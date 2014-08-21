@@ -1,0 +1,10 @@
+.media
+  h3
+    | 评论
+    small ({{comments.length}}条)
+  form.input-group.comments-form(ng-submit='replyAuthor(myReply)')
+    input.form-control.input-lg(type='text', focus-me='focusInput', ng-model='myReply.content')
+    span.input-group-btn
+      button.btn.blue(type='submit') 评论
+  hr
+include shared/_comment_item

@@ -1,0 +1,64 @@
+<div class="media">
+    <h3>评论
+        <small>({{comments.length}}条)</small>
+    </h3>
+    <form class="input-group comments-form" ng-submit="replyAuthor(myReply)">
+        <input type="text" focus-me="focusInput" class="form-control input-lg" ng-model="myReply.content">
+        <!--
+		<span class="input-group-addon">
+			<i class="fa fa-microphone"></i>
+		</span> -->
+        <!-- <span class="input-group-addon">
+			<i class="fa fa-meh-o"></i>
+		</span>	 -->
+        <span class="input-group-btn">
+            <button class="btn blue" type="submit">评论</button>
+        </span>
+    </form>
+    <hr/>
+</div>
+<!--end media-->
+<div ng-repeat="comment in comments" ng-controller="KCommentRowCtrl">
+    <div class="media">
+        <a href="#" class="pull-left">
+            <img alt="" ng-src="{{comment.creator.avatar_url}}" class="media-object">
+        </a>
+        <div class="media-body">
+            <h4 class="media-heading">
+                {{comment.creator.name}}
+                <em>{{comment.created_at | date:'yyyy年MM月dd日'}}</em>
+                <span>
+                    <a href="javascript:void(0);" ng-click="replyTo(comment)">回复</a>
+                </span>
+            </h4>
+            <p>{{comment.content}}</p>
+            <hr>
+            <form class="relpy" ng-submit="reply()" ng-show="replying">
+                <div class="input-group comments-form">
+                    <input type="text" class="form-control input-lg" ng-model="content">
+                    <input type="hidden" ng-model="reply_to_id">
+                    <span class="input-group-btn">
+                        <button class="btn blue" type="button">回复</button>
+                    </span>
+                </div>
+
+            </form>
+
+            <div ng-repeat="reply in comment.replys" class="media">
+                <a href="#" class="pull-left">
+                    <img alt="{{comment.creator.name}}" ng-src="{{comment.creator.avatar_url}}" class="media-object">
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        {{reply.creator.name}}
+                        <em>{{reply.created_at | date:'yyyy年MM月dd日'}}</em>
+                    </h4>
+                    <p ng-bind="reply.content">
+                    </p>
+                </div>
+            </div>
+            <hr ng-show="comment.replys.length > 0">
+        </div>
+    </div>
+</div>
+<!--end media-->

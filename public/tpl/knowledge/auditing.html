@@ -1,0 +1,105 @@
+<!-- 第三个部分 -->
+<!-- BEGIN FILTER -->
+<div class="tab-pane active" id="tab_1_11">
+    <ul class="mix-filter">
+        <li class="filter ng-binding ng-scope" ng-class="{active:waitDisplay}" ng-click="switchArticles(true)">待审核</li>
+        <li class="filter ng-binding ng-scope" ng-class="{active:!waitDisplay}" ng-click="switchArticles(false)">已通过</li>
+    </ul>
+
+    <!-- 待审核表 -->
+    <div class="portlet-body" ng-show="waitDisplay">
+        <div class="know-dsk-number">
+            当前有 “{{articles.length}}” 篇文档需要您审核
+        </div>
+
+        <table ng-if="articles.length != 0" class="table know-table table-striped table-bordered table-advance table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        标题
+                    </th>
+                    <th class="hidden-xs">
+                        组名/类别
+                    </th>
+                    <th>
+                        时间
+                    </th>
+                    <th>
+                        创建人
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="">
+                <tr ng-repeat="article in articles">
+                    <td>
+                        <a ui-sref="^.auditById({articleId: article.id, audit: true})">
+                            {{article.title}}</a>
+                    </td>
+                    <td class="hidden-xs">
+                        {{article.group.name || '公共文档' }}/{{article.type.name || '无'}}
+                    </td>
+                    <td>
+                        {{article.updated_at | date: 'yyyy:MM:dd'}}
+                    </td>
+                    <td>
+                        {{article.author.name}}
+                        <img alt="{{aticle.author.name}}" class="img-circle know-dsh-img" ng-src="{{article.author.avatar_url}}">
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 已通过表 -->
+    <div class="portlet-body" ng-hide="waitDisplay">
+        <div class="know-dsk-number">
+            当前有 “{{publicedArticles.length || 0}}” 篇文档已通过审核
+        </div>
+        <table ng-if="publiceArticles.length != 0" class="table know-table table-striped table-bordered table-advance table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        标题
+                    </th>
+                    <th class="hidden-xs">
+                        组名/类别
+                    </th>
+                    <th>
+                        时间
+                    </th>
+                    <th>
+                        创建人
+                    </th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody class="">
+                <tr ng-repeat="article in publicedArticles">
+                    <td>
+                        <a ui-sref="^.auditById({articleId: article.id, audit: false})">
+                            {{article.title}}</a>
+                    </td>
+                    <td class="hidden-xs">
+                        {{article.group.name || '公共文档' }}/{{article.type.name || '无'}}
+                    </td>
+                    <td>
+                        {{article.updated_at | date: 'yyyy年MM月dd日'}}
+                    </td>
+                    <td>
+                        {{article.author.name}}
+                        <img alt="{{aticle.author.name}}" class="img-circle know-dsh-img" ng-src="{{article.author.avatar_url}}">
+                    </td>
+                    <td ng-switch="article.check_status">
+                        <button ng-click="editAction(article.id)" type="button" class="btn green delete">编辑</button>
+                        <button ng-click="deleteAction(article.id)" type="button" class="btn yellow delete">删除</button>
+                        <button ng-switch-when="2" ng-click="shieldArticle(article.id)" type="button" class="btn red delete">屏蔽</button>
+                        <button ng-switch-default ng-click="canelShieldArticle(article.id)" type="button" class="btn red delete">取消屏蔽</button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- END FILTER -->

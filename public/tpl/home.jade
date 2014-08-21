@@ -1,0 +1,34 @@
+.page-header.navbar.navbar-fixed-top
+  // BEGIN HEADER INNER
+  .page-header-inner
+    // BEGIN LOGO
+    .page-logo
+      a(href='index.html')
+        // <img src="../../assets/admin/layout/img/logo.png" alt="logo" class="logo-default"/>
+      .menu-toggler.sidebar-toggler.hide
+        // DOC: Remove the above "hide" to enable the sidebar toggler button on header
+    // END LOGO
+    // BEGIN RESPONSIVE MENU TOGGLER
+    a.menu-toggler.responsive-toggler(href='javascript:;', data-toggle='collapse', data-target='.navbar-collapse')
+    // END RESPONSIVE MENU TOGGLER
+    // BEGIN TOP NAVIGATION MENU
+    include shared/top_menu
+    // END TOP NAVIGATION MENU
+  // END HEADER INNER
+// END HEADER
+.clearfix
+// BEGIN CONTAINER
+.page-container
+  // BEGIN SIDEBAR
+  include shared/left_sidebar
+  // END SIDEBAR
+  // BEGIN CONTENT
+  .page-content-wrapper
+    div(ui-view='')
+  // END CONTENT
+  // BEGIN QUICK SIDEBAR
+
+  // END QUICK SIDEBAR
+// END CONTAINER
+// BEGIN FOOTER
+// END FOOTER

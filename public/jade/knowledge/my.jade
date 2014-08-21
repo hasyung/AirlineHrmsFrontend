@@ -1,0 +1,42 @@
+.col-md-13.blog-tag-data(ng-repeat='article in articles')
+  .news-blocks
+    h3
+      a(ui-sref='^.byId({articleId:article.id})', ng-bind-html='article.title  | highlight: search_keyword')
+      .know-state(ng-switch='article.check_status')
+        span(ng-switch-when='4')
+          i.fa.fa-file-text-o
+          | 草稿
+        span(ng-switch-when='1')
+          i.icon-eyeglasses
+          | 待审核
+        span(ng-switch-when='2')
+          i.fa.fa-check
+          | 已发布
+        span(ng-switch-when='3')
+          i.icon-close
+          | 审核未通过
+        span(ng-if='article.check_status < 0')
+          i.fa.fa-ban
+          | 被管理员屏蔽
+    ul.list-inline.blog-tags
+      li
+        i.fa.fa-folder
+        span {{article.group.name || '公共文档' }}/{{article.type.name || '无'}}
+    ul.list-inline.blog-tags
+      li
+        i.fa.fa-tags
+        a(href='javascript:void(0)', ng-bind-html='tag |highlight: search_keyword', ng-repeat='tag in article.tags')
+    p(ng-bind-html='article.introduction')
+      img.news-block-img.pull-right(ng-src='{{article.cover_url}}', alt='')
+    ul.list-inline.pull-left
+      li
+        i.fa.fa-calendar
+        a(href='javascript:void(0)') {{article.updated_at | date: 'yyyy/MM/dd'}}
+      li
+        i.fa.fa-comments
+        a(href='javascript:void(0)')
+          | {{article.comments_count}} 条评论
+    a.news-block-btn(ui-sref='^.byId({articleId:article.id})')
+      | 查看更多
+      i.icon-arrow-right
+// 新版结束

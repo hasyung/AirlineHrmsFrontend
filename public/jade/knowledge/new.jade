@@ -1,0 +1,79 @@
+.page-content
+  .row
+    include shared/top_navbar
+    //- .col-md-12
+      // BEGIN PAGE TITLE & BREADCRUMB
+      h3.page-title(ui-sref='knowledge.articles.public')
+        | 知识库
+      .zsk-ser
+        form.input-group(ng-submit='search(search_text)')
+          input.form-control(type='text', ng-model='search_text')
+          span.input-group-btn
+            button.fa.btn.fa-search(type='submit')
+        .btn.red-sunglo(ui-sref='^.new') 新建我的文档
+      // END PAGE TITLE & BREADCRUMB
+  .row
+    .col-md-12
+      .portlet-body.form
+        // BEGIN FORM
+        form.form-horizontal(name='article_form', novalidate='', ng-submit='save(article,article_form)')
+          .form-body
+            .form-group
+              input.ng-invalid.form-control(
+                type='text'
+                name='title'
+                ng-disabled='editorDisabled'
+                required=''
+                ng-model='article.title'
+                placeholder='请输入标题...')
+              .error-messages(
+                ng-if='article_form.title.$dirty||article_form.title.$touched'
+                ng-messages='article_form.title.$error'
+                ng-messages-include='validateMessages.html')
+                div(ng-message='required') 请输入标题！
+            .form-group
+              .input-group.col-md-12
+                textarea.form-control(
+                  required=''
+                  simditor=''
+                  ng-model='article.html_content'
+                  editable='{{!editorDisabled}}'
+                  rows='20'
+                  placeholder='这里放文本编辑器')
+            .form-group(bootstrap-tagsinput='', ng-model='article.tags', editable='{{editorDisabled}}')
+            .form-group
+              .col-md-9(style='margin:30px 0;')
+                .form-group
+                  label.col-md-2.control-label 权限：
+                  .col-md-8
+                    .radio-list
+                      label.radio-inline
+                        input(vx-uiniform='', type='radio', ng-model='article.permissions', value='public')
+                        | 公开发表
+                      label.radio-inline
+                        input(vx-uniform='', type='radio', ng-model='article.permissions', value='private')
+                        | 分组可见
+                      ui-select.zsk-news-class(style="width: 300px;", ng-model='article.group' ,theme='bootstrap',ng-disabled='groupDisabled')
+                        ui-select-match(placeholder='组别')
+                          | {{$select.selected.name}}
+                        ui-select-choices(repeat='group in groups')
+                          div(ng-bind-html='group.name | highlight: $select.search')
+              .col-md-9
+                .form-group
+                  label.col-md-2.control-label 分类：
+                  .col-md-4
+                    // begin
+                    ui-select.zsk-news-class(ng-model='article.type')
+                      ui-select-match(placeholder='类别')
+                        | {{$select.selected.name}}
+                      ui-select-choices(repeat='type in types')
+                        div(ng-bind-html='type.name | highlight: $select.search')
+                    // end
+              .clearfix
+          .form-actions
+            .btn-set.pull-left
+              button.btn.btn-default(type='button', ui-sref='knowledge.articles.my') 取消
+            .btn-set.pull-right
+              button.btn.btn-default(type='submit', ng-disabled='article_form.$invalid', ng-click='article.draft = true') 保存草稿
+              button.btn.blue(type='submit', ng-disabled='article_form.$invalid', ng-click='article.draft = false') 发布文章
+        // END FORM

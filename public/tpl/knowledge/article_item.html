@@ -1,0 +1,113 @@
+<div class="page-content" ng-controller="KArticleCtrl">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+            <h3 class="page-title">
+                知识库
+            </h3>
+            <div class="zsk-ser">
+                <!-- <div class="input-group">
+				<input type="text" class="form-control" ng-model="keyword">
+				<span class="input-group-btn">
+				<button class="fa btn fa-search" type="button" ui-sref="knowledge.articles.search({keyword: keyword})"></button>
+				</span>
+			</div> -->
+                <form ng-submit="search(keyword)" class="input-group">
+                    <input type="text" class="form-control" ng-model="keyword">
+                    <span class="input-group-btn">
+                        <button class="fa btn fa-search" type="submit" ui-sref="knowledge.articles.search({keyword: keyword})"></button>
+                    </span>
+                </form>
+                <div class="btn red-sunglo" ui-sref="knowledge.articles.new">新建我的文档</div>
+            </div>
+            <ul class="page-breadcrumb breadcrumb">
+
+                <li>
+                    <i class="fa fa-home"></i>
+                    <a ng-href="#/">知识库</a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <a ng-href="#/knowledge">文档首页</a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <a href="javascript:void(0);">{{article.title}}</a>
+                </li>
+            </ul>
+            <!-- END PAGE TITLE & BREADCRUMB-->
+        </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN PAGE CONTENT-->
+    <div class="row">
+        <div class="col-md-12 news-page blog-page">
+            <div class="row">
+                <div class="col-md-12 blog-tag-data" >
+                    <h3 class="zsk-title" ng-switch="article.check_status">{{article.title}}
+                        <!-- <span>
+                            <i ng-class="{0: 'icon-ban', 1: 'icon-eyeglasses', 2: 'fa fa-check', 3: 'icon-close', 4: 'icon-pencil'}[article.check_status]"></i>{{article.statuStr}}</span> -->
+                        <span ng-switch-when="4"><i class="fa fa-file-text-o"></i>草稿</span>
+                        <span ng-switch-when="1"><i class="icon-eyeglasses"></i>待审核</span>
+                        <span ng-switch-when="2"><i class="fa fa-check"></i>已发布</span>
+                        <span ng-switch-when="3"><i class="icon-close"></i>审核未通过</span>
+                        <span ng-if="article.check_status < 0"><i class="fa fa-ban"></i>被管理员屏蔽</span>
+                    </h3>
+                    <div class="zsk-contrl">
+                        <a class="btn btn-default" ng-show="article.editable" ui-sref=".edit({articleId: article.id,article: article })"><i class="fa fa-pencil"></i> 编辑</a>
+                        <a class="btn btn-default" ng-show="article.deletable" href="javascript:void(0);" ng-click="deleteArticle()"><i class="fa fa-trash-o"></i> 删除</a>
+                        <!-- <a class="btn blue" ng-show="publishable" ng-click="publishArticle()">发布</a> -->
+                    </div>
+                    <img ng-src="{{article.cover_url}}" class="img-responsive" alt="">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <ul class="list-inline blog-tags">
+                                <li>
+                                    <i class="fa fa-tags"></i>
+                                    <span ng-repeat="tagName in article.tags">
+                                        <a href="javascript:void(0);">{{tagName}}</a>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-7 blog-tag-data-inner">
+                            <ul class="list-inline">
+                                <li>
+                                    <!-- <i class="fa fa-calendar"></i> -->
+                                    {{article.group.name || "公共文档"}}&nbsp;/{{article.type.name}}
+                                </li>
+                                <li>
+                                    <i class="fa fa-calendar"></i>
+                                    {{article.created_at | date:"yyyy年MM月dd日"}}
+                                </li>
+                                <li>
+                                    <i class="fa fa-user"></i>
+                                    创建人:{{article.author_name}}
+                                </li>
+                                <!-- <li>
+								<i class="fa fa-book"></i>
+								<a href="#">
+								16页</a>
+							</li> -->
+                                <li>
+                                    <i class="fa fa-eye"></i>
+                                    {{article.clicks}}人阅读
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="news-item-page zsk-page" ng-bind-html="article.html_content">
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+            <div class="col-md-offset-6 col-md-12" ng-show="article.reviewable">
+                <button type="button" class="btn blue" ng-click="reviewAction(true)">通 过</button>
+                <button type="button" class="btn btn-default" ng-click="reviewAction(false)">不通过</button>
+            </div>
+            <!-- comment begin-->
+            <div ng-show="article.commentable" ui-view="comment"></div>
+
+
+            <!-- comment begin-->

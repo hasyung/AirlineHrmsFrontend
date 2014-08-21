@@ -1,0 +1,16 @@
+.col-md-12
+  // BEGIN PAGE TITLE & BREADCRUMB
+  h3.page-title
+    | 知识库
+  .zsk-ser
+    .input-group
+      input.form-control(type='text')
+      span.input-group-btn
+        button.fa.btn.fa-search(type='button')
+    .btn.red-sunglo(ui-sref='^.new') 新建我的文档
+  ul.page-breadcrumb.breadcrumb
+    li
+      | 搜索关键词 “
+      span.highlightText {{ search_keyword }}
+      | ”
+  // END PAGE TITLE & BREADCRUMB

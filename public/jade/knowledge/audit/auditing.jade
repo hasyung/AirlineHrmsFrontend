@@ -1,0 +1,22 @@
+extends ./_audit_layout
+
+block tips
+  | 当前有 “{{articles.length}}” 篇文档需要您审核
+
+block theadTpl
+  th 标题
+  th.hidden-xs 组名/类别
+  th 时间
+  th 创建人
+
+block tbodyTpl
+  td
+    a(ui-sref='^.auditById({articleId: article.id, audit: true})')
+      | {{article.title}}
+  td.hidden-xs
+    | {{article.group.name || '公共文档' }}/{{article.type.name || '无'}}
+  td
+    | {{article.updated_at | date: 'yyyy:MM:dd'}}
+  td
+    | {{article.author.name}}
+    img.img-circle.know-dsh-img(alt='{{aticle.author.name}}', ng-src='{{article.author.avatar_url}}')  

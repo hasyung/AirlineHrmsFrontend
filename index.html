@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="vxApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+
+  <!-- @if ENV == 'debug' !>
+  <link rel="stylesheet" href="css/lib.css">
+  <link href="css/web.css" rel="stylesheet">
+  <!-- @endif -->
+
+  <!-- @if ENV == 'debug' !>
+    <script src="js/lib.js"></script>
+    <script src="js/app_debug.js"></script>
+  <!-- @endif -->
+
+</head>
+<body class="page-header-fixed page-quick-sidebar-over-content ">
+
+
+    <div ui-view></div>
+
+
+  <!-- @if ENV == 'debug' !>
+    <!-- Livereload script rendered -->
+    <script type="text/javascript" src="http://localhost:35729/livereload.js"></script>
+    <!-- <script type="text/javascript" src="{{'http://' + 'localhost' + ':35729/livereload.js'}}"></script> -->
+  <!-- @endif -->
+
+</body>
+</html>

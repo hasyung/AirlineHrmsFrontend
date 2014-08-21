@@ -1,0 +1,135 @@
+
+<!-- 第一部分 -->
+<!-- BEGIN FILTER -->
+<div class="margin-top-10">
+    <ul class="mix-filter group-ui">
+        <label class="group-name">组名</label>
+        <li ng-repeat="group in user_groups" ng-class="{active: group.active}" ng-click="select_group(group)" ng-bind="group.name" class="filter" data-filter="category_1">
+        </li>
+    </ul>
+    <ul class="mix-filter group-ui">
+        <label class="group-name">类别</label>
+        <li ng-repeat="type in types" class="filter" ng-class="{active: type.active}" ng-bind="type.name" ng-click="toggle_type(type)" data-filter="all" ;>
+        </li>
+    </ul>
+    <!--   <div class="row mix-grid">
+        <div ng-repeat="article in articles " class="col-md-3 col-sm-4 mix category_2 category_3 mix_all" style="display: block; opacity: 1;">
+            <div class="mix-inner">
+                <img class="img-responsive" ng-src ="{{article.cover_url}}" alt="">
+                <div class="mix-details know-tanc">
+                    <h4><a class="know-tanc-name" ui-sref="^.byId({articleId:article.id})">{{articletitle}}</a></h4>
+                    <p class="know-time">2014年6月26日 地勤/公开文档</p>
+                    <a class="mix-link" style="margin-right:-57px;" ui-sref="^.byId({articleId:article.id})">
+                   <i class="icon-eye"></i>
+                   <span class="know-span">{{article.clicks}}人已阅</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- 新增开始 -->
+    <h5 class="know-class">您当前选择的是：{{current_group.name || "公共文档"}} &nbsp; {{current_type.name}}</h5>
+    <div class="row" ng-if="!current_group && !current_type">
+        <div class="col-md-4" ng-repeat="colTypes in cols">
+            <div ng-repeat="type in colTypes " class="blog-tag-data">
+                <div class="top-news">
+                    <a href="javascript:void(0)" ng-click="toggle_type({id:type.id,name:type.name})" class="btn blue">
+                        <span>{{type.name}}</span>
+                        <em>
+                            <i class="fa fa-folder"></i>
+                            {{type.desc}}
+                        </em>
+                        <i class="fa fa- icon-bullhorn top-news-icon"></i>
+                    </a>
+                </div>
+                <div class="news-blocks" ng-repeat="article in type.articles">
+                    <h3 class="know-index-name">
+                        <a ui-sref="^.byId({articleId: article.id})">
+                          {{article.title}} </a>
+                    </h3>
+                    <!-- <div class="news-block-tags">
+                        <strong>
+                            <i class="fa fa-tags"></i>
+                            <span ng-repeat="tagName in article.tags">
+                                <a href="javascript:void(0);">{{tagName}}</a>
+                            </span>
+                        </strong>
+                    </div> -->
+                    <ul class="list-inline blog-tags">
+                        <li>
+                            <i class="fa fa-tags"></i>
+                            <span ng-repeat="tagName in article.tags">
+                                <a href="javascript:void(0);">{{tagName}}</a>
+                            </span>
+                        </li>
+                    </ul>
+                    <p>{{article.introduction}}
+                    </p>
+                    <div>
+                       <!--  <div class="pull-left know-index-date">
+                            <i class="fa fa-calendar"></i>
+                            <em>{{article.created_at | date:'yyyy年MM月dd日'}}</em>
+                        </div> -->
+                        <ul class="list-inline pull-left know-index-date">
+                            <li>
+                                <i class="fa fa-calendar"></i>
+                                <a href="javascript:void(0)">{{article.created_at | date:'yyyy年MM月dd日'}}</a>
+                            </li>
+                        </ul>
+                        <a ui-sref="^.byId({articleId:article.id})" class="news-block-btn">
+                            更多.... <i class="icon-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row" ng-if="current_group || current_type">
+        <div ng-repeat="article in articles " class="col-md-4 blog-tag-data">
+            <!--     <div class="top-news">
+                    <a href="#" class="btn blue">
+                    <span>{{type.name}}</span>
+                    <em>
+                    <i class="fa fa-tags"></i>
+                    {{type.desc}} </em>
+                    <i class="fa fa- icon-bullhorn top-news-icon"></i>
+                    </a>
+                </div> -->
+            <div class="news-blocks">
+                <h3 class="know-index-name">
+                    <a ui-sref="^.byId({articleId: article.id})">
+                      {{article.title}} </a>
+                </h3>
+                 <ul class="list-inline blog-tags">
+                        <li>
+                            <i class="fa fa-tags"></i>
+                            <span ng-repeat="tagName in article.tags">
+                                <a href="javascript:void(0);">{{tagName}}</a>
+                            </span>
+                        </li>
+                    </ul>
+                <p>{{article.introduction}}
+                </p>
+                <div>
+                    <ul class="list-inline pull-left know-index-date">
+                        <li>
+                            <i class="fa fa-calendar"></i>
+                            <a href="javascript:void(0)">{{article.created_at | date:'yyyy年MM月dd日'}}</a>
+                        </li>
+                    </ul>
+                    <a ui-sref="^.byId({articleId:article.id})" class="news-block-btn">
+                    更多.... <i class="icon-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- 新增结束 -->
+</div>
+<!-- END FILTER -->

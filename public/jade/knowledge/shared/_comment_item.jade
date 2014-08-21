@@ -1,0 +1,29 @@
+// end media
+div(ng-repeat='comment in comments', ng-controller='KCommentRowCtrl')
+  .media
+    a.pull-left(href='#')
+      img.media-object(alt='', ng-src='{{comment.creator.avatar_url}}')
+    .media-body
+      h4.media-heading
+        | {{comment.creator.name}}
+        em {{comment.created_at | date:'yyyy年MM月dd日'}}
+        span
+          a(href='javascript:void(0);', ng-click='replyTo(comment)') 回复
+      p {{comment.content}}
+      hr
+      form.relpy(ng-submit='reply()', ng-show='replying')
+        .input-group.comments-form
+          input.form-control.input-lg(type='text', ng-model='content')
+          input(type='hidden', ng-model='reply_to_id')
+          span.input-group-btn
+            button.btn.blue(type='button') 回复
+      .media(ng-repeat='reply in comment.replys')
+        a.pull-left(href='#')
+          img.media-object(alt='{{comment.creator.name}}', ng-src='{{comment.creator.avatar_url}}')
+        .media-body
+          h4.media-heading
+            | {{reply.creator.name}}
+            em {{reply.created_at | date:'yyyy年MM月dd日'}}
+          p(ng-bind='reply.content')
+      hr(ng-show='comment.replys.length > 0')
+// end media
