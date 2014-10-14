@@ -34,6 +34,7 @@ paths =
     scssStyles: "app/styles/**/*.scss"
     distStylesPath: "dist/styles"
     distStyles: []
+    sassStylesLib: "app/styles/lib.scss"
     sassStylesMain: "app/styles/web.scss"
     css:  "app/styles/vendor/*.css"
     images: "app/images/**/*"
@@ -114,15 +115,25 @@ gulp.task "sass-lint", ->
 gulp.task "sass-watch", ->
     gulp.src(paths.sassStylesMain)
         .pipe(plumber())
-        .pipe(sass())
+        .pipe(sass({includePaths: require('node-bourbon').includePaths}))
         .pipe(rename("app.css"))
         .pipe(gulp.dest(paths.distStylesPath))
+
+
+#编译 并压缩 scss 文件
+gulp.task "sass-lib", ->
+    gulp.src(paths.sassStylesLib)
+        .pipe(plumber())
+        .pipe(sass())
+        .pipe(rename("lib.css"))
+        .pipe(gulp.dest(paths.distStylesPath))
+
 
 #编译 并压缩 scss 文件
 gulp.task "sass-deploy", ->
     gulp.src(paths.sassStylesMain)
         .pipe(plumber())
-        .pipe(sass())
+        .pipe(sass({includePaths: require('node-bourbon').includePaths}))
         .pipe(rename("app.css"))
         .pipe(gulp.dest(paths.distStylesPath))
 
@@ -257,6 +268,7 @@ gulp.task "default", [
     "copy",
     "template",
     "sass-watch",
+    "sass-lib",
     "coffee-watch",
     "jslibs-watch",
     "express",
