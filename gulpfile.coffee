@@ -116,7 +116,7 @@ gulp.task "sass-watch", ->
     gulp.src(paths.sassStylesMain)
         .pipe(plumber())
         .pipe(sass({includePaths: require('node-bourbon').includePaths}))
-        .pipe(rename("app.css"))
+        .pipe(rename("web.css"))
         .pipe(gulp.dest(paths.distStylesPath))
 
 
@@ -248,10 +248,14 @@ gulp.task "express", ->
 # Rerun the task when a file changes
 gulp.task "watch", ->
     livereload.listen()
-    gulp.watch(paths.jade, ["jade-watch"]).on("change",livereload.changed)
-    gulp.watch("#{paths.app}/index.jade", ["template"]).on("change",livereload.changed)
-    gulp.watch(paths.scssStyles, ["sass-watch"]).on("change",livereload.changed)
-    gulp.watch(paths.coffee, ["coffee-watch"]).on("change",livereload.changed)
+    gulp.watch(paths.jade, ["jade-watch"])
+    gulp.watch("#{paths.app}/index.jade", ["template"])
+    gulp.watch(paths.scssStyles, ["sass-watch"])
+    gulp.watch(paths.coffee, ["coffee-watch"])
+    gulp.watch(["dist/index.html","dist/js/app.js","dist/styles/web.css","dist/partials/**/*.html"])
+        .on("change",livereload.changed)
+
+
 
 gulp.task "deploy", [
     "jade-deploy",
