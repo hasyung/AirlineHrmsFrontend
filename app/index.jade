@@ -10,6 +10,10 @@ html
         link(rel="stylesheet", href="/styles/main.css")
         link(rel="icon", type="image/png", href="/images/favicon.png")
     body
+        h1 刷新！！！！
+        //- include partials/shared/top_menu
+        include partials/shared/left_sidebar
+
         if debugMode
             each script in libs
                 script(src="/vendor/#{script}")

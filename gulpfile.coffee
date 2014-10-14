@@ -30,7 +30,7 @@ debugMode = true
 paths =
     app: "app"
     dist: "dist"
-    jade: ["app/index.jade", "app/partials/**/*.jade"]
+    jade: ["app/partials/**/*.jade"]
     scssStyles: "app/styles/**/*.scss"
     distStylesPath: "dist/styles"
     distStyles: []
@@ -262,7 +262,7 @@ gulp.task "deploy", [
     "styles-deploy"
 ]
 
-# The default task (called when you run gulp from cli)
+# bugfix: copy 异步 template 同步 ,后者依赖前者
 gulp.task "default", [
     "jade-deploy",
     "copy",
