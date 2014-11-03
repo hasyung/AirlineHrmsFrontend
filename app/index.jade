@@ -10,10 +10,11 @@ html
         link(rel="stylesheet", href="/styles/lib.css?v=#{v}")
         link(rel="stylesheet", href="/styles/web.css?v=#{v}")
         link(rel="icon", type="image/png", href="/images/favicon.png")
-    body
+    body(ng-app="vxApp")
         h1 刷新！！！！
         //- include partials/shared/top_menu
-        include partials/shared/left_sidebar
+
+        div(ng-controller="Ctrl")
 
         if debugMode
             each script in libs

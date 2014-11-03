@@ -1,6 +1,7 @@
 gulp            = require("gulp")
 jade            = require("gulp-jade")
 _               = require("lodash")
+url             = require('url')
 
 coffee          = require("gulp-coffee")
 concat          = require("gulp-concat")
@@ -60,7 +61,7 @@ paths =
              # "app/plugins/**/*.coffee"
     ]
     vendorJsLibs: [
-        "dist/underscore.string/lib/underscore.string.js",
+        'deps/underscore.string/lib/underscore.string.js',
         'deps/store.js/store.js'
         'deps/lodash/dist/lodash.min.js'
         'deps/moment/min/moment.min.js'
@@ -69,6 +70,7 @@ paths =
         #http://harvesthq.github.io/chosen/
         'deps/simditor/lib/simditor-all.js'
         'deps/angular-cookies/angular-cookies.js'
+        'deps/angular-restmod/dist/angular-restmod-bundle.js'
         'deps/angular-messages/angular-messages.js'
         'deps/angular-animate/angular-animate.js'
         'deps/angular-sanitize/angular-sanitize.js'
@@ -219,6 +221,8 @@ gulp.task "copy",  ->
 
     gulp.src(paths.vendorJsLibs)
         .pipe(gulp.dest("#{paths.dist}/vendor/"))
+    gulp.src("#{paths.app}/api/*")
+        .pipe(gulp.dest("#{paths.dist}/api/"))
 
     gulp.src("#{paths.app}/images/**/*")
         .pipe(gulp.dest("#{paths.dist}/images/"))
@@ -227,9 +231,14 @@ gulp.task "copy",  ->
 gulp.task "express", ->
     express = require("express")
     app = express()
+
+    proxyOptions = url.parse('http://192.168.6.7:3000')
+    proxyOptions.route = '/api'
+
     # 反向代理 webapi
-    # app.use(proxy(proxyOptions))
+    app.use(proxy(proxyOptions))
     app.use("/js", express.static("#{__dirname}/dist/js"))
+    app.use("/api", express.static("#{__dirname}/dist/api"))
     app.use("/vendor", express.static("#{__dirname}/dist/vendor"))
     app.use("/styles", express.static("#{__dirname}/dist/styles"))
     app.use("/images", express.static("#{__dirname}/dist/images"))
@@ -266,6 +275,7 @@ gulp.task "deploy", [
 ]
 
 # bugfix: copy 异步 template 同步 ,后者依赖前者
+# 添加 lib 文件后，先执行 gulp copy
 gulp.task "default", [
     "jade-deploy",
     "copy",
