@@ -12,7 +12,7 @@
 #
 #
 
-vx = @.vx
+nb = @.nb
 
 class Base
 
@@ -30,6 +30,6 @@ class Controller extends Base
 
         return @q.reject(xhr)
 
-vx.Base = Base
-vx.Service= Service
-vx.Controller = Controller
+nb.Base = Base
+nb.Service= Service
+nb.Controller = Controller

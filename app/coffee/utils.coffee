@@ -1,4 +1,8 @@
 
+
+
+
+
 mixOf = (base, mixins...) ->
     class Mixed extends base
 
@@ -6,3 +10,14 @@ mixOf = (base, mixins...) ->
         for name, method of mixin::
             Mixed::[name] = method
     Mixed
+
+
+
+
+
+
+
+
+nb = @.nb
+
+nb.mixOf = mixOf

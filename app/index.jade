@@ -9,18 +9,15 @@ html
         meta(name="viewport", content="width=device-width, user-scalable=no")
         link(rel="stylesheet", href="/styles/lib.css?v=#{v}")
         link(rel="stylesheet", href="/styles/web.css?v=#{v}")
-        link(rel="stylesheet", href="/styles/common.css?v=#{v}")            
+        link(rel="stylesheet", href="/styles/common.css?v=#{v}")
         link(rel="icon", type="image/png", href="/images/favicon.png")
-    body(ng-app="vxApp")
+    body(ng-app="nb")
 
         include partials/shared/top_menu
         include partials/shared/left_sidebar
         .container
-            .div(style="height:1900px;")
+            .div(style="height:1900px;" ui-view)
 
-
-
-        div(ng-controller="Ctrl")
 
         if debugMode
             each script in libs
