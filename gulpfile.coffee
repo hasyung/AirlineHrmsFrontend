@@ -41,7 +41,8 @@ paths =
     svg: "app/svg/**/*"
     coffee: ["app/coffee/app.coffee"
              "app/coffee/*.coffee"
-             "app/base/*.coffee"
+             # "app/coffee/base/*.coffee"
+             "app/coffee/personnel/*.coffee"
              # "app/coffee/modules/controllerMixins.coffee"
              # "app/coffee/modules/*.coffee"
              # "app/coffee/modules/common/*.coffee"
@@ -179,7 +180,6 @@ gulp.task "styles-deploy", ["sass-deploy", "css-vendor"], ->
 gulp.task "coffee-watch", ->
     gulp.src(paths.coffee)
         .pipe(plumber())
-        .pipe(cache("coffee"))
         .pipe(coffee())
         .pipe(concat("app.js"))
         .pipe(gulp.dest("dist/js/"))
