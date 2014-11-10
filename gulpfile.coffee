@@ -31,17 +31,19 @@ paths =
     app: "app"
     dist: "dist"
     jade: ["app/partials/**/*.jade"]
+    vendorStyles: [
+        'deps/bootstrap/dist/css/bootstrap.css'
+    ]
     scssStyles: "app/styles/**/*.scss"
     distStylesPath: "dist/styles"
     distStyles: []
     sassStylesLib: "app/styles/lib.scss"
     sassStylesMain: "app/styles/web.scss"
-    css:  "app/styles/vendor/*.css"
     images: "app/images/**/*"
     svg: "app/svg/**/*"
     coffee: ["app/coffee/app.coffee"
              "app/coffee/*.coffee"
-             # "app/coffee/base/*.coffee"
+             "app/coffee/base/*.coffee"
              "app/coffee/personnel/*.coffee"
              # "app/coffee/modules/controllerMixins.coffee"
              # "app/coffee/modules/*.coffee"
@@ -139,9 +141,9 @@ gulp.task "sass-deploy", ->
         .pipe(rename("app.css"))
         .pipe(gulp.dest(paths.distStylesPath))
 
-# 给发布的 CSS 加上厂商标签，提高兼容性
+# 引入第三方 CSS
 gulp.task "css-vendor", ->
-    gulp.src(paths.css)
+    gulp.src(paths.vendorStyles)
         .pipe(concat("vendor.css"))
         .pipe(gulp.dest(paths.distStylesPath))
 
@@ -279,6 +281,7 @@ gulp.task "deploy", [
 gulp.task "default", [
     "jade-deploy",
     "copy",
+    "css-vendor",
     "template",
     "sass-watch",
     "sass-lib",
