@@ -1,28 +1,38 @@
 @charset 'utf-8';
 @import 'bourbon';
-
+body  {font-family: "微软雅黑"}
 ul {
 	list-style: none;;
 }
 .highlightText {
     color: #f15a5a !important;
 }
-
 .bootstrap-tagsinput { width: 100%; }
-
-
-h1 {
-    font-size: 121px !important;
-}
 .navbar-fixed-top {
 	background-color: #fff;
 	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(0, 0, 0, 0.05);
+}
+.navbar {
+	margin-bottom: 0px;
+	border: 0px;
 }
 .left-sidebar { 
 	float: left; 
 	margin-top: 50px;
 	height: 100%; 
-	width: 200px;
+	width: 240px;
 	color: #6b94b3;
-	background-color: #1c2b36;
+	background-color: #3a3f52;
 }
+.left-sidebar li  { 
+	height: 48px; 
+	line-height: 48px;
+}
+.left-sidebar li i  { 
+	height: 48px; 
+	line-height: 48px;
+}
+.left-sidebar a { 
+	color: #adb2c5;
+}
+
