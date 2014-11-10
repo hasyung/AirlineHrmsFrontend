@@ -31,9 +31,7 @@ paths =
     app: "app"
     dist: "dist"
     jade: ["app/partials/**/*.jade"]
-    vendorStyles: [
-        'deps/bootstrap/dist/css/bootstrap.css'
-    ]
+    vendorStyles: "app/styles/lib/*.css"
     scssStyles: "app/styles/**/*.scss"
     distStylesPath: "dist/styles"
     distStyles: []
@@ -218,7 +216,7 @@ gulp.task "svg",  ->
 
 # Copy Files
 gulp.task "copy",  ->
-    gulp.src("#{paths.app}/fonts/*")
+    gulp.src("#{paths.app}/styles/fonts/*")
         .pipe(gulp.dest("#{paths.dist}/fonts/"))
 
     gulp.src(paths.vendorJsLibs)
