@@ -13,6 +13,7 @@ livereload      = require("gulp-livereload")
 # gutil           = require("gulp-util")
 minifyHTML      = require("gulp-minify-html")
 sass            = require("gulp-sass")
+less            = require("gulp-less")
 csslint         = require("gulp-csslint")
 minifyCSS       = require("gulp-minify-css")
 watch           = require("gulp-watch")
@@ -32,6 +33,7 @@ paths =
     dist: "dist"
     jade: ["app/partials/**/*.jade"]
     vendorStyles: "app/styles/lib/*.css"
+    lessVendorStyles: "app/styles/less/app.less"
     scssStyles: "app/styles/**/*.scss"
     distStylesPath: "dist/styles"
     distStyles: []
@@ -142,7 +144,13 @@ gulp.task "sass-deploy", ->
 # 引入第三方 CSS
 gulp.task "css-vendor", ->
     gulp.src(paths.vendorStyles)
-        .pipe(concat("vendor.css"))
+        .pipe(concat("vendor1.css"))
+        .pipe(gulp.dest(paths.distStylesPath))
+
+gulp.task "less-vendor", ->
+    gulp.src(paths.lessVendorStyles)
+        .pipe(less())
+        .pipe(rename("vendor2.css"))
         .pipe(gulp.dest(paths.distStylesPath))
 
 gulp.task "css-lint-app", ["sass-watch"],  ->
@@ -279,6 +287,7 @@ gulp.task "deploy", [
 gulp.task "default", [
     "jade-deploy",
     "copy",
+    "less-vendor",
     "css-vendor",
     "template",
     "sass-watch",
