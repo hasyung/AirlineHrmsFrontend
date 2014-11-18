@@ -1,16 +1,12 @@
 
 
-
+nb = @.nb
 
 
 urls =
     'home': '/'
     'login': '/login'
     'not-found': '/not-found'
-
-
-
-
     'permission-denied': '/permission-denied'
 
 
@@ -21,7 +17,7 @@ format = (fmt, obj) ->
     return fmt.replace /%s/g, (match) -> String(obj.shift())
 
 
-class UrlsService extends Service
+class UrlsService extends nb.Service
     @.$inject = ['$config']
 
     constructor: (@config) ->

@@ -53,7 +53,7 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider) ->
 App
     .config ['restmodProvider', restConf]
     .config ['$stateProvider','$urlRouterProvider','$locationProvider',routeConf]
-    .run ['$state','$rootScope', ($state,$rootScope) ->
+    .run ['$state','$rootScope', ($state, $rootScope) ->
         # for $state.includes in view
 
     ]
