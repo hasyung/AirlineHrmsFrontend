@@ -19,6 +19,11 @@ class Base
 class Service extends Base
 
 class Controller extends Base
+
+    constructor: () ->
+        @initialize()
+
+
     onInitialDataError: (xhr) ->
         if xhr
             if xhr.status == 404

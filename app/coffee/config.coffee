@@ -16,7 +16,7 @@ Api = {
 
 class ConfigService extends nb.Service
 
-    @.$inject = ['$log','restmodProvider','']
+    @.$inject = ['$log','restmodProvider']
 
     constructor: (@log, @provider) ->
         @initialize()

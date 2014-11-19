@@ -1,0 +1,21 @@
+form(ng-switch on="key")
+    select
+        option 姓名
+        option 年龄
+        option 入职时间
+    .form-control(ng-switch-when="key")
+        input(type='text' ng-name="key")
+    .form-control
+        input(type='number')
+    .form-control
+        input(type='date',name='create_at[from]')
+        | 至
+        input(type='date',name='create_at[to]')
+
+
+finder
+    Date 入职时间
+    Number 年龄
+    String 姓名
+
+

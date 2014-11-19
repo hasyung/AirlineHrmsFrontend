@@ -78,10 +78,13 @@ paths =
         'deps/angular-animate/angular-animate.js'
         'deps/angular-sanitize/angular-sanitize.js'
         'deps/angular-ui-router/release/angular-ui-router.js'
+        'deps/angular-ui-router/release/angular-ui-router.js'
         'deps/ngInfiniteScroll/build/ng-infinite-scroll.js'
         'deps/angular-locale_zh-cn.js'
         'deps/angular-ui-select/dist/select.js'
         'deps/jquery-slimscroll/jquery.slimscroll.js'
+        'deps/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js'
+        'deps/angular-ui-bootstrap-bower/ui-bootstrap.js'
         # 'deps/angular-ui-utils/ui-utils.js'
         # 'deps/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js'
         # 'deps/jasny-bootstrap/dist/js/jasny-bootstrap.js' jasny bootstrap 增强版，提供一些好用组件
