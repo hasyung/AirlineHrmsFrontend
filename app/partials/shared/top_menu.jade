@@ -1,119 +1,60 @@
-.navbar-header
-  button.pull-right.visible-xs.dk(data-target='.navbar-collapse')
-    i.glyphicon.glyphicon-cog
-  button.pull-right.visible-xs(data-target='.app-aside')
-    i.glyphicon.glyphicon-align-justify
-  // brand
-  a.navbar-brand.text-lt(href='#/')
-    // <i class="fa fa-btc"></i>
-    // <img src="img/logo.png" alt="." class="hide">
-    span.hidden-folded.m-l-xs(style='font-size:18px;') 川航人力资源系统
-  // / brand
-// / navbar header
-// navbar collapse
-.collapse.navbar-collapse.box-shadow
-  // buttons
-  .nav.navbar-nav.m-l-sm.hidden-xs
-    a.btn.no-shadow.navbar-btn(href='')
-      i.fa.fa-fw
-    a.btn.no-shadow.navbar-btn(href='', target='#aside-user')
-      i.icon-user.fa-fw
-  // / buttons
-  // link and dropdown
-  ul.nav.navbar-nav.hidden-sm
-    li.active
-      a(href='')
-        i.fa.fa-cloud-upload.fa-fw
-        span 上传
-    li.dropdown
-      a.dropdown-toggle(href='#', data-toggle='dropdown')
-        i.fa.fa-fw.fa-plus.visible-xs-inline-block
-        span 发起
-        span.caret
-      ul.dropdown-menu(role='menu')
-        li
-          a(href='#', translate='') 项目
-        li
-          a(href='#')
-            span.badge.bg-info.pull-right 5
-            span(translate='') 任务
-        li
-          a(href='#', translate='') 用户
-        li.divider
-        li
-          a(href='#')
-            span.badge.bg-danger.pull-right 4
-            span(translate='') 邮件
-  // / link and dropdown
-  // search form
-  form.navbar-form.navbar-form-sm.navbar-left.shift(target='.navbar-collapse', role='search')
-    .form-group
-      .input-group
-        input.form-control.input-sm.bg-light.no-border.rounded.padder(type='text', placeholder='查询...')
-        span.input-group-btn
-          button.btn.btn-sm.bg-light.rounded(type='submit')
-            i.fa.fa-search
-  // / search form
-  // nabar right
-  ul.nav.navbar-nav.navbar-right
-    li.dropdown.hidden-sm
-      a.dropdown-toggle(href='', data-toggle='dropdown')
-        // {{selectLang}}
-        // <b class="caret"></b>
-      // dropdown
-      ul.dropdown-menu.animated.fadeInRight.w
-        li
-          a(href='#') 111
-      // / dropdown
-    li.hidden-xs
-      a
-    li.dropdown
-      a.dropdown-toggle(href='')
-        i.icon-bell.fa-fw
-        span.visible-xs-inline 提醒
-        span.badge.badge-sm.up.bg-danger.pull-right-xs 1
-      // dropdown
-      .dropdown-menu.w-xl.animated.fadeInUp
-        .panel.bg-white
-          .panel-heading.b-light.bg-light
-            strong
-              | 你有
-              span 1
-              | 项提醒
-          .list-group
-            a.media.list-group-item(href='')
-              span.pull-left.thumb-sm
-                img.img-circle(src='img/a0.jpg', alt='...')
-              span.media-body.block.m-b-none
-                | 新员工入职培训
-                br
-                small.text-muted 10 分钟之前
-          .panel-footer.text-sm
-            a.pull-right(href='')
-              i.fa.fa-cog
-            a(href='#notes', data-toggle='class:show animated fadeInRight') 查看所有提醒
-      // / dropdown
-    li.dropdown
-      a.dropdown-toggle.clear(href='', data-toggle='dropdown')
-        span.thumb-sm.avatar.pull-right.m-t-n-sm.m-b-n-sm.m-l-sm
-          img(src='img/a0.jpg', alt='...')
-          i.on.md.b-white.bottom
-        span.hidden-sm.hidden-md 张某某
-        b.caret
-      // dropdown
-      ul.dropdown-menu.animated.fadeInRight.w
-        li
-          a(href='')
-            span.badge.bg-danger.pull-right 30%
-            span 设置
-        li
-          a 个人信息
-        li
-          a
-            span.label.bg-info.pull-right new
-            | 帮助
-        li.divider
-        li
-          a 退出
-
-
+.app-header.navbar.ng-scope
+  .navbar-header.bg-black
+    a.navbar-brand.text-lt(href='#/')
+      span.hidden-folded.m-l-xs(style='font-size:18px;') 川航人力资源系统
+  .collapse.navbar-collapse.box-shadow.bg-white-only
+    ul.nav.navbar-nav.navbar-right
+      li.dropdown.hidden-sm(is-open='lang.isopen')
+        a.dropdown-toggle(href='', data-toggle='dropdown')
+        ul.dropdown-menu.animated.fadeInRight.w
+          li.ng-scope
+            a.ng-binding(href='') German
+          li.ng-scope
+            a.ng-binding(href='') English
+          li.ng-scope
+            a.ng-binding(href='') Italian
+      li.dropdown
+        a.dropdown-toggle(href='')
+          i.icon-bell.fa-fw
+          span.visible-xs-inline 提醒
+          span.badge.badge-sm.up.bg-danger.pull-right-xs 1
+        .dropdown-menu.w-xl.animated.fadeInUp
+          .panel.bg-white
+            .panel-heading.b-light.bg-light
+              strong
+                | 你有
+                span 1
+                | 项提醒
+            .list-group
+              a.media.list-group-item(href='')
+                span.pull-left.thumb-sm
+                  img.img-circle(src='img/a0.jpg', alt='...')
+                span.media-body.block.m-b-none
+                  | 新员工入职培训
+                  br
+                  small.text-muted 10 分钟之前
+            .panel-footer.text-sm
+              a.pull-right(href='')
+                i.fa.fa-cog
+              a(href='#notes', data-toggle='class:show animated fadeInRight') 查看所有提醒
+      li.dropdown
+        a.dropdown-toggle.clear(href='', data-toggle='dropdown')
+          span.thumb-sm.avatar.pull-right.m-t-n-sm.m-b-n-sm.m-l-sm
+            img(src='img/a0.jpg', alt='...')
+            i.on.md.b-white.bottom
+          span.hidden-sm.hidden-md 张某某
+          b.caret
+        ul.dropdown-menu.animated.fadeInRight.w
+          li
+            a(href='')
+              span.badge.bg-danger.pull-right 30%
+              span 设置
+          li
+            a(ui-sref='app.page.profile', href='#/app/page/profile') 个人信息
+          li
+            a(ui-sref='app.docs', href='#/app/docs')
+              span.label.bg-info.pull-right new
+              | 帮助
+          li.divider
+          li
+            a(ui-sref='access.signin', href='#/access/signin') 退出
