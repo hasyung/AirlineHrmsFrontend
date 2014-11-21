@@ -51,7 +51,7 @@ class Route
     @.$inject = ['$stateProvider']
 
     constructor: (@stateProvider) ->
-        @stateProvider.state '/dsko', ()->
+        # @stateProvider.state '/dsko', ()->
 
 
 

@@ -21,7 +21,7 @@ class Service extends Base
 class Controller extends Base
 
     constructor: () ->
-        @initialize()
+        # @initialize()
 
 
     onInitialDataError: (xhr) ->
