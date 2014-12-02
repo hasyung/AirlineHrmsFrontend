@@ -44,6 +44,7 @@ paths =
     coffee: ["app/coffee/app.coffee"
              "app/coffee/*.coffee"
              "app/coffee/base/*.coffee"
+             "app/coffee/directives/*.coffee"
              "app/coffee/personnel/*.coffee"
              "app/coffee/orgs/*.coffee"
              # "app/coffee/modules/controllerMixins.coffee"

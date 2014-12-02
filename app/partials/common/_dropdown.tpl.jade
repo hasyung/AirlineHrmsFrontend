@@ -1,0 +1,7 @@
+.dropdown
+  button.btn.btn-default.dropdown-toggle(type="button")
+    {{selected || "请选择"}}
+    span.caret
+  ul.dropdown-menu(role="menu")
+    li(role="presentation", ng-repeat="item in items")
+      a(role="menuitem", tabindex="-1", href="javascript:;", ng-click="setSelected($index)") {{::item}}

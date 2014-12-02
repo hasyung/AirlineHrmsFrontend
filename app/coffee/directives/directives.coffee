@@ -214,14 +214,36 @@ angular.module 'nb.directives', []
         }
     ]
 
-    # .directive 'nbDropdown', [()->
-    #     return {
-    #         restrict: 'AC'
-    #         templateUrl: 'partials/common/_dropdown.tpl.html'
-    #         replace: true
-    #         link: (scope, elem, attr) ->
+    .directive 'nbDropdown', [()->
+        return {
+            restrict: 'AC'
+            templateUrl: 'partials/common/_dropdown.tpl.html'
+            replace: true
+            scope: {}
+            controller: ($scope) ->
+                $scope.setSelected = (index) ->
+                    $scope.selected = $scope.items[index]
+                    
+            link: (scope, elem, attr) ->
+                scope.isOpen = false
+                scope.items = ['a','b']
+                elem.on 'click', (e) ->
+                    e.preventDefault()
+                    if scope.isOpen then elem.removeClass 'open' else elem.addClass 'open'
+                    scope.isOpen = ! scope.isOpen
 
-    #     }
-    # ]
+
+
+                
+
+
+
+
+                return
+
+
+
+        }
+    ]
 
    
