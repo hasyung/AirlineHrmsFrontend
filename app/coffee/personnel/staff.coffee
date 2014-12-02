@@ -47,6 +47,13 @@ mixOf = nb.mixOf
 # filter
 
 
+
+
+
+
+
+
+
 class Route
     @.$inject = ['$stateProvider']
 
@@ -57,10 +64,25 @@ class Route
 
 class StaffController extends mixOf(nb.Controller)
 
-    @.$inject = ['$scope','$rootScope']
+    @.$inject = ['$scope','$rootScope', 'Organ']
 
-    constructor: (@scope, @rootscope) ->
+    constructor: (@scope, @rootscope, Organ) ->
         super()
+
+        orgs = Organ.$search()
+
+        orgs.abc()
+
+        orgs.$asPromise().then (organs) ->
+            organs.abc()
+
+    loadInitialData: () ->
+
+
+    buildOrganTree: () ->
+
+
+
 
         # @scope.filters.push()
 

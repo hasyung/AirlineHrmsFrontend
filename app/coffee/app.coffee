@@ -11,20 +11,21 @@ deps = [
     'ngSanitize'
     'ngMessages'
     'restmod'    #rest api
+    'angular.filter'
+    'resources'
 ]
+resources = angular.module('resources',[])
 
 nb.app = App = angular.module 'nb',deps
-nb.models = models = angular.module 'models', []
+# nb.models = models = angular.module 'models', []
 
 
 
 
 restConf = (restmodProvider) ->
-    restmodProvider.rebase 'VXstoreApi',
+    restmodProvider.rebase 'AMSApi',
         $config:
-            PACKER: 'DefaultPacker'
             urlPrefix: 'api'
-            style: 'AMS'
         # $hooks: {
         #     'before-request': (_req)->
         #         _req.url += '.json'
@@ -55,6 +56,9 @@ App
     .config ['$stateProvider','$urlRouterProvider','$locationProvider',routeConf]
     .run ['$state','$rootScope', ($state, $rootScope) ->
         # for $state.includes in view
+        $rootScope.$on '$stateChangeSuccess', (evt, to) ->
+            console.debug "stateChangeSuccess: to ", to
+
 
     ]
 

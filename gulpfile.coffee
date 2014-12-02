@@ -45,6 +45,7 @@ paths =
              "app/coffee/*.coffee"
              "app/coffee/base/*.coffee"
              "app/coffee/personnel/*.coffee"
+             "app/coffee/orgs/*.coffee"
              # "app/coffee/modules/controllerMixins.coffee"
              # "app/coffee/modules/*.coffee"
              # "app/coffee/modules/common/*.coffee"
@@ -64,20 +65,23 @@ paths =
              # "app/plugins/**/*.coffee"
     ]
     vendorJsLibs: [
-        'deps/underscore.string/lib/underscore.string.js',
+        'deps/underscore.string/lib/underscore.string.js'
+        'deps/raphael/raphael.js'
         'deps/store.js/store.js'
         'deps/lodash/dist/lodash.min.js'
         'deps/moment/min/moment.min.js'
         'deps/jquery/dist/jquery.min.js'
+        'deps/jqtree/tree.jquery.js'
         'deps/angular/angular.js'
         #http://harvesthq.github.io/chosen/
         'deps/simditor/lib/simditor-all.js'
         'deps/angular-cookies/angular-cookies.js'
         'deps/angular-restmod/dist/angular-restmod-bundle.js'
+        'deps/angular-restmod/dist/styles/ams.js'
         'deps/angular-messages/angular-messages.js'
         'deps/angular-animate/angular-animate.js'
         'deps/angular-sanitize/angular-sanitize.js'
-        'deps/angular-ui-router/release/angular-ui-router.js'
+        'deps/angular-filter/dist/angular-filter.js'
         'deps/angular-ui-router/release/angular-ui-router.js'
         'deps/ngInfiniteScroll/build/ng-infinite-scroll.js'
         'deps/angular-locale_zh-cn.js'
@@ -111,7 +115,7 @@ gulp.task "jade-watch", ->
 gulp.task "template", ->
     gulp.src("#{paths.app}/index.jade")
         .pipe(plumber())
-        .pipe(jade({pretty: true, locals:{debugMode: debugMode,v:(new Date()).getTime(),libs: generate_scripts()}}))
+        .pipe(jade({pretty: true, locals:{debugMode: debugMode,v: (new Date()).getTime(),libs: generate_scripts()}}))
         .pipe(gulp.dest("#{paths.dist}"))
 
 gulp.task "sass-lint", ->
@@ -243,7 +247,7 @@ gulp.task "express", ->
     express = require("express")
     app = express()
 
-    proxyOptions = url.parse('http://192.168.6.7:3000')
+    proxyOptions = url.parse('http://192.168.6.3:3000')
     proxyOptions.route = '/api'
 
     # 反向代理 webapi

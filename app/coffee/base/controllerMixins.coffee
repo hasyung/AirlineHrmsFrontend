@@ -42,6 +42,7 @@
 # }
 
 
+
 nb = @.nb
 App = nb.app
 forEach = angular.forEach

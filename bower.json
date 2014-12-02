@@ -45,6 +45,9 @@
     "lodash": "~2.4.1",
     "ng-grid": "~2.0.14",
     "ui-bootstrap": "~0.11.2",
-    "angular-ui-bootstrap-bower": "~0.11.2"
+    "angular-ui-bootstrap-bower": "~0.11.2",
+    "jqtree": "~0.22.0",
+    "raphael": "~2.1.2",
+    "angular-filter": "~0.5.1"
   }
 }
