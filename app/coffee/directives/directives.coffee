@@ -1,31 +1,227 @@
-require './simditor.coffee'
-require './tagsinput.js'
-require './slimscroll.coffee'
+angular.module 'nb.directives', []
+
+    .provider 'nbTooltip', [()->
+        defaultOptions = {
+            template:""
+            title: ""
+            content: ""
+            container: ""
+            html: true
+            animation: ""
+            customClass: ""
+            autoClose: true
+            position: "right"
+
+        }
+        this.$get  = ['$window', '$rootScope', '$compile', '$q', '$templateCache', '$http', '$timeout', ($window, $rootScope, $compile, $q, $templateCache, $http, $timeout)->
+            trim = String.prototype.trim
+            $body = angular.element $window.document
+            fetchTemplate = (templateUrl) ->
+                return $q.when($templateCache.get(templateUrl) || $http.get(templateUrl)).then (res)->
+                    if angular.isObject res
+                        $templateCache.put templateUrl, res.data
+                        return res.data
+                    return res
+
+            return (element, config)->
+
+                nbTooltip = {}
+                options = nbTooltip.$options = angular.extend {}, defaultOptions, config
+                scope = nbTooltip.$scope = options.scope && options.scope.$new() || $rootScope.$new()
+
+                nbTooltip.$scope.title = options.title if options.title
+
+                nbTooltip.$scope.content = options.content if options.content
+                # 加载模板
+                nbTooltip.$promise = fetchTemplate options.template
+
+                tipLinker = tipElement = tipContainer = tipTemplate = undefined
+                nbTooltip.$promise.then (template)->
+                    
+                    template = template.data if angular.isObject template
+                    
+                    template = template.replace /ng-bind="/ig, 'ng-bind-html="' if options.html
+                    template = trim.apply template
+                    tipTemplate = template
+                    tipLinker = $compile template
+                    #nbTooltip.init()
+
+                #todo
+                nbTooltip.init = ()->
+                    if options.container == 'self'
+                        tipContainer = element
+                    else if angular.isElement options.container
+                        tipContainer = options.container
+                    else if options.container
+                        tipContainer = findElement options.container
 
 
-angular.module 'vx.directives', ['simditor','bootstrap-tagsinput','slimscroll']
+                nbTooltip.toggle = ()->
+                    if nbTooltip.$isShown then nbTooltip.hide() else nbTooltip.show()
 
-    .directive 'fileread', [() ->
-        return:
-            scope:
-                fileread: '='
-            link: (scope,elem,attr) ->
-                elem.on 'change', (evt) ->
-                    scope.$apply () ->
-                        scope.fileread = evt.target.files[0]
+
+                nbTooltip.hide = ()->
+                    return if !nbTooltip.$isShown
+
+                    nbTooltip.$isShown  = scope.$isShown = false
+                    tipElement.remove()
+                    if options.autoClose && tipElement
+                        $body.off 'click'
+                        tipElement.off 'click'
+                nbTooltip.show = ()->
+                    parent = if options.container then tipContainer else null
+                    after = if options.container then null else element
+
+                    tipElement.remove() if tipElement
+
+                    tipElement = nbTooltip.$element = tipLinker scope
+
+                    tipElement.addClass options.animation if options.animation
+
+                    tipElement.addClass options.customClass if options.customClass
+
+                    tipElement.css({top: -9999 + 'px', left: -99999 + 'px', position:'absolute', display: 'block', visibility: 'hidden', 'background-color':'#ff0','z-index':'1000000'})
+                    element.after(tipElement)
+                    position = calcPosition element
+                    
+                    tipElement.css {top: position.top + 'px', left: position.left + 'px', visibility: 'visible'}
+                    nbTooltip.$isShown = scope.$isShown = true
+
+                    
+                    if options.autoClose 
+                        $timeout ()->
+                            tipElement.on 'click', (e)->
+                                event.stopPropagation()
+                            $body.on 'click', ()->
+                                if nbTooltip.$isShown
+                                    nbTooltip.hide()
+                        , 0
+
+
+                getPosition = (element) ->
+                    return {
+                        left: element.position().left,
+                        top: element.position().top
+                    }
+                   
+                calcPosition = (element) ->
+                    elemWidth = element.outerWidth()
+                    elemHeight = element.outerHeight()
+                    elemPosition = getPosition(element)
+                    tipWidth = tipElement.outerWidth()
+                    tipHeight = tipElement.outerHeight()
+
+                    if options.position == "bottom"
+                        return {
+                            top: elemPosition.top + elemHeight + 5,
+                            left: elemPosition.left + elemWidth/2 - tipWidth/2
+                        }
+                    else if options.position == "top"
+                        return {
+                            top: elemPosition.top - 5 - tipHeight,
+                            left: elemPosition.left + elemWidth/2 - tipWidth/2
+                        }
+                    else if options.position == "left"
+                        return {
+                            top: elemPosition.top + elemHeight/2 - tipHeight/2,
+                            left: elemPosition.left - tipWidth - 5
+                        }
+                    else
+                        return {
+                            top: elemPosition.top + elemHeight/2 - tipHeight/2,
+                            left: elemPosition.left + elemWidth + 5
+                        }
+
+                    
+
+                return nbTooltip
+
+        ]   
+        return
+
     ]
-    .directive 'focusMe', ['$timeout','$parse',($timeout,$parse) ->
+
+    .directive 'navToggleActive', [() ->
         return {
-            scope: {
-                focusMe: '='
-            }
+            scope: {}
+            restrict: 'A'
             link: (scope,elem,attr) ->
-                scope.$watch 'focusMe',(value)->
-                    if value == true
-                        $timeout(() ->
-                            elem[0].focus()
-                        ,10)
-                elem.on 'blur', () ->
-                    scope.focusMe = false
+                elem.on 'click', '.auto', (event) ->
+                    event.preventDefault()
+                    elem.toggleClass 'active'
         }
     ]
+
+    .directive 'toggleClass', [() ->
+        return {
+            scope: {}
+            restrict: 'A'
+            link: (scope,elem,attr) ->
+                toggleText = if attr.toggleClass then attr.toggleClass else 'active'
+                
+                # for nav list
+                elem.on 'click', (event) ->
+                    event.preventDefault()
+                    elem.toggleClass toggleText
+        }
+    ]
+    .directive 'nbCheck', [()->
+        return {
+            restrict: 'AC'
+            priority: 1
+            controller: ($scope, $http)->
+                #todo
+                this.check = ()->
+                    
+            link: (scope, elem, attr) ->
+
+                elem.on 'click', (e)->
+                    console.log "click check"
+                    e.preventDefault()
+
+        }
+    ]
+    .directive 'nbConfirm', ['nbTooltip', '$sce' , (nbTooltip, $sce)->
+        return {
+            restrict: 'AC'
+            require: '?nbCheck'
+            priority: 10
+            scope: {
+
+            }
+            link: (scope, elem, attrs, nbCheckCtrl) ->
+                options = {scope: scope}
+                angular.forEach ['template', 'contentTemplate', 'container', 'html', 'animation', 'customClass', 'position'], (key)->
+                    if angular.isDefined attrs[key]
+                        options[key] = attrs[key]
+
+                nbConfirm = nbTooltip(elem, options)
+                attrs.$observe 'title', (newValue)->
+                    if angular.isDefined newValue || !scope.hasOwnProperty 'title'
+                        oldValue = scope.title
+                        scope.title = $sce.trustAsHtml(newValue)
+
+                elem.on 'click', (e)->
+                    e.preventDefault()
+                    nbConfirm.toggle()
+                    #if need check
+                    if attrs.nbCheck
+                        #check first
+                        nbCheckCtrl.check()
+                    #default confirm
+                    else
+
+        }
+    ]
+
+    # .directive 'nbDropdown', [()->
+    #     return {
+    #         restrict: 'AC'
+    #         templateUrl: 'partials/common/_dropdown.tpl.html'
+    #         replace: true
+    #         link: (scope, elem, attr) ->
+
+    #     }
+    # ]
+
+   
