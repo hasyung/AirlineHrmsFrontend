@@ -115,16 +115,16 @@ class Route
             }
 
             .state 'org.newsub', {
-                url: '/new'
+                url: '/:parentId/newsub'
                 views: {
                     'sub': {
-                        templateUrl: 'partials/orgs/org_edit.html'
+                        templateUrl: 'partials/orgs/org_newsub.html'
                     }
                 }
 
             }
             .state 'org.edit', {
-                url: '/edit'
+                url: '/:parentId/edit'
                 views: {
                     'sub': {
                         templateUrl: 'partials/orgs/org_edit.html'
@@ -134,15 +134,14 @@ class Route
 
 
 
-
-
-
-
 class OrgsController extends nb.Controller
 
-    @.$inject = ['Org']
+    @.$inject = ['Org', '$stateParams', '$state', '$scope']
 
-    constructor: (@Org)->
+    constructor: (@Org, @params, @state, @scope)->
+        @currentOrg = null #当前选中机构
+        @orgs = null    #集合
+        @editOrg = null # 当前正在修改的机构
         @loadInitialData()
 
     loadInitialData: () ->
@@ -151,22 +150,49 @@ class OrgsController extends nb.Controller
             .$then (orgs) ->
                 self.orgs = orgs
                 self.currentOrg = _.find(orgs, {nodeType: 'manager'})
-
-
-
-class OrgController extends nb.Controller
-    @.$inject = ['Org', '$stateParams']
-
-    constructor: (@Org, @params) ->
+                self.currentOrg.$save()
 
     newSubOrg: (org) ->
+        self = @
+        state = @state
         parentId = @params.parentId
         org.parentId = parentId
-        org  = @Org.$create(org).$reveal()
+        org  = @orgs.$create(org)
+
+        org.$then (org) ->
+            self.scope.currentOrg = org
+            state.go('^.show')
+
+    # #切换到编辑页面
+    # edit: (orgId) ->
+    #     @state.go('^.edit',{parentId: orgId})
+
+
+    update: (org) ->
+        @orgs.$update(org)
+
+
+
+# class OrgCtrl
+#     @.$inject = ['$scope', 'Org']
+
+#     constructor: () ->
+
+#     newsub: () ->
+
+#     update: () ->
+
+#     remove: () ->
+
 
 
 
 
 app.config(Route)
 app.controller('OrgsController', OrgsController)
-app.controller('OrgController', OrgController)
+# app.controller('OrgController', OrgController)
+
+
+
+
+

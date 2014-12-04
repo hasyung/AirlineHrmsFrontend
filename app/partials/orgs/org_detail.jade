@@ -1,8 +1,8 @@
 .org-title
     span 机构信息
-    button.btn.btn-default.fa.fa-trash-o(title="删除") 
-    button.btn.btn-default.fa.fa-pencil(ui-sref="^.edit",title="编辑") 
-    button.btn.btn-default.fa.fa-plus(ui-sref=".newsub({parentId: currentOrg.id})",title="新增子机构") 
+    button.btn.btn-default.fa.fa-trash-o(title="删除",) 
+    button.btn.btn-default.fa.fa-pencil(ui-sref=".edit({id: ctrl.currentOrg.id})",title="编辑") 
+    button.btn.btn-default.fa.fa-plus(title="新增子机构",ui-sref=".newsub({parentId: ctrl.currentOrg.id})") 
 .org-info
     ul
         li 名称：

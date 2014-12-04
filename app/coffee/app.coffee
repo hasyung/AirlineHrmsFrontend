@@ -13,6 +13,8 @@ deps = [
     'restmod'    #rest api
     'angular.filter'
     'resources'
+    'nb.directives'
+    'nb.controller.site'
 ]
 resources = angular.module('resources',[])
 

@@ -44,6 +44,8 @@ paths =
     coffee: ["app/coffee/app.coffee"
              "app/coffee/*.coffee"
              "app/coffee/base/*.coffee"
+             "app/coffee/directives/*.coffee"
+             "app/coffee/controller/*.coffee"
              "app/coffee/personnel/*.coffee"
              "app/coffee/orgs/*.coffee"
              # "app/coffee/modules/controllerMixins.coffee"
@@ -247,7 +249,7 @@ gulp.task "express", ->
     express = require("express")
     app = express()
 
-    proxyOptions = url.parse('http://192.168.6.3:3000')
+    proxyOptions = url.parse('http://192.168.6.99:9002')
     proxyOptions.route = '/api'
 
     # 反向代理 webapi

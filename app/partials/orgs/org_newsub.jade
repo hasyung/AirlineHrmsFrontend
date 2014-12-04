@@ -1,0 +1,11 @@
+form(novalidate ng-submit="ctrl.newSubOrg(org)")
+    .input-group
+        span.input-group-addon 机构名称
+        input.form-control(ng-model="org.name")
+    .input-group
+        span.input-group-addon 所在地
+        input.form-control(ng-model="org.location")
+
+    .input-group
+        input(type="submit")
+        button(ui-sref="^.show") 取消
