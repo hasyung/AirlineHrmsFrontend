@@ -1,14 +1,36 @@
-.form-control
-    label 机构名称
-.form-control
-    label 详细信息
-.form-control
-    label 详细信息
-.form-control
-    label 详细信息
-.form-control
-    label 详细信息
-.form-control
-    label 详细信息
-.form-control
-    label 详细信息
+.org-title
+    span 机构信息
+    button.btn.btn-default.fa.fa-trash-o(title="删除") 
+    button.btn.btn-default.fa.fa-pencil(ui-sref="^.edit",title="编辑") 
+    button.btn.btn-default.fa.fa-plus(ui-sref=".newsub({parentId: currentOrg.id})",title="新增子机构") 
+.org-info
+    ul
+        li 名称：
+        li 人力资源部	
+        li 编号：
+        li 00214
+        li 办公地点：
+        li 成都
+        li 职级：
+        li 一正级
+.org-title
+    span 下属岗位信息
+    button.btn.btn-default.fa.fa-cog(title="设置") 
+table.table.table-striped.org-table
+    tbody
+       tr
+            td 岗位名称
+            td  编制
+            td  在编人数
+       tr
+            td.org-post 总经理
+            td  3
+            td  2
+       tr
+            td.org-post 主任
+            td  2
+            td  1
+       tr
+            td.org-post 副主任
+            td  2
+            td  2
