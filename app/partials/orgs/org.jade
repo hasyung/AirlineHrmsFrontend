@@ -1,15 +1,13 @@
-.org.row(ng-controller="OrgsController as ctrl")
-    .form-control
-        button(ui-sref=".newsub({parentId: ctrl.currentOrg.id})") 新增子机构
-        button(ui-sref=".edit({id: ctrl.currentOrg.id})") 编辑
-        button 删除
-    .org-tree.col-md-3
-        div#org_tree
-            ul
-                li( ng-repeat="org in ::ctrl.orgs | filterBy: ['nodeType']: 'internal'"
-                    ng-click="load()")
-                    a {{org.name}}
-    .org-chart.col-md-5
-        | 123
-        div#org_chart(org-chart)
-    .org-detail.col-md-3(ui-view='sub')
+.app-aside.org-aside.hidden-xs.bg-white-opacity.pull-right(ng-controller="OrgsController as ctrl")
+    .org-row(ui-view='sub')
+
+.org-tree.col-md-3
+    div#org_tree
+        ul
+            li( ng-repeat="org in ::ctrl.orgs | filterBy: ['nodeType']: 'internal'"
+                ng-click="load()")
+                a {{org.name}}
+.org-chart.col-md-5
+    | 123
+    div#org_chart(org-chart)
+.org-detail.col-md-3
