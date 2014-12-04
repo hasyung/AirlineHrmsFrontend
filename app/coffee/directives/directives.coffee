@@ -214,30 +214,50 @@ angular.module 'nb.directives', []
         }
     ]
 
-    .directive 'nbDropdown', [()->
+    .directive 'nbDropdown', ['$http', ($http)->
         return {
             restrict: 'AC'
             templateUrl: 'partials/common/_dropdown.tpl.html'
             replace: true
-            scope: {}
+            require: "ngModel"
+            scope: {
+                options: "=nbDropdown"
+                selected: "=ngModel"
+            }
             controller: ($scope) ->
+                $scope.defaultText = $scope.options.defaultText
+                $scope.items = $scope.options.data
                 $scope.setSelected = (index) ->
-                    $scope.selected = $scope.items[index]
-                    
-            link: (scope, elem, attr) ->
+                    $scope.selected = $scope.options.data[index]
+
+            link: (scope, elem, attr, ctrl) ->
                 scope.isOpen = false
-                scope.items = ['a','b']
                 elem.on 'click', (e) ->
                     e.preventDefault()
                     if scope.isOpen then elem.removeClass 'open' else elem.addClass 'open'
                     scope.isOpen = ! scope.isOpen
 
-
-
                 
+                # attr.required && ctrl && ctrl.$validators.required
+                if attr.key
+                    $http.get('/api/enum?key=' + attr.key).success (data, status) ->
+                        scope.items = data
+                    .error (data, status) ->
+                        scope.items = [
+                            {
+                                key: 'ORG.'
+                                name: 'chengdu'
+                                display_name: '成都'
+                            }
+                            {
+                                key: 'ORG.'
+                                name: 'shanghai'
+                                display_name: '上海'
+                            }
+                        ]
 
-
-
+                scope.$on '$destroy', ()->
+                    elem.off 'click'
 
                 return
 
@@ -245,5 +265,13 @@ angular.module 'nb.directives', []
 
         }
     ]
+
+{
+    
+}
+
+
+
+
 
    
