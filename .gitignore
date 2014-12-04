@@ -35,3 +35,4 @@ config.js
 .csslintrc
 fly.sublime-project
 fly.sublime-workspace
+api_doc.coffee

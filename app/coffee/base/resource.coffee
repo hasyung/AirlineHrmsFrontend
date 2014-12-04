@@ -46,7 +46,7 @@ resources = angular.module('resources')
 
 
 
-resources.factory 'VXstoreApi',(restmod, RMUtils) ->
+VXstoreApi = (restmod, RMUtils) ->
 
     Utils = RMUtils
 
@@ -73,7 +73,7 @@ resources.factory 'VXstoreApi',(restmod, RMUtils) ->
 
     }
 
-resources.factory 'User',(restmod) ->
+User = (restmod) ->
     User = restmod.model('/users').mix('VXstoreApi', {
         # created_at: { serialize: 'RailsDate' } #todo 序列化器
         updated_at: { decode: 'date', param: 'yyyy年mm月dd日',mask: 'CUR' } #不 send CURD 操作时
@@ -108,7 +108,7 @@ resources.factory 'User',(restmod) ->
     })
 
 
-resources.factory 'Org', (restmod) ->
+Org = (restmod) ->
 
     transform = (arr = []) ->
 
@@ -151,6 +151,8 @@ resources.factory 'Org', (restmod) ->
 
     Org = restmod.model('/departments').mix {
 
+        jobs: { hasMany: 'Position'}
+
         $extend:
             Collection:
                 abc: () ->
@@ -159,9 +161,30 @@ resources.factory 'Org', (restmod) ->
                         console.debug model
     }
 
-resources.factory 'Permission',(restmod) ->
+Position = (restmod) ->
+    restmod.model('/positions')
+
+Permission = (restmod) ->
     Permission = restmod.model('/permissions')
 
+Enum = ->
+    restmod.model '/enums' ,{
+        'Model.pack': (item) ->
+            return item.name
+    }
+
+{
+    type: { musk: 'CU' }
+}
 
 
+
+
+
+
+resources.factory 'Org',['restmod', Org]
+resources.factory 'User',['restmod', User]
+resources.factory 'VXstoreApi',['restmod','RMUtils', VXstoreApi]
+resources.factory 'Permission',['restmod', Permission]
+resources.factory 'Position',['restmod', Position]
 
