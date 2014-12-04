@@ -114,7 +114,7 @@ gulp.task "jade-watch", ->
         .pipe(jade({pretty: true}))
         .pipe(gulp.dest("#{paths.dist}"))
 
-gulp.task "template", ->
+gulp.task "template",['copy'], ->
     gulp.src("#{paths.app}/index.jade")
         .pipe(plumber())
         .pipe(jade({pretty: true, locals:{debugMode: debugMode,v: (new Date()).getTime(),libs: generate_scripts()}}))
@@ -295,7 +295,6 @@ gulp.task "deploy", [
 # 添加 lib 文件后，先执行 gulp copy
 gulp.task "default", [
     "jade-deploy",
-    "copy",
     "less-vendor",
     "css-vendor",
     "template",
