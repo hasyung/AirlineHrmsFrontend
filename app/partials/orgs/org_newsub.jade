@@ -1,11 +1,23 @@
 form(novalidate ng-submit="ctrl.newSubOrg(org)")
-    .input-group
-        span.input-group-addon 机构名称
-        input.form-control(ng-model="org.name")
-    .input-group
-        span.input-group-addon 所在地
-        input.form-control(ng-model="org.location")
-
-    .input-group
-        input(type="submit")
-        button(ui-sref="^.show") 取消
+    .org-title
+        span 新增子机构信息
+    .org-info
+        .form-group 
+           label.control-label.col-lg-5 名称：
+           .ol-lg-5
+                input(ng-model="org.name")
+        .form-group
+            label.control-label.col-lg-5 办公地点
+            .ol-lg-5
+                select
+                    option 成都
+                    option 重庆
+        .form-group
+            label.control-label.col-lg-5 职级
+            .ol-lg-5
+                select
+                    option 一正级
+                    option 二副级
+        .form-group.org-btn
+            input.btn.btn-info.pull-right(type="submit",value="保存")
+            button.btn.btn-default.pull-right(ui-sref="^.show") 取消
