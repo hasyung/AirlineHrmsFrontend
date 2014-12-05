@@ -167,24 +167,11 @@ Position = (restmod) ->
 Permission = (restmod) ->
     Permission = restmod.model('/permissions')
 
-Enum = ->
-    restmod.model '/enums' ,{
-        'Model.pack': (item) ->
-            return item.name
-    }
-
-{
-    type: { musk: 'CU' }
-}
 
 
-
-
-
-
+resources.factory 'VXstoreApi',['restmod','RMUtils', VXstoreApi]
 resources.factory 'Org',['restmod', Org]
 resources.factory 'User',['restmod', User]
-resources.factory 'VXstoreApi',['restmod','RMUtils', VXstoreApi]
 resources.factory 'Permission',['restmod', Permission]
 resources.factory 'Position',['restmod', Position]
 
