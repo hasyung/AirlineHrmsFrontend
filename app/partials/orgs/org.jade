@@ -1,5 +1,6 @@
-.app-aside.org-aside.hidden-xs.bg-white-opacity.pull-right(ng-controller="OrgsController as ctrl")
-    .org-row(ui-view='sub')
+div(ng-controller="OrgsController as ctrl")
+    .app-aside.org-aside.hidden-xs.bg-white-opacity.pull-right
+        .org-row(ui-view='sub')
 
     .org-tree.col-md-3
         div#org_tree
