@@ -1,4 +1,4 @@
- div(ng-controller="OrgsController as ctrl")
+div(ng-controller="OrgsController as ctrl")
     .app-aside.org-aside.hidden-xs.bg-white-opacity.pull-right
         .org-row(ui-view='sub')
 
@@ -10,7 +10,11 @@
                     a {{org.name}}
     .org-chart.col-md-5
         | 123
-        div#org_chart(org-chart)
+        //- div#org_chart(org-chart)
+        button(ng-click="load()") 未 transclude
+        button(nb-popup)
+            i 我是button内嵌代码
+            span.abc 123
+            popup-template
+                button(ng-click="load()") 呵呵按钮
     .org-detail.col-md-3
-
-
