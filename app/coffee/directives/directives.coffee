@@ -239,9 +239,9 @@ angular.module 'nb.directives', []
         postLink = (scope, elem, attrs, $ctrl, $transcludeFn) ->
             console.debug arguments
 
-            $transcludeFn (clone) ->
-                TemplateBody = clone.filter 'popup-template'
-                elem.append(TemplateBody)
+            # $transcludeFn (clone) ->
+            #     TemplateBody = clone.filter 'popup-template'
+            #     elem.append(TemplateBody)
 
 
         return {
@@ -288,7 +288,7 @@ angular.module 'nb.directives', []
 
             $transcludeFn (clone) ->
                 templateBlock = clone.filter('popup-template')
-                elem.replaceWith templateBlock
+                elem.parent().parent().after templateBlock
 
         return {
             # controller: PopupTransclude
