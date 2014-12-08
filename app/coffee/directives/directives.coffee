@@ -236,8 +236,13 @@ angular.module 'nb.directives', []
 
 
 
-        postLink = (scope, elem, attrs) ->
-            console.debug 'popup'
+        postLink = (scope, elem, attrs, $ctrl, $transcludeFn) ->
+            console.debug arguments
+
+            $transcludeFn (clone) ->
+                TemplateBody = clone.filter 'popup-template'
+                elem.append(TemplateBody)
+
 
         return {
             transclude: true
@@ -367,5 +372,29 @@ angular.module 'nb.directives', []
 
 
         }
+    ]
+    .directive 'nbSelect', ['$http', ($http) ->
+
+
+        postLink = (scope, elem, attrs, $ctrl) ->
+
+            key = attrs['remoteKey']
+
+            $http.get("api/enum?key=#{key}")
+                .success (data, status) ->
+
+
+
+
+
+
+        return {
+            required: 'ngModel'
+            link: postLink
+        }
+
+
+
+
     ]
 
