@@ -1,3 +1,11 @@
+class PopupController
+
+    @.$inject = ['$scope', '$element', '$transclude']
+
+    constructor: (@scope, $elem, $transcludeFn) ->
+        # $transcludeFn (clone) ->
+        #     console.debug clone
+
 angular.module 'nb.directives', []
 
     .provider 'nbTooltip', [()->
@@ -219,35 +227,95 @@ angular.module 'nb.directives', []
 
         }
     ]
-    .directive 'npPopup', [ () ->
+    .directive 'nbPopup', [ () ->
+
+
+                    # console.debug $elem.html()
+
+
+
+
+
         postLink = (scope, elem, attrs) ->
+            console.debug 'popup'
 
         return {
             transclude: true
-            template: '''
-                <div class="parent">
-                    <div nb-popup-transclude></div>
-                </div>
-            '''
+            controller: PopupController
+            templateUrl: 'partials/common/popup.html'
             link: postLink
         }
 
     ]
-    .directive 'nbPopupTransclude', [ ()->
+
+    # .directive 'popupTemplate', [ ()->
+
+    #     postLink = (scope, elem, attrs) ->
+    #         console.debug arguments
+    #         console.debug 'template'
+    #         # $transcludeFn (clone) ->
+    #         #     console.debug "transcludeFn args:", arguments
+
+    #     return {
+    #         transclude: true
+    #         restrict: 'EA'
+    #         require: '^?nbPopup'
+    #         controller: ->
+    #         template: '''<div nb-popup-transclude></div>'''
+    #         link: postLink
+    #     }
+    # ]
+    .directive 'nbPopupTransclude', [ () ->
+
+
+        # class PopupTransclude
+
+        #     @.$inject = ['$scope', '$element', '$transclude']
+
+        #     constructor: (@scope, $elem, $transcludeFn) ->
+        #         $transcludeFn (clone) ->
+        #             console.debug arguments
+        #             templateBlock = clone.filter('[popup-template]')
+        #             $elem.append templateBlock.html()
+
 
         postLink = (scope, elem, attrs, $ctrl, $transcludeFn) ->
 
             $transcludeFn (clone) ->
-                console.debug "transcludeFn args:", arguments
-
-
+                templateBlock = clone.filter('popup-template')
+                elem.replaceWith templateBlock
 
         return {
-            require: '^npPopup'
+            # controller: PopupTransclude
+            restrict: 'AE'
+            # require: '^popupTemplate'
             link: postLink
         }
 
     ]
+
+    .directive 'nbPopupEmbedTransclude', [ ()->
+
+        class EmbedTransclude
+            constructor: () ->
+        postLink = (scope, elem, attrs, $ctrl, $transcludeFn) ->
+
+            $transcludeFn (clone) ->
+                console.debug elem.html()
+                console.debug clone
+                elem.replaceWith( clone.not('popup-template'))
+
+
+        return {
+            restrict: 'EA'
+            require: '^nbPopup'
+            link: postLink
+        }
+
+    ]
+
+
+
 
     .directive 'nbDropdown', ['$http', ($http)->
         return {
@@ -300,8 +368,4 @@ angular.module 'nb.directives', []
 
         }
     ]
-
-
-
-
 
