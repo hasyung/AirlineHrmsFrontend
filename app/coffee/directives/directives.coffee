@@ -1,3 +1,11 @@
+class PopupController
+
+    @.$inject = ['$scope', '$element', '$transclude']
+
+    constructor: (@scope, $elem, $transcludeFn) ->
+        # $transcludeFn (clone) ->
+        #     console.debug clone
+
 angular.module 'nb.directives', []
 
     .provider 'nbTooltip', [()->
@@ -37,9 +45,9 @@ angular.module 'nb.directives', []
 
                 tipLinker = tipElement = tipContainer = tipTemplate = undefined
                 nbTooltip.$promise.then (template)->
-                    
+
                     template = template.data if angular.isObject template
-                    
+
                     template = template.replace /ng-bind="/ig, 'ng-bind-html="' if options.html
                     template = trim.apply template
                     tipTemplate = template
@@ -83,12 +91,12 @@ angular.module 'nb.directives', []
                     tipElement.css({top: -9999 + 'px', left: -99999 + 'px', position:'absolute', display: 'block', visibility: 'hidden', 'background-color':'#ff0','z-index':'1000000'})
                     element.after(tipElement)
                     position = calcPosition element
-                    
+
                     tipElement.css {top: position.top + 'px', left: position.left + 'px', visibility: 'visible'}
                     nbTooltip.$isShown = scope.$isShown = true
 
-                    
-                    if options.autoClose 
+
+                    if options.autoClose
                         $timeout ()->
                             tipElement.on 'click', (e)->
                                 event.stopPropagation()
@@ -103,7 +111,7 @@ angular.module 'nb.directives', []
                         left: element.position().left,
                         top: element.position().top
                     }
-                   
+
                 calcPosition = (element) ->
                     elemWidth = element.outerWidth()
                     elemHeight = element.outerHeight()
@@ -132,14 +140,15 @@ angular.module 'nb.directives', []
                             left: elemPosition.left + elemWidth + 5
                         }
 
-                    
+
 
                 return nbTooltip
 
-        ]   
+        ]
         return
 
     ]
+
 
     .directive 'navToggleActive', [() ->
         return {
@@ -158,7 +167,7 @@ angular.module 'nb.directives', []
             restrict: 'A'
             link: (scope,elem,attr) ->
                 toggleText = if attr.toggleClass then attr.toggleClass else 'active'
-                
+
                 # for nav list
                 elem.on 'click', (event) ->
                     event.preventDefault()
@@ -172,7 +181,7 @@ angular.module 'nb.directives', []
             controller: ($scope, $http)->
                 #todo
                 this.check = ()->
-                    
+
             link: (scope, elem, attr) ->
 
                 elem.on 'click', (e)->
@@ -185,10 +194,15 @@ angular.module 'nb.directives', []
         return {
             restrict: 'AC'
             require: '?nbCheck'
+            transclude: true
+            replace: true
             priority: 10
             scope: {
 
             }
+            # controller: ($element, $transclude) ->
+            #     $transclude (cloned, scope) ->
+
             link: (scope, elem, attrs, nbCheckCtrl) ->
                 options = {scope: scope}
                 angular.forEach ['template', 'contentTemplate', 'container', 'html', 'animation', 'customClass', 'position'], (key)->
@@ -213,6 +227,95 @@ angular.module 'nb.directives', []
 
         }
     ]
+    .directive 'nbPopup', [ () ->
+
+
+                    # console.debug $elem.html()
+
+
+
+
+
+        postLink = (scope, elem, attrs) ->
+            console.debug 'popup'
+
+        return {
+            transclude: true
+            controller: PopupController
+            templateUrl: 'partials/common/popup.html'
+            link: postLink
+        }
+
+    ]
+
+    # .directive 'popupTemplate', [ ()->
+
+    #     postLink = (scope, elem, attrs) ->
+    #         console.debug arguments
+    #         console.debug 'template'
+    #         # $transcludeFn (clone) ->
+    #         #     console.debug "transcludeFn args:", arguments
+
+    #     return {
+    #         transclude: true
+    #         restrict: 'EA'
+    #         require: '^?nbPopup'
+    #         controller: ->
+    #         template: '''<div nb-popup-transclude></div>'''
+    #         link: postLink
+    #     }
+    # ]
+    .directive 'nbPopupTransclude', [ () ->
+
+
+        # class PopupTransclude
+
+        #     @.$inject = ['$scope', '$element', '$transclude']
+
+        #     constructor: (@scope, $elem, $transcludeFn) ->
+        #         $transcludeFn (clone) ->
+        #             console.debug arguments
+        #             templateBlock = clone.filter('[popup-template]')
+        #             $elem.append templateBlock.html()
+
+
+        postLink = (scope, elem, attrs, $ctrl, $transcludeFn) ->
+
+            $transcludeFn (clone) ->
+                templateBlock = clone.filter('popup-template')
+                elem.replaceWith templateBlock
+
+        return {
+            # controller: PopupTransclude
+            restrict: 'AE'
+            # require: '^popupTemplate'
+            link: postLink
+        }
+
+    ]
+
+    .directive 'nbPopupEmbedTransclude', [ ()->
+
+        class EmbedTransclude
+            constructor: () ->
+        postLink = (scope, elem, attrs, $ctrl, $transcludeFn) ->
+
+            $transcludeFn (clone) ->
+                console.debug elem.html()
+                console.debug clone
+                elem.replaceWith( clone.not('popup-template'))
+
+
+        return {
+            restrict: 'EA'
+            require: '^nbPopup'
+            link: postLink
+        }
+
+    ]
+
+
+
 
     .directive 'nbDropdown', ['$http', ($http)->
         return {
@@ -237,7 +340,7 @@ angular.module 'nb.directives', []
                     if scope.isOpen then elem.removeClass 'open' else elem.addClass 'open'
                     scope.isOpen = ! scope.isOpen
 
-                
+
                 # attr.required && ctrl && ctrl.$validators.required
                 if attr.key
                     $http.get('/api/enum?key=' + attr.key).success (data, status) ->
@@ -266,12 +369,3 @@ angular.module 'nb.directives', []
         }
     ]
 
-{
-    
-}
-
-
-
-
-
-   

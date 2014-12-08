@@ -144,13 +144,15 @@ class OrgsController extends nb.Controller
         @editOrg = null # 当前正在修改的机构
         @loadInitialData()
 
+        @scope.load = ->
+            console.debug 342432
+
     loadInitialData: () ->
         self = @
         @Org.$search()
             .$then (orgs) ->
                 self.orgs = orgs
                 self.currentOrg = _.find(orgs, {nodeType: 'manager'})
-                self.currentOrg.$save()
 
     newSubOrg: (org) ->
         self = @
@@ -162,6 +164,7 @@ class OrgsController extends nb.Controller
         org.$then (org) ->
             self.scope.currentOrg = org
             state.go('^.show')
+
 
     # #切换到编辑页面
     # edit: (orgId) ->

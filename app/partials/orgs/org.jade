@@ -1,13 +1,19 @@
 .app-aside.org-aside.hidden-xs.bg-white-opacity.pull-right(ng-controller="OrgsController as ctrl")
     .org-row(ui-view='sub')
 
-.org-tree.col-md-3
-    div#org_tree
-        ul
-            li( ng-repeat="org in ::ctrl.orgs | filterBy: ['nodeType']: 'internal'"
-                ng-click="load()")
-                a {{org.name}}
-.org-chart.col-md-5
-    | 123
-    div#org_chart(org-chart)
-.org-detail.col-md-3
+    .org-tree.col-md-3
+        div#org_tree
+            ul
+                li( ng-repeat="org in ::ctrl.orgs | filterBy: ['nodeType']: 'internal'"
+                    ng-click="load()")
+                    a {{org.name}}
+    .org-chart.col-md-5
+        | 123
+        //- div#org_chart(org-chart)
+        button(ng-click="load()") 未 transclude
+        button(nb-popup)
+            i 我是button内嵌代码
+            span.abc 123
+            popup-template
+                button(ng-click="load()") 呵呵按钮
+    .org-detail.col-md-3
