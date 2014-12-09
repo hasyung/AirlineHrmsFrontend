@@ -181,15 +181,14 @@ class OrgsController extends nb.Controller
 
 
     update: (org) ->
-        self = @
 
         onSuccess = ->
-            @state.go('^.show')
+            self.state.go('^.show')
 
         onError = (data, status)->
+            scope.$emit 'error'
 
-        org.$save().$then () ->
-            self.state.go('^.show')
+        org.$save().$then onSuccess, onError
 
 
 

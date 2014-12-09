@@ -227,10 +227,10 @@ angular.module 'nb.directives', []
             @.$inject = ['$scope', '$element', '$transclude']
 
             constructor: (@$scope, $elem, $transcludeFn) ->
-            
+
 
         postLink = (scope, elem, attrs, $ctrl, $transcludeFn) ->
-            
+
             $doc = angular.element $window.document
             scope.isShown = false
             tipElement = elem.next()
@@ -297,7 +297,7 @@ angular.module 'nb.directives', []
                 $doc.off 'click'
                 elem.off 'click'
 
-            
+
 
 
 
@@ -379,16 +379,17 @@ angular.module 'nb.directives', []
 
 
         class DropdownCtrl
-            @.$inject = ['$http','$attrs','$scope', 'inflector']
-            constructor: (@http, @attrs, @scope, @inflector) ->
+            @.$inject = ['$http','$attrs','$scope']
+            constructor: (@http, @attrs, @scope) ->
                 self = @
                 @scope.isOpen = false
+                @options = []
 
                 onSuccess = (data, status) ->
                     self.options = data.result
 
                 onError = ->
-                    @scope.$emit('dropdown:notfound')
+                    self.scope.$emit('dropdown:notfound')
 
 
                 @http.get("/api/enum?key=#{@attrs.remoteKey}")
@@ -398,16 +399,20 @@ angular.module 'nb.directives', []
                 # @selected = _.clone @options[$index]
                 # @scope.selected = _.clone @options[$index]
                 # @scope.$apply () ->
-                inflector = @inflector
-                @selected = _.clone @options[$index]
+                @scope.selected = _.clone @options[$index]
                 # @scope.$emit('select:change', selected)
                 # @scope.$emit('options:change', @selected)
                 @close()
 
                 # @scope.$digest()
-            addItem: (newItem) ->
+            addItem: (evt, form , newItem) ->
+                evt.preventDefault()
                 @options.push(newItem)
-                @setSelected(_.findIndex(@options,newItem))
+                @options = _.uniq(@options)
+                @setSelected(@options.length - 1)
+                newItem = ""
+                form.$setPristine()
+
 
             toggle: () ->
                 @isOpen = !@isOpen
