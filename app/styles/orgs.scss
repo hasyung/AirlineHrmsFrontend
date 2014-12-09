@@ -8,5 +8,19 @@
 .org-post { color: #448ecb;}
 .org-btn .btn { width: 88px; height: 34px; margin-top: 30px;}
 .org-btn .btn-default { margin-right: 20px;}
+.org-dep { position: absolute; width: 183px; border-right: 1px solid #d1dcde; border-bottom: 1px solid #d1dcde; left: 200px;}
+.org-dep .panel-body { padding-right: 0px;}
+.org-dep .panel-body ul {padding-left: 0px; }
+.org-dep .panel-body li { line-height: 35px; height: 35px;}
+.org-dep .panel-body li a { color: #58656e; padding-left: 15px;}
+.org-dep .panel-body li a:hover { color: #f34e4c; border-left: 2px solid #f34e4c; transition:all ease 0.2s;}
+.org-dep .panel-heading { background-color: #f6f8f7; height: 39px; border-top: 1px solid #d1dcde; border-bottom: 1px solid #d1dcde;}
+.org-dep .panel { border:none; box-shadow:none;}
+.org-dep .panel-heading { border-radius: 0px;}
+.org-dep .panel-group .panel { border-radius: 0px;}
+.org-dep-badge { width: 24px; height: 72px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border:1px solid #d1dcde; position: absolute; left: 182px;top: 38px;}
+.org-dep-badge a { width: 24px; height: 72px; display: block; text-align: center; line-height: 72px; }
+
+
 
 

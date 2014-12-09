@@ -1,4 +1,58 @@
+.app-aside.org-dep.hidden-xs.bg-white-opacity.pull-left 撒的撒的撒的撒的撒的撒的撒的撒的撒的撒的撒的撒的撒的撒的撒的撒的撒的撒的撒的撒的撒的撒的撒的撒的撒的撒的撒的撒的
 div(ng-controller="OrgsController as ctrl")
+    .app-aside.org-dep.hidden-xs.bg-white-opacity.pull-left
+        .org-dep-badge
+            a.fa.fa-chevron-right(href="#")
+          //a.fa.fa-chevron-left(href="#")  是箭头朝左
+        div.panel-group
+          div.panel.panel-default
+            div.panel-heading
+              h4.panel-title
+                a(href='/') 一级正
+                    i.fa.fa-angle-down.pull-right
+            div.panel-collapse.collapse.in
+              div.panel-body
+                 ul
+                    li
+                        a 总经理工作部
+                    li
+                        a 人力资源部
+                    li
+                        a 计划财务部
+                    li
+                        a 企划管理部
+                    li
+                        a 航空安全监察部
+                    li
+                        a 标准管理部
+                    li
+                        a 品牌质量管理部
+                    li
+                        a 飞行技术管理部
+                    li
+                        a 保卫部
+                    li
+                        a 企业文化部
+                    li
+                        a 飞行部
+                    li
+                        a 机务工程部
+                    li
+                        a 运行控制中心
+           div.panel.panel-default
+            div.panel-heading
+              h4.panel-title
+                a(href='/') 一级副
+                    i.fa.fa-angle-right.pull-right
+            div.panel-collapse.collapse.in
+              div.panel-body 一级副栏目
+           div.panel.panel-default
+            div.panel-heading
+              h4.panel-title
+                a(href='/') 分公司集
+                    i.fa.fa-angle-right.pull-right
+            div.panel-collapse.collapse.in
+              div.panel-body 分公司集栏目
     .app-aside.org-aside.hidden-xs.bg-white-opacity.pull-right
         .org-row(ui-view='sub')
 
