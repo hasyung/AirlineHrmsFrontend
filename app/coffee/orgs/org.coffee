@@ -113,7 +113,6 @@ class Route
                     }
                 }
             }
-
             .state 'org.newsub', {
                 url: '/:parentId/newsub'
                 views: {
@@ -124,7 +123,7 @@ class Route
 
             }
             .state 'org.edit', {
-                url: '/:parentId/edit'
+                url: '/:Id/edit'
                 views: {
                     'sub': {
                         templateUrl: 'partials/orgs/org_edit.html'
@@ -139,20 +138,23 @@ class OrgsController extends nb.Controller
     @.$inject = ['Org', '$stateParams', '$state', '$scope']
 
     constructor: (@Org, @params, @state, @scope)->
-        @currentOrg = null #当前选中机构
+        @scope.currentOrg = null #当前选中机构
         @orgs = null    #集合
         @editOrg = null # 当前正在修改的机构
         @loadInitialData()
 
-        @scope.load = ->
-            console.debug 342432
+        @scope.$on 'select:change', (ctx, location) ->
+            scope.currentOrg.location = location
 
     loadInitialData: () ->
         self = @
         @Org.$search()
             .$then (orgs) ->
                 self.orgs = orgs
-                self.currentOrg = _.find(orgs, {nodeType: 'manager'})
+                #默认选中总经理节点
+                self.scope.currentOrg = _.find orgs, (org) ->
+                    org.nodeType.name = 'manager'
+
 
     newSubOrg: (org) ->
         self = @
@@ -172,7 +174,15 @@ class OrgsController extends nb.Controller
 
 
     update: (org) ->
-        @orgs.$update(org)
+        self = @
+
+        onSuccess = ->
+            @state.go('^.show')
+
+        onError = (data, status)->
+
+        org.$save().$then () ->
+            self.state.go('^.show')
 
 
 
