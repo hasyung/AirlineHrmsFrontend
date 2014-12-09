@@ -98,7 +98,7 @@ div(ng-controller="OrgsController as ctrl")
         div#org_tree
             ul
                 li( ng-repeat="org in ::ctrl.orgs | filterBy: ['nodeType']: 'internal'"
-                    ng-click="load()")
+                    ng-click="ctrl.setCurrentOrg(org)")
                     a {{org.name}}
     .org-chart.col-md-5
         table
@@ -112,4 +112,11 @@ div(ng-controller="OrgsController as ctrl")
                     td {{item.status}}
 
         //- div#org_chart(org-chart)
+        form(name="active_form" ng-submit="ctrl.active(active_form, active)")
+            input(type="text" name="log_title" ng-model="active.log_title" placeholder="操作说明")
+            input(type="text" name="oa_file_no" ng-model="active.oa_file_no" placeholder="文件编号" )
+            button(type="submit") 生效
+            button(ng-click="ctrl.revert()") 撤销
+
+
     .org-detail.col-md-3

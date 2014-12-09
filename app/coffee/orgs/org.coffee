@@ -135,10 +135,11 @@ class Route
 
 class OrgsController extends nb.Controller
 
-    @.$inject = ['Org', '$stateParams', '$state', '$scope']
 
-    constructor: (@Org, @params, @state, @scope)->
-        @currentOrg = null #当前选中机构
+    @.$inject = ['Org', '$http','$stateParams', '$state', '$scope']
+
+
+    constructor: (@Org, @http, @params, @state, @scope, @toaster)->
         @scope.currentOrg = null #当前选中机构
         @orgs = null    #集合
         @editOrg = null # 当前正在修改的机构
@@ -169,6 +170,10 @@ class OrgsController extends nb.Controller
                 # console.log orgs[0]
                 self.currentOrg = orgs[0]
 
+    setCurrentOrg: (org) ->
+        id = org.id
+        @scope.currentOrg = _.find(@orgs, {id: id})
+
     newSubOrg: (org) ->
         self = @
         state = @state
@@ -185,29 +190,40 @@ class OrgsController extends nb.Controller
     # edit: (orgId) ->
     #     @state.go('^.edit',{parentId: orgId})
 
-
     update: (org) ->
-
+        self = @
         onSuccess = ->
             self.state.go('^.show')
 
         onError = (data, status)->
-            scope.$emit 'error'
+            self.scope.$emit 'error'
 
         org.$save().$then onSuccess, onError
 
+    revert: () ->
+        self = @
+        onSuccess = ->
+            self.orgs = self.Org.$search()
+            self.scope.$emit 'success', '撤销成功'
+
+        onError = (data, status)->
+            self.scope.$emit 'error', "#{data.message}"
+
+        promise = @http.post '/api/departments/revert'
+        promise.then onSuccess, onError
 
 
-# class OrgCtrl
-#     @.$inject = ['$scope', 'Org']
+    active: (form, data) ->
+        self = @
+        onSuccess = ->
+            self.orgs = self.Org.$search()
+            self.scope.$emit 'success', '更改已生效'
 
-#     constructor: () ->
+        onError = (data, status)->
+            self.scope.$emit 'error', "#{data.message}"
 
-#     newsub: () ->
-
-#     update: () ->
-
-#     remove: () ->
+        promise = @http.post '/api/departments/active', data
+        promise.then onSuccess, onError
 
 
 
