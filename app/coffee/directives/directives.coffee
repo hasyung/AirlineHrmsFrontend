@@ -434,7 +434,7 @@ angular.module 'nb.directives', []
             #     console.debug "formatters : ", inputVal
             #     return inputVal
 
-            scope.$watch 'dropdown.selected', (newVal) ->
+            scope.$watch 'selected', (newVal) ->
                 console.debug 'selected:change', newVal
                 scope.selected = newVal
                 ngModelCtrl.$render()
