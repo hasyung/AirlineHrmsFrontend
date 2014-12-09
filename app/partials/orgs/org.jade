@@ -9,10 +9,14 @@ div(ng-controller="OrgsController as ctrl")
                     ng-click="load()")
                     a {{org.name}}
     .org-chart.col-md-5
-        | 123
-        //- div#org_chart(org-chart)
-        button(nb-popup)
-            i 我是button内嵌代码
-            popup-template
-                div(ng-click="load()") 内嵌按钮
+        table
+            thead
+                tr
+                    th 机构名
+                    th 状态
+            tbody
+                tr(ng-repeat="item in ctrl.orgs")
+                    td {{item.name}}
+                    td {{item.status}}
+
     .org-detail.col-md-3
