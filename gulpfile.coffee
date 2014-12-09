@@ -86,11 +86,13 @@ paths =
         'deps/angular-filter/dist/angular-filter.js'
         'deps/angular-ui-router/release/angular-ui-router.js'
         'deps/ngInfiniteScroll/build/ng-infinite-scroll.js'
+        'deps/AngularJS-Toaster/toaster.js'
         'deps/angular-locale_zh-cn.js'
         'deps/angular-ui-select/dist/select.js'
         'deps/jquery-slimscroll/jquery.slimscroll.js'
         'deps/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js'
         'deps/angular-ui-bootstrap-bower/ui-bootstrap.js'
+        'deps/angularjs-toaster/toaster.js'
         # 'deps/angular-ui-utils/ui-utils.js'
         # 'deps/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js'
         # 'deps/jasny-bootstrap/dist/js/jasny-bootstrap.js' jasny bootstrap 增强版，提供一些好用组件
@@ -249,7 +251,7 @@ gulp.task "express", ->
     express = require("express")
     app = express()
 
-    proxyOptions = url.parse('http://192.168.6.99:9002')
+    proxyOptions = url.parse('http://192.168.6.7:3000')
     proxyOptions.route = '/api'
 
     # 反向代理 webapi

@@ -1,10 +1,3 @@
-class PopupController
-
-    @.$inject = ['$scope', '$element', '$transclude']
-
-    constructor: (@scope, $elem, $transcludeFn) ->
-        # $transcludeFn (clone) ->
-        #     console.debug clone
 
 angular.module 'nb.directives', []
 
@@ -227,17 +220,86 @@ angular.module 'nb.directives', []
 
         }
     ]
-    .directive 'nbPopup', [ () ->
+    .directive 'nbPopup', ['$window', ($window) ->
+
+        class PopupController
+
+            @.$inject = ['$scope', '$element', '$transclude']
+
+            constructor: (@$scope, $elem, $transcludeFn) ->
 
 
-                    # console.debug $elem.html()
+        postLink = (scope, elem, attrs, $ctrl, $transcludeFn) ->
+
+            $doc = angular.element $window.document
+            scope.isShown = false
+            tipElement = elem.next()
+            options = {scope: scope}
+            options.position = "left"
+            angular.forEach ['position'], (key)->
+                if angular.isDefined attrs[key]
+                    options[key] = attrs[key]
+            toggle = (element)->
+                if scope.isShown then hide(element) else show(element)
+            show = (element)->
+                element.show()
+                scope.isShown = true
+                $doc.on 'click', (e)->
+                    e.stopPropagation()
+                    hide element
+
+            hide = (element)->
+                element.hide()
+                scope.isShown = false
+                $doc.off "click"
+
+            getPosition = (element) ->
+                return {
+                    left: element.position().left,
+                    top: element.position().top
+                }
+
+            calcPosition = (element) ->
+                elemWidth = element.outerWidth()
+                elemHeight = element.outerHeight()
+                elemPosition = getPosition(element)
+                tipWidth = tipElement.outerWidth()
+                tipHeight = tipElement.outerHeight()
+
+                if options.position == "bottom"
+                    return {
+                        top: elemPosition.top + elemHeight + 5,
+                        left: elemPosition.left + elemWidth/2 - tipWidth/2
+                    }
+                else if options.position == "top"
+                    return {
+                        top: elemPosition.top - 5 - tipHeight,
+                        left: elemPosition.left + elemWidth/2 - tipWidth/2
+                    }
+                else if options.position == "left"
+                    return {
+                        top: elemPosition.top + elemHeight/2 - tipHeight/2,
+                        left: elemPosition.left - tipWidth - 5
+                    }
+                else
+                    return {
+                        top: elemPosition.top + elemHeight/2 - tipHeight/2,
+                        left: elemPosition.left + elemWidth + 5
+                    }
+            position = calcPosition elem
+            tipElement.css {top: position.top + 'px', left: position.left + 'px'}
+            hide tipElement
+            elem.on 'click', (e)->
+                e.stopPropagation()
+                toggle elem.next()
+
+            scope.$on '$destroy', ()->
+                $doc.off 'click'
+                elem.off 'click'
 
 
 
 
-
-        postLink = (scope, elem, attrs) ->
-            console.debug 'popup'
 
         return {
             transclude: true
@@ -280,10 +342,9 @@ angular.module 'nb.directives', []
 
 
         postLink = (scope, elem, attrs, $ctrl, $transcludeFn) ->
-
             $transcludeFn (clone) ->
                 templateBlock = clone.filter('popup-template')
-                elem.replaceWith templateBlock
+                elem.parent().parent().after templateBlock
 
         return {
             # controller: PopupTransclude
@@ -299,10 +360,7 @@ angular.module 'nb.directives', []
         class EmbedTransclude
             constructor: () ->
         postLink = (scope, elem, attrs, $ctrl, $transcludeFn) ->
-
             $transcludeFn (clone) ->
-                console.debug elem.html()
-                console.debug clone
                 elem.replaceWith( clone.not('popup-template'))
 
 
@@ -318,54 +376,114 @@ angular.module 'nb.directives', []
 
 
     .directive 'nbDropdown', ['$http', ($http)->
+
+
+        class DropdownCtrl
+            @.$inject = ['$http','$attrs','$scope']
+            constructor: (@http, @attrs, @scope) ->
+                self = @
+                @scope.isOpen = false
+                @options = []
+
+                onSuccess = (data, status) ->
+                    self.options = data.result
+
+                onError = ->
+                    self.scope.$emit('dropdown:notfound')
+
+
+                @http.get("/api/enum?key=#{@attrs.remoteKey}")
+                    .success onSuccess
+                    .error onError
+            setSelected: ($index) ->
+                # @selected = _.clone @options[$index]
+                # @scope.selected = _.clone @options[$index]
+                # @scope.$apply () ->
+                @scope.selected = _.clone @options[$index]
+                # @scope.$emit('select:change', selected)
+                # @scope.$emit('options:change', @selected)
+                @close()
+
+                # @scope.$digest()
+            addItem: (evt, form , newItem) ->
+                evt.preventDefault()
+                @options.push(newItem)
+                @options = _.uniq(@options)
+                @setSelected(@options.length - 1)
+                newItem = ""
+                form.$setPristine()
+
+
+            toggle: () ->
+                @isOpen = !@isOpen
+
+            close: () ->
+                @isOpen = false
+
+        postLink = (scope, elem, attr, $ctrl) ->
+            scope.isOpen = false
+            dropdownCtrl = $ctrl[0]
+            ngModelCtrl = $ctrl[1]
+
+            # view to model
+            # ngModelCtrl.$parsers.unshift (inputVal) ->
+            #     console.debug "inputVal:", arguments
+            #     return inputVal
+            # # model to view
+            # ngModelCtrl.$formatters.unshift (inputVal) ->
+            #     console.debug "formatters : ", inputVal
+            #     return inputVal
+
+            scope.$watch 'dropdown.selected', (newVal) ->
+                console.debug 'selected:change', newVal
+                scope.selected = newVal
+                ngModelCtrl.$render()
+
+            scope.$on '$destroy', () ->
+                elem.off 'click'
+
         return {
-            restrict: 'AC'
-            templateUrl: 'partials/common/_dropdown.tpl.html'
+            restrict: 'EA'
+            templateUrl: 'partials/common/dropdown.tpl.html'
             replace: true
-            require: "ngModel"
+            require: ["nbDropdown", "ngModel"]
             scope: {
                 options: "=nbDropdown"
                 selected: "=ngModel"
             }
-            controller: ($scope) ->
-                $scope.defaultText = $scope.options.defaultText
-                $scope.items = $scope.options.data
-                $scope.setSelected = (index) ->
-                    $scope.selected = $scope.options.data[index]
+            controller: DropdownCtrl
+            controllerAs: 'dropdown'
 
-            link: (scope, elem, attr, ctrl) ->
-                scope.isOpen = false
-                elem.on 'click', (e) ->
-                    e.preventDefault()
-                    if scope.isOpen then elem.removeClass 'open' else elem.addClass 'open'
-                    scope.isOpen = ! scope.isOpen
-
-
-                # attr.required && ctrl && ctrl.$validators.required
-                if attr.key
-                    $http.get('/api/enum?key=' + attr.key).success (data, status) ->
-                        scope.items = data
-                    .error (data, status) ->
-                        scope.items = [
-                            {
-                                key: 'ORG.'
-                                name: 'chengdu'
-                                display_name: '成都'
-                            }
-                            {
-                                key: 'ORG.'
-                                name: 'shanghai'
-                                display_name: '上海'
-                            }
-                        ]
-
-                scope.$on '$destroy', ()->
-                    elem.off 'click'
-
-                return
-
-
+            link: postLink
 
         }
     ]
+    # .directive 'nbSelect', ['$http', ($http) ->
+
+
+    #     postLink = (scope, elem, attrs, $ctrl) ->
+
+    #         key = attrs['remoteKey']
+
+    #         $http.get("api/enum?key=#{key}")
+    #             .success (data, status) ->
+    #                 $ctrl.
+
+
+
+
+
+
+    #     return {
+    #         required: 'ngModel'
+    #         link: postLink
+    #         scope: {
+
+    #         }
+    #     }
+
+
+
+
+    # ]
 

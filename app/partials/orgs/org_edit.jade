@@ -8,16 +8,15 @@ form(novalidate ng-submit="ctrl.update(currentOrg)")
                 input(ng-model="currentOrg.name")
         .form-group
             label.control-label.col-lg-5 编号
-            .ol-lg-5 02044
+            .ol-lg-5 {{::currentOrg.serialNumber}}
         .form-group
             label.control-label.col-lg-5 办公地点
             .ol-lg-5
-                select
-                    option 成都
-                    option 重庆
+            nb-dropdown(ng-model="currentOrg.location" remote-key="Department.locations")
+
         .form-group
             label.control-label.col-lg-5 职级
-            .ol-lg-5 一正级
+            .ol-lg-5 {{::currentOrg.nodeType.displayName}}
         .form-group.org-btn
             input.btn.btn-info.pull-right(type="submit",value="保存")
             button.btn.btn-default.pull-right(ui-sref="^.show") 取消

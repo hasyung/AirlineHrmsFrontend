@@ -12,12 +12,13 @@ html
         link(rel="stylesheet", href="/styles/lib.css?v=#{v}")
         link(rel="stylesheet", href="/styles/web.css?v=#{v}")
         link(rel="icon", type="image/png", href="/images/favicon.png")
+    //- body(ng-app="nb" ng-controller="AppController")
     body(ng-app="nb")
 
         include partials/shared/top_menu
         include partials/shared/left_sidebar
 
-
+        toaster-container(toaster-options="{'time-out': 3000, 'close-button':true, 'animation-class': 'toast-top-right'}")
         .org-container(ui-view)
 
 

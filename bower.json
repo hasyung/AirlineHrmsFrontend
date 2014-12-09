@@ -48,6 +48,8 @@
     "angular-ui-bootstrap-bower": "~0.11.2",
     "jqtree": "~0.22.0",
     "raphael": "~2.1.2",
-    "angular-filter": "~0.5.1"
+    "angular-filter": "~0.5.1",
+    "AngularJS-Toaster": "~0.4.9"
+
   }
 }
