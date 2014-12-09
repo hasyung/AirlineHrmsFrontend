@@ -1,8 +1,24 @@
 .org-title
     span 机构信息
-    button.btn.btn-default.fa.fa-trash-o(title="删除",)
+<<<<<<< HEAD
+    button.btn.btn-default.fa.fa-trash-o(title="删除", nb-popup)
+      popup-template.org-delete-template.panel.panel-default()
+        .panel-heading.popup-title 警告
+        .panel-body.popup-body
+          div 删除后将无法恢复，请确认删除
+          div.div-delete-btn(ng-click="ctrl.deleteOrg()") 删除
     button.btn.btn-default.fa.fa-pencil(ui-sref="^.edit({Id: currentOrg.id})",title="编辑")
     button.btn.btn-default.fa.fa-plus(title="新增子机构",ui-sref="^.newsub({parentId: currentOrg.id})")
+=======
+    button.btn.btn-default.fa.fa-trash-o(title="删除", nb-popup)
+      popup-template.org-delete-template.panel.panel-default()
+        .panel-heading.popup-title 警告
+        .panel-body.popup-body
+          div 删除后将无法恢复，请确认删除
+          div.div-delete-btn(ng-click="ctrl.deleteOrg()") 删除
+    button.btn.btn-default.fa.fa-pencil(ui-sref="^.edit({id: ctrl.currentOrg.id})",title="编辑")
+    button.btn.btn-default.fa.fa-plus(title="新增子机构",ui-sref="^.newsub({parentId: ctrl.currentOrg.id})")
+>>>>>>> f081c17c3e71cb79c426e2842fb911bebff14c3d
 .org-info
     .form-group
        label.control-label.col-lg-5 名称：

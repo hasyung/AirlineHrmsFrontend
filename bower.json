@@ -50,5 +50,6 @@
     "raphael": "~2.1.2",
     "angular-filter": "~0.5.1",
     "AngularJS-Toaster": "~0.4.9"
+
   }
 }
