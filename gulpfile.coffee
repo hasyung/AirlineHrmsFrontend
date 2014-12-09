@@ -86,6 +86,7 @@ paths =
         'deps/angular-filter/dist/angular-filter.js'
         'deps/angular-ui-router/release/angular-ui-router.js'
         'deps/ngInfiniteScroll/build/ng-infinite-scroll.js'
+        'deps/AngularJS-Toaster/toaster.js'
         'deps/angular-locale_zh-cn.js'
         'deps/angular-ui-select/dist/select.js'
         'deps/jquery-slimscroll/jquery.slimscroll.js'

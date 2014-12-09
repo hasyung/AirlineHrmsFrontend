@@ -15,6 +15,7 @@ deps = [
     'angular.filter'
     'resources'
     'nb.directives'
+    'toaster'
     #'nb.controller.site'
 ]
 resources = angular.module('resources',[])

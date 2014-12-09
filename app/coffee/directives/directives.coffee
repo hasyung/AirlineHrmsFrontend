@@ -227,10 +227,10 @@ angular.module 'nb.directives', []
             @.$inject = ['$scope', '$element', '$transclude']
 
             constructor: (@$scope, $elem, $transcludeFn) ->
-            
+
 
         postLink = (scope, elem, attrs, $ctrl, $transcludeFn) ->
-            
+
             $doc = angular.element $window.document
             scope.isShown = false
             tipElement = elem.next()
@@ -297,7 +297,7 @@ angular.module 'nb.directives', []
                 $doc.off 'click'
                 elem.off 'click'
 
-            
+
 
 
 
@@ -376,78 +376,114 @@ angular.module 'nb.directives', []
 
 
     .directive 'nbDropdown', ['$http', ($http)->
+
+
+        class DropdownCtrl
+            @.$inject = ['$http','$attrs','$scope']
+            constructor: (@http, @attrs, @scope) ->
+                self = @
+                @scope.isOpen = false
+                @options = []
+
+                onSuccess = (data, status) ->
+                    self.options = data.result
+
+                onError = ->
+                    self.scope.$emit('dropdown:notfound')
+
+
+                @http.get("/api/enum?key=#{@attrs.remoteKey}")
+                    .success onSuccess
+                    .error onError
+            setSelected: ($index) ->
+                # @selected = _.clone @options[$index]
+                # @scope.selected = _.clone @options[$index]
+                # @scope.$apply () ->
+                @scope.selected = _.clone @options[$index]
+                # @scope.$emit('select:change', selected)
+                # @scope.$emit('options:change', @selected)
+                @close()
+
+                # @scope.$digest()
+            addItem: (evt, form , newItem) ->
+                evt.preventDefault()
+                @options.push(newItem)
+                @options = _.uniq(@options)
+                @setSelected(@options.length - 1)
+                newItem = ""
+                form.$setPristine()
+
+
+            toggle: () ->
+                @isOpen = !@isOpen
+
+            close: () ->
+                @isOpen = false
+
+        postLink = (scope, elem, attr, $ctrl) ->
+            scope.isOpen = false
+            dropdownCtrl = $ctrl[0]
+            ngModelCtrl = $ctrl[1]
+
+            # view to model
+            # ngModelCtrl.$parsers.unshift (inputVal) ->
+            #     console.debug "inputVal:", arguments
+            #     return inputVal
+            # # model to view
+            # ngModelCtrl.$formatters.unshift (inputVal) ->
+            #     console.debug "formatters : ", inputVal
+            #     return inputVal
+
+            scope.$watch 'dropdown.selected', (newVal) ->
+                console.debug 'selected:change', newVal
+                scope.selected = newVal
+                ngModelCtrl.$render()
+
+            scope.$on '$destroy', () ->
+                elem.off 'click'
+
         return {
-            restrict: 'AC'
-            templateUrl: 'partials/common/_dropdown.tpl.html'
+            restrict: 'EA'
+            templateUrl: 'partials/common/dropdown.tpl.html'
             replace: true
-            require: "ngModel"
+            require: ["nbDropdown", "ngModel"]
             scope: {
                 options: "=nbDropdown"
                 selected: "=ngModel"
             }
-            controller: ($scope) ->
-                $scope.defaultText = $scope.options.defaultText
-                $scope.items = $scope.options.data
-                $scope.setSelected = (index) ->
-                    $scope.selected = $scope.options.data[index]
+            controller: DropdownCtrl
+            controllerAs: 'dropdown'
 
-            link: (scope, elem, attr, ctrl) ->
-                scope.isOpen = false
-                elem.on 'click', (e) ->
-                    e.preventDefault()
-                    if scope.isOpen then elem.removeClass 'open' else elem.addClass 'open'
-                    scope.isOpen = ! scope.isOpen
-
-
-                # attr.required && ctrl && ctrl.$validators.required
-                if attr.key
-                    $http.get('/api/enum?key=' + attr.key).success (data, status) ->
-                        scope.items = data
-                    .error (data, status) ->
-                        scope.items = [
-                            {
-                                key: 'ORG.'
-                                name: 'chengdu'
-                                display_name: '成都'
-                            }
-                            {
-                                key: 'ORG.'
-                                name: 'shanghai'
-                                display_name: '上海'
-                            }
-                        ]
-
-                scope.$on '$destroy', ()->
-                    elem.off 'click'
-
-                return
-
-
-
-        }
-    ]
-    .directive 'nbSelect', ['$http', ($http) ->
-
-
-        postLink = (scope, elem, attrs, $ctrl) ->
-
-            key = attrs['remoteKey']
-
-            $http.get("api/enum?key=#{key}")
-                .success (data, status) ->
-
-
-
-
-
-
-        return {
-            required: 'ngModel'
             link: postLink
+
         }
-
-
-
-
     ]
+    # .directive 'nbSelect', ['$http', ($http) ->
+
+
+    #     postLink = (scope, elem, attrs, $ctrl) ->
+
+    #         key = attrs['remoteKey']
+
+    #         $http.get("api/enum?key=#{key}")
+    #             .success (data, status) ->
+    #                 $ctrl.
+
+
+
+
+
+
+    #     return {
+    #         required: 'ngModel'
+    #         link: postLink
+    #         scope: {
+
+    #         }
+    #     }
+
+
+
+
+    # ]
 
