@@ -136,23 +136,27 @@ class Route
 
 class OrgsController extends nb.Controller
 
-    @.$inject = ['Org', '$stateParams', '$state', '$scope']
+    @.$inject = ['Org', '$stateParams', '$state', '$scope', 'toaster']
 
-    constructor: (@Org, @params, @state, @scope)->
+    constructor: (@Org, @params, @state, @scope, @toaster)->
         @currentOrg = null #当前选中机构
         @orgs = null    #集合
         @editOrg = null # 当前正在修改的机构
         @loadInitialData()
 
-        @scope.load = ->
-            console.debug 342432
+    deleteOrg: ->
+        if @currentOrg
+            @currentOrg.$destroy() 
+        else
+            @toaster.pop({type: 'error', title: "通知", body:"删除失败"})
 
     loadInitialData: () ->
         self = @
         @Org.$search()
             .$then (orgs) ->
                 self.orgs = orgs
-                self.currentOrg = _.find(orgs, {nodeType: 'manager'})
+                console.log orgs[0]
+                # self.currentOrg = _.find(orgs, {nodeType: 'manager'})
 
     newSubOrg: (org) ->
         self = @

@@ -1,10 +1,3 @@
-class PopupController
-
-    @.$inject = ['$scope', '$element', '$transclude']
-
-    constructor: (@scope, $elem, $transcludeFn) ->
-        # $transcludeFn (clone) ->
-        #     console.debug clone
 
 angular.module 'nb.directives', []
 
@@ -227,21 +220,85 @@ angular.module 'nb.directives', []
 
         }
     ]
-    .directive 'nbPopup', [ () ->
+    .directive 'nbPopup', ['$window', ($window) ->
 
+        class PopupController
 
-                    # console.debug $elem.html()
+            @.$inject = ['$scope', '$element', '$transclude']
 
-
-
-
+            constructor: (@$scope, $elem, $transcludeFn) ->
+            
 
         postLink = (scope, elem, attrs, $ctrl, $transcludeFn) ->
-            console.debug arguments
+            
+            $doc = angular.element $window.document
+            scope.isShown = false
+            tipElement = elem.next()
+            options = {scope: scope}
+            options.position = "left"
+            angular.forEach ['position'], (key)->
+                if angular.isDefined attrs[key]
+                    options[key] = attrs[key]
+            toggle = (element)->
+                if scope.isShown then hide(element) else show(element)
+            show = (element)->
+                element.show()
+                scope.isShown = true
+                $doc.on 'click', (e)->
+                    e.stopPropagation()
+                    hide element
 
-            # $transcludeFn (clone) ->
-            #     TemplateBody = clone.filter 'popup-template'
-            #     elem.append(TemplateBody)
+            hide = (element)->
+                element.hide()
+                scope.isShown = false
+                $doc.off "click"
+
+            getPosition = (element) ->
+                return {
+                    left: element.position().left,
+                    top: element.position().top
+                }
+
+            calcPosition = (element) ->
+                elemWidth = element.outerWidth()
+                elemHeight = element.outerHeight()
+                elemPosition = getPosition(element)
+                tipWidth = tipElement.outerWidth()
+                tipHeight = tipElement.outerHeight()
+
+                if options.position == "bottom"
+                    return {
+                        top: elemPosition.top + elemHeight + 5,
+                        left: elemPosition.left + elemWidth/2 - tipWidth/2
+                    }
+                else if options.position == "top"
+                    return {
+                        top: elemPosition.top - 5 - tipHeight,
+                        left: elemPosition.left + elemWidth/2 - tipWidth/2
+                    }
+                else if options.position == "left"
+                    return {
+                        top: elemPosition.top + elemHeight/2 - tipHeight/2,
+                        left: elemPosition.left - tipWidth - 5
+                    }
+                else
+                    return {
+                        top: elemPosition.top + elemHeight/2 - tipHeight/2,
+                        left: elemPosition.left + elemWidth + 5
+                    }
+            position = calcPosition elem
+            tipElement.css {top: position.top + 'px', left: position.left + 'px'}
+            hide tipElement
+            elem.on 'click', (e)->
+                e.stopPropagation()
+                toggle elem.next()
+
+            scope.$on '$destroy', ()->
+                $doc.off 'click'
+                elem.off 'click'
+
+            
+
 
 
         return {
@@ -285,7 +342,6 @@ angular.module 'nb.directives', []
 
 
         postLink = (scope, elem, attrs, $ctrl, $transcludeFn) ->
-
             $transcludeFn (clone) ->
                 templateBlock = clone.filter('popup-template')
                 elem.parent().parent().after templateBlock
@@ -304,10 +360,7 @@ angular.module 'nb.directives', []
         class EmbedTransclude
             constructor: () ->
         postLink = (scope, elem, attrs, $ctrl, $transcludeFn) ->
-
             $transcludeFn (clone) ->
-                console.debug elem.html()
-                console.debug clone
                 elem.replaceWith( clone.not('popup-template'))
 
 

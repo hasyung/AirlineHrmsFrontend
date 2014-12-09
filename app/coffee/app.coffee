@@ -10,6 +10,7 @@ deps = [
     # 'ui.bootstrap'
     'ngSanitize'
     'ngMessages'
+    'toaster'
     'restmod'    #rest api
     'angular.filter'
     'resources'

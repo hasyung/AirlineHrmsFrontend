@@ -17,7 +17,7 @@ html
         include partials/shared/top_menu
         include partials/shared/left_sidebar
 
-
+        toaster-container(toaster-options="{'time-out': 3000, 'close-button':true, 'animation-class': 'toast-top-right'}")
         .org-container(ui-view)
 
 
