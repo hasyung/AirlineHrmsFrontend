@@ -144,18 +144,21 @@ class OrgsController extends nb.Controller
         @orgs = null    #集合
         @editOrg = null # 当前正在修改的机构
         @loadInitialData()
+        @orgBarOpen = true
+
 
         @scope.$on 'select:change', (ctx, location) ->
             scope.currentOrg.location = location
     deleteOrg: ->
         self = @
-        # onSuccess = ->
+        onSuccess = ->
+            self.scope.$emit('success',"机构：#{self.scope.currentOrg.name} ,删除成功")
 
-        # onError = ->
-        #     self.scope.$emit('nb:error',"")
+        onError = (data, status)->
+            self.scope.$emit 'error', "#{data.message}"
 
-        self.currentOrg.$destroy().$then (data)->
-            self.scope.$emit('success',"机构：#{self.currentOrg.name} ,删除成功")
+        self.scope.currentOrg.$destroy().$then onSuccess, onError
+            
 
     loadInitialData: () ->
         self = @
@@ -167,12 +170,14 @@ class OrgsController extends nb.Controller
                     org.nodeType.name = 'manager'
 
                 # self.currentOrg = _.find(orgs, {nodeType: 'manager'})
-                # console.log orgs[0]
-                self.currentOrg = orgs[0]
+                console.log orgs[0]
+                # self.currentOrg = orgs[0]
 
     setCurrentOrg: (org) ->
+        state = @state
         id = org.id
         @scope.currentOrg = _.find(@orgs, {id: id})
+        state.go('^.show')
 
     newSubOrg: (org) ->
         self = @
@@ -224,6 +229,10 @@ class OrgsController extends nb.Controller
 
         promise = @http.post '/api/departments/active', data
         promise.then onSuccess, onError
+
+    toggleOrgBar: ()->
+        self = @
+        self.orgBarOpen = ! self.orgBarOpen
 
 
 

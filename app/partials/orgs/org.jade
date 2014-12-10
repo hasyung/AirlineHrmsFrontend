@@ -1,5 +1,5 @@
-.modal-backdrop.fade.in
-.org-modal.org-modal-posts
+.modal-backdrop.fade.in(style="display:none;")
+.org-modal.org-modal-posts(style="display:none;")
     .org-modal-top 这里是顶部标题
     .org-modal-post
         .org-modal-posttop 岗位信息列表
@@ -38,59 +38,48 @@
               td  编制
               td  在编人数
 div(ng-controller="OrgsController as ctrl")
-    .app-aside.org-dep.hidden-xs.bg-white-opacity.pull-left
+    .app-aside.org-dep.hidden-xs.bg-white-opacity.pull-left(ng-class="{'active': ctrl.orgBarOpen}")
         .org-dep-badge
-            a.fa.fa-chevron-right(href="#")
-          //a.fa.fa-chevron-left(href="#")  是箭头朝左
+            //- a.fa.fa-chevron-right(href="javascript:void(0);")
+            a.toggle-bar.fa(ng-class="{true: 'fa-chevron-right', false: 'fa-chevron-left'}[ctrl.orgBarOpen]" href="javascript:void(0);", ng-click="ctrl.toggleOrgBar()")
         div.panel-group
-          div.panel.panel-default
-            div.panel-heading
-              h4.panel-title
-                a(href='/') 一级正
-                    i.fa.fa-angle-down.pull-right
-            div.panel-collapse.collapse.in
-              div.panel-body
-                 ul
-                    li
-                        a 总经理工作部
-                    li
-                        a 人力资源部
-                    li
-                        a 计划财务部
-                    li
-                        a 企划管理部
-                    li
-                        a 航空安全监察部
-                    li
-                        a 标准管理部
-                    li
-                        a 品牌质量管理部
-                    li
-                        a 飞行技术管理部
-                    li
-                        a 保卫部
-                    li
-                        a 企业文化部
-                    li
-                        a 飞行部
-                    li
-                        a 机务工程部
-                    li
-                        a 运行控制中心
-           div.panel.panel-default
-            div.panel-heading
-              h4.panel-title
-                a(href='/') 一级副
-                    i.fa.fa-angle-right.pull-right
-            div.panel-collapse.collapse.in
-              div.panel-body 一级副栏目
-           div.panel.panel-default
-            div.panel-heading
-              h4.panel-title
-                a(href='/') 分公司集
-                    i.fa.fa-angle-right.pull-right
-            div.panel-collapse.collapse.in
-              div.panel-body 分公司集栏目
+            div.panel.panel-default(toggle-class="in", toggle-element="panel-heading", action-class="collapse")
+                div.panel-heading()
+                    h4.panel-title
+                        a(href='javascript:void(0);') 一级正
+                            i.fa.fa-angle-down.pull-right.toggle-fa
+                            i.fa.fa-angle-right.pull-right.toggle-fa-x
+
+                div.panel-collapse.collapse.in()
+                    div.panel-body
+                        ul
+                            li(ng-repeat="org in ctrl.orgs | filterBy: ['nodeType']: 'internal'" ng-click="ctrl.setCurrentOrg(org)")
+                                a {{::org.name}}
+                    
+            div.panel.panel-default(toggle-class="in", toggle-element="panel-heading", action-class="collapse")
+                div.panel-heading()
+                    h4.panel-title
+                        a(href='javascript:void(0);') 一级副
+                            i.fa.fa-angle-down.pull-right.toggle-fa
+                            i.fa.fa-angle-right.pull-right.toggle-fa-x
+                div.panel-collapse.collapse.in()
+                    div.panel-body
+                        ul
+                            li(ng-repeat="org in ctrl.orgs | filterBy: ['nodeType']: 'external'"
+                                ng-click="ctrl.setCurrentOrg(org)")
+                                a {{::org.name}}
+            div.panel.panel-default(toggle-class="in", toggle-element="panel-heading", action-class="collapse")
+                div.panel-heading()
+                    h4.panel-title
+                        a(href='javascript:void(0);') 分公司集
+                            i.fa.fa-angle-down.pull-right.toggle-fa
+                            i.fa.fa-angle-right.pull-right.toggle-fa-x
+                div.panel-collapse.collapse.in()
+                    div.panel-body
+                        ul
+                            li(ng-repeat="org in ctrl.orgs | filterBy: ['nodeType']: 'branch'"
+                                ng-click="ctrl.setCurrentOrg(org)")
+                                a {{::org.name}}
     .app-aside.org-aside.hidden-xs.bg-white-opacity.pull-right
         .org-row(ui-view='sub')
 
@@ -101,22 +90,6 @@ div(ng-controller="OrgsController as ctrl")
                     ng-click="ctrl.setCurrentOrg(org)")
                     a {{org.name}}
     .org-chart.col-md-5
-        table
-            thead
-                tr
-                    th 机构名
-                    th 状态
-            tbody
-                tr(ng-repeat="item in ctrl.orgs")
-                    td {{item.name}}
-                    td {{item.status}}
-
-        //- div#org_chart(org-chart)
-        form(name="active_form" ng-submit="ctrl.active(active_form, active)")
-            input(type="text" name="log_title" ng-model="active.log_title" placeholder="操作说明")
-            input(type="text" name="oa_file_no" ng-model="active.oa_file_no" placeholder="文件编号" )
-            button(type="submit") 生效
-            button(ng-click="ctrl.revert()") 撤销
 
 
     .org-detail.col-md-3
