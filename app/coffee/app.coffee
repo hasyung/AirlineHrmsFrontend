@@ -42,7 +42,7 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider) ->
     $locationProvider.html5Mode(false)
 
     #default route
-    $urlRouterProvider.otherwise('/')
+    $urlRouterProvider.otherwise('/login')
     $stateProvider
         .state 'home', {
             url: '/'
@@ -52,6 +52,11 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider) ->
             url: '/personnel'
             templateUrl: 'partials/personnel/info.html'
         }
+        .state 'login', {
+            url: '/login'
+            templateUrl: 'partials/auth/login.html'
+        }
+
 
 
 

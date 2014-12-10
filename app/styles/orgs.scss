@@ -1,5 +1,6 @@
 .btn-info { background-color: #07b6e5;}
 .modal-backdrop.in {opacity: 0.4;}
+ul { padding: 0px;}
 .org-aside { width: 340px; background-color: #fff; border-left: 1px solid #dfe4e7;}
 .org-title { position: relative; width: 300px; height: 35px; margin-left: 20px;border-bottom: 1px solid #c6d1d5; margin-top: 20px;}
 .org-title span { width: auto; height: 35px; line-height: 35px; position: absolute;  border-bottom: 1px solid #39b7e9; color: #58656e; font-size: 16px;}
@@ -22,15 +23,22 @@
 .org-dep-badge { width: 24px; height: 72px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border:1px solid #d1dcde; position: absolute; left: 182px;top: 38px;}
 .org-dep-badge a { width: 24px; height: 72px; display: block; text-align: center; line-height: 72px; }
 .org-modal { position: absolute; right: 0px; top: 0px; z-index: 1042; background-color: #fff; min-width: 500px; box-shadow: -5px 0 20px #666;}
-.org-modal-posts { width: 900px;}
-.org-modal-top { height: 51px; line-height: 51px; font-size: 16px;padding: 0 20px; border-bottom: 1px solid #eae9ef;}
+.org-modal-posts { width: 900px;content: "";position: absolute;top: 0;bottom: 0;z-index: 1042;}
+.org-modal-top { height: 51px; line-height: 51px; font-size: 18px;padding: 0 20px; border-bottom: 1px solid #eae9ef;}
 .org-modal-post { padding:20px; background-color: #f2f3f8;}
-.org-modal-posttop { height: 35px; width: inherit;}
+.org-modal-posttop { height: 35px; width: inherit; font-size: 16px;}
 .org-modal-posttop button { float: right; margin-left: 8px;}
 .org-modal-posttop button.btn-info { padding-top: 3px; padding-bottom: 3px;}
 .org-post-table { border:1px solid #e6e6e6;}
-
-
+.org-post-table tr td:first-child { width: 44px;}
+.org-postadd { width: inherit;}
+.org-postadd-step { width: 268px; background-color: #f2f3f8; content: "";position: absolute;top: 51px;bottom: 0;z-index: 1042; float: left;}
+.org-postadd-step li { width: 268px; float: left; padding-left: 20px; padding-right: 20px; height: 63px; line-height: 63px;}
+.org-postadd-step li:hover a,.org-postadd-step li:hover a span,.org-postadd-step li.active a { color: #fff;}
+.org-postadd-step li:hover,.org-postadd-step li.active { background-color: #0ab6e8; color: #fff; transition:all ease 0.3s;}
+.org-postadd-step a { color: #000; display: block;font-size: 16px;}
+.org-postadd-step a span { float: right; line-height: 63px;font-size: 16px;}
+.org-postadd-detail { width: 632px; padding: 20px; }
 
 
 
@@ -51,5 +59,7 @@
 	border-radius: 4px;
 	margin-top:15px;
 }
+
+
 
 

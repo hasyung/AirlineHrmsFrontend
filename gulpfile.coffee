@@ -93,6 +93,8 @@ paths =
         'deps/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js'
         # 'deps/angular-ui-bootstrap-bower/ui-bootstrap.js'
         'deps/angularjs-toaster/toaster.js'
+        'deps/angular-bootstrap/ui-bootstrap-tpls.js'
+        # 'deps/angular-bootstrap/ui-bootstrap.js'
         # 'deps/angular-ui-utils/ui-utils.js'
         # 'deps/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js'
         # 'deps/jasny-bootstrap/dist/js/jasny-bootstrap.js' jasny bootstrap 增强版，提供一些好用组件

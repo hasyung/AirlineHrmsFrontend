@@ -144,18 +144,26 @@ class OrgsController extends nb.Controller
         @orgs = null    #集合
         @editOrg = null # 当前正在修改的机构
         @loadInitialData()
+        @scope.currentJobInfo = null #当前所选择的岗位信息
+        @scope.jobRanks = null
+
+        #for ui status
+        @orgBarOpen = true
+        @jobInfoDialog = false
+
 
         @scope.$on 'select:change', (ctx, location) ->
             scope.currentOrg.location = location
     deleteOrg: ()-> #删除机构
         self = @
-        # onSuccess = ->
+        onSuccess = ->
+            self.scope.$emit('success',"机构：#{self.scope.currentOrg.name} ,删除成功")
 
-        # onError = ->
-        #     self.scope.$emit('nb:error',"")
+        onError = (data, status)->
+            self.scope.$emit 'error', "#{data.message}"
 
-        self.currentOrg.$destroy().$then (data)->
-            self.scope.$emit('success',"机构：#{self.currentOrg.name} ,删除成功")
+        self.scope.currentOrg.$destroy().$then onSuccess, onError
+
 
     loadInitialData: () -> #初始化数据
         self = @
@@ -167,12 +175,24 @@ class OrgsController extends nb.Controller
                     org.nodeType.name = 'manager'
 
                 # self.currentOrg = _.find(orgs, {nodeType: 'manager'})
-                # console.log orgs[0]
-                self.currentOrg = orgs[0]
+                console.log orgs[0]
+                # self.currentOrg = orgs[0]
+        @http.get("/api/enum?key=Department.node_types")
+            .success (data) ->
+                self.scope.jobRanks = data.result
+            .error (data) ->
+                self.scope.$emit 'error', "#{data.message}"
 
     setCurrentOrg: (org) -> #修改当前机构
         id = org.id
         @scope.currentOrg = _.find(@orgs, {id: id})
+        @state.go('^.show')
+
+    setCurrentJobInfo: (jobInfo) ->
+        self = @
+        self.scope.currentJobInfo = jobInfo
+        self.jobInfoDialog = true
+        console.log "test"
 
     newSubOrg: (org) -> #新增子机构
         self = @
@@ -232,7 +252,6 @@ class OrgsController extends nb.Controller
             promise.then onSuccess, onError
 
 
-
 class EffectChangesCtrl
     @.$inject = ['$modalInstance', '$scope']
 
@@ -247,7 +266,6 @@ class EffectChangesCtrl
         @scope.log = {}
         form.$setPristine()
         @dialog.dismiss('cancel')
-
 
 
 
