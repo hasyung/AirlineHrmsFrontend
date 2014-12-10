@@ -59,5 +59,19 @@ ul { padding: 0px;}
 	border-radius: 4px;
 	margin-top:15px;
 }
+.toggle-fa-x{
+	display: none;
+}
+.toggle-fa{
+	display: inline-block;
+}
+
+.in-active .toggle-fa-x{
+	display: inline-block;
+}
+.in-active .toggle-fa{
+	display: none;
+}
+
 
 

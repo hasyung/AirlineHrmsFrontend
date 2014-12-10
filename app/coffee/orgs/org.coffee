@@ -135,22 +135,30 @@ class Route
 
 class OrgsController extends nb.Controller
 
-    @.$inject = ['Org', '$stateParams', '$state', '$scope', 'toaster']
+
+    @.$inject = ['Org', '$http','$stateParams', '$state', '$scope']
 
 
-    constructor: (@Org, @params, @state, @scope, @toaster)->
+    constructor: (@Org, @http, @params, @state, @scope, @toaster)->
         @scope.currentOrg = null #当前选中机构
         @orgs = null    #集合
         @editOrg = null # 当前正在修改的机构
         @loadInitialData()
+        @orgBarOpen = true
+
 
         @scope.$on 'select:change', (ctx, location) ->
             scope.currentOrg.location = location
     deleteOrg: ->
-        if @currentOrg
-            @currentOrg.$destroy()
-        else
-            @toaster.pop({type: 'error', title: "通知", body:"删除失败"})
+        self = @
+        onSuccess = ->
+            self.scope.$emit('success',"机构：#{self.scope.currentOrg.name} ,删除成功")
+
+        onError = (data, status)->
+            self.scope.$emit 'error', "#{data.message}"
+
+        self.scope.currentOrg.$destroy().$then onSuccess, onError
+            
 
     loadInitialData: () ->
         self = @
@@ -162,6 +170,14 @@ class OrgsController extends nb.Controller
                     org.nodeType.name = 'manager'
 
                 # self.currentOrg = _.find(orgs, {nodeType: 'manager'})
+                console.log orgs[0]
+                # self.currentOrg = orgs[0]
+
+    setCurrentOrg: (org) ->
+        state = @state
+        id = org.id
+        @scope.currentOrg = _.find(@orgs, {id: id})
+        state.go('^.show')
 
     newSubOrg: (org) ->
         self = @
@@ -179,29 +195,44 @@ class OrgsController extends nb.Controller
     # edit: (orgId) ->
     #     @state.go('^.edit',{parentId: orgId})
 
-
     update: (org) ->
-
+        self = @
         onSuccess = ->
             self.state.go('^.show')
 
         onError = (data, status)->
-            scope.$emit 'error'
+            self.scope.$emit 'error'
 
         org.$save().$then onSuccess, onError
 
+    revert: () ->
+        self = @
+        onSuccess = ->
+            self.orgs = self.Org.$search()
+            self.scope.$emit 'success', '撤销成功'
+
+        onError = (data, status)->
+            self.scope.$emit 'error', "#{data.message}"
+
+        promise = @http.post '/api/departments/revert'
+        promise.then onSuccess, onError
 
 
-# class OrgCtrl
-#     @.$inject = ['$scope', 'Org']
+    active: (form, data) ->
+        self = @
+        onSuccess = ->
+            self.orgs = self.Org.$search()
+            self.scope.$emit 'success', '更改已生效'
 
-#     constructor: () ->
+        onError = (data, status)->
+            self.scope.$emit 'error', "#{data.message}"
 
-#     newsub: () ->
+        promise = @http.post '/api/departments/active', data
+        promise.then onSuccess, onError
 
-#     update: () ->
-
-#     remove: () ->
+    toggleOrgBar: ()->
+        self = @
+        self.orgBarOpen = ! self.orgBarOpen
 
 
 

@@ -1,84 +1,84 @@
-//OA日志 弹出层开始
-#myModal.modal.fade.in(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='false', style='display: block;')
-  .modal-dialog
-    .modal-content
-      .modal-header
-        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-        h4.modal-title Edit Media Gallery
-      .modal-body.row
-        .col-md-7
-          .form-group
-            label  Name
-            input#name.form-control(value='img01.jpg')
-          .form-group
-            label  Tittle Text
-            input#title.form-control(value='awesome image')
-          .form-group
-            label  Description
-            textarea.form-control(rows='2')
-          .form-group
-            label  Link URL
-            input#link.form-control(value='images/gallery/img01.jpg')
-          .pull-right
-            button.btn.btn-danger(type='button') Delete
-            button.btn.btn-primary(type='button') Save changes
-
-//OA日志 弹出层结束
-
+.modal-backdrop.fade.in(style="display:none;")
+.org-modal.org-modal-posts(style="display:none;")
+    .org-modal-top 这里是顶部标题
+    .org-modal-post
+        .org-modal-posttop 岗位信息列表
+            button.btn.btn-default.fa.fa-trash-o(title="删除",)
+            button.btn.btn-default.fa.fa-pencil(title="编辑")
+            button.btn.btn-default.fa.fa-cog(title="新增子机构")
+            button.btn.btn-info 调整机构
+        table.table.table-striped.ng-scope.org-post-table
+          tbody
+            tr
+              td 岗位名称
+              td  编制
+              td  在编人数
+              td 岗位名称
+              td  编制
+              td  在编人数
+            tr
+              td.org-post 总经理
+              td  3
+              td  2
+              td 岗位名称
+              td  编制
+              td  在编人数
+            tr
+              td.org-post 主任
+              td  2
+              td  1
+              td 岗位名称
+              td  编制
+              td  在编人数
+            tr
+              td.org-post 副主任
+              td  2
+              td  2
+              td 岗位名称
+              td  编制
+              td  在编人数
 div(ng-controller="OrgsController as ctrl")
-    .app-aside.org-dep.hidden-xs.bg-white-opacity.pull-left
+    .app-aside.org-dep.hidden-xs.bg-white-opacity.pull-left(ng-class="{'active': ctrl.orgBarOpen}")
         .org-dep-badge
-            a.fa.fa-chevron-right(href="#")
-          //a.fa.fa-chevron-left(href="#")  是箭头朝左
+            //- a.fa.fa-chevron-right(href="javascript:void(0);")
+            a.toggle-bar.fa(ng-class="{true: 'fa-chevron-right', false: 'fa-chevron-left'}[ctrl.orgBarOpen]" href="javascript:void(0);", ng-click="ctrl.toggleOrgBar()")
         div.panel-group
-          div.panel.panel-default
-            div.panel-heading
-              h4.panel-title
-                a(href='/') 一级正
-                    i.fa.fa-angle-down.pull-right
-            div.panel-collapse.collapse.in
-              div.panel-body
-                 ul
-                    li
-                        a 总经理工作部
-                    li
-                        a 人力资源部
-                    li
-                        a 计划财务部
-                    li
-                        a 企划管理部
-                    li
-                        a 航空安全监察部
-                    li
-                        a 标准管理部
-                    li
-                        a 品牌质量管理部
-                    li
-                        a 飞行技术管理部
-                    li
-                        a 保卫部
-                    li
-                        a 企业文化部
-                    li
-                        a 飞行部
-                    li
-                        a 机务工程部
-                    li
-                        a 运行控制中心
-           div.panel.panel-default
-            div.panel-heading
-              h4.panel-title
-                a(href='/') 一级副
-                    i.fa.fa-angle-right.pull-right
-            div.panel-collapse.collapse.in
-              div.panel-body 一级副栏目
-           div.panel.panel-default
-            div.panel-heading
-              h4.panel-title
-                a(href='/') 分公司集
-                    i.fa.fa-angle-right.pull-right
-            div.panel-collapse.collapse.in
-              div.panel-body 分公司集栏目
+            div.panel.panel-default(toggle-class="in", toggle-element="panel-heading", action-class="collapse")
+                div.panel-heading()
+                    h4.panel-title
+                        a(href='javascript:void(0);') 一级正
+                            i.fa.fa-angle-down.pull-right.toggle-fa
+                            i.fa.fa-angle-right.pull-right.toggle-fa-x
+
+                div.panel-collapse.collapse.in()
+                    div.panel-body
+                        ul
+                            li(ng-repeat="org in ctrl.orgs | filterBy: ['nodeType']: 'internal'" ng-click="ctrl.setCurrentOrg(org)")
+                                a {{::org.name}}
+            div.panel.panel-default(toggle-class="in", toggle-element="panel-heading", action-class="collapse")
+                div.panel-heading()
+                    h4.panel-title
+                        a(href='javascript:void(0);') 一级副
+                            i.fa.fa-angle-down.pull-right.toggle-fa
+                            i.fa.fa-angle-right.pull-right.toggle-fa-x
+                div.panel-collapse.collapse.in()
+                    div.panel-body
+                        ul
+                            li(ng-repeat="org in ctrl.orgs | filterBy: ['nodeType']: 'external'"
+                                ng-click="ctrl.setCurrentOrg(org)")
+                                a {{::org.name}}
+            div.panel.panel-default(toggle-class="in", toggle-element="panel-heading", action-class="collapse")
+                div.panel-heading()
+                    h4.panel-title
+                        a(href='javascript:void(0);') 分公司集
+                            i.fa.fa-angle-down.pull-right.toggle-fa
+                            i.fa.fa-angle-right.pull-right.toggle-fa-x
+                div.panel-collapse.collapse.in()
+                    div.panel-body
+                        ul
+                            li(ng-repeat="org in ctrl.orgs | filterBy: ['nodeType']: 'branch'"
+                                ng-click="ctrl.setCurrentOrg(org)")
+                                a {{::org.name}}
     .app-aside.org-aside.hidden-xs.bg-white-opacity.pull-right
         .org-row(ui-view='sub')
 
@@ -86,9 +86,9 @@ div(ng-controller="OrgsController as ctrl")
         div#org_tree
             ul
                 li( ng-repeat="org in ::ctrl.orgs | filterBy: ['nodeType']: 'internal'"
-                    ng-click="load()")
+                    ng-click="ctrl.setCurrentOrg(org)")
                     a {{org.name}}
     .org-chart.col-md-5
-        | 123
-        //- div#org_chart(org-chart)
+
+
     .org-detail.col-md-3

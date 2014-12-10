@@ -58,10 +58,13 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider) ->
 App
     .config ['restmodProvider', restConf]
     .config ['$stateProvider','$urlRouterProvider','$locationProvider',routeConf]
-    .run ['$state','$rootScope', ($state, $rootScope) ->
+    .run ['$state','$rootScope', 'toaster', ($state, $rootScope, toaster) ->
         # for $state.includes in view
         $rootScope.$on '$stateChangeSuccess', (evt, to) ->
             console.debug "stateChangeSuccess: to ", to
+
+        $rootScope.$on 'success', (code, info)->
+            toaster.pop(code.name, "提示", info)
 
 
     ]

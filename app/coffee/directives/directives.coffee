@@ -153,18 +153,29 @@ angular.module 'nb.directives', []
                     elem.toggleClass 'active'
         }
     ]
-
+    #存在缺陷，有待优化
     .directive 'toggleClass', [() ->
         return {
             scope: {}
             restrict: 'A'
             link: (scope,elem,attr) ->
                 toggleText = if attr.toggleClass then attr.toggleClass else 'active'
+                actionElement = {}
 
-                # for nav list
-                elem.on 'click', (event) ->
-                    event.preventDefault()
-                    elem.toggleClass toggleText
+                if attr.actionClass
+                    actionElement = elem.find('.' + attr.actionClass)
+                else
+                    actionElement = elem
+                if attr.toggleElement
+                    elem.on 'click', '.' + attr.toggleElement, (event) ->
+                        event.preventDefault()
+                        elem.toggleClass 'in-active'
+                        actionElement.toggleClass toggleText
+                else
+                    elem.on 'click', (event) ->
+                        event.preventDefault()
+                        elem.toggleClass 'in-active'
+                        actionElement.toggleClass toggleText
         }
     ]
     .directive 'nbCheck', [()->
@@ -434,7 +445,7 @@ angular.module 'nb.directives', []
             #     console.debug "formatters : ", inputVal
             #     return inputVal
 
-            scope.$watch 'dropdown.selected', (newVal) ->
+            scope.$watch 'selected', (newVal) ->
                 console.debug 'selected:change', newVal
                 scope.selected = newVal
                 ngModelCtrl.$render()
