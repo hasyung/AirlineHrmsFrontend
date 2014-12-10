@@ -1,0 +1,58 @@
+.modal-backdrop.fade.in
+.org-modal.org-modal-posts
+    .org-modal-top 人力资源部岗位管理 > 新增岗位
+    .org-postadd
+        .org-postadd-step.pull-left
+            ul
+                li.active
+                    a(href="#") 填写基本信息
+                        span.fa.fa-angle-right
+                li
+                    a(href="#") 设置薪酬
+                        span.fa.fa-angle-right
+                li
+                    a(href="#") 设置绩效
+                        span.fa.fa-angle-right
+                 li
+                   a(href="#") 完成
+                        span.fa.fa-angle-right
+        .org-postadd-detail.pull-right
+            form.form-horizontal.bucket-form(method='get')
+                .form-group
+                    label.col-lg-3.control-label 岗位名称
+                    .col-lg-8
+                        input.form-control(type='text', placeholder='岗位名称')
+                .form-group
+                    label.col-lg-3.control-label 岗位通道
+                    .col-lg-8
+                        select.form-control.m-bot15
+                          option 管理
+                          option 普通职工
+                .form-group
+                    label.col-lg-3.control-label 工作时间
+                    .col-lg-8
+                        select.form-control.m-bot15
+                          option 标准工作制
+                          option 倒班制
+                .form-group
+                    label.col-lg-3.control-label OA文件编号
+                    .col-lg-8
+                        input.form-control(type='text', placeholder='川0144450')
+                .form-group
+                    label.col-lg-3.control-label 编制数
+                    .col-lg-8
+                        input.form-control(type='text', placeholder='1')
+                .form-group
+                    label.col-lg-3.control-label 所在部门
+                    .col-lg-8 人力资源部
+                .form-group
+                    label.col-lg-3.control-label 创建时间
+                    .col-lg-8 2014-05-10
+                .form-group
+                    label.col-lg-3.control-label 描述书
+                    div.col-lg-8
+                        textarea.form-control(rows='6')
+                .form-group
+                    label.col-lg-3.control-label
+                    div.col-lg-8
+                        button.btn.btn-info(type='submit') 保存并下一步
