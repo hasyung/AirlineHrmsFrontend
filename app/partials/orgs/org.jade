@@ -1,5 +1,5 @@
-.modal-backdrop.fade.in(style="display:none;")
-.org-modal.org-modal-posts(style="display:none;")
+.modal-backdrop.fade.in(ng-class="{'hidden': !ctrl.jobInfoDialog}")
+.org-modal.org-modal-posts(ng-class="{'hidden': !ctrl.jobInfoDialog}")
     .org-modal-top 这里是顶部标题
     .org-modal-post
         .org-modal-posttop 岗位信息列表
@@ -43,42 +43,54 @@ div(ng-controller="OrgsController as ctrl")
             //- a.fa.fa-chevron-right(href="javascript:void(0);")
             a.toggle-bar.fa(ng-class="{true: 'fa-chevron-right', false: 'fa-chevron-left'}[ctrl.orgBarOpen]" href="javascript:void(0);", ng-click="ctrl.toggleOrgBar()")
         div.panel-group
-            div.panel.panel-default(toggle-class="in", toggle-element="panel-heading", action-class="collapse")
-                div.panel-heading()
+            div.panel.panel-default(toggle-class="in", toggle-element="panel-heading", action-class="collapse", ng-repeat="jobRank in ctrl.scope.jobRanks")
+              div.panel-heading()
                     h4.panel-title
-                        a(href='javascript:void(0);') 一级正
+                        a(href='javascript:void(0);') {{::jobRank}}
                             i.fa.fa-angle-down.pull-right.toggle-fa
                             i.fa.fa-angle-right.pull-right.toggle-fa-x
 
-                div.panel-collapse.collapse.in()
-                    div.panel-body
-                        ul
-                            li(ng-repeat="org in ctrl.orgs | filterBy: ['nodeType']: 'internal'" ng-click="ctrl.setCurrentOrg(org)")
-                                a {{::org.name}}
-            div.panel.panel-default(toggle-class="in", toggle-element="panel-heading", action-class="collapse")
-                div.panel-heading()
-                    h4.panel-title
-                        a(href='javascript:void(0);') 一级副
-                            i.fa.fa-angle-down.pull-right.toggle-fa
-                            i.fa.fa-angle-right.pull-right.toggle-fa-x
-                div.panel-collapse.collapse.in()
-                    div.panel-body
-                        ul
-                            li(ng-repeat="org in ctrl.orgs | filterBy: ['nodeType']: 'external'"
-                                ng-click="ctrl.setCurrentOrg(org)")
-                                a {{::org.name}}
-            div.panel.panel-default(toggle-class="in", toggle-element="panel-heading", action-class="collapse")
-                div.panel-heading()
-                    h4.panel-title
-                        a(href='javascript:void(0);') 分公司集
-                            i.fa.fa-angle-down.pull-right.toggle-fa
-                            i.fa.fa-angle-right.pull-right.toggle-fa-x
-                div.panel-collapse.collapse.in()
-                    div.panel-body
-                        ul
-                            li(ng-repeat="org in ctrl.orgs | filterBy: ['nodeType']: 'branch'"
-                                ng-click="ctrl.setCurrentOrg(org)")
-                                a {{::org.name}}
+              div.panel-collapse.collapse.in()
+                  div.panel-body
+                      ul
+                          li(ng-repeat="org in ctrl.orgs | filterBy: ['nodeType']: jobRank" ng-click="ctrl.setCurrentOrg(org)")
+                              a {{::org.name}}
+            //- div.panel.panel-default(toggle-class="in", toggle-element="panel-heading", action-class="collapse")
+            //-     div.panel-heading()
+            //-         h4.panel-title
+            //-             a(href='javascript:void(0);') 一级正
+            //-                 i.fa.fa-angle-down.pull-right.toggle-fa
+            //-                 i.fa.fa-angle-right.pull-right.toggle-fa-x
+
+            //-     div.panel-collapse.collapse.in()
+            //-         div.panel-body
+            //-             ul
+            //-                 li(ng-repeat="org in ctrl.orgs | filterBy: ['nodeType']: 'internal'" ng-click="ctrl.setCurrentOrg(org)")
+            //-                     a {{::org.name}}
+            //- div.panel.panel-default(toggle-class="in", toggle-element="panel-heading", action-class="collapse")
+            //-     div.panel-heading()
+            //-         h4.panel-title
+            //-             a(href='javascript:void(0);') 一级副
+            //-                 i.fa.fa-angle-down.pull-right.toggle-fa
+            //-                 i.fa.fa-angle-right.pull-right.toggle-fa-x
+            //-     div.panel-collapse.collapse.in()
+            //-         div.panel-body
+            //-             ul
+            //-                 li(ng-repeat="org in ctrl.orgs | filterBy: ['nodeType']: 'external'"
+            //-                     ng-click="ctrl.setCurrentOrg(org)")
+            //-                     a {{::org.name}}
+            //- div.panel.panel-default(toggle-class="in", toggle-element="panel-heading", action-class="collapse")
+            //-     div.panel-heading()
+            //-         h4.panel-title
+            //-             a(href='javascript:void(0);') 分公司集
+            //-                 i.fa.fa-angle-down.pull-right.toggle-fa
+            //-                 i.fa.fa-angle-right.pull-right.toggle-fa-x
+            //-     div.panel-collapse.collapse.in()
+            //-         div.panel-body
+            //-             ul
+            //-                 li(ng-repeat="org in ctrl.orgs | filterBy: ['nodeType']: 'branch'"
+            //-                     ng-click="ctrl.setCurrentOrg(org)")
+            //-                     a {{::org.name}}
     .app-aside.org-aside.hidden-xs.bg-white-opacity.pull-right
         .org-row(ui-view='sub')
 
@@ -87,7 +99,7 @@ div(ng-controller="OrgsController as ctrl")
             ul
                 li( ng-repeat="org in ::ctrl.orgs | filterBy: ['nodeType']: 'internal'"
                     ng-click="ctrl.setCurrentOrg(org)")
-                    a {{org.name}}
+                    a {{::org.name}}
     .org-chart.col-md-5
 
 
