@@ -144,7 +144,12 @@ class OrgsController extends nb.Controller
         @orgs = null    #集合
         @editOrg = null # 当前正在修改的机构
         @loadInitialData()
+        @scope.currentJobInfo = null #当前所选择的岗位信息
+        @scope.jobRanks = null
+
+        #for ui status
         @orgBarOpen = true
+        @jobInfoDialog = false
 
 
         @scope.$on 'select:change', (ctx, location) ->
@@ -172,12 +177,23 @@ class OrgsController extends nb.Controller
                 # self.currentOrg = _.find(orgs, {nodeType: 'manager'})
                 console.log orgs[0]
                 # self.currentOrg = orgs[0]
+        @http.get("/api/enum?key=Department.node_types")
+            .success (data) ->
+                self.scope.jobRanks = data.result
+            .error (data) ->
+                self.scope.$emit 'error', "#{data.message}"
 
     setCurrentOrg: (org) ->
         state = @state
         id = org.id
         @scope.currentOrg = _.find(@orgs, {id: id})
         state.go('^.show')
+
+    setCurrentJobInfo: (jobInfo) ->
+        self = @
+        self.scope.currentJobInfo = jobInfo
+        self.jobInfoDialog = true
+        console.log "test"
 
     newSubOrg: (org) ->
         self = @
@@ -230,9 +246,14 @@ class OrgsController extends nb.Controller
         promise = @http.post '/api/departments/active', data
         promise.then onSuccess, onError
 
+    #控制view显示效果
     toggleOrgBar: ()->
         self = @
         self.orgBarOpen = ! self.orgBarOpen
+
+    closeJobInfoDialog: () ->
+        self = @
+        self.jobInfoDialog = false
 
 
 
