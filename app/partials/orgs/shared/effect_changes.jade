@@ -1,0 +1,9 @@
+form(name="active_form" ng-submit="eff.ok(active_form)")
+    .modal-header
+        h3.modal-title I'm a modal!
+    .modal-body
+            input(type="text" name="log_title" ng-model="log.log_title" placeholder="操作说明")
+            input(type="text" name="oa_file_no" ng-model="log.oa_file_no" placeholder="文件编号" )
+    .modal-footer
+        button.btn.btn-primary(type="submit") OK
+        button.btn.btn-warning(ng-click='eff.cancel($event, active_form)') Cancel

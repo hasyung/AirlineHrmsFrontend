@@ -136,10 +136,10 @@ class Route
 class OrgsController extends nb.Controller
 
 
-    @.$inject = ['Org', '$http','$stateParams', '$state', '$scope']
+    @.$inject = ['Org', '$http','$stateParams', '$state', '$scope', '$modal']
 
 
-    constructor: (@Org, @http, @params, @state, @scope, @toaster)->
+    constructor: (@Org, @http, @params, @state, @scope, @modal)->
         @scope.currentOrg = null #当前选中机构
         @orgs = null    #集合
         @editOrg = null # 当前正在修改的机构
@@ -147,7 +147,7 @@ class OrgsController extends nb.Controller
 
         @scope.$on 'select:change', (ctx, location) ->
             scope.currentOrg.location = location
-    deleteOrg: ->
+    deleteOrg: ()-> #删除机构
         self = @
         # onSuccess = ->
 
@@ -157,7 +157,7 @@ class OrgsController extends nb.Controller
         self.currentOrg.$destroy().$then (data)->
             self.scope.$emit('success',"机构：#{self.currentOrg.name} ,删除成功")
 
-    loadInitialData: () ->
+    loadInitialData: () -> #初始化数据
         self = @
         @Org.$search()
             .$then (orgs) ->
@@ -170,11 +170,11 @@ class OrgsController extends nb.Controller
                 # console.log orgs[0]
                 self.currentOrg = orgs[0]
 
-    setCurrentOrg: (org) ->
+    setCurrentOrg: (org) -> #修改当前机构
         id = org.id
         @scope.currentOrg = _.find(@orgs, {id: id})
 
-    newSubOrg: (org) ->
+    newSubOrg: (org) -> #新增子机构
         self = @
         state = @state
         parentId = @params.parentId
@@ -190,7 +190,7 @@ class OrgsController extends nb.Controller
     # edit: (orgId) ->
     #     @state.go('^.edit',{parentId: orgId})
 
-    update: (org) ->
+    update: (org) -> #修改机构信息
         self = @
         onSuccess = ->
             self.state.go('^.show')
@@ -222,9 +222,31 @@ class OrgsController extends nb.Controller
         onError = (data, status)->
             self.scope.$emit 'error', "#{data.message}"
 
-        promise = @http.post '/api/departments/active', data
-        promise.then onSuccess, onError
+        dialog = @modal.open {
+            templateUrl: 'partials/orgs/shared/effect_changes.html'
+            controller: EffectChangesCtrl
+            controllerAs: 'eff'
+        }
+        dialog.result.then (formdata) ->
+            promise = self.http.post '/api/departments/active', formdata
+            promise.then onSuccess, onError
 
+
+
+class EffectChangesCtrl
+    @.$inject = ['$modalInstance', '$scope']
+
+    constructor: (@dialog, @scope) ->
+        @scope.log = {}
+
+    ok: (formdata)->
+        @dialog.close(@scope.log)
+
+    cancel: (evt,form)->
+        evt.preventDefault()
+        @scope.log = {}
+        form.$setPristine()
+        @dialog.dismiss('cancel')
 
 
 

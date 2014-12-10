@@ -458,6 +458,48 @@ angular.module 'nb.directives', []
 
         }
     ]
+
+    # .directive 'nbDialog', ['$modal', ($modal) ->
+
+    #     postLink = (scope, elem, attrs) ->
+
+    #         modalInstance =  $modal.open {
+    #             template: () ->
+    #                 elem.html()
+    #             scope: scope
+    #             size:  attrs.size || 'sm'
+    #         }
+
+    #         modalInstance.result.then
+
+    # ]
+
+
+
+
+
+# '''
+# nb-dialog(title="提示")
+#     form
+#         input(name="username")
+#         input(name="password")
+#     ok(nb-click="abc()")
+#     cancel(cancel="")
+#     button(ng-click="ok()")
+#     cancel(ng-click="cancel")
+# '''
+
+# $modal.open {
+#     templateUrl: () ->
+#         return element.find('dialog-body').html()
+#     scope: scope
+
+
+# }
+
+# app.directive
+
+
     # .directive 'nbSelect', ['$http', ($http) ->
 
 
