@@ -154,30 +154,30 @@ angular.module 'nb.directives', []
         }
     ]
     #存在缺陷，有待优化
-    .directive 'toggleClass', [() ->
-        return {
-            scope: {}
-            restrict: 'A'
-            link: (scope,elem,attr) ->
-                toggleText = if attr.toggleClass then attr.toggleClass else 'active'
-                actionElement = {}
+    # .directive 'toggleClass', [() ->
+    #     return {
+    #         scope: {}
+    #         restrict: 'A'
+    #         link: (scope,elem,attr) ->
+    #             toggleText = if attr.toggleClass then attr.toggleClass else 'active'
+    #             actionElement = {}
 
-                if attr.actionClass
-                    actionElement = elem.find('.' + attr.actionClass)
-                else
-                    actionElement = elem
-                if attr.toggleElement
-                    elem.on 'click', '.' + attr.toggleElement, (event) ->
-                        event.preventDefault()
-                        elem.toggleClass 'in-active'
-                        actionElement.toggleClass toggleText
-                else
-                    elem.on 'click', (event) ->
-                        event.preventDefault()
-                        elem.toggleClass 'in-active'
-                        actionElement.toggleClass toggleText
-        }
-    ]
+    #             if attr.actionClass
+    #                 actionElement = elem.find('.' + attr.actionClass)
+    #             else
+    #                 actionElement = elem
+    #             if attr.toggleElement
+    #                 elem.on 'click', '.' + attr.toggleElement, (event) ->
+    #                     event.preventDefault()
+    #                     elem.toggleClass 'in-active'
+    #                     actionElement.toggleClass toggleText
+    #             else
+    #                 elem.on 'click', (event) ->
+    #                     event.preventDefault()
+    #                     elem.toggleClass 'in-active'
+    #                     actionElement.toggleClass toggleText
+    #     }
+    # ]
     .directive 'nbCheck', [()->
         return {
             restrict: 'AC'
