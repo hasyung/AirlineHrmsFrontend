@@ -1,20 +1,20 @@
-
-.modal-dialog
-    .modal-content
-      .modal-header
-        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-        h4.modal-title 提示
-      .modal-body.row
-        .col-md-3
-          .form-group
-            label  OA文件名：
-            input#name.form-control
-          .form-group
-            label  整体日志：
-            textarea.form-control(rows='2')
-          .pull-right
-            button.btn.btn-danger(type='button') 取消
-            button.btn.btn-primary(type='button') 确定
+#myModal.modal.fade.in(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='false', style='display: block;')
+    .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+            h4.modal-title 提示
+          .modal-body.row
+            .col-md-3
+              .form-group
+                label  OA文件名：
+                input#name.form-control
+              .form-group
+                label  整体日志：
+                textarea.form-control(rows='2')
+              .pull-right
+                button.btn.btn-danger(type='button') 取消
+                button.btn.btn-primary(type='button') 确定
 
 
 .modal-backdrop.fade.in(style="display:none;")
