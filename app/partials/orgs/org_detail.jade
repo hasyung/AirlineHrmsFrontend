@@ -24,7 +24,7 @@
        .ol-lg-5 {{currentOrg.nodeType}}
 .org-title
     span 下属岗位信息
-    button.btn.btn-default.fa.fa-cog(title="设置")
+    button.btn.btn-default.fa.fa-cog(title="设置" ng-click="ctrl.openPositionPanel(currentOrg.id)")
 table.table.table-striped.org-table
     tbody
        tr

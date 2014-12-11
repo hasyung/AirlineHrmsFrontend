@@ -136,10 +136,10 @@ class Route
 class OrgsController extends nb.Controller
 
 
-    @.$inject = ['Org', '$http','$stateParams', '$state', '$scope', '$modal']
+    @.$inject = ['Org', '$http','$stateParams', '$state', '$scope', '$modal', '$panel']
 
 
-    constructor: (@Org, @http, @params, @state, @scope, @modal)->
+    constructor: (@Org, @http, @params, @state, @scope, @modal, @panel)->
         @scope.currentOrg = null #当前选中机构
         @orgs = null    #集合
         @editOrg = null # 当前正在修改的机构
@@ -252,8 +252,19 @@ class OrgsController extends nb.Controller
             promise.then onSuccess, onError
 
 
+    openPositionPanel: (orgId) ->
+
+        self = @
+        panel = @panel.open {
+            templateUrl: 'partials/orgs/position.html'
+            controller: PositionCtrl
+            controllerAs: 'pos'
+        }
+
+
+
 class EffectChangesCtrl
-    @.$inject = ['$modalInstance', '$scope']
+    @.$inject = ['$panelInstance', '$scope']
 
     constructor: (@dialog, @scope) ->
         @scope.log = {}
@@ -266,6 +277,14 @@ class EffectChangesCtrl
         @scope.log = {}
         form.$setPristine()
         @dialog.dismiss('cancel')
+
+
+class PositionCtrl extends nb.Controller
+
+
+
+
+
 
 
 
