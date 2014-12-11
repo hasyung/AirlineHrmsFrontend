@@ -23,9 +23,9 @@ div(ng-controller="OrgsController as ctrl")
                     ng-click="ctrl.setCurrentOrg(org)")
                     a {{::org.name}}
     .org-chart.col-md-5
-
-        button(ng-click="ctrl.active()") 生效
-        button(ng-click="ctrl.revert()") 撤销
+        div(ng-show="ctrl.org_modified")
+            button(ng-click="ctrl.active()") 生效
+            button(ng-click="ctrl.revert()") 撤销
 
 
     .org-detail.col-md-3
