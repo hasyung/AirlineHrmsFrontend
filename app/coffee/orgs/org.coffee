@@ -149,7 +149,6 @@ class OrgsController extends nb.Controller
 
         #for ui status
         @orgBarOpen = true
-        @jobInfoDialog = false
 
 
         @scope.$on 'select:change', (ctx, location) ->
@@ -260,7 +259,6 @@ class OrgsController extends nb.Controller
             controller: PositionCtrl
             controllerAs: 'pos'
         }
-
 
 class EffectChangesCtrl
     @.$inject = ['$modalInstance', '$scope']

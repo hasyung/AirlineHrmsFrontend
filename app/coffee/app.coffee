@@ -42,7 +42,7 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider) ->
     $locationProvider.html5Mode(false)
 
     #default route
-    $urlRouterProvider.otherwise('/login')
+    $urlRouterProvider.otherwise('/')
     $stateProvider
         .state 'home', {
             url: '/'
@@ -56,14 +56,18 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider) ->
             url: '/login'
             templateUrl: 'partials/auth/login.html'
         }
+        .state 'sigup', {
+            url: '/sigup'
+            templateUrl: 'partials/auth/sigup.html'
+        }
 
-
+    
 
 
 App
     .config ['restmodProvider', restConf]
     .config ['$stateProvider','$urlRouterProvider','$locationProvider',routeConf]
-    .run ['$state','$rootScope', 'toaster', ($state, $rootScope, toaster) ->
+    .run ['$state','$rootScope', 'toaster', '$http', ($state, $rootScope, toaster, $http) ->
         # for $state.includes in view
         $rootScope.$on '$stateChangeSuccess', (evt, to) ->
             console.debug "stateChangeSuccess: to ", to
