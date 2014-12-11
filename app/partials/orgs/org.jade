@@ -2,7 +2,7 @@ div(ng-controller="OrgsController as ctrl")
     .app-aside.org-dep.hidden-xs.bg-white-opacity.pull-left(ng-class="{'active': ctrl.orgBarOpen}")
         .org-dep-badge
             //- a.fa.fa-chevron-right(href="javascript:void(0);")
-            a.toggle-bar.fa(ng-class="{true: 'fa-chevron-right', false: 'fa-chevron-left'}[ctrl.orgBarOpen]" href="javascript:void(0);", ng-click="ctrl.toggleOrgBar()")
+            a.toggle-bar.fa(ng-class="{true: 'fa-chevron-right', false: 'fa-chevron-left'}[ctrl.orgBarOpen]" href="javascript:void(0);", ng-click="ctrl.orgBarOpen = !ctrl.orgBarOpen")
         accordion
           accordion-group(is-open="status.open", ng-repeat="jobRank in ctrl.scope.jobRanks")
             accordion-heading {{::jobRank}}
@@ -23,9 +23,9 @@ div(ng-controller="OrgsController as ctrl")
                     ng-click="ctrl.setCurrentOrg(org)")
                     a {{::org.name}}
     .org-chart.col-md-5
-
-        button(ng-click="ctrl.active()") 生效
-        button(ng-click="ctrl.revert()") 撤销
+        div(ng-show="ctrl.org_modified")
+            button(ng-click="ctrl.active()") 生效
+            button(ng-click="ctrl.revert()") 撤销
 
 
     .org-detail.col-md-3
