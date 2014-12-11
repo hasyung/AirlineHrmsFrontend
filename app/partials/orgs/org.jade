@@ -1,5 +1,5 @@
-.modal-backdrop.fade.in
-.org-modal.org-modal-posts
+.modal-backdrop.fade.in(style="display:none;")
+.org-modal.org-modal-posts(style="display:none;")
     .org-modal-top 这里是顶部标题
     .org-modal-post
         .org-modal-posttop 岗位信息列表
@@ -37,7 +37,7 @@
               td 岗位名称
               td  编制
               td  在编人数
-#myModal.modal.fade.in(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='false', style='display: block;')
+#myModal.modal.fade.in(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='false', style='display: none;')
     .modal-dialog
         .modal-content
           .modal-header
@@ -103,7 +103,7 @@ div(ng-controller="OrgsController as ctrl")
     .app-aside.org-dep.hidden-xs.bg-white-opacity.pull-left(ng-class="{'active': ctrl.orgBarOpen}")
         .org-dep-badge
             //- a.fa.fa-chevron-right(href="javascript:void(0);")
-            a.toggle-bar.fa(ng-class="{true: 'fa-chevron-right', false: 'fa-chevron-left'}[ctrl.orgBarOpen]" href="javascript:void(0);", ng-click="ctrl.toggleOrgBar()")
+            a.toggle-bar.fa(ng-class="{true: 'fa-chevron-right', false: 'fa-chevron-left'}[ctrl.orgBarOpen]" href="javascript:void(0);", ng-click="ctrl.orgBarOpen = !ctrl.orgBarOpen")
         accordion
           accordion-group(is-open="status.open", ng-repeat="jobRank in ctrl.scope.jobRanks")
             accordion-heading {{::jobRank}}
