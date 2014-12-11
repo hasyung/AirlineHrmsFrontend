@@ -12,7 +12,7 @@ class LoginController extends nb.Controller
         @scope.currentUser = null #当前用户
 
     loadInitialData: () -> #初始化数据
-        
+
     login: (user) ->
         self = @
         # user.employee_no = user.employee_no + ""
@@ -21,11 +21,11 @@ class LoginController extends nb.Controller
                 self.rootScope.currentUser = user
                 self.http.defaults.headers.common = {token: data.token}
                 self.state.go "home"
-                
+
             .error (data) ->
                 self.$emit 'error', '#{data.message}'
 
-    
+
 
 class SigupController extends nb.Controller
 
@@ -35,10 +35,10 @@ class SigupController extends nb.Controller
 
     constructor: (@http, @params, @state, @scope)->
         @scope.currentUser = null #当前用户
-        
+
 
     loadInitialData: () -> #初始化数据
-        
+
     sigup: (user) ->
         self = @
         # user.employee_no = user.employee_no + ""
