@@ -1,6 +1,10 @@
 .btn-info { background-color: #07b6e5;}
 .modal-backdrop.in {opacity: 0.4;}
 ul { padding: 0px;}
+.panel-content { content: "";position: absolute;top: 0;bottom: 0;z-index: 1042;right: 0px; background-color: #fff; box-shadow: -5px 0 20px #666;}
+.panel-lg { width: 900px;}
+.panel-md { width: 600px;}
+.panel-sm { width: 300px;}
 .org-aside { width: 340px; background-color: #fff; border-left: 1px solid #dfe4e7;}
 .org-title { position: relative; width: 300px; height: 35px; margin-left: 20px;border-bottom: 1px solid #c6d1d5; margin-top: 20px;}
 .org-title span { width: auto; height: 35px; line-height: 35px; position: absolute;  border-bottom: 1px solid #39b7e9; color: #58656e; font-size: 16px;}
@@ -10,7 +14,7 @@ ul { padding: 0px;}
 .org-post { color: #448ecb;}
 .org-btn .btn { width: 88px; height: 34px; margin-top: 30px;}
 .org-btn .btn-default { margin-right: 20px;}
-.org-dep { position: absolute; width: 183px; border-right: 1px solid #d1dcde; border-bottom: 1px solid #d1dcde; left: 200px;}
+.org-dep { position: absolute; width: 183px; border-right: 1px solid #d1dcde; border-bottom: 1px solid #d1dcde; left: 200px; top:51px; bottom:0px;}
 .org-dep .panel-body { padding-right: 0px;}
 .org-dep .panel-body ul {padding-left: 0px; }
 .org-dep .panel-body li { line-height: 35px; height: 35px;}
@@ -22,8 +26,6 @@ ul { padding: 0px;}
 .org-dep .panel-group .panel { border-radius: 0px;}
 .org-dep-badge { width: 24px; height: 72px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border:1px solid #d1dcde; position: absolute; left: 182px;top: 38px;}
 .org-dep-badge a { width: 24px; height: 72px; display: block; text-align: center; line-height: 72px; }
-.org-modal { position: absolute; right: 0px; top: 0px; z-index: 1042; background-color: #fff; min-width: 500px; box-shadow: -5px 0 20px #666;}
-.org-modal-posts { width: 900px;content: "";position: absolute;top: 0;bottom: 0;z-index: 1042;}
 .org-modal-top { height: 51px; line-height: 51px; font-size: 18px;padding: 0 20px; border-bottom: 1px solid #eae9ef;}
 .org-modal-post { padding:20px; background-color: #f2f3f8;}
 .org-modal-posttop { height: 35px; width: inherit; font-size: 16px;}
@@ -59,6 +61,7 @@ ul { padding: 0px;}
 	border-radius: 4px;
 	margin-top:15px;
 }
+
 
 
 

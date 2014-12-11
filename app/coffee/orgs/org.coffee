@@ -140,6 +140,7 @@ class OrgsController extends nb.Controller
 
 
     constructor: (@Org, @http, @params, @state, @scope, @modal, @panel)->
+        self = @
         @scope.currentOrg = null #当前选中机构
         @orgs = null    #集合
         @editOrg = null # 当前正在修改的机构
@@ -149,14 +150,17 @@ class OrgsController extends nb.Controller
 
         #for ui status
         @orgBarOpen = true
+        @org_modified = false
 
 
         @scope.$on 'select:change', (ctx, location) ->
             scope.currentOrg.location = location
+
     deleteOrg: ()-> #删除机构
         self = @
         onSuccess = ->
             self.scope.$emit('success',"机构：#{self.scope.currentOrg.name} ,删除成功")
+            self.org_modified = true
 
         onError = (data, status)->
             self.scope.$emit 'error', "#{data.message}"
@@ -171,11 +175,13 @@ class OrgsController extends nb.Controller
                 self.orgs = orgs
                 #默认选中总经理节点
                 self.scope.currentOrg = _.find orgs, (org) ->
-                    org.nodeType.name = 'manager'
+                    if org.nodeType
+                        org.nodeType.name = 'manager'
 
-                # self.currentOrg = _.find(orgs, {nodeType: 'manager'})
-                console.log orgs[0]
-                # self.currentOrg = orgs[0]
+                self.org_modified = !! _.find self.orgs, (org) ->
+                    /inactive/.test org.status
+
+
         @http.get("/api/enum?key=Department.node_types")
             .success (data) ->
                 self.scope.jobRanks = data.result
@@ -202,6 +208,7 @@ class OrgsController extends nb.Controller
 
         org.$then (org) ->
             self.scope.currentOrg = org
+            self.org_modified = true
             state.go('^.show')
 
 
@@ -212,6 +219,7 @@ class OrgsController extends nb.Controller
     update: (org) -> #修改机构信息
         self = @
         onSuccess = ->
+            self.org_modified = true
             self.state.go('^.show')
 
         onError = (data, status)->
@@ -223,9 +231,11 @@ class OrgsController extends nb.Controller
         self = @
         onSuccess = ->
             self.orgs = self.Org.$search()
+            self.org_modified = false
             self.scope.$emit 'success', '撤销成功'
 
         onError = (data, status)->
+            self.org_modified = true
             self.scope.$emit 'error', "#{data.message}"
 
         promise = @http.post '/api/departments/revert'
@@ -236,9 +246,11 @@ class OrgsController extends nb.Controller
         self = @
         onSuccess = ->
             self.orgs = self.Org.$search()
+            self.org_modified = false
             self.scope.$emit 'success', '更改已生效'
 
         onError = (data, status)->
+            self.org_modified = true
             self.scope.$emit 'error', "#{data.message}"
 
         dialog = @modal.open {
