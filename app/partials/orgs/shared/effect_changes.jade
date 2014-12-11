@@ -1,15 +1,18 @@
-form(name="active_form" ng-submit="eff.ok(active_form)")
+form.form-horizontal(name="active_form" ng-submit="eff.ok(active_form)")
     .modal-header
         button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
         h4.modal-title 提示
     .modal-body.row
-        .col-md-3
         .form-group
-            label  OA文件名：
-            input(type="text" name="log_title" ng-model="log.log_title" placeholder="操作说明")
+            label.col-lg-2.col-sm-2.control-label  OA文件名：
+            .col-lg-10
+                input(type="text" name="log_title" ng-model="log.log_title" placeholder="操作说明")
         .form-group
-            label  整体日志：
-            textarea.form-control(type="text" name="oa_file_no" ng-model="log.oa_file_no" placeholder="文件编号" )
+            label.col-lg-2.col-sm-2.control-label  整体日志：
+            .col-lg-10
+                textarea.form-control(type="text" name="oa_file_no" ng-model="log.oa_file_no" placeholder="文件编号" )
         .pull-right
             button.btn.btn-danger(type='button',ng-click='eff.cancel($event, active_form)') 取消
             button.btn.btn-primary(type='submit') 确定
+
+
