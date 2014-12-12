@@ -250,7 +250,7 @@ angular.module 'nb.directives', []
             triangleBorder = tipElement.find(".triangle-border")
             triangleContent = tipElement.find(".triangle-content")
             options = {scope: scope}
-            options.position = "right"
+            options.position = "left"
             options.space = 16
             options.triangleHeight = 14
             angular.forEach ['position', 'space', 'triangleHeight'], (key)->
