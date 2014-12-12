@@ -245,10 +245,12 @@ angular.module 'nb.directives', []
             $doc = angular.element $window.document
             scope.isShown = false
             tipElement = elem.next()
+            tipElement.append '<span class="triangle-border"></span>'
+            tipElement.append '<span class="triangle-content"></span>'
             triangleBorder = tipElement.find(".triangle-border")
             triangleContent = tipElement.find(".triangle-content")
             options = {scope: scope}
-            options.position = "bottom"
+            options.position = "left"
             options.space = 16
             options.triangleHeight = 14
             angular.forEach ['position', 'space', 'triangleHeight'], (key)->
