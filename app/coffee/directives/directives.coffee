@@ -250,7 +250,7 @@ angular.module 'nb.directives', []
             triangleBorder = tipElement.find(".triangle-border")
             triangleContent = tipElement.find(".triangle-content")
             options = {scope: scope}
-            options.position = "left"
+            options.position = "right"
             options.space = 16
             options.triangleHeight = 14
             angular.forEach ['position', 'space', 'triangleHeight'], (key)->
@@ -281,21 +281,25 @@ angular.module 'nb.directives', []
                     position: 'absolute',
                     'border-style': 'solid',
                     'border-width': options.triangleHeight + 'px',
+                    width:0,
+                    height:0
                 }
                 triangleContent.css {
                     position: 'absolute',
                     'border-width': options.triangleHeight + 'px',
                     'border-style': 'solid',
+                    width:0,
+                    height:0
                 }
                 if options.position == "bottom"
                     triangleBorder.css {
                         left: (tipWidth/2 - options.triangleHeight) + 'px',
-                        top: "-#{2*options.triangleHeight+7}px",
+                        top: "-#{2*options.triangleHeight+1}px",
                         'border-color': 'transparent transparent #bbb transparent'
                     }
                     triangleContent.css {
                         left: (tipWidth/2 - options.triangleHeight) + 'px',
-                        top: "-#{2*options.triangleHeight+6}px",
+                        top: "-#{2*options.triangleHeight}px",
                         'border-color': 'transparent transparent #fff transparent'
                     }
                 else if options.position == "top"
