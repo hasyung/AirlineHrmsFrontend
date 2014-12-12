@@ -14,7 +14,9 @@ ul { padding: 0px;}
 .org-post { color: #448ecb;}
 .org-btn .btn { width: 88px; height: 34px; margin-top: 30px;}
 .org-btn .btn-default { margin-right: 20px;}
-.org-dep { position: absolute; width: 183px; border-right: 1px solid #d1dcde; border-bottom: 1px solid #d1dcde; left: 200px; top:51px; bottom:0px;}
+.org-dep {position: absolute; width: 183px; border-right: 1px solid #d1dcde; border-bottom: 1px solid #d1dcde; left: 200px; top:51px; bottom:0px; }
+.org-dep.active { z-index: 1; left: 18px;  width: 0px; border: none;}
+.org-dep.active .panel-group { display: none;}
 .org-dep .panel-body { padding-right: 0px;}
 .org-dep .panel-body ul {padding-left: 0px; }
 .org-dep .panel-body li { line-height: 35px; height: 35px;}
@@ -33,6 +35,10 @@ ul { padding: 0px;}
 .org-modal-posttop button.btn-info { padding-top: 3px; padding-bottom: 3px;}
 .org-post-table { border:1px solid #e6e6e6;}
 .org-post-table tr td:first-child { width: 44px;}
+.org-post-table tr td:last-child { width: 204px;}
+.org-hover { float: right;}
+.org-hover .btn { padding: 0px; border:none; margin-left: 15px;}
+.org-hover .btn-default { background:none;}
 .org-postadd { width: inherit;}
 .org-postadd-step { width: 268px; background-color: #f2f3f8; content: "";position: absolute;top: 51px;bottom: 0;z-index: 1042; float: left;}
 .org-postadd-step li { width: 268px; float: left; padding-left: 20px; padding-right: 20px; height: 63px; line-height: 63px;}
