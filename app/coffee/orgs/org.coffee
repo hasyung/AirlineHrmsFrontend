@@ -150,7 +150,7 @@ class OrgsController extends nb.Controller
 
         #for ui status
         @orgBarOpen = true
-        @org_modified = false
+        @org_modified = false #是否有更改过还未生效的组织机构
 
 
         @scope.$on 'select:change', (ctx, location) ->
@@ -170,18 +170,17 @@ class OrgsController extends nb.Controller
 
     loadInitialData: () -> #初始化数据
         self = @
+
+        IneffectiveOrg = (org)-> #系统还有未生效的组织机构
+            return /inactive/.test org.status
+
+
         @Org.$search()
             .$then (orgs) ->
                 self.orgs = orgs
-                #默认选中总经理节点
-                self.scope.currentOrg = _.find orgs, (org) ->
-                    if org.nodeType
-                        org.nodeType.name = 'manager'
-
-                self.org_modified = !! _.find self.orgs, (org) ->
-                    /inactive/.test org.status
-
-
+                self.scope.currentOrg = orgs[0] #默认选中节点
+                self.org_modified = !! _.find(self.orgs, IneffectiveOrg)
+                self.scope.positions = self.scope.currentOrg.positions.$fetch()
         @http.get("/api/enum?key=Department.node_types")
             .success (data) ->
                 self.scope.jobRanks = data.result
@@ -191,6 +190,9 @@ class OrgsController extends nb.Controller
     setCurrentOrg: (org) -> #修改当前机构
         id = org.id
         @scope.currentOrg = _.find(@orgs, {id: id})
+
+        @scope.positions = @scope.currentOrg.positions.$fetch()
+
         @state.go('^.show')
 
     setCurrentJobInfo: (jobInfo) ->

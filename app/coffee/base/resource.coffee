@@ -151,7 +151,7 @@ Org = (restmod) ->
 
     Org = restmod.model('/departments').mix {
 
-        jobs: { hasMany: 'Position'}
+        positions: { hasMany: 'Position'}
 
         $extend:
             Collection:
@@ -165,7 +165,9 @@ Position = (restmod) ->
     restmod.model('/positions')
 
 Permission = (restmod) ->
-    Permission = restmod.model('/permissions')
+    Permission = restmod.model('/permissions'). mix {
+
+    }
 
 
 
