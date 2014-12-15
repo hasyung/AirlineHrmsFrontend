@@ -61,12 +61,13 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
             templateUrl: 'partials/auth/sigup.html'
         }
 
-    $httpProvider.interceptors.push ['$q', '$location', ($q, $location) ->
+    $httpProvider.interceptors.push ['$q', '$location', 'toaster', ($q, $location, toaster) ->
 
         return {
             'responseError': (response) ->
                 if response.status == 401
                     $location.path('/login')
+                toaster.pop('error', '服务器错误', JSON.stringify(response.data))
                 return $q.reject(response)
         }
 
