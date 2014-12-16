@@ -174,15 +174,16 @@ class OrgsController extends nb.Controller
             .$then (orgs) ->
                 self.orgs = orgs
                 #默认选中总经理节点
+                console.log orgs[0]
                 self.scope.currentOrg = _.find orgs, (org) ->
-                    if org.nodeType
-                        org.nodeType.name = 'manager'
+                    if org.depth
+                        org.depth = 1
 
                 self.org_modified = !! _.find self.orgs, (org) ->
                     /inactive/.test org.status
 
 
-        @http.get("/api/enum?key=Department.node_types")
+        @http.get("/api/enum?key=Department.department_grades")
             .success (data) ->
                 self.scope.jobRanks = data.result
             .error (data) ->
@@ -197,7 +198,6 @@ class OrgsController extends nb.Controller
         self = @
         self.scope.currentJobInfo = jobInfo
         self.jobInfoDialog = true
-        console.log "test"
 
     newSubOrg: (org) -> #新增子机构
         self = @
