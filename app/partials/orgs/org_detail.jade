@@ -10,18 +10,18 @@
     button.btn.btn-default.fa.fa-plus(title="新增子机构",ui-sref="^.newsub({parentId: currentOrg.id})")
 
 .org-info
-    .form-group
-       label.control-label.col-lg-5 名称：
+    .form-group.row
+       label.control-label.col-lg-5.org-label 名称：
        .ol-lg-5 {{currentOrg.name}}
-    .form-group
-       label.control-label.col-lg-5 编号：
+    .form-group.row
+       label.control-label.col-lg-5.org-label 编号：
        .ol-lg-5 {{currentOrg.serialNumber}}
-    .form-group
-       label.control-label.col-lg-5 办公地点：
-       .ol-lg-5 {{currentOrg.location}}
-    .form-group
-       label.control-label.col-lg-5 职级：
-       .ol-lg-5 {{currentOrg.nodeType}}
+    .form-group.row
+       label.control-label.col-lg-5.org-label 办公地点：
+       .ol-lg-5 {{currentOrg.location.name}}
+    .form-group.row
+       label.control-label.col-lg-5.org-label 职级：
+       .ol-lg-5 {{currentOrg.grade.name}}
 .org-title
     span 下属岗位信息
     button.btn.btn-default.fa.fa-cog(title="设置" ng-click="ctrl.openPositionPanel(currentOrg.id)")
