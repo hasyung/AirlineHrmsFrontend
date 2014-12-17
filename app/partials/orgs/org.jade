@@ -1,21 +1,15 @@
 div(ng-controller="OrgsController as ctrl")
     .app-aside.org-dep.hidden-xs.bg-white-opacity.pull-left(ng-class="{'active': ctrl.orgBarOpen}")
         .org-dep-badge
-            a.toggle-bar.fa(ng-class="{true: 'fa-chevron-right', false: 'fa-chevron-left'}[ctrl.orgBarOpen]" href="javascript:void(0);", ng-click="ctrl.orgBarOpen = !ctrl.orgBarOpen")
-        
-        
-        //- accordion
-        //-   accordion-group(is-open="status.open", ng-repeat="jobRank in ctrl.scope.jobRanks")
-        //-     accordion-heading {{::jobRank}}
-        //-       i.pull-right.fa(ng-class="{'fa-angle-down': status.open, 'fa-angle-right': !status.open}")
-        //-     ul
-        //-       li(ng-repeat="org in ctrl.orgs | filterBy: ['nodeType']: jobRank" ng-click="ctrl.setCurrentOrg(org)")
-        //-         a {{::org.name}}
-
-        .org-main-node 四川航空
-        ul
-            li.org-node(ng-repeat="org in ctrl.orgs | filterBy: ['depth']: 1") {{::org.name}}
-            
+            a.toggle-bar.fa(
+                ng-class="{true: 'fa-chevron-right', false: 'fa-chevron-left'}[ctrl.orgBarOpen]"
+                href="javascript:void(0);"
+                ng-click="ctrl.orgBarOpen = !ctrl.orgBarOpen")
+        .org-main-wrapper
+            .org-main-node 四川航空
+            ul
+                li(ng-repeat="org in ctrl.orgs | filterBy: ['depth']: 1")
+                    a.org-node {{::org.name}}
 
 
 

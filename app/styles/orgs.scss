@@ -78,15 +78,23 @@ ul { padding: 0px;}
 	background-color: #eee;
 	height: 30px;
 	line-height:30px;
-	padding-left: 15px;
+	padding-left: 8px;
+	margin-bottom: 4px;
 	background-color: #dee5e7;
 	font-size: 16px;
 	cursor: pointer;
 }
 .org-node{
-	padding-left: 15px;
-	margin-top: 8px;
+	display: block;
+	width: 100%;
+	height: 100%;
+	padding: 4px 0 4px 15px;
 	font-size: 14px;
+	border-left: 3px solid transparent;
+}
+.org-node:hover{
+	border-left: 3px solid red;
+	color: red;
 }
 .org-form-row{
 	width:300px;
@@ -97,6 +105,12 @@ ul { padding: 0px;}
 }
 .org-info input{
 	border: 1px solid #c6d1d5
+}
+.org-dep.active .org-main-wrapper{
+	overflow: hidden;
+}
+.org-main-wrapper ul{
+	padding-left: 5px;
 }
 
 
