@@ -250,7 +250,7 @@ angular.module 'nb.directives', []
             triangleBorder = tipElement.find(".triangle-border")
             triangleContent = tipElement.find(".triangle-content")
             options = {scope: scope}
-            options.position = "right"
+            options.position = "left"
             options.space = 16
             options.triangleHeight = 14
             angular.forEach ['position', 'space', 'triangleHeight'], (key)->
@@ -463,13 +463,14 @@ angular.module 'nb.directives', []
                 self = @
                 @scope.isOpen = false
                 @options = []
+                @scope.additory = true
 
                 onSuccess = (data, status) ->
                     self.options = data.result
+                    console.log data
 
                 onError = ->
                     self.scope.$emit('dropdown:notfound')
-
 
                 @http.get("/api/enum?key=#{@attrs.remoteKey}")
                     .success onSuccess
@@ -489,7 +490,7 @@ angular.module 'nb.directives', []
                 @options.push(newItem)
                 @options = _.uniq(@options)
                 @setSelected(@options.length - 1)
-                newItem = ""
+                @newItem = ""
                 form.$setPristine()
 
 
@@ -501,9 +502,11 @@ angular.module 'nb.directives', []
 
         postLink = (scope, elem, attr, $ctrl) ->
             scope.isOpen = false
+            scope.additory = ((attr.additory || "true") is "true")
             dropdownCtrl = $ctrl[0]
             ngModelCtrl = $ctrl[1]
-
+            elem.on 'click', ()->
+                ngModelCtrl.$touched = true
             # view to model
             # ngModelCtrl.$parsers.unshift (inputVal) ->
             #     console.debug "inputVal:", arguments

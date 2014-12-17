@@ -9,7 +9,7 @@ deps = [
     # 'ui.select'
     'ui.bootstrap'
     'ngSanitize'
-    # 'ngMessages'
+    'ngMessages'
     'toaster'
     'restmod'    #rest api
     'angular.filter'

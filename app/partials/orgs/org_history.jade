@@ -43,3 +43,39 @@ table.table.table-striped.org-table
             td.org-post 副主任
             td  2
             td  2
+
+
+.org-info
+    .form-group.row
+       label.control-label.col-lg-5.org-label 名称：
+       .ol-lg-5 {{currentOrg.name}}
+    .form-group.row
+       label.control-label.col-lg-5.org-label 编号：
+       .ol-lg-5 {{currentOrg.serialNumber}}
+    .form-group.row
+       label.control-label.col-lg-5.org-label 办公地点：
+       .ol-lg-5 {{currentOrg.location.name}}
+    .form-group.row
+       label.control-label.col-lg-5.org-label 职级：
+       .ol-lg-5 {{currentOrg.grade.name}}
+.org-title
+    span 下属岗位信息
+    button.btn.btn-default.fa.fa-cog(title="设置" ng-click="ctrl.openPositionPanel(currentOrg.id)")
+table.table.table-striped.org-table
+    tbody
+       tr
+            td 岗位名称
+            td  编制
+            td  在编人数
+       tr
+            td.org-post(ng-click="ctrl.setCurrentJobInfo('xx')") 总经理
+            td  3
+            td  2
+       tr
+            td.org-post 主任
+            td  2
+            td  1
+       tr
+            td.org-post 副主任
+            td  2
+            td  2
