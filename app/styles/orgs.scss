@@ -6,15 +6,22 @@ ul { padding: 0px;}
 .panel-md { width: 600px;}
 .panel-sm { width: 300px;}
 .org-aside { width: 340px; background-color: #fff; border-left: 1px solid #dfe4e7;}
-.org-title { position: relative; width: 300px; height: 35px; margin-left: 20px;border-bottom: 1px solid #c6d1d5; margin-top: 20px;}
+.org-title { position: relative; height: 35px; margin-left: 20px;border-bottom: 1px solid #c6d1d5; margin-top: 20px;}
 .org-title span { width: auto; height: 35px; line-height: 35px; position: absolute;  border-bottom: 1px solid #39b7e9; color: #58656e; font-size: 16px;}
 .org-title button { float: right; margin-right: 10px; }
-.org-info { width: 300px; height: 180px; padding-top: 20px; margin-left: 20px;}
+.org-info {padding-top: 20px;}
 .org-table { margin-left: 20px; width: 338px;}
 .org-post { color: #448ecb;}
 .org-btn .btn { width: 88px; height: 34px; margin-top: 30px;}
 .org-btn .btn-default { margin-right: 20px;}
-.org-dep {position: absolute; width: 183px; border-right: 1px solid #d1dcde; border-bottom: 1px solid #d1dcde; left: 200px; top:51px; bottom:0px; }
+.org-btn:after{
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.org-dep {position: absolute; width: 183px; border-right: 1px solid #d1dcde; border-bottom: 1px solid #d1dcde; left: 200px; top:51px; bottom:0px; overflow-y: scorll}
 .org-dep.active { z-index: 1; left: 18px;  width: 0px; border: none;}
 .org-dep.active .panel-group { display: none;}
 .org-dep .panel-body { padding-right: 0px;}
@@ -47,8 +54,13 @@ ul { padding: 0px;}
 .org-postadd-step a { color: #000; display: block;font-size: 16px;}
 .org-postadd-step a span { float: right; line-height: 63px;font-size: 16px;}
 .org-postadd-detail { width: 632px; padding: 20px; }
-
-
+.org-history { width: 100%; height: auto; padding: 0 20px; background-image: url(../images/history-line.jpg); background-repeat: repeat-y; background-position: 52px 20px;}
+.org-history .history-num { width: 68px; height: 35px; line-height: 35px; border-radius: 10px; background-color: #ddd; display: block; text-align: center; margin-bottom: 20px; }
+.org-history article { width: inherit;}
+.org-history .history-item { width: 310px; margin-bottom: 20px; position: relative; height: auto; min-height: 50px; }
+.history-left { width: 14px; height: 18px;  margin-left: 25px; background-color: #fff;}
+.history-left span { width: 10px; height: 10px; display: block; float: right; margin-top: 4px; border: 3px solid #ddd; border-radius: 50px;}
+.history-right {border:1px solid #e0e4e7; width: 255px; padding: 10px; height: auto; min-height: 100px;}
 
 .org-delete-template{
 	position: absolute;
@@ -66,6 +78,30 @@ ul { padding: 0px;}
 	cursor: pointer;
 	border-radius: 4px;
 	margin-top:15px;
+}
+.org-main-node{
+	background-color: #eee;
+	height: 30px;
+	line-height:30px;
+	padding-left: 15px;
+	background-color: #dee5e7;
+	font-size: 16px;
+	cursor: pointer;
+}
+.org-node{
+	padding-left: 15px;
+	margin-top: 8px;
+	font-size: 14px;
+}
+.org-form-row{
+	width:300px;
+	margin-left: 20px;
+}
+.org-label{
+	text-align:right;
+}
+.org-info input{
+	border: 1px solid #c6d1d5
 }
 
 

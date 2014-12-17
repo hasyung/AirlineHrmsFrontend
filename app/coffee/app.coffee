@@ -9,7 +9,7 @@ deps = [
     # 'ui.select'
     'ui.bootstrap'
     'ngSanitize'
-    # 'ngMessages'
+    'ngMessages'
     'toaster'
     'restmod'    #rest api
     'angular.filter'
@@ -85,7 +85,9 @@ App
 
         $rootScope.$on 'success', (code, info)->
             toaster.pop(code.name, "提示", info)
-
+        $rootScope.$on 'error', (code, info)->
+            console.log arguments
+            toaster.pop(code.name, "提示", info)
 
 
 
