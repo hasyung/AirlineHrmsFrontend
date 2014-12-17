@@ -130,6 +130,7 @@ class Route
                     }
                 }
             }
+            
 
 
 
@@ -163,7 +164,8 @@ class OrgsController extends nb.Controller
             self.org_modified = true
 
         onError = (data, status)->
-            self.scope.$emit 'error', "#{data.message}"
+            console.log arguments
+            self.scope.$emit 'error', "机构：#{self.scope.currentOrg.name} ,删除失败,请确保当前没有子机构，同时该机构岗位要为空"
 
         self.scope.currentOrg.$destroy().$then onSuccess, onError
 
@@ -190,6 +192,7 @@ class OrgsController extends nb.Controller
                 self.scope.$emit 'error', "#{data.message}"
 
     setCurrentOrg: (org) -> #修改当前机构
+        console.log org.status
         id = org.id
         @scope.currentOrg = _.find(@orgs, {id: id})
         @state.go('^.show')
@@ -259,6 +262,8 @@ class OrgsController extends nb.Controller
             controllerAs: 'eff'
         }
         dialog.result.then (formdata) ->
+            #todo,以后需要讨论
+            formdata.department_id = 1
             promise = self.http.post '/api/departments/active', formdata
             promise.then onSuccess, onError
 
@@ -273,9 +278,24 @@ class OrgsController extends nb.Controller
         }
 
 
+    openHistoryPanel: () ->
+        self = @
+        panel = @modal.open {
+            templateUrl: 'partials/orgs/org_history.html'
+            controller: HistoryCtrl
+            controllerAs: 'his'
+        } 
+
+class HistoryCtrl
+    @.$inject = ['$modalInstance', '$scope']
+    constructor: (@dialog, @scope) ->
+
+    ok: (formdata)->
+        @dialog.close()
+
 
 class EffectChangesCtrl
-    @.$inject = ['$panelInstance', '$scope']
+    @.$inject = ['$modalInstance', '$scope']
 
     constructor: (@dialog, @scope) ->
         @scope.log = {}
