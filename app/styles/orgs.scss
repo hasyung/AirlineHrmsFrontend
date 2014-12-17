@@ -21,7 +21,7 @@ ul { padding: 0px;}
 	clear: both;
 	visibility: hidden;
 }
-.org-dep {position: absolute; width: 183px; border-right: 1px solid #d1dcde; border-bottom: 1px solid #d1dcde; left: 200px; top:51px; bottom:0px; overflow-y: scorll}
+.org-dep {position: absolute; width: 183px; border-right: 1px solid #d1dcde; border-bottom: 1px solid #d1dcde; left: 200px; top:51px; bottom:0px; overflow-y: scorll;z-index: 10;}
 .org-dep.active { z-index: 1; left: 18px;  width: 0px; border: none;}
 .org-dep.active .panel-group { display: none;}
 .org-dep .panel-body { padding-right: 0px;}
@@ -117,6 +117,22 @@ ul { padding: 0px;}
 .org-main-wrapper ul{
 	padding-left: 5px;
 }
-
+.org-chart-window{
+	width:740px;
+	height: 600px;
+	overflow:hidden;
+}
+.orgchart-box-active{
+	fill: #dfe5e7;
+}
+.orgchart-box-create_inactive{
+	fill: #ffc490;
+}
+.orgchart-box-update_inactive{
+	fill: #ffc490;
+}
+.orgchart-box-destroy_inactive{
+	fill: #ff908f;
+}
 
 
