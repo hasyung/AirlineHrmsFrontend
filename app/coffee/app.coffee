@@ -38,7 +38,7 @@ restConf = (restmodProvider) ->
 
 
 
-routeConf = ($stateProvider,$urlRouterProvider,$locationProvider) ->
+routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider) ->
     $locationProvider.html5Mode(false)
 
     #default route
@@ -61,12 +61,23 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider) ->
             templateUrl: 'partials/auth/sigup.html'
         }
 
-    
+    $httpProvider.interceptors.push ['$q', '$location', 'toaster', ($q, $location, toaster) ->
+
+        return {
+            'responseError': (response) ->
+                if response.status == 401
+                    $location.path('/login')
+                toaster.pop('error', '服务器错误', JSON.stringify(response.data))
+                return $q.reject(response)
+        }
+
+
+    ]
 
 
 App
     .config ['restmodProvider', restConf]
-    .config ['$stateProvider','$urlRouterProvider','$locationProvider',routeConf]
+    .config ['$stateProvider','$urlRouterProvider','$locationProvider', '$httpProvider',routeConf]
     .run ['$state','$rootScope', 'toaster', '$http', ($state, $rootScope, toaster, $http) ->
         # for $state.includes in view
         $rootScope.$on '$stateChangeSuccess', (evt, to) ->
@@ -74,6 +85,10 @@ App
 
         $rootScope.$on 'success', (code, info)->
             toaster.pop(code.name, "提示", info)
+        $rootScope.$on 'error', (code, info)->
+            console.log arguments
+            toaster.pop(code.name, "提示", info)
+
 
 
     ]

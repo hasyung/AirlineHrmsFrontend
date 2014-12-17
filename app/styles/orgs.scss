@@ -54,8 +54,13 @@ ul { padding: 0px;}
 .org-postadd-step a { color: #000; display: block;font-size: 16px;}
 .org-postadd-step a span { float: right; line-height: 63px;font-size: 16px;}
 .org-postadd-detail { width: 632px; padding: 20px; }
-
-
+.org-history { width: 100%; height: auto; padding: 0 20px; background-image: url(../images/history-line.jpg); background-repeat: repeat-y; background-position: 52px 20px;}
+.org-history .history-num { width: 68px; height: 35px; line-height: 35px; border-radius: 10px; background-color: #ddd; display: block; text-align: center; margin-bottom: 20px; }
+.org-history article { width: inherit;}
+.org-history .history-item { width: 310px; margin-bottom: 20px; position: relative; height: auto; min-height: 50px; }
+.history-left { width: 14px; height: 18px;  margin-left: 25px; background-color: #fff;}
+.history-left span { width: 10px; height: 10px; display: block; float: right; margin-top: 4px; border: 3px solid #ddd; border-radius: 50px;}
+.history-right {border:1px solid #e0e4e7; width: 255px; padding: 10px; height: auto; min-height: 100px;}
 
 .org-delete-template{
 	position: absolute;

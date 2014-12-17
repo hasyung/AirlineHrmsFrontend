@@ -12,8 +12,6 @@ div(ng-controller="OrgsController as ctrl")
                     a.org-node {{::org.name}}
 
 
-
-
     .app-aside.org-aside.hidden-xs.bg-white-opacity.pull-right
         .org-row(ui-view='sub')
 
@@ -24,6 +22,8 @@ div(ng-controller="OrgsController as ctrl")
                     ng-click="ctrl.setCurrentOrg(org)")
                     a {{::org.name}}
     .org-chart.col-md-5
+        div(org-chart drag-on org-chart-data="ctrl.treeData" style="width:800px;height:500px;overflow:hidden;")
+        button(ng-click="ctrl.openHistoryPanel()") 历史
         div(ng-show="ctrl.org_modified")
             button(ng-click="ctrl.active()") 生效
             button(ng-click="ctrl.revert()") 撤销

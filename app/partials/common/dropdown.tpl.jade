@@ -1,6 +1,6 @@
 .dropdown(ng-class="{'open':dropdown.isOpen}")
     button.btn.btn-default.dropdown-toggle(type="button" ng-click="dropdown.toggle()")
-        {{ selected.name || '请选择'}}
+        | {{ selected.name || '请选择'}}
         span.caret
     ul.dropdown-menu(role="menu")
         li(role="form", ng-if="additory")

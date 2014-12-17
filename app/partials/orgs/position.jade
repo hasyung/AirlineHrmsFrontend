@@ -1,21 +1,29 @@
 .org-modal-top 人力资源部岗位管理
 .org-modal-post
   .org-modal-posttop 岗位信息列表
-    button.btn.btn-default.fa.fa-trash-o(title="删除",)
-    button.btn.btn-default.fa.fa-pencil(title="编辑")
-    button.btn.btn-default.fa.fa-cog(title="新增子机构")
+    //- button.btn.btn-default.fa.fa-trash-o(title="删除",)
+    //- button.btn.btn-default.fa.fa-pencil(title="编辑")
+    button.btn.btn-default.fa.fa-plus(title="新增子机构")
     button.btn.btn-info 调整机构
   table.table.table-striped.ng-scope.org-post-table
-    tbody
+    thead
       tr
+        th
+          //- input(type='checkbox', value='option2')
+        th  岗位名称
+        th  通道
+        th  编制数
+        th  工作时间
+        th  OA文件编号
+    tbody
+      tr(ng-repeat=" pos in positions")
         td
           input(type='checkbox', value='option2')
-        td  岗位名称
-        td  通道
-        td  编制数
-        td  工作时间
-        td  OA文件编号
-      tr
+        td.org-post {{pos.name}}
+        td {{pos.channel.displayName}}
+        td {{pos.activeEmpNum}}/{{pos.staffingLevel}}
+        td {{pos.schedule.displayName}}
+        td {{pos.oaNum}}
         td
           input(type='checkbox', value='option2')
         td.org-post 总经理
@@ -27,7 +35,8 @@
       tr
         td
           input(type='checkbox', value='option2')
-        td.org-post 主任
+        td
+          a.org-post 主任
         td  文秘
         td  1/2
         td 标准工作制
@@ -37,7 +46,7 @@
         td
           input(type='checkbox', value='option2')
         td.org-post 总经理
-        td  管理
+        td  管理~
         td  2/10
         td 标准工作制
         td  021244468
@@ -65,3 +74,4 @@
         td  1/2
         td 标准工作制
         td  201544120
+

@@ -8,18 +8,22 @@ app = nb.app
 
 
 click_handler = () ->
+    console.debug arguments
 
 
 
 
 
 
-organChart = () ->
+orgChart = () ->
     link = (scope, $el, attrs) ->
+        #
+        #raphael paper
+        paper = null
 
         oc_options_2 = {
-            data_id           : 1,                    # identifies the ID of the "data" JSON object that is paired with these options
-            container         : 'organ_chart',     # name of the DIV where the chart will be drawn
+            data_id           : 90943,                    # identifies the ID of the "data" JSON object that is paired with these options
+            container         : $el[0],     # name of the DIV where the chart will be drawn
             box_color         : '#aaf',               # fill color of boxes
             box_color_hover   : '#faa',               # fill color of boxes when mouse is over them
             box_border_color  : '#008',               # stroke color of boxes
@@ -27,7 +31,7 @@ organChart = () ->
             line_color        : '#f44',               # color of connectors
             title_color       : '#000',               # color of titles
             subtitle_color    : '#707',               # color of subtitles
-            max_text_width    : 20,                   # max width (in chars) of each line of text ('0' for no limit)
+            max_text_width    : 2,                   # max width (in chars) of each line of text ('0' for no limit)
             text_font         : 'Courier',            # font family to use (should be monospaced)
             use_images        : false,                # use images within boxes?
             box_click_handler : click_handler,        # handler (function) called on click on boxes (set to null if no handler)
@@ -35,34 +39,23 @@ organChart = () ->
             debug             : false                 # set to true if you want to debug the library
         };
 
-        orgs = {
-            id: 1
-            root: {
-                id: 2
-                title: '总经办'
-                children: [
-                    {
-                        id: 3
-                        title: '人力资源部'
-                        type: 'staff' # staff
-                    }
+        scope.$watch attrs.orgChartData, (newval ,old) ->
+            if typeof newval == 'undefined'
+                return
 
-                ]
-            }
-            title: '董事会'
+            if paper?
+                paper.remove()
 
-        }
-
-        ggOrgChart.render(oc_options_2,orgs)
+            data = {id:90943, title: '', root: newval}
+            paper =ggOrgChart.render(oc_options_2, data)
 
         return
 
-
-
     return {
         # scope: {
-        #     organChartOptions: '@options'
+        #     orgTreeData: '@'
         # }
+        restrict: 'A'
         link: link
     }
 
@@ -86,7 +79,7 @@ organChart = () ->
 
 
 
-# app.directive('organChart',[organChart])
+app.directive('orgChart',[orgChart])
 
 
 
@@ -133,6 +126,7 @@ class Route
 
 
 
+
 class OrgsController extends nb.Controller
 
 
@@ -150,7 +144,7 @@ class OrgsController extends nb.Controller
 
         #for ui status
         @orgBarOpen = true
-        @org_modified = false
+        @org_modified = false #是否有更改过还未生效的组织机构
 
 
         @scope.$on 'select:change', (ctx, location) ->
@@ -163,7 +157,8 @@ class OrgsController extends nb.Controller
             self.org_modified = true
 
         onError = (data, status)->
-            self.scope.$emit 'error', "#{data.message}"
+            console.log arguments
+            self.scope.$emit 'error', "机构：#{self.scope.currentOrg.name} ,删除失败,请确保当前没有子机构，同时该机构岗位要为空"
 
         self.scope.currentOrg.$destroy().$then onSuccess, onError
 
@@ -179,9 +174,16 @@ class OrgsController extends nb.Controller
                     if org.depth
                         org.depth = 1
 
-                self.org_modified = !! _.find self.orgs, (org) ->
-                    /inactive/.test org.status
+        IneffectiveOrg = (org)-> #系统还有未生效的组织机构
+            return /inactive/.test org.status
 
+        @Org.$search()
+            .$then (orgs) ->
+                self.orgs = orgs
+                self.buildTree()
+                self.scope.currentOrg = orgs[0] #默认选中节点
+                self.org_modified = !! _.find(self.orgs, IneffectiveOrg)
+                self.scope.positions = self.scope.currentOrg.positions.$fetch()
 
         @http.get("/api/enum?key=Department.department_grades")
             .success (data) ->
@@ -190,8 +192,12 @@ class OrgsController extends nb.Controller
                 self.scope.$emit 'error', "#{data.message}"
 
     setCurrentOrg: (org) -> #修改当前机构
+        console.log org.status
         id = org.id
         @scope.currentOrg = _.find(@orgs, {id: id})
+
+        @scope.positions = @scope.currentOrg.positions.$fetch()
+
         @state.go('^.show')
 
     setCurrentJobInfo: (jobInfo) ->
@@ -210,6 +216,9 @@ class OrgsController extends nb.Controller
             self.scope.currentOrg = org
             self.org_modified = true
             state.go('^.show')
+    buildTree: ->
+
+        @treeData = @orgs.treeful(TREE_DEEPTH = 4)
 
 
     # #切换到编辑页面
@@ -259,6 +268,8 @@ class OrgsController extends nb.Controller
             controllerAs: 'eff'
         }
         dialog.result.then (formdata) ->
+            #todo,以后需要讨论
+            formdata.department_id = 1
             promise = self.http.post '/api/departments/active', formdata
             promise.then onSuccess, onError
 
@@ -272,10 +283,49 @@ class OrgsController extends nb.Controller
             controllerAs: 'pos'
         }
 
+    openHistoryPanel: () ->
+        self = @
+        panel = @modal.open {
+            templateUrl: 'partials/orgs/org_history.html'
+            controller: HistoryCtrl
+            controllerAs: 'his'
+            backdrop: false
+            size: 'sm'
+        }
 
+# 机构历史记录
+class HistoryCtrl
+    @.$inject = ['$modalInstance', '$scope', '$http']
+    constructor: (@dialog, @scope, @http) ->
+        @historys = null
+
+
+        @loadInitialData()
+
+
+
+    loadInitialData: ()->
+        self = @
+        onError = (res)->
+            console.log res
+        onSuccess = (res)->
+            console.log res
+        promise = self.http.get('/api/history/departments?version=1')
+        promise.then onSuccess, onError
+
+    loadVersionData: (version)->
+        self = @
+        onError = (res)->
+            console.log res
+        onSuccess = (res)->
+            console.log res
+        promise = self.http.get("/api/history/departments?version=#{version}")
+        promise.then onSuccess, onError
+    ok: (formdata)->
+        @dialog.close()
 
 class EffectChangesCtrl
-    @.$inject = ['$panelInstance', '$scope']
+    @.$inject = ['$modalInstance', '$scope']
 
     constructor: (@dialog, @scope) ->
         @scope.log = {}

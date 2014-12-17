@@ -67,6 +67,10 @@ paths =
         'deps/moment/min/moment.min.js'
         'deps/jquery/dist/jquery.min.js'
         'deps/jqtree/tree.jquery.js'
+        #组织机构树
+        'compat/vendor/drag-on.js'
+        'compat/vendor/lib-gg-orgchart.js'
+        #end
         'deps/angular/angular.js'
         #http://harvesthq.github.io/chosen/
         # 'deps/simditor/lib/simditor-all.js'
