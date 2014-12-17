@@ -67,6 +67,10 @@ paths =
         'deps/moment/min/moment.min.js'
         'deps/jquery/dist/jquery.min.js'
         'deps/jqtree/tree.jquery.js'
+        #组织机构树
+        'compat/vendor/drag-on.js'
+        'compat/vendor/lib-gg-orgchart.js'
+        #end
         'deps/angular/angular.js'
         #http://harvesthq.github.io/chosen/
         # 'deps/simditor/lib/simditor-all.js'
@@ -246,7 +250,7 @@ gulp.task "express", ->
     express = require("express")
     app = express()
 
-    proxyOptions = url.parse('http://192.168.6.21:9002')
+    proxyOptions = url.parse('http://192.168.6.99:9002')
     # proxyOptions = url.parse('http://192.168.6.10:3000')
     proxyOptions.route = '/api'
 

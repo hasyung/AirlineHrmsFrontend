@@ -8,18 +8,22 @@ app = nb.app
 
 
 click_handler = () ->
+    console.debug arguments
 
 
 
 
 
 
-organChart = () ->
+orgChart = () ->
     link = (scope, $el, attrs) ->
+        #
+        #raphael paper
+        paper = null
 
         oc_options_2 = {
-            data_id           : 1,                    # identifies the ID of the "data" JSON object that is paired with these options
-            container         : 'organ_chart',     # name of the DIV where the chart will be drawn
+            data_id           : 90943,                    # identifies the ID of the "data" JSON object that is paired with these options
+            container         : $el[0],     # name of the DIV where the chart will be drawn
             box_color         : '#aaf',               # fill color of boxes
             box_color_hover   : '#faa',               # fill color of boxes when mouse is over them
             box_border_color  : '#008',               # stroke color of boxes
@@ -27,7 +31,7 @@ organChart = () ->
             line_color        : '#f44',               # color of connectors
             title_color       : '#000',               # color of titles
             subtitle_color    : '#707',               # color of subtitles
-            max_text_width    : 20,                   # max width (in chars) of each line of text ('0' for no limit)
+            max_text_width    : 2,                   # max width (in chars) of each line of text ('0' for no limit)
             text_font         : 'Courier',            # font family to use (should be monospaced)
             use_images        : false,                # use images within boxes?
             box_click_handler : click_handler,        # handler (function) called on click on boxes (set to null if no handler)
@@ -35,34 +39,23 @@ organChart = () ->
             debug             : false                 # set to true if you want to debug the library
         };
 
-        orgs = {
-            id: 1
-            root: {
-                id: 2
-                title: '总经办'
-                children: [
-                    {
-                        id: 3
-                        title: '人力资源部'
-                        type: 'staff' # staff
-                    }
+        scope.$watch attrs.orgChartData, (newval ,old) ->
+            if typeof newval == 'undefined'
+                return
 
-                ]
-            }
-            title: '董事会'
+            if paper?
+                paper.remove()
 
-        }
-
-        ggOrgChart.render(oc_options_2,orgs)
+            data = {id:90943, title: '', root: newval}
+            paper =ggOrgChart.render(oc_options_2, data)
 
         return
 
-
-
     return {
         # scope: {
-        #     organChartOptions: '@options'
+        #     orgTreeData: '@'
         # }
+        restrict: 'A'
         link: link
     }
 
@@ -86,7 +79,7 @@ organChart = () ->
 
 
 
-# app.directive('organChart',[organChart])
+app.directive('orgChart',[orgChart])
 
 
 
@@ -178,6 +171,7 @@ class OrgsController extends nb.Controller
         @Org.$search()
             .$then (orgs) ->
                 self.orgs = orgs
+                self.buildTree()
                 self.scope.currentOrg = orgs[0] #默认选中节点
                 self.org_modified = !! _.find(self.orgs, IneffectiveOrg)
                 self.scope.positions = self.scope.currentOrg.positions.$fetch()
@@ -212,6 +206,9 @@ class OrgsController extends nb.Controller
             self.scope.currentOrg = org
             self.org_modified = true
             state.go('^.show')
+    buildTree: ->
+
+        @treeData = @orgs.treeful(TREE_DEEPTH = 4)
 
 
     # #切换到编辑页面

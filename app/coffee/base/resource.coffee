@@ -116,9 +116,10 @@ Org = (restmod) ->
 
         newarr = []
         arr.forEach (val) ->
-            res = _.transform (result, val, key) ->
+            val['type'] = 'subordinate'
+            res = _.transform val, (result, val, key) ->
                 if key == 'name'
-                    key = 'label'
+                    key = 'title'
                 result[key] = val
             newarr.push res
         return newarr
@@ -129,13 +130,29 @@ Org = (restmod) ->
             val['mapping'] = index
         return newarr
 
-    unflatten = (array, parent = {}, tree = []) ->
+    #
+    # 将数组根据 parent_id 转为 tree 形式
+    #
+    #  tree 结构为
+    #  [{
+    #    id: 2
+    #    children: []
+    #  }]
+    #
+    #  param: array 待转换的数组
+    #         ttl   tree 的最大深度
+    #
+    unflatten = (array, ttl = 9,parent = {}, tree = []) ->
+
+        if ttl == 0
+            return
+
 
         children = _.filter array, (child) ->
             if typeof parent.id == 'undefined'
-                return child.parentId == undefined
+                return child.parent_id == undefined or child.parent_id == 0
             else
-                child.parentId == parent.id
+                child.parent_id == parent.id
 
         if not _.isEmpty( children )
             if parent.id == undefined
@@ -143,7 +160,7 @@ Org = (restmod) ->
             else
                 parent['children'] = children
 
-            _.each children, (child) -> unflatten(array, child, tree)
+            _.each children, (child) -> unflatten(array, ttl - 1, child, tree)
 
         return tree
 
@@ -155,10 +172,15 @@ Org = (restmod) ->
 
         $extend:
             Collection:
-                abc: () ->
-                    forEach =  angular.forEach
-                    forEach this, (model) ->
-                        console.debug model
+                treeful: (deepth = 4) ->
+                    data =  @$wrap()
+                    data = cacheIndex(data)
+                    data = transform(data)
+                    tree = unflatten(data, deepth)[0]
+
+                    console.debug tree
+                    return tree
+
     }
 
 Position = (restmod) ->
