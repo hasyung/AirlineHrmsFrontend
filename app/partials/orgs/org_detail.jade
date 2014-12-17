@@ -1,13 +1,13 @@
 .org-title
     span 机构信息
-    button.btn.btn-default.fa.fa-trash-o(title="删除", nb-popup)
+    button.btn.btn-default.fa.fa-trash-o(title="删除", nb-popup, ng-if="currentOrg.status !== 'destroy_inactive'")
       popup-template.org-delete-template.panel.panel-default()
         .panel-heading.popup-title 警告
         .panel-body.popup-body
           div 删除后将无法恢复，请确认删除
           div.div-delete-btn(ng-click="ctrl.deleteOrg()") 删除
-    button.btn.btn-default.fa.fa-pencil(ui-sref="^.edit({Id: currentOrg.id})",title="编辑")
-    button.btn.btn-default.fa.fa-plus(title="新增子机构",ui-sref="^.newsub({parentId: currentOrg.id})")
+    button.btn.btn-default.fa.fa-pencil(ui-sref="^.edit({Id: currentOrg.id})",title="编辑", ng-if="currentOrg.status !== 'destroy_inactive'")
+    button.btn.btn-default.fa.fa-plus(title="新增子机构",ui-sref="^.newsub({parentId: currentOrg.id})", ng-if="currentOrg.status !== 'destroy_inactive'")
 
 .org-info
     .form-group.row
@@ -22,10 +22,10 @@
     .form-group.row
        label.control-label.col-lg-5.org-label 职级：
        .ol-lg-5 {{currentOrg.grade.name}}
-.org-title
+.org-title(ng-if="currentOrg.status !== 'destroy_inactive'")
     span 下属岗位信息
     button.btn.btn-default.fa.fa-cog(title="设置" ng-click="ctrl.openPositionPanel(currentOrg.id)")
-table.table.table-striped.org-table
+table.table.table-striped.org-table(ng-if="currentOrg.status !== 'destroy_inactive'")
     tbody
        tr
             td 岗位名称
