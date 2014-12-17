@@ -284,12 +284,38 @@ class OrgsController extends nb.Controller
             templateUrl: 'partials/orgs/org_history.html'
             controller: HistoryCtrl
             controllerAs: 'his'
+            backdrop: false
+            size: 'sm'
         } 
 
+# 机构历史记录
 class HistoryCtrl
-    @.$inject = ['$modalInstance', '$scope']
-    constructor: (@dialog, @scope) ->
+    @.$inject = ['$modalInstance', '$scope', '$http']
+    constructor: (@dialog, @scope, @http) ->
+        @historys = null
 
+
+        @loadInitialData()
+
+
+
+    loadInitialData: ()->
+        self = @
+        onError = (res)->
+            console.log res
+        onSuccess = (res)->
+            console.log res
+        promise = self.http.get('/api/history/departments?version=1')
+        promise.then onSuccess, onError
+
+    loadVersionData: (version)->
+        self = @
+        onError = (res)->
+            console.log res
+        onSuccess = (res)->
+            console.log res
+        promise = self.http.get("/api/history/departments?version=#{version}")
+        promise.then onSuccess, onError
     ok: (formdata)->
         @dialog.close()
 
