@@ -8,8 +8,8 @@ div(ng-controller="OrgsController as ctrl")
         .org-main-wrapper
             .org-main-node 四川航空
             ul
-                li(ng-repeat="org in ctrl.orgs | filterBy: ['depth']: 1")
-                    a.org-node {{::org.name}}
+                li(ng-repeat="org in ctrl.orgs | filterBy: ['depth']: 2")
+                    a.org-node(ng-click="ctrl.buildTree(org)" ng-bind="::org.name")
 
 
     .app-aside.org-aside.hidden-xs.bg-white-opacity.pull-right
@@ -26,10 +26,10 @@ div(ng-controller="OrgsController as ctrl")
             div.top-btn-group
                 button.export() 导出
                 button.history(ng-click="ctrl.openHistoryPanel()") 历史
-            div.bottom-btn-group
+            div.bottom-btn-group(ng-show="ctrl.tree.is_modified")
                 button.cancel(ng-click="ctrl.revert()") 撤销
                 button.effect(ng-click="ctrl.active()") 生效
-            div(org-chart drag-on org-chart-data="ctrl.treeData" style="width:inherit;height:inherit;overflow:hidden")
+            div(org-chart drag-on org-chart-data="ctrl.tree.data" style="width:inherit;height:inherit;overflow:hidden")
 
         div(ng-show="ctrl.org_modified")
 
