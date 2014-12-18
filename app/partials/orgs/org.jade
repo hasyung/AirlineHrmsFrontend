@@ -25,7 +25,7 @@ div(ng-controller="OrgsController as ctrl")
         div.org-chart-window
             div.top-btn-group
                 button.export() 导出
-                button.history(ng-click="ctrl.openHistoryPanel()") 历史
+                button.history(ng-click="ctrl.openHistoryDialog()") 历史
             div.bottom-btn-group(ng-show="ctrl.tree.is_modified")
                 button.cancel(ng-click="ctrl.revert()") 撤销
                 button.effect(ng-click="ctrl.active()") 生效

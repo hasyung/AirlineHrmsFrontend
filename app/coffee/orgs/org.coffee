@@ -249,23 +249,29 @@ class OrgsController extends nb.Controller
             controllerAs: 'pos'
         }
 
-    openHistoryPanel: () ->
+    openHistoryDialog: () ->
         self = @
-        panel = @modal.open {
+        dialog = @modal.open {
             templateUrl: 'partials/orgs/org_history.html'
             controller: HistoryCtrl
             controllerAs: 'his'
             backdrop: false
             size: 'sm'
-        }
+        } 
+        dialog.result.then (data) ->
+            console.log data.historyOrgs
+            self.orgs = data.historyOrgs
+
+# 机构历史记录
 
 # 机构历史记录
 class HistoryCtrl
-    @.$inject = ['$modalInstance', '$scope', '$http']
-    constructor: (@dialog, @scope, @http) ->
-        @historys = null
-
-
+    @.$inject = ['$modalInstance', '$scope', '$http', 'Org']
+    constructor: (@dialog, @scope, @http, @Org) ->
+        self = @
+        @changeLogs = null
+        @currentHisVersion = null
+        @historyOrgs = null
         @loadInitialData()
 
 
@@ -273,22 +279,45 @@ class HistoryCtrl
     loadInitialData: ()->
         self = @
         onError = (res)->
-            console.log res
+            self.scope.emit 'error', res
         onSuccess = (res)->
-            console.log res
-        promise = self.http.get('/api/history/departments?version=1')
+            logs = res.data.change_logs
+            groupedLog = _.groupBy logs, (log) ->
+                # 后端返回的一些数据是以";"结尾, 那么split之后数组的最后一项将为undefined
+                if /.*;$/.test(log.step_desc)
+                    log.step_desc = log.step_desc.substring(0, log.step_desc.length - 1)
+                log.step_desc = log.step_desc.split(';') 
+
+                #Unix 时间戳转普通时间要乘1000 ，Date内部处理是按毫秒
+                return new Date(parseInt(log.created_at)*1000).getFullYear()
+            # 将对象转换为数组,待优化后期会整合为filter
+            groupedLogs = []
+            angular.forEach groupedLog, (item, key) ->
+                groupedLogs.push {logs:item, changeYear: key}
+            #转换结束
+            
+            self.changeLogs = groupedLogs.reverse()
+        promise = self.http.get('/api/departments/change_logs')
         promise.then onSuccess, onError
 
-    loadVersionData: (version)->
+
+    setHistoryVersion: (version)->
+        @currentHisVersion = version
+    ok: ()->
         self = @
         onError = (res)->
-            console.log res
+            self.scope.emit 'error', res
+            self.dialog.close()
         onSuccess = (res)->
-            console.log res
-        promise = self.http.get("/api/history/departments?version=#{version}")
-        promise.then onSuccess, onError
-    ok: (formdata)->
-        @dialog.close()
+            self.dialog.close({ historyOrgs: res })
+        promise = self.Org.$search {version: self.currentHisVersion}
+        promise.$then onSuccess, onError
+
+    cancel: ()->
+        @dialog.dismiss('cancel')
+
+
+
 
 class EffectChangesCtrl
     @.$inject = ['$modalInstance', '$scope']
