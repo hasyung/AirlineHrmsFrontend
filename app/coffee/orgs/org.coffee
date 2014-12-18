@@ -55,7 +55,7 @@ orgChart = () ->
         # scope: {
         #     orgTreeData: '@'
         # }
-        restrict: 'A'
+        restrict: 'EA'
         link: link
     }
 

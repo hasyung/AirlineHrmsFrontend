@@ -21,7 +21,7 @@ ul { padding: 0px;}
 	clear: both;
 	visibility: hidden;
 }
-.org-dep {position: absolute; width: 183px; border-right: 1px solid #d1dcde; border-bottom: 1px solid #d1dcde; left: 200px; top:51px; bottom:0px; overflow-y: scorll;z-index: 10;}
+.org-dep {position: absolute; width: 183px; border-right: 1px solid #d1dcde; border-bottom: 1px solid #d1dcde; left: 200px; background-color: rgba(255,255,255,1);top:51px; bottom:0px; overflow-y: scorll;z-index: 10;}
 .org-dep.active { z-index: 1; left: 18px;  width: 0px; border: none;}
 .org-dep.active .panel-group { display: none;}
 .org-dep .panel-body { padding-right: 0px;}
@@ -118,9 +118,58 @@ ul { padding: 0px;}
 	padding-left: 5px;
 }
 .org-chart-window{
+	position: relative;
 	width:740px;
 	height: 600px;
 	overflow:hidden;
+}
+.top-btn-group{
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 10;
+}
+.top-btn-group button{
+	font-size: 14px;
+	width: 60px;
+	height: 30px;
+	border-radius: 4px;
+	outline: none;
+}
+.bottom-btn-group{
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	z-index: 10;
+}
+.bottom-btn-group button{
+	font-size: 14px;
+	width: 90px;
+	height: 30px;
+	border-radius: 4px;
+	outline: none;
+}
+.org-chart .history{
+	margin-left: 10px;
+	border: 1px solid #7264bc;
+	background-color: #7264bc;
+	color: #fff;
+}
+.org-chart .export{
+	border: 1px solid #09b6e7;
+	background-color: #09b6e7;
+	color: #fff;
+}
+.org-chart .cancel{
+	border: 1px solid #c4cfd1;
+	background-color: #fff;
+	color: #000;
+}
+.org-chart .effect{
+	margin-left: 10px;
+	border: 1px solid #09b6e7;
+	background-color: #09b6e7;
+	color: #fff;
 }
 .orgchart-box-active{
 	fill: #dfe5e7;

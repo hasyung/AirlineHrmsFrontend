@@ -22,11 +22,16 @@ div(ng-controller="OrgsController as ctrl")
                     ng-click="ctrl.setCurrentOrg(org)")
                     a {{::org.name}}
     .org-chart.col-md-5
-        div.org-chart-window(org-chart drag-on org-chart-data="ctrl.treeData")
-        button(ng-click="ctrl.openHistoryPanel()") 历史
+        div.org-chart-window
+            div.top-btn-group
+                button.export() 导出
+                button.history(ng-click="ctrl.openHistoryPanel()") 历史
+            div.bottom-btn-group
+                button.cancel(ng-click="ctrl.revert()") 撤销
+                button.effect(ng-click="ctrl.active()") 生效
+            div(org-chart drag-on org-chart-data="ctrl.treeData" style="width:inherit;height:inherit;overflow:hidden")
+
         div(ng-show="ctrl.org_modified")
-            button(ng-click="ctrl.active()") 生效
-            button(ng-click="ctrl.revert()") 撤销
 
 
     .org-detail.col-md-3
