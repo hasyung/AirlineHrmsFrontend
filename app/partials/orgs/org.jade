@@ -33,15 +33,15 @@ div(ng-controller="OrgsController as ctrl")
                     a {{::org.name}}
     .org-chart.col-md-5
 
-        div.org-chart-window
-            div.top-btn-group
+    div.org-chart-window
+        div.top-btn-group
                 a.export(download="机构组织.xls" href="/api/departments/export_to_xls?department_id=1") 导出
                 button.history(ng-click="ctrl.openHistoryPanel()") 历史
             div.bottom-btn-group(ng-show="ctrl.tree.isModified")
                 button.cancel(ng-click="ctrl.revert()") 撤销
                 button.effect(ng-click="ctrl.active()") 生效
-            div(org-chart drag-on org-chart-data="ctrl.tree.data" style="width:inherit;height:inherit;overflow:hidden")
+        div.svg-wrapper(org-chart drag-on org-chart-data="ctrl.tree.data")
 
-        div(ng-show="ctrl.org_modified")
+    div(ng-show="ctrl.org_modified")
 
     .org-detail.col-md-3
