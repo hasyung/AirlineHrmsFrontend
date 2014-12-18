@@ -135,7 +135,6 @@ Org = (restmod) ->
             val['mapping'] = index
         return newarr
 
-    #
     # 将数组根据 parent_id 转为 tree 形式
     #
     #  tree 结构为
@@ -151,6 +150,7 @@ Org = (restmod) ->
 
         if ttl == 0
             return
+        ttl = ttl - 1
 
 
         children = _.filter array, (child) ->
@@ -165,9 +165,15 @@ Org = (restmod) ->
             else
                 parent['children'] = children
 
-            _.each children, (child) -> unflatten(array, ttl - 1, child, tree)
+            _.each children, (child) -> unflatten(array, ttl, child, tree)
 
-        return tree
+        return parent
+
+
+    treeful = (treeData, DEPTH, parent) ->
+        parent = _.find treeData, (child) ->
+            parent.id == child.id
+        return unflatten(treeData, DEPTH, parent)
 
 
 
@@ -188,20 +194,18 @@ Org = (restmod) ->
 
                     isModified = false  #当前组织机构树是否被修改过
 
-                    treeData = _.filter cachedIndexOrgs, (org) ->
-                        throw Error('serial number if required') if not org.serial_number
+                    treeData = _.filter cachedIndexOrgs, (orgItem) ->
+                        throw Error('serial number if required') if not orgItem.serial_number
                         #tree 数据深度不能超过 DEPTH
-                        return false if org.depth - rootDepth > DEPTH
+                        return false if orgItem.depth - rootDepth > DEPTH
 
-                        isModified = true if IneffectiveOrg(org)
-                        isChild = _.str.startsWith(org.serial_number,rootSerialNumber) #子机构的serialNumber number 前缀和父机构相同
+                        isModified = true if IneffectiveOrg(orgItem)
+                        isChild = _.str.startsWith(orgItem.serial_number,rootSerialNumber) #子机构的serialNumber number 前缀和父机构相同
 
                         return isChild
 
-
-
                     treeData = transform(treeData)
-                    treeData = unflatten(treeData, DEPTH)[0]
+                    treeData = treeful(treeData, DEPTH, org)
 
                     return {
                         data: treeData
