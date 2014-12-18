@@ -14,7 +14,7 @@ ul { padding: 0px;}
 .org-chart-top.active h2 { font-size: 16px; margin: 0px; line-height: 40px; color: #90743f; height: 30px; overflow: hidden; width: inherit;}
 .org-chart-top button { float: right; padding: 4px 12px; margin-left: 10px; margin-top: 25px;}
 .org-chart-top h1 { font-size: 25px; margin: 0px; line-height: 80px;}
-.btn-cold { background-color: #7263bc; color: #fff;}
+.btn-cold { background-color: #7623bc; color: #fff;}
 .btn-cold:hover {color: #fff;}
 .panel-content { content: "";position: absolute;top: 0;bottom: 0;z-index: 1042;right: 0px; background-color: #fff; box-shadow: -5px 0 20px #666;}
 .panel-lg { width: 900px;}
@@ -148,9 +148,15 @@ ul { padding: 0px;}
 }
 .org-chart-window{
 	position: relative;
-	width:740px;
-	height: 600px;
+	width: calc(100% - 569px);
+	height: 100%;
+	left: 15px;
 	overflow:hidden;
+}
+.svg-wrapper{
+	width:100%;
+	height:100%;
+	overflow:hidden
 }
 .top-btn-group{
 	position: absolute;
@@ -178,23 +184,23 @@ ul { padding: 0px;}
 	border-radius: 4px;
 	outline: none;
 }
-.org-chart .history{
+.org-chart-window .history{
 	margin-left: 10px;
 	border: 1px solid #7264bc;
 	background-color: #7264bc;
 	color: #fff;
 }
-.org-chart .export{
+.org-chart-window .export{
 	border: 1px solid #09b6e7;
 	background-color: #09b6e7;
 	color: #fff;
 }
-.org-chart .cancel{
+.org-chart-window .cancel{
 	border: 1px solid #c4cfd1;
 	background-color: #fff;
 	color: #000;
 }
-.org-chart .effect{
+.org-chart-window .effect{
 	margin-left: 10px;
 	border: 1px solid #09b6e7;
 	background-color: #09b6e7;
@@ -202,6 +208,13 @@ ul { padding: 0px;}
 }
 .orgchart-box-active{
 	fill: #dfe5e7;
+	cursor: pointer;
+}
+svg text{
+	cursor: pointer;
+}
+.orgchart-box-active.active{
+	fill: #cad4d7;
 }
 .orgchart-box-create_inactive{
 	fill: #ffc490;

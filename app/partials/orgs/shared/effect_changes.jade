@@ -4,19 +4,21 @@ form.form-horizontal(name="active_form" ng-submit="eff.ok(active_form)")
         h4.modal-title 提示
     .modal-body.row
         .form-group
-            label.col-lg-2.col-sm-2.control-label  OA文件名：
-            .col-lg-10
-                input(type="text" name="log_title" ng-model="log.log_title" placeholder="操作说明", required="true")
+            label.col-lg-3.control-label  OA文件名：
+            .col-lg-8
+                input.form-control(type="text" name="log_title" ng-model="log.log_title" placeholder="操作说明", required="true")
                 div(ng-messages="active_form.log_title.$error", ng-if="active_form.log_title.$touched")
                     .form-group-error(ng-message="required") OA文件名必填
         .form-group
-            label.col-lg-2.col-sm-2.control-label  整体日志：
-            .col-lg-10
-                textarea.form-control(type="text" name="oa_file_no", ng-model="log.oa_file_no", placeholder="文件编号", required="true")
+            label.col-lg-3.control-label  日志标题：
+            .col-lg-8
+                input.form-control(type="text" name="oa_file_no", ng-model="log.oa_file_no", placeholder="文件编号", required="true")
                 div(ng-messages="active_form.oa_file_no.$error", ng-if="active_form.oa_file_no.$touched")
                     .form-group-error(ng-message="required") 日志必填
-        .pull-right
-            button.btn.btn-danger(type='button',ng-click='eff.cancel($event, active_form)') 取消
-            button.btn.btn-primary(type='submit') 确定
+        .form-group
+            .col-lg-11
+                .pull-right
+                    button.btn.btn-default(type='button',ng-click='eff.cancel($event, active_form)') 取消
+                    button.btn.btn-info(type='submit') 确定
 
 
