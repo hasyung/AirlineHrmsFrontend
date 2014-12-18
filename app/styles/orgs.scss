@@ -1,6 +1,21 @@
 .btn-info { background-color: #07b6e5;}
 .modal-backdrop.in {opacity: 0.4;}
 ul { padding: 0px;}
+.app-main { width: 1000px; height: auto; padding: 20px; float: left;}
+@media  (max-width: 1440px){
+.app-main { width: 883px; }
+}
+@media (min-width: 1441px) and (max-width: 1920px){
+.app-main { width: 1375px; }
+}
+.org-chart-top { width: auto; height: 80px;}
+.org-chart-top.active { width: auto; height: 78px; background-color: #fdf8e2; border: 1px solid #f3ebd4;}
+.org-chart-top.active h1 { font-size: 25px; margin: 0px; height: 30px; line-height: 30px; color: #90743f; width: inherit;}
+.org-chart-top.active h2 { font-size: 16px; margin: 0px; line-height: 40px; color: #90743f; height: 30px; overflow: hidden; width: inherit;}
+.org-chart-top button { float: right; padding: 4px 12px; margin-left: 10px; margin-top: 25px;}
+.org-chart-top h1 { font-size: 25px; margin: 0px; line-height: 80px;}
+.btn-cold { background-color: #7623bc; color: #fff;}
+.btn-cold:hover {color: #fff;}
 .panel-content { content: "";position: absolute;top: 0;bottom: 0;z-index: 1042;right: 0px; background-color: #fff; box-shadow: -5px 0 20px #666;}
 .panel-lg { width: 900px;}
 .panel-md { width: 600px;}
@@ -8,7 +23,7 @@ ul { padding: 0px;}
 .org-aside { width: 340px; background-color: #fff; border-left: 1px solid #dfe4e7;}
 .org-title { position: relative; height: 35px; margin-left: 20px;border-bottom: 1px solid #c6d1d5; margin-top: 20px;}
 .org-title span { width: auto; height: 35px; line-height: 35px; position: absolute;  border-bottom: 1px solid #39b7e9; color: #58656e; font-size: 16px;}
-.org-title button { float: right; margin-right: 10px; }
+.org-title button { float: right; margin-right: 10px;  color: #9ba8af;}
 .org-info {padding-top: 20px;}
 .org-table { margin-left: 20px; width: 338px;}
 .org-post { color: #448ecb;}
@@ -21,6 +36,7 @@ ul { padding: 0px;}
 	clear: both;
 	visibility: hidden;
 }
+
 .org-dep {position: absolute; width: 183px; border-right: 1px solid #d1dcde; border-bottom: 1px solid #d1dcde; left: 200px; background-color: rgba(255,255,255,1);top:51px; bottom:0px; z-index: 10;}
 .org-dep.active { z-index: 1; left: 18px;  width: 0px; border: none;}
 .org-dep.active .panel-group { display: none;}
@@ -54,15 +70,20 @@ ul { padding: 0px;}
 .org-postadd-step a { color: #000; display: block;font-size: 16px;}
 .org-postadd-step a span { float: right; line-height: 63px;font-size: 16px;}
 .org-postadd-detail { width: 632px; padding: 20px; }
-.org-history { width: 100%; height: auto; padding: 0 20px; background-image: url(../images/history-line.jpg); background-repeat: repeat-y; background-position: 52px 20px;}
-.org-history .history-num { width: 68px; height: 35px; line-height: 35px; border-radius: 10px; background-color: #ddd; display: block; text-align: center; margin-bottom: 20px; }
-.org-history article { width: inherit;}
-.org-history .history-item { width: 310px; margin-bottom: 20px; position: relative; height: auto; min-height: 50px; }
-.history-left { width: 14px; height: 18px;  margin-left: 25px; background-color: #fff;}
-.history-left span { width: 10px; height: 10px; display: block; float: right; margin-top: 4px; border: 3px solid #ddd; border-radius: 50px;}
-.history-right {border:1px solid #e0e4e7; width: 255px; padding: 10px; height: auto; min-height: 100px;}
-
-.org-delete-template{
+.bg-info { background-color: #daedf8;}
+.arrow.left.arrow-info:after {border-right-color: #daedf8;}
+.org-timline .tl-content.panel { width: 210px;}
+.org-timline .tl-content.panel h1  { font-size: 16px; margin: 0px; color: #000; }
+.org-timline .tl-content.panel h2  { font-size: 12px; margin-top: 10px; color: #23b7e5;}
+.org-timline .tl-content.panel p  { font-size: 14px; border-top: 1px dotted #cee0eb; padding-top: 10px; }
+.org-timline .tl-header { text-align: left; width: inherit;}
+.org-timline span.pull-right {font-size: 12px; color: #23b7e5;line-height: 34px; }
+.org-timline .tl-wrap { margin-left: 30px;}
+.org-timline .tl-header .btn { border-radius: 25px; padding: 6px 14px;}
+.org-timline .tl-header .bg-info .text-lt { color: #000!important;}
+.org-timline .panel-footer .btn{ width: 70px; margin-left: 10px;}
+//u.org-timline .b-info { border-color: #dee5e7; }
+.org-timline .org-delete-template{
 	position: absolute;
 	background-color:#fff;
 	top: -40px;
