@@ -134,16 +134,15 @@ class OrgsController extends nb.Controller
     constructor: (@Org, @http, @params, @state, @scope, @modal, @panel)->
         @ORG_TREE_DEEPTH = 1
         self = @
+        @treeRootOrg = null # 当前树的顶级节点
         @scope.currentOrg = null #当前选中机构
         @orgs = null    #集合
         @editOrg = null # 当前正在修改的机构
         @loadInitialData()
         @scope.currentJobInfo = null #当前所选择的岗位信息
-        @scope.jobRanks = null
 
         #for ui status
         @orgBarOpen = true
-        @org_modified = false #是否有更改过还未生效的组织机构
 
 
         @scope.$on 'select:change', (ctx, location) ->
@@ -152,8 +151,8 @@ class OrgsController extends nb.Controller
     deleteOrg: ()-> #删除机构
         self = @
         onSuccess = ->
+            self.reset()
             self.scope.$emit('success',"机构：#{self.scope.currentOrg.name} ,删除成功")
-            self.org_modified = true
 
         onError = (data, status)->
             console.log arguments
@@ -167,14 +166,10 @@ class OrgsController extends nb.Controller
         @Org.$search()
             .$then (orgs) ->
                 self.orgs = orgs
-                currentOrg = _.find orgs, (org) -> org.depth == 1
-                self.buildTree(currentOrg)
-
-        @http.get("/api/enum?key=Department.department_grades")
-            .success (data) ->
-                self.scope.jobRanks = data.result
-            .error (data) ->
-                self.scope.$emit 'error', "#{data.message}"
+                self.rootTree()
+    rootTree: () ->
+        @currentOrg = _.find @orgs, (org) -> org.depth == 1
+        @buildTree(@currentOrg)
 
     setCurrentOrg: (org) -> #修改当前机构
         id = org.id
@@ -192,12 +187,25 @@ class OrgsController extends nb.Controller
 
         org.$then (org) ->
             self.scope.currentOrg = org
-            self.org_modified = true
+            self.reset()
             state.go('^.show')
 
-    buildTree: (org)->
+    buildTree: (org = @treeRootOrg)->
+
+        depth = 5
+        depth = @ORG_TREE_DEEPTH if org.depth == 1
+
+        @treeRootOrg = org
         @setCurrentOrg(org)
-        @tree = @orgs.treeful(org, @ORG_TREE_DEEPTH)
+        @tree = @orgs.treeful(org, depth)
+    #force 是否修改当前机构
+    reset: (force) ->
+        self = @
+        @Org.$search()
+            .$then (orgs) ->
+                self.orgs = orgs
+                self.scope.currentOrg = _.find orgs,{id: self.treeRootOrg.id} if force
+                self.buildTree()
 
     onItemClick: (evt, element) ->
         orgId = element.oc_id
@@ -211,7 +219,7 @@ class OrgsController extends nb.Controller
     update: (org) -> #修改机构信息
         self = @
         onSuccess = ->
-            self.org_modified = true
+            self.reset()
             self.state.go('^.show')
 
         onError = (data, status)->
@@ -222,12 +230,10 @@ class OrgsController extends nb.Controller
     revert: () ->
         self = @
         onSuccess = ->
-            self.orgs = self.Org.$search()
-            self.org_modified = false
+            self.reset(true)
             self.scope.$emit 'success', '撤销成功'
 
         onError = (data, status)->
-            self.org_modified = true
             self.scope.$emit 'error', "#{data.message}"
 
         promise = @http.post '/api/departments/revert'
@@ -237,12 +243,10 @@ class OrgsController extends nb.Controller
     active: (form, data) ->
         self = @
         onSuccess = ->
-            self.orgs = self.Org.$search()
-            self.org_modified = false
+            self.reset(true)
             self.scope.$emit 'success', '更改已生效'
 
         onError = (data, status)->
-            self.org_modified = true
             self.scope.$emit 'error', "#{data.message}"
 
         dialog = @modal.open {
@@ -266,23 +270,29 @@ class OrgsController extends nb.Controller
             controllerAs: 'pos'
         }
 
-    openHistoryPanel: () ->
+    openHistoryDialog: () ->
         self = @
-        panel = @modal.open {
+        dialog = @modal.open {
             templateUrl: 'partials/orgs/org_history.html'
             controller: HistoryCtrl
             controllerAs: 'his'
             backdrop: false
             size: 'sm'
-        }
+        } 
+        dialog.result.then (data) ->
+            console.log data.historyOrgs
+            self.orgs = data.historyOrgs
+
+# 机构历史记录
 
 # 机构历史记录
 class HistoryCtrl
-    @.$inject = ['$modalInstance', '$scope', '$http']
-    constructor: (@dialog, @scope, @http) ->
-        @historys = null
-
-
+    @.$inject = ['$modalInstance', '$scope', '$http', 'Org']
+    constructor: (@dialog, @scope, @http, @Org) ->
+        self = @
+        @changeLogs = null
+        @currentHisVersion = null
+        @historyOrgs = null
         @loadInitialData()
 
 
@@ -290,22 +300,45 @@ class HistoryCtrl
     loadInitialData: ()->
         self = @
         onError = (res)->
-            console.log res
+            self.scope.emit 'error', res
         onSuccess = (res)->
-            console.log res
-        promise = self.http.get('/api/history/departments?version=1')
+            logs = res.data.change_logs
+            groupedLog = _.groupBy logs, (log) ->
+                # 后端返回的一些数据是以";"结尾, 那么split之后数组的最后一项将为undefined
+                if /.*;$/.test(log.step_desc)
+                    log.step_desc = log.step_desc.substring(0, log.step_desc.length - 1)
+                log.step_desc = log.step_desc.split(';') 
+
+                #Unix 时间戳转普通时间要乘1000 ，Date内部处理是按毫秒
+                return new Date(parseInt(log.created_at)*1000).getFullYear()
+            # 将对象转换为数组,待优化后期会整合为filter
+            groupedLogs = []
+            angular.forEach groupedLog, (item, key) ->
+                groupedLogs.push {logs:item, changeYear: key}
+            #转换结束
+            
+            self.changeLogs = groupedLogs.reverse()
+        promise = self.http.get('/api/departments/change_logs')
         promise.then onSuccess, onError
 
-    loadVersionData: (version)->
+
+    setHistoryVersion: (version)->
+        @currentHisVersion = version
+    ok: ()->
         self = @
         onError = (res)->
-            console.log res
+            self.scope.emit 'error', res
+            self.dialog.close()
         onSuccess = (res)->
-            console.log res
-        promise = self.http.get("/api/history/departments?version=#{version}")
-        promise.then onSuccess, onError
-    ok: (formdata)->
-        @dialog.close()
+            self.dialog.close({ historyOrgs: res })
+        promise = self.Org.$search {version: self.currentHisVersion}
+        promise.$then onSuccess, onError
+
+    cancel: ()->
+        @dialog.dismiss('cancel')
+
+
+
 
 class EffectChangesCtrl
     @.$inject = ['$modalInstance', '$scope']
