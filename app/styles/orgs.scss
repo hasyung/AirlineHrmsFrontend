@@ -21,7 +21,7 @@ ul { padding: 0px;}
 	clear: both;
 	visibility: hidden;
 }
-.org-dep {position: absolute; width: 183px; border-right: 1px solid #d1dcde; border-bottom: 1px solid #d1dcde; left: 200px; background-color: rgba(255,255,255,1);top:51px; bottom:0px; overflow-y: scorll;z-index: 10;}
+.org-dep {position: absolute; width: 183px; border-right: 1px solid #d1dcde; border-bottom: 1px solid #d1dcde; left: 200px; background-color: rgba(255,255,255,1);top:51px; bottom:0px; z-index: 10;}
 .org-dep.active { z-index: 1; left: 18px;  width: 0px; border: none;}
 .org-dep.active .panel-group { display: none;}
 .org-dep .panel-body { padding-right: 0px;}
@@ -114,8 +114,16 @@ ul { padding: 0px;}
 .org-dep.active .org-main-wrapper{
 	overflow: hidden;
 }
+.org-main-wrapper{
+	height: 100%;
+	overflow: hidden;
+}
 .org-main-wrapper ul{
 	padding-left: 5px;
+}
+.org-children-wrapper{
+	height: calc(100% - 30px);
+	overflow-y: scroll;
 }
 .org-chart-window{
 	position: relative;

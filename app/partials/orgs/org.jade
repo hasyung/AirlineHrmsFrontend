@@ -7,9 +7,10 @@ div(ng-controller="OrgsController as ctrl")
                 ng-click="ctrl.orgBarOpen = !ctrl.orgBarOpen")
         .org-main-wrapper
             .org-main-node 四川航空
-            ul
-                li(ng-repeat="org in ctrl.orgs | filterBy: ['depth']: 2")
-                    a.org-node(ng-click="ctrl.buildTree(org)" ng-bind="::org.name")
+            .org-children-wrapper
+                ul
+                    li(ng-repeat="org in ctrl.orgs | filterBy: ['depth']: 2")
+                        a.org-node(ng-click="ctrl.buildTree(org)" ng-bind="::org.name")
 
 
     .app-aside.org-aside.hidden-xs.bg-white-opacity.pull-right
