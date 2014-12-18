@@ -3,16 +3,8 @@ nb = @.nb
 app = nb.app
 
 
-
-
-
-
 click_handler = () ->
     console.debug arguments
-
-
-
-
 
 
 orgChart = () ->
@@ -24,14 +16,14 @@ orgChart = () ->
         oc_options_2 = {
             data_id           : 90943,                    # identifies the ID of the "data" JSON object that is paired with these options
             container         : $el[0],     # name of the DIV where the chart will be drawn
-            box_color         : '#aaf',               # fill color of boxes
+            box_color         : '#fff',               # fill color of boxes
             box_color_hover   : '#faa',               # fill color of boxes when mouse is over them
             box_border_color  : '#008',               # stroke color of boxes
             box_html_template : null,                 # id of element with template; don't use if you are using the box_click_handler
             line_color        : '#f44',               # color of connectors
             title_color       : '#000',               # color of titles
             subtitle_color    : '#707',               # color of subtitles
-            max_text_width    : 2,                   # max width (in chars) of each line of text ('0' for no limit)
+            max_text_width    : 1,                   # max width (in chars) of each line of text ('0' for no limit)
             text_font         : 'Courier',            # font family to use (should be monospaced)
             use_images        : false,                # use images within boxes?
             box_click_handler : click_handler,        # handler (function) called on click on boxes (set to null if no handler)
@@ -42,19 +34,13 @@ orgChart = () ->
         scope.$watch attrs.orgChartData, (newval ,old) ->
             if typeof newval == 'undefined'
                 return
-
             if paper?
                 paper.remove()
-
             data = {id:90943, title: '', root: newval}
             paper =ggOrgChart.render(oc_options_2, data)
-
         return
 
     return {
-        # scope: {
-        #     orgTreeData: '@'
-        # }
         restrict: 'A'
         link: link
     }
@@ -134,6 +120,7 @@ class OrgsController extends nb.Controller
 
 
     constructor: (@Org, @http, @params, @state, @scope, @modal, @panel)->
+        @ORG_TREE_DEEPTH = 2
         self = @
         @scope.currentOrg = null #当前选中机构
         @orgs = null    #集合
@@ -168,22 +155,8 @@ class OrgsController extends nb.Controller
         @Org.$search()
             .$then (orgs) ->
                 self.orgs = orgs
-                #默认选中总经理节点
-                console.log orgs[0]
-                self.scope.currentOrg = _.find orgs, (org) ->
-                    if org.depth
-                        org.depth = 1
-
-        IneffectiveOrg = (org)-> #系统还有未生效的组织机构
-            return /inactive/.test org.status
-
-        @Org.$search()
-            .$then (orgs) ->
-                self.orgs = orgs
-                self.buildTree()
-                self.scope.currentOrg = orgs[0] #默认选中节点
-                self.org_modified = !! _.find(self.orgs, IneffectiveOrg)
-                self.scope.positions = self.scope.currentOrg.positions.$fetch()
+                currentOrg = _.find orgs, (org) -> org.depth == 1
+                self.buildTree(currentOrg)
 
         @http.get("/api/enum?key=Department.department_grades")
             .success (data) ->
@@ -192,18 +165,11 @@ class OrgsController extends nb.Controller
                 self.scope.$emit 'error', "#{data.message}"
 
     setCurrentOrg: (org) -> #修改当前机构
-        console.log org.status
         id = org.id
         @scope.currentOrg = _.find(@orgs, {id: id})
-
         @scope.positions = @scope.currentOrg.positions.$fetch()
-
         @state.go('^.show')
 
-    setCurrentJobInfo: (jobInfo) ->
-        self = @
-        self.scope.currentJobInfo = jobInfo
-        self.jobInfoDialog = true
 
     newSubOrg: (org) -> #新增子机构
         self = @
@@ -216,10 +182,10 @@ class OrgsController extends nb.Controller
             self.scope.currentOrg = org
             self.org_modified = true
             state.go('^.show')
-    buildTree: ->
 
-        @treeData = @orgs.treeful(TREE_DEEPTH = 4)
-
+    buildTree: (org)->
+        @setCurrentOrg(org)
+        @tree = @orgs.treeful(org, @ORG_TREE_DEEPTH)
 
     # #切换到编辑页面
     # edit: (orgId) ->
