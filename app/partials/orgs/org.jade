@@ -6,7 +6,8 @@ div(ng-controller="OrgsController as ctrl")
                 href="javascript:void(0);"
                 ng-click="ctrl.orgBarOpen = !ctrl.orgBarOpen")
         .org-main-wrapper
-            .org-main-node 四川航空
+            .org-main-node
+                a(ng-click="rootTree()") 四川航空
             .org-children-wrapper
                 ul
                     li(ng-repeat="org in ctrl.orgs | filterBy: ['depth']: 2")
@@ -34,7 +35,7 @@ div(ng-controller="OrgsController as ctrl")
 
         div.org-chart-window
             div.top-btn-group
-                button.export() 导出
+                a.export(download="机构组织.xls" href="/api/departments/export_to_xls?department_id=1") 导出
                 button.history(ng-click="ctrl.openHistoryPanel()") 历史
             div.bottom-btn-group(ng-show="ctrl.tree.isModified")
                 button.cancel(ng-click="ctrl.revert()") 撤销
