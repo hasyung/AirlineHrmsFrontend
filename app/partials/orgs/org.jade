@@ -31,14 +31,9 @@ div(ng-controller="OrgsController as ctrl")
                     ng-click="ctrl.setCurrentOrg(org)")
                     a {{::org.name}}
     .org-chart.col-md-5
-<<<<<<< Updated upstream
 
-        div.org-chart-window
-            div.top-btn-group
-=======
     div.org-chart-window
         div.top-btn-group
->>>>>>> Stashed changes
                 button.export() 导出
                 button.history(ng-click="ctrl.openHistoryPanel()") 历史
         div.bottom-btn-group(ng-show="ctrl.tree.is_modified")
