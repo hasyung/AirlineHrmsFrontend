@@ -3,15 +3,25 @@ nb = @.nb
 app = nb.app
 
 
-click_handler = () ->
-    console.debug arguments
-
 
 orgChart = () ->
     link = (scope, $el, attrs) ->
         #
         #raphael paper
         paper = null
+        active_rect = null
+
+
+        click_handler = (evt, elem) ->
+            # elem.setAttribute("class", 'active')
+            rect = elem[0]
+            if active_rect != null
+                active_rect.classList.remove('active')
+            rect.classList = _.uniq rect.classList.add 'active'
+            active_rect = rect
+
+            scope.ctrl.onItemClick.apply(scope.ctrl,arguments)
+
 
         oc_options_2 = {
             data_id           : 90943,                    # identifies the ID of the "data" JSON object that is paired with these options
@@ -35,9 +45,11 @@ orgChart = () ->
             if typeof newval == 'undefined'
                 return
             if paper?
+                active_rect = null
                 paper.remove()
             data = {id:90943, title: '', root: newval}
             paper =ggOrgChart.render(oc_options_2, data)
+            active_rect = null
         return
 
     return {
@@ -120,7 +132,7 @@ class OrgsController extends nb.Controller
 
 
     constructor: (@Org, @http, @params, @state, @scope, @modal, @panel)->
-        @ORG_TREE_DEEPTH = 2
+        @ORG_TREE_DEEPTH = 1
         self = @
         @scope.currentOrg = null #当前选中机构
         @orgs = null    #集合
@@ -186,6 +198,11 @@ class OrgsController extends nb.Controller
     buildTree: (org)->
         @setCurrentOrg(org)
         @tree = @orgs.treeful(org, @ORG_TREE_DEEPTH)
+
+    onItemClick: (evt, element) ->
+        orgId = element.oc_id
+        org = _.find @orgs, {id: orgId}
+        @setCurrentOrg(org)
 
     # #切换到编辑页面
     # edit: (orgId) ->
