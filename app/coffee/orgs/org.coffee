@@ -143,7 +143,6 @@ class OrgsController extends nb.Controller
 
         #for ui status
         @orgBarOpen = true
-        @org_modified = false #是否有更改过还未生效的组织机构
 
 
         @scope.$on 'select:change', (ctx, location) ->
@@ -153,7 +152,6 @@ class OrgsController extends nb.Controller
         self = @
         onSuccess = ->
             self.scope.$emit('success',"机构：#{self.scope.currentOrg.name} ,删除成功")
-            self.org_modified = true
 
         onError = (data, status)->
             console.log arguments
@@ -192,12 +190,16 @@ class OrgsController extends nb.Controller
 
         org.$then (org) ->
             self.scope.currentOrg = org
-            self.org_modified = true
             state.go('^.show')
 
     buildTree: (org)->
+        depth = 5
+        depth = @ORG_TREE_DEEPTH if org.depth == 1
+
         @setCurrentOrg(org)
-        @tree = @orgs.treeful(org, @ORG_TREE_DEEPTH)
+        @tree = @orgs.treeful(org, depth)
+
+    _refreshTree: () ->
 
     onItemClick: (evt, element) ->
         orgId = element.oc_id
@@ -211,7 +213,6 @@ class OrgsController extends nb.Controller
     update: (org) -> #修改机构信息
         self = @
         onSuccess = ->
-            self.org_modified = true
             self.state.go('^.show')
 
         onError = (data, status)->
@@ -223,11 +224,9 @@ class OrgsController extends nb.Controller
         self = @
         onSuccess = ->
             self.orgs = self.Org.$search()
-            self.org_modified = false
             self.scope.$emit 'success', '撤销成功'
 
         onError = (data, status)->
-            self.org_modified = true
             self.scope.$emit 'error', "#{data.message}"
 
         promise = @http.post '/api/departments/revert'
@@ -238,11 +237,9 @@ class OrgsController extends nb.Controller
         self = @
         onSuccess = ->
             self.orgs = self.Org.$search()
-            self.org_modified = false
             self.scope.$emit 'success', '更改已生效'
 
         onError = (data, status)->
-            self.org_modified = true
             self.scope.$emit 'error', "#{data.message}"
 
         dialog = @modal.open {
