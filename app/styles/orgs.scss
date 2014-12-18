@@ -6,26 +6,26 @@ ul { padding: 0px;}
 .app-main { width: 883px; }
 }
 @media (min-width: 1441px) and (max-width: 1920px){
-.app-main { width: 1375px; }
+.app-main { width: 1363px; }
 }
 .org-chart-top { width: auto; height: 80px;}
 .org-chart-top.active { width: auto; height: 78px; background-color: #fdf8e2; border: 1px solid #f3ebd4;}
-.org-chart-top.active h1 { font-size: 25px; margin: 0px; height: 30px; line-height: 30px; color: #90743f; width: inherit;}
-.org-chart-top.active h2 { font-size: 16px; margin: 0px; line-height: 40px; color: #90743f; height: 30px; overflow: hidden; width: inherit;}
+.org-chart-top.active h1 { text-align: right; font-size: 25px; margin: 0px; height: 30px; line-height: 30px; color: #90743f; width: inherit;}
+.org-chart-top.active h2 { text-align: right; font-size: 16px; margin: 0px; line-height: 40px; color: #90743f; height: 30px; overflow: hidden; width: inherit;}
 .org-chart-top button { float: right; padding: 4px 12px; margin-left: 10px; margin-top: 25px;}
 .org-chart-top h1 { font-size: 25px; margin: 0px; line-height: 80px;}
-.btn-cold { background-color: #7623bc; color: #fff;}
+.btn-cold { background-color: #7263bc; color: #fff;}
 .btn-cold:hover {color: #fff;}
 .panel-content { content: "";position: absolute;top: 0;bottom: 0;z-index: 1042;right: 0px; background-color: #fff; box-shadow: -5px 0 20px #666;}
 .panel-lg { width: 900px;}
 .panel-md { width: 600px;}
 .panel-sm { width: 300px;}
 .org-aside { width: 340px; background-color: #fff; border-left: 1px solid #dfe4e7;}
-.org-title { position: relative; height: 35px; margin-left: 20px;border-bottom: 1px solid #c6d1d5; margin-top: 20px;}
+.org-title { position: relative; height: 35px; margin-left: 20px; margin-right: 20px; border-bottom: 1px solid #c6d1d5; margin-top: 20px;}
 .org-title span { width: auto; height: 35px; line-height: 35px; position: absolute;  border-bottom: 1px solid #39b7e9; color: #58656e; font-size: 16px;}
-.org-title button { float: right; margin-right: 10px;  color: #9ba8af;}
+.org-title button { float: right; margin-right: 10px;  color: #99a6ad;}
 .org-info {padding-top: 20px;}
-.org-table { margin-left: 20px; width: 338px;}
+.org-table { margin-left: 20px; width: 298px;}
 .org-post { color: #448ecb;}
 .org-btn .btn { width: 88px; height: 34px; margin-top: 30px;}
 .org-btn .btn-default { margin-right: 20px;}
@@ -49,7 +49,7 @@ ul { padding: 0px;}
 .org-dep .panel { border:none; box-shadow:none;}
 .org-dep .panel-heading { border-radius: 0px;}
 .org-dep .panel-group .panel { border-radius: 0px;}
-.org-dep-badge { width: 24px; height: 72px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border:1px solid #d1dcde; position: absolute; left: 182px;top: 38px;}
+.org-dep-badge { width: 24px; height: 72px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border:1px solid #d1dcde; position: absolute; left: 182px;top: 59px;background-color: #f6f8f8; border-left: none;}
 .org-dep-badge a { width: 24px; height: 72px; display: block; text-align: center; line-height: 72px; }
 .org-modal-top { height: 51px; line-height: 51px; font-size: 18px;padding: 0 20px; border-bottom: 1px solid #eae9ef;}
 .org-modal-post { padding:20px; background-color: #f2f3f8;}
@@ -101,12 +101,11 @@ ul { padding: 0px;}
 	margin-top:15px;
 }
 .org-main-node{
-	background-color: #eee;
-	height: 30px;
-	line-height:30px;
+	height: 38px;
+	line-height:38px;
 	padding-left: 8px;
 	margin-bottom: 4px;
-	background-color: #dee5e7;
+	background-color: #f6f8f8;
 	font-size: 16px;
 	cursor: pointer;
 }
