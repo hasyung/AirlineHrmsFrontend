@@ -454,7 +454,7 @@ angular.module 'nb.directives', []
 
 
 
-    .directive 'nbDropdown', ['$http', ($http)->
+    .directive 'nbDropdown', ['$http', 'inflector', ($http, inflector)->
 
 
         class DropdownCtrl
@@ -466,8 +466,11 @@ angular.module 'nb.directives', []
                 @scope.additory = true
 
                 onSuccess = (data, status) ->
-                    self.options = data.result
-                    console.log data
+                    self.options = _.map data.result, (item) ->
+                        _.reduce(item, (res, val, key) ->
+                            res[inflector.camelize(key)] = val
+                            return res
+                        , {})
 
                 onError = ->
                     self.scope.$emit('dropdown:notfound')
