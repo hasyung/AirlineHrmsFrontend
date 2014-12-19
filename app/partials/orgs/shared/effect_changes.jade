@@ -6,14 +6,14 @@ form.form-horizontal(name="active_form" ng-submit="eff.ok(active_form)")
         .form-group
             label.col-lg-3.control-label  OA文件名：
             .col-lg-8
-                input.form-control(type="text" name="log_title" ng-model="log.log_title" placeholder="操作说明", required="true")
-                div(ng-messages="active_form.log_title.$error", ng-if="active_form.log_title.$touched")
+                input.form-control(type="text" name="oa_file_no" ng-model="log.oa_file_no" placeholder="文件编号", required="true")
+                div(ng-messages="active_form.oa_file_no.$error", ng-if="active_form.oa_file_no.$touched")
                     .form-group-error(ng-message="required") OA文件名必填
         .form-group
             label.col-lg-3.control-label  日志标题：
             .col-lg-8
-                input.form-control(type="text" name="oa_file_no", ng-model="log.oa_file_no", placeholder="文件编号", required="true")
-                div(ng-messages="active_form.oa_file_no.$error", ng-if="active_form.oa_file_no.$touched")
+                input.form-control(type="text" name="title", ng-model="log.title", placeholder="操作说明", required="true")
+                div(ng-messages="active_form.title.$error", ng-if="active_form.title.$touched")
                     .form-group-error(ng-message="required") 日志必填
         .form-group
             .col-lg-11
