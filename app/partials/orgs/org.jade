@@ -18,12 +18,11 @@ div(ng-controller="OrgsController as ctrl")
         .org-row(ui-view='sub')
     .app-main
         .org-chart-top.active
-            .col-md-8.pull-left
-                h2.pull-right 2014年2月12日 人力资源部机构发上变化
-                h1.pull-right 四川航空人力资源部组织架构图
-            .col-md-4.pull-left
+                h1 四川航空人力资源部组织架构图
+                h2 2014年2月12日 人力资源部机构发上变化
+            .title-btn-group
                 button.btn.btn-cold(ng-click="ctrl.openHistoryDialog()") 历史记录
-                button.btn.btn-info 导出
+                button.btn.btn-info(download="机构组织.xls" href="/api/departments/export_to_xls?department_id=1") 导出
                 button.btn.btn-info(ng-click="ctrl.openHistoryPanel()") 返回最新
     .org-tree.col-md-3
         div#org_tree
@@ -31,17 +30,13 @@ div(ng-controller="OrgsController as ctrl")
                 li( ng-repeat="org in ::ctrl.orgs | filterBy: ['nodeType']: 'internal'"
                     ng-click="ctrl.setCurrentOrg(org)")
                     a {{::org.name}}
-    .org-chart.col-md-5
 
     div.org-chart-window
-        div.top-btn-group
-                a.export(download="机构组织.xls" href="/api/departments/export_to_xls?department_id=1") 导出
-                button.history(ng-click="ctrl.openHistoryDialog()") 历史
-            div.bottom-btn-group(ng-show="ctrl.tree.isModified")
+        div.bottom-btn-group(ng-show="ctrl.tree.isModified")
                 button.cancel(ng-click="ctrl.revert()") 撤销
                 button.effect(ng-click="ctrl.active()") 生效
         div.svg-wrapper(org-chart drag-on org-chart-data="ctrl.tree.data")
 
     div(ng-show="ctrl.org_modified")
 
-    .org-detail.col-md-3
+    //- .org-detail.col-md-3
