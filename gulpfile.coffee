@@ -251,7 +251,7 @@ gulp.task "express", ->
     app = express()
 
     proxyOptions = url.parse('http://192.168.6.99:9002')
-    # proxyOptions = url.parse('http://192.168.6.10:3000')
+    # proxyOptions = url.parse('http://192.168.6.23:3000')
     proxyOptions.route = '/api'
 
     # 反向代理 webapi

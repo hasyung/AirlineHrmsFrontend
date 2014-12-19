@@ -58,25 +58,6 @@ orgChart = () ->
     }
 
 
-# {
-#     label: '公司机构'
-#     children: [
-#         label: ''
-
-#     ]
-# }
-# {
-#     label: '一正级机构'
-#     children: [
-#         {
-#             label: '人力资源部'
-#         }
-#     ]
-# }
-
-
-
-
 app.directive('orgChart',[orgChart])
 
 
@@ -354,7 +335,6 @@ class EffectChangesCtrl
         @scope.log = {}
         form.$setPristine()
         @dialog.dismiss('cancel')
-
 
 class PositionCtrl extends nb.Controller
 
