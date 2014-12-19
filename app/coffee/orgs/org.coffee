@@ -58,25 +58,6 @@ orgChart = () ->
     }
 
 
-# {
-#     label: '公司机构'
-#     children: [
-#         label: ''
-
-#     ]
-# }
-# {
-#     label: '一正级机构'
-#     children: [
-#         {
-#             label: '人力资源部'
-#         }
-#     ]
-# }
-
-
-
-
 app.directive('orgChart',[orgChart])
 
 
@@ -128,10 +109,10 @@ class Route
 class OrgsController extends nb.Controller
 
 
-    @.$inject = ['Org', '$http','$stateParams', '$state', '$scope', '$modal', '$panel']
+    @.$inject = ['Org', '$http','$stateParams', '$state', '$scope', '$modal', '$panel', '$rootScope']
 
 
-    constructor: (@Org, @http, @params, @state, @scope, @modal, @panel)->
+    constructor: (@Org, @http, @params, @state, @scope, @modal, @panel, @rootScope)->
         @ORG_TREE_DEEPTH = 1
         self = @
         @treeRootOrg = null # 当前树的顶级节点
@@ -247,8 +228,10 @@ class OrgsController extends nb.Controller
 
     active: (form, data) ->
         self = @
+        rootScope = @rootScope
         onSuccess = ->
             self.reset(true)
+            rootScope.loading = false
             self.scope.$emit 'success', '更改已生效'
 
         onError = (data, status)->
@@ -262,6 +245,7 @@ class OrgsController extends nb.Controller
         dialog.result.then (formdata) ->
             #todo,以后需要讨论
             formdata.department_id = 1
+            rootScope.loading = true
             promise = self.http.post '/api/departments/active', formdata
             promise.then onSuccess, onError
 
@@ -283,7 +267,7 @@ class OrgsController extends nb.Controller
             controllerAs: 'his'
             backdrop: false
             size: 'sm'
-        } 
+        }
         dialog.result.then (data) ->
             console.log data.historyOrgs
             self.isHistory = true
@@ -314,7 +298,7 @@ class HistoryCtrl
                 # 后端返回的一些数据是以";"结尾, 那么split之后数组的最后一项将为undefined
                 if /.*;$/.test(log.step_desc)
                     log.step_desc = log.step_desc.substring(0, log.step_desc.length - 1)
-                log.step_desc = log.step_desc.split(';') 
+                log.step_desc = log.step_desc.split(';')
 
                 #Unix 时间戳转普通时间要乘1000 ，Date内部处理是按毫秒
                 return new Date(parseInt(log.created_at)*1000).getFullYear()
@@ -323,7 +307,7 @@ class HistoryCtrl
             angular.forEach groupedLog, (item, key) ->
                 groupedLogs.push {logs:item, changeYear: key}
             #转换结束
-            
+
             self.changeLogs = groupedLogs.reverse()
         promise = self.http.get('/api/departments/change_logs')
         promise.then onSuccess, onError
@@ -365,7 +349,6 @@ class EffectChangesCtrl
         @scope.log = {}
         form.$setPristine()
         @dialog.dismiss('cancel')
-
 
 class PositionCtrl extends nb.Controller
 

@@ -1,17 +1,18 @@
 .btn-info { background-color: #07b6e5;}
 .modal-backdrop.in {opacity: 0.4;}
 ul { padding: 0px;}
-.app-main { width: 1000px; height: auto; padding: 20px; float: left;}
-@media  (max-width: 1440px){
-.app-main { width: 883px; }
-}
-@media (min-width: 1441px) and (max-width: 1920px){
-.app-main { width: 1363px; }
-}
+.app-main { width: calc(100% - 569px); height: auto; float: left; position: relative; left: 15px;}
+// @media  (min-width: 1401 and max-width: 1440px){
+// .app-main { width: 883px; }
+// }
+// @media (min-width: 1441px) and (max-width: 1920px){
+// .app-main { width: 1375px; }
+// }
 .org-chart-top { width: auto; height: 80px;}
-.org-chart-top.active { width: auto; height: 78px; background-color: #fdf8e2; border: 1px solid #f3ebd4;}
-.org-chart-top.active h1 { text-align: right; font-size: 25px; margin: 0px; height: 30px; line-height: 30px; color: #90743f; width: inherit;}
-.org-chart-top.active h2 { text-align: right; font-size: 16px; margin: 0px; line-height: 40px; color: #90743f; height: 30px; overflow: hidden; width: inherit;}
+.org-chart-top.active { position: relative; width: auto; height: 78px; background-color: #fdf8e2; border: 1px solid #f3ebd4; box-sizing: border-box; padding-top: 20px;}
+.org-chart-top.active h1 { font-size: 25px; margin-bottom: 10px; line-height: 25px; color: #90743f; text-align: center;}
+.org-chart-top.active h2 { font-size: 16px; margin: 0px;line-height: 16px; color: #90743f; text-align: center;}
+
 .org-chart-top button { float: right; padding: 4px 12px; margin-left: 10px; margin-top: 25px;}
 .org-chart-top h1 { font-size: 25px; margin: 0px; line-height: 80px;}
 .btn-cold { background-color: #7263bc; color: #fff;}
@@ -49,7 +50,8 @@ ul { padding: 0px;}
 .org-dep .panel { border:none; box-shadow:none;}
 .org-dep .panel-heading { border-radius: 0px;}
 .org-dep .panel-group .panel { border-radius: 0px;}
-.org-dep-badge { width: 24px; height: 72px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border:1px solid #d1dcde; position: absolute; left: 182px;top: 59px;background-color: #f6f8f8; border-left: none;}
+.org-dep-badge { width: 24px; height: 72px; background-color: #fff; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border:1px solid #d1dcde; position: absolute; left: 182px;top: 38px;}
+
 .org-dep-badge a { width: 24px; height: 72px; display: block; text-align: center; line-height: 72px; }
 .org-modal-top { height: 51px; line-height: 51px; font-size: 18px;padding: 0 20px; border-bottom: 1px solid #eae9ef;}
 .org-modal-post { padding:20px; background-color: #f2f3f8;}
@@ -156,27 +158,14 @@ ul { padding: 0px;}
 .org-chart-window{
 	position: relative;
 	width: calc(100% - 569px);
-	height: 100%;
+	height: calc(100% - 51px);
 	left: 15px;
 	overflow:hidden;
 }
 .svg-wrapper{
-	width:100%;
+	width: 100%;
 	height:100%;
 	overflow:hidden
-}
-.top-btn-group{
-	position: absolute;
-	top: 0;
-	right: 0;
-	z-index: 10;
-}
-.top-btn-group button{
-	font-size: 14px;
-	width: 60px;
-	height: 30px;
-	border-radius: 4px;
-	outline: none;
 }
 .bottom-btn-group{
 	position: absolute;
@@ -191,20 +180,9 @@ ul { padding: 0px;}
 	border-radius: 4px;
 	outline: none;
 }
-.org-chart-window .history{
-	margin-left: 10px;
-	border: 1px solid #7264bc;
-	background-color: #7264bc;
-	color: #fff;
-}
-.org-chart-window .export{
-	border: 1px solid #09b6e7;
-	background-color: #09b6e7;
-	color: #fff;
-}
 .org-chart-window .cancel{
 	border: 1px solid #c4cfd1;
-	background-color: #fff;
+	background-color: red;
 	color: #000;
 }
 .org-chart-window .effect{
@@ -231,6 +209,23 @@ svg text{
 }
 .orgchart-box-destroy_inactive{
 	fill: #ff908f;
+}
+
+.title-btn-group{
+	position: absolute;
+	top: 23px;
+	right: 10px;
+}
+.title-btn-group button{
+	float: right;
+	margin-left: 10px;
+}
+.title-btn-group button:last-child{
+	margin-left: none;
+}
+
+.svg-wrapper svg{
+
 }
 
 
