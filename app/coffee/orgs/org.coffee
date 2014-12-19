@@ -109,10 +109,10 @@ class Route
 class OrgsController extends nb.Controller
 
 
-    @.$inject = ['Org', '$http','$stateParams', '$state', '$scope', '$modal', '$panel']
+    @.$inject = ['Org', '$http','$stateParams', '$state', '$scope', '$modal', '$panel', '$rootScope']
 
 
-    constructor: (@Org, @http, @params, @state, @scope, @modal, @panel)->
+    constructor: (@Org, @http, @params, @state, @scope, @modal, @panel, @rootScope)->
         @ORG_TREE_DEEPTH = 1
         self = @
         @treeRootOrg = null # 当前树的顶级节点
@@ -223,8 +223,10 @@ class OrgsController extends nb.Controller
 
     active: (form, data) ->
         self = @
+        rootScope = @rootScope
         onSuccess = ->
             self.reset(true)
+            rootScope.loading = false
             self.scope.$emit 'success', '更改已生效'
 
         onError = (data, status)->
@@ -238,6 +240,7 @@ class OrgsController extends nb.Controller
         dialog.result.then (formdata) ->
             #todo,以后需要讨论
             formdata.department_id = 1
+            rootScope.loading = true
             promise = self.http.post '/api/departments/active', formdata
             promise.then onSuccess, onError
 

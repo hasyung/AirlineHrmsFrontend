@@ -22,7 +22,7 @@ div(ng-controller="OrgsController as ctrl")
                 h2 2014年2月12日 人力资源部机构发上变化
             .title-btn-group
                 button.btn.btn-cold(ng-click="ctrl.openHistoryDialog()") 历史记录
-                button.btn.btn-info(download="机构组织.xls" href="/api/departments/export_to_xls?department_id=1") 导出
+                a.btn.btn-info(download="机构组织.xls" ng-href="/api/departments/export_to_xls?department_id={{treeRootOrg.id}}") 导出
                 button.btn.btn-info(ng-click="ctrl.openHistoryPanel()") 返回最新
                 //- loading-btn.red(ng-click="ctrl.openHistoryPanel()" btn-loading-type="contract-overlay" btn-text="测试loading")
     .org-tree.col-md-3
