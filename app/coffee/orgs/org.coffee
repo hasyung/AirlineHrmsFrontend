@@ -143,6 +143,7 @@ class OrgsController extends nb.Controller
 
         #for ui status
         @orgBarOpen = true
+        @isHistory = false
 
 
         @scope.$on 'select:change', (ctx, location) ->
@@ -166,6 +167,9 @@ class OrgsController extends nb.Controller
         @Org.$search()
             .$then (orgs) ->
                 self.orgs = orgs
+                console.log orgs
+                #通过这里赋值的orgs都不是历史记录
+                self.isHistory = false
                 self.rootTree()
     rootTree: () ->
         @currentOrg = _.find @orgs, (org) -> org.depth == 1
@@ -281,7 +285,9 @@ class OrgsController extends nb.Controller
         } 
         dialog.result.then (data) ->
             console.log data.historyOrgs
+            self.isHistory = true
             self.orgs = data.historyOrgs
+
 
 # 机构历史记录
 
