@@ -109,10 +109,10 @@ class Route
 class OrgsController extends nb.Controller
 
 
-    @.$inject = ['Org', '$http','$stateParams', '$state', '$scope', '$modal', '$panel']
+    @.$inject = ['Org', '$http','$stateParams', '$state', '$scope', '$modal', '$panel', '$rootScope']
 
 
-    constructor: (@Org, @http, @params, @state, @scope, @modal, @panel)->
+    constructor: (@Org, @http, @params, @state, @scope, @modal, @panel, @rootScope)->
         @ORG_TREE_DEEPTH = 1
         self = @
         @treeRootOrg = null # 当前树的顶级节点
@@ -124,6 +124,7 @@ class OrgsController extends nb.Controller
 
         #for ui status
         @orgBarOpen = true
+        @isHistory = false
 
 
         @scope.$on 'select:change', (ctx, location) ->
@@ -147,6 +148,9 @@ class OrgsController extends nb.Controller
         @Org.$search()
             .$then (orgs) ->
                 self.orgs = orgs
+                console.log orgs
+                #通过这里赋值的orgs都不是历史记录
+                self.isHistory = false
                 self.rootTree()
     rootTree: () ->
         @currentOrg = _.find @orgs, (org) -> org.depth == 1
@@ -185,6 +189,7 @@ class OrgsController extends nb.Controller
         @Org.$search()
             .$then (orgs) ->
                 self.orgs = orgs
+                self.isHistory = false
                 self.scope.currentOrg = _.find orgs,{id: self.treeRootOrg.id} if force
                 self.buildTree()
 
@@ -223,8 +228,10 @@ class OrgsController extends nb.Controller
 
     active: (form, data) ->
         self = @
+        rootScope = @rootScope
         onSuccess = ->
             self.reset(true)
+            rootScope.loading = false
             self.scope.$emit 'success', '更改已生效'
 
         onError = (data, status)->
@@ -238,6 +245,7 @@ class OrgsController extends nb.Controller
         dialog.result.then (formdata) ->
             #todo,以后需要讨论
             formdata.department_id = 1
+            rootScope.loading = true
             promise = self.http.post '/api/departments/active', formdata
             promise.then onSuccess, onError
 
@@ -262,7 +270,9 @@ class OrgsController extends nb.Controller
         }
         dialog.result.then (data) ->
             console.log data.historyOrgs
+            self.isHistory = true
             self.orgs = data.historyOrgs
+
 
 # 机构历史记录
 
@@ -272,7 +282,7 @@ class HistoryCtrl
     constructor: (@dialog, @scope, @http, @Org) ->
         self = @
         @changeLogs = null
-        @currentHisVersion = null
+        @currentLog = null
         @historyOrgs = null
         @loadInitialData()
 
@@ -303,8 +313,12 @@ class HistoryCtrl
         promise.then onSuccess, onError
 
 
-    setHistoryVersion: (version)->
-        @currentHisVersion = version
+    setCurrentLog: (log)->
+        # 防止UI中出现多个被选中的item
+        if @currentLog 
+            @currentLog.isActive = false
+        log.isActive = true
+        @currentLog = log
     ok: ()->
         self = @
         onError = (res)->
@@ -312,7 +326,7 @@ class HistoryCtrl
             self.dialog.close()
         onSuccess = (res)->
             self.dialog.close({ historyOrgs: res })
-        promise = self.Org.$search {version: self.currentHisVersion}
+        promise = self.Org.$search {version: self.currentLog.id}
         promise.$then onSuccess, onError
 
     cancel: ()->
