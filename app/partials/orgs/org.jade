@@ -25,6 +25,7 @@ div(ng-controller="OrgsController as ctrl")
                 button.btn.btn-cold(ng-click="ctrl.openHistoryDialog()") 历史记录
                 button.btn.btn-info 导出
                 button.btn.btn-info(ng-click="ctrl.openHistoryPanel()") 返回最新
+                loading-btn.red(ng-click="ctrl.openHistoryPanel()" btn-loading-type="contract-overlay" btn-text="测试loading")
     .org-tree.col-md-3
         div#org_tree
             ul
