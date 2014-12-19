@@ -4,8 +4,8 @@ div.wrapper
 			div.btn.btn-info {{:: yearItem.changeYear}}
 			span.pull-right 有{{:: yearItem.logs.length}}次变动
 		li.tl-item(ng-repeat="log in yearItem.logs", ng-click="his.setCurrentLog(log)", ng-class="{'active': log.isActive}")
-			div.tl-wrap
-				div.tl-content.panel.padder.b-a
+			div.tl-wrap(ng-class="{'b-info': log.isActive}")
+				div.tl-content.panel.padder.b-a(ng-class="{'bg-info': log.isActive}")
 					span.arrow.left.pull-up
 					div
 						h1() {{log.title}}
