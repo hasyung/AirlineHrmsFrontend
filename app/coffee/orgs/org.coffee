@@ -173,6 +173,7 @@ class OrgsController extends nb.Controller
         org.$then (org) ->
             self.scope.currentOrg = org
             self.reset()
+            self.scope.$emit 'success', "新增子机构#{org.name}成功"
             state.go('^.show')
 
     buildTree: (org = @treeRootOrg)->
@@ -206,6 +207,7 @@ class OrgsController extends nb.Controller
         self = @
         onSuccess = ->
             self.reset()
+            self.scope.$emit 'success', '修改机构成功'
             self.state.go('^.show')
 
         onError = (data, status)->
@@ -315,7 +317,7 @@ class HistoryCtrl
 
     setCurrentLog: (log)->
         # 防止UI中出现多个被选中的item
-        if @currentLog 
+        if @currentLog
             @currentLog.isActive = false
         log.isActive = true
         @currentLog = log
