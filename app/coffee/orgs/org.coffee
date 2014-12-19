@@ -148,7 +148,6 @@ class OrgsController extends nb.Controller
         @Org.$search()
             .$then (orgs) ->
                 self.orgs = orgs
-                console.log orgs
                 #通过这里赋值的orgs都不是历史记录
                 self.isHistory = false
                 self.rootTree()
@@ -246,7 +245,7 @@ class OrgsController extends nb.Controller
         }
         dialog.result.then (formdata) ->
             #todo,以后需要讨论
-            formdata.department_id = 1
+            formdata.department_id = self.treeRootOrg.id
             rootScope.loading = true
             promise = self.http.post '/api/departments/active', formdata
             promise.then onSuccess, onError
@@ -297,13 +296,15 @@ class HistoryCtrl
         onSuccess = (res)->
             logs = res.data.change_logs
             groupedLog = _.groupBy logs, (log) ->
+                # 还是UNIX时间戳转js时间
+                log.created_at = parseInt(log.created_at) * 1000
                 # 后端返回的一些数据是以";"结尾, 那么split之后数组的最后一项将为undefined
                 if /.*;$/.test(log.step_desc)
                     log.step_desc = log.step_desc.substring(0, log.step_desc.length - 1)
                 log.step_desc = log.step_desc.split(';')
 
                 #Unix 时间戳转普通时间要乘1000 ，Date内部处理是按毫秒
-                return new Date(parseInt(log.created_at)*1000).getFullYear()
+                return new Date(log.created_at).getFullYear()
             # 将对象转换为数组,待优化后期会整合为filter
             groupedLogs = []
             angular.forEach groupedLog, (item, key) ->
@@ -327,7 +328,8 @@ class HistoryCtrl
             self.scope.emit 'error', res
             self.dialog.close()
         onSuccess = (res)->
-            self.dialog.close({ historyOrgs: res })
+            res.$metadata.created_at = parseInt(res.$metadata.created_at) * 1000
+            self.dialog.close({ historyOrgs: res})
         promise = self.Org.$search {version: self.currentLog.id}
         promise.$then onSuccess, onError
 
