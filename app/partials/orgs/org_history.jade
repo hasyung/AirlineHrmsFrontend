@@ -3,14 +3,16 @@ div.wrapper
 		li.tl-header
 			div.btn.btn-info {{:: yearItem.changeYear}}
 			span.pull-right 有{{:: yearItem.logs.length}}次变动
-		li.tl-item(ng-repeat="log in yearItem.logs", ng-click="his.setHistoryVersion(log.id)")
+		li.tl-item(ng-repeat="log in yearItem.logs", ng-click="his.setCurrentLog(log)", ng-class="{'active': log.isActive}")
 			div.tl-wrap
 				div.tl-content.panel.padder.b-a
 					span.arrow.left.pull-up
 					div
 						h1() {{log.title}}
 						h2 {{::log.created_at | date: 'MM月dd日'}} - {{::log.dep_name}}
-						p(ng-repeat="step in log.step_desc") {{::step}}
+						ul(ng-if="log.isActive")
+							li(ng-repeat="step in log.step_desc")
+								p {{::step}}
 	.panel-footer
 		button.btn.btn-info.btn-sm.pull-right(type='submit', ng-click="his.ok()") 提交
 		button.btn.btn-default.btn-sm.pull-right(type='button',ng-click='his.cancel()') 取消

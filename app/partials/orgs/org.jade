@@ -17,14 +17,14 @@ div(ng-controller="OrgsController as ctrl")
     .app-aside.org-aside.hidden-xs.bg-white-opacity.pull-right
         .org-row(ui-view='sub')
     .app-main
-        .org-chart-top.active
+        .org-chart-top(ng-class="{'active': ctrl.isHistory}")
             .col-md-8.pull-left
-                h2.pull-right 2014年2月12日 人力资源部机构发上变化
+                h2.pull-right(ng-if="ctrl.isHistory") {{::ctrl.orgs.$metadata.created_at*1000 | date:'yyyy年MM月dd日'}}— {{::ctrl.orgs.$metadata.title}}
                 h1.pull-right 四川航空人力资源部组织架构图
             .col-md-4.pull-left
                 button.btn.btn-cold(ng-click="ctrl.openHistoryDialog()") 历史记录
                 button.btn.btn-info 导出
-                button.btn.btn-info(ng-click="ctrl.openHistoryPanel()") 返回最新
+                button.btn.btn-info(ng-click="ctrl.reset(false)", ng-if="ctrl.isHistory") 返回最新
     .org-tree.col-md-3
         div#org_tree
             ul

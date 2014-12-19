@@ -208,6 +208,7 @@ class OrgsController extends nb.Controller
         @Org.$search()
             .$then (orgs) ->
                 self.orgs = orgs
+                self.isHistory = false
                 self.scope.currentOrg = _.find orgs,{id: self.treeRootOrg.id} if force
                 self.buildTree()
 
@@ -297,7 +298,7 @@ class HistoryCtrl
     constructor: (@dialog, @scope, @http, @Org) ->
         self = @
         @changeLogs = null
-        @currentHisVersion = null
+        @currentLog = null
         @historyOrgs = null
         @loadInitialData()
 
@@ -328,8 +329,12 @@ class HistoryCtrl
         promise.then onSuccess, onError
 
 
-    setHistoryVersion: (version)->
-        @currentHisVersion = version
+    setCurrentLog: (log)->
+        # 防止UI中出现多个被选中的item
+        if @currentLog 
+            @currentLog.isActive = false
+        log.isActive = true
+        @currentLog = log
     ok: ()->
         self = @
         onError = (res)->
@@ -337,7 +342,7 @@ class HistoryCtrl
             self.dialog.close()
         onSuccess = (res)->
             self.dialog.close({ historyOrgs: res })
-        promise = self.Org.$search {version: self.currentHisVersion}
+        promise = self.Org.$search {version: self.currentLog.id}
         promise.$then onSuccess, onError
 
     cancel: ()->
