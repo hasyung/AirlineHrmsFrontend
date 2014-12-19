@@ -40,13 +40,11 @@ div(ng-controller="OrgsController as ctrl")
       //-           button.btn.btn-info.effect(ng-click="ctrl.active()") 生效
       //-           button.btn.btn-default.cancel(ng-click="ctrl.revert()") 撤销
       //- .org-tree.col-md-3
-
-
-        div#org_tree
-            ul
-                li( ng-repeat="org in ::ctrl.orgs | filterBy: ['nodeType']: 'internal'"
-                    ng-click="ctrl.setCurrentOrg(org)")
-                    a {{::org.name}}
+        //- div#org_tree
+        //-     ul
+        //-         li( ng-repeat="org in ::ctrl.orgs | filterBy: ['nodeType']: 'internal'"
+        //-             ng-click="ctrl.setCurrentOrg(org)")
+        //-             a {{::org.name}}
 
     div.org-chart-window
         div.bottom-btn-group(ng-show="ctrl.tree.isModified")
