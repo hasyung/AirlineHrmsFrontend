@@ -19,7 +19,8 @@ html
         include partials/shared/left_sidebar
 
         toaster-container(toaster-options="{'time-out': 3000, 'close-button':true, 'animation-class': 'toast-top-right'}")
-        nb-loading(ng-show="loading")
+        //- nb-loading(ng-show="loading")
+        nb-loading.nb-loading()
         .org-container(ui-view)
 
 

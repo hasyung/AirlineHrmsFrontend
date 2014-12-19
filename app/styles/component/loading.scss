@@ -1,13 +1,27 @@
-body {
-  background: #111;
+.nb-loading{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 100000;
 }
-.loader {
+.bezel {
   position: relative;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,.6);
+}
+.global-loader {
+  position: absolute;
   padding-top: 100px;
   width: 40px;
-  margin: auto;
+  left: 50%;
+  top: 50%;
+  margin-left: -20px;
+  margin-top: -140px;
 }
-.loader .circle {
+.global-loader .global-loader-circle {
   position: absolute;
   width: 38px;
   height: 38px;
@@ -17,7 +31,7 @@ body {
   -webkit-animation-name: orbit;
   -webkit-animation-duration: 5.5s;
 }
-.loader .circle:after {
+.global-loader .global-loader-circle:after {
   content: '';
   position: absolute;
   width: 5px;
@@ -26,16 +40,16 @@ body {
   background: #fff;
   /* Pick a color */
 }
-.loader .circle:nth-child(2) {
+.global-loader .global-loader-circle:nth-child(2) {
   -webkit-animation-delay: 240ms;
 }
-.loader .circle:nth-child(3) {
+.global-loader .global-loader-circle:nth-child(3) {
   -webkit-animation-delay: 480ms;
 }
-.loader .circle:nth-child(4) {
+.global-loader .global-loader-circle:nth-child(4) {
   -webkit-animation-delay: 720ms;
 }
-.loader .circle:nth-child(5) {
+.global-loader .global-loader-circle:nth-child(5) {
   -webkit-animation-delay: 960ms;
 }
 
