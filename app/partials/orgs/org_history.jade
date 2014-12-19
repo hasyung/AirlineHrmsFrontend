@@ -1,5 +1,5 @@
-div.wrapper
-	ul.timeline.org-timline(ng-repeat="yearItem in his.changeLogs")
+div.wrapper.org-timline
+	ul.timeline(ng-repeat="yearItem in his.changeLogs")
 		li.tl-header
 			div.btn.btn-info {{:: yearItem.changeYear}}
 			span.pull-right 有{{:: yearItem.logs.length}}次变动
@@ -11,9 +11,12 @@ div.wrapper
 						h1() {{log.title}}
 						h2 {{::log.created_at | date: 'MM月dd日'}} - {{::log.dep_name}}
 						p(ng-repeat="step in log.step_desc") {{::step}}
-	.panel-footer
-		button.btn.btn-info.btn-sm.pull-right(type='submit', ng-click="his.ok()") 提交
-		button.btn.btn-default.btn-sm.pull-right(type='button',ng-click='his.cancel()') 取消
-	.clearfix
+
+.panel-footer.org-timline
+	button.btn.btn-info.btn-sm.pull-right(type='submit', ng-click="his.ok()") 提交
+	button.btn.btn-default.btn-sm.pull-right(type='button',ng-click='his.cancel()') 取消
+.clearfix
+
+
 
 

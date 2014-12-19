@@ -25,7 +25,13 @@ div(ng-controller="OrgsController as ctrl")
                 button.btn.btn-cold(ng-click="ctrl.openHistoryDialog()") 历史记录
                 button.btn.btn-info 导出
                 button.btn.btn-info(ng-click="ctrl.openHistoryPanel()") 返回最新
-    .org-tree.col-md-3
+
+        //撤销和生效的按钮
+        .org-chart-top.org-chart-bottom
+            .col-md-12.pull-left
+                button.btn.btn-info.effect(ng-click="ctrl.active()") 生效
+                button.btn.btn-default.cancel(ng-click="ctrl.revert()") 撤销
+      .org-tree.col-md-3
         div#org_tree
             ul
                 li( ng-repeat="org in ::ctrl.orgs | filterBy: ['nodeType']: 'internal'"
