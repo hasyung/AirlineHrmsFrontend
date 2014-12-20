@@ -133,6 +133,9 @@ background-color: #31374b;
 	font-size: 16px;
 	cursor: pointer;
 }
+.org-main-node:hover a{
+	color: #ff0000;
+}
 .org-node{
 	display: block;
 	width: 100%;
