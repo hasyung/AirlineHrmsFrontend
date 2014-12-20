@@ -450,10 +450,6 @@ angular.module 'nb.directives', []
         }
 
     ]
-
-
-
-
     .directive 'nbDropdown', ['$http', 'inflector', ($http, inflector)->
 
 

@@ -223,8 +223,16 @@ class OrgsController extends nb.Controller
         onError = (data, status)->
             self.scope.$emit 'error', "#{data.message}"
 
-        promise = @http.post '/api/departments/revert'
-        promise.then onSuccess, onError
+        dialog = @modal.open {
+            templateUrl: 'partials/orgs/shared/revert_changes.html'
+            controller: RevertChangesCtrl
+            controllerAs: 'rev'
+            backdrop: true
+            size: 'sm'
+        }
+        dialog.result.then () ->
+            promise = self.http.post '/api/departments/revert'
+            promise.then onSuccess, onError
 
 
     active: (form, data) ->
@@ -271,9 +279,10 @@ class OrgsController extends nb.Controller
             backdropClass: 'org-history-dialog-backdrop'
         }
         dialog.result.then (data) ->
-            console.log data.historyOrgs
             self.isHistory = true
             self.orgs = data.historyOrgs
+            self.buildTree()
+
 
 
 # 机构历史记录
@@ -337,6 +346,18 @@ class HistoryCtrl
     cancel: ()->
         @dialog.dismiss('cancel')
 
+# 撤销提示框
+
+class RevertChangesCtrl
+    @.$inject = ['$modalInstance']
+    constructor: (@dialog) ->
+
+    ok: (formdata)->
+        @dialog.close()
+
+    cancel: (evt,form)->
+        evt.preventDefault()
+        @dialog.dismiss('cancel')
 
 
 
