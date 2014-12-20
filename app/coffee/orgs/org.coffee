@@ -266,8 +266,9 @@ class OrgsController extends nb.Controller
             templateUrl: 'partials/orgs/org_history.html'
             controller: HistoryCtrl
             controllerAs: 'his'
-            backdrop: false
+            backdrop: true
             size: 'sm'
+            backdropClass: 'org-history-dialog-backdrop'
         }
         dialog.result.then (data) ->
             console.log data.historyOrgs
