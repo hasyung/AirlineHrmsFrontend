@@ -271,9 +271,10 @@ class OrgsController extends nb.Controller
             backdropClass: 'org-history-dialog-backdrop'
         }
         dialog.result.then (data) ->
-            console.log data.historyOrgs
             self.isHistory = true
             self.orgs = data.historyOrgs
+            self.buildTree()
+
 
 
 # 机构历史记录
