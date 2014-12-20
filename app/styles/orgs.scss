@@ -169,6 +169,17 @@ background-color: #31374b;
 	height: calc(100% - 30px);
 	overflow-y: scroll;
 }
+.org-children-wrapper li a {
+	height: 35px;
+	line-height: 35px;
+	display: block;
+	width: 100%;
+	text-overflow:ellipsis;
+	overflow:hidden;
+	white-space:nowrap;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
 .org-chart-window{
 	position: relative;
 	width: calc(100% - 569px);
