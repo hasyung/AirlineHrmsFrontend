@@ -543,13 +543,13 @@ angular.module 'nb.directives', []
 
         }
     ]
-    .directive 'dragOn', [ () ->
+    .directive 'dragOn', [ '$window', ($window) ->
 
 
         postLink = (scope, elem, attrs)->
 
             return if not jQuery.fn.dragOn
-            elem.dragOn()
+            $window.dragOnElem = elem.dragOn()
             scope.$on 'destroy', () ->
                 elem.trigger 'DragOn.remove'
 

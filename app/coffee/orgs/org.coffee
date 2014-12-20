@@ -49,6 +49,7 @@ orgChart = () ->
                 paper.remove()
             data = {id:90943, title: '', root: newval}
             paper =ggOrgChart.render(oc_options_2, data)
+            $el.trigger('resize')
             active_rect = null
         return
 

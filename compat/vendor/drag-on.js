@@ -61,6 +61,7 @@ $(function () {
                     if (_this.on) {
                         S.css({ cursor: o.cursor }).children('a').on(o.holdEvents,onPrevent).css({ cursor: 'pointer'});
                         S.on(o.wheelEvents,_this.onWhell).on(o.holdEvents,_this.onHold);
+                        S.on('resize',_this.resize)
                         $('body').on({'keydown':_this.onKeyDown,'keyup':_this.onKeyDown});
                         (("Info" in window) && Info || console).log('DragOn fly...');
                     } else {
@@ -72,6 +73,14 @@ $(function () {
                     _this.on=!_this.on;
                     if (e!=null) S.trigger('BarOn.toggle');
                     return _this;
+                },
+                resize: function() {
+                    var pw,cw,dx;
+
+                    S.to = S.children().eq(0)
+                    pw = S.innerWidth();
+                    cw = S.to.innerWidth()
+                        _this.setCurPos(-250, 0)
                 },
                 getCurPos: function () {
                     var b, to = S.to;

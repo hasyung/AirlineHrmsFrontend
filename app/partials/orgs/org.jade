@@ -31,21 +31,6 @@ div(ng-controller="OrgsController as ctrl")
     .org-tree.col-md-3
 
 
-      //-           button.btn.btn-info 导出
-      //-           button.btn.btn-info(ng-click="ctrl.openHistoryPanel()") 返回最新
-
-      //-   //撤销和生效的按钮
-      //-   .org-chart-top.org-chart-bottom
-      //-       .col-md-12.pull-left
-      //-           button.btn.btn-info.effect(ng-click="ctrl.active()") 生效
-      //-           button.btn.btn-default.cancel(ng-click="ctrl.revert()") 撤销
-      //- .org-tree.col-md-3
-        //- div#org_tree
-        //-     ul
-        //-         li( ng-repeat="org in ::ctrl.orgs | filterBy: ['nodeType']: 'internal'"
-        //-             ng-click="ctrl.setCurrentOrg(org)")
-        //-             a {{::org.name}}
-
     div.org-chart-window
         div.bottom-btn-group(ng-show="ctrl.tree.isModified")
                 button.cancel(ng-click="ctrl.revert()") 撤销
