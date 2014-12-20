@@ -12,8 +12,8 @@ ul { padding: 0px;}
 
 .org-chart-top { width: auto; height: 80px;}
 .org-chart-top.active { position: relative; width: auto; height: 78px; background-color: #fdf8e2; border: 1px solid #f3ebd4; box-sizing: border-box; padding-top: 20px;}
-.org-chart-top.active h1 { font-size: 25px; margin-bottom: 10px; line-height: 25px; color: #90743f; text-align: center;}
-.org-chart-top.active h2 { font-size: 16px; margin: 0px;line-height: 16px; color: #90743f; text-align: center;}
+.org-chart-top.active h1 {width: calc(100% - 200px); font-size: 25px; margin-bottom: 10px; line-height: 25px; color: #90743f; text-align: center;}
+.org-chart-top.active h2 { width: calc(100% - 200px);font-size: 16px; margin: 0px;line-height: 16px; color: #90743f; text-align: center;}
 .org-chart-top button { float: right; padding: 4px 12px; margin-left: 10px; margin-top: 25px;}
 .org-chart-top h1 { font-size: 25px; margin: 0px; line-height: 80px;text-align: center;}
 
@@ -90,7 +90,7 @@ ul { padding: 0px;}
 .org-timline .tl-header .bg-info .text-lt { color: #000!important;}
 .org-timline.panel-footer {margin-bottom: 30px;}
 .org-timline.panel-footer .btn{ width: 70px; margin-left: 10px;}
-.org-timline .b-info { border-color: #dee5e7; }
+.org-timline .b-info { border-color: #daedf8; }
 .org-timline .b-info p { color: #000;}
 .org-timline .org-delete-template{
 	position: absolute;
@@ -99,6 +99,13 @@ ul { padding: 0px;}
 	left: -160px;
 	width: 270px;
 	z-index: 99999;
+}
+.modal-backdrop.org-history-dialog-backdrop.in { opacity: 0;}
+.bg-black {
+background-color: #3a3f52;
+}
+.bg-black.dk, .bg-black .dk {
+background-color: #31374b;
 }
 .org-delete-template{
 	position: absolute;
@@ -161,6 +168,17 @@ ul { padding: 0px;}
 .org-children-wrapper{
 	height: calc(100% - 30px);
 	overflow-y: scroll;
+}
+.org-children-wrapper li a {
+	height: 35px;
+	line-height: 35px;
+	display: block;
+	width: 100%;
+	text-overflow:ellipsis;
+	overflow:hidden;
+	white-space:nowrap;
+	padding-top: 0px;
+	padding-bottom: 0px;
 }
 .org-chart-window{
 	position: relative;
@@ -233,6 +251,10 @@ svg text{
 
 .svg-wrapper svg{
 
+}
+
+.button-group button{
+	margin-left: 10px;
 }
 
 

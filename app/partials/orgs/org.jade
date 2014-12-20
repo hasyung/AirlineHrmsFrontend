@@ -19,7 +19,7 @@ div(ng-controller="OrgsController as ctrl")
     .app-main
         .org-chart-top(ng-class="{'active': ctrl.isHistory}")
                 h1 {{ctrl.treeRootOrg.name}}组织机构图
-                h2(ng-show="ctrl.isHistory") {{::ctrl.orgs.$metadata.created_at | date:'yyyy年MM月dd日'}}— {{::ctrl.orgs.$metadata.title}}
+                h2(ng-show="ctrl.isHistory") {{ctrl.orgs.$metadata.created_at | date:'yyyy年MM月dd日'}}— {{ctrl.orgs.$metadata.title}}
             .title-btn-group
                 button.btn.btn-cold(ng-click="ctrl.openHistoryDialog()") 历史记录
 
@@ -34,6 +34,7 @@ div(ng-controller="OrgsController as ctrl")
     div.org-chart-window
         div.bottom-btn-group(ng-show="ctrl.tree.isModified")
                 button.cancel(ng-click="ctrl.revert()") 撤销
+                
                 button.effect(ng-click="ctrl.active()") 生效
         div.svg-wrapper(org-chart drag-on org-chart-data="ctrl.tree.data")
 
