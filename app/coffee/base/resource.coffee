@@ -185,7 +185,7 @@ Org = (restmod) ->
             Collection:
                 treeful: (org, DEPTH = 4) ->
                     IneffectiveOrg = (org)-> #系统还有未生效的组织机构
-                        return /inactive/.test org.status
+                        return /inactive$/.test org.status
 
                     allOrgs =  @$wrap()
                     cachedIndexOrgs = cacheIndex(allOrgs)
@@ -199,8 +199,8 @@ Org = (restmod) ->
                         #tree 数据深度不能超过 DEPTH
                         return false if orgItem.depth - rootDepth > DEPTH
 
-                        isModified = true if IneffectiveOrg(orgItem)
                         isChild = _.str.startsWith(orgItem.serial_number,rootSerialNumber) #子机构的serialNumber number 前缀和父机构相同
+                        isModified = true if isChild and IneffectiveOrg(orgItem)
 
                         return isChild
 

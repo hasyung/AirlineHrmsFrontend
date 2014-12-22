@@ -49,6 +49,7 @@ orgChart = () ->
                 paper.remove()
             data = {id:90943, title: '', root: newval}
             paper =ggOrgChart.render(oc_options_2, data)
+            $el.trigger('resize')
             active_rect = null
         return
 
@@ -148,7 +149,6 @@ class OrgsController extends nb.Controller
         @Org.$search()
             .$then (orgs) ->
                 self.orgs = orgs
-                console.log orgs
                 #通过这里赋值的orgs都不是历史记录
                 self.isHistory = false
                 self.rootTree()
@@ -173,6 +173,7 @@ class OrgsController extends nb.Controller
         org.$then (org) ->
             self.scope.currentOrg = org
             self.reset()
+            self.scope.$emit 'success', "新增子机构#{org.name}成功"
             state.go('^.show')
 
     buildTree: (org = @treeRootOrg)->
@@ -206,6 +207,7 @@ class OrgsController extends nb.Controller
         self = @
         onSuccess = ->
             self.reset()
+            self.scope.$emit 'success', '修改机构成功'
             self.state.go('^.show')
 
         onError = (data, status)->
@@ -222,8 +224,16 @@ class OrgsController extends nb.Controller
         onError = (data, status)->
             self.scope.$emit 'error', "#{data.message}"
 
-        promise = @http.post '/api/departments/revert'
-        promise.then onSuccess, onError
+        dialog = @modal.open {
+            templateUrl: 'partials/orgs/shared/revert_changes.html'
+            controller: RevertChangesCtrl
+            controllerAs: 'rev'
+            backdrop: true
+            size: 'sm'
+        }
+        dialog.result.then () ->
+            promise = self.http.post '/api/departments/revert'
+            promise.then onSuccess, onError
 
 
     active: (form, data) ->
@@ -244,7 +254,7 @@ class OrgsController extends nb.Controller
         }
         dialog.result.then (formdata) ->
             #todo,以后需要讨论
-            formdata.department_id = 1
+            formdata.department_id = self.treeRootOrg.id
             rootScope.loading = true
             promise = self.http.post '/api/departments/active', formdata
             promise.then onSuccess, onError
@@ -265,13 +275,15 @@ class OrgsController extends nb.Controller
             templateUrl: 'partials/orgs/org_history.html'
             controller: HistoryCtrl
             controllerAs: 'his'
-            backdrop: false
+            backdrop: true
             size: 'sm'
+            backdropClass: 'org-history-dialog-backdrop'
         }
         dialog.result.then (data) ->
-            console.log data.historyOrgs
             self.isHistory = true
             self.orgs = data.historyOrgs
+            self.buildTree()
+
 
 
 # 机构历史记录
@@ -295,13 +307,15 @@ class HistoryCtrl
         onSuccess = (res)->
             logs = res.data.change_logs
             groupedLog = _.groupBy logs, (log) ->
+                # 还是UNIX时间戳转js时间
+                log.created_at = parseInt(log.created_at) * 1000
                 # 后端返回的一些数据是以";"结尾, 那么split之后数组的最后一项将为undefined
                 if /.*;$/.test(log.step_desc)
                     log.step_desc = log.step_desc.substring(0, log.step_desc.length - 1)
                 log.step_desc = log.step_desc.split(';')
 
                 #Unix 时间戳转普通时间要乘1000 ，Date内部处理是按毫秒
-                return new Date(parseInt(log.created_at)*1000).getFullYear()
+                return new Date(log.created_at).getFullYear()
             # 将对象转换为数组,待优化后期会整合为filter
             groupedLogs = []
             angular.forEach groupedLog, (item, key) ->
@@ -315,7 +329,7 @@ class HistoryCtrl
 
     setCurrentLog: (log)->
         # 防止UI中出现多个被选中的item
-        if @currentLog 
+        if @currentLog
             @currentLog.isActive = false
         log.isActive = true
         @currentLog = log
@@ -325,13 +339,26 @@ class HistoryCtrl
             self.scope.emit 'error', res
             self.dialog.close()
         onSuccess = (res)->
-            self.dialog.close({ historyOrgs: res })
+            res.$metadata.created_at = parseInt(res.$metadata.created_at) * 1000
+            self.dialog.close({ historyOrgs: res})
         promise = self.Org.$search {version: self.currentLog.id}
         promise.$then onSuccess, onError
 
     cancel: ()->
         @dialog.dismiss('cancel')
 
+# 撤销提示框
+
+class RevertChangesCtrl
+    @.$inject = ['$modalInstance']
+    constructor: (@dialog) ->
+
+    ok: (formdata)->
+        @dialog.close()
+
+    cancel: (evt,form)->
+        evt.preventDefault()
+        @dialog.dismiss('cancel')
 
 
 
