@@ -159,6 +159,7 @@ class OrgsController extends nb.Controller
     setCurrentOrg: (org) -> #修改当前机构
         id = org.id
         @scope.currentOrg = _.find(@orgs, {id: id})
+        console.log @scope.currentOrg
         @scope.positions = @scope.currentOrg.positions.$fetch()
         @state.go('^.show')
 

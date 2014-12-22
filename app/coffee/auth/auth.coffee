@@ -5,10 +5,10 @@ app = nb.app
 class LoginController extends nb.Controller
 
 
-    @.$inject = ['$http','$stateParams', '$state', '$scope', '$rootScope']
+    @.$inject = ['$http','$stateParams', '$state', '$scope', '$rootScope', '$cookies']
 
 
-    constructor: (@http, @params, @state, @scope, @rootScope)->
+    constructor: (@http, @params, @state, @scope, @rootScope, @cookies)->
         @scope.currentUser = null #当前用户
 
     loadInitialData: () -> #初始化数据
@@ -18,8 +18,7 @@ class LoginController extends nb.Controller
         # user.employee_no = user.employee_no + ""
         self.http.post('/api/sign_in', {user: user})
             .success (data) ->
-                self.rootScope.currentUser = user
-                self.http.defaults.headers.common = {token: data.token}
+                self.cookies.token = data.token
                 self.state.go "home"
 
             .error (data) ->
