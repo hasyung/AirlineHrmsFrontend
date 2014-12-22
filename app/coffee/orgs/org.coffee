@@ -26,11 +26,11 @@ orgChart = () ->
         oc_options_2 = {
             data_id           : 90943,                    # identifies the ID of the "data" JSON object that is paired with these options
             container         : $el[0],     # name of the DIV where the chart will be drawn
-            box_color         : '#fff',               # fill color of boxes
-            box_color_hover   : '#faa',               # fill color of boxes when mouse is over them
-            box_border_color  : '#008',               # stroke color of boxes
+            box_color         : '#dfe5e7',               # fill color of boxes
+            box_color_hover   : '#cad4d7',               # fill color of boxes when mouse is over them
+            box_border_color  : '#c4cfd3',               # stroke color of boxes
             box_html_template : null,                 # id of element with template; don't use if you are using the box_click_handler
-            line_color        : '#f44',               # color of connectors
+            line_color        : '#c4cfd3',               # color of connectors
             title_color       : '#000',               # color of titles
             subtitle_color    : '#707',               # color of subtitles
             max_text_width    : 1,                   # max width (in chars) of each line of text ('0' for no limit)
