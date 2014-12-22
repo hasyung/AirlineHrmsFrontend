@@ -223,6 +223,9 @@ background-color: #31374b;
 svg text,svg rect{
 	cursor: pointer;
 }
+.orgchart-box-active{
+	fill: #dfe5e7;
+}
 .orgchart-box-active.active{
 	fill: #90d7ff;
 }
