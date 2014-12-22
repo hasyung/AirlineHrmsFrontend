@@ -1,4 +1,4 @@
-div(ng-controller="OrgsController as ctrl")
+div
     .app-aside.org-dep.hidden-xs.bg-white-opacity.pull-left(ng-class="{'active': ctrl.orgBarOpen}")
         .org-dep-badge
             a.toggle-bar.fa(
@@ -32,9 +32,9 @@ div(ng-controller="OrgsController as ctrl")
 
 
     div.org-chart-window
-        div.bottom-btn-group(ng-show="ctrl.tree.isModified")
-                button.cancel(ng-click="ctrl.revert()") 撤销
-
-                button.effect(ng-click="ctrl.active()") 生效
         div.svg-wrapper(org-chart drag-on org-chart-data="ctrl.tree.data")
-    //- .org-detail.col-md-3
+        div.bottom-btn-group(ng-show="ctrl.tree.isModified")
+            button.cancel(ng-click="ctrl.revert()") 撤销
+            button.effect(ng-click="ctrl.active()") 生效
+
+    div(ng-show="ctrl.org_modified")

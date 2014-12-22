@@ -26,11 +26,11 @@ orgChart = () ->
         oc_options_2 = {
             data_id           : 90943,                    # identifies the ID of the "data" JSON object that is paired with these options
             container         : $el[0],     # name of the DIV where the chart will be drawn
-            box_color         : '#fff',               # fill color of boxes
-            box_color_hover   : '#faa',               # fill color of boxes when mouse is over them
-            box_border_color  : '#008',               # stroke color of boxes
+            box_color         : '#dfe5e7',               # fill color of boxes
+            box_color_hover   : '#cad4d7',               # fill color of boxes when mouse is over them
+            box_border_color  : '#c4cfd3',               # stroke color of boxes
             box_html_template : null,                 # id of element with template; don't use if you are using the box_click_handler
-            line_color        : '#f44',               # color of connectors
+            line_color        : '#c4cfd3',               # color of connectors
             title_color       : '#000',               # color of titles
             subtitle_color    : '#707',               # color of subtitles
             max_text_width    : 1,                   # max width (in chars) of each line of text ('0' for no limit)
@@ -115,6 +115,21 @@ class Route
                 url: '/orgs'
                 abstract: true
                 templateUrl: 'partials/orgs/org.html'
+                resolve: {
+                    eidtMode: ['$cookies', (cookies) ->
+                        # 仅供机构第一版本测试用
+                        #普通用户
+                        if cookies.currentUserNo && cookies.currentUserNo == '100001'
+                            return false
+                        #管理员
+                        else if cookies.currentUserNo && cookies.currentUserNo == '100002'
+                            return true
+                        else
+                            return false
+                    ]
+                }
+                controller: 'OrgsController'
+                controllerAs: 'ctrl'
                 # views: {
                 #     '@main': 'partials/orgs/org.html'
                 #     '': 'partials/orgs/org_detail.html'
@@ -152,10 +167,10 @@ class Route
 class OrgsController extends nb.Controller
 
 
-    @.$inject = ['Org', '$http','$stateParams', '$state', '$scope', '$modal', '$panel', '$rootScope']
+    @.$inject = ['Org', '$http','$stateParams', '$state', '$scope', '$modal', '$panel', '$rootScope', 'eidtMode']
 
 
-    constructor: (@Org, @http, @params, @state, @scope, @modal, @panel, @rootScope)->
+    constructor: (@Org, @http, @params, @state, @scope, @modal, @panel, @rootScope, @eidtMode)->
         @ORG_TREE_DEEPTH = 1
         self = @
         @treeRootOrg = null # 当前树的顶级节点
@@ -180,7 +195,6 @@ class OrgsController extends nb.Controller
             self.scope.$emit('success',"机构：#{self.scope.currentOrg.name} ,删除成功")
 
         onError = (data, status)->
-            console.log arguments
             self.scope.$emit 'error', "机构：#{self.scope.currentOrg.name} ,删除失败,请确保当前没有子机构，同时该机构岗位要为空"
 
         self.scope.currentOrg.$destroy().$then onSuccess, onError
@@ -188,7 +202,7 @@ class OrgsController extends nb.Controller
 
     loadInitialData: () -> #初始化数据
         self = @
-        @Org.$search()
+        @Org.$search({'edit_mode': self.eidtMode})
             .$then (orgs) ->
                 self.orgs = orgs
                 #通过这里赋值的orgs都不是历史记录
