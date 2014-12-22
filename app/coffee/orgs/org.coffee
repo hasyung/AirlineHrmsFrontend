@@ -85,9 +85,7 @@ class Route
                         else
                             return false
                     ]
-                    permission: [ ()->
-
-                    ]
+                    
                 }
                 controller: 'OrgsController'
                 controllerAs: 'ctrl'
