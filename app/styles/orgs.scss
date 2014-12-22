@@ -28,6 +28,7 @@ ul { padding: 0px;}
 .org-title { position: relative; height: 35px; margin-left: 20px; margin-right: 20px; border-bottom: 1px solid #c6d1d5; margin-top: 20px;}
 .org-title span { width: auto; height: 35px; line-height: 35px; position: absolute;  border-bottom: 1px solid #39b7e9; color: #58656e; font-size: 16px;}
 .org-title button { float: right; margin-right: 10px;  color: #99a6ad;}
+.org-title .btn {padding: 5px 9px; min-width: 35px;}
 .org-info {padding-top: 20px;}
 .org-table { margin-left: 20px; width: 298px;}
 .org-post { color: #448ecb;}
@@ -40,7 +41,7 @@ ul { padding: 0px;}
 	clear: both;
 	visibility: hidden;
 }
-
+.org-btn .btn-info[disabled]{ background-color: #edf1f2;border-color: #cfdadd;color: #555; }
 .org-dep {position: absolute; width: 183px; border-right: 1px solid #d1dcde; border-bottom: 1px solid #d1dcde; left: 200px; background-color: rgba(255,255,255,1);top:51px; bottom:0px; z-index: 10;}
 //.org-dep .org-children-wrapper
 .org-dep.active { z-index: 1; left: 18px;  width: 0px; border: none;}
@@ -106,6 +107,12 @@ background-color: #3a3f52;
 }
 .bg-black.dk, .bg-black .dk {
 background-color: #31374b;
+}
+.bg-black .nav > li > a {
+  color: #adb2c5;
+}
+.btn-default {
+border-color: #c4cfd3;
 }
 .org-delete-template{
 	position: absolute;
