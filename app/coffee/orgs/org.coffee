@@ -73,6 +73,21 @@ class Route
                 url: '/orgs'
                 abstract: true
                 templateUrl: 'partials/orgs/org.html'
+                resolve: {
+                    eidtMode: ['$cookies', (cookies) ->
+                        # 仅供机构第一版本测试用
+                        #普通用户
+                        if cookies.currentUserNo && cookies.currentUserNo == '100001'
+                            return false
+                        #管理员
+                        else if cookies.currentUserNo && cookies.currentUserNo == '100002'
+                            return true
+                        else
+                            return false
+                    ]
+                }
+                controller: 'OrgsController'
+                controllerAs: 'ctrl'
                 # views: {
                 #     '@main': 'partials/orgs/org.html'
                 #     '': 'partials/orgs/org_detail.html'
@@ -110,10 +125,10 @@ class Route
 class OrgsController extends nb.Controller
 
 
-    @.$inject = ['Org', '$http','$stateParams', '$state', '$scope', '$modal', '$panel', '$rootScope']
+    @.$inject = ['Org', '$http','$stateParams', '$state', '$scope', '$modal', '$panel', '$rootScope', 'eidtMode']
 
 
-    constructor: (@Org, @http, @params, @state, @scope, @modal, @panel, @rootScope)->
+    constructor: (@Org, @http, @params, @state, @scope, @modal, @panel, @rootScope, @eidtMode)->
         @ORG_TREE_DEEPTH = 1
         self = @
         @treeRootOrg = null # 当前树的顶级节点
@@ -138,7 +153,6 @@ class OrgsController extends nb.Controller
             self.scope.$emit('success',"机构：#{self.scope.currentOrg.name} ,删除成功")
 
         onError = (data, status)->
-            console.log arguments
             self.scope.$emit 'error', "机构：#{self.scope.currentOrg.name} ,删除失败,请确保当前没有子机构，同时该机构岗位要为空"
 
         self.scope.currentOrg.$destroy().$then onSuccess, onError
@@ -146,7 +160,7 @@ class OrgsController extends nb.Controller
 
     loadInitialData: () -> #初始化数据
         self = @
-        @Org.$search()
+        @Org.$search({'edit_mode': self.eidtMode})
             .$then (orgs) ->
                 self.orgs = orgs
                 #通过这里赋值的orgs都不是历史记录

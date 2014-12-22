@@ -1,7 +1,7 @@
 .org-title
     span 机构信息
     //- div(ng-if="currentOrg.status !== 'destroy_inactive'")
-    div(ng-if="!(ctrl.isHistory && (ctrl.isHistory || currentOrg.status === 'destroy_inactive'))")
+    div(ng-if="!(ctrl.isHistory || currentOrg.status == 'destroy_inactive')")
       button.btn.btn-default.fa.fa-trash-o(title="删除", nb-popup)
         popup-template.org-delete-template.panel.panel-default()
           .panel-heading.popup-title 警告
