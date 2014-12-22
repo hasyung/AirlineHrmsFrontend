@@ -230,6 +230,9 @@ border-color: #c4cfd3;
 svg text,svg rect{
 	cursor: pointer;
 }
+.orgchart-box-active{
+	fill: #dfe5e7;
+}
 .orgchart-box-active.active{
 	fill: #90d7ff;
 }
@@ -237,6 +240,9 @@ svg text,svg rect{
 	fill: #ffc490;
 }
 .orgchart-box-update_inactive{
+	fill: #ffc490;
+}
+.orgchart-box-transfer_inactive{
 	fill: #ffc490;
 }
 .orgchart-box-destroy_inactive{
