@@ -138,7 +138,6 @@ class OrgsController extends nb.Controller
             self.scope.$emit('success',"机构：#{self.scope.currentOrg.name} ,删除成功")
 
         onError = (data, status)->
-            console.log arguments
             self.scope.$emit 'error', "机构：#{self.scope.currentOrg.name} ,删除失败,请确保当前没有子机构，同时该机构岗位要为空"
 
         self.scope.currentOrg.$destroy().$then onSuccess, onError
@@ -159,7 +158,6 @@ class OrgsController extends nb.Controller
     setCurrentOrg: (org) -> #修改当前机构
         id = org.id
         @scope.currentOrg = _.find(@orgs, {id: id})
-        console.log @scope.currentOrg
         @scope.positions = @scope.currentOrg.positions.$fetch()
         @state.go('^.show')
 
