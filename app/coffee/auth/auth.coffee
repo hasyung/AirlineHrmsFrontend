@@ -19,6 +19,10 @@ class LoginController extends nb.Controller
         self.http.post('/api/sign_in', {user: user})
             .success (data) ->
                 self.cookies.token = data.token
+                #后期做权限的时候此处一定要改
+                self.cookies.currentUserNo = user.employee_no
+                # self.rootScope.currentUser = user
+                #####end
                 self.state.go "home"
 
             .error (data) ->
