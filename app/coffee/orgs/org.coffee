@@ -127,7 +127,7 @@ class Route
                         else
                             return false
                     ]
-                    
+
                 }
                 controller: 'OrgsController'
                 controllerAs: 'ctrl'
@@ -354,7 +354,8 @@ class OrgsController extends nb.Controller
         }
         dialog.result.then (dest_org) ->
             self.scope.currentOrg.transfer(dest_org.id).then ()->
-                self.reset()
+                self.reset(true)
+                self.scope.$emit("success", "划转机构成功")
 
 
 class TransferOrgCtrl
