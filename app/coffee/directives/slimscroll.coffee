@@ -1,4 +1,4 @@
-angular.module 'slimscroll',[]
+angular.module 'nb.directives'
     .constant 'slimscrollConfig', {
         allowPageScroll: true, # allow page scroll when the element scroll is ended
         size: '7px',
@@ -16,7 +16,6 @@ angular.module 'slimscroll',[]
         return {
             restrict: 'A'
             replace: true
-            # require: 'ngModel'
             scope: true
             link: (scope,elem,attr) ->
                 opts = {}

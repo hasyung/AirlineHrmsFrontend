@@ -8,7 +8,7 @@
           .panel-body.popup-body
             div 删除后将无法恢复，请确认删除
             div.div-delete-btn.pull-right(ng-click="ctrl.deleteOrg()") 删除
-      button.btn.btn-default.fa.fa-retweet(title="划转")
+      button.btn.btn-default.fa.fa-retweet(title="划转" ng-click="ctrl.openOrgtreeDialog()")
       button.btn.btn-default.fa.fa-pencil(ui-sref="^.edit({Id: currentOrg.id})",title="编辑")
       button.btn.btn-default.fa.fa-plus(title="新增子机构",ui-sref="^.newsub({parentId: currentOrg.id})", ng-if="currentOrg.grade.name !== 'secondly_positive'")
 
