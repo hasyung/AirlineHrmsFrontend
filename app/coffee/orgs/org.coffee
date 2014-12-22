@@ -127,6 +127,7 @@ class Route
                         else
                             return false
                     ]
+                    
                 }
                 controller: 'OrgsController'
                 controllerAs: 'ctrl'
@@ -222,8 +223,10 @@ class OrgsController extends nb.Controller
     newSubOrg: (org) -> #新增子机构
         self = @
         state = @state
-        parentId = @params.parentId
-        org.parentId = parentId
+        # 注释中可能存在ui-router的bug
+        # parentId = @params.parentId
+        # org.parentId = parentId
+        org.parentId = self.scope.currentOrg.id
         org  = @orgs.$create(org)
 
         org.$then (org) ->
@@ -243,7 +246,8 @@ class OrgsController extends nb.Controller
     #force 是否修改当前机构
     reset: (force) ->
         self = @
-        @Org.$search()
+        #数据入口不止一个，需要解决
+        @Org.$search({'edit_mode': self.eidtMode})
             .$then (orgs) ->
                 self.orgs = orgs
                 self.isHistory = false
