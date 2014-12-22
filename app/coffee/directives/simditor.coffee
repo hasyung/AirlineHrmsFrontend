@@ -1,4 +1,4 @@
-angular.module 'simditor', []
+angular.module 'nb.directives'
     .constant 'simditorConfig', {
         textarea: null
         upload: true
