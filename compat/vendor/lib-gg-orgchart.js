@@ -408,6 +408,11 @@ var oc_zdp_width,
     {
         if (typeof str == "undefined")
             return undefined;
+
+        if(str.length > 8){
+            str = str.slice(0, 7) + '…'
+        }
+
         var parts = (str + '').split('');
         var lines = [];
         var line_str = '';

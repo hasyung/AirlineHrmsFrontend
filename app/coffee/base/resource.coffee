@@ -108,14 +108,14 @@ User = (restmod) ->
     })
 
 
-Org = (restmod) ->
+Org = (restmod, $http) ->
 
     Constants = {
         NODE_INDEX: 3 # serial_number 生成策略是parent_node.serial_number+node_index，node_index由3位构成，值为创建该node时，其parent_node.children_count
     }
 
 
-    transform = (arr = []) ->
+    transform = (arr = [], keyPair={'name': 'title'}) ->
 
         arr = [] if not angular.isArray(arr)
 
@@ -123,9 +123,11 @@ Org = (restmod) ->
         arr.forEach (val) ->
             val['type'] = 'subordinate'
             res = _.transform val, (result, val, key) ->
-                if key == 'name'
-                    key = 'title'
-                result[key] = val
+                if keyPair.hasOwnProperty(key)
+                    result[keyPair[key]] = val
+                else
+                    result[key] = val
+                return
             newarr.push res
         return newarr
 
@@ -171,10 +173,12 @@ Org = (restmod) ->
 
 
     treeful = (treeData, DEPTH, parent) ->
-        parent = _.find treeData, (child) ->
-            parent.id == child.id
-        return unflatten(treeData, DEPTH, parent)
 
+        if not parent?
+            parent = _.find treeData, (child) -> child.parent_id == undefined or child.parent_id == 0 #根节点
+        else
+            parent = _.find treeData, (child) -> parent.id == child.id
+        return unflatten(treeData, DEPTH, parent)
 
 
     Org = restmod.model('/departments').mix {
@@ -204,13 +208,32 @@ Org = (restmod) ->
 
                         return isChild
 
-                    treeData = transform(treeData)
+                    treeData = transform(treeData, {'name': 'title'})
                     treeData = treeful(treeData, DEPTH, org)
 
                     return {
                         data: treeData
                         isModified: isModified
                     }
+                jqTreeful: () ->
+                    allOrgs = @$wrap()
+                    treeData = transform(allOrgs, {'name': 'label'}) # for jqTree
+                    treeData = treeful(treeData,Infinity)
+
+                    return [treeData]
+            Record:
+                transfer: (to_dep_id) -> #划转机构 {to_department_id: to_id}
+                    self = @
+
+                    onSuccess = -> # bug? 直接修改属性 collection 中数据可能不会改变, 会影响到机构树
+                        self.parentId = to_dep_id
+
+                    url = this.$url()
+                    request = {to_department_id: to_dep_id}
+                    promise =  $http.post "#{url}/transfer", request
+                    promise.then onSuccess
+
+
     }
 
 Position = (restmod) ->
@@ -224,7 +247,7 @@ Permission = (restmod) ->
 
 
 resources.factory 'VXstoreApi',['restmod','RMUtils', VXstoreApi]
-resources.factory 'Org',['restmod', Org]
+resources.factory 'Org',['restmod', '$http', Org]
 resources.factory 'User',['restmod', User]
 resources.factory 'Permission',['restmod', Permission]
 resources.factory 'Position',['restmod', Position]
