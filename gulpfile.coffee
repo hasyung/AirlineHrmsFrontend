@@ -44,6 +44,7 @@ paths =
     coffee: ["app/coffee/app.coffee"
              "app/coffee/*.coffee"
              "app/coffee/base/*.coffee"
+             "app/coffee/directives/*.coffee"
              "app/coffee/component/$panel.coffee"
              "app/coffee/directives/directives.coffee"
              #"app/coffee/controller/siteCtrl.coffee"
@@ -86,7 +87,7 @@ paths =
         'deps/AngularJS-Toaster/toaster.js'
         'deps/angular-locale_zh-cn.js'
         # 'deps/angular-ui-select/dist/select.js'
-        # 'deps/jquery-slimscroll/jquery.slimscroll.js'
+        'deps/jquery-slimscroll/jquery.slimscroll.js'
         'deps/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js'
         # 'deps/angular-ui-bootstrap-bower/ui-bootstrap.js'
         'deps/angularjs-toaster/toaster.js'
@@ -250,7 +251,9 @@ gulp.task "express", ->
     express = require("express")
     app = express()
 
+
     proxyOptions = url.parse('http://192.168.6.99:9002')
+    # proxyOptions = url.parse('http://192.168.6.6:4000')
     # proxyOptions = url.parse('http://192.168.6.23:3000')
     proxyOptions.route = '/api'
 

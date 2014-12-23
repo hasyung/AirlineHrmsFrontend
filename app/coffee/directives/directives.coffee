@@ -1,5 +1,5 @@
 
-angular.module 'nb.directives', []
+angular.module 'nb.directives'
 
     .provider 'nbTooltip', [()->
         defaultOptions = {

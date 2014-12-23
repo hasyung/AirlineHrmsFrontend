@@ -21,11 +21,11 @@ div
                 h1 {{ctrl.treeRootOrg.name}}组织机构图
                 h2(ng-show="ctrl.isHistory") {{ctrl.orgs.$metadata.created_at | date:'yyyy年MM月dd日'}}— {{ctrl.orgs.$metadata.title}}
             .title-btn-group
-                button.btn.btn-cold(ng-click="ctrl.openHistoryDialog()") 历史记录
+                button.btn.btn-cold(ng-click="ctrl.openHistoryDialog()") 时间轴
 
 
-                a.btn.btn-info(ng-show="!ctrl.isHistory", download="机构组织.xls" ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导出
-                a.btn.btn-info(ng-show="ctrl.isHistory", download="机构组织.xls" ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导出
+                a.btn.btn-info(ng-show="!ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导出
+                a.btn.btn-info(ng-show="ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导出
                 button.btn.btn-info(ng-click="ctrl.reset(true)" ng-show="ctrl.isHistory") 返回最新
                 //- loading-btn.red(ng-click="ctrl.openHistoryPanel()" btn-loading-type="contract-overlay" btn-text="测试loading")
     .org-tree.col-md-3
@@ -38,5 +38,3 @@ div
             button.effect(ng-click="ctrl.active()") 生效
 
     div(ng-show="ctrl.org_modified")
-
-    //- .org-detail.col-md-3

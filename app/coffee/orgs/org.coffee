@@ -58,8 +58,50 @@ orgChart = () ->
         link: link
     }
 
+orgTree = (Org, $parse) ->
+
+    postLink = (scope, elem, attrs, $ctrl) ->
+
+        $tree = null
+
+        getData = (node) ->
+            data = {}
+            for k, v of node
+                if (
+                    k not in ['parent', 'children', 'element', 'tree'] and
+                    Object.prototype.hasOwnProperty.call(node, k)
+                )
+                    data[k] = v
+            return data
+
+
+        orgs = Org.$search().$then (orgs) ->
+            treeData = orgs.jqTreeful()
+            $tree = elem.tree {data: treeData,autoOpen: 0}
+            $tree.bind 'tree.select', (evt) ->
+                if evt.node
+                    node = evt.node
+                    scope.selectedData = getData(node)
+                else
+
+            return
+
+        scope.$on '$destroy', () ->
+            $tree.tree('destroy')
+            $tree = null
+
+    return {
+        # require: 'ngModel'
+        scope: {
+            selectedData: '='
+        }
+        link: postLink
+
+    }
+
 
 app.directive('orgChart',[orgChart])
+app.directive('nbOrgTree',['Org', '$parse', orgTree])
 
 
 
@@ -85,6 +127,7 @@ class Route
                         else
                             return false
                     ]
+
                 }
                 controller: 'OrgsController'
                 controllerAs: 'ctrl'
@@ -167,8 +210,8 @@ class OrgsController extends nb.Controller
                 self.isHistory = false
                 self.rootTree()
     rootTree: () ->
-        @currentOrg = _.find @orgs, (org) -> org.depth == 1
-        @buildTree(@currentOrg)
+        @scope.currentOrg = _.find @orgs, (org) -> org.depth == 1
+        @buildTree(@scope.currentOrg)
 
     setCurrentOrg: (org) -> #修改当前机构
         id = org.id
@@ -180,8 +223,10 @@ class OrgsController extends nb.Controller
     newSubOrg: (org) -> #新增子机构
         self = @
         state = @state
-        parentId = @params.parentId
-        org.parentId = parentId
+        # 注释中可能存在ui-router的bug
+        # parentId = @params.parentId
+        # org.parentId = parentId
+        org.parentId = self.scope.currentOrg.id
         org  = @orgs.$create(org)
 
         org.$then (org) ->
@@ -201,7 +246,8 @@ class OrgsController extends nb.Controller
     #force 是否修改当前机构
     reset: (force) ->
         self = @
-        @Org.$search()
+        #数据入口不止一个，需要解决
+        @Org.$search({'edit_mode': self.eidtMode})
             .$then (orgs) ->
                 self.orgs = orgs
                 self.isHistory = false
@@ -297,7 +343,31 @@ class OrgsController extends nb.Controller
             self.isHistory = true
             self.orgs = data.historyOrgs
             self.buildTree()
+    openOrgtreeDialog: () ->
+        self = @
+        dialog = @modal.open {
+            templateUrl: 'partials/orgs/shared/org_transfer.html'
+            controller: TransferOrgCtrl
+            controllerAs: 'trs'
+            backdrop: true
+            size: 'sm'
+        }
+        dialog.result.then (dest_org) ->
+            self.scope.currentOrg.transfer(dest_org.id).then ()->
+                self.reset(true)
+                self.scope.$emit("success", "划转机构成功")
 
+
+class TransferOrgCtrl
+    @.$inject = ['$modalInstance', '$scope', '$http', 'Org']
+
+    constructor: (@dialog, @scope, @http, @Org) ->
+        @selectedData = null
+
+    ok: () ->
+        @dialog.close(@selectedData)
+    cancel: () ->
+        @dialog.dismiss('close')
 
 
 # 机构历史记录
