@@ -49,8 +49,9 @@ orgChart = () ->
                 paper.remove()
             data = {id:90943, title: '', root: newval}
             paper =ggOrgChart.render(oc_options_2, data)
-            $el.trigger('resize')
-            active_rect = null
+            active_rect = $el.find('rect').last()[0] #默认选择顶级节点
+            active_rect.classList.add 'active'
+            $el.trigger('resize') # 触发滚动居中
         return
 
     return {
