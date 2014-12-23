@@ -469,6 +469,8 @@ var oc_zdp_width,
         str = str.replace(/Ü/g, 'U');
         str = str.replace(/ñ/g, 'n');
         str = str.replace(/Ñ/g, 'N');
+        str = str.replace(/（/gm, '︵')
+        str = str.replace(/）/gm, '︶')
         return str;
     }
 
