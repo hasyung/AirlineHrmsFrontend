@@ -4,8 +4,8 @@
 @import 'layout/nav';
 @import 'component/loading.scss';
 
-@import 'personnel';
-@import 'orgs';
+@import 'modules/personnel';
+@import 'modules/orgs';
 
 
 body  {font-family: "微软雅黑"}
@@ -51,7 +51,4 @@ ul {
 	margin-top: 5px;
 	text-align: center;
 	font-size: 12px;
-}
-.jqtree-toggler{
-	font-family:  "Arial";
 }
