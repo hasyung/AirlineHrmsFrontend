@@ -222,6 +222,13 @@ Org = (restmod, $http) ->
 
                     return [treeData]
             Record:
+
+                newSub: (org) ->
+                    org = this.$build(org)
+                    org.parentId = this.$primay
+                    org.$save()
+
+
                 transfer: (to_dep_id) -> #划转机构 {to_department_id: to_id}
                     self = @
 

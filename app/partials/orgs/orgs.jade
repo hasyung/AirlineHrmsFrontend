@@ -1,0 +1,38 @@
+div
+    .app-aside.org-dep.hidden-xs.bg-white-opacity.pull-left(ng-class="{'active': ctrl.isBarOpen}")
+        .org-dep-badge
+            a.toggle-bar.fa(
+                ng-class="{true: 'fa-chevron-right', false: 'fa-chevron-left'}[ctrl.isBarOpen]"
+                ng-click="ctrl.orgBarOpen = !ctrl.orgBarOpen")
+        .org-main-wrapper
+            .org-main-node
+                a(ng-click="ctrl.rootTree()") 四川航空
+            .org-children-wrapper
+                ul
+                    li(ng-repeat="org in ctrl.orgs track by org.id | filterBy: ['depth']: 2")
+                        //- a.org-node(ng-click="ctrl.buildTree(org)" ng-bind="org.name", title="{{org.name}}")
+                        a.org-node(ui-serf="^.show({orgId: org.id})" ng-bind="org.name", title="{{org.name}}")
+
+
+    .app-aside.org-aside.hidden-xs.bg-white-opacity.pull-right
+        .org-row(ui-view='sub')
+    .app-main
+        .org-chart-top(ng-class="{'active': ctrl.state.includes('org_history')}")
+                h1 {{ctrl.treeRootOrg.name}}组织机构图
+                h2(ng-show="ctrl.isHistory") {{ctrl.orgs.$metadata.created_at | date:'yyyy年MM月dd日'}}— {{ctrl.orgs.$metadata.title}}
+            .title-btn-group
+                button.btn.btn-cold(ng-click="ctrl.openHistoryDialog()") 时间轴
+
+
+                a.btn.btn-info(ng-show="!ctrl.state.includes('org_history')", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导出
+                a.btn.btn-info(ng-show="ctrl.state.includes('org_history')", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导出
+                button.btn.btn-info(ng-click="ctrl.reset(true)" ng-show="ctrl.isHistory") 返回最新
+                //- loading-btn.red(ng-click="ctrl.openHistoryPanel()" btn-loading-type="contract-overlay" btn-text="测试loading")
+    .org-tree.col-md-3
+
+
+    div.org-chart-window
+        div.svg-wrapper(org-chart drag-on org-chart-data="ctrl.tree.data")
+        div.bottom-btn-group(ng-show="ctrl.tree.isModified")
+            button.cancel(ng-click="ctrl.revert()") 撤销
+            button.effect(ng-click="ctrl.active()") 生效

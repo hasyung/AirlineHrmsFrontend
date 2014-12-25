@@ -1,42 +1,42 @@
 .org-title
     span 机构信息
     //- div(ng-if="currentOrg.status !== 'destroy_inactive'")
-    div(ng-if="!(ctrl.isHistory || currentOrg.status == 'destroy_inactive')")
+    div(ng-if="!(ctrl.state.includes('org_history') || org.status == 'destroy_inactive')")
       button.btn.btn-default.fa.fa-trash-o(title="删除", nb-popup)
         popup-template.org-delete-template.panel.panel-default()
           .panel-heading.popup-title 警告
           .panel-body.popup-body
             div 删除后将无法恢复，请确认删除
-            div.div-delete-btn.pull-right(ng-click="ctrl.deleteOrg()") 删除
+            div.div-delete-btn.pull-right(ng-click="destory()") 删除
       button.btn.btn-default.fa.fa-retweet(title="划转" ng-click="ctrl.openOrgtreeDialog()")
-      button.btn.btn-default.fa.fa-pencil(ui-sref="^.edit({Id: currentOrg.id})",title="编辑")
-      button.btn.btn-default.fa.fa-plus(title="新增子机构",ui-sref="^.newsub({parentId: currentOrg.id})", ng-if="currentOrg.grade.name !== 'secondly_positive'")
+      button.btn.btn-default.fa.fa-pencil(ui-sref="^.edit({orgId: org.id})",title="编辑")
+      button.btn.btn-default.fa.fa-plus(title="新增子机构",ui-sref="^.newsub({parentId: org.id})", ng-if="org.grade.name !== 'secondly_positive'")
 
 
 .org-info
     .form-group.row
        label.control-label.col-lg-5.org-label 名称：
-       .col-lg-5 {{currentOrg.name}}
+       .col-lg-5 {{org.name}}
     .form-group.row
        label.control-label.col-lg-5.org-label 编号：
-       .col-lg-5 {{currentOrg.serialNumber}}
+       .col-lg-5 {{org.serialNumber}}
     .form-group.row
        label.control-label.col-lg-5.org-label 办公地点：
-       .col-lg-5 {{currentOrg.location.displayName}}
+       .col-lg-5 {{org.location.displayName}}
     .form-group.row
        label.control-label.col-lg-5.org-label 职级：
-       .col-lg-5 {{currentOrg.grade.displayName}}
-.org-title(ng-if="currentOrg.status !== 'destroy_inactive'")
+       .col-lg-5 {{org.grade.displayName}}
+.org-title(ng-if="org.status !== 'destroy_inactive'")
     span 下属岗位信息
-    button.btn.btn-default.fa.fa-cog(title="设置" ng-click="ctrl.openPositionPanel(currentOrg.id)")
-table.table.table-striped.org-table(ng-if="currentOrg.status !== 'destroy_inactive'")
+    button.btn.btn-default.fa.fa-cog(title="设置" ng-click="ctrl.openPositionPanel(org.id)")
+table.table.table-striped.org-table(ng-if="org.status !== 'destroy_inactive'")
     tbody
        tr
             td 岗位名称
             td  编制
             td  在编人数
        tr
-            td.org-post(ng-click="ctrl.setCurrentJobInfo('xx')") 总经理
+            td.org-post(ng-click="") 总经理
             td  3
             td  2
        tr

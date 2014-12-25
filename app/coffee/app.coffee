@@ -90,7 +90,7 @@ App
             console.log arguments
             toaster.pop(code.name, "提示", info)
 
-
+        $rootScope.$state = $state
 
     ]
 
