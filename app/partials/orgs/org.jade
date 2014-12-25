@@ -1,40 +1,111 @@
-div
-    .app-aside.org-dep.hidden-xs.bg-white-opacity.pull-left(ng-class="{'active': ctrl.orgBarOpen}")
-        .org-dep-badge
-            a.toggle-bar.fa(
-                ng-class="{true: 'fa-chevron-right', false: 'fa-chevron-left'}[ctrl.orgBarOpen]"
-                href="javascript:void(0);"
-                ng-click="ctrl.orgBarOpen = !ctrl.orgBarOpen")
-        .org-main-wrapper
-            .org-main-node
-                a(ng-click="ctrl.rootTree()") 四川航空
-            .org-children-wrapper
-                ul
-                    li(ng-repeat="org in ctrl.orgs | filterBy: ['depth']: 2")
-                        a.org-node(ng-click="ctrl.buildTree(org)" ng-bind="org.name", title="{{org.name}}")
+
+aside.org-aside
+    section.org-detail
+        .org-title.org-form-row
+            span(ng-show="state != 'newsub'") 机构信息
+            span(ng-show="state= 'newsub'") 新增子机构信息
+            div(ng-if="!(ctrl.state.includes('org_history') || org.status == 'destroy_inactive')")
+                button.btn.btn-default.fa.fa-trash-o(title="删除", nb-popup)
+                    popup-template.org-delete-template.panel.panel-default()
+                        .panel-heading.popup-title 警告
+                        .panel-body.popup-body
+                            div 删除后将无法恢复，请确认删除
+                            div.div-delete-btn.pull-right(ng-click="destory()") 删除
+                button.btn.btn-default.fa.fa-retweet(title="划转" ng-click="ctrl.openOrgtreeDialog()")
+                button.btn.btn-default.fa.fa-pencil(ui-sref="^.edit({orgId: org.id})",title="编辑")
+                button.btn.btn-default.fa.fa-plus(title="新增子机构",ui-sref="^.newsub({parentId: org.id})", ng-if="org.grade.name !== 'secondly_positive'")
+
+        //- show
+        .org-info
+            .form-group.row
+                label.control-label.col-lg-5.org-label 名称：
+                .col-lg-5 {{org.name}}
+            .form-group.row
+                label.control-label.col-lg-5.org-label 编号：
+                .col-lg-5 {{org.serialNumber}}
+            .form-group.row
+                label.control-label.col-lg-5.org-label 办公地点：
+                .col-lg-5 {{org.location.displayName}}
+            .form-group.row
+                label.control-label.col-lg-5.org-label 职级：
+                .col-lg-5 {{org.grade.displayName}}
+        //- update
+        .org-info.org-form-row
+            form(novalidate, ng-submit="update(org)", name="form")
+                .form-group.row
+                    label.control-label.col-lg-4.org-label 名称：
+                    .col-lg-5
+                        input(ng-model="org.name", required="true", name="orgName")
+                        div(ng-messages="form.orgName.$error", ng-if="form.orgName.$touched")
+                            .form-group-error(ng-message="required") 名称必填
+                .form-group.row
+                    label.control-label.col-lg-4.org-label 编号：
+                    .col-lg-5 {{::org.serialNumber}}
+                .form-group.row
+                    label.control-label.col-lg-4.org-label 办公地点：
+                    .col-lg-5
+                        nb-dropdown(ng-model="org.location" remote-key="Department.locations", name="orgAddr", required="true")
+                        div(ng-messages="form.orgAddr.$error", ng-if="form.orgAddr.$touched")
+                            .form-group-error(ng-message="required") 地点必选
+
+                .form-group.row
+                    label.control-label.col-lg-4.org-label 职级：
+                    .col-lg-5 {{::org.grade.displayName}}
+
+                .form-group.row
+                    input.btn.btn-info.pull-right(type="submit",value="保存" ,ng-disabled="!form.$valid")
+                    button.btn.btn-default.pull-right(ui-sref="^.show({orgId: org.id})") 取消
+
+         //- new sub
+        .org-info.org-form-row
+            form(novalidate, ng-submit="ctrl.newSubOrg(org)", name="form")
+                .form-group.row
+                    label.control-label.col-lg-5.org-label 名称：
+                    .col-lg-5
+                        input(ng-model="org.name", type="text", required="true", name="orgName")
+                        div(ng-messages="form.orgName.$error", ng-if="form.orgName.$touched")
+                            .form-group-error.col-lg-12(ng-message="required") 名称必填
+
+                .form-group.row
+                    label.control-label.col-lg-5.org-label 办公地点：
+                    .col-lg-5
+                        nb-dropdown(ng-model="org.location" remote-key="Department.locations", required="true", name="orgAddr")
+
+                        div(ng-messages="form.orgAddr.$error", ng-if="form.orgAddr.$touched")
+                            .form-group-error(ng-message="required") 地点必选
+
+                .form-group.row
+                    label.control-label.col-lg-5.org-label 职级：
+                    .col-lg-5
+                        nb-dropdown(ng-model="org.grade" remote-key="Department.department_grades", required="true", name="orgType", additory="false")
+                        div(ng-messages="form.orgType.$error", ng-if="form.orgType.$touched || form.orgType.$dirty")
+                            .form-group-error(ng-message="required") 职级必选
+
+                .form-group.row
+                    input.btn.btn-info.pull-right(type="submit",value="保存",ng-disabled="!form.$valid")
+                    button.btn.btn-default.pull-right(ui-sref="^.show") 取消
 
 
-    .app-aside.org-aside.hidden-xs.bg-white-opacity.pull-right
-        .org-row(ui-view='sub')
-    .app-main
-        .org-chart-top(ng-class="{'active': ctrl.isHistory}")
-                h1 {{ctrl.treeRootOrg.name}}组织机构图
-                h2(ng-show="ctrl.isHistory") {{ctrl.orgs.$metadata.created_at | date:'yyyy年MM月dd日'}}— {{ctrl.orgs.$metadata.title}}
-            .title-btn-group
-                button.btn.btn-cold(ng-click="ctrl.openHistoryDialog()") 时间轴
-
-
-                a.btn.btn-info(ng-show="!ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导出
-                a.btn.btn-info(ng-show="ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导出
-                button.btn.btn-info(ng-click="ctrl.reset(true)" ng-show="ctrl.isHistory") 返回最新
-                //- loading-btn.red(ng-click="ctrl.openHistoryPanel()" btn-loading-type="contract-overlay" btn-text="测试loading")
-    .org-tree.col-md-3
-
-
-    div.org-chart-window
-        div.svg-wrapper(org-chart drag-on org-chart-data="ctrl.tree.data")
-        div.bottom-btn-group(ng-show="ctrl.tree.isModified")
-            button.cancel(ng-click="ctrl.revert()") 撤销
-            button.effect(ng-click="ctrl.active()") 生效
-
-    div(ng-show="ctrl.org_modified")
+    section
+        .org-title(ng-if="org.status !== 'destroy_inactive'")
+            span 下属岗位信息
+            button.btn.btn-default.fa.fa-cog(title="设置" ng-click="ctrl.openPositionPanel(org.id)")
+        table.table.table-striped.org-table(ng-if="org.status !== 'destroy_inactive'")
+            thead
+                tr
+                    th 岗位名称
+                    th  编制
+                    th  在编人数
+            tbody
+                tr
+                    td.org-post(ng-click="") 总经理
+                    td  3
+                    td  2
+                tr
+                    td.org-post 主任
+                    td  2
+                    td  1
+                tr
+                    td.org-post 副主任
+                    td  2
+                    td  2
