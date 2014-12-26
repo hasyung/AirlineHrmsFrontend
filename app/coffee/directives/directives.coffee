@@ -453,7 +453,7 @@ angular.module 'nb.directives'
         }
 
     ]
-    .directive 'nbDropdown', ['$http', 'inflector', ($http, inflector)->
+    .directive 'nbDropdown', ['$http', 'inflector', '$window', ($http, inflector, $window)->
 
 
         class DropdownCtrl
@@ -503,12 +503,20 @@ angular.module 'nb.directives'
                 @isOpen = false
 
         postLink = (scope, elem, attr, $ctrl) ->
+            $doc = angular.element $window.document
             scope.isOpen = false
             scope.additory = ((attr.additory || "true") is "true")
             dropdownCtrl = $ctrl[0]
             ngModelCtrl = $ctrl[1]
-            elem.on 'click', ()->
-                ngModelCtrl.$touched = true
+            elem.on 'click', (e)->
+                e.stopPropagation()
+                scope.$apply ()->
+                    ngModelCtrl.$touched = true
+            $doc.on 'click', (e)->
+                e.stopPropagation()
+                scope.$apply ()->
+                    dropdownCtrl.close()
+                    
             # view to model
             # ngModelCtrl.$parsers.unshift (inputVal) ->
             #     console.debug "inputVal:", arguments
@@ -525,6 +533,7 @@ angular.module 'nb.directives'
 
             scope.$on '$destroy', () ->
                 elem.off 'click'
+                $doc.off 'click'
 
         return {
             restrict: 'EA'
