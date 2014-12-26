@@ -69,6 +69,9 @@ VXstoreApi = (restmod, RMUtils) ->
 
                 @.$send request, onSuccess, onErorr
 
+        'Record.$copy': ->
+            raw = this.$wrap()
+            # copy = this.buildRaw(raw)
 
 
     }

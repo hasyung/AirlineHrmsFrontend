@@ -124,25 +124,23 @@ class Route
         stateProvider
             .state 'org', {
                 url: '/orgs'
-                abstract: true
+                # abstract: true
                 templateUrl: 'partials/orgs/orgs.html'
                 controller: 'OrgsCtrl'
-                controllerAs: 'orgsCtrl'
+                controllerAs: 'ctrl'
                 resolve: {
                     eidtMode: ->
                         return true
                 }
             }
-            .state 'org.show', {
-                url: '/:orgId'
-                views: {
-                    'sub': {
-                        templateUrl: 'partials/orgs/org.html'
-                        controller: 'OrgCtrl'
-                        controllerAs: 'orgCtrl'
-                    }
-                }
-            }
+            # .state 'org.show', {
+            #     url: '/:orgId'
+            #     views: {
+            #         'sub': {
+            #             templateUrl: 'partials/orgs/org.html'
+            #         }
+            #     }
+            # }
             .state 'org_history', {
                 url: '/orgs/history'
                 abstract: true
@@ -158,24 +156,23 @@ class Route
                     }
                 }
             }
-            .state 'org.newsub', {
-                url: '/:parentId/newsub'
-                views: {
-                    'sub': {
-                        templateUrl: 'partials/orgs/org_newsub.html'
-                    }
-                }
-
-            }
-            .state 'org.edit', {
-                url: '/:orgId/edit'
-                views: {
-                    'sub': {
-                        templateUrl: 'partials/orgs/org_edit.html'
-                        controller: 'OrgController'
-                    }
-                }
-            }
+            # .state 'org.newsub', {
+            #     url: '/:parentId/newsub'
+            #     views: {
+            #         'sub': {
+            #             templateUrl: 'partials/orgs/org_newsub.html'
+            #         }
+            #     }
+            # }
+            # .state 'org.edit', {
+            #     url: '/:orgId/edit'
+            #     views: {
+            #         'sub': {
+            #             templateUrl: 'partials/orgs/org_edit.html'
+            #             controller: 'OrgController'
+            #         }
+            #     }
+            # }
 
 
 
@@ -191,12 +188,11 @@ class OrgsCtrl extends nb.Controller
 
         self = @
         @treeRootOrg = null # 当前树的顶级节点
-        # @scope.currentOrg = null #当前选中机构
         @orgs = null    #集合
-        @loadInitialData()
         #for ui status
         @isBarOpen = true
 
+        @loadInitialData()
     # deleteOrg: (orgId)-> #删除机构
     #     self = @
     #     onSuccess = ->
@@ -211,86 +207,31 @@ class OrgsCtrl extends nb.Controller
 
     loadInitialData: () -> #初始化数据
         self = @
-        state = @state
-        @Org.$search({'edit_mode': self.eidtMode})
+        rootScope = @rootScope
+        @orgs = @Org.$search({'edit_mode': @eidtMode})
             .$then (orgs) ->
-                self.orgs = orgs
-                #通过这里赋值的orgs都不是历史记录
-                # self.isHistory = false
                 treeRootOrg = _.find orgs, (org) -> org.depth == 1
+                rootScope.$emit('orgs:link',treeRootOrg)
+                self.buildTree(treeRootOrg)
                 self.treeRootOrg = treeRootOrg
-                self.rootTree()
-                state.go('^.show',{orgId: treeRootOrg.id})
 
-    rootTree: () ->
-
-        @buildTree(@scope.currentOrg)
-
-    # setCurrentOrg: (org) -> #修改当前机构
-    #     id = org.id
-    #     @scope.currentOrg = _.find(@orgs, {id: id})
-    #     # @scope.positions = @scope.currentOrg.positions.$fetch()
-    #     @state.go('^.show')
-
-
-    # newSubOrg: (org) -> #新增子机构
-    #     self = @
-    #     state = @state
-    #     # 注释中可能存在ui-router的bug
-    #     # parentId = @params.parentId
-    #     # org.parentId = parentId
-    #     org.parentId = self.scope.currentOrg.id
-    #     org  = @orgs.$create(org)
-
-    #     org.$then (org) ->
-    #         self.scope.currentOrg = org
-    #         self.reset()
-    #         self.scope.$emit 'success', "新增子机构#{org.name}成功"
-    #         state.go('^.show')
-
-    buildTree: (org = @treeRootOrg)->
-
-        depth = 5
-        depth = 1 if org.depth == 1
-
+    buildTree: (org = @treeRootOrg, depth = 9)->
+        depth = 1 if org.depth == 1 #如果是顶级节点 则只显示一级
         @treeRootOrg = org
-        # @setCurrentOrg(org)
         @tree = @orgs.treeful(org, depth)
+
     #force 是否修改当前机构
     reset: (force) ->
         self = @
         #数据入口不止一个，需要解决
-        @Org.$search({'edit_mode': self.eidtMode})
-            .$then (orgs) ->
-                self.orgs = orgs
-                # self.isHistory = false
-                self.scope.currentOrg = _.find orgs,{id: self.treeRootOrg.id} if force
-                self.buildTree()
+        @orgs.$refresh({edit_mode: @eidtMode}).$then () ->
+            self.buildTree()
+            # self.rootScope.$emit('orgs:link', _.find(@orgs, {id: orgId}))
 
-    # onItemClick: (evt, element) ->
-    #     orgId = element.oc_id
-    #     org = _.find @orgs, {id: orgId}
-    #     @setCurrentOrg(org)
-    onItemClick: (evt, elem) ->
+    onItemClick: (evt, elem) -> #机构树 点击事件处理 重构？
         orgId = elem.oc_id
-        @state.go('^.show',{orgId: orgId})
-
-
-    # #切换到编辑页面
-    # edit: (orgId) ->
-    #     @state.go('^.edit',{parentId: orgId})
-
-    # update: (org) -> #修改机构信息
-    #     self = @
-    #     onSuccess = ->
-    #         self.reset()
-    #         self.scope.$emit 'success', '修改机构成功'
-    #         self.state.go('^.show')
-
-    #     onError = (data, status)->
-    #         self.scope.$emit 'error'
-
-    #     org.$save().$then onSuccess, onError
+        # @state.go('^.show',{orgId: orgId})
+        @rootScope.$emit('orgs:link', _.find(@orgs, {id: orgId}))
 
     revert: () ->
         self = @
@@ -377,12 +318,32 @@ class OrgsCtrl extends nb.Controller
 
 class OrgCtrl extends nb.Controller
 
-    @.$inject = ['Org', '$stateParams', '$scope']
+    @.$inject = ['Org', '$stateParams', '$scope', '$rootScope']
 
-    constructor: (@Org, @params, @scope) ->
-        @scope.org = @Org.$find(@params.orgId)
+    constructor: (@Org, @params, @scope, @rootScope) ->
+        @state = 'show' # show editing newsub
+        # @scope.org = @Org.$find(@params.orgId)
+        @scope.org = null
+
+        @scope.$onRootScope 'orgs:link', (evt, org) ->
+            # org = org.$wrap()
+            scope.org = org
+            copy = Org.$buildRaw(org.$wrap())
+            # org.$update(copy)
+    cancel: ->
+        @state = 'show'
+
+
+    reload: (org) ->
+        @scope.org = org
     destory: ->
-        @scope.org.$destroy()
+        self = @
+        onSuccess = ->
+            self.scope.$emit('success',"机构：#{self.scope.currentOrg.name} ,删除成功")
+
+
+
+        @scope.org.$destroy().$then
     update: (org) ->
         org.$save()
     newSub: (org) ->
@@ -500,8 +461,10 @@ class PositionCtrl extends nb.Controller
 
 
 
+class Event
+    constructor: ->
 
-
+    send: ->
 
 
 
