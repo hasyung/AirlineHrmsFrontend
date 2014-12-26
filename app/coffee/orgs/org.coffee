@@ -278,6 +278,7 @@ class OrgsController extends nb.Controller
 
     revert: () ->
         self = @
+
         onSuccess = ->
             self.reset(true)
             self.scope.$emit 'success', '撤销成功'
@@ -285,16 +286,8 @@ class OrgsController extends nb.Controller
         onError = (data, status)->
             self.scope.$emit 'error', "#{data.message}"
 
-        dialog = @modal.open {
-            templateUrl: 'partials/orgs/shared/revert_changes.html'
-            controller: RevertChangesCtrl
-            controllerAs: 'rev'
-            backdrop: true
-            size: 'sm'
-        }
-        dialog.result.then () ->
-            promise = self.http.post '/api/departments/revert'
-            promise.then onSuccess, onError
+        promise = self.http.post '/api/departments/revert'
+        promise.then onSuccess, onError
 
 
     active: (form, data) ->
@@ -433,19 +426,6 @@ class HistoryCtrl
         @dialog.dismiss('cancel')
 
 # 撤销提示框
-
-class RevertChangesCtrl
-    @.$inject = ['$modalInstance']
-    constructor: (@dialog) ->
-
-    ok: (formdata)->
-        @dialog.close()
-
-    cancel: (evt,form)->
-        evt.preventDefault()
-        @dialog.dismiss('cancel')
-
-
 
 class EffectChangesCtrl
     @.$inject = ['$modalInstance', '$scope']

@@ -260,6 +260,11 @@ angular.module 'nb.directives'
                 if scope.isShown then hide(element) else show(element)
             show = (element)->
                 element.show()
+                # 重新定位，解决按钮位置被挤出后popover位置错乱的BUG
+                position = calcPosition elem
+                setTriangleClass(tipElement.outerWidth(), tipElement.outerHeight())
+                tipElement.css {top: position.top + 'px', left: position.left + 'px'}
+                #end
                 scope.isShown = true
                 $doc.on 'click', (e)->
                     e.stopPropagation()
@@ -364,9 +369,7 @@ angular.module 'nb.directives'
                         left: elemPosition.left + elemWidth + options.space
                     }
 
-            position = calcPosition elem
-            setTriangleClass(tipElement.outerWidth(), tipElement.outerHeight())
-            tipElement.css {top: position.top + 'px', left: position.left + 'px'}
+            
             hide tipElement
             elem.on 'click', (e)->
                 e.stopPropagation()
