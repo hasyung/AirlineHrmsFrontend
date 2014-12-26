@@ -3,7 +3,7 @@ div
         .org-dep-badge
             a.toggle-bar.fa(
                 ng-class="{true: 'fa-chevron-right', false: 'fa-chevron-left'}[ctrl.isBarOpen]"
-                ng-click="ctrl.orgBarOpen = !ctrl.orgBarOpen")
+                ng-click="ctrl.isBarOpen = !ctrl.isBarOpen")
         .org-main-wrapper
             .org-main-node
                 a(ng-click="ctrl.rootTree()") 四川航空
@@ -15,7 +15,9 @@ div
 
 
     .app-aside.org-aside.hidden-xs.bg-white-opacity.pull-right
-        .org-row(ui-view='sub')
+        //- .org-row(ui-view='sub' ng-controller="OrgCtrl as orgCtrl")
+        .org-row(ng-controller="OrgCtrl as orgCtrl")
+            include org
     .app-main
         .org-chart-top(ng-class="{'active': ctrl.state.includes('org_history')}")
                 h1 {{ctrl.treeRootOrg.name}}组织机构图

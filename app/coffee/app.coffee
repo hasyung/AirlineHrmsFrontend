@@ -25,6 +25,22 @@ nb.app = App = angular.module 'nb',deps
 # nb.models = models = angular.module 'models', []
 
 
+appConf = ($provide) ->
+    # 事件广播 始终锁定在 rootscope 上 ， 提高性能
+    $provide.decorator '$rootScope', ['$delegate', ($delegate) ->
+
+        Object.defineProperty $delegate.constructor.prototype, '$onRootScope', {
+            value: (name, listener) ->
+                unsubscribe = $delegate.$on(name, listener)
+                this.$on('$destory', unsubscribe)
+
+                return unsubscribe
+            enumerable: false
+        }
+
+        return $delegate
+    ]
+
 
 
 restConf = (restmodProvider) ->
@@ -77,6 +93,7 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
 
 
 App
+    .config ['$provide', appConf]
     .config ['restmodProvider', restConf]
     .config ['$stateProvider','$urlRouterProvider','$locationProvider', '$httpProvider',routeConf]
     .run ['$state','$rootScope', 'toaster', '$http', ($state, $rootScope, toaster, $http) ->
