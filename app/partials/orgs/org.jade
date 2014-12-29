@@ -11,7 +11,11 @@ div
             .org-children-wrapper
                 ul
                     li(ng-repeat="org in ctrl.orgs | filterBy: ['depth']: 2")
-                        a.org-node(ng-click="ctrl.buildTree(org)" ng-bind="org.name", title="{{org.name}}")
+                        a.org-node(ng-click="ctrl.buildTree(org)",
+                                    ng-bind="org.name",
+                                    title="{{org.name}}",
+                                    ng-class="{'active': org.id == (ctrl.treeRootOrg && ctrl.treeRootOrg.id)}"
+                                )
 
 
     .app-aside.org-aside.hidden-xs.bg-white-opacity.pull-right
