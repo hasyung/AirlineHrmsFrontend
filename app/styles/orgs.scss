@@ -79,7 +79,8 @@ ul { padding: 0px;}
 .org-postadd-detail { width: 632px; padding: 20px; }
 .bg-info { background-color: #daedf8;}
 .arrow.left.arrow-info:after {border-right-color: #daedf8;}
-.wrapper.org-timline { height: auto; max-height: 500px; overflow-y:scroll}
+.arrow.left:after{left:2px;bottom: -7px;}
+// .wrapper.org-timline { height: auto; max-height: 500px; overflow-y:scroll}
 .org-timline .tl-content.panel { width: 210px; cursor: pointer;}
 .org-timline .tl-content.panel h1  { font-size: 16px; margin: 0px; color: #000; }
 .org-timline .tl-content.panel h2  { font-size: 12px; margin-top: 10px; color: #23b7e5;}

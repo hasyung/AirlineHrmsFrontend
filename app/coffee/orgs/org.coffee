@@ -331,7 +331,6 @@ class OrgsController extends nb.Controller
             controllerAs: 'his'
             backdrop: true
             size: 'sm'
-            backdropClass: 'org-history-dialog-backdrop'
         }
         dialog.result.then (data) ->
             self.isHistory = true
