@@ -13,24 +13,23 @@ angular.module 'nb.directives'
             $doc = angular.element $window.document
             scope.isShown = false
             tipElement = elem.next()
-            tipElement.append '<span class="triangle-border"></span>'
-            tipElement.append '<span class="triangle-content"></span>'
-            triangleBorder = tipElement.find(".triangle-border")
-            triangleContent = tipElement.find(".triangle-content")
+            tipElement.append '<span class="arrow"></span>'
             options = {scope: scope}
             options.position = "left"
-            options.space = 16
-            options.triangleHeight = 14
-            angular.forEach ['position', 'space', 'triangleHeight'], (key)->
+            # popup提示框和按钮之间的距离
+            options.space = 12
+            angular.forEach ['position', 'space'], (key)->
                 if angular.isDefined attrs[key]
                     options[key] = attrs[key]
+
+            # css中向三角形添加样式需要知道模板的定位
+            tipElement.addClass options.position
             toggle = (element)->
                 if scope.isShown then hide(element) else show(element)
             show = (element)->
                 element.show()
                 # 重新定位，解决按钮位置被挤出后popover位置错乱的BUG
                 position = calcPosition elem
-                setTriangleClass(tipElement.outerWidth(), tipElement.outerHeight())
                 tipElement.css {top: position.top + 'px', left: position.left + 'px'}
                 #end
                 scope.isShown = true
@@ -49,66 +48,7 @@ angular.module 'nb.directives'
                     top: element.position().top
                 }
 
-            setTriangleClass = (tipWidth, tipHeight) ->
-                triangleBorder.css {
-                    position: 'absolute',
-                    'border-style': 'solid',
-                    'border-width': options.triangleHeight + 'px',
-                    width:0,
-                    height:0
-                }
-                triangleContent.css {
-                    position: 'absolute',
-                    'border-width': options.triangleHeight + 'px',
-                    'border-style': 'solid',
-                    width:0,
-                    height:0
-                }
-                if options.position == "bottom"
-                    triangleBorder.css {
-                        left: (tipWidth/2 - options.triangleHeight) + 'px',
-                        top: "-#{2*options.triangleHeight+1}px",
-                        'border-color': 'transparent transparent #bbb transparent'
-                    }
-                    triangleContent.css {
-                        left: (tipWidth/2 - options.triangleHeight) + 'px',
-                        top: "-#{2*options.triangleHeight}px",
-                        'border-color': 'transparent transparent #fff transparent'
-                    }
-                else if options.position == "top"
-                    triangleBorder.css {
-                        left: (tipWidth/2 - options.triangleHeight) + 'px',
-                        top: tipHeight-1+'px',
-                        'border-color': '#ccc transparent transparent transparent'
-                    }
-                    triangleContent.css {
-                        left: (tipWidth/2 - options.triangleHeight) + 'px',
-                        top: tipHeight-2+'px',
-                        'border-color': '#fff transparent transparent transparent'
-                    }
-                else if options.position == "left"
-                    triangleBorder.css {
-                        left: tipWidth-1 + 'px',
-                        top: (tipHeight/2 - options.triangleHeight-2) + "px",
-                        'border-color': 'transparent transparent transparent #ccc'
-                    }
-                    triangleContent.css {
-                        left: tipWidth-2 + 'px',
-                        top: (tipHeight/2 - options.triangleHeight-2) + "px",
-                        'border-color': 'transparent transparent transparent #fff'
-                    }
-                else
-                    triangleBorder.css {
-                        left: "-#{2*options.triangleHeight}px",
-                        top: (tipHeight/2 - options.triangleHeight-2) + "px",
-                        'border-color': 'transparent #ccc transparent transparent'
-                    }
-                    triangleContent.css {
-                        left: "-#{2*options.triangleHeight-1}px",
-                        top: (tipHeight/2 - options.triangleHeight-2) + "px",
-                        'border-color': 'transparent #fff transparent transparent'
-                    }
-
+            
             calcPosition = (element) ->
                 elemWidth = element.outerWidth()
                 elemHeight = element.outerHeight()
@@ -131,14 +71,17 @@ angular.module 'nb.directives'
                         top: elemPosition.top + elemHeight/2 - tipHeight/2,
                         left: elemPosition.left - tipWidth - options.space
                     }
-                else
+                else if options.position == "right"
                     return {
                         top: elemPosition.top + elemHeight/2 - tipHeight/2,
                         left: elemPosition.left + elemWidth + options.space
                     }
+                else
+                    throw Error('position only support left, right, bottom, top!')
 
-            
+            # 加载时隐藏提示框
             hide tipElement
+
             elem.on 'click', (e)->
                 e.stopPropagation()
                 toggle elem.next()
@@ -146,10 +89,7 @@ angular.module 'nb.directives'
             scope.$on '$destroy', ()->
                 $doc.off 'click'
                 elem.off 'click'
-
-
-
-
+                tipElement = null
 
         return {
             transclude: true
