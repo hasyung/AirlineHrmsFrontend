@@ -29,7 +29,7 @@ ul { padding: 0px;}
 .org-title span { width: auto; height: 35px; line-height: 35px; position: absolute;  border-bottom: 1px solid #39b7e9; color: #58656e; font-size: 16px;}
 .org-title button { float: right; margin-right: 10px;  color: #99a6ad;}
 .org-title .btn {padding: 5px 9px; min-width: 35px;}
-.org-info {padding-top: 20px;}
+.org-info {padding: 20px;}
 .org-table { margin-left: 20px; width: 298px;}
 .org-post { color: #448ecb;}
 .org-btn .btn { width: 88px; height: 34px; margin-top: 30px;}
@@ -155,7 +155,6 @@ border-color: #c4cfd3;
 }
 .org-form-row{
 	width:300px;
-	margin-left: 20px;
 }
 .org-label{
 	text-align:right;
@@ -248,7 +247,6 @@ svg text,svg rect{
 .orgchart-box-destroy_inactive{
 	fill: #ff9090;
 }
-
 .title-btn-group{
 	position: absolute;
 	top: 23px;
@@ -264,15 +262,78 @@ svg text,svg rect{
 .title-btn-group button:last-child{
 	margin-left: none;
 }
-
 .svg-wrapper svg{
 	display: block;
 	margin: 0 auto;
 
 }
-
 .button-group button{
 	margin-left: 10px;
 }
+
+//右边信息展示窗口部分样式
+.org-info{
+	@include clearfix();
+}
+.org-info .org-form-group{
+	margin-bottom: 20px;
+	@include clearfix();
+}
+.org-info label{
+	float: left;
+	width: 80px;
+	font-size: 14px;
+	text-align: right;
+	margin-bottom: 0;
+}
+
+.org-info .form-content{
+	float: left;
+	width: 170px;
+	padding-left: 40px;
+	text-align: left;
+}
+.drop-label{
+	height: 34px;
+	line-height: 34px;
+}
+.form-content input{
+	width: 170px;
+	font-size: 14px;
+	height: 34px;
+	padding-left: 10px;
+	border-radius: 4px;
+}
+.org-form-btn-group .btn{
+	width: 92px;
+	height: 34px;
+	border-radius: 4px;
+}
+.org-form-btn-group input{
+	margin-left: 10px;
+}
+
+// 下拉菜单样式新增
+.org-info .dropdown{
+	width: 170px;
+}
+.org-info .dropdown .btn{
+	width: 170px;
+	border-radius: 4px;
+	text-align: left;
+}
+.org-info .dropdown .caret{
+	float: right;
+	margin-top: 7px;
+}
+
+
+
+
+
+
+
+
+
 
 
