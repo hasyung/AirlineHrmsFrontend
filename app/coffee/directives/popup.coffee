@@ -7,7 +7,6 @@ angular.module 'nb.directives'
 
             constructor: (@$scope, $elem, $transcludeFn) ->
 
-
         postLink = (scope, elem, attrs, $ctrl, $transcludeFn) ->
 
             $doc = angular.element $window.document
@@ -47,7 +46,6 @@ angular.module 'nb.directives'
                     left: element.position().left,
                     top: element.position().top
                 }
-
             
             calcPosition = (element) ->
                 elemWidth = element.outerWidth()
@@ -99,6 +97,3 @@ angular.module 'nb.directives'
         }
 
     ]
-
-
-
