@@ -5,7 +5,8 @@
 
 
 deps = [
-    'ui.router'
+    # 'ui.router'
+    'ct.ui.router.extras'
     # 'ui.select'
     'ui.bootstrap'
     'ngSanitize'

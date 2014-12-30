@@ -46,11 +46,18 @@ resources = angular.module('resources')
 
 
 
-VXstoreApi = (restmod, RMUtils) ->
+nbRestApi = (restmod, RMUtils, $rootScope, $Evt) ->
 
     Utils = RMUtils
 
     restmod.mixin {
+
+        hooks:
+            'after-request-error': (res)->
+                $Evt.$send('global:request:error',res)
+
+
+
         'Record.$store': (_patch) ->
             self = @
             self.$action () ->
@@ -71,13 +78,14 @@ VXstoreApi = (restmod, RMUtils) ->
 
         'Record.$copy': ->
             raw = this.$wrap()
-            # copy = this.buildRaw(raw)
+            copy = this.$scope.$buildRaw(raw)
+            return copy
 
 
     }
 
 User = (restmod) ->
-    User = restmod.model('/users').mix('VXstoreApi', {
+    User = restmod.model('/users').mix('nbRestApi', {
         # created_at: { serialize: 'RailsDate' } #todo 序列化器
         updated_at: { decode: 'date', param: 'yyyy年mm月dd日',mask: 'CUR' } #不 send CURD 操作时
         permissions: { belongsToMany: 'Permission', keys: 'permission_ids'}
@@ -111,7 +119,7 @@ User = (restmod) ->
     })
 
 
-Org = (restmod, $http) ->
+Org = (restmod, RMUtils, $Evt) ->
 
     Constants = {
         NODE_INDEX: 3 # serial_number 生成策略是parent_node.serial_number+node_index，node_index由3位构成，值为创建该node时，其parent_node.children_count
@@ -184,11 +192,55 @@ Org = (restmod, $http) ->
         return unflatten(treeData, DEPTH, parent)
 
 
-    Org = restmod.model('/departments').mix {
+    Org = restmod.model('/departments').mix 'nbRestApi', {
 
         positions: { hasMany: 'Position'}
 
+
+        $hooks:
+            # 有无必要自定义事件增加系统复杂度? 待观察
+            'after-destroy': ->
+                $Evt.$send('org:destroy:success',"机构：#{self.scope.currentOrg.name} ,删除成功")
+
+            'after-active': ->
+                $Evt.$send('org:active:success', "生效成功")
+
+            'after-active-error': ->
+                $Evt.$send('org:active:error', arguments)
+
+            'after-revert': ->
+                $Evt.$send('org:revert:success', "撤销成功")
+
         $extend:
+            Scope:
+                active: (formdata)->
+                    self = @
+                    url = RMUtils.joinUrl(this.$url(), 'active')
+                    request = {method: 'POST', url: url, data: formdata}
+
+                    onSuccess = (res)->
+                        self.$dispatch 'after-active', res
+
+                    onErorr = (res) ->
+                        self.$dispatch 'after-active-error', res
+
+                    this.$send(request, onSuccess, onErorr)
+
+                revert: ->
+                    self = @
+                    url = RMUtils.joinUrl(this.$url(), 'revert')
+                    request = {method: 'POST', url: url}
+
+                    onSuccess = (res) ->
+                        self.$dispatch 'after-revert', res
+
+                    onErorr = (res) ->
+                        self.$dispatch 'after-revert-error', res
+
+                    this.$send(request, onSuccess, onErorr)
+
+
+
             Collection:
                 treeful: (org, DEPTH = 4) ->
                     IneffectiveOrg = (org)-> #系统还有未生效的组织机构
@@ -221,7 +273,7 @@ Org = (restmod, $http) ->
                 jqTreeful: () ->
                     allOrgs = @$wrap()
                     treeData = transform(allOrgs, {'name': 'label'}) # for jqTree
-                    treeData = treeful(treeData,Infinity)
+                    treeData = treeful(treeData, Infinity)
 
                     return [treeData]
             Record:
@@ -256,8 +308,8 @@ Permission = (restmod) ->
 
 
 
-resources.factory 'VXstoreApi',['restmod','RMUtils', VXstoreApi]
-resources.factory 'Org',['restmod', '$http', Org]
+resources.factory 'nbRestApi',['restmod','RMUtils', '$nbEvent', nbRestApi]
+resources.factory 'Org',['restmod', 'RMUtils', '$nbEvent', Org]
 resources.factory 'User',['restmod', User]
 resources.factory 'Permission',['restmod', Permission]
 resources.factory 'Position',['restmod', Position]

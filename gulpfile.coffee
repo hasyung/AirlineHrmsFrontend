@@ -45,8 +45,7 @@ paths =
              "app/coffee/*.coffee"
              "app/coffee/base/*.coffee"
              "app/coffee/directives/*.coffee"
-             "app/coffee/component/$panel.coffee"
-             "app/coffee/directives/directives.coffee"
+             "app/coffee/component/*.coffee"
              #"app/coffee/controller/siteCtrl.coffee"
              "app/coffee/personnel/*.coffee"
              "app/coffee/orgs/*.coffee"
@@ -83,6 +82,8 @@ paths =
         'deps/angular-sanitize/angular-sanitize.js'
         'deps/angular-filter/dist/angular-filter.js'
         'deps/angular-ui-router/release/angular-ui-router.js'
+
+        'deps/ui-router-extras/release/ct-ui-router-extras.js'
         # 'deps/ngInfiniteScroll/build/ng-infinite-scroll.js'
         'deps/AngularJS-Toaster/toaster.js'
         'deps/angular-locale_zh-cn.js'

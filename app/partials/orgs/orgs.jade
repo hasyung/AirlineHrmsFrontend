@@ -36,5 +36,6 @@ div
     div.org-chart-window
         div.svg-wrapper(org-chart drag-on org-chart-data="ctrl.tree.data")
         div.bottom-btn-group(ng-show="ctrl.tree.isModified")
-            button.cancel(ng-click="ctrl.revert()") 撤销
+            button.cancel(ui-sref=".revert") 撤销
+            //- button.cancel(ng-click="ctrl.revert()") 撤销
             button.effect(ng-click="ctrl.active()") 生效

@@ -1,7 +1,7 @@
 
 nb = @.nb
 app = nb.app
-
+extend = angular.extend
 
 
 orgChart = () ->
@@ -110,7 +110,7 @@ app.directive('nbOrgTree',['Org', '$parse', orgTree])
 class Route
     @.$inject = ['$stateProvider']
 
-    constructor: (stateProvider) ->
+    constructor: (stateProvider, $dialog) ->
 
 
         # states  = []
@@ -119,12 +119,58 @@ class Route
 
         # sta
 
+    # $dialog = (dialogName, controller, templateUrl, options = {}) ->
+    #     memoName = "#{dialogName}Invoker"
+    #     $previousState.memo(dialogName) #记住当前 url 状态
+
+    #     controller = {controller: controller}
+    #     templateUrl= {templateUrl: templateUrl}
+
+    #     options = angular.extend {}, controller, templateUrl, options
+
+    #     modalInstance = $modal.open options
+
+    #     modalInstance.result.finally ->
+    #         $previousState.go(memoName) #恢复之前 url 状态
+    #         unsubscribe()
+
+    #     # 当 URL 改变时自动关闭 dialog
+    #     unsubscribe =  $rootScope.$on '$stateChangeStart', (evt, toState) ->
+    #         if !toState.$$state().includes[dialogName]
+    #             modalInstance.dismiss('close')
+
+
+    # # return $dialog
+    # return {$dialog: $dialog}
+
+
+
+
+        class RevertChangesCtrl extends nb.Dialog
+            @.$inject = ['$modalInstance','$rootScope' , '$scope', '$previousState', '$state', '$nbEvent']
+
+            constructor: (@dialog, @rootScope, @scope, @previousState, @state, $Evt) ->
+                @initialize('revert')
+
+            close: (formdata)->
+                @dialog.close()
+
+            cancel: (evt,form)->
+                evt.preventDefault()
+                @dialog.dismiss('cancel')
+
+
+        openRevertDialog = ($modal, $previousState)->
+            $modal.open {
+                templateUrl: 'partials/orgs/shared/revert_changes.html'
+                controller: RevertChangesCtrl
+            }
+
 
 
         stateProvider
             .state 'org', {
                 url: '/orgs'
-                # abstract: true
                 templateUrl: 'partials/orgs/orgs.html'
                 controller: 'OrgsCtrl'
                 controllerAs: 'ctrl'
@@ -133,14 +179,11 @@ class Route
                         return true
                 }
             }
-            # .state 'org.show', {
-            #     url: '/:orgId'
-            #     views: {
-            #         'sub': {
-            #             templateUrl: 'partials/orgs/org.html'
-            #         }
-            #     }
-            # }
+            .state 'org.revert', {
+                url: '/revert'
+                template: '<div ui-view></div>'
+                onEnter: openRevertDialog
+            }
             .state 'org_history', {
                 url: '/orgs/history'
                 abstract: true
@@ -156,23 +199,10 @@ class Route
                     }
                 }
             }
-            # .state 'org.newsub', {
-            #     url: '/:parentId/newsub'
-            #     views: {
-            #         'sub': {
-            #             templateUrl: 'partials/orgs/org_newsub.html'
-            #         }
-            #     }
-            # }
-            # .state 'org.edit', {
-            #     url: '/:orgId/edit'
-            #     views: {
-            #         'sub': {
-            #             templateUrl: 'partials/orgs/org_edit.html'
-            #             controller: 'OrgController'
-            #         }
-            #     }
-            # }
+
+
+
+
 
 
 
@@ -191,19 +221,7 @@ class OrgsCtrl extends nb.Controller
         @orgs = null    #集合
         #for ui status
         @isBarOpen = true
-
         @loadInitialData()
-    # deleteOrg: (orgId)-> #删除机构
-    #     self = @
-    #     onSuccess = ->
-    #         self.reset()
-    #         self.scope.$emit('success',"机构：#{self.scope.currentOrg.name} ,删除成功")
-
-    #     onError = (data, status)->
-    #         self.scope.$emit 'error', "机构：#{self.scope.currentOrg.name} ,删除失败,请确保当前没有子机构，同时该机构岗位要为空"
-
-    #     self.scope.currentOrg.$destroy().$then onSuccess, onError
-
 
     loadInitialData: () -> #初始化数据
         self = @
@@ -234,24 +252,18 @@ class OrgsCtrl extends nb.Controller
         @rootScope.$emit('orgs:link', _.find(@orgs, {id: orgId}))
 
     revert: () ->
-        self = @
-        onSuccess = ->
-            self.reset(true)
-            self.scope.$emit 'success', '撤销成功'
+        # self = @
+        # Org  = @Org
+        # dialog = @modal.open {
+        #     templateUrl: 'partials/orgs/shared/revert_changes.html'
+        #     controller: RevertChangesCtrl
+        #     controllerAs: 'rev'
+        #     backdrop: true
+        #     size: 'sm'
+        # }
+        # dialog.result.then () ->
+        @Org.$revert()
 
-        onError = (data, status)->
-            self.scope.$emit 'error', "#{data.message}"
-
-        dialog = @modal.open {
-            templateUrl: 'partials/orgs/shared/revert_changes.html'
-            controller: RevertChangesCtrl
-            controllerAs: 'rev'
-            backdrop: true
-            size: 'sm'
-        }
-        dialog.result.then () ->
-            promise = self.http.post '/api/departments/revert'
-            promise.then onSuccess, onError
 
 
     active: (form, data) ->
@@ -279,7 +291,6 @@ class OrgsCtrl extends nb.Controller
 
 
     openPositionPanel: (orgId) ->
-
         self = @
         panel = @panel.open {
             templateUrl: 'partials/orgs/position.html'
@@ -318,34 +329,32 @@ class OrgsCtrl extends nb.Controller
 
 class OrgCtrl extends nb.Controller
 
-    @.$inject = ['Org', '$stateParams', '$scope', '$rootScope']
+    @.$inject = ['Org', '$stateParams', '$scope', '$rootScope', '$nbEvent']
 
-    constructor: (@Org, @params, @scope, @rootScope) ->
+    constructor: (@Org, @params, @scope, @rootScope, @Evt) ->
         @state = 'show' # show editing newsub
         # @scope.org = @Org.$find(@params.orgId)
         @scope.org = null
 
         @scope.$onRootScope 'orgs:link', (evt, org) ->
-            # org = org.$wrap()
             scope.org = org
-            copy = Org.$buildRaw(org.$wrap())
-            # org.$update(copy)
+            scope.copy = org.$copy()
     cancel: ->
         @state = 'show'
 
-
     reload: (org) ->
         @scope.org = org
+
     destory: ->
         self = @
+        Evt = @Evt
         onSuccess = ->
-            self.scope.$emit('success',"机构：#{self.scope.currentOrg.name} ,删除成功")
 
+        @scope.org.$destroy().$then onSuccess
 
-
-        @scope.org.$destroy().$then
     update: (org) ->
-        org.$save()
+        org.$update(org)
+
     newSub: (org) ->
         @scope.org.newSub(org)
 
@@ -431,6 +440,7 @@ class HistoryCtrl
 
 class RevertChangesCtrl
     @.$inject = ['$modalInstance']
+
     constructor: (@dialog) ->
 
     ok: (formdata)->
@@ -458,13 +468,6 @@ class EffectChangesCtrl
         @dialog.dismiss('cancel')
 
 class PositionCtrl extends nb.Controller
-
-
-
-class Event
-    constructor: ->
-
-    send: ->
 
 
 
