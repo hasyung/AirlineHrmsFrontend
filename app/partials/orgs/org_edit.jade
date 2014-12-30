@@ -23,7 +23,7 @@ form(novalidate, ng-submit="ctrl.update(currentOrg)", name="form")
             .col-lg-5 {{::currentOrg.grade.displayName}}
 
     .org-btn.org-form-row
-        input.btn.btn-info.pull-right(type="submit",value="保存" ,ng-disabled="!form.$valid")
+        input.btn.btn-info.pull-right(type="submit", value="保存", ng-disabled="!form.$valid")
         button.btn.btn-default.pull-right(ui-sref="^.show") 取消
 
 

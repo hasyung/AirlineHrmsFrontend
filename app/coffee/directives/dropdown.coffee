@@ -56,12 +56,14 @@ angular.module 'nb.directives'
             ngModelCtrl = $ctrl[1]
             elem.on 'click', (e)->
                 e.stopPropagation()
-                scope.$apply ()->
+                scope.$apply () ->
                     ngModelCtrl.$touched = true
             $doc.on 'click', (e)->
                 e.stopPropagation()
                 scope.$apply ()->
                     dropdownCtrl.close()
+                    # dropdownCtrl.close() 返回false，将阻止submit按钮的提交事件的触发
+                    return true
                     
             # view to model
             # ngModelCtrl.$parsers.unshift (inputVal) ->
