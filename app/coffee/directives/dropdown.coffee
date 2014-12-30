@@ -58,12 +58,15 @@ angular.module 'nb.directives'
                 e.stopPropagation()
                 scope.$apply () ->
                     ngModelCtrl.$touched = true
-            $doc.on 'click', (e)->
+
+            closeDropdown = (e) ->
                 e.stopPropagation()
                 scope.$apply ()->
                     dropdownCtrl.close()
                     # dropdownCtrl.close() 返回false，将阻止submit按钮的提交事件的触发
-                    return true
+                    return true 
+            $doc.on 'click', closeDropdown
+                
                     
             # view to model
             # ngModelCtrl.$parsers.unshift (inputVal) ->
@@ -81,7 +84,7 @@ angular.module 'nb.directives'
 
             scope.$on '$destroy', () ->
                 elem.off 'click'
-                $doc.off 'click'
+                $doc.off 'click', closeDropdown
 
         return {
             restrict: 'EA'
