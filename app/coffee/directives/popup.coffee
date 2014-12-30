@@ -55,23 +55,20 @@ angular.module 'nb.directives'
 
             # css中向三角形添加样式需要知道模板的定位
             tipElement.addClass options.position
-            toggle = (element)->
-                if scope.isShown then hide(element) else show(element)
-            show = (element)->
-                element.show()
+            toggle = ()->
+                if scope.isShown then hide() else show()
+            show = ()->
+                tipElement.show()
                 # 重新定位，解决按钮位置被挤出后popover位置错乱的BUG
                 position = calcPosition elem
                 tipElement.css {top: position.top + 'px', left: position.left + 'px'}
                 #end
                 scope.isShown = true
-                $doc.on 'click', (e)->
-                    e.stopPropagation()
-                    hide element
+            
 
-            hide = (element)->
-                element.hide()
+            hide = ()->
+                tipElement.hide()
                 scope.isShown = false
-                $doc.off "click"
 
             getPosition = (element) ->
                 return {
@@ -110,15 +107,22 @@ angular.module 'nb.directives'
                     # 没有正确的位置信息三角形将无法定位
                     throw Error('position only support left, right, bottom, top!')
 
-            # 加载时隐藏提示框
-            hide tipElement
+            hideHandle = (e) ->
+                e.stopPropagation()
+                hide()
 
+
+            # 加载时隐藏提示框
+            hide()
+            
+            $doc.on 'click', hideHandle
+                
             elem.on 'click', (e)->
                 e.stopPropagation()
-                toggle elem.next()
+                toggle()
 
             scope.$on '$destroy', ()->
-                $doc.off 'click'
+                $doc.off 'click', hideHandle
                 elem.off 'click'
                 tipElement = null
 
