@@ -110,6 +110,8 @@ angular.module 'nb.directives'
             hideHandle = (e) ->
                 e.stopPropagation()
                 hide()
+                # hide() 返回false，将阻止submit按钮的提交事件的触发
+                return 
 
 
             # 加载时隐藏提示框
