@@ -1,4 +1,36 @@
 angular.module 'nb.directives'
+    .directive 'nbPopupTransclude', [ () ->
+
+        postLink = (scope, elem, attrs, $ctrl, $transcludeFn) ->
+            $transcludeFn (clone) ->
+                templateBlock = clone.filter('popup-template')
+                elem.parent().parent().after templateBlock
+
+        return {
+            # controller: PopupTransclude
+            restrict: 'AE'
+            # require: '^popupTemplate'
+            link: postLink
+        }
+
+    ]
+
+    .directive 'nbPopupEmbedTransclude', [ ()->
+
+        class EmbedTransclude
+            constructor: () ->
+        postLink = (scope, elem, attrs, $ctrl, $transcludeFn) ->
+            $transcludeFn (clone) ->
+                elem.replaceWith( clone.not('popup-template'))
+
+
+        return {
+            restrict: 'EA'
+            require: '^nbPopup'
+            link: postLink
+        }
+
+    ]
     .directive 'nbPopup', ['$window', ($window) ->
 
         class PopupController
@@ -75,6 +107,7 @@ angular.module 'nb.directives'
                         left: elemPosition.left + elemWidth + options.space
                     }
                 else
+                    # 没有正确的位置信息三角形将无法定位
                     throw Error('position only support left, right, bottom, top!')
 
             # 加载时隐藏提示框

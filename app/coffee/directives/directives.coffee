@@ -12,50 +12,7 @@ angular.module 'nb.directives'
         }
     ]
     
-    .directive 'nbPopupTransclude', [ () ->
-
-
-        # class PopupTransclude
-
-        #     @.$inject = ['$scope', '$element', '$transclude']
-
-        #     constructor: (@scope, $elem, $transcludeFn) ->
-        #         $transcludeFn (clone) ->
-        #             console.debug arguments
-        #             templateBlock = clone.filter('[popup-template]')
-        #             $elem.append templateBlock.html()
-
-
-        postLink = (scope, elem, attrs, $ctrl, $transcludeFn) ->
-            $transcludeFn (clone) ->
-                templateBlock = clone.filter('popup-template')
-                elem.parent().parent().after templateBlock
-
-        return {
-            # controller: PopupTransclude
-            restrict: 'AE'
-            # require: '^popupTemplate'
-            link: postLink
-        }
-
-    ]
-
-    .directive 'nbPopupEmbedTransclude', [ ()->
-
-        class EmbedTransclude
-            constructor: () ->
-        postLink = (scope, elem, attrs, $ctrl, $transcludeFn) ->
-            $transcludeFn (clone) ->
-                elem.replaceWith( clone.not('popup-template'))
-
-
-        return {
-            restrict: 'EA'
-            require: '^nbPopup'
-            link: postLink
-        }
-
-    ]
+    
     .directive 'dragOn', [ '$window', ($window) ->
 
 
