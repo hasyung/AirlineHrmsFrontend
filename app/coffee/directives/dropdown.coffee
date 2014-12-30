@@ -64,7 +64,7 @@ angular.module 'nb.directives'
                 scope.$apply ()->
                     dropdownCtrl.close()
                     # dropdownCtrl.close() 返回false，将阻止submit按钮的提交事件的触发
-                    return true 
+                    return  
             $doc.on 'click', closeDropdown
                 
                     
