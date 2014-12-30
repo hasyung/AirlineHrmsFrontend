@@ -15,74 +15,73 @@ aside.org-aside
                 //- button.btn.btn-default.fa.fa-pencil(ui-sref="^.edit({orgId: org.id})",title="编辑")
                 button.btn.btn-default.fa.fa-pencil(ng-click="orgCtrl.state = 'editing'",title="编辑")
                 button.btn.btn-default.fa.fa-plus(title="新增子机构",ng-click="orgCtrl.state = 'newsub'", ng-if="org.grade.name !== 'secondly_positive'")
-
         //- show
         .org-info(ng-show="orgCtrl.state == 'show'")
-            .form-group.row
-                label.control-label.col-lg-5.org-label 名称：
-                .col-lg-5 {{org.name}}
-            .form-group.row
-                label.control-label.col-lg-5.org-label 编号：
-                .col-lg-5 {{org.serialNumber}}
-            .form-group.row
-                label.control-label.col-lg-5.org-label 办公地点：
-                .col-lg-5 {{org.location.displayName}}
-            .form-group.row
-                label.control-label.col-lg-5.org-label 职级：
-                .col-lg-5 {{org.grade.displayName}}
+            .org-form-group
+                label.control-label.org-label 名称：
+                .form-content {{org.name}}
+            .org-form-group
+                label.control-label.org-label 编号：
+                .form-content {{org.serialNumber}}
+            .org-form-group
+                label.control-label.org-label 办公地点：
+                .form-content {{org.location.displayName}}
+            .org-form-group
+                label.control-label.org-label 职级：
+                .form-content {{org.grade.displayName}}
         //- update
-        .org-info.org-form-row(ng-show="orgCtrl.state == 'editing'")
+        .org-info(ng-show="orgCtrl.state == 'editing'")
             form(novalidate, ng-submit="update(org)", name="form")
-                .form-group.row
-                    label.control-label.col-lg-4.org-label 名称：
-                    .col-lg-5
+                .org-form-group
+                    label.control-label.org-label.drop-label 名称：
+                    .form-content
                         input(ng-model="copyOrg.name", required="true", name="orgName")
                         div(ng-messages="form.orgName.$error", ng-if="form.orgName.$touched")
                             .form-group-error(ng-message="required") 名称必填
-                .form-group.row
-                    label.control-label.col-lg-4.org-label 编号：
-                    .col-lg-5 {{copyOrg.serialNumber}}
-                .form-group.row
-                    label.control-label.col-lg-4.org-label 办公地点：
-                    .col-lg-5
+                .org-form-group
+                    label.control-label.org-label 编号：
+                    .form-content {{copyOrg.serialNumber}}
+                .org-form-group
+                    label.control-label.org-label.drop-label 办公地点：
+                    .form-content
                         nb-dropdown(ng-model="copyOrg.location" remote-key="Department.locations", name="orgAddr", required="true")
                         div(ng-messages="form.orgAddr.$error", ng-if="form.orgAddr.$touched")
                             .form-group-error(ng-message="required") 地点必选
 
-                .form-group.row
-                    label.control-label.col-lg-4.org-label 职级：
-                    .col-lg-5 {{::org.grade.displayName}}
+                .org-form-group
+                    label.control-label.org-label 职级：
+                    .form-content {{::org.grade.displayName}}
 
-                .form-group.row
+                .org-form-group.org-form-btn-group
                     input.btn.btn-info.pull-right(type="submit",value="保存" ,ng-disabled="!form.$valid")
                     button.btn.btn-default.pull-right(ng-click="orgCtrl.cancel()") 取消
 
          //- new sub
-        .org-info.org-form-row(ng-show="orgCtrl.state == 'newsub' ")
+        .org-info(ng-show="orgCtrl.state == 'newsub' ")
             form(novalidate, ng-submit="newsub(org)", name="form")
-                .form-group.row
-                    label.control-label.col-lg-5.org-label 名称：
-                    .col-lg-5
+                .org-form-group
+                    label.control-label.org-label.drop-label 名称：
+                    .form-content
                         input(ng-model="neworg.name", type="text", required="true", name="orgName")
                         div(ng-messages="form.orgName.$error", ng-if="form.orgName.$touched")
-                            .form-group-error.col-lg-12(ng-message="required") 名称必填
+                            .form-group-error(ng-message="required") 名称必填
 
-                .form-group.row
-                    label.control-label.col-lg-5.org-label 办公地点：
-                    .col-lg-5
+                .org-form-group
+                    label.control-label.org-label.drop-label 办公地点：
+                    .form-content
                         nb-dropdown(ng-model="neworg.location" remote-key="Department.locations", required="true", name="orgAddr")
 
                         div(ng-messages="form.orgAddr.$error", ng-if="form.orgAddr.$touched")
                             .form-group-error(ng-message="required") 地点必选
 
-                .form-group.row
-                    label.control-label.col-lg-5.org-label 职级：
-                    .col-lg-5
+                .org-form-group
+                    label.control-label.org-label.drop-label 职级：
+                    .form-content
                         nb-dropdown(ng-model="neworg.grade" remote-key="Department.department_grades", required="true", name="orgType", additory="false")
                         div(ng-messages="form.orgType.$error", ng-if="form.orgType.$touched || form.orgType.$dirty")
                             .form-group-error(ng-message="required") 职级必选
 
-                .form-group.row
+                .org-form-group.org-form-btn-group
                     input.btn.btn-info.pull-right(type="submit",value="保存",ng-disabled="!form.$valid")
                     button.btn.btn-default.pull-right(ng-click="orgCtrl.cancel()") 取消
 

@@ -1,16 +1,23 @@
 @charset 'utf-8';
 @import 'bourbon';
 // @import 'component/loading-btn.scss';
-@import 'layout/nav';
+//layout
+// @import '_variables';
+// @import 'layout/nav.scss';
+// @import 'layout/layout';
+//components
 @import 'component/loading.scss';
 
+
+
+//modules
 @import 'modules/personnel';
-@import 'modules/orgs';
+@import 'orgs';
 
 
 body  {font-family: "微软雅黑"}
 ul {
-	list-style: none;;
+	list-style: none;
 }
 .highlightText {
     color: #f15a5a !important;
