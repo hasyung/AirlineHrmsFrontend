@@ -7,6 +7,7 @@
           .panel-heading.popup-title 警告
           .panel-body.popup-body
             div 删除后将无法恢复，请确认删除
+            //- 在这个指令下面不能添加button
             div.div-delete-btn.pull-right(ng-click="ctrl.deleteOrg()") 删除
       button.btn.btn-default.fa.fa-retweet(title="划转" ng-click="ctrl.openOrgtreeDialog()")
       button.btn.btn-default.fa.fa-pencil(ui-sref="^.edit({Id: currentOrg.id})",title="编辑")
