@@ -23,7 +23,7 @@ div
                 h1 {{ctrl.treeRootOrg.name}}组织机构图
                 h2(ng-show="ctrl.isHistory") {{ctrl.orgs.$metadata.created_at | date:'yyyy年MM月dd日'}}— {{ctrl.orgs.$metadata.title}}
             .title-btn-group
-                button.btn.btn-cold(ng-click="ctrl.openHistoryDialog()") 时间轴
+                button.btn.btn-cold(ui-sref=".history") 时间轴
 
 
                 a.btn.btn-info(ng-show="!ctrl.state.includes('org_history')", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导出
@@ -38,4 +38,4 @@ div
         div.bottom-btn-group(ng-show="ctrl.tree.isModified")
             button.cancel(ui-sref=".revert") 撤销
             //- button.cancel(ng-click="ctrl.revert()") 撤销
-            button.effect(ng-click="ctrl.active()") 生效
+            button.effect(ui-sref=".active") 生效

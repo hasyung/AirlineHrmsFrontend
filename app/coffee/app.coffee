@@ -54,8 +54,6 @@ restConf = (restmodProvider) ->
         # }
 
 
-
-
 routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider) ->
     $locationProvider.html5Mode(false)
 

@@ -12,6 +12,11 @@ mixOf = (base, mixins...) ->
     Mixed
 
 
+resetForm = (forms...) ->
+    for form in forms
+        form.$setPristine()
+        form.$setUntouched()
+    return
 
 
 
@@ -21,3 +26,4 @@ mixOf = (base, mixins...) ->
 nb = @.nb
 
 nb.mixOf = mixOf
+nb.resetForm = resetForm

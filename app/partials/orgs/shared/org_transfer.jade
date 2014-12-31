@@ -1,11 +1,11 @@
 .modal-header
-    button.close(type='button', data-dismiss='modal', aria-hidden='true', ng-click="trs.cancel($event, active_form)") ×
+    button.close(type='button', data-dismiss='modal', aria-hidden='true', ng-click="ctrl.cancel($event)") ×
     h4.modal-title 机构
 .modal-body
     div(slimscroll height="300px")
-        nb-org-tree(tree-data= "trs.tree.data" selected-data="trs.selectedData")
+        nb-org-tree(tree-data= "trs.tree.data" selected-data="ctrl.selectedData")
 .modal-footer
     .pull-right.button-group
-        button.btn.btn-default.btn-sm(type='button',ng-click='trs.cancel($event)') 取消
-        button.btn.btn-info.btn-sm(type='button', ng-click="trs.ok()") 确定
+        button.btn.btn-default.btn-sm(type='button',ng-click='ctrl.cancel($event)') 取消
+        button.btn.btn-info.btn-sm(type='button', ng-click="ctrl.ok()") 确定
 

@@ -2,52 +2,38 @@
 
 nb = @.nb
 app = nb.app
-# Dialog =  ($modal, $previousState, $rootScope) ->
-
-#     $dialog = (dialogName, controller, templateUrl, options = {}) ->
-#         memoName = "#{dialogName}Invoker"
-#         $previousState.memo(dialogName) #记住当前 url 状态
-
-#         controller = {controller: controller}
-#         templateUrl= {templateUrl: templateUrl}
-
-#         options = angular.extend {}, controller, templateUrl, options
-
-#         modalInstance = $modal.open options
-
-#         modalInstance.result.finally ->
-#             $previousState.go(memoName) #恢复之前 url 状态
-#             unsubscribe()
-
-#         # 当 URL 改变时自动关闭 dialog
-#         unsubscribe =  $rootScope.$on '$stateChangeStart', (evt, toState) ->
-#             if !toState.$$state().includes[dialogName]
-#                 modalInstance.dismiss('close')
 
 
-#     # return $dialog
-#     return {$dialog: $dialog}
-
-
-# app.factory '$nbDialog', ['$modal', '$previousState', '$rootScope', Dialog]
-
-
+extend = angular.extend
 
 #   require: $scope, $previousState, $rootScope, $modalInstance named dialog
 #
 class Dialog
-    constructor: ->
+    constructor: (dialog, scope, memoName)->
+        @initialize(dialog, scope, memoName)
 
-    initialize: (stateName)->
-        throw new Error('stateName is required, cause memo current state') unless stateName
+    cancel: (evt, form) ->
+        evt.preventDefault()
+        form.$setPristine() if form
+        @dialog.dismiss('cancel')
 
-        $previousState = @previousState
+    initialize: (dialog, scope, memoName)->
+        throw new Error('memoName is required, cause memo current state') unless memoName
+        # error: injector 只能注入 provider
+        # $injector = angular.injector()
+        # $state = $injector.get('$state')
+        # $previousState = $injector.get('$previousState')
+        # $rootScope = $injector.get('$rootScope')
+
         $state = @state
-        dialog = @dialog
-        _.bindAll(@)
-        extend(@scope, @)
-        invokerName = "#{stateName}Invoker"
-        isRefresh = true if @state.includes("*.#{stateName}")
+        $previousState = @previousState
+        $rootScope = @rootScope
+
+        # _.bindAll(@)
+        # extend(scope, @) #把controller 方法绑定到 scope 上
+        scope.ctrl = @
+        invokerName = "#{memoName}Invoker"
+        isRefresh = true if $state.includes("*.#{memoName}")
 
         $previousState.memo(invokerName)
 
@@ -65,8 +51,28 @@ class Dialog
             unsubscribe()
 
         unsubscribe = @rootScope.$on '$stateChangeStart', (evt, toState) ->
-            if !toState.$$state().includes[stateName]
+            if !toState.$$state().includes[memoName]
                 dialog.dismiss('close')
+
+
+Dialog.$build = (childState, controller, templateUrl)->
+
+    modalOpen = ['$modal', ($modal)->
+        $modal.open {
+            templateUrl: templateUrl
+            controller: controller
+            resolve: {
+                memoName: ->
+                    return childState
+            }
+        }
+    ]
+
+    return {
+        url: "/#{childState}"
+        template: '<div ui-view></div>'
+        onEnter: modalOpen
+    }
 
 nb.Dialog = Dialog
 

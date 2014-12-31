@@ -198,6 +198,8 @@ Org = (restmod, RMUtils, $Evt) ->
 
 
         $hooks:
+            'after-request': ->
+                $Evt.$send('org:refresh')
             # 有无必要自定义事件增加系统复杂度? 待观察
             'after-destroy': ->
                 $Evt.$send('org:destroy:success',"机构：#{self.scope.currentOrg.name} ,删除成功")
@@ -211,8 +213,24 @@ Org = (restmod, RMUtils, $Evt) ->
             'after-revert': ->
                 $Evt.$send('org:revert:success', "撤销成功")
 
+            'after-update': ->
+                $Evt.$send('org:update:success', "撤销成功")
+
+            'after-update-error': ->
+                $Evt.$send('org:update:error')
+
+            'after-newsub': ->
+                $Evt.$send('org:newsub:success', "撤销成功")
+
+            'after-newsub-error': ->
+                $Evt.$send('org:newsub:error')
+
+            'after-transfer': ->
+                $Evt.$send('org:transfer:success', "划转机构成功")
+
+
         $extend:
-            Scope:
+            Resource:
                 active: (formdata)->
                     self = @
                     url = RMUtils.joinUrl(this.$url(), 'active')
@@ -279,21 +297,32 @@ Org = (restmod, RMUtils, $Evt) ->
             Record:
 
                 newSub: (org) ->
-                    org = this.$build(org)
-                    org.parentId = this.$primay
-                    org.$save()
+                    onSuccess = ->
+                        @.$dispatch 'after-newsub'
+                    onErorr = ->
+                        @.$dispatch 'after-newsub-error', arguments
+
+                    org = this.$scope.$build(org)
+                    org.parentId = this.$pk
+                    org.$save().$then onSuccess, onErorr
 
 
                 transfer: (to_dep_id) -> #划转机构 {to_department_id: to_id}
                     self = @
 
                     onSuccess = -> # bug? 直接修改属性 collection 中数据可能不会改变, 会影响到机构树
-                        self.parentId = to_dep_id
+                        @parentId = to_dep_id
+                        @.$dispatch 'after-transfer'
+                    onErorr = ->
+                        @.$dispatch 'after-transfer-error', arguments
 
                     url = this.$url()
-                    request = {to_department_id: to_dep_id}
-                    promise =  $http.post "#{url}/transfer", request
-                    promise.then onSuccess
+                    request = {
+                        url: "#{@.$url}/transfer"
+                        method: 'POST'
+                        to_department_id: to_dep_id
+                    }
+                    @.$send request, onSuccess, onErorr
 
 
     }

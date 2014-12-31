@@ -1,6 +1,6 @@
-form.form-horizontal(name="active_form" ng-submit="eff.ok(active_form)")
+form.form-horizontal(name="active_form" ng-submit="active(log, active_form)")
     .modal-header
-        button.close(type='button', data-dismiss='modal', aria-hidden='true', ng-click="eff.cancel($event, active_form)") ×
+        button.close(type='button', data-dismiss='modal', aria-hidden='true', ng-click="cancel($event, active_form)") ×
         h4.modal-title 提示
     .modal-body.row
         .form-group
@@ -18,7 +18,7 @@ form.form-horizontal(name="active_form" ng-submit="eff.ok(active_form)")
         .form-group
             .col-lg-11
                 .pull-right.button-group
-                    button.btn.btn-default(type='button',ng-click='eff.cancel($event, active_form)') 取消
+                    button.btn.btn-default(type='button',ng-click='cancel($event, active_form)') 取消
                     button.btn.btn-info(type='submit') 确定
 
 
