@@ -36,7 +36,7 @@ class EventsService extends nb.Service
 
     #   暂时非必须
     #    events scope callback
-    #
+    #   $Evt.$on.call(scope,event, params)
     # @params  events {string | array} 需要绑定的事件名称
     # @params  scope 当前scope, 必选参数, 事件会在 scope 销毁时解除绑定
     # @params  callback 回调
