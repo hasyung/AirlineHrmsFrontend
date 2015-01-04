@@ -8,6 +8,7 @@ deps = [
     # 'ui.router'
     'ct.ui.router.extras'
     # 'ui.select'
+    'ngAnimate'
     'ui.bootstrap'
     'ngSanitize'
     'ngMessages'
