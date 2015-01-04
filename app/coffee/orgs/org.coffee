@@ -183,6 +183,7 @@ class OrgsCtrl extends nb.Controller
 
         @loadInitialData()
 
+
         scope.$onRootScope 'org:revert', @.revert.bind(@)
         scope.$onRootScope 'org:active', @.active.bind(@)
         scope.$onRootScope 'org:history', @.history.bind(@)
@@ -383,8 +384,6 @@ class HistoryCtrl extends Dialog
         # promise.$then onSuccess, onError
         @Evt.$send('org:history', {version: @currentLog.id}) if @currentLog
         @dialog.close()
-
-
 
 
 class TransferOrgCtrl extends Dialog

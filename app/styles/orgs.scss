@@ -79,7 +79,8 @@ ul { padding: 0px;}
 .org-postadd-detail { width: 632px; padding: 20px; }
 .bg-info { background-color: #daedf8;}
 .arrow.left.arrow-info:after {border-right-color: #daedf8;}
-.wrapper.org-timline { height: auto; max-height: 500px; overflow-y:scroll}
+// .arrow.left:after{left:2px;bottom: -7px;}
+// .wrapper.org-timline { height: auto; max-height: 500px; overflow-y:scroll}
 .org-timline .tl-content.panel { width: 210px; cursor: pointer;}
 .org-timline .tl-content.panel h1  { font-size: 16px; margin: 0px; color: #000; }
 .org-timline .tl-content.panel h2  { font-size: 12px; margin-top: 10px; color: #23b7e5;}
@@ -114,7 +115,7 @@ background-color: #31374b;
 .btn-default {
 border-color: #c4cfd3;
 }
-.org-delete-template{
+.org-default-popup-template{
 	position: absolute;
 	background-color:#fff;
 	width: 270px;
@@ -153,6 +154,10 @@ border-color: #c4cfd3;
 	border-left: 3px solid red;
 	color: red;
 }
+.org-node.active{
+	border-left: 3px solid red;
+	color: red;
+}
 .org-form-row{
 	width:300px;
 }
@@ -160,7 +165,8 @@ border-color: #c4cfd3;
 	text-align:right;
 }
 .org-info input{
-	border: 1px solid #c6d1d5
+	border: 1px solid #c6d1d5;
+	padding: 2px 5px;
 }
 .org-dep.active .org-main-wrapper{
 	overflow: hidden;

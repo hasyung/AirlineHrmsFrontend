@@ -1,12 +1,11 @@
-
 aside.org-aside
     section.org-detail
         .org-title.org-form-row
             span(ng-show="state != 'newsub'") 机构信息
             span(ng-show="state == 'newsub'") 新增子机构信息
             div(ng-if="orgCtrl.state == 'show' || !(ctrl.state.includes('org_history') || org.status == 'destroy_inactive')")
-                button.btn.btn-default.fa.fa-trash-o(title="删除", nb-popup)
-                    popup-template.org-delete-template.panel.panel-default()
+                button.btn.btn-default.fa.fa-trash-o(title="删除", nb-popup, position="left")
+                    popup-template.nb-popup.org-default-popup-template.panel.panel-default()
                         .panel-heading.popup-title 警告
                         .panel-body.popup-body
                             div 删除后将无法恢复，请确认删除
@@ -109,3 +108,54 @@ aside.org-aside
                     td.org-post 副主任
                     td  2
                     td  2
+//- div
+//-     .app-aside.org-dep.hidden-xs.bg-white-opacity.pull-left(ng-class="{'active': ctrl.orgBarOpen}")
+//-         .org-dep-badge
+//-             a.toggle-bar.fa(
+//-                 ng-class="{true: 'fa-chevron-right', false: 'fa-chevron-left'}[ctrl.orgBarOpen]"
+//-                 href="javascript:void(0);"
+//-                 ng-click="ctrl.orgBarOpen = !ctrl.orgBarOpen")
+//-         .org-main-wrapper
+//-             .org-main-node
+//-                 a(ng-click="ctrl.rootTree()") 四川航空
+//-             .org-children-wrapper
+//-                 ul
+//-                     li(ng-repeat="org in ctrl.orgs | filterBy: ['depth']: 2")
+//-                         a.org-node(ng-click="ctrl.buildTree(org)",
+//-                                     ng-bind="org.name",
+//-                                     title="{{org.name}}",
+//-                                     ng-class="{'active': org.id == (ctrl.treeRootOrg && ctrl.treeRootOrg.id)}"
+//-                                 )
+
+
+//-     .app-aside.org-aside.hidden-xs.bg-white-opacity.pull-right
+//-         .org-row(ui-view='sub')
+//-     .app-main
+//-         .org-chart-top(ng-class="{'active': ctrl.isHistory}")
+//-                 h1 {{ctrl.treeRootOrg.name}}组织机构图
+//-                 h2(ng-show="ctrl.isHistory") {{ctrl.orgs.$metadata.created_at | date:'yyyy年MM月dd日'}}— {{ctrl.orgs.$metadata.title}}
+//-             .title-btn-group
+//-                 button.btn.btn-cold(ng-click="ctrl.openHistoryDialog()") 时间轴
+
+
+//-                 a.btn.btn-info(ng-show="!ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导出
+//-                 a.btn.btn-info(ng-show="ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导出
+//-                 button.btn.btn-info(ng-click="ctrl.reset(true)" ng-show="ctrl.isHistory") 返回最新
+//-                 //- loading-btn.red(ng-click="ctrl.openHistoryPanel()" btn-loading-type="contract-overlay" btn-text="测试loading")
+//-     .org-tree.col-md-3
+
+
+//-     div.org-chart-window
+//-         div.svg-wrapper(org-chart drag-on org-chart-data="ctrl.tree.data")
+//-         div.bottom-btn-group(ng-if="ctrl.tree.isModified")
+//-             //- button.cancel(ng-click="ctrl.revert()") 撤销
+//-             button.btn.btn-default(title="撤销", nb-popup, position="top") 撤销
+//-                 popup-template.nb-popup.org-default-popup-template.panel.panel-default()
+//-                     .panel-heading.popup-title 警告
+//-                     .panel-body.popup-body
+//-                         div 你是否要撤销所有更改？
+//-                         div.div-delete-btn.pull-right(ng-click="ctrl.revert()") 确定
+//-             button.effect(ng-click="ctrl.active()") 生效
+
+//-     div(ng-show="ctrl.org_modified")
+//- >>>>>>> org
