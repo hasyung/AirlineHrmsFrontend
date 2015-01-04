@@ -96,7 +96,7 @@
               margin: 0;
               line-height: $app-aside-folded-nav-height;
               border: none !important;
-              .transition(margin-top 0.2s);
+              @include  transition(margin-top 0.2s);
               b{
                 left: 0 !important;
               }
@@ -117,7 +117,11 @@
           top: 0 !important;
           z-index: 1050;
           width: $app-aside-width;
-          @include box-shadow(0 2px 6px rgba(0,0,0,0.1));
+          -webkit-webkit-box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+          -moz-webkit-box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+          -ms-webkit-box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+          -o-webkit-box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+          box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
       }
       li {
