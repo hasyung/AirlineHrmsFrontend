@@ -184,7 +184,7 @@ class OrgsCtrl extends nb.Controller
         @loadInitialData()
 
 
-        scope.$onRootScope 'org:revert', @.revert.bind(@)
+        # scope.$onRootScope 'org:revert', @.revert.bind(@)
         scope.$onRootScope 'org:active', @.active.bind(@)
         scope.$onRootScope 'org:history', @.history.bind(@)
         scope.$onRootScope 'org:refresh', @.refreshTree.bind(@)
@@ -240,7 +240,7 @@ class OrgsCtrl extends nb.Controller
         @isHistory = true
         promise  = @orgs.$refresh(history_param).$asPromise()
         promise.then @buildTree.bind(@)
-    recovery_now: () ->
+    resetData: () ->
         @isHistory = false
         @orgs.$refresh({'edit_mode': @eidtMode}).$then @buildTree.bind(@)
 

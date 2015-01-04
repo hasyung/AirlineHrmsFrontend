@@ -198,7 +198,7 @@ Org = (restmod, RMUtils, $Evt) ->
 
 
         $hooks:
-            'after-request': ->
+            'after-feed': ->
                 $Evt.$send('org:refresh')
             # 有无必要自定义事件增加系统复杂度? 待观察
             'after-destroy': ->
