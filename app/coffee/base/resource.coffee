@@ -214,7 +214,7 @@ Org = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('org:revert:success', "撤销成功")
 
             'after-update': ->
-                $Evt.$send('org:update:success', "撤销成功")
+                $Evt.$send('org:update:success', "修改成功")
 
             'after-update-error': ->
                 $Evt.$send('org:update:error')

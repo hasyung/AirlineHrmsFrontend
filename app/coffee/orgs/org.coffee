@@ -155,7 +155,7 @@ class Route
                         return true
                 }
             }
-            .state 'org.revert', Dialog.$build('revert', RevertChangesCtrl, 'partials/orgs/shared/revert_changes.html')
+            # .state 'org.revert', Dialog.$build('revert', RevertChangesCtrl, 'partials/orgs/shared/revert_changes.html')
             .state 'org.active', Dialog.$build('active', ActiveCtrl, 'partials/orgs/shared/effect_changes.html')
             .state 'org.history', Dialog.$build('history', HistoryCtrl, 'partials/orgs/org_history.html')
             .state 'org.transfer', Dialog.$build('transfer', TransferOrgCtrl, 'partials/orgs/shared/org_transfer.html')
@@ -204,10 +204,14 @@ class OrgsCtrl extends nb.Controller
         depth = 1 if org.depth == 1 #如果是顶级节点 则只显示一级
         @treeRootOrg = org
         @tree = @orgs.treeful(org, depth)
+        currentOrg = org
+        @Evt.$send('org:link', currentOrg)
     refreshTree: () ->
+        self = @
         return unless @treeRootOrg
         depth = 9
         depth = 1 if @treeRootOrg.depth == 1 #如果是顶级节点 则只显示一级
+
         @tree = @orgs.treeful(@treeRootOrg, depth)
 
     #force 是否修改当前机构
@@ -224,7 +228,7 @@ class OrgsCtrl extends nb.Controller
         @Evt.$send('org:link', currentOrg)
 
     revert: () ->
-        @Org.$revert()
+        @orgs.revert()
 
     active: (evt, data) ->
         #deparment_id 是否必要?
@@ -309,6 +313,8 @@ class OrgCtrl extends nb.Controller
         resetForm(scope.newsubForm, scope.updateForm)
         @state = 'show'
 
+    destroy: () ->
+        @scope.currentOrg.$destroy()
     # newSub: (org) ->
     #     @scope.org.newSub(org)
 

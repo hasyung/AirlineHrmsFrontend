@@ -11,7 +11,8 @@ div
                 ul
                     li(ng-repeat="org in ctrl.orgs track by org.id | filterBy: ['depth']: 2")
                         //- a.org-node(ng-click="ctrl.buildTree(org)" ng-bind="org.name", title="{{org.name}}")
-                        a.org-node(ui-serf="^.show({orgId: org.id})",
+                        a.org-node(
+                            ng-click="ctrl.buildTree(org)",
                             ng-bind="org.name",
                             title="{{org.name}}", 
                             ng-class="{'active': org.id == (ctrl.treeRootOrg && ctrl.treeRootOrg.id)}"
