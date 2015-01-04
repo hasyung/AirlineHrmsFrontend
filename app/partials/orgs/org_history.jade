@@ -1,5 +1,8 @@
-div.wrapper.org-timline
-	ul.timeline(ng-repeat="yearItem in changeLogs")
+.modal-header
+	button.close(type='button', data-dismiss='modal', aria-hidden='true', ng-click="his.cancel()") ×
+	h4.modal-title 时间轴
+div.wrapper.org-timline(slimscroll height="400px")
+	ul.timeline(ng-repeat="yearItem in his.changeLogs")
 		li.tl-header
 			div.btn.btn-info {{:: yearItem.changeYear}}
 			span.pull-right 有{{:: yearItem.logs.length}}次变动

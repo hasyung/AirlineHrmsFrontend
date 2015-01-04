@@ -25,3 +25,20 @@ form(novalidate, ng-submit="update(org)", name="form")
     .org-btn.org-form-row
         input.btn.btn-info.pull-right(type="submit",value="保存" ,ng-disabled="!form.$valid")
         button.btn.btn-default.pull-right(ui-sref="^.show({orgId: org.id})") 取消
+
+
+//- button(
+//-     nb-confirm
+//-     confirm-title="警告"
+//-     confirm-text="确认删除?"
+//-     confirm-button-text="删除"
+//-     confirm-function="remove(currentOrg)")
+//-     div(nb-confirm-template)
+
+
+//- button(nb-popup position="left")
+//-     popup-template
+//-         .form-control
+//-             p 删除 XX
+//-             button(ng-click="")
+>>>>>>> org
