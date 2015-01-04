@@ -5,7 +5,7 @@ $app-aside-folded-nav-height:        50px;
 
 $font-size-base:                     14px;
 $line-height-base:                   1.42857143;  //  20/14
-// $line-height-computed:               floor($font-size-base * $line-height-computed);
+$line-height-computed:               floor($font-size-base * $line-height-base);
 
 //layout
 $app-header-height:                  50px;

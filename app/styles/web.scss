@@ -2,9 +2,9 @@
 @import 'bourbon';
 // @import 'component/loading-btn.scss';
 //layout
-// @import '_variables';
-// @import 'layout/nav.scss';
-// @import 'layout/layout';
+@import '_variables';
+@import 'layout/nav';
+@import 'layout/layout';
 //components
 @import 'component/loading.scss';
 
