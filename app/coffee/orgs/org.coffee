@@ -157,8 +157,8 @@ class Route
             }
             # .state 'org.revert', Dialog.$build('revert', RevertChangesCtrl, 'partials/orgs/shared/revert_changes.html')
             .state 'org.active', Dialog.$build('active', ActiveCtrl, 'partials/orgs/shared/effect_changes.html')
-            .state 'org.history', Dialog.$build('history', HistoryCtrl, 'partials/orgs/org_history.html')
-            .state 'org.transfer', Dialog.$build('transfer', TransferOrgCtrl, 'partials/orgs/shared/org_transfer.html')
+            .state 'org.history', Dialog.$build('history', HistoryCtrl, 'partials/orgs/org_history.html', {size: 'sm'})
+            .state 'org.transfer', Dialog.$build('transfer', TransferOrgCtrl, 'partials/orgs/shared/org_transfer.html', {size: 'sm'})
 
 
 
@@ -305,7 +305,6 @@ class OrgCtrl extends nb.Controller
 
 
     update: (form, copyOrg) ->
-        $Evt = @Evt
         @scope.currentOrg.$update(copyOrg)
 
     reset: (evt)->
@@ -332,10 +331,6 @@ class RevertChangesCtrl extends Dialog
     close: (formdata)->
         @Evt.$send('org:revert')
         @dialog.close()
-
-    cancel: (evt,form)->
-        evt.preventDefault()
-        @dialog.dismiss('cancel')
 
 
 class ActiveCtrl extends Dialog

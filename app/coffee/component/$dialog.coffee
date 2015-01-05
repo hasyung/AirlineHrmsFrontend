@@ -6,6 +6,14 @@ app = nb.app
 
 extend = angular.extend
 
+
+
+defaultOption = {
+    backdrop: true
+    keyboard: true
+    # size: 'lg' | 'sm'
+}
+
 #   require: $scope, $previousState, $rootScope, $modalInstance named dialog
 #
 class Dialog
@@ -55,10 +63,9 @@ class Dialog
                 dialog.dismiss('close')
 
 
-Dialog.$build = (childState, controller, templateUrl)->
+Dialog.$build = (childState, controller, templateUrl, customOptions)->
 
-    modalOpen = ['$modal', ($modal)->
-        $modal.open {
+    options = {
             templateUrl: templateUrl
             controller: controller
             resolve: {
@@ -66,6 +73,11 @@ Dialog.$build = (childState, controller, templateUrl)->
                     return childState
             }
         }
+    options = extend {}, defaultOption, customOptions, options
+
+
+    modalOpen = ['$modal', ($modal)->
+        $modal.open options
     ]
 
     return {
