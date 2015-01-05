@@ -78,10 +78,11 @@ nbRestApi = (restmod, RMUtils, $rootScope, $Evt) ->
 
         'Record.$copy': ->
             raw = this.$wrap()
-            copy = this.$scope.$buildRaw(raw)
+            # copy = this.$scope.$buildRaw(raw)
+            copy = this.$new(this.$type.inferKey(raw))
+            copy.$type.decode(copy, raw, RMUtils.READ_MASK)
+            copy.$pk = copy.$type.inferKey(raw)
             return copy
-
-
     }
 
 User = (restmod) ->
