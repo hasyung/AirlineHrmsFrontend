@@ -252,6 +252,7 @@ class OrgsCtrl extends nb.Controller
         @isHistory = false
         @orgs.$refresh({'edit_mode': @eidtMode})
 
+
     openOrgtreeDialog: () ->
         self = @
         dialog = @modal.open {
