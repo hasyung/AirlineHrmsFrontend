@@ -3,7 +3,7 @@ aside.org-aside
         .org-title.org-form-row
             span(ng-show="state != 'newsub'") 机构信息
             span(ng-show="state == 'newsub'") 新增子机构信息
-            div(ng-if="orgCtrl.state == 'show' || !(ctrl.state.includes('org_history') || org.status == 'destroy_inactive')")
+            div(ng-if="orgCtrl.state == 'show' && !(ctrl.isHistory || currentOrg.status == 'destroy_inactive')")
                 button.btn.btn-default.fa.fa-trash-o(title="删除", nb-popup, position="left")
                     popup-template.nb-popup.org-default-popup-template.panel.panel-default()
                         .panel-heading.popup-title 警告
@@ -13,7 +13,7 @@ aside.org-aside
                 button.btn.btn-default.fa.fa-retweet(title="划转" ui-sref=".transfer")
                 //- button.btn.btn-default.fa.fa-pencil(ui-sref="^.edit({orgId: org.id})",title="编辑")
                 button.btn.btn-default.fa.fa-pencil(ng-click="orgCtrl.state = 'editing'",title="编辑")
-                button.btn.btn-default.fa.fa-plus(title="新增子机构",ng-click="orgCtrl.state = 'newsub'", ng-if="org.grade.name !== 'secondly_positive'")
+                button.btn.btn-default.fa.fa-plus(title="新增子机构",ng-click="orgCtrl.state = 'newsub'", ng-if="currentOrg.grade.name !== 'secondly_positive'")
         //- show
         .org-info(ng-show="orgCtrl.state == 'show'")
             .org-form-group
@@ -53,7 +53,7 @@ aside.org-aside
 
                 .org-form-group.org-form-btn-group
                     input.btn.btn-info.pull-right(type="submit",value="保存" ,ng-disabled="!updateForm.$valid")
-                    button.btn.btn-default.pull-right(ng-click="orgCtrl.cancel()") 取消
+                    button.btn.btn-default.pull-right(type="button", ng-click="orgCtrl.cancel()") 取消
 
          //- new sub
         .org-info(ng-show="orgCtrl.state == 'newsub' ")
@@ -82,7 +82,7 @@ aside.org-aside
 
                 .org-form-group.org-form-btn-group
                     input.btn.btn-info.pull-right(type="submit",value="保存",ng-disabled="!newsubForm.$valid")
-                    button.btn.btn-default.pull-right(ng-click="orgCtrl.cancel()") 取消
+                    button.btn.btn-default.pull-right(type="button", ng-click="orgCtrl.cancel()") 取消
 
 
     section

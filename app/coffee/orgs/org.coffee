@@ -188,12 +188,13 @@ class OrgsCtrl extends nb.Controller
         scope.$onRootScope 'org:active', @.active.bind(@)
         scope.$onRootScope 'org:history', @.history.bind(@)
         scope.$onRootScope 'org:refresh', @.refreshTree.bind(@)
+        scope.$onRootScope 'org:resetData', @.resetData.bind(@)
 
     loadInitialData: () -> #初始化数据
         self = @
         rootScope = @rootScope
         Evt = @Evt
-        @orgs = @Org.$search({'edit_mode': @eidtMode})
+        @orgs = @Org.$collection().$fetch({'edit_mode': @eidtMode})
             .$then (orgs) ->
                 treeRootOrg = _.find orgs, (org) -> org.depth == 1
                 Evt.$send('org:link', treeRootOrg)
@@ -206,6 +207,7 @@ class OrgsCtrl extends nb.Controller
         @tree = @orgs.treeful(org, depth)
         currentOrg = org
         @Evt.$send('org:link', currentOrg)
+
     refreshTree: () ->
         self = @
         return unless @treeRootOrg
@@ -229,28 +231,26 @@ class OrgsCtrl extends nb.Controller
 
     revert: () ->
         @orgs.revert()
+        # 是否可以将两步合成一步
+        # 即撤销后，后端返回当前机构信息
+        @resetData()
 
     active: (evt, data) ->
         #deparment_id 是否必要?
         data.department_id = @.treeRootOrg.id
         @orgs.active(data)
+        @resetData()
 
 
     history: (evt, history_param) ->
+        self = @
         @isHistory = true
-        promise  = @orgs.$refresh(history_param).$asPromise()
-        promise.then @buildTree.bind(@)
+        @orgs.$refresh(history_param)
+        
+
     resetData: () ->
         @isHistory = false
-        @orgs.$refresh({'edit_mode': @eidtMode}).$then @buildTree.bind(@)
-
-    # openPositionPanel: (orgId) ->
-    #     self = @
-    #     panel = @panel.open {
-    #         templateUrl: 'partials/orgs/position.html'
-    #         controller: PositionCtrl
-    #         controllerAs: 'pos'
-    #     }
+        @orgs.$refresh({'edit_mode': @eidtMode})
 
     openOrgtreeDialog: () ->
         self = @
@@ -314,7 +314,9 @@ class OrgCtrl extends nb.Controller
         @state = 'show'
 
     destroy: () ->
-        @scope.currentOrg.$destroy()
+        $Evt = @Evt
+        @scope.currentOrg.$destroy().$then ->
+           $Evt.$send 'org:resetData'
     # newSub: (org) ->
     #     @scope.org.newSub(org)
 
@@ -349,6 +351,7 @@ class HistoryCtrl extends Dialog
         super(dialog, scope, memoName)
 
     loadInitialData: ()->
+        self = @
         onError = (res)->
             @Evt.$send('org:history:error',res)
         onSuccess = (res)->
@@ -368,7 +371,7 @@ class HistoryCtrl extends Dialog
                 groupedLogs.push {logs:item, changeYear: key}
             #转换结束
 
-            @scope.changeLogs = groupedLogs.reverse()
+            self.changeLogs = groupedLogs.reverse()
         promise = @http.get('/api/departments/change_logs')
         promise.then onSuccess.bind(@), onError.bind(@)
 

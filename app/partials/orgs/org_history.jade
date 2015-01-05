@@ -1,8 +1,8 @@
 .modal-header
-	button.close(type='button', data-dismiss='modal', aria-hidden='true', ng-click="his.cancel()") ×
+	button.close(type='button', data-dismiss='modal', aria-hidden='true', ng-click="ctrl.cancel()") ×
 	h4.modal-title 时间轴
 div.wrapper.org-timline(slimscroll height="400px")
-	ul.timeline(ng-repeat="yearItem in his.changeLogs")
+	ul.timeline(ng-repeat="yearItem in ctrl.changeLogs")
 		li.tl-header
 			div.btn.btn-info {{:: yearItem.changeYear}}
 			span.pull-right 有{{:: yearItem.logs.length}}次变动
@@ -13,8 +13,8 @@ div.wrapper.org-timline(slimscroll height="400px")
 					div
 						h1 {{log.title}}
 						h2 {{::log.created_at | date: 'MM月dd日'}} - {{::log.dep_name}}
-						ul(ng-if="log.active")
-							li(ng-repeat="step in log.step_desc")
+						ul(ng-show="log.active")
+							li(ng-repeat="step in log.step_desc track by $index")
 								p {{::step}}
 
 .panel-footer.org-timline
