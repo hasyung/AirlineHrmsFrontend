@@ -9,7 +9,7 @@ div
                 a(ng-click="ctrl.rootTree()") 四川航空
             .org-children-wrapper
                 ul
-                    li(ng-repeat="org in ctrl.orgs track by org.id | filterBy: ['depth']: 2")
+                    li(ng-repeat="org in ctrl.orgs | filterBy: ['depth']: 2 track by org.id" )
                         //- a.org-node(ng-click="ctrl.buildTree(org)" ng-bind="org.name", title="{{org.name}}")
                         a.org-node(
                             ng-click="ctrl.buildTree(org)",
