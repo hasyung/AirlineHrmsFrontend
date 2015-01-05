@@ -294,6 +294,7 @@ class OrgCtrl extends nb.Controller
     #     @scope.org.$destroy().$then onSuccess
     transfer: (evt, destOrg) ->
         @scope.currentOrg.transfer(destOrg.id)
+        @Evt.$send 'org:resetData'
 
     newsub: (form, neworg) ->
         $Evt = @Evt

@@ -320,7 +320,9 @@ Org = (restmod, RMUtils, $Evt) ->
                     request = {
                         url: "#{url}/transfer"
                         method: 'POST'
-                        to_department_id: to_dep_id
+                        data:{
+                            to_department_id: to_dep_id
+                        }
                     }
                     @.$send request, onSuccess, onErorr
 
