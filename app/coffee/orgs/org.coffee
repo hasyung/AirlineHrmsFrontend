@@ -184,7 +184,6 @@ class OrgsCtrl extends nb.Controller
         @loadInitialData()
 
 
-        # scope.$onRootScope 'org:revert', @.revert.bind(@)
         scope.$onRootScope 'org:active', @.active.bind(@)
         scope.$onRootScope 'org:history', @.history.bind(@)
         scope.$onRootScope 'org:refresh', @.refreshTree.bind(@)
@@ -214,7 +213,6 @@ class OrgsCtrl extends nb.Controller
         depth = 1 if @treeRootOrg.depth == 1 #如果是顶级节点 则只显示一级
 
         @tree = @orgs.treeful(@treeRootOrg, depth)
-        @Evt.$send('org:link', @treeRootOrg)
 
     #force 是否修改当前机构
     reset: (force) ->
@@ -253,19 +251,6 @@ class OrgsCtrl extends nb.Controller
         @orgs.$refresh({'edit_mode': @eidtMode})
 
 
-    openOrgtreeDialog: () ->
-        self = @
-        dialog = @modal.open {
-            templateUrl: 'partials/orgs/shared/org_transfer.html'
-            controller: TransferOrgCtrl
-            controllerAs: 'trs'
-            backdrop: true
-            size: 'sm'
-        }
-        dialog.result.then (dest_org) ->
-            self.scope.currentOrg.transfer(dest_org.id).then () ->
-                self.reset(true)
-                self.scope.$emit("success", "划转机构成功")
 
 
 class OrgCtrl extends nb.Controller
@@ -378,15 +363,6 @@ class HistoryCtrl extends Dialog
         @currentLog = log
 
     submit: ()->
-        # self = @
-        # onError = (res)->
-        #     self.scope.emit 'error', res
-        #     self.dialog.close()
-        # onSuccess = (res)->
-        #     res.$metadata.created_at = parseInt(res.$metadata.created_at) * 1000
-        #     self.dialog.close({ historyOrgs: res})
-        # promise = self.Org.$search {version: self.currentLog.id}
-        # promise.$then onSuccess, onError
         @Evt.$send('org:history', {version: @currentLog.id}) if @currentLog
         @dialog.close()
 
@@ -401,84 +377,6 @@ class TransferOrgCtrl extends Dialog
         @Evt.$send('org:transfer',@selectedData)
         @dialog.close()
 
-# 机构历史记录
-
-# # 机构历史记录
-# class HistoryCtrl
-#     @.$inject = ['$modalInstance', '$scope', '$http', 'Org']
-#     constructor: (@dialog, @scope, @http, @Org) ->
-#         self = @
-#         @changeLogs = null
-#         @currentLog = null
-#         @historyOrgs = null
-#         @loadInitialData()
-
-
-
-#     loadInitialData: ()->
-#         self = @
-#         onError = (res)->
-#             self.scope.emit 'error', res
-#         onSuccess = (res)->
-#             logs = res.data.change_logs
-#             groupedLog = _.groupBy logs, (log) ->
-#                 # 还是UNIX时间戳转js时间
-#                 log.created_at = parseInt(log.created_at) * 1000
-#                 # 后端返回的一些数据是以";"结尾, 那么split之后数组的最后一项将为undefined
-#                 if /.*;$/.test(log.step_desc)
-#                     log.step_desc = log.step_desc.substring(0, log.step_desc.length - 1)
-#                 log.step_desc = log.step_desc.split(';')
-#                 #Unix 时间戳转普通时间要乘1000 ，Date内部处理是按毫秒
-#                 return new Date(log.created_at).getFullYear()
-#             # 将对象转换为数组,待优化后期会整合为filter
-#             groupedLogs = []
-#             angular.forEach groupedLog, (item, key) ->
-#                 groupedLogs.push {logs:item, changeYear: key}
-#             #转换结束
-
-#             self.changeLogs = groupedLogs.reverse()
-#         promise = self.http.get('/api/departments/change_logs')
-#         promise.then onSuccess, onError
-
-
-#     setCurrentLog: (log)->
-#         # 防止UI中出现多个被选中的item
-#         if @currentLog
-#             @currentLog.isActive = false
-#         log.isActive = true
-#         @currentLog = log
-#     ok: ()->
-#         self = @
-#         onError = (res)->
-#             self.scope.emit 'error', res
-#             self.dialog.close()
-#         onSuccess = (res)->
-#             res.$metadata.created_at = parseInt(res.$metadata.created_at) * 1000
-#             self.dialog.close({ historyOrgs: res})
-#         promise = self.Org.$search {version: self.currentLog.id}
-#         promise.$then onSuccess, onError
-
-#     cancel: ()->
-#         @dialog.dismiss('cancel')
-
-# 撤销提示框
-
-
-
-# class EffectChangesCtrl
-#     @.$inject = ['$modalInstance', '$scope']
-
-#     constructor: (@dialog, @scope) ->
-#         @scope.log = {}
-
-#     ok: (formdata)->
-#         @dialog.close(@scope.log)
-
-#     cancel: (evt,form)->
-#         evt.preventDefault()
-#         @scope.log = {}
-#         form.$setPristine()
-#         @dialog.dismiss('cancel')
 
 class PositionCtrl extends nb.Controller
 
