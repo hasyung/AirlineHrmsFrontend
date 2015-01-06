@@ -100,11 +100,15 @@ App
         # for $state.includes in view
         $rootScope.$on '$stateChangeSuccess', (evt, to) ->
             console.debug "stateChangeSuccess: to ", to
+        $rootScope.$on 'process', () ->
+            $rootScope.loading = true
 
         $rootScope.$on 'success', (code, info)->
             toaster.pop(code.name, "提示", info)
+            $rootScope.loading = false
         $rootScope.$on 'error', (code, info)->
             console.log arguments
+            $rootScope.loading = false
             toaster.pop(code.name, "提示", info)
 
         $rootScope.$state = $state
