@@ -159,7 +159,7 @@ class Route
             .state 'org.active', nb.$buildDialog('active', ActiveCtrl, 'partials/orgs/shared/effect_changes.html')
             .state 'org.history', nb.$buildDialog('history', HistoryCtrl, 'partials/orgs/org_history.html', {size: 'sm'})
             .state 'org.transfer', nb.$buildDialog('transfer', TransferOrgCtrl, 'partials/orgs/shared/org_transfer.html', {size: 'sm'})
-            .state 'org.position', nb.$buildPanel('org-position',PositionCtrl, 'partials/orgs/position.html')
+            .state 'org.position', nb.$buildPanel('position',PositionCtrl, 'partials/orgs/position.html')
 
 
 
@@ -323,9 +323,8 @@ class OrgCtrl extends nb.Controller
 
 
 class RevertChangesCtrl extends Modal
-    @.$inject = ['$modalInstance','$scope', '$nbEvent', 'memoName', '$rootScope', '$previousState', '$state']
-
-    constructor: (@dialog, @scope, @Evt, @memoName, @rootScope, @previousState, @state) ->
+    @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$injector']
+    constructor: (@dialog, @scope, @Evt, @memoName, @injector) ->
         super(dialog,scope,memoName) #必须调用父类构造器, 传入 dialog 实例, 当前 scope, memoname
 
     close: (formdata)->
@@ -334,16 +333,16 @@ class RevertChangesCtrl extends Modal
 
 
 class ActiveCtrl extends Modal
-    @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$rootScope', '$previousState', '$state']
-    constructor: (@dialog, @scope, @Evt, @memoName, @rootScope, @previousState, @state) ->
+    @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$injector']
+    constructor: (@dialog, @scope, @Evt, @memoName, @injector) ->
         super(dialog, scope, memoName)
     active: (log, form) ->
         @Evt.$send('org:active',log)
         @dialog.close()
 
 class HistoryCtrl extends Modal
-    @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$rootScope', '$previousState', '$state', '$http']
-    constructor: (@dialog, @scope, @Evt, @memoName, @rootScope, @previousState, @state, @http) ->
+    @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$http', '$injector']
+    constructor: (@dialog, @scope, @Evt, @memoName, @http, @injector) ->
         @loadInitialData()
         super(dialog, scope, memoName)
 
@@ -393,8 +392,8 @@ class HistoryCtrl extends Modal
 
 
 class TransferOrgCtrl extends Modal
-    @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$rootScope', '$previousState', '$state', '$http']
-    constructor: (@dialog, @scope, @Evt, @memoName, @rootScope, @previousState, @state, @http) ->
+    @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$injector']
+    constructor: (@dialog, @scope, @Evt, @memoName, @injector) ->
         super(dialog, scope, memoName)
         @selectedData = null
 
@@ -482,6 +481,11 @@ class TransferOrgCtrl extends Modal
 #         @dialog.dismiss('cancel')
 
 class PositionCtrl extends Modal
+    @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$injector']
+    constructor: (@panel, @scope, @Evt, @memoName, @injector) ->
+        super(panel, scope, memoName)
+
+
 
 
 
