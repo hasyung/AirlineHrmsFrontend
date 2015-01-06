@@ -272,12 +272,7 @@ class OrgCtrl extends nb.Controller
     cancel: ->
         @state = 'show'
 
-    # destory: ->
-    #     self = @
-    #     Evt = @Evt
-    #     onSuccess = ->
-
-    #     @scope.org.$destroy().$then onSuccess
+    
     transfer: (evt, destOrg) ->
         @scope.currentOrg.transfer(destOrg.id)
         @Evt.$send 'org:resetData'
