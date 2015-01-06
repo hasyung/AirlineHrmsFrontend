@@ -62,7 +62,7 @@ $(function () {
                         S.css({ cursor: o.cursor }).children('a').on(o.holdEvents,onPrevent).css({ cursor: 'pointer'});
                         S.on(o.wheelEvents,_this.onWhell).on(o.holdEvents,_this.onHold);
                         S.on('resize',_this.resize)
-                        $('body').on({'keydown':_this.onKeyDown,'keyup':_this.onKeyDown});
+                        // $('body').on({'keydown':_this.onKeyDown,'keyup':_this.onKeyDown});
                         (("Info" in window) && Info || console).log('DragOn fly...');
                     } else {
                         S.css({ cursor: '' }).children('a').off(o.holdEvents,onPrevent).css({ cursor: '' });
