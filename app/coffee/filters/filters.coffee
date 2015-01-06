@@ -1,4 +1,4 @@
-module = angular.module 'vx.filters', []
+module = angular.module 'nb.filters', []
 
 
 module
@@ -10,3 +10,11 @@ module
             return input unless opts.text?
 
             input.replace(new RegExp(opts.text, 'gi'), '<span class="highlightText">$&</span>')
+
+
+module
+	.filter 'unixToDate', ['$filter', ($filter)->
+		return (unixTime, format) ->
+			date = parseInt(unixTime) * 1000
+			$filter('date')(date, format)
+	]

@@ -19,6 +19,7 @@ deps = [
     'nb.directives'
     'toaster'
     'ngCookies'
+    'nb.filters'
     #'nb.controller.site'
 ]
 resources = angular.module('resources',[])

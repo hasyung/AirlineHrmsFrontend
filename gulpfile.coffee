@@ -50,6 +50,7 @@ paths =
              "app/coffee/personnel/*.coffee"
              "app/coffee/orgs/*.coffee"
              "app/coffee/auth/*.coffee"
+             "app/coffee/filters/*.coffee"
              # "app/coffee/modules/controllerMixins.coffee"
              # "app/coffee/modules/*.coffee"
              # "app/coffee/modules/common/*.coffee"

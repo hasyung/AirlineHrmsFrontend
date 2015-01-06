@@ -355,12 +355,11 @@ class HistoryCtrl extends Dialog
             logs = res.data.change_logs
             groupedLog = _.groupBy logs, (log) ->
                 # 还是UNIX时间戳转js时间
-                log.created_at = parseInt(log.created_at) * 1000
+                log.created_at = moment.unix(log.created_at)._i
                 # 后端返回的一些数据是以";"结尾, 那么split之后数组的最后一项将为undefined
                 if /.*;$/.test(log.step_desc)
                     log.step_desc = log.step_desc.substring(0, log.step_desc.length - 1)
                 log.step_desc = log.step_desc.split(';')
-                #Unix 时间戳转普通时间要乘1000 ，Date内部处理是按毫秒
                 return new Date(log.created_at).getFullYear()
             # 将对象转换为数组,待优化后期会整合为filter
             groupedLogs = []
