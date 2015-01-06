@@ -209,12 +209,12 @@ class OrgsCtrl extends nb.Controller
         @Evt.$send('org:link', currentOrg)
 
     refreshTree: () ->
-        self = @
         return unless @treeRootOrg
         depth = 9
         depth = 1 if @treeRootOrg.depth == 1 #如果是顶级节点 则只显示一级
 
         @tree = @orgs.treeful(@treeRootOrg, depth)
+        @Evt.$send('org:link', @treeRootOrg)
 
     #force 是否修改当前机构
     reset: (force) ->
