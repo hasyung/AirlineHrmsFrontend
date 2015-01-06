@@ -26,8 +26,8 @@ div.org
     .app-main.org-chart
         .org-chart-top(ng-class="{'org-chart-history': ctrl.state.includes('org_history')}")
                 h1 {{ctrl.treeRootOrg.name}}组织机构图
-                h2(ng-show="ctrl.isHistory") {{ctrl.orgs.$metadata.created_at | date:'yyyy年MM月dd日'}}— {{ctrl.orgs.$metadata.title}}
-            .top-btn-group
+                h2(ng-show="ctrl.isHistory") {{ctrl.orgs.$metadata.created_at | unixToDate : 'yyyy年MM月dd日'}}— {{ctrl.orgs.$metadata.title}}
+            .title-btn-group
                 button.btn.btn-m.btn-primary(ui-sref=".history") 时间轴
 
 

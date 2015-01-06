@@ -24,13 +24,13 @@ class EventsService extends nb.Service
 
         # if not angular.isString(eventName) return
 
-        event = eventName.split(':')
+        events = eventName.split(':')
         # if event.length == 2
             # @scope.$emit(eventName, params)
-        if event.length == 3
-            if angular.isString(params) then message = params  else message = params.message
+        if events.length == 3
+            if  !params || angular.isString(params) then message = params  else message = params.message
             # success process error
-            @rootScope.$emit _.last(event), message
+            @rootScope.$emit _.last(events), message
 
         scope.$emit(eventName, params)
 

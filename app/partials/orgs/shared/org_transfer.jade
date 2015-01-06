@@ -3,7 +3,7 @@
     h4.modal-title 机构
 .modal-body
     div(slimscroll height="300px")
-        nb-org-tree(tree-data= "trs.tree.data" selected-data="ctrl.selectedData")
+        nb-org-tree(selected-data="ctrl.selectedData")
 .modal-footer
     .pull-right.button-group
         button.btn.btn-default.btn-sm(type='button',ng-click='ctrl.cancel($event)') 取消
