@@ -15,6 +15,6 @@ module
 module
 	.filter 'unixToDate', ['$filter', ($filter)->
 		return (unixTime, format) ->
-			date = parseInt(unixTime) * 1000
+			date = moment.unix(unixTime)._i
 			$filter('date')(date, format)
 	]

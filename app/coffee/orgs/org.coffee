@@ -250,6 +250,12 @@ class OrgsCtrl extends nb.Controller
         @isHistory = false
         @orgs.$refresh({'edit_mode': @eidtMode})
 
+    rootTree: () ->
+        self = @
+        treeRootOrg = _.find self.orgs, (org) -> org.depth == 1 
+        self.buildTree(treeRootOrg)
+
+
 
 
 
