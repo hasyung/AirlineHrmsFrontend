@@ -88,7 +88,7 @@ aside.org-aside
     section
         .org-title(ng-if="org.status !== 'destroy_inactive'")
             span 下属岗位信息
-            button.btn.btn-default.fa.fa-cog(title="设置" ng-click="ctrl.openPositionPanel(org.id)")
+            button.btn.btn-default.fa.fa-cog(title="设置" ui-sref=".position")
         table.table.table-striped.org-table(ng-if="org.status !== 'destroy_inactive'")
             thead
                 tr

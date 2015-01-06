@@ -3,7 +3,7 @@ nb = @.nb
 app = nb.app
 extend = angular.extend
 resetForm = nb.resetForm
-Dialog = nb.Dialog
+Modal = nb.Modal
 
 
 orgChart = () ->
@@ -156,10 +156,10 @@ class Route
                 }
             }
             # .state 'org.revert', Dialog.$build('revert', RevertChangesCtrl, 'partials/orgs/shared/revert_changes.html')
-            .state 'org.active', Dialog.$build('active', ActiveCtrl, 'partials/orgs/shared/effect_changes.html')
-            .state 'org.history', Dialog.$build('history', HistoryCtrl, 'partials/orgs/org_history.html', {size: 'sm'})
-            .state 'org.transfer', Dialog.$build('transfer', TransferOrgCtrl, 'partials/orgs/shared/org_transfer.html', {size: 'sm'})
-
+            .state 'org.active', nb.$buildDialog('active', ActiveCtrl, 'partials/orgs/shared/effect_changes.html')
+            .state 'org.history', nb.$buildDialog('history', HistoryCtrl, 'partials/orgs/org_history.html', {size: 'sm'})
+            .state 'org.transfer', nb.$buildDialog('transfer', TransferOrgCtrl, 'partials/orgs/shared/org_transfer.html', {size: 'sm'})
+            .state 'org.position', nb.$buildPanel('org-position',PositionCtrl, 'partials/orgs/position.html')
 
 
 
@@ -246,7 +246,7 @@ class OrgsCtrl extends nb.Controller
         self = @
         @isHistory = true
         @orgs.$refresh(history_param)
-        
+
 
     resetData: () ->
         @isHistory = false
@@ -322,7 +322,7 @@ class OrgCtrl extends nb.Controller
     #     @scope.org.newSub(org)
 
 
-class RevertChangesCtrl extends Dialog
+class RevertChangesCtrl extends Modal
     @.$inject = ['$modalInstance','$scope', '$nbEvent', 'memoName', '$rootScope', '$previousState', '$state']
 
     constructor: (@dialog, @scope, @Evt, @memoName, @rootScope, @previousState, @state) ->
@@ -333,7 +333,7 @@ class RevertChangesCtrl extends Dialog
         @dialog.close()
 
 
-class ActiveCtrl extends Dialog
+class ActiveCtrl extends Modal
     @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$rootScope', '$previousState', '$state']
     constructor: (@dialog, @scope, @Evt, @memoName, @rootScope, @previousState, @state) ->
         super(dialog, scope, memoName)
@@ -341,7 +341,7 @@ class ActiveCtrl extends Dialog
         @Evt.$send('org:active',log)
         @dialog.close()
 
-class HistoryCtrl extends Dialog
+class HistoryCtrl extends Modal
     @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$rootScope', '$previousState', '$state', '$http']
     constructor: (@dialog, @scope, @Evt, @memoName, @rootScope, @previousState, @state, @http) ->
         @loadInitialData()
@@ -392,7 +392,7 @@ class HistoryCtrl extends Dialog
         @dialog.close()
 
 
-class TransferOrgCtrl extends Dialog
+class TransferOrgCtrl extends Modal
     @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$rootScope', '$previousState', '$state', '$http']
     constructor: (@dialog, @scope, @Evt, @memoName, @rootScope, @previousState, @state, @http) ->
         super(dialog, scope, memoName)
@@ -481,7 +481,7 @@ class TransferOrgCtrl extends Dialog
 #         form.$setPristine()
 #         @dialog.dismiss('cancel')
 
-class PositionCtrl extends nb.Controller
+class PositionCtrl extends Modal
 
 
 
