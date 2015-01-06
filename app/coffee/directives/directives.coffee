@@ -11,8 +11,8 @@ angular.module 'nb.directives'
                     elem.toggleClass 'active'
         }
     ]
-    
-    
+
+
     .directive 'dragOn', [ '$window', ($window) ->
 
 
@@ -76,7 +76,20 @@ angular.module 'nb.directives'
         }
 
     ]
+    .directive 'nbButterbar', ['$rootScope', '$anchorScroll', (rootScope, anchorScroll) ->
 
+        postLink = (scope, elem, attrs) ->
+            elem.addClass 'butterbar hide'
+            rootScope.$on '$stateChangeStart', (evt) ->
+                anchorScroll()
+                elem.removeClass('hide').addClass('active')
+            rootScope.$on '$stateChangeSuccess', (evt) ->
+                evt.targetScope.$watch '$viewContentLoaded', ->
+                    elem.addClass('hide').removeClass('active')
 
+        return {
+            template: '<span class="bar"></span>'
+            link: postLink
+        }
 
-
+    ]

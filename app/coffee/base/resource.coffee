@@ -79,9 +79,10 @@ nbRestApi = (restmod, RMUtils, $rootScope, $Evt) ->
         'Record.$copy': ->
             raw = this.$wrap()
             copy = this.$scope.$buildRaw(raw)
+            # copy = this.$scope.$new(this.$type.inferKey(raw))
+            # copy.$type.decode(copy, raw, RMUtils.READ_MASK)
+            # copy.$pk = copy.$type.inferKey(raw)
             return copy
-
-
     }
 
 User = (restmod) ->
@@ -192,34 +193,40 @@ Org = (restmod, RMUtils, $Evt) ->
         return unflatten(treeData, DEPTH, parent)
 
 
+
+
     Org = restmod.model('/departments').mix 'nbRestApi', {
 
         positions: { hasMany: 'Position'}
 
 
         $hooks:
-            'after-request': ->
-                $Evt.$send('org:refresh')
+            'after-fetch-many': -> $Evt.$send('org:refresh')
             # 有无必要自定义事件增加系统复杂度? 待观察
             'after-destroy': ->
+                $Evt.$send('org:refresh')
                 $Evt.$send('org:destroy:success',"机构删除成功")
 
             'after-active': ->
+                $Evt.$send('org:refresh')
                 $Evt.$send('org:active:success', "生效成功")
 
             'after-active-error': ->
                 $Evt.$send('org:active:error', arguments)
 
             'after-revert': ->
+                $Evt.$send('org:refresh')
                 $Evt.$send('org:revert:success', "撤销成功")
 
             'after-update': ->
+                $Evt.$send('org:refresh')
                 $Evt.$send('org:update:success', "修改成功")
 
             'after-update-error': ->
                 $Evt.$send('org:update:error')
 
             'after-newsub': ->
+                $Evt.$send('org:refresh')
                 $Evt.$send('org:newsub:success', "撤销成功")
 
             'after-newsub-error': ->
@@ -235,9 +242,10 @@ Org = (restmod, RMUtils, $Evt) ->
                     self = @
                     url = RMUtils.joinUrl(this.$url(), 'active')
                     request = {method: 'POST', url: url, data: formdata}
-
+                    $Evt.$send('org:active:process')
                     onSuccess = (res)->
                         self.$dispatch 'after-active', res
+                        $Evt.$send('org:refresh')
 
                     onErorr = (res) ->
                         self.$dispatch 'after-active-error', res
@@ -251,6 +259,7 @@ Org = (restmod, RMUtils, $Evt) ->
 
                     onSuccess = (res) ->
                         self.$dispatch 'after-revert', res
+                        $Evt.$send('org:refresh')
 
                     onErorr = (res) ->
                         self.$dispatch 'after-revert-error', res
