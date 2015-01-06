@@ -203,7 +203,7 @@ Org = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('org:refresh')
             # 有无必要自定义事件增加系统复杂度? 待观察
             'after-destroy': ->
-                $Evt.$send('org:destroy:success',"机构：#{self.scope.currentOrg.name} ,删除成功")
+                $Evt.$send('org:destroy:success',"机构删除成功")
 
             'after-active': ->
                 $Evt.$send('org:active:success', "生效成功")
@@ -215,7 +215,7 @@ Org = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('org:revert:success', "撤销成功")
 
             'after-update': ->
-                $Evt.$send('org:update:success', "撤销成功")
+                $Evt.$send('org:update:success', "修改成功")
 
             'after-update-error': ->
                 $Evt.$send('org:update:error')
@@ -319,9 +319,11 @@ Org = (restmod, RMUtils, $Evt) ->
 
                     url = this.$url()
                     request = {
-                        url: "#{@.$url}/transfer"
+                        url: "#{url}/transfer"
                         method: 'POST'
-                        to_department_id: to_dep_id
+                        data:{
+                            to_department_id: to_dep_id
+                        }
                     }
                     @.$send request, onSuccess, onErorr
 

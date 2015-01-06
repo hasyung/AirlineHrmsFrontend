@@ -155,7 +155,7 @@ class Route
                         return true
                 }
             }
-            .state 'org.revert', Dialog.$build('revert', RevertChangesCtrl, 'partials/orgs/shared/revert_changes.html')
+            # .state 'org.revert', Dialog.$build('revert', RevertChangesCtrl, 'partials/orgs/shared/revert_changes.html')
             .state 'org.active', Dialog.$build('active', ActiveCtrl, 'partials/orgs/shared/effect_changes.html')
             .state 'org.history', Dialog.$build('history', HistoryCtrl, 'partials/orgs/org_history.html', {size: 'sm'})
             .state 'org.transfer', Dialog.$build('transfer', TransferOrgCtrl, 'partials/orgs/shared/org_transfer.html', {size: 'sm'})
@@ -184,16 +184,17 @@ class OrgsCtrl extends nb.Controller
         @loadInitialData()
 
 
-        scope.$onRootScope 'org:revert', @.revert.bind(@)
+        # scope.$onRootScope 'org:revert', @.revert.bind(@)
         scope.$onRootScope 'org:active', @.active.bind(@)
         scope.$onRootScope 'org:history', @.history.bind(@)
         scope.$onRootScope 'org:refresh', @.refreshTree.bind(@)
+        scope.$onRootScope 'org:resetData', @.resetData.bind(@)
 
     loadInitialData: () -> #初始化数据
         self = @
         rootScope = @rootScope
         Evt = @Evt
-        @orgs = @Org.$search({'edit_mode': @eidtMode})
+        @orgs = @Org.$collection().$fetch({'edit_mode': @eidtMode})
             .$then (orgs) ->
                 treeRootOrg = _.find orgs, (org) -> org.depth == 1
                 Evt.$send('org:link', treeRootOrg)
@@ -204,10 +205,15 @@ class OrgsCtrl extends nb.Controller
         depth = 1 if org.depth == 1 #如果是顶级节点 则只显示一级
         @treeRootOrg = org
         @tree = @orgs.treeful(org, depth)
+        currentOrg = org
+        @Evt.$send('org:link', currentOrg)
+
     refreshTree: () ->
+        self = @
         return unless @treeRootOrg
         depth = 9
         depth = 1 if @treeRootOrg.depth == 1 #如果是顶级节点 则只显示一级
+
         @tree = @orgs.treeful(@treeRootOrg, depth)
 
     #force 是否修改当前机构
@@ -224,29 +230,28 @@ class OrgsCtrl extends nb.Controller
         @Evt.$send('org:link', currentOrg)
 
     revert: () ->
-        @Org.$revert()
+        @orgs.revert()
+        # 是否可以将两步合成一步
+        # 即撤销后，后端返回当前机构信息
+        @resetData()
 
     active: (evt, data) ->
         #deparment_id 是否必要?
         data.department_id = @.treeRootOrg.id
         @orgs.active(data)
+        @resetData()
 
 
     history: (evt, history_param) ->
+        self = @
         @isHistory = true
-        promise  = @orgs.$refresh(history_param).$asPromise()
-        promise.then @buildTree.bind(@)
-    recovery_now: () ->
-        @isHistory = false
-        @orgs.$refresh({'edit_mode': @eidtMode}).$then @buildTree.bind(@)
+        @orgs.$refresh(history_param)
+        
 
-    # openPositionPanel: (orgId) ->
-    #     self = @
-    #     panel = @panel.open {
-    #         templateUrl: 'partials/orgs/position.html'
-    #         controller: PositionCtrl
-    #         controllerAs: 'pos'
-    #     }
+    resetData: () ->
+        @isHistory = false
+        @orgs.$refresh({'edit_mode': @eidtMode})
+
 
     openOrgtreeDialog: () ->
         self = @
@@ -290,6 +295,7 @@ class OrgCtrl extends nb.Controller
     #     @scope.org.$destroy().$then onSuccess
     transfer: (evt, destOrg) ->
         @scope.currentOrg.transfer(destOrg.id)
+        @Evt.$send 'org:resetData'
 
     newsub: (form, neworg) ->
         $Evt = @Evt
@@ -308,6 +314,10 @@ class OrgCtrl extends nb.Controller
         resetForm(scope.newsubForm, scope.updateForm)
         @state = 'show'
 
+    destroy: () ->
+        $Evt = @Evt
+        @scope.currentOrg.$destroy().$then ->
+           $Evt.$send 'org:resetData'
     # newSub: (org) ->
     #     @scope.org.newSub(org)
 
@@ -338,6 +348,7 @@ class HistoryCtrl extends Dialog
         super(dialog, scope, memoName)
 
     loadInitialData: ()->
+        self = @
         onError = (res)->
             @Evt.$send('org:history:error',res)
         onSuccess = (res)->
@@ -357,7 +368,7 @@ class HistoryCtrl extends Dialog
                 groupedLogs.push {logs:item, changeYear: key}
             #转换结束
 
-            @scope.changeLogs = groupedLogs.reverse()
+            self.changeLogs = groupedLogs.reverse()
         promise = @http.get('/api/departments/change_logs')
         promise.then onSuccess.bind(@), onError.bind(@)
 

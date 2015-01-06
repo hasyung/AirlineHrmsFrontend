@@ -9,9 +9,10 @@ div
                 a(ng-click="ctrl.rootTree()") 四川航空
             .org-children-wrapper
                 ul
-                    li(ng-repeat="org in ctrl.orgs track by org.id | filterBy: ['depth']: 2")
+                    li(ng-repeat="org in ctrl.orgs | filterBy: ['depth']: 2 track by org.id" )
                         //- a.org-node(ng-click="ctrl.buildTree(org)" ng-bind="org.name", title="{{org.name}}")
-                        a.org-node(ui-serf="^.show({orgId: org.id})",
+                        a.org-node(
+                            ng-click="ctrl.buildTree(org)",
                             ng-bind="org.name",
                             title="{{org.name}}", 
                             ng-class="{'active': org.id == (ctrl.treeRootOrg && ctrl.treeRootOrg.id)}"
@@ -30,9 +31,9 @@ div
                 button.btn.btn-cold(ui-sref=".history") 时间轴
 
 
-                a.btn.btn-info(ng-show="!ctrl.state.includes('org_history')", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导出
-                a.btn.btn-info(ng-show="ctrl.state.includes('org_history')", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导出
-                button.btn.btn-info(ng-click="ctrl.reset(true)" ng-show="ctrl.isHistory") 返回最新
+                a.btn.btn-info(ng-show="!ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导出
+                a.btn.btn-info(ng-show="ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导出
+                button.btn.btn-info(ng-click="ctrl.resetData()" ng-show="ctrl.isHistory") 返回最新
                 //- loading-btn.red(ng-click="ctrl.openHistoryPanel()" btn-loading-type="contract-overlay" btn-text="测试loading")
     .org-tree.col-md-3
 
