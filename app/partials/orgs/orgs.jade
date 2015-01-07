@@ -5,7 +5,7 @@ div.org
                 ng-class="{true: 'fa-chevron-left', false: 'fa-chevron-right'}[ctrl.isBarOpen]"
                 ng-click="ctrl.isBarOpen = !ctrl.isBarOpen")
         .org-dep-wrapper
-            .org-dep-root
+            div.org-dep-root
                 a(ng-click="ctrl.rootTree()") 四川航空
             .org-children-wrapper
                 ul
@@ -19,7 +19,7 @@ div.org
                         )
 
 
-    .app-aside.org-aside.hidden-xs.bg-white-opacity.pull-right
+    .org-aside.pull-right
         //- .org-row(ui-view='sub' ng-controller="OrgCtrl as orgCtrl")
         .org-row(ng-controller="OrgCtrl as orgCtrl")
             include org
@@ -27,7 +27,7 @@ div.org
         .org-chart-top(ng-class="{'org-chart-history': ctrl.state.includes('org_history')}")
                 h1 {{ctrl.treeRootOrg.name}}组织机构图
                 h2(ng-show="ctrl.isHistory") {{ctrl.orgs.$metadata.created_at | unixToDate : 'yyyy年MM月dd日'}}— {{ctrl.orgs.$metadata.title}}
-            .title-btn-group
+            .top-btn-group
                 button.btn.btn-m.btn-primary(ui-sref=".history") 时间轴
 
 

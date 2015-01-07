@@ -1,0 +1,59 @@
+.org-timline .tl-content.panel {
+    width: 210px;
+    cursor: pointer;
+}
+.org-timline .tl-content.panel h1 {
+    font-size: 16px;
+    margin: 0px;
+    color: #000;
+}
+.org-timline .tl-content.panel h2 {
+    font-size: 12px;
+    margin-top: 10px;
+    color: #23b7e5;
+}
+.org-timline .tl-content.panel p {
+    font-size: 14px;
+    border-top: 1px dotted #cee0eb;
+    padding-top: 10px;
+}
+.org-timline .tl-header {
+    text-align: left;
+    width: inherit;
+}
+.org-timline span.pull-right {
+    font-size: 12px;
+    color: #23b7e5;
+    line-height: 34px;
+}
+.org-timline .tl-wrap {
+    margin-left: 30px;
+}
+.org-timline .tl-header .btn {
+    border-radius: 25px;
+    padding: 6px 14px;
+}
+.org-timline .tl-header .bg-info .text-lt {
+    color: #000!important;
+}
+.org-timline.panel-footer {
+    margin-bottom: 30px;
+}
+.org-timline.panel-footer .btn {
+    width: 70px;
+    margin-left: 10px;
+}
+.org-timline .b-info {
+    border-color: #daedf8;
+}
+.org-timline .b-info p {
+    color: #000;
+}
+.org-timline .org-delete-template {
+    position: absolute;
+    background-color: #fff;
+    top: -40px;
+    left: -160px;
+    width: 270px;
+    z-index: 99999;
+}

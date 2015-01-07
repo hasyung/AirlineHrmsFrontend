@@ -179,7 +179,7 @@ class OrgsCtrl extends nb.Controller
         @tree = null    # tree化的 orgs 数据
         @scope.currentOrg = null
         #for ui status
-        @isBarOpen = true
+        @isBarOpen = false
 
         @loadInitialData()
 

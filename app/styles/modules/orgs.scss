@@ -1,8 +1,11 @@
 .app-main {
     padding: 15px;
 }
-.org-chart {
-    height: 80px;
+.org {
+	position: relative;
+	height: inherit;
+}
+.org-chart,.app-main{
     padding-top: 20px;
     h1 {
     	font-size: 25px;
@@ -22,406 +25,174 @@
     }
     .top-btn-group {
     	position: absolute;
-    	top: 73px;
-    	right: 355px;
+    	top: 36px;
+    	right: 365px;
 
 		button {
     		float: right;
     		margin-left: 10px;
+
     		&:last-child {
     			margin-left: none;
     		}
     	}
     }
+
     .bottom-btn-group {
+    	margin-top: 50px;
+    	margin-left: calc(100% - 200px);
+    	background-color: #000;
 		button {
     		float: right;
     		margin-left: 10px;
+    		width: 90px;
+    		height: 30px;
+    		border-radius: 4px;
+    		outline: none;
     		&:last-child {
     			margin-left: none;
     		}
     	}
     }
-
-}
-// .title-btn-group {
-//     position: absolute;
-//     top: 73px;
-//     right: 355px;
-// }
-// .title-btn-group a {
-//     font-weight: bolder;
-// }
-// .title-btn-group button {
-//     float: right;
-//     margin-left: 10px;
-// }
-
-.bottom-btn-group {
-    margin-top: 50px;
-    margin-left: calc(100% - 200px);
-    z-index: 10;
-}
-.bottom-btn-group button {
-    font-size: 14px;
-    width: 90px;
-    height: 30px;
-    border-radius: 4px;
-    outline: none;
 }
 
-// .org-chart-top.active h2 {
-//     width: calc(100% - 200px);
-//     font-size: 16px;
-//     margin: 0px;
-//     line-height: 16px;
-//     color: #90743f;
-//     text-align: center;
-// }
-// .org-chart-top button {
-//     float: right;
-//     padding: 4px 12px;
-//     margin-left: 10px;
-//     margin-top: 25px;
-// }
-
-.org-aside{
-	width: 340px;
-	background-color: #fff;
-	.org-title{
-		position: relative;
-		height: 35px;
-		margin: 20px 20px 0 20px;
-		border-bottom: 1px solid #c6d1d5;
-	}
-}
-// .org-aside {
-//     width: 340px;
-//     background-color: #fff;
-// }
-// .org-title {
-//     position: relative;
-//     height: 35px;
-//     margin-left: 20px;
-//     margin-right: 20px;
-//     border-bottom: 1px solid #c6d1d5;
-//     margin-top: 20px;
-// }
-.org-title span {
-    width: auto;
-    height: 35px;
-    line-height: 35px;
-    position: absolute;
-    border-bottom: 1px solid #39b7e9;
-    color: #58656e;
-    font-size: 16px;
-}
-.org-title button {
-    float: right;
-    margin-right: 10px;
-    color: #99a6ad;
-}
-.org-title .btn {
-    padding: 5px 9px;
-    min-width: 35px;
-}
-.org-info {
-    padding: 20px;
-}
-.org-table {
-    margin-left: 20px;
-    width: 298px;
-}
-.org-post {
-    color: #448ecb;
-}
-
-.org-dep {
-    position: absolute;
-    width: 183px;
-    border-right: 1px solid #d1dcde;
-    border-bottom: 1px solid #d1dcde;
-    left: 200px;
-    background-color: rgba(255, 255, 255, 1);
-    top: 51px;
-    bottom: 0px;
-    z-index: 10;
-}
-//.org-dep .org-children-wrapper
-.org-dep.active {
-    z-index: 1;
-    left: 18px;
-    width: 0px;
-    border: none;
-}
-.org-dep.active .panel-group {
-    display: none;
-}
-.org-dep .panel-body {
-    padding-right: 0px;
-}
-.org-dep .panel-body ul {
-    padding-left: 0px;
-}
-.org-dep .panel-body li {
-    line-height: 35px;
-    height: 35px;
-}
-.org-dep .panel-body li a {
-    color: #58656e;
-    padding-left: 15px;
-}
-.org-dep .panel-body li a:hover {
-    color: #f34e4c;
-    border-left: 2px solid #f34e4c;
-    transition: all ease 0.2s;
-}
-.org-dep .panel-heading {
-    background-color: #f6f8f7;
-    height: 39px;
-    border-top: 1px solid #d1dcde;
-    border-bottom: 1px solid #d1dcde;
-}
-.org-dep .panel {
-    border: none;
-    box-shadow: none;
-}
-.org-dep .panel-heading {
-    border-radius: 0px;
-}
-.org-dep .panel-group .panel {
-    border-radius: 0px;
-}
-.org-dep-badge {
-    width: 24px;
-    height: 72px;
-    background-color: #fff;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border: 1px solid #d1dcde;
-    position: absolute;
-    left: 182px;
-    top: 38px;
-}
-.org-dep-badge a {
-    width: 24px;
-    height: 72px;
-    display: block;
-    text-align: center;
-    line-height: 72px;
-}
-.org-modal-top {
-    height: 51px;
-    line-height: 51px;
-    font-size: 18px;
-    padding: 0 20px;
-    border-bottom: 1px solid #eae9ef;
-}
-.org-modal-post {
-    padding: 20px;
-    background-color: #f2f3f8;
-}
-.org-modal-posttop {
-    height: 35px;
-    width: inherit;
-    font-size: 16px;
-}
-.org-modal-posttop button {
-    float: right;
-    margin-left: 8px;
-}
-.org-modal-posttop button.btn-info {
-    padding-top: 3px;
-    padding-bottom: 3px;
-}
-.org-post-table {
-    border: 1px solid #e6e6e6;
-}
-.org-post-table tr td:first-child {
-    width: 44px;
-}
-.org-post-table tr td:last-child {
-    width: 204px;
-}
-.org-hover {
-    float: right;
-}
-.org-hover .btn {
-    padding: 0px;
-    border: none;
-    margin-left: 15px;
-}
-.org-hover .btn-default {
-    background: none;
-}
-.org-postadd {
-    width: inherit;
-}
-.org-postadd-step {
-    width: 268px;
-    background-color: #f2f3f8;
-    content: "";
-    position: absolute;
-    top: 51px;
-    bottom: 0;
-    z-index: 1042;
-    float: left;
-}
-.org-postadd-step li {
-    width: 268px;
-    float: left;
-    padding-left: 20px;
-    padding-right: 20px;
-    height: 63px;
-    line-height: 63px;
-}
-.org-postadd-step li:hover a, .org-postadd-step li:hover a span, .org-postadd-step li.active a {
-    color: #fff;
-}
-.org-postadd-step li:hover, .org-postadd-step li.active {
-    background-color: #0ab6e8;
-    color: #fff;
-    transition: all ease 0.3s;
-}
-.org-postadd-step a {
-    color: #000;
-    display: block;
-    font-size: 16px;
-}
-.org-postadd-step a span {
-    float: right;
-    line-height: 63px;
-    font-size: 16px;
-}
-.org-postadd-detail {
-    width: 632px;
-    padding: 20px;
-}
-.bg-info {
-    background-color: #daedf8;
-}
-.arrow.left.arrow-info:after {
-    border-right-color: #daedf8;
-}
-// .arrow.left:after{left:2px;bottom: -7px;}
-// .wrapper.org-timline { height: auto; max-height: 500px; overflow-y:scroll}
-.org-timline .tl-content.panel {
-    width: 210px;
-    cursor: pointer;
-}
-.org-timline .tl-content.panel h1 {
-    font-size: 16px;
-    margin: 0px;
-    color: #000;
-}
-.org-timline .tl-content.panel h2 {
-    font-size: 12px;
-    margin-top: 10px;
-    color: #23b7e5;
-}
-.org-timline .tl-content.panel p {
-    font-size: 14px;
-    border-top: 1px dotted #cee0eb;
-    padding-top: 10px;
-}
-.org-timline .tl-header {
-    text-align: left;
-    width: inherit;
-}
-.org-timline span.pull-right {
-    font-size: 12px;
-    color: #23b7e5;
-    line-height: 34px;
-}
-.org-timline .tl-wrap {
-    margin-left: 30px;
-}
-.org-timline .tl-header .btn {
-    border-radius: 25px;
-    padding: 6px 14px;
-}
-.org-timline .tl-header .bg-info .text-lt {
-    color: #000!important;
-}
-.org-timline.panel-footer {
-    margin-bottom: 30px;
-}
-.org-timline.panel-footer .btn {
-    width: 70px;
-    margin-left: 10px;
-}
-.org-timline .b-info {
-    border-color: #daedf8;
-}
-.org-timline .b-info p {
-    color: #000;
-}
-.org-timline .org-delete-template {
-    position: absolute;
-    background-color: #fff;
-    top: -40px;
-    left: -160px;
-    width: 270px;
-    z-index: 99999;
-}
-.modal-backdrop.org-history-dialog-backdrop.in {
-    opacity: 0;
-}
-.bg-black {
-    background-color: #3a3f52;
-}
-.bg-black.dk, .bg-black .dk {
-    background-color: #31374b;
-}
-.bg-black .nav > li > a {
-    color: #adb2c5;
-}
-.btn-default {
-    border-color: #c4cfd3;
-}
-.org-default-popup-template {
-    position: absolute;
-    background-color: #fff;
-    width: 270px;
-    z-index: 99999;
-}
 .div-delete-btn {
+    width: 48px;
     padding: 5px 10px;
     background-color: #d9534f;
-    width: 48px;
-    color: #fff;
-    cursor: pointer;
+   	color: #fff;
+  	cursor: pointer;
     border-radius: 4px;
     margin-top: 15px;
 }
-.org-main-node {
-    height: 38px;
-    line-height: 38px;
-    padding-left: 8px;
-    margin-bottom: 4px;
-    background-color: #f6f8f8;
-    font-size: 16px;
-    cursor: pointer;
+
+.org-aside {
+	width: 340px;
+	height: inherit;
+	background-color: #fff;
+	&:before {
+		content: " ";
+		position: absolute;
+		width: inherit;
+		top: 0;
+		bottom: 0;
+		z-index: -1;
+		background-color: inherit;
+	}
+	.org-title {
+		height: 35px;
+		margin: 20px 20px 0 20px;
+		border-bottom: 1px solid #c6d1d5;
+		span {
+			line-height: 34px;
+    		position: absolute;
+    		border-bottom: 1px solid #39b7e9;
+    		color: $text-title;
+    		font-size: 16px;
+		}
+		button {
+			float: right;
+    		margin-right: 10px;
+    		color: #99a6ad;
+		}
+		.btn {
+			padding: 5px 9px;
+    		min-width: 35px;
+		}
+	}
+	.org-info {
+    	padding: 20px;
+	}
+
+	.org-table {
+    	margin-left: 20px;
+    	width: 298px;
+    	.org-post {
+    		color: #448ecb;
+		}
+	}
 }
-.org-main-node:hover a {
-    color: #ff0000;
+
+/* 机构 左侧部门菜单 */
+.org-dep {
+    position: absolute;
+    width: 0;
+    height: inherit;
+    left: -182px;
+    background-color: #fff;
+    z-index: 10;
+	border: none;
+    &.active {
+    	left: 0px;
+    	width: 183px;
+	    border-right: 1px solid #d1dcde;
+	    border-bottom: 1px solid #d1dcde;
+    }
+	.org-dep-badge {
+		width: 24px;
+	    height: 72px;
+	    background-color: #fff;
+	    border-top-right-radius: 5px;
+	    border-bottom-right-radius: 5px;
+	    border: 1px solid #d1dcde;
+	    position: absolute;
+	    left: 182px;
+	    top: 38px;
+	    .toggle-bar {
+		    width: 24px;
+		    height: 72px;
+		    display: block;
+		    text-align: center;
+		    line-height: 72px;
+	    }
+	}
+	.org-dep-root {
+		font-size: $font-size-lg;
+		height: 40px;
+		padding-left: 10px;
+		line-height: 40px;
+		background-color: #f6f8f8;
+	}
+
+	.org-dep-wrapper {
+		height: inherit;
+	    overflow: hidden;
+	    ul {
+			padding-left: 5px;
+	    }
+	}
+	.org-children-wrapper {
+	    height: calc(100% - 40px);
+	    overflow-y: scroll;
+	     a {
+	    	display: block;
+	    	width: 100%;
+		    height: 35px;
+		    line-height: 35px;
+			padding: 0 0 0 18px;
+			border-left: 3px solid transparent;
+		    text-overflow: ellipsis;
+	    	overflow: hidden;
+	    	white-space: nowrap;
+	    	&:hover, &.active {
+	    		border-left: 3px solid red;
+    			color: red;
+	    	}
+		}
+	}
 }
-.org-node {
-    display: block;
-    width: 100%;
-    height: 100%;
-    padding: 4px 0 4px 15px;
-    font-size: 14px;
-    border-left: 3px solid transparent;
+/* 机构 左侧部门菜单结束 */
+
+// .arrow.left:after{left:2px;bottom: -7px;}
+// .wrapper.org-timline { height: auto; max-height: 500px; overflow-y:scroll}
+.org-default-popup-template {
+    // position: absolute;
+    background-color: #fff;
+    width: 270px;
+    z-index: 99999;
 }
-.org-node:hover {
-    border-left: 3px solid red;
-    color: red;
-}
-.org-node.active {
-    border-left: 3px solid red;
-    color: red;
-}
+
+//机构 信息管理部分
 .org-form-row {
     width: 300px;
 }
@@ -432,31 +203,7 @@
     border: 1px solid #c6d1d5;
     padding: 2px 5px;
 }
-.org-dep.active .org-main-wrapper {
-    overflow: hidden;
-}
-.org-main-wrapper {
-    height: 100%;
-    overflow: hidden;
-}
-.org-main-wrapper ul {
-    padding-left: 5px;
-}
-.org-children-wrapper {
-    height: calc(100% - 30px);
-    overflow-y: scroll;
-}
-.org-children-wrapper li a {
-    height: 35px;
-    line-height: 35px;
-    display: block;
-    width: 100%;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    padding-top: 0px;
-    padding-bottom: 0px;
-}
+
 .org-chart-window {
     position: relative;
     width: calc(100% - 369px);
