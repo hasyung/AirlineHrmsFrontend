@@ -96,8 +96,8 @@ angular.module 'nb.directives'
     .directive 'nbResponsiveHeight', ['$window', ($window)->
         postLink = (scope, elem, attrs) ->
             height =  $window.innerHeight - elem.position().top
-            elem.css('height': "#{height}px")
 
+            elem.css('height': "#{height}px")
 
         return {
             link: postLink
