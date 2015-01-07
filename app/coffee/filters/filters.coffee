@@ -15,6 +15,7 @@ module
 module
 	.filter 'unixToDate', ['$filter', ($filter)->
 		return (unixTime, format) ->
+			return if !unixTime
 			date = moment.unix(unixTime)._i
 			$filter('date')(date, format)
 	]
