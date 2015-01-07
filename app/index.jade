@@ -21,8 +21,10 @@ html
 
         toaster-container(toaster-options="{'time-out': 3000, 'close-button':true, 'animation-class': 'toast-top-right'}")
         nb-loading.nb-loading(ng-show="loading")
-        .org-container.smooth(ui-view nb-responsive-height)
-
+        //- .org-container.smooth(ui-view)
+        .app-content()
+            .butterbar(ui-butterbar)
+            .app-content-body.smooth(ui-view nb-responsive-height)
 
         if debugMode
             each script in libs

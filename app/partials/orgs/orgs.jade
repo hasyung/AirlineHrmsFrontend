@@ -1,11 +1,11 @@
-div
-    .app-aside.org-dep.hidden-xs.bg-white-opacity.pull-left(ng-class="{'active': ctrl.isBarOpen}")
+div.org
+    .org-dep(ng-class="{'active': ctrl.isBarOpen}")
         .org-dep-badge
             a.toggle-bar.fa(
-                ng-class="{true: 'fa-chevron-right', false: 'fa-chevron-left'}[ctrl.isBarOpen]"
+                ng-class="{true: 'fa-chevron-left', false: 'fa-chevron-right'}[ctrl.isBarOpen]"
                 ng-click="ctrl.isBarOpen = !ctrl.isBarOpen")
-        .org-main-wrapper
-            .org-main-node
+        .org-dep-wrapper
+            div.org-dep-root
                 a(ng-click="ctrl.rootTree()") 四川航空
             .org-children-wrapper
                 ul
@@ -14,39 +14,40 @@ div
                         a.org-node(
                             ng-click="ctrl.buildTree(org)",
                             ng-bind="org.name",
-                            title="{{org.name}}", 
+                            title="{{org.name}}",
                             ng-class="{'active': org.id == (ctrl.treeRootOrg && ctrl.treeRootOrg.id)}"
                         )
 
 
-    .app-aside.org-aside.hidden-xs.bg-white-opacity.pull-right
+    .org-aside.pull-right
         //- .org-row(ui-view='sub' ng-controller="OrgCtrl as orgCtrl")
         .org-row(ng-controller="OrgCtrl as orgCtrl")
             include org
-    .app-main
-        .org-chart-top(ng-class="{'active': ctrl.state.includes('org_history')}")
+    .app-main.org-chart
+        .org-chart-top(ng-class="{'org-chart-history': ctrl.state.includes('org_history')}")
                 h1 {{ctrl.treeRootOrg.name}}组织机构图
                 h2(ng-show="ctrl.isHistory") {{ctrl.orgs.$metadata.created_at | unixToDate : 'yyyy年MM月dd日'}}— {{ctrl.orgs.$metadata.title}}
-            .title-btn-group
-                button.btn.btn-cold(ui-sref=".history") 时间轴
+            .top-btn-group
+                button.btn.btn-m.btn-primary(ui-sref=".history") 时间轴
 
 
-                a.btn.btn-info(ng-show="!ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导出
-                a.btn.btn-info(ng-show="ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导出
+                a.btn.btn-m.btn-info(ng-show="!ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导 出
+                a.btn.btn-m.btn-info(ng-show="ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导 出
                 button.btn.btn-info(ng-click="ctrl.resetData()" ng-show="ctrl.isHistory") 返回最新
+
                 //- loading-btn.red(ng-click="ctrl.openHistoryPanel()" btn-loading-type="contract-overlay" btn-text="测试loading")
-    .org-tree.col-md-3
+        .org-tree.col-md-3
 
 
-    div.org-chart-window
-        div.svg-wrapper(org-chart drag-on org-chart-data="ctrl.tree.data")
-        div.bottom-btn-group(ng-show="ctrl.tree.isModified")
-            //- button.cancel(ui-sref=".revert") 撤销
-            button.btn.btn-default(title="撤销", nb-popup, position="top") 撤销
-                popup-template.nb-popup.org-default-popup-template.panel.panel-default()
-                    .panel-heading.popup-title 警告
-                    .panel-body.popup-body
-                        div 你是否要撤销所有更改？
-                        div.div-delete-btn.pull-right(ng-click="ctrl.revert()") 确定
-            //- button.cancel(ng-click="ctrl.revert()") 撤销
-            button.effect(ui-sref=".active") 生效
+        div.org-chart-window
+            div.svg-wrapper(org-chart drag-on org-chart-data="ctrl.tree.data")
+            div.bottom-btn-group(ng-show="ctrl.tree.isModified")
+                //- button.cancel(ui-sref=".revert") 撤销
+                button.btn.btn-default(title="撤销", nb-popup, position="top") 撤 销
+                    popup-template.nb-popup.org-default-popup-template.panel.panel-default()
+                        .panel-heading.popup-title 警告
+                        .panel-body.popup-body
+                            div 你是否要撤销所有更改？
+                            div.div-delete-btn(ng-click="ctrl.revert()") 确定
+                //- button.cancel(ng-click="ctrl.revert()") 撤销
+                button.effect(ui-sref=".active") 生 效

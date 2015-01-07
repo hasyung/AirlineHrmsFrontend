@@ -1,0 +1,34 @@
+
+
+//font
+$text-color:            #333;
+$text-muted:            lighten( $text-color, 25% );
+$text-title:            #58666e;
+
+$font-size-base:          14px;
+$font-size-lg:            ceil($font-size-base * 1.23); // ~20px
+$font-size-md:            ceil($font-size-base * 1.14); // ~16px
+$font-size-sm:            ceil($font-size-base * 0.92); // ~13px
+$font-size-xs:            ceil($font-size-base * 0.85); // ~12px
+
+
+//nav
+$app-aside-nav-height:               40px;
+$app-aside-folded-nav-height:        50px;
+
+$font-size-base:                     14px;
+$line-height-base:                   1.42857143;  //  20/14
+$line-height-computed:               floor( $font-size-base * $line-height-base );
+
+//layout
+$app-header-height:                  50px;
+$app-header-md-height:               60px;
+
+$app-aside-width:                    200px;
+$app-aside-folded-width:             60px;
+
+$scroll-bar-width:                   17px;
+
+//bg-colors
+$bg-black:             #3a3f52;
+$bg-black-dk:          #31374b;
