@@ -61,7 +61,13 @@ angular.module 'nb.directives'
                 tipElement.show()
                 # 重新定位，解决按钮位置被挤出后popover位置错乱的BUG
                 position = calcPosition elem
-                tipElement.css {top: position.top + 'px', left: position.left + 'px'}
+                tipElement.css {
+                    top: position.top + 'px',
+                    left: position.left + 'px',
+                    position: 'absolute',
+                    'z-index': '1040',
+                    'background-color': '#fff'
+                }
                 #end
                 scope.isShown = true
             
