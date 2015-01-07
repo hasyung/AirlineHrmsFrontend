@@ -339,10 +339,9 @@ class HistoryCtrl extends Modal
         onSuccess = (res)->
             logs = res.data.change_logs
             angular.forEach logs, (log) ->
-                # unix时间转javascript时间
-                log.created_at = moment.unix(log.created_at)._i
-                log.changeYear = new Date(log.created_at).getFullYear()
-                
+                # 添加changeYear属性便于filter的分组
+                log.changeYear = moment.unix(log.created_at).format('YYYY')
+
             self.changeLogs = logs   
         promise = @http.get('/api/departments/change_logs')
         promise.then onSuccess.bind(@), onError.bind(@)
