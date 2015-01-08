@@ -6,17 +6,16 @@
 /* 机构 左侧部门菜单 */
 .org-dep {
     position: absolute;
-    width: 0;
+    width: 183px;
     height: inherit;
     left: -182px;
     background-color: #fff;
     z-index: 10;
-	border: none;
+	border-right: 1px solid #d1dcde;
+	border-bottom: 1px solid #d1dcde;
+	@include transition(left .5s ease-in);
     &.active {
     	left: 0px;
-    	width: 183px;
-	    border-right: 1px solid #d1dcde;
-	    border-bottom: 1px solid #d1dcde;
     }
 	.org-dep-badge {
 		width: 24px;
@@ -294,4 +293,23 @@
 // 撤销 删除弹出泡泡提示框
 .org-default-popup-template {
     width: 270px;
+}
+
+.navi-root {
+	width: 200px;
+	z-index: 1050;
+	&:before {
+		content: " ";
+		display: block;
+		position: absolute;
+		width: inherit;
+		top: 0;
+		bottom: 0;
+		z-index: 1000;
+		background-color: inherit;
+
+	}
+	.navi-wrap {
+		width: 200px;
+	}
 }
