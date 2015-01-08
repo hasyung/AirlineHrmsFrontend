@@ -24,26 +24,22 @@ div.org
         .org-row(ng-controller="OrgCtrl as orgCtrl")
             include org
     .app-main.org-chart
-        .org-chart-top(ng-class="{'org-chart-history': ctrl.state.includes('org_history')}")
+        .org-chart-top(ng-class="{'org-chart-history': ctrl.isHistory}")
                 h1 {{ctrl.treeRootOrg.name}}组织机构图
                 h2(ng-show="ctrl.isHistory") {{ctrl.orgs.$metadata.created_at | unixToDate : 'yyyy年MM月dd日'}}— {{ctrl.orgs.$metadata.title}}
             .top-btn-group
                 button.btn.btn-m.btn-primary(ui-sref=".history") 时间轴
-
-
                 a.btn.btn-m.btn-info(ng-show="!ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导 出
                 a.btn.btn-m.btn-info(ng-show="ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导 出
                 button.btn.btn-info(ng-click="ctrl.resetData()" ng-show="ctrl.isHistory") 返回最新
 
                 //- loading-btn.red(ng-click="ctrl.openHistoryPanel()" btn-loading-type="contract-overlay" btn-text="测试loading")
-        .org-tree.col-md-3
-
 
         div.org-chart-window
             div.svg-wrapper(org-chart drag-on org-chart-data="ctrl.tree.data")
             div.bottom-btn-group(ng-show="ctrl.tree.isModified")
                 //- button.cancel(ui-sref=".revert") 撤销
-                button.effect(ui-sref=".active") 生 效
+                button.btn.btn-info(ui-sref=".active") 生 效
                 button.btn.btn-default(title="撤销", nb-popup, position="top") 撤 销
                     popup-template.nb-popup.org-default-popup-template.panel.panel-default()
                         .panel-heading.popup-title 警告
