@@ -3,11 +3,11 @@
 	h4.modal-title 时间轴
 div.wrapper.org-timline(slimscroll, height="400px")
 	//- ul.timeline(ng-repeat="yearItem in ctrl.changeLogs")
-	ul.timeline(ng-repeat="(key, yearLogs) in ctrl.changeLogs | groupBy: 'changeYear'")
+	ul.timeline(ng-repeat="yearLogs in ctrl.changeLogs")
 		li.tl-header
-			div.btn.btn-info {{::key}}
+			div.btn.btn-info {{::yearLogs.changeYear}}
 			span.pull-right 有{{:: yearLogs.length || 0}}次变动
-		li.tl-item(ng-repeat="log in yearLogs", ng-click="ctrl.expandLog(log)", ng-class="{'active, b-info': log.active}")
+		li.tl-item(ng-repeat="log in yearLogs.logs", ng-click="ctrl.expandLog(log)", ng-class="{'active, b-info': log.active}")
 			div.tl-wrap(ng-class="{'b-info': log.active}")
 				div.tl-content.panel.padder.b-a(ng-class="{'bg-info': log.active}")
 					span.arrow.left.pull-up(ng-class="{'arrow-info': log.active}")

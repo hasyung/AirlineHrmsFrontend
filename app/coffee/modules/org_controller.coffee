@@ -338,11 +338,13 @@ class HistoryCtrl extends Modal
             self.Evt.$send('org:history:error',res)
         onSuccess = (res)->
             logs = res.data.change_logs
-            angular.forEach logs, (log) ->
-                # 添加changeYear属性便于filter的分组
-                log.changeYear = moment.unix(log.created_at).format('YYYY')
+            groupedLogs = _.groupBy logs, (log) ->
+                moment.unix(log.created_at).format('YYYY')
+            logsArr = []
+            angular.forEach groupedLogs, (item, key) ->
+                logsArr.push {logs:item, changeYear: key}
 
-            self.changeLogs = logs   
+            self.changeLogs = logsArr.reverse()
         promise = @http.get('/api/departments/change_logs')
         promise.then onSuccess.bind(@), onError.bind(@)
 
