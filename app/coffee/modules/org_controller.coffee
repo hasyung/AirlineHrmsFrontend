@@ -177,7 +177,6 @@ class OrgsCtrl extends nb.Controller
         @treeRootOrg = null # 当前树的顶级节点
         @orgs = null    #集合
         @tree = null    # tree化的 orgs 数据
-        @scope.currentOrg = null
         #for ui status
         @isBarOpen = false
 
