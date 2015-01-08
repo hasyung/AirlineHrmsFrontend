@@ -45,6 +45,11 @@ angular.module 'nb.directives'
             scope.isShown = false
             tipElement = elem.next()
             tipElement.append '<span class="arrow"></span>'
+            tipElement.css {
+                'z-index': '1040',
+                'background-color': '#fff',
+                position: 'absolute';
+            }
             options = {scope: scope}
             options.position = "left"
             # popup提示框和按钮之间的距离
@@ -64,9 +69,6 @@ angular.module 'nb.directives'
                 tipElement.css {
                     top: position.top + 'px',
                     left: position.left + 'px',
-                    position: 'absolute',
-                    'z-index': '1040',
-                    'background-color': '#fff'
                 }
                 #end
                 scope.isShown = true
