@@ -7,6 +7,8 @@ ul {
 }
 h1, h2, h3, h4, h5 {
     color: $text-title;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 .highlightText {
     color: #f15a5a !important;
