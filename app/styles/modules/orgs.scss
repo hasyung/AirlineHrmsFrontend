@@ -79,10 +79,6 @@
 
 	.org-chart-top {
 		height: 90px;
-		background-color: #FDF9E1;
-		border-left: 1px solid #faebca;
-		border-right: 1px solid #faebca;
-		border-bottom: 1px solid #faebca;
 		overflow: hidden;
 	}
     h1 {
@@ -131,8 +127,10 @@
 	}
 
     .org-chart-history {
-    	background-color: #fdf8e2;
-    	border: 1px solid #f3ebd4;
+    	background-color: #FDF9E1;
+		border-left: 1px solid #faebca;
+		border-right: 1px solid #faebca;
+		border-bottom: 1px solid #faebca;
     	h2 {
     		visibility: visible;
     	}
@@ -242,11 +240,11 @@
 		.form-content {
 		    float: left;
 		    width: 170px;
-		    padding-left: 40px;
+		    margin-left: 40px;
 		    text-align: left;
 
 		    input {
-			    width: 170px;
+			    width: inherit;
 			    font-size: 14px;
 			    height: 34px;
 			    padding-left: 10px;
@@ -268,10 +266,11 @@
     	height: 34px;
     	line-height: 34px;
 	}
+
+	//下拉菜单 待后续抽出
 	.dropdown {
-	    width: 170px;
 	    .dropdown-toggle {
-		    width: 170px;
+	    	width: 100%;
 		    border-radius: 4px;
 		    text-align: left;
 		}
@@ -280,7 +279,7 @@
 		    margin-top: 7px;
 		}
 		.dropdown-menu {
-			width: 170px;
+			width: 100%;
 		}
 	}
 	.org-table {
@@ -296,10 +295,3 @@
 .org-default-popup-template {
     width: 270px;
 }
-
-
-
-
-
-
-
