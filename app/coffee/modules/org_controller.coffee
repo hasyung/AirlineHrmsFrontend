@@ -344,7 +344,7 @@ class HistoryCtrl extends Modal
             angular.forEach groupedLogs, (item, key) ->
                 logsArr.push {logs:item, changeYear: key}
 
-            self.changeLogs = logsArr.reverse()
+            self.changeLogs = _.sortBy(logsArr, 'changeYear').reverse()
         promise = @http.get('/api/departments/change_logs')
         promise.then onSuccess.bind(@), onError.bind(@)
 
