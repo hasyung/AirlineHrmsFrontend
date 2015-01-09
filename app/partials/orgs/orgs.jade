@@ -18,7 +18,6 @@ div.org
                             ng-class="{'active': org.id == (ctrl.treeRootOrg && ctrl.treeRootOrg.id)}"
                         )
 
-
     .org-aside.pull-right
         //- .org-row(ui-view='sub' ng-controller="OrgCtrl as orgCtrl")
         .org-row(ng-controller="OrgCtrl as orgCtrl")
@@ -34,7 +33,6 @@ div.org
                 button.btn.btn-info(ng-click="ctrl.resetData()" ng-show="ctrl.isHistory") 返回最新
 
                 //- loading-btn.red(ng-click="ctrl.openHistoryPanel()" btn-loading-type="contract-overlay" btn-text="测试loading")
-
         div.org-chart-window
             div.svg-wrapper(org-chart drag-on org-chart-data="ctrl.tree.data")
             div.bottom-btn-group(ng-show="ctrl.tree.isModified")
