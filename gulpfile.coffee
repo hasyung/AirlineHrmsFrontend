@@ -82,8 +82,8 @@ paths =
         'deps/angular-sanitize/angular-sanitize.js'
         'deps/angular-filter/dist/angular-filter.js'
         'deps/angular-ui-router/release/angular-ui-router.js'
-
         'deps/ui-router-extras/release/ct-ui-router-extras.js'
+        'deps/angular-breadcrumb/release/angular-breadcrumb.js'
         # 'deps/ngInfiniteScroll/build/ng-infinite-scroll.js'
         'deps/AngularJS-Toaster/toaster.js'
         'deps/angular-locale_zh-cn.js'
@@ -239,13 +239,14 @@ gulp.task "copy",  ->
     gulp.src("#{paths.app}/styles/fonts/*")
         .pipe(gulp.dest("#{paths.dist}/fonts/"))
 
-    gulp.src(paths.vendorJsLibs)
-        .pipe(gulp.dest("#{paths.dist}/vendor/"))
     gulp.src("#{paths.app}/api/*")
         .pipe(gulp.dest("#{paths.dist}/api/"))
 
     gulp.src("#{paths.app}/images/**/*")
         .pipe(gulp.dest("#{paths.dist}/images/"))
+
+    gulp.src(paths.vendorJsLibs)
+        .pipe(gulp.dest("#{paths.dist}/vendor/"))
 
 
 gulp.task "express", ->
@@ -254,6 +255,7 @@ gulp.task "express", ->
 
 
     proxyOptions = url.parse('http://192.168.6.99:9002')
+    # proxyOptions = url.parse('http://114.215.142.122:9002')
     # proxyOptions = url.parse('http://192.168.6.6:4000')
     # proxyOptions = url.parse('http://192.168.6.18:3000')
     proxyOptions.route = '/api'
