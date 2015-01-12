@@ -22,8 +22,10 @@
         @include translateX(-100%);
     }
     .modal-panel{
-        width: 75%;
-        margin-left: 25%;
+        position: absolute;
+        right: 0;
+        width: 960px;
+        height: 100%;
         &:before {
             content: "";
             display: block;
@@ -78,54 +80,4 @@
             }
         }
     }
-}
-
-.org-postadd {
-    width: inherit;
-}
-.org-postadd-step {
-    width: 268px;
-    background-color: #f2f3f8;
-    content: "";
-    position: absolute;
-    top: 51px;
-    bottom: 0;
-    z-index: 1042;
-    float: left;
-}
-.org-postadd-step li {
-    width: 268px;
-    float: left;
-    padding-left: 20px;
-    padding-right: 20px;
-    height: 63px;
-    line-height: 63px;
-}
-.org-postadd-step li:hover a, .org-postadd-step li:hover a span, .org-postadd-step li.active a {
-    color: #fff;
-}
-.org-postadd-step li:hover, .org-postadd-step li.active {
-    background-color: #0ab6e8;
-    color: #fff;
-    transition: all ease 0.3s;
-}
-.org-postadd-step a {
-    color: #000;
-    display: block;
-    font-size: 16px;
-}
-.org-postadd-step a span {
-    float: right;
-    line-height: 63px;
-    font-size: 16px;
-}
-.org-postadd-detail {
-    width: 632px;
-    padding: 20px;
-}
-.bg-info {
-    background-color: #daedf8;
-}
-.arrow.left.arrow-info:after {
-    border-right-color: #daedf8;
 }
