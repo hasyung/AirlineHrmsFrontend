@@ -159,12 +159,7 @@ class Route
             .state 'org.active', nb.$buildDialog('active', ActiveCtrl, 'partials/orgs/shared/effect_changes.html')
             .state 'org.history', nb.$buildDialog('history', HistoryCtrl, 'partials/orgs/org_history.html', {size: 'sm'})
             .state 'org.transfer', nb.$buildDialog('transfer', TransferOrgCtrl, 'partials/orgs/shared/org_transfer.html', {size: 'sm'})
-            .state 'org.position', nb.$buildPanel('position',PositionCtrl, 'partials/orgs/position.html')
-
-
-
-
-
+            .state 'org.position', nb.$buildPanel(':id/positions',PositionCtrl, 'partials/orgs/position.html')
 
 
 class OrgsCtrl extends nb.Controller
@@ -260,9 +255,9 @@ class OrgsCtrl extends nb.Controller
 
 class OrgCtrl extends nb.Controller
 
-    @.$inject = ['Org', '$stateParams', '$scope', '$rootScope', '$nbEvent']
+    @.$inject = ['Org', '$stateParams', '$scope', '$rootScope', '$nbEvent', 'Position']
 
-    constructor: (@Org, @params, @scope, @rootScope, @Evt) ->
+    constructor: (@Org, @params, @scope, @rootScope, @Evt, @Position) ->
         @state = 'show' # show editing newsub
         # @scope.org = @Org.$find(@params.orgId)
         scope.$onRootScope 'org:link', @.orgLink.bind(@)
@@ -273,6 +268,7 @@ class OrgCtrl extends nb.Controller
     orgLink: (evt, org)->
         @scope.currentOrg = org
         @scope.copyOrg = org.$copy()
+        @loadPosition()
 
     cancel: ->
         @state = 'show'
@@ -299,10 +295,17 @@ class OrgCtrl extends nb.Controller
         resetForm(scope.newsubForm, scope.updateForm)
         @state = 'show'
 
+    loadPosition: () ->
+        self = @
+        @Position.$search({department_id:@scope.currentOrg.id}).$then (positions) ->
+            self.scope.positions = positions
+            self.Evt.$send 'org:positions', positions
+
     destroy: () ->
         $Evt = @Evt
         @scope.currentOrg.$destroy().$then ->
            $Evt.$send 'org:resetData'
+
     # newSub: (org) ->
     #     @scope.org.newSub(org)
 
@@ -370,10 +373,33 @@ class TransferOrgCtrl extends Modal
 
 
 class PositionCtrl extends Modal
-    @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$injector']
-    constructor: (@panel, @scope, @Evt, @memoName, @injector) ->
+    @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$injector', 'Position', '$stateParams']
+    constructor: (@panel, @scope, @Evt, @memoName, @injector, @Position, @stateParams) ->
+        @loadInitialData()
+        @selects = []
+        @selectOrg = null
         super(panel, scope, memoName)
 
+    loadInitialData: ()->
+        self = @
+        @Position.$search({department_id:@stateParams.id}).$then (positions) ->
+            self.positions = positions
+
+
+    toggleSelect: (position) ->
+        self = @
+        isSelected = _.find self.selects, (item) ->
+            return item == position.id
+        if isSelected
+            self.selects = _.reject self.selects, (item) ->
+                return position.id == item
+        else
+            self.selects.push position.id
+
+    posTransfer: () ->
+        self = @
+        if @selectOrg
+            self.Position.$adjust()
 
 
 
