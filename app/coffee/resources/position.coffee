@@ -42,6 +42,24 @@ Position = (restmod, RMUtils, $Evt) ->
 
                     this.$send(request, onSuccess, onErorr)
 
+                $removeMany: (ids) ->
+                    self = @
+                    url = this.$url()
+                    request = {
+                        method: 'POST', 
+                        url: "#{url}/batch_destroy",
+                        data: ids
+                    }
+                    # $Evt.$send('positions:adjust:success')
+                    onSuccess = (res)->
+                        self.$dispatch 'after-active', res
+                        # $Evt.$send('org:refresh')
+
+                    onErorr = (res) ->
+                        self.$dispatch 'after-active-error', res
+
+                    this.$send(request, onSuccess, onErorr)
+
     }
 
 

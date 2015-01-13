@@ -409,6 +409,14 @@ class PositionCtrl extends Modal
         newPos = @Position.$build(formdata)
         newPos.$save()
 
+    removePositions: () ->
+        console.log @selects
+        @positions.$removeMany({ids:@selects})
+
+
+    updatePosition: (formdata) ->
+
+
 
 
 

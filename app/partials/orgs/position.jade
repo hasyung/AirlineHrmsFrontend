@@ -2,7 +2,13 @@ div(ng-if="ctrl.state == 'list'")
   .org-modal-top.bg-white 人力资源部岗位管理
   .org-modal-post
     .org-modal-posttop 岗位信息列表
-      button.btn.btn-default.fa.fa-trash-o(title="删除",)
+      //- button.btn.btn-default.fa.fa-trash-o(title="删除",)
+      button.btn.btn-default.fa.fa-trash-o(title="删除", nb-popup, position="left")
+        popup-template.nb-popup.org-default-popup-template.panel.panel-default()
+          .panel-heading.popup-title 警告
+          .panel-body.popup-body
+            div 删除后将无法恢复，请确认删除
+            div.div-delete-btn.pull-right(ng-click="ctrl.removePositions()") 删除
       //- button.btn.btn-default.fa.fa-pencil(title="编辑")
       button.btn.btn-default.fa.fa-plus(title="新增子机构", ng-click="ctrl.state = 'create'")
       button.btn.btn-info(title="", nb-popup-plus, position="left-bottom", offset="0.2") 调整机构
@@ -28,7 +34,7 @@ div(ng-if="ctrl.state == 'list'")
           td
             input(type='checkbox', ng-click="ctrl.toggleSelect(pos)")
           td.org-post 
-            a(href="#")
+            a(href="javascript:;")
               {{pos.name}}
           td {{pos.channel.displayName}}
           td {{pos.staffing}}/{{pos.budgetedStaffing}}
