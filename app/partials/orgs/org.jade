@@ -43,7 +43,7 @@ aside.org-aside
                 .org-form-group
                     label.control-label.org-label.drop-label 办公地点：
                     .form-content
-                        nb-dropdown(ng-model="copyOrg.location" remote-key="Department.locations", name="orgAddr", required="true")
+                        nb-dropdown(ng-model="copyOrg.location" remote-key="department_locations", name="orgAddr", required="true")
                         div(ng-messages="updateForm.orgAddr.$error", ng-if="updateForm.orgAddr.$touched")
                             .form-group-error(ng-message="required") 地点必选
 
@@ -68,7 +68,7 @@ aside.org-aside
                 .org-form-group
                     label.control-label.org-label.drop-label 办公地点：
                     .form-content
-                        nb-dropdown(ng-model="neworg.location" remote-key="Department.locations", required="true", name="orgAddr")
+                        nb-dropdown(ng-model="neworg.location" remote-key="department_locations", required="true", name="orgAddr")
 
                         div(ng-messages="newsubForm.orgAddr.$error", ng-if="newsubForm.orgAddr.$touched")
                             .form-group-error(ng-message="required") 地点必选
@@ -76,7 +76,7 @@ aside.org-aside
                 .org-form-group
                     label.control-label.org-label.drop-label 职级：
                     .form-content
-                        nb-dropdown(ng-model="neworg.grade" remote-key="Department.department_grades", required="true", name="orgType", additory="false")
+                        nb-dropdown(ng-model="neworg.grade" remote-key="department_grades", required="true", name="orgType", additory="false")
                         div(ng-messages="newsubForm.orgType.$error", ng-if="newsubForm.orgType.$touched || newsubForm.orgType.$dirty")
                             .form-group-error(ng-message="required") 职级必选
 

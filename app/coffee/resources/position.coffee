@@ -17,16 +17,21 @@ resources = angular.module('resources')
 
 
 
-Position = (restmod) ->
-    restmod.model('/positions')
+Position = (restmod, RMUtils, $Evt) ->
+    # restmod.model('/positions')
     Position = restmod.model('/positions').mix 'nbRestApi', {
-
+        department_id: {mask: 'R', map: 'department.id'}
+        department: {mask: 'CU'}
     	$extend:
-            Resource:
+            Collection:
                 $adjust: (infoData)->
                     self = @
-                    url = RMUtils.joinUrl(this.$url(), 'adjust')
-                    request = {method: 'POST', url: url, data: infoData}
+                    url = this.$url()
+                    request = {
+                        method: 'POST', 
+                        url: "#{url}/adjust",
+                        data: infoData
+                    }
                     # $Evt.$send('positions:adjust:success')
                     onSuccess = (res)->
                         self.$dispatch 'after-active', res
@@ -36,9 +41,6 @@ Position = (restmod) ->
                         self.$dispatch 'after-active-error', res
 
                     this.$send(request, onSuccess, onErorr)
-
-                
-
 
     }
 

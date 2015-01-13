@@ -1,85 +1,157 @@
-.org-modal-top.bg-white 人力资源部岗位管理
-.org-modal-post
-  .org-modal-posttop 岗位信息列表
-    button.btn.btn-default.fa.fa-trash-o(title="删除",)
-    //- button.btn.btn-default.fa.fa-pencil(title="编辑")
-    button.btn.btn-default.fa.fa-plus(title="新增子机构")
-    button.btn.btn-info(title="", nb-popup-plus, position="left-bottom", offset="0.2") 调整机构
-      popup-template.nb-popup.org-default-popup-template.panel.panel-default()
-        .panel-heading.popup-title 组织机构
-        .panel-body.popup-body
-          div(slimscroll height="300px")
-            nb-org-tree(selected-data="ctrl.selectOrg")
-        .panel-footer
-          div.div-delete-btn.pull-right(ng-click="ctrl.posTransfer()") 确定
-  table.table.table-striped.ng-scope.org-post-table
-    thead
-      tr
-        th
-          //- input(type='checkbox', value='option2')
-        th  岗位名称
-        th  通道
-        th  编制数
-        th  工作时间
-        th  OA文件编号
-    tbody
-      tr(ng-repeat="pos in ctrl.positions")
-        td
-          input(type='checkbox', ng-click="ctrl.toggleSelect(pos)")
-        td.org-post {{pos.name}}
-        td {{pos.channel.displayName}}
-        td {{pos.staffing}}/{{pos.budgetedStaffing}}
-        td {{pos.schedule.displayName}}
-        td {{pos.oaFileNo}}
-      //-   td
-      //-     input(type='checkbox', value='option2')
-      //-   td.org-post 总经理
-      //-   td  管理
-      //-   td  2/10
-      //-   td 标准工作制
-      //-   td  021244468
-      //-     .org-hover
-      //-       button.btn.btn-default.fa.fa-pencil(title="编辑")
-      //- tr
-      //-   td
-      //-     input(type='checkbox', value='option2')
-      //-   td
-      //-     a.org-post 主任
-      //-   td  文秘
-      //-   td  1/2
-      //-   td 标准工作制
-      //-   td  20154412
-      //-     .org-hover <button title="编辑" class="btn btn-default fa fa-pencil"></button> 
-      //- tr
-      //-   td
-      //-     input(type='checkbox', value='option2')
-      //-   td.org-post 总经理
-      //-   td  管理~
-      //-   td  2/10
-      //-   td 标准工作制
-      //-   td  021244468
-      //- tr
-      //-   td
-      //-     input(type='checkbox', value='option2')
-      //-   td.org-post 主任
-      //-   td  文秘
-      //-   td  1/2
-      //-   td 标准工作制
-      //-   td  201544120
-      //- tr
-      //-   td
-      //-     input(type='checkbox', value='option2')
-      //-   td.org-post 总经理
-      //-   td  管理
-      //-   td  2/10
-      //-   td 标准工作制
-      //-   td  021244468
-      //- tr
-      //-   td
-      //-     input(type='checkbox', value='option2')
-      //-   td.org-post 主任
-      //-   td  文秘
-      //-   td  1/2
-      //-   td 标准工作制
-      //-   td  201544120
+div(ng-if="ctrl.state == 'list'")
+  .org-modal-top.bg-white 人力资源部岗位管理
+  .org-modal-post
+    .org-modal-posttop 岗位信息列表
+      button.btn.btn-default.fa.fa-trash-o(title="删除",)
+      //- button.btn.btn-default.fa.fa-pencil(title="编辑")
+      button.btn.btn-default.fa.fa-plus(title="新增子机构", ng-click="ctrl.state = 'create'")
+      button.btn.btn-info(title="", nb-popup-plus, position="left-bottom", offset="0.2") 调整机构
+        popup-template.nb-popup.org-default-popup-template.panel.panel-default()
+          .panel-heading.popup-title 组织机构
+          .panel-body.popup-body
+            div(slimscroll height="300px")
+              nb-org-tree(selected-data="ctrl.selectOrg")
+          .panel-footer
+            div.div-delete-btn.pull-right(ng-click="ctrl.posTransfer()") 确定
+    table.table.table-striped.ng-scope.org-post-table
+      thead
+        tr
+          th
+            //- input(type='checkbox', value='option2')
+          th  岗位名称
+          th  通道
+          th  编制数
+          th  工作时间
+          th  OA文件编号
+      tbody
+        tr(ng-repeat="pos in ctrl.positions")
+          td
+            input(type='checkbox', ng-click="ctrl.toggleSelect(pos)")
+          td.org-post 
+            a(href="#")
+              {{pos.name}}
+          td {{pos.channel.displayName}}
+          td {{pos.staffing}}/{{pos.budgetedStaffing}}
+          td {{pos.schedule.displayName}}
+          td {{pos.oaFileNo}}
+div(ng-if="ctrl.state == 'create'")
+  .modal-panel()
+    .modal-panel-content()
+        .org-modal-top.bg-white 人力资源部岗位管理 > 新增岗位
+        .org-postadd.clear
+            .org-postadd-step.pull-left
+                ul
+                    li.active
+                        a(href="javascript:;") 岗位基本信息
+                          span.fa.fa-angle-right
+                    li
+                        a(href="javascript:;") 岗位描述书
+                          span.fa.fa-angle-right
+                    li
+                      a(href="javascript:;") 完成
+                          span.fa.fa-angle-right
+            .org-postadd-detail.pull-right
+                form(novalidate, ng-submit="ctrl.newPosition(posForm, position)", name="posForm")
+                    .postadd-form-group
+                        label.postadd-control-label 岗位名称
+                        input.postadd-form-control(type='text', placeholder='岗位名称', ng-model="position.name")
+                    .postadd-form-group
+                        label.postadd-control-label 岗位通道
+                        nb-dropdown.postadd-form-control(ng-model="position.channel" remote-key="position_channels", required="true", name="", additory="false")
+                    .postadd-form-group
+                        label.postadd-control-label OA文件编号
+                        input.postadd-form-control(type='text', placeholder='川0144450', ng-model="position.oaFileNo")
+                    .postadd-form-group
+                        label.postadd-control-label 编制
+                        input.postadd-form-control(type='text', placeholder='1', ng-model="position.budgetedStaffing")
+                    .postadd-form-group
+                        label.postadd-control-label 工时制度
+                        nb-dropdown.postadd-form-control(ng-model="position.schedule" remote-key="position_schedules", required="true", name="", additory="false")
+                    .postadd-form-group
+                        label.postadd-control-label 类别
+                        nb-dropdown.postadd-form-control(ng-model="position.category" remote-key="position_categories", required="true", name="", additory="false")
+                    .postadd-form-group
+                        label.postadd-control-label 性质
+                        nb-dropdown.postadd-form-control(ng-model="position.nature" remote-key="position_natures", required="true", name="", additory="false")
+                    
+                    
+                    .postadd-form-group
+                        label.postadd-control-label 所在部门
+                        span.postadd-control-text 人力资源部
+                    
+                    .postadd-form-group
+                        label.postadd-control-label
+                        button.btn.btn-info(type='submit') 保存并下一步
+div(ng-if="ctrl.state == 'show'")
+  .modal-panel()
+    .modal-panel-content()
+        .org-modal-top.bg-white 人力资源部总经理岗位详情
+        .org-pos-detail-menu
+        .org-pos-detail-window.bg-white
+          .org-pos-detail-content
+            section.position-info
+              h3 岗位信息
+              .editor-style
+                table
+                  tbody
+                    tr
+                      th 岗位名称：
+                      td 总经理
+                      th 编制：
+                      td 无
+                    tr
+                      th 所属部门：
+                      td 人力资源部
+                      th 工作制度：
+                      td 普通工时制
+                    tr
+                      th 通道：
+                      td 管理
+                      th 类别：
+                      td 领导
+                    tr
+                      th OA文件编号：
+                      td 无
+                      th 性质：
+                      td 无
+            section.position-duty
+              h3 工作职责
+              ol
+                li 根据公司整体经营战略，制订人力资源发展战略，使人力资源配置和供给满足公司各项业务发展的需要。
+                li 组织制订及实施人力资源管理政策及制度，确保公司具有完善的、规范的、客观公正的、在业内处于领先地位的、易于操作的人力资源管理体系。
+                li 根据公司发展的指导思想，使公司在招聘、薪酬、绩效和培训等方面的战略起到吸引、激励和保留优秀员工的作用。
+                li 指导本部建立健全相关管理规定，完善部门监督检查机制，并使之有效的运行，确保部门管理手册有效适宜，满足公司质量方针和目标。
+                li 指导本部副总经理和各科室主任的工作，对部门全体员工实施有效的管理。
+                li 组织和实施中层管理人员和专业技术人员的聘任工作，确保为关键岗位找到最恰当的人选。
+            section.position-purview
+              h3 工作权限
+              ol
+                li 人事权限：
+                  span 无
+                li 财务权限：
+                  span 无
+                li 业务权限：
+                  span 对分管的科室业务工作有建议权、监督权、审核权。
+            section.position-relative
+              h3 工作关系
+              ol
+                li 直属上级：
+                  span 人事调配室主任、副主任；
+                li 直属下级：
+                  span 人力资源管理员、档案管理员、行政助理、服务坐席；
+                li 内部联系：
+                  span 人力资源部各科室、公司各部门；
+                li 外部联系：
+                  span 劳动人事主管部门负责人、相关院校学生处负责人、管理局相关负责人。
+            section.position-qualification
+              h3 任职条件
+              p 参照《人力资源管理手册》第四章第一节《干部管理规定》相关条款。
+            section.work-time
+              h3 工作时间
+              p 不定时工作制
+
+
+
+
+      
 

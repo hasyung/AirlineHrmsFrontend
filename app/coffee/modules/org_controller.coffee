@@ -375,6 +375,7 @@ class TransferOrgCtrl extends Modal
 class PositionCtrl extends Modal
     @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$injector', 'Position', '$stateParams']
     constructor: (@panel, @scope, @Evt, @memoName, @injector, @Position, @stateParams) ->
+        @state = "list"
         @loadInitialData()
         @selects = []
         @selectOrg = null
@@ -398,8 +399,16 @@ class PositionCtrl extends Modal
 
     posTransfer: () ->
         self = @
+        #todo
+        #需要弹出提示框
         if @selectOrg
-            self.Position.$adjust()
+            self.positions.$adjust({position:{department_id: self.selectOrg.id, position_ids: self.selects}})
+
+    newPosition: (form, formdata) ->
+        formdata.departmentId = @stateParams.id
+        newPos = @Position.$build(formdata)
+        newPos.$save()
+
 
 
 
