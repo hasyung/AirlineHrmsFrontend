@@ -177,9 +177,8 @@ class OrgsCtrl extends nb.Controller
         @treeRootOrg = null # 当前树的顶级节点
         @orgs = null    #集合
         @tree = null    # tree化的 orgs 数据
-        @scope.currentOrg = null
         #for ui status
-        @isBarOpen = true
+        @isBarOpen = false
 
         @loadInitialData()
 
@@ -338,11 +337,13 @@ class HistoryCtrl extends Modal
             self.Evt.$send('org:history:error',res)
         onSuccess = (res)->
             logs = res.data.change_logs
-            angular.forEach logs, (log) ->
-                # 添加changeYear属性便于filter的分组
-                log.changeYear = moment.unix(log.created_at).format('YYYY')
+            groupedLogs = _.groupBy logs, (log) ->
+                moment.unix(log.created_at).format('YYYY')
+            logsArr = []
+            angular.forEach groupedLogs, (item, key) ->
+                logsArr.push {logs:item, changeYear: key}
 
-            self.changeLogs = logs   
+            self.changeLogs = _.sortBy(logsArr, 'changeYear').reverse()
         promise = @http.get('/api/departments/change_logs')
         promise.then onSuccess.bind(@), onError.bind(@)
 

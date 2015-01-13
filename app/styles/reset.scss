@@ -1,0 +1,24 @@
+
+body  {
+  font-family: "微软雅黑";
+}
+ul {
+    list-style: none;
+}
+h1, h2, h3, h4, h5 {
+    color: $text-title;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.highlightText {
+    color: #f15a5a !important;
+}
+.bg-black {
+    background-color: $bg-black;
+}
+.bg-black.dk, .bg-black .dk {
+    background-color: $bg-black-dk;
+}
+.bg-black .nav > li > a {
+    color: #adb2c5;
+}

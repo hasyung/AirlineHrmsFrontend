@@ -1,0 +1,217 @@
+.org-pos-detail-menu {
+  width: 100%;
+  height: 280px;
+  // background-color: #f2f3f8;
+  background-color: skyblue;
+
+}
+
+.org-pos-detail-window {
+  width: 100%;
+  height: 650px;
+  padding: 46px 55px;
+  overflow-y: scroll;
+}
+.org-pos-detail-content {
+  width: 800px;
+  margin: 0 auto;
+  section {
+    margin-bottom: 46px;
+    h3 {
+      font-size: $font-size-md;
+      color: $text-title;
+      margin-bottom: 10px;
+    }
+    table {
+      font-size: $font-size-sm;
+    }
+    ol {
+      padding-left: 22px;
+      li {
+        margin-bottom: 10px;
+        letter-spacing: 1px;
+      }
+    }
+  }
+}
+
+
+
+// 文字排版 typo样式
+.simditor .simditor-body, .editor-style {
+  font-size: 16px;
+  font-family: arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  outline: none;
+  word-wrap: break-word;
+
+  & > :first-child {
+    margin-top: 0!important;
+  }
+
+  a{ color: #4298BA; text-decoration: none; word-break: break-all;}
+  a:visited{ color: #4298BA; }
+  a:hover{ color: #0F769F; }
+  a:active{ color:#9E792E; }
+  a:hover, a:active{ outline: 0; }
+
+  h1,h2,h3,h4,h5,h6 {
+    font-weight: normal;
+    margin: 40px 0 20px;
+    color: #000000;
+  }
+
+  h1 { font-size: 24px; }
+  h2 { font-size: 22px; }
+  h3 { font-size: 20px; }
+  h4 { font-size: 18px; }
+  h5 { font-size: 16px; }
+  h6 { font-size: 16px; }
+
+  p, div {
+    word-wrap: break-word;
+    margin: 0 0 15px 0;
+    color: #333;
+    word-wrap: break-word;
+  }
+
+  b, strong {
+    font-weight: bold;
+  }
+
+  i, em {
+    font-style: italic;
+  }
+
+  u {
+    text-decoration: underline;
+  }
+
+  strike, del {
+    text-decoration: line-through;
+  }
+
+  ul, ol {
+    list-style:disc outside none;
+    margin: 15px 0;
+    padding: 0 0 0 40px;
+    line-height: 1.6;
+
+    ul, ol {
+      padding-left: 30px;
+    }
+
+    ul {
+      list-style: circle outside none;
+
+      ul {
+        list-style: square outside none;
+      }
+    }
+  }
+
+  ol {
+    list-style:decimal;
+  }
+
+  blockquote {
+    border-left: 6px solid #ddd;
+    padding: 5px 0 5px 10px;
+    margin: 15px 0 15px 15px;
+
+    & > :first-child {
+      margin-top: 0;
+    }
+  }
+
+  pre {
+    padding: 10px 5px 10px 10px;
+    margin: 15px 0;
+    display: block;
+    line-height: 18px;
+    background: #F0F0F0;
+    border-radius: 3px;
+    font-size:13px;
+    font-family: 'monaco', 'Consolas', "Liberation Mono", Courier, monospace;
+    /*overflow-x: auto;*/
+    word-wrap: break-word;
+    white-space: pre-wrap;
+  }
+
+  code {
+    display: inline-block;
+    padding: 0 4px;
+    margin: 0 5px;
+    background: #eeeeee;
+    border-radius: 3px;
+    font-size:13px;
+    font-family: 'monaco', 'Consolas', "Liberation Mono", Courier, monospace;
+  }
+
+  hr {
+    display: block;
+    height: 0px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 15px 0;
+    padding: 0;
+  }
+
+  table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 15px 0;
+
+    thead {
+      background-color: #f9f9f9;
+    }
+
+    td {
+      min-width: 40px;
+      height: 30px;
+      border: 1px solid #ccc;
+      vertical-align: top;
+      padding: 2px 4px;
+      box-sizing: border-box;
+
+      &.active {
+        background-color: #ffffee;
+      }
+    }
+  }
+
+
+  img {
+    margin: 0 5px;
+    vertical-align: middle;
+  }
+
+  @for $i from 0 through 10 {
+    *[data-indent="#{$i}"] {
+      margin-left: 40px * $i;
+    }
+  }
+}
+
+// 岗位信息部分覆盖的文字样式
+.position-info{
+  .editor-style {
+    table {
+      width: 60%;
+    }
+    th {
+      font-weight: normal;
+      width: 120px;
+      padding: 0 5px 10px 0;
+
+    }
+    td {
+      width: 260px;
+      border: none;
+      padding: 0 5px 10px 5px;
+    }
+  }
+}

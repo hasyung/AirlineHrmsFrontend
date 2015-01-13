@@ -1,28 +1,28 @@
 @charset 'utf-8';
 @import 'bourbon';
+
+@import 'variables';
+@import 'reset';
+@import 'mixin/mixin';
+
 // @import 'component/loading-btn.scss';
 //layout
-@import '_variables';
 @import 'layout/nav';
 @import 'layout/layout';
 //components
 @import 'component/loading.scss';
-
+@import 'component/panel';
+@import 'component/timline';
+@import 'component/button';
+@import 'component/position_detail';
+@import 'component/position_add';
 
 
 //modules
 @import 'modules/personnel';
 
-@import 'orgs';
+@import 'modules/orgs';
 
-
-body  {font-family: "微软雅黑"}
-ul {
-	list-style: none;
-}
-.highlightText {
-    color: #f15a5a !important;
-}
 .bootstrap-tagsinput { width: 100%; }
 .navbar-fixed-top {
 	background-color: #fff;

@@ -1,0 +1,59 @@
+.org-timline {
+    .tl-content {
+        width: 210px;
+        cursor: pointer;
+        @include transition(all .5s linear);
+        h1 {
+            font-size: $font-size-md;
+            margin: 0;
+            color: #000;
+        }
+        h2 {
+            font-size: $font-size-sm;
+            margin-top: 10px;
+            color: #23b7e5;
+        }
+        p {
+            font-size: $font-size-base;
+            border-top: 1px dotted #cee0eb;
+            padding-top: 10px;
+        }
+    }
+    span.pull-right {
+        font-size: $font-size-sm;
+        color: #23b7e5;
+        line-height: 34px;
+    }
+    .tl-header {
+        width: inherit;
+        text-align: left;
+        .year {
+            border-radius: 25px;
+            padding: 6px 14px;
+        }
+    }
+    .tl-wrap {
+        margin-left: 30px;
+    }
+    .bg-info {
+        border-color: #daedf8;
+        p {
+            color: #000;
+        }
+    }
+
+    //这是什么。。。？
+    .org-delete-template {
+        position: absolute;
+        background-color: #fff;
+        top: -40px;
+        left: -160px;
+        width: 270px;
+        z-index: 99999;
+    }
+}
+
+.org-timline-footer .btn {
+    width: 70px;
+    margin-left: 10px;
+}

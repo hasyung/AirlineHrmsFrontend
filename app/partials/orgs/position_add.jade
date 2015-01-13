@@ -1,58 +1,52 @@
-.modal-backdrop.fade.in
-.org-modal.org-modal-posts
-    .org-modal-top 人力资源部岗位管理 > 新增岗位
-    .org-postadd
-        .org-postadd-step.pull-left
-            ul
-                li.active
-                    a(href="#") 填写基本信息
-                        span.fa.fa-angle-right
-                li
-                    a(href="#") 设置薪酬
-                        span.fa.fa-angle-right
-                li
-                    a(href="#") 设置绩效
-                        span.fa.fa-angle-right
-                 li
-                   a(href="#") 完成
-                        span.fa.fa-angle-right
-        .org-postadd-detail.pull-right
-            form.form-horizontal.bucket-form(method='get')
-                .form-group
-                    label.col-lg-3.control-label 岗位名称
-                    .col-lg-8
-                        input.form-control(type='text', placeholder='岗位名称')
-                .form-group
-                    label.col-lg-3.control-label 岗位通道
-                    .col-lg-8
-                        select.form-control.m-bot15
-                          option 管理
-                          option 普通职工
-                .form-group
-                    label.col-lg-3.control-label 工作时间
-                    .col-lg-8
-                        select.form-control.m-bot15
-                          option 标准工作制
-                          option 倒班制
-                .form-group
-                    label.col-lg-3.control-label OA文件编号
-                    .col-lg-8
-                        input.form-control(type='text', placeholder='川0144450')
-                .form-group
-                    label.col-lg-3.control-label 编制数
-                    .col-lg-8
-                        input.form-control(type='text', placeholder='1')
-                .form-group
-                    label.col-lg-3.control-label 所在部门
-                    .col-lg-8 人力资源部
-                .form-group
-                    label.col-lg-3.control-label 创建时间
-                    .col-lg-8 2014-05-10
-                .form-group
-                    label.col-lg-3.control-label 描述书
-                    div.col-lg-8
-                        textarea.form-control(rows='6')
-                .form-group
-                    label.col-lg-3.control-label
-                    div.col-lg-8
-                        button.btn.btn-info(type='submit') 保存并下一步
+.modal.modal-panel-wrapper#test-position(style="z-index: 1060; display: block;")
+    .modal-panel()
+        .modal-panel-content()
+            .org-modal-top.bg-white 人力资源部岗位管理 > 新增岗位
+            .org-postadd.clear
+                .org-postadd-step.pull-left
+                    ul
+                        li.active
+                            a(href="#") 填写基本信息
+                                span.fa.fa-angle-right
+                        li
+                            a(href="#") 设置薪酬
+                                span.fa.fa-angle-right
+                        li
+                            a(href="#") 设置绩效
+                                span.fa.fa-angle-right
+                         li
+                           a(href="#") 完成
+                                span.fa.fa-angle-right
+                .org-postadd-detail.pull-right
+                    form(method='get')
+                        .postadd-form-group
+                            label.postadd-control-label 岗位名称
+                            input.postadd-form-control(type='text', placeholder='岗位名称')
+                        .postadd-form-group
+                            label.postadd-control-label 岗位通道
+                            select.postadd-form-control
+                                option 管理
+                                option 普通职工
+                        .postadd-form-group
+                            label.postadd-control-label 工作时间
+                            select.postadd-form-control
+                                option 标准工作制
+                                option 倒班制
+                        .postadd-form-group
+                            label.postadd-control-label OA文件编号
+                            input.postadd-form-control(type='text', placeholder='川0144450')
+                        .postadd-form-group
+                            label.postadd-control-label 编制数
+                            input.postadd-form-control(type='text', placeholder='1')
+                        .postadd-form-group
+                            label.postadd-control-label 所在部门
+                            span.postadd-control-text 人力资源部
+                        .postadd-form-group
+                            label.postadd-control-label 创建时间
+                            span.postadd-control-text 2014-05-10
+                        .postadd-form-group
+                            label.postadd-control-label 描述书
+                            textarea(rows='6')
+                        .postadd-form-group
+                            label.postadd-control-label
+                            button.btn.btn-info(type='submit') 保存并下一步
