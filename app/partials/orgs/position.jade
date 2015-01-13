@@ -34,7 +34,7 @@ div(ng-if="ctrl.state == 'list'")
           td
             input(type='checkbox', ng-click="ctrl.toggleSelect(pos)")
           td.org-post 
-            a(href="javascript:;")
+            a(href="javascript:;", ng-click="ctrl.state = 'show'")
               {{pos.name}}
           td {{pos.channel.displayName}}
           td {{pos.staffing}}/{{pos.budgetedStaffing}}
@@ -53,9 +53,7 @@ div(ng-if="ctrl.state == 'create'")
                     li
                         a(href="javascript:;") 岗位描述书
                           span.fa.fa-angle-right
-                    li
-                      a(href="javascript:;") 完成
-                          span.fa.fa-angle-right
+                    
             .org-postadd-detail.pull-right
                 form(novalidate, ng-submit="ctrl.newPosition(posForm, position)", name="posForm")
                     .postadd-form-group

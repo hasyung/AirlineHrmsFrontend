@@ -408,9 +408,9 @@ class PositionCtrl extends Modal
         formdata.departmentId = @stateParams.id
         newPos = @Position.$build(formdata)
         newPos.$save()
+        @state = "list"
 
     removePositions: () ->
-        console.log @selects
         @positions.$removeMany({ids:@selects})
 
 
