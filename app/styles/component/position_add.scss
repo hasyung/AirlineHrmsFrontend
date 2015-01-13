@@ -75,6 +75,22 @@
         vertical-align: top;
 
     }
+    .dropdown {
+        display: inline-block;;
+        width: 66.6666667%;
+        .dropdown-toggle {
+            width: 100%;
+            border-radius: 4px;
+            text-align: left;
+        }
+        .caret {
+            float: right;
+            margin-top: 7px;
+        }
+        .dropdown-menu {
+            width: 100%;
+        }
+    }
 }
 .arrow.left.arrow-info:after {
     border-right-color: #daedf8;
