@@ -8,13 +8,13 @@
 
 .org-pos-detail-window {
   width: 100%;
-  height: 630px;
+  height: 650px;
   padding: 46px 55px;
   overflow-y: scroll;
 }
 .org-pos-detail-content {
-  // width: 800px;
-  // margin: 0 auto;
+  width: 800px;
+  margin: 0 auto;
   section {
     margin-bottom: 46px;
     h3 {
@@ -28,14 +28,12 @@
     ol {
       padding-left: 22px;
       li {
-        font-size: $font-size-sm;
         margin-bottom: 10px;
         letter-spacing: 1px;
       }
     }
   }
 }
-
 
 
 
