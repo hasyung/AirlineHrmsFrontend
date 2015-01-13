@@ -27,7 +27,7 @@ div(ng-if="ctrl.state == 'list'")
         tr(ng-repeat="pos in ctrl.positions")
           td
             input(type='checkbox', ng-click="ctrl.toggleSelect(pos)")
-          td.org-post 
+          td.org-post
             a(href="#")
               {{pos.name}}
           td {{pos.channel.displayName}}
@@ -57,7 +57,7 @@ div(ng-if="ctrl.state == 'create'")
                         input.postadd-form-control(type='text', placeholder='岗位名称', ng-model="position.name")
                     .postadd-form-group
                         label.postadd-control-label 岗位通道
-                        nb-dropdown.postadd-form-control(ng-model="position.channel" remote-key="position_channels", required="true", name="", additory="false")
+                        nb-dropdown(ng-model="position.channel" remote-key="position_channels", required="true", name="", additory="false")
                     .postadd-form-group
                         label.postadd-control-label OA文件编号
                         input.postadd-form-control(type='text', placeholder='川0144450', ng-model="position.oaFileNo")
@@ -66,19 +66,19 @@ div(ng-if="ctrl.state == 'create'")
                         input.postadd-form-control(type='text', placeholder='1', ng-model="position.budgetedStaffing")
                     .postadd-form-group
                         label.postadd-control-label 工时制度
-                        nb-dropdown.postadd-form-control(ng-model="position.schedule" remote-key="position_schedules", required="true", name="", additory="false")
+                        nb-dropdown(ng-model="position.schedule" remote-key="position_schedules", required="true", name="", additory="false")
                     .postadd-form-group
                         label.postadd-control-label 类别
-                        nb-dropdown.postadd-form-control(ng-model="position.category" remote-key="position_categories", required="true", name="", additory="false")
+                        nb-dropdown(ng-model="position.category" remote-key="position_categories", required="true", name="", additory="false")
                     .postadd-form-group
                         label.postadd-control-label 性质
-                        nb-dropdown.postadd-form-control(ng-model="position.nature" remote-key="position_natures", required="true", name="", additory="false")
-                    
-                    
+                        nb-dropdown(ng-model="position.nature" remote-key="position_natures", required="true", name="", additory="false")
+
+
                     .postadd-form-group
                         label.postadd-control-label 所在部门
                         span.postadd-control-text 人力资源部
-                    
+
                     .postadd-form-group
                         label.postadd-control-label
                         button.btn.btn-info(type='submit') 保存并下一步
@@ -153,5 +153,5 @@ div(ng-if="ctrl.state == 'show'")
 
 
 
-      
+
 
