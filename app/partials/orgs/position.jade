@@ -54,78 +54,79 @@ div(ng-if="ctrl.state == 'create'")
                         a(href="javascript:;", , ng-click="ctrl.step = 'jd'") 岗位描述书
                           span.fa.fa-angle-right
 
-            .org-postadd-detail.pull-right(ng-show="ctrl.step == 'detail'")
+            .org-postadd-detail.pull-right
                 form(novalidate, ng-submit="ctrl.newPosition(posForm, position)", name="posForm")
-                    .postadd-form-group
-                        label.postadd-control-label 岗位名称
-                        input.postadd-form-control(type='text', placeholder='岗位名称', ng-model="position.name")
-                    .postadd-form-group
-                        label.postadd-control-label 岗位通道
-                        nb-dropdown(ng-model="position.channel" remote-key="position_channels", required="true", name="", additory="false")
-                    .postadd-form-group
-                        label.postadd-control-label OA文件编号
-                        input.postadd-form-control(type='text', placeholder='川0144450', ng-model="position.oaFileNo")
-                    .postadd-form-group
-                        label.postadd-control-label 编制
-                        input.postadd-form-control(type='text', placeholder='1', ng-model="position.budgetedStaffing")
-                    .postadd-form-group
-                        label.postadd-control-label 工时制度
-                        nb-dropdown(ng-model="position.schedule" remote-key="position_schedules", required="true", name="", additory="false")
-                    .postadd-form-group
-                        label.postadd-control-label 类别
-                        nb-dropdown(ng-model="position.category" remote-key="position_categories", required="true", name="", additory="false")
-                    .postadd-form-group
-                        label.postadd-control-label 性质
-                        nb-dropdown(ng-model="position.nature" remote-key="position_natures", required="true", name="", additory="false")
+                    div(ng-show="ctrl.step == 'detail'")
+                      .postadd-form-group
+                          label.postadd-control-label 岗位名称
+                          input.postadd-form-control(type='text', placeholder='岗位名称', ng-model="position.name")
+                      .postadd-form-group
+                          label.postadd-control-label 岗位通道
+                          nb-dropdown(ng-model="position.channel" remote-key="position_channels", required="true", name="", additory="false")
+                      .postadd-form-group
+                          label.postadd-control-label OA文件编号
+                          input.postadd-form-control(type='text', placeholder='川0144450', ng-model="position.oaFileNo")
+                      .postadd-form-group
+                          label.postadd-control-label 编制
+                          input.postadd-form-control(type='text', placeholder='1', ng-model="position.budgetedStaffing")
+                      .postadd-form-group
+                          label.postadd-control-label 工时制度
+                          nb-dropdown(ng-model="position.schedule" remote-key="position_schedules", required="true", name="", additory="false")
+                      .postadd-form-group
+                          label.postadd-control-label 类别
+                          nb-dropdown(ng-model="position.category" remote-key="position_categories", required="true", name="", additory="false")
+                      .postadd-form-group
+                          label.postadd-control-label 性质
+                          nb-dropdown(ng-model="position.nature" remote-key="position_natures", required="true", name="", additory="false")
 
 
-                    .postadd-form-group
-                        label.postadd-control-label 所在部门
-                        span.postadd-control-text {{currentOrg.name}}
+                      .postadd-form-group
+                          label.postadd-control-label 所在部门
+                          span.postadd-control-text {{currentOrg.name}}
 
-                    .postadd-form-group
-                        label.postadd-control-label
-                        button.btn.btn-info(type='submit') 保存并下一步
-              <!-- 新增/编辑 岗位描述书 （还未抽出） -->
-              .org-postadd-detail.pull-right.org-postadd-jd(ng-show="ctrl.step == 'jd'")
-                form(novalidate, ng-submit="ctrl.newPosition(posForm, position)", name="posForm")
-                  .org-desc-section
-                    h3 工作职责
-                    label.postadd-control-label 工作职责
-                    textarea.postadd-form-control(simditor, placeholder="这里输入内容", autofocus, ng-model="position.responsibility")
+                      .postadd-form-group
+                          label.postadd-control-label
+                          button.btn.btn-info(type='submit') 保存并下一步
+                          //- jd
+                    .org-postadd-detail.pull-right.org-postadd-jd(ng-show="ctrl.step == 'jd'")
+                      form(novalidate, ng-submit="ctrl.newPosition(posForm, position)", name="posForm")
+                        .org-desc-section
+                          h3 工作职责
+                          label.postadd-control-label 工作职责
+                          textarea.postadd-form-control(simditor, placeholder="这里输入内容", autofocus, ng-model="position.responsibility")
 
-                  .org-desc-section
-                    h3 工作权限
-                    .postadd-form-group
-                        label.postadd-control-label 人事权限
-                        input.postadd-form-control(type='text', placeholder='请输入人事权限', ng-model="position.name")
-                    .postadd-form-group
-                        label.postadd-control-label 财务权限
-                        input.postadd-form-control(type='text', placeholder='请输入财务权限', ng-model="position.name")
-                    .postadd-form-group
-                        label.postadd-control-label 业务权限
-                        input.postadd-form-control(type='text', placeholder='请输入业务权限', ng-model="position.name")
-                  .org-desc-section
-                    h3 工作关系
-                    .postadd-form-group
-                        label.postadd-control-label 直属上级
-                        input.postadd-form-control(type='text', placeholder='请输入直属上级', ng-model="position.oaFileNo")
-                    .postadd-form-group
-                        label.postadd-control-label 直属下级
-                        input.postadd-form-control(type='text', placeholder='请输入直属下级', ng-model="position.budgetedStaffing")
-                    .postadd-form-group
-                        label.postadd-control-label 内部联系
-                        input.postadd-form-control(type='text', placeholder='请输入内部联系', ng-model="position.budgetedStaffing")
-                    .postadd-form-group
-                        label.postadd-control-label 外部联系
-                        input.postadd-form-control(type='text', placeholder='请输入外部联系', ng-model="position.budgetedStaffing")
-                    .postadd-form-group
-                      h3 任职条件
-                      label.postadd-control-label 任职条件
+                        .org-desc-section
+                          h3 工作权限
+                          .postadd-form-group
+                              label.postadd-control-label 人事权限
+                              input.postadd-form-control(type='text', placeholder='请输入人事权限', ng-model="position.name")
+                          .postadd-form-group
+                              label.postadd-control-label 财务权限
+                              input.postadd-form-control(type='text', placeholder='请输入财务权限', ng-model="position.name")
+                          .postadd-form-group
+                              label.postadd-control-label 业务权限
+                              input.postadd-form-control(type='text', placeholder='请输入业务权限', ng-model="position.name")
+                        .org-desc-section
+                          h3 工作关系
+                          .postadd-form-group
+                              label.postadd-control-label 直属上级
+                              input.postadd-form-control(type='text', placeholder='请输入直属上级', ng-model="position.oaFileNo")
+                          .postadd-form-group
+                              label.postadd-control-label 直属下级
+                              input.postadd-form-control(type='text', placeholder='请输入直属下级', ng-model="position.budgetedStaffing")
+                          .postadd-form-group
+                              label.postadd-control-label 内部联系
+                              input.postadd-form-control(type='text', placeholder='请输入内部联系', ng-model="position.budgetedStaffing")
+                          .postadd-form-group
+                              label.postadd-control-label 外部联系
+                              input.postadd-form-control(type='text', placeholder='请输入外部联系', ng-model="position.budgetedStaffing")
+                          .postadd-form-group
+                            h3 任职条件
+                            label.postadd-control-label 任职条件
 
-                    .postadd-form-group
-                        label.postadd-control-label
-                        button.btn.btn-info(type='submit') 保存并下一步
+                          .postadd-form-group
+                              label.postadd-control-label
+                              button.btn.btn-info(type='submit') 保存并下一步
 
 div(ng-if="ctrl.state == 'show'")
   .modal-panel()
