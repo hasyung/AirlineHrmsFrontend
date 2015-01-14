@@ -1,8 +1,8 @@
 div(ng-if="ctrl.state == 'list'")
-  .org-modal-top.bg-white 人力资源部岗位管理
+  .org-modal-top.bg-white {{currentOrg.name}}岗位管理
   .org-modal-post
     .org-modal-posttop 岗位信息列表
-      //- button.btn.btn-default.fa.fa-trash-o(title="删除",)
+      button.btn.btn-default 导出
       button.btn.btn-default.fa.fa-trash-o(title="删除", nb-popup, position="left")
         popup-template.nb-popup.org-default-popup-template.panel.panel-default()
           .panel-heading.popup-title 警告
@@ -34,7 +34,7 @@ div(ng-if="ctrl.state == 'list'")
           td
             input(type='checkbox', ng-click="ctrl.toggleSelect(pos)")
           td.org-post 
-            a(href="javascript:;", ng-click="ctrl.state = 'show'")
+            a(href="javascript:;", ng-click="ctrl.positionDetail(pos)")
               {{pos.name}}
           td {{pos.channel.displayName}}
           td {{pos.staffing}}/{{pos.budgetedStaffing}}
@@ -43,18 +43,18 @@ div(ng-if="ctrl.state == 'list'")
 div(ng-if="ctrl.state == 'create'")
   .modal-panel()
     .modal-panel-content()
-        .org-modal-top.bg-white 人力资源部岗位管理 > 新增岗位
+        .org-modal-top.bg-white {{currentOrg.name}} > 新增岗位
         .org-postadd.clear
             .org-postadd-step.pull-left
                 ul
-                    li.active
-                        a(href="javascript:;") 岗位基本信息
+                    li(ng-class="{'active': ctrl.step == 'detail'}")
+                        a(href="javascript:;", ng-click="ctrl.step = 'detail'") 岗位基本信息
                           span.fa.fa-angle-right
-                    li
-                        a(href="javascript:;") 岗位描述书
+                    li(ng-class="{'active': ctrl.step == 'jd'}")
+                        a(href="javascript:;", , ng-click="ctrl.step = 'jd'") 岗位描述书
                           span.fa.fa-angle-right
                     
-            .org-postadd-detail.pull-right
+            .org-postadd-detail.pull-right(ng-show="ctrl.step == 'detail'")
                 form(novalidate, ng-submit="ctrl.newPosition(posForm, position)", name="posForm")
                     .postadd-form-group
                         label.postadd-control-label 岗位名称
@@ -81,15 +81,18 @@ div(ng-if="ctrl.state == 'create'")
 
                     .postadd-form-group
                         label.postadd-control-label 所在部门
-                        span.postadd-control-text 人力资源部
+                        span.postadd-control-text {{currentOrg.name}}
 
                     .postadd-form-group
                         label.postadd-control-label
                         button.btn.btn-info(type='submit') 保存并下一步
+
+            .org-postadd-jd(ng-show="ctrl.step == 'jd'")
+              .test 随时可以删
 div(ng-if="ctrl.state == 'show'")
   .modal-panel()
     .modal-panel-content()
-        .org-modal-top.bg-white 人力资源部总经理岗位详情
+        .org-modal-top.bg-white {{currentOrg.name}}{{currentPos.name}}岗位详情
         .org-pos-detail-menu
         .org-pos-detail-window.bg-white
           .org-pos-detail-content
@@ -100,24 +103,24 @@ div(ng-if="ctrl.state == 'show'")
                   tbody
                     tr
                       th 岗位名称：
-                      td 总经理
+                      td {{currentPos.name}}
                       th 编制：
-                      td 无
+                      td {{currentPos.budgetedStaffing}}
                     tr
                       th 所属部门：
-                      td 人力资源部
+                      td {{currentOrg.name}}
                       th 工作制度：
-                      td 普通工时制
+                      td {{currentPos.schedule.displayName || '无'}}
                     tr
                       th 通道：
-                      td 管理
+                      td {{currentPos.channel.displayName || '无'}}
                       th 类别：
-                      td 领导
+                      td {{currentPos.category.displayName || '无'}}
                     tr
                       th OA文件编号：
-                      td 无
+                      td {{currentPos.oaFileNo}}
                       th 性质：
-                      td 无
+                      td {{currentPos.nature.displayName || '无'}}
             section.position-duty
               h3 工作职责
               ol

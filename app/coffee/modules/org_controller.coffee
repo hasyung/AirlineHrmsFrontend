@@ -373,18 +373,22 @@ class TransferOrgCtrl extends Modal
 
 
 class PositionCtrl extends Modal
-    @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$injector', 'Position', '$stateParams']
-    constructor: (@panel, @scope, @Evt, @memoName, @injector, @Position, @stateParams) ->
+    @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$injector', 'Position', '$stateParams', 'Org']
+    constructor: (@panel, @scope, @Evt, @memoName, @injector, @Position, @stateParams, @Org) ->
         @state = "list"
         @loadInitialData()
         @selects = []
         @selectOrg = null
+        #for view 标示岗位新增的步骤
+        @step = "detail"
         super(panel, scope, memoName)
 
     loadInitialData: ()->
         self = @
         @Position.$search({department_id:@stateParams.id}).$then (positions) ->
             self.positions = positions
+        @Org.$find(@stateParams.id).$then (org) ->
+            self.scope.currentOrg = org
 
 
     toggleSelect: (position) ->
@@ -412,6 +416,10 @@ class PositionCtrl extends Modal
 
     removePositions: () ->
         @positions.$removeMany({ids:@selects})
+
+    positionDetail: (position) ->
+        @scope.currentPos = position
+        @state = "show"
 
 
     updatePosition: (formdata) ->
