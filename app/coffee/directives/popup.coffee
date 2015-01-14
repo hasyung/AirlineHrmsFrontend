@@ -64,7 +64,7 @@ angular.module 'nb.directives'
             tipElement.css {
                 'z-index': '1040',
                 'background-color': '#fff',
-                position: 'absolute';
+                position: 'absolute'
             }
             options = {scope: scope}
             options.position = "left"

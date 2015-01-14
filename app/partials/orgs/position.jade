@@ -2,13 +2,14 @@ div(ng-if="ctrl.state == 'list'")
   .org-modal-top.bg-white {{currentOrg.name}}岗位管理
   .org-modal-post
     .org-modal-posttop 岗位信息列表
-      button.btn.btn-default 导出
+      //- button.btn.btn-default 导出
       button.btn.btn-default.fa.fa-trash-o(title="删除", nb-popup, position="left")
         popup-template.nb-popup.org-default-popup-template.panel.panel-default()
           .panel-heading.popup-title 警告
           .panel-body.popup-body
             div 删除后将无法恢复，请确认删除
             div.div-delete-btn.pull-right(ng-click="ctrl.removePositions()") 删除
+
       //- button.btn.btn-default.fa.fa-pencil(title="编辑")
       button.btn.btn-default.fa.fa-plus(title="新增子机构", ng-click="ctrl.state = 'create'")
       button.btn.btn-info(title="", nb-popup-plus, position="left-bottom", offset="0.2") 调整机构
@@ -51,7 +52,7 @@ div(ng-if="ctrl.state == 'create'")
                         a(href="javascript:;", ng-click="ctrl.step = 'detail'") 岗位基本信息
                           span.fa.fa-angle-right
                     li(ng-class="{'active': ctrl.step == 'jd'}")
-                        a(href="javascript:;", , ng-click="ctrl.step = 'jd'") 岗位描述书
+                        a(href="javascript:;", ng-click="ctrl.step = 'jd'") 岗位描述书
                           span.fa.fa-angle-right
 
             .org-postadd-detail.pull-right
@@ -86,7 +87,7 @@ div(ng-if="ctrl.state == 'create'")
 
                       .postadd-form-group
                           label.postadd-control-label
-                          button.btn.btn-info(type='submit') 保存并下一步
+                          button.btn.btn-info(type='button', ng-click="ctrl.step = 'jd'") 下一步
                           //- jd
                     .org-postadd-detail.pull-right.org-postadd-jd(ng-show="ctrl.step == 'jd'")
                       form(novalidate, ng-submit="ctrl.newPosition(posForm, position)", name="posForm")
@@ -126,7 +127,7 @@ div(ng-if="ctrl.state == 'create'")
 
                           .postadd-form-group
                               label.postadd-control-label
-                              button.btn.btn-info(type='submit') 保存并下一步
+                              button.btn.btn-info(type='submit') 完成
 
 div(ng-if="ctrl.state == 'show'")
   .modal-panel()

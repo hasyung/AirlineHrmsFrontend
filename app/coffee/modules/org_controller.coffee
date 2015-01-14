@@ -378,10 +378,11 @@ class PositionCtrl extends Modal
         @state = "list"
         @loadInitialData()
         @selects = []
-        @selectOrg = null
         #for view 标示岗位新增的步骤
         @step = "detail"
         super(panel, scope, memoName)
+        @selectOrg = null
+
 
     loadInitialData: ()->
         self = @
@@ -389,6 +390,7 @@ class PositionCtrl extends Modal
             self.positions = positions
         @Org.$find(@stateParams.id).$then (org) ->
             self.scope.currentOrg = org
+        
 
 
     toggleSelect: (position) ->
@@ -407,6 +409,8 @@ class PositionCtrl extends Modal
         #需要弹出提示框
         if @selectOrg
             self.positions.$adjust({position:{department_id: self.selectOrg.id, position_ids: self.selects}})
+        else 
+            console.log "未选中机构"
 
     newPosition: (form, formdata) ->
         formdata.departmentId = @stateParams.id
@@ -423,6 +427,8 @@ class PositionCtrl extends Modal
 
 
     updatePosition: (formdata) ->
+
+    
 
 
 
