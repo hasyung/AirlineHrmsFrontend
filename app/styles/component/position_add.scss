@@ -1,6 +1,7 @@
 
 .org-postadd {
     width: inherit;
+    height: calc(100% - 51px);
 }
 // 新增岗位弹出层左侧菜单
 .org-postadd-step {
@@ -37,6 +38,8 @@
 // 新增岗位弹出层右侧表单
 .org-postadd-detail {
     width: 632px;
+    height: 100%;
+    overflow-y: scroll;
     padding: 20px;
     .postadd-form-group {
         margin: 0 0 15px 0;
@@ -67,14 +70,6 @@
         box-shadow: none;
         vertical-align: middle;
     }
-    textarea {
-        width: 66.6666667%;
-        padding: 6px 12px;
-        border: 1px solid #cfdadd;
-        border-radius: 2px;
-        vertical-align: top;
-
-    }
     .dropdown {
         display: inline-block;;
         width: 66.6666667%;
@@ -94,8 +89,14 @@
 }
 .org-postadd-jd {
     .org-desc-section {
+        margin-bottom: 20px;
         h3 {
             font-size: $font-size-md;
+        }
+        .simditor {
+            display: inline-block;
+            width: 66.6666667%;
+            vertical-align: top;
         }
     }
 }
