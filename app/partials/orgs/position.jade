@@ -87,8 +87,9 @@ div(ng-if="ctrl.state == 'create'")
                         label.postadd-control-label
                         button.btn.btn-info(type='submit') 保存并下一步
 
-            .org-postadd-jd(ng-show="ctrl.step == 'jd'")
-              .test 随时可以删
+            .org-postadd-jd(ng-if="ctrl.step == 'jd'")
+              form
+                textarea(simditor, placeholder="这里输入内容", autofocus, ng-model="position.responsibility")
 div(ng-if="ctrl.state == 'show'")
   .modal-panel()
     .modal-panel-content()
