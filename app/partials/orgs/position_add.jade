@@ -18,35 +18,34 @@
                             a(href="#") 完成
                                 span.fa.fa-angle-right
                 .org-postadd-detail.pull-right
-                    form(method='get')
+                    form(novalidate, ng-submit="ctrl.newPosition(posForm, position)", name="posForm")
                         .postadd-form-group
                             label.postadd-control-label 岗位名称
-                            input.postadd-form-control(type='text', placeholder='岗位名称')
+                            input.postadd-form-control(type='text', placeholder='岗位名称', ng-model="position.name")
                         .postadd-form-group
                             label.postadd-control-label 岗位通道
-                            select.postadd-form-control
-                                option 管理
-                                option 普通职工
-                        .postadd-form-group
-                            label.postadd-control-label 工作时间
-                            select.postadd-form-control
-                                option 标准工作制
-                                option 倒班制
+                            nb-dropdown(ng-model="position.channel" remote-key="position_channels", required="true", name="", additory="false")
                         .postadd-form-group
                             label.postadd-control-label OA文件编号
-                            input.postadd-form-control(type='text', placeholder='川0144450')
+                            input.postadd-form-control(type='text', placeholder='川0144450', ng-model="position.oaFileNo")
                         .postadd-form-group
-                            label.postadd-control-label 编制数
-                            input.postadd-form-control(type='text', placeholder='1')
+                            label.postadd-control-label 编制
+                            input.postadd-form-control(type='text', placeholder='1', ng-model="position.budgetedStaffing")
+                        .postadd-form-group
+                            label.postadd-control-label 工时制度
+                            nb-dropdown(ng-model="position.schedule" remote-key="position_schedules", required="true", name="", additory="false")
+                        .postadd-form-group
+                            label.postadd-control-label 类别
+                            nb-dropdown(ng-model="position.category" remote-key="position_categories", required="true", name="", additory="false")
+                        .postadd-form-group
+                            label.postadd-control-label 性质
+                            nb-dropdown(ng-model="position.nature" remote-key="position_natures", required="true", name="", additory="false")
+
+
                         .postadd-form-group
                             label.postadd-control-label 所在部门
-                            span.postadd-control-text 人力资源部
-                        .postadd-form-group
-                            label.postadd-control-label 创建时间
-                            span.postadd-control-text 2014-05-10
-                        .postadd-form-group
-                            label.postadd-control-label 描述书
-                            textarea(rows='6')
+                            span.postadd-control-text {{currentOrg.name}}
+
                         .postadd-form-group
                             label.postadd-control-label
                             button.btn.btn-info(type='submit') 保存并下一步
