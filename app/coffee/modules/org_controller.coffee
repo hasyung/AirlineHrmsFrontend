@@ -373,12 +373,13 @@ class TransferOrgCtrl extends Modal
 
 
 class PositionCtrl extends Modal
-    @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$injector', 'Position', '$stateParams', 'Org']
-    constructor: (@panel, @scope, @Evt, @memoName, @injector, @Position, @stateParams, @Org) ->
+    @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$injector', 'Position', '$stateParams', 'Org', 'Specification']
+    constructor: (@panel, @scope, @Evt, @memoName, @injector, @Position, @stateParams, @Org, @Specification) ->
         super(panel, scope, memoName)
         @state = "list"
         @loadInitialData()
         @selects = []
+        @scope.currentPos = {}
         #for view 标示岗位新增的步骤
         @step = "detail"
         @selectOrg = null
@@ -416,17 +417,25 @@ class PositionCtrl extends Modal
             console.log "未选中机构"
 
     newPosition: (form, position, specification) ->
+        @scope.position = null
         position.departmentId = @stateParams.id
-        newPos = @Position.$build({position: position, specification:specification})
+        newPos = @Position.$build({position: position, specification: specification})
         newPos.$save()
-        # @state = "list"
+        @resetData()
+        @state = "list"
+
 
     removePositions: () ->
         @positions.$removeMany({ids:@selects})
 
     positionDetail: (position) ->
-        @scope.currentPos = position
-        console.log position
+        self = @
+        @scope.currentPos.position = position
+        position.$getJD().$then (data) ->
+            # console.log data
+            # self.scope.currentPos.specification = data
+            # console.log self.scope.currentPos
+            self.currentJD = data
         @state = "show"
 
 

@@ -60,15 +60,32 @@ Position = (restmod, RMUtils, $Evt) ->
 
                     this.$send(request, onSuccess, onErorr)
 
+            Record:
+
+                $getJD: () ->
+                    self = @
+                    url = this.$url()
+                    request = {
+                        method: 'GET', 
+                        url: "#{url}/specifications",
+                    }
+                    onSuccess = ->
+                        @.$dispatch 'after-get'
+                    onErorr = ->
+                        @.$dispatch 'after-get-error', arguments
+                    this.$send(request, onSuccess, onErorr)
+
     }
 
 
 
 
-
+Specification = (restmod) ->
+    restmod.model('/specifications')
 
 
 
 
 
 resources.factory 'Position',['restmod', Position]
+resources.factory 'Specification',['restmod', Specification]
