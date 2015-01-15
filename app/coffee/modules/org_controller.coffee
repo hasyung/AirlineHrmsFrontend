@@ -375,12 +375,12 @@ class TransferOrgCtrl extends Modal
 class PositionCtrl extends Modal
     @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$injector', 'Position', '$stateParams', 'Org']
     constructor: (@panel, @scope, @Evt, @memoName, @injector, @Position, @stateParams, @Org) ->
+        super(panel, scope, memoName)
         @state = "list"
         @loadInitialData()
         @selects = []
         #for view 标示岗位新增的步骤
         @step = "detail"
-        super(panel, scope, memoName)
         @selectOrg = null
 
 
@@ -403,32 +403,46 @@ class PositionCtrl extends Modal
         else
             self.selects.push position.id
 
-    posTransfer: () ->
+    posTransfer: (e) ->
+        e.stopPropagation()
         self = @
         #todo
         #需要弹出提示框
+        console.log @selectOrg
         if @selectOrg
             self.positions.$adjust({position:{department_id: self.selectOrg.id, position_ids: self.selects}})
+            self.resetData()
         else 
             console.log "未选中机构"
 
-    newPosition: (form, formdata) ->
-        formdata.departmentId = @stateParams.id
-        newPos = @Position.$build(formdata)
+    newPosition: (form, position, specification) ->
+        position.departmentId = @stateParams.id
+        newPos = @Position.$build({position: position, specification:specification})
         newPos.$save()
-        @state = "list"
+        # @state = "list"
 
     removePositions: () ->
         @positions.$removeMany({ids:@selects})
 
     positionDetail: (position) ->
         @scope.currentPos = position
+        console.log position
         @state = "show"
 
 
-    updatePosition: (formdata) ->
+    editDetail: ()->
+        @scope.position = @scope.currentPos.$copy()
+        @state = 'edit'
+        @step = 'detail'
 
-    
+    editJD: ()->
+        @state = 'edit'  
+        @step = 'jd'      
+
+    resetData: () ->
+        self = @
+        self.positions.$refresh()
+        @state = "list"
 
 
 

@@ -103,7 +103,9 @@ angular.module 'nb.directives'
             calcPosition = (element) ->
                 elemWidth = element.outerWidth()
                 elemHeight = element.outerHeight()
-                elemPosition = getPosition(element)
+                # elemPosition = offset(element)
+                #合并代码之后offset()获取到的left值比实际值要大，后续检查，先用暴力方法
+                elemPosition = {left: element[0].offsetLeft, top: element[0].offsetTop}
                 tipWidth = tipElement.outerWidth()
                 tipHeight = tipElement.outerHeight()
 
@@ -305,7 +307,11 @@ angular.module 'nb.directives'
 
             hideHandle = (e) ->
                 e.stopPropagation()
-                hide()
+                #todo
+                #如果在popup-template上加上一个click事件代理，在机构岗位中划转岗位的时候将出现一个问题，
+                #当点击确定的时候并不能获取到所选择的机构。后面有事件在重构吧
+                if(angular.element(e.target).parents("popup-template").length == 0)
+                    hide()
                 # hide() 返回false，将阻止submit按钮的提交事件的触发
                 return 
 
@@ -318,13 +324,19 @@ angular.module 'nb.directives'
                 e.stopPropagation()
                 toggle()
 
-            tipElement.on 'click', (e) ->
-                e.stopPropagation()
+            # tipElement.on 'click', (e) ->
+            #     e.stopPropagation()
 
+            closeEles = tipElement.find('[popup-close]')
+            closeEles.on 'click', (e) ->
+                e.stopPropagation()
+                hide()
+                return
 
             scope.$on '$destroy', ()->
                 $doc.off 'click', hideHandle
                 elem.off 'click'
+                closeEles.off 'click'
                 tipElement.off 'click'
                 tipElement = null
 

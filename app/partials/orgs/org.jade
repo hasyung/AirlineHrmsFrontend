@@ -89,16 +89,17 @@ aside.org-aside
         .org-title
             span 下属岗位信息
             button.btn.btn-default.fa.fa-cog(title="设置" ui-sref=".position({id:currentOrg.id})")
-        table.table.table-striped.org-table
-            thead
-                tr
-                    th 岗位名称
-                    th  编制
-                    th  在编人数
-            tbody
-                tr(ng-repeat="position in positions")
-                    td.org-post(ng-click="") 
-                        a(ui-sref=".position({id:currentOrg.id})") {{position.name}}
-                    td  {{position.budgetedStaffing}}
-                    td  {{position.staffing}}
+        div(slimscroll height="300px")
+            table.table.table-striped.org-table
+                thead
+                    tr
+                        th 岗位名称
+                        th  编制
+                        th  在编人数
+                tbody
+                    tr(ng-repeat="position in positions")
+                        td.org-post(ng-click="") 
+                            a(ui-sref=".position({id:currentOrg.id})") {{position.name}}
+                        td  {{position.budgetedStaffing}}
+                        td  {{position.staffing}}
                 
