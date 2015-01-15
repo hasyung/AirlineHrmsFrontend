@@ -283,8 +283,8 @@
 	.org-table {
     	margin-left: 20px;
     	width: 298px;
-    	.org-post {
-    		color: #448ecb;
+    	.org-post a {
+    		color: $a-color;
 		}
 	}
 }
