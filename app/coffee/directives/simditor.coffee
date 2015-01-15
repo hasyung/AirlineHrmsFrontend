@@ -28,7 +28,9 @@ angular.module 'nb.directives'
             restrict: 'A'
             replace: true
             require: 'ngModel'
-            scope: true
+            scope: {
+                textVal: '=ngModel'
+            }
             link: (scope,elem,attrs,ctrl) ->
                 opts = angular.extend {},defaultConfig,{textarea:elem}
                 editor = new Simditor opts
