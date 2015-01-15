@@ -185,7 +185,7 @@
 	background-color: #fff;
 	&:before {
 		content: " ";
-		position: absolute;
+		position: fixed;
 		width: inherit;
 		top: 0;
 		bottom: 0;
