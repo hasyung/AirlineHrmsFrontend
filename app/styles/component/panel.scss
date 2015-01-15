@@ -74,6 +74,11 @@
                 width: 204px;
             }
         }
+        .org-post {
+            a {
+                color: $a-color;
+            }
+        }
         .org-hover {
             float: right;
             .btn {
