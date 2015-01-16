@@ -26,15 +26,20 @@ class Route
 
 class PositionCtrl extends nb.Controller
 
+    @.$inject = ['Position', '$scope']
 
-    constructor: (@Position) ->
+
+    constructor: (@Position, @scope) ->
         @loadInitialData()
+        scope.tableState = null
 
     loadInitialData: ->
         # @positions = @Position.$collection().$fetch()
 
-    search: () ->
+    search: (tableState) ->
         console.debug "search success:", arguments
+        @$parent.tableState = JSON.stringify(tableState)
+
 
 
 app.config(Route)

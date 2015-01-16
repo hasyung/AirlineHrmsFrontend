@@ -1,6 +1,6 @@
 .searchbar
     .row(ng-repeat="condition in conditions")
-        button( ng-click="ctrl.remove($index)" ng-show="$last") 删除条件
+        button( ng-click="ctrl.remove($index)") 删除条件
         //- select(ng-model="selected" nb-options="inactiveOptions")
             //- option(ng-repeat="o as option in options" ng-click="select(o)")
         div(ng-model="condition.selected", nb-dropdown="predicates.inactivePredicates" prevent-clone default-option)
