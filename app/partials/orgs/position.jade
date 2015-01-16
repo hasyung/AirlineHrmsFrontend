@@ -60,7 +60,7 @@ div(ng-if="ctrl.state == 'create' || ctrl.state == 'edit'")
                         a(href="javascript:;", ng-click="ctrl.step = 'jd'") 岗位描述书
                           span.fa.fa-angle-right
 
-            .org-postadd-detail.pull-right
+            .org-postadd-detail.org-postadd-basic.pull-left(slimscroll height="700px")
                 form(novalidate, ng-submit="ctrl.newPosition(posForm, position, specification)", name="posForm")
                   //- detail
                   div(ng-show="ctrl.step == 'detail'")
@@ -97,7 +97,7 @@ div(ng-if="ctrl.state == 'create' || ctrl.state == 'edit'")
                           button.btn.btn-info(type='button', ng-click="ctrl.step = 'jd'", ng-if="ctrl.state == 'create'") 下一步
                           button.btn.btn-info(type='button', ng-click="", ng-if="ctrl.state == 'edit'") 保存
                   //- jd
-                  .org-postadd-detail.pull-right.org-postadd-jd(ng-show="ctrl.step == 'jd'")
+                  .org-postadd-detail.pull-left.org-postadd-jd(ng-show="ctrl.step == 'jd'")
                       //- form(novalidate, ng-submit="ctrl.newPosition(posForm, position)", name="posForm")
                       .org-desc-section
                         h3 工作职责
