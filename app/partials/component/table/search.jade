@@ -1,13 +1,15 @@
 .searchbar
-    .row(ng-repeat="condition in conditions")
-        button( ng-click="ctrl.remove($index)") 删除条件
-        //- select(ng-model="selected" nb-options="inactiveOptions")
-            //- option(ng-repeat="o as option in options" ng-click="select(o)")
-        div(ng-model="condition.selected", nb-dropdown="predicates.inactivePredicates" prevent-clone default-option)
+    h3 筛选条件
+    .search-content.bg-white
+        .search-row(ng-repeat="condition in conditions")
+            button.btn.btn-default.search-del.fa.fa-times( ng-click="ctrl.remove($index)")
+            //- select(ng-model="selected" nb-options="inactiveOptions")
+                //- option(ng-repeat="o as option in options" ng-click="select(o)")
+            div.search-opt(ng-model="condition.selected", nb-dropdown="predicates.inactivePredicates" prevent-clone default-option)
 
-        .condition-detail(nb-watch-select)
+            .condition-detail.search-type(nb-watch-select)
 
-        //- .condition(ng-repeat="option in predicate" ng-if="option === predicate.selected")
-        //- div(nb-search-transclude)
+            //- .condition(ng-repeat="option in predicate" ng-if="option === predicate.selected")
+            //- div(nb-search-transclude)
 
-        button(ng-click="ctrl.addCondition()" ng-show="$last && predicates.inactivePredicates.length > 0") 新增条件
+            button.search-plus.btn.btn-default.fa.fa-plus(ng-click="ctrl.addCondition()" ng-show="$last && predicates.inactivePredicates.length > 0")
