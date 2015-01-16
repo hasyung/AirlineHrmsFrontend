@@ -15,13 +15,16 @@
 
 resources = angular.module('resources')
 
-
+# position.specifications.fetch()
 
 Position = (restmod, RMUtils, $Evt) ->
+
     # restmod.model('/positions')
     Position = restmod.model('/positions').mix 'nbRestApi', {
         department_id: {mask: 'R', map: 'department.id'}
         department: {mask: 'CU'}
+        isSelected: {init: true , }
+        specifications: { hasOne: 'Specification'}
     	$extend:
             Collection:
                 $adjust: (infoData)->
@@ -32,6 +35,7 @@ Position = (restmod, RMUtils, $Evt) ->
                         url: "#{url}/adjust",
                         data: infoData
                     }
+                    
                     # $Evt.$send('positions:adjust:success')
                     onSuccess = (res)->
                         self.$dispatch 'after-active', res
@@ -60,28 +64,19 @@ Position = (restmod, RMUtils, $Evt) ->
 
                     this.$send(request, onSuccess, onErorr)
 
-            Record:
-
-                $getJD: () ->
-                    self = @
-                    url = this.$url()
-                    request = {
-                        method: 'GET', 
-                        url: "#{url}/specifications",
-                    }
-                    onSuccess = ->
-                        @.$dispatch 'after-get'
-                    onErorr = ->
-                        @.$dispatch 'after-get-error', arguments
-                    this.$send(request, onSuccess, onErorr)
 
     }
 
 
 
 
-Specification = (restmod) ->
-    restmod.model('/specifications')
+Specification = (restmod, RMUtils, $Evt) ->
+    Specification = restmod.model('/specifications').mix 'nbRestApi', {
+
+
+    }
+
+
 
 
 

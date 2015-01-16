@@ -404,12 +404,10 @@ class PositionCtrl extends Modal
         else
             self.selects.push position.id
 
-    posTransfer: (e) ->
-        e.stopPropagation()
+    posTransfer: () ->
         self = @
         #todo
         #需要弹出提示框
-        console.log @selectOrg
         if @selectOrg
             self.positions.$adjust({position:{department_id: self.selectOrg.id, position_ids: self.selects}})
             self.resetData()
@@ -417,7 +415,6 @@ class PositionCtrl extends Modal
             console.log "未选中机构"
 
     newPosition: (form, position, specification) ->
-        @scope.position = null
         position.departmentId = @stateParams.id
         newPos = @Position.$build({position: position, specification: specification})
         newPos.$save()
@@ -430,24 +427,26 @@ class PositionCtrl extends Modal
 
     positionDetail: (position) ->
         self = @
-        @scope.currentPos.position = position
-        position.$getJD().$then (data) ->
-            # console.log data
-            # self.scope.currentPos.specification = data
-            # console.log self.scope.currentPos
-            self.currentJD = data
+        @scope.currentPos = position
+        position.specifications.$fetch().$then (data)->
+            self.scope.currentSpe = data
         @state = "show"
 
-
     editDetail: ()->
-        @scope.position = @scope.currentPos.$copy()
-        @state = 'edit'
-        @step = 'detail'
-
+        @step = "detail"
+        @editPosition()
     editJD: ()->
+        @step = 'jd'
+        @editPosition()
+    editPosition: ()->
         @state = 'edit'  
-        @step = 'jd'      
+        @scope.position = @scope.currentPos.$copy()
+        @scope.specification = @scope.currentSpe
 
+    updateDetail: (position)->
+        @scope.currentPos.$update({position:position})
+    updateJD: (spe)->
+        @scope.currentSpe.$update(spe)
     resetData: () ->
         self = @
         self.positions.$refresh()
