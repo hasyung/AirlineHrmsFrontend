@@ -1,5 +1,5 @@
 angular.module 'nb.directives'
-    .directive 'nbDropdown', ['$http', 'inflector', '$window', ($http, inflector, $window)->
+    .directive 'nbDropdown', ['$http', 'inflector', '$document', ($http, inflector, $doc)->
 
 
         class DropdownCtrl
@@ -8,39 +8,29 @@ angular.module 'nb.directives'
                 self = @
                 @scope.isOpen = false
                 @options = []
-                @scope.additory = true
 
                 onSuccess = (data, status) ->
-                    self.options = _.map data.result, (item) ->
+                    @options = _.map data.result, (item) ->
                         _.reduce(item, (res, val, key) ->
                             res[inflector.camelize(key)] = val
                             return res
                         , {})
-
                 onError = ->
-                    self.scope.$emit('dropdown:notfound')
+                    scope.$emit('dropdown:notfound:error')
 
-                @http.get("/api/enum?key=#{@attrs.remoteKey}")
-                    .success onSuccess
-                    .error onError
+
+                if scope.options
+                    @options = scope.options
+                else if attrs.remoteKey
+                    @http.get("/api/enum?key=#{@attrs.remoteKey}")
+                        .success onSuccess.bind(@)
+                        .error onError
+                else
+                    throw new Error('dropdown need options')
             setSelected: ($index) ->
-                # @selected = _.clone @options[$index]
-                # @scope.selected = _.clone @options[$index]
-                # @scope.$apply () ->
-                @scope.selected = _.clone @options[$index]
-                # @scope.$emit('select:change', selected)
-                # @scope.$emit('options:change', @selected)
+                # @scope.selected = _.clone @options[$index] # why clone ?
+                @scope.selected = if @attrs.preventClone then @options[$index] else _.clone @options[$index]
                 @close()
-
-                # @scope.$digest()
-            addItem: (evt, form , newItem) ->
-                evt.preventDefault()
-                @options.push(newItem)
-                @options = _.uniq(@options)
-                @setSelected(@options.length - 1)
-                @newItem = ""
-                form.$setPristine()
-
 
             toggle: () ->
                 @isOpen = !@isOpen
@@ -49,9 +39,7 @@ angular.module 'nb.directives'
                 @isOpen = false
 
         postLink = (scope, elem, attr, $ctrl) ->
-            $doc = angular.element $window.document
             scope.isOpen = false
-            scope.additory = ((attr.additory || "true") is "true")
             dropdownCtrl = $ctrl[0]
             ngModelCtrl = $ctrl[1]
             elem.on 'click', (e)->
@@ -64,21 +52,10 @@ angular.module 'nb.directives'
                 scope.$apply ()->
                     dropdownCtrl.close()
                     # dropdownCtrl.close() 返回false，将阻止submit按钮的提交事件的触发
-                    return  
+                    return
             $doc.on 'click', closeDropdown
-                
-                    
-            # view to model
-            # ngModelCtrl.$parsers.unshift (inputVal) ->
-            #     console.debug "inputVal:", arguments
-            #     return inputVal
-            # # model to view
-            # ngModelCtrl.$formatters.unshift (inputVal) ->
-            #     console.debug "formatters : ", inputVal
-            #     return inputVal
 
             scope.$watch 'selected', (newVal) ->
-                console.debug 'selected:change', newVal
                 scope.selected = newVal
                 ngModelCtrl.$render()
 
@@ -89,7 +66,7 @@ angular.module 'nb.directives'
         return {
             restrict: 'EA'
             templateUrl: 'partials/common/dropdown.tpl.html'
-            replace: true
+            # replace: true
             require: ["nbDropdown", "ngModel"]
             scope: {
                 options: "=nbDropdown"

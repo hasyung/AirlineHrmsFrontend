@@ -3,11 +3,5 @@
         | {{ selected.displayName || '请选择'}}
         span.caret
     ul.dropdown-menu(role="menu")
-        //- li(role="form", ng-if="additory")
-        //-     form(ng-submit="dropdown.addItem($event, dropdown.newItem)" name="dropdown_form")
-        //-         .input-group
-        //-             input.form-control(type="text", ng-model="dropdown.newItem" ng-model-options="{ debounce: 250 }")
-        //-             span.input-group-btn
-        //-                 button.btn.btn-default(type="submit", ng-click="dropdown.addItem($event, dropdown_form, dropdown.newItem)") 新增
-        li(role="presentation", ng-repeat="item in dropdown.options")
-            a(role="menuitem", tabindex="-1", href="javascript:void(0);", ng-click="dropdown.setSelected($index)") {{::item.displayName}}
+        li(role="presentation", ng-repeat="item in dropdown.options track by  item.displayName")
+            a(role="menuitem", tabindex="-1", href="javascript:void(0);", ng-click="dropdown.setSelected($index)") {{item.displayName}}
