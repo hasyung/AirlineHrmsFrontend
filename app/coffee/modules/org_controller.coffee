@@ -93,7 +93,7 @@ orgTree = (Org, $parse) ->
     return {
         scope: {
             selectedData: '='
-            # treeData: '@'
+            treeData: '@'
         }
         link: postLink
     }
@@ -108,40 +108,7 @@ app.directive('nbOrgTree',['Org', '$parse', orgTree])
 class Route
     @.$inject = ['$stateProvider']
 
-    constructor: (stateProvider, $dialog) ->
-
-
-        # states  = []
-
-        # states.push name: 'orgs', url: '/orgs', abstract: true, controller: 'OrgsCtrl', views: {}
-
-        # sta
-
-    # $dialog = (dialogName, controller, templateUrl, options = {}) ->
-    #     memoName = "#{dialogName}Invoker"
-    #     $previousState.memo(dialogName) #记住当前 url 状态
-
-    #     controller = {controller: controller}
-    #     templateUrl= {templateUrl: templateUrl}
-
-    #     options = angular.extend {}, controller, templateUrl, options
-
-    #     modalInstance = $modal.open options
-
-    #     modalInstance.result.finally ->
-    #         $previousState.go(memoName) #恢复之前 url 状态
-    #         unsubscribe()
-
-    #     # 当 URL 改变时自动关闭 dialog
-    #     unsubscribe =  $rootScope.$on '$stateChangeStart', (evt, toState) ->
-    #         if !toState.$$state().includes[dialogName]
-    #             modalInstance.dismiss('close')
-
-
-    # # return $dialog
-    # return {$dialog: $dialog}
-
-
+    constructor: (stateProvider) ->
 
 
         stateProvider
@@ -150,6 +117,9 @@ class Route
                 templateUrl: 'partials/orgs/orgs.html'
                 controller: 'OrgsCtrl'
                 controllerAs: 'ctrl'
+                ncyBreadcrumb: {
+                    label: "机构"
+                }
                 resolve: {
                     eidtMode: ->
                         return true
@@ -246,7 +216,7 @@ class OrgsCtrl extends nb.Controller
 
     rootTree: () ->
         self = @
-        treeRootOrg = _.find self.orgs, (org) -> org.depth == 1 
+        treeRootOrg = _.find self.orgs, (org) -> org.depth == 1
         self.buildTree(treeRootOrg)
 
 
@@ -273,7 +243,7 @@ class OrgCtrl extends nb.Controller
     cancel: ->
         @state = 'show'
 
-    
+
     transfer: (evt, destOrg) ->
         @scope.currentOrg.transfer(destOrg.id)
         @Evt.$send 'org:resetData'
@@ -347,6 +317,7 @@ class HistoryCtrl extends Modal
                 logsArr.push {logs:item, changeYear: key}
 
             self.changeLogs = _.sortBy(logsArr, 'changeYear').reverse()
+
         promise = @http.get('/api/departments/change_logs')
         promise.then onSuccess.bind(@), onError.bind(@)
 
@@ -390,7 +361,7 @@ class PositionCtrl extends Modal
             self.positions = positions
         @Org.$find(@stateParams.id).$then (org) ->
             self.scope.currentOrg = org
-        
+
 
 
     toggleSelect: (position) ->
@@ -412,7 +383,7 @@ class PositionCtrl extends Modal
         if @selectOrg
             self.positions.$adjust({position:{department_id: self.selectOrg.id, position_ids: self.selects}})
             self.resetData()
-        else 
+        else
             console.log "未选中机构"
 
     newPosition: (form, position, specification) ->
@@ -436,8 +407,8 @@ class PositionCtrl extends Modal
         @step = 'detail'
 
     editJD: ()->
-        @state = 'edit'  
-        @step = 'jd'      
+        @state = 'edit'
+        @step = 'jd'
 
     resetData: () ->
         self = @

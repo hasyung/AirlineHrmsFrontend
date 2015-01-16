@@ -12,17 +12,15 @@ class Route
 
     constructor: (stateProvider) ->
         stateProvider
-            .state 'org', {
-                url: '/orgs'
-                templateUrl: 'partials/positions/positions.html'
-                controller: 'OrgsCtrl'
+            .state 'position', {
+                url: '/positions'
+                templateUrl: 'partials/position/position.html'
+                controller: PositionCtrl
                 controllerAs: 'ctrl'
                 ncyBreadcrumb: {
                     label: "岗位"
                 }
                 resolve: {
-                    eidtMode: ->
-                        return true
                 }
             }
 
@@ -33,4 +31,10 @@ class PositionCtrl extends nb.Controller
         @loadInitialData()
 
     loadInitialData: ->
-        @positions = @Position.$collection().$fetch()
+        # @positions = @Position.$collection().$fetch()
+
+    search: () ->
+        console.debug "search success:", arguments
+
+
+app.config(Route)

@@ -7,6 +7,7 @@
 deps = [
     # 'ui.router'
     'ct.ui.router.extras'
+    'ncy-angular-breadcrumb'
     # 'ui.select'
     'ngAnimate'
     'ui.bootstrap'
@@ -56,8 +57,13 @@ restConf = (restmodProvider) ->
         # }
 
 
-routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider) ->
+routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider, $breadcrumbProvider) ->
     $locationProvider.html5Mode(false)
+
+    $breadcrumbProvider.setOptions {
+        prefixStateName: 'home'
+        template: 'bootstrap3'
+    }
 
     #default route
     $urlRouterProvider.otherwise('/')
@@ -65,6 +71,9 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
         .state 'home', {
             url: '/'
             templateUrl: 'partials/home.html'
+            ncyBreadcrumb: {
+                skip: true
+            }
         }
         .state 'personnel', {
             url: '/personnel'
@@ -96,7 +105,7 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
 App
     .config ['$provide', appConf]
     .config ['restmodProvider', restConf]
-    .config ['$stateProvider','$urlRouterProvider','$locationProvider', '$httpProvider',routeConf]
+    .config ['$stateProvider','$urlRouterProvider','$locationProvider', '$httpProvider', '$breadcrumbProvider', routeConf]
     .run ['$state','$rootScope', 'toaster', '$http', ($state, $rootScope, toaster, $http) ->
         # for $state.includes in view
         $rootScope.$on '$stateChangeSuccess', (evt, to) ->
