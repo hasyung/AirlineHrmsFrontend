@@ -378,7 +378,6 @@ class PositionCtrl extends Modal
         super(panel, scope, memoName)
         @state = "list"
         @loadInitialData()
-        @selects = []
         @scope.currentPos = {}
         #for view 标示岗位新增的步骤
         @step = "detail"
@@ -394,22 +393,18 @@ class PositionCtrl extends Modal
         
 
 
-    toggleSelect: (position) ->
-        self = @
-        isSelected = _.find self.selects, (item) ->
-            return item == position.id
-        if isSelected
-            self.selects = _.reject self.selects, (item) ->
-                return position.id == item
-        else
-            self.selects.push position.id
-
+    getSelectsIds: ()->
+        selects = []
+        _.forEach @positions, (item)->
+            selects.push item.id if item.isSelected is true
+        return selects
     posTransfer: () ->
+        @getSelectsIds()
         self = @
         #todo
         #需要弹出提示框
         if @selectOrg
-            self.positions.$adjust({position:{department_id: self.selectOrg.id, position_ids: self.selects}})
+            self.positions.$adjust({position:{department_id: self.selectOrg.id, position_ids: @getSelectsIds()}})
             self.resetData()
         else 
             console.log "未选中机构"
@@ -423,7 +418,7 @@ class PositionCtrl extends Modal
 
 
     removePositions: () ->
-        @positions.$removeMany({ids:@selects})
+        @positions.$removeMany({ids:@getSelectsIds()})
 
     positionDetail: (position) ->
         self = @
@@ -441,12 +436,14 @@ class PositionCtrl extends Modal
     editPosition: ()->
         @state = 'edit'  
         @scope.position = @scope.currentPos.$copy()
-        @scope.specification = @scope.currentSpe
+        @scope.specification = @scope.currentSpe.$copy()
 
     updateDetail: (position)->
         @scope.currentPos.$update({position:position})
     updateJD: (spe)->
-        @scope.currentSpe.$update(spe)
+        console.log spe
+        # spe.$save()
+        @scope.currentSpe.$update({specification:spe})
     resetData: () ->
         self = @
         self.positions.$refresh()

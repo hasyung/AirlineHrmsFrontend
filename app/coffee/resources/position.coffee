@@ -23,7 +23,7 @@ Position = (restmod, RMUtils, $Evt) ->
     Position = restmod.model('/positions').mix 'nbRestApi', {
         department_id: {mask: 'R', map: 'department.id'}
         department: {mask: 'CU'}
-        isSelected: {init: true , }
+        isSelected: {init: false , volatile: true}
         specifications: { hasOne: 'Specification'}
     	$extend:
             Collection:

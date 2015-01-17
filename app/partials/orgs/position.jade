@@ -1,8 +1,9 @@
-div(ng-if="ctrl.state == 'list'")
+.modal-panel()
   .org-modal-top.bg-white
     a(ui-sref="org") {{currentOrg.name}} >
     a(href="javascript:;") 岗位管理
-  .org-modal-post
+
+  .org-modal-post(ng-if="ctrl.state == 'list'")
     .org-modal-posttop 岗位信息列表
       //- button.btn.btn-default 导出
       button.btn.btn-default.fa.fa-trash-o(title="删除", nb-popup, position="left")
@@ -36,188 +37,15 @@ div(ng-if="ctrl.state == 'list'")
       tbody
         tr(ng-repeat="pos in ctrl.positions")
           td
-            input(type='checkbox', ng-model="pos.isSelected" ")
+            input(type='checkbox', ng-model="pos.isSelected")
           td.org-post
             a(href="javascript:;", ng-click="ctrl.positionDetail(pos)") {{pos.name}}
           td {{pos.channel.displayName}}
           td {{pos.staffing}}/{{pos.budgetedStaffing}}
           td {{pos.schedule.displayName}}
           td {{pos.oaFileNo}}
-div(ng-if="ctrl.state == 'create' || ctrl.state == 'edit'")
-  .modal-panel()
-    .modal-panel-content()
-        .org-modal-top.bg-white
-          a(href="", ui-sref="org") {{currentOrg.name}} >
-          a(href="", ng-click="ctrl.state = 'list'") 岗位管理 >
-          a(href="") 新增岗位
-        .org-postadd.clear
-            .org-postadd-step.pull-left
-                ul
-                    li(ng-class="{'active': ctrl.step == 'detail'}")
-                        a(href="javascript:;", ng-click="ctrl.step = 'detail'") 岗位基本信息
-                          span.fa.fa-angle-right
-                    li(ng-class="{'active': ctrl.step == 'jd'}")
-                        a(href="javascript:;", ng-click="ctrl.step = 'jd'") 岗位描述书
-                          span.fa.fa-angle-right
-
-            .org-postadd-detail.pull-right
-                form(novalidate, ng-submit="ctrl.newPosition(posForm, position, specification)", name="posForm")
-                  //- detail
-                  div(ng-show="ctrl.step == 'detail'")
-                      .postadd-form-group
-                          label.postadd-control-label 岗位名称
-                          input.postadd-form-control(type='text', placeholder='岗位名称', ng-model="position.name")
-                      .postadd-form-group
-                          label.postadd-control-label 岗位通道
-                          nb-dropdown(ng-model="position.channel" remote-key="position_channels", required="true", name="", additory="false")
-                      .postadd-form-group
-                          label.postadd-control-label OA文件编号
-                          input.postadd-form-control(type='text', placeholder='川0144450', ng-model="position.oaFileNo")
-                      .postadd-form-group
-                          label.postadd-control-label 编制
-                          input.postadd-form-control(type='text', placeholder='1', ng-model="position.budgetedStaffing")
-                      .postadd-form-group
-                          label.postadd-control-label 工时制度
-                          nb-dropdown(ng-model="position.schedule" remote-key="position_schedules", required="true", name="", additory="false")
-                      .postadd-form-group
-                          label.postadd-control-label 类别
-                          nb-dropdown(ng-model="position.category" remote-key="position_categories", required="true", name="", additory="false")
-                      .postadd-form-group
-                          label.postadd-control-label 性质
-                          nb-dropdown(ng-model="position.nature" remote-key="position_natures", required="true", name="", additory="false")
-
-
-                      .postadd-form-group
-                          label.postadd-control-label 所在部门
-                          span.postadd-control-text {{currentOrg.name}}
-
-                      .postadd-form-group
-                          label.postadd-control-label
-
-                          button.btn.btn-info(type='button', ng-click="ctrl.step = 'jd'", ng-if="ctrl.state == 'create'") 下一步
-                          button.btn.btn-info(type='button', ng-click="ctrl.updateDetail(position)", ng-if="ctrl.state == 'edit'") 保存
-                  //- jd
-                  div(ng-show="ctrl.step == 'jd'", slimscroll style="height:450px;")
-                    .org-postadd-detail.pull-right.org-postadd-jd
-                      //- form(novalidate, ng-submit="ctrl.newPosition(posForm, position)", name="posForm")
-                      .org-desc-section
-                        h3 工作职责
-                        label.postadd-control-label 工作职责
-                        textarea(simditor, placeholder="这里输入内容", autofocus, ng-model="specification.duty")
-                      .org-desc-section
-                        h3 工作权限
-                        .postadd-form-group
-                            label.postadd-control-label 人事权限
-                            input.postadd-form-control(type='text', placeholder='请输入人事权限', ng-model="specification.personnelPermission")
-                        .postadd-form-group
-                            label.postadd-control-label 财务权限
-                            input.postadd-form-control(type='text', placeholder='请输入财务权限', ng-model="specification.financialPermission")
-                        .postadd-form-group
-                            label.postadd-control-label 业务权限
-                            input.postadd-form-control(type='text', placeholder='请输入业务权限', ng-model="specification.businessPermission")
-                      .org-desc-section
-                        h3 工作关系
-                        .postadd-form-group
-                            label.postadd-control-label 直属上级
-                            input.postadd-form-control(type='text', placeholder='请输入直属上级', ng-model="specification.superior")
-                        .postadd-form-group
-                            label.postadd-control-label 直属下级
-                            input.postadd-form-control(type='text', placeholder='请输入直属下级', ng-model="specification.underling")
-                        .postadd-form-group
-                            label.postadd-control-label 内部联系
-                            input.postadd-form-control(type='text', placeholder='请输入内部联系', ng-model="specification.internalRelation")
-                        .postadd-form-group
-                            label.postadd-control-label 外部联系
-                            input.postadd-form-control(type='text', placeholder='请输入外部联系', ng-model="specification.externalRelation")
-                        .postadd-form-group
-                          h3 任职条件
-                          label.postadd-control-label 任职条件
-                          textarea(simditor, placeholder="这里输入内容", autofocus, ng-model="specification.qualification")
-
-                        .postadd-form-group
-                            label.postadd-control-label
-                            button.btn.btn-info(type='submit', ng-if="ctrl.state != 'edit'") 完成
-                            button.btn.btn-info(type='button', ng-click="ctrl.updateJD(specification)", ng-if="ctrl.state == 'edit'") 保存
-
-div(ng-if="ctrl.state == 'show'")
-  .modal-panel()
-    .modal-panel-content()
-        .org-modal-top.bg-white
-          a(href="", ui-sref="org") {{currentOrg.name}} >
-          a(href="", ng-click="ctrl.state = 'list'") 岗位列表 >
-          a(href="") {{currentPos.name}}岗位详情
-        .org-pos-detail-menu
-        .org-pos-detail-window.bg-white(slimscroll height="650px")
-          .org-pos-detail-content
-            section.position-info
-              button.btn.btn-default.pull-right(ng-click="ctrl.editDetail()") 编辑
-              h3 岗位信息
-              .editor-style
-                table
-                  tbody
-                    tr
-                      th 岗位名称：
-                      td {{currentPos.name}}
-                      th 编制：
-                      td {{currentPos.budgetedStaffing}}
-                    tr
-                      th 所属部门：
-                      td {{currentOrg.name}}
-                      th 工作制度：
-                      td {{currentPos.schedule.displayName || '无'}}
-                    tr
-                      th 通道：
-                      td {{currentPos.channel.displayName || '无'}}
-                      th 类别：
-                      td {{currentPos.category.displayName || '无'}}
-                    tr
-                      th OA文件编号：
-                      td {{currentPos.oaFileNo}}
-                      th 性质：
-                      td {{currentPos.nature.displayName || '无'}}
-            section.position-duty
-              button.btn.btn-default.pull-right(ng-click="ctrl.editJD()") 编辑
-              br
-              h3 工作职责
-              //- ol
-              //-   li 根据公司整体经营战略，制订人力资源发展战略，使人力资源配置和供给满足公司各项业务发展的需要。
-              //-   li 组织制订及实施人力资源管理政策及制度，确保公司具有完善的、规范的、客观公正的、在业内处于领先地位的、易于操作的人力资源管理体系。
-              //-   li 根据公司发展的指导思想，使公司在招聘、薪酬、绩效和培训等方面的战略起到吸引、激励和保留优秀员工的作用。
-              //-   li 指导本部建立健全相关管理规定，完善部门监督检查机制，并使之有效的运行，确保部门管理手册有效适宜，满足公司质量方针和目标。
-              //-   li 指导本部副总经理和各科室主任的工作，对部门全体员工实施有效的管理。
-              //-   li 组织和实施中层管理人员和专业技术人员的聘任工作，确保为关键岗位找到最恰当的人选。
-              div(ng-bind-html="currentSpe.duty")
-                //- {{currentSpe.duty}}
-            section.position-purview
-              h3 工作权限
-              ol
-                li 人事权限：
-                  span {{currentSpe.personnelPermission}}
-                li 财务权限：
-                  span {{currentSpe.financialPermission}}
-                li 业务权限：
-                  span {{currentSpe.businessPermission}}
-            section.position-relative
-              h3 工作关系
-              ol
-                li 直属上级：
-                  span {{currentSpe.superior}}
-                li 直属下级：
-                  span {{currentSpe.underling}}
-                li 内部联系：
-                  span {{currentSpe.internalRelation}}
-                li 外部联系：
-                  span {{currentSpe.externalRelation}}
-            section.position-qualification
-              h3 任职条件
-              //- p 参照《人力资源管理手册》第四章第一节《干部管理规定》相关条款。
-              div(ng-bind-html="currentSpe.qualification")
-            section.work-time
-              h3 工作时间
-              p {{currentPos.schedule.displayName || '无'}}
-
-
-
-
-
-
+  div(ng-if="ctrl.state == 'create' || ctrl.state == 'edit'")
+    include ./position_add.jade
+  div(ng-if="ctrl.state == 'show'")
+    include ./position_detail.jade
+      
