@@ -1,0 +1,16 @@
+.position-manage
+    h1 岗位管理
+    .position_123
+
+
+        div(nb-table)
+            div(nb-search)
+                input(nb-predicate="姓名" name="name" placeholder="姓名" ng-model="name")
+                input(nb-predicate="年龄" name="age" placeholder="年龄" ng-model="age")
+                div(nb-predicate="入职时间" predicate-attr="date")
+                    input(ng-model="date.from")
+                    span 至
+                    input(ng-model="date.to")
+            button.btn.btn-default.search-commit.fa.fa-search(nb-pipe="ctrl.search") 查询
+
+    div(ng-bind="tableState")

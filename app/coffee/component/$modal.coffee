@@ -96,6 +96,9 @@ $build  = (options, childState, customOptions)->
         url: "/#{childState}"
         template: '<div ui-view></div>'
         onEnter: modalOpen
+        ncyBreadcrumb: {
+            label: childState
+        }
     }
 
 

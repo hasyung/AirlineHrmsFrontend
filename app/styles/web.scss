@@ -16,11 +16,12 @@
 @import 'component/button';
 @import 'component/position_detail';
 @import 'component/position_add';
+@import 'component/table-search-bar';
 
 
 //modules
 @import 'modules/personnel';
-
+@import 'modules/position-manage';
 @import 'modules/orgs';
 
 .bootstrap-tagsinput { width: 100%; }

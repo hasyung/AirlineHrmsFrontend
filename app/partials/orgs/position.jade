@@ -49,3 +49,21 @@
   div(ng-if="ctrl.state == 'show'")
     include ./position_detail.jade
       
+//- =======
+//- div(ng-if="ctrl.state == 'create' || ctrl.state == 'edit'")
+//-   .modal-panel()
+//-     .modal-panel-content()
+//-         .org-modal-top.bg-white
+//-           a(href="", ui-sref="org") {{currentOrg.name}} >
+//-           a(href="", ng-click="ctrl.state = 'list'") 岗位管理 >
+//-           a(href="") 新增岗位
+        
+//- div(ng-if="ctrl.state == 'show'")
+//-   .modal-panel()
+//-     .modal-panel-content()
+//-         .org-modal-top.bg-white
+//-           a(href="", ui-sref="org") {{currentOrg.name}} >
+//-           a(href="", ng-click="ctrl.state = 'list'") 岗位列表 >
+//-           a(href="") {{currentPos.name}}岗位详情
+        
+//- >>>>>>> d1cc79fc41ac13a10dff9d9ee2ed8dbdee430238

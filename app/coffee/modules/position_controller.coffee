@@ -12,25 +12,34 @@ class Route
 
     constructor: (stateProvider) ->
         stateProvider
-            .state 'org', {
-                url: '/orgs'
-                templateUrl: 'partials/positions/positions.html'
-                controller: 'OrgsCtrl'
+            .state 'position', {
+                url: '/positions'
+                templateUrl: 'partials/position/position.html'
+                controller: PositionCtrl
                 controllerAs: 'ctrl'
                 ncyBreadcrumb: {
                     label: "岗位"
                 }
                 resolve: {
-                    eidtMode: ->
-                        return true
                 }
             }
 
 class PositionCtrl extends nb.Controller
 
+    @.$inject = ['Position', '$scope']
 
-    constructor: (@Position) ->
+
+    constructor: (@Position, @scope) ->
         @loadInitialData()
+        scope.tableState = null
 
     loadInitialData: ->
-        @positions = @Position.$collection().$fetch()
+        # @positions = @Position.$collection().$fetch()
+
+    search: (tableState) ->
+        console.debug "search success:", arguments
+        @$parent.tableState = JSON.stringify(tableState)
+
+
+
+app.config(Route)
