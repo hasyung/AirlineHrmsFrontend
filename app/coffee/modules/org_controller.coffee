@@ -372,12 +372,12 @@ class TransferOrgCtrl extends Modal
 
 
 class PositionCtrl extends Modal
-    @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$injector', 'Position', '$stateParams', 'Org']
-    constructor: (@panel, @scope, @Evt, @memoName, @injector, @Position, @stateParams, @Org) ->
+    @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$injector', 'Position', '$stateParams', 'Org', 'Specification']
+    constructor: (@panel, @scope, @Evt, @memoName, @injector, @Position, @stateParams, @Org, @Specification) ->
         super(panel, scope, memoName)
         @state = "list"
         @loadInitialData()
-        @selects = []
+        @scope.currentPos = {}
         #for view 标示岗位新增的步骤
         @step = "detail"
         @selectOrg = null
@@ -392,51 +392,57 @@ class PositionCtrl extends Modal
 
 
 
-    toggleSelect: (position) ->
-        self = @
-        isSelected = _.find self.selects, (item) ->
-            return item == position.id
-        if isSelected
-            self.selects = _.reject self.selects, (item) ->
-                return position.id == item
-        else
-            self.selects.push position.id
-
-    posTransfer: (e) ->
-        e.stopPropagation()
+    getSelectsIds: ()->
+        selects = []
+        _.forEach @positions, (item)->
+            selects.push item.id if item.isSelected is true
+        return selects
+    posTransfer: () ->
+        @getSelectsIds()
         self = @
         #todo
         #需要弹出提示框
-        console.log @selectOrg
         if @selectOrg
-            self.positions.$adjust({position:{department_id: self.selectOrg.id, position_ids: self.selects}})
+            self.positions.$adjust({position:{department_id: self.selectOrg.id, position_ids: @getSelectsIds()}})
             self.resetData()
         else
             console.log "未选中机构"
 
     newPosition: (form, position, specification) ->
         position.departmentId = @stateParams.id
-        newPos = @Position.$build({position: position, specification:specification})
+        newPos = @Position.$build({position: position, specification: specification})
         newPos.$save()
-        # @state = "list"
+        @resetData()
+        @state = "list"
+
 
     removePositions: () ->
-        @positions.$removeMany({ids:@selects})
+        @positions.$removeMany({ids:@getSelectsIds()})
 
     positionDetail: (position) ->
+        self = @
         @scope.currentPos = position
-        console.log position
+        position.specifications.$fetch().$then (data)->
+            self.scope.currentSpe = data
         @state = "show"
 
-
     editDetail: ()->
-        @scope.position = @scope.currentPos.$copy()
-        @state = 'edit'
-        @step = 'detail'
-
+        @step = "detail"
+        @editPosition()
     editJD: ()->
-        @state = 'edit'
         @step = 'jd'
+        @editPosition()
+    editPosition: ()->
+        @state = 'edit'  
+        @scope.position = @scope.currentPos.$copy()
+        @scope.specification = @scope.currentSpe.$copy()
+
+    updateDetail: (position)->
+        @scope.currentPos.$update({position:position})
+    updateJD: (spe)->
+        console.log spe
+        # spe.$save()
+        @scope.currentSpe.$update({specification:spe})
 
     resetData: () ->
         self = @
