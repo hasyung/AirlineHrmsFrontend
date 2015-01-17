@@ -73,7 +73,10 @@ paths =
         #end
         'deps/angular/angular.js'
         #http://harvesthq.github.io/chosen/
-        'deps/simditor/lib/simditor-all.js'
+        'deps/simple-module/lib/module.js'
+        'deps/simple-uploader/lib/uploader.js'
+        'deps/simple-hotkeys/lib/hotkeys.js'
+        'deps/simditor/lib/simditor.js'
         'deps/angular-cookies/angular-cookies.js'
         'deps/angular-restmod/dist/angular-restmod-bundle.js'
         'deps/angular-restmod/dist/styles/ams.js'
