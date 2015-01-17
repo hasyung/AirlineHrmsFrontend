@@ -126,10 +126,38 @@ class Route
                 }
             }
             # .state 'org.revert', Dialog.$build('revert', RevertChangesCtrl, 'partials/orgs/shared/revert_changes.html')
-            .state 'org.active', nb.$buildDialog('active', ActiveCtrl, 'partials/orgs/shared/effect_changes.html')
-            .state 'org.history', nb.$buildDialog('history', HistoryCtrl, 'partials/orgs/org_history.html', {size: 'sm'})
-            .state 'org.transfer', nb.$buildDialog('transfer', TransferOrgCtrl, 'partials/orgs/shared/org_transfer.html', {size: 'sm'})
-            .state 'org.position', nb.$buildPanel(':id/positions',PositionCtrl, 'partials/orgs/position.html')
+            # .state 'org.active', nb.$buildDialog('active', ActiveCtrl, 'partials/orgs/shared/effect_changes.html')
+            # .state 'org.history', nb.$buildDialog('history', HistoryCtrl, 'partials/orgs/org_history.html', {size: 'sm'})
+            # .state 'org.transfer', nb.$buildDialog('transfer', TransferOrgCtrl, 'partials/orgs/shared/org_transfer.html', {size: 'sm'})
+            # .state 'org.position', nb.$buildPanel(':id/positions',PositionCtrl, 'partials/orgs/position.html')
+            .state nb.$buildDialog {
+                name: 'org.active'
+                url: '/active'
+                controller: ActiveCtrl
+                templateUrl: 'partials/orgs/shared/effect_changes.html'
+            }
+            .state nb.$buildDialog {
+                name: 'org.history'
+                url:' /history'
+                controller: HistoryCtrl
+                templateUrl: 'partials/orgs/org_history.html'
+                size: 'sm'
+            }
+            .state nb.$buildDialog {
+                name: 'org.transfer'
+                url: '/transfer'
+                controller: TransferOrgCtrl
+                templateUrl: 'partials/orgs/shared/org_transfer.html'
+                size: 'sm'
+            }
+            .state nb.$buildPanel {
+                name: 'org.position'
+                url: ':id/positions'
+                controller: PositionCtrl
+                templateUrl: 'partials/orgs/position.html'
+            }
+
+
 
 
 class OrgsCtrl extends nb.Controller

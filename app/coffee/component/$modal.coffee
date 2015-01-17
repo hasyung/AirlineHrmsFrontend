@@ -26,7 +26,7 @@ class Modal
         scope.ctrl = @
         invokerName = "#{memoName}Invoker"
         handle = ($state, $previousState, $rootScope, invokerName, $modalInstance) ->
-            isRefresh = true if $state.includes("*.#{memoName}")
+            isRefresh = true if $state.is("#{memoName}")
             $previousState.memo(invokerName)
             $modalInstance.result.finally ->
                 if isRefresh
@@ -83,53 +83,59 @@ defaultOption = {
     # size: 'lg' | 'sm'
 }
 
-$build  = (options, childState, customOptions)->
+$build  = (routerOptions, modalOptions)->
 
 
-    options = extend {}, defaultOption, customOptions, options
+    modalOptions = extend {}, defaultOption, modalOptions
 
 
     modalOpen = ['$modal', ($modal)->
-        $modal.open options
+        $modal.open modalOptions
     ]
-    return {
-        url: "/#{childState}"
-        template: '<div ui-view></div>'
-        onEnter: modalOpen
-        ncyBreadcrumb: {
-            label: childState
-        }
-    }
+    routerOptions = extend {}, {onEnter: modalOpen}, routerOptions
+
+    return routerOptions
 
 
-nb.$buildDialog = (childState, controller, templateUrl, customOptions) ->
+# nb.$buildDialog = (childState, controller, templateUrl, customOptions) ->
+nb.$buildDialog = (options) ->
 
-    options = {
-            templateUrl: templateUrl
-            controller: controller
+    routerOptionAttrs = ['name', 'url', 'ncyBreadcrumb']
+
+    routerOptions = _.pick(options, routerOptionAttrs)
+    modalOptions = _.omit(options, routerOptionAttrs)
+
+
+    memoResolved = {
             resolve: {
                 memoName: ->
-                    return childState
+                    return routerOptions.name
             }
         }
+    modalOptions = extend({}, memoResolved, modalOptions)
 
-    return $build.apply(this, [options, childState ,customOptions])
+
+    return $build.apply(this, [routerOptions, modalOptions])
 
 
-nb.$buildPanel = (childState, controller, templateUrl, customOptions)->
+nb.$buildPanel = (options)->
 
-    options = {
-            templateUrl: templateUrl
-            controller: controller
+
+    routerOptionAttrs = ['name', 'url', 'ncyBreadcrumb']
+
+    routerOptions = _.pick(options, routerOptionAttrs)
+    modalOptions = _.omit(options, routerOptionAttrs)
+
+    memoResolved = {
             resolve: {
                 memoName: ->
-                    return childState
+                    return routerOptions.name
             }
             windowTemplateUrl: 'partials/component/panel/window.html'
         }
+    modalOptions = extend({}, memoResolved, modalOptions)
 
-
-    return $build.apply(this, [options, childState, customOptions])
+    return $build.apply(this, [routerOptions, modalOptions])
 
 
 nb.Modal = Modal
