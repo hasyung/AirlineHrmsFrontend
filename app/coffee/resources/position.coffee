@@ -32,14 +32,23 @@ Position = (restmod, RMUtils, $Evt) ->
 
             'after-save': ->
                 $Evt.$send('position:create:success', "岗位更新成功")
+
+            'after-destroy': ->
+                $Evt.$send('position:destroy:success',"岗位删除成功")
+            'after-destroy-error': ->
+                $Evt.$send('position:destroy:success', arguments)
+            'after-adjust': ->
+                $Evt.$send('position:adjust:success',"岗位调整成功")
+            'after-adjust': ->
+                $Evt.$send('position:adjust:success', arguments)
     	$extend:
             Collection:
                 $adjust: (infoData)->
                     self = @
-                    url = this.$url()
+                    # url = this.$url()
                     request = {
                         method: 'POST',
-                        url: "#{url}/adjust",
+                        url: "api/positions/adjust",
                         data: infoData
                     }
 
@@ -55,12 +64,20 @@ Position = (restmod, RMUtils, $Evt) ->
 
                 $batchRemove: (ids) ->
                     self = @
-                    url = this.$url()
                     request = {
                         method: 'POST',
-                        url: "#{url}/batch_destroy",
+                        url: "api/positions/batch_destroy",
                         data: ids
                     }
+                    onSuccess = (res)->
+                        angular.forEach ids.ids, (id) ->
+                            item = _.find self, {id: id}
+                            self.$remove item
+                            
+                        self.$dispatch 'after-destroy', res
+
+                    onErorr = (res) ->
+                        self.$dispatch 'after-destroy-error', res
 
                     this.$send(request, onSuccess, onErorr)
 
