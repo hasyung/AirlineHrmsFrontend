@@ -87,7 +87,7 @@ orgTree = (Org, $parse) ->
                 else
             return
         scope.$on '$destroy', () ->
-            $tree.tree('destroy')
+            $tree.tree('destroy') if $tree && $tree.tree #for nest router
             $tree = null
 
     return {
@@ -153,7 +153,6 @@ class Route
             .state {
                 name: 'org.position'
                 url: ':id/positions'
-                controller: PositionCtrl
                 views: {
                     "@": {
                         controller: PositionCtrl
@@ -162,7 +161,7 @@ class Route
                     }
                 }
                 ncyBreadcrumb: {
-                    label: "岗位"
+                    label: "{{ ctrl.currentOrg.name || '岗位' }}"
                     parent: ($scope) ->
                         console.debug $scope
                 }
@@ -179,6 +178,17 @@ class Route
                 }
                 ncyBreadcrumb: {
                     label: "{{ctrl.pos.name}}"
+                }
+            }
+            .state {
+                name: 'org.position.detail.editing'
+                url: '/editing/:template'
+                views: {
+                    "@": {
+                        controller: PosCtrl
+                        templateUrl: (params) ->
+                            return "partials/orgs/position_edit_#{params.template}.html"
+                    }
                 }
             }
             .state {
