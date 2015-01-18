@@ -187,6 +187,7 @@ class Route
                 views: {
                     "@": {
                         controller: PosCtrl
+                        controllerAs: 'ctrl'
                         templateUrl: (params) ->
                             return "partials/orgs/position_edit_#{params.template}.html"
                     }
@@ -436,7 +437,7 @@ class PositionCtrl extends nb.Controller
         @selectOrg = null # 划转所选择的机构 rework
 
     getSelectsIds: ()->
-        @scope.positions
+        @positions
             .filter (pos) -> return pos.isSelected
             .map (pos) -> return pos.id
 
@@ -477,12 +478,24 @@ class PositionCtrl extends nb.Controller
         @scope.specification = @scope.currentSpe.$copy()
 
 class PosCtrl extends nb.Controller
-    @.$inject = ['$stateParams', 'Position']
+    @.$inject = ['$stateParams', 'Position', '$scope', '$state']
 
-    constructor: (@params, @Position) ->
-        posId = params.id
-        @pos = Position.$find(posId)
-        @pos.specifications.$fetch()
+    constructor: (@params, @Position, @scope, @state) ->
+        self = @
+        posId = params.posId
+        @Position.$find(posId).$then (position) ->
+            self.scope.currentPos = position
+            self.scope.copyPos = position.$copy()
+            position.specifications.$fetch().$then (data)->
+                console.log data
+                self.scope.currentSpe = data
+            
+    updateDetail: (postion) ->
+        @scope.currentPos.$update(postion)
+        @state.go '^'
+    
+
+
 
 class PosCreateCtrl extends nb.Controller
     @.$inject = ['$stateParams', 'Position', '$scope', 'Org', '$state']

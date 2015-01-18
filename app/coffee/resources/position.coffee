@@ -29,6 +29,9 @@ Position = (restmod, RMUtils, $Evt) ->
         $hooks:
             'after-create': ->
                 $Evt.$send('position:create:success', "岗位创建成功")
+
+            'after-save': ->
+                $Evt.$send('position:create:success', "岗位更新成功")
     	$extend:
             Collection:
                 $adjust: (infoData)->
