@@ -152,7 +152,7 @@ class Route
             }
             .state {
                 name: 'org.position'
-                url: ':id/positions'
+                url: '/:id/positions'
                 controller: PositionCtrl
                 views: {
                     "@": {
@@ -474,12 +474,19 @@ class PosCtrl extends nb.Controller
         @pos.specifications.$fetch()
 
 class PosCreateCtrl extends nb.Controller
-    @.$inject = ['$stateParams', 'Position', '$scope']
+    @.$inject = ['$stateParams', 'Position', '$scope', 'Org', '$state']
 
-    constructor: (@params, @Position, @scope) ->
+    constructor: (@params, @Position, @scope, @Org, @state) ->
+        @orgId = @params.id
+        @loadInitialData()
 
+    loadInitialData: () ->
+        @scope.currentOrg = @Org.$find @orgId
     createPos: () ->
-        console.debug "created", @
+        @position.departmentId = @orgId
+        newPos = @Position.$build({position: @position, specification: @specification})
+        newPos.$save()
+        @state.go '^'
     store: (attr, value) ->
         this[attr] = value
 

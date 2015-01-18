@@ -25,6 +25,10 @@ Position = (restmod, RMUtils, $Evt) ->
         department: {mask: 'CU'}
         isSelected: {init: false , volatile: true}
         specifications: { hasOne: 'Specification'}
+
+        $hooks:
+            'after-create': ->
+                $Evt.$send('position:create:success', "岗位创建成功")
     	$extend:
             Collection:
                 $adjust: (infoData)->
@@ -75,5 +79,5 @@ Specification = (restmod, RMUtils, $Evt) ->
 
 
 
-resources.factory 'Position',['restmod', Position]
-resources.factory 'Specification',['restmod', Specification]
+resources.factory 'Position',['restmod', 'RMUtils', '$nbEvent', Position]
+resources.factory 'Specification',['restmod', 'RMUtils', '$nbEvent', Specification]
