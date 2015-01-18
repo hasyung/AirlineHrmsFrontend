@@ -1,69 +1,90 @@
-.modal-panel()
-  .org-modal-top.bg-white
-    a(ui-sref="org") {{currentOrg.name}} >
-    a(href="javascript:;") 岗位管理
+//- .modal-panel()
+//-   .org-modal-top.bg-white
+//-     a(ui-sref="org") {{currentOrg.name}} >
+//-     a(href="javascript:;") 岗位管理
 
-  .org-modal-post(ng-if="ctrl.state == 'list'")
-    .org-modal-posttop 岗位信息列表
-      //- button.btn.btn-default 导出
-      button.btn.btn-default.fa.fa-trash-o(title="删除", nb-popup, position="left")
-        popup-template.nb-popup.org-default-popup-template.panel.panel-default()
-          .panel-heading.popup-title 警告
-          .panel-body.popup-body
-            div 删除后将无法恢复，请确认删除
-            div.div-delete-btn.pull-right(ng-click="ctrl.removePositions()") 删除
+//-   .org-modal-post(ng-if="ctrl.state == 'list'")
+//-     .org-modal-posttop 岗位信息列表
+//-       //- button.btn.btn-default 导出
+//-       button.btn.btn-default.fa.fa-trash-o(title="删除", nb-popup, position="left")
+//-         popup-template.nb-popup.org-default-popup-template.panel.panel-default()
+//-           .panel-heading.popup-title 警告
+//-           .panel-body.popup-body
+//-             div 删除后将无法恢复，请确认删除
+//-             div.div-delete-btn.pull-right(ng-click="ctrl.removePositions()") 删除
 
-      //- button.btn.btn-default.fa.fa-pencil(title="编辑")
-      button.btn.btn-default.fa.fa-plus(title="新增子机构", ng-click="ctrl.state = 'create'")
-      button.btn.btn-info(title="", nb-popup-plus, position="left-bottom", offset="0.2") 调整机构
-        popup-template.nb-popup.org-default-popup-template.panel.panel-default()
-          .panel-heading.popup-title 组织机构
-          .panel-body.popup-body
-            div(slimscroll height="300px")
-              nb-org-tree(selected-data="ctrl.selectOrg")
-          .panel-footer
-            div.div-delete-btn.pull-right(popup-close, ng-click="ctrl.posTransfer()") 确定
-            div.div-delete-btn.pull-right(popup-close) 取消
-    table.table.table-striped.ng-scope.org-post-table
-      thead
-        tr
-          th
-            //- input(type='checkbox', value='option2')
-          th  岗位名称
-          th  通道
-          th  编制数
-          th  工作时间
-          th  OA文件编号
-      tbody
-        tr(ng-repeat="pos in ctrl.positions")
-          td
-            input(type='checkbox', ng-model="pos.isSelected")
-          td.org-post
-            a(href="javascript:;", ng-click="ctrl.positionDetail(pos)") {{pos.name}}
-          td {{pos.channel.displayName}}
-          td {{pos.staffing}}/{{pos.budgetedStaffing}}
-          td {{pos.schedule.displayName}}
-          td {{pos.oaFileNo}}
-  div(ng-if="ctrl.state == 'create' || ctrl.state == 'edit'")
-    include ./position_add.jade
-  div(ng-if="ctrl.state == 'show'")
-    include ./position_detail.jade
-      
-//- =======
-//- div(ng-if="ctrl.state == 'create' || ctrl.state == 'edit'")
-//-   .modal-panel()
-//-     .modal-panel-content()
-//-         .org-modal-top.bg-white
-//-           a(href="", ui-sref="org") {{currentOrg.name}} >
-//-           a(href="", ng-click="ctrl.state = 'list'") 岗位管理 >
-//-           a(href="") 新增岗位
-        
-//- div(ng-if="ctrl.state == 'show'")
-//-   .modal-panel()
-//-     .modal-panel-content()
-//-         .org-modal-top.bg-white
-//-           a(href="", ui-sref="org") {{currentOrg.name}} >
-//-           a(href="", ng-click="ctrl.state = 'list'") 岗位列表 >
-//-           a(href="") {{currentPos.name}}岗位详情
-        
-//- >>>>>>> d1cc79fc41ac13a10dff9d9ee2ed8dbdee430238
+//-       //- button.btn.btn-default.fa.fa-pencil(title="编辑")
+//-       button.btn.btn-default.fa.fa-plus(title="新增子机构", ng-click="ctrl.state = 'create'")
+//-       button.btn.btn-info(title="", nb-popup-plus, position="left-bottom", offset="0.2") 调整机构
+//-         popup-template.nb-popup.org-default-popup-template.panel.panel-default()
+//-           .panel-heading.popup-title 组织机构
+//-           .panel-body.popup-body
+//-             div(slimscroll height="300px")
+//-               nb-org-tree(selected-data="ctrl.selectOrg")
+//-           .panel-footer
+//-             div.div-delete-btn.pull-right(popup-close, ng-click="ctrl.posTransfer()") 确定
+//-             div.div-delete-btn.pull-right(popup-close) 取消
+//-     table.table.table-striped.ng-scope.org-post-table
+//-       thead
+//-         tr
+//-           th
+//-             //- input(type='checkbox', value='option2')
+//-           th  岗位名称
+//-           th  通道
+//-           th  编制数
+//-           th  工作时间
+//-           th  OA文件编号
+//-       tbody
+//-         tr(ng-repeat="pos in ctrl.positions")
+//-           td
+//-             input(type='checkbox', ng-model="pos.isSelected")
+//-           td.org-post
+//-             a(href="javascript:;", ng-click="ctrl.positionDetail(pos)") {{pos.name}}
+//-           td {{pos.channel.displayName}}
+//-           td {{pos.staffing}}/{{pos.budgetedStaffing}}
+//-           td {{pos.schedule.displayName}}
+//-           td {{pos.oaFileNo}}
+//-   div(ng-if="ctrl.state == 'create' || ctrl.state == 'edit'")
+//-     include ./position_add.jade
+//-   div(ng-if="ctrl.state == 'show'")
+//-     include ./position_detail.jade
+.org-modal-posttop 岗位信息列表
+  //- button.btn.btn-default 导出
+  button.btn.btn-default.fa.fa-trash-o(title="删除", nb-popup, position="left")
+    popup-template.nb-popup.org-default-popup-template.panel.panel-default()
+      .panel-heading.popup-title 警告
+      .panel-body.popup-body
+        div 删除后将无法恢复，请确认删除
+        div.div-delete-btn.pull-right(ng-click="ctrl.removePositions()") 删除
+
+  //- button.btn.btn-default.fa.fa-pencil(title="编辑")
+  button.btn.btn-default.fa.fa-plus(title="新增子机构", ui-sref=".new")
+  button.btn.btn-info(title="", nb-popup-plus, position="left-bottom", offset="0.2") 调整机构
+    popup-template.nb-popup.org-default-popup-template.panel.panel-default()
+      .panel-heading.popup-title 组织机构
+      .panel-body.popup-body
+        div(slimscroll height="300px")
+          nb-org-tree(selected-data="ctrl.selectOrg")
+      .panel-footer
+        div.div-delete-btn.pull-right(popup-close, ng-click="ctrl.posTransfer()") 确定
+        div.div-delete-btn.pull-right(popup-close) 取消
+table.table.table-striped.ng-scope.org-post-table
+  thead
+    tr
+      th
+        //- input(type='checkbox', value='option2')
+      th  岗位名称
+      th  通道
+      th  编制数
+      th  工作时间
+      th  OA文件编号
+  tbody
+    tr(ng-repeat="pos in ctrl.positions track by pos.id")
+      td
+        input(type='checkbox', ng-model="pos.isSelected")
+      td.org-post
+        a(ui-sref=".detail({posId: pos.id})") {{pos.name}}
+      td {{pos.channel.displayName}}
+      td {{pos.staffing}}/{{pos.budgetedStaffing}}
+      td {{pos.schedule.displayName}}
+      td {{pos.oaFileNo}}

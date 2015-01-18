@@ -49,6 +49,7 @@
     "angular-filter": "~0.5.1",
     "AngularJS-Toaster": "~0.4.9",
     "angular-bootstrap": "~0.12.0",
-    "angular-breadcrumb": "~0.3.3"
+    "angular-breadcrumb": "~0.3.3",
+    "angular-wizard": "~0.4.2"
   }
 }

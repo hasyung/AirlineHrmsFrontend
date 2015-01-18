@@ -49,7 +49,7 @@ paths =
              "app/coffee/auth/*.coffee"
              "app/coffee/filters/*.coffee"
              "app/coffee/modules/*.coffee"
-             "APP/coffee/resources/*.coffee"
+             "app/coffee/resources/*.coffee"
              # "app/coffee/modules/controllerMixins.coffee"
              # "app/coffee/modules/*.coffee"
              # "app/coffee/modules/common/*.coffee"
@@ -58,6 +58,9 @@ paths =
              # "app/coffee/modules/resources/*.coffee"
              # "app/coffee/modules/user-settings/*.coffee"
              # "app/plugins/**/*.coffee"
+    ]
+    js: [
+        "app/coffee/modules/*.js"
     ]
     vendorJsLibs: [
         'deps/lodash/dist/lodash.min.js'
@@ -87,6 +90,7 @@ paths =
         'deps/angular-ui-router/release/angular-ui-router.js'
         'deps/ui-router-extras/release/ct-ui-router-extras.js'
         'deps/angular-breadcrumb/release/angular-breadcrumb.js'
+        'compat/vendor/wizard.js'
         # 'deps/ngInfiniteScroll/build/ng-infinite-scroll.js'
         'deps/AngularJS-Toaster/toaster.js'
         'deps/angular-locale_zh-cn.js'
@@ -207,6 +211,16 @@ gulp.task "coffee-watch", ->
         .pipe(concat("app.js"))
         .pipe(gulp.dest("dist/js/"))
 
+gulp.task "js-watch", ->
+    gulp.src(paths.js)
+        .pipe(plumber())
+        .pipe(concat("appjs.js"))
+        .pipe(gulp.dest("dist/js/"))
+
+
+
+
+
 gulp.task "coffee-deploy", ->
     gulp.src(paths.coffee)
         .pipe(plumber())
@@ -257,8 +271,8 @@ gulp.task "express", ->
     app = express()
 
 
-    proxyOptions = url.parse('http://192.168.6.99:9002')
-    # proxyOptions = url.parse('http://114.215.142.122:9002')
+    # proxyOptions = url.parse('http://192.168.6.99:9002')
+    proxyOptions = url.parse('http://114.215.142.122:9002')
     # proxyOptions = url.parse('http://192.168.6.7:3000')
     # proxyOptions = url.parse('http://192.168.6.18:3000')
     proxyOptions.route = '/api'
@@ -288,6 +302,8 @@ gulp.task "watch", ->
     gulp.watch("#{paths.app}/index.jade", ["template"])
     gulp.watch(paths.scssStyles, ["sass-watch"])
     gulp.watch(paths.coffee, ["coffee-watch"])
+    gulp.watch(paths.js, ["js-watch"])
+    gulp.watch(paths.vendorJsLibs, ["copy"])
     gulp.watch(["dist/index.html","dist/js/app.js","dist/styles/web.css","dist/partials/**/*.html"])
         .on("change",livereload.changed)
 
@@ -312,6 +328,7 @@ gulp.task "default", [
     "sass-watch",
     "sass-lib",
     "coffee-watch",
+    "js-watch",
     "jslibs-watch",
     "express",
     "watch"

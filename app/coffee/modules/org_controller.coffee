@@ -150,12 +150,57 @@ class Route
                 templateUrl: 'partials/orgs/shared/org_transfer.html'
                 size: 'sm'
             }
-            .state nb.$buildPanel {
+            .state {
                 name: 'org.position'
                 url: ':id/positions'
                 controller: PositionCtrl
-                templateUrl: 'partials/orgs/position.html'
+                views: {
+                    "@": {
+                        controller: PositionCtrl
+                        controllerAs: 'ctrl'
+                        templateUrl: 'partials/orgs/position.html'
+                    }
+                }
+                ncyBreadcrumb: {
+                    label: "岗位"
+                    parent: ($scope) ->
+                        console.debug $scope
+                }
             }
+            .state {
+                name: 'org.position.detail'
+                url: '/:posId'
+                views: {
+                    "@": {
+                        controller: PosCtrl
+                        controllerAs: 'ctrl'
+                        templateUrl: 'partials/orgs/position_detail.html'
+                    }
+                }
+                ncyBreadcrumb: {
+                    label: "{{ctrl.pos.name}}"
+                }
+            }
+            .state {
+                name: 'org.position.new'
+                url: '/new'
+                views: {
+                    "@": {
+                        controller: PosCreateCtrl
+                        controllerAs: 'ctrl'
+                        templateUrl: 'partials/orgs/position_add.html'
+                    }
+                }
+            }
+
+
+
+            # nb.$buildPanel {
+            #     name: 'org.position'
+            #     url: ':id/positions'
+            #     controller: PositionCtrl
+            #     templateUrl: 'partials/orgs/position.html'
+            # }
 
 
 
@@ -371,42 +416,33 @@ class TransferOrgCtrl extends Modal
         @dialog.close()
 
 
-class PositionCtrl extends Modal
-    @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$injector', 'Position', '$stateParams', 'Org', 'Specification']
-    constructor: (@panel, @scope, @Evt, @memoName, @injector, @Position, @stateParams, @Org, @Specification) ->
-        super(panel, scope, memoName)
-        @state = "list"
-        @loadInitialData()
-        @scope.currentPos = {}
-        #for view 标示岗位新增的步骤
-        @step = "detail"
-        @selectOrg = null
-
-
-    loadInitialData: ()->
-        self = @
-        @Position.$search({department_id:@stateParams.id}).$then (positions) ->
-            self.positions = positions
-        @Org.$find(@stateParams.id).$then (org) ->
-            self.scope.currentOrg = org
-
-
+class PositionCtrl extends nb.Controller
+    @.$inject = ['$scope', '$nbEvent', 'Position', '$stateParams', 'Org', 'Specification']
+    constructor: (@scope, @Evt, @Position, @stateParams, @Org, @Specification) ->
+        orgId = @stateParams.id
+        @currentOrg = Org.$find(orgId)
+        @positions = @currentOrg.positions.$fetch()
+        @selectOrg = null # 划转所选择的机构 rework
 
     getSelectsIds: ()->
-        selects = []
-        _.forEach @positions, (item)->
-            selects.push item.id if item.isSelected is true
-        return selects
-    posTransfer: () ->
-        @getSelectsIds()
-        self = @
-        #todo
+        @scope.positions
+            .filter (pos) -> return pos.isSelected
+            .map (pos) -> return pos.id
+
+    posTransfer: () -> #将岗位批量划转到另外一个机构下
+        selectedPosIds = @getSelectsIds()
+        onSuccess = () ->
+            @selectOrg = null
         #需要弹出提示框
-        if @selectOrg
-            self.positions.$adjust({position:{department_id: self.selectOrg.id, position_ids: @getSelectsIds()}})
-            self.resetData()
+        if selectedPosIds.length > 0
+            @positions
+                .$adjust({department_id: @selectOrg.id, position_ids: selectedPosIds })
+                .then onSuccess.bind(@)
         else
-            console.log "未选中机构"
+            console.log "未选中任何机构"
+
+    batchRemove: () ->
+        @positions.$batchRemove({ids:@getSelectsIds()})
 
     newPosition: (form, position, specification) ->
         position.departmentId = @stateParams.id
@@ -416,8 +452,6 @@ class PositionCtrl extends Modal
         @state = "list"
 
 
-    removePositions: () ->
-        @positions.$removeMany({ids:@getSelectsIds()})
 
     positionDetail: (position) ->
         self = @
@@ -426,31 +460,28 @@ class PositionCtrl extends Modal
             self.scope.currentSpe = data
         @state = "show"
 
-    editDetail: ()->
-        @step = "detail"
-        @editPosition()
-    editJD: ()->
-        @step = 'jd'
-        @editPosition()
     editPosition: ()->
-        @state = 'edit'  
+        @state = 'edit'
         @scope.position = @scope.currentPos.$copy()
         @scope.specification = @scope.currentSpe.$copy()
 
-    updateDetail: (position)->
-        @scope.currentPos.$update({position:position})
-    updateJD: (spe)->
-        console.log spe
-        # spe.$save()
-        @scope.currentSpe.$update({specification:spe})
+class PosCtrl extends nb.Controller
+    @.$inject = ['$stateParams', 'Position']
 
-    resetData: () ->
-        self = @
-        self.positions.$refresh()
-        @state = "list"
+    constructor: (@params, @Position) ->
+        posId = params.id
+        @pos = Position.$find(posId)
+        @pos.specifications.$fetch()
 
+class PosCreateCtrl extends nb.Controller
+    @.$inject = ['$stateParams', 'Position', '$scope']
 
+    constructor: (@params, @Position, @scope) ->
 
+    createPos: () ->
+        console.debug "created", @
+    store: (attr, value) ->
+        this[attr] = value
 
 
 

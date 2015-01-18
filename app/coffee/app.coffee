@@ -8,6 +8,7 @@ deps = [
     # 'ui.router'
     'ct.ui.router.extras'
     'ncy-angular-breadcrumb'
+    'mgo-angular-wizard'
     # 'ui.select'
     'ngAnimate'
     'ui.bootstrap'

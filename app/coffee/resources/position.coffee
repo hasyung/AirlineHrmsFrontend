@@ -31,11 +31,11 @@ Position = (restmod, RMUtils, $Evt) ->
                     self = @
                     url = this.$url()
                     request = {
-                        method: 'POST', 
+                        method: 'POST',
                         url: "#{url}/adjust",
                         data: infoData
                     }
-                    
+
                     # $Evt.$send('positions:adjust:success')
                     onSuccess = (res)->
                         self.$dispatch 'after-active', res
@@ -46,21 +46,14 @@ Position = (restmod, RMUtils, $Evt) ->
 
                     this.$send(request, onSuccess, onErorr)
 
-                $removeMany: (ids) ->
+                $batchRemove: (ids) ->
                     self = @
                     url = this.$url()
                     request = {
-                        method: 'POST', 
+                        method: 'POST',
                         url: "#{url}/batch_destroy",
                         data: ids
                     }
-                    # $Evt.$send('positions:adjust:success')
-                    onSuccess = (res)->
-                        self.$dispatch 'after-active', res
-                        # $Evt.$send('org:refresh')
-
-                    onErorr = (res) ->
-                        self.$dispatch 'after-active-error', res
 
                     this.$send(request, onSuccess, onErorr)
 
