@@ -517,6 +517,9 @@ class PosCreateCtrl extends nb.Controller
     createPos: () ->
         @position.departmentId = @orgId
         newPos = @Position.$build({position: @position, specification: @specification})
+        pos = @position
+        pos.specification = @specification
+        newPos = @Position.$create(pos)
         newPos.$save()
         @state.go '^'
     store: (attr, value) ->

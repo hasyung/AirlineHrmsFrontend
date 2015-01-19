@@ -33,6 +33,8 @@ class PositionCtrl extends nb.Controller
         @loadInitialData()
         scope.tableState = null
 
+        @positions = positions = null
+
         @search = (tableState) ->
             console.debug "search success:", arguments
             @$parent.tableState = JSON.stringify(tableState)
@@ -41,13 +43,7 @@ class PositionCtrl extends nb.Controller
                 @$parent.status = data.$status
                 @$parent.data = JSON.stringify(data.$wrap())
 
-            req = {
-                method: 'POST'
-                url: '/api/positions'
-                data: tableState
-            }
-
-            Position.$search(tableState).$then callback.bind(@)
+            positions = Position.$search(tableState).$then callback.bind(@)
 
     loadInitialData: ->
         # @positions = @Position.$collection().$fetch()

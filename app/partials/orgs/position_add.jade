@@ -17,13 +17,7 @@ wizard(on-finish="ctrl.createPos()")
 				.form-group-error(ng-message="required") OA文件必填
 		.postadd-form-group
 			label.postadd-control-label 编制
-<<<<<<< HEAD
-			input.postadd-form-control(type='number', placeholder='1', name="budgetedStaffing",
-				ng-model="position.budgetedStaffing", required,
-				ng-class="{'noTouche': '', 'error': 'control-error-tips', 'valid': 'control-valid-tips'}[ctrl.verifyControl(posForm.budgetedStaffing.$touched, posForm.budgetedStaffing.$error)]")
-=======
 			input.postadd-form-control(type='number', placeholder='1', name="budgetedStaffing", ng-model="position.budgetedStaffing", required)
->>>>>>> c42388503a0912ab3a5a0d3f97eaf2a79b45accc
 			.form-control-error(ng-messages="posForm.budgetedStaffing.$error", ng-if="posForm.budgetedStaffing.$touched")
 				.form-group-error(ng-message="required") 编制必填
 				.form-group-error(ng-message="number") 类型必须为数字
