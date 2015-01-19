@@ -83,7 +83,8 @@ orgTree = (Org, $parse) ->
             $tree.bind 'tree.select', (evt) ->
                 if evt.node
                     node = evt.node
-                    scope.selectedData = getData(node)
+                    scope.$apply ()->
+                        scope.selectedData = getData(node)
                 else
             return
         scope.$on '$destroy', () ->
@@ -443,14 +444,14 @@ class PositionCtrl extends nb.Controller
             .map (pos) -> return pos.id
 
     posTransfer: () -> #将岗位批量划转到另外一个机构下
+        self = @
         selectedPosIds = @getSelectsIds()
-        onSuccess = () ->
-            @selectOrg = null
+        
         #需要弹出提示框
-        if selectedPosIds.length > 0 && selectOrg
+        if selectedPosIds.length > 0 && @selectOrg
             @positions
                 .$adjust({department_id: @selectOrg.id, position_ids: selectedPosIds })
-                .then onSuccess.bind(@)
+            self.selectOrg = null
         else
             console.log "未选中任何机构"
 
