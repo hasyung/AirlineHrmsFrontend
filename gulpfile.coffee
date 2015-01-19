@@ -89,7 +89,7 @@ paths =
         'deps/angular-filter/dist/angular-filter.js'
         'deps/angular-ui-router/release/angular-ui-router.js'
         'deps/ui-router-extras/release/ct-ui-router-extras.js'
-        'deps/angular-breadcrumb/release/angular-breadcrumb.js'
+        'compat/vendor/breadcrumb.js'
         'compat/vendor/wizard.js'
         # 'deps/ngInfiniteScroll/build/ng-infinite-scroll.js'
         'deps/AngularJS-Toaster/toaster.js'

@@ -179,7 +179,7 @@ class Route
                     }
                 }
                 ncyBreadcrumb: {
-                    label: "{{ctrl.pos.name}}"
+                    label: "{{currentPos.name}}"
                 }
             }
             .state {
@@ -446,7 +446,7 @@ class PositionCtrl extends nb.Controller
     posTransfer: () -> #将岗位批量划转到另外一个机构下
         self = @
         selectedPosIds = @getSelectsIds()
-        
+
         #需要弹出提示框
         if selectedPosIds.length > 0 && @selectOrg
             @positions
