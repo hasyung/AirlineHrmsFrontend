@@ -41,11 +41,7 @@
 // 新增岗位弹出层右侧表单
 .org-postadd-detail {
     width: 100%;
-    // form {
-    //     width: 692px;
-    //     padding: 20px 0;
-
-    // }
+    margin-top: 30px;
     .postadd-form-group {
         margin: 0 0 15px 0;
         .form-control-error {
@@ -121,12 +117,12 @@
             width: 100%;
         }
     }
-    .control-error-tips {
+    .ng-touched.ng-invalid {
             .dropdown-toggle {
                 border-color: $danger;
             }
         }
-    .control-valid-tips {
+    .ng-touched.ng-valid {
         .dropdown-toggle {
             border-color: $success;
         }

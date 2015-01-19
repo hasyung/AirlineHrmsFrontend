@@ -69,7 +69,7 @@
         div.div-delete-btn.pull-right(popup-close, ng-click="ctrl.posTransfer()") 确定
         div.div-delete-btn.pull-right(popup-close) 取消
 
-  button.btn.btn-default(title="导出") 导出
+  button.btn.btn-info(title="导出") 导出
 table.table.table-striped.ng-scope.org-post-table
   thead
     tr
@@ -87,6 +87,6 @@ table.table.table-striped.ng-scope.org-post-table
       td.org-post
         a(ui-sref=".detail({posId: pos.id})") {{pos.name}}
       td {{pos.channel.displayName}}
-      td(ng-class="{'invalid': pos.budgetedStaffing < pos.staffing}") {{pos.staffing}}/{{pos.budgetedStaffing}}
+      td.org-preparation(ng-class="{'invalid': pos.budgetedStaffing < pos.staffing}") {{pos.staffing}}/{{pos.budgetedStaffing}}
       td {{pos.schedule.displayName}}
       td {{pos.oaFileNo}}

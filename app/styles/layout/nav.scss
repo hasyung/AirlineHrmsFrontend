@@ -1,6 +1,15 @@
 .navi-root {
+  position: fixed;
   width: 200px;
+  left: 0;
+  top: 0;
   z-index: 1050;
+  .navi-root-header {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 2000;
+  }
   &:before {
     content: " ";
     display: block;
