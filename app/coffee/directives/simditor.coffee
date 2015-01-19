@@ -30,17 +30,23 @@ angular.module 'nb.directives'
             require: 'ngModel'
             scope: {
                 textVal: '=ngModel'
+                toolbar: '='
             }
             link: (scope,elem,attrs,ctrl) ->
-                opts = angular.extend {},defaultConfig,{textarea:elem}
-                editor = new Simditor opts
-                editor.on 'valuechanged', () ->
-                    fn = _.throttle(() ->
-                        scope.$apply ()->
-                            ctrl.$setViewValue editor.getValue()
 
-                    ,2000)
-                    fn()
+                customOpt = {}
+
+                customOpt.toolbar = scope.toolbar if scope.toolbar
+
+                opts = angular.extend {},defaultConfig, customOpt,{textarea: elem}
+
+                onValueChanged = _.throttle(() ->
+                    # scope.$apply ()->
+                    ctrl.$setViewValue editor.getValue()
+
+                ,2000)
+                editor = new Simditor opts
+                editor.on 'valuechanged', onValueChanged
 
                 #当编辑文章时初始化文本
                 ctrl.$render = () ->
