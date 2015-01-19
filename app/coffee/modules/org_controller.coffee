@@ -434,8 +434,8 @@ class TransferOrgCtrl extends Modal
 
 
 class PositionCtrl extends nb.Controller
-    @.$inject = ['$scope', '$nbEvent', 'Position', '$stateParams', 'Org', 'Specification']
-    constructor: (@scope, @Evt, @Position, @stateParams, @Org, @Specification) ->
+    @.$inject = ['$scope', '$nbEvent', 'Position', '$stateParams', 'Org']
+    constructor: (@scope, @Evt, @Position, @stateParams, @Org) ->
         orgId = @stateParams.id
         @currentOrg = Org.$find(orgId)
         @positions = @currentOrg.positions.$fetch()
@@ -486,21 +486,31 @@ class PositionCtrl extends nb.Controller
 
 
 class PosCtrl extends nb.Controller
-    @.$inject = ['$stateParams', 'Position', '$scope', '$state']
+    @.$inject = ['$stateParams', 'Position', '$scope', '$state', 'Org']
 
-    constructor: (@params, @Position, @scope, @state) ->
+    constructor: (@params, @Position, @scope, @state, @Org) ->
+        @loadInitialData()
+    loadInitialData: () ->
         self = @
-        posId = params.posId
+        orgId = @params.id
+        posId = @params.posId
         @Position.$find(posId).$then (position) ->
             self.scope.currentPos = position
             self.scope.copyPos = position.$copy()
-            position.specifications.$fetch().$then (data)->
-                console.log data
-                self.scope.currentSpe = data
 
-    updateDetail: (postion) ->
-        @scope.currentPos.$update(postion)
+            spe = position.specification.$fetch()
+            spe.$asPromise().then (spe) ->
+                self.copySpe = spe.$copy()
+
+        @scope.currentOrg = @Org.$find orgId
+
+    updateDetail: (position) ->
+        @scope.currentPos.$update(position)
         @state.go '^'
+    updateAdvanced: (advance) ->
+        console.log advance
+        @scope.currentSpe.$update(advance)
+        # @state.go '^'
 
 
 
@@ -516,9 +526,10 @@ class PosCreateCtrl extends nb.Controller
         @scope.currentOrg = @Org.$find @orgId
     createPos: () ->
         @position.departmentId = @orgId
-        newPos = @Position.$build({position: @position, specification: @specification})
+        @position.specification = @specification
+        newPos = @Position.$build(@position)
         newPos.$save()
-        @state.go '^'
+        # @state.go '^'
     store: (attr, value) ->
         this[attr] = value
 

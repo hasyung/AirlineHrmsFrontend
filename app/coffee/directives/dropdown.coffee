@@ -81,3 +81,10 @@ angular.module 'nb.directives'
 
         }
     ]
+    .directive 'dropdownBtn', [()->
+        return {
+            restrict: 'EA'
+            # template: 'partials/common/dropdown.tpl.html'
+            link: postLink
+        }
+    ]

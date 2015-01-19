@@ -23,8 +23,8 @@ Position = (restmod, RMUtils, $Evt) ->
     Position = restmod.model('/positions').mix 'nbRestApi', {
         department_id: {mask: 'R', map: 'department.id'}
         department: {mask: 'CU'}
-        isSelected: {init: false , volatile: true}
-        specifications: { hasOne: 'Specification'}
+        isSelected: {init: false , mask: "CU"}
+        specification: { hasOne: 'Specification'}
 
         $hooks:
             'after-create': ->
@@ -90,9 +90,9 @@ Position = (restmod, RMUtils, $Evt) ->
 
 
 Specification = (restmod, RMUtils, $Evt) ->
-    Specification = restmod.model('/specifications').mix 'nbRestApi', {
-
-
+    Specification = restmod.model().mix 'nbRestApi', {
+        $config:
+            jsonRoot: 'specification'
     }
 
 
