@@ -518,6 +518,16 @@ class PosCreateCtrl extends nb.Controller
     store: (attr, value) ->
         this[attr] = value
 
+    verifyControl: (touched, errorObj)->
+        result = "noTouche"
+        if touched
+            if Object.keys(errorObj).length == 0
+                result = "valid"
+            else
+                result = "error"
+
+
+
 
 
 app.config(Route)
