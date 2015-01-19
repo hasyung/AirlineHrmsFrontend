@@ -18,7 +18,7 @@ div.org
                             ng-class="{'active': org.id == (ctrl.treeRootOrg && ctrl.treeRootOrg.id)}"
                         )
 
-    .org-aside.pull-right
+    .org-aside.org-aside-info.pull-right
         //- .org-row(ui-view='sub' ng-controller="OrgCtrl as orgCtrl")
         .org-row(ng-controller="OrgCtrl as orgCtrl")
             include org

@@ -5,21 +5,6 @@
     width: 100%;
     position: relative;
 }
-
-.app-header-fixed{
-    padding-top: $app-header-height;
-    .app-header{
-        position: fixed;
-        top: 0;
-        width: 100%;
-    }
-}
-
-.app-header{
-    z-index: 1025;
-    border-radius: 0;
-}
-
 // menu
 .app-aside{
     float: left;
@@ -43,6 +28,9 @@
 .app-content{
     height: 100%;
     @include clearfix();
+    .app-content-body {
+        overflow: scroll;
+    }
 }
 
 .app-content-full{
@@ -60,11 +48,10 @@
     }
 }
 
-.app-content-body{
-    padding-bottom: $app-header-height;
-    float: left;
-    width: 100%;
-}
+// .app-content-body{
+//     float: left;
+//     width: 100%;
+// }
 
 // footer
 .app-footer{
