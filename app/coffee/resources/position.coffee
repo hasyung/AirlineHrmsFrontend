@@ -54,8 +54,10 @@ Position = (restmod, RMUtils, $Evt) ->
 
                     # $Evt.$send('positions:adjust:success')
                     onSuccess = (res)->
+                        angular.forEach infoData.position_ids, (id) ->
+                            item = _.find self, {id: id}
+                            self.$remove item
                         self.$dispatch 'after-active', res
-                        # $Evt.$send('org:refresh')
 
                     onErorr = (res) ->
                         self.$dispatch 'after-active-error', res
