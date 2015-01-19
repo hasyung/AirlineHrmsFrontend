@@ -152,7 +152,7 @@ class Route
             }
             .state {
                 name: 'org.position'
-                url: ':id/positions'
+                url: '/:id/positions'
                 views: {
                     "@": {
                         controller: PositionCtrl
