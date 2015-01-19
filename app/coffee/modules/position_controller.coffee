@@ -26,19 +26,34 @@ class Route
 
 class PositionCtrl extends nb.Controller
 
-    @.$inject = ['Position', '$scope']
+    @.$inject = ['Position', '$scope', '$http']
 
 
-    constructor: (@Position, @scope) ->
+    constructor: (@Position, @scope, @http) ->
         @loadInitialData()
         scope.tableState = null
+
+        @search = (tableState) ->
+            console.debug "search success:", arguments
+            @$parent.tableState = JSON.stringify(tableState)
+
+            callback = (data, status, headers, config) ->
+                @$parent.status = JSON.stringify(data.status)
+                @$parent.headers = JSON.stringify(data.headers())
+                @$parent.data = JSON.stringify(data.data)
+
+            req = {
+                method: 'GET'
+                url: '/api/positions'
+                data: tableState
+            }
+
+            http(req).then callback.bind(@)
 
     loadInitialData: ->
         # @positions = @Position.$collection().$fetch()
 
-    search: (tableState) ->
-        console.debug "search success:", arguments
-        @$parent.tableState = JSON.stringify(tableState)
+
 
 
 

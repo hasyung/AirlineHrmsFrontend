@@ -13,4 +13,15 @@
                     input(ng-model="date.to")
             button.btn.btn-default.search-commit.fa.fa-search(nb-pipe="ctrl.search") 查询
 
-    div(ng-bind="tableState")
+    div
+        h3 查询参数
+        p(ng-bind="tableState")
+    div
+        h3 http状态
+        p(ng-bind="status")
+    div
+        h3 http headers
+        p(ng-bind="headers")
+    div
+        h3 返回数据
+        p(ng-bind="data")
