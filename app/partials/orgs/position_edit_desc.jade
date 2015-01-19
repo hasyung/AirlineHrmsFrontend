@@ -1,1 +1,41 @@
-h1 edit desc
+form.org-postadd-detail.pull-left.org-postadd-jd(title="岗位说明" name="posAdvancedForm")
+	//- input(placeholder="这里输入内容", autofocus, required ,  ng-model="specification.duty")
+	//- input.btn.btn-info(type='submit' value="完成" wz-next="ctrl.store('specification', specification)" ng-disabled="posAdvancedForm.$invalid")
+	.org-desc-section
+		h3 工作职责
+		label.postadd-control-label 工作职责
+		textarea(simditor, placeholder="这里输入内容", autofocus, ng-model="specification.duty")
+	.org-desc-section
+		h3 工作权限
+		.postadd-form-group
+			label.postadd-control-label 人事权限
+			input.postadd-form-control(type='text', placeholder='请输入人事权限', ng-model="specification.personnelPermission")
+		.postadd-form-group
+			label.postadd-control-label 财务权限
+			input.postadd-form-control(type='text', placeholder='请输入财务权限', ng-model="specification.financialPermission")
+		.postadd-form-group
+			label.postadd-control-label 业务权限
+			input.postadd-form-control(type='text', placeholder='请输入业务权限', ng-model="specification.businessPermission")
+	.org-desc-section
+		h3 工作关系
+		.postadd-form-group
+			label.postadd-control-label 直属上级
+			input.postadd-form-control(type='text', placeholder='请输入直属上级', ng-model="specification.superior")
+		.postadd-form-group
+			label.postadd-control-label 直属下级
+			input.postadd-form-control(type='text', placeholder='请输入直属下级', ng-model="specification.underling")
+		.postadd-form-group
+			label.postadd-control-label 内部联系
+			input.postadd-form-control(type='text', placeholder='请输入内部联系', ng-model="specification.internalRelation")
+		.postadd-form-group
+			label.postadd-control-label 外部联系
+			input.postadd-form-control(type='text', placeholder='请输入外部联系', ng-model="specification.externalRelation")
+		.postadd-form-group
+			h3 任职条件
+			label.postadd-control-label 任职条件
+			textarea(simditor, placeholder="这里输入内容", autofocus, ng-model="specification.qualification")
+
+		.postadd-form-group
+			label.postadd-control-label
+			button.btn.btn-info(type='submit' ng-disabled="posAdvancedForm.$invalid") 保存
+
