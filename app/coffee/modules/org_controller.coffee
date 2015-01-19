@@ -497,6 +497,13 @@ class PosCtrl extends nb.Controller
     updateDetail: (postion) ->
         @scope.currentPos.$update(postion)
         @state.go '^'
+    verifyControl: (touched, errorObj)->
+        result = "noTouche"
+        if touched
+            if Object.keys(errorObj).length == 0
+                result = "valid"
+            else
+                result = "error"
 
 
 
