@@ -84,11 +84,11 @@
             width: 25%;
             border-color:$focus;
         }
-        &.control-error-tips {
+        &.ng-dirty.ng-invalid {
             border-color: $danger;
             background-image: url("../../../images/close-r.png");
         }
-        &.control-valid-tips {
+        &.ng-dirty.ng-valid {
             border-color: $success;
             background-image: url("../../../images/check-g.png");
         }
