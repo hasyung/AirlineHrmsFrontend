@@ -42,7 +42,7 @@ wizard(on-finish="ctrl.createPos()")
 			span.postadd-control-text {{currentOrg.name}}
 		.postadd-form-group
 			label.postadd-control-label
-			button.btn.btn-info(type="submit" wz-next="ctrl.store('position', position)" required ng-disabled="posForm.$invalid") 下一步
+			button.btn.btn-info(type="submit" wz-next="ctrl.store('position', position)" ng-disabled="posForm.$invalid") 下一步
 
 
 	form.org-postadd-detail.pull-left.org-postadd-jd(title="岗位说明" wz-step canexit="posAdvancedForm.$valid" name="posAdvancedForm")
