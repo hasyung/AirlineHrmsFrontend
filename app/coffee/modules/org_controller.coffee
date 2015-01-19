@@ -493,11 +493,11 @@ class PosCtrl extends nb.Controller
             position.specifications.$fetch().$then (data)->
                 console.log data
                 self.scope.currentSpe = data
-            
+
     updateDetail: (postion) ->
         @scope.currentPos.$update(postion)
         @state.go '^'
-    
+
 
 
 
