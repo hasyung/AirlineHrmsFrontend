@@ -1,46 +1,39 @@
 wizard(on-finish="ctrl.createPos()")
 	form.org-postadd-detail.org-postadd-basic(title="基本信息" wz-step canexit="posForm.$valid" name="posForm" novalidate )
-		//- input(required ng-model="position.name")
-		//- input.btn.btn-info(type="submit" wz-next="ctrl.store('position', position)" required value="下一步" ng-disabled="posForm.$invalid")
-		//- error control-error-tips  valid:control-valid-tips
 		.postadd-form-group
 			label.postadd-control-label 岗位名称
-			input.postadd-form-control(ng-class="{'noTouche': '', 'error': 'control-error-tips', 'valid': 'control-valid-tips'}[ctrl.verifyControl(posForm.name.$touched, posForm.name.$error)]", type='text', placeholder='岗位名称', ng-model="position.name", name="name", required)
+			input.postadd-form-control(type='text', placeholder='岗位名称', ng-model="position.name", name="name", required)
 			.form-control-error(ng-messages="posForm.name.$error", ng-if="posForm.name.$touched")
 				.form-group-error(ng-message="required") 名称必填
 		.postadd-form-group
 			label.postadd-control-label 岗位通道
-			nb-dropdown(ng-class="{'noTouche': '', 'error': 'control-error-tips', 'valid': 'control-valid-tips'}[ctrl.verifyControl(posForm.channel.$touched, posForm.channel.$error)]", ng-model="position.channel", remote-key="position_channels", name="channel" required)
+			nb-dropdown( ng-model="position.channel", remote-key="position_channels", name="channel" required)
 			.form-control-error(ng-messages="posForm.channel.$error", ng-if="posForm.channel.$touched")
 				.form-group-error(ng-message="required") 通道必选  
 		.postadd-form-group
 			label.postadd-control-label OA文件编号
-			input.postadd-form-control(type='text', placeholder='川0144450', name="fileName",
-										 ng-model="position.oaFileNo", required,
-										 ng-class="{'noTouche': '', 'error': 'control-error-tips', 'valid': 'control-valid-tips'}[ctrl.verifyControl(posForm.fileName.$touched, posForm.fileName.$error)]")
+			input.postadd-form-control(type='text', placeholder='川0144450', name="fileName", ng-model="position.oaFileNo", required)
 			.form-control-error(ng-messages="posForm.fileName.$error", ng-if="posForm.fileName.$touched")
 				.form-group-error(ng-message="required") OA文件必填
 		.postadd-form-group
 			label.postadd-control-label 编制
-			input.postadd-form-control(type='number', placeholder='1', name="budgetedStaffing", 
-				ng-model="position.budgetedStaffing", required,
-				ng-class="{'noTouche': '', 'error': 'control-error-tips', 'valid': 'control-valid-tips'}[ctrl.verifyControl(posForm.budgetedStaffing.$touched, posForm.budgetedStaffing.$error)]")
+			input.postadd-form-control(type='number', placeholder='1', name="budgetedStaffing", ng-model="position.budgetedStaffing", required)
 			.form-control-error(ng-messages="posForm.budgetedStaffing.$error", ng-if="posForm.budgetedStaffing.$touched")
 				.form-group-error(ng-message="required") 编制必填
 				.form-group-error(ng-message="number") 类型必须为数字
 		.postadd-form-group
 			label.postadd-control-label 工时制度
-			nb-dropdown(ng-class="{'noTouche': '', 'error': 'control-error-tips', 'valid': 'control-valid-tips'}[ctrl.verifyControl(posForm.schedule.$touched, posForm.schedule.$error)]", ng-model="position.schedule" remote-key="position_schedules", required="true", name="schedule")
+			nb-dropdown( ng-model="position.schedule" remote-key="position_schedules", required="true", name="schedule")
 			.form-control-error(ng-messages="posForm.schedule.$error", ng-if="posForm.schedule.$touched")
 				.form-group-error(ng-message="required") 工时必选
 		.postadd-form-group
 			label.postadd-control-label 类别
-			nb-dropdown(ng-class="{'noTouche': '', 'error': 'control-error-tips', 'valid': 'control-valid-tips'}[ctrl.verifyControl(posForm.category.$touched, posForm.category.$error)]", ng-model="position.category" remote-key="position_categories", required="true", name="category", additory="false")
+			nb-dropdown( ng-model="position.category" remote-key="position_categories", required="true", name="category")
 			.form-control-error(ng-messages="posForm.category.$error", ng-if="posForm.category.$touched")
 				.form-group-error(ng-message="required") 类别必选
 		.postadd-form-group
 			label.postadd-control-label 性质
-			nb-dropdown(ng-class="{'noTouche': '', 'error': 'control-error-tips', 'valid': 'control-valid-tips'}[ctrl.verifyControl(posForm.nature.$touched, posForm.nature.$error)]", ng-model="position.nature" remote-key="position_natures", required="true", name="nature", additory="false")
+			nb-dropdown( ng-model="position.nature" remote-key="position_natures", required="true", name="nature")
 			.form-control-error(ng-messages="posForm.nature.$error", ng-if="posForm.nature.$touched")
 				.form-group-error(ng-message="required") 性质必选
 
@@ -87,7 +80,7 @@ wizard(on-finish="ctrl.createPos()")
 			.postadd-form-group
 				h3 任职条件
 				label.postadd-control-label 任职条件
-				textarea(simditor, placeholder="这里输入内容", autofocus, ng-model="specification.qualification")
+				textarea(simditor, placeholder="这里输入内容", ng-model="specification.qualification")
 
 			.postadd-form-group
 				label.postadd-control-label
