@@ -280,13 +280,14 @@
 			width: 100%;
 		}
 	}
-	.org-table {
-    	margin-left: 20px;
-    	width: 298px;
-    	.org-post a {
-    		color: $a-color;
-		}
-	}
+}
+
+.org-post-table {
+    .org-post {
+        a {
+            color: $a-color;
+        }
+    }
 }
 
 // 撤销 删除弹出泡泡提示框
