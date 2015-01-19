@@ -435,6 +435,7 @@ class PositionCtrl extends nb.Controller
         @currentOrg = Org.$find(orgId)
         @positions = @currentOrg.positions.$fetch()
         @selectOrg = null # 划转所选择的机构 rework
+        # @scope.$onRootScope 'position:refresh', @.resetData.bind(@)
 
     getSelectsIds: ()->
         @positions
@@ -446,7 +447,7 @@ class PositionCtrl extends nb.Controller
         onSuccess = () ->
             @selectOrg = null
         #需要弹出提示框
-        if selectedPosIds.length > 0
+        if selectedPosIds.length > 0 && selectOrg
             @positions
                 .$adjust({department_id: @selectOrg.id, position_ids: selectedPosIds })
                 .then onSuccess.bind(@)
@@ -476,6 +477,8 @@ class PositionCtrl extends nb.Controller
         @state = 'edit'
         @scope.position = @scope.currentPos.$copy()
         @scope.specification = @scope.currentSpe.$copy()
+
+
 
 class PosCtrl extends nb.Controller
     @.$inject = ['$stateParams', 'Position', '$scope', '$state']
