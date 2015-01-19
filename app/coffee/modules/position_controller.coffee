@@ -38,17 +38,16 @@ class PositionCtrl extends nb.Controller
             @$parent.tableState = JSON.stringify(tableState)
 
             callback = (data, status, headers, config) ->
-                @$parent.status = JSON.stringify(data.status)
-                @$parent.headers = JSON.stringify(data.headers())
-                @$parent.data = JSON.stringify(data.data)
+                @$parent.status = data.$status
+                @$parent.data = JSON.stringify(data.$wrap())
 
             req = {
-                method: 'GET'
+                method: 'POST'
                 url: '/api/positions'
                 data: tableState
             }
 
-            http(req).then callback.bind(@)
+            Position.$search(tableState).$then callback.bind(@)
 
     loadInitialData: ->
         # @positions = @Position.$collection().$fetch()
