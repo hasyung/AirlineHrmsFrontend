@@ -22,3 +22,9 @@ h1, h2, h3, h4, h5 {
 .bg-black .nav > li > a {
     color: #adb2c5;
 }
+a {
+    color: $a-color;
+}
+a:hover {
+    color: $a-color;
+}
