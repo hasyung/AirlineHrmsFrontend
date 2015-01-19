@@ -68,6 +68,8 @@
       .panel-footer
         div.div-delete-btn.pull-right(popup-close, ng-click="ctrl.posTransfer()") 确定
         div.div-delete-btn.pull-right(popup-close) 取消
+
+  button.btn.btn-default(title="导出") 导出
 table.table.table-striped.ng-scope.org-post-table
   thead
     tr
@@ -79,12 +81,12 @@ table.table.table-striped.ng-scope.org-post-table
       th  工作时间
       th  OA文件编号
   tbody
-    tr(ng-repeat="pos in ctrl.positions track by pos.id")
+    tr(ng-repeat="pos in ctrl.positions track by pos.id", ng-class="{'active': pos.isSelected == true}")
       td
         input(type='checkbox', ng-model="pos.isSelected")
       td.org-post
         a(ui-sref=".detail({posId: pos.id})") {{pos.name}}
       td {{pos.channel.displayName}}
-      td {{pos.staffing}}/{{pos.budgetedStaffing}}
+      td(ng-class="{'invalid': pos.budgetedStaffing < pos.staffing}") {{pos.staffing}}/{{pos.budgetedStaffing}}
       td {{pos.schedule.displayName}}
       td {{pos.oaFileNo}}
