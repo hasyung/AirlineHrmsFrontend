@@ -34,7 +34,7 @@ div.org
 
                 //- loading-btn.red(ng-click="ctrl.openHistoryPanel()" btn-loading-type="contract-overlay" btn-text="测试loading")
         div.org-chart-window
-            div.svg-wrapper(org-chart-data="ctrl.tree.data")
+            div.svg-wrapper(org-chart drag-on org-chart-data="ctrl.tree.data")
             div.bottom-btn-group(ng-show="ctrl.tree.isModified")
                 //- button.cancel(ui-sref=".revert") 撤销
                 button.btn.btn-info(ui-sref=".active") 生 效
