@@ -168,7 +168,7 @@ class Route
             }
             .state {
                 name: 'org.position.detail'
-                url: '/:posId'
+                url: '/{posId:[0-9]+}'
                 views: {
                     "@": {
                         controller: PosCtrl
