@@ -9,7 +9,7 @@ wizard(on-finish="ctrl.createPos()")
 			label.postadd-control-label 岗位通道
 			nb-dropdown( ng-model="position.channel", remote-key="position_channels", name="channel" required)
 			.form-control-error(ng-messages="posForm.channel.$error", ng-if="posForm.channel.$touched")
-				.form-group-error(ng-message="required") 通道必选  
+				.form-group-error(ng-message="required") 通道必选
 		.postadd-form-group
 			label.postadd-control-label OA文件编号
 			input.postadd-form-control(type='text', placeholder='川0144450', name="fileName", ng-model="position.oaFileNo", required)
@@ -17,7 +17,13 @@ wizard(on-finish="ctrl.createPos()")
 				.form-group-error(ng-message="required") OA文件必填
 		.postadd-form-group
 			label.postadd-control-label 编制
+<<<<<<< HEAD
+			input.postadd-form-control(type='number', placeholder='1', name="budgetedStaffing",
+				ng-model="position.budgetedStaffing", required,
+				ng-class="{'noTouche': '', 'error': 'control-error-tips', 'valid': 'control-valid-tips'}[ctrl.verifyControl(posForm.budgetedStaffing.$touched, posForm.budgetedStaffing.$error)]")
+=======
 			input.postadd-form-control(type='number', placeholder='1', name="budgetedStaffing", ng-model="position.budgetedStaffing", required)
+>>>>>>> c42388503a0912ab3a5a0d3f97eaf2a79b45accc
 			.form-control-error(ng-messages="posForm.budgetedStaffing.$error", ng-if="posForm.budgetedStaffing.$touched")
 				.form-group-error(ng-message="required") 编制必填
 				.form-group-error(ng-message="number") 类型必须为数字
@@ -51,7 +57,7 @@ wizard(on-finish="ctrl.createPos()")
 		.org-desc-section
 			h3 工作职责
 			label.postadd-control-label 工作职责
-			textarea(simditor, placeholder="这里输入内容", autofocus, ng-model="specification.duty")
+			textarea(simditor, toolbar="['bold', 'italic', 'underline', 'ol', 'ul']" placeholder="这里输入内容", autofocus, ng-model="specification.duty")
 		.org-desc-section
 			h3 工作权限
 			.postadd-form-group
@@ -80,7 +86,7 @@ wizard(on-finish="ctrl.createPos()")
 			.postadd-form-group
 				h3 任职条件
 				label.postadd-control-label 任职条件
-				textarea(simditor, placeholder="这里输入内容", ng-model="specification.qualification")
+				textarea(simditor, toolbar="['bold', 'italic', 'underline', 'ol', 'ul']" placeholder="这里输入内容", ng-model="specification.qualification")
 
 			.postadd-form-group
 				label.postadd-control-label
