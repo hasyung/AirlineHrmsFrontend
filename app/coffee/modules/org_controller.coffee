@@ -164,8 +164,6 @@ class Route
                 }
                 ncyBreadcrumb: {
                     label: "{{ ctrl.currentOrg.name || '岗位' }}"
-                    parent: ($scope) ->
-                        console.debug $scope
                 }
             }
             .state {
@@ -193,6 +191,9 @@ class Route
                             return "partials/orgs/position_edit_#{params.template}.html"
                     }
                 }
+                ncyBreadcrumb: {
+                    label: "编辑"
+                }
             }
             .state {
                 name: 'org.position.new'
@@ -203,6 +204,9 @@ class Route
                         controllerAs: 'ctrl'
                         templateUrl: 'partials/orgs/position_add.html'
                     }
+                }
+                ncyBreadcrumb: {
+                    label: "新增"
                 }
             }
 
@@ -497,13 +501,6 @@ class PosCtrl extends nb.Controller
     updateDetail: (postion) ->
         @scope.currentPos.$update(postion)
         @state.go '^'
-    verifyControl: (touched, errorObj)->
-        result = "noTouche"
-        if touched
-            if Object.keys(errorObj).length == 0
-                result = "valid"
-            else
-                result = "error"
 
 
 
@@ -524,14 +521,6 @@ class PosCreateCtrl extends nb.Controller
         @state.go '^'
     store: (attr, value) ->
         this[attr] = value
-
-    verifyControl: (touched, errorObj)->
-        result = "noTouche"
-        if touched
-            if Object.keys(errorObj).length == 0
-                result = "valid"
-            else
-                result = "error"
 
 
 
