@@ -49,10 +49,8 @@
             margin-left: 10px;
             .form-group-error {
                 position: relative;
-                background-color: #fcf8e2;
-                border: 1px solid #faebca;
                 color: #000;
-                padding: 3px 3px;
+                padding: 5px;
                 font-size: $font-size-xs;
             }
         }
@@ -84,6 +82,12 @@
             border-color: $danger;
             background-image: url("../../../images/close-r.png");
         }
+        // &.ng-dirty.ng-invalid+.form-control-error {
+        //     .form-group-error {
+        //         background-color: $danger;
+        //         color: #fff;
+        //     }
+        // }
         &.ng-dirty.ng-valid {
             border-color: $success;
             background-image: url("../../../images/check-g.png");
