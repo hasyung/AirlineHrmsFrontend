@@ -26,7 +26,7 @@
         span.caret
       ul.dropdown-menu
         li( role="presentation")
-          a(role="menuitem" ng-href="/api/positions/export_to_xls?department_id={{ctrl.treeRootOrg.id}}" ) 导出全部岗位
+          a(role="menuitem" ng-href="/api/positions/export_to_xls?{{ctrl.getExportParams()}}" ) 导出全部岗位
         li( role="presentation")
           a(role="menuitem" ng-href="/api/positions/export_to_xls?department_id={{ctrl.treeRootOrg.id}}" ) 导出所选岗位
         li( role="presentation")
@@ -39,8 +39,7 @@
       tr
         th
           //- input(type='checkbox', value='option2')
-          input(type='checkbox', ng-click="ctrl.toggleSelectAll()")
-          label 全选
+          input(type='checkbox', ng-model="allSelect", ng-click="ctrl.toggleSelectAll()")
         th  岗位名称
         th  通道
         th  编制数

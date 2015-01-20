@@ -440,6 +440,7 @@ class PositionCtrl extends nb.Controller
         @currentOrg = Org.$find(orgId)
         @positions = @currentOrg.positions.$fetch()
         @selectOrg = null # 划转所选择的机构 rework
+        @scope.allSelect = false
         # @scope.$onRootScope 'position:refresh', @.resetData.bind(@)
 
     getSelectsIds: ()->
@@ -462,6 +463,13 @@ class PositionCtrl extends nb.Controller
     batchRemove: () ->
         @positions.$batchRemove({ids:@getSelectsIds()})
 
+    toggleSelectAll: () ->
+        self = @
+        _.map @positions, (item)->
+            item.isSelected = self.scope.allSelect
+
+    getExportParams: () ->
+        return 'department_id=' + @currentOrg.id  + '&position_ids=' + @getSelectsIds().join(',')
     
 
 
