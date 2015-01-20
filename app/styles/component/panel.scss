@@ -1,3 +1,4 @@
+//机构各种切换窗口公共样式
 .org-modal-wrapper {
   height: 100%;
   overflow: scroll;
@@ -45,5 +46,16 @@
     }
     .org-preparation.invalid {
         color: $danger;
+    }
+}
+
+//调整机构部分样式
+.popup-title {
+    padding: 0 15px;
+    line-height: 50px;
+}
+.panel-footer {
+    .div-delete-btn {
+        margin: 0 0 0 10px;
     }
 }
