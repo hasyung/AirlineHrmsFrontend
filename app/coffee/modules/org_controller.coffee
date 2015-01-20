@@ -462,26 +462,7 @@ class PositionCtrl extends nb.Controller
     batchRemove: () ->
         @positions.$batchRemove({ids:@getSelectsIds()})
 
-    newPosition: (form, position, specification) ->
-        position.departmentId = @stateParams.id
-        newPos = @Position.$build({position: position, specification: specification})
-        newPos.$save()
-        @resetData()
-        @state = "list"
-
-
-
-    positionDetail: (position) ->
-        self = @
-        @scope.currentPos = position
-        position.specifications.$fetch().$then (data)->
-            self.scope.currentSpe = data
-        @state = "show"
-
-    editPosition: ()->
-        @state = 'edit'
-        @scope.position = @scope.currentPos.$copy()
-        @scope.specification = @scope.currentSpe.$copy()
+    
 
 
 

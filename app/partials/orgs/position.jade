@@ -70,22 +70,27 @@
           div.btn.div-delete-btn.pull-right(popup-close, ng-click="ctrl.posTransfer()") 确定
           div.btn.div-delete-btn.pull-right(popup-close) 取消
 
-    //- .dropdown
-    //-   button.btn.btn-default.dropdown-toggle(type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true")
-    //-     |导出
-    //-     span.caret
-    //-   ul.dropdown-menu
-    //-     li( role="presentation")
-    //-       a(role="menuitem" tabindex="-1" href="#") 导出excel
-    //-     li( role="presentation")
-    //-       a(role="menuitem" tabindex="-1" href="#") 导出pdf
+    .dropdown(ng-class="{'open': menuOpen}")
+      button.btn.btn-default.dropdown-toggle(ng-click="menuOpen = !menuOpen" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true")
+        |导出
+        span.caret
+      ul.dropdown-menu
+        li( role="presentation")
+          a(role="menuitem" ng-href="/api/positions/export_to_xls?department_id={{ctrl.treeRootOrg.id}}" ) 导出全部岗位
+        li( role="presentation")
+          a(role="menuitem" ng-href="/api/positions/export_to_xls?department_id={{ctrl.treeRootOrg.id}}" ) 导出所选岗位
+        li( role="presentation")
+          a(role="menuitem" ng-href="/api/positions/export_to_xls?department_id={{ctrl.treeRootOrg.id}}" ) 导出全部岗位描述书
+        li( role="presentation")
+          a(role="menuitem" ng-href="/api/positions/export_to_xls?department_id={{ctrl.treeRootOrg.id}}" ) 导出所选岗位描述书
 
-    button.btn.btn-info(title="导出") 导出
   table.table.table-striped.ng-scope.org-post-table
     thead
       tr
         th
           //- input(type='checkbox', value='option2')
+          input(type='checkbox', ng-click="ctrl.toggleSelectAll()")
+          label 全选
         th  岗位名称
         th  通道
         th  编制数
