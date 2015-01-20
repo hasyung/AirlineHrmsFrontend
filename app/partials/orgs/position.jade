@@ -20,8 +20,8 @@
           div.btn.div-delete-btn.pull-right(popup-close, ng-click="ctrl.posTransfer()") 确定
           div.btn.div-delete-btn.pull-right(popup-close) 取消
 
-    .dropdown(ng-class="{'open': menuOpen}")
-      button.btn.btn-default.dropdown-toggle(ng-click="menuOpen = !menuOpen" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true")
+    .dropdown.pull-right(ng-class="{'open': menuOpen}")
+      button.btn.btn-info.dropdown-toggle(ng-click="menuOpen = !menuOpen" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true")
         |导出
         span.caret
       ul.dropdown-menu
