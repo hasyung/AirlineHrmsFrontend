@@ -28,6 +28,9 @@ a {
 a:hover {
     color: $a-color;
 }
+.inset-box-shadow {
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(0, 0, 0, 0.05);
+}
 //步骤线的定位类型修改
 //目的是 线是使用伪元素做的，绝对定位类型，而当前元素没有定位
 //修正步骤线在一些情况下定位错误
