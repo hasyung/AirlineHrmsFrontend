@@ -48,55 +48,56 @@
 //-     include ./position_add.jade
 //-   div(ng-if="ctrl.state == 'show'")
 //-     include ./position_detail.jade
-.org-modal-posttop 岗位信息列表
-  //- button.btn.btn-default 导出
-  button.btn.btn-default.fa.fa-trash-o(title="删除", nb-popup, position="left")
-    popup-template.nb-popup.org-default-popup-template.panel.panel-default()
-      .panel-heading.popup-title 警告
-      .panel-body.popup-body
-        div 删除后将无法恢复，请确认删除
-        div.div-delete-btn.pull-right(ng-click="ctrl.batchRemove()") 删除
+.org-modal-wrapper
+  .org-modal-posttop 岗位信息列表
+    //- button.btn.btn-default 导出
+    button.btn.btn-default.fa.fa-trash-o(title="删除", nb-popup, position="left")
+      popup-template.nb-popup.org-default-popup-template.panel.panel-default()
+        .panel-heading.popup-title 警告
+        .panel-body.popup-body
+          div 删除后将无法恢复，请确认删除
+          div.btn.div-delete-btn.pull-right(ng-click="ctrl.batchRemove()") 删除
 
-  //- button.btn.btn-default.fa.fa-pencil(title="编辑")
-  button.btn.btn-default.fa.fa-plus(title="新增子机构", ui-sref=".new")
-  button.btn.btn-info(title="", nb-popup-plus, position="left-bottom", offset="0.2") 调整机构
-    popup-template.nb-popup.org-default-popup-template.panel.panel-default()
-      .panel-heading.popup-title 组织机构
-      .panel-body.popup-body
-        div(slimscroll height="300px")
-          nb-org-tree(selected-data="ctrl.selectOrg")
-      .panel-footer
-        div.div-delete-btn.pull-right(popup-close, ng-click="ctrl.posTransfer()") 确定
-        div.div-delete-btn.pull-right(popup-close) 取消
+    //- button.btn.btn-default.fa.fa-pencil(title="编辑")
+    button.btn.btn-default.fa.fa-plus(title="新增子机构", ui-sref=".new")
+    button.btn.btn-info(title="", nb-popup-plus, position="left-bottom", offset="0.2") 调整机构
+      popup-template.nb-popup.org-default-popup-template.panel.panel-default()
+        .panel-heading.popup-title 组织机构
+        .panel-body.popup-body
+          div(slimscroll height="300px")
+            nb-org-tree(selected-data="ctrl.selectOrg")
+        .panel-footer
+          div.btn.div-delete-btn.pull-right(popup-close, ng-click="ctrl.posTransfer()") 确定
+          div.btn.div-delete-btn.pull-right(popup-close) 取消
 
-  //- .dropdown
-  //-   button.btn.btn-default.dropdown-toggle(type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true")
-  //-     |导出
-  //-     span.caret
-  //-   ul.dropdown-menu
-  //-     li( role="presentation")
-  //-       a(role="menuitem" tabindex="-1" href="#") 导出excel
-  //-     li( role="presentation")
-  //-       a(role="menuitem" tabindex="-1" href="#") 导出pdf
-    
-  button.btn.btn-info(title="导出") 导出
-table.table.table-striped.ng-scope.org-post-table
-  thead
-    tr
-      th
-        //- input(type='checkbox', value='option2')
-      th  岗位名称
-      th  通道
-      th  编制数
-      th  工作时间
-      th  OA文件编号
-  tbody
-    tr(ng-repeat="pos in ctrl.positions track by pos.id", ng-class="{'active': pos.isSelected == true}")
-      td
-        input(type='checkbox', ng-model="pos.isSelected")
-      td.org-post
-        a(ui-sref=".detail({posId: pos.id})") {{pos.name}}
-      td {{pos.channel.displayName}}
-      td.org-preparation(ng-class="{'invalid': pos.budgetedStaffing < pos.staffing}") {{pos.staffing}}/{{pos.budgetedStaffing}}
-      td {{pos.schedule.displayName}}
-      td {{pos.oaFileNo}}
+    //- .dropdown
+    //-   button.btn.btn-default.dropdown-toggle(type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true")
+    //-     |导出
+    //-     span.caret
+    //-   ul.dropdown-menu
+    //-     li( role="presentation")
+    //-       a(role="menuitem" tabindex="-1" href="#") 导出excel
+    //-     li( role="presentation")
+    //-       a(role="menuitem" tabindex="-1" href="#") 导出pdf
+
+    button.btn.btn-info(title="导出") 导出
+  table.table.table-striped.ng-scope.org-post-table
+    thead
+      tr
+        th
+          //- input(type='checkbox', value='option2')
+        th  岗位名称
+        th  通道
+        th  编制数
+        th  工作时间
+        th  OA文件编号
+    tbody
+      tr(ng-repeat="pos in ctrl.positions track by pos.id", ng-class="{'active': pos.isSelected == true}")
+        td
+          input(type='checkbox', ng-model="pos.isSelected")
+        td.org-post
+          a(ui-sref=".detail({posId: pos.id})") {{pos.name}}
+        td {{pos.channel.displayName}}
+        td.org-preparation(ng-class="{'invalid': pos.budgetedStaffing < pos.staffing}") {{pos.staffing}}/{{pos.budgetedStaffing}}
+        td {{pos.schedule.displayName}}
+        td {{pos.oaFileNo}}
