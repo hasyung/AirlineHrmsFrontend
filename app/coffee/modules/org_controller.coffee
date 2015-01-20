@@ -496,11 +496,13 @@ class PosCtrl extends nb.Controller
         posId = @params.posId
         @Position.$find(posId).$then (position) ->
             self.scope.currentPos = position
-            self.scope.copyPos = position.$copy()
+            # self.scope.copyPos = position.$copy()
 
             spe = position.specification.$fetch()
             spe.$asPromise().then (spe) ->
-                self.copySpe = spe.$copy()
+                self.scope.currentSpe = spe
+                # self.scope.copySpe = spe.$copy()
+
 
         @scope.currentOrg = @Org.$find orgId
 
@@ -508,9 +510,8 @@ class PosCtrl extends nb.Controller
         @scope.currentPos.$update(position)
         @state.go '^'
     updateAdvanced: (advance) ->
-        console.log advance
         @scope.currentSpe.$update(advance)
-        # @state.go '^'
+        @state.go '^'
 
 
 
@@ -525,11 +526,11 @@ class PosCreateCtrl extends nb.Controller
     loadInitialData: () ->
         @scope.currentOrg = @Org.$find @orgId
     createPos: () ->
+        console.log @specification
         @position.departmentId = @orgId
         @position.specification = @specification
-        newPos = @Position.$build(@position)
-        newPos.$save()
-        # @state.go '^'
+        newPos = @Position.$create(@position)
+        @state.go '^'
     store: (attr, value) ->
         this[attr] = value
 

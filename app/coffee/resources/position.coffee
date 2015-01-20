@@ -24,14 +24,14 @@ Position = (restmod, RMUtils, $Evt) ->
         department_id: {mask: 'R', map: 'department.id'}
         department: {mask: 'CU'}
         isSelected: {init: false , mask: "CU"}
-        specification: { hasOne: 'Specification'}
+        specification: { hasOne: 'Specification', mask: "U"}
 
         $hooks:
             'after-create': ->
                 $Evt.$send('position:create:success', "岗位创建成功")
 
-            'after-save': ->
-                $Evt.$send('position:create:success', "岗位更新成功")
+            'after-update': ->
+                $Evt.$send('position:update:success', "岗位更新成功")
 
             'after-destroy': ->
                 $Evt.$send('position:destroy:success',"岗位删除成功")
