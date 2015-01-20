@@ -10,7 +10,7 @@
 
     //- button.btn.btn-default.fa.fa-pencil(title="编辑")
     button.btn.btn-default.fa.fa-plus(title="新增子机构", ui-sref=".new")
-    button.btn.btn-info(title="", nb-popup-plus, position="left-bottom", offset="0.2") 调整机构
+    button.btn.btn-info(title="", nb-popup-plus, position="left-bottom", offset="0.15") 调整机构
       popup-template.nb-popup.org-default-popup-template.panel.panel-default()
         .panel-heading.popup-title 组织机构
         .panel-body.popup-body
@@ -26,13 +26,13 @@
         span.caret
       ul.dropdown-menu
         li( role="presentation")
-          a(role="menuitem" ng-href="/api/positions/export_to_xls?{{ctrl.getExportParams()}}" ) 导出全部岗位
+          a(role="menuitem" ng-href="/api/positions/export_to_xls?department_id={{ctrl.currentOrg.id}}" ) 导出全部岗位
         li( role="presentation")
-          a(role="menuitem" ng-href="/api/positions/export_to_xls?department_id={{ctrl.treeRootOrg.id}}" ) 导出所选岗位
-        li( role="presentation")
-          a(role="menuitem" ng-href="/api/positions/export_to_xls?department_id={{ctrl.treeRootOrg.id}}" ) 导出全部岗位描述书
-        li( role="presentation")
-          a(role="menuitem" ng-href="/api/positions/export_to_xls?department_id={{ctrl.treeRootOrg.id}}" ) 导出所选岗位描述书
+          a(role="menuitem" ng-href="/api/positions/export_to_xls?{{ctrl.getExportParams()}}" ) 导出所选岗位
+        //- li( role="presentation")
+        //-   a(role="menuitem" ng-href="/api/positions/export_specification_pdf?department_id={{ctrl.currentOrg.id}}" ) 导出全部岗位描述书
+        //- li( role="presentation")
+        //-   a(role="menuitem" ng-href="/api/positions/export_specification_pdf?{{ctrl.getExportParams()}}" ) 导出所选岗位描述书
 
   table.table.table-striped.ng-scope.org-post-table
     thead
@@ -52,6 +52,8 @@
         td.org-post
           a(ui-sref=".detail({posId: pos.id})") {{pos.name}}
         td {{pos.channel.displayName}}
-        td.org-preparation(ng-class="{'invalid': pos.budgetedStaffing < pos.staffing}") {{pos.staffing}}/{{pos.budgetedStaffing}}
+        td.org-preparation
+          span(ng-class="{'invalid': pos.budgetedStaffing < pos.staffing}") {{pos.staffing}}
+          span /{{pos.budgetedStaffing}}
         td {{pos.schedule.displayName}}
         td {{pos.oaFileNo}}

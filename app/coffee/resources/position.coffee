@@ -1,18 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 resources = angular.module('resources')
 
 # position.specifications.fetch()
