@@ -23,15 +23,15 @@ Position = (restmod, RMUtils, $Evt) ->
     Position = restmod.model('/positions').mix 'nbRestApi', {
         department_id: {mask: 'R', map: 'department.id'}
         department: {mask: 'CU'}
-        isSelected: {init: false , volatile: true}
-        specifications: { hasOne: 'Specification'}
+        isSelected: {init: false , mask: "CU"}
+        specification: { hasOne: 'Specification', mask: "U"}
 
         $hooks:
             'after-create': ->
                 $Evt.$send('position:create:success', "岗位创建成功")
 
-            'after-save': ->
-                $Evt.$send('position:create:success', "岗位更新成功")
+            'after-update': ->
+                $Evt.$send('position:update:success', "岗位更新成功")
 
             'after-destroy': ->
                 $Evt.$send('position:destroy:success',"岗位删除成功")
@@ -90,9 +90,9 @@ Position = (restmod, RMUtils, $Evt) ->
 
 
 Specification = (restmod, RMUtils, $Evt) ->
-    Specification = restmod.model('/specifications').mix 'nbRestApi', {
-
-
+    Specification = restmod.model().mix 'nbRestApi', {
+        $config:
+            jsonRoot: 'specification'
     }
 
 

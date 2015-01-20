@@ -1,49 +1,93 @@
-form.org-postadd-detail.org-postadd-basic(title="基本信息" name="posForm" novalidate ng-submit="ctrl.updateDetail(copyPos)")
-	.postadd-form-group
-		label.postadd-control-label 岗位名称
-		input.postadd-form-control(type='text', placeholder='岗位名称', ng-model="copyPos.name", name="name", required)
-		.form-control-error(ng-messages="posForm.name.$error", ng-if="posForm.name.$touched")
-			.form-group-error(ng-message="required") 名称必填
-	.postadd-form-group
-		label.postadd-control-label 岗位通道
-		nb-dropdown( 
-			ng-model="copyPos.channel", remote-key="position_channels", name="channel", additory="false", required)
-		.form-control-error(ng-messages="posForm.channel.$error", ng-if="posForm.channel.$touched")
-			.form-group-error(ng-message="required") 通道必选  
-	.postadd-form-group
-		label.postadd-control-label OA文件编号
-		input.postadd-form-control(type='text', placeholder='川0144450', name="fileName", ng-model="copyPos.oaFileNo", required)
-		.form-control-error(ng-messages="posForm.fileName.$error", ng-if="posForm.fileName.$touched")
-			.form-group-error(ng-message="required") OA文件必填
-	.postadd-form-group
-		label.postadd-control-label 编制
-		input.postadd-form-control(type='number', placeholder='1', name="budgetedStaffing", ng-model="copyPos.budgetedStaffing", required)
-		.form-control-error(ng-messages="posForm.budgetedStaffing.$error", ng-if="posForm.budgetedStaffing.$touched")
-			.form-group-error(ng-message="required") 编制必填
-			.form-group-error(ng-message="number") 类型必须为数字
-	.postadd-form-group
-		label.postadd-control-label 工时制度
-		nb-dropdown( 
-			ng-model="copyPos.schedule" remote-key="position_schedules", required="true", name="schedule")
-		.form-control-error(ng-messages="posForm.schedule.$error", ng-if="posForm.schedule.$touched")
-			.form-group-error(ng-message="required") 工时必选
-	.postadd-form-group
-		label.postadd-control-label 类别
-		nb-dropdown( 
-			ng-model="copyPos.category" remote-key="position_categories", required="true", name="category")
-		.form-control-error(ng-messages="posForm.category.$error", ng-if="posForm.category.$touched")
-			.form-group-error(ng-message="required") 类别必选
-	.postadd-form-group
-		label.postadd-control-label 性质
-		nb-dropdown( 
-			ng-model="copyPos.nature" remote-key="position_natures", required="true", name="nature")
-		.form-control-error(ng-messages="posForm.nature.$error", ng-if="posForm.nature.$touched")
-			.form-group-error(ng-message="required") 性质必选
+//- <<<<<<< HEAD
+//- form.org-postadd-detail.org-postadd-basic(title="基本信息" name="posForm" novalidate ng-submit="ctrl.updateDetail(currentPos)")
+//- 	.postadd-form-group
+//- 		label.postadd-control-label 岗位名称
+//- 		input.postadd-form-control(type='text', placeholder='岗位名称', ng-model="currentPos.name", name="name", required)
+//- 		.form-control-error(ng-messages="posForm.name.$error", ng-if="posForm.name.$touched")
+//- 			.form-group-error(ng-message="required") 名称必填
+//- 	.postadd-form-group
+//- 		label.postadd-control-label 岗位通道
+//- 		nb-dropdown( 
+//- 			ng-model="currentPos.channel", remote-key="position_channels", name="channel", additory="false", required)
+//- 		.form-control-error(ng-messages="posForm.channel.$error", ng-if="posForm.channel.$touched")
+//- 			.form-group-error(ng-message="required") 通道必选  
+//- 	.postadd-form-group
+//- 		label.postadd-control-label OA文件编号
+//- 		input.postadd-form-control(type='text', placeholder='川0144450', name="fileName", ng-model="currentPos.oaFileNo", required)
+//- 		.form-control-error(ng-messages="posForm.fileName.$error", ng-if="posForm.fileName.$touched")
+//- 			.form-group-error(ng-message="required") OA文件必填
+//- 	.postadd-form-group
+//- 		label.postadd-control-label 编制
+//- 		input.postadd-form-control(type='number', placeholder='1', name="budgetedStaffing", ng-model="currentPos.budgetedStaffing", required)
+//- 		.form-control-error(ng-messages="posForm.budgetedStaffing.$error", ng-if="posForm.budgetedStaffing.$touched")
+//- 			.form-group-error(ng-message="required") 编制必填
+//- 			.form-group-error(ng-message="number") 类型必须为数字
+//- 	.postadd-form-group
+//- 		label.postadd-control-label 工时制度
+//- 		nb-dropdown( 
+//- 			ng-model="currentPos.schedule" remote-key="position_schedules", required="true", name="schedule")
+//- 		.form-control-error(ng-messages="posForm.schedule.$error", ng-if="posForm.schedule.$touched")
+//- 			.form-group-error(ng-message="required") 工时必选
+//- 	.postadd-form-group
+//- 		label.postadd-control-label 类别
+//- 		nb-dropdown( 
+//- 			ng-model="currentPos.category" remote-key="position_categories", required="true", name="category")
+//- 		.form-control-error(ng-messages="posForm.category.$error", ng-if="posForm.category.$touched")
+//- 			.form-group-error(ng-message="required") 类别必选
+//- 	.postadd-form-group
+//- 		label.postadd-control-label 性质
+//- 		nb-dropdown( 
+//- 			ng-model="currentPos.nature" remote-key="position_natures", required="true", name="nature")
+//- 		.form-control-error(ng-messages="posForm.nature.$error", ng-if="posForm.nature.$touched")
+//- 			.form-group-error(ng-message="required") 性质必选
+//- =======
+.org-modal-wrapper
+	form.org-postadd-detail.org-postadd-basic(title="基本信息" name="posForm" novalidate ng-submit="ctrl.updateDetail(currentPos)")
+		.postadd-form-group
+			label.postadd-control-label 岗位名称
+			input.postadd-form-control(type='text', placeholder='岗位名称', ng-model="currentPos.name", name="name", required)
+			.form-control-error(ng-messages="posForm.name.$error", ng-if="posForm.name.$touched")
+				.form-group-error(ng-message="required") 名称必填
+		.postadd-form-group
+			label.postadd-control-label 岗位通道
+			nb-dropdown(
+				ng-model="currentPos.channel", remote-key="position_channels", name="channel", additory="false", required)
+			.form-control-error(ng-messages="posForm.channel.$error", ng-if="posForm.channel.$touched")
+				.form-group-error(ng-message="required") 通道必选
+		.postadd-form-group
+			label.postadd-control-label OA文件编号
+			input.postadd-form-control(type='text', placeholder='川0144450', name="fileName", ng-model="currentPos.oaFileNo", required)
+			.form-control-error(ng-messages="posForm.fileName.$error", ng-if="posForm.fileName.$touched")
+				.form-group-error(ng-message="required") OA文件必填
+		.postadd-form-group
+			label.postadd-control-label 编制
+			input.postadd-form-control(type='number', placeholder='1', name="budgetedStaffing", ng-model="currentPos.budgetedStaffing", required)
+			.form-control-error(ng-messages="posForm.budgetedStaffing.$error", ng-if="posForm.budgetedStaffing.$touched")
+				.form-group-error(ng-message="required") 编制必填
+				.form-group-error(ng-message="number") 类型必须为数字
+		.postadd-form-group
+			label.postadd-control-label 工时制度
+			nb-dropdown(
+				ng-model="currentPos.schedule" remote-key="position_schedules", required="true", name="schedule")
+			.form-control-error(ng-messages="posForm.schedule.$error", ng-if="posForm.schedule.$touched")
+				.form-group-error(ng-message="required") 工时必选
+		.postadd-form-group
+			label.postadd-control-label 类别
+			nb-dropdown(
+				ng-model="currentPos.category" remote-key="position_categories", required="true", name="category")
+			.form-control-error(ng-messages="posForm.category.$error", ng-if="posForm.category.$touched")
+				.form-group-error(ng-message="required") 类别必选
+		.postadd-form-group
+			label.postadd-control-label 性质
+			nb-dropdown(
+				ng-model="currentPos.nature" remote-key="position_natures", required="true", name="nature")
+			.form-control-error(ng-messages="posForm.nature.$error", ng-if="posForm.nature.$touched")
+				.form-group-error(ng-message="required") 性质必选
 
-	.postadd-form-group
-		label.postadd-control-label 所在部门
-		span.postadd-control-text {{currentOrg.name}}
-	.postadd-form-group
-		label.postadd-control-label
-		button.btn.btn-info(type="submit" required ng-disabled="posForm.$invalid") 保存
+		.postadd-form-group
+			label.postadd-control-label 所在部门
+			span.postadd-control-text {{currentOrg.name}}
+		.postadd-form-group
+			label.postadd-control-label
+			button.btn.btn-info(type="submit" required ng-disabled="posForm.$invalid") 保存
 

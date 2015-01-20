@@ -111,7 +111,7 @@ Org = (restmod, RMUtils, $Evt) ->
 
             'after-newsub': ->
                 $Evt.$send('org:refresh')
-                $Evt.$send('org:newsub:success', "撤销成功")
+                $Evt.$send('org:newsub:success', "机构创建成功")
 
             'after-newsub-error': ->
                 $Evt.$send('org:newsub:error')

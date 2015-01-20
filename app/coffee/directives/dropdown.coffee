@@ -42,10 +42,13 @@ angular.module 'nb.directives'
             scope.isOpen = false
             dropdownCtrl = $ctrl[0]
             ngModelCtrl = $ctrl[1]
+            # 下面两行代码是为了防止点击元素后事件冒泡至body，然后影藏弹出框
             elem.on 'click', (e)->
                 e.stopPropagation()
                 scope.$apply () ->
-                    ngModelCtrl.$touched = true
+                    ngModelCtrl.$setTouched()
+                    # if !_.isEqual(initSelected, scope.selected)
+                    #     ngModelCtrl.$setDirty()
 
             closeDropdown = (e) ->
                 e.stopPropagation()
@@ -57,7 +60,6 @@ angular.module 'nb.directives'
 
             scope.$watch 'selected', (newVal) ->
                 scope.selected = newVal
-                ngModelCtrl.$render()
 
             scope.$on '$destroy', () ->
                 elem.off 'click'
@@ -77,5 +79,12 @@ angular.module 'nb.directives'
 
             link: postLink
 
+        }
+    ]
+    .directive 'dropdownBtn', [()->
+        return {
+            restrict: 'EA'
+            # template: 'partials/common/dropdown.tpl.html'
+            link: postLink
         }
     ]

@@ -168,7 +168,7 @@ class Route
             }
             .state {
                 name: 'org.position.detail'
-                url: '/:posId'
+                url: '/{posId:[0-9]+}'
                 views: {
                     "@": {
                         controller: PosCtrl
@@ -434,12 +434,13 @@ class TransferOrgCtrl extends Modal
 
 
 class PositionCtrl extends nb.Controller
-    @.$inject = ['$scope', '$nbEvent', 'Position', '$stateParams', 'Org', 'Specification']
-    constructor: (@scope, @Evt, @Position, @stateParams, @Org, @Specification) ->
+    @.$inject = ['$scope', '$nbEvent', 'Position', '$stateParams', 'Org']
+    constructor: (@scope, @Evt, @Position, @stateParams, @Org) ->
         orgId = @stateParams.id
         @currentOrg = Org.$find(orgId)
         @positions = @currentOrg.positions.$fetch()
         @selectOrg = null # 划转所选择的机构 rework
+        @scope.allSelect = false
         # @scope.$onRootScope 'position:refresh', @.resetData.bind(@)
 
     getSelectsIds: ()->
@@ -462,44 +463,43 @@ class PositionCtrl extends nb.Controller
     batchRemove: () ->
         @positions.$batchRemove({ids:@getSelectsIds()})
 
-    newPosition: (form, position, specification) ->
-        position.departmentId = @stateParams.id
-        newPos = @Position.$build({position: position, specification: specification})
-        newPos.$save()
-        @resetData()
-        @state = "list"
-
-
-
-    positionDetail: (position) ->
+    toggleSelectAll: () ->
         self = @
-        @scope.currentPos = position
-        position.specifications.$fetch().$then (data)->
-            self.scope.currentSpe = data
-        @state = "show"
+        _.map @positions, (item)->
+            item.isSelected = self.scope.allSelect
 
-    editPosition: ()->
-        @state = 'edit'
-        @scope.position = @scope.currentPos.$copy()
-        @scope.specification = @scope.currentSpe.$copy()
+    getExportParams: () ->
+        return 'department_id=' + @currentOrg.id  + '&position_ids=' + @getSelectsIds().join(',')
+
 
 
 
 class PosCtrl extends nb.Controller
-    @.$inject = ['$stateParams', 'Position', '$scope', '$state']
+    @.$inject = ['$stateParams', 'Position', '$scope', '$state', 'Org']
 
-    constructor: (@params, @Position, @scope, @state) ->
+    constructor: (@params, @Position, @scope, @state, @Org) ->
+        @loadInitialData()
+    loadInitialData: () ->
         self = @
-        posId = params.posId
+        orgId = @params.id
+        posId = @params.posId
         @Position.$find(posId).$then (position) ->
             self.scope.currentPos = position
-            self.scope.copyPos = position.$copy()
-            position.specifications.$fetch().$then (data)->
-                console.log data
-                self.scope.currentSpe = data
+            # self.scope.copyPos = position.$copy()
 
-    updateDetail: (postion) ->
-        @scope.currentPos.$update(postion)
+            spe = position.specification.$fetch()
+            spe.$asPromise().then (spe) ->
+                self.scope.currentSpe = spe
+                # self.scope.copySpe = spe.$copy()
+
+
+        @scope.currentOrg = @Org.$find orgId
+
+    updateDetail: (position) ->
+        @scope.currentPos.$update(position)
+        @state.go '^'
+    updateAdvanced: (advance) ->
+        @scope.currentSpe.$update(advance)
         @state.go '^'
 
 
@@ -515,12 +515,10 @@ class PosCreateCtrl extends nb.Controller
     loadInitialData: () ->
         @scope.currentOrg = @Org.$find @orgId
     createPos: () ->
+        console.log @specification
         @position.departmentId = @orgId
-        newPos = @Position.$build({position: @position, specification: @specification})
-        pos = @position
-        pos.specification = @specification
-        newPos = @Position.$create(pos)
-        newPos.$save()
+        @position.specification = @specification
+        newPos = @Position.$create(@position)
         @state.go '^'
     store: (attr, value) ->
         this[attr] = value

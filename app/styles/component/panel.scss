@@ -1,91 +1,61 @@
-
-.modal-panel-content {
-
+//机构各种切换窗口公共样式
+.org-modal-wrapper {
+  height: 100%;
+  overflow: scroll;
 }
-.modal-panel-lg {
-    width: 900px;
-}
-.modal-panel-sm {
-    width: 300px;
-}
-#test-position {
-    left: 0;
-}
-
-
-.modal-panel-wrapper {
-    width: 100%;
-    left: 100%;
-    @include translateX(0);
-    @include transition(transform .75s cubic-bezier(.34,.67,.57,1.19));
-    &.in {
-        @include translateX(-100%);
-    }
-    .modal-panel{
-        position: absolute;
-        right: 0;
-        width: 960px;
-        height: 100%;
-        &:before {
-            content: "";
-            display: block;
-            width: 100%;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            background-color: #f2f3f8;
-            z-index: -1;
-        }
-        .modal-panel-content {
-            height: 100%;
-        }
-    }
-    .org-modal-top {
-        height: 51px;
+.app-content {
+    .breadcrumb {
+        position: fixed;
+        height: 50px;
         line-height: 51px;
-        font-size: $font-size-lg;
+        background-color: transparent;
         padding: 0 20px;
-        border-bottom: 1px solid #eae9ef;
+        margin-bottom: 0;
+        border: none;
+        top: 0;
+        left: 200px;
+        z-index: 2000;
+        border-radius: none;
     }
-    .org-modal-post {
-        padding: 20px;
-        background-color: #f2f3f8;
+}
+.org-modal-posttop {
+    font-size: $font-size-md;
+    width: inherit;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 15px;
+    button {
+        float: right;
+        margin-right: 15px;
+        margin-top: 10px;
     }
-    .org-modal-posttop {
-        font-size: $font-size-md;
-        width: inherit;
-        height: 35px;
-        button {
-            float: right;
-            margin-left: 8px;
+    .btn-info {
+        padding-top: 3px;
+        padding-bottom: 3px;
+    }
+}
+.org-post-table {
+    border: 1px solid #e6e6e6;
+    tr td{
+        &:first-child {
+            width: 44px;
         }
-        .btn-info {
-            padding-top: 3px;
-            padding-bottom: 3px;
+        &:last-child {
+            width: 204px;
         }
     }
-    .org-post-table {
-        border: 1px solid #e6e6e6;
-        tr td{
-            &:first-child {
-                width: 44px;
-            }
-            &:last-child {
-                width: 204px;
-            }
-        }
-        .org-post {
-            a {
-                color: $a-color;
-            }
-        }
-        .org-hover {
-            float: right;
-            .btn {
-                padding: 0px;
-                border: none;
-                margin-left: 15px;
-            }
-        }
+    .org-preparation.invalid {
+        color: $danger;
+    }
+}
+
+//调整机构部分样式
+.popup-title {
+    padding: 0 15px;
+    line-height: 50px;
+}
+.panel-footer {
+    .div-delete-btn {
+        margin: 0 0 0 10px;
     }
 }
