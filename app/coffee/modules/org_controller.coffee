@@ -357,9 +357,9 @@ class OrgCtrl extends nb.Controller
 
     loadPosition: () ->
         self = @
-        @Position.$search({department_id:@scope.currentOrg.id}).$then (positions) ->
-            self.scope.positions = positions
-            self.Evt.$send 'org:positions', positions
+        @scope.positions = @scope.currentOrg.positions.$fetch()
+        # @Position.$search({department_id:@scope.currentOrg.id}).$then (positions) ->
+        #     self.scope.positions = positions
 
     destroy: () ->
         $Evt = @Evt

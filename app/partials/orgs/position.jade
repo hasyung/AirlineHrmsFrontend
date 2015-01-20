@@ -29,10 +29,10 @@
           a(role="menuitem" ng-href="/api/positions/export_to_xls?department_id={{ctrl.currentOrg.id}}" ) 导出全部岗位
         li( role="presentation")
           a(role="menuitem" ng-href="/api/positions/export_to_xls?{{ctrl.getExportParams()}}" ) 导出所选岗位
-        //- li( role="presentation")
-        //-   a(role="menuitem" ng-href="/api/positions/export_specification_pdf?department_id={{ctrl.currentOrg.id}}" ) 导出全部岗位描述书
-        //- li( role="presentation")
-        //-   a(role="menuitem" ng-href="/api/positions/export_specification_pdf?{{ctrl.getExportParams()}}" ) 导出所选岗位描述书
+        li( role="presentation")
+          a(role="menuitem" ng-href="/api/positions/export_specification_pdf?department_id={{ctrl.currentOrg.id}}" ) 导出全部岗位描述书
+        li( role="presentation")
+          a(role="menuitem" ng-href="/api/positions/export_specification_pdf?{{ctrl.getExportParams()}}" ) 导出所选岗位描述书
 
   table.table.table-striped.ng-scope.org-post-table
     thead

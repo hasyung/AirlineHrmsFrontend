@@ -99,7 +99,7 @@ aside.org-aside
                 tbody
                     tr(ng-repeat="position in positions")
                         td.org-post(ng-click="") 
-                            a(ui-sref=".position({id:currentOrg.id})") {{position.name}}
+                            a(ui-sref=".position.detail({posId: position.id,id:currentOrg.id})") {{position.name}}
                         td  {{position.budgetedStaffing}}
                         td  {{position.staffing}}
                 
