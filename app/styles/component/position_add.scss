@@ -3,7 +3,9 @@
     width: inherit;
     height: calc(100% - 51px);
     background-color: #fff;
-
+}
+.steps-indicator {
+    position: relative;
 }
 // 新增岗位弹出层左侧菜单
 .org-postadd-step {
