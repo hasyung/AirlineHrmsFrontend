@@ -32,21 +32,12 @@ class PositionCtrl extends nb.Controller
     constructor: (@Position, @scope, @http) ->
         @loadInitialData()
         scope.tableState = null
-
-        @positions = positions = null
-
-        @search = (tableState) ->
-            console.debug "search success:", arguments
-            @$parent.tableState = JSON.stringify(tableState)
-
-            callback = (data, status, headers, config) ->
-                @$parent.status = data.$status
-                @$parent.data = JSON.stringify(data.$wrap())
-
-            positions = Position.$search(tableState).$then callback.bind(@)
-
     loadInitialData: ->
-        # @positions = @Position.$collection().$fetch()
+        @positions = @Position.$collection().$fetch()
+
+    search: (tableState) ->
+        @positions.$refresh(tableState)
+
 
 
 
