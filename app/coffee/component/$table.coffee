@@ -131,7 +131,7 @@ nbPipeDirective = () ->
         if angular.isFunction(scope.nbPipe)
             ctrl.preventPipeOnWatch()
             ctrl.pipe = ->
-                return scope.nbPipe(ctrl.getTableState(), ctrl)
+                return scope.nbPipe({tableState: ctrl.getTableState(), tableCtrl: ctrl})
 
         elem.on 'click', ->
             ctrl.search()
@@ -141,7 +141,7 @@ nbPipeDirective = () ->
 
     return {
         require: '^nbTable'
-        scope: {nbPipe: '='} # @ ?
+        scope: {nbPipe: '&'} # @ ?
         link:{
             pre: preLink
         }

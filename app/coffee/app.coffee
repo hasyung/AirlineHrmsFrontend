@@ -9,7 +9,8 @@ deps = [
     'ct.ui.router.extras'
     'ncy-angular-breadcrumb'
     'mgo-angular-wizard'
-    # 'ui.select'
+    'mgcrea.ngStrap.datepicker'
+    'ui.select'
     'ngAnimate'
     'ui.bootstrap'
     'ngSanitize'
@@ -107,7 +108,7 @@ App
     .config ['$provide', appConf]
     .config ['restmodProvider', restConf]
     .config ['$stateProvider','$urlRouterProvider','$locationProvider', '$httpProvider', '$breadcrumbProvider', routeConf]
-    .run ['$state','$rootScope', 'toaster', '$http', ($state, $rootScope, toaster, $http) ->
+    .run ['$state','$rootScope', 'toaster', '$http', 'Org', ($state, $rootScope, toaster, $http, Org) ->
         # for $state.includes in view
         $rootScope.$on '$stateChangeSuccess', (evt, to) ->
             console.debug "stateChangeSuccess: to ", to
@@ -123,6 +124,8 @@ App
             toaster.pop(code.name, "提示", info)
 
         $rootScope.$state = $state
+
+        $rootScope.allOrgs = Org.$search()
 
     ]
 

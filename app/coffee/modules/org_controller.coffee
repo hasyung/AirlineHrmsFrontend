@@ -470,7 +470,7 @@ class PositionCtrl extends nb.Controller
 
     getExportParams: () ->
         return 'department_id=' + @currentOrg.id  + '&position_ids=' + @getSelectsIds().join(',')
-    
+
 
 
 

@@ -1,27 +1,35 @@
 .position-manage
-    h1 岗位管理
-    .position_123
+    div(nb-table)
+        div(nb-search)
+            input(nb-predicate="姓名" name="name" placeholder="姓名" ng-model="name")
+            input(nb-predicate="年龄" name="age" placeholder="年龄" ng-model="age")
+            div(nb-predicate="入职时间" predicate-attr="date")
+                input(ng-model="date.from" bs-datepicker)
+                span 至
+                input(ng-model="date.to" bs-datepicker)
+            div(nb-predicate="机构" predicate-attr="orgs")
+                ui-select(multiple ng-model="orgs.orgs" theme="bootstrap")
+                    ui-select-match(placeholder="请输入机构名称") {{$item}}
+                    ui-select-choices(repeat="org in allOrgs | filter:$select.search") {{org.name}}
+        button.btn.btn-default.search-commit.fa.fa-search(nb-pipe="ctrl.search(tableState)") 查询
 
-
-        div(nb-table)
-            div(nb-search)
-                input(nb-predicate="姓名" name="name" placeholder="姓名" ng-model="name")
-                input(nb-predicate="年龄" name="age" placeholder="年龄" ng-model="age")
-                div(nb-predicate="入职时间" predicate-attr="date")
-                    input(ng-model="date.from")
-                    span 至
-                    input(ng-model="date.to")
-            button.btn.btn-default.search-commit.fa.fa-search(nb-pipe="ctrl.search") 查询
-
-    div
-        h3 查询参数
-        p(ng-bind="tableState")
-    div
-        h3 http状态
-        p(ng-bind="status")
-    div
-        h3 http headers
-        p(ng-bind="headers")
-    div
-        h3 返回数据
-        p(ng-bind="data")
+        table.table.table-striped.org-post-table
+            thead
+                tr
+                    th
+                    //- input(type='checkbox', value='option2')
+                    th  岗位名称
+                    th  通道
+                    th  编制数
+                    th  工作时间
+                    th  OA文件编号
+            tbody
+                tr(ng-repeat="pos in ctrl.positions track by pos.id", ng-class="{'active': pos.isSelected == true}")
+                    td
+                        input(type='checkbox', ng-model="pos.isSelected")
+                    td.org-post
+                        a(ui-sref=".detail({posId: pos.id})") {{pos.name}}
+                    td {{pos.channel.displayName}}
+                    td(ng-class="{'invalid': pos.budgetedStaffing < pos.staffing}") {{pos.staffing}}/{{pos.budgetedStaffing}}
+                    td {{pos.schedule.displayName}}
+                    td {{pos.oaFileNo}}

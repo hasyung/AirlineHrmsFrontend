@@ -75,6 +75,7 @@ paths =
         'compat/vendor/lib-gg-orgchart.js'
         #end
         'deps/angular/angular.js'
+        'deps/angular-i18n/angular-locale_zh-cn.js'
         #http://harvesthq.github.io/chosen/
         'deps/simple-module/lib/module.js'
         'deps/simple-uploader/lib/uploader.js'
@@ -87,22 +88,19 @@ paths =
         'deps/angular-animate/angular-animate.js'
         'deps/angular-sanitize/angular-sanitize.js'
         'deps/angular-filter/dist/angular-filter.js'
+        'deps/angular-strap/dist/angular-strap.js'
+        'deps/angular-strap/dist/angular-strap.tpl.js'
         'deps/angular-ui-router/release/angular-ui-router.js'
         'deps/ui-router-extras/release/ct-ui-router-extras.js'
         'compat/vendor/breadcrumb.js'
         'compat/vendor/wizard.js'
+        'compat/vendor/ui-bootstrap-custom-tpls-0.12.0.js'
         # 'deps/ngInfiniteScroll/build/ng-infinite-scroll.js'
         'deps/AngularJS-Toaster/toaster.js'
-        'deps/angular-locale_zh-cn.js'
-        # 'deps/angular-ui-select/dist/select.js'
+        'deps/angular-ui-select/dist/select.js'
         'deps/jquery-slimscroll/jquery.slimscroll.js'
-        'deps/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js'
-        # 'deps/angular-ui-bootstrap-bower/ui-bootstrap.js'
         'deps/angularjs-toaster/toaster.js'
-        'deps/angular-bootstrap/ui-bootstrap-tpls.js'
-        # 'deps/angular-bootstrap/ui-bootstrap.js'
         # 'deps/angular-ui-utils/ui-utils.js'
-        # 'deps/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js'
         # 'deps/jasny-bootstrap/dist/js/jasny-bootstrap.js' jasny bootstrap 增强版，提供一些好用组件
     ]
 ############################################################################

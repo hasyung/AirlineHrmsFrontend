@@ -50,6 +50,8 @@
     "AngularJS-Toaster": "~0.4.9",
     "angular-bootstrap": "~0.12.0",
     "angular-breadcrumb": "~0.3.3",
-    "angular-wizard": "~0.4.2"
+    "angular-wizard": "~0.4.2",
+    "angular-strap": "~2.1.6",
+    "angular-i18n": "~1.3.9"
   }
 }
