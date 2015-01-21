@@ -78,6 +78,11 @@ Specification = (restmod, RMUtils, $Evt) ->
     Specification = restmod.model().mix 'nbRestApi', {
         $config:
             jsonRoot: 'specification'
+
+        $hooks:
+            'after-update': ->
+                $Evt.$send('position:update:success', "岗位说明书更新成功")
+
     }
 
 

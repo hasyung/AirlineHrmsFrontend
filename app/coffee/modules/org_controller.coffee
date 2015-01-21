@@ -242,6 +242,7 @@ class OrgsCtrl extends nb.Controller
         scope.$onRootScope 'org:history', @.history.bind(@)
         scope.$onRootScope 'org:refresh', @.refreshTree.bind(@)
         scope.$onRootScope 'org:resetData', @.resetData.bind(@)
+        # scope.$onRootScope 'position:back2org', @.back2org.bind(@)
 
     loadInitialData: () -> #初始化数据
         self = @
@@ -308,6 +309,9 @@ class OrgsCtrl extends nb.Controller
         self = @
         treeRootOrg = _.find self.orgs, (org) -> org.depth == 1
         self.buildTree(treeRootOrg)
+
+    # back2org: (evt, currentOrg) ->
+
 
 
 
@@ -496,11 +500,13 @@ class PosCtrl extends nb.Controller
         @scope.currentOrg = @Org.$find orgId
 
     updateDetail: (position) ->
-        @scope.currentPos.$update(position)
-        @state.go '^'
+        self = @
+        @scope.currentPos.$update(position).$then ()->
+         self.state.go '^'
     updateAdvanced: (advance) ->
-        @scope.currentSpe.$update(advance)
-        @state.go '^'
+        self = @
+        @scope.currentSpe.$update(advance).$then ()->
+            self.state.go '^'
 
 
 
@@ -515,11 +521,12 @@ class PosCreateCtrl extends nb.Controller
     loadInitialData: () ->
         @scope.currentOrg = @Org.$find @orgId
     createPos: () ->
-        console.log @specification
+        self = @
         @position.departmentId = @orgId
         @position.specification = @specification
-        newPos = @Position.$create(@position)
-        @state.go '^'
+        #将页面跳转放在then里，防止当跳转过去时新创建的岗位未被添加到岗位列表
+        newPos = @Position.$create(@position).$then ()->
+            self.state.go '^'
     store: (attr, value) ->
         this[attr] = value
 
