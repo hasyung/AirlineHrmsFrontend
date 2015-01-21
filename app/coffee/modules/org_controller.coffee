@@ -242,7 +242,6 @@ class OrgsCtrl extends nb.Controller
         scope.$onRootScope 'org:history', @.history.bind(@)
         scope.$onRootScope 'org:refresh', @.refreshTree.bind(@)
         scope.$onRootScope 'org:resetData', @.resetData.bind(@)
-        # scope.$onRootScope 'position:back2org', @.back2org.bind(@)
 
     loadInitialData: () -> #初始化数据
         self = @
@@ -309,11 +308,6 @@ class OrgsCtrl extends nb.Controller
         self = @
         treeRootOrg = _.find self.orgs, (org) -> org.depth == 1
         self.buildTree(treeRootOrg)
-
-    # back2org: (evt, currentOrg) ->
-
-
-
 
 
 

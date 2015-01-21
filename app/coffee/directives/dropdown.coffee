@@ -81,3 +81,55 @@ angular.module 'nb.directives'
 
         }
     ]
+
+    .directive 'simpleDropdown', ['$document', ($doc)->
+        
+        class simDropdownCtrl
+            @.$inject = ['$scope', '$attrs']
+            constructor: (@scope, @attrs) ->
+                @scope.isOpen = false
+                if @attrs.btnText
+                    @scope.btnText = @attrs.btnText
+                else
+                    throw Error("btn-text attribute is required")
+            toggle: () ->
+                @scope.isOpen = !@scope.isOpen
+
+        postLink = (scope, elem, attr)->
+
+            closeDropdown = (e)->
+                e.stopPropagation()
+                scope.$apply ()->
+                    scope.isOpen = false
+                return
+            # 下面两行代码是为了防止点击元素后事件冒泡至body，然后影藏弹出框
+            elem.on 'click', (e)->
+                e.stopPropagation()
+
+            $doc.on 'click', closeDropdown
+
+            scope.$on '$destroy', () ->
+                $doc.off 'click', closeDropdown
+                elem.off 'click'
+
+
+        return {
+            restrict: 'EA'
+            replace: true
+            scope:{}
+            transclude: true
+            template: '<div class="dropdown", ng-class="{\'open\': isOpen}">' +
+                        '  <button ng-click="dropdown.toggle()" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">' +
+                        '    {{btnText}}' +
+                        '    <span class="caret"></span>' +
+                        '  </button>' +
+                        '  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" ng-transclude>' +
+                        '  </ul>' +
+                        '</div>'
+            controller: simDropdownCtrl
+            controllerAs: 'dropdown'
+            link: postLink
+
+        }
+    ]
+
