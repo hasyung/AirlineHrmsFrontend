@@ -48,7 +48,7 @@
           a(ui-sref=".detail({posId: pos.id})") {{pos.name}}
         td {{pos.channel.displayName}}
         td.org-preparation
-          span(ng-class="{'invalid': pos.isInvalid}") {{pos.staffing}}
+          span(ng-class="{'invalid': pos.isOverstaffed}") {{pos.staffing}}
           span /{{pos.budgetedStaffing}}
         td {{pos.schedule.displayName}}
         td {{pos.oaFileNo}}

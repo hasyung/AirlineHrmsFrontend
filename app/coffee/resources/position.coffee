@@ -10,7 +10,7 @@ Position = (restmod, RMUtils, $Evt) ->
         department: {mask: 'CU'}
         isSelected: {init: false , mask: "CU"}
         # 是否超编
-        isInvalid: {
+        isOverstaffed: {
             computed: (val) -> 
                 this.staffing > this.budgetedStaffing
             , mask: "CU"
