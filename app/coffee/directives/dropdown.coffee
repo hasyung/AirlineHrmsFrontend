@@ -119,7 +119,7 @@ angular.module 'nb.directives'
             scope:{}
             transclude: true
             template: '<div class="dropdown", ng-class="{\'open\': isOpen}">' +
-                        '  <button ng-click="dropdown.toggle()" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">' +
+                        '  <button ng-click="dropdown.toggle()" class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">' +
                         '    {{btnText}}' +
                         '    <span class="caret"></span>' +
                         '  </button>' +

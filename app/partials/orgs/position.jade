@@ -16,9 +16,9 @@
         .panel-body.popup-body
           div(slimscroll height="300px")
             nb-org-tree(selected-data="ctrl.selectOrg")
-        .panel-footer.clearfix
-          div.btn.div-delete-btn.pull-right(popup-close, ng-click="ctrl.posTransfer()") 确定
-          div.btn.div-delete-btn.pull-right(popup-close) 取消
+        .panel-footer.clearfix.button-group
+          div.btn.btn-danger.pull-right(popup-close, ng-click="ctrl.posTransfer()") 确 定
+          div.btn.btn-default.pull-right(popup-close) 取 消
 
     .pull-right.nb-dropdown(simple-dropdown, btn-text="导出")
       li( role="presentation")
