@@ -1,7 +1,7 @@
 .position-manage
     div(nb-table)
         div(nb-search)
-            input(nb-predicate="姓名" name="name" placeholder="姓名" ng-model="name")
+            input(nb-predicate="名称" name="name" placeholder="姓名" ng-model="name")
             div(nb-predicate="年龄" predicate-attr="age")
                 input(name="from" placeholder="年龄" ng-model="age.from")
                 span 至
@@ -10,8 +10,8 @@
                 input(ng-model="date.from" bs-datepicker)
                 span 至
                 input(ng-model="date.to" bs-datepicker)
-            div(nb-predicate="机构" predicate-attr="org_ids")
-                ui-select(multiple ng-model="$parent.org_ids" theme="select2" style="width:600px")
+            div(nb-predicate="机构" predicate-attr="department_ids")
+                ui-select(multiple ng-model="$parent.department_ids" theme="select2" style="width:600px")
                     ui-select-match(placeholder="请输入机构名称") {{ $item.name }}
                     ui-select-choices(repeat="org.id as org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
         button.btn.btn-default.search-commit.fa.fa-search(nb-pipe="ctrl.search(tableState)") 查询
@@ -31,8 +31,8 @@
                     td
                         input(type='checkbox', ng-model="pos.isSelected")
                     td.org-post
-                        a(ui-sref=".detail({posId: pos.id})") {{pos.name}}
-                    td {{pos.channel.displayName}}
+                        a(ui-sref=".detail({posId: pos.id})" ng-bind="pos.name")
+                    td(ng-bind="pos.channel.displayName")
                     td(ng-class="{'invalid': pos.budgetedStaffing < pos.staffing}") {{pos.staffing}}/{{pos.budgetedStaffing}}
-                    td {{pos.schedule.displayName}}
-                    td {{pos.oaFileNo}}
+                    td(ng-bind="pos.schedule.displayName")
+                    td(ng-bind="pos.oaFileNo")
