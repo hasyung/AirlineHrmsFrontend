@@ -2,15 +2,18 @@
     div(nb-table)
         div(nb-search)
             input(nb-predicate="姓名" name="name" placeholder="姓名" ng-model="name")
-            input(nb-predicate="年龄" name="age" placeholder="年龄" ng-model="age")
+            div(nb-predicate="年龄" predicate-attr="age")
+                input(name="from" placeholder="年龄" ng-model="age.from")
+                span 至
+                input(name="to" placeholder="年龄" ng-model="age.to")
             div(nb-predicate="入职时间" predicate-attr="date")
                 input(ng-model="date.from" bs-datepicker)
                 span 至
                 input(ng-model="date.to" bs-datepicker)
-            div(nb-predicate="机构" predicate-attr="orgs")
-                ui-select(multiple ng-model="orgs.orgs" theme="bootstrap")
-                    ui-select-match(placeholder="请输入机构名称") {{$item}}
-                    ui-select-choices(repeat="org in allOrgs | filter:$select.search") {{org.name}}
+            div(nb-predicate="机构" predicate-attr="org_ids")
+                ui-select(multiple ng-model="$parent.org_ids" theme="select2" style="width:600px")
+                    ui-select-match(placeholder="请输入机构名称") {{ $item.name }}
+                    ui-select-choices(repeat="org.id as org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
         button.btn.btn-default.search-commit.fa.fa-search(nb-pipe="ctrl.search(tableState)") 查询
 
         table.table.table-striped.org-post-table
