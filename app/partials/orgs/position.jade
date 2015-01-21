@@ -41,14 +41,16 @@
         th  工作时间
         th  OA文件编号
     tbody
-      tr(ng-repeat="pos in ctrl.positions track by pos.id", ng-class="{'active': pos.isSelected == true}")
+      tr(ng-repeat="pos in ctrl.positions track by pos.id", 
+          ng-class="{'active': pos.isSelected == true}"
+          )
         td
           input(type='checkbox', ng-model="pos.isSelected")
         td.org-post
           a(ui-sref=".detail({posId: pos.id})") {{pos.name}}
-        td {{pos.channel.displayName}}
+        td(ng-bind="pos.channel.displayName")
         td.org-preparation
           span(ng-class="{'invalid': pos.isOverstaffed}") {{pos.staffing}}
           span /{{pos.budgetedStaffing}}
-        td {{pos.schedule.displayName}}
-        td {{pos.oaFileNo}}
+        td(ng-bind="pos.schedule.displayName")
+        td(ng-bind="pos.oaFileNo")

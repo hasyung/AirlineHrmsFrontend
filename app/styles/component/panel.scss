@@ -36,17 +36,24 @@
 }
 .org-post-table {
     border: 1px solid #e6e6e6;
-    tr td{
-        &:first-child {
-            width: 44px;
+    tr {
+        &.active td{
+           background-color: #216eff !important; 
         }
-        &:last-child {
-            width: 204px;
-        }
+        td{
+            &:first-child {
+                width: 44px;
+            }
+            &:last-child {
+                width: 204px;
+            }
+        }    
     }
+    
     .org-preparation .invalid {
         color: $danger;
     }
+    
 }
 
 //调整机构部分样式
