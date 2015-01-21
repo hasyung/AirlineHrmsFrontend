@@ -31,12 +31,19 @@
                 float: right;
                 margin-top: 7px;
             }
+            .ui-select-match {
+                min-width: 175px;
+                .caret {
+                    margin-top: 0;
+                }
+            }
         }
         .search-type {
             input {
+                min-width: 175px;
                 height: 34px;
             }
-            span {
+            .gap {
                 margin: 0 10px;
             }
         }

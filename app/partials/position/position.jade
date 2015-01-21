@@ -5,7 +5,7 @@
             input(nb-predicate="年龄" name="age" placeholder="年龄" ng-model="age")
             div(nb-predicate="入职时间" predicate-attr="date")
                 input(ng-model="date.from" bs-datepicker)
-                span 至
+                span.gap 至
                 input(ng-model="date.to" bs-datepicker)
             div(nb-predicate="机构" predicate-attr="orgs")
                 ui-select(multiple ng-model="orgs.orgs" theme="bootstrap")
