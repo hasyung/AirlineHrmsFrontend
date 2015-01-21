@@ -27,21 +27,24 @@
             }
         }
         .dropdown {
+            .dropdown-toggle:focus {
+                border-color: $focus;
+            }
             .caret {
                 float: right;
                 margin-top: 7px;
             }
-            .ui-select-match {
-                min-width: 175px;
-                .caret {
-                    margin-top: 0;
-                }
-            }
         }
         .search-type {
             input {
-                min-width: 175px;
+                min-width: 190px;
                 height: 34px;
+                box-shadow: none;
+                border-width: 1px;
+                box-shadow: none;
+                &:focus {
+                    border-color: $focus;
+                }
             }
             .gap {
                 margin: 0 10px;
@@ -52,6 +55,16 @@
             &:hover {
                 color: $a-color;
             }
+        }
+        .ui-select-match {
+                min-width: 190px;
+                .caret {
+                    margin-top: 0;
+                }
+                .ui-select-match-item {
+                    padding: 5px;
+                    margin: 5px 3px 0 3px;
+                }
         }
     }
 }
