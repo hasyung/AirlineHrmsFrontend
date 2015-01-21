@@ -13,12 +13,12 @@
 					.form-group-error(ng-message="required") 通道必选
 			.postadd-form-group
 				label.postadd-control-label OA文件编号
-				input.postadd-form-control(type='text', placeholder='川0144450', name="fileName", ng-model="position.oaFileNo", required)
+				input.postadd-form-control(type='text', placeholder='填写OA文件编号', name="fileName", ng-model="position.oaFileNo", required)
 				.form-control-error(ng-messages="posForm.fileName.$error", ng-if="posForm.fileName.$touched")
 					.form-group-error(ng-message="required") OA文件必填
 			.postadd-form-group
 				label.postadd-control-label 编制
-				input.postadd-form-control(type='number', placeholder='1', name="budgetedStaffing", ng-model="position.budgetedStaffing", required)
+				input.postadd-form-control(type='number', placeholder='填写计划编制人数', name="budgetedStaffing", ng-model="position.budgetedStaffing", required)
 				.form-control-error(ng-messages="posForm.budgetedStaffing.$error", ng-if="posForm.budgetedStaffing.$touched")
 					.form-group-error(ng-message="required") 编制必填
 					.form-group-error(ng-message="number") 类型必须为数字
@@ -47,8 +47,6 @@
 
 
 		form.org-postadd-detail.pull-left.org-postadd-jd(title="岗位说明" wz-step canexit="posAdvancedForm.$valid" name="posAdvancedForm")
-			//- input(placeholder="这里输入内容", autofocus, required ,  ng-model="specification.duty")
-			//- input.btn.btn-info(type='submit' value="完成" wz-next="ctrl.store('specification', specification)" ng-disabled="posAdvancedForm.$invalid")
 			.org-desc-section
 				h3 工作职责
 				label.postadd-control-label 工作职责
