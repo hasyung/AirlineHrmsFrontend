@@ -9,6 +9,12 @@ Position = (restmod, RMUtils, $Evt) ->
         department_id: {mask: 'R', map: 'department.id'}
         department: {mask: 'CU'}
         isSelected: {init: false , mask: "CU"}
+        # 是否超编
+        isInvalid: {
+            computed: (val) -> 
+                this.staffing > this.budgetedStaffing
+            , mask: "CU"
+        }
         specification: { hasOne: 'Specification', mask: "U"}
 
         $hooks:
