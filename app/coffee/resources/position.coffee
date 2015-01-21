@@ -37,15 +37,14 @@ Position = (restmod, RMUtils, $Evt) ->
                         data: infoData
                     }
 
-                    # $Evt.$send('positions:adjust:success')
                     onSuccess = (res)->
                         angular.forEach infoData.position_ids, (id) ->
                             item = _.find self, {id: id}
                             self.$remove item
-                        self.$dispatch 'after-active', res
+                        self.$dispatch 'after-adjust', res
 
                     onErorr = (res) ->
-                        self.$dispatch 'after-active-error', res
+                        self.$dispatch 'after-adjust-error', res
 
                     this.$send(request, onSuccess, onErorr)
 
@@ -78,6 +77,11 @@ Specification = (restmod, RMUtils, $Evt) ->
     Specification = restmod.model().mix 'nbRestApi', {
         $config:
             jsonRoot: 'specification'
+
+        $hooks:
+            'after-update': ->
+                $Evt.$send('position:update:success', "岗位说明书更新成功")
+
     }
 
 

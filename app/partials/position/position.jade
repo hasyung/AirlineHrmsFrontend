@@ -4,11 +4,11 @@
             input(nb-predicate="名称" name="name" placeholder="姓名" ng-model="name")
             div(nb-predicate="年龄" predicate-attr="age")
                 input(name="from" placeholder="年龄" ng-model="age.from")
-                span 至
+                span.gap 至
                 input(name="to" placeholder="年龄" ng-model="age.to")
             div(nb-predicate="入职时间" predicate-attr="date")
                 input(ng-model="date.from" bs-datepicker)
-                span 至
+                span.gap 至
                 input(ng-model="date.to" bs-datepicker)
             div(nb-predicate="机构" predicate-attr="department_ids")
                 ui-select(multiple ng-model="$parent.department_ids" theme="select2" style="width:600px")
