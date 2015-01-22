@@ -16,8 +16,8 @@
 }
 
 .steps-indicator.steps-2:before {
-  right: calc(25%);
-  left: calc(25%);
+  right: calc(28%);
+  left: calc(22%);
 }
 
 .steps-indicator.steps-3:before {
@@ -165,3 +165,50 @@
 .steps-indicator li.editing a:before {
   background-color: #ff0000;
 }
+
+/*新增岗位弹出层左侧菜单*/
+/*.steps-indicator {
+    float: left;
+    width: 268px;
+    background-color: #f2f3f8;
+    padding: 0;
+}
+.steps-indicator + .steps {
+  float: left;
+  width: 66%;
+}
+.steps-indicator li {
+  width: 268px;
+  height: 63px;
+  padding: 0 20px;
+  line-height: 63px;
+}
+.steps-indicator li:hover, .steps-indicator li.active{
+  background-color: #0ab6e8;
+  color: #fff;
+  transition: all ease .5s;
+}
+.steps-indicator li:hover a, .steps-indicator li.active a,
+.steps-indicator li:hover span, .steps-indicator li.active span {
+  color: #fff;
+}
+.steps-indicator a {
+  display: block;
+  font-size: 16px;
+  color: #000;
+
+}
+.steps-indicator a span {
+  float: right;
+  font-size: 16px;
+  line-height: 63px;
+
+}
+.steps-indicator li.current,.steps-indicator li.editing {
+  background-color: #0ab6e8;
+  transition: all ease .5s;
+}
+.steps-indicator li.current a,.steps-indicator li.current span,
+.steps-indicator li.editing a,.steps-indicator li.editing span {
+  color: #fff;
+}*/
