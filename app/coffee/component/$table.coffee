@@ -7,7 +7,7 @@ class NbTableCtrl
     @.$inject = ['$scope', '$parse', '$filter', '$attrs']
 
     copyRefs = (src) ->
-        return [].concat(src)
+        return `src? [].concat(src) : []`
 
     constructor: (scope, $parse, $filter, $attrs) ->
         propertyName  = $attrs.nbTable
@@ -19,6 +19,7 @@ class NbTableCtrl
         safeCopy = copyRefs(displayGetter(scope))
 
         pipeAfterSafaCopy = true
+        lastSelected = null #最后选择的选项
 
         tableState = {
             sort: {}
@@ -29,7 +30,7 @@ class NbTableCtrl
         }
 
         updateSafeCopy = ->
-            safeCopy = copyRefs(safeGetter($scope))
+            safeCopy = copyRefs(safeGetter(scope))
             @pipe() if pipeAfterSafaCopy == true
 
         if $attrs.nbSafeSrc
@@ -40,7 +41,7 @@ class NbTableCtrl
                         return `safeSrc? safeSrc.length : 0`
                     ,
                     (newValue, oldValue) ->
-                        updateSafeCopy() if newValue != safeSrc.length
+                        updateSafeCopy() if newValue != safeCopy.length
                 )
             scope.$watch(
                     () -> return safeGetter(scope)
@@ -244,6 +245,10 @@ class nbSearchCtrl
         return if @conditions.length <= 1
         condition = @conditions[$index]
         predicate = condition.selected
+        #remove predicate from searchObject object
+        @scope.predicateObject = _.omit(@scope.predicateObject, predicate.key)
+
+
         @$$destroy(predicate)
 
         @predicates.inactivePredicates.push(predicate)
@@ -324,26 +329,50 @@ nbSearchDirective = ($timeout) ->
 
 
 
+nbSelectRowDirective = ->
+
+
+    postLink = (scope, elem, attrs, tableCtrl) ->
+        return unless attrs.nbSelectRow
+        onSelect = (evt) ->
+            scope.$apply ->
+                tableCtrl.select(scope.row, mode)
+        mode = attrs.mode || 'single' #multiple
+        elem.on 'click', onSelect
+
+        scope.$watch 'row.isSelected' ,(newValue, oldValue) ->
+            if newValue == true
+                elem.addClass('nb-selected')
+            else
+                elem.removeClass('nb-selected')
+
+        scope.$on '$destroy', () ->
+            elem.off 'click', onSelect
+
+    return {
+        require: '^nbTable'
+        link: postLink
+        scope: {
+            row: "=nbSelectRow"
+        }
+    }
+
+
 nbPredicateDirective = ($parse) ->
 
     postLink = (scope, elem, attrs, ctrl, $transcludeFn) ->
         searchCtrl = ctrl[0]
-        ngModelCtrl = ctrl[1]
+        # ngModelCtrl = ctrl[1]
 
-        return if !ngModelCtrl && !attrs.predicateAttr
+        return if !attrs.ngModel && !attrs.predicateAttr
 
         key = attrs.ngModel || attrs.predicateAttr
 
         modelGetter = $parse(key)
         searchCtrl.addPredicate(key, scope.displayName, modelGetter, $transcludeFn)
-        # scope.$predicate = modelGetter
-
-
-
-
 
     return {
-        require: ['^nbSearch', '?ngModel']
+        require: ['^nbSearch']
         link: postLink
         transclude: 'element'
         priority: 1
@@ -351,8 +380,6 @@ nbPredicateDirective = ($parse) ->
             displayName: "@nbPredicate"
         }
     }
-
-
 
 
 nbPaginationDirective = ->
@@ -411,6 +438,7 @@ app.directive 'nbSearch', nbSearchDirective
 app.directive 'nbWatchSelect', nbWatchSelectDirective
 app.directive 'nbPredicate', ['$parse', nbPredicateDirective]
 app.directive 'nbPipe', nbPipeDirective
+app.directive 'nbSelectRow', nbSelectRowDirective
 
 
 

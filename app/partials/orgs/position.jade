@@ -49,6 +49,7 @@
         td.org-post
           a(ui-sref=".detail({posId: pos.id})") {{pos.name}}
         td(ng-bind="pos.channel.displayName")
+        //- td.org-preparation
         td
           span(ng-class="{'overstaffed': pos.isOverstaffed}") {{pos.staffing}}
           span /{{pos.budgetedStaffing}}
