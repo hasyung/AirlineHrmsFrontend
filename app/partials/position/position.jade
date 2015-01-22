@@ -33,6 +33,9 @@
                     td.org-post
                         a(ui-sref=".detail({posId: pos.id})" ng-bind="pos.name")
                     td(ng-bind="pos.channel.displayName")
-                    td(ng-class="{'invalid': pos.budgetedStaffing < pos.staffing}") {{pos.staffing}}/{{pos.budgetedStaffing}}
+                    //- td(ng-class="{'invalid': pos.budgetedStaffing < pos.staffing}") {{pos.staffing}}/{{pos.budgetedStaffing}}
+                    td.org-preparation
+                      span(ng-class="{'overstaffed': pos.isOverstaffed}") {{pos.staffing}}
+                      span /{{pos.budgetedStaffing}}
                     td(ng-bind="pos.schedule.displayName")
                     td(ng-bind="pos.oaFileNo")
