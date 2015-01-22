@@ -77,7 +77,7 @@ angular.module 'nb.directives'
             $doc.on 'click', closeDropdown
 
             scope.$watch 'selected', (newVal) ->
-                scope.selected = newVal
+                ngModelCtrl.$validate();
 
             scope.$on '$destroy', () ->
                 elem.off 'click'
