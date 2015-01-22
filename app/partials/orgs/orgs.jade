@@ -43,6 +43,7 @@ div.org
                         .panel-heading.popup-title 警告
                         .panel-body.popup-body
                             div 你是否要撤销所有更改？
-                            div.div-delete-btn.pull-right(ng-click="ctrl.revert()") 确定
+                        .panel-footer.clearfix
+                            div.btn.btn-danger.pull-right(ng-click="ctrl.revert()") 确定
                 //- button.cancel(ng-click="ctrl.revert()") 撤销
 

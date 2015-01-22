@@ -1,4 +1,4 @@
-.position-manage
+.position-manage.org-modal-wrapper
     div(nb-table='ctrl.positions' nb-safe-src="ctrl.positions")
         div(nb-search)
             div(nb-predicate="名称" predicate-attr="name")
@@ -31,6 +31,6 @@
                         a(ui-sref=".detail({posId: pos.id})" ng-bind="pos.name")
                     td(ng-bind="pos.department.name")
                     td(ng-bind="pos.channel.displayName")
-                    td(ng-class="{'invalid': pos.budgetedStaffing < pos.staffing}") {{pos.staffing}}/{{pos.budgetedStaffing}}
+                    td(ng-class="{'overstaffed': pos.budgetedStaffing < pos.staffing}") {{pos.staffing}}/{{pos.budgetedStaffing}}
                     td(ng-bind="pos.schedule.displayName")
                     td(ng-bind="pos.oaFileNo")
