@@ -17,7 +17,7 @@
           div(slimscroll height="300px")
             nb-org-tree(selected-data="ctrl.selectOrg")
         .panel-footer.clearfix.button-group
-          div.btn.btn-danger.pull-right(popup-close, ng-click="ctrl.posTransfer()") 确 定
+          div.btn.btn-info.pull-right.btn-submit(popup-close, ng-click="ctrl.posTransfer()") 确 定
           div.btn.btn-default.pull-right(popup-close) 取 消
 
     .pull-right.nb-dropdown(simple-dropdown, btn-text="导出")
@@ -41,7 +41,7 @@
         th  工作时间
         th  OA文件编号
     tbody
-      tr(ng-repeat="pos in ctrl.positions track by pos.id", 
+      tr(ng-repeat="pos in ctrl.positions track by pos.id",
           ng-class="{'active': pos.isSelected == true}"
           )
         td

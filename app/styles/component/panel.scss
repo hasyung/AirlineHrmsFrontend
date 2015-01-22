@@ -33,6 +33,9 @@
         padding-top: 3px;
         padding-bottom: 3px;
     }
+    .btn-submit {
+        padding: 6px 12px;
+    }
     ul {
         line-height: 21px;
     }
@@ -47,16 +50,21 @@
             &:last-child {
                 width: 204px;
             }
-        }    
+        }
     }
-    
     .org-preparation .invalid {
         color: $danger;
     }
-    tbody > tr.active > td{
-        background-color: #ddd; 
+    tbody > tr:nth-child(even) > td{
+        background-color: #fff;
     }
-    
+    tbody > tr:nth-child(odd) > td{
+        background-color: #FAFBFC;
+    }
+    tbody > tr.active > td{
+        background-color: #EDF1F2;
+    }
+
 }
 
 
