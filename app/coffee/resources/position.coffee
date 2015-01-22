@@ -8,7 +8,7 @@ Position = (restmod, RMUtils, $Evt) ->
     Position = restmod.model('/positions').mix 'nbRestApi', {
         department_id: {mask: 'R', map: 'department.id'}
         department: {mask: 'CU'}
-        isSelected: {init: false , mask: "CU"}
+        isSelected: {mask: "CU"}
         specification: { hasOne: 'Specification', mask: "U"}
 
         $hooks:
@@ -59,7 +59,7 @@ Position = (restmod, RMUtils, $Evt) ->
                         angular.forEach ids.ids, (id) ->
                             item = _.find self, {id: id}
                             self.$remove item
-                            
+
                         self.$dispatch 'after-destroy', res
 
                     onErorr = (res) ->
