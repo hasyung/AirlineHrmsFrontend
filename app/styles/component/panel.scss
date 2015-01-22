@@ -1,5 +1,5 @@
 //机构各种切换窗口公共样式
-.org-modal-wrapper {
+.app-content-wrapper {
   height: 100%;
   overflow: scroll;
 }
@@ -40,15 +40,12 @@
         line-height: 21px;
     }
 }
-.org-post-table {
+.custom-table {
     border: 1px solid #e6e6e6;
     tr {
         td{
-            &:first-child {
+            &.has-checkbox {
                 width: 44px;
-            }
-            &:last-child {
-                width: 204px;
             }
         }
     }

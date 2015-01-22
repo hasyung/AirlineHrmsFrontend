@@ -1,4 +1,4 @@
-.org-modal-wrapper
+.app-content-wrapper
   .org-modal-posttop 岗位信息列表
     //- button.btn.btn-default 导出
     button.btn.btn-default.fa.fa-trash-o(title="删除", nb-popup, position="left")
@@ -29,7 +29,7 @@
         a(role="menuitem" ng-href="/api/positions/export_specification_pdf?department_id={{ctrl.currentOrg.id}}" ) 导出全部岗位描述书
       li( role="presentation")
         a(role="menuitem" ng-href="/api/positions/export_specification_pdf?{{ctrl.getExportParams()}}" ) 导出所选岗位描述书
-  table.table.table-striped.ng-scope.org-post-table
+  table.table.table-striped.ng-scope.custom-table
     thead
       tr
         th
@@ -44,7 +44,7 @@
       tr(ng-repeat="pos in ctrl.positions track by pos.id",
           ng-class="{'active': pos.isSelected == true}"
           )
-        td
+        td.has-checkbox
           input(type='checkbox', ng-model="pos.isSelected")
         td.org-post
           a(ui-sref=".detail({posId: pos.id})") {{pos.name}}
