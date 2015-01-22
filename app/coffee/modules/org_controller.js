@@ -1,33 +1,33 @@
 (function(){
 
 
-app = @nb.app
+// app = @nb.app
 
 
 
-Route.$inject = ['$stateProvider']
-function Route($stateProvider){
+// Route.$inject = ['$stateProvider']
+// function Route($stateProvider){
 
-    // $stateProvider.state({
+//     // $stateProvider.state({
 
-    // })
-}
+//     // })
+// }
 
-PostionsCreateFormCtrl.$inject = ['$scope']
-function PostionsCreateFormCtrl(scope){
+// PostionsCreateFormCtrl.$inject = ['$scope']
+// function PostionsCreateFormCtrl(scope){
 
-    scope.formData = {}
-
-
+//     scope.formData = {}
 
 
 
 
 
-}
 
 
-app.controller('')
+// }
+
+
+// app.controller('')
 
 
 

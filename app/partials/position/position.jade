@@ -1,17 +1,16 @@
 .position-manage.org-modal-wrapper
-    div(nb-table)
+    div(nb-table='ctrl.positions' nb-safe-src="ctrl.positions")
         div(nb-search)
-            input(nb-predicate="名称" name="name" placeholder="姓名" ng-model="name")
-            div(nb-predicate="年龄" predicate-attr="age")
-                input(name="from" placeholder="年龄" ng-model="age.from")
+            div(nb-predicate="名称" predicate-attr="name")
+                input(name="name" placeholder="姓名" ng-model="$parent.name")
+            div(nb-predicate="岗位通道" predicate-attr="channel_id")
+                nb-dropdown( ng-model="$parent.channel_id", remote-key="position_channels", map="$item.id" name="channel" required)
+            div(nb-predicate="入职时间" predicate-attr="created_at")
+                input(ng-model="created_at.from" bs-datepicker)
                 span.gap 至
-                input(name="to" placeholder="年龄" ng-model="age.to")
-            div(nb-predicate="入职时间" predicate-attr="date")
-                input(ng-model="date.from" bs-datepicker)
-                span.gap 至
-                input(ng-model="date.to" bs-datepicker)
+                input(ng-model="created_at.to" bs-datepicker)
             div(nb-predicate="机构" predicate-attr="department_ids")
-                ui-select(multiple ng-model="$parent.department_ids" theme="select2" style="width:600px")
+                ui-select(multiple ng-model="$parent.department_ids" theme="select2" style="width:600px" reset-search-input="true")
                     ui-select-match(placeholder="请输入机构名称") {{ $item.name }}
                     ui-select-choices(repeat="org.id as org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
         button.btn.btn-default.search-commit.fa.fa-search(nb-pipe="ctrl.search(tableState)") 查询
@@ -19,19 +18,18 @@
         table.table.table-striped.org-post-table
             thead
                 tr
-                    th
-                    //- input(type='checkbox', value='option2')
                     th  岗位名称
+                    th  所属机构
                     th  通道
                     th  编制数
                     th  工作时间
                     th  OA文件编号
             tbody
-                tr(ng-repeat="pos in ctrl.positions track by pos.id", ng-class="{'active': pos.isSelected == true}")
-                    td
-                        input(type='checkbox', ng-model="pos.isSelected")
+                tr(ng-repeat="pos in ctrl.positions track by pos.id | limitTo: 10"
+                   nb-select-row="pos" mode="multiple")
                     td.org-post
                         a(ui-sref=".detail({posId: pos.id})" ng-bind="pos.name")
+                    td(ng-bind="pos.department.name")
                     td(ng-bind="pos.channel.displayName")
                     //- td(ng-class="{'invalid': pos.budgetedStaffing < pos.staffing}") {{pos.staffing}}/{{pos.budgetedStaffing}}
                     td.org-preparation

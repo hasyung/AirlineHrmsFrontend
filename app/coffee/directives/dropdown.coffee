@@ -2,12 +2,28 @@ angular.module 'nb.directives'
     .directive 'nbDropdown', ['$http', 'inflector', '$document', ($http, inflector, $doc)->
 
 
+        parseMappedAttr = (mapped)->
+            prefixIndex = mapped.indexOf('$item.')
+            throw Error("map属性格式不正确, '必须符合 $item.xx.xx 格式'") if prefixIndex != 0
+            attr = mapped.slice(6) #prefix length
+            splited = attr.split('.')
+
+        getMappedAttr = (mappedArr, selectedItem) ->
+            attr = mappedArr.reduce(
+                (res, value) -> res[value]
+                ,
+                selectedItem)
+
+
         class DropdownCtrl
             @.$inject = ['$http','$attrs','$scope']
             constructor: (@http, @attrs, @scope) ->
                 self = @
                 @scope.isOpen = false
                 @options = []
+                @mapped = parseMappedAttr(@attrs.map) if @attrs.map
+
+
 
                 onSuccess = (data, status) ->
                     @options = _.map data.result, (item) ->
@@ -29,7 +45,9 @@ angular.module 'nb.directives'
                     throw new Error('dropdown need options')
             setSelected: ($index) ->
                 # @scope.selected = _.clone @options[$index] # why clone ?
-                @scope.selected = if @attrs.preventClone then @options[$index] else _.clone @options[$index]
+                selected = if @attrs.preventClone then @options[$index] else _.clone @options[$index]
+                @scope.$item = selected
+                @scope.selected = if @mapped then getMappedAttr(@mapped, selected) else selected
                 @close()
 
             toggle: () ->
@@ -83,7 +101,7 @@ angular.module 'nb.directives'
     ]
 
     .directive 'simpleDropdown', ['$document', ($doc)->
-        
+
         class simDropdownCtrl
             @.$inject = ['$scope', '$attrs']
             constructor: (@scope, @attrs) ->

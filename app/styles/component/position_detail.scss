@@ -4,7 +4,7 @@
 //   // background-color: #f2f3f8;
 //   background-color: skyblue;
 // }
-// 
+//
 .org-pos-detail-menu {
   width: 100%;
   height: 280px;
@@ -32,7 +32,7 @@
           background: url("../../../images/pos-menu/pos-desc.png") no-repeat;
           left: -225px;
           top: -35px;
-          &:hover {
+          &.active,&:hover {
             width: 290px;
             height: 77px;
             background: url("../../../images/pos-menu/pos-desc-act.png") no-repeat;
@@ -46,7 +46,7 @@
           background: url("../../../images/pos-menu/pos-detail.png") no-repeat;
           left: -259px;
           top: 33px;
-          &:hover {
+          &.active,&:hover {
             width: 273px;
             height: 82px;
             background: url("../../../images/pos-menu/pos-detail-act.png") no-repeat;
@@ -60,7 +60,7 @@
           background: url("../../../images/pos-menu/pos-train.png") no-repeat;
           left: -241px;
           top: 107px;
-          &:hover {
+          &.active,&:hover {
             width: 307px;
             height: 76px;
             background: url("../../../images/pos-menu/pos-train-act.png") no-repeat;
@@ -74,7 +74,7 @@
           background: url("../../../images/pos-menu/pos-welfare.png") no-repeat;
           left: 58px;
           top: 128px;
-          &:hover {
+          &.active,&:hover {
             width: 280px;
             height: 54px;
             background: url("../../../images/pos-menu/pos-welfare-act.png") no-repeat;
@@ -88,7 +88,7 @@
           background: url("../../../images/pos-menu/pos-rel.png") no-repeat;
           left: 121px;
           top: 74px;
-          &:hover {
+          &.active,&:hover {
             width: 246px;
             height: 68px;
             background: url("../../../images/pos-menu/pos-rel-act.png") no-repeat;
@@ -103,7 +103,7 @@
           left: 121px;
           top: -2px;
           z-index: 1;
-          &:hover {
+          &.active,&:hover {
             width: 288px;
             height: 76px;
             background: url("../../../images/pos-menu/pos-performance-act.png") no-repeat;
@@ -118,7 +118,7 @@
           background: url("../../../images/pos-menu/pos-work.png") no-repeat;
           left: 45px;
           top: -49px;
-          &:hover {
+          &.active,&:hover {
             width: 272px;
             height: 69px;
             background: url("../../../images/pos-menu/pos-work-act.png") no-repeat;
