@@ -495,8 +495,7 @@ class PosCtrl extends nb.Controller
 
     updateDetail: (position) ->
         self = @
-        @scope.currentPos.$update(position).$then ()->
-         self.state.go '^'
+        position.$save().$then () -> self.state.go "^"
     updateAdvanced: (advance) ->
         self = @
         @scope.currentSpe.$update(advance).$then ()->
