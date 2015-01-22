@@ -40,7 +40,8 @@
         line-height: 21px;
     }
 }
-.org-post-table {
+//表格相关样式个性化
+.table.table-striped {
     border: 1px solid #e6e6e6;
     tr {
         td{
@@ -52,7 +53,7 @@
             }
         }
     }
-    .org-preparation .invalid {
+    .overstaffed {
         color: $danger;
     }
     tbody > tr:nth-child(even) > td{
