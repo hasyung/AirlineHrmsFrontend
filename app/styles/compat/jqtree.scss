@@ -2,6 +2,10 @@
 .jqtree-tree {
     font-size: 14px;
     .jqtree-element {
+        &:hover {
+            background: none;
+            background-color: #EDF1F2;
+        }
         .jqtree-toggler {
             font-family:  "Arial";
             font-size: 10px;
@@ -16,9 +20,13 @@
     }
     .jqtree-folder {
         .jqtree-selected {
-            .jqtree-element {
+            & > .jqtree-element {
                 background: none;
                 background-color: #EDF1F2;
+                &:hover {
+                    background: none;
+                    background-color: #EDF1F2;
+                }
                 .jqtree-toggler {
                     color: #468fce;
                 }
