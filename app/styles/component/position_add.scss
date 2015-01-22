@@ -133,12 +133,12 @@
             width: 100%;
         }
     }
-    .ng-touched.ng-invalid {
+    .ng-dirty.ng-invalid {
             .dropdown-toggle {
                 border-color: $danger;
             }
         }
-    .ng-touched.ng-valid {
+    .ng-dirty.ng-valid {
         .dropdown-toggle {
             border-color: $success;
         }
