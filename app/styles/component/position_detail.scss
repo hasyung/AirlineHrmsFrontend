@@ -1,8 +1,136 @@
+// .org-pos-detail-menu {
+//   width: 100%;
+//   height: 280px;
+//   // background-color: #f2f3f8;
+//   background-color: skyblue;
+// }
+// 
 .org-pos-detail-menu {
   width: 100%;
   height: 280px;
-  // background-color: #f2f3f8;
-  background-color: skyblue;
+  background-color: #f2f3f8;
+    .org-menu-wrapper {
+      position: relative;
+      width: 700px;
+      height: 100%;
+      margin: 0 auto;
+      .org-icon-window {
+        position: absolute;
+        width: 145px;
+        height: 145px;
+        left: 50%;
+        margin-left: -72.5px;
+        top: 50%;
+        margin-top: -72.5px;
+        background: url("../../../images/pos-menu/pos-menu-item1.png") no-repeat;
+        .org-detail-item {
+          position: absolute;
+        }
+        .org-detail-item1 {
+          width: 284px;
+          height: 75px;
+          background: url("../../../images/pos-menu/pos-desc.png") no-repeat;
+          left: -225px;
+          top: -35px;
+          &:hover {
+            width: 290px;
+            height: 77px;
+            background: url("../../../images/pos-menu/pos-desc-act.png") no-repeat;
+            left: -232px;
+            top: -38px;
+          }
+        }
+        .org-detail-item2 {
+          width: 266px;
+          height: 81px;
+          background: url("../../../images/pos-menu/pos-detail.png") no-repeat;
+          left: -259px;
+          top: 33px;
+          &:hover {
+            width: 273px;
+            height: 82px;
+            background: url("../../../images/pos-menu/pos-detail-act.png") no-repeat;
+            left: -267px;
+            top: 34px;
+          }
+        }
+        .org-detail-item3 {
+          width: 300px;
+          height: 73px;
+          background: url("../../../images/pos-menu/pos-train.png") no-repeat;
+          left: -241px;
+          top: 107px;
+          &:hover {
+            width: 307px;
+            height: 76px;
+            background: url("../../../images/pos-menu/pos-train-act.png") no-repeat;
+            left: -249px;
+            top: 108px;
+          }
+        }
+        .org-detail-item4 {
+          width: 272px;
+          height: 51px;
+          background: url("../../../images/pos-menu/pos-welfare.png") no-repeat;
+          left: 58px;
+          top: 128px;
+          &:hover {
+            width: 280px;
+            height: 54px;
+            background: url("../../../images/pos-menu/pos-welfare-act.png") no-repeat;
+            left: 57px;
+            top: 130px;
+          }
+        }
+        .org-detail-item5 {
+          width: 239px;
+          height: 67px;
+          background: url("../../../images/pos-menu/pos-rel.png") no-repeat;
+          left: 121px;
+          top: 74px;
+          &:hover {
+            width: 246px;
+            height: 68px;
+            background: url("../../../images/pos-menu/pos-rel-act.png") no-repeat;
+            left: 123px;
+            top: 74px;
+          }
+        }
+        .org-detail-item6 {
+          width: 272px;
+          height: 75px;
+          background: url("../../../images/pos-menu/pos-performance.png") no-repeat;
+          left: 121px;
+          top: -2px;
+          z-index: 1;
+          &:hover {
+            width: 288px;
+            height: 76px;
+            background: url("../../../images/pos-menu/pos-performance-act.png") no-repeat;
+            left: 113px;
+            top: -5px;
+          }
+
+        }
+        .org-detail-item7 {
+          width: 277px;
+          height: 67px;
+          background: url("../../../images/pos-menu/pos-work.png") no-repeat;
+          left: 45px;
+          top: -49px;
+          &:hover {
+            width: 272px;
+            height: 69px;
+            background: url("../../../images/pos-menu/pos-work-act.png") no-repeat;
+            left: 56px;
+            top: -53px;
+          }
+        }
+
+
+      }
+    }
+
 }
 
 .org-pos-detail-window {
