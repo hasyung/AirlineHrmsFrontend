@@ -154,7 +154,8 @@ angular.module 'nb.directives'
                 return
             # 下面两行代码是为了防止点击元素后事件冒泡至body，然后影藏弹出框
             elem.on 'click', (e)->
-                e.stopPropagation()
+                if e.target.nodeName is "BUTTON"
+                    e.stopPropagation()
 
             $doc.on 'click', closeDropdown
 
