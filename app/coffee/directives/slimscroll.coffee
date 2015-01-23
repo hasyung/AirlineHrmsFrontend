@@ -27,9 +27,9 @@ angular.module 'nb.directives'
 
                 elem.slimScroll(opts)
 
-                scope.$on '$destory', () ->
+                scope.$on '$destroy', () ->
                     elem.slimscroll {
-                        destory: true
+                        destroy: true
                     }
         }
 
