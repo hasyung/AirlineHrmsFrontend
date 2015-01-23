@@ -87,12 +87,14 @@ angular.module 'nb.directives'
                     left: position.left + 'px',
                 }
                 #end
+                $doc.on 'click', hideHandle
                 scope.isShown = true
             
 
             hide = ()->
                 tipElement.hide()
                 scope.isShown = false
+                $doc.off 'click', hideHandle
 
             getPosition = (element) ->
                 return {
@@ -143,7 +145,7 @@ angular.module 'nb.directives'
             # 加载时隐藏提示框
             hide()
             
-            $doc.on 'click', hideHandle
+            # $doc.on 'click', hideHandle
                 
             elem.on 'click', (e)->
                 e.stopPropagation()
@@ -211,11 +213,13 @@ angular.module 'nb.directives'
                 }
                 #end
                 scope.isShown = true
+                $doc.on 'click', hideHandle
             
 
             hide = ()->
                 tipElement.hide()
                 scope.isShown = false
+                $doc.off 'click', hideHandle
 
             calcPosition = (element) ->
                 elemWidth = element.outerWidth()
@@ -314,7 +318,7 @@ angular.module 'nb.directives'
             # 加载时隐藏提示框
             hide()
             
-            $doc.on 'click', hideHandle
+            # $doc.on 'click', hideHandle
                 
             elem.on 'click', (e)->
                 e.stopPropagation()

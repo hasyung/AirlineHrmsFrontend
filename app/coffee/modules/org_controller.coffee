@@ -455,10 +455,13 @@ class PositionCtrl extends nb.Controller
             self.selectOrg = null
         else
             # 通知被划转岗位和目标机构必选
-            @Evt.$send "position:transfer:error", "通知被划转岗位和目标机构必选"
+            @Evt.$send "position:transfer:error", "被划转岗位和目标机构必选"
 
     batchRemove: () ->
-        @positions.$batchRemove({ids:@getSelectsIds()})
+        if @getSelectsIds().length != 0
+            @positions.$batchRemove({ids:@getSelectsIds()})
+        else
+            @Evt.$send "position:remove:error", "你还没选择所要删除的岗位"
 
     toggleSelectAll: () ->
         self = @
