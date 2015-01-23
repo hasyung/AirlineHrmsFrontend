@@ -30,7 +30,7 @@ Position = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('position:destroy:success', arguments)
             'after-adjust': ->
                 $Evt.$send('position:adjust:success',"岗位调整成功")
-            'after-adjust': ->
+            'after-adjust-error': ->
                 $Evt.$send('position:adjust:success', arguments)
     	$extend:
             Collection:
