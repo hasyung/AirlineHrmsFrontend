@@ -5,8 +5,8 @@
 
 
 deps = [
-    'ui.router'
-    # 'ct.ui.router.extras'
+    # 'ui.router'
+    'ct.ui.router.extras'
     'ncy-angular-breadcrumb'
     'mgo-angular-wizard'
     'mgcrea.ngStrap.datepicker'
@@ -90,13 +90,17 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider,
             templateUrl: 'partials/auth/sigup.html'
         }
 
-    $httpProvider.interceptors.push ['$q', '$location', 'toaster', ($q, $location, toaster) ->
+    $httpProvider.interceptors.push ['$q', '$location', 'toaster', 'sweet', ($q, $location, toaster, sweet) ->
 
         return {
             'responseError': (response) ->
                 if response.status == 401
                     $location.path('/login')
-                toaster.pop('error', '服务器错误', JSON.stringify(response.data))
+                if response.status == 403
+                    sweet.error('操作失败',response.data.message || JSON.stringify(response.data))
+
+                if /^5/.test(Number(response.status).toString()) # if server error
+                    toaster.pop('error', '服务器错误', response.data.message || JSON.stringify(response.data))
                 return $q.reject(response)
         }
 
@@ -108,7 +112,7 @@ App
     .config ['$provide', appConf]
     .config ['restmodProvider', restConf]
     .config ['$stateProvider','$urlRouterProvider','$locationProvider', '$httpProvider', '$breadcrumbProvider', routeConf]
-    .run ['$state','$rootScope', 'toaster', '$http', 'Org', '$uiViewScroll', ($state, $rootScope, toaster, $http, Org, $uiViewScroll) ->
+    .run ['$state','$rootScope', 'toaster', '$http', 'Org', 'sweet', ($state, $rootScope, toaster, $http, Org, sweet) ->
         # for $state.includes in view
         $rootScope.$on '$stateChangeSuccess', (evt, to) ->
             console.debug "stateChangeSuccess: to ", to
