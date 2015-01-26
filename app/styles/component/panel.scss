@@ -53,6 +53,9 @@
         td{
             &.has-checkbox {
                 width: 44px;
+                input {
+                    cursor: pointer;
+                }
             }
         }
     }
