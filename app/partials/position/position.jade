@@ -15,7 +15,7 @@
                     ui-select-choices(repeat="org.id as org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
         button.btn.btn-default.search-commit.fa.fa-search(nb-pipe="ctrl.search(tableState)") 查询
 
-        table.table.table-striped.org-post-table
+        table.table.table-striped.custom-table
             thead
                 tr
                     th  岗位名称
@@ -37,6 +37,4 @@
                       span /{{pos.budgetedStaffing}}
                     td(ng-bind="pos.schedule.displayName")
                     td(ng-bind="pos.oaFileNo")
-            tfoot
-                tr
-                    td(nb-pagination="ctrl.positions.$metadata")
+        .custom-pages(nb-pagination="ctrl.positions.$metadata")

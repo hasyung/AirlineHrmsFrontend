@@ -46,6 +46,7 @@
 .custom-table {
     border: 1px solid #e6e6e6;
     tr {
+        cursor: pointer;
         td{
             &.has-checkbox {
                 width: 44px;
@@ -61,10 +62,17 @@
     tbody > tr:nth-child(odd) > td{
         background-color: #FAFBFC;
     }
-    tbody > tr.active > td{
+    tbody > tr.nb-selected > td{
         background-color: #EDF1F2;
     }
 
+}
+.custom-pages {
+    .pagination {
+        width: 380px;
+        display: block;
+        margin: 0 auto;
+    }
 }
 
 
