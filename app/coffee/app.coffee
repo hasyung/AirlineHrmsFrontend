@@ -126,7 +126,6 @@ App
             $rootScope.loading = false
 
         $rootScope.$on 'error', (code, info)->
-            console.log arguments
             $rootScope.loading = false
             toaster.pop(code.name, "提示", info)
 

@@ -87,12 +87,14 @@ angular.module 'nb.directives'
                     left: position.left + 'px',
                 }
                 #end
+                $doc.on 'click', hideHandle
                 scope.isShown = true
             
 
             hide = ()->
                 tipElement.hide()
                 scope.isShown = false
+                $doc.off 'click', hideHandle
 
             getPosition = (element) ->
                 return {
@@ -143,7 +145,7 @@ angular.module 'nb.directives'
             # 加载时隐藏提示框
             hide()
             
-            $doc.on 'click', hideHandle
+            # $doc.on 'click', hideHandle
                 
             elem.on 'click', (e)->
                 e.stopPropagation()
@@ -211,11 +213,13 @@ angular.module 'nb.directives'
                 }
                 #end
                 scope.isShown = true
+                $doc.on 'click', hideHandle
             
 
             hide = ()->
                 tipElement.hide()
                 scope.isShown = false
+                $doc.off 'click', hideHandle
 
             calcPosition = (element) ->
                 elemWidth = element.outerWidth()
@@ -307,25 +311,21 @@ angular.module 'nb.directives'
 
             hideHandle = (e) ->
                 e.stopPropagation()
-                #todo
-                #如果在popup-template上加上一个click事件代理，在机构岗位中划转岗位的时候将出现一个问题，
-                #当点击确定的时候并不能获取到所选择的机构。后面有事件在重构吧
-                if(angular.element(e.target).parents("popup-template").length == 0)
-                    hide()
+                hide()
                 # hide() 返回false，将阻止submit按钮的提交事件的触发
                 return 
 
             # 加载时隐藏提示框
             hide()
             
-            $doc.on 'click', hideHandle
+            # $doc.on 'click', hideHandle
                 
             elem.on 'click', (e)->
                 e.stopPropagation()
                 toggle()
 
-            # tipElement.on 'click', (e) ->
-            #     e.stopPropagation()
+            tipElement.on 'click', (e) ->
+                e.stopPropagation()
 
             closeEles = tipElement.find('[popup-close]')
             closeEles.on 'click', (e) ->

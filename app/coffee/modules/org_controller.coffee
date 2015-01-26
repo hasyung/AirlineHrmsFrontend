@@ -443,17 +443,19 @@ class PositionCtrl extends nb.Controller
     posTransfer: () -> #将岗位批量划转到另外一个机构下
         self = @
         selectedPosIds = @getSelectsIds()
-
-        #需要弹出提示框
         if selectedPosIds.length > 0 && @selectOrg
             @positions
                 .$adjust({department_id: @selectOrg.id, position_ids: selectedPosIds })
             self.selectOrg = null
         else
-            console.log "未选中任何机构"
+            # 通知被划转岗位和目标机构必选
+            @Evt.$send "position:transfer:error", "被划转岗位和目标机构必选"
 
     batchRemove: () ->
-        @positions.$batchRemove({ids:@getSelectsIds()})
+        if @getSelectsIds().length != 0
+            @positions.$batchRemove({ids:@getSelectsIds()})
+        else
+            @Evt.$send "position:remove:error", "你还没选择所要删除的岗位"
 
     toggleSelectAll: () ->
         self = @
