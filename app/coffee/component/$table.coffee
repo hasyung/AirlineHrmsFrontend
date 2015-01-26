@@ -43,7 +43,7 @@ class NbTableCtrl
                     (newValue, oldValue) ->
                         updateSafeCopy() if newValue != safeCopy.length
                 )
-            scope.$watch(
+            scope.$watchCollection(
                     () -> return safeGetter(scope)
                     ,
                     (newValue, oldValue) -> updateSafeCopy() if newValue != oldValue
