@@ -222,7 +222,8 @@
 	}
     .org-table {
         padding: 0 20px;
-        table > tbody > tr > td {
+        table > thead > tr > th,table > tbody > tr > td {
+            max-width: 170px;
             padding: 8px;
         }
     }
