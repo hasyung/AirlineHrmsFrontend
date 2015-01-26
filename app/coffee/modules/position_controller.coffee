@@ -33,8 +33,6 @@ class PositionCtrl extends nb.Controller
         @loadInitialData()
         scope.tableState = null
 
-        sweet.confirm('确定要删除吗?', '解释 XXXXXXXX ', (isConfirm)-> alert(isConfirm) )
-
     loadInitialData: ->
         @positions = @Position.$collection().$fetch()
 
