@@ -313,9 +313,9 @@ class OrgsCtrl extends nb.Controller
 
 class OrgCtrl extends nb.Controller
 
-    @.$inject = ['Org', '$stateParams', '$scope', '$rootScope', '$nbEvent', 'Position']
+    @.$inject = ['Org', '$stateParams', '$scope', '$rootScope', '$nbEvent', 'Position', 'sweet']
 
-    constructor: (@Org, @params, @scope, @rootScope, @Evt, @Position) ->
+    constructor: (@Org, @params, @scope, @rootScope, @Evt, @Position , @sweet) ->
         @state = 'show' # show editing newsub
         # @scope.org = @Org.$find(@params.orgId)
         scope.$onRootScope 'org:link', @.orgLink.bind(@)
@@ -359,23 +359,17 @@ class OrgCtrl extends nb.Controller
         # @Position.$search({department_id:@scope.currentOrg.id}).$then (positions) ->
         #     self.scope.positions = positions
 
-    destroy: () ->
+    destroy: (isConfirm) ->
+        sweet = @sweet
         $Evt = @Evt
-        @scope.currentOrg.$destroy().$then ->
-           $Evt.$send 'org:resetData'
+        orgName = @scope.currentOrg.name
 
-    # newSub: (org) ->
-    #     @scope.org.newSub(org)
-
-
-class RevertChangesCtrl extends Modal
-    @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$injector']
-    constructor: (@dialog, @scope, @Evt, @memoName, @injector) ->
-        super(dialog,scope,memoName) #必须调用父类构造器, 传入 dialog 实例, 当前 scope, memoname
-
-    close: (formdata)->
-        @Evt.$send('org:revert')
-        @dialog.close()
+        if isConfirm
+            @scope.currentOrg.$destroy().$then ->
+                $Evt.$send 'org:resetData'
+                sweet.success('删除成功', "您已成功删除#{orgName}" )
+        else
+            sweet.error("您取消了删除#{@scope.currentOrg.name}")
 
 
 class ActiveCtrl extends Modal

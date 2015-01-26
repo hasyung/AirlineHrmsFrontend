@@ -70,6 +70,9 @@ paths =
         'deps/moment/min/moment.min.js'
         'deps/jquery/dist/jquery.min.js'
         'deps/jqtree/tree.jquery.js'
+        #alert
+        'deps/sweetalert/lib/sweet-alert.js'
+
         #组织机构树
         'compat/vendor/drag-on.js'
         'compat/vendor/lib-gg-orgchart.js'
@@ -271,7 +274,7 @@ gulp.task "express", ->
 
     proxyOptions = url.parse('http://192.168.6.99:9002')
     # proxyOptions = url.parse('http://114.215.142.122:9002')
-    # proxyOptions = url.parse('http://192.168.6.24:3000')
+    # proxyOptions = url.parse('http://192.168.6.40:3000')
     # proxyOptions = url.parse('http://192.168.6.18:3000')
     proxyOptions.route = '/api'
 

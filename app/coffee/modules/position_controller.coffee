@@ -26,12 +26,15 @@ class Route
 
 class PositionCtrl extends nb.Controller
 
-    @.$inject = ['Position', '$scope', '$http']
+    @.$inject = ['Position', '$scope', '$http', 'sweet']
 
 
-    constructor: (@Position, @scope, @http) ->
+    constructor: (@Position, @scope, @http, @sweet) ->
         @loadInitialData()
         scope.tableState = null
+
+        sweet.confirm('确定要删除吗?', '解释 XXXXXXXX ', (isConfirm)-> alert(isConfirm) )
+
     loadInitialData: ->
         @positions = @Position.$collection().$fetch()
 
