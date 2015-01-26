@@ -3,7 +3,7 @@
 		.org-desc-section
 			h3 工作职责
 			label.postadd-control-label 工作职责
-			textarea(simditor, placeholder="这里输入内容", autofocus, ng-model="currentSpe.duty")
+			textarea(simditor, toolbar="['bold', 'italic', 'underline', 'ol', 'ul']", placeholder="这里输入内容", autofocus, ng-model="currentSpe.duty")
 		.org-desc-section
 			h3 工作权限
 			.postadd-form-group
@@ -32,7 +32,7 @@
 			.postadd-form-group
 				h3 任职条件
 				label.postadd-control-label 任职条件
-				textarea(simditor, placeholder="这里输入内容", autofocus, ng-model="currentSpe.qualification")
+				textarea(simditor, toolbar="['bold', 'italic', 'underline', 'ol', 'ul']", placeholder="这里输入内容", autofocus, ng-model="currentSpe.qualification")
 			.postadd-form-group
 				label.postadd-control-label
 				button.btn.btn-info(type='submit' ng-disabled="posAdvancedForm.$invalid") 保存

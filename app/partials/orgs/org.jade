@@ -6,7 +6,7 @@ aside.org-aside
             div(ng-if="orgCtrl.state == 'show' && !(ctrl.isHistory || currentOrg.status == 'destroy_inactive')")
                 button.btn.btn-default.fa.fa-trash-o(
                     nb-confirm="orgCtrl.destroy(isConfirm)"
-                    nb-title="您确认要删除{{currentOrg.name}}吗?"
+                    nb-title="您确定要删除{{currentOrg.name}}吗?"
                     nb-text="删除操作将在点击组织结构树 '生效' 按钮并关联 OA 文件号后真正生效, 在这之前您可以随时撤销未生效的操作")
                 button.btn.btn-default.fa.fa-retweet(title="划转" ui-sref=".transfer")
                 //- button.btn.btn-default.fa.fa-pencil(ui-sref="^.edit({orgId: org.id})",title="编辑")

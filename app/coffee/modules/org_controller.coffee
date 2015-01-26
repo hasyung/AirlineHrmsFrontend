@@ -463,7 +463,10 @@ class PositionCtrl extends nb.Controller
             item.isSelected = self.scope.allSelect
 
     getExportParams: () ->
-        return 'department_id=' + @currentOrg.id  + '&position_ids=' + @getSelectsIds().join(',')
+        if @getSelectsIds().length == 0
+            return 'department_id=' + @currentOrg.id
+        else
+            return 'department_id=' + @currentOrg.id  + '&position_ids=' + @getSelectsIds().join(',')
 
 
 
