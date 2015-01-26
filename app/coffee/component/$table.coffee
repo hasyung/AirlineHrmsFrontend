@@ -25,7 +25,7 @@ class NbTableCtrl
             sort: {}
             predicate: {}
             pagination: {
-                start: 0
+                page: 1
             }
         }
 
@@ -66,6 +66,7 @@ class NbTableCtrl
             # delete predicateObject[prop] if !input
             # tableState.search.predicateObject = predicateObject
             # tableState.pagination.start = 0
+            tableState.pagination.page = 1
             return @pipe()
 
         @pipe = ->
@@ -95,9 +96,9 @@ class NbTableCtrl
                 else
                     rows[index].isSelected = !rows[index].isSelected
 
-        @slice = (start, number) ->
-            tableState.pagination.start = start
-            tableState.pagination.number = number
+        @slice = (page, number) ->
+            tableState.pagination.page = page
+            tableState.pagination.per_page = number
             return @pipe()
 
         @getTableState = () ->
@@ -386,50 +387,57 @@ nbPaginationDirective = ->
 
     postLink = (scope, elem, attrs, ctrl) ->
         # eval?
-        scope.nbItemsByPage = scope.$eval(socpe.nbItemsByPage) || 10
-        scope.nbDislpayedPages = scope.$eval(scope.nbDislpayedPages) || 5
+        scope.perPage = scope.$eval(attrs.perPage) || 10 #每页条数
+        scope.nbDislpayedPages = scope.$eval(scope.nbDislpayedPages) || 10 #显示多少页
 
         scope.currentPage = 1
         scope.pages = []
 
         redraw = ->
-            paginationState = ctrl.getTableState().pagination
             start = 1
             end
             i
-
-            scope.currentPage = Math.floor(paginationState.start / paginationState.number) + 1
+            # scope.currentPage = Math.floor(paginationState.start / paginationState.number) + 1
 
             start = Math.max start, scope.currentPage - Math.abs(Math.floor(scope.nbDislpayedPages / 2))
             end =  start + scope.nbDislpayedPages
 
-            if end > paginationState.numberofPages
-                end = paginationState.numberofPages
-
+            if end > scope.pagesCount
+                end = scope.pagesCount
                 start = Math.max(1, end - scope.nbDislpayedPages)
 
             scope.pages = []
 
-            scope.numPages = pagi.numberofPages
-
-            for i in [start ... end]
+            for i in [start ... end + 1]
                 scope.pages.push(i)
 
             return
 
-        scope.$watch ->
-            ctrl.getTableState().pagination
+        scope.$watch 'pageState', (newValue) ->
+            return if angular.isUndefined(newValue)
+            scope.currentPage = newValue.page
+            scope.perPage = newValue.per_page
+            scope.pagesCount = newValue.pages_count
+            redraw()
 
-        scope.$watch 'nbItemsByPage', ->
-            scope.selectPage(1)
-
-        scope.$watch 'nbDislpayedPages', redraw
+        # TODO: 下拉框选择每张表个数
+        # TODO: 下一页 上一页 首页 尾页?
 
         scope.selectPage = (page) ->
-            if 0 < page <= scope.numPages
-                ctrl.slice (page - 1) * scope.nbItemsByPage, scope.nbItemsByPage
+            if 0 < page <= scope.pagesCount
+                ctrl.slice page , scope.perPage
 
-        ctrl.slice(0, scope,nbItemsByPage)
+        ctrl.slice(1, scope.nbItemsByPage)
+
+    return {
+        restrict: 'EA'
+        require: '^nbTable'
+        templateUrl: 'partials/component/table/pagination.html'
+        scope: {
+            pageState: '=nbPagination'
+        }
+        link: postLink
+    }
 
 
 app.controller 'nbSearchCtrl', nbSearchCtrl
@@ -439,6 +447,7 @@ app.directive 'nbWatchSelect', nbWatchSelectDirective
 app.directive 'nbPredicate', ['$parse', nbPredicateDirective]
 app.directive 'nbPipe', nbPipeDirective
 app.directive 'nbSelectRow', nbSelectRowDirective
+app.directive 'nbPagination', nbPaginationDirective
 
 
 

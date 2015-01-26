@@ -5,8 +5,8 @@
 
 
 deps = [
-    # 'ui.router'
-    'ct.ui.router.extras'
+    'ui.router'
+    # 'ct.ui.router.extras'
     'ncy-angular-breadcrumb'
     'mgo-angular-wizard'
     'mgcrea.ngStrap.datepicker'
@@ -77,10 +77,10 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider,
                 skip: true
             }
         }
-        .state 'personnel', {
-            url: '/personnel'
-            templateUrl: 'partials/personnel/info.html'
-        }
+        # .state 'personnel', {
+        #     url: '/personnel'
+        #     templateUrl: 'partials/personnel/info.html'
+        # }
         .state 'login', {
             url: '/login'
             templateUrl: 'partials/auth/login.html'
@@ -108,16 +108,19 @@ App
     .config ['$provide', appConf]
     .config ['restmodProvider', restConf]
     .config ['$stateProvider','$urlRouterProvider','$locationProvider', '$httpProvider', '$breadcrumbProvider', routeConf]
-    .run ['$state','$rootScope', 'toaster', '$http', 'Org', ($state, $rootScope, toaster, $http, Org) ->
+    .run ['$state','$rootScope', 'toaster', '$http', 'Org', '$uiViewScroll', ($state, $rootScope, toaster, $http, Org, $uiViewScroll) ->
         # for $state.includes in view
         $rootScope.$on '$stateChangeSuccess', (evt, to) ->
             console.debug "stateChangeSuccess: to ", to
+            # $uiViewScroll()
+
         $rootScope.$on 'process', () ->
             $rootScope.loading = true
 
         $rootScope.$on 'success', (code, info)->
             toaster.pop(code.name, "提示", info)
             $rootScope.loading = false
+
         $rootScope.$on 'error', (code, info)->
             console.log arguments
             $rootScope.loading = false

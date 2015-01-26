@@ -99,8 +99,8 @@ aside.org-aside
                         th  在编人数
                 tbody
                     tr(ng-repeat="position in positions")
-                        td.org-post(ng-click="") 
+                        td.org-post(ng-click="")
                             a(ui-sref=".position.detail({posId: position.id,id:currentOrg.id})") {{position.name}}
                         td  {{position.budgetedStaffing}}
                         td  {{position.staffing}}
-                
+
