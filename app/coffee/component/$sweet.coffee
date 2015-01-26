@@ -67,7 +67,7 @@ app.factory 'sweet',['$q', '$timeout', ($q, $timeout) ->
 ]
 
 
-app.directive 'nbConfirm', ['sweet', (sweet) ->
+app.directive 'nbConfirm', ['sweet', (sweet) -> #use $interpolate ?
 
     postLink = (scope, elem, attrs) ->
 
