@@ -457,17 +457,15 @@ class PositionCtrl extends nb.Controller
         else
             @Evt.$send "position:remove:error", "你还没选择所要删除的岗位"
 
-    toggleSelectAll: () ->
-        self = @
-        _.map @positions, (item)->
-            item.isSelected = self.scope.allSelect
-
     getExportParams: () ->
-        if @getSelectsIds().length == 0
+        ids = @getSelectsIds()
+        if ids.length == 0
             return 'department_id=' + @currentOrg.id
         else
-            return 'department_id=' + @currentOrg.id  + '&position_ids=' + @getSelectsIds().join(',')
+            return 'department_id=' + @currentOrg.id  + '&position_ids=' + ids.join(',')
 
+    search: (tableState) ->
+        @positions.$refresh(tableState)
 
 
 
