@@ -14,11 +14,11 @@ class Route
         stateProvider
             .state 'personnel', {
                 url: '/personnels'
-                templateUrl: 'partials/personnel/info.html'
+                templateUrl: 'partials/personnel/personnel.html'
                 controller: PersonnelCtrl
                 controllerAs: 'ctrl'
                 ncyBreadcrumb: {
-                    label: "人事"
+                    label: "人事信息"
                 }
                 resolve: {
                 }
@@ -31,9 +31,10 @@ class PersonnelCtrl extends nb.Controller
 
     constructor: (@scope) ->
 
-        
 
-    
+
+
+
 
 
 

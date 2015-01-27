@@ -3,29 +3,31 @@
         div(nb-search)
             div(nb-predicate="名称" predicate-attr="name")
                 input(name="name" placeholder="姓名" ng-model="$parent.name")
-            div(nb-predicate="员工编号" predicate-attr="name")
+            div(nb-predicate="员工编号" predicate-attr="employee_no")
                 input(name="employee_no" placeholder="工号" ng-model="$parent.employee_no")
-            div(nb-predicate="岗位名称" predicate-attr="position_id")
-                input(name="position_id" placeholder="姓名" ng-model="$parent.position_id")
-            div(nb-predicate="员工分类" predicate-attr="category_id")
-                input(name="category_id" placeholder="姓名" ng-model="$parent.name")
-            div(nb-predicate="属地" predicate-attr="name")
-                input(name="name" placeholder="姓名" ng-model="$parent.name")
-            div(nb-predicate="岗位通道" predicate-attr="channel_id")
-                nb-dropdown( ng-model="$parent.channel_id", remote-key="position_channels", map="$item.id" name="channel" required)
-            div(nb-predicate="出生日期" predicate-attr="birthday")
-                input(ng-model="birthday.from" bs-datepicker)
-                span.gap 至
-                input(ng-model="birthday.to" bs-datepicker)
             div(nb-predicate="机构" predicate-attr="department_ids")
                 ui-select(multiple ng-model="$parent.department_ids" theme="select2" style="width:600px" reset-search-input="true")
                     ui-select-match(placeholder="请输入机构名称") {{ $item.name }}
                     ui-select-choices(repeat="org.id as org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
-            //- ul(nb-predicate-advanced)
-            //-     li(ng-model="has_phone") 有电话
-            //-     li(ng-model="has_number") 有工号
-        button.btn.btn-default.search-commit.fa.fa-search(nb-pipe="ctrl.search(tableState)") 查询
 
+            div(nb-predicate="岗位名称" predicate-attr="position_id")
+                input(name="position_name" placeholder="姓名" ng-model="$parent.position_name")
+
+            div(nb-predicate="员工分类" predicate-attr="category_id")
+                input(name="category_id" placeholder="姓名" ng-model="$parent.category_id")
+
+            div(nb-predicate="岗位通道" predicate-attr="channel_id")
+                nb-dropdown( ng-model="$parent.channel_id", remote-key="position_channels", map="$item.id" name="channel_id" required)
+
+            div(nb-predicate="属地" predicate-attr="location_id")
+                nb-dropdown( ng-model="$parent.location_id", remote-key="department_locations", map="$item.id" name="location_id" required)
+
+            div(nb-predicate="出生日期" predicate-attr="birthday")
+                input(ng-model="birthday.from" bs-datepicker)
+                span.gap 至
+                input(ng-model="birthday.to" bs-datepicker)
+
+        button.btn.btn-default.search-commit.fa.fa-search(nb-pipe="ctrl.search(tableState)") 查询
 
 
         table.table.table-striped.org-post-table
@@ -40,18 +42,17 @@
                     th 用工性质
                     th 入职日期
             tbody
-                tr(ng-repeat="pos in ctrl.positions track by pos.id | limitTo: 10"
-                   nb-select-row="pos" mode="multiple")
+                tr(ng-repeat="emp in ctrl.employees track by emp.id")
+                    td(ng-bind="::emp.employee_no")
                     td.org-post
-                        a(ui-sref=".detail({posId: pos.id})" ng-bind="pos.name")
-                    td(ng-bind="pos.department.name")
-                    td(ng-bind="pos.channel.displayName")
-                    //- td(ng-class="{'invalid': pos.budgetedStaffing < pos.staffing}") {{pos.staffing}}/{{pos.budgetedStaffing}}
-                    td.org-preparation
-                      span(ng-class="{'overstaffed': pos.isOverstaffed}") {{pos.staffing}}
-                      span /{{pos.budgetedStaffing}}
-                    td(ng-bind="pos.schedule.displayName")
-                    td(ng-bind="pos.oaFileNo")
+                        a(ui-sref=".detail({empId: emp.id})" ng-bind="emp.name")
+                    td(ng-bind="::emp.department.name")
+                    td(ng-bind="::emp.position.name")
+                    td(ng-bind="::emp.category.name")
+                    td(ng-bind="::emp.channel.displayName")
+                    //- TODO 用工性质
+                    td(ng-bind="")
+                    td(ng-bind="")
             tfoot
                 tr
                     td(nb-pagination="ctrl.positions.$metadata")
