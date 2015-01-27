@@ -31,13 +31,13 @@
                 tr(ng-repeat="pos in ctrl.positions track by pos.id | limitTo: 10"
                    nb-select-row="pos" mode="multiple")
                     td.org-post
-                        a(ui-sref=".detail({posId: pos.id})" ng-bind="pos.name")
-                    td(ng-bind="pos.department.name")
-                    td(ng-bind="pos.channel.displayName")
+                        a(ui-sref=".detail({posId: ::pos.id})" ng-bind="::pos.name")
+                    td(ng-bind="::pos.department.name")
+                    td(ng-bind="::pos.channel.displayName")
                     //- td(ng-class="{'invalid': pos.budgetedStaffing < pos.staffing}") {{pos.staffing}}/{{pos.budgetedStaffing}}
                     td.org-preparation
                       span(ng-class="{'overstaffed': pos.isOverstaffed}") {{pos.staffing}}
-                      span /{{pos.budgetedStaffing}}
-                    td(ng-bind="pos.schedule.displayName")
-                    td(ng-bind="pos.oaFileNo")
+                      span /{{::pos.budgetedStaffing}}
+                    td(ng-bind="::pos.schedule.displayName")
+                    td(ng-bind="::pos.oaFileNo")
         .custom-pages(nb-pagination="ctrl.positions.$metadata")
