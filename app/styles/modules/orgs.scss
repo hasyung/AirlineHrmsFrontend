@@ -196,8 +196,11 @@
 	}
 	.org-title {
 		height: 35px;
-		margin: 20px 20px 0 20px;
+		margin: 20px 20px 5px 20px;
 		border-bottom: 1px solid #c6d1d5;
+        & > span {
+            border-bottom: 1px solid $focus;
+        }
 		span {
 			line-height: 34px;
     		position: absolute;
@@ -217,6 +220,13 @@
 
 		}
 	}
+    .org-table {
+        padding: 0 20px;
+        table > thead > tr > th,table > tbody > tr > td {
+            max-width: 170px;
+            padding: 8px;
+        }
+    }
 	.org-info {
     	padding: 20px;
 		@include clearfix();

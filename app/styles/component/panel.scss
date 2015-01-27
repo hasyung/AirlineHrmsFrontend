@@ -3,6 +3,9 @@
   height: 100%;
   overflow: scroll;
 }
+.org-pos-list {
+    padding: 0 15px;
+}
 .app-content {
     .breadcrumb {
         position: fixed;
@@ -24,6 +27,9 @@
     height: 50px;
     line-height: 50px;
     padding-left: 15px;
+    .fa {
+        color: #99a6ad;
+    }
     button {
         float: right;
         margin-right: 15px;
@@ -43,9 +49,13 @@
 .custom-table {
     border: 1px solid #e6e6e6;
     tr {
+        cursor: pointer;
         td{
             &.has-checkbox {
                 width: 44px;
+                input {
+                    cursor: pointer;
+                }
             }
         }
     }
@@ -58,10 +68,17 @@
     tbody > tr:nth-child(odd) > td{
         background-color: #FAFBFC;
     }
-    tbody > tr.active > td{
+    tbody > tr.nb-selected > td{
         background-color: #EDF1F2;
     }
 
+}
+.custom-pages {
+    .pagination {
+        width: 450px;
+        display: block;
+        margin: 0 auto;
+    }
 }
 
 
