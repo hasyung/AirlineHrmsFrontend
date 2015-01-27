@@ -80,14 +80,19 @@ class NbTableCtrl
             index = rows.indexOf(row)
 
             if index != -1
-                if mode == 'single'
-                    row.isSelected = row.isSelected != true
-                    if lastSelected
-                        lastSelected.isSelected = false
+                switch mode
+                    when 'single'
+                        row.isSelected = row.isSelected != true
+                        if lastSelected
+                            lastSelected.isSelected = false
 
-                    lastSelected = if row.isSelected == true then row else undefined
-                else
-                    rows[index].isSelected = !rows[index].isSelected
+                        lastSelected = if row.isSelected == true then row else undefined
+                    when 'multiple'
+                        rows[index].isSelected = !rows[index].isSelected
+
+        @selectAll = (isSelected) ->
+            rows = safeCopy
+            rows.map((row) -> row.isSelected = isSelected)
 
         @slice = (page, number) ->
             tableState.pagination.page = page
@@ -352,6 +357,44 @@ nbSelectRowDirective = ->
     }
 
 
+nbSelectRowDirective2 = ->
+
+    postLink = (scope, elem, attrs, ctrl) ->
+        mode = attrs.mode || 'single'
+
+        $input = elem.find('input')[0]
+
+        if mode == 'all'
+            elem.on 'change', (evt) ->
+                ctrl.selectAll($input.checked)
+        else
+            elem.on 'change', (evt)->
+                input = evt.target
+                ctrl.select(scope.row, mode)
+
+            scope.$watch(
+                'row.isSelected'
+                (newValue) ->
+                    $input.checked = newValue
+                    if newValue == true
+                        elem.parent().addClass('nb-selected')
+                    else
+                        elem.parent().removeClass('nb-selected')
+                )
+
+        scope.$on '$destroy', () ->
+            elem.off 'change'
+
+    return {
+        template: '<input ng-model="row.isSelected" type="checkbox"/>'
+        link: postLink
+        require: '^nbTable'
+        scope: {
+            row: '=?selectRow'
+        }
+    }
+
+
 nbPredicateDirective = ($parse) ->
 
     postLink = (scope, elem, attrs, ctrl, $transcludeFn) ->
@@ -442,6 +485,8 @@ app.directive 'nbWatchSelect', nbWatchSelectDirective
 app.directive 'nbPredicate', ['$parse', nbPredicateDirective]
 app.directive 'nbPipe', nbPipeDirective
 app.directive 'nbSelectRow', nbSelectRowDirective
+app.directive 'selectRow', nbSelectRowDirective2
+
 app.directive 'nbPagination', nbPaginationDirective
 
 
