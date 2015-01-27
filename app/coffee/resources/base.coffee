@@ -39,7 +39,7 @@ nbRestApi = (restmod, RMUtils, $rootScope, $Evt) ->
         'Record.$copy': ->
             raw = this.$wrap()
             if angular.isUndefined(this.$scope.$buildRaw)
-                copy = angular.copy this
+                copy = _.omit(@, (v, k) -> k[0] == '$' )
             # copy = this.$scope.$new(this.$type.inferKey(raw))
             # copy.$type.decode(copy, raw, RMUtils.READ_MASK)
             # copy.$pk = copy.$type.inferKey(raw)

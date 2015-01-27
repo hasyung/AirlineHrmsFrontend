@@ -38,8 +38,7 @@ appConf = ($provide) ->
         Object.defineProperty $delegate.constructor.prototype, '$onRootScope', {
             value: (name, listener) ->
                 unsubscribe = $delegate.$on(name, listener)
-                this.$on('$destory', unsubscribe)
-
+                this.$on('$destroy', unsubscribe)
                 return unsubscribe
             enumerable: false
         }
@@ -77,10 +76,6 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider,
                 skip: true
             }
         }
-        # .state 'personnel', {
-        #     url: '/personnel'
-        #     templateUrl: 'partials/personnel/info.html'
-        # }
         .state 'login', {
             url: '/login'
             templateUrl: 'partials/auth/login.html'

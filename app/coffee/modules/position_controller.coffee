@@ -26,10 +26,10 @@ class Route
 
 class PositionCtrl extends nb.Controller
 
-    @.$inject = ['Position', '$scope', '$http', 'sweet']
+    @.$inject = ['Position', '$scope', 'sweet']
 
 
-    constructor: (@Position, @scope, @http, @sweet) ->
+    constructor: (@Position, @scope, @sweet) ->
         @loadInitialData()
         scope.tableState = null
 

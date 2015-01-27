@@ -14,11 +14,11 @@ class Route
         stateProvider
             .state 'personnel', {
                 url: '/personnels'
-                templateUrl: 'partials/personnel/info.html'
+                templateUrl: 'partials/personnel/personnel.html'
                 controller: PersonnelCtrl
                 controllerAs: 'ctrl'
                 ncyBreadcrumb: {
-                    label: "人事"
+                    label: "人事信息"
                 }
                 resolve: {
                 }
@@ -26,14 +26,22 @@ class Route
 
 class PersonnelCtrl extends nb.Controller
 
-    @.$inject = ['$scope']
+    @.$inject = ['$scope', 'sweet', 'Employee']
 
 
-    constructor: (@scope) ->
+    constructor: (@scope, @sweet, @Employee) ->
+        @loadInitailData()
 
-        
+    loadInitailData: ->
+        @employees = @Employee.$collection().$fetch()
 
-    
+    search: (tableState) ->
+        @employees.$refresh(tableState)
+
+
+
+
+
 
 
 

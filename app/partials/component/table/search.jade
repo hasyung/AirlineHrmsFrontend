@@ -13,3 +13,5 @@
             //- div(nb-search-transclude)
 
             button.search-plus.btn.btn-default.fa.fa-plus(ng-click="ctrl.addCondition()" ng-show="$last && predicates.inactivePredicates.length > 0")
+        .advanced_options
+            span(ng-repeat="opt in advanced_options" ng-class="{yes,no,none}" ng-bind="opt.name")

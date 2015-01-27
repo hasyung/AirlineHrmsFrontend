@@ -89,11 +89,10 @@ app.directive 'nbConfirm', ['sweet', (sweet) -> #use $interpolate ?
             promise = sweet.confirm(scope.title, scope.text)
             promise.then(callback).catch(scope.onCancel || callback)
 
-        scope.$on '$destory', ->
+        scope.$on '$destroy', ->
             elem.off 'click'
 
     return {
-
         scope: {
             callback: '&nbConfirm'
             onCancel: '&'

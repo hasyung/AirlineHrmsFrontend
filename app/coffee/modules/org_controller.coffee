@@ -42,7 +42,7 @@ orgChart = () ->
             box_click_handler : click_handler,        # handler (function) called on click on boxes (set to null if no handler)
             use_zoom_print    : false,                # wheter to use zoom and print or not (only one graph per web page can do so)
             debug             : false                 # set to true if you want to debug the library
-        };
+        }
 
         scope.$watch attrs.orgChartData, (newval ,old) ->
             if typeof newval == 'undefined'
@@ -457,17 +457,15 @@ class PositionCtrl extends nb.Controller
         else
             @Evt.$send "position:remove:error", "你还没选择所要删除的岗位"
 
-    toggleSelectAll: () ->
-        self = @
-        _.map @positions, (item)->
-            item.isSelected = self.scope.allSelect
-
     getExportParams: () ->
-        if @getSelectsIds().length == 0
+        ids = @getSelectsIds()
+        if ids.length == 0
             return 'department_id=' + @currentOrg.id
         else
-            return 'department_id=' + @currentOrg.id  + '&position_ids=' + @getSelectsIds().join(',')
+            return 'department_id=' + @currentOrg.id  + '&position_ids=' + ids.join(',')
 
+    search: (tableState) ->
+        @positions.$refresh(tableState)
 
 
 

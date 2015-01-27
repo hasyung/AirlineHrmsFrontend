@@ -36,17 +36,15 @@ class NbTableCtrl
         if $attrs.nbSafeSrc
             safeGetter = $parse $attrs.nbSafeSrc
             scope.$watch(
-                    ->
-                        safeSrc = safeGetter(scope)
-                        return `safeSrc? safeSrc.length : 0`
-                    ,
-                    (newValue, oldValue) ->
-                        updateSafeCopy() if newValue != safeCopy.length
+                ->
+                    safeSrc = safeGetter(scope)
+                    return `safeSrc? safeSrc.length : 0`
+                (newValue, oldValue) ->
+                    updateSafeCopy() if newValue != safeCopy.length
                 )
-            scope.$watch(
-                    () -> return safeGetter(scope)
-                    ,
-                    (newValue, oldValue) -> updateSafeCopy() if newValue != oldValue
+            scope.$watchCollection(
+                () -> return safeGetter(scope)
+                (newValue, oldValue) -> updateSafeCopy() if newValue != oldValue
                 )
 
 
@@ -75,11 +73,6 @@ class NbTableCtrl
 
             filtered = orderBy(filtered, tableState.sort.predicate, tableState.sort.reverse) if tableState.sort.predicate
 
-            if pagination.number != undefined
-                pagination.numberofPages = if filtered.length > 0 then Math.ceil(filtered.length / pagination.number) else 1
-                pagination.start = if pagination.start >= filtered.length then (pagination.numberOfPages - 1) * pagination.number else pagination.start
-                filtered = filtered.slice(pagination.start, pagination.start + pagination.number)
-
             displaySetter(scope, filtered)
 
         @select = (row, mode) -> #选择行
@@ -87,14 +80,19 @@ class NbTableCtrl
             index = rows.indexOf(row)
 
             if index != -1
-                if mode == 'single'
-                    row.isSelected = row.isSelected != true
-                    if lastSelected
-                        lastSelected.isSelected = false
+                switch mode
+                    when 'single'
+                        row.isSelected = row.isSelected != true
+                        if lastSelected
+                            lastSelected.isSelected = false
 
-                    lastSelected = if row.isSelected == true then row else undefined
-                else
-                    rows[index].isSelected = !rows[index].isSelected
+                        lastSelected = if row.isSelected == true then row else undefined
+                    when 'multiple'
+                        rows[index].isSelected = !rows[index].isSelected
+
+        @selectAll = (isSelected) ->
+            rows = safeCopy
+            rows.map((row) -> row.isSelected = isSelected)
 
         @slice = (page, number) ->
             tableState.pagination.page = page
@@ -150,7 +148,7 @@ nbPipeDirective = () ->
 
     }
 
-class nbSearchCtrl
+class NbSearchCtrl
 
     @.$inject = ['$scope']
 
@@ -359,6 +357,44 @@ nbSelectRowDirective = ->
     }
 
 
+nbSelectRowDirective2 = ->
+
+    postLink = (scope, elem, attrs, ctrl) ->
+        mode = attrs.mode || 'single'
+
+        $input = elem.find('input')[0]
+
+        if mode == 'all'
+            elem.on 'change', (evt) ->
+                ctrl.selectAll($input.checked)
+        else
+            elem.on 'change', (evt)->
+                input = evt.target
+                ctrl.select(scope.row, mode)
+
+            scope.$watch(
+                'row.isSelected'
+                (newValue) ->
+                    $input.checked = newValue
+                    if newValue == true
+                        elem.parent().addClass('nb-selected')
+                    else
+                        elem.parent().removeClass('nb-selected')
+                )
+
+        scope.$on '$destroy', () ->
+            elem.off 'change'
+
+    return {
+        template: '<input ng-model="row.isSelected" type="checkbox"/>'
+        link: postLink
+        require: '^nbTable'
+        scope: {
+            row: '=?selectRow'
+        }
+    }
+
+
 nbPredicateDirective = ($parse) ->
 
     postLink = (scope, elem, attrs, ctrl, $transcludeFn) ->
@@ -381,6 +417,8 @@ nbPredicateDirective = ($parse) ->
             displayName: "@nbPredicate"
         }
     }
+
+
 
 
 nbPaginationDirective = ->
@@ -440,13 +478,15 @@ nbPaginationDirective = ->
     }
 
 
-app.controller 'nbSearchCtrl', nbSearchCtrl
+app.controller 'nbSearchCtrl', NbSearchCtrl
 app.directive 'nbTable', ['$timeout', nbTableDirective]
 app.directive 'nbSearch', nbSearchDirective
 app.directive 'nbWatchSelect', nbWatchSelectDirective
 app.directive 'nbPredicate', ['$parse', nbPredicateDirective]
 app.directive 'nbPipe', nbPipeDirective
 app.directive 'nbSelectRow', nbSelectRowDirective
+app.directive 'selectRow', nbSelectRowDirective2
+
 app.directive 'nbPagination', nbPaginationDirective
 
 
