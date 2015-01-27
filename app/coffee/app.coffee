@@ -76,10 +76,6 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider,
                 skip: true
             }
         }
-        # .state 'personnel', {
-        #     url: '/personnel'
-        #     templateUrl: 'partials/personnel/info.html'
-        # }
         .state 'login', {
             url: '/login'
             templateUrl: 'partials/auth/login.html'

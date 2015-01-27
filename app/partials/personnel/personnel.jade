@@ -3,12 +3,20 @@
         div(nb-search)
             div(nb-predicate="名称" predicate-attr="name")
                 input(name="name" placeholder="姓名" ng-model="$parent.name")
+            div(nb-predicate="员工编号" predicate-attr="name")
+                input(name="employee_no" placeholder="工号" ng-model="$parent.employee_no")
+            div(nb-predicate="岗位名称" predicate-attr="position_id")
+                input(name="position_id" placeholder="姓名" ng-model="$parent.position_id")
+            div(nb-predicate="员工分类" predicate-attr="category_id")
+                input(name="category_id" placeholder="姓名" ng-model="$parent.name")
+            div(nb-predicate="属地" predicate-attr="name")
+                input(name="name" placeholder="姓名" ng-model="$parent.name")
             div(nb-predicate="岗位通道" predicate-attr="channel_id")
                 nb-dropdown( ng-model="$parent.channel_id", remote-key="position_channels", map="$item.id" name="channel" required)
-            div(nb-predicate="创建时间" predicate-attr="created_at")
-                input(ng-model="created_at.from" bs-datepicker)
+            div(nb-predicate="出生日期" predicate-attr="birthday")
+                input(ng-model="birthday.from" bs-datepicker)
                 span.gap 至
-                input(ng-model="created_at.to" bs-datepicker)
+                input(ng-model="birthday.to" bs-datepicker)
             div(nb-predicate="机构" predicate-attr="department_ids")
                 ui-select(multiple ng-model="$parent.department_ids" theme="select2" style="width:600px" reset-search-input="true")
                     ui-select-match(placeholder="请输入机构名称") {{ $item.name }}
@@ -18,15 +26,19 @@
             //-     li(ng-model="has_number") 有工号
         button.btn.btn-default.search-commit.fa.fa-search(nb-pipe="ctrl.search(tableState)") 查询
 
+
+
         table.table.table-striped.org-post-table
             thead
                 tr
-                    th  岗位名称
-                    th  所属机构
-                    th  通道
-                    th  编制数
-                    th  工作时间
-                    th  OA文件编号
+                    th 员工编码
+                    th 姓名
+                    th 所属部门
+                    th 岗位
+                    th 分类
+                    th 通道
+                    th 用工性质
+                    th 入职日期
             tbody
                 tr(ng-repeat="pos in ctrl.positions track by pos.id | limitTo: 10"
                    nb-select-row="pos" mode="multiple")

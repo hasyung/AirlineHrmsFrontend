@@ -383,6 +383,7 @@ nbPredicateDirective = ($parse) ->
     }
 
 
+
 nbPaginationDirective = ->
 
     postLink = (scope, elem, attrs, ctrl) ->
