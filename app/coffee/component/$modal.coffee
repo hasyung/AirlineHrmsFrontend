@@ -106,12 +106,10 @@ nb.$buildDialog = (options) ->
     modalOptions = _.omit(options, routerOptionAttrs)
 
 
-    memoResolved = {
-            resolve: {
+    memoResolved =
+            resolve:
                 memoName: ->
                     return routerOptions.name
-            }
-        }
     modalOptions = extend({}, memoResolved, modalOptions)
 
 
@@ -126,13 +124,11 @@ nb.$buildPanel = (options)->
     routerOptions = _.pick(options, routerOptionAttrs)
     modalOptions = _.omit(options, routerOptionAttrs)
 
-    memoResolved = {
-            resolve: {
+    memoResolved =
+            resolve:
                 memoName: ->
                     return routerOptions.name
-            }
             windowTemplateUrl: 'partials/component/panel/window.html'
-        }
     modalOptions = extend({}, memoResolved, modalOptions)
 
     return $build.apply(this, [routerOptions, modalOptions])

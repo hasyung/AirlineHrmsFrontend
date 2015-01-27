@@ -42,7 +42,7 @@ orgChart = () ->
             box_click_handler : click_handler,        # handler (function) called on click on boxes (set to null if no handler)
             use_zoom_print    : false,                # wheter to use zoom and print or not (only one graph per web page can do so)
             debug             : false                 # set to true if you want to debug the library
-        };
+        }
 
         scope.$watch attrs.orgChartData, (newval ,old) ->
             if typeof newval == 'undefined'
