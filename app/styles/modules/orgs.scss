@@ -1,298 +1,336 @@
 .org {
-	position: relative;
-	height: inherit;
+    height: inherit;
+    position: relative;
 }
 
-/* 机构 左侧部门菜单 */
+// 机构 左侧部门菜单
 .org-dep {
-    position: absolute;
-    width: 183px;
+    @include transition(left .5s ease-in);
+    background-color: #fff;
+    border-bottom: 1px solid #d1dcde;
+    border-right: 1px solid #d1dcde;
     height: inherit;
     left: -182px;
-    background-color: #fff;
+    position: absolute;
+    width: 183px;
     z-index: 10;
-	border-right: 1px solid #d1dcde;
-	border-bottom: 1px solid #d1dcde;
-	@include transition(left .5s ease-in);
-    &.active {
-    	left: 0px;
-    }
-	.org-dep-badge {
-		width: 24px;
-	    height: 72px;
-	    background-color: #fff;
-	    border-top-right-radius: 5px;
-	    border-bottom-right-radius: 5px;
-	    border: 1px solid #d1dcde;
-	    position: absolute;
-	    left: 182px;
-	    top: 38px;
-	    .toggle-bar {
-		    width: 24px;
-		    height: 72px;
-		    display: block;
-		    text-align: center;
-		    line-height: 72px;
-	    }
-	}
-	.org-dep-root {
-		font-size: $font-size-lg;
-		height: 40px;
-		padding-left: 10px;
-		line-height: 40px;
-		background-color: #f6f8f8;
-	}
 
-	.org-dep-wrapper {
-		height: inherit;
-	    overflow: hidden;
-	    ul {
-			padding-left: 5px;
-	    }
-	}
-	.org-children-wrapper {
-	    height: calc(100% - 40px);
-	    overflow-y: scroll;
-	     a {
-	    	display: block;
-	    	width: 100%;
-		    height: 35px;
-		    line-height: 35px;
-			padding: 0 0 0 18px;
-			border-left: 3px solid transparent;
-		    text-overflow: ellipsis;
-	    	overflow: hidden;
-	    	white-space: nowrap;
-	    	&:hover, &.active {
-	    		border-left: 3px solid red;
-    			color: red;
-	    	}
-		}
-	}
+    &.active {
+        left: 0;
+    }
+
+    .org-dep-badge {
+        background-color: #fff;
+        border: 1px solid #d1dcde;
+        border-bottom-right-radius: 5px;
+        border-top-right-radius: 5px;
+        height: 72px;
+        left: 182px;
+        position: absolute;
+        top: 38px;
+        width: 24px;
+
+        .toggle-bar {
+            display: block;
+            height: 72px;
+            line-height: 72px;
+            text-align: center;
+            width: 24px;
+        }
+    }
+
+    .org-dep-root {
+        background-color: #f6f8f8;
+        font-size: $font-size-lg;
+        height: 40px;
+        line-height: 40px;
+        padding-left: 10px;
+    }
+
+    .org-dep-wrapper {
+        height: inherit;
+        overflow: hidden;
+
+        ul {
+            padding-left: 5px;
+        }
+    }
+
+    .org-children-wrapper {
+        height: calc(100% - 40px);
+        overflow-y: scroll;
+
+        a {
+            border-left: 3px solid transparent;
+            display: block;
+            height: 35px;
+            line-height: 35px;
+            overflow: hidden;
+            padding: 0 0 0 18px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 100%;
+
+            &:hover,
+            &.active {
+                border-left: 3px solid $danger;
+                color: $danger;
+            }
+        }
+    }
 }
-/* 机构 左侧部门菜单结束 */
+// 机构 左侧部门菜单结束
 
 // 机构树整体及容器部分
-.org-chart{
+.org-chart {
     padding: 0 355px 15px 15px;
 
-	.org-chart-top {
-		height: 90px;
-		overflow: hidden;
-	}
-    h1 {
-    	font-size: 25px;
-    	text-align: center;
-    	margin: 25px 0 5px 0;
-    }
-    h2 {
-    	font-size: 16px;
-    	text-align: center;
-    	visibility: none;
+    .org-chart-top {
+        height: 90px;
+        overflow: hidden;
     }
 
-	.org-chart-window {
-    	overflow: hidden;
-	    .svg-wrapper {
-	    	width: 100%;
-	    	height: 100%;
-	    	overflow: hidden
-		}
-		.orgchart-box-active {
-		    fill: #dfe5e7;
-		}
-		.svg-wrapper svg {
-		    display: block;
-		    margin: 0 auto;
-		}
-		svg text, svg rect {
-		    cursor: pointer;
-		}
-		.orgchart-box-active.active {
-		    fill: #90d7ff;
-		}
-		.orgchart-box-create_inactive {
-		    fill: #ffc490;
-		}
-		.orgchart-box-update_inactive {
-		    fill: #ffc490;
-		}
-		.orgchart-box-transfer_inactive {
-		    fill: #ffc490;
-		}
-		.orgchart-box-destroy_inactive {
-		    fill: #ff9090;
-		}
-	}
+    h1 {
+        font-size: 25px;
+        margin: 25px 0 5px;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 16px;
+        text-align: center;
+        visibility: none;
+    }
+
+    .org-chart-window {
+        overflow: hidden;
+
+        .svg-wrapper {
+            height: 100%;
+            overflow: hidden;
+            width: 100%;
+
+            svg {
+                display: block;
+                margin: 0 auto;
+            }
+        }
+
+        .orgchart-box-active {
+            fill: #dfe5e7;
+
+            &.active {
+                fill: #90d7ff;
+            }
+        }
+
+        svg text,
+        svg rect {
+            cursor: pointer;
+        }
+
+        .orgchart-box-create_inactive {
+            fill: #ffc490;
+        }
+
+        .orgchart-box-update_inactive {
+            fill: #ffc490;
+        }
+
+        .orgchart-box-transfer_inactive {
+            fill: #ffc490;
+        }
+
+        .orgchart-box-destroy_inactive {
+            fill: #ff9090;
+        }
+    }
 
     .org-chart-history {
-    	background-color: #FDF9E1;
-		border-left: 1px solid #faebca;
-		border-right: 1px solid #faebca;
-		border-bottom: 1px solid #faebca;
-    	h2 {
-    		visibility: visible;
-    	}
+        background-color: #fdf9e1;
+        border-bottom: 1px solid #faebca;
+        border-left: 1px solid #faebca;
+        border-right: 1px solid #faebca;
+
+        h2 {
+            visibility: visible;
+        }
     }
 
     .top-btn-group {
-    	position: absolute;
-    	top: 25px;
-    	right: 365px;
+        position: absolute;
+        right: 365px;
+        top: 25px;
 
-		button {
-    		float: right;
-    		margin-left: 10px;
+        button {
+            float: right;
+            margin-left: 10px;
 
-    		&:last-child {
-    			margin-left: none;
-    		}
-    	}
+            &:last-child {
+                margin-left: none;
+            }
+        }
     }
 
     .bottom-btn-group {
-    	margin-top: 50px;
-    	margin-left: calc(100% - 200px);
-    	background-color: #000;
-		button {
-    		float: right;
-    		margin-left: 10px;
-    		width: 90px;
-    		height: 30px;
-    		border-radius: 4px;
-    		outline: none;
-    		&:last-child {
-    			margin-left: none;
-    		}
-    	}
+        background-color: #000;
+        margin-left: calc(100% - 200px);
+        margin-top: 50px;
+
+        button {
+            border-radius: 4px;
+            float: right;
+            height: 30px;
+            margin-left: 10px;
+            outline: none;
+            width: 90px;
+
+            &:last-child {
+                margin-left: none;
+            }
+        }
     }
 }
 
 .div-delete-btn {
-    padding: 5px 10px;
     background-color: #d9534f;
-   	color: #fff;
-  	cursor: pointer;
     border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    padding: 5px 10px;
     // margin-top: 15px;
 }
 
 // 机构 右侧边栏 机构信息展示及操作
 .org-aside {
-	width: 340px;
-	height: inherit;
-	background-color: #fff;
+    background-color: #fff;
+    height: inherit;
+    width: 340px;
+
     &.org-aside-info {
-        box-shadow:inset 0 2px 2px rgba(0, 0, 0, 0.05),inset 0 1px 0 rgba(0, 0, 0, 0.05);
+        box-shadow: inset 0 2px 2px rgba(0, 0, 0, .05), inset 0 1px 0 rgba(0, 0, 0, .05);
     }
-	&:before {
-		content: " ";
-		position: fixed;
-		width: inherit;
-		top: 0;
-		bottom: 0;
-		z-index: -1;
-		background-color: inherit;
-	}
-	.org-title {
-		height: 35px;
-		margin: 20px 20px 5px 20px;
-		border-bottom: 1px solid #c6d1d5;
-        & > span {
+
+    &:before {
+        background-color: inherit;
+        bottom: 0;
+        content: ' ';
+        position: fixed;
+        top: 0;
+        width: inherit;
+        z-index: -1;
+    }
+
+    .org-title {
+        border-bottom: 1px solid #c6d1d5;
+        height: 35px;
+        margin: 20px 20px 5px;
+
+        > span {
             border-bottom: 1px solid $focus;
         }
-		span {
-			line-height: 34px;
-    		position: absolute;
-    		color: $text-title;
-    		font-size: 16px;
-		}
-		button {
-			float: right;
-    		margin-right: 10px;
-    		color: #99a6ad;
-		}
-		.btn {
-			padding: 5px 9px;
-    		min-width: 35px;
-		}
-		.arrow {
 
-		}
-	}
+        span {
+            color: $text-title;
+            font-size: 16px;
+            line-height: 34px;
+            position: absolute;
+        }
+
+        button {
+            color: #99a6ad;
+            float: right;
+            margin-right: 10px;
+        }
+
+        .btn {
+            min-width: 35px;
+            padding: 5px 9px;
+        }
+    }
+
     .org-table {
         padding: 0 20px;
-        table > thead > tr > th,table > tbody > tr > td {
+
+        table > thead > tr > th,
+        table > tbody > tr > td {
             max-width: 170px;
             padding: 8px;
         }
     }
-	.org-info {
-    	padding: 20px;
-		@include clearfix();
 
-    	input {
-    		border: 1px solid #c6d1d5;
-    		padding: 2px 5px;
-    	}
+    .org-info {
+        @include clearfix();
+        padding: 20px;
 
-    	.org-form-group {
-    		margin-bottom: 20px;
-    		@include clearfix();
-		}
+        input {
+            border: 1px solid #c6d1d5;
+            padding: 2px 5px;
+        }
 
-		label {
-    		float: left;
-    		width: 80px;
-    		font-size: 14px;
-    		text-align: right;
-    		margin-bottom: 0;
-		}
-		.form-content {
-		    float: left;
-		    width: 170px;
-		    margin-left: 40px;
-		    text-align: left;
+        .org-form-group {
+            @include clearfix();
+            margin-bottom: 20px;
+        }
 
-		    input {
-			    width: inherit;
-			    font-size: 14px;
-			    height: 34px;
-			    padding-left: 10px;
-			    border-radius: 4px;
-			}
-		}
-		.org-form-btn-group {
-			.btn {
-			    width: 92px;
-			    height: 34px;
-			    border-radius: 4px;
-			}
-			input {
-	    		margin-left: 10px;
-			}
-		}
-	}
-	.drop-label {
-    	height: 34px;
-    	line-height: 34px;
-	}
+        label {
+            float: left;
+            font-size: 14px;
+            margin-bottom: 0;
+            text-align: right;
+            width: 80px;
+        }
 
-	//下拉菜单 待后续抽出
-	.dropdown {
-	    .dropdown-toggle {
-	    	width: 100%;
-		    border-radius: 4px;
-		    text-align: left;
-		}
-		.caret {
-		    float: right;
-		    margin-top: 7px;
-		}
-		.dropdown-menu {
-			width: 100%;
-		}
-	}
+        .form-content {
+            float: left;
+            margin-left: 40px;
+            text-align: left;
+            width: 170px;
+
+            input {
+                border-radius: 4px;
+                font-size: 14px;
+                height: 34px;
+                padding-left: 10px;
+                width: inherit;
+            }
+        }
+
+        .org-form-btn-group {
+            .btn {
+                border-radius: 4px;
+                height: 34px;
+                width: 92px;
+            }
+
+            input {
+                margin-left: 10px;
+            }
+        }
+    }
+
+    .drop-label {
+        height: 34px;
+        line-height: 34px;
+    }
+
+    //下拉菜单 待后续抽出
+    .dropdown {
+        .dropdown-toggle {
+            border-radius: 4px;
+            text-align: left;
+            width: 100%;
+        }
+
+        .caret {
+            float: right;
+            margin-top: 7px;
+        }
+
+        .dropdown-menu {
+            width: 100%;
+        }
+    }
 }
 
 // 撤销 删除弹出泡泡提示框
