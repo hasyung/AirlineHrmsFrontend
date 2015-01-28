@@ -23,6 +23,21 @@ class Route
                 resolve: {
                 }
             }
+            .state 'personnel.detail', {
+                url: '/:id'
+                # templateUrl: 'partials/personnel/info.html'
+                # controller: perInfoCtrl
+                controllerAs: 'ctrl'
+                views: {
+                    "@": {
+                        controller: perInfoCtrl
+                        controllerAs: 'ctrl'
+                        templateUrl: 'partials/personnel/info.html'
+                    }
+                }
+                resolve: {
+                }
+            }
 
 class PersonnelCtrl extends nb.Controller
 
@@ -40,7 +55,19 @@ class PersonnelCtrl extends nb.Controller
 
 
 
+class perInfoCtrl extends nb.Controller
 
+    @.$inject = ['$scope', 'sweet', 'Employee']
+
+
+    constructor: (@scope, @sweet, @Employee) ->
+        @loadInitailData()
+
+    loadInitailData: ->
+        # @employees = @Employee.$collection().$fetch()
+
+    search: (tableState) ->
+        # @employees.$refresh(tableState)
 
 
 
