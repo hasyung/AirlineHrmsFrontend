@@ -1,3 +1,4 @@
+
 .personnel-menu {
     width: 270px;
 
@@ -188,7 +189,37 @@
     }
 }
 
+// resume begin
+.resume-title{
+	padding: 15px 10px;
+	.title-text{
+		line-height: 20px;
+		font-size: 20px;
+	}
+}
+.resume-item{
+	border: 1px solid #eee;
+	margin: 8px 10px;
+}
+.resume-content{
+	.section-title{
+		padding: 5px 8px;
+	}
+	.section-body{
+		padding: 5px 0px;
 
+	}
+}
 
+.resume-footer{
+
+}
+.label-text{
+	text-align: right;			
+}
+.info-row{
+	margin: 5px 0px;
+}
+// resume end
 
 
