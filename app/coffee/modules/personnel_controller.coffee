@@ -25,15 +25,15 @@ class Route
             }
             .state 'personnel.detail', {
                 url: '/:id'
-                # templateUrl: 'partials/personnel/info.html'
-                # controller: perInfoCtrl
-                controllerAs: 'ctrl'
                 views: {
                     "@": {
                         controller: perInfoCtrl
                         controllerAs: 'ctrl'
                         templateUrl: 'partials/personnel/info.html'
                     }
+                }
+                ncyBreadcrumb: {
+                    label: "人事详情"
                 }
                 resolve: {
                 }
