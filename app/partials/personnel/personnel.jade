@@ -48,7 +48,7 @@
                         a(ui-sref=".detail({empId: emp.id})" ng-bind="emp.name")
                     td(ng-bind="::emp.department.name")
                     td(ng-bind="::emp.position.name")
-                    td(ng-bind="::emp.category.name")
+                    td(ng-bind="::emp.category.displayName")
                     td(ng-bind="::emp.channel.displayName")
                     //- TODO 用工性质
                     td(ng-bind="")

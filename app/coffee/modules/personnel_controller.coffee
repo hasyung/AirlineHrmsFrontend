@@ -24,7 +24,7 @@ class Route
                 }
             }
             .state 'personnel.detail', {
-                url: '/:id'
+                url: '/{empId:[0-9]+}'
                 views: {
                     "@": {
                         controller: perInfoCtrl
@@ -33,10 +33,17 @@ class Route
                     }
                 }
                 ncyBreadcrumb: {
-                    label: "人事详情"
+                    label: "{{selectEmp.name}}基本信息"
                 }
                 resolve: {
                 }
+            }
+            .state nb.$buildDialog {
+                name: 'personnel.resume'
+                url: '/resume'
+                controller: ResumeCtrl
+                templateUrl: 'partials/personnel/personnel_resume.html'
+                size: 'lg'
             }
 
 class PersonnelCtrl extends nb.Controller
@@ -57,18 +64,23 @@ class PersonnelCtrl extends nb.Controller
 
 class perInfoCtrl extends nb.Controller
 
-    @.$inject = ['$scope', 'sweet', 'Employee']
+    @.$inject = ['$scope', 'sweet', 'Employee', '$stateParams']
 
 
-    constructor: (@scope, @sweet, @Employee) ->
+    constructor: (@scope, @sweet, @Employee, @stateParams) ->
         @loadInitailData()
 
     loadInitailData: ->
-        # @employees = @Employee.$collection().$fetch()
+        @scope.selectEmp = @Employee.$find(@stateParams.empId)
 
-    search: (tableState) ->
-        # @employees.$refresh(tableState)
 
+
+
+class ResumeCtrl extends Modal
+    @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$injector']
+    constructor: (@dialog, @scope, @Evt, @memoName, @injector) ->
+        super(dialog, scope, memoName)
+    
 
 
 
