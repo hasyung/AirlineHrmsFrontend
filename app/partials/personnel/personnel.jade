@@ -43,16 +43,16 @@
                     th 入职日期
             tbody
                 tr(ng-repeat="emp in ctrl.employees track by emp.id")
-                    td(ng-bind="::emp.employee_no")
+                    td(ng-bind="::emp.employeeNo")
                     td.org-post
                         a(ui-sref=".detail({empId: emp.id})" ng-bind="emp.name")
                     td(ng-bind="::emp.department.name")
-                    td(ng-bind="::emp.position.name")
+                    td(ng-bind="::emp.positions | spliceItem: '-': 'name'")
                     td(ng-bind="::emp.category.displayName")
                     td(ng-bind="::emp.channel.displayName")
                     //- TODO 用工性质
-                    td(ng-bind="")
-                    td(ng-bind="")
+                    td(ng-bind="::emp.laborRelation")
+                    td(ng-bind="::emp.entryDate | nbDate:'yyyy-MM-dd'")
             tfoot
                 tr
                     td(nb-pagination="ctrl.positions.$metadata")

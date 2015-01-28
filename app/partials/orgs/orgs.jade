@@ -25,7 +25,7 @@ div.org.app-content-wrapper
     .app-main.org-chart
         .org-chart-top(ng-class="{'org-chart-history': ctrl.isHistory}")
                 h1 {{ctrl.treeRootOrg.name}}组织机构图
-                h2(ng-show="ctrl.isHistory") {{ctrl.orgs.$metadata.created_at | unixToDate : 'yyyy年MM月dd日'}}— {{ctrl.orgs.$metadata.title}}
+                h2(ng-show="ctrl.isHistory") {{ctrl.orgs.$metadata.created_at | nbDate : 'yyyy年MM月dd日'}}— {{ctrl.orgs.$metadata.title}}
             .top-btn-group
                 button.btn.btn-m.btn-primary(ui-sref=".history") 时间轴
                 a.btn.btn-m.btn-info(ng-show="!ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导 出

@@ -178,17 +178,36 @@
 		padding: 5px 0px;
 
 	}
+	.editor-style {
+        table {
+            margin-bottom: 0;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        th {
+            font-weight: normal;
+            padding: 0 5px 10px 0;
+            text-align: right;
+            width: 20%;
+
+        }
+
+        td {
+            border: 0;
+            padding: 0 5px 10px;
+            width: 30%;
+        }
+    }
+    hr{
+    	margin: 5px 40px;
+    }
 }
 
 .resume-footer{
 
 }
-.label-text{
-	text-align: right;			
-}
-.info-row{
-	margin: 5px 0px;
-}
+
 // resume end
 
 

@@ -13,7 +13,7 @@ div.wrapper.org-timline(slimscroll, height="400px")
 					span.arrow.left.pull-up(ng-class="{'arrow-info': log.active}")
 					div
 						h1 {{log.title}}
-						h2 {{::log.created_at | unixToDate: 'MM月dd日'}} - {{::log.dep_name}}
+						h2 {{::log.created_at | nbDate: 'MM月dd日'}} - {{::log.dep_name}}
 						ul(ng-show="log.active")
 							li(ng-repeat="step in log.step_desc track by $index")
 								p {{::step}}
