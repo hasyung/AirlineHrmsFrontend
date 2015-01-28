@@ -1,3 +1,163 @@
+
+.personnel-menu {
+    width: 270px;
+
+    &:before {
+        box-shadow: 1px 0 2px #bbb, 4px 0 4px #ddd;
+    }
+
+    .avator {
+        background-color: #fff;
+        height: 210px;
+        overflow: hidden;
+        width: 100%;
+
+        .avator-area {
+            border: 1px solid #e6e6e6;
+            border-radius: 50%;
+            height: 110px;
+            margin: 25px auto 5px;
+            width: 110px;
+        }
+
+        h3 {
+            color: $a-color;
+            font-size: $font-size-lg;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        p {
+            color: $text-muted;
+            font-size: $font-size-md;
+            text-align: center;
+        }
+    }
+
+    .personnel-info-list {
+        li {
+            color: $text-muted;
+            font-size: $font-size-md;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        .switch-circle {
+            background-color: $success;
+            border-radius: 50%;
+            display: inline-block;
+            height: 8px;
+            margin-right: 25px;
+            vertical-align: middle;
+            width: 8px;
+        }
+    }
+
+}
+
+.personnel-content {
+    padding: 32px;
+    width: calc(100% - 270px);
+
+    .personnel-top-header {
+        background-color: #f2f3f8;
+        border: 1px solid #c3c3c3;
+        font-size: 14px;
+        height: 50px;
+        padding-left: 40px;
+
+        h4 {
+            color: $text-title;
+            font-size: $font-size-lg;
+            line-height: 50px;
+        }
+
+        .btn-group {
+            margin: 7px 20px;
+        }
+    }
+
+    .personnel-content-body {
+        border: 1px solid #c3c3c3;
+        border-top: 0;
+        width: 100%;
+
+        .personnel-info-control {
+            background-color: #fff;
+            padding: 40px;
+
+            &:nth-child(odd) {
+                background-color: #fff;
+            }
+
+            &:nth-child(even) {
+                background-color: #fafbfd;
+            }
+        }
+    }
+
+    .personnel-info-left {
+        width: 80px;
+
+        .personnel-item-icon {
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 62px;
+            margin: 0 auto 10px;
+            width: 70px;
+        }
+
+        .personnel-item-desc {
+            border-radius: 15px;
+            color: #fff;
+            font-weight: bold;
+            height: 25px;
+            line-height: 25px;
+            margin: 0 auto;
+            text-align: center;
+            width: 70px;
+        }
+
+        .personnel-item1 {
+            background-image: url('../../../images/personnel/1.png');
+        }
+
+        .personnel-item2 {
+            background-image: url('../../../images/personnel/2.png');
+        }
+
+        .personnel-item3 {
+            background-image: url('../../../images/personnel/3.png');
+        }
+    }
+
+    .personnel-info-right {
+        min-height: 140px;
+        width: calc(100% - 80px);
+    }
+
+    .editor-style {
+        table {
+            margin-bottom: 0;
+            width: 100%;
+        }
+
+        th {
+            font-weight: normal;
+            padding: 0 5px 10px 0;
+            text-align: right;
+            width: 20%;
+
+        }
+
+        td {
+            border: 0;
+            padding: 0 5px 10px;
+            width: 30%;
+        }
+    }
+}
+
 // resume begin
 .resume-title{
 	padding: 15px 10px;
@@ -30,3 +190,5 @@
 	margin: 5px 0px;
 }
 // resume end
+
+
