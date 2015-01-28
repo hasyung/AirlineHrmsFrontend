@@ -26,10 +26,17 @@ class Route
 
 class PersonnelCtrl extends nb.Controller
 
-    @.$inject = ['$scope']
+    @.$inject = ['$scope', 'sweet', 'Employee']
 
 
-    constructor: (@scope) ->
+    constructor: (@scope, @sweet, @Employee) ->
+        @loadInitailData()
+
+    loadInitailData: ->
+        @employees = @Employee.$collection().$fetch()
+
+    search: (tableState) ->
+        @employees.$refresh(tableState)
 
 
 

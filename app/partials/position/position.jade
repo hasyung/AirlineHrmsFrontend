@@ -21,6 +21,7 @@
         table.table.table-striped.custom-table
             thead
                 tr
+                    th(select-row="" mode='all')
                     th  岗位名称
                     th  所属机构
                     th  通道
@@ -28,10 +29,10 @@
                     th  工作时间
                     th  OA文件编号
             tbody
-                tr(ng-repeat="pos in ctrl.positions track by pos.id | limitTo: 10"
-                   nb-select-row="pos" mode="multiple")
+                tr(ng-repeat="pos in ctrl.positions track by pos.id")
+                    td(select-row="pos" mode="multiple")
                     td.org-post
-                        a(ui-sref=".detail({posId: ::pos.id})" ng-bind="::pos.name")
+                        a(ui-sref=".detail({posId: pos.id})" ng-bind="::pos.name")
                     td(ng-bind="::pos.department.name")
                     td(ng-bind="::pos.channel.displayName")
                     //- td(ng-class="{'invalid': pos.budgetedStaffing < pos.staffing}") {{pos.staffing}}/{{pos.budgetedStaffing}}
