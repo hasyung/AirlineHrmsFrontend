@@ -35,11 +35,17 @@
     }
 
     .personnel-info-list {
+        ul {
+            padding: 0;
+        }
+
         li {
             color: $text-muted;
+            cursor: pointer;
             font-size: $font-size-md;
             height: 50px;
             line-height: 50px;
+            padding-left: 40px;
         }
 
         .switch-circle {
@@ -58,6 +64,30 @@
 .personnel-content {
     padding: 32px;
     width: calc(100% - 270px);
+
+    .personnel-info-section {
+        margin-bottom: 30px;
+    }
+
+    .personnel-table-wrapper {
+        padding: 0 5px;
+    }
+
+    .personnel-info-table {
+        border: 0;
+
+        thead > tr > th {
+            background-color: #fafbfc;
+        }
+
+        tbody > tr:nth-child(odd) > td {
+            background-color: #fff;
+        }
+
+        tbody > tr:nth-child(even) > td {
+            background-color: #fafbfc;
+        }
+    }
 
     .personnel-top-header {
         background-color: #f2f3f8;
@@ -78,6 +108,7 @@
     }
 
     .personnel-content-body {
+        background-color: #fff;
         border: 1px solid #c3c3c3;
         border-top: 0;
         width: 100%;
