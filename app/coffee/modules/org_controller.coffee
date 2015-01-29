@@ -240,7 +240,6 @@ class OrgsCtrl extends nb.Controller
 
 
         scope.$onRootScope 'org:active', @.active.bind(@)
-        scope.$onRootScope 'org:history', @.history.bind(@)
         scope.$onRootScope 'org:refresh', @.refreshTree.bind(@)
         scope.$onRootScope 'org:resetData', @.resetData.bind(@)
 
@@ -294,13 +293,6 @@ class OrgsCtrl extends nb.Controller
         @orgs.active(data)
         @resetData()
 
-
-    history: (evt, history_param) ->
-        self = @
-        @isHistory = true
-        @orgs.$refresh(history_param)
-
-
     resetData: () ->
         @isHistory = false
         @orgs.$refresh({'edit_mode': @eidtMode})
@@ -310,8 +302,6 @@ class OrgsCtrl extends nb.Controller
         treeRootOrg = _.find self.orgs, (org) -> org.depth == 1
         self.buildTree(treeRootOrg)
     initialHistoryData: ->
-        onError = (res)->
-            self.Evt.$send('org:history:error',res)
         onSuccess = (res)->
             logs = res.data.change_logs
             groupedLogs = _.groupBy logs, (log) ->
@@ -320,10 +310,22 @@ class OrgsCtrl extends nb.Controller
             angular.forEach groupedLogs, (item, key) ->
                 logsArr.push {logs:item, changeYear: key}
 
-            self.changeLogs = _.sortBy(logsArr, 'changeYear').reverse()
+            changeLogs = _.sortBy(logsArr, 'changeYear').reverse()
 
         promise = @http.get('/api/departments/change_logs')
-        promise.then onSuccess.bind(@), onError.bind(@)
+        promise.then onSuccess
+    # 返回机构的指定版本
+    backToPast: (version)->
+        self = @
+        if @currentLog
+            self.orgs.$refresh({version: @currentLog.id})
+        @isHistory = true
+    expandLog: (log)->
+        # 防止UI中出现多个被选中的item
+        @currentLog.active = false if @currentLog
+        log.active = true
+        @currentLog = log
+
 
 
 
@@ -386,40 +388,6 @@ class OrgCtrl extends nb.Controller
                 sweet.success('删除成功', "您已成功删除#{orgName}" )
         else
             sweet.error("您取消了删除#{@scope.currentOrg.name}")
-
-
-class HistoryCtrl extends Modal
-    @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$http', '$injector']
-    constructor: (@dialog, @scope, @Evt, @memoName, @http, @injector) ->
-        @loadInitialData()
-        super(dialog, scope, memoName)
-
-    loadInitialData: ()->
-        self = @
-        onError = (res)->
-            self.Evt.$send('org:history:error',res)
-        onSuccess = (res)->
-            logs = res.data.change_logs
-            groupedLogs = _.groupBy logs, (log) ->
-                moment.unix(log.created_at).format('YYYY')
-            logsArr = []
-            angular.forEach groupedLogs, (item, key) ->
-                logsArr.push {logs:item, changeYear: key}
-
-            self.changeLogs = _.sortBy(logsArr, 'changeYear').reverse()
-
-        promise = @http.get('/api/departments/change_logs')
-        promise.then onSuccess.bind(@), onError.bind(@)
-
-    expandLog: (log)->
-        # 防止UI中出现多个被选中的item
-        @currentLog.active = false if @currentLog
-        log.active = true
-        @currentLog = log
-
-    submit: ()->
-        @Evt.$send('org:history', {version: @currentLog.id}) if @currentLog
-        @dialog.close()
 
 
 class PositionCtrl extends nb.Controller
