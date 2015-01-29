@@ -1,7 +1,7 @@
 .modal-header
 	button.close(type='button', data-dismiss='modal', aria-hidden='true', ng-click="ctrl.cancel($event)") ×
 	h4.modal-title 时间轴
-div.wrapper.org-timline(slimscroll, height="400px")
+div.wrapper.org-timline(slimscroll, height="400px" ng-init="activeLog = {}")
 	//- ul.timeline(ng-repeat="yearItem in ctrl.changeLogs")
 	ul.timeline(ng-repeat="yearLogs in ctrl.changeLogs")
 		li.tl-header
@@ -19,5 +19,5 @@ div.wrapper.org-timline(slimscroll, height="400px")
 								p {{::step}}
 
 .panel-footer.org-timline-footer.clearfix
-	button.btn.btn-info.btn-sm.pull-right(ng-click="ctrl.submit()") 确 定
-	button.btn.btn-default.btn-sm.pull-right(ng-click='ctrl.cancel($event)') 取 消
+	button.btn.btn-info.btn-sm.pull-right(ng-click="") 确 定
+	button.btn.btn-default.btn-sm.pull-right(ng-click='closeThisDialog()') 取 消
