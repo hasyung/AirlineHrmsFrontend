@@ -1,22 +1,49 @@
 .org-timline {
-    .tl-content {
-        width: 210px;
-        cursor: pointer;
-        @include transition(all .5s linear);
-        h1 {
-            font-size: $font-size-md;
-            margin: 0;
-            color: #000;
+    .tl-item{
+        .tl-content {
+            width: 210px;
+            cursor: pointer;
+            @include transition(all .5s linear);
+            h1 {
+                font-size: $font-size-md;
+                margin: 0;
+                color: #000;
+            }
+            h2 {
+                font-size: $font-size-sm;
+                margin-top: 10px;
+                color: #23b7e5;
+            }
+            p {
+                font-size: $font-size-base;
+                // border-top: 1px dotted #cee0eb;
+                padding-top: 10px;
+            }
         }
-        h2 {
-            font-size: $font-size-sm;
-            margin-top: 10px;
-            color: #23b7e5;
+        
+        .tl-wrap {
+            margin-left: 30px;
         }
-        p {
-            font-size: $font-size-base;
-            border-top: 1px dotted #cee0eb;
-            padding-top: 10px;
+        .bg-info {
+            border-color: #daedf8;
+            p {
+                color: #000;
+            }
+        }
+        &.active {
+            .tl-wrap{
+                border-color: #31b0d5;
+            }
+            .tl-content{
+                background-color: #31b0d5;
+                color: #fff;
+                h1,h2{
+                    color: #fff;
+                }
+            }
+            .arrow.left:after{
+                border-right-color: #31b0d5;
+            }
         }
     }
     span.pull-right {
@@ -32,25 +59,16 @@
             padding: 6px 14px;
         }
     }
-    .tl-wrap {
-        margin-left: 30px;
-    }
-    .bg-info {
-        border-color: #daedf8;
-        p {
-            color: #000;
-        }
-    }
 
     //这是什么。。。？
-    .org-delete-template {
-        position: absolute;
-        background-color: #fff;
-        top: -40px;
-        left: -160px;
-        width: 270px;
-        z-index: 99999;
-    }
+    // .org-delete-template {
+    //     position: absolute;
+    //     background-color: #fff;
+    //     top: -40px;
+    //     left: -160px;
+    //     width: 270px;
+    //     z-index: 99999;
+    // }
 }
 
 .org-timline-footer .btn {

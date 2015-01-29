@@ -1,16 +1,16 @@
 .modal-header
-	button.close(type='button', data-dismiss='modal', aria-hidden='true', ng-click="ctrl.cancel($event)") ×
+	button.close(type='button', data-dismiss='modal', aria-hidden='true', ng-click="closeThisDialog()") ×
 	h4.modal-title 时间轴
 div.wrapper.org-timline(slimscroll, height="400px" ng-init="activeLog = {}")
 	//- ul.timeline(ng-repeat="yearItem in ctrl.changeLogs")
-	ul.timeline(ng-repeat="yearLogs in ctrl.changeLogs")
+	ul.timeline(ng-repeat="yearLogs in ngDialogData")
 		li.tl-header
 			div.btn.btn-info.year {{::yearLogs.changeYear}}
-			span.pull-right 有{{:: yearLogs.length || 0}}次变动
-		li.tl-item(ng-repeat="log in yearLogs.logs", ng-click="ctrl.expandLog(log)", ng-class="{'active, b-info': log.active}")
-			div.tl-wrap(ng-class="{'b-info': log.active}")
-				div.tl-content.panel.padder.b-a(ng-class="{'bg-info': log.active}")
-					span.arrow.left.pull-up(ng-class="{'arrow-info': log.active}")
+			span.pull-right 有{{::yearLogs.logs.length || 0}}次变动
+		li.tl-item(ng-repeat="log in yearLogs.logs track by $index", ng-click="ctrl.expandLog(log)", ng-class="{'active': log.active}")
+			div.tl-wrap
+				div.tl-content.panel.padder.b-a
+					span.arrow.left.pull-up
 					div
 						h1 {{log.title}}
 						h2 {{::log.created_at | unixToDate: 'MM月dd日'}} - {{::log.dep_name}}
@@ -19,5 +19,5 @@ div.wrapper.org-timline(slimscroll, height="400px" ng-init="activeLog = {}")
 								p {{::step}}
 
 .panel-footer.org-timline-footer.clearfix
-	button.btn.btn-info.btn-sm.pull-right(ng-click="") 确 定
+	button.btn.btn-info.btn-sm.pull-right(ng-click="ctrl.backToPast() && closeThisDialog()") 确 定
 	button.btn.btn-default.btn-sm.pull-right(ng-click='closeThisDialog()') 取 消
