@@ -54,6 +54,7 @@
     "angular-strap": "~2.1.6",
     "angular-i18n": "~1.3.9",
     "select2": "3.5.2",
-    "sweetalert": "~0.4.1"
+    "sweetalert": "~0.4.1",
+    "ngDialog": "https://github.com/sandwich99/ngDialog.git#5645dcc0183aad46b0f03dbc580c5a75b00d16b8"
   }
 }
