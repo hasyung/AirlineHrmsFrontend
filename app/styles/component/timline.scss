@@ -1,13 +1,13 @@
 .org-timline {
     .tl-item{
         .tl-content {
-            width: 210px;
-            cursor: pointer;
             @include transition(all .5s linear);
+            cursor: pointer;
+            width: 210px;
             h1 {
+                color: #000;
                 font-size: $font-size-md;
                 margin: 0;
-                color: #000;
             }
             h2 {
                 font-size: $font-size-sm;
@@ -46,14 +46,17 @@
             }
         }
     }
+
     span.pull-right {
-        font-size: $font-size-sm;
         color: #23b7e5;
+        font-size: $font-size-sm;
         line-height: 34px;
     }
+
     .tl-header {
-        width: inherit;
         text-align: left;
+        width: inherit;
+
         .year {
             border-radius: 25px;
             padding: 6px 14px;
@@ -69,9 +72,10 @@
     //     width: 270px;
     //     z-index: 99999;
     // }
+
 }
 
 .org-timline-footer .btn {
-    width: 70px;
     margin-left: 10px;
+    width: 70px;
 }

@@ -1,38 +1,47 @@
-
 .org-postadd {
-    width: inherit;
-    height: calc(100% - 51px);
     background-color: #fff;
+    height: calc(100% - 51px);
+    width: inherit;
 }
+
 .steps-indicator {
     position: relative;
 }
+
 // 新增岗位弹出层左侧菜单
 .org-postadd-step {
-    width: 268px;
-    height: 100%;
     background-color: #f2f3f8;
+    height: 100%;
+    width: 268px;
+
     ul {
         padding: 0;
     }
+
     li {
-        width: 268px;
         height: 63px;
-        padding: 0 20px;
         line-height: 63px;
-        &:hover,&.active {
-                background-color: #0ab6e8;
-                color: #fff;
-                transition: all ease .5s;
-            a,span {
+        padding: 0 20px;
+        width: 268px;
+
+        &:hover,
+        &.active {
+            background-color: #0ab6e8;
+            color: #fff;
+            transition: all ease .5s;
+
+            a,
+            span {
                 color: #fff;
             }
         }
     }
+
     a {
+        color: #000;
         display: block;
         font-size: 16px;
-        color: #000;
+
         span {
             float: right;
             font-size: 16px;
@@ -40,124 +49,144 @@
         }
     }
 }
+
 // 新增岗位弹出层右侧表单
 .org-postadd-detail {
-    width: 100%;
     margin-top: 30px;
+    width: 100%;
+
     .postadd-form-group {
-        margin: 0 0 15px 0;
+        margin: 0 0 15px;
+
         .form-control-error {
             display: inline-block;
             margin-left: 15px;
+
             .form-group-error {
-                position: relative;
+                background-color: $danger;
+                border-radius: 8px;
+                color: #fff;
                 font-size: $font-size-xs;
                 font-weight: bold;
-                color: #000;
                 padding: 3px 5px;
-                border-radius: 8px;
-                background-color: $danger;
-                color: #fff;
+                position: relative;
+
                 &:after {
-                    content: " ";
-                    position: absolute;
-                    display: block;
-                    width: 0;
-                    height: 0;
-                    left: -12px;
-                    top: 8px;
-                    border-top: 4px solid transparent;
-                    border-right: 6px solid $danger;
                     border-bottom: 4px solid transparent;
                     border-left: 6px solid transparent;
+                    border-right: 6px solid $danger;
+                    border-top: 4px solid transparent;
+                    content: ' ';
+                    display: block;
+                    height: 0;
+                    left: -12px;
+                    position: absolute;
+                    top: 8px;
+                    width: 0;
                 }
             }
         }
     }
+
     .postadd-control-label {
-        width: 20%;
-        margin-right: 20px;
         margin-bottom: 0;
+        margin-right: 20px;
         text-align: right;
-    }
-    .postadd-form-control {
         width: 20%;
-        height: 34px;
+    }
+
+    .postadd-form-control {
+        @include transition(all .5s linear);
         background-color: #fff;
         background-image: none;
+        background-position: 98% 9px;
         background-repeat: no-repeat;
         background-size: 14px;
-        background-position: 98% 9px;
         border: 1px solid #cfdadd;
         border-radius: 2px;
-        padding: 6px 12px;
         box-shadow: none;
-        @include transition(all .5s linear);
+        height: 34px;
+        padding: 6px 12px;
+        width: 20%;
+
         &:focus {
+            border-color: $focus;
             width: 25%;
-            border-color:$focus;
         }
+
         &.ng-dirty.ng-invalid {
+            background-image: url('../../../images/close-r.png');
             border-color: $danger;
-            background-image: url("../../../images/close-r.png");
         }
+
         &.ng-dirty.ng-valid {
+            background-image: url('../../../images/check-g.png');
             border-color: $success;
-            background-image: url("../../../images/check-g.png");
         }
     }
+
     .postadd-control-text {
-        width: 66.6666667%;
+        box-shadow: none;
         height: 34px;
         line-height: 34px;
         padding-left: 12px;
-        box-shadow: none;
         vertical-align: middle;
+        width: 66.6666667%;
     }
+
     .dropdown {
-        display: inline-block;;
+        display: inline-block;
         width: 20%;
+
         .dropdown-toggle {
-            width: 100%;
             border-radius: 4px;
             text-align: left;
+            width: 100%;
+
             &:focus {
                 border-color: $focus;
             }
         }
+
         .caret {
             float: right;
             margin-top: 7px;
         }
+
         .dropdown-menu {
             width: 100%;
         }
     }
+
     .ng-dirty.ng-invalid {
-            .dropdown-toggle {
-                border-color: $danger;
-            }
+        .dropdown-toggle {
+            border-color: $danger;
         }
+    }
+
     .ng-dirty.ng-valid {
         .dropdown-toggle {
             border-color: $success;
         }
     }
 }
+
 .org-postadd-jd {
     .org-desc-section {
-        width: 100%;
         margin-bottom: 20px;
+        width: 100%;
+
         h3 {
             font-size: $font-size-md;
-            width: 20%;
-            text-align: right;
             margin-bottom: 10px;
+            text-align: right;
+            width: 20%;
         }
+
         .simditor {
             display: inline-block;
-            width: 50%;
             vertical-align: top;
+            width: 50%;
         }
     }
 }

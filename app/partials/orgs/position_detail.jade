@@ -30,12 +30,12 @@
               tr
                 th 通道：
                 td {{currentPos.channel.displayName || '无'}}
-                th 类别：
+                th 分类：
                 td {{currentPos.category.displayName || '无'}}
               tr
                 th OA文件编号：
                 td {{currentPos.oaFileNo}}
-                th 性质：
+                th 岗位性质：
                 td {{currentPos.nature.displayName || '无'}}
       section.position-duty
         button.btn.btn-default.pull-right(ui-sref=".editing({template: 'desc'})") 编辑
