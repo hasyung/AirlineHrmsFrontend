@@ -16,7 +16,6 @@ angular.module 'nb.directives'
         return {
             restrict: 'A'
             replace: true
-            scope: true
             link: (scope,elem,attr) ->
                 opts = {}
 
