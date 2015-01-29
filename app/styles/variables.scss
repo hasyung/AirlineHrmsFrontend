@@ -2,7 +2,7 @@
 
 //font
 $text-color:            #333;
-$text-muted:            lighten( $text-color, 25% );
+$text-muted:            lighten($text-color, 25%);
 $text-title:            #58666e;
 $a-color:               #468fce;
 $over-staff-color:      #d9534f;
@@ -10,8 +10,8 @@ $over-staff-color:      #d9534f;
 $font-size-base:          14px;
 $font-size-lg:            ceil($font-size-base * 1.23); // ~20px
 $font-size-md:            ceil($font-size-base * 1.14); // ~16px
-$font-size-sm:            ceil($font-size-base * 0.98); // ~14px
-$font-size-xs:            ceil($font-size-base * 0.85); // ~12px
+$font-size-sm:            ceil($font-size-base * .98); // ~14px
+$font-size-xs:            ceil($font-size-base * .85); // ~12px
 
 
 //nav
@@ -20,7 +20,7 @@ $app-aside-folded-nav-height:        50px;
 
 $font-size-base:                     14px;
 $line-height-base:                   1.42857143;  //  20/14
-$line-height-computed:               floor( $font-size-base * $line-height-base );
+$line-height-computed:               floor($font-size-base * $line-height-base);
 
 //layout
 $app-header-height:                  50px;
@@ -37,5 +37,5 @@ $bg-black-dk:          #31374b;
 
 //status colors
 $success :             #86c440;
-$danger :              #FF7976;
+$danger :              #ff7976;
 $focus :               #46b8da;

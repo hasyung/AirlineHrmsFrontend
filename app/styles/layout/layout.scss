@@ -1,48 +1,47 @@
-/*layout*/
-.app{
+// layout
+.app {
     height: auto;
     min-height: 100%;
-    width: 100%;
     position: relative;
+    width: 100%;
 }
 // menu
-.app-aside{
+.app-aside {
     float: left;
-    &:before{
-        content: "";
-        position: absolute;
-        width: inherit;
-        top: 0;
-        bottom: 0;
-        z-index: -1;
+
+    &:before {
         background-color: inherit;
         border: inherit;
+        bottom: 0;
+        content: ' ';
+        position: absolute;
+        top: 0;
+        width: inherit;
+        z-index: -1;
     }
 }
 
-.app-aside-right{
+.app-aside-right {
     padding-bottom: $app-header-height;
 }
 
 // content
-.app-content{
-    height: 100%;
+.app-content {
     @include clearfix();
-    .app-content-body {
-        // overflow: scroll;
-    }
+    height: 100%;
 }
 
-.app-content-full{
-    position: absolute;
-    top: $app-header-height;
+.app-content-full {
     bottom: $app-header-height;
     height: auto;
-    width: auto !important;
-    padding: 0 !important;
-    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    &.h-full{
+    overflow-y: auto;
+    padding: 0 !important;
+    position: absolute;
+    top: $app-header-height;
+    width: auto !important;
+
+    &.h-full {
         bottom: 0;
         height: auto;
     }
@@ -54,57 +53,70 @@
 // }
 
 // footer
-.app-footer{
-    position: absolute;
+.app-footer {
     bottom: 0;
     left: 0;
+    position: absolute;
     right: 0;
     z-index: 1005;
 }
 
-.hbox{
-    display: table;
-    table-layout: fixed;
+.hbox {
     border-spacing: 0;
-    width: 100%;
+    display: table;
     height: 100%;
-    .col{
+    table-layout: fixed;
+    width: 100%;
+
+    .col {
         display: table-cell;
-        vertical-align: top;
-        height: 100%;
         float: none;
+        height: 100%;
+        vertical-align: top;
     }
 }
 
-.v-middle{vertical-align: middle !important;}
-.v-top{vertical-align: top !important;}
-.v-bottom{vertical-align: bottom !important;}
+.v-middle {
+    vertical-align: middle !important;
+}
 
-.vbox{
+.v-top {
+    vertical-align: top !important;
+}
+
+.v-bottom {
+    vertical-align: bottom !important;
+}
+
+.vbox {
+    border-spacing: 0;
     display: table;
-    border-spacing:0;
-    position: relative;
-    width: 100%;
     height: 100%;
     min-height: 240px;
+    position: relative;
+    width: 100%;
+
     .row-row {
         display: table-row;
         height: 100%;
+
         .cell {
-            position: relative;
             height: 100%;
-            width: 100%;
-            -webkit-overflow-scrolling:touch;
             overflow: auto;
+            -webkit-overflow-scrolling: touch;
+            position: relative;
+            width: 100%;
+
             .ie & {
                 display: table-cell;
             }
+
             .cell-inner {
-                position: absolute;
-                top: 0;
                 bottom: 0;
                 left: 0;
+                position: absolute;
                 right: 0;
+                top: 0;
             }
         }
     }
@@ -112,59 +124,66 @@
 
 // navbar
 
-.navbar{
-    .navbar-form-sm{
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
-    border-width: 0;
+.navbar {
     border-radius: 0;
+    border-width: 0;
     margin: 0;
+
+    .navbar-form-sm {
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
 }
 
-.navbar-md{
+.navbar-md {
     min-height: $app-header-md-height;
-    .navbar-btn{
+
+    .navbar-btn {
         margin-top: 13px;
     }
-    .navbar-form{
+
+    .navbar-form {
         margin-top: 15px;
     }
-    .navbar-nav > li > a{
-        padding-top: 20px;
+
+    .navbar-nav > li > a {
         padding-bottom: 20px;
+        padding-top: 20px;
     }
-    .navbar-brand{
+
+    .navbar-brand {
         line-height: 60px;
     }
 }
 
-.navbar-header{
-    > button{
-        text-decoration: none;
-        line-height: 30px;
-        font-size: 16px;
-        padding: 10px 17px;
-        border: none;
+.navbar-header {
+    > button {
         background-color: transparent;
+        border: 0;
+        font-size: 16px;
+        line-height: 30px;
+        padding: 10px 17px;
+        text-decoration: none;
     }
 }
 
-.navbar-brand{
+.navbar-brand {
+    display: inline-block;
     float: none;
-    text-align: center;
     font-size: 20px;
     font-weight: 700;
     height: auto;
     line-height: $app-header-height;
-    display: inline-block;
     padding: 0 20px;
-    &:hover{
+    text-align: center;
+
+    &:hover {
         text-decoration: none;
     }
-    img{
-        max-height: 20px;
+
+    img {
         margin-top: -4px;
+        max-height: 20px;
         vertical-align: middle;
     }
 }
@@ -174,38 +193,44 @@
     .navbar-header {
         width: $app-aside-width;
     }
+
     .app-content,
-    .app-footer{
+    .app-footer {
         margin-left: $app-aside-width;
     }
 
-    .app-aside-right{
-        position: absolute;
-        top: $app-header-height;
+    .app-aside-right {
         bottom: 0;
+        position: absolute;
         right: 0;
+        top: $app-header-height;
         z-index: 1000;
-        &.pos-fix{
+
+        &.pos-fix {
             z-index: 1010;
         }
     }
 
-    .visible-folded{display: none;}
+    .visible-folded {display: none;}
 
-    .app-aside-folded{
-        .hidden-folded{
+    .app-aside-folded {
+        .hidden-folded {
             display: none !important;
         }
-        .visible-folded{
+
+        .visible-folded {
             display: inherit;
         }
-        .text-center-folded{
+
+        .text-center-folded {
             text-align: center;
         }
-        .pull-none-folded{
+
+        .pull-none-folded {
             float: none !important;
         }
-        .w-auto-folded{
+
+        .w-auto-folded {
             width: auto;
         }
 
@@ -213,12 +238,14 @@
         .navbar-header {
             width: $app-aside-folded-width;
         }
+
         .app-content,
-        .app-footer{
+        .app-footer {
             margin-left: $app-aside-folded-width;
         }
-        .app-header{
-            .navbar-brand{
+
+        .app-header {
+            .navbar-brand {
                 display: block;
                 padding: 0;
             }
@@ -226,92 +253,105 @@
 
     }
 
-    .app-aside-fixed{
-        .app-header{
-            .navbar-header{
+    .app-aside-fixed {
+        .app-header {
+            .navbar-header {
                 position: fixed;
             }
-            .navbar-collapse{
+
+            .navbar-collapse {
                 padding-left: $app-aside-width;
             }
         }
-        .aside-wrap{
-            position: fixed;
-            overflow: hidden;
-            top: $app-header-height;
+
+        .aside-wrap {
             bottom: 0;
             left: 0;
+            overflow: hidden;
+            position: fixed;
+            top: $app-header-height;
             width: $app-aside-width;
             z-index: 1000;
-            .navi-wrap{
-                width: $app-aside-width + $scroll-bar-width;
-                position: relative;
+
+            .navi-wrap {
                 height: 100%;
-                overflow-x:hidden;
-                overflow-y: scroll;
                 -webkit-overflow-scrolling: touch;
+                overflow-x: hidden;
+                overflow-y: scroll;
+                position: relative;
+                width: $app-aside-width + $scroll-bar-width;
+
                 &::-webkit-scrollbar {
-                  -webkit-appearance: none;
+                    -webkit-appearance: none;
                 }
+
                 &::-webkit-scrollbar:vertical {
-                  width: $scroll-bar-width;
+                    width: $scroll-bar-width;
                 }
             }
-            .smart & .navi-wrap{
+
+            .smart & .navi-wrap {
                 width: $app-aside-width;
             }
         }
-        &.app-aside-folded{
-            .app-header{
-                .navbar-collapse{
+
+        &.app-aside-folded {
+            .app-header {
+                .navbar-collapse {
                     padding-left: $app-aside-folded-width;
                 }
             }
-            .app-aside{
+
+            .app-aside {
+                bottom: 0;
                 position: fixed;
                 top: 0;
-                bottom: 0;
                 z-index: 1010;
             }
-            .aside-wrap{
+
+            .aside-wrap {
                 width: $app-aside-folded-width;
-                .navi-wrap{
+
+                .navi-wrap {
                     width: $app-aside-folded-width + $scroll-bar-width;
                 }
-                .smart & .navi-wrap{
+
+                .smart & .navi-wrap {
                     width: $app-aside-folded-width;
                 }
             }
         }
     }
 
-    .bg-auto{
-        &:before{
-            content: "";
-            position: absolute;
-            width: inherit;
-            top: 0;
-            bottom: 0;
-            z-index: -2;
+    .bg-auto {
+        &:before {
             background-color: inherit;
             border: inherit;
+            bottom: 0;
+            content: '';
+            position: absolute;
+            top: 0;
+            width: inherit;
+            z-index: -2;
         }
     }
 
-    .col.show{
+    .col.show {
         display: table-cell !important;
     }
 }
 
 // sm
 @media (min-width: 768px) and (max-width: 991px) {
-    .hbox-auto-sm{
+    .hbox-auto-sm {
         display: block;
-        > .col{
-            width: auto;
-            height: auto;
+
+        > .col {
             display: block;
-            &.show{
+            height: auto;
+            width: auto;
+
+            &.show {
                 display: block !important;
             }
         }
@@ -320,42 +360,52 @@
 }
 // xs
 @media (max-width: 767px) {
-    .app-aside{
+    .app-aside {
         float: none;
     }
-    .app-content-full{
+
+    .app-content-full {
         width: 100% !important;
     }
-    .hbox-auto-xs{
+
+    .hbox-auto-xs {
         display: block;
-        > .col{
-            width: auto;
-            height: auto;
+
+        > .col {
             display: block;
+            height: auto;
+            width: auto;
         }
     }
-    .navbar-nav{
-        margin-top: 0;
+
+    .navbar-nav {
         margin-bottom: 0;
-        > li > a{
-            box-shadow:0 -1px 0 rgba(0,0,0,0.1);
-            .up{
+        margin-top: 0;
+
+        > li > a {
+            box-shadow: 0 -1px 0 rgba(0, 0, 0, .1);
+
+            .up {
                 top: 0;
             }
-            .avatar{
-                width: 30px;
+
+            .avatar {
                 margin-top: -5px;
+                width: 30px;
             }
         }
-        .open .dropdown-menu{
+
+        .open .dropdown-menu {
             background-color: #fff;
         }
     }
-    .navbar-form{
-        box-shadow:0 -1px 0 rgba(0,0,0,0.1);
-        margin-top: 0 !important;
+
+    .navbar-form {
+        box-shadow: 0 -1px 0 rgba(0, 0, 0, .1);
         margin-bottom: 0 !important;
-        .form-group{
+        margin-top: 0 !important;
+
+        .form-group {
             margin-bottom: 0;
         }
     }

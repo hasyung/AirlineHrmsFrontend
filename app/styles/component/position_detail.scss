@@ -1,343 +1,396 @@
-// .org-pos-detail-menu {
-//   width: 100%;
-//   height: 280px;
-//   // background-color: #f2f3f8;
-//   background-color: skyblue;
-// }
-//
 .org-pos-detail-menu {
-  width: 100%;
-  height: 280px;
-  background-color: #f2f3f8;
+    background-color: #f2f3f8;
+    height: 280px;
+    width: 100%;
+
     .org-menu-wrapper {
-      position: relative;
-      width: 700px;
-      height: 100%;
-      margin: 0 auto;
-      .org-icon-window {
-        position: absolute;
-        width: 145px;
-        height: 145px;
-        left: 50%;
-        margin-left: -72.5px;
-        top: 50%;
-        margin-top: -72.5px;
-        background: url("../../../images/pos-menu/pos-menu-item1.png") no-repeat;
-        .org-detail-item {
-          position: absolute;
-          cursor: pointer;
-        }
-        .org-detail-item1 {
-          width: 284px;
-          height: 75px;
-          background: url("../../../images/pos-menu/pos-desc.png") no-repeat;
-          left: -225px;
-          top: -35px;
-          &.active,&:hover {
-            width: 290px;
-            height: 77px;
-            background: url("../../../images/pos-menu/pos-desc-act.png") no-repeat;
-            left: -232px;
-            top: -38px;
-          }
-        }
-        .org-detail-item2 {
-          width: 266px;
-          height: 81px;
-          background: url("../../../images/pos-menu/pos-detail.png") no-repeat;
-          left: -259px;
-          top: 33px;
-          &.active,&:hover {
-            width: 273px;
-            height: 82px;
-            background: url("../../../images/pos-menu/pos-detail-act.png") no-repeat;
-            left: -267px;
-            top: 34px;
-          }
-        }
-        .org-detail-item3 {
-          width: 300px;
-          height: 73px;
-          background: url("../../../images/pos-menu/pos-train.png") no-repeat;
-          left: -241px;
-          top: 107px;
-          &.active,&:hover {
-            width: 307px;
-            height: 76px;
-            background: url("../../../images/pos-menu/pos-train-act.png") no-repeat;
-            left: -249px;
-            top: 108px;
-          }
-        }
-        .org-detail-item4 {
-          width: 272px;
-          height: 51px;
-          background: url("../../../images/pos-menu/pos-welfare.png") no-repeat;
-          left: 58px;
-          top: 128px;
-          &.active,&:hover {
-            width: 280px;
-            height: 54px;
-            background: url("../../../images/pos-menu/pos-welfare-act.png") no-repeat;
-            left: 57px;
-            top: 130px;
-          }
-        }
-        .org-detail-item5 {
-          width: 239px;
-          height: 67px;
-          background: url("../../../images/pos-menu/pos-rel.png") no-repeat;
-          left: 121px;
-          top: 74px;
-          &.active,&:hover {
-            width: 246px;
-            height: 68px;
-            background: url("../../../images/pos-menu/pos-rel-act.png") no-repeat;
-            left: 123px;
-            top: 74px;
-          }
-        }
-        .org-detail-item6 {
-          width: 272px;
-          height: 75px;
-          background: url("../../../images/pos-menu/pos-performance.png") no-repeat;
-          left: 121px;
-          top: -2px;
-          z-index: 1;
-          &.active,&:hover {
-            width: 288px;
-            height: 76px;
-            background: url("../../../images/pos-menu/pos-performance-act.png") no-repeat;
-            left: 113px;
-            top: -5px;
-          }
+        height: 100%;
+        margin: 0 auto;
+        position: relative;
+        width: 700px;
+
+        .org-icon-window {
+            background: url('../../../images/pos-menu/pos-menu-item1.png') no-repeat;
+            height: 145px;
+            left: 50%;
+            margin-left: -72.5px;
+            margin-top: -72.5px;
+            position: absolute;
+            top: 50%;
+            width: 145px;
+
+            .org-detail-item {
+                cursor: pointer;
+                position: absolute;
+            }
+
+            .org-detail-item1 {
+                background: url('../../../images/pos-menu/pos-desc.png') no-repeat;
+                height: 75px;
+                left: -225px;
+                top: -35px;
+                width: 284px;
+
+                &.active,
+                &:hover {
+                    background: url('../../../images/pos-menu/pos-desc-act.png') no-repeat;
+                    height: 77px;
+                    left: -232px;
+                    top: -38px;
+                    width: 290px;
+                }
+            }
+
+            .org-detail-item2 {
+                background: url('../../../images/pos-menu/pos-detail.png') no-repeat;
+                height: 81px;
+                left: -259px;
+                top: 33px;
+                width: 266px;
+
+                &.active,
+                &:hover {
+                    background: url('../../../images/pos-menu/pos-detail-act.png') no-repeat;
+                    height: 82px;
+                    left: -267px;
+                    top: 34px;
+                    width: 273px;
+                }
+            }
+
+            .org-detail-item3 {
+                background: url('../../../images/pos-menu/pos-train.png') no-repeat;
+                height: 73px;
+                left: -241px;
+                top: 107px;
+                width: 300px;
+
+                &.active,
+                &:hover {
+                    background: url('../../../images/pos-menu/pos-train-act.png') no-repeat;
+                    height: 76px;
+                    left: -249px;
+                    top: 108px;
+                    width: 307px;
+                }
+            }
+
+            .org-detail-item4 {
+                background: url('../../../images/pos-menu/pos-welfare.png') no-repeat;
+                height: 51px;
+                left: 58px;
+                top: 128px;
+                width: 272px;
+
+                &.active,
+                &:hover {
+                    background: url('../../../images/pos-menu/pos-welfare-act.png') no-repeat;
+                    height: 54px;
+                    left: 57px;
+                    top: 130px;
+                    width: 280px;
+                }
+            }
+
+            .org-detail-item5 {
+                background: url('../../../images/pos-menu/pos-rel.png') no-repeat;
+                height: 67px;
+                left: 121px;
+                top: 74px;
+                width: 239px;
+
+                &.active,
+                &:hover {
+                    background: url('../../../images/pos-menu/pos-rel-act.png') no-repeat;
+                    height: 68px;
+                    left: 123px;
+                    top: 74px;
+                    width: 246px;
+                }
+            }
+
+            .org-detail-item6 {
+                background: url('../../../images/pos-menu/pos-performance.png') no-repeat;
+                height: 75px;
+                left: 121px;
+                top: -2px;
+                width: 272px;
+                z-index: 1;
+
+                &.active,
+                &:hover {
+                    background: url('../../../images/pos-menu/pos-performance-act.png') no-repeat;
+                    height: 76px;
+                    left: 113px;
+                    top: -5px;
+                    width: 288px;
+                }
+
+            }
+
+            .org-detail-item7 {
+                background: url('../../../images/pos-menu/pos-work.png') no-repeat;
+                height: 67px;
+                left: 45px;
+                top: -49px;
+                width: 277px;
+
+                &.active,
+                &:hover {
+                    background: url('../../../images/pos-menu/pos-work-act.png') no-repeat;
+                    height: 69px;
+                    left: 56px;
+                    top: -53px;
+                    width: 272px;
+                }
+            }
+
 
         }
-        .org-detail-item7 {
-          width: 277px;
-          height: 67px;
-          background: url("../../../images/pos-menu/pos-work.png") no-repeat;
-          left: 45px;
-          top: -49px;
-          &.active,&:hover {
-            width: 272px;
-            height: 69px;
-            background: url("../../../images/pos-menu/pos-work-act.png") no-repeat;
-            left: 56px;
-            top: -53px;
-          }
-        }
-
-
-      }
     }
 
 }
 
 .org-pos-detail-window {
-  width: 100%;
-  padding: 46px 55px;
+    padding: 46px 55px;
+    width: 100%;
 }
+
 .org-pos-detail-content {
-  width: 800px;
-  margin: 0 auto;
-  section {
-    margin-bottom: 46px;
-    h3 {
-      font-size: $font-size-md;
-      color: $text-title;
-      margin-bottom: 10px;
+    margin: 0 auto;
+    width: 800px;
+
+    section {
+        margin-bottom: 46px;
+
+        h3 {
+            color: $text-title;
+            font-size: $font-size-md;
+            margin-bottom: 10px;
+        }
+
+        table {
+            font-size: $font-size-sm;
+        }
+
+        ol {
+            padding-left: 22px;
+
+            li {
+                letter-spacing: 1px;
+                margin-bottom: 10px;
+            }
+        }
     }
-    table {
-      font-size: $font-size-sm;
-    }
-    ol {
-      padding-left: 22px;
-      li {
-        margin-bottom: 10px;
-        letter-spacing: 1px;
-      }
-    }
-  }
 }
 
 
 
 // 文字排版 typo样式
-.simditor .simditor-body, .editor-style {
-  font-size: 16px;
-  font-family: arial, sans-serif;
-  line-height: 1.6;
-  color: #333;
-  outline: none;
-  word-wrap: break-word;
-
-  & > :first-child {
-    margin-top: 0!important;
-  }
-
-  a{ color: #4298BA; text-decoration: none; word-break: break-all;}
-  a:visited{ color: #4298BA; }
-  a:hover{ color: #0F769F; }
-  a:active{ color:#9E792E; }
-  a:hover, a:active{ outline: 0; }
-
-  h1,h2,h3,h4,h5,h6 {
-    font-weight: normal;
-    margin: 40px 0 20px;
-    color: #000000;
-  }
-
-  h1 { font-size: 24px; }
-  h2 { font-size: 22px; }
-  h3 { font-size: 20px; }
-  h4 { font-size: 18px; }
-  h5 { font-size: 16px; }
-  h6 { font-size: 16px; }
-
-  p, div {
-    word-wrap: break-word;
-    margin: 0 0 15px 0;
+.simditor .simditor-body,
+.editor-style {
     color: #333;
-    word-wrap: break-word;
-  }
-
-  b, strong {
-    font-weight: bold;
-  }
-
-  i, em {
-    font-style: italic;
-  }
-
-  u {
-    text-decoration: underline;
-  }
-
-  strike, del {
-    text-decoration: line-through;
-  }
-
-  ul, ol {
-    list-style:disc outside none;
-    margin: 15px 0;
-    padding: 0 0 0 40px;
+    font-family: arial, sans-serif;
+    font-size: 16px;
     line-height: 1.6;
-
-    ul, ol {
-      padding-left: 30px;
-    }
-
-    ul {
-      list-style: circle outside none;
-
-      ul {
-        list-style: square outside none;
-      }
-    }
-  }
-
-  ol {
-    list-style:decimal;
-  }
-
-  blockquote {
-    border-left: 6px solid #ddd;
-    padding: 5px 0 5px 10px;
-    margin: 15px 0 15px 15px;
-
-    & > :first-child {
-      margin-top: 0;
-    }
-  }
-
-  pre {
-    padding: 10px 5px 10px 10px;
-    margin: 15px 0;
-    display: block;
-    line-height: 18px;
-    background: #F0F0F0;
-    border-radius: 3px;
-    font-size:13px;
-    font-family: 'monaco', 'Consolas', "Liberation Mono", Courier, monospace;
-    /*overflow-x: auto;*/
+    outline: none;
     word-wrap: break-word;
-    white-space: pre-wrap;
-  }
 
-  code {
-    display: inline-block;
-    padding: 0 4px;
-    margin: 0 5px;
-    background: #eeeeee;
-    border-radius: 3px;
-    font-size:13px;
-    font-family: 'monaco', 'Consolas', "Liberation Mono", Courier, monospace;
-  }
-
-  hr {
-    display: block;
-    height: 0px;
-    border: 0;
-    border-top: 1px solid #ccc;
-    margin: 15px 0;
-    padding: 0;
-  }
-
-  table {
-    width: 100%;
-    table-layout: fixed;
-    border-collapse: collapse;
-    border-spacing: 0;
-    margin: 15px 0;
-
-    thead {
-      background-color: #f9f9f9;
+    > :first-child {
+        margin-top: 0 !important;
     }
 
-    td {
-      min-width: 40px;
-      height: 30px;
-      border: 1px solid #ccc;
-      vertical-align: top;
-      padding: 2px 4px;
-      box-sizing: border-box;
-
-      &.active {
-        background-color: #ffffee;
-      }
+    a {
+        color: #4298ba;
+        text-decoration: none;
+        word-break: break-all;
     }
-  }
 
-
-  img {
-    margin: 0 5px;
-    vertical-align: middle;
-  }
-
-  @for $i from 0 through 10 {
-    *[data-indent="#{$i}"] {
-      margin-left: 40px * $i;
+    a:visited {
+        color: #4298ba;
     }
-  }
+
+    a:hover {
+        color: #0f769f;
+    }
+
+    a:active {
+        color: #9e792e;
+    }
+
+    a:hover,
+    a:active {
+        outline: 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: #000;
+        font-weight: normal;
+        margin: 40px 0 20px;
+    }
+
+    h1 { font-size: 24px; }
+    h2 { font-size: 22px; }
+    h3 { font-size: 20px; }
+    h4 { font-size: 18px; }
+    h5 { font-size: 16px; }
+    h6 { font-size: 16px; }
+
+    p,
+    div {
+        color: #333;
+        margin: 0 0 15px;
+        word-wrap: break-word;
+    }
+
+    b,
+    strong {
+        font-weight: bold;
+    }
+
+    i,
+    em {
+        font-style: italic;
+    }
+
+    u {
+        text-decoration: underline;
+    }
+
+    strike,
+    del {
+        text-decoration: line-through;
+    }
+
+    ul,
+    ol {
+        line-height: 1.6;
+        list-style: disc outside none;
+        margin: 15px 0;
+        padding: 0 0 0 40px;
+
+        ul,
+        ol {
+            padding-left: 30px;
+        }
+
+        ul {
+            list-style: circle outside none;
+
+            ul {
+                list-style: square outside none;
+            }
+        }
+    }
+
+    ol {
+        list-style: decimal;
+    }
+
+    blockquote {
+        border-left: 6px solid #ddd;
+        margin: 15px 0 15px 15px;
+        padding: 5px 0 5px 10px;
+
+        > :first-child {
+            margin-top: 0;
+        }
+    }
+
+    pre {
+        background: #f0f0f0;
+        border-radius: 3px;
+        display: block;
+        font-family: 'monaco', 'Consolas', "Liberation Mono", Courier, monospace;
+        font-size: 13px;
+        line-height: 18px;
+        margin: 15px 0;
+        padding: 10px 5px 10px 10px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        /*overflow-x: auto;*/
+    }
+
+    code {
+        background: #eee;
+        border-radius: 3px;
+        display: inline-block;
+        font-family: 'monaco', 'Consolas', 'Liberation Mono', Courier, monospace;
+        font-size: 13px;
+        margin: 0 5px;
+        padding: 0 4px;
+    }
+
+    hr {
+        border: 0;
+        border-top: 1px solid #ccc;
+        display: block;
+        height: 0;
+        margin: 15px 0;
+        padding: 0;
+    }
+
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        margin: 15px 0;
+        table-layout: fixed;
+        width: 100%;
+
+        thead {
+            background-color: #f9f9f9;
+        }
+
+        td {
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            height: 30px;
+            min-width: 40px;
+            padding: 2px 4px;
+            vertical-align: top;
+
+            &.active {
+                background-color: #ffe;
+            }
+        }
+    }
+
+
+    img {
+        margin: 0 5px;
+        vertical-align: middle;
+    }
+
+    @for $i from 0 through 10 {
+        *[data-indent="#{$i}"] {
+            margin-left: 40px * $i;
+        }
+    }
 }
 
 // 岗位信息部分覆盖的文字样式
-.position-info{
-  .editor-style {
-    table {
-      width: 60%;
-    }
-    th {
-      font-weight: normal;
-      width: 120px;
-      padding: 0 5px 10px 0;
+.position-info {
+    .editor-style {
+        table {
+            width: 60%;
+        }
 
+        th {
+            font-weight: normal;
+            padding: 0 5px 10px 0;
+            width: 120px;
+
+        }
+
+        td {
+            border: 0;
+            padding: 0 5px 10px;
+            width: 260px;
+        }
     }
-    td {
-      width: 260px;
-      border: none;
-      padding: 0 5px 10px 5px;
-    }
-  }
 }
