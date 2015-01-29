@@ -48,7 +48,7 @@ appConf = ($provide, ngDialogProvider) ->
     ]
 
     ngDialogProvider.setDefaults {
-        className: 'ngdialog-theme-default ngdialog-theme-flat'
+        className: 'ngdialog-theme-default'
         plain: false
         showClose: false
         appendTo: false
