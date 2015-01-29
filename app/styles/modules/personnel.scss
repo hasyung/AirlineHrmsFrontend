@@ -190,30 +190,35 @@
 }
 
 // resume begin
-.resume-title{
-	padding: 15px 10px;
-	.title-text{
-		line-height: 20px;
-		font-size: 20px;
-	}
-}
-.resume-item{
-	border: 1px solid #eee;
-	margin: 8px 10px;
-}
-.resume-content{
-	.section-title{
-		padding: 5px 8px;
-	}
-	.section-body{
-		padding: 5px 0px;
+.resume-title {
+    padding: 15px 10px;
 
-	}
-	.editor-style {
+    .title-text {
+        font-size: 20px;
+        line-height: 20px;
+    }
+}
+
+.resume-item {
+    border: 1px solid #eee;
+    margin: 8px 10px;
+}
+
+.resume-content {
+    .section-title {
+        padding: 5px 8px;
+    }
+
+    .section-body {
+        padding: 5px 0;
+
+    }
+
+    .editor-style {
         table {
+            font-size: 14px;
             margin-bottom: 0;
             width: 100%;
-            font-size: 14px;
         }
 
         th {
@@ -230,14 +235,15 @@
             width: 30%;
         }
     }
-    hr{
-    	margin: 5px 40px;
+
+    hr {
+        margin: 5px 40px;
     }
 }
 
-.resume-footer{
+// .resume-footer {
 
-}
+// }
 
 // resume end
 
