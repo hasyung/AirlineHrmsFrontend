@@ -25,15 +25,4 @@ module
 				return $filter('date')(new Date(dateStr), format)
 
 	]
-# 拼接对象属性
-module
-	.filter 'spliceItem', [()->
-		return (arr, format = '-', property = 'name') ->
-			return arr if !angular.isArray arr
-			tempStr = ""
-			angular.forEach arr, (item)->
-				tempStr = tempStr + format + item[property]
-			tempStr.replace format, ''
-
-	]
 

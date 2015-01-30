@@ -112,8 +112,6 @@ class perInfoCtrl extends nb.Controller
         @scope.selectEmp = @Employee.$find(@stateParams.empId)
 
 
-
-
 class ResumeCtrl extends Modal
     @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$injector']
     constructor: (@dialog, @scope, @Evt, @memoName, @injector) ->

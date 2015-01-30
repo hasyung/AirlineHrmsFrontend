@@ -42,9 +42,7 @@
                     span.switch-circle(ui-sref="^.resume")
                     | 个人履历
     .personnel-content.pull-left
-        div(ng-if="ctrl.status == 'edit'") 
-            include info_basic_editing
-        div(ui-view="detail", ng-if="ctrl.status == 'show'")
+        div(ui-view="detail")
         //- include info_basic
         //- include info_detail
 
