@@ -174,7 +174,6 @@
 
     //flat主题  有问题 进入样式 动画不正确
     &.ngdialog-theme-flat {
-        font-size: 1.5em;
         padding-bottom: 100px;
         padding-top: 100px;
         -ms-perspective: 1300px;
@@ -197,12 +196,11 @@
             color: $text-color;
             margin: 0 auto;
             max-width: 100%;
-            padding: 2em 2em 3em;
             position: relative;
             -ms-transform-style: preserve-3d;
             -webkit-transform-style: preserve-3d;
             transform-style: preserve-3d;
-            width: 600px;
+            width: 450px;
         }
 
         .ngdialog-close {
