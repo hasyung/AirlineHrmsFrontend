@@ -1,6 +1,6 @@
 .position-manage.app-content-wrapper
     div(nb-table='ctrl.positions' nb-safe-src="ctrl.positions")
-        div(nb-search)
+        div(nb-search="positions-all")
             div(nb-predicate="名称" predicate-attr="name")
                 input(name="name" placeholder="姓名" ng-model="$parent.name")
             div(nb-predicate="岗位通道" predicate-attr="channel_id")

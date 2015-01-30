@@ -1,5 +1,12 @@
 .searchbar
     h3 筛选条件
+    a(nb-dialog="partials/component/table/save_filter_dialog.html" nb-dialog-scope="this") 保存过滤器
+    ul
+        li(ng-repeat="filter in filters track by filter.id")
+            div
+                span(ng-bind="filter.name")
+                a.close(ng-click="filter.$destroy()") X
+
     .search-content.bg-white
         .search-row(ng-repeat="condition in conditions")
             button.btn.btn-default.search-del.fa.fa-times( ng-click="ctrl.remove($index)")
@@ -13,5 +20,5 @@
             //- div(nb-search-transclude)
 
             button.search-plus.btn.btn-default.fa.fa-plus(ng-click="ctrl.addCondition()" ng-show="$last && predicates.inactivePredicates.length > 0")
-        .advanced_options
-            span(ng-repeat="opt in advanced_options" ng-class="{yes,no,none}" ng-bind="opt.name")
+        //- .advanced_options
+        //-     span(ng-repeat="opt in advanced_options" ng-class="{yes,no,none}" ng-bind="opt.name")

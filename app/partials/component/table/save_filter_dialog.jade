@@ -1,0 +1,5 @@
+form(name="filter_form" ng-submit="ctrl.saveFilter(filter_name) && closeThisDialog()")
+    .form-group
+        input(type="text" required ng-model="filter_name")
+
+        input(type="submit" ng-disabled="filter_form.$invalid")

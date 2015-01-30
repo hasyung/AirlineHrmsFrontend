@@ -150,10 +150,12 @@ nbPipeDirective = () ->
 
 class NbSearchCtrl
 
-    @.$inject = ['$scope']
+    @.$inject = ['$scope', 'SearchCondition', '$attrs', '$element']
 
-    constructor: (@scope) ->
+    constructor: (@scope, @Filter, @attrs) ->
         self = @
+        @conditionCode = attrs.nbSearch
+        scope.filters = Filter.$search({code: @conditionCode})
         scope.predicateObject = {}
         inactivePredicates = []
         activePredicates = []
@@ -237,8 +239,10 @@ class NbSearchCtrl
     initialCondition: (predicate, element) ->
         predicate.transclude(element)
 
-    select: (option) ->
-        @predicates.select(option)
+    selectFilter: (filter) ->
+        $el = @el
+        $el.trigger('select:filter',filter)
+
 
     remove: ($index) ->
         return if @conditions.length <= 1
@@ -254,6 +258,22 @@ class NbSearchCtrl
         predicate_index = _.findIndex @predicates.activePredicates, predicate
         @predicates.activePredicates.splice(predicate_index, 1)
         @conditions.splice($index, 1)
+
+
+    saveFilter: (filterName) ->
+
+        request_data = {
+            name: filterName
+            code: @conditionCode
+            condition: JSON.stringify(@scope.predicateObject)
+        }
+
+        promise = @Filter.$create(request_data)
+
+
+        return true
+
+
 
     addPredicate: (key, displayName, paramGetter, $transcludeFn) ->
         @predicates.addPredicate(key, displayName, paramGetter, $transcludeFn)
@@ -304,8 +324,17 @@ nbSearchDirective = ($timeout) ->
         $transcludeFn (clone, scope) -> #for parser nb-condition
             elem.append clone
 
+
+        onSelectFilter = (evt, filter) ->
+            condition = JSON.parse(filter.condition)
+
+
+
         # view -> table state 无搜索按钮?
         # state -> table view 条件数据入口唯一?
+
+        elem.on 'select:filter'
+
 
 
 
