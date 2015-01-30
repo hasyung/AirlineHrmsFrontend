@@ -41,22 +41,34 @@ class Route
                 url: ''
                 views: {
                     "detail@personnel.detail": {
-                        controller: perInfoCtrl
-                        controllerAs: 'ctrl'
-                        templateUrl: 'partials/personnel/info_basic.html'
+                        # controller: perInfoCtrl
+                        # controllerAs: 'ctrl'
+                        templateUrl: "partials/personnel/info_basic.html"
                     }
                 }
                 ncyBreadcrumb: {
                     label: "{{selectEmp.name}}的基本信息"
                 }
             }
-            .state 'personnel.detail.more',{
-                url: '/more'
+            # .state 'personnel.detail.more',{
+            #     url: '/more'
+            #     views: {
+            #         "detail@personnel.detail": {
+            #             controller: perInfoCtrl
+            #             controllerAs: 'ctrl'
+            #             templateUrl: 'partials/personnel/info_detail.html'
+            #         }
+            #     }
+            #     ncyBreadcrumb: {
+            #         label: "{{selectEmp.name}}的详情信息"
+            #     }
+            # }
+            .state 'personnel.detail.editing',{
+                url: '/editing/:template'
                 views: {
                     "detail@personnel.detail": {
-                        controller: perInfoCtrl
-                        controllerAs: 'ctrl'
-                        templateUrl: 'partials/personnel/info_detail.html'
+                        templateUrl: (params) ->
+                            return "partials/personnel/info_#{params.template}_editing.html"
                     }
                 }
                 ncyBreadcrumb: {
@@ -94,6 +106,7 @@ class perInfoCtrl extends nb.Controller
 
     constructor: (@scope, @sweet, @Employee, @stateParams) ->
         @loadInitailData()
+        @status = 'show'
 
     loadInitailData: ->
         @scope.selectEmp = @Employee.$find(@stateParams.empId)
