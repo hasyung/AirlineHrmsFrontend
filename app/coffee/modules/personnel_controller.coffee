@@ -25,6 +25,7 @@ class Route
             }
             .state 'personnel.detail', {
                 url: '/{empId:[0-9]+}'
+                abstract:true
                 views: {
                     "@": {
                         controller: perInfoCtrl
@@ -32,10 +33,34 @@ class Route
                         templateUrl: 'partials/personnel/info.html'
                     }
                 }
-                ncyBreadcrumb: {
-                    label: "{{selectEmp.name}}基本信息"
-                }
+                
                 resolve: {
+                }
+            }
+            .state 'personnel.detail.basic',{
+                url: ''
+                views: {
+                    "detail@personnel.detail": {
+                        controller: perInfoCtrl
+                        controllerAs: 'ctrl'
+                        templateUrl: 'partials/personnel/info_basic.html'
+                    }
+                }
+                ncyBreadcrumb: {
+                    label: "{{selectEmp.name}}的基本信息"
+                }
+            }
+            .state 'personnel.detail.more',{
+                url: '/more'
+                views: {
+                    "detail@personnel.detail": {
+                        controller: perInfoCtrl
+                        controllerAs: 'ctrl'
+                        templateUrl: 'partials/personnel/info_detail.html'
+                    }
+                }
+                ncyBreadcrumb: {
+                    label: "{{selectEmp.name}}的详情信息"
                 }
             }
             .state nb.$buildDialog {
