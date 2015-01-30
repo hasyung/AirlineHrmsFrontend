@@ -14,26 +14,28 @@ section.personnel-info-section
                         tr
                             th 员工编号：
                             td
-                                input(type="text")
+                                input(type="text", ng-model="selectEmp.employeeNo")
                             th 性别：
                             td
-                                input(type="text")
+                                nb-dropdown(
+                                    ng-model="selectEmp.gender", remote-key="genders", 
+                                    name="gender", required)
                         tr
                             th 姓名：
                             td
-                                input(type="text")
+                                input(type="text", ng-model="selectEmp.name")
                             th 学历：
-                            td 本科
+                            td {{::selectEmp.educationBackground.displayName}}
                         tr
                             th 身份证号：
                             td
-                                input(type="text")
+                                input(type="text", ng-model="selectEmp.identityNo")
                             th 联系方式：
                             td
-                                input(type="text")
+                                input(type="text", ng-model="selectEmp.contact.mobile")
                         tr
                             th 政治面貌：
-                            td 中共党员
+                            td {{::selectEmp.politicalStatus.displayName}}
         section.personnel-info-control.clearfix
             .personnel-info-left.pull-left
                 .personnel-item-icon.personnel-item2
@@ -43,25 +45,27 @@ section.personnel-info-section
                     tbody
                         tr
                             th 所属部门：
-                            td 人力资源部-人事调配室
+                            td {{::selectEmp.department.name}}
                             th 岗位：
-                            td 人事调配室副主任
+                            td {{::selectEmp.position.name}}
                         tr
                             th 分类：
-                            td 干部
+                            td {{::selectEmp.category.displayName}}
                             th 通道：
-                            td 管理
+                            td {{::selectEmp.channel.displayName}}
                         tr
                             th 类别：
-                            td 行政管理
+                            td {{::selectEmp.position.postType}}
                             th 用工性质：
-                            td 合同工
+                            td {{::selectEmp.laborRelation.nature.displayName}}
                         tr
                             th 属地化地点：
                             td
-                                input(type="text")
+                                nb-dropdown(
+                                    ng-model="selectEmp.location", remote-key="locations", 
+                                    name="location", required)
                             th 用工关系状态：
-                            td 正式员工
+                            td 字段未知
         section.personnel-info-control.clearfix
             .personnel-info-left.pull-left
                 .personnel-item-icon.personnel-item3
@@ -71,11 +75,11 @@ section.personnel-info-section
                     tbody
                         tr
                             th 职称：
-                            td 高级工程师
+                            td {{::selectEmp.skill.technicalTitles}}
                             th 技术职务：
-                            td 高级工程师
+                            td {{::selectEmp.skill.technicalPosts}}
                         tr
-                            th 分类：
-                            td 二正
+                            th 职称职级：
+                            td {{::selectEmp.skill.technicalRanks}}
                             th 职称级别：
-                            td 高级
+                            td {{::selectEmp.skill.technicalLevels}}
