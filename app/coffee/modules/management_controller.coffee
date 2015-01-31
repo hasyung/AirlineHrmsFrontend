@@ -14,7 +14,7 @@ class Route
         stateProvider
             .state 'management', {
                 url: '/management'
-                templateUrl: 'partials/management/personnel/self_info.html'
+                templateUrl: 'partials/management/self_info.html'
                 controller: ManagementCtrl
                 controllerAs: 'ctrl'
                 abstract:true
@@ -28,15 +28,15 @@ class Route
                 url: ''
                 views: {
                     "detail@management": {
-                        controller: perInfoCtrl
+                        controller: PerInfoCtrl
                         controllerAs: 'ctrl'
-                        templateUrl: 'partials/management/personnel/self_info_basic.html'
+                        templateUrl: 'partials/management/self_info_basic/self_info_basic.html'
                     }
                 }
                 ncyBreadcrumb: {
                     label: "员工自助"
                 }
-                
+
                 resolve: {
                 }
             }
@@ -55,7 +55,7 @@ class ManagementCtrl extends nb.Controller
 
 
 
-class perInfoCtrl extends nb.Controller
+class PerInfoCtrl extends nb.Controller
 
     @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope']
 
