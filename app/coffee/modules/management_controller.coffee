@@ -65,7 +65,8 @@ class PerInfoCtrl extends nb.Controller
         @status = 'show'
 
     loadInitailData: ->
-        @scope.selectEmp = @rootScope.currentUser
+        console.log @rootScope.currentUser
+        @scope.currentUser = @rootScope.currentUser
 
 
 

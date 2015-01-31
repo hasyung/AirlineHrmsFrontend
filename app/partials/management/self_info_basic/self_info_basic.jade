@@ -5,45 +5,26 @@ section.personnel-info-section
         include self_info_basic_section
         section.personnel-info-control.clearfix
             .personnel-info-left.pull-left
-                .personnel-item-icon.personnel-item2
-                .personnel-item-desc.bg-primary 岗位信息
+                .personnel-item-icon.personnel-item1
+                .personnel-item-desc.bg-success 基本信息
             .personnel-info-right.editor-style.pull-left
                 table
                     tbody
                         tr
-                            th 所属部门：
-                            td {{::selectEmp.department.name}}
-                            th 岗位：
-                            td {{::selectEmp.position.name}}
+                            th 员工编号：
+                            td {{::currentUser.employeeNo}}
+                            th 性别：
+                            td {{::currentUser.gender.displayName}}
                         tr
-                            th 分类：
-                            td {{::selectEmp.category.displayName}}
-                            th 通道：
-                            td {{::selectEmp.channel.displayName}}
+                            th 姓名：
+                            td {{::currentUser.name}}
+                            th 学历：
+                            td {{::currentUser.educationBackground.displayName}}
                         tr
-                            th 类别：
-                            td {{::selectEmp.position.postType}}
-                            th 用工性质：
-                            td {{::selectEmp.laborRelation.nature.displayName}}
+                            th 身份证号：
+                            td {{::currentUser.identityNo}}
+                            th 联系方式：
+                            td {{::currentUser.contact.mobile}}
                         tr
-                            th 属地化地点：
-                            td {{::selectEmp.location.displayName}}
-                            th 用工关系状态：
-                            td 字段未知
-        section.personnel-info-control.clearfix
-            .personnel-info-left.pull-left
-                .personnel-item-icon.personnel-item3
-                .personnel-item-desc.bg-info 职称信息
-            .personnel-info-right.editor-style.pull-left
-                table
-                    tbody
-                        tr
-                            th 职称：
-                            td {{::selectEmp.skill.technicalTitles}}
-                            th 技术职务：
-                            td {{::selectEmp.skill.technicalPosts}}
-                        tr
-                            th 职称职级：
-                            td {{::selectEmp.skill.technicalRanks}}
-                            th 职称级别：
-                            td {{::selectEmp.skill.technicalLevels}}
+                            th 政治面貌：
+                            td {{::currentUser.politicalStatus.displayName}}

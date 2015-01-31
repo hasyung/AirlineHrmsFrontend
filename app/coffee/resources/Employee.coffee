@@ -19,32 +19,11 @@ Employee = (restmod, RMUtils, $Evt) ->
     }
 
 User = (restmod, RMUtils, $Evt) ->
-
-    cached = null
-
-    User = restmod.model('/employees').mix 'nbRestApi', {
-        department_id: {mask: 'R', map: 'department.id'}
-        department: {mask: 'CU'}
-
-        $hooks: {
-
-        }
-        $extend:
-            Collection: {}
-            #需要改进，存在很大BUG
-            Scope:
-                getCurrentUser: () ->
-                    if !cached
-                        cached = true
-                        this.$find('current')
-
+    User = restmod.model(null).mix 'nbRestApi', {
+        $config:
+            jsonRoot: 'employee'
     }
-
-
-
-
-
-
+    .single('/employees/current')
 
 
 resources.factory 'Employee',['restmod', 'RMUtils', '$nbEvent', Employee]
