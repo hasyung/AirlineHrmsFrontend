@@ -14,7 +14,7 @@ class Route
         stateProvider
             .state 'management', {
                 url: '/management'
-                templateUrl: 'partials/management/self_info.html'
+                templateUrl: 'partials/management/personnel/self_info.html'
                 controller: ManagementCtrl
                 controllerAs: 'ctrl'
                 abstract:true
@@ -30,7 +30,7 @@ class Route
                     "detail@management": {
                         controller: perInfoCtrl
                         controllerAs: 'ctrl'
-                        templateUrl: 'partials/management/self_info_basic.html'
+                        templateUrl: 'partials/management/personnel/self_info_basic.html'
                     }
                 }
                 ncyBreadcrumb: {
