@@ -1,0 +1,29 @@
+section.personnel-info-control.clearfix
+            .btn-group
+                button.btn.btn-default(ui-sref="personnel.detail.editing({template: 'basic'})") 编辑
+            .personnel-info-left.pull-left
+                .personnel-item-icon.personnel-item2
+                .personnel-item-desc.bg-success 岗位信息
+            .personnel-info-right.editor-style.pull-left
+                table
+                    tbody
+                        tr
+                            th 所属部门：
+                            td {{::selectEmp.department.name}}
+                            th 岗位：
+                            td {{::selectEmp.position.name}}
+                        tr
+                            th 分类：
+                            td {{::selectEmp.category.displayName}}
+                            th 通道：
+                            td {{::selectEmp.channel.displayName}}
+                        tr
+                            th 类别：
+                            td {{::selectEmp.position.postType}}
+                            th 用工性质：
+                            td {{::selectEmp.laborRelation.nature.displayName}}
+                        tr
+                            th 属地化地点：
+                            td {{::selectEmp.location.displayName}}
+                            th 用工关系状态：
+                            td 字段未知

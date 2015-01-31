@@ -272,9 +272,10 @@ gulp.task "express", ->
     app = express()
 
 
-    proxyOptions = url.parse('http://192.168.6.99:9002')
+    # proxyOptions = url.parse('http://192.168.6.99:9002')
     # proxyOptions = url.parse('http://114.215.142.122:9002')
     # proxyOptions = url.parse('http://192.168.6.5:3000')
+    proxyOptions = url.parse('http://192.168.6.5:3000')
     # proxyOptions = url.parse('http://192.168.6.18:3000')
     proxyOptions.route = '/api'
 

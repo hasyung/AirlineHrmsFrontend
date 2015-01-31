@@ -1,4 +1,3 @@
-
 .personnel-menu {
     width: 270px;
 
@@ -101,10 +100,6 @@
             font-size: $font-size-lg;
             line-height: 50px;
         }
-
-        .btn-group {
-            margin: 7px 20px;
-        }
     }
 
     .personnel-content-body {
@@ -116,6 +111,25 @@
         .personnel-info-control {
             background-color: #fff;
             padding: 40px;
+            position: relative;
+
+            &.editing {
+                .btn-group {
+                    visibility: visible;
+                }
+            }
+
+            .btn-group {
+                position: absolute;
+                right: 40px;
+                top: 20px;
+                visibility: hidden;
+
+                .btn {
+                    border-radius: 4px;
+                    margin-left: 15px;
+                }
+            }
 
             &:nth-child(odd) {
                 background-color: #fff;
@@ -123,6 +137,12 @@
 
             &:nth-child(even) {
                 background-color: #fafbfd;
+            }
+
+            &:hover {
+                .btn-group {
+                    visibility: visible;
+                }
             }
         }
     }
@@ -173,9 +193,15 @@
             width: 100%;
         }
 
+        tr {
+            height: 40px;
+            line-height: 40px;
+        }
+
         th {
+            color: $text-title;
             font-weight: normal;
-            padding: 0 5px 10px 0;
+            height: inherit;
             text-align: right;
             width: 20%;
 
@@ -183,7 +209,8 @@
 
         td {
             border: 0;
-            padding: 0 5px 10px;
+            height: inherit;
+            padding: 0;
             width: 30%;
         }
     }
