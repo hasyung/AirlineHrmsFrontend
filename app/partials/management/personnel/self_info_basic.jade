@@ -13,22 +13,22 @@ section.personnel-info-section
                     tbody
                         tr
                             th 员工编号：
-                            td {{::selectEmp.employeeNo}}
+                            td {{::currentUser.employeeNo}}
                             th 性别：
-                            td {{::selectEmp.gender.displayName}}
+                            td {{::currentUser.gender.displayName}}
                         tr
                             th 姓名：
-                            td {{::selectEmp.name}}
+                            td {{::currentUser.name}}
                             th 学历：
-                            td {{::selectEmp.educationBackground.displayName}}
+                            td {{::currentUser.educationBackground.displayName}}
                         tr
                             th 身份证号：
-                            td {{::selectEmp.identityNo}}
+                            td {{::currentUser.identityNo}}
                             th 联系方式：
-                            td {{::selectEmp.contact.mobile}}
+                            td {{::currentUser.contact.mobile}}
                         tr
                             th 政治面貌：
-                            td {{::selectEmp.politicalStatus.displayName}}
+                            td {{::currentUser.politicalStatus.displayName}}
         section.personnel-info-control.clearfix
             .personnel-info-left.pull-left
                 .personnel-item-icon.personnel-item2
@@ -38,22 +38,22 @@ section.personnel-info-section
                     tbody
                         tr
                             th 所属部门：
-                            td {{::selectEmp.department.name}}
+                            td {{::currentUser.department.name}}
                             th 岗位：
-                            td {{::selectEmp.position.name}}
+                            td {{::currentUser.position.name}}
                         tr
                             th 分类：
-                            td {{::selectEmp.category.displayName}}
+                            td {{::currentUser.category.displayName}}
                             th 通道：
-                            td {{::selectEmp.channel.displayName}}
+                            td {{::currentUser.channel.displayName}}
                         tr
                             th 类别：
-                            td {{::selectEmp.position.postType}}
+                            td {{::currentUser.position.postType}}
                             th 用工性质：
-                            td {{::selectEmp.laborRelation.nature.displayName}}
+                            td {{::currentUser.laborRelation.nature.displayName}}
                         tr
                             th 属地化地点：
-                            td {{::selectEmp.location.displayName}}
+                            td {{::currentUser.location.displayName}}
                             th 用工关系状态：
                             td 字段未知
         section.personnel-info-control.clearfix
@@ -65,11 +65,11 @@ section.personnel-info-section
                     tbody
                         tr
                             th 职称：
-                            td {{::selectEmp.skill.technicalTitles}}
+                            td {{::currentUser.skill.technicalTitles}}
                             th 技术职务：
-                            td {{::selectEmp.skill.technicalPosts}}
+                            td {{::currentUser.skill.technicalPosts}}
                         tr
                             th 职称职级：
-                            td {{::selectEmp.skill.technicalRanks}}
+                            td {{::currentUser.skill.technicalRanks}}
                             th 职称级别：
-                            td {{::selectEmp.skill.technicalLevels}}
+                            td {{::currentUser.skill.technicalLevels}}

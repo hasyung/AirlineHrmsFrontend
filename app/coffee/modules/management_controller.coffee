@@ -66,7 +66,7 @@ class perInfoCtrl extends nb.Controller
 
     loadInitailData: ->
         console.log @rootScope.currentUser
-        @scope.selectEmp = @rootScope.currentUser
+        @scope.currentUser = @rootScope.currentUser
 
 
 
