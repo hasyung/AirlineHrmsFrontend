@@ -1,0 +1,188 @@
+
+//dialog中的表单样式(还需修改)
+.form-validator-dialog {
+    padding: 20px;
+    width: 100%;
+
+    &:after {
+        clear: both;
+        content: '';
+        display: table;
+    }
+
+    .form-group-row {
+        margin: 0 0 15px;
+
+        .form-control-error {
+            // display: inline-block;
+            margin-left: 15px;
+
+            .form-group-error {
+                background-color: $danger;
+                border-radius: 8px;
+                color: #fff;
+                font-size: $font-size-xs;
+                font-weight: bold;
+                padding: 3px 5px;
+                position: relative;
+
+                &:after {
+                    border-bottom: 6px solid $danger;
+                    border-left: 6px solid transparent;
+                    border-right: 6px solid transparent;
+                    border-top: 6px solid transparent;
+                    content: ' ';
+                    display: block;
+                    height: 0;
+                    left: 50%;
+                    position: absolute;
+                    top: -11px;
+                    width: 0;
+                }
+            }
+        }
+    }
+
+    .form-control-label {
+        margin-bottom: 0;
+        margin-right: 20px;
+        text-align: right;
+        width: 25%;
+    }
+
+    .form-control-input {
+        @include transition(all .5s linear);
+        background-color: #fff;
+        background-image: none;
+        background-position: 98% 9px;
+        background-repeat: no-repeat;
+        background-size: 14px;
+        border: 1px solid #cfdadd;
+        border-radius: 2px;
+        box-shadow: none;
+        height: 34px;
+        padding: 6px 12px;
+        width: 50%;
+
+        &:focus {
+            border-color: $focus;
+            width: 60%;
+        }
+
+        &.ng-dirty.ng-invalid {
+            background-image: url('../../../images/close-r.png');
+            border-color: $danger;
+        }
+
+        &.ng-dirty.ng-valid {
+            background-image: url('../../../images/check-g.png');
+            border-color: $success;
+        }
+    }
+
+    .form-control-text {
+        box-shadow: none;
+        height: 34px;
+        line-height: 34px;
+        padding-left: 12px;
+        vertical-align: middle;
+        width: 66.6666667%;
+    }
+
+    .dropdown {
+        display: inline-block;
+        width: 20%;
+
+        .dropdown-toggle {
+            border-radius: 4px;
+            text-align: left;
+            width: 100%;
+
+            &:focus {
+                border-color: $focus;
+            }
+        }
+
+        .caret {
+            float: right;
+            margin-top: 7px;
+        }
+
+        .dropdown-menu {
+            width: 100%;
+        }
+    }
+
+    .ng-dirty.ng-invalid {
+        .dropdown-toggle {
+            border-color: $danger;
+        }
+    }
+
+    .ng-dirty.ng-valid {
+        .dropdown-toggle {
+            border-color: $success;
+        }
+    }
+}
+
+//人事信息部分 表单样式
+.form-validator-table {
+    input {
+        background-color: #fff;
+        background-image: none;
+        background-position: 98% 6px;
+        background-repeat: no-repeat;
+        background-size: 14px;
+        border: 1px solid #cfdadd;
+        border-radius: 2px;
+        border-width: 1px;
+        height: 30px;
+        line-height: 30px;
+        padding: 0 0 0 5px;
+        vertical-align: middle;
+        width: 200px;
+
+
+        &:focus {
+            border-color: $focus;
+        }
+
+        &.ng-dirty.ng-invalid {
+            background-image: url('../../../images/close-r.png');
+            border-color: $danger;
+        }
+
+        &.ng-dirty.ng-valid {
+            background-image: url('../../../images/check-g.png');
+            border-color: $success;
+        }
+    }
+
+    .dropdown {
+        height: 40px;
+        margin-bottom: 0;
+
+        .dropdown-toggle {
+            height: 35px;
+        }
+
+        .dropdown-menu {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+    }
+
+    .ng-dirty.ng-invalid {
+        .dropdown-toggle {
+            border-color: $danger;
+        }
+    }
+
+    .ng-dirty.ng-valid {
+        .dropdown-toggle {
+            border-color: $success;
+        }
+    }
+}
