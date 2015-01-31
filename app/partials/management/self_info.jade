@@ -1,0 +1,46 @@
+.app-content-wrapper.personnel-info
+    .personnel-menu.app-aside
+        .avator
+            .avator-area
+            h3(ng-bind="selectEmp.name")
+            p(ng-bind="selectEmp.employeeNo")
+        .personnel-info-list
+            ul
+                li
+                    a(ui-sref=".basic")
+                        span.switch-circle
+                        | 基本人事信息
+                li
+                    span.switch-circle
+                    | 教育经历
+                li
+                    span.switch-circle
+                    | 工作经历
+                li
+                    span.switch-circle
+                    | 任职记录
+                li
+                    span.switch-circle
+                    | 培训记录
+                li
+                    span.switch-circle
+                    | 奖惩记录
+                li
+                    span.switch-circle
+                    | 考勤记录
+                li
+                    span.switch-circle
+                    | 绩效考核
+                li
+                    span.switch-circle
+                    | 档案信息
+                li
+                    span.switch-circle(ui-sref="^.resume")
+                    | 个人履历
+    .personnel-content.pull-left
+        div(ui-view="detail")
+        //- include info_basic
+        //- include info_detail
+
+
+

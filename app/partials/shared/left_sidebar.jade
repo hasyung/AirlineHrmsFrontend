@@ -62,7 +62,7 @@
               span.font-bold 岗位管理
           li.line.dk
           li(nav-toggle-active)
-            a.auto(href='')
+            a.auto(ui-sref='management.personnel')
               span.pull-right.text-muted
                 i.fa.fa-fw.fa-angle-right.text
                 i.fa.fa-fw.fa-angle-down.text-active
@@ -70,9 +70,9 @@
               span 员工自助
             ul.nav.nav-sub.dk
               li.nav-sub-header
-                a(href='#/app/personnel/entry')
+                a(ui-sref='management.personnel')
               li
-                a(href='#/personnels')
+                a(ui-sref='management.personnel')
                   span 我的基本信息
               li
                 a(href='#/app/personnel/regulariz')

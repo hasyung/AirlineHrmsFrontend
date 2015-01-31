@@ -107,7 +107,7 @@ App
     .config ['$provide', appConf]
     .config ['restmodProvider', restConf]
     .config ['$stateProvider','$urlRouterProvider','$locationProvider', '$httpProvider', '$breadcrumbProvider', routeConf]
-    .run ['$state','$rootScope', 'toaster', '$http', 'Org', 'sweet', ($state, $rootScope, toaster, $http, Org, sweet) ->
+    .run ['$state','$rootScope', 'toaster', '$http', 'Org', 'sweet', 'User', ($state, $rootScope, toaster, $http, Org, sweet, User) ->
         # for $state.includes in view
         $rootScope.$on '$stateChangeSuccess', (evt, to) ->
             console.debug "stateChangeSuccess: to ", to
@@ -123,6 +123,8 @@ App
         $rootScope.$on 'error', (code, info)->
             $rootScope.loading = false
             toaster.pop(code.name, "提示", info)
+
+        $rootScope.currentUser = User.getCurrentUser()
 
         $rootScope.$state = $state
 

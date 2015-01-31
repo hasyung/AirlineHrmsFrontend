@@ -4,7 +4,6 @@ resources = angular.module('resources')
 
 Employee = (restmod, RMUtils, $Evt) ->
 
-    # restmod.model('/positions')
     Employee = restmod.model('/employees').mix 'nbRestApi', {
         department_id: {mask: 'R', map: 'department.id'}
         department: {mask: 'CU'}
@@ -17,6 +16,26 @@ Employee = (restmod, RMUtils, $Evt) ->
         $extend:
             Collection: {}
 
+    }
+
+User = (restmod, RMUtils, $Evt) ->
+
+    cached = null
+
+    User = restmod.model('/employees').mix 'nbRestApi', {
+        department_id: {mask: 'R', map: 'department.id'}
+        department: {mask: 'CU'}
+
+        $hooks: {
+
+        }
+        $extend:
+            Collection: {}
+            Scope:
+                getCurrentUser: () ->
+                    if !cached
+                        cached = true
+                        this.$find('current')
 
     }
 
@@ -27,6 +46,5 @@ Employee = (restmod, RMUtils, $Evt) ->
 
 
 
-
-
 resources.factory 'Employee',['restmod', 'RMUtils', '$nbEvent', Employee]
+resources.factory 'User',['restmod', 'RMUtils', '$nbEvent', User]
