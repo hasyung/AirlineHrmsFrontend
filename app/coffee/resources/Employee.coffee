@@ -31,6 +31,7 @@ User = (restmod, RMUtils, $Evt) ->
         }
         $extend:
             Collection: {}
+            #需要改进，存在很大BUG
             Scope:
                 getCurrentUser: () ->
                     if !cached

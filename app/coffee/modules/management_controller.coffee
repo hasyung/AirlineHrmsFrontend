@@ -43,17 +43,15 @@ class Route
 
 class ManagementCtrl extends nb.Controller
 
-    @.$inject = ['$scope', 'sweet', 'Employee']
+    @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope']
 
 
-    constructor: (@scope, @sweet, @Employee) ->
+    constructor: (@scope, @sweet, @Employee, @rootScope) ->
+        @scope.currentUser = @rootScope.currentUser
         @loadInitailData()
 
     loadInitailData: ->
-        @employees = @Employee.$collection().$fetch()
 
-    search: (tableState) ->
-        @employees.$refresh(tableState)
 
 
 
