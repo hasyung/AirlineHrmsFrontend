@@ -108,8 +108,23 @@
         border-top: 0;
         width: 100%;
 
+        .personnel-section-wrap {
+            &:nth-child(odd) {
+                background-color: #fff;
+            }
+
+            &:nth-child(even) {
+                background-color: #fafbfd;
+            }
+
+            &:hover {
+                .btn-group {
+                    visibility: visible;
+                }
+            }
+        }
+
         .personnel-info-control {
-            background-color: #fff;
             padding: 40px;
             position: relative;
 
@@ -128,20 +143,6 @@
                 .btn {
                     border-radius: 4px;
                     margin-left: 10px;
-                }
-            }
-
-            &:nth-child(odd) {
-                background-color: #fff;
-            }
-
-            &:nth-child(even) {
-                background-color: #fafbfd;
-            }
-
-            &:hover {
-                .btn-group {
-                    visibility: visible;
                 }
             }
         }
