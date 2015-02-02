@@ -1,6 +1,14 @@
 section.personnel-info-section
-    .personnel-top-header
-        h4.pull-left 基本人事信息
-    .personnel-content-body
-        include info_basic/info_basic_section
-        include info_basic/info_position_section
+	.personnel-top-header
+		h4.pull-left 基本人事信息
+	.personnel-content-body
+		//- include info_basic/info_basic_section
+		//- include info_basic/info_position_section
+		div(ng-if="ctrl.basicEdit == true")
+			include info_basic/info_basic_edit
+		div(ng-if="ctrl.basicEdit == false")
+			include info_basic/info_basic_section
+		div(ng-if="ctrl.posEdit == true")
+			include info_basic/info_position_edit
+		div(ng-if="ctrl.posEdit == false")
+			include info_basic/info_position_section

@@ -106,7 +106,8 @@ class perInfoCtrl extends nb.Controller
 
     constructor: (@scope, @sweet, @Employee, @stateParams) ->
         @loadInitailData()
-        @status = 'show'
+        @basicEdit = false
+        @posEdit = false
 
     loadInitailData: ->
         @scope.selectEmp = @Employee.$find(@stateParams.empId)
