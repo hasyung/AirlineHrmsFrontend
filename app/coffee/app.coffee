@@ -10,6 +10,7 @@ deps = [
     'ncy-angular-breadcrumb'
     'mgo-angular-wizard'
     'mgcrea.ngStrap.datepicker'
+    'ngDialog'
     'ui.select'
     'ngAnimate'
     'ui.bootstrap'
@@ -31,7 +32,7 @@ nb.app = App = angular.module 'nb',deps
 # nb.models = models = angular.module 'models', []
 
 
-appConf = ($provide) ->
+appConf = ($provide, ngDialogProvider) ->
     # 事件广播 始终锁定在 rootscope 上 ， 提高性能
     $provide.decorator '$rootScope', ['$delegate', ($delegate) ->
 
@@ -45,6 +46,13 @@ appConf = ($provide) ->
 
         return $delegate
     ]
+
+    ngDialogProvider.setDefaults {
+        className: 'ngdialog-theme-flat'
+        plain: false
+        showClose: false
+        appendTo: false
+    }
 
 
 
@@ -104,7 +112,7 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider,
 
 
 App
-    .config ['$provide', appConf]
+    .config ['$provide', 'ngDialogProvider', appConf]
     .config ['restmodProvider', restConf]
     .config ['$stateProvider','$urlRouterProvider','$locationProvider', '$httpProvider', '$breadcrumbProvider', routeConf]
     .run ['$state','$rootScope', 'toaster', '$http', 'Org', 'sweet', 'User', ($state, $rootScope, toaster, $http, Org, sweet, User) ->

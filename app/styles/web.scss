@@ -10,6 +10,7 @@
 @import 'layout/nav';
 @import 'layout/layout';
 //components
+@import 'component/dialog';
 @import 'component/form-validation';
 @import 'component/loading';
 @import 'component/panel';
@@ -155,4 +156,5 @@
     content: ' ';
     right: 1px;
 }
+
 //nb-popup end

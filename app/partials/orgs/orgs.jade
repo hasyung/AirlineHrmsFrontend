@@ -27,7 +27,11 @@ div.org.app-content-wrapper
                 h1 {{ctrl.treeRootOrg.name}}组织机构图
                 h2(ng-show="ctrl.isHistory") {{ctrl.orgs.$metadata.created_at | nbDate : 'yyyy年MM月dd日'}}— {{ctrl.orgs.$metadata.title}}
             .top-btn-group
-                button.btn.btn-m.btn-primary(ui-sref=".history") 时间轴
+                button.btn.btn-m.btn-primary(
+                    nb-dialog="partials/orgs/org_history.html"
+                    nb-dialog-scope="this"
+                    prepare-data="ctrl.initialHistoryData()"
+                    ) 时间轴
                 a.btn.btn-m.btn-info(ng-show="!ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导 出
                 a.btn.btn-m.btn-info(ng-show="ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导 出
                 button.btn.btn-info(ng-click="ctrl.resetData()" ng-show="ctrl.isHistory") 返回最新
@@ -36,7 +40,10 @@ div.org.app-content-wrapper
         div.org-chart-window
             div.svg-wrapper(org-chart drag-on org-chart-data="ctrl.tree.data")
             div.bottom-btn-group(ng-show="ctrl.tree.isModified")
-                button.btn.btn-info(ui-sref=".active") 生 效
+                button.btn.btn-info(
+                    nb-dialog="partials/orgs/shared/effect_changes.html"
+                    nb-dialog-scope="this"
+                    ) 生 效
                 button.btn.btn-default(
                     nb-confirm="ctrl.revert(isConfirm)"
                     nb-title="您确认要撤销当前的所有修改吗?"
