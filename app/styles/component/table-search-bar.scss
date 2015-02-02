@@ -3,10 +3,19 @@
         background-color: #f2f3f8;
         border: 1px solid #c3c3c3;
         color: $text-title;
-        font-size: $font-size-sm;
-        height: 40px;
-        line-height: 40px;
+        font-size: $font-size-md;
+        height: 55px;
+        line-height: 55px;
         padding-left: 40px;
+
+        .ui-select-container {
+            margin: 10px 10px 0 0;
+            min-width: 160px;
+        }
+
+        > a {
+            margin: 10px 10px 0 0;
+        }
     }
 
     .search-content {
@@ -72,7 +81,7 @@
         }
 
         .ui-select-match {
-            min-width: 190px;
+            min-width: 160px;
 
             .caret {
                 margin-top: 0;

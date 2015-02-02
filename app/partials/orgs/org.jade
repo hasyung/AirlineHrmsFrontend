@@ -8,7 +8,11 @@ aside.org-aside
                     nb-confirm="orgCtrl.destroy(isConfirm)"
                     nb-title="您确定要删除{{currentOrg.name}}吗?"
                     nb-text="删除操作将在点击组织结构树 '生效' 按钮并关联 OA 文件号后真正生效, 在这之前您可以随时撤销未生效的操作")
-                button.btn.btn-default.fa.fa-retweet(title="划转" ui-sref=".transfer")
+                button.btn.btn-default.fa.fa-retweet(
+                    title="划转"
+                    nb-dialog="partials/orgs/shared/org_transfer.html"
+                    nb-dialog-scope="this"
+                    )
                 //- button.btn.btn-default.fa.fa-pencil(ui-sref="^.edit({orgId: org.id})",title="编辑")
                 button.btn.btn-default.fa.fa-pencil(ng-click="orgCtrl.state = 'editing'",title="编辑")
                 button.btn.btn-default.fa.fa-plus(title="新增子机构",ng-click="orgCtrl.state = 'newsub'", ng-if="currentOrg.grade.name !== 'secondly_positive'")

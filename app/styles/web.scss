@@ -10,6 +10,7 @@
 @import 'layout/nav';
 @import 'layout/layout';
 //components
+@import 'component/dialog';
 @import 'component/form-validation';
 @import 'component/loading';
 @import 'component/panel';
@@ -28,6 +29,7 @@
 @import 'modules/orgs';
 
 .bootstrap-tagsinput { width: 100%; }
+
 .navbar-fixed-top {
     background-color: #fff;
     box-shadow: 0 2px 2px rgba(0, 0, 0, .05), 0 1px 0 rgba(0, 0, 0, .05);
@@ -155,4 +157,5 @@
     content: ' ';
     right: 1px;
 }
+
 //nb-popup end

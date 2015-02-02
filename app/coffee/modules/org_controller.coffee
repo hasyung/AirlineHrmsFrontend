@@ -66,6 +66,9 @@ orgTree = (Org, $parse) ->
 
     postLink = (scope, elem, attrs, $ctrl) ->
 
+        # getter = $parse('org')
+        # setter = getter.assign
+
         $tree = null
         getData = (node) ->
             data = {}
@@ -77,25 +80,23 @@ orgTree = (Org, $parse) ->
                     data[k] = v
             return data
 
-        orgs = Org.$search().$then (orgs) ->
-            treeData = orgs.jqTreeful()
-            $tree = elem.tree {data: treeData,autoOpen: 0}
-            $tree.bind 'tree.select', (evt) ->
-                if evt.node
-                    node = evt.node
-                    scope.$apply ()->
-                        scope.selectedData = getData(node)
-                else
-            return
+        treeData = scope.treeData.jqTreeful()
+        $tree = elem.tree {data: treeData,autoOpen: 0}
+        $tree.bind 'tree.select', (evt) ->
+            node = evt.node
+            # setter(scope, getData(node).id)
+            $ctrl.$setViewValue(getData(node))
+
         scope.$on '$destroy', () ->
             $tree.tree('destroy') if $tree && $tree.tree #for nest router
             $tree = null
 
     return {
         scope: {
-            selectedData: '='
-            treeData: '@'
+            org: "=ngModel"
+            treeData: '='
         }
+        require: 'ngModel'
         link: postLink
     }
 
@@ -131,26 +132,26 @@ class Route
             # .state 'org.history', nb.$buildDialog('history', HistoryCtrl, 'partials/orgs/org_history.html', {size: 'sm'})
             # .state 'org.transfer', nb.$buildDialog('transfer', TransferOrgCtrl, 'partials/orgs/shared/org_transfer.html', {size: 'sm'})
             # .state 'org.position', nb.$buildPanel(':id/positions',PositionCtrl, 'partials/orgs/position.html')
-            .state nb.$buildDialog {
-                name: 'org.active'
-                url: '/active'
-                controller: ActiveCtrl
-                templateUrl: 'partials/orgs/shared/effect_changes.html'
-            }
-            .state nb.$buildDialog {
-                name: 'org.history'
-                url:' /history'
-                controller: HistoryCtrl
-                templateUrl: 'partials/orgs/org_history.html'
-                size: 'sm'
-            }
-            .state nb.$buildDialog {
-                name: 'org.transfer'
-                url: '/transfer'
-                controller: TransferOrgCtrl
-                templateUrl: 'partials/orgs/shared/org_transfer.html'
-                size: 'sm'
-            }
+            # .state nb.$buildDialog {
+            #     name: 'org.active'
+            #     url: '/active'
+            #     controller: ActiveCtrl
+            #     templateUrl: 'partials/orgs/shared/effect_changes.html'
+            # }
+            # .state nb.$buildDialog {
+            #     name: 'org.history'
+            #     url:' /history'
+            #     controller: HistoryCtrl
+            #     templateUrl: 'partials/orgs/org_history.html'
+            #     size: 'sm'
+            # }
+            # .state nb.$buildDialog {
+            #     name: 'org.transfer'
+            #     url: '/transfer'
+            #     controller: TransferOrgCtrl
+            #     templateUrl: 'partials/orgs/shared/org_transfer.html'
+            #     size: 'sm'
+            # }
             .state {
                 name: 'org.position'
                 url: '/:id/positions'
@@ -239,7 +240,6 @@ class OrgsCtrl extends nb.Controller
 
 
         scope.$onRootScope 'org:active', @.active.bind(@)
-        scope.$onRootScope 'org:history', @.history.bind(@)
         scope.$onRootScope 'org:refresh', @.refreshTree.bind(@)
         scope.$onRootScope 'org:resetData', @.resetData.bind(@)
 
@@ -293,13 +293,6 @@ class OrgsCtrl extends nb.Controller
         @orgs.active(data)
         @resetData()
 
-
-    history: (evt, history_param) ->
-        self = @
-        @isHistory = true
-        @orgs.$refresh(history_param)
-
-
     resetData: () ->
         @isHistory = false
         @orgs.$refresh({'edit_mode': @eidtMode})
@@ -308,6 +301,31 @@ class OrgsCtrl extends nb.Controller
         self = @
         treeRootOrg = _.find self.orgs, (org) -> org.depth == 1
         self.buildTree(treeRootOrg)
+    initialHistoryData: ->
+        onSuccess = (res)->
+            logs = res.data.change_logs
+            groupedLogs = _.groupBy logs, (log) ->
+                moment.unix(log.created_at).format('YYYY')
+            logsArr = []
+            angular.forEach groupedLogs, (item, key) ->
+                logsArr.push {logs:item, changeYear: key}
+
+            changeLogs = _.sortBy(logsArr, 'changeYear').reverse()
+
+        promise = @http.get('/api/departments/change_logs')
+        promise.then onSuccess
+    # 返回机构的指定版本
+    backToPast: (version)->
+        self = @
+        if @currentLog
+            self.orgs.$refresh({version: @currentLog.id})
+        @isHistory = true
+    expandLog: (log)->
+        # 防止UI中出现多个被选中的item
+        @currentLog.active = false if @currentLog
+        log.active = true
+        @currentLog = log
+
 
 
 
@@ -332,7 +350,7 @@ class OrgCtrl extends nb.Controller
         @state = 'show'
 
 
-    transfer: (evt, destOrg) ->
+    transfer: (destOrg) ->
         @scope.currentOrg.transfer(destOrg.id)
         @Evt.$send 'org:resetData'
 
@@ -370,59 +388,6 @@ class OrgCtrl extends nb.Controller
                 sweet.success('删除成功', "您已成功删除#{orgName}" )
         else
             sweet.error("您取消了删除#{@scope.currentOrg.name}")
-
-
-class ActiveCtrl extends Modal
-    @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$injector']
-    constructor: (@dialog, @scope, @Evt, @memoName, @injector) ->
-        super(dialog, scope, memoName)
-    active: (log, form) ->
-        @Evt.$send('org:active',log)
-        @dialog.close()
-
-class HistoryCtrl extends Modal
-    @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$http', '$injector']
-    constructor: (@dialog, @scope, @Evt, @memoName, @http, @injector) ->
-        @loadInitialData()
-        super(dialog, scope, memoName)
-
-    loadInitialData: ()->
-        self = @
-        onError = (res)->
-            self.Evt.$send('org:history:error',res)
-        onSuccess = (res)->
-            logs = res.data.change_logs
-            groupedLogs = _.groupBy logs, (log) ->
-                moment.unix(log.created_at).format('YYYY')
-            logsArr = []
-            angular.forEach groupedLogs, (item, key) ->
-                logsArr.push {logs:item, changeYear: key}
-
-            self.changeLogs = _.sortBy(logsArr, 'changeYear').reverse()
-
-        promise = @http.get('/api/departments/change_logs')
-        promise.then onSuccess.bind(@), onError.bind(@)
-
-    expandLog: (log)->
-        # 防止UI中出现多个被选中的item
-        @currentLog.active = false if @currentLog
-        log.active = true
-        @currentLog = log
-
-    submit: ()->
-        @Evt.$send('org:history', {version: @currentLog.id}) if @currentLog
-        @dialog.close()
-
-
-class TransferOrgCtrl extends Modal
-    @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$injector']
-    constructor: (@dialog, @scope, @Evt, @memoName, @injector) ->
-        super(dialog, scope, memoName)
-        @selectedData = null
-
-    ok: () ->
-        @Evt.$send('org:transfer',@selectedData)
-        @dialog.close()
 
 
 class PositionCtrl extends nb.Controller

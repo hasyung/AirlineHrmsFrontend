@@ -102,5 +102,44 @@ angular.module 'nb.directives'
             link: postLink
         }
     ]
+    .directive 'nbDialog',['ngDialog', (ngDialog) ->
+
+        postLink = (scope, elem, attrs) ->
+            elem.on 'click', (e) ->
+                e.preventDefault()
+
+                dialogScope = `angular.isDefined(scope.nbDialogScope)? scope.nbDialogScope : 'noScope'`
+                angular.isDefined(attrs.nbDialogClosePrevious) && ngDialog.close(attrs.nbDialogClosePrevious)
+
+                defaults = ngDialog.getDefaults()
+
+                data = attrs.nbDialogData
+                #link https://github.com/angular/angular.js/issues/6404
+                data = scope.prepareData() if attrs.prepareData
+
+                ngDialog.open {
+
+                    template: attrs.nbDialog
+                    className: attrs.nbDialogClass || defaults.className
+                    controller: attrs.nbDialogController
+                    scope: dialogScope
+                    data: data
+                    # showClose: attrs.ngDialogShowClose === 'false' ? false : (attrs.ngDialogShowClose === 'true' ? true : defaults.showClose),
+                    # closeByDocument: attrs.ngDialogCloseByDocument === 'false' ? false :
+                    # (attrs.ngDialogCloseByDocument === 'true' ? true : defaults.closeByDocument),
+                    # closeByEscape: attrs.ngDialogCloseByEscape === 'false' ? false
+                    # : (attrs.ngDialogCloseByEscape === 'true' ? true : defaults.closeByEscape),
+                    # preCloseCallback: attrs.ngDialogPreCloseCallback || defaults.preCloseCallback
+
+                }
+        return {
+            restrict: 'A'
+            scope: {
+                nbDialogScope : '='
+                prepareData: '&?'
+            }
+            link: postLink
+        }
 
 
+    ]

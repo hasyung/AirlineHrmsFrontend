@@ -2,7 +2,10 @@ section.personnel-info-section
     .personnel-top-header
         h4.pull-left 基本人事信息
     .personnel-content-body
-        include self_info_basic_section
+        div.personnel-section-wrap(ng-if="ctrl.basicEdit == true")
+            include self_info_basic_edit
+        div.personnel-section-wrap(ng-if="ctrl.basicEdit == false")
+            include self_info_basic_section
         section.personnel-info-control.clearfix
             .personnel-info-left.pull-left
                 .personnel-item-icon.personnel-item1
