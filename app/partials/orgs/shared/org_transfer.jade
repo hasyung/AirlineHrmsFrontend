@@ -1,7 +1,9 @@
-form(ng-submit="orgCtrl.transfer(transfer_dest_org) && closeThisDialog()" name="trans_form")
+form.clearfix(ng-submit="orgCtrl.transfer(transfer_dest_org) && closeThisDialog()" name="trans_form")
+    .modal-header
+        h4.modal-title 机构划转
     div(slimscroll height="300px")
         nb-org-tree(ng-model="transfer_dest_org" tree-data="allOrgs" required)
-    .pull-right.button-group
-        button.btn.btn-default.btn-sm(type='button',ng-click='closeThisDialog()') 取消
-        button.btn.btn-info.btn-sm(type='submit' ng-disabled="trans_form.$invalid") 确定
+    .button-group.panel-footer.clearfix
+        button.btn.btn-default.btn-sm.pull-right(type='button',ng-click='closeThisDialog()') 取消
+        button.btn.btn-info.btn-sm.pull-right(type='submit' ng-disabled="trans_form.$invalid") 确定
 
