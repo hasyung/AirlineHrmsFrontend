@@ -34,3 +34,40 @@ section.personnel-info-control.clearfix
                     tr
                         th 政治面貌：
                         td {{::selectEmp.politicalStatus.displayName}}
+//- =======
+//- section.personnel-info-control.editing.clearfix
+//-     .btn-group
+//-         button.btn.btn-default(ui-sref="^.basic") 取消
+//-         button.btn.btn-info(ui-sref="^.basic") 保存
+//-     .personnel-info-left.pull-left
+//-         .personnel-item-icon.personnel-item1
+//-         .personnel-item-desc.bg-success 基本信息
+//-     .personnel-info-right.editor-style.pull-left
+//-         table.form-validator-table
+//-             tbody
+//-                 tr
+//-                     th 员工编号：
+//-                     td
+//-                         input(type="text", ng-model="selectEmp.employeeNo")
+//-                     th 性别：
+//-                     td
+//-                         nb-dropdown(
+//-                             ng-model="selectEmp.gender", remote-key="genders",
+//-                             name="gender", required)
+//-                 tr
+//-                     th 姓名：
+//-                     td
+//-                         input(type="text", ng-model="selectEmp.name")
+//-                     th 学历：
+//-                     td {{::selectEmp.educationBackground.displayName}}
+//-                 tr
+//-                     th 身份证号：
+//-                     td
+//-                         input(type="text", ng-model="selectEmp.identityNo")
+//-                     th 联系方式：
+//-                     td
+//-                         input(type="text", ng-model="selectEmp.contact.mobile")
+//-                 tr
+//-                     th 政治面貌：
+//-                     td {{::selectEmp.politicalStatus.displayName}}
+//- >>>>>>> f4d96b57078481a5a4a8a2c87370a59a3f1b7cb2

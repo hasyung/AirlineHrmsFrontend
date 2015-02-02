@@ -1,4 +1,4 @@
-section.personnel-info-control.clearfix
+section.personnel-info-control.editing.clearfix
     .btn-group
         button.btn.btn-default(ui-sref="^.basic") 取消
         button.btn.btn-info(ui-sref="^.basic") 保存
@@ -9,7 +9,7 @@ section.personnel-info-control.clearfix
         table.form-validator-table
             tbody
                 tr
-                    th 员工编号：
+                    th 姓名：
                     td
                         input(type="text", ng-model="selectEmp.employeeNo")
                     th 性别：
