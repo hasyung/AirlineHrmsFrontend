@@ -2,6 +2,8 @@
 nb = @nb
 app = nb.app
 
+ISO_DATE_REGEXP = /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/
+
 
 class NbTableCtrl
     @.$inject = ['$scope', '$parse', '$filter', '$attrs']
@@ -181,6 +183,29 @@ class NbSearchCtrl
                     inactivePredicates.push newValue
 
             }
+            startupPredicate: {
+                enumerable: false
+                value: (key) ->
+                    predicate = if key then _.remove(inactivePredicates, (pre) -> pre.key == key)[0] else inactivePredicates.pop()
+                    activePredicates.push predicate
+                    return predicate
+            }
+            shutdownPredicate: {
+                enumerable: false
+                value: (predicate) ->
+                    inactivePredicates.push(predicate)
+                    index = activePredicates.indexOf(predicate)
+                    activePredicates.splice(index, 1)
+            }
+            # 选择条件时, 把新条件放去 active_predicate, 老条件放入 inactive_predicate 中
+            switchActivePredicate: {
+                enumerable: false
+                value: (oldValue, newValue) ->
+                    oldIndex = activePredicates.indexOf(oldValue)
+                    newIndex = inactivePredicates.indexOf(newValue)
+                    activePredicates.splice(oldIndex, 1, newValue)
+                    inactivePredicates.splice(newIndex, 1, oldValue)
+            }
             addPredicate: {
                 enumerable: false
                 value: (key, displayName, paramGetter, $transcludeFn) ->
@@ -192,9 +217,12 @@ class NbSearchCtrl
                             displayName: displayName
                             getter: paramGetter
                             $transcludeFn: $transcludeFn
-                            transclude: (element) ->
+                            transclude: (element, initialData) ->
                                 that = @
-                                @.$transcludeFn (clone, newScope) ->
+                                newScope = scope.$new()
+                                angular.forEach initialData, ((v, k ) -> newScope[key] = v ) if initialData
+
+                                @.$transcludeFn newScope, (clone, newScope) ->
                                     that.block = {
                                         element: clone
                                         scope: newScope
@@ -208,7 +236,7 @@ class NbSearchCtrl
                     }
                     @inactivePredicates = this[key]
 
-                    self.addCondition() if activePredicates.length == 0
+                    self.addNewCondition() if activePredicates.length == 0
 
             }
             select: {
@@ -227,36 +255,36 @@ class NbSearchCtrl
                 return res
             , {})
 
-    splice: (old, newValue, element) ->
+    switchQueryPredicate: (old, newValue, element) ->
         @$$destroy(old) if old.block?
         newValue.transclude(element)
 
-        oldIndex = _.findIndex @predicates.activePredicates, old
-        newIndex = _.findIndex @predicates.inactivePredicates, newValue
-        @predicates.activePredicates.splice(oldIndex, 1, newValue)
-        @predicates.inactivePredicates.splice(newIndex, 1, old)
+        @predicates.switchActivePredicate(old, newValue)
 
-    initialCondition: (predicate, element) ->
-        predicate.transclude(element)
+    initialCondition: (predicate, element, initialData) ->
+        predicate.transclude(element, initialData)
 
     selectFilter: (filter) ->
-        $el = @el
-        $el.trigger('select:filter',filter)
+        self = @
+        @.$$clear()
+        pick = _.pick
+        # $el = @el
+        # $el.trigger('select:filter',filter)
+
+        parsedQueryParams = @.$$parseFilter(filter.condition)
+        angular.forEach parsedQueryParams, (v, key) ->
+            initialData = {}
+            initialData[key] = v
+            predicate = self.predicates.startupPredicate(key)
+            self.addCondition(predicate, initialData)
 
 
-    remove: ($index) ->
-        return if @conditions.length <= 1
-        condition = @conditions[$index]
-        predicate = condition.selected
-        #remove predicate from searchObject object
-        @scope.predicateObject = _.omit(@scope.predicateObject, predicate.key)
 
-
-        @$$destroy(predicate)
-
-        @predicates.inactivePredicates.push(predicate)
-        predicate_index = _.findIndex @predicates.activePredicates, predicate
-        @predicates.activePredicates.splice(predicate_index, 1)
+    remove: ($index, force = false) ->
+        return if !force && @conditions.length <= 1 #保留最少一个条件
+        condition = @conditions[$index] #待删除的条件
+        @.$$destroyCondition(condition)
+        #删除
         @conditions.splice($index, 1)
 
 
@@ -268,20 +296,37 @@ class NbSearchCtrl
             condition: JSON.stringify(@scope.predicateObject)
         }
 
-        promise = @Filter.$create(request_data)
-
-
-        return true
-
+        promise = @scope.filters.$create(request_data)
 
 
     addPredicate: (key, displayName, paramGetter, $transcludeFn) ->
         @predicates.addPredicate(key, displayName, paramGetter, $transcludeFn)
 
-    addCondition: ->
-        predicate = @predicates.inactivePredicates.pop()
-        @conditions.push {selected: predicate}
-        @predicates.activePredicates.push predicate
+    addCondition: (predicate, initialData) ->
+        @conditions.push {selected: predicate, initialData: initialData}
+
+    addNewCondition: () ->
+        predicate = @predicates.startupPredicate()
+        @addCondition(predicate)
+
+    $$destroyCondition: (condition) ->
+        predicate = condition.selected #当前条件的查询规则
+        #清理资源
+        #remove predicate from searchObject object
+        @scope.predicateObject = _.omit(@scope.predicateObject, predicate.key)
+        @$$destroy(predicate)
+        #重置待选的条件
+        @predicates.shutdownPredicate(predicate)
+
+
+    $$clear: () ->
+        destroyAll = (v, idx, arr) ->
+            @.$$destroyCondition(v)
+
+        @conditions.forEach destroyAll.bind(@)
+        @conditions.splice(0, @conditions.length)
+
+
 
     $$destroy: (predicate) ->
         return  if not predicate.block
@@ -290,17 +335,29 @@ class NbSearchCtrl
         delete predicate.block
         return
 
+    $$parseFilter: (filter) ->
+
+        reviver = (k , v) ->
+            return v if k == ''
+            return new Date(v) if typeof v == 'string' && ISO_DATE_REGEXP.test(v)
+            return v
+
+        return JSON.parse(filter, reviver)
+
     # predicate: () ->
 
 
-nbWatchSelectDirective = ->
+nbConditionContainerDirective = ->
     postLink = (scope, elem, attrs, ctrl) ->
 
-        ctrl.initialCondition(scope.condition.selected, elem)
+        selectedPredicate = scope.condition.selected
+        initialData  =scope.condition.initialData
+
+        ctrl.initialCondition(scope.condition.selected, elem, initialData)
 
         scope.$watch 'condition.selected', (newValue, old) ->
-            return if newValue == old
-            ctrl.splice(old, newValue, elem)
+            return if newValue == old #predicate object
+            ctrl.switchQueryPredicate(old, newValue, elem)
 
         scope.$on '$destroy', ->
             conditionNode = null
@@ -314,14 +371,18 @@ nbWatchSelectDirective = ->
 nbSearchDirective = ($timeout) ->
 
     postLink = (scope, elem, attrs, ctrl, $transcludeFn) ->
-
-        tableCtrl =  ctrl
+        searchCtrl = ctrl[0]
+        tableCtrl =  ctrl[1]
         promise = null
         throttle = attrs.nbDelay || 400
         # tableCtrl.getTableState().predicate = scope.predicate
         scope.$watch('predicateObject', (newValue, oldValue) -> tableCtrl.getTableState().predicate = newValue)
 
-        $transcludeFn (clone, scope) -> #for parser nb-condition
+        scope.$watch('ctrl.currentFilter',(newValue) -> searchCtrl.selectFilter(newValue) if newValue)
+
+
+
+        $transcludeFn scope,(clone, scope) -> #for parser nb-condition
             elem.append clone
 
 
@@ -339,7 +400,7 @@ nbSearchDirective = ($timeout) ->
 
 
     return {
-        require: '^nbTable'
+        require: ['nbSearch','^nbTable']
         templateUrl: 'partials/component/table/search.html'
         transclude: true
         controller: 'nbSearchCtrl'
@@ -429,22 +490,20 @@ nbPredicateDirective = ($parse) ->
     postLink = (scope, elem, attrs, ctrl, $transcludeFn) ->
         searchCtrl = ctrl[0]
         # ngModelCtrl = ctrl[1]
+        displayName = attrs.nbPredicate
 
         return if !attrs.ngModel && !attrs.predicateAttr
 
         key = attrs.ngModel || attrs.predicateAttr
 
         modelGetter = $parse(key)
-        searchCtrl.addPredicate(key, scope.displayName, modelGetter, $transcludeFn)
+        searchCtrl.addPredicate(key, displayName, modelGetter, $transcludeFn)
 
     return {
         require: ['^nbSearch']
         link: postLink
         transclude: 'element'
         priority: 1
-        scope: {
-            displayName: "@nbPredicate"
-        }
     }
 
 
@@ -506,11 +565,18 @@ nbPaginationDirective = ->
         link: postLink
     }
 
+filterSelectorDirective = ->
+
+    postLink = (scope, elem, attrs) ->
+
+
+
+
 
 app.controller 'nbSearchCtrl', NbSearchCtrl
 app.directive 'nbTable', ['$timeout', nbTableDirective]
 app.directive 'nbSearch', nbSearchDirective
-app.directive 'nbWatchSelect', nbWatchSelectDirective
+app.directive 'nbConditionContainer', nbConditionContainerDirective
 app.directive 'nbPredicate', ['$parse', nbPredicateDirective]
 app.directive 'nbPipe', nbPipeDirective
 app.directive 'nbSelectRow', nbSelectRowDirective

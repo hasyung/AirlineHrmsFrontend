@@ -1,11 +1,16 @@
 .searchbar
     h3 筛选条件
     a(nb-dialog="partials/component/table/save_filter_dialog.html" nb-dialog-scope="this") 保存过滤器
-    ul
-        li(ng-repeat="filter in filters track by filter.id")
-            div
-                span(ng-bind="filter.name")
-                a.close(ng-click="filter.$destroy()") X
+    //- ul
+    //-     li(ng-repeat="filter in filters track by filter.id")
+    //-         div(ng-click="ctrl.selectFilter(filter)")
+    //-             span(ng-bind="filter.name")
+    //-             a.close(ng-click="filter.$destroy()") X
+    ui-select(ng-model="ctrl.currentFilter" style="width:300px" ng-if="filters.length > 0")
+        ui-select-match(placeholder="选择筛选条件") {{$select.selected.name}}
+        ui-select-choices(repeat="filter in filters track by filter.id")
+            span(ng-bind="filter.name")
+            a.close(ng-click="filter.$destroy()") X
 
     .search-content.bg-white
         .search-row(ng-repeat="condition in conditions")
@@ -14,11 +19,13 @@
                 //- option(ng-repeat="o as option in options" ng-click="select(o)")
             div.search-opt(ng-model="condition.selected", nb-dropdown="predicates.inactivePredicates" prevent-clone default-option)
 
-            .condition-detail.search-type(nb-watch-select)
+            //- .condition-detail.search-type(nb-watch-select)
+            //- container 下的 scope 与 ng-repeat 不一致, 清楚之前需要手动释放资源
+            .condition-detail.search-type(nb-condition-container)
 
             //- .condition(ng-repeat="option in predicate" ng-if="option === predicate.selected")
             //- div(nb-search-transclude)
 
-            button.search-plus.btn.btn-default.fa.fa-plus(ng-click="ctrl.addCondition()" ng-show="$last && predicates.inactivePredicates.length > 0")
+            button.search-plus.btn.btn-default.fa.fa-plus(ng-click="ctrl.addNewCondition()" ng-show="$last && predicates.inactivePredicates.length > 0")
         //- .advanced_options
         //-     span(ng-repeat="opt in advanced_options" ng-class="{yes,no,none}" ng-bind="opt.name")
