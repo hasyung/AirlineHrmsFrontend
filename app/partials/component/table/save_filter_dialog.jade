@@ -1,5 +1,7 @@
-form(name="filter_form" ng-submit="ctrl.saveFilter(filter_name) && closeThisDialog()")
-    .form-group
-        input(type="text" required ng-model="filter_name")
-
-        input(type="submit" ng-disabled="filter_form.$invalid")
+form.form-validator-dialog(name="filter_form" ng-submit="ctrl.saveFilter(filter_name) && closeThisDialog()")
+    .form-group-row
+        label.form-control-label  过滤器名称：
+        input.form-control-input(type="text" required ng-model="filter_name")
+    .form-group-row
+        .pull-right.button-group
+            button.btn.btn-info(type="submit" ng-disabled="filter_form.$invalid") 提交
