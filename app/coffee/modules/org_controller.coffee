@@ -167,49 +167,49 @@ class Route
                     label: "{{ ctrl.currentOrg.name || '岗位' }}"
                 }
             }
-            .state {
-                name: 'org.position.detail'
-                url: '/{posId:[0-9]+}'
-                views: {
-                    "@": {
-                        controller: PosCtrl
-                        controllerAs: 'ctrl'
-                        templateUrl: 'partials/orgs/position_detail.html'
-                    }
-                }
-                ncyBreadcrumb: {
-                    label: "{{currentPos.name}}"
-                }
-            }
-            .state {
-                name: 'org.position.detail.editing'
-                url: '/editing/:template'
-                views: {
-                    "@": {
-                        controller: PosCtrl
-                        controllerAs: 'ctrl'
-                        templateUrl: (params) ->
-                            return "partials/orgs/position_edit_#{params.template}.html"
-                    }
-                }
-                ncyBreadcrumb: {
-                    label: "编辑"
-                }
-            }
-            .state {
-                name: 'org.position.new'
-                url: '/new'
-                views: {
-                    "@": {
-                        controller: PosCreateCtrl
-                        controllerAs: 'ctrl'
-                        templateUrl: 'partials/orgs/position_add.html'
-                    }
-                }
-                ncyBreadcrumb: {
-                    label: "新增"
-                }
-            }
+            # .state {
+            #     name: 'org.position.detail'
+            #     url: '/{posId:[0-9]+}'
+            #     views: {
+            #         "@": {
+            #             controller: PosCtrl
+            #             controllerAs: 'ctrl'
+            #             templateUrl: 'partials/orgs/position_detail.html'
+            #         }
+            #     }
+            #     ncyBreadcrumb: {
+            #         label: "{{currentPos.name}}"
+            #     }
+            # }
+            # .state {
+            #     name: 'org.position.detail.editing'
+            #     url: '/editing/:template'
+            #     views: {
+            #         "@": {
+            #             controller: PosCtrl
+            #             controllerAs: 'ctrl'
+            #             templateUrl: (params) ->
+            #                 return "partials/orgs/position_edit_#{params.template}.html"
+            #         }
+            #     }
+            #     ncyBreadcrumb: {
+            #         label: "编辑"
+            #     }
+            # }
+            # .state {
+            #     name: 'org.position.new'
+            #     url: '/new'
+            #     views: {
+            #         "@": {
+            #             controller: PosCreateCtrl
+            #             controllerAs: 'ctrl'
+            #             templateUrl: 'partials/orgs/position_add.html'
+            #         }
+            #     }
+            #     ncyBreadcrumb: {
+            #         label: "新增"
+            #     }
+            # }
 
 
 
@@ -424,62 +424,63 @@ class PositionCtrl extends nb.Controller
             return 'department_id=' + @currentOrg.id
         else
             return 'department_id=' + @currentOrg.id  + '&position_ids=' + ids.join(',')
+    createPos: (newPos) ->
+        # self = @
+        # @position.departmentId = @orgId
+        # @position.specification = @specification
+        #将页面跳转放在then里，防止当跳转过去时新创建的岗位未被添加到岗位列表
+        newPos = @positions.$create(newPos)
 
     search: (tableState) ->
         @positions.$refresh(tableState)
 
 
 
-class PosCtrl extends nb.Controller
-    @.$inject = ['$stateParams', 'Position', '$scope', '$state', 'Org']
+# class PosCtrl extends nb.Controller
+#     @.$inject = ['$stateParams', 'Position', '$scope', '$state', 'Org']
 
-    constructor: (@params, @Position, @scope, @state, @Org) ->
-        @loadInitialData()
-    loadInitialData: () ->
-        self = @
-        orgId = @params.id
-        posId = @params.posId
-        @Position.$find(posId).$then (position) ->
-            self.scope.currentPos = position
-            # self.scope.copyPos = position.$copy()
+#     constructor: (@params, @Position, @scope, @state, @Org) ->
+#         @loadInitialData()
+#     loadInitialData: () ->
+#         self = @
+#         orgId = @params.id
+#         posId = @params.posId
+#         @Position.$find(posId).$then (position) ->
+#             self.scope.currentPos = position
+#             # self.scope.copyPos = position.$copy()
 
-            spe = position.specification.$fetch()
-            spe.$asPromise().then (spe) ->
-                self.scope.currentSpe = spe
-                # self.scope.copySpe = spe.$copy()
+#             spe = position.specification.$fetch()
+#             spe.$asPromise().then (spe) ->
+#                 self.scope.currentSpe = spe
+#                 # self.scope.copySpe = spe.$copy()
 
 
-        @scope.currentOrg = @Org.$find orgId
+#         @scope.currentOrg = @Org.$find orgId
 
-    updateDetail: (position) ->
-        self = @
-        position.$save().$then () -> self.state.go "^"
-    updateAdvanced: (advance) ->
-        self = @
-        @scope.currentSpe.$update(advance).$then ()->
-            self.state.go '^'
+#     updateDetail: (position) ->
+#         position.$save()
+#     updateAdvanced: (advance) ->
+#         @scope.currentSpe.$update(advance)
 
 
 
+# class PosCreateCtrl extends nb.Controller
+#     @.$inject = ['$stateParams', 'Position', '$scope', 'Org']
 
-class PosCreateCtrl extends nb.Controller
-    @.$inject = ['$stateParams', 'Position', '$scope', 'Org', '$state']
+#     constructor: (@params, @Position, @scope, @Org) ->
+#         @orgId = @params.id
+#         @loadInitialData()
 
-    constructor: (@params, @Position, @scope, @Org, @state) ->
-        @orgId = @params.id
-        @loadInitialData()
-
-    loadInitialData: () ->
-        @scope.currentOrg = @Org.$find @orgId
-    createPos: () ->
-        self = @
-        @position.departmentId = @orgId
-        @position.specification = @specification
-        #将页面跳转放在then里，防止当跳转过去时新创建的岗位未被添加到岗位列表
-        newPos = @Position.$create(@position).$then ()->
-            self.state.go '^'
-    store: (attr, value) ->
-        this[attr] = value
+#     loadInitialData: () ->
+#         @scope.currentOrg = @Org.$find @orgId
+#     createPos: () ->
+#         self = @
+#         @position.departmentId = @orgId
+#         @position.specification = @specification
+#         #将页面跳转放在then里，防止当跳转过去时新创建的岗位未被添加到岗位列表
+#         newPos = @Position.$create(@position)
+#     store: (attr, value) ->
+#         this[attr] = value
 
 
 
