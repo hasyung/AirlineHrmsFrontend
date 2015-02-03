@@ -135,6 +135,14 @@ class perInfoCtrl extends nb.Controller
     loadInitailData: ->
         @scope.selectEmp = @Employee.$find(@stateParams.empId)
 
+    createPerPos: (perPos) ->
+        console.log perPos
+
+    setSelectedOrg: (org) ->
+        console.log org
+        # 返回true是为了能执行后面的closeDialog
+        return true
+
 
 class ResumeCtrl extends Modal
     @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$injector']
