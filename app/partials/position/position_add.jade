@@ -40,7 +40,9 @@
 
             .postadd-form-group
                 label.postadd-control-label 所在部门
-                span.postadd-control-text {{currentOrg.name}}
+                ui-select(ng-model="departmentId" theme="select2" style="width:600px" reset-search-input="true")
+                    ui-select-match(placeholder="请输入机构名称") {{ $item.name }}
+                    ui-select-choices(repeat="org.id as org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
             .postadd-form-group
                 label.postadd-control-label
                 button.btn.btn-info(type="submit" wz-next="ctrl.store('position', position)" ng-disabled="posForm.$invalid") 下一步

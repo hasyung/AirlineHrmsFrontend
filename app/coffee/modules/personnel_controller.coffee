@@ -14,13 +14,21 @@ class Route
         stateProvider
             .state 'personnel', {
                 url: '/personnels'
+                template: '<div ui-view></div>'
+                controller: PersonnelCtrl
+                controllerAs: 'ctrl'
+                abstract:true
+                ncyBreadcrumb: {
+                    label: "人事管理"
+                }
+            }
+            .state 'personnel.list', {
+                url: ''
                 templateUrl: 'partials/personnel/personnel.html'
                 controller: PersonnelCtrl
                 controllerAs: 'ctrl'
                 ncyBreadcrumb: {
-                    label: "人事信息"
-                }
-                resolve: {
+                    label: "人事信息列表"
                 }
             }
             .state 'personnel.detail', {
@@ -33,16 +41,11 @@ class Route
                         templateUrl: 'partials/personnel/info.html'
                     }
                 }
-                
-                resolve: {
-                }
             }
             .state 'personnel.detail.basic',{
                 url: ''
                 views: {
                     "detail@personnel.detail": {
-                        # controller: perInfoCtrl
-                        # controllerAs: 'ctrl'
                         templateUrl: "partials/personnel/info_basic.html"
                     }
                 }
@@ -50,19 +53,6 @@ class Route
                     label: "{{selectEmp.name}}的基本信息"
                 }
             }
-            # .state 'personnel.detail.more',{
-            #     url: '/more'
-            #     views: {
-            #         "detail@personnel.detail": {
-            #             controller: perInfoCtrl
-            #             controllerAs: 'ctrl'
-            #             templateUrl: 'partials/personnel/info_detail.html'
-            #         }
-            #     }
-            #     ncyBreadcrumb: {
-            #         label: "{{selectEmp.name}}的详情信息"
-            #     }
-            # }
             .state 'personnel.detail.editing',{
                 url: '/editing/:template'
                 views: {
@@ -81,6 +71,39 @@ class Route
                 controller: ResumeCtrl
                 templateUrl: 'partials/personnel/personnel_resume.html'
                 size: 'lg'
+            }
+            .state 'personnel.fresh',{
+                url: 'fresh-list'
+                views: {
+                    "@": {
+                        templateUrl: 'partials/personnel/personnel_new_list.html'
+                    }
+                }
+                ncyBreadcrumb: {
+                    label: "新员工列表"
+                }
+            }
+            .state 'personnel.check',{
+                url: '/check-list'
+                template: '<div ui-view></div>'
+                abstract:true
+                ncyBreadcrumb: {
+                    label: "待审核列表"
+                }
+            }
+            .state 'personnel.check.list',{
+                url: ''
+                templateUrl: 'partials/personnel/personnel_check_list.html'
+                ncyBreadcrumb: {
+                    label: "待审核列表"
+                }
+            }
+            .state 'personnel.check.record',{
+                url: '/record'
+                templateUrl: 'partials/personnel/personnel_changes_record.html'
+                ncyBreadcrumb: {
+                    label: "待审核列表"
+                }
             }
 
 class PersonnelCtrl extends nb.Controller
