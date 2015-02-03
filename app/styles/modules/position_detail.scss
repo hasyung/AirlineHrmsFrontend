@@ -187,6 +187,23 @@
 
 
 // 文字排版 typo样式
+
+
+.simditor {
+    width: 60%;
+
+    .simditor-wrapper {
+        width: 100%;
+    }
+
+    .simditor-toolbar > ul > li > .toolbar-item {
+        height: 30px;
+        line-height: 30px;
+        width: 30px;
+    }
+
+}
+
 .simditor .simditor-body,
 .editor-style {
     color: #333;
