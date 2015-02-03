@@ -123,8 +123,9 @@ class Route
                     label: "机构"
                 }
                 resolve: {
-                    eidtMode: ->
+                    eidtMode: ['$scope', ($scope)->
                         return true
+                    ]
                 }
             }
             # .state 'org.revert', Dialog.$build('revert', RevertChangesCtrl, 'partials/orgs/shared/revert_changes.html')

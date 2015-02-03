@@ -69,6 +69,18 @@ restConf = (restmodProvider) ->
 routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider, $breadcrumbProvider) ->
     $locationProvider.html5Mode(false)
 
+    # $stateProvider.decorator 'views', (state, parent) ->
+    #     result = {}
+    #     views = parent(state)
+
+    #     angular.forEach views, (config, name) ->
+    #         autoName = "#{state.name}.#{name}".replace('.','/')
+    #         config.templateUrl = config.templateUrl || "/partials/#{autoName}.html"
+    #         result[name] = config
+
+    #     return result
+
+
     $breadcrumbProvider.setOptions {
         prefixStateName: 'home'
         template: 'bootstrap3'
@@ -132,7 +144,7 @@ App
             $rootScope.loading = false
             toaster.pop(code.name, "提示", info)
 
-        $rootScope.currentUser = User.$fetch();
+        $rootScope.currentUser = User.$fetch()
 
         $rootScope.$state = $state
 
