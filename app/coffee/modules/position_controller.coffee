@@ -44,7 +44,7 @@ class Route
                         controller: PosCtrl
                         controllerAs: 'ctrl'
                         templateUrl: (params) ->
-                            return "partials/orgs/position_edit_#{params.template}.html"
+                            return "partials/position/position_edit_#{params.template}.html"
                     }
                 }
                 ncyBreadcrumb: {
@@ -58,7 +58,7 @@ class Route
                     "@": {
                         controller: PosCreateCtrl
                         controllerAs: 'ctrl'
-                        templateUrl: 'partials/orgs/position_add.html'
+                        templateUrl: 'partials/position/position_add.html'
                     }
                 }
                 ncyBreadcrumb: {
