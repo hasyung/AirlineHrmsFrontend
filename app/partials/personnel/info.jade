@@ -6,24 +6,15 @@
             p(ng-bind="selectEmp.employeeNo")
         .personnel-info-list
             ul
-                li
+                li(ui-sref-active="active")
                     a(ui-sref=".basic")
                         span.switch-circle
-                        | 基本人事信息
+                        | 基本信息
                 //- li
                 //-     a(ui-sref=".more")
                 //-         span.switch-circle
                 //-         | 个人详情信息
-                li
-                    span.switch-circle
-                    | 教育经历
-                li
-                    span.switch-circle
-                    | 工作经历
-                li
-                    span.switch-circle
-                    | 任职记录
-                li
+                li(ui-sref-active="active")
                     span.switch-circle
                     | 培训记录
                 li
@@ -31,7 +22,7 @@
                     | 奖惩记录
                 li
                     span.switch-circle
-                    | 考勤记录
+                    | 考勤信息
                 li
                     span.switch-circle
                     | 绩效考核

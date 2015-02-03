@@ -45,10 +45,26 @@
             height: 50px;
             line-height: 50px;
             padding-left: 40px;
+
+            a {
+                color: $text-color;
+            }
+
+            &:hover {
+                background-color: rgb(230, 230, 230);
+            }
+
+            &.active {
+                background-color: rgb(230, 230, 230);
+
+                .switch-circle {
+                    background-color: $success;
+                }
+            }
         }
 
         .switch-circle {
-            background-color: $success;
+            background-color: rgba(191, 203, 206, 1);
             border-radius: 50%;
             display: inline-block;
             height: 8px;
