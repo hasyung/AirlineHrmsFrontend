@@ -73,7 +73,7 @@ class Route
                 size: 'lg'
             }
             .state 'personnel.fresh',{
-                url: 'fresh-list'
+                url: '/fresh-list'
                 views: {
                     "@": {
                         templateUrl: 'partials/personnel/personnel_new_list.html'
@@ -139,7 +139,8 @@ class perInfoCtrl extends nb.Controller
         console.log perPos
 
     setSelectedOrg: (org) ->
-        console.log org
+        self = @
+        @scope.selectEmp.department = org
         # 返回true是为了能执行后面的closeDialog
         return true
 

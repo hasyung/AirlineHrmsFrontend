@@ -12,10 +12,11 @@ section.personnel-info-control.editing.clearfix
                     tr
                         th 所属部门：
                         td 
-                            button.btn.btn-default.fa.fa-retweet(
+                            input(
                                 title="划转"
                                 nb-dialog="partials/common/org_select.tpl.html"
                                 nb-dialog-scope="this"
+                                ng-model="selectEmp.department.custStr"
                             )
                         th 岗位：
                         td {{::selectEmp.position.name}}

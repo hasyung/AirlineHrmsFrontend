@@ -84,23 +84,28 @@ orgTree = (Org, $parse) ->
             orgRoute = []
             orgRoute.push node
 
-            while node.parent 
+            while node.parent && node.parent.parent_id != 0
                 node = node.parent
                 orgRoute.push node
 
             orgRoute.reverse()
             nameArr = _.map orgRoute, 'name'
+
             return nameArr.join('-')
+
+        # $ctrl.$formatters.push (value)->
+        #     if value
+        #         return setOrgRoute value
+
 
         treeData = scope.treeData.jqTreeful()
         $tree = elem.tree {data: treeData,autoOpen: 0}
         $tree.bind 'tree.select', (evt) ->
             node = evt.node
+            node.custStr = setOrgRoute node
             # setter(scope, getData(node).id)
             $ctrl.$setViewValue(getData(node))
-            routeStr = setOrgRoute node
-            scope.$apply ()->
-                scope.orgRoute = routeStr
+
 
         scope.$on '$destroy', () ->
             $tree.tree('destroy') if $tree && $tree.tree #for nest router
@@ -110,7 +115,6 @@ orgTree = (Org, $parse) ->
         scope: {
             org: "=ngModel"
             treeData: '='
-            orgRoute: '=?'
         }
         require: 'ngModel'
         link: postLink
