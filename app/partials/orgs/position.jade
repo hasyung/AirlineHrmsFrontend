@@ -52,7 +52,10 @@
                 tr(ng-repeat="pos in ctrl.positions track by pos.id")
                     td.has-checkbox(select-row="pos" mode="multiple")
                     td.org-post
-                        a(nb-dialog="partials/orgs/position_detail.html") {{pos.name}}
+                        a(
+                        nb-dialog="partials/orgs/position_detail.html"
+                        nb-dialog-class="ngdialog-theme-panel"
+                        ) {{pos.name}}
                     td(ng-bind="pos.channel.displayName")
                     //- td.org-preparation
                     td
