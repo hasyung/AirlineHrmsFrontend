@@ -113,7 +113,7 @@ angular.module 'nb.directives'
 
                 defaults = ngDialog.getDefaults()
 
-                data = attrs.nbDialogData
+                data = scope.nbDialogData
                 #link https://github.com/angular/angular.js/issues/6404
                 data = scope.prepareData() if attrs.prepareData
 
@@ -137,6 +137,7 @@ angular.module 'nb.directives'
             scope: {
                 nbDialogScope : '='
                 prepareData: '&?'
+                nbDialogData: '='
             }
             link: postLink
         }

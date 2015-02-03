@@ -123,9 +123,8 @@ class Route
                     label: "机构"
                 }
                 resolve: {
-                    eidtMode: ['$scope', ($scope)->
+                    eidtMode: ()->
                         return true
-                    ]
                 }
             }
             # .state 'org.revert', Dialog.$build('revert', RevertChangesCtrl, 'partials/orgs/shared/revert_changes.html')
@@ -251,7 +250,6 @@ class OrgsCtrl extends nb.Controller
         @orgs = @Org.$collection().$fetch({'edit_mode': @eidtMode})
             .$then (orgs) ->
                 treeRootOrg = _.find orgs, (org) -> org.depth == 1
-                Evt.$send('org:link', treeRootOrg)
                 self.buildTree(treeRootOrg)
                 self.treeRootOrg = treeRootOrg
 
@@ -345,7 +343,8 @@ class OrgCtrl extends nb.Controller
     orgLink: (evt, org)->
         @scope.currentOrg = org
         @scope.copyOrg = org.$copy()
-        @loadPosition()
+        @scope.positions = @scope.currentOrg.positions.$fetch().$then (poss) ->
+            console.debug(poss)
 
     cancel: ->
         @state = 'show'
@@ -372,12 +371,6 @@ class OrgCtrl extends nb.Controller
         resetForm(scope.newsubForm, scope.updateForm)
         @state = 'show'
 
-    loadPosition: () ->
-        self = @
-        @scope.positions = @scope.currentOrg.positions.$fetch()
-        # @Position.$search({department_id:@scope.currentOrg.id}).$then (positions) ->
-        #     self.scope.positions = positions
-
     destroy: (isConfirm) ->
         sweet = @sweet
         $Evt = @Evt
@@ -394,11 +387,13 @@ class OrgCtrl extends nb.Controller
 class PositionCtrl extends nb.Controller
     @.$inject = ['$scope', '$nbEvent', 'Position', '$stateParams', 'Org']
     constructor: (@scope, @Evt, @Position, @stateParams, @Org) ->
-        orgId = @stateParams.id
-        @currentOrg = Org.$find(orgId)
-        @positions = @currentOrg.positions.$fetch()
-        @selectOrg = null # 划转所选择的机构 rework
-        @scope.allSelect = false
+        @positions = scope.ngDialogData # from parent ctrl
+        scope.ctrl = this
+        # orgId = @stateParams.id
+        # @currentOrg = Org.$find(orgId)
+        # @positions = @currentOrg.positions.$fetch()
+        # @selectOrg = null # 划转所选择的机构 rework
+        # @scope.allSelect = false
         # @scope.$onRootScope 'position:refresh', @.resetData.bind(@)
 
     getSelectsIds: ()->
@@ -493,6 +488,7 @@ class PosCreateCtrl extends nb.Controller
 app.config(Route)
 app.controller('OrgsCtrl', OrgsCtrl)
 app.controller('OrgCtrl', OrgCtrl)
+app.controller('OrgPosCtrl', PositionCtrl)
 
 
 

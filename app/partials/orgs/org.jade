@@ -90,7 +90,13 @@ aside.org-aside
     section(ng-if="currentOrg.status !== 'destroy_inactive'")
         .org-title
             span 下属岗位信息
-            button.btn.btn-default.fa.fa-cog(title="设置" ui-sref=".position({id:currentOrg.id})")
+            button.btn.btn-default.fa.fa-cog(
+                title="设置岗位"
+                nb-dialog="partials/orgs/position.html"
+                nb-dialog-scope="this"
+                nb-dialog-controller="OrgPosCtrl"
+                nb-dialog-data="positions"
+                )
         div.org-table(slimscroll height="300px")
             table.table.table-striped
                 thead
@@ -99,7 +105,7 @@ aside.org-aside
                         th  编制
                         th  在编人数
                 tbody
-                    tr(ng-repeat="position in positions")
+                    tr(ng-repeat="position in positions track by position.id")
                         td.org-post(ng-click="")
                             a(ui-sref=".position.detail({posId: position.id,id:currentOrg.id})") {{position.name}}
                         td  {{position.budgetedStaffing}}
