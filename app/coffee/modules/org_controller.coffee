@@ -418,12 +418,12 @@ class PositionCtrl extends nb.Controller
         else
             @Evt.$send "position:remove:error", "你还没选择所要删除的岗位"
 
-    getExportParams: () ->
+    getExportParams: (id) ->
         ids = @getSelectsIds()
         if ids.length == 0
-            return 'department_id=' + @currentOrg.id
+            return 'department_id=' + id
         else
-            return 'department_id=' + @currentOrg.id  + '&position_ids=' + ids.join(',')
+            return 'department_id=' + id  + '&position_ids=' + ids.join(',')
     createPos: (newPos) ->
         # self = @
         # @position.departmentId = @orgId

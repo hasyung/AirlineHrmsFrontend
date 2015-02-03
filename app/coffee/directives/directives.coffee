@@ -108,7 +108,7 @@ angular.module 'nb.directives'
             elem.on 'click', (e) ->
                 e.preventDefault()
 
-                dialogScope = `angular.isDefined(scope.nbDialogScope)? scope.nbDialogScope : 'noScope'`
+                dialogScope = `angular.isDefined(scope.nbDialogScope)? scope.nbDialogScope : scope.$parent`
                 angular.isDefined(attrs.nbDialogClosePrevious) && ngDialog.close(attrs.nbDialogClosePrevious)
 
                 defaults = ngDialog.getDefaults()
