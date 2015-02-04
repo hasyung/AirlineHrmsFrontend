@@ -120,7 +120,6 @@ class PosCreateCtrl extends nb.Controller
         newPos = @Position.$create(@position).$then ()->
             self.state.go '^'
     store: (attr, value) ->
-        console.log value
         this[attr] = value
 
 
