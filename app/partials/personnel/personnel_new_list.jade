@@ -20,7 +20,7 @@
                 nb-dropdown( ng-model="$parent.channel_id", remote-key="position_channels", map="$item.id" name="channel_id" required)
 
             div(nb-predicate="属地" predicate-attr="location_id")
-                nb-dropdown( ng-model="$parent.location_id", remote-key="department_locations", map="$item.id" name="location_id" required)
+                nb-dropdown( ng-model="$parent.location_id", remote-key="locations", map="$item.id" name="location_id" required)
 
             div(nb-predicate="出生日期" predicate-attr="birthday")
                 input(ng-model="birthday.from" bs-datepicker)

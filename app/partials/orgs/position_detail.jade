@@ -1,4 +1,4 @@
-.app-content-wrapper(ng-init= "currentPos = ngDialogData; currentSpe = currentPos.specification.$fetch()")
+.app-content-wrapper(ng-init= "currentPos = ngDialogData; currentSpe = currentPos.specification.$refresh()")
     .org-pos-detail-menu
         .org-menu-wrapper
             .org-icon-window
@@ -132,7 +132,7 @@
 
                 .editing(ng-if="editing")
                     .custom-btn-group.pull-right
-                        button.btn.btn-info(ng-click="save(currentPos.$save())") 保存
+                        button.btn.btn-info(ng-click="save(currentSpe.$save())") 保存
                         button.btn.btn-default(ng-click="cancel()") 取消
                     form.editor-style.form-validator-table
                         h3 工作职责
