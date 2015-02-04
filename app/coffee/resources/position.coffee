@@ -7,7 +7,7 @@ Position = (restmod, RMUtils, $Evt) ->
     # restmod.model('/positions')
     Position = restmod.model('/positions').mix 'nbRestApi', {
         department_id: {mask: 'R', map: 'department.id'}
-        department: {mask: 'CU'}
+        department: {mask: 'C'}
         isSelected: {mask: "CU"}
         # 是否超编
         isOverstaffed: {
