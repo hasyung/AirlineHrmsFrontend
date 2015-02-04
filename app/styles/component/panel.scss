@@ -25,7 +25,8 @@
 }
 
 .org-modal-posttop {
-    font-size: $font-size-md;
+    color: $text-title;
+    font-size: $font-size-lg;
     height: 50px;
     line-height: 50px;
     padding-left: 15px;
@@ -61,7 +62,14 @@
     tr {
         cursor: pointer;
 
+        th {
+            color: $text-title;
+            font-size: $font-size-md;
+        }
+
         td {
+            font-size: $font-size-sm;
+
             &.has-checkbox {
                 width: 44px;
 
@@ -76,11 +84,11 @@
         color: $danger;
     }
 
-    tbody > tr:nth-child(even) > td {
+    tbody > tr:nth-child(odd) > td {
         background-color: #fff;
     }
 
-    tbody > tr:nth-child(odd) > td {
+    tbody > tr:nth-child(even) > td {
         background-color: #fafbfc;
     }
 

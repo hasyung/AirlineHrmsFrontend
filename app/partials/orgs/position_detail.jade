@@ -45,7 +45,7 @@
                         button.btn.btn-info(ng-click="save(currentPos.$save())") 保存
                         button.btn.btn-default(ng-click="cancel()") 取消
                     h3 岗位信息
-                    form.editor-style(name="posForm" novalidate)
+                    form.editor-style.form-validator-table(name="posForm" novalidate)
                         table
                             tbody
                                 tr
@@ -134,7 +134,7 @@
                     .custom-btn-group.pull-right
                         button.btn.btn-info(ng-click="save(currentPos.$save())") 保存
                         button.btn.btn-default(ng-click="cancel()") 取消
-                    form.editor-style
+                    form.editor-style.form-validator-table
                         h3 工作职责
                         textarea(
                             simditor

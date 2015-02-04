@@ -199,11 +199,13 @@
             -webkit-animation: ngdialog-flipin-horizontal .5s;
             animation: ngdialog-flipin-horizontal .5s;
             background: #fff;
-            border: 5px solid $focus;
+            border: 1px solid $border-color;
             border-radius: 10px;
+            box-shadow: 0 0 5px 5px rgba(0, 0, 0, .1);
             color: $text-color;
             margin: 0 auto;
             max-width: 100%;
+            overflow: hidden;
             position: relative;
             -ms-transform-style: preserve-3d;
             -webkit-transform-style: preserve-3d;
