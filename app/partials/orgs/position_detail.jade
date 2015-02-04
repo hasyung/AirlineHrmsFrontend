@@ -2,7 +2,7 @@
   .org-pos-detail-menu
     .org-menu-wrapper
       .org-icon-window
-        .org-detail-item1.org-detail-item(ng-class="{'active': ctrl.state.is('org.position.detail')}")
+        .org-detail-item1.org-detail-item(class="active")
         .org-detail-item2.org-detail-item
         .org-detail-item3.org-detail-item
         .org-detail-item4.org-detail-item
@@ -12,7 +12,7 @@
   .org-pos-detail-window.bg-white
     .org-pos-detail-content
       section.position-info
-        button.btn.btn-default.pull-right(ui-sref=".editing({template: 'basic'})") 编辑
+        button.btn.btn-default.pull-right() 编辑
         h3 岗位信息
         .editor-style
           table
@@ -38,7 +38,7 @@
                 th 岗位性质：
                 td {{currentPos.nature.displayName || '无'}}
       section.position-duty
-        button.btn.btn-default.pull-right(ui-sref=".editing({template: 'desc'})") 编辑
+        button.btn.btn-default.pull-right() 编辑
         br
         h3 工作职责
         div(ng-bind-html="currentSpe.duty")

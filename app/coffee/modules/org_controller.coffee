@@ -343,8 +343,7 @@ class OrgCtrl extends nb.Controller
     orgLink: (evt, org)->
         @scope.currentOrg = org
         @scope.copyOrg = org.$copy()
-        @scope.positions = @scope.currentOrg.positions.$fetch().$then (poss) ->
-            console.debug(poss)
+        @scope.positions = @scope.currentOrg.positions.$refresh()
 
     cancel: ->
         @state = 'show'

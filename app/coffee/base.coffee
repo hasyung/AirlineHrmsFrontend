@@ -13,6 +13,7 @@
 #
 
 nb = @.nb
+app = nb.app
 
 class Base
 
@@ -38,3 +39,17 @@ class Controller extends Base
 nb.Base = Base
 nb.Service= Service
 nb.Controller = Controller
+
+
+class EditableResourceCtrl
+    @.$inject = ['$scope']
+    constructor: (scope) ->
+        scope.editing = false
+
+        scope.edit = () ->
+            scope.editing = true
+
+        scope.save = () ->
+            scope.editing = false
+
+app.controller('EditableResource', EditableResourceCtrl)
