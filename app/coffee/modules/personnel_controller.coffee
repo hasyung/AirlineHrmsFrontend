@@ -141,6 +141,7 @@ class perInfoCtrl extends nb.Controller
     setSelectedOrg: (org) ->
         self = @
         @scope.selectEmp.department = org
+        @scope.selectEmp.position = null
         @loadOrgPos()
         # 返回true是为了能执行后面的closeDialog
         return true
