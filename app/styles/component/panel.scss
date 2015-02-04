@@ -56,6 +56,19 @@
     }
 }
 
+.table-container {
+    border: 1px solid #e6e6e6;
+    border-bottom: 0;
+
+    h4 {
+        background-color: $bg-header;
+        color: $text-title;
+        height: 50px;
+        line-height: 50px;
+        padding-left: 40px;
+    }
+}
+
 .custom-table {
     border: 1px solid #e6e6e6;
 
@@ -63,6 +76,7 @@
         cursor: pointer;
 
         th {
+            background-color: #fff;
             color: $text-title;
             font-size: $font-size-md;
         }
