@@ -404,8 +404,8 @@ class OrgCtrl extends nb.Controller
 
 
 class PositionCtrl extends nb.Controller
-    @.$inject = ['$scope', '$nbEvent', 'Position', '$stateParams', 'Org']
-    constructor: (@scope, @Evt, @Position, @stateParams, @Org) ->
+    @.$inject = ['$scope', '$nbEvent', 'Position', '$stateParams', 'Org', 'Specification']
+    constructor: (@scope, @Evt, @Position, @stateParams, @Org, @Specification) ->
         @positions = scope.ngDialogData # from parent ctrl
         scope.ctrl = this
         # orgId = @stateParams.id
@@ -443,12 +443,14 @@ class PositionCtrl extends nb.Controller
             return 'department_id=' + id
         else
             return 'department_id=' + id  + '&position_ids=' + ids.join(',')
-    createPos: (newPos) ->
+    createPos: (newPos, spe) ->
         # self = @
         # @position.departmentId = @orgId
         # @position.specification = @specification
         #将页面跳转放在then里，防止当跳转过去时新创建的岗位未被添加到岗位列表
-        newPos = @positions.$create(newPos)
+        newPos.specification = @Specification.$buildRaw(spe)
+        newPos = @positions.$create(newPos).$then (pos) ->
+            consolde.debug(pos)
 
     search: (tableState) ->
         @positions.$refresh(tableState)
