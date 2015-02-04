@@ -25,8 +25,8 @@ aside.org-aside
                 label.control-label.org-label 编号：
                 .form-content(ng-bind="currentOrg.serialNumber")
             .org-form-group
-                label.control-label.org-label 办公地点：
-                .form-content(ng-bind="currentOrg.location.displayName")
+                label.control-label.org-label 机构性质：
+                .form-content(ng-bind="currentOrg.nature.displayName")
             .org-form-group
                 label.control-label.org-label 职级：
                 .form-content(ng-bind="currentOrg.grade.displayName")
@@ -43,9 +43,9 @@ aside.org-aside
                     label.control-label.org-label 编号：
                     .form-content {{copyOrg.serialNumber}}
                 .org-form-group
-                    label.control-label.org-label.drop-label 办公地点：
+                    label.control-label.org-label.drop-label 机构性质：
                     .form-content
-                        nb-dropdown(ng-model="copyOrg.location" remote-key="department_locations", name="orgAddr", required="true")
+                        nb-dropdown(ng-model="copyOrg.nature" remote-key="department_natures", name="orgAddr", required="true")
                         div(ng-messages="updateForm.orgAddr.$error", ng-if="updateForm.orgAddr.$touched")
                             .form-group-error(ng-message="required") 地点必选
 
@@ -68,9 +68,9 @@ aside.org-aside
                             .form-group-error(ng-message="required") 名称必填
 
                 .org-form-group
-                    label.control-label.org-label.drop-label 办公地点：
+                    label.control-label.org-label.drop-label 机构性质：
                     .form-content
-                        nb-dropdown(ng-model="neworg.location" remote-key="department_locations", required="true", name="orgAddr")
+                        nb-dropdown(ng-model="neworg.nature" remote-key="department_natures", required="true", name="orgAddr")
 
                         div(ng-messages="newsubForm.orgAddr.$error", ng-if="newsubForm.orgAddr.$touched")
                             .form-group-error(ng-message="required") 地点必选
