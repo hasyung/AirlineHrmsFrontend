@@ -456,7 +456,8 @@ nbSelectRowDirective2 = ->
 
         if mode == 'all'
             elem.on 'change', (evt) ->
-                ctrl.selectAll($input.checked)
+                scope.$apply () ->
+                    ctrl.selectAll($input.checked)
         else
             elem.on 'change', (evt)->
                 input = evt.target

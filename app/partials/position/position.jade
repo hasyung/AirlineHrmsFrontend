@@ -5,6 +5,7 @@
                 input(name="name" placeholder="姓名" ng-model="name")
             div(nb-predicate="岗位通道" predicate-attr="channel_id")
                 nb-dropdown( ng-model="channel_id", remote-key="position_channels", map="$item.id" name="channel" required)
+
             div(nb-predicate="创建时间" predicate-attr="created_at")
                 input(ng-model="created_at.from" bs-datepicker)
                 span.gap 至
@@ -17,7 +18,11 @@
             //-     li(ng-model="has_phone") 有电话
             //-     li(ng-model="has_number") 有工号
         button.btn.btn-default.search-commit.fa.fa-search(nb-pipe="ctrl.search(tableState)") 查询
-
+        .pull-right.nb-dropdown(simple-dropdown, btn-text="导出")
+            li( role="presentation")
+                a(role="menuitem" ng-href="/api/positions/export_to_xls" ) 导出全部岗位
+            li( role="presentation")
+                a(role="menuitem" ng-href="/api/positions/export_to_xls?position_ids={{ctrl.getExportParams()}}" ) 导出所选岗位
         table.table.table-striped.custom-table
             thead
                 tr

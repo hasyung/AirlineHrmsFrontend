@@ -120,6 +120,12 @@ class PersonnelCtrl extends nb.Controller
     search: (tableState) ->
         @employees.$refresh(tableState)
 
+    getExportParams: ->
+        @employees
+                .filter (emp) -> emp.isSelected
+                .map (emp) -> emp.id
+                .join(',')
+
 
 
 class perInfoCtrl extends nb.Controller
@@ -153,7 +159,7 @@ class ResumeCtrl extends Modal
     @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$injector']
     constructor: (@dialog, @scope, @Evt, @memoName, @injector) ->
         super(dialog, scope, memoName)
-    
+
 
 
 
