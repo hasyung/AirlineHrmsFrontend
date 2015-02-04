@@ -11,6 +11,7 @@
         .org-detail-item7.org-detail-item
   .org-pos-detail-window.bg-white
     .org-pos-detail-content
+
       section.position-info
         div.showing
           .btn-group.pull-right
@@ -75,47 +76,122 @@
                   th 岗位性质：
                   td
                     //- nb-dropdown
+
       section.position-duty
         .showing
           .custom-btn-group.pull-right
             button.btn.btn-default(ui-sref=".editing({template: 'desc'})") 编辑
           h3 工作职责
           div(ng-bind-html="currentSpe.duty")
+            | 无
         .editing
           .custom-btn-group.pull-right
             button.btn.btn-info() 保存
             button.btn.btn-default() 取消
           h3 工作职责
-          div
+          form.editor-style
             textarea(
             simditor
             toolbar="['bold', 'italic', 'underline', 'ol', 'ul']"
             placeholder="这里输入内容"
             ng-model="currentSpe.duty"
             )
+
       section.position-purview
-        h3 工作权限
-        ol
-          li 人事权限：
-            span {{currentSpe.personnelPermission}}
-          li 财务权限：
-            span {{currentSpe.financialPermission}}
-          li 业务权限：
-            span {{currentSpe.businessPermission}}
+        .showing
+          .custom-btn-group.pull-right
+            button.btn.btn-default(ui-sref=".editing({template: 'desc'})") 编辑
+          h3 工作权限
+          ol
+            li 人事权限：
+              span {{currentSpe.personnelPermission}}
+            li 财务权限：
+              span {{currentSpe.financialPermission}}
+            li 业务权限：
+              span {{currentSpe.businessPermission}}
+        .editing
+          .custom-btn-group.pull-right
+            button.btn.btn-info(ui-sref=".editing({template: 'desc'})") 保存
+            button.btn.btn-default(ui-sref=".editing({template: 'desc'})") 取消
+          h3 工作权限
+          form.editor-style
+            ol
+              li 人事权限：
+                span
+                  input(type="text")
+              li 财务权限：
+                span
+                  input(type="text")
+              li 业务权限：
+                span
+                  input(type="text")
+
       section.position-relative
-        h3 工作关系
-        ol
-          li 直属上级：
-            span {{currentSpe.superior}}
-          li 直属下级：
-            span {{currentSpe.underling}}
-          li 内部联系：
-            span {{currentSpe.internalRelation}}
-          li 外部联系：
-            span {{currentSpe.externalRelation}}
+        .showing
+          .custom-btn-group.pull-right
+            button.btn.btn-default(ui-sref=".editing({template: 'desc'})") 编辑
+          h3 工作关系
+          ol
+            li 直属上级：
+              span {{currentSpe.superior}}
+            li 直属下级：
+              span {{currentSpe.underling}}
+            li 内部联系：
+              span {{currentSpe.internalRelation}}
+            li 外部联系：
+              span {{currentSpe.externalRelation}}
+        .editing
+          .custom-btn-group.pull-right
+            button.btn.btn-info(ui-sref=".editing({template: 'desc'})") 保存
+            button.btn.btn-default(ui-sref=".editing({template: 'desc'})") 取消
+          h3 工作关系
+          form.editor-style
+            ol
+              li 直属上级：
+                span
+                  input(type="text")
+              li 直属下级：
+                span
+                  input(type="text")
+              li 内部联系：
+                span
+                  input(type="text")
+              li 外部联系：
+                span
+                  input(type="text")
+
+
       section.position-qualification
-        h3 任职条件
-        div(ng-bind-html="currentSpe.qualification")
+        .showing
+          .custom-btn-group.pull-right
+            button.btn.btn-default(ui-sref=".editing({template: 'desc'})") 编辑
+          h3 任职条件
+          div(ng-bind-html="currentSpe.qualification")
+            | 无
+        .editing
+          .custom-btn-group.pull-right
+            button.btn.btn-info(ui-sref=".editing({template: 'desc'})") 保存
+            button.btn.btn-default(ui-sref=".editing({template: 'desc'})") 取消
+          h3 任职条件
+          form.editor-style
+            textarea(
+            simditor
+            toolbar="['bold', 'italic', 'underline', 'ol', 'ul']"
+            placeholder="这里输入内容"
+            ng-model="currentSpe.duty"
+            )
+
       section.work-time
-        h3 工作时间
-        p {{currentPos.schedule.displayName || '无'}}
+        .showing
+          .custom-btn-group.pull-right
+            button.btn.btn-default(ui-sref=".editing({template: 'desc'})") 编辑
+          h3 工作时间
+          p {{currentPos.schedule.displayName || '无'}}
+        .editing
+          .custom-btn-group.pull-right
+            button.btn.btn-info(ui-sref=".editing({template: 'desc'})") 保存
+            button.btn.btn-default(ui-sref=".editing({template: 'desc'})") 取消
+          h3 工作时间
+          form.editor-style
+            p
+              nb-dropdown
