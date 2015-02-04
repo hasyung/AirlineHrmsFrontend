@@ -28,6 +28,11 @@
                 input(ng-model="birthday.to" bs-datepicker)
 
             button.btn.btn-primary.search-commit(nb-pipe="ctrl.search(tableState)") 开始搜索
+        .pull-right.nb-dropdown.search-commit(simple-dropdown, btn-text="导出")
+            li( role="presentation")
+                a(role="menuitem" ng-href="" ) 导出全部
+            li( role="presentation")
+                a(role="menuitem" ng-href="" ) 导出所选
 
     .table-container
         h4 人事信息列表
@@ -52,6 +57,6 @@
                     td(ng-bind="::emp.category.displayName")
                     td(ng-bind="::emp.channel.displayName")
                     //- TODO 用工性质
-                    td(ng-bind="::emp.laborRelation.nature.displayName")
-                    td(ng-bind="::emp.entryDate | nbDate:'yyyy-MM-dd'")
+                    td(ng-bind="::emp.laborRelation.name")
+                    td(ng-bind="::emp.joinScalDate | nbDate:'yyyy-MM-dd'")
         .custom-pages(nb-pagination="ctrl.employees.$metadata")

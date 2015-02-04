@@ -1,5 +1,5 @@
 .app-content-wrapper(ng-init="newPos = {departmentId: currentOrg.id}")
-	wizard(on-finish="ctrl.createPos(newPos) && closeThisDialog()")
+	wizard(on-finish="ctrl.createPos(newPos, specification) && closeThisDialog()")
 		form.org-postadd-detail.org-postadd-basic(title="基本信息" wz-step canexit="posForm.$valid" name="posForm" novalidate )
 			.postadd-form-group
 				label.postadd-control-label 岗位名称
@@ -53,32 +53,32 @@
 				textarea(simditor
 					toolbar="['bold', 'italic', 'underline', 'ol', 'ul']"
 					placeholder="这里输入内容"
-					autofocus, ng-model="newPos.specification.duty")
+					autofocus, ng-model="specification.duty")
 			.org-desc-section
 				h3 工作权限
 				.postadd-form-group
 					label.postadd-control-label 人事权限
-					input.postadd-form-control(type='text', placeholder='请输入人事权限', ng-model="newPos.specification.personnelPermission")
+					input.postadd-form-control(type='text', placeholder='请输入人事权限', ng-model="specification.personnelPermission")
 				.postadd-form-group
 					label.postadd-control-label 财务权限
-					input.postadd-form-control(type='text', placeholder='请输入财务权限', ng-model="newPos.specification.financialPermission")
+					input.postadd-form-control(type='text', placeholder='请输入财务权限', ng-model="specification.financialPermission")
 				.postadd-form-group
 					label.postadd-control-label 业务权限
-					input.postadd-form-control(type='text', placeholder='请输入业务权限', ng-model="newPos.specification.businessPermission")
+					input.postadd-form-control(type='text', placeholder='请输入业务权限', ng-model="specification.businessPermission")
 			.org-desc-section
 				h3 工作关系
 				.postadd-form-group
 					label.postadd-control-label 直属上级
-					input.postadd-form-control(type='text', placeholder='请输入直属上级', ng-model="newPos.specification.superior")
+					input.postadd-form-control(type='text', placeholder='请输入直属上级', ng-model="specification.superior")
 				.postadd-form-group
 					label.postadd-control-label 直属下级
-					input.postadd-form-control(type='text', placeholder='请输入直属下级', ng-model="newPos.specification.underling")
+					input.postadd-form-control(type='text', placeholder='请输入直属下级', ng-model="specification.underling")
 				.postadd-form-group
 					label.postadd-control-label 内部联系
-					input.postadd-form-control(type='text', placeholder='请输入内部联系', ng-model="newPos.specification.internalRelation")
+					input.postadd-form-control(type='text', placeholder='请输入内部联系', ng-model="specification.internalRelation")
 				.postadd-form-group
 					label.postadd-control-label 外部联系
-					input.postadd-form-control(type='text', placeholder='请输入外部联系', ng-model="newPos.specification.externalRelation")
+					input.postadd-form-control(type='text', placeholder='请输入外部联系', ng-model="specification.externalRelation")
 				.postadd-form-group
 					h3 任职条件
 					label.postadd-control-label 任职条件
@@ -86,7 +86,7 @@
 						simditor
 						toolbar="['bold', 'italic', 'underline', 'ol', 'ul']"
 						placeholder="这里输入内容"
-						ng-model="newPos.specification.qualification")
+						ng-model="specification.qualification")
 
 				.postadd-form-group
 					label.postadd-control-label
