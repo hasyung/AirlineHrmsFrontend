@@ -42,12 +42,31 @@
                 i.fa.fa-fw.fa-angle-down.text-active
               i.glyphicon.glyphicon-home.nav-text-color1
               span.font-bold 首页
-          li
-            a.auto(ui-sref='personnel')
+          //- li
+          //-   a.auto(ui-sref='personnel')
+          //-     span.pull-right.text-muted
+          //-       i.fa.fa-fw.fa-angle-down.text-active
+          //-     i.fa.fa-group.nav-text-color1
+          //-     span.font-bold 人事信息
+          li(nav-toggle-active)
+            a.auto(ui-sref='personnel.list')
               span.pull-right.text-muted
+                i.fa.fa-fw.fa-angle-right.text
                 i.fa.fa-fw.fa-angle-down.text-active
               i.fa.fa-group.nav-text-color1
-              span.font-bold 人事信息
+              span 人事信息
+            ul.nav.nav-sub.dk
+              li.nav-sub-header
+                a(ui-sref='personnel.list')
+              li
+                a(ui-sref='personnel.list')
+                  span 人事信息
+              li
+                a(ui-sref='personnel.fresh')
+                  span 新员工入职列表
+              li
+                a(ui-sref='personnel.check.list')
+                  span 员工信息変更审核
           li
             a.auto(ui-sref='org')
               span.pull-right.text-muted

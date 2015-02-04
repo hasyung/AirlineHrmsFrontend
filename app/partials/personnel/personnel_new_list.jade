@@ -2,25 +2,25 @@
     div(nb-table='ctrl.positions' nb-safe-src="ctrl.positions")
         div(nb-search)
             div(nb-predicate="名称" predicate-attr="name")
-                input(name="name" placeholder="姓名" ng-model="name")
+                input(name="name" placeholder="姓名" ng-model="$parent.name")
             div(nb-predicate="员工编号" predicate-attr="employee_no")
-                input(name="employee_no" placeholder="工号" ng-model="employee_no")
+                input(name="employee_no" placeholder="工号" ng-model="$parent.employee_no")
             div(nb-predicate="机构" predicate-attr="department_ids")
                 ui-select(multiple ng-model="$parent.department_ids" theme="select2" style="width:600px" reset-search-input="true")
                     ui-select-match(placeholder="请输入机构名称") {{ $item.name }}
                     ui-select-choices(repeat="org.id as org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
 
-            div(nb-predicate="岗位名称" predicate-attr="position_name")
-                input(name="position_name" placeholder="岗位名称" ng-model="position_name")
+            div(nb-predicate="岗位名称" predicate-attr="position_id")
+                input(name="position_name" placeholder="姓名" ng-model="$parent.position_name")
 
             div(nb-predicate="员工分类" predicate-attr="category_id")
-                input(name="category_id" placeholder="员工分类" ng-model="category_id")
+                input(name="category_id" placeholder="姓名" ng-model="$parent.category_id")
 
             div(nb-predicate="岗位通道" predicate-attr="channel_id")
-                nb-dropdown( ng-model="channel_id", remote-key="position_channels", map="$item.id" name="channel_id" required)
+                nb-dropdown( ng-model="$parent.channel_id", remote-key="position_channels", map="$item.id" name="channel_id" required)
 
             div(nb-predicate="属地" predicate-attr="location_id")
-                nb-dropdown( ng-model="location_id", remote-key="department_locations", map="$item.id" name="location_id" required)
+                nb-dropdown( ng-model="$parent.location_id", remote-key="department_locations", map="$item.id" name="location_id" required)
 
             div(nb-predicate="出生日期" predicate-attr="birthday")
                 input(ng-model="birthday.from" bs-datepicker)
@@ -29,9 +29,15 @@
 
         button.btn.btn-default.search-commit.fa.fa-search(nb-pipe="ctrl.search(tableState)") 查询
 
+        .org-modal-posttop 新员工人事信息列表
+            button.btn.btn-default 导出
+            button.btn.btn-default 新员工批量导出
+            button.btn.btn-default(ui-sref=".new") 新员工入职
+
         table.table.table-striped.custom-table
             thead
                 tr
+                    th.has-checkbox
                     th 员工编码
                     th 姓名
                     th 所属部门
@@ -42,6 +48,8 @@
                     th 入职日期
             tbody
                 tr(ng-repeat="emp in ctrl.employees track by emp.id")
+                    td
+                        input(type="checkbox" ng-model="row.iSelected")
                     td(ng-bind="::emp.employeeNo")
                     td.org-post
                         a(ui-sref="^.detail.basic({empId: emp.id})" ng-bind="emp.name")
