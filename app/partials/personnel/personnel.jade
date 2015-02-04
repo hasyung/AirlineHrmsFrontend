@@ -28,6 +28,12 @@
                 input(ng-model="birthday.to" bs-datepicker)
 
         button.btn.btn-default.search-commit.fa.fa-search(nb-pipe="ctrl.search(tableState)") 查询
+        .pull-right.nb-dropdown.search-commit(simple-dropdown, btn-text="导出")
+            li( role="presentation")
+                a(role="menuitem" ng-href="" ) 导出全部
+            li( role="presentation")
+                a(role="menuitem" ng-href="" ) 导出所选
+            
 
         table.table.table-striped.custom-table
             thead
