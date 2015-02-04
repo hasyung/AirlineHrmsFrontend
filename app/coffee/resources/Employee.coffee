@@ -7,6 +7,7 @@ Employee = (restmod, RMUtils, $Evt) ->
     Employee = restmod.model('/employees').mix 'nbRestApi', {
         department_id: {mask: 'R', map: 'department.id'}
         department: {mask: 'CU'}
+
         isSelected: {mask: "CU"}
         # 是否超编
 

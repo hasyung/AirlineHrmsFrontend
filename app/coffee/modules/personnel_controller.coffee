@@ -36,7 +36,7 @@ class Route
                 abstract:true
                 views: {
                     "@": {
-                        controller: perInfoCtrl
+                        controller: PerInfoCtrl
                         controllerAs: 'ctrl'
                         templateUrl: 'partials/personnel/info.html'
                     }
@@ -128,7 +128,7 @@ class PersonnelCtrl extends nb.Controller
 
 
 
-class perInfoCtrl extends nb.Controller
+class PerInfoCtrl extends nb.Controller
 
     @.$inject = ['$scope', 'sweet', 'Employee', '$stateParams', 'Org']
 
