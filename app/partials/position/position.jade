@@ -10,7 +10,7 @@
                 span.gap 至
                 input(ng-model="created_at.to" bs-datepicker)
             div(nb-predicate="机构" predicate-attr="department_ids")
-                ui-select(multiple ng-model="department_ids" theme="select2" style="width:600px" reset-search-input="true")
+                ui-select(multiple ng-model="$parent.department_ids" theme="select2" style="width:600px" reset-search-input="true")
                     ui-select-match(placeholder="请输入机构名称") {{ $item.name }}
                     ui-select-choices(repeat="org.id as org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
             //- ul(nb-predicate-advanced)
