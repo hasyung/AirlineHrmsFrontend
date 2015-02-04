@@ -109,7 +109,12 @@ aside.org-aside
                 tbody
                     tr(ng-repeat="position in positions track by position.id")
                         td.org-post(ng-click="")
-                            a(ui-sref=".position.detail({posId: position.id,id:currentOrg.id})") {{position.name}}
+                            //- a(ui-sref=".position.detail({posId: position.id,id:currentOrg.id})") {{position.name}}
+                            a(
+                                nb-dialog="partials/orgs/position_detail.html"
+                                nb-dialog-class="ngdialog-theme-panel"
+                                nb-dialog-data="position"
+                            ) {{position.name}}
                         td  {{position.budgetedStaffing}}
                         td  {{position.staffing}}
 
