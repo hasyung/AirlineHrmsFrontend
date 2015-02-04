@@ -163,6 +163,12 @@
     section {
         margin-bottom: 46px;
 
+        .custom-btn-group {
+            .btn {
+                margin-left: 15px;
+            }
+        }
+
         h3 {
             color: $text-title;
             font-size: $font-size-md;
@@ -190,11 +196,8 @@
 
 
 .simditor {
+    margin: 0;
     width: 60%;
-
-    .simditor-wrapper {
-        width: 100%;
-    }
 
     .simditor-toolbar > ul > li > .toolbar-item {
         height: 30px;
@@ -393,6 +396,10 @@
 // 岗位信息部分覆盖的文字样式
 .position-info {
     .editor-style {
+        div {
+            margin: 0;
+        }
+
         table {
             width: 60%;
         }

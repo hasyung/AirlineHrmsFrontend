@@ -49,7 +49,20 @@ class EditableResourceCtrl
         scope.edit = () ->
             scope.editing = true
 
-        scope.save = () ->
+        scope.save = (promise) ->
+            if promise
+                if promise.then
+                    promise.then () -> scope.editing = false
+                else if promise.$then
+                    promise.$then () -> scope.editing =false
+                else
+                    throw new Error('promise 参数错误')
+
+            else scope.editing =false
+
+
+
+        scope.cancel = () ->
             scope.editing = false
 
 app.controller('EditableResource', EditableResourceCtrl)
