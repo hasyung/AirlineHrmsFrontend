@@ -73,7 +73,7 @@ class Route
                 size: 'lg'
             }
             .state 'personnel.fresh',{
-                url: 'fresh-list'
+                url: '/fresh-list'
                 views: {
                     "@": {
                         templateUrl: 'partials/personnel/personnel_new_list.html'
@@ -124,16 +124,29 @@ class PersonnelCtrl extends nb.Controller
 
 class perInfoCtrl extends nb.Controller
 
-    @.$inject = ['$scope', 'sweet', 'Employee', '$stateParams']
+    @.$inject = ['$scope', 'sweet', 'Employee', '$stateParams', 'Org']
 
 
-    constructor: (@scope, @sweet, @Employee, @stateParams) ->
+    constructor: (@scope, @sweet, @Employee, @stateParams, @Org) ->
         @loadInitailData()
         @basicEdit = false
         @posEdit = false
 
     loadInitailData: ->
         @scope.selectEmp = @Employee.$find(@stateParams.empId)
+
+    createPerPos: (perPos) ->
+        console.log perPos
+
+    setSelectedOrg: (org) ->
+        self = @
+        @scope.selectEmp.department = org
+        @loadOrgPos()
+        # 返回true是为了能执行后面的closeDialog
+        return true
+    loadOrgPos: ->
+        currentOrg = @Org.$new @scope.selectEmp.department.id
+        @scope.orgPos = currentOrg.positions.$fetch()
 
 
 class ResumeCtrl extends Modal

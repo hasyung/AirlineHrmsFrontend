@@ -1,0 +1,10 @@
+form.clearfix(ng-submit="ctrl.setSelectedOrg(selectedOrg) && closeThisDialog()" name="org_form")
+    .modal-header
+        h4.modal-title 选择机构
+    div(slimscroll height="300px")
+        nb-org-tree(ng-model="selectedOrg" tree-data="allOrgs" org-route="orgRoute" required)
+
+    .button-group.panel-footer.clearfix
+        button.btn.btn-default.btn-sm.pull-right(type='button',ng-click='closeThisDialog()') 取消
+        button.btn.btn-info.btn-sm.pull-right(type='submit' ng-disabled="org_form.$invalid") 确定
+

@@ -1,5 +1,5 @@
 section.personnel-info-control.editing.clearfix
-    form
+    form(ng-submit="ctrl.createPerPos(selectEmp)")
         .btn-group
             button.btn.btn-default(ng-click="ctrl.posEdit=false") 取消
             button.btn.btn-info(type="submit") 保存
@@ -11,9 +11,18 @@ section.personnel-info-control.editing.clearfix
                 tbody
                     tr
                         th 所属部门：
-                        td {{::selectEmp.department.name}}
+                        td 
+                            input(
+                                title="划转"
+                                nb-dialog="partials/common/org_select.tpl.html"
+                                nb-dialog-scope="this"
+                                ng-model="selectEmp.department.custStr"
+                            )
                         th 岗位：
-                        td {{::selectEmp.position.name}}
+                        td 
+                            ui-select(ng-model="selectEmp.position" theme="select2" style="width:600px" required)
+                                ui-select-match(placeholder="请输入机构名称") {{ $select.selected.name }}
+                                ui-select-choices(repeat="pos in orgPos | filter:$select.search | limitTo: 5", refresh="ctrl.loadOrgPos()") {{ pos.name }}
                     tr
                         th 分类：
                         td {{::selectEmp.category.displayName}}
