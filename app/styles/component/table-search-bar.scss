@@ -1,12 +1,11 @@
-.search-container {
-    margin-bottom: 40px;
-    position: relative;
+.btn-export {
+    display: inline-block;
+    margin-right: 100px;
+}
 
-    .search-commit {
-        bottom: 0;
-        left: 16px;
-        position: absolute;
-    }
+.search-btn-group {
+    margin: 10px 0;
+    padding-left: 40px;
 }
 
 .searchbar {
