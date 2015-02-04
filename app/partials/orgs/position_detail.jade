@@ -1,121 +1,121 @@
-.app-content-wrapper
-  .org-pos-detail-menu
-    .org-menu-wrapper
-      .org-icon-window
-        .org-detail-item1.org-detail-item(class="active")
-        .org-detail-item2.org-detail-item
-        .org-detail-item3.org-detail-item
-        .org-detail-item4.org-detail-item
-        .org-detail-item5.org-detail-item
-        .org-detail-item6.org-detail-item
-        .org-detail-item7.org-detail-item
-  .org-pos-detail-window.bg-white
-    .org-pos-detail-content
-      section.position-info
-        div.showing
-          .btn-group.pull-right
-            button.btn.btn-default(ui-sref=".editing({template: 'basic'})") 编辑
-          h3 岗位信息
-          .editor-style
-            table
-              tbody
-                tr
-                  th 岗位名称：
-                  td {{currentPos.name}}
-                  th 编制：
-                  td {{currentPos.budgetedStaffing}}
-                tr
-                  th 所属部门：
-                  td {{currentOrg.name}}
-                  th 工作制度：
-                  td {{currentPos.schedule.displayName || '无'}}
-                tr
-                  th 通道：
-                  td {{currentPos.channel.displayName || '无'}}
-                  th 分类：
-                  td {{currentPos.category.displayName || '无'}}
-                tr
-                  th OA文件编号：
-                  td {{currentPos.oaFileNo}}
-                  th 岗位性质：
-                  td {{currentPos.nature.displayName || '无'}}
-        div.editing
-          .custom-btn-group.pull-right
-            button.btn.btn-info() 保存
-            button.btn.btn-default() 取消
-          h3 岗位信息
-          form.editor-style
-            table
-              tbody
-                tr
-                  th 岗位名称：
-                  td
-                    input(type="text")
-                  th 编制：
-                  td
-                    input(type="text")
-                tr
-                  th 所属部门：
-                  td
-                    //- nb-dropdown
-                  th 工作制度：
-                  td
-                    //- nb-dropdown
-                tr
-                  th 通道：
-                  td
-                    //- nb-dropdown
-                  th 分类：
-                  td
-                    //- nb-dropdown
-                tr
-                  th OA文件编号：
-                  td
-                    input(type="text")
-                  th 岗位性质：
-                  td
-                    //- nb-dropdown
-      section.position-duty
-        .showing
-          .custom-btn-group.pull-right
-            button.btn.btn-default(ui-sref=".editing({template: 'desc'})") 编辑
-          h3 工作职责
-          div(ng-bind-html="currentSpe.duty")
-        .editing
-          .custom-btn-group.pull-right
-            button.btn.btn-info() 保存
-            button.btn.btn-default() 取消
-          h3 工作职责
-          div
-            textarea(
-            simditor
-            toolbar="['bold', 'italic', 'underline', 'ol', 'ul']"
-            placeholder="这里输入内容"
-            ng-model="currentSpe.duty"
-            )
-      section.position-purview
-        h3 工作权限
-        ol
-          li 人事权限：
-            span {{currentSpe.personnelPermission}}
-          li 财务权限：
-            span {{currentSpe.financialPermission}}
-          li 业务权限：
-            span {{currentSpe.businessPermission}}
-      section.position-relative
-        h3 工作关系
-        ol
-          li 直属上级：
-            span {{currentSpe.superior}}
-          li 直属下级：
-            span {{currentSpe.underling}}
-          li 内部联系：
-            span {{currentSpe.internalRelation}}
-          li 外部联系：
-            span {{currentSpe.externalRelation}}
-      section.position-qualification
-        h3 任职条件
-        div(ng-bind-html="currentSpe.qualification")
-      section.work-time
-        h3 工作时间
-        p {{currentPos.schedule.displayName || '无'}}
+.app-content-wrapper(ng-init= "currentPos = ngDialogData; currentSpe = currentPos.specification.$fetch()")
+    .org-pos-detail-menu
+        .org-menu-wrapper
+            .org-icon-window
+                .org-detail-item1.org-detail-item(class="active")
+                .org-detail-item2.org-detail-item
+                .org-detail-item3.org-detail-item
+                .org-detail-item4.org-detail-item
+                .org-detail-item5.org-detail-item
+                .org-detail-item6.org-detail-item
+                .org-detail-item7.org-detail-item
+    .org-pos-detail-window.bg-white
+        .org-pos-detail-content
+            section.position-info(ng-controller="EditableResource")
+                div.showing(ng-hide="editing")
+                    .btn-group.pull-right
+                        button.btn.btn-default(ng-click="edit()") 编辑
+                    h3 岗位信息
+                    .editor-style
+                        table
+                            tbody
+                                tr
+                                    th 岗位名称：
+                                    td {{currentPos.name}}
+                                    th 编制：
+                                    td {{currentPos.budgetedStaffing}}
+                                tr
+                                    th 所属部门：
+                                    td {{currentOrg.name}}
+                                    th 工作制度：
+                                    td {{currentPos.schedule.displayName || '无'}}
+                                tr
+                                    th 通道：
+                                    td {{currentPos.channel.displayName || '无'}}
+                                    th 分类：
+                                    td {{currentPos.category.displayName || '无'}}
+                                tr
+                                    th OA文件编号：
+                                    td {{currentPos.oaFileNo}}
+                                    th 岗位性质：
+                                    td {{currentPos.nature.displayName || '无'}}
+                div.editing(ng-if="editing")
+                    .custom-btn-group.pull-right
+                        button.btn.btn-info(ng-click="save(currentPos.$save())") 保存
+                        button.btn.btn-default(ng-click="cancel()") 取消
+                    h3 岗位信息
+                    form.editor-style
+                        table
+                            tbody
+                                tr
+                                    th 岗位名称：
+                                    td
+                                        input(type="text" ng-model="currentPos.name")
+                                    th 编制：
+                                    td
+                                        input(type="text")
+                                tr
+                                    th 所属部门：
+                                    td
+                                        //- nb-dropdown
+                                    th 工作制度：
+                                    td
+                                        //- nb-dropdown
+                                tr
+                                    th 通道：
+                                    td
+                                        //- nb-dropdown
+                                    th 分类：
+                                    td
+                                        //- nb-dropdown
+                                tr
+                                    th OA文件编号：
+                                    td
+                                        input(type="text")
+                                    th 岗位性质：
+                                    td
+                                        //- nb-dropdown
+            section.position-duty
+                .showing
+                    .custom-btn-group.pull-right
+                        button.btn.btn-default(ui-sref=".editing({template: 'desc'})") 编辑
+                    h3 工作职责
+                    div(ng-bind-html="currentSpe.duty")
+                .editing
+                    .custom-btn-group.pull-right
+                        button.btn.btn-info() 保存
+                        button.btn.btn-default() 取消
+                    h3 工作职责
+                    div
+                        textarea(
+                        simditor
+                        toolbar="['bold', 'italic', 'underline', 'ol', 'ul']"
+                        placeholder="这里输入内容"
+                        ng-model="currentSpe.duty"
+                        )
+            section.position-purview
+                h3 工作权限
+                ol
+                    li 人事权限：
+                        span {{currentSpe.personnelPermission}}
+                    li 财务权限：
+                        span {{currentSpe.financialPermission}}
+                    li 业务权限：
+                        span {{currentSpe.businessPermission}}
+            section.position-relative
+                h3 工作关系
+                ol
+                    li 直属上级：
+                        span {{currentSpe.superior}}
+                    li 直属下级：
+                        span {{currentSpe.underling}}
+                    li 内部联系：
+                        span {{currentSpe.internalRelation}}
+                    li 外部联系：
+                        span {{currentSpe.externalRelation}}
+            section.position-qualification
+                h3 任职条件
+                div(ng-bind-html="currentSpe.qualification")
+            section.work-time
+                h3 工作时间
+                p {{currentPos.schedule.displayName || '无'}}
