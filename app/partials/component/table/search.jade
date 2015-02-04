@@ -5,7 +5,7 @@
             ui-select-choices(repeat="filter in filters track by filter.id")
                 span(ng-bind="filter.name")
                 a.close(ng-click="filter.$destroy()") X
-        a.btn.btn-default.pull-right(nb-dialog="partials/component/table/save_filter_dialog.html" nb-dialog-scope="this") 保存过滤器
+        a.btn.btn-info.pull-right(nb-dialog="partials/component/table/save_filter_dialog.html" nb-dialog-scope="this") 保存过滤器
     //- ul
     //-     li(ng-repeat="filter in filters track by filter.id")
     //-         div(ng-click="ctrl.selectFilter(filter)")

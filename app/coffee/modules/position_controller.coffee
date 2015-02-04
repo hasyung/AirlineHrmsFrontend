@@ -82,6 +82,12 @@ class PositionCtrl extends nb.Controller
     search: (tableState) ->
         @positions.$refresh(tableState)
 
+    getExportParams: () ->
+        @positions
+                .filter (pos) -> pos.isSelected
+                .map (pos) -> pos.id
+                .join(',')
+
 
 class PosCtrl extends nb.Controller
     @.$inject = ['$stateParams', 'Position', '$scope', '$state', 'Org']

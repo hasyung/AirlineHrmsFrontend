@@ -187,12 +187,9 @@
         margin-top: 50px;
 
         button {
-            border-radius: 4px;
             float: right;
-            height: 30px;
             margin-left: 10px;
             outline: none;
-            width: 90px;
 
             &:last-child {
                 margin-left: none;
@@ -247,6 +244,7 @@
         }
 
         .btn-default {
+            box-shadow: 0;
             color: #99a6ad !important;
             float: right;
             margin-right: 10px;

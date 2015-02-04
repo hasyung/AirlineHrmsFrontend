@@ -1,9 +1,20 @@
+.search-container {
+    margin-bottom: 40px;
+    position: relative;
+
+    .search-commit {
+        bottom: 0;
+        left: 16px;
+        position: absolute;
+    }
+}
+
 .searchbar {
     h3 {
-        background-color: #f2f3f8;
-        border: 1px solid #c3c3c3;
+        background-color: $bg-header;
+        border: 1px solid #dde5e7;
         color: $text-title;
-        font-size: $font-size-md;
+        font-size: $font-size-lg;
         height: 55px;
         line-height: 55px;
         padding-left: 40px;
@@ -19,10 +30,10 @@
     }
 
     .search-content {
-        border-bottom: 1px solid #c3c3c3;
-        border-left: 1px solid #c3c3c3;
-        border-right: 1px solid #c3c3c3;
-        padding: 10px;
+        border-bottom: 1px solid #dde5e7;
+        border-left: 1px solid #dde5e7;
+        border-right: 1px solid #dde5e7;
+        padding: 10px 10px 50px;
     }
 
     .search-row {
