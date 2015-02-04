@@ -56,6 +56,6 @@
                     td(ng-bind="::emp.category.displayName")
                     td(ng-bind="::emp.channel.displayName")
                     //- TODO 用工性质
-                    td(ng-bind="::emp.laborRelation.nature.displayName")
-                    td(ng-bind="::emp.entryDate | nbDate:'yyyy-MM-dd'")
+                    td(ng-bind="::emp.laborRelation.name")
+                    td(ng-bind="::emp.joinScalDate | nbDate:'yyyy-MM-dd'")
         .custom-pages(nb-pagination="ctrl.employees.$metadata")
