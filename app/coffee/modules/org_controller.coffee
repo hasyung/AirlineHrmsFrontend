@@ -313,6 +313,7 @@ class OrgsCtrl extends nb.Controller
         @resetData()
 
     resetData: () ->
+        self = @
         @isHistory = false
         @orgs.$refresh({'edit_mode': @eidtMode})
 
@@ -370,8 +371,9 @@ class OrgCtrl extends nb.Controller
 
 
     transfer: (destOrg) ->
-        @scope.currentOrg.transfer(destOrg.id)
-        @Evt.$send 'org:resetData'
+        self = @
+        @scope.currentOrg.transfer(destOrg.id).$then ()->
+            self.Evt.$send 'org:resetData'
 
     newsub: (form, neworg) ->
         $Evt = @Evt
@@ -448,9 +450,10 @@ class PositionCtrl extends nb.Controller
         # @position.departmentId = @orgId
         # @position.specification = @specification
         #将页面跳转放在then里，防止当跳转过去时新创建的岗位未被添加到岗位列表
-        newPos.specification = @Specification.$buildRaw(spe)
-        newPos = @positions.$create(newPos).$then (pos) ->
-            consolde.debug(pos)
+        # newPos.specification = @Specification.$buildRaw(spe)
+        # newPos.specification = spe
+        #bug, 
+        newPos = @positions.$create(newPos).$then (newpos)-> newpos.specification.$update(spe)
 
     search: (tableState) ->
         @positions.$refresh(tableState)
