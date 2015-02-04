@@ -20,7 +20,7 @@
                 nb-dropdown( ng-model="channel_id", remote-key="position_channels", map="$item.id" name="channel_id" required)
 
             div(nb-predicate="属地" predicate-attr="location_id")
-                nb-dropdown( ng-model="location_id", remote-key="department_locations", map="$item.id" name="location_id" required)
+                nb-dropdown( ng-model="location_id", remote-key="locations", map="$item.id" name="location_id" required)
 
             div(nb-predicate="出生日期" predicate-attr="birthday")
                 input(ng-model="birthday.from" bs-datepicker)
@@ -52,6 +52,4 @@
                     //- TODO 用工性质
                     td(ng-bind="::emp.laborRelation.nature.displayName")
                     td(ng-bind="::emp.entryDate | nbDate:'yyyy-MM-dd'")
-            tfoot
-                tr
-                    td(nb-pagination="ctrl.positions.$metadata")
+        .custom-pages(nb-pagination="ctrl.employees.$metadata")
