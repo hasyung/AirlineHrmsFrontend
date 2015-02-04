@@ -124,10 +124,10 @@ class PersonnelCtrl extends nb.Controller
 
 class perInfoCtrl extends nb.Controller
 
-    @.$inject = ['$scope', 'sweet', 'Employee', '$stateParams']
+    @.$inject = ['$scope', 'sweet', 'Employee', '$stateParams', 'Org']
 
 
-    constructor: (@scope, @sweet, @Employee, @stateParams) ->
+    constructor: (@scope, @sweet, @Employee, @stateParams, @Org) ->
         @loadInitailData()
         @basicEdit = false
         @posEdit = false
@@ -143,6 +143,9 @@ class perInfoCtrl extends nb.Controller
         @scope.selectEmp.department = org
         # 返回true是为了能执行后面的closeDialog
         return true
+    loadOrgPos: ->
+        currentOrg = @Org.$new @scope.selectEmp.department.id
+        @scope.orgPos = currentOrg.positions.$fetch()
 
 
 class ResumeCtrl extends Modal

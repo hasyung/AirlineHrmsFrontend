@@ -19,7 +19,10 @@ section.personnel-info-control.editing.clearfix
                                 ng-model="selectEmp.department.custStr"
                             )
                         th 岗位：
-                        td {{::selectEmp.position.name}}
+                        td 
+                            ui-select(ng-model="selectEmp.position" theme="select2" style="width:600px" required)
+                                ui-select-match(placeholder="请输入机构名称") {{ $select.selected.name }}
+                                ui-select-choices(repeat="pos in orgPos | filter:$select.search | limitTo: 5", refresh="ctrl.loadOrgPos()") {{ pos.name }}
                     tr
                         th 分类：
                         td {{::selectEmp.category.displayName}}
