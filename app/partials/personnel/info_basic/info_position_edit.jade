@@ -11,7 +11,7 @@ section.personnel-info-control.editing.clearfix
                 tbody
                     tr
                         th 所属部门：
-                        td 
+                        td
                             input(
                                 title="划转"
                                 nb-dialog="partials/common/org_select.tpl.html"
@@ -19,7 +19,7 @@ section.personnel-info-control.editing.clearfix
                                 ng-model="selectEmp.department.custStr"
                             )
                         th 岗位：
-                        td 
+                        td
                             ui-select(ng-model="selectEmp.position" theme="select2" style="width:600px" required)
                                 ui-select-match(placeholder="请输入机构名称") {{ $select.selected.name }}
                                 ui-select-choices(repeat="pos in orgPos | filter:$select.search | limitTo: 5", refresh="ctrl.loadOrgPos()") {{ pos.name }}
