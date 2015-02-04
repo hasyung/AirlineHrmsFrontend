@@ -4,7 +4,7 @@
 
     .search-commit {
         bottom: 0;
-        left: 20px;
+        left: 16px;
         position: absolute;
     }
 }
@@ -12,7 +12,7 @@
 .searchbar {
     h3 {
         background-color: $bg-header;
-        border: 1px solid #c3c3c3;
+        border: 1px solid #dde5e7;
         color: $text-title;
         font-size: $font-size-lg;
         height: 55px;
@@ -30,9 +30,9 @@
     }
 
     .search-content {
-        border-bottom: 1px solid #c3c3c3;
-        border-left: 1px solid #c3c3c3;
-        border-right: 1px solid #c3c3c3;
+        border-bottom: 1px solid #dde5e7;
+        border-left: 1px solid #dde5e7;
+        border-right: 1px solid #dde5e7;
         padding: 10px 10px 50px;
     }
 
