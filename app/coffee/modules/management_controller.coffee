@@ -8,23 +8,22 @@ Modal = nb.Modal
 
 
 class Route
-    @.$inject = ['$stateProvider']
+    @.$inject = ['$stateProvider', '$urlRouterProvider']
 
-    constructor: (stateProvider) ->
+    constructor: (stateProvider, urlRouterProvider) ->
+
+        urlRouterProvider.when('/self-service', '/self-service/profile')
+
         stateProvider
             .state 'self', {
                 url: '/self-service'
                 template: '<div ui-view="profile"></div>'
-                abstract:true
                 ncyBreadcrumb: {
                     label: "员工自助"
                 }
-                resolve: {
-                }
             }
-            .state 'self.personnel', {
-                url: '/personnel'
-                abstract:true
+            .state 'self.profile', {
+                url: '/profile'
                 views: {
                     "profile@self": {
                         controller: SelfCtrl
@@ -38,10 +37,10 @@ class Route
                 resolve: {
                 }
             }
-            .state 'self.personnel.basic', {
+            .state 'self.profile.basic', {
                 url: ''
                 views: {
-                    "detail@self.personnel": {
+                    "detail@self.profile": {
                         controller: PerInfoCtrl
                         controllerAs: 'ctrl'
                         templateUrl: 'partials/self/self_info_basic/self_info_basic.html'
@@ -54,10 +53,10 @@ class Route
                 resolve: {
                 }
             }
-            .state 'self.personnel.members', {
+            .state 'self.profile.members', {
                 url: '/members'
                 views: {
-                    "detail@self.personnel": {
+                    "detail@self.profile": {
                         controller: PerInfoCtrl
                         controllerAs: 'ctrl'
                         templateUrl: 'partials/self/members.html'
@@ -70,10 +69,10 @@ class Route
                 resolve: {
                 }
             }
-            .state 'self.personnel.education', {
+            .state 'self.profile.education', {
                 url: '/education'
                 views: {
-                    "detail@self.personnel": {
+                    "detail@self.profile": {
                         controller: PerInfoCtrl
                         controllerAs: 'ctrl'
                         templateUrl: 'partials/self/education.html'
@@ -86,10 +85,10 @@ class Route
                 resolve: {
                 }
             }
-            .state 'self.personnel.experience', {
+            .state 'self.profile.experience', {
                 url: '/experience'
                 views: {
-                    "detail@self.personnel": {
+                    "detail@self.profile": {
                         controller: PerInfoCtrl
                         controllerAs: 'ctrl'
                         templateUrl: 'partials/self/experience.html'

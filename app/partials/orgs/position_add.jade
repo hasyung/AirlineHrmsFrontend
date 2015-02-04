@@ -1,5 +1,5 @@
-.app-content-wrapper
-	wizard(on-finish="ctrl.createPos()")
+.app-content-wrapper(ng-init="newPos = {departmentId: currentOrg.id}")
+	wizard(on-finish="ctrl.createPos(newPos) && closeThisDialog()")
 		form.org-postadd-detail.org-postadd-basic(title="基本信息" wz-step canexit="posForm.$valid" name="posForm" novalidate )
 			.postadd-form-group
 				label.postadd-control-label 岗位名称
@@ -8,7 +8,7 @@
 					.form-group-error(ng-message="required") 名称必填
 			.postadd-form-group
 				label.postadd-control-label 岗位通道
-				nb-dropdown( ng-model="position.channel", remote-key="position_channels", name="channel" required)
+				nb-dropdown( ng-model="newPos.channel", remote-key="position_channels", name="channel" required)
 				.form-control-error(ng-messages="posForm.channel.$error", ng-if="posForm.channel.$dirty")
 					.form-group-error(ng-message="required") 通道必选
 			.postadd-form-group
@@ -24,17 +24,17 @@
 					.form-group-error(ng-message="number") 类型必须为数字
 			.postadd-form-group
 				label.postadd-control-label 工时制度
-				nb-dropdown( ng-model="position.schedule" remote-key="position_schedules", required="true", name="schedule")
+				nb-dropdown( ng-model="newPos.schedule" remote-key="position_schedules", required="true", name="schedule")
 				.form-control-error(ng-messages="posForm.schedule.$error", ng-if="posForm.schedule.$dirty")
 					.form-group-error(ng-message="required") 工时必选
 			.postadd-form-group
 				label.postadd-control-label 分类
-				nb-dropdown( ng-model="position.category" remote-key="position_categories", required="true", name="category")
+				nb-dropdown( ng-model="newPos.category" remote-key="position_categories", required="true", name="category")
 				.form-control-error(ng-messages="posForm.category.$error", ng-if="posForm.category.$dirty")
 					.form-group-error(ng-message="required") 类别必选
 			.postadd-form-group
 				label.postadd-control-label 岗位性质
-				nb-dropdown( ng-model="position.nature" remote-key="position_natures", required="true", name="nature")
+				nb-dropdown( ng-model="newPos.nature" remote-key="position_natures", required="true", name="nature")
 				.form-control-error(ng-messages="posForm.nature.$error", ng-if="posForm.nature.$dirty")
 					.form-group-error(ng-message="required") 性质必选
 
@@ -43,45 +43,52 @@
 				span.postadd-control-text {{currentOrg.name}}
 			.postadd-form-group
 				label.postadd-control-label
-				button.btn.btn-info(type="submit" wz-next="ctrl.store('position', position)" ng-disabled="posForm.$invalid") 下一步
+				button.btn.btn-info(type="submit" wz-next="" ng-disabled="posForm.$invalid") 下一步
 
 
 		form.org-postadd-detail.org-postadd-jd(title="岗位说明" wz-step canexit="posAdvancedForm.$valid" name="posAdvancedForm")
 			.org-desc-section
 				h3 工作职责
 				label.postadd-control-label 工作职责
-				textarea(simditor, toolbar="['bold', 'italic', 'underline', 'ol', 'ul']" placeholder="这里输入内容", autofocus, ng-model="specification.duty")
+				textarea(simditor
+					toolbar="['bold', 'italic', 'underline', 'ol', 'ul']"
+					placeholder="这里输入内容"
+					autofocus, ng-model="newPos.specification.duty")
 			.org-desc-section
 				h3 工作权限
 				.postadd-form-group
 					label.postadd-control-label 人事权限
-					input.postadd-form-control(type='text', placeholder='请输入人事权限', ng-model="specification.personnelPermission")
+					input.postadd-form-control(type='text', placeholder='请输入人事权限', ng-model="newPos.specification.personnelPermission")
 				.postadd-form-group
 					label.postadd-control-label 财务权限
-					input.postadd-form-control(type='text', placeholder='请输入财务权限', ng-model="specification.financialPermission")
+					input.postadd-form-control(type='text', placeholder='请输入财务权限', ng-model="newPos.specification.financialPermission")
 				.postadd-form-group
 					label.postadd-control-label 业务权限
-					input.postadd-form-control(type='text', placeholder='请输入业务权限', ng-model="specification.businessPermission")
+					input.postadd-form-control(type='text', placeholder='请输入业务权限', ng-model="newPos.specification.businessPermission")
 			.org-desc-section
 				h3 工作关系
 				.postadd-form-group
 					label.postadd-control-label 直属上级
-					input.postadd-form-control(type='text', placeholder='请输入直属上级', ng-model="specification.superior")
+					input.postadd-form-control(type='text', placeholder='请输入直属上级', ng-model="newPos.specification.superior")
 				.postadd-form-group
 					label.postadd-control-label 直属下级
-					input.postadd-form-control(type='text', placeholder='请输入直属下级', ng-model="specification.underling")
+					input.postadd-form-control(type='text', placeholder='请输入直属下级', ng-model="newPos.specification.underling")
 				.postadd-form-group
 					label.postadd-control-label 内部联系
-					input.postadd-form-control(type='text', placeholder='请输入内部联系', ng-model="specification.internalRelation")
+					input.postadd-form-control(type='text', placeholder='请输入内部联系', ng-model="newPos.specification.internalRelation")
 				.postadd-form-group
 					label.postadd-control-label 外部联系
-					input.postadd-form-control(type='text', placeholder='请输入外部联系', ng-model="specification.externalRelation")
+					input.postadd-form-control(type='text', placeholder='请输入外部联系', ng-model="newPos.specification.externalRelation")
 				.postadd-form-group
 					h3 任职条件
 					label.postadd-control-label 任职条件
-					textarea(simditor, toolbar="['bold', 'italic', 'underline', 'ol', 'ul']" placeholder="这里输入内容", ng-model="specification.qualification")
+					textarea(
+						simditor
+						toolbar="['bold', 'italic', 'underline', 'ol', 'ul']"
+						placeholder="这里输入内容"
+						ng-model="newPos.specification.qualification")
 
 				.postadd-form-group
 					label.postadd-control-label
-					button.btn.btn-info(type='submit' wz-next="ctrl.store('specification', specification)" ng-disabled="posAdvancedForm.$invalid") 完成
+					button.btn.btn-info(type='submit' wz-next="" ng-disabled="posAdvancedForm.$invalid") 完成
 

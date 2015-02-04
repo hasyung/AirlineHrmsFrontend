@@ -13,6 +13,7 @@
 #
 
 nb = @.nb
+app = nb.app
 
 class Base
 
@@ -38,3 +39,30 @@ class Controller extends Base
 nb.Base = Base
 nb.Service= Service
 nb.Controller = Controller
+
+
+class EditableResourceCtrl
+    @.$inject = ['$scope']
+    constructor: (scope) ->
+        scope.editing = false
+
+        scope.edit = () ->
+            scope.editing = true
+
+        scope.save = (promise) ->
+            if promise
+                if promise.then
+                    promise.then () -> scope.editing = false
+                else if promise.$then
+                    promise.$then () -> scope.editing =false
+                else
+                    throw new Error('promise 参数错误')
+
+            else scope.editing =false
+
+
+
+        scope.cancel = () ->
+            scope.editing = false
+
+app.controller('EditableResource', EditableResourceCtrl)

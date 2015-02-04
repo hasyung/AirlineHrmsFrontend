@@ -108,12 +108,12 @@ angular.module 'nb.directives'
             elem.on 'click', (e) ->
                 e.preventDefault()
 
-                dialogScope = `angular.isDefined(scope.nbDialogScope)? scope.nbDialogScope : 'noScope'`
+                dialogScope = `angular.isDefined(scope.nbDialogScope)? scope.nbDialogScope : scope.$parent`
                 angular.isDefined(attrs.nbDialogClosePrevious) && ngDialog.close(attrs.nbDialogClosePrevious)
 
                 defaults = ngDialog.getDefaults()
 
-                data = attrs.nbDialogData
+                data = scope.nbDialogData
                 #link https://github.com/angular/angular.js/issues/6404
                 data = scope.prepareData() if attrs.prepareData
 
@@ -137,6 +137,7 @@ angular.module 'nb.directives'
             scope: {
                 nbDialogScope : '='
                 prepareData: '&?'
+                nbDialogData: '='
             }
             link: postLink
         }

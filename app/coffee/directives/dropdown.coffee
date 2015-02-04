@@ -76,7 +76,7 @@ angular.module 'nb.directives'
             scope.$watch(
                 -> dropdownCtrl.isOpen
                 ,
-                (newValue, oldValue) -> 
+                (newValue, oldValue) ->
                     if newValue == true
                         $doc.on 'click', closeDropdown
                     else
@@ -103,47 +103,7 @@ angular.module 'nb.directives'
 
         }
     ]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     .directive 'simpleDropdown', ['$document', ($doc)->
-
-        class simDropdownCtrl
-            @.$inject = ['$scope', '$attrs']
-            constructor: (@scope, @attrs) ->
-                @scope.isOpen = false
-                if @attrs.btnText
-                    @scope.btnText = @attrs.btnText
-                else
-                    throw Error("btn-text attribute is required")
-            toggle: () ->
-                @scope.isOpen = !@scope.isOpen
 
         postLink = (scope, elem, attr)->
 
@@ -169,18 +129,30 @@ angular.module 'nb.directives'
             replace: true
             scope:{}
             transclude: true
-            template: '<div class="dropdown", ng-class="{\'open\': isOpen}">' +
-                        '  <button ng-click="dropdown.toggle()" class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">' +
-                        '    {{btnText}}' +
-                        '    <span class="caret"></span>' +
-                        '  </button>' +
-                        '  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" ng-transclude>' +
-                        '  </ul>' +
-                        '</div>'
-            controller: simDropdownCtrl
+            template: '''
+            <div class="dropdown", ng-class="{\'open\': isOpen}">
+              <button ng-click="dropdown.toggle()" class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">
+                {{btnText}}
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" ng-if="isOpen" role="menu" aria-labelledby="dropdownMenu1" ng-transclude>
+              </ul>
+            </div>
+            '''
+            controller: SimpleDropdownCtrl
             controllerAs: 'dropdown'
             link: postLink
 
         }
     ]
 
+class SimpleDropdownCtrl
+    @.$inject = ['$scope', '$attrs']
+    constructor: (@scope, @attrs) ->
+        @scope.isOpen = false
+        if @attrs.btnText
+            @scope.btnText = @attrs.btnText
+        else
+            throw Error("btn-text attribute is required")
+    toggle: () ->
+        @scope.isOpen = !@scope.isOpen

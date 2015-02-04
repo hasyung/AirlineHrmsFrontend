@@ -163,6 +163,12 @@
     section {
         margin-bottom: 46px;
 
+        .custom-btn-group {
+            .btn {
+                margin-left: 15px;
+            }
+        }
+
         h3 {
             color: $text-title;
             font-size: $font-size-md;
@@ -187,6 +193,20 @@
 
 
 // 文字排版 typo样式
+
+
+.simditor {
+    margin: 0;
+    width: 60%;
+
+    .simditor-toolbar > ul > li > .toolbar-item {
+        height: 30px;
+        line-height: 30px;
+        width: 30px;
+    }
+
+}
+
 .simditor .simditor-body,
 .editor-style {
     color: #333;
@@ -376,12 +396,17 @@
 // 岗位信息部分覆盖的文字样式
 .position-info {
     .editor-style {
+        div {
+            margin: 0;
+        }
+
         table {
             width: 60%;
         }
 
         th {
             font-weight: normal;
+            height: 40px;
             padding: 0 5px 10px 0;
             width: 120px;
 
@@ -389,6 +414,7 @@
 
         td {
             border: 0;
+            height: 40px;
             padding: 0 5px 10px;
             width: 260px;
         }
