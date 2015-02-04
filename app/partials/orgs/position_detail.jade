@@ -12,36 +12,87 @@
   .org-pos-detail-window.bg-white
     .org-pos-detail-content
       section.position-info
-        button.btn.btn-default.pull-right(ui-sref=".editing({template: 'basic'})") 编辑
-        h3 岗位信息
-        .editor-style
-          table
-            tbody
-              tr
-                th 岗位名称：
-                td {{currentPos.name}}
-                th 编制：
-                td {{currentPos.budgetedStaffing}}
-              tr
-                th 所属部门：
-                td {{currentOrg.name}}
-                th 工作制度：
-                td {{currentPos.schedule.displayName || '无'}}
-              tr
-                th 通道：
-                td {{currentPos.channel.displayName || '无'}}
-                th 分类：
-                td {{currentPos.category.displayName || '无'}}
-              tr
-                th OA文件编号：
-                td {{currentPos.oaFileNo}}
-                th 岗位性质：
-                td {{currentPos.nature.displayName || '无'}}
+        div.showing
+          .btn-group.pull-right
+            button.btn.btn-default(ui-sref=".editing({template: 'basic'})") 编辑
+          h3 岗位信息
+          .editor-style
+            table
+              tbody
+                tr
+                  th 岗位名称：
+                  td {{currentPos.name}}
+                  th 编制：
+                  td {{currentPos.budgetedStaffing}}
+                tr
+                  th 所属部门：
+                  td {{currentOrg.name}}
+                  th 工作制度：
+                  td {{currentPos.schedule.displayName || '无'}}
+                tr
+                  th 通道：
+                  td {{currentPos.channel.displayName || '无'}}
+                  th 分类：
+                  td {{currentPos.category.displayName || '无'}}
+                tr
+                  th OA文件编号：
+                  td {{currentPos.oaFileNo}}
+                  th 岗位性质：
+                  td {{currentPos.nature.displayName || '无'}}
+        div.editing
+          .custom-btn-group.pull-right
+            button.btn.btn-info() 保存
+            button.btn.btn-default() 取消
+          h3 岗位信息
+          form.editor-style
+            table
+              tbody
+                tr
+                  th 岗位名称：
+                  td
+                    input(type="text")
+                  th 编制：
+                  td
+                    input(type="text")
+                tr
+                  th 所属部门：
+                  td
+                    //- nb-dropdown
+                  th 工作制度：
+                  td
+                    //- nb-dropdown
+                tr
+                  th 通道：
+                  td
+                    //- nb-dropdown
+                  th 分类：
+                  td
+                    //- nb-dropdown
+                tr
+                  th OA文件编号：
+                  td
+                    input(type="text")
+                  th 岗位性质：
+                  td
+                    //- nb-dropdown
       section.position-duty
-        button.btn.btn-default.pull-right(ui-sref=".editing({template: 'desc'})") 编辑
-        br
-        h3 工作职责
-        div(ng-bind-html="currentSpe.duty")
+        .showing
+          .custom-btn-group.pull-right
+            button.btn.btn-default(ui-sref=".editing({template: 'desc'})") 编辑
+          h3 工作职责
+          div(ng-bind-html="currentSpe.duty")
+        .editing
+          .custom-btn-group.pull-right
+            button.btn.btn-info() 保存
+            button.btn.btn-default() 取消
+          h3 工作职责
+          div
+            textarea(
+            simditor
+            toolbar="['bold', 'italic', 'underline', 'ol', 'ul']"
+            placeholder="这里输入内容"
+            ng-model="currentSpe.duty"
+            )
       section.position-purview
         h3 工作权限
         ol
