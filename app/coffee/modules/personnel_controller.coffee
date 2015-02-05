@@ -76,6 +76,8 @@ class Route
                 url: '/fresh-list'
                 views: {
                     "@": {
+                        controller: NewEmpsCtrl
+                        controllerAs: 'ctrl'
                         templateUrl: 'partials/personnel/personnel_new_list.html'
                     }
                 }
@@ -126,8 +128,6 @@ class PersonnelCtrl extends nb.Controller
                 .map (emp) -> emp.id
                 .join(',')
 
-
-
 class PerInfoCtrl extends nb.Controller
 
     @.$inject = ['$scope', 'sweet', 'Employee', '$stateParams', 'Org']
@@ -139,13 +139,12 @@ class PerInfoCtrl extends nb.Controller
         @posEdit = false
 
     loadInitailData: ->
-        @scope.selectEmp = @Employee.$find(@stateParams.empId)
+        # @scope.selectEmp = @Employee.$find(@stateParams.empId)
 
     createPerPos: (perPos) ->
         console.log perPos
 
     setSelectedOrg: (org) ->
-        self = @
         @scope.selectEmp.department = org
         @scope.selectEmp.position = null
         @loadOrgPos()
@@ -154,6 +153,36 @@ class PerInfoCtrl extends nb.Controller
     loadOrgPos: ->
         currentOrg = @Org.$new @scope.selectEmp.department.id
         @scope.orgPos = currentOrg.positions.$fetch()
+
+class NewEmpsCtrl extends nb.Controller
+    @.$inject = ['$scope', 'Employee']
+    constructor: (@scope, @Employee) ->
+        @loadInitailData()
+
+    loadInitailData: ->
+        date = new Date()
+        @scope.newEmps = @Employee.$collection().$fetch({'sort': 'desc'})
+
+    regEmployee: (employee)->
+        @Employee.$build(employee).$save()
+
+    getExportParams: ->
+        @scope.newEmps
+                .filter (emp) -> emp.isSelected
+                .map (emp) -> emp.id
+                .join(',')
+
+
+class RegEmployeeCtrl extends nb.Controller
+
+    @.$inject = ['$scope', 'Employee']
+
+    constructor: (@scope, @Employee) ->
+        @scope.test = "test"
+    regEmployee: (employee)->
+        console.log employee
+
+        
 
 
 class ResumeCtrl extends Modal
@@ -168,3 +197,5 @@ class ResumeCtrl extends Modal
 
 
 app.config(Route)
+app.controller('PerInfoCtrl', PerInfoCtrl)
+app.controller('RegEmployeeCtrl', RegEmployeeCtrl)

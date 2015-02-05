@@ -16,6 +16,7 @@ Employee = (restmod, RMUtils, $Evt) ->
         }
         $extend:
             Collection: {}
+        
 
     }
 
