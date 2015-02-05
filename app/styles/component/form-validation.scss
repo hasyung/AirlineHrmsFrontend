@@ -186,4 +186,30 @@
             border-color: $success;
         }
     }
+
+    .ui-select-container.select2 {
+        background-image: none;
+        width: 150px;
+
+        .ui-select-match {
+            background-color: #fff;
+            border-radius: 0;
+            height: 35px;
+            line-height: 35px;
+        }
+
+        .select2-drop {
+            input {
+                background-image: none;
+                border-color: #cfdadd;
+                width: 100%;
+            }
+
+            ul {
+                margin: 0;
+                padding: 0;
+            }
+        }
+    }
 }
+
