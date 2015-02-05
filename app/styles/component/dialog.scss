@@ -281,9 +281,9 @@
         .ngdialog-content {
             -webkit-animation: ngdialog-scrollin .5s;
             animation: ngdialog-scrollin .5s;
-            background: #f0f0f0;
+            background: #fff;
             // border-radius: 5px;
-            color: #444;
+            color: $text-color;
             font-family: 'Helvetica',sans-serif;
             font-size: 1.1em;
             height: 100%;

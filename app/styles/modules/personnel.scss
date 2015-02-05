@@ -80,6 +80,11 @@
     padding: 32px;
     width: calc(100% - 270px);
 
+    &.personnel-control {
+        padding: 0;
+        width: calc(100%);
+    }
+
     .personnel-info-section {
         margin-bottom: 30px;
     }
@@ -106,7 +111,8 @@
 
     .personnel-top-header {
         background-color: #f2f3f8;
-        border: 1px solid #c3c3c3;
+        border-bottom: 1px solid #c3c3c3;
+        border-top: 1px solid #c3c3c3;
         font-size: 14px;
         height: 50px;
         padding-left: 40px;
@@ -120,11 +126,25 @@
 
     .personnel-content-body {
         background-color: #fff;
-        border: 1px solid #c3c3c3;
+        // border: 1px solid #c3c3c3;
         border-top: 0;
         width: 100%;
 
         .personnel-section-wrap {
+            position: relative;
+
+            .btn-group {
+                position: absolute;
+                right: 20px;
+                top: 10px;
+                visibility: hidden;
+                z-index: 10;
+
+                .btn {
+                    margin-left: 10px;
+                }
+            }
+
             &:nth-child(odd) {
                 background-color: #fff;
             }
@@ -141,7 +161,7 @@
         }
 
         .personnel-info-control {
-            padding: 40px;
+            padding: 50px;
             position: relative;
 
             &.editing {
@@ -178,6 +198,7 @@
         .personnel-item-desc {
             border-radius: 15px;
             color: #fff;
+            font-size: $font-size-sm;
             font-weight: bold;
             height: 25px;
             line-height: 25px;

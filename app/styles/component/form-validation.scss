@@ -189,6 +189,9 @@
 
     .ui-select-container.select2 {
         background-image: none;
+        height: 35px;
+        margin: 0;
+        vertical-align: middle;
         width: 150px;
 
         .ui-select-match {

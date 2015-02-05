@@ -20,8 +20,8 @@ section.personnel-info-control.editing.clearfix
                             )
                         th 岗位：
                         td
-                            ui-select(ng-model="selectEmp.position" theme="select2" style="width:600px" required)
-                                ui-select-match(placeholder="请输入机构名称") {{ $select.selected.name }}
+                            ui-select(ng-model="selectEmp.position" theme="select2" required)
+                                ui-select-match(placeholder="请输入岗位名称") {{ $select.selected.name }}
                                 ui-select-choices(repeat="pos in orgPos | filter:$select.search | limitTo: 5", refresh="ctrl.loadOrgPos()") {{ pos.name }}
                     tr
                         th 分类：
@@ -41,35 +41,3 @@ section.personnel-info-control.editing.clearfix
                                 name="location", required)
                         th 用工关系状态：
                         td 字段未知
-//- =======
-//- section.personnel-info-control.editing.clearfix
-//-     .personnel-info-left.pull-left
-//-         .personnel-item-icon.personnel-item2
-//-         .personnel-item-desc.bg-success 岗位信息
-//-     .personnel-info-right.editor-style.pull-left
-//-         table.form-validator-table
-//-             tbody
-//-                 tr
-//-                     th 所属部门：
-//-                     td {{::selectEmp.department.name}}
-//-                     th 岗位：
-//-                     td {{::selectEmp.position.name}}
-//-                 tr
-//-                     th 分类：
-//-                     td {{::selectEmp.category.displayName}}
-//-                     th 通道：
-//-                     td {{::selectEmp.channel.displayName}}
-//-                 tr
-//-                     th 类别：
-//-                     td {{::selectEmp.position.postType}}
-//-                     th 用工性质：
-//-                     td {{::selectEmp.laborRelation.nature.displayName}}
-//-                 tr
-//-                     th 属地化地点：
-//-                     td
-//-                         nb-dropdown(
-//-                             ng-model="selectEmp.location", remote-key="locations",
-//-                             name="location", required)
-//-                     th 用工关系状态：
-//-                     td 字段未知
-//- >>>>>>> f4d96b57078481a5a4a8a2c87370a59a3f1b7cb2
