@@ -1,4 +1,4 @@
-.app-content-wrapper(ng-init="newPos = {departmentId: currentOrg.id}")
+.app-content-wrapper(ng-init="newPos = {departmentId: currentOrg.id}; specification = {}")
 	wizard(on-finish="ctrl.createPos(newPos, specification) && closeThisDialog()")
 		form.org-postadd-detail.org-postadd-basic(title="基本信息" wz-step canexit="posForm.$valid" name="posForm" novalidate )
 			.postadd-form-group
