@@ -57,7 +57,9 @@
                             a(
                                 nb-dialog="partials/personnel/info_basic.html"
                                 nb-dialog-class="ngdialog-theme-panel"
+                                nb-dialog-controller="PerInfoCtrl"
                                 nb-dialog-data="emp"
+                                nb-dialog-scope="this"
                             ) {{emp.name}}
                         td(ng-bind="::emp.department.name")
                         td(ng-bind="::emp.position.name")
