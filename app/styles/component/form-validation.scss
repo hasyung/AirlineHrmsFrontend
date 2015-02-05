@@ -127,7 +127,7 @@
     }
 }
 
-//人事信息部分 表单样式
+//人事信息部分 表单样式 table风格表单
 .form-validator-table {
     input {
         background-color: #fff;
@@ -184,6 +184,34 @@
     .ng-dirty.ng-valid {
         .dropdown-toggle {
             border-color: $success;
+        }
+    }
+
+    .ui-select-container.select2 {
+        background-image: none;
+        height: 35px;
+        margin: 0;
+        vertical-align: middle;
+        width: 150px;
+
+        .ui-select-match {
+            background-color: #fff;
+            border-radius: 0;
+            height: 35px;
+            line-height: 35px;
+        }
+
+        .select2-drop {
+            input {
+                background-image: none;
+                border-color: #cfdadd;
+                width: 100%;
+            }
+
+            ul {
+                margin: 0;
+                padding: 0;
+            }
         }
     }
 }

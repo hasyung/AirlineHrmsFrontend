@@ -63,7 +63,7 @@
                                 tr
                                     th 所属部门：
                                     td
-                                        ui-select(ng-model="currentPos.department" theme="select2" style="width:30%;" required)
+                                        ui-select(ng-model="currentPos.department" theme="select2" required)
                                             ui-select-match(placeholder="请输入机构名称") {{ $select.selected.name }}
                                             ui-select-choices(repeat="org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
                                     th 工作制度：
