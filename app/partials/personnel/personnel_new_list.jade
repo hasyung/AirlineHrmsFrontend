@@ -32,7 +32,10 @@
         .org-modal-posttop 新员工人事信息列表
             button.btn.btn-default 导出
             button.btn.btn-default 新员工批量导出
-            button.btn.btn-default(ui-sref=".new") 新员工入职
+            button.btn.btn-default(
+                nb-dialog="partials/personnel/personnel_entry.html"
+                nb-dialog-class="ngdialog-theme-panel"
+            ) 新员工入职
 
         table.table.table-striped.custom-table
             thead
@@ -52,7 +55,12 @@
                         input(type="checkbox" ng-model="row.iSelected")
                     td(ng-bind="::emp.employeeNo")
                     td.org-post
-                        a(ui-sref="^.detail.basic({empId: emp.id})" ng-bind="emp.name")
+                        //- a(ui-sref="^.detail.basic({empId: emp.id})" ng-bind="emp.name")
+                        a(
+                            nb-dialog="partials/personnel/info_basic.html"
+                            nb-dialog-class="ngdialog-theme-panel"
+                            nb-dialog-data="emp"
+                        ) {{emp.name}}
                     td(ng-bind="::emp.department.name")
                     td(ng-bind="::emp.position.name")
                     td(ng-bind="::emp.category.displayName")

@@ -170,9 +170,12 @@ Org = (restmod, RMUtils, $Evt) ->
                         return false if orgItem.depth - rootDepth > DEPTH
 
                         isChild = _.str.startsWith(orgItem.serial_number,rootSerialNumber) #子机构的serialNumber number 前缀和父机构相同
-                        isModified = true if isChild and IneffectiveOrg(orgItem)
+                        # isModified = true if isChild and IneffectiveOrg(orgItem)
 
                         return isChild
+                    #待优化
+                    _.forEach cachedIndexOrgs, (orgItem) ->
+                        isModified = true if IneffectiveOrg(orgItem)
 
                     treeData = transform(treeData, {'name': 'title'})
                     treeData = treeful(treeData, DEPTH, org)

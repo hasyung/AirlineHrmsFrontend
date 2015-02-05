@@ -1,14 +1,24 @@
-section.personnel-info-section
-	.personnel-top-header
-		h4.pull-left 基本人事信息
-	.personnel-content-body
-		//- include info_basic/info_basic_section
-		//- include info_basic/info_position_section
-		div.personnel-section-wrap(ng-if="ctrl.basicEdit == true")
-			include info_basic/info_basic_edit
-		div.personnel-section-wrap(ng-if="ctrl.basicEdit == false")
-			include info_basic/info_basic_section
-		div.personnel-section-wrap(ng-if="ctrl.posEdit == true")
-			include info_basic/info_position_edit
-		div.personnel-section-wrap(ng-if="ctrl.posEdit == false")
-			include info_basic/info_position_section
+section.personnel-info-section(ng-init= "selectEmp = ngDialogData")
+  .personnel-top-header
+    h4.pull-left 基本人事信息
+  .personnel-content-body
+    section.personnel-section-wrap(ng-controller="EditableResource")
+      div.showing(ng-hide="editing")
+        .btn-group.pull-right
+          button.btn.btn-default(ng-click="edit()") 编辑
+        include info_basic/info_basic_section
+      div.editing(ng-if="editing")
+        .custom-btn-group.pull-right
+          button.btn.btn-info(ng-click="save(selectEmp.$save())") 保存
+          button.btn.btn-default(ng-click="cancel()") 取消
+        include info_basic/info_basic_edit
+    section.personnel-section-wrap(ng-controller="EditableResource")
+      div.showing(ng-hide="editing")
+        .btn-group.pull-right
+          button.btn.btn-default(ng-click="edit()") 编辑
+        include info_basic/info_position_section
+      div.editing(ng-if="editing")
+        .custom-btn-group.pull-right
+          button.btn.btn-info(ng-click="save(selectEmp.$save())") 保存
+          button.btn.btn-default(ng-click="cancel()") 取消
+        include info_basic/info_position_edit
