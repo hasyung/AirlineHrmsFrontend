@@ -306,10 +306,21 @@
     }
 }
 
-// .resume-footer {
+.btn-group-actions {
+    height: 40px;
+    margin: 20px auto;
+    width: 300px;
 
-// }
+    .btn {
+        &:first-child {
+            float: left;
+        }
 
-// resume end
+        &:last-child {
+            float: right;
+        }
+    }
+
+}
 
 
