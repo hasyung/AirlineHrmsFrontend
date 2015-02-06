@@ -37,7 +37,7 @@ class TabsetCtrl
         if tab.active && @tabs.length > 1 && @destroyed
             newActiveIndex = index = if @tabs.length - 1 then index - 1 else index + 1
             @select(@tabs[newActiveIndex])
-        tabs.splice(index, 1)
+        @tabs.splice(index, 1)
 
 
 tabsetDirective = ->
