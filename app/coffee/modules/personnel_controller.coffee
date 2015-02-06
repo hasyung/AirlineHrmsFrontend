@@ -177,7 +177,6 @@ class NewEmpsCtrl extends nb.Controller
 
         @scope.newEmps = @Employee.$collection(collection_param).$fetch()
     regEmployee: (employee)->
-        console.log employee
         @Employee.$build(employee).$save()
 
     getExportParams: ->
