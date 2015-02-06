@@ -87,6 +87,7 @@ paths =
         'deps/angular-cookies/angular-cookies.js'
         'deps/angular-restmod/dist/angular-restmod-bundle.js'
         'deps/angular-restmod/dist/styles/ams.js'
+        'deps/angular-restmod/dist/plugins/dirty.js'
         'deps/angular-messages/angular-messages.js'
         'deps/angular-animate/angular-animate.js'
         'deps/angular-sanitize/angular-sanitize.js'

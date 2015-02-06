@@ -41,11 +41,11 @@
                                     th 岗位性质：
                                     td {{currentPos.nature.displayName || '无'}}
                 div.editing(ng-if="editing")
-                    .custom-btn-group.pull-right
-                        button.btn.btn-info(ng-click="save(currentPos.$save())") 保存
-                        button.btn.btn-default(ng-click="cancel()") 取消
                     h3 岗位信息
-                    form.editor-style.form-validator-table(name="posForm" novalidate)
+                    form.editor-style.form-validator-table(name="posForm" novalidate ng-submit="save(currentPos.$save())")
+                        .custom-btn-group.pull-right
+                            button.btn.btn-info(type="submit") 保存
+                            button.btn.btn-default(ng-click="cancel() &&  currentPos.$restore()") 取消
                         table
                             tbody
                                 tr
