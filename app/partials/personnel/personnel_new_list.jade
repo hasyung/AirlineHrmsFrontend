@@ -56,7 +56,7 @@
                         th 用工性质
                         th 入职日期
                 tbody
-                    tr(ng-repeat="emp in ctrl.employees track by emp.id")
+                    tr(ng-repeat="emp in newEmps track by emp.id")
                         td(select-row="emp" mode="multiple")
                         td(ng-bind="::emp.employeeNo")
                         td.org-post

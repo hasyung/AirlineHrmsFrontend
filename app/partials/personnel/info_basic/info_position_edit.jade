@@ -24,20 +24,16 @@ section.personnel-info-control.editing.clearfix
                                 ui-select-match(placeholder="请输入岗位名称") {{ $select.selected.name }}
                                 ui-select-choices(repeat="pos in orgPos | filter:$select.search | limitTo: 5", refresh="ctrl.loadOrgPos()") {{ pos.name }}
                     tr
-                        th 分类：
-                        td {{::selectEmp.category.displayName}}
-                        th 通道：
-                        td {{::selectEmp.channel.displayName}}
-                    tr
-                        th 类别：
-                        td {{::selectEmp.position.postType}}
                         th 用工性质：
-                        td {{::selectEmp.laborRelation.nature.displayName}}
+                        td 
+                            nb-dropdown(
+                                ng-model="selectEmp.laborRelation", remote-key="labor_natures",
+                                name="labor_natures", required)
+                        th 用工关系状态：
+                        td 字段未知
                     tr
                         th 属地化地点：
                         td
                             nb-dropdown(
                                 ng-model="selectEmp.location", remote-key="locations",
                                 name="location", required)
-                        th 用工关系状态：
-                        td 字段未知

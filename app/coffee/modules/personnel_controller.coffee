@@ -160,9 +160,20 @@ class NewEmpsCtrl extends nb.Controller
         @loadInitailData()
 
     loadInitailData: ->
-        date = new Date()
-        @scope.newEmps = @Employee.$collection().$fetch({'sort': 'desc'})
 
+        collection_param = {
+            predicate: {
+                join_scal_date: {
+                    from: moment().startOf('year').format("YYYY-MM-DD")
+                    to: moment().format("YYYY-MM-DD")
+                }
+            }
+            sort: {
+                join_scal_date: 'desc'
+            }
+        }
+
+        @scope.newEmps = @Employee.$collection(collection_param).$fetch()
     regEmployee: (employee)->
         @Employee.$build(employee).$save()
 

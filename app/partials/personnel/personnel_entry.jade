@@ -3,7 +3,7 @@
         .personnel-top-header
             h4.pull-left 新员工入职信息填写
         .personnel-content-body
-            form(ng-submit="regEmployee(newEmp)")
+            form(ng-submit="regEmployee(newEmp)" name="newEmpForm")
                 section.personnel-section-wrap()
                     section.personnel-info-control.clearfix
                         .personnel-info-left.pull-left
@@ -19,7 +19,7 @@
                                     .form-group
                                         label.control-label.col-md-3 性别：
                                         div.col-md-5
-                                            nb-dropdown(ng-model="newEmp.gender")
+                                            nb-dropdown(ng-model="newEmp.gender", remote-key="genders")
                                     .form-group
                                         label.control-label.col-md-3 身份证号码：
                                         div.col-md-5
@@ -27,15 +27,15 @@
                                     .form-group
                                         label.control-label.col-md-3 政治面貌：
                                         div.col-md-5
-                                            nb-dropdown(ng-model="newEmp.politicalStatus")
+                                            nb-dropdown(ng-model="newEmp.politicalStatus", remote-key="political_status")
                                     .form-group
                                         label.control-label.col-md-3 学历：
                                         div.col-md-5
-                                            nb-dropdown(ng-model="newEmp.educationBackgroud")
+                                            nb-dropdown(ng-model="newEmp.educationBackgroud", remote-key="education_backgrounds")
                                     .form-group
                                         label.control-label.col-md-3 学位：
                                         div.col-md-5
-                                            nb-dropdown(ng-model="newEmp.degree")
+                                            nb-dropdown(ng-model="newEmp.degree", remote-key="degrees")
                                     .form-group
                                         label.control-label.col-md-3 毕业院校：
                                         div.col-md-5
@@ -47,7 +47,7 @@
                                     .form-group
                                         label.control-label.col-md-3 英语等级：
                                         div.col-md-5
-                                            nb-dropdown(ng-model="newEmp.englishLevel")
+                                            nb-dropdown(ng-model="newEmp.englishLevel", remote-key="english_levels")
                                     .form-group
                                         label.control-label.col-md-3 手机号码：
                                         div.col-md-5
@@ -76,15 +76,15 @@
                                         .form-group
                                             label.control-label.col-md-3 属地化地点：
                                             div.col-md-5
-                                                nb-dropdown(ng-model="newEmp.location")
+                                                nb-dropdown(ng-model="newEmp.location", remote-key="degrees")
                                         .form-group
                                             label.control-label.col-md-3 用工性质：
                                             div.col-md-5
-                                                nb-dropdown(ng-model="newEmp.laborRelation")
+                                                nb-dropdown(ng-model="newEmp.laborRelation", remote-key="degrees")
                                         .form-group
                                             label.control-label.col-md-3 用工关系状态：
                                             div.col-md-5
-                                                nb-dropdown(ng-model="newEmp.employeeStatus")
+                                                nb-dropdown(ng-model="newEmp.employeeStatus", remote-key="degrees")
                     .btn-group-actions
                         button.btn.btn-info(type="submit") 保 存
                         button.btn.btn-default() 取 消

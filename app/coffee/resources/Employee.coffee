@@ -5,9 +5,9 @@ resources = angular.module('resources')
 Employee = (restmod, RMUtils, $Evt) ->
 
     Employee = restmod.model('/employees').mix 'nbRestApi', {
-        department_id: {mask: 'R', map: 'department.id'}
+        departmentId: {mask: 'R', map: 'department.id'}
         department: {mask: 'CU'}
-
+        joinScalDate: {decode: 'date', param: 'yyyy年mm月dd日',mask: 'CU'}
         isSelected: {mask: "CU"}
         # 是否超编
 
