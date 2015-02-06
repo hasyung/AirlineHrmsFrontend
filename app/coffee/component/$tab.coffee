@@ -10,10 +10,11 @@ class TabsetCtrl
     @.$inject = ['$scope']
 
     constructor: (scope) ->
+        self = @
         @tabs = scope.tabs = []
         @destroyed = undefined
 
-        scope.$on '$destroy', -> @destroyed
+        scope.$on '$destroy', -> self.destroyed
 
     select: (selectedTab) ->
         angular.forEach @tabs, (tab) ->
@@ -52,21 +53,17 @@ tabsetDirective = ->
         scope:
             type: '@'
         controller: 'TabsetCtrl'
-        templateUrl: ''
+        templateUrl: 'partials/component/tab/tabset.html'
     }
 
 
-tabDirective = ->
-
-
-
-
+tabDirective = ($parse) ->
 
     return {
         require: '^tabset'
         restrict: 'EA'
         replace: true
-        templateUrl: ''
+        templateUrl: 'partials/component/tab/tab.html'
         transclude: true
         scope: {
             active: '=?'
@@ -137,7 +134,7 @@ tabContentTranscludeDirective = ->
 
 com.controller 'TabsetCtrl', TabsetCtrl
 com.directive 'tabset', tabsetDirective
-com.directive 'tab', tabDirective
+com.directive 'tab', ['$parse', tabDirective]
 com.directive 'tabHeadingTransclude', tabHeadingTranscludeDirective
 com.directive 'tabContentTransclude', tabContentTranscludeDirective
 
