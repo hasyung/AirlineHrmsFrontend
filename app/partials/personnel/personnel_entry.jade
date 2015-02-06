@@ -3,7 +3,7 @@
         .personnel-top-header
             h4.pull-left 新员工入职信息填写
         .personnel-content-body
-            form(ng-submit="regEmployee(newEmp)" name="newEmpForm")
+            form(ng-submit="ctrl.regEmployee(newEmp)" name="newEmpForm")
                 section.personnel-section-wrap()
                     section.personnel-info-control.clearfix
                         .personnel-info-left.pull-left
@@ -67,12 +67,14 @@
                                                     title="划转"
                                                     nb-dialog="partials/common/org_select.tpl.html"
                                                     nb-dialog-scope="this"
-                                                    ng-model="selectEmp.department.custStr"
+                                                    ng-model="newEmp.department.custStr"
                                                 )
                                         .form-group
                                             label.control-label.col-md-3 岗位：
                                             div.col-md-5
-                                                nb-dropdown
+                                                ui-select(ng-model="newEmp.position" theme="select2" required)
+                                                    ui-select-match(placeholder="请输入岗位名称") {{ $select.selected.name }}
+                                                    ui-select-choices(repeat="pos in ctrl.orgPos | filter:$select.search | limitTo: 5", refresh="ctrl.loadOrgPos()") {{ pos.name }}
                                         .form-group
                                             label.control-label.col-md-3 属地化地点：
                                             div.col-md-5
