@@ -1,3 +1,6 @@
+.btn-group.pull-right
+    button.btn.btn-info(ng-click="save(selectEmp.$save())") 保存
+    button.btn.btn-default(ng-click="cancel()") 取消
 section.personnel-info-control.editing.clearfix
     form(ng-submit="ctrl.createPerPos(selectEmp)")
         //- .btn-group
@@ -30,7 +33,10 @@ section.personnel-info-control.editing.clearfix
                                 ng-model="selectEmp.laborRelation", remote-key="labor_natures",
                                 name="labor_natures", required)
                         th 用工关系状态：
-                        td 字段未知
+                        td 
+                            nb-dropdown(
+                                ng-model="selectEmp.employeeStatus", remote-key="employment_status",
+                                name="employee_status", required)
                     tr
                         th 属地化地点：
                         td
