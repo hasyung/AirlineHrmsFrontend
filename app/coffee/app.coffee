@@ -24,6 +24,7 @@ deps = [
     'toaster'
     'ngCookies'
     'nb.filters'
+    'nb.component'
     #'nb.controller.site'
 ]
 resources = angular.module('resources',[])
