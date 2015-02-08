@@ -145,7 +145,7 @@ App
             $rootScope.loading = false
             toaster.pop(code.name, "提示", info)
 
-        $rootScope.currentUser = User.$fetch()
+        # $rootScope.currentUser = User.$fetch()
 
         $rootScope.$state = $state
 

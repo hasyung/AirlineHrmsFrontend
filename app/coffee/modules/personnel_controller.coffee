@@ -42,6 +42,13 @@ class Route
                     label: "新员工列表"
                 }
             }
+            .state 'personnel.review', {
+                url: '/change-review'
+                templateUrl: 'partials/personnel/change_review.html'
+                controller: PersonnelCtrl
+                controllerAs: 'ctrl'
+
+            }
 
 class PersonnelCtrl extends nb.Controller
 
