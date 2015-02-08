@@ -4,7 +4,7 @@ resources = angular.module('resources')
 
 Employee = (restmod, RMUtils, $Evt) ->
 
-    Employee = restmod.model('/employees').mix 'nbRestApi', {
+    Employee = restmod.model('/employees').mix 'nbRestApi', 'DirtyModel', {
         departmentId: {mask: 'R', map: 'department.id'}
         department: {mask: 'CU'}
         joinScalDate: {decode: 'date', param: 'yyyy年mm月dd日',mask: 'CU'}
@@ -17,7 +17,7 @@ Employee = (restmod, RMUtils, $Evt) ->
         }
         $extend:
             Collection: {}
-        
+
 
     }
 

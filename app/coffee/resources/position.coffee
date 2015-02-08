@@ -5,7 +5,7 @@ resources = angular.module('resources')
 Position = (restmod, RMUtils, $Evt) ->
 
     # restmod.model('/positions')
-    Position = restmod.model('/positions').mix 'nbRestApi', {
+    Position = restmod.model('/positions').mix 'nbRestApi', 'DirtyModel', {
         department_id: {mask: 'R', map: 'department.id'}
         department: {mask: 'C'}
         isSelected: {mask: "CU"}
@@ -32,7 +32,7 @@ Position = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('position:adjust:success',"岗位调整成功")
             'after-adjust-error': ->
                 $Evt.$send('position:adjust:success', arguments)
-    	$extend:
+        $extend:
             Collection:
                 $adjust: (infoData)->
                     self = @

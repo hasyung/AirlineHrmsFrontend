@@ -1,8 +1,9 @@
 .btn-group.pull-right
-    button.btn.btn-info(ng-click="save(selectEmp.$save())") 保存
-    button.btn.btn-default(ng-click="cancel()") 取消
 section.personnel-info-control.editing.clearfix
-    form(name="empEditForm")
+    form(name="empEditForm" ng-submit=""save(current.$save())"")
+        button.btn.btn-info(type="submit") 保存
+        button.btn.btn-default(ng-click="current.$restore(); cancel()") 取消
+
         //- .btn-group
         //-     //- button.btn.btn-default(ng-click="ctrl.basicEdit=false") 取消
         //-     //- button.btn.btn-info(type="submit") 保存
@@ -15,86 +16,48 @@ section.personnel-info-control.editing.clearfix
                     tr
                         th 姓名：
                         td
-                            input(type="text", ng-model="selectEmp.name", name="name", required)
+                            input(type="text", ng-model="current.name", name="name", required)
                             .form-control-error(ng-messages="empEditForm.name.$error", ng-if="empEditForm.name.$dirty")
                                 .form-group-error(ng-message="required") 名称必填
                         th 性别：
                         td
                             nb-dropdown(
-                                ng-model="selectEmp.gender", remote-key="genders",
+                                ng-model="current.gender", remote-key="genders",
                                 name="gender", required)
                             .form-control-error(ng-messages="empEditForm.gender.$error", ng-if="empEditForm.gender.$dirty")
                                 .form-group-error(ng-message="required") 性别必选
                     tr
                         th 政治面貌：
                         td
-                            nb-dropdown(ng-model="selectEmp.politicalStatus", remote-key="political_status", name="political_status")
+                            nb-dropdown(ng-model="current.politicalStatus", remote-key="political_status", name="political_status")
                             .form-control-error(ng-messages="empEditForm.political_status.$error", ng-if="empEditForm.political_status.$dirty")
                                 .form-group-error(ng-message="required") 政治面貌必选
                         th 学历：
-                        td 
-                            nb-dropdown(ng-model="selectEmp.educationBackgroud", remote-key="education_backgrounds")
-                            
+                        td
+                            nb-dropdown(ng-model="current.educationBackgroud", remote-key="education_backgrounds")
+
                     tr
                         th 学位：
                         td
-                            nb-dropdown(ng-model="selectEmp.degree", remote-key="degrees")
+                            nb-dropdown(ng-model="current.degree", remote-key="degrees")
                         th 毕业院校：
                         td
-                            input(type="text", ng-model="selectEmp.school")
+                            input(type="text", ng-model="current.school")
                     tr
                         th 身份证号：
                         td
-                            input(type="text", ng-model="selectEmp.identityNo", name="identityNo")
+                            input(type="text", ng-model="current.identityNo", name="identityNo")
                             .form-control-error(ng-messages="empEditForm.identityNo.$error", ng-if="empEditForm.identityNo.$dirty")
                                 .form-group-error(ng-message="required") 身份证号码必填
                         th 联系方式：
                         td
-                            input(type="text", ng-model="selectEmp.contact.mobile", name="contact")
+                            input(type="text", ng-model="current.contact.mobile", name="contact")
                             .form-control-error(ng-messages="empEditForm.contact.$error", ng-if="empEditForm.contact.$dirty")
                                 .form-group-error(ng-message="required") 联系方式必填
                     tr
                         th 专业：
                         td
-                            input.form-control(type="text" placeholder="请输入专业" ng-model="selectEmp.major")
+                            input.form-control(type="text" placeholder="请输入专业" ng-model="current.major")
                         th 英语等级：
                         td
-                            nb-dropdown(ng-model="selectEmp.englishLevel", remote-key="english_levels")
-                    
-//- =======
-//- section.personnel-info-control.editing.clearfix
-//-     .btn-group
-//-         button.btn.btn-default(ui-sref="^.basic") 取消
-//-         button.btn.btn-info(ui-sref="^.basic") 保存
-//-     .personnel-info-left.pull-left
-//-         .personnel-item-icon.personnel-item1
-//-         .personnel-item-desc.bg-success 基本信息
-//-     .personnel-info-right.editor-style.pull-left
-//-         table.form-validator-table
-//-             tbody
-//-                 tr
-//-                     th 员工编号：
-//-                     td
-//-                         input(type="text", ng-model="selectEmp.employeeNo")
-//-                     th 性别：
-//-                     td
-//-                         nb-dropdown(
-//-                             ng-model="selectEmp.gender", remote-key="genders",
-//-                             name="gender", required)
-//-                 tr
-//-                     th 姓名：
-//-                     td
-//-                         input(type="text", ng-model="selectEmp.name")
-//-                     th 学历：
-//-                     td {{::selectEmp.educationBackground.displayName}}
-//-                 tr
-//-                     th 身份证号：
-//-                     td
-//-                         input(type="text", ng-model="selectEmp.identityNo")
-//-                     th 联系方式：
-//-                     td
-//-                         input(type="text", ng-model="selectEmp.contact.mobile")
-//-                 tr
-//-                     th 政治面貌：
-//-                     td {{::selectEmp.politicalStatus.displayName}}
-//- >>>>>>> f4d96b57078481a5a4a8a2c87370a59a3f1b7cb2
+                            nb-dropdown(ng-model="current.englishLevel", remote-key="english_levels")
