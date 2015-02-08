@@ -1,35 +1,74 @@
-section.personnel-info-control.editing.clearfix
-    .btn-group
-        button.btn.btn-default(ui-sref="^.basic") 取消
-        button.btn.btn-info(ui-sref="^.basic") 保存
-    .personnel-info-left.pull-left
-        .personnel-item-icon.personnel-item1
-        .personnel-item-desc.bg-success 基本信息
-    .personnel-info-right.editor-style.pull-left
-        table.form-validator-table
-            tbody
-                tr
-                    th 姓名：
-                    td
-                        input(type="text", ng-model="selectEmp.employeeNo")
-                    th 性别：
-                    td
-                        nb-dropdown(
-                            ng-model="selectEmp.gender", remote-key="genders",
-                            name="gender", required)
-                tr
-                    th 姓名：
-                    td
-                        input(type="text", ng-model="selectEmp.name")
-                    th 学历：
-                    td {{::selectEmp.educationBackground.displayName}}
-                tr
-                    th 身份证号：
-                    td
-                        input(type="text", ng-model="selectEmp.identityNo")
-                    th 联系方式：
-                    td
-                        input(type="text", ng-model="selectEmp.contact.mobile")
-                tr
-                    th 政治面貌：
-                    td {{::selectEmp.politicalStatus.displayName}}
+section.personnel-info-section
+    .personnel-top-header
+        h4.pull-left 基本人事信息
+    .personnel-content-body
+        
+        section.personnel-info-control.clearfix
+            
+            .personnel-info-left.pull-left
+                .personnel-item-icon.personnel-item1
+                .personnel-item-desc.bg-success 基本信息
+            .personnel-info-right.editor-style.pull-left
+                form.form-split(ng-submit="ctrl.updateInfo()")
+                    .btn-group.pull-right
+                        button.btn.btn-default(type="submit") 保存
+                        button.btn.btn-default(ui-sref="^") 取消
+                    .form-group.block
+                        label.control-label 姓名：
+                        .form-content
+                            input(ng-model="currentUser.name")
+                    .form-group
+                        label.control-label 性别：
+                        .form-content
+                            nb-dropdown(ng-model="currentUser.gender", remote-key="genders")
+                    .form-group
+                        label.control-label 籍贯：
+                        .form-content
+                            input(ng-model="currentUser.nativePlace")
+                    .form-group
+                        label.control-label 民族：
+                        .form-content
+                            nb-dropdown(ng-model="currentUser.nation", remote-key="nations")
+                    .form-group
+                        label.control-label 出生地：
+                        .form-content
+                            input(ng-model="currentUser.birthPlace")
+                    .form-group
+                        label.control-label 身份证号：
+                        .form-content
+                            input(ng-model="currentUser.identityNo")
+                    .form-group
+                        label.control-label 婚姻状况：
+                        .form-content
+                            nb-dropdown(ng-model="currentUser.martialStatus", remote-key="marital_status")
+        section.personnel-info-control.clearfix
+            .personnel-info-left.pull-left
+                .personnel-item-icon.personnel-item1
+                .personnel-item-desc.bg-success 联系方式
+            .personnel-info-right.editor-style.pull-left
+                form.form-split
+                    .form-group.block
+                        label.control-label 固定电话：
+                        .form-content
+                            input(ng-model="currentUser.contact.telephone")
+                    .form-group
+                        label.control-label 手机号码：
+                        .form-content
+                            input(ng-model="currentUser.contact.mobile")
+                    .form-group
+                        label.control-label 家庭住址：
+                        .form-content
+                            input(ng-model="currentUser.contact.address")
+                    .form-group
+                        label.control-label 通信地址：
+                        .form-content
+                            input(ng-model="currentUser.contact.mailing_address")
+                    .form-group
+                        label.control-label 通信地址邮编：
+                        .form-content
+                            input(ng-model="currentUser.contact.postcode")
+                    .form-group
+                        label.control-label 电子邮箱：
+                        .form-content
+                            input(ng-model="currentUser.contact.email")
+        

@@ -28,7 +28,7 @@ User = (restmod, RMUtils, $Evt) ->
         $config:
             jsonRoot: 'employee'
     }
-    .single('/employees/current')
+    .single('/me')
 
 
 resources.factory 'Employee',['restmod', 'RMUtils', '$nbEvent', Employee]
