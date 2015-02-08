@@ -199,6 +199,26 @@
 
     .form-split {
         padding: 50px 0;
+
+        .control-label {
+            height: 34px;
+            line-height: 34px;
+        }
+
+        .form-content {
+            height: 34px;
+            line-height: 34px;
+        }
+
+        .form-control {
+            margin-right: 10%;
+        }
+
+        .form-group.block {
+            .form-control {
+                margin-right: 5%;
+            }
+        }
     }
 
     .personnel-info-left {
@@ -212,7 +232,6 @@
         flex: 1;
         min-height: 240px;
     }
-
 }
 
 
