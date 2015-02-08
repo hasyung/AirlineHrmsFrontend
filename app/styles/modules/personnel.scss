@@ -132,7 +132,7 @@
         h4 {
             color: $text-title;
             font-size: $font-size-lg;
-            line-height: 50px;
+            line-height: 48px;
         }
     }
 
@@ -143,25 +143,6 @@
         width: 100%;
 
         .personnel-section-wrap {
-            position: relative;
-
-            .btn-group {
-                position: absolute;
-                right: 20px;
-                top: 10px;
-                visibility: hidden;
-                z-index: 10;
-
-                .btn {
-                    margin-left: 10px;
-                }
-            }
-        }
-
-        .personnel-info-control {
-            padding: 50px;
-            position: relative;
-
             &:nth-child(odd) {
                 background-color: #fff;
             }
@@ -169,35 +150,12 @@
             &:nth-child(even) {
                 background-color: #fafbfd;
             }
-
-            &:hover {
-                .btn-group {
-                    visibility: visible;
-                }
-            }
-
-            &.editing {
-                .btn-group {
-                    visibility: visible;
-                }
-            }
-
-            .btn-group {
-                position: absolute;
-                right: 20px;
-                top: 10px;
-                visibility: hidden;
-
-                .btn {
-                    margin-left: 10px;
-                }
-            }
         }
+
+
     }
 
     .personnel-info-left {
-        width: 80px;
-
         .personnel-item-icon {
             background-position: center;
             background-repeat: no-repeat;
@@ -231,107 +189,31 @@
         }
     }
 
+}
+
+.personnel-info-control {
+    display: flex;
+    font-size: $font-size-md;
+    padding: 0 50px;
+    position: relative;
+
+    .form-split {
+        padding: 50px 0;
+    }
+
+    .personnel-info-left {
+        flex: none;
+        margin-right: 70px;
+        padding-top: 50px;
+        width: 80px;
+    }
+
     .personnel-info-right {
-        min-height: 140px;
-        width: calc(100% - 80px);
-    }
-
-    .editor-style {
-        table {
-            margin-bottom: 0;
-            width: 100%;
-        }
-
-        tr {
-            height: 40px;
-            line-height: 40px;
-        }
-
-        th {
-            color: $text-title;
-            font-weight: normal;
-            height: inherit;
-            text-align: right;
-            width: 20%;
-
-        }
-
-        td {
-            border: 0;
-            height: inherit;
-            padding: 0;
-            width: 30%;
-        }
-    }
-}
-
-// resume begin
-.resume-title {
-    padding: 15px 10px;
-
-    .title-text {
-        font-size: 20px;
-        line-height: 20px;
-    }
-}
-
-.resume-item {
-    border: 1px solid #eee;
-    margin: 8px 10px;
-}
-
-.resume-content {
-    .section-title {
-        padding: 5px 8px;
-    }
-
-    .section-body {
-        padding: 5px 0;
-
-    }
-
-    .editor-style {
-        table {
-            font-size: 14px;
-            margin-bottom: 0;
-            width: 100%;
-        }
-
-        th {
-            font-weight: normal;
-            padding: 0 5px 10px 0;
-            text-align: right;
-            width: 20%;
-
-        }
-
-        td {
-            border: 0;
-            padding: 0 5px 10px;
-            width: 30%;
-        }
-    }
-
-    hr {
-        margin: 5px 40px;
-    }
-}
-
-.btn-group-actions {
-    height: 40px;
-    margin: 20px auto;
-    width: 300px;
-
-    .btn {
-        &:first-child {
-            float: left;
-        }
-
-        &:last-child {
-            float: right;
-        }
+        flex: 1;
+        min-height: 240px;
     }
 
 }
+
 
 

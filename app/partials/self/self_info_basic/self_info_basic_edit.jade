@@ -1,35 +1,72 @@
-section.personnel-info-control.editing.clearfix
-    .btn-group
-        button.btn.btn-default(ui-sref="^.basic") 取消
-        button.btn.btn-info(ui-sref="^.basic") 保存
+section.personnel-info-control.clearfix
     .personnel-info-left.pull-left
         .personnel-item-icon.personnel-item1
         .personnel-item-desc.bg-success 基本信息
-    .personnel-info-right.editor-style.pull-left
-        table.form-validator-table
-            tbody
-                tr
-                    th 姓名：
-                    td
-                        input(type="text", ng-model="selectEmp.employeeNo")
-                    th 性别：
-                    td
-                        nb-dropdown(
-                            ng-model="selectEmp.gender", remote-key="genders",
-                            name="gender", required)
-                tr
-                    th 姓名：
-                    td
-                        input(type="text", ng-model="selectEmp.name")
-                    th 学历：
-                    td {{::selectEmp.educationBackground.displayName}}
-                tr
-                    th 身份证号：
-                    td
-                        input(type="text", ng-model="selectEmp.identityNo")
-                    th 联系方式：
-                    td
-                        input(type="text", ng-model="selectEmp.contact.mobile")
-                tr
-                    th 政治面貌：
-                    td {{::selectEmp.politicalStatus.displayName}}
+    .personnel-info-right.pull-left
+        form.form-split.clearfix
+            .form-btn-group.alive
+                button.btn.btn-info(ui-sref="^.basic") 保存
+                button.btn.btn-default(ui-sref="^.basic") 取消
+            //- .form-group.block
+            //-     label.control-label 姓名：
+            //-     input.form-control(type="text")
+            .form-group
+                label.control-label 姓名：
+                .form-content 姜文峰
+            .form-group
+                label.control-label 性别：
+                .form-content 男
+            .form-group
+                label.control-label 身份证号：
+                .form-content 510105198612162538
+            .form-group
+                label.control-label 政治面貌：
+                .form-content 中共党员
+            .form-group
+                label.control-label 学历：
+                .form-content 大学本科
+            .form-group
+                label.control-label 学位：
+                .form-content 学士
+            .form-group
+                label.control-label 毕业院校：
+                .form-content 四川大学
+            .form-group
+                label.control-label 专业：
+                .form-content 工商管理
+            .form-group
+                label.control-label 英语等级：
+                .form-content 大学英语四级
+            .form-group
+                label.control-label 联系方式：
+                .form-content 18628118505
+
+
+    //- .personnel-info-right.editor-style.pull-left
+    //-     table.form-validator-table
+    //-         tbody
+    //-             tr
+    //-                 th 姓名：
+    //-                 td
+    //-                     input(type="text", ng-model="selectEmp.employeeNo")
+    //-                 th 性别：
+    //-                 td
+    //-                     nb-dropdown(
+    //-                         ng-model="selectEmp.gender", remote-key="genders",
+    //-                         name="gender", required)
+    //-             tr
+    //-                 th 姓名：
+    //-                 td
+    //-                     input(type="text", ng-model="selectEmp.name")
+    //-                 th 学历：
+    //-                 td {{::selectEmp.educationBackground.displayName}}
+    //-             tr
+    //-                 th 身份证号：
+    //-                 td
+    //-                     input(type="text", ng-model="selectEmp.identityNo")
+    //-                 th 联系方式：
+    //-                 td
+    //-                     input(type="text", ng-model="selectEmp.contact.mobile")
+    //-             tr
+    //-                 th 政治面貌：
+    //-                 td {{::selectEmp.politicalStatus.displayName}}

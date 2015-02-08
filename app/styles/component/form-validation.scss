@@ -218,7 +218,30 @@
 
 // form-split 样式
 .form-split {
-    padding-left: 70px;
+    @include clearfix();
+    position: relative;
+
+    &:hover {
+        .form-btn-group {
+            visibility: visible;
+        }
+    }
+
+    .form-btn-group {
+        position: absolute;
+        right: 0;
+        top: 10px;
+        visibility: hidden;
+
+        &.alive {
+            visibility: visible;
+        }
+
+        .btn {
+            margin-left: 20px;
+        }
+
+    }
 
     .form-group {
         display: flex;
@@ -234,7 +257,8 @@
             width: 120px;
         }
 
-        .form-content {
+        .form-content,
+        .form-control {
             flex: 1;
         }
     }
