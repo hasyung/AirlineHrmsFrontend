@@ -16,29 +16,29 @@ section.personnel-info-section
                     form.form-split.clearfix
                         .form-group.block
                             label.control-label 所属部门：
-                            .form-content 人力资源部-人事调配室
+                            .form-content {{currentUser.department.name}}
                         .form-group
                             label.control-label 岗位：
-                            .form-content 人事调配室副主任
+                            .form-content {{currentUser.position.name}}
                         .form-group
                             label.control-label 分类：
-                            .form-content 干部
+                            .form-content {{currentUser.category.displayName}}
                         .form-group
                             label.control-label 通道：
-                            .form-content 管理
+                            .form-content {{currentUser.channel.displayName}}
                         .form-group
                             label.control-label 类别：
                             .form-content 行政管理
                         .form-group
                             label.control-label 属地化地点：
-                            .form-content 成都
+                            .form-content {{currentUser.location.displayName}}
                         .form-group
                             label.control-label 用工性质：
-                            .form-content 合同工
+                            .form-content {{currentUser.laborRelation.displayName}}
                         .form-group
                             label.control-label 用工关系状态：
-                            .form-content 正式员工
-        div.personnel-section-wrap()
+                            .form-content {{currentUser.employeeStatus.displayName}}
+        .personnel-section-wrap()
             section.personnel-info-control.clearfix
                 .personnel-info-left.pull-left
                     .personnel-item-icon.personnel-item1

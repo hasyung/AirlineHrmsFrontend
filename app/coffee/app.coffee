@@ -7,7 +7,7 @@
 deps = [
     # 'ui.router'
     'ct.ui.router.extras'
-    'ncy-angular-breadcrumb'
+    # 'ncy-angular-breadcrumb'
     'mgo-angular-wizard'
     'mgcrea.ngStrap.datepicker'
     'ngDialog'
@@ -67,7 +67,7 @@ restConf = (restmodProvider) ->
         # }
 
 
-routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider, $breadcrumbProvider) ->
+routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider) ->
     $locationProvider.html5Mode(false)
 
     # $stateProvider.decorator 'views', (state, parent) ->
@@ -82,10 +82,10 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider,
     #     return result
 
 
-    $breadcrumbProvider.setOptions {
-        prefixStateName: 'home'
-        template: 'bootstrap3'
-    }
+    # $breadcrumbProvider.setOptions {
+    #     prefixStateName: 'home'
+    #     template: 'bootstrap3'
+    # }
 
     #default route
     $urlRouterProvider.otherwise('/')
@@ -120,14 +120,13 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider,
                 return $q.reject(response)
         }
 
-
     ]
 
 
 App
     .config ['$provide', 'ngDialogProvider', appConf]
     .config ['restmodProvider', restConf]
-    .config ['$stateProvider','$urlRouterProvider','$locationProvider', '$httpProvider', '$breadcrumbProvider', routeConf]
+    .config ['$stateProvider','$urlRouterProvider','$locationProvider', '$httpProvider', routeConf]
     .run ['$state','$rootScope', 'toaster', '$http', 'Org', 'sweet', 'User', ($state, $rootScope, toaster, $http, Org, sweet, User) ->
         # for $state.includes in view
         $rootScope.$on '$stateChangeSuccess', (evt, to) ->
