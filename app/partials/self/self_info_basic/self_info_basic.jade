@@ -2,10 +2,10 @@ section.personnel-info-section
     .personnel-top-header.clearfix
         h4.pull-left 基本人事信息
     .personnel-content-body
-        .personnel-section-wrap()
-            div()
+        .personnel-section-wrap(ng-controller="EditableResource")
+            .showing(ng-hide="editing")
                 include self_info_basic_section
-            div()
+            .editing(ng-if="editing")
                 include self_info_basic_edit
         .personnel-section-wrap()
             section.personnel-info-control.clearfix
