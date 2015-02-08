@@ -215,3 +215,28 @@
         }
     }
 }
+
+// form-split 样式
+.form-split {
+    padding-left: 80px;
+
+
+    .form-group {
+        display: flex;
+        float: left;
+        width: 50%;
+
+        &.block {
+            width: 100%;
+        }
+
+        .control-label {
+            flex: none;
+            width: 120px;
+        }
+
+        .form-content {
+            flex: 1;
+        }
+    }
+}
