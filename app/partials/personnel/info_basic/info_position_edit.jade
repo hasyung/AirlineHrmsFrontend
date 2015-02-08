@@ -1,11 +1,8 @@
-.btn-group.pull-right
-    button.btn.btn-info(ng-click="save(selectEmp.$save())") 保存
-    button.btn.btn-default(ng-click="cancel()") 取消
 section.personnel-info-control.editing.clearfix
-    form(ng-submit="ctrl.createPerPos(selectEmp)")
-        //- .btn-group
-        //-     button.btn.btn-default(ng-click="ctrl.posEdit=false") 取消
-        //-     button.btn.btn-info(type="submit") 保存
+    form(ng-submit="save(selectEmp.$save())")
+        .btn-group.pull-right
+            button.btn.btn-info(type="submit") 保存
+            button.btn.btn-default(ng-click="selectEmp.$restore();cancel()") 取消
         .personnel-info-left.pull-left
             .personnel-item-icon.personnel-item2
             .personnel-item-desc.bg-success 岗位信息
@@ -28,12 +25,12 @@ section.personnel-info-control.editing.clearfix
                                 ui-select-choices(repeat="pos in orgPos | filter:$select.search | limitTo: 5", refresh="ctrl.loadOrgPos()") {{ pos.name }}
                     tr
                         th 用工性质：
-                        td 
+                        td
                             nb-dropdown(
                                 ng-model="selectEmp.laborRelation", remote-key="labor_relations",
                                 name="labor_natures", required)
                         th 用工关系状态：
-                        td 
+                        td
                             nb-dropdown(
                                 ng-model="selectEmp.employeeStatus", remote-key="employment_status",
                                 name="employee_status", required)
