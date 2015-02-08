@@ -6,7 +6,7 @@ section.personnel-info-section
         //-     include self_info_basic_section
         section.personnel-info-control.clearfix
             .btn-group.pull-right
-                button.btn.btn-default(ng-click="edit()") 编辑
+                button.btn.btn-default(ui-sref=".editing") 编辑
             .personnel-info-left.pull-left
                 .personnel-item-icon.personnel-item1
                 .personnel-item-desc.bg-success 基本信息
@@ -14,37 +14,37 @@ section.personnel-info-section
                 form.form-split
                     .form-group.block
                         label.control-label 员工编号：
-                        .form-content 3456789
+                        .form-content {{currentUser.employeeNo}}
                     .form-group
                         label.control-label 姓名：
-                        .form-content 姜文峰
+                        .form-content {{currentUser.name}}
                     .form-group
                         label.control-label 性别：
-                        .form-content 男
+                        .form-content {{currentUser.gender.displayName}}
                     .form-group
                         label.control-label 身份证号：
-                        .form-content 510105198612162538
+                        .form-content {{currentUser.identityNo}}
                     .form-group
                         label.control-label 政治面貌：
-                        .form-content 中共党员
+                        .form-content {{currentUser.politicalStatus.displayName}}
                     .form-group
                         label.control-label 学历：
-                        .form-content 大学本科
+                        .form-content {{currentUser.educationBackground.displayName}}
                     .form-group
                         label.control-label 学位：
-                        .form-content 学士
+                        .form-content {{currentUser.degree.displayName}}
                     .form-group
                         label.control-label 毕业院校：
-                        .form-content 四川大学
+                        .form-content {{currentUser.school}}
                     .form-group
                         label.control-label 专业：
-                        .form-content 工商管理
+                        .form-content {{currentUser.major}}
                     .form-group
                         label.control-label 英语等级：
-                        .form-content 大学英语四级
+                        .form-content {{currentUser.englishLevel.displayName}}
                     .form-group
                         label.control-label 联系方式：
-                        .form-content 18628118505
+                        .form-content {{currentUser.contactWay.mobile}}
 
         section.personnel-info-control.clearfix
             .personnel-info-left.pull-left
@@ -54,37 +54,37 @@ section.personnel-info-section
                 form.form-split
                     .form-group.block
                         label.control-label 所属部门：
-                        .form-content 人力资源部-人事调配室
+                        .form-content {{currentUser.department.name}}
                     .form-group
                         label.control-label 岗位：
-                        .form-content 人事调配室副主任
+                        .form-content {{currentUser.position.name}}
                     .form-group
                         label.control-label 分类：
-                        .form-content 干部
+                        .form-content {{currentUser.category.displayName}}
                     .form-group
                         label.control-label 通道：
-                        .form-content 管理
+                        .form-content {{currentUser.channel.displayName}}
                     .form-group
                         label.control-label 类别：
                         .form-content 行政管理
                     .form-group
                         label.control-label 属地化地点：
-                        .form-content 成都
+                        .form-content {{currentUser.location.displayName}}
                     .form-group
                         label.control-label 用工性质：
-                        .form-content 合同工
+                        .form-content {{currentUser.laborRelation.displayName}}
                     .form-group
                         label.control-label 用工关系状态：
-                        .form-content 正式员工
-        section.personnel-info-control.clearfix
-            .personnel-info-left.pull-left
-                .personnel-item-icon.personnel-item1
-                .personnel-item-desc.bg-success 职称信息
-            .personnel-info-right.editor-style.pull-left
-                form.form-split
-                    .form-group
-                        label.control-label 职称：
-                        .form-content 工程师
-                    .form-group
-                        label.control-label 职称级别：
-                        .form-content 高级
+                        .form-content {{currentUser.employeeStatus.displayName}}
+        //- section.personnel-info-control.clearfix
+        //-     .personnel-info-left.pull-left
+        //-         .personnel-item-icon.personnel-item1
+        //-         .personnel-item-desc.bg-success 职称信息
+        //-     .personnel-info-right.editor-style.pull-left
+        //-         form.form-split
+        //-             .form-group
+        //-                 label.control-label 职称：
+        //-                 .form-content 工程师
+        //-             .form-group
+        //-                 label.control-label 职称级别：
+        //-                 .form-content 高级

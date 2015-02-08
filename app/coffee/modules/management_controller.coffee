@@ -34,14 +34,12 @@ class Route
                 ncyBreadcrumb: {
                     label: "个人信息"
                 }
-                resolve: {
-                }
             }
             .state 'self.profile.basic', {
                 url: ''
                 views: {
                     "detail@self.profile": {
-                        controller: PerInfoCtrl
+                        controller: ProfileCtrl
                         controllerAs: 'ctrl'
                         templateUrl: 'partials/self/self_info_basic/self_info_basic.html'
                     }
@@ -50,14 +48,24 @@ class Route
                     label: "我的基本信息"
                 }
 
-                resolve: {
+            }
+            .state 'self.profile.basic.editing', {
+                url: '/editing/basic'
+                views: {
+                    "detail@self.profile": {
+                        controller: ProfileCtrl
+                        controllerAs: 'ctrl'
+                        templateUrl: 'partials/self/self_info_basic/self_info_basic_edit.html'
+                    }
                 }
+                
+
             }
             .state 'self.profile.members', {
                 url: '/members'
                 views: {
                     "detail@self.profile": {
-                        controller: PerInfoCtrl
+                        controller: ProfileCtrl
                         controllerAs: 'ctrl'
                         templateUrl: 'partials/self/members.html'
                     }
@@ -66,14 +74,12 @@ class Route
                     label: "家庭成员"
                 }
 
-                resolve: {
-                }
             }
             .state 'self.profile.education', {
                 url: '/education'
                 views: {
                     "detail@self.profile": {
-                        controller: PerInfoCtrl
+                        controller: ProfileCtrl
                         controllerAs: 'ctrl'
                         templateUrl: 'partials/self/education.html'
                     }
@@ -82,14 +88,12 @@ class Route
                     label: "教育经历"
                 }
 
-                resolve: {
-                }
             }
             .state 'self.profile.experience', {
                 url: '/experience'
                 views: {
                     "detail@self.profile": {
-                        controller: PerInfoCtrl
+                        controller: ProfileCtrl
                         controllerAs: 'ctrl'
                         templateUrl: 'partials/self/experience.html'
                     }
@@ -98,8 +102,6 @@ class Route
                     label: "工作经历"
                 }
 
-                resolve: {
-                }
             }
 
 class SelfCtrl extends nb.Controller
@@ -116,7 +118,7 @@ class SelfCtrl extends nb.Controller
 
 
 
-class PerInfoCtrl extends nb.Controller
+class ProfileCtrl extends nb.Controller
 
     @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope']
 
@@ -126,8 +128,11 @@ class PerInfoCtrl extends nb.Controller
         @status = 'show'
 
     loadInitailData: ->
-        console.log @rootScope.currentUser
         @scope.currentUser = @rootScope.currentUser
+
+    # 员工自助中员工编辑自己的信息
+    updateInfo: ->
+        @scope.currentUser.$update()
 
 
 

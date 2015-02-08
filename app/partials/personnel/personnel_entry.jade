@@ -3,7 +3,7 @@
         .personnel-top-header
             h4.pull-left 新员工入职信息填写
         .personnel-content-body
-            form(ng-submit="ctrl.regEmployee(newEmp)" name="newEmpForm")
+            form(ng-submit="ctrl.regEmployee(newEmp) && closeThisDialog()" name="newEmpForm")
                 section.personnel-section-wrap()
                     section.personnel-info-control.clearfix
                         .personnel-info-left.pull-left
@@ -89,5 +89,5 @@
                                                 nb-dropdown(ng-model="newEmp.employeeStatus", remote-key="employment_status")
                     .btn-group-actions
                         button.btn.btn-info(type="submit") 提 交
-                        button.btn.btn-default() 取 消
+                        button.btn.btn-default(ng-click="cancel()") 取 消
 

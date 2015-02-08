@@ -14,15 +14,9 @@ module
 module
 	.filter 'nbDate', ['$filter', ($filter)->
 		return (dateStr, format) ->
-			return dateStr if !dateStr
-			# dateStr = _.trim(dateStr)
 			# unixToDate 1422439743
-			if /^\d\d+\d$/.test dateStr
-				date = moment.unix(dateStr)._i
-				return $filter('date')(date, format)
-			else
-				# "Wed 01 Aug 2012"
-				return $filter('date')(new Date(dateStr), format)
+			date = moment.unix(dateStr)._i
+			return $filter('date')(date, format)
 
 	]
 
