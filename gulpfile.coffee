@@ -97,7 +97,7 @@ paths =
         'deps/angular-ui-router/release/angular-ui-router.js'
         'deps/ui-router-extras/release/ct-ui-router-extras.js'
         'deps/ngDialog/js/ngDialog.js'
-        'compat/vendor/breadcrumb.js'
+        # 'compat/vendor/breadcrumb.js'
         'compat/vendor/wizard.js'
         'compat/vendor/ui-bootstrap-custom-tpls-0.12.0.js'
         # 'deps/ngInfiniteScroll/build/ng-infinite-scroll.js'

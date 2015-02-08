@@ -7,7 +7,7 @@
 deps = [
     # 'ui.router'
     'ct.ui.router.extras'
-    'ncy-angular-breadcrumb'
+    # 'ncy-angular-breadcrumb'
     'mgo-angular-wizard'
     'mgcrea.ngStrap.datepicker'
     'ngDialog'
