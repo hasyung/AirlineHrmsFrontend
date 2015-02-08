@@ -156,6 +156,11 @@
                     margin-left: 10px;
                 }
             }
+        }
+
+        .personnel-info-control {
+            padding: 50px;
+            position: relative;
 
             &:nth-child(odd) {
                 background-color: #fff;
@@ -170,11 +175,6 @@
                     visibility: visible;
                 }
             }
-        }
-
-        .personnel-info-control {
-            padding: 50px;
-            position: relative;
 
             &.editing {
                 .btn-group {
@@ -185,11 +185,10 @@
             .btn-group {
                 position: absolute;
                 right: 20px;
-                top: 20px;
+                top: 10px;
                 visibility: hidden;
 
                 .btn {
-                    border-radius: 4px;
                     margin-left: 10px;
                 }
             }
