@@ -1,12 +1,8 @@
-.btn-group.pull-right
 section.personnel-info-control.editing.clearfix
     form(name="empEditForm" ng-submit="save(current.$save())")
-        button.btn.btn-info(type="submit") 保存
-        button.btn.btn-default(ng-click="current.$restore(); cancel()") 取消
-
-        //- .btn-group
-        //-     //- button.btn.btn-default(ng-click="ctrl.basicEdit=false") 取消
-        //-     //- button.btn.btn-info(type="submit") 保存
+        .btn-group.pull-right
+            button.btn.btn-info(type="submit") 保存
+            button.btn.btn-default(ng-click="current.$restore(); cancel()") 取消
         .personnel-info-left.pull-left
             .personnel-item-icon.personnel-item1
             .personnel-item-desc.bg-success 基本信息
@@ -35,7 +31,6 @@ section.personnel-info-control.editing.clearfix
                         th 学历：
                         td
                             nb-dropdown(ng-model="current.educationBackgroud", remote-key="education_backgrounds")
-
                     tr
                         th 学位：
                         td

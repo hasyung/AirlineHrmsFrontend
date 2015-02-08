@@ -83,14 +83,16 @@ class NewEmpsCtrl extends nb.Controller
             }
         }
 
-        @scope.newEmps = @Employee.$collection(collection_param).$fetch()
+        @employees = @Employee.$collection(collection_param).$fetch()
     regEmployee: (employee)->
         @Employee.$build(employee).$save()
 
     getExportParams: ->
-        @scope.newEmps
+        @employees
                 .filter (emp) -> emp.isSelected
                 .map (emp) -> emp.id
                 .join(',')
+    search: (tableState) ->
+        @employees.$refresh(tableState)
 
 app.config(Route)
