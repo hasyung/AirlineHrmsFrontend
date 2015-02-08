@@ -1,41 +1,40 @@
 section.personnel-info-control.clearfix
-    .personnel-info-left.pull-left
+    .personnel-info-left
         .personnel-item-icon.personnel-item1
         .personnel-item-desc.bg-success 基本信息
-    .personnel-info-right.pull-left
-        form.form-split.clearfix
-            .form-btn-group
-                button.btn.btn-default(ui-sref="^.basic") 编辑
-            .form-group.block
-                label.control-label 员工编号：
-                .form-content 456789056
-            .form-group
-                label.control-label 姓名：
-                .form-content 姜文峰
-            .form-group
-                label.control-label 性别：
-                .form-content 男
-            .form-group
-                label.control-label 身份证号：
-                .form-content 510105198612162538
-            .form-group
-                label.control-label 政治面貌：
-                .form-content 中共党员
-            .form-group
-                label.control-label 学历：
-                .form-content 大学本科
-            .form-group
-                label.control-label 学位：
-                .form-content 学士
-            .form-group
-                label.control-label 毕业院校：
-                .form-content 四川大学
-            .form-group
-                label.control-label 专业：
-                .form-content 工商管理
-            .form-group
-                label.control-label 英语等级：
-                .form-content 大学英语四级
-            .form-group
-                label.control-label 联系方式：
-                .form-content 18628118505
+    .personnel-info-right.form-split
+        .form-btn-group
+            button.btn.btn-default(ui-sref="^.basic") 编辑
+        .form-group.block
+            label.control-label 员工编号：
+            .form-content {{currentUser.employeeNo}}
+        .form-group
+            label.control-label 姓名：
+            .form-content {{currentUser.name}}
+        .form-group
+            label.control-label 性别：
+            .form-content {{currentUser.gender.displayName}}
+        .form-group
+            label.control-label 身份证号：
+            .form-content {{currentUser.identityNo}}
+        .form-group
+            label.control-label 政治面貌：
+            .form-content {{currentUser.politicalStatus.displayName}}
+        .form-group
+            label.control-label 学历：
+            .form-content {{currentUser.educationBackground.displayName}}
+        .form-group
+            label.control-label 学位：
+            .form-content {{currentUser.degree.displayName}}
+        .form-group
+            label.control-label 毕业院校：
+            .form-content {{currentUser.school}}
+        .form-group
+            label.control-label 专业：
+            .form-content {{currentUser.major}}
+        .form-group
+            label.control-label 英语等级：
+            .form-content {{currentUser.englishLevel.displayName}}
+        .form-group
+            label.control-label 联系方式：
+            .form-content {{currentUser.contactWay.mobile}}
