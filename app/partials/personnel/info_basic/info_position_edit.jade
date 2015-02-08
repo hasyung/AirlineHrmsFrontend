@@ -1,4 +1,4 @@
-section.personnel-info-control.editing.clearfix
+section.personnel-info-control.editing.clearfix(ng-init="params = {}")
     form(ng-submit="save(current.$save())")
         .btn-group.pull-right
             button.btn.btn-info(type="submit") 保存
@@ -12,15 +12,18 @@ section.personnel-info-control.editing.clearfix
                     tr
                         th 所属部门：
                         td
-                            ui-select(multiple ng-model="current.department" ng-change="" theme="select2" style="width:600px" reset-search-input="true")
-                                ui-select-match(placeholder="请输入机构名称") {{ $item.name }}
-                                ui-select-choices(repeat="org.id as org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
+                            ui-select(
+                                ng-model="current.department"
+                                ng-change="params.orgPos = current.department.positions.length? current.department.positions: current.department.positions.$fetch()"
+                                reset-search-input="true")
+                                ui-select-match(placeholder="请输入机构名称") {{ $select.selected.name }}
+                                ui-select-choices(repeat="org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
 
                         th 岗位：
                         td
                             ui-select(ng-model="current.position" theme="select2" required)
                                 ui-select-match(placeholder="请输入岗位名称") {{ $select.selected.name }}
-                                ui-select-choices(repeat="pos in orgPos | filter:$select.search | limitTo: 5", refresh="ctrl.loadOrgPos()") {{ pos.name }}
+                                ui-select-choices(repeat="pos in params.orgPos | filter:$select.search | limitTo: 5") {{ pos.name }}
                     tr
                         th 用工性质：
                         td

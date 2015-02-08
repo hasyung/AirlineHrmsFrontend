@@ -1,6 +1,6 @@
 .btn-group.pull-right
 section.personnel-info-control.editing.clearfix
-    form(name="empEditForm" ng-submit=""save(current.$save())"")
+    form(name="empEditForm" ng-submit="save(current.$save())")
         button.btn.btn-info(type="submit") 保存
         button.btn.btn-default(ng-click="current.$restore(); cancel()") 取消
 
