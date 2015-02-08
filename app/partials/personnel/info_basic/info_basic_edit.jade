@@ -1,5 +1,8 @@
+.btn-group.pull-right
+    button.btn.btn-info(ng-click="save(selectEmp.$save())") 保存
+    button.btn.btn-default(ng-click="cancel()") 取消
 section.personnel-info-control.editing.clearfix
-    form
+    form(name="empEditForm")
         //- .btn-group
         //-     //- button.btn.btn-default(ng-click="ctrl.basicEdit=false") 取消
         //-     //- button.btn.btn-info(type="submit") 保存
@@ -10,30 +13,54 @@ section.personnel-info-control.editing.clearfix
             table.form-validator-table
                 tbody
                     tr
-                        th 员工编号：
+                        th 姓名：
                         td
-                            input(type="text", ng-model="selectEmp.employeeNo")
+                            input(type="text", ng-model="selectEmp.name", name="name", required)
+                            .form-control-error(ng-messages="empEditForm.name.$error", ng-if="empEditForm.name.$dirty")
+                                .form-group-error(ng-message="required") 名称必填
                         th 性别：
                         td
                             nb-dropdown(
                                 ng-model="selectEmp.gender", remote-key="genders",
                                 name="gender", required)
+                            .form-control-error(ng-messages="empEditForm.gender.$error", ng-if="empEditForm.gender.$dirty")
+                                .form-group-error(ng-message="required") 性别必选
                     tr
-                        th 姓名：
+                        th 政治面貌：
                         td
-                            input(type="text", ng-model="selectEmp.name")
+                            nb-dropdown(ng-model="selectEmp.politicalStatus", remote-key="political_status", name="political_status")
+                            .form-control-error(ng-messages="empEditForm.political_status.$error", ng-if="empEditForm.political_status.$dirty")
+                                .form-group-error(ng-message="required") 政治面貌必选
                         th 学历：
-                        td {{::selectEmp.educationBackground.displayName}}
+                        td 
+                            nb-dropdown(ng-model="selectEmp.educationBackgroud", remote-key="education_backgrounds")
+                            
+                    tr
+                        th 学位：
+                        td
+                            nb-dropdown(ng-model="selectEmp.degree", remote-key="degrees")
+                        th 毕业院校：
+                        td
+                            input(type="text", ng-model="selectEmp.school")
                     tr
                         th 身份证号：
                         td
-                            input(type="text", ng-model="selectEmp.identityNo")
+                            input(type="text", ng-model="selectEmp.identityNo", name="identityNo")
+                            .form-control-error(ng-messages="empEditForm.identityNo.$error", ng-if="empEditForm.identityNo.$dirty")
+                                .form-group-error(ng-message="required") 身份证号码必填
                         th 联系方式：
                         td
-                            input(type="text", ng-model="selectEmp.contact.mobile")
+                            input(type="text", ng-model="selectEmp.contact.mobile", name="contact")
+                            .form-control-error(ng-messages="empEditForm.contact.$error", ng-if="empEditForm.contact.$dirty")
+                                .form-group-error(ng-message="required") 联系方式必填
                     tr
-                        th 政治面貌：
-                        td {{::selectEmp.politicalStatus.displayName}}
+                        th 专业：
+                        td
+                            input.form-control(type="text" placeholder="请输入专业" ng-model="selectEmp.major")
+                        th 英语等级：
+                        td
+                            nb-dropdown(ng-model="selectEmp.englishLevel", remote-key="english_levels")
+                    
 //- =======
 //- section.personnel-info-control.editing.clearfix
 //-     .btn-group

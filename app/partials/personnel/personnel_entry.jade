@@ -3,7 +3,7 @@
         .personnel-top-header
             h4.pull-left 新员工入职信息填写
         .personnel-content-body
-            form(ng-submit="regEmployee(newEmp)")
+            form(ng-submit="ctrl.regEmployee(newEmp)" name="newEmpForm")
                 section.personnel-section-wrap()
                     section.personnel-info-control.clearfix
                         .personnel-info-left.pull-left
@@ -19,24 +19,24 @@
                                     .form-group.personnel-info-row
                                         label.control-label.col-md-3 性别：
                                         div.col-md-5
-                                            nb-dropdown(ng-model="newEmp.gender")
-                                    .form-group.personnel-info-row
+                                            nb-dropdown(ng-model="newEmp.gender", remote-key="genders")
+                                    .form-group
                                         label.control-label.col-md-3 身份证号码：
                                         div.col-md-5
                                             input.form-control(type="text" placeholder="身份证号，护照至少输入一项" ng-model="newEmp.identityNo")
                                     .form-group.personnel-info-row
                                         label.control-label.col-md-3 政治面貌：
                                         div.col-md-5
-                                            nb-dropdown(ng-model="newEmp.politicalStatus")
-                                    .form-group.personnel-info-row
+                                            nb-dropdown(ng-model="newEmp.politicalStatus", remote-key="political_status")
+                                    .form-group
                                         label.control-label.col-md-3 学历：
                                         div.col-md-5
-                                            nb-dropdown(ng-model="newEmp.educationBackgroud")
-                                    .form-group.personnel-info-row
+                                            nb-dropdown(ng-model="newEmp.educationBackgroud", remote-key="education_backgrounds")
+                                    .form-group
                                         label.control-label.col-md-3 学位：
                                         div.col-md-5
-                                            nb-dropdown(ng-model="newEmp.degree")
-                                    .form-group.personnel-info-row
+                                            nb-dropdown(ng-model="newEmp.degree", remote-key="degrees")
+                                    .form-group
                                         label.control-label.col-md-3 毕业院校：
                                         div.col-md-5
                                             input.form-control(type="text" placeholder="请输入毕业院校" ng-model="newEmp.school")
@@ -47,8 +47,8 @@
                                     .form-group.personnel-info-row
                                         label.control-label.col-md-3 英语等级：
                                         div.col-md-5
-                                            nb-dropdown(ng-model="newEmp.englishLevel")
-                                    .form-group.personnel-info-row
+                                            nb-dropdown(ng-model="newEmp.englishLevel", remote-key="english_levels")
+                                    .form-group
                                         label.control-label.col-md-3 手机号码：
                                         div.col-md-5
                                             input.form-control(type="text" placeholder="请输入手机号码" ng-model="newEmp.contactWay.mobile")
@@ -67,24 +67,26 @@
                                                     title="划转"
                                                     nb-dialog="partials/common/org_select.tpl.html"
                                                     nb-dialog-scope="this"
-                                                    ng-model="selectEmp.department.custStr"
+                                                    ng-model="newEmp.department.custStr"
                                                 )
                                         .form-group.personnel-info-row
                                             label.control-label.col-md-3 岗位：
                                             div.col-md-5
-                                                nb-dropdown
-                                        .form-group.personnel-info-row
+                                                ui-select(ng-model="newEmp.position" theme="select2" required)
+                                                    ui-select-match(placeholder="请输入岗位名称") {{ $select.selected.name }}
+                                                    ui-select-choices(repeat="pos in ctrl.orgPos | filter:$select.search | limitTo: 5", refresh="ctrl.loadOrgPos()") {{ pos.name }}
+                                        .form-group
                                             label.control-label.col-md-3 属地化地点：
                                             div.col-md-5
-                                                nb-dropdown(ng-model="newEmp.location")
-                                        .form-group.personnel-info-row
+                                                nb-dropdown(ng-model="newEmp.location", remote-key="degrees")
+                                        .form-group
                                             label.control-label.col-md-3 用工性质：
                                             div.col-md-5
-                                                nb-dropdown(ng-model="newEmp.laborRelation")
-                                        .form-group.personnel-info-row
+                                                nb-dropdown(ng-model="newEmp.laborRelation", remote-key="degrees")
+                                        .form-group
                                             label.control-label.col-md-3 用工关系状态：
                                             div.col-md-5
-                                                nb-dropdown(ng-model="newEmp.employeeStatus")
+                                                nb-dropdown(ng-model="newEmp.employeeStatus", remote-key="degrees")
                     .btn-group-actions
                         button.btn.btn-info(type="submit") 提 交
                         button.btn.btn-default() 取 消
