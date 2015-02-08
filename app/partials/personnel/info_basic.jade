@@ -7,23 +7,13 @@
         .personnel-content-body
           section.personnel-section-wrap(ng-controller="EditableResource")
             div.showing(ng-hide="editing")
-              .btn-group.pull-right
-                button.btn.btn-default(ng-click="edit()") 编辑
               include info_basic/info_basic_section
             div.editing(ng-if="editing")
-              .btn-group.pull-right
-                button.btn.btn-info(ng-click="save(selectEmp.$save())") 保存
-                button.btn.btn-default(ng-click="cancel()") 取消
               include info_basic/info_basic_edit
           section.personnel-section-wrap(ng-controller="EditableResource")
             div.showing(ng-hide="editing")
-              .btn-group.pull-right
-                button.btn.btn-default(ng-click="edit()") 编辑
               include info_basic/info_position_section
             div.editing(ng-if="editing")
-              .btn-group.pull-right
-                button.btn.btn-info(ng-click="save(selectEmp.$save())") 保存
-                button.btn.btn-default(ng-click="cancel()") 取消
               include info_basic/info_position_edit
       tab(heading="高级人事信息")
         p 543543543

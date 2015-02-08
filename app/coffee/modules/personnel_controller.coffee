@@ -145,6 +145,7 @@ class PerInfoCtrl extends nb.Controller
         console.log perPos
 
     setSelectedOrg: (org) ->
+        console.log org
         @scope.selectEmp.department = org
         @scope.selectEmp.position = null
         @loadOrgPos()
@@ -155,14 +156,26 @@ class PerInfoCtrl extends nb.Controller
         @scope.orgPos = currentOrg.positions.$fetch()
 
 class NewEmpsCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Employee']
-    constructor: (@scope, @Employee) ->
+    @.$inject = ['$scope', 'Employee', 'Org']
+    constructor: (@scope, @Employee, @Org) ->
+        @newEmp = {}
         @loadInitailData()
 
     loadInitailData: ->
-        date = new Date()
-        @scope.newEmps = @Employee.$collection().$fetch({'sort': 'desc'})
 
+        collection_param = {
+            predicate: {
+                join_scal_date: {
+                    from: moment().startOf('year').format("YYYY-MM-DD")
+                    to: moment().format("YYYY-MM-DD")
+                }
+            }
+            sort: {
+                join_scal_date: 'desc'
+            }
+        }
+
+        @scope.newEmps = @Employee.$collection(collection_param).$fetch()
     regEmployee: (employee)->
         @Employee.$build(employee).$save()
 
@@ -171,6 +184,15 @@ class NewEmpsCtrl extends nb.Controller
                 .filter (emp) -> emp.isSelected
                 .map (emp) -> emp.id
                 .join(',')
+    setSelectedOrg: (org) ->
+        @newEmp.department = org
+        @newEmp.position = null
+        @loadOrgPos()
+        # 返回true是为了能执行后面的closeDialog
+        return true
+    loadOrgPos: ->
+        currentOrg = @Org.$new @newEmp.department.id
+        @orgPos = currentOrg.positions.$fetch()
 
 
 class RegEmployeeCtrl extends nb.Controller
