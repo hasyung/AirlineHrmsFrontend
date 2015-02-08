@@ -1,8 +1,8 @@
-.btn-group.pull-right
-    button.btn.btn-info(ng-click="save(selectEmp.$save())") 保存
-    button.btn.btn-default(ng-click="cancel()") 取消
 section.personnel-info-control.editing.clearfix
     form(name="empEditForm")
+        .btn-group.pull-right
+            button.btn.btn-info(ng-click="save(selectEmp.$save())") 保存
+            button.btn.btn-default(ng-click="cancel()") 取消
         //- .btn-group
         //-     //- button.btn.btn-default(ng-click="ctrl.basicEdit=false") 取消
         //-     //- button.btn.btn-info(type="submit") 保存
@@ -32,9 +32,9 @@ section.personnel-info-control.editing.clearfix
                             .form-control-error(ng-messages="empEditForm.political_status.$error", ng-if="empEditForm.political_status.$dirty")
                                 .form-group-error(ng-message="required") 政治面貌必选
                         th 学历：
-                        td 
+                        td
                             nb-dropdown(ng-model="selectEmp.educationBackgroud", remote-key="education_backgrounds")
-                            
+
                     tr
                         th 学位：
                         td
@@ -60,7 +60,7 @@ section.personnel-info-control.editing.clearfix
                         th 英语等级：
                         td
                             nb-dropdown(ng-model="selectEmp.englishLevel", remote-key="english_levels")
-                    
+
 //- =======
 //- section.personnel-info-control.editing.clearfix
 //-     .btn-group
