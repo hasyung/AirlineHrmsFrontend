@@ -11,21 +11,21 @@ section.personnel-info-control.clearfix
             tbody
                 tr
                     th 所属部门：
-                    td {{::selectEmp.department.name}}
+                    td {{selectEmp.department.name}}
                     th 岗位：
-                    td {{::selectEmp.position.name}}
+                    td {{selectEmp.position.name}}
                 tr
                     th 分类：
-                    td {{::selectEmp.category.displayName}}
+                    td {{selectEmp.category.displayName}}
                     th 通道：
-                    td {{::selectEmp.channel.displayName}}
+                    td {{selectEmp.channel.displayName}}
                 tr
                     th 类别：
-                    td {{::selectEmp.position.postType}}
+                    td {{selectEmp.position.postType}}
                     th 用工性质：
-                    td {{::selectEmp.laborRelation.nature.displayName}}
+                    td {{selectEmp.laborRelation.name}}
                 tr
                     th 属地化地点：
-                    td {{::selectEmp.location.displayName}}
+                    td {{selectEmp.location.displayName}}
                     th 用工关系状态：
-                    td 字段未知
+                    td {{selectEmp.employmentStatus}}

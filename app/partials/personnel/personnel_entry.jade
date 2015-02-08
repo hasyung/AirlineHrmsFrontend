@@ -78,15 +78,15 @@
                                         .form-group
                                             label.control-label.col-md-3 属地化地点：
                                             div.col-md-5
-                                                nb-dropdown(ng-model="newEmp.location", remote-key="degrees")
+                                                nb-dropdown(ng-model="newEmp.location", remote-key="locations")
                                         .form-group
                                             label.control-label.col-md-3 用工性质：
                                             div.col-md-5
-                                                nb-dropdown(ng-model="newEmp.laborRelation", remote-key="degrees")
+                                                nb-dropdown(ng-model="newEmp.laborRelation", remote-key="labor_relations")
                                         .form-group
                                             label.control-label.col-md-3 用工关系状态：
                                             div.col-md-5
-                                                nb-dropdown(ng-model="newEmp.employeeStatus", remote-key="degrees")
+                                                nb-dropdown(ng-model="newEmp.employeeStatus", remote-key="employment_status")
                     .btn-group-actions
                         button.btn.btn-info(type="submit") 提 交
                         button.btn.btn-default() 取 消

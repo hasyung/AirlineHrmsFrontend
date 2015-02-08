@@ -12,7 +12,8 @@ Employee = (restmod, RMUtils, $Evt) ->
         # 是否超编
 
         $hooks: {
-
+            'after-create': ->
+                $Evt.$send('employee:create:success', "新员工创建成功")
         }
         $extend:
             Collection: {}
