@@ -1,30 +1,32 @@
-
-section.personnel-info-control.clearfix
-    .btn-group.pull-right
-        button.btn.btn-default(ng-click="edit()") 编辑
-    //- .btn-group
-    //-     button.btn.btn-default(ng-click="ctrl.basicEdit = true") 编辑
-    .personnel-info-left.pull-left
-        .personnel-item-icon.personnel-item1
-        .personnel-item-desc.bg-success 基本信息
-    .personnel-info-right.pull-left
-        table
-            tbody
-                tr
-                    th 员工编号：
-                    td {{current.employeeNo}}
-                    th 性别：
-                    td {{current.gender.displayName}}
-                tr
-                    th 姓名：
-                    td {{current.name}}
-                    th 学历：
-                    td {{current.educationBackground.displayName}}
-                tr
-                    th 身份证号：
-                    td {{current.identityNo}}
-                    th 联系方式：
-                    td {{current.contact.mobile}}
-                tr
-                    th 政治面貌：
-                    td {{current.politicalStatus.displayName}}
+.form-btn-group
+    button.btn.btn-default(ng-click="edit()") 编辑
+.form-group
+    label.control-label 员工编号：
+    .form-content(ng-bind="current.employeeNo")
+.form-group
+    label.control-label 性别：
+    .form-content(ng-bind="current.gender.displayName")
+.form-group
+    label.control-label 姓名：
+    .form-content(ng-bind="current.name")
+.form-group
+    label.control-label 学历：
+    .form-content(ng-bind="current.educationBackground.displayName")
+.form-group
+    label.control-label 身份证号：
+    .form-content(ng-bind="current.identityNo")
+.form-group
+    label.control-label 联系方式：
+    .form-content(ng-bind="current.contact.mobile")
+.form-group
+    label.control-label 政治面貌：
+    .form-content(ng-bind="current.politicalStatus.displayName")
+.form-group
+    label.control-label 联系方式：
+    .form-content(ng-bind="current.employeeNo")
+.form-group
+    label.control-label 联系方式：
+    .form-content(ng-bind="current.employeeNo")
+.form-group
+    label.control-label 联系方式：
+    .form-content(ng-bind="current.employeeNo")

@@ -6,15 +6,25 @@
                     h4.pull-left 基本人事信息
                 .personnel-content-body
                     section.personnel-section-wrap(ng-controller="EditableResource")
-                        div.showing(ng-hide="editing")
-                            include info_basic/info_basic_section
-                        div.editing(ng-if="editing")
-                            include info_basic/info_basic_edit
+                        section.personnel-info-control.clearfix
+                                .personnel-info-left
+                                        .personnel-item-icon.personnel-item1
+                                        .personnel-item-desc.bg-success 基本信息
+                                .personnel-info-right.form-split
+                                    div.showing(ng-hide="editing")
+                                        include info_basic/info_basic_section
+                                    div.editing(ng-if="editing")
+                                        include info_basic/info_basic_edit
                     section.personnel-section-wrap(ng-controller="EditableResource")
-                        div.showing(ng-hide="editing")
-                            include info_basic/info_position_section
-                        div.editing(ng-if="editing")
-                            include info_basic/info_position_edit
+                        section.personnel-info-control.clearfix
+                                .personnel-info-left
+                                        .personnel-item-icon.personnel-item1
+                                        .personnel-item-desc.bg-success 岗位信息
+                                .personnel-info-right.form-split
+                                    div.showing(ng-hide="editing")
+                                        include info_basic/info_position_section
+                                    div.editing(ng-if="editing")
+                                        include info_basic/info_position_edit
             tab(heading="培训记录")
                 p 培训记录
             tab(heading="奖惩记录")
