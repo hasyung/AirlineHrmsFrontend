@@ -1,0 +1,40 @@
+.resume-wrap {
+    font-size: $font-size-md;
+    padding: 0 50px;
+    position: relative;
+
+    h4 {
+        margin-bottom: 10px;
+    }
+
+    .form-split {
+        padding: 20px;
+
+        .control-label {
+            height: 34px;
+            line-height: 34px;
+            margin-left: 20px;
+        }
+
+        .form-content {
+            height: 34px;
+            line-height: 34px;
+        }
+
+        .form-control {
+            margin-right: 10%;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+
+            &.block {
+                .form-control {
+                    margin-right: 5%;
+                }
+            }
+        }
+
+
+    }
+}
