@@ -9,6 +9,7 @@ Position = (restmod, RMUtils, $Evt) ->
         department_id: {mask: 'R', map: 'department.id'}
         department: {mask: 'C'}
         isSelected: {mask: "CU"}
+        employees: { hasMany: 'Employee'}
         # 是否超编
         isOverstaffed: {
             computed: (val) ->
