@@ -194,14 +194,8 @@
                                 tbody
                                     tr(ng-repeat="emp in currentEmps track by emp.id")
                                         td(select-row="emp" mode="multiple")
-                                        td(ng-bind="::emp.employeeNo")
-                                        td.org-post
-                                            //- a(ui-sref="^.detail.basic({empId: emp.id})" ng-bind="emp.name")
-                                            a(
-                                                nb-dialog="partials/personnel/info_basic.html"
-                                                nb-dialog-class="ngdialog-theme-panel"
-                                                nb-dialog-data="emp"
-                                            ) {{emp.name}}
+                                        td(ng-bind="::emp.employee.employeeNo")
+                                        td(ng-bind="emp.employee.name")
                                         td(ng-bind="::emp.startDate")
                             .custom-pages(nb-pagination="currentEmps.$metadata")
                 tab(heading="历任领导信息")
@@ -220,14 +214,8 @@
                                 tbody
                                     tr(ng-repeat="emp in currentEmps track by emp.id")
                                         td(select-row="emp" mode="multiple")
-                                        td(ng-bind="::emp.employeeNo")
-                                        td.org-post
-                                            //- a(ui-sref="^.detail.basic({empId: emp.id})" ng-bind="emp.name")
-                                            a(
-                                                nb-dialog="partials/personnel/info_basic.html"
-                                                nb-dialog-class="ngdialog-theme-panel"
-                                                nb-dialog-data="emp"
-                                            ) {{emp.name}}
+                                        td(ng-bind="::emp.employee.employeeNo")
+                                        td(ng-bind="emp.employee.name")
                                         td(ng-bind="::emp.startDate")
                                         td(ng-bind="::emp.endDate")
                             .custom-pages(nb-pagination="currentEmps.$metadata")
