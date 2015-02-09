@@ -6,7 +6,7 @@ form(ng-submit="ctrl.updateInfo()")
         .personnel-info-right.form-split
                 .form-btn-group
                     button.btn.btn-info(type="submit") 保存
-                    button.btn.btn-default(ui-sref="^") 取消
+                    button.btn.btn-default(ng-click="cancel(currentUser, $event)") 取消
                 .form-group.block
                     label.control-label 姓名：
                     input.form-control(ng-model="currentUser.name")

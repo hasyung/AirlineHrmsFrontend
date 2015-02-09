@@ -1,4 +1,4 @@
-div(nb-table='ctrl.employees' nb-safe-src="ctrl.employees")
+div(nb-table='ctrl.records' nb-safe-src="ctrl.records")
         .search-container(nb-search)
             div(nb-predicate="名称" predicate-attr="name")
                 input(name="name" placeholder="姓名" ng-model="name")
@@ -24,38 +24,30 @@ div(nb-table='ctrl.employees' nb-safe-src="ctrl.employees")
                 span.gap 至
                 input(ng-model="birthday.to" bs-datepicker)
         .search-btn-group
-            button.btn.btn-primary(nb-pipe="ctrl.search(tableState)") 开始搜索
+            button.btn.btn-primary(nb-pipe="ctrl.searchRecord(tableState)") 开始搜索
 
         .table-container
             h4 人事信息列表
             table.table.table-striped.custom-table
                 thead
                     tr
-                        th(select-row="" mode='all')
                         th 员工编码
                         th 姓名
                         th 所属部门
-                        th 岗位
-                        th 分类
-                        th 通道
-                        th 用工性质
-                        th 入职日期
+                        th 信息变更模块
+                        th 变更时间
+                        th 状态
+                        th 审核时间
+                        th 理由
                 tbody
-                    tr(ng-repeat="emp in ctrl.employees track by emp.id")
-                        td(select-row="emp" mode="multiple")
-                        td(ng-bind="::emp.employeeNo")
-                        td.org-post
-                            //- a(ui-sref="^.detail.basic({empId: emp.id})" ng-bind="emp.name")
-                            a(
-                                nb-dialog="partials/personnel/info_basic.html"
-                                nb-dialog-class="ngdialog-theme-panel"
-                                nb-dialog-data="emp"
-                                nb-dialog-scope="this"
-                            ) {{emp.name}}
-                        td(ng-bind="emp.department.name")
-                        td(ng-bind="emp.position.name")
-                        td(ng-bind="emp.category.displayName")
-                        td(ng-bind="emp.channel.displayName")
+                    tr(ng-repeat="record in ctrl.records track by $index")
+                        td(ng-bind="record")
+                        
+                        td(ng-bind="record")
+                        td(ng-bind="record")
+                        td(ng-bind="record")
+                        td(ng-bind="record")
                         //- TODO 用工性质
-                        td(ng-bind="emp.laborRelation.name")
-                        td(ng-bind="emp.joinScalDate")
+                        td(ng-bind="record")
+                        td(ng-bind="record")
+                        td(ng-bind="record")
