@@ -1,78 +1,15 @@
-.app-content-wrapper(ng-init="currentPos = ngDialogData ;currentSpe = currentPos.specification.$fetch")
-    .org-pos-detail-window.bg-white
-        .org-pos-detail-content
-            .position-info.form-split(ng-controller="EditableResource")
-                h3 岗位信息
-                div.showing(ng-hide="editing")
-                    .form-btn-group
-                        button.btn.btn-default(ng-click="edit()") 编辑
-                    .form-group
-                        label.control-label 岗位名称：
-                        span.form-content(ng-bind="currentPos.name")
-                    .form-group
-                        label.control-label 编制
-                        span.form-content(ng-bind="currentPos.budgetedStaffing")
-
-                    .form-group
-                        label.control-label 所属部门：
-                        span.form-content(ng-bind="currentPos.department.name")
-                    .form-group
-                        label.control-label 工作制度：
-                        span.form-content(ng-bind="currentPos.schedule.displayName || '无'")
-
-                    .form-group
-                        label.control-label 通道：
-                        span.form-content(ng-bind="currentPos.channel.displayName || '无'")
-
-                    .form-group
-                        label.control-label 分类：
-                        span.form-content(ng-bind="currentPos.category.displayName || '无'")
-
-                    .form-group
-                        label.control-label OA文件编号：
-                        span.form-content(ng-bind="currentPos.oaFileNo")
-
-                    .form-group
-                        label.control-label 岗位性质：
-                        span.form-content(ng-bind="currentPos.nature.displayName || '无'")
-
-                    .form-group
-                        label.control-label 岗位名称：
-                        span.form-content(ng-bind="") {{currentPos.name}}
-                .editing(ng-show="editing")
-                    include position_edit_basic
-            .position-desc.form-split(ng-controller="EditableResource")
-                .showing(ng-hide="editing")
-                    .form-btn-group
-                        button.btn.btn-default(ng-click="edit()") 编辑
-                    section.position-duty
-                        h3 工作职责
-                        div(ng-bind-html="currentSpe.duty")
-                    section.position-purview
-                        h3 工作权限
-                        ol
-                            li 人事权限：
-                                span {{currentSpe.personnelPermission}}
-                            li 财务权限：
-                                span {{currentSpe.financialPermission}}
-                            li 业务权限：
-                                span {{currentSpe.businessPermission}}
-                    section.position-relative
-                        h3 工作关系
-                        ol
-                            li 直属上级：
-                                span {{currentSpe.superior}}
-                            li 直属下级：
-                                span {{currentSpe.underling}}
-                            li 内部联系：
-                                span {{currentSpe.internalRelation}}
-                            li 外部联系：
-                                span {{currentSpe.externalRelation}}
-                    section.position-qualification
-                        h3 任职条件
-                        div(ng-bind-html="currentSpe.qualification")
-                    section.work-time
-                        h3 工作时间
-                        p {{currentPos.schedule.displayName || '无'}}
-                .editing(ng-if="editing")
-                    include position_edit_desc
+.app-content-wrapper(
+    ng-init="currentPos = ngDialogData;\
+    currentEmps = currentPos.employees.$refresh();\
+    hisLeaders = currentPos.formerleaders.$refresh();\
+    currentSpe = currentPos.specification.$refresh();")
+    tabset
+        tab(heading="岗位信息")
+            include position_basic
+        tab(heading="人员明细")
+            include position_employees
+        tab(heading="考勤体系")
+        tab(heading="绩效体系")
+        tab(heading="薪酬体系")
+        tab(heading="福利体系")
+        tab(heading="培训体系")

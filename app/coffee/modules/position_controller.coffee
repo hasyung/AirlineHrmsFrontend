@@ -27,6 +27,7 @@ class PositionCtrl extends nb.Controller
         @loadInitialData()
 
     loadInitialData: ->
+        self = @
         @positions = @Position.$collection().$fetch()
 
     search: (tableState) ->

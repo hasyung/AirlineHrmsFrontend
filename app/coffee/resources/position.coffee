@@ -10,6 +10,8 @@ Position = (restmod, RMUtils, $Evt) ->
         department: {mask: 'C'}
         isSelected: {mask: "CU"}
         employees: { hasMany: 'Employee'}
+        # 部门领导
+        formerleaders: {hasMany: 'Formerleaders'}
         # 是否超编
         isOverstaffed: {
             computed: (val) ->
