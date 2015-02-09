@@ -292,16 +292,6 @@
             right: 0;
             top: 0;
             width: 960px;
-
-            &:before {
-                background: #fff;
-                bottom: 0;
-                content: ' ';
-                display: block;
-                position: fixed;
-                top: 0;
-                width: inherit;
-            }
         }
 
         .ngdialog-close {
