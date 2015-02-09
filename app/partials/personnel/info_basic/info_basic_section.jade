@@ -1,32 +1,35 @@
 .form-btn-group
     button.btn.btn-default(ng-click="edit()") 编辑
-.form-group
+.form-group.block
     label.control-label 员工编号：
-    .form-content(ng-bind="current.employeeNo")
-.form-group
-    label.control-label 性别：
-    .form-content(ng-bind="current.gender.displayName")
+    .form-content {{current.employeeNo}}
 .form-group
     label.control-label 姓名：
-    .form-content(ng-bind="current.name")
+    .form-content {{current.name}}
 .form-group
-    label.control-label 学历：
-    .form-content(ng-bind="current.educationBackground.displayName")
+    label.control-label 性别：
+    .form-content {{current.gender.displayName}}
 .form-group
     label.control-label 身份证号：
-    .form-content(ng-bind="current.identityNo")
-.form-group
-    label.control-label 联系方式：
-    .form-content(ng-bind="current.contact.mobile")
+    .form-content {{current.identityNo}}
 .form-group
     label.control-label 政治面貌：
-    .form-content(ng-bind="current.politicalStatus.displayName")
+    .form-content {{current.politicalStatus.displayName}}
 .form-group
-    label.control-label 联系方式：
-    .form-content(ng-bind="current.employeeNo")
+    label.control-label 学历：
+    .form-content {{current.educationBackground.displayName}}
+.form-group
+    label.control-label 学位：
+    .form-content {{current.degree.displayName}}
+.form-group
+    label.control-label 毕业院校：
+    .form-content {{current.school}}
 .form-group
     label.control-label 专业：
-    .form-content(ng-bind="current.major")
+    .form-content {{current.major}}
 .form-group
     label.control-label 英语等级：
-    .form-content(ng-bind="current.englishLevel")
+    .form-content {{current.englishLevel.displayName}}
+.form-group
+    label.control-label 联系方式：
+    .form-content {{current.contactWay.mobile}}

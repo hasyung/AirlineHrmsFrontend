@@ -9,45 +9,43 @@ section.personnel-info-section
                 include self_info_basic_edit
         .personnel-section-wrap()
             section.personnel-info-control.clearfix
-                .personnel-info-left.pull-left
+                .personnel-info-left
                     .personnel-item-icon.personnel-item1
                     .personnel-item-desc.bg-success 岗位信息
-                .personnel-info-right.pull-left
-                    form.form-split.clearfix
-                        .form-group.block
-                            label.control-label 所属部门：
-                            .form-content {{currentUser.department.name}}
-                        .form-group
-                            label.control-label 岗位：
-                            .form-content {{currentUser.position.name}}
-                        .form-group
-                            label.control-label 分类：
-                            .form-content {{currentUser.category.displayName}}
-                        .form-group
-                            label.control-label 通道：
-                            .form-content {{currentUser.channel.displayName}}
-                        .form-group
-                            label.control-label 类别：
-                            .form-content 行政管理
-                        .form-group
-                            label.control-label 属地化地点：
-                            .form-content {{currentUser.location.displayName}}
-                        .form-group
-                            label.control-label 用工性质：
-                            .form-content {{currentUser.laborRelation.displayName}}
-                        .form-group
-                            label.control-label 用工关系状态：
-                            .form-content {{currentUser.employeeStatus.displayName}}
-        div.personnel-section-wrap()
+                .personnel-info-right.form-split
+                    .form-group.block
+                        label.control-label 所属部门：
+                        .form-content {{currentUser.department.name}}
+                    .form-group
+                        label.control-label 岗位：
+                        .form-content {{currentUser.position.name}}
+                    .form-group
+                        label.control-label 分类：
+                        .form-content {{currentUser.category.displayName}}
+                    .form-group
+                        label.control-label 通道：
+                        .form-content {{currentUser.channel.displayName}}
+                    .form-group
+                        label.control-label 类别：
+                        .form-content {{currentUser.position.postType}}
+                    .form-group
+                        label.control-label 属地化地点：
+                        .form-content {{currentUser.location.displayName}}
+                    .form-group
+                        label.control-label 用工性质：
+                        .form-content {{currentUser.laborRelation.displayName}}
+                    .form-group
+                        label.control-label 用工关系状态：
+                        .form-content {{currentUser.employeeStatus.displayName}}
+        .personnel-section-wrap()
             section.personnel-info-control.clearfix
-                .personnel-info-left.pull-left
+                .personnel-info-left
                     .personnel-item-icon.personnel-item1
                     .personnel-item-desc.bg-success 职称信息
-                .personnel-info-right.pull-left
-                    form.form-split.clearfix
-                        .form-group
-                            label.control-label 职称：
-                            .form-content 工程师
-                        .form-group
-                            label.control-label 职称级别：
-                            .form-content 高级
+                .personnel-info-right.form-split
+                    .form-group
+                        label.control-label 职称：
+                        .form-content 工程师
+                    .form-group
+                        label.control-label 职称级别：
+                        .form-content 高级
