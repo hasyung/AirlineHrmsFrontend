@@ -14,7 +14,14 @@ tabset
                         tbody
                             tr(ng-repeat="emp in currentEmps track by emp.id")
                                 td(ng-bind="::emp.employeeNo")
-                                td(ng-bind="::emp.name")
+                                td()
+                                    a(
+                                    ng-bind="::emp.name"
+                                    nb-dialog="partials/personnel/info_basic.html"
+                                    nb-dialog-class="ngdialog-theme-panel"
+                                    nb-dialog-data="emp"
+                                    nb-dialog-scope="this"
+                                    )
                                 td(ng-bind="::emp.startDate")
                     .custom-pages(nb-pagination="currentEmps.$metadata" per-page="15")
     tab(heading="历任领导信息")
