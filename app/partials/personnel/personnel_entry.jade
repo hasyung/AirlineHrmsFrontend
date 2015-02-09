@@ -1,5 +1,5 @@
 .personnel-content.personnel-control
-    section.personnel-info-section(ng-init= "selectEmp = ngDialogData")
+    section.personnel-info-section(ng-init= "selectEmp = ngDialogData; params = {}")
         .personnel-top-header
             h4.pull-left 新员工入职信息填写
         .personnel-content-body
@@ -63,18 +63,18 @@
                                         .form-group.personnel-info-row
                                             label.control-label.col-md-3 所属部门：
                                             div.col-md-5
-                                                input.form-control(
-                                                    title="划转"
-                                                    nb-dialog="partials/common/org_select.tpl.html"
-                                                    nb-dialog-scope="this"
-                                                    ng-model="newEmp.department.custStr"
-                                                )
+                                                ui-select(
+                                                    ng-model="newEmp.department"
+                                                    ng-change="params.orgPos = newEmp.department.positions.length? newEmp.department.positions: newEmp.department.positions.$fetch()"
+                                                    reset-search-input="true")
+                                                    ui-select-match(placeholder="请输入机构名称") {{ $select.selected.name }}
+                                                    ui-select-choices(repeat="org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
                                         .form-group.personnel-info-row
                                             label.control-label.col-md-3 岗位：
                                             div.col-md-5
-                                                ui-select(ng-model="newEmp.position" theme="select2" required)
+                                                ui-select(ng-model="newEmp.position" required)
                                                     ui-select-match(placeholder="请输入岗位名称") {{ $select.selected.name }}
-                                                    ui-select-choices(repeat="pos in ctrl.orgPos | filter:$select.search | limitTo: 5", refresh="ctrl.loadOrgPos()") {{ pos.name }}
+                                                    ui-select-choices(repeat="pos in params.orgPos | filter:$select.search | limitTo: 5") {{ pos.name }}
                                         .form-group
                                             label.control-label.col-md-3 属地化地点：
                                             div.col-md-5
