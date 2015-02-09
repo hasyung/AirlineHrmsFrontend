@@ -39,7 +39,7 @@ a {
 }
 
 a:hover {
-    color: $a-color;
+    color: darken($a-color, 20%);
 }
 
 .inset-box-shadow {
