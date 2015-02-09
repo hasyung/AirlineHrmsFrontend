@@ -58,7 +58,7 @@ class Route
                         templateUrl: 'partials/self/self_info_basic/self_info_basic_edit.html'
                     }
                 }
-                
+
 
             }
             .state 'self.profile.members', {
@@ -67,7 +67,7 @@ class Route
                     "detail@self.profile": {
                         controller: ProfileCtrl
                         controllerAs: 'ctrl'
-                        templateUrl: 'partials/self/members.html'
+                        templateUrl: 'partials/self/self_info_family/self_info_members.html'
                     }
                 }
                 ncyBreadcrumb: {
