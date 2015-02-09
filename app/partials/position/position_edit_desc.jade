@@ -1,38 +1,36 @@
 form(title="岗位说明" name="posAdvancedForm", ng-submit="save(currentSpe.$save())")
-    .form-btn-group
+    .form-btn-group.alive
         button.btn.btn-info(type='submit' ng-disabled="posAdvancedForm.$invalid") 保存
         button.btn.btn-default(ng-click="cancel(currentSpe, $event)") 取消
-    section
+    section.position-desc-area
         h3 工作职责
-        label.postadd-control-label 工作职责
         textarea(simditor, toolbar="['bold', 'italic', 'underline', 'ol', 'ul']", placeholder="这里输入内容", autofocus, ng-model="currentSpe.duty")
-    section
+    section.position-desc-area
         h3 工作权限
-        .form-group
+        .form-group.block
             label.control-label 人事权限
             input.form-control(type='text', placeholder='请输入人事权限', ng-model="currentSpe.personnelPermission")
-        .form-group
+        .form-group.block
             label.control-label 财务权限
             input.form-control(type='text', placeholder='请输入财务权限', ng-model="currentSpe.financialPermission")
-        .form-group
+        .form-group.block
             label.control-label 业务权限
             input.form-control(type='text', placeholder='请输入业务权限', ng-model="currentSpe.businessPermission")
-    section
+    section.position-desc-area
         h3 工作关系
-        .form-group
+        .form-group.block
             label.control-label 直属上级
             input.form-control(type='text', placeholder='请输入直属上级', ng-model="currentSpe.superior")
-        .form-group
+        .form-group.block
             label.control-label 直属下级
             input.form-control(type='text', placeholder='请输入直属下级', ng-model="currentSpe.underling")
-        .form-group
+        .form-group.block
             label.control-label 内部联系
             input.form-control(type='text', placeholder='请输入内部联系', ng-model="currentSpe.internalRelation")
-        .form-group
+        .form-group.block
             label.control-label 外部联系
             input.form-control(type='text', placeholder='请输入外部联系', ng-model="currentSpe.externalRelation")
-    section
+    section.position-desc-area
         h3 任职条件
-        label.postadd-control-label 任职条件
         textarea(simditor, toolbar="['bold', 'italic', 'underline', 'ol', 'ul']", placeholder="这里输入内容", autofocus, ng-model="currentSpe.qualification")
 

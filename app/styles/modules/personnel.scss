@@ -95,8 +95,6 @@
     }
 
     .personnel-info-section {
-        margin-bottom: 30px;
-
         .personnel-info-row {
             height: 40px;
         }
@@ -141,19 +139,18 @@
         border: 1px solid #c3c3c3;
         border-top: 0;
         width: 100%;
+    }
 
-        .personnel-section-wrap {
-            &:nth-child(odd) {
-                background-color: #fff;
-            }
-
-            &:nth-child(even) {
-                background-color: #fafbfd;
-            }
+    .personnel-section-wrap {
+        &:nth-child(odd) {
+            background-color: #fff;
         }
 
-
+        &:nth-child(even) {
+            background-color: #fafbfd;
+        }
     }
+
 
     .personnel-info-left {
         .personnel-item-icon {
@@ -233,10 +230,20 @@
         min-height: 240px;
 
         &.break-lines {
+            margin-right: 5%;
             padding-bottom: 50px;
             padding-top: 50px;
-            margin-right: 5%;
         }
+    }
+}
+
+.btn-group-actions {
+    bottom: -10px;
+    left: 140px;
+    position: absolute;
+
+    .btn {
+        margin-right: 100px;
     }
 }
 
