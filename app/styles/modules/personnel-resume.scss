@@ -3,7 +3,31 @@
     padding: 0 50px;
     position: relative;
 
+    .resume-header {
+        text-align: center;
+
+        h3 {
+            height: 60px;
+            line-height: 60px;
+        }
+    }
+
+    .resume-btn-group {
+        position: absolute;
+        right: 20px;
+        top: 15px;
+
+        .btn {
+            margin-left: 20px;
+        }
+    }
+
     h4 {
+        margin-bottom: 10px;
+    }
+
+    h5 {
+        font-size: $font-size-lg;
         margin-bottom: 10px;
     }
 
@@ -34,7 +58,36 @@
                 }
             }
         }
+    }
+}
 
+.nice-table {
+    @include clearfix();
+    padding: 0;
+    width: 100%;
 
+    .nice-table-row {
+        @include clearfix();
+        width: 100%;
+
+        .nt-cell {
+            display: block;
+            float: left;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+        }
+
+        .nt-cell-sm {
+            width: 10%;
+        }
+
+        .nt-cell-md {
+            width: 15%;
+        }
+
+        .nt-cell-lg {
+            width: 25%;
+        }
     }
 }

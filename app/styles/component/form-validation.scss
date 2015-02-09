@@ -264,28 +264,3 @@
     }
 }
 
-.flex-table {
-    .flex-tabel-row {
-        display: flex;
-        width: 100%;
-
-        span {
-            display: block;
-            width: 40px;
-        }
-
-        .cell-sm {
-            flex: 1;
-        }
-
-        .cell-md {
-            flex: 2;
-        }
-
-        .cell-lg {
-            flex: 3;
-        }
-
-
-    }
-}

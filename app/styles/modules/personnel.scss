@@ -216,6 +216,11 @@
                 margin-right: 5%;
             }
         }
+        //暴力解决 ui-select中小三角位置的问题
+        .ui-select-bootstrap .ui-select-toggle > .caret {
+            margin-top: 7px;
+            position: static;
+        }
     }
 
     .personnel-info-left {

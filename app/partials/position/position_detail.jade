@@ -1,19 +1,20 @@
 //- <<<<<<< HEAD
-.app-content-wrapper(
+.app-content-wrapper.personnel-content.personnel-control(
     ng-init="currentPos = ngDialogData;\
     currentEmps = currentPos.employees.$refresh();\
     hisLeaders = currentPos.formerleaders.$refresh();\
     currentSpe = currentPos.specification.$refresh();")
-    tabset
-        tab(heading="岗位信息")
-            include position_basic
-        tab(heading="人员明细")
-            include position_employees
-        tab(heading="考勤体系")
-        tab(heading="绩效体系")
-        tab(heading="薪酬体系")
-        tab(heading="福利体系")
-        tab(heading="培训体系")
+    section.personnel-info-section
+        tabset
+            tab(heading="岗位信息")
+                include position_basic
+            tab(heading="人员明细")
+                include position_employees
+            tab(heading="考勤体系")
+            tab(heading="绩效体系")
+            tab(heading="薪酬体系")
+            tab(heading="福利体系")
+            tab(heading="培训体系")
 //- =======
 //- .app-content-wrapper.personnel-content.personnel-control(ng-init="currentPos = ngDialogData ;currentSpe = currentPos.specification.$fetch")
 //-     section.personnel-info-section(ng-init= "current = ngDialogData")
