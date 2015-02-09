@@ -1,36 +1,28 @@
 form(title="基本信息" name="posForm" novalidate ng-submit="save(currentPos.$save())")
-    .form-btn-group
+    .form-btn-group.alive
         button.btn.btn-info(type="submit" ng-disabled="posForm.$invalid") 保存
         button.btn.btn-default(ng-click="current.$restore();cancel()") 取消
 
-    .form-group
-        label.control-label 岗位名称：
-        input.form-control(type='text', placeholder='岗位名称', ng-model="currentPos.name", name="name", required)
-        .form-control-error(ng-messages="posForm.name.$error", ng-if="posForm.name.$dirty")
-            .form-group-error(ng-message="required") 名称必填
-    .form-group
-        label.control-label 岗位通道：
-        nb-dropdown.form-content(
-            ng-model="currentPos.channel", remote-key="channels", name="channel", additory="false", required)
-        .form-control-error(ng-messages="posForm.channel.$error", ng-if="posForm.channel.$dirty")
-            .form-group-error(ng-message="required") 通道必选
     .form-group
         label.control-label OA文件编号：
         input.form-control(type='text', placeholder='填写OA文件编号', name="fileName", ng-model="currentPos.oaFileNo", required)
         .form-control-error(ng-messages="posForm.fileName.$error", ng-if="posForm.fileName.$dirty")
             .form-group-error(ng-message="required") OA文件必填
     .form-group
-        label.control-label 编制：
-        input.form-control(type='number', placeholder='填写计划编制人数', name="budgetedStaffing", ng-model="currentPos.budgetedStaffing", required)
-        .form-control-error(ng-messages="posForm.budgetedStaffing.$error", ng-if="posForm.budgetedStaffing.$dirty")
-            .form-group-error(ng-message="required") 编制必填
-            .form-group-error(ng-message="number") 类型必须为数字
+        label.control-label 创建时间：
+        input.form-control(type='text', placeholder='填写OA文件编号', name="fileName", ng-model="currentPos.oaFileNo", required)
+        .form-control-error(ng-messages="posForm.fileName.$error", ng-if="posForm.fileName.$dirty")
+            .form-group-error(ng-message="required") 创建时间必填
     .form-group
-        label.control-label 工时制度：
-        nb-dropdown.form-content(
-            ng-model="currentPos.schedule" remote-key="position_schedules", required="true", name="schedule")
-        .form-control-error(ng-messages="posForm.schedule.$error", ng-if="posForm.schedule.$dirty")
-            .form-group-error(ng-message="required") 工时必选
+        label.control-label 岗位名称：
+        input.form-control(type='text', placeholder='岗位名称', ng-model="currentPos.name", name="name", required)
+        .form-control-error(ng-messages="posForm.name.$error", ng-if="posForm.name.$dirty")
+            .form-group-error(ng-message="required") 名称必填
+    .form-group
+        label.control-label 所在部门：
+        ui-select.form-content(ng-model="currentPos.department" style="width:30%;" required)
+            ui-select-match(placeholder="请输入机构名称") {{ $select.selected.name }}
+            ui-select-choices(repeat="org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
     .form-group
         label.control-label 分类：
         nb-dropdown.form-content(
@@ -38,14 +30,51 @@ form(title="基本信息" name="posForm" novalidate ng-submit="save(currentPos.$
         .form-control-error(ng-messages="posForm.category.$error", ng-if="posForm.category.$dirty")
             .form-group-error(ng-message="required") 类别必选
     .form-group
+        label.control-label 岗位通道：
+        nb-dropdown.form-content(
+            ng-model="currentPos.channel", remote-key="channels", name="channel", additory="false", required)
+        .form-control-error(ng-messages="posForm.channel.$error", ng-if="posForm.channel.$dirty")
+            .form-group-error(ng-message="required") 通道必选
+    .form-group
+        label.control-label 类别：
+        nb-dropdown.form-content(
+            ng-model="currentPos.category" remote-key="categories", required="true", name="category")
+        .form-control-error(ng-messages="posForm.category.$error", ng-if="posForm.category.$dirty")
+            .form-group-error(ng-message="required") 类别必选
+    .form-group
+        label.control-label 编制：
+        input.form-control(type='number', placeholder='填写计划编制人数', name="budgetedStaffing", ng-model="currentPos.budgetedStaffing", required)
+        .form-control-error(ng-messages="posForm.budgetedStaffing.$error", ng-if="posForm.budgetedStaffing.$dirty")
+            .form-group-error(ng-message="required") 编制必填
+            .form-group-error(ng-message="number") 类型必须为数字
+    .form-group
+        label.control-label 在岗人数：
+        input.form-control(type='number', placeholder='填写计划编制人数', name="budgetedStaffing", ng-model="currentPos.budgetedStaffing", required)
+        .form-control-error(ng-messages="posForm.budgetedStaffing.$error", ng-if="posForm.budgetedStaffing.$dirty")
+            .form-group-error(ng-message="required") 编制必填
+            .form-group-error(ng-message="number") 类型必须为数字
+    .form-group
+        label.control-label 超编：
+        input.form-control(type='number', placeholder='填写计划编制人数', name="budgetedStaffing", ng-model="currentPos.budgetedStaffing", required)
+        .form-control-error(ng-messages="posForm.budgetedStaffing.$error", ng-if="posForm.budgetedStaffing.$dirty")
+            .form-group-error(ng-message="required") 编制必填
+            .form-group-error(ng-message="number") 类型必须为数字
+    .form-group
+        label.control-label 职务职级：
+        input.form-control(type='number', placeholder='填写计划编制人数', name="budgetedStaffing", ng-model="currentPos.budgetedStaffing", required)
+        .form-control-error(ng-messages="posForm.budgetedStaffing.$error", ng-if="posForm.budgetedStaffing.$dirty")
+            .form-group-error(ng-message="required") 编制必填
+    .form-group
+        label.control-label 工时制度：
+        nb-dropdown.form-content(
+            ng-model="currentPos.schedule" remote-key="position_schedules", required="true", name="schedule")
+        .form-control-error(ng-messages="posForm.schedule.$error", ng-if="posForm.schedule.$dirty")
+            .form-group-error(ng-message="required") 工时必选
+    .form-group
         label.control-label 岗位性质：
         nb-dropdown.form-content(
             ng-model="currentPos.nature" remote-key="position_natures", required="true", name="nature")
         .form-control-error(ng-messages="posForm.nature.$error", ng-if="posForm.nature.$dirty")
             .form-group-error(ng-message="required") 性质必选
 
-    .form-group
-        label.control-label 所在部门：
-        ui-select.form-content(ng-model="currentPos.department" style="width:30%;" required)
-            ui-select-match(placeholder="请输入机构名称") {{ $select.selected.name }}
-            ui-select-choices(repeat="org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
+
