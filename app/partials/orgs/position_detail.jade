@@ -1,302 +1,239 @@
-.app-content-wrapper(ng-init= "currentPos = ngDialogData; currentSpe = currentPos.specification.$refresh()")
-    .org-pos-detail-menu
-        .org-menu-wrapper
-            .org-icon-window
-                .org-detail-item1.org-detail-item(class="active")
-                .org-detail-item2.org-detail-item
-                .org-detail-item3.org-detail-item
-                .org-detail-item4.org-detail-item
-                .org-detail-item5.org-detail-item
-                .org-detail-item6.org-detail-item
-                .org-detail-item7.org-detail-item
-    .org-pos-detail-window.bg-white
-        .org-pos-detail-content
+.app-content-wrapper(ng-init="currentPos = ngDialogData;currentEmps = currentPos.employees.$refresh();currentSpe = currentPos.specification.$refresh()")
+    //- .org-pos-detail-menu
+    //-     .org-menu-wrapper
+    //-         .org-icon-window
+    //-             .org-detail-item1.org-detail-item(class="active")
+    //-             .org-detail-item2.org-detail-item
+    //-             .org-detail-item3.org-detail-item
+    //-             .org-detail-item4.org-detail-item
+    //-             .org-detail-item5.org-detail-item
+    //-             .org-detail-item6.org-detail-item
+    //-             .org-detail-item7.org-detail-item
+    //- .org-pos-detail-window.bg-white
+    tabset
+        tab(heading="岗位信息")
+            .org-pos-detail-content
 
-            section.position-info(ng-controller="EditableResource")
-                div.showing(ng-hide="editing")
-                    .btn-group.pull-right
-                        button.btn.btn-default(ng-click="edit()") 编辑
-                    h3 岗位信息
-                    .editor-style
-                        table
-                            tbody
-                                tr
-                                    th 岗位名称：
-                                    td {{currentPos.name}}
-                                    th 编制：
-                                    td {{currentPos.budgetedStaffing}}
-                                tr
-                                    th 所属部门：
-                                    td {{currentOrg.name}}
-                                    th 工作制度：
-                                    td {{currentPos.schedule.displayName || '无'}}
-                                tr
-                                    th 通道：
-                                    td {{currentPos.channel.displayName || '无'}}
-                                    th 分类：
-                                    td {{currentPos.category.displayName || '无'}}
-                                tr
-                                    th OA文件编号：
-                                    td {{currentPos.oaFileNo}}
-                                    th 岗位性质：
-                                    td {{currentPos.nature.displayName || '无'}}
-                div.editing(ng-if="editing")
-                    h3 岗位信息
-                    form.editor-style.form-validator-table(name="posForm" novalidate ng-submit="save(currentPos.$save())")
+                section.position-info(ng-controller="EditableResource")
+                    div.showing(ng-hide="editing")
+                        .btn-group.pull-right
+                            button.btn.btn-default(ng-click="edit()") 编辑
+                        h3 岗位信息
+                        .editor-style
+                            table
+                                tbody
+                                    tr
+                                        th 岗位名称：
+                                        td {{currentPos.name}}
+                                        th 编制：
+                                        td {{currentPos.budgetedStaffing}}
+                                    tr
+                                        th 所属部门：
+                                        td {{currentOrg.name}}
+                                        th 工作制度：
+                                        td {{currentPos.schedule.displayName || '无'}}
+                                    tr
+                                        th 通道：
+                                        td {{currentPos.channel.displayName || '无'}}
+                                        th 分类：
+                                        td {{currentPos.category.displayName || '无'}}
+                                    tr
+                                        th OA文件编号：
+                                        td {{currentPos.oaFileNo}}
+                                        th 岗位性质：
+                                        td {{currentPos.nature.displayName || '无'}}
+                    div.editing(ng-if="editing")
+                        h3 岗位信息
+                        form.editor-style.form-validator-table(name="posForm" novalidate ng-submit="save(currentPos.$save())")
+                            .custom-btn-group.pull-right
+                                button.btn.btn-info(type="submit") 保存
+                                button.btn.btn-default(ng-click="currentPos.$restore(); cancel()") 取消
+                            table
+                                tbody
+                                    tr
+                                        th 岗位名称：
+                                        td
+                                            input(type='text', placeholder='岗位名称', ng-model="currentPos.name", name="name", required)
+                                            .form-control-error(ng-messages="posForm.name.$error", ng-if="posForm.name.$dirty")
+                                                .form-group-error(ng-message="required") 名称必填
+                                        th 编制：
+                                        td
+                                            input(type='number', placeholder='填写计划编制人数', name="budgetedStaffing", ng-model="currentPos.budgetedStaffing", required)
+                                            .form-control-error(ng-messages="posForm.budgetedStaffing.$error", ng-if="posForm.budgetedStaffing.$dirty")
+                                                .form-group-error(ng-message="required") 编制必填
+                                                .form-group-error(ng-message="number") 类型必须为数字
+                                    tr
+                                        th 所属部门：
+                                        td
+                                            ui-select(ng-model="currentPos.department" theme="select2" required)
+                                                ui-select-match(placeholder="请输入机构名称") {{ $select.selected.name }}
+                                                ui-select-choices(repeat="org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
+                                        th 工作制度：
+                                        td
+                                            nb-dropdown(
+                                                ng-model="currentPos.schedule" remote-key="position_schedules", required="true", name="schedule")
+                                            .form-control-error(ng-messages="posForm.schedule.$error", ng-if="posForm.schedule.$dirty")
+                                                .form-group-error(ng-message="required") 工时必选
+                                    tr
+                                        th 通道：
+                                        td
+                                            nb-dropdown(
+                                                ng-model="currentPos.channel", remote-key="channels", name="channel", additory="false", required)
+                                            .form-control-error(ng-messages="posForm.channel.$error", ng-if="posForm.channel.$dirty")
+                                                .form-group-error(ng-message="required") 通道必选
+                                        th 分类：
+                                        td
+                                            nb-dropdown(
+                                                ng-model="currentPos.category" remote-key="categories", required="true", name="category")
+                                            .form-control-error(ng-messages="posForm.category.$error", ng-if="posForm.category.$dirty")
+                                                .form-group-error(ng-message="required") 类别必选
+                                    tr
+                                        th OA文件编号：
+                                        td
+                                            input(type='text', placeholder='填写OA文件编号', name="fileName", ng-model="currentPos.oaFileNo", required)
+                                            .form-control-error(ng-messages="posForm.fileName.$error", ng-if="posForm.fileName.$dirty")
+                                                .form-group-error(ng-message="required") OA文件必填
+                                        th 岗位性质：
+                                        td
+                                            nb-dropdown(
+                                                ng-model="currentPos.nature" remote-key="position_natures", required="true", name="nature")
+                                            .form-control-error(ng-messages="posForm.nature.$error", ng-if="posForm.nature.$dirty")
+                                                .form-group-error(ng-message="required") 性质必选
+
+
+                section.position-specification(ng-controller="EditableResource")
+                    .showing(ng-hide="editing")
                         .custom-btn-group.pull-right
-                            button.btn.btn-info(type="submit") 保存
-                            button.btn.btn-default(ng-click="currentPos.$restore(); cancel()") 取消
-                        table
-                            tbody
-                                tr
-                                    th 岗位名称：
-                                    td
-                                        input(type='text', placeholder='岗位名称', ng-model="currentPos.name", name="name", required)
-                                        .form-control-error(ng-messages="posForm.name.$error", ng-if="posForm.name.$dirty")
-                                            .form-group-error(ng-message="required") 名称必填
-                                    th 编制：
-                                    td
-                                        input(type='number', placeholder='填写计划编制人数', name="budgetedStaffing", ng-model="currentPos.budgetedStaffing", required)
-                                        .form-control-error(ng-messages="posForm.budgetedStaffing.$error", ng-if="posForm.budgetedStaffing.$dirty")
-                                            .form-group-error(ng-message="required") 编制必填
-                                            .form-group-error(ng-message="number") 类型必须为数字
-                                tr
-                                    th 所属部门：
-                                    td
-                                        ui-select(ng-model="currentPos.department" theme="select2" required)
-                                            ui-select-match(placeholder="请输入机构名称") {{ $select.selected.name }}
-                                            ui-select-choices(repeat="org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
-                                    th 工作制度：
-                                    td
-                                        nb-dropdown(
-                                            ng-model="currentPos.schedule" remote-key="position_schedules", required="true", name="schedule")
-                                        .form-control-error(ng-messages="posForm.schedule.$error", ng-if="posForm.schedule.$dirty")
-                                            .form-group-error(ng-message="required") 工时必选
-                                tr
-                                    th 通道：
-                                    td
-                                        nb-dropdown(
-                                            ng-model="currentPos.channel", remote-key="channels", name="channel", additory="false", required)
-                                        .form-control-error(ng-messages="posForm.channel.$error", ng-if="posForm.channel.$dirty")
-                                            .form-group-error(ng-message="required") 通道必选
-                                    th 分类：
-                                    td
-                                        nb-dropdown(
-                                            ng-model="currentPos.category" remote-key="categories", required="true", name="category")
-                                        .form-control-error(ng-messages="posForm.category.$error", ng-if="posForm.category.$dirty")
-                                            .form-group-error(ng-message="required") 类别必选
-                                tr
-                                    th OA文件编号：
-                                    td
-                                        input(type='text', placeholder='填写OA文件编号', name="fileName", ng-model="currentPos.oaFileNo", required)
-                                        .form-control-error(ng-messages="posForm.fileName.$error", ng-if="posForm.fileName.$dirty")
-                                            .form-group-error(ng-message="required") OA文件必填
-                                    th 岗位性质：
-                                    td
-                                        nb-dropdown(
-                                            ng-model="currentPos.nature" remote-key="position_natures", required="true", name="nature")
-                                        .form-control-error(ng-messages="posForm.nature.$error", ng-if="posForm.nature.$dirty")
-                                            .form-group-error(ng-message="required") 性质必选
-
-
-            section.position-specification(ng-controller="EditableResource")
-                .showing(ng-hide="editing")
-                    .custom-btn-group.pull-right
-                        button.btn.btn-default(ng-click="edit()") 编辑
-                    h3 工作职责
-                    div(ng-bind-html="currentSpe.duty")
-                        | 无
-                    h3 工作权限
-                    ol
-                        li 人事权限：
-                            span {{currentSpe.personnelPermission}}
-                        li 财务权限：
-                            span {{currentSpe.financialPermission}}
-                        li 业务权限：
-                            span {{currentSpe.businessPermission}}
-                    h3 工作关系
-                    ol
-                        li 直属上级：
-                            span {{currentSpe.superior}}
-                        li 直属下级：
-                            span {{currentSpe.underling}}
-                        li 内部联系：
-                            span {{currentSpe.internalRelation}}
-                        li 外部联系：
-                            span {{currentSpe.externalRelation}}
-                    h3 任职条件
-                    div(ng-bind-html="currentSpe.qualification")
-                        | 无
-                    //- h3 工作时间
-                    //- p {{currentPos.schedule.displayName || '无'}}
-
-                .editing(ng-if="editing")
-                    .custom-btn-group.pull-right
-                        button.btn.btn-info(ng-click="save(currentSpe.$save())") 保存
-                        button.btn.btn-default(ng-click="cancel()") 取消
-                    form.editor-style.form-validator-table
+                            button.btn.btn-default(ng-click="edit()") 编辑
                         h3 工作职责
-                        textarea(
-                            simditor
-                            toolbar="['bold', 'italic', 'underline', 'ol', 'ul']"
-                            placeholder="这里输入内容"
-                            ng-model="currentSpe.duty"
-                        )
+                        div(ng-bind-html="currentSpe.duty")
+                            | 无
                         h3 工作权限
                         ol
                             li 人事权限：
-                                span
-                                    input(type='text', placeholder='请输入人事权限', ng-model="currentSpe.personnelPermission")
+                                span {{currentSpe.personnelPermission}}
                             li 财务权限：
-                                span
-                                    input(type='text', placeholder='请输入财务权限', ng-model="currentSpe.financialPermission")
+                                span {{currentSpe.financialPermission}}
                             li 业务权限：
-                                span
-                                    input(type='text', placeholder='请输入业务权限', ng-model="currentSpe.businessPermission")
-
+                                span {{currentSpe.businessPermission}}
                         h3 工作关系
                         ol
                             li 直属上级：
-                                span
-                                    input(type='text', placeholder='请输入直属上级', ng-model="currentSpe.superior")
+                                span {{currentSpe.superior}}
                             li 直属下级：
-                                span
-                                    input(type='text', placeholder='请输入直属下级', ng-model="currentSpe.underling")
+                                span {{currentSpe.underling}}
                             li 内部联系：
-                                span
-                                    input(type='text', placeholder='请输入内部联系', ng-model="currentSpe.internalRelation")
+                                span {{currentSpe.internalRelation}}
                             li 外部联系：
-                                span
-                                    input(type='text', placeholder='请输入外部联系', ng-model="currentSpe.externalRelation")
+                                span {{currentSpe.externalRelation}}
                         h3 任职条件
-                        textarea(
-                            simditor
-                            toolbar="['bold', 'italic', 'underline', 'ol', 'ul']"
-                            placeholder="这里输入内容"
-                            ng-model="currentSpe.qualification"
-                        )
+                        div(ng-bind-html="currentSpe.qualification")
+                            | 无
+                        //- h3 工作时间
+                        //- p {{currentPos.schedule.displayName || '无'}}
 
+                    .editing(ng-if="editing")
+                        .custom-btn-group.pull-right
+                            button.btn.btn-info(ng-click="save(currentSpe.$save())") 保存
+                            button.btn.btn-default(ng-click="cancel()") 取消
+                        form.editor-style.form-validator-table
+                            h3 工作职责
+                            textarea(
+                                simditor
+                                toolbar="['bold', 'italic', 'underline', 'ol', 'ul']"
+                                placeholder="这里输入内容"
+                                ng-model="currentSpe.duty"
+                            )
+                            h3 工作权限
+                            ol
+                                li 人事权限：
+                                    span
+                                        input(type='text', placeholder='请输入人事权限', ng-model="currentSpe.personnelPermission")
+                                li 财务权限：
+                                    span
+                                        input(type='text', placeholder='请输入财务权限', ng-model="currentSpe.financialPermission")
+                                li 业务权限：
+                                    span
+                                        input(type='text', placeholder='请输入业务权限', ng-model="currentSpe.businessPermission")
 
+                            h3 工作关系
+                            ol
+                                li 直属上级：
+                                    span
+                                        input(type='text', placeholder='请输入直属上级', ng-model="currentSpe.superior")
+                                li 直属下级：
+                                    span
+                                        input(type='text', placeholder='请输入直属下级', ng-model="currentSpe.underling")
+                                li 内部联系：
+                                    span
+                                        input(type='text', placeholder='请输入内部联系', ng-model="currentSpe.internalRelation")
+                                li 外部联系：
+                                    span
+                                        input(type='text', placeholder='请输入外部联系', ng-model="currentSpe.externalRelation")
+                            h3 任职条件
+                            textarea(
+                                simditor
+                                toolbar="['bold', 'italic', 'underline', 'ol', 'ul']"
+                                placeholder="这里输入内容"
+                                ng-model="currentSpe.qualification"
+                            )
+        tab(heading="人员明细")
+            tabset
+                tab(heading="在岗人员信息")
+                    .position-manage.app-content-wrapper
+                        .table-container
+                            h4 人员明细
+                            table.table.table-striped.custom-table
+                                thead
+                                    tr
+                                        th(select-row="" mode='all')
+                                        th 员工编码
+                                        th 姓名
+                                        th 到岗时间
+                                        
+                                tbody
+                                    tr(ng-repeat="emp in currentEmps track by emp.id")
+                                        td(select-row="emp" mode="multiple")
+                                        td(ng-bind="::emp.employeeNo")
+                                        td.org-post
+                                            //- a(ui-sref="^.detail.basic({empId: emp.id})" ng-bind="emp.name")
+                                            a(
+                                                nb-dialog="partials/personnel/info_basic.html"
+                                                nb-dialog-class="ngdialog-theme-panel"
+                                                nb-dialog-data="emp"
+                                            ) {{emp.name}}
+                                        td(ng-bind="::emp.startDate")
+                            .custom-pages(nb-pagination="currentEmps.$metadata")
+                tab(heading="历任领导信息")
+                    .position-manage.app-content-wrapper
+                        .table-container
+                            h4 人员明细
+                            table.table.table-striped.custom-table
+                                thead
+                                    tr
+                                        th(select-row="" mode='all')
+                                        th 工号
+                                        th 姓名
+                                        th 到岗时间
+                                        th 到岗时间
+                                        
+                                tbody
+                                    tr(ng-repeat="emp in currentEmps track by emp.id")
+                                        td(select-row="emp" mode="multiple")
+                                        td(ng-bind="::emp.employeeNo")
+                                        td.org-post
+                                            //- a(ui-sref="^.detail.basic({empId: emp.id})" ng-bind="emp.name")
+                                            a(
+                                                nb-dialog="partials/personnel/info_basic.html"
+                                                nb-dialog-class="ngdialog-theme-panel"
+                                                nb-dialog-data="emp"
+                                            ) {{emp.name}}
+                                        td(ng-bind="::emp.startDate")
+                                        td(ng-bind="::emp.endDate")
+                            .custom-pages(nb-pagination="currentEmps.$metadata")
 
-
-
-
-            //- section.position-duty(ng-controller="EditableResource")
-            //-     .showing(ng-hide="editing")
-            //-         .custom-btn-group.pull-right
-            //-             button.btn.btn-default(ng-click="edit()") 编辑
-            //-         h3 工作职责
-            //-         div(ng-bind-html="currentSpe.duty")
-            //-             | 无
-            //-     .editing(ng-if="editing")
-            //-         .custom-btn-group.pull-right
-            //-             button.btn.btn-info() 保存
-            //-             button.btn.btn-default() 取消
-            //-         h3 工作职责
-            //-         form.editor-style
-            //-             textarea(
-            //-             simditor
-            //-             toolbar="['bold', 'italic', 'underline', 'ol', 'ul']"
-            //-             placeholder="这里输入内容"
-            //-             ng-model="currentSpe.duty"
-            //-             )
-
-            //- section.position-purview(ng-controller="EditableResource")
-            //-     .showing(ng-hide="editing")
-            //-         .custom-btn-group.pull-right
-            //-             button.btn.btn-default(ng-click="edit()") 编辑
-            //-         h3 工作权限
-            //-         ol
-            //-             li 人事权限：
-            //-                 span {{currentSpe.personnelPermission}}
-            //-             li 财务权限：
-            //-                 span {{currentSpe.financialPermission}}
-            //-             li 业务权限：
-            //-                 span {{currentSpe.businessPermission}}
-            //-     .editing(ng-if="editing")
-            //-         .custom-btn-group.pull-right
-            //-             button.btn.btn-info(ui-sref=".editing({template: 'desc'})") 保存
-            //-             button.btn.btn-default(ui-sref=".editing({template: 'desc'})") 取消
-            //-         h3 工作权限
-            //-         form.editor-style
-            //-             ol
-            //-                 li 人事权限：
-            //-                     span
-            //-                         input(type="text")
-            //-                 li 财务权限：
-            //-                     span
-            //-                         input(type="text")
-            //-                 li 业务权限：
-            //-                     span
-            //-                         input(type="text")
-
-            //- section.position-relative(ng-controller="EditableResource")
-            //-     .showing(ng-hide="editing")
-            //-         .custom-btn-group.pull-right
-            //-             button.btn.btn-default(ng-click="edit()") 编辑
-            //-         h3 工作关系
-            //-         ol
-            //-             li 直属上级：
-            //-                 span {{currentSpe.superior}}
-            //-             li 直属下级：
-            //-                 span {{currentSpe.underling}}
-            //-             li 内部联系：
-            //-                 span {{currentSpe.internalRelation}}
-            //-             li 外部联系：
-            //-                 span {{currentSpe.externalRelation}}
-            //-     .editing(ng-if="editing")
-            //-         .custom-btn-group.pull-right
-            //-             button.btn.btn-info(ui-sref=".editing({template: 'desc'})") 保存
-            //-             button.btn.btn-default(ui-sref=".editing({template: 'desc'})") 取消
-            //-         h3 工作关系
-            //-         form.editor-style
-            //-             ol
-            //-                 li 直属上级：
-            //-                     span
-            //-                         input(type="text")
-            //-                 li 直属下级：
-            //-                     span
-            //-                         input(type="text")
-            //-                 li 内部联系：
-            //-                     span
-            //-                         input(type="text")
-            //-                 li 外部联系：
-            //-                     span
-            //-                         input(type="text")
-
-
-            //- section.position-qualification(ng-controller="EditableResource")
-            //-     .showing(ng-hide="editing")
-            //-         .custom-btn-group.pull-right
-            //-             button.btn.btn-default(ng-click="edit()") 编辑
-            //-         h3 任职条件
-            //-         div(ng-bind-html="currentSpe.qualification")
-            //-             | 无
-            //-     .editing(ng-if="editing")
-            //-         .custom-btn-group.pull-right
-            //-             button.btn.btn-info(ui-sref=".editing({template: 'desc'})") 保存
-            //-             button.btn.btn-default(ui-sref=".editing({template: 'desc'})") 取消
-            //-         h3 任职条件
-            //-         form.editor-style
-            //-             textarea(
-            //-             simditor
-            //-             toolbar="['bold', 'italic', 'underline', 'ol', 'ul']"
-            //-             placeholder="这里输入内容"
-            //-             ng-model="currentSpe.duty"
-            //-             )
-
-            //- section.work-time(ng-controller="EditableResource")
-            //-     .showing(ng-hide="editing")
-            //-         .custom-btn-group.pull-right
-            //-             button.btn.btn-default(ng-click="edit()") 编辑
-            //-         h3 工作时间
-            //-         p {{currentPos.schedule.displayName || '无'}}
-            //-     .editing(ng-if="editing")
-            //-         .custom-btn-group.pull-right
-            //-             button.btn.btn-info(ui-sref=".editing({template: 'desc'})") 保存
-            //-             button.btn.btn-default(ui-sref=".editing({template: 'desc'})") 取消
-            //-         h3 工作时间
-            //-         form.editor-style
-            //-             p
-            //-                 //- nb-dropdown
-
+        tab(heading="考勤体系")
+        tab(heading="绩效体系")
+        tab(heading="薪酬体系")
+        tab(heading="福利体系")
+        tab(heading="培训体系")
