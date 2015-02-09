@@ -10,6 +10,8 @@ Position = (restmod, RMUtils, $Evt) ->
         department: {mask: 'C'}
         isSelected: {mask: "CU"}
         employees: { hasMany: 'Employee'}
+        # 部门领导
+        formerleaders: {hasMany: 'Formerleaders'}
         # 是否超编
         isOverstaffed: {
             computed: (val) ->
@@ -27,10 +29,13 @@ Position = (restmod, RMUtils, $Evt) ->
 
             'after-destroy': ->
                 $Evt.$send('position:destroy:success',"岗位删除成功")
+
             'after-destroy-error': ->
                 $Evt.$send('position:destroy:success', arguments)
+
             'after-adjust': ->
                 $Evt.$send('position:adjust:success',"岗位调整成功")
+
             'after-adjust-error': ->
                 $Evt.$send('position:adjust:success', arguments)
         $extend:
@@ -73,7 +78,6 @@ Position = (restmod, RMUtils, $Evt) ->
                         self.$dispatch 'after-destroy-error', res
 
                     this.$send(request, onSuccess, onErorr)
-
 
     }
 

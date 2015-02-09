@@ -45,7 +45,7 @@ class Route
             .state 'personnel.review', {
                 url: '/change-review'
                 templateUrl: 'partials/personnel/change_review.html'
-                controller: PersonnelCtrl
+                controller: ReviewCtrl
                 controllerAs: 'ctrl'
 
             }
@@ -101,5 +101,14 @@ class NewEmpsCtrl extends nb.Controller
                 .join(',')
     search: (tableState) ->
         @employees.$refresh(tableState)
+
+class ReviewCtrl extends nb.Controller
+    @.$inject = ['$scope', 'Change']
+    constructor: (@scope, @Change) ->
+        @loadInitailData()
+
+    loadInitailData: ->
+        @Change.$collection().$fetch().$then (data)->
+            console.log data
 
 app.config(Route)

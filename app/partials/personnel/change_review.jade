@@ -1,34 +1,26 @@
-.position-manage.app-content-wrapper
-    .table-container
-        h4 待审核信息列表
-        table.table.table-striped.custom-table
-            thead
-                tr
-                    th(select-row="" mode='all')
-                    th 员工编码
-                    th 姓名
-                    th 所属部门
-                    th 岗位
-                    th 分类
-                    th 通道
-                    th 用工性质
-                    th 入职日期
-            tbody
-                tr(ng-repeat="emp in ctrl.employees track by emp.id")
-                    td(select-row="emp" mode="multiple")
-                    td(ng-bind="::emp.employeeNo")
-                    td.org-post
-                        //- a(ui-sref="^.detail.basic({empId: emp.id})" ng-bind="emp.name")
-                        a(
-                            nb-dialog="partials/personnel/info_basic.html"
-                            nb-dialog-class="ngdialog-theme-panel"
-                            nb-dialog-data="emp"
-                        ) {{emp.name}}
-                    td(ng-bind="::emp.department.name")
-                    td(ng-bind="::emp.position.name")
-                    td(ng-bind="::emp.category.displayName")
-                    td(ng-bind="::emp.channel.displayName")
-                    //- TODO 用工性质
-                    td(ng-bind="::emp.laborRelation.name")
-                    td(ng-bind="::emp.joinScalDate | nbDate:'yyyy-MM-dd'")
-        .custom-pages(nb-pagination="ctrl.employees.$metadata")
+
+tabset
+    tab(heading="待审核")
+        .position-manage.app-content-wrapper
+            div(nb-table='hisLeaders' nb-safe-src="hisLeaders")
+                input(type="hidden" nb-pipe="ctrl.search(tableState)")
+                .table-container
+                    h4 人员明细{{hisLeaders.length}}
+                    table.table.table-striped.custom-table
+                        thead
+                            tr
+                                //- th(select-row="" mode='all')
+                                th 工号
+                                th 姓名
+                                th 到岗时间
+                                th 离岗时间
+                                
+                        tbody
+                            tr(ng-repeat="emp in hisLeaders track by emp.id")
+                                //- td(select-row="emp" mode="multiple")
+                                td(ng-bind="::emp.employee.employeeNo")
+                                td(ng-bind="emp.employee.name")
+                                td(ng-bind="::emp.startDate")
+                                td(ng-bind="::emp.endDate")
+    tab(heading="变更记录")
+        include personnel_changes_record

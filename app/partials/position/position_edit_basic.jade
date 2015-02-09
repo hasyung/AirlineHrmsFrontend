@@ -1,7 +1,7 @@
 form(title="基本信息" name="posForm" novalidate ng-submit="save(currentPos.$save())")
     .form-btn-group.alive
         button.btn.btn-info(type="submit" ng-disabled="posForm.$invalid") 保存
-        button.btn.btn-default(ng-click="current.$restore();cancel()") 取消
+        button.btn.btn-default(ng-click="cancel(currentPos, $event)") 取消
 
     .form-group
         label.control-label OA文件编号：

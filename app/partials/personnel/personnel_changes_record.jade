@@ -1,1 +1,61 @@
-h1 変更记录
+div(nb-table='ctrl.employees' nb-safe-src="ctrl.employees")
+        .search-container(nb-search)
+            div(nb-predicate="名称" predicate-attr="name")
+                input(name="name" placeholder="姓名" ng-model="name")
+            div(nb-predicate="员工编号" predicate-attr="employee_no")
+                input(name="employee_no" placeholder="工号" ng-model="employee_no")
+            div(nb-predicate="机构" predicate-attr="department_ids")
+                ui-select(multiple ng-model="$parent.department_ids" theme="select2" style="width:600px" reset-search-input="true")
+                    ui-select-match(placeholder="请输入机构名称") {{ $item.name }}
+                    ui-select-choices(repeat="org.id as org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
+
+            div(nb-predicate="岗位名称" predicate-attr="position_name")
+                input(name="position_name" placeholder="岗位名称" ng-model="position_name")
+
+
+            div(nb-predicate="岗位通道" predicate-attr="channel_id")
+                nb-dropdown( ng-model="channel_id", remote-key="channels", map="$item.id" name="channel_id" required)
+
+            div(nb-predicate="属地" predicate-attr="location_id")
+                nb-dropdown( ng-model="location_id", remote-key="locations", map="$item.id" name="location_id" required)
+
+            div(nb-predicate="出生日期" predicate-attr="birthday")
+                input(ng-model="birthday.from" bs-datepicker)
+                span.gap 至
+                input(ng-model="birthday.to" bs-datepicker)
+        .search-btn-group
+            button.btn.btn-primary(nb-pipe="ctrl.search(tableState)") 开始搜索
+
+        .table-container
+            h4 人事信息列表
+            table.table.table-striped.custom-table
+                thead
+                    tr
+                        th(select-row="" mode='all')
+                        th 员工编码
+                        th 姓名
+                        th 所属部门
+                        th 岗位
+                        th 分类
+                        th 通道
+                        th 用工性质
+                        th 入职日期
+                tbody
+                    tr(ng-repeat="emp in ctrl.employees track by emp.id")
+                        td(select-row="emp" mode="multiple")
+                        td(ng-bind="::emp.employeeNo")
+                        td.org-post
+                            //- a(ui-sref="^.detail.basic({empId: emp.id})" ng-bind="emp.name")
+                            a(
+                                nb-dialog="partials/personnel/info_basic.html"
+                                nb-dialog-class="ngdialog-theme-panel"
+                                nb-dialog-data="emp"
+                                nb-dialog-scope="this"
+                            ) {{emp.name}}
+                        td(ng-bind="emp.department.name")
+                        td(ng-bind="emp.position.name")
+                        td(ng-bind="emp.category.displayName")
+                        td(ng-bind="emp.channel.displayName")
+                        //- TODO 用工性质
+                        td(ng-bind="emp.laborRelation.name")
+                        td(ng-bind="emp.joinScalDate")
