@@ -4,7 +4,7 @@ section.personnel-info-control.clearfix
         .personnel-item-desc.bg-success 基本信息
     .personnel-info-right.form-split
         .form-btn-group
-            button.btn.btn-default(ui-sref="^.basic") 编辑
+            button.btn.btn-default(ng-click="edit()") 编辑
         .form-group.block
             label.control-label 员工编号：
             .form-content {{currentUser.employeeNo}}

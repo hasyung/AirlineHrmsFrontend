@@ -4,7 +4,7 @@
             div(nb-predicate="名称" predicate-attr="name")
                 input(name="name" placeholder="姓名" ng-model="name")
             div(nb-predicate="岗位通道" predicate-attr="channel_id")
-                nb-dropdown( ng-model="channel_id", remote-key="position_channels", map="$item.id" name="channel" required)
+                nb-dropdown( ng-model="channel_id", remote-key="channels", map="$item.id" name="channel" required)
 
             div(nb-predicate="创建时间" predicate-attr="created_at")
                 input(ng-model="created_at.from" bs-datepicker)

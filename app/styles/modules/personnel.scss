@@ -95,8 +95,6 @@
     }
 
     .personnel-info-section {
-        margin-bottom: 30px;
-
         .personnel-info-row {
             height: 40px;
         }
@@ -233,10 +231,20 @@
         min-height: 240px;
 
         &.break-lines {
+            margin-right: 5%;
             padding-bottom: 50px;
             padding-top: 50px;
-            margin-right: 5%;
         }
+    }
+}
+
+.btn-group-actions {
+    bottom: -10px;
+    left: 140px;
+    position: absolute;
+
+    .btn {
+        margin-right: 100px;
     }
 }
 
