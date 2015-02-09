@@ -1,76 +1,90 @@
-.org-pos-detail-content
-    .position-info.form-split(ng-controller="EditableResource")
-        h3 岗位信息
-        div.showing(ng-hide="editing")
-            .form-btn-group
-                button.btn.btn-default(ng-click="edit()") 编辑
-            .form-group
-                label.control-label 岗位名称：
-                span.form-content(ng-bind="currentPos.name")
-            .form-group
-                label.control-label 编制
-                span.form-content(ng-bind="currentPos.budgetedStaffing")
+section.personnel-section-wrap(ng-controller="EditableResource")
+    section.personnel-info-control.clearfix
+            .personnel-info-left
+                    .personnel-item-icon.personnel-item1
+                    .personnel-item-desc.bg-success 基本信息
+            .personnel-info-right.form-split
+                div.showing(ng-hide="editing")
+                    .form-btn-group
+                            button.btn.btn-default(ng-click="edit()") 编辑
+                    .form-group
+                        label.control-label OA文件编号：
+                        .form-content(ng-bind="currentPos.oaFileNo")
+                    .form-group
+                        label.control-label 创建时间：
+                        .form-content 2013年1月
+                    .form-group
+                        label.control-label 岗位名称：
+                        .form-content(ng-bind="currentPos.name")
+                    .form-group
+                        label.control-label 所属部门：
+                        .form-content(ng-bind="currentPos.department.name")
+                    .form-group
+                        label.control-label 分类：
+                        .form-content(ng-bind="currentPos.category.displayName || '无'")
+                    .form-group
+                        label.control-label 通道：
+                        .form-content(ng-bind="currentPos.channel.displayName || '无'")
+                    .form-group
+                        label.control-label 类别：
+                        .form-content 行政管理
+                    .form-group
+                        label.control-label 编制：
+                        .form-content(ng-bind="currentPos.budgetedStaffing")
+                    .form-group
+                        label.control-label 在岗人数：
+                        .form-content 2/1
+                    .form-group
+                        label.control-label 超编：
+                        .form-content 1
+                    .form-group
+                        label.control-label 职务职级：
+                        .form-content 一正
+                    .form-group
+                        label.control-label 工时制度：
+                        .form-content(ng-bind="currentPos.schedule.displayName || '无'")
+                    .form-group
+                        label.control-label 岗位性质：
+                        .form-content(ng-bind="currentPos.nature.displayName || '无'")
 
-            .form-group
-                label.control-label 所属部门：
-                span.form-content(ng-bind="currentPos.department.name")
-            .form-group
-                label.control-label 工作制度：
-                span.form-content(ng-bind="currentPos.schedule.displayName || '无'")
-
-            .form-group
-                label.control-label 通道：
-                span.form-content(ng-bind="currentPos.channel.displayName || '无'")
-
-            .form-group
-                label.control-label 分类：
-                span.form-content(ng-bind="currentPos.category.displayName || '无'")
-
-            .form-group
-                label.control-label OA文件编号：
-                span.form-content(ng-bind="currentPos.oaFileNo")
-
-            .form-group
-                label.control-label 岗位性质：
-                span.form-content(ng-bind="currentPos.nature.displayName || '无'")
-
-            .form-group
-                label.control-label 岗位名称：
-                span.form-content(ng-bind="") {{currentPos.name}}
-        .editing(ng-show="editing")
-            include position_edit_basic
-    .position-desc.form-split(ng-controller="EditableResource")
-        .showing(ng-hide="editing")
-            .form-btn-group
-                button.btn.btn-default(ng-click="edit()") 编辑
-            section.position-duty
-                h3 工作职责
-                div(ng-bind-html="currentSpe.duty")
-            section.position-purview
-                h3 工作权限
-                ol
-                    li 人事权限：
-                        span {{currentSpe.personnelPermission}}
-                    li 财务权限：
-                        span {{currentSpe.financialPermission}}
-                    li 业务权限：
-                        span {{currentSpe.businessPermission}}
-            section.position-relative
-                h3 工作关系
-                ol
-                    li 直属上级：
-                        span {{currentSpe.superior}}
-                    li 直属下级：
-                        span {{currentSpe.underling}}
-                    li 内部联系：
-                        span {{currentSpe.internalRelation}}
-                    li 外部联系：
-                        span {{currentSpe.externalRelation}}
-            section.position-qualification
-                h3 任职条件
-                div(ng-bind-html="currentSpe.qualification")
-            section.work-time
-                h3 工作时间
-                p {{currentPos.schedule.displayName || '无'}}
-        .editing(ng-if="editing")
-            include position_edit_desc
+                div.editing(ng-if="editing")
+                    include position_edit_basic
+section.personnel-section-wrap(ng-controller="EditableResource")
+    section.personnel-info-control.clearfix
+            .personnel-info-right.form-split
+                div.showing(ng-hide="editing")
+                    .form-btn-group
+                        button.btn.btn-default(ng-click="edit()") 编辑
+                    section.position-desc-area
+                        h3 工作职责
+                        div(ng-bind-html="currentSpe.duty")
+                    section.position-desc-area
+                        h3 工作权限
+                        .form-group.block
+                            label.control-label 人事权限：
+                            .form-content {{currentSpe.personnelPermission}}
+                        .form-group.block
+                            label.control-label 财务权限：
+                            .form-content {{currentSpe.financialPermission}}
+                        .form-group.block
+                            label.control-label 业务权限：
+                            .form-content {{currentSpe.businessPermission}}
+                    section.position-desc-area
+                        h3 工作关系
+                        .form-group.block
+                            label.control-label 直属上级：
+                            .form-content {{currentSpe.superior}}
+                        .form-group.block
+                            label.control-label 直属下级：
+                            .form-content {{currentSpe.underling}}
+                        .form-group.block
+                            label.control-label 内部联系：
+                            .form-content {{currentSpe.internalRelation}}
+                        .form-group.block
+                            label.control-label 外部联系：
+                            .form-content {{currentSpe.externalRelation}}
+                    section.position-desc-area
+                        h3 任职条件
+                        div(ng-bind-html="currentSpe.qualification")
+                div.editing(ng-if="editing")
+                    include position_edit_desc
