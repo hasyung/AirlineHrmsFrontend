@@ -7,9 +7,13 @@ Employee = (restmod, RMUtils, $Evt) ->
     Employee = restmod.model('/employees').mix 'nbRestApi', 'DirtyModel', {
         departmentId: {mask: 'R', map: 'department.id'}
         department: {mask: 'CU'}
+
         joinScalDate: {decode: 'date', param: 'yyyy年MM月dd日',mask: 'CU'}
+
         startDate: {decode: 'date', param: 'yyyy年MM月dd日',mask: 'CU'}
+
         isSelected: {mask: "CU"}
+
         $hooks: {
             'after-create': ->
                 $Evt.$send('employee:create:success', "新员工创建成功")
@@ -17,7 +21,9 @@ Employee = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('employee:create:error', "新员工创建失败")
         }
         $extend:
-            Collection: {}
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
 
 
     }
@@ -28,6 +34,12 @@ Formerleaders = (restmod, RMUtils, $Evt) ->
 
         startDate: {decode: 'date', param: 'yyyy年MM月dd日',mask: 'CU'}
         endDate: {decode: 'date', param: 'yyyy年MM月dd日',mask: 'CU'}
+
+
+        $extend:
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
 
     }
 User = (restmod, RMUtils, $Evt) ->

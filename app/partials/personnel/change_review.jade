@@ -2,7 +2,7 @@
 tabset
     tab(heading="待审核")
         .position-manage.app-content-wrapper
-            div(nb-table='hisLeaders' nb-safe-src="hisLeaders")
+            div(nb-table='ctrl.changes' nb-safe-src="ctrl.changes")
                 input(type="hidden" nb-pipe="ctrl.search(tableState)")
                 .table-container
                     h4 人员明细{{hisLeaders.length}}
@@ -10,17 +10,67 @@ tabset
                         thead
                             tr
                                 //- th(select-row="" mode='all')
-                                th 工号
+                                th 员工编号
                                 th 姓名
-                                th 到岗时间
-                                th 离岗时间
+                                th 所属部门
+                                th 信息变更模块
+                                th 变更时间
+                                th 操作
+                                th 理由
                                 
                         tbody
-                            tr(ng-repeat="emp in hisLeaders track by emp.id")
+                            tr(ng-repeat="change in ctrl.changes track by $index")
                                 //- td(select-row="emp" mode="multiple")
-                                td(ng-bind="::emp.employee.employeeNo")
-                                td(ng-bind="emp.employee.name")
-                                td(ng-bind="::emp.startDate")
-                                td(ng-bind="::emp.endDate")
+                                td(ng-bind="change.employeeNo")
+                                td(ng-bind="change.name")
+                                td(ng-bind="change.department.name")
+                                td()
+                                    span(nb-popup-plus, position="left-bottom", offset="0.5") 基本信息
+                                        popup-template.nb-popup.org-default-popup-template.panel.panel-default()
+                                            .panel-heading.popup-title {{change.name}}的基本变更
+                                            .panel-body.popup-body
+                                                .col-md-6
+                                                    |修改前
+                                                    .row
+                                                        label 姓名：
+                                                        span {{change.name}}
+                                                    .row
+                                                        label 性别：
+                                                        span {{change.name}}
+                                                    .row
+                                                        label 身份证号：
+                                                        span {{change.name}}
+                                                    .row
+                                                        label 手机号码：
+                                                        span {{change.name}}
+                                                    
+                                                .col-md-6
+                                                    |修改后
+                                                    label 姓名：
+                                                        span {{change.name}}
+                                                    .row
+                                                        label 性别：
+                                                        span {{change.name}}
+                                                    .row
+                                                        label 身份证号：
+                                                        span {{change.name}}
+                                                    .row
+                                                        label 手机号码：
+                                                        span {{change.name}}
+                                                
+                                            
+                                td(ng-bind="change.createdAt")
+                                td()
+                                    .radio-group
+                                        input(type="radio", ng-model="check", value="yes")
+                                        label 同意
+                                        input(type="radio", ng-model="check", value="no")
+                                        label 不同意
+                                td() 
+                                    span(nb-popup-plus, position="left-bottom", offset="0.5") {{change.reason || "请输入"}}
+                                        popup-template.nb-popup.org-default-popup-template.panel.panel-default()
+                                            .panel-heading.popup-title 请输入理由
+                                            .panel-body.popup-body
+                                                textarea(ng-model="change.reason")
     tab(heading="变更记录")
         include personnel_changes_record

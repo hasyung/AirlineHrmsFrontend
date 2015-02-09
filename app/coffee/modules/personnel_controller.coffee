@@ -103,12 +103,15 @@ class NewEmpsCtrl extends nb.Controller
         @employees.$refresh(tableState)
 
 class ReviewCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Change']
-    constructor: (@scope, @Change) ->
+    @.$inject = ['$scope', 'Change', 'Record']
+    constructor: (@scope, @Change, @Record) ->
         @loadInitailData()
 
     loadInitailData: ->
-        @Change.$collection().$fetch().$then (data)->
-            console.log data
+        @changes = @Change.$collection().$fetch()
+        @records = @Record.$collection().$fetch()
+    searchRecord: (tableState)->
+        @records.$refresh(tableState);
+        
 
 app.config(Route)
