@@ -79,7 +79,7 @@ Org = (restmod, RMUtils, $Evt) ->
 
 
 
-    Org = restmod.model('/departments').mix 'nbRestApi', {
+    Org = restmod.model('/departments').mix 'nbRestApi', 'DirtyModel', {
 
         positions: { hasMany: 'Position'}
 
