@@ -62,7 +62,9 @@ class EditableResourceCtrl
 
 
 
-        scope.cancel = () ->
+        scope.cancel = (resource, evt) ->
+            evt.preventDefault() if evt
+            resource.$restore() if resource && resource.$restore
             scope.editing = false
 
 app.controller('EditableResource', EditableResourceCtrl)

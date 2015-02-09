@@ -1279,10 +1279,10 @@ var oc_zdp_width,
         options.oc_zdp_height_internal = oc_zdp_height;
         oc_zdp_width                  *= 0.76;
         oc_zdp_height                 *= 0.76;
-        $("#"+options.container_supra).scrollLeft(options.oc_zdp_width_internal * options.oc_zdp_zoom / 2 - options.pdf_canvas_width / 2);
-        $("#"+options.container).css('transform','scale('+options.oc_zdp_zoom+')');
-        $("#"+options.container).width (options.pdf_canvas_width  / (options.oc_zdp_width_internal  * 100) );
-        $("#"+options.container).height(options.pdf_canvas_height / (options.oc_zdp_height_internal * 100) );
+        // $("#"+options.container_supra).scrollLeft(options.oc_zdp_width_internal * options.oc_zdp_zoom / 2 - options.pdf_canvas_width / 2);
+        $(options.container).css('transform','scale('+options.oc_zdp_zoom+')');
+        $(options.container).width (options.pdf_canvas_width  / (options.oc_zdp_width_internal  * 100) );
+        $(options.container).height(options.pdf_canvas_height / (options.oc_zdp_height_internal * 100) );
         $("svg").css('background','#FFFFFF');
     }
 

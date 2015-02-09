@@ -1,7 +1,7 @@
 form(name="positionEditForm" ng-submit="save(current.$save())")
     .form-btn-group
         button.btn.btn-info(type="submit" ng-disabled="positionEditForm.$invalid") 保存
-        button.btn.btn-default(ng-click="current.$restore();cancel()") 取消
+        button.btn.btn-default(ng-click="cancel(current, $event)") 取消
     .form-group
         label.control-label 所属部门：
         ui-select(
