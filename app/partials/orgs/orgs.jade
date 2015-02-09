@@ -27,6 +27,7 @@ div.org.app-content-wrapper
                 h1 {{ctrl.treeRootOrg.name}}组织机构图
                 h2(ng-show="ctrl.isHistory") {{ctrl.orgs.$metadata.created_at | nbDate : 'yyyy年MM月dd日'}}— {{ctrl.orgs.$metadata.title}}
             .top-btn-group
+                //- button(ng-click="ctrl.print()") 导出
                 button.btn.btn-m.btn-primary(
                     nb-dialog="partials/orgs/org_history.html"
                     nb-dialog-scope="this"
@@ -37,8 +38,9 @@ div.org.app-content-wrapper
                 button.btn.btn-info(ng-click="ctrl.resetData()" ng-show="ctrl.isHistory") 返回最新
 
                 //- loading-btn.red(ng-click="ctrl.openHistoryPanel()" btn-loading-type="contract-overlay" btn-text="测试loading")
-        div.org-chart-window
-            div.svg-wrapper(org-chart drag-on org-chart-data="ctrl.tree.data")
+        div.org-chart-window(id="org_chart_warpper")
+            div.svg-wrapper(org-chart id="org_chart" drag-on org-chart-data="ctrl.tree.data")
+            canvas(id="org_chart_print_canvas")
             div.bottom-btn-group(ng-show="ctrl.tree.isModified")
                 button.btn.btn-info(
                     nb-dialog="partials/orgs/shared/effect_changes.html"

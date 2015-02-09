@@ -76,6 +76,8 @@ paths =
         #组织机构树
         'compat/vendor/drag-on.js'
         'compat/vendor/lib-gg-orgchart.js'
+        'deps/canvg/dist/canvg.bundle.js'
+        'deps/jspdf/dist/jspdf.min.js'
         #end
         'deps/angular/angular.js'
         'deps/angular-i18n/angular-locale_zh-cn.js'
@@ -276,7 +278,7 @@ gulp.task "express", ->
 
     proxyOptions = url.parse('http://192.168.6.99:9002')
     # proxyOptions = url.parse('http://114.215.142.122:9002')
-    # proxyOptions = url.parse('http://192.168.6.5:3000')
+    # proxyOptions = url.parse('http://192.168.6.16:3000')
     # proxyOptions = url.parse('http://192.168.6.18:3000')
     proxyOptions.route = '/api'
 

@@ -61,7 +61,7 @@
 form(name="empEditForm" ng-submit="save(current.$save())")
     .form-btn-group
         button.btn.btn-info(type="submit" ng-disabled="empEditForm.$invalid") 保存
-        button.btn.btn-default(ng-click="current.$restore(); cancel()") 取消
+        button.btn.btn-default(ng-click="cancel(current, $event)") 取消
     .form-group
         label.control-label 员工编号：
         .form-content(ng-bind="current.employeeNo")

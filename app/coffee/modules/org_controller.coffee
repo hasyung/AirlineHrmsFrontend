@@ -332,6 +332,18 @@ class OrgsCtrl extends nb.Controller
         log.active = true
         @currentLog = log
 
+    # print: () ->
+    #     options = {
+    #         container: 'org_chart',
+    #         pdf_canvas: 'org_chart_print_canvas'
+    #         pdf_filename: '机构组织架构图.pdf'
+    #         oc_zdp_width_internal: $('svg').width(),
+    #         oc_zdp_height_internal: $('svg').height()
+    #     }
+
+    #     ggOrgChart.print(options)
+
+
 
 
 
@@ -438,7 +450,7 @@ class PositionCtrl extends nb.Controller
         #将页面跳转放在then里，防止当跳转过去时新创建的岗位未被添加到岗位列表
         # newPos.specification = @Specification.$buildRaw(spe)
         # newPos.specification = spe
-        #bug, 
+        #bug,
         newPos = @positions.$create(newPos).$then (newpos)-> newpos.specification.$update(spe)
 
     search: (tableState) ->
