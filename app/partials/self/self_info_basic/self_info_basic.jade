@@ -5,7 +5,7 @@ section.personnel-info-section
         .personnel-section-wrap(ng-controller="EditableResource")
             .showing(ng-hide="editing")
                 include self_info_basic_section
-            .editing(ng-hide="editing")
+            .editing(ng-if="editing")
                 include self_info_basic_edit
         .personnel-section-wrap()
             section.personnel-info-control.clearfix

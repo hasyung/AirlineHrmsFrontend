@@ -231,6 +231,12 @@
     .personnel-info-right {
         flex: 1;
         min-height: 240px;
+
+        &.break-lines {
+            padding-bottom: 50px;
+            padding-top: 50px;
+            margin-right: 5%;
+        }
     }
 }
 
