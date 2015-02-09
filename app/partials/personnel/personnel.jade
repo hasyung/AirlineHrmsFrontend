@@ -17,7 +17,7 @@
             //-     input(name="category_id" placeholder="员工分类" ng-model="category_id")
 
             div(nb-predicate="岗位通道" predicate-attr="channel_id")
-                nb-dropdown( ng-model="channel_id", remote-key="position_channels", map="$item.id" name="channel_id" required)
+                nb-dropdown( ng-model="channel_id", remote-key="channels", map="$item.id" name="channel_id" required)
 
             div(nb-predicate="属地" predicate-attr="location_id")
                 nb-dropdown( ng-model="location_id", remote-key="locations", map="$item.id" name="location_id" required)
