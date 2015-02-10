@@ -64,6 +64,10 @@ Education = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('education:create:success', "教育经历创建成功")
             'after-create-error': ->
                 $Evt.$send('education:create:error', "教育经历创建失败")
+            'after-update': ->
+                $Evt.$send('education:update:success', "教育经历更新成功")
+            'after-update-error': ->
+                $Evt.$send('education:update:error', "教育经历更新失败")
         }
         $config:
             jsonRoot: 'education_experiences'
@@ -91,6 +95,16 @@ Experience = (restmod, RMUtils, $Evt) ->
     Experience = restmod.model(null).mix 'nbRestApi', {
         startDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
         endDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
+        $hooks: {
+            'after-create': ->
+                $Evt.$send('work:create:success', "工作经历创建成功")
+            'after-create-error': ->
+                $Evt.$send('work:create:error', "工作经历创建失败")
+            'after-update': ->
+                $Evt.$send('work:update:success', "工作经历更新成功")
+            'after-update-error': ->
+                $Evt.$send('work:update:error', "工作经历更新失败")
+        }
         $config:
             jsonRoot: 'work_experiences'
     }
