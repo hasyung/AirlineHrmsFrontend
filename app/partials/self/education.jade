@@ -1,0 +1,30 @@
+section.personnel-info-section
+    .personnel-top-header.clearfix
+        h4.pull-left 教育经历
+    .personnel-content-body
+        .personnel-section-wrap(ng-controller="EditableResource")
+             section.personnel-info-control.clearfix
+                .personnel-info-right.form-split
+                    .form-btn-group
+                        button.btn.btn-default(ng-click="edit()") 编辑
+                    .form-group
+                        label.control-label 入学日期：
+                        .form-content {{currentUser}}
+                    .form-group
+                        label.control-label 毕业时间：
+                        .form-content {{currentUser}}
+                    .form-group
+                        label.control-label 毕业院校：
+                        .form-content {{currentUser}}
+                    .form-group
+                        label.control-label 专业：
+                        .form-content {{currentUser}}
+                    .form-group
+                        label.control-label 学历：
+                        .form-content {{currentUser}}
+                    .form-group
+                        label.control-label 学位：
+                        .form-content {{currentUser}}
+                    .form-group
+                        label.control-label 证明人：
+                        .form-content {{currentUser}}
