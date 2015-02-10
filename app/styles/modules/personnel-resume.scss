@@ -58,13 +58,17 @@
                 }
             }
         }
+
+        .auto-height {
+            height: auto;
+        }
     }
 }
 
 .nice-table {
     @include clearfix();
-    font-size: $font-size-md;
     padding: 0;
+    margin-bottom: 20px;
     width: 100%;
 
     .nice-table-row {
