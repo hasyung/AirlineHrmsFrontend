@@ -52,16 +52,8 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                 .add
                     button(ng-click="newChildren.push({})") 新增
 
-
-
-
-
-
-
-
-
 section.clearfix(ng-init="vm.other = currentUser.familymembers.$search({relation: 'other'}); newOther = []")
-    table
+    table.custom-table
         tr
             th 姓名
             th 关系
@@ -76,7 +68,7 @@ section.clearfix(ng-init="vm.other = currentUser.familymembers.$search({relation
             td(ng-bind="omg.birthday")
             td(ng-bind="omg.native_place")
             td(ng-bind="omg.company")
-        tr(ng-repeat="nc in newChildren" ng-init="nc.relation='other'")
+        tr(ng-repeat="nc in newOther" ng-init="nc.relation='other'")
             td
                 input(ng-model="nc.name")
             td
