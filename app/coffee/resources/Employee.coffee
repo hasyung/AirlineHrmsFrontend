@@ -48,7 +48,7 @@ Formerleaders = (restmod, RMUtils, $Evt) ->
     }
 User = (restmod, RMUtils, $Evt) ->
     User = restmod.model(null).mix 'nbRestApi', {
-        educationExperiences: { hasOne: 'Education'}
+        educationExperiences: { hasMany: 'Education'}
         workExperiences: { hasOne: 'Experience'}
         $config:
             jsonRoot: 'employee'
@@ -56,8 +56,30 @@ User = (restmod, RMUtils, $Evt) ->
     }
     .single('/me')
 Education = (restmod, RMUtils, $Evt) ->
-    Education = restmod.model('/education_experiences').mix 'nbRestApi', {
-        
+    Education = restmod.model(null).mix 'nbRestApi', {
+        $hooks: {
+            'after-newedu': ->
+                $Evt.$send('education:create:success', "教育经历创建成功")
+            'after-newedu-error': ->
+                $Evt.$send('education:create:error', "教育经历创建失败")
+        }
+        $config:
+            jsonRoot: 'education_experiences'
+        $extend:
+            Collection:
+                createEdu: (edu)->
+
+                    onSuccess = ->
+                        @.$dispatch 'after-newedu'
+                    onErorr = ->
+                        @.$dispatch 'after-newedu-error', arguments
+                    url = this.$url()
+                    request = {
+                        url: url
+                        method: 'POST'
+                        data:edu
+                    }
+                    this.$send request, onSuccess, onErorr
     }
 Experience = (restmod, RMUtils, $Evt) ->
     Experience = restmod.model('/work_experiences').mix 'nbRestApi', {

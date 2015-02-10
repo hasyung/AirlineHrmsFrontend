@@ -27,19 +27,19 @@ section.personnel-section-wrap(ng-controller="EditableResource")
                         .form-content(ng-bind="currentPos.channel.displayName || '无'")
                     .form-group
                         label.control-label 类别：
-                        .form-content 行政管理
+                        .form-content(ng-bind="currentPos.postType")
                     .form-group
                         label.control-label 编制：
                         .form-content(ng-bind="currentPos.budgetedStaffing")
                     .form-group
                         label.control-label 在岗人数：
-                        .form-content 2/1
+                        .form-content(ng-bind="currentPos.staffing")
                     .form-group
                         label.control-label 超编：
-                        .form-content 1
-                    .form-group
-                        label.control-label 职务职级：
-                        .form-content 一正
+                        .form-content {{currentPos.staffing - currentPos.budgetedStaffing}}
+                    //- .form-group
+                    //-     label.control-label 职务职级：
+                    //-     .form-content 一正
                     .form-group
                         label.control-label 工时制度：
                         .form-content(ng-bind="currentPos.schedule.displayName || '无'")
