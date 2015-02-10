@@ -109,6 +109,13 @@
 
         thead > tr > th {
             background-color: #fafbfc;
+            font-size: $font-size-md;
+            padding: 8px 15px;
+        }
+
+        tbody > tr > td {
+            font-size: $font-size-md;
+            padding: 8px 15px;
         }
 
         tbody > tr:nth-child(odd) > td {
@@ -238,6 +245,46 @@
             margin-right: 5%;
             padding-bottom: 50px;
             padding-top: 50px;
+        }
+    }
+}
+
+.personnel-info-table {
+    padding: 20px;
+
+    h4 {
+        margin: 10px 0;
+    }
+
+    .custom-table {
+        margin-bottom: 20px;
+        width: 100%;
+
+        .control-td .btn {
+            background: transparent;
+            border: 0;
+            box-shadow: none;
+            color: $danger;
+            font-size: $font-size-lg;
+            outline: none;
+            visibility: hidden;
+        }
+
+        tr:hover .control-td .btn {
+            visibility: visible;
+        }
+    }
+
+    .form-split {
+        margin-top: 20px;
+
+        .form-control {
+            margin-right: 10%;
+        }
+
+        .control-label {
+            height: 34px;
+            line-height: 34px;
         }
     }
 }
