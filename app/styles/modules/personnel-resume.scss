@@ -63,6 +63,7 @@
 
 .nice-table {
     @include clearfix();
+    font-size: $font-size-md;
     padding: 0;
     width: 100%;
 
