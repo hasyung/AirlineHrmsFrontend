@@ -1,0 +1,37 @@
+form(ng-submit="save(wife.$save())" )
+    .form-btn-group
+        button.btn.btn-info(type="submit") 保存
+        button.btn.btn-default(ng-click="cancel(wife, $event)") 取消
+    .form-group.block
+        label.control-label 姓名：
+        input.form-control(ng-model="wife.name")
+    .form-group
+        label.control-label 性别：
+        input.form-control(ng-model="wife.gender")
+    .form-group
+        label.control-label 籍贯：
+        input.form-control(ng-model="wife.nativePlace")
+    .form-group
+        label.control-label 民族：
+        input.form-control(ng-model="wife.nation")
+    .form-group
+        label.control-label 出生年月：
+        input.form-control(ng-model="wife.birthday")
+    .form-group
+        label.control-label 身份证号：
+        input.form-control(ng-model="wife.identityNo")
+    .form-group
+        label.control-label 文化程度：
+        input.form-control(ng-model="wife.educationBackground")
+    .form-group
+        label.control-label 政治面貌：
+        input.form-control(ng-model="wife.politicalStatus")
+    .form-group
+        label.control-label 工作单位：
+        input.form-control(ng-model="wife.company")
+    .form-group
+        label.control-label 职业：
+        input.form-control(ng-model="wife.position")
+    .form-group
+        label.control-label 联系方式：
+        input.form-control(ng-model="wife.mobile")

@@ -52,6 +52,7 @@ User = (restmod, RMUtils, $Evt) ->
         workExperiences: { hasOne: 'Experience'}
         $config:
             jsonRoot: 'employee'
+        familymembers: {hasMany: 'FamilyMember'}
     }
     .single('/me')
 Education = (restmod, RMUtils, $Evt) ->
@@ -63,8 +64,16 @@ Experience = (restmod, RMUtils, $Evt) ->
         
     }
 
+FamilyMember = (restmod, RMUtils, $Evt) ->
+    FamilyMember = restmod.model().mix 'nbRestApi', {
+        $config:
+            jsonRoot: 'family_members'
+    }
+
+
 resources.factory 'Employee',['restmod', 'RMUtils', '$nbEvent', Employee]
 resources.factory 'User',['restmod', 'RMUtils', '$nbEvent', User]
 resources.factory 'Formerleaders',['restmod', 'RMUtils', '$nbEvent', Formerleaders]
 resources.factory 'Education',['restmod', 'RMUtils', '$nbEvent', Education]
 resources.factory 'Experience',['restmod', 'RMUtils', '$nbEvent', Experience]
+resources.factory 'FamilyMember',['restmod', 'RMUtils', '$nbEvent', FamilyMember]

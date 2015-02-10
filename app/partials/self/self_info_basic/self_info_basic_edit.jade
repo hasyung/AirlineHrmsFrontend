@@ -1,4 +1,4 @@
-form(ng-submit="ctrl.updateInfo()")
+form(ng-submit="save(currentUser.$save())" )
     section.personnel-info-control.clearfix
         .personnel-info-left
             .personnel-item-icon.personnel-item1
@@ -58,40 +58,40 @@ form(ng-submit="ctrl.updateInfo()")
         .personnel-info-right.break-lines
                 .form-group
                     label.control-label 何年何月在何处工作
-                    input.form-control()
+                    input.form-control(ng-model="currentUser.personnelInfo.desc1")
                 .form-group
                     label.control-label 何年何月由何人介绍加入中国共产党，何时转正
-                    input.form-control()
+                    input.form-control(ng-model="currentUser.personnelInfo.desc2")
                 .form-group
                     label.control-label 何年何月加入中国共产主义青年团
-                    input.form-control()
+                    input.form-control(ng-model="currentUser.personnelInfo.desc3")
                 .form-group
                     label.control-label 何年何月由何人介绍加入何民主党派，任何职务
-                    input.form-control()
+                    input.form-control(ng-model="currentUser.personnelInfo.desc4")
                 .form-group
                     label.control-label 何年经何机关审批任何种专业技术职务或取得何种任职资格
-                    input.form-control()
+                    input.form-control(ng-model="currentUser.personnelInfo.desc5")
                 .form-group
                     label.control-label 何年何月何机关授予何种军、警衔
-                    input.form-control()
+                    input.form-control(ng-model="currentUser.personnelInfo.desc6")
                 .form-group
                     label.control-label 有何业务专长、重要发明创造、科研成果、著作译作
-                    input.form-control()
+                    input.form-control(ng-model="currentUser.personnelInfo.desc7")
                 .form-group
                     label.control-label 何时何处参加何种社会团体，任何职务
-                    input.form-control()
+                    input.form-control(ng-model="currentUser.personnelInfo.desc8")
                 .form-group
                     label.control-label 有何宗教信仰
-                    input.form-control()
+                    input.form-control(ng-model="currentUser.personnelInfo.desc9")
                 .form-group
                     label.control-label 何年何月出国（境）参加重大国际性活动的情况
-                    input.form-control()
+                    input.form-control(ng-model="currentUser.personnelInfo.desc10")
                 .form-group
                     label.control-label 掌握何种外语或少数民族语言及其他技能情况
-                    input.form-control()
+                    input.form-control(ng-model="currentUser.personnelInfo.desc11")
                 .form-group
                     label.control-label 何时何处受过何种奖励
-                    input.form-control()
+                    input.form-control(ng-model="currentUser.personnelInfo.desc12")
                 .form-group
                     label.control-label 何时何处何原因受过何种处分
-                    input.form-control()
+                    input.form-control(ng-model="currentUser.personnelInfo.desc13")
