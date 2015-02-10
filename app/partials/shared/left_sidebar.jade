@@ -48,8 +48,14 @@
           //-       i.fa.fa-fw.fa-angle-down.text-active
           //-     i.fa.fa-group.nav-text-color1
           //-     span.font-bold 人事信息
+          li
+            a.auto(ui-sref='org')
+              span.pull-right.text-muted
+                i.fa.fa-fw.fa-angle-down.text-active
+              i.fa.fa-sitemap.nav-text-color1
+              span.font-bold 组织机构
           li(nav-toggle-active)
-            a.auto(ui-sref='personnel.list')
+            a.auto(href="javascript:;")
               span.pull-right.text-muted
                 i.fa.fa-fw.fa-angle-right.text
                 i.fa.fa-fw.fa-angle-down.text-active
@@ -67,21 +73,28 @@
               li
                 a(ui-sref='personnel.review')
                   span 员工信息変更审核
-          li
-            a.auto(ui-sref='org')
+          li(nav-toggle-active)
+            a.auto(href="javascript:;")
               span.pull-right.text-muted
+                i.fa.fa-fw.fa-angle-right.text
                 i.fa.fa-fw.fa-angle-down.text-active
               i.fa.fa-sitemap.nav-text-color1
-              span.font-bold 组织机构
-          li
-            a.auto(ui-sref='position')
-              span.pull-right.text-muted
-                i.fa.fa-fw.fa-angle-down.text-active
-              i.fa.fa-sitemap.nav-text-color1
-              span.font-bold 岗位管理
+              span 岗位管理
+            ul.nav.nav-sub.dk
+              li.nav-sub-header
+                a(ui-sref='position')
+              li
+                a(ui-sref='position')
+                  span 岗位列表
+              li
+                a()
+                  span 岗位分布图
+              li
+                a()
+                  span 岗位异动记录
           li.line.dk
           li(nav-toggle-active)
-            a.auto(ui-sref='self.profile.basic')
+            a.auto(href="javascript:;")
               span.pull-right.text-muted
                 i.fa.fa-fw.fa-angle-right.text
                 i.fa.fa-fw.fa-angle-down.text-active
