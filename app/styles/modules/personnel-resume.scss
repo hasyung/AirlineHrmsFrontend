@@ -68,6 +68,7 @@
 .nice-table {
     @include clearfix();
     padding: 0;
+    margin-bottom: 20px;
     width: 100%;
 
     .nice-table-row {
