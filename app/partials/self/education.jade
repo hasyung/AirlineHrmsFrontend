@@ -111,7 +111,7 @@ section.personnel-info-section(ng-init="educations = currentUser.educationExperi
                         label.control-label 证明人：
                         .form-content {{education.witness}}
             section.personnel-info-control.clearfix(ng-if="editing")
-                form.personnel-info-right.form-split(name="eduEditForm", ng-submit="ctrl.updateEdu()")
+                form.personnel-info-right.form-split(name="eduEditForm", ng-submit="save(education.$save())")
                     .form-btn-group
                         button.btn.btn-info(type="submit" ng-disabled="eduEditForm.$invalid") 保存
                         button.btn.btn-default(ng-click="cancel(current, $event)") 取消

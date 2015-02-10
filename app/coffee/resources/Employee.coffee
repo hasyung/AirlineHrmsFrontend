@@ -49,7 +49,7 @@ Formerleaders = (restmod, RMUtils, $Evt) ->
 User = (restmod, RMUtils, $Evt) ->
     User = restmod.model(null).mix 'nbRestApi', {
         educationExperiences: { hasMany: 'Education'}
-        workExperiences: { hasOne: 'Experience'}
+        workExperiences: { hasMany: 'Experience'}
         $config:
             jsonRoot: 'employee'
         familymembers: {hasMany: 'FamilyMember'}
@@ -88,8 +88,11 @@ Education = (restmod, RMUtils, $Evt) ->
                     this.$send request, onSuccess, onErorr
     }
 Experience = (restmod, RMUtils, $Evt) ->
-    Experience = restmod.model('/work_experiences').mix 'nbRestApi', {
-        
+    Experience = restmod.model(null).mix 'nbRestApi', {
+        startDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
+        endDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
+        $config:
+            jsonRoot: 'work_experiences'
     }
 
 FamilyMember = (restmod, RMUtils, $Evt) ->
