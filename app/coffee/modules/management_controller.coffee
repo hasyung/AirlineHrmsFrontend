@@ -129,9 +129,17 @@ class ProfileCtrl extends nb.Controller
 
     loadInitailData: ->
         @scope.currentUser = @rootScope.currentUser
+        @scope.currentUser.educationExperiences.$fetch()
+        @scope.currentUser.workExperiences.$fetch()
+
 
     # 员工自助中员工编辑自己的信息
     updateInfo: ->
+        @scope.currentUser.$update()
+    updateEdu: ->
+        @scope.currentUser.$update()
+    createEdu: (edu)->
+        @scope.currentUser.educationExperiences.after.push(edu)
         @scope.currentUser.$update()
 
 

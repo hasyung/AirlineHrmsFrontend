@@ -29,10 +29,10 @@ form(name="empEditForm" ng-submit="save(current.$save())")
             .form-group-error(ng-message="required") 政治面貌必选
     .form-group
         label.control-label 学历：
-        nb-dropdown(ng-model="current.educationBackgroud", remote-key="education_backgrounds")
+        nb-dropdown(ng-model="current.educationBackground", remote-key="education_backgrounds")
     .form-group
         label.control-label 学位：
-        nb-dropdown(ng-model="current.educationBackgroud", remote-key="education_backgrounds")
+        nb-dropdown(ng-model="current.degree", remote-key="degrees")
     .form-group
         label.control-label 毕业院校：
         input.form-control(type="text", ng-model="current.school")
