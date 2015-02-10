@@ -57,10 +57,12 @@ User = (restmod, RMUtils, $Evt) ->
     .single('/me')
 Education = (restmod, RMUtils, $Evt) ->
     Education = restmod.model(null).mix 'nbRestApi', {
+        admissionDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
+        graduationDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
         $hooks: {
-            'after-newedu': ->
+            'after-create': ->
                 $Evt.$send('education:create:success', "教育经历创建成功")
-            'after-newedu-error': ->
+            'after-create-error': ->
                 $Evt.$send('education:create:error', "教育经历创建失败")
         }
         $config:
@@ -68,9 +70,13 @@ Education = (restmod, RMUtils, $Evt) ->
         $extend:
             Collection:
                 createEdu: (edu)->
-
-                    onSuccess = ->
+                    self = this
+                    onSuccess = (res)->
+                        console.log res
+                        self.$buidRow
                         @.$dispatch 'after-newedu'
+                        self.$add()
+
                     onErorr = ->
                         @.$dispatch 'after-newedu-error', arguments
                     url = this.$url()
