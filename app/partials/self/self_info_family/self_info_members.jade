@@ -17,45 +17,46 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                         include self_info_lover_section
                     .editing(ng-if="editing")
                         include self_info_lover_edit
+            section.personnel-info-table.clearfix(ng-init="vm.children = currentUser.familymembers.$search({relation: 'children'}); newChildren = []") 子女
+                table.custom-table
+                    tr
+                        th 姓名
+                        th 关系
+                        th 性别
+                        th 出生年月
+                        th 常住户口所在地
+                        th 学校或工作单位
+                    tr(ng-repeat="child in vm.children")
+                        td(ng-bind="child.name")
+                        td(ng-bind="child.relationType")
+                        td(ng-bind="child.gender")
+                        td(ng-bind="child.birthday")
+                        td(ng-bind="child.nativePlace")
+                        td(ng-bind="child.company")
+                    tr(ng-repeat="nc in newChildren" ng-init="nc.relation='children'")
+                        td
+                            input(ng-model="nc.name")
+                        td
+                            input(ng-model="nc.relationType")
+                        td
+                            input(ng-model="nc.gender")
+                        td
+                            input(ng-model="nc.birthday")
+                        td
+                            input(ng-model="nc.nativePlace")
+                        td
+                            input(ng-model="nc.company")
+                        td
+                            button(ng-click="vm.children.$create(nc);newChildren.splice($index, 1)") 新增
+
+                .add
+                    button(ng-click="newChildren.push({})") 新增
 
 
 
 
 
-section.clearfix(ng-init="vm.children = currentUser.familymembers.$search({relation: 'children'}); newChildren = []") 子女
-    table
-        tr
-            th 姓名
-            th 关系
-            th 性别
-            th 出生年月
-            th 常住户口所在地
-            th 学校或工作单位
-        tr(ng-repeat="child in vm.children")
-            td(ng-bind="child.name")
-            td(ng-bind="child.relationType")
-            td(ng-bind="child.gender")
-            td(ng-bind="child.birthday")
-            td(ng-bind="child.nativePlace")
-            td(ng-bind="child.company")
-        tr(ng-repeat="nc in newChildren" ng-init="nc.relation='children'")
-            td
-                input(ng-model="nc.name")
-            td
-                input(ng-model="nc.relationType")
-            td
-                input(ng-model="nc.gender")
-            td
-                input(ng-model="nc.birthday")
-            td
-                input(ng-model="nc.nativePlace")
-            td
-                input(ng-model="nc.company")
-            td
-                button(ng-click="vm.children.$create(nc);newChildren.splice($index, 1)") 新增
 
-    .add
-        button(ng-click="newChildren.push({})") 新增
 
 
 
