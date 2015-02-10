@@ -271,6 +271,10 @@
             padding: .5em 1em;
             text-transform: uppercase;
         }
+
+        .simditor {
+            width: 60%;
+        }
     }
 
     //pannel主题
@@ -367,7 +371,7 @@
     animation: ngdialog-fadein .5s;
     -webkit-backface-visibility: hidden;
     background: rgba(0, 0, 0, .4);
-    bottom: 0;
+    bottom: -10000px;
     left: 0;
     position: fixed;
     right: 0;
