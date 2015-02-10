@@ -6,19 +6,19 @@
             p(ng-bind="currentUser.employeeNo")
         .personnel-info-list
             ul
-                li
+                li(ui-sref-active="active")
                     a(ui-sref=".basic")
                         span.switch-circle
                         | 基本信息
-                li
+                li(ui-sref-active="active")
                     a(ui-sref=".members")
                         span.switch-circle
                         | 家庭成员
-                li
+                li(ui-sref-active="active")
                     a(ui-sref=".education")
                         span.switch-circle
                         | 教育经历
-                li
+                li(ui-sref-active="active")
                     a(ui-sref=".experience")
                         span.switch-circle
                         | 工作经历

@@ -1,42 +1,94 @@
-section.personnel-info-section
+section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$search({relation: 'lover'})")
     .personnel-top-header.clearfix
         h4.pull-left 家庭成员
     .personnel-content-body
-        .personnel-section-wrap(ng-controller="EditableResource")
+        .personnel-section-wrap
              section.personnel-info-control.clearfix
                 .personnel-info-left
                     .personnel-item-icon.personnel-item2
                     .personnel-item-desc.bg-success 配偶
-                .personnel-info-right.form-split
-                    .form-btn-group
-                        button.btn.btn-default(ui-sref="^.basic") 编辑
-                    .form-group
-                        label.control-label 姓名：
-                        .form-content 冯丽
-                    .form-group
-                        label.control-label 性别
-                        .form-content 女
-                    .form-group
-                        label.control-label 籍贯：
-                        .form-content 四川成都
-                    .form-group
-                        label.control-label 民族：
-                        .form-content 汉族
-                    .form-group
-                        label.control-label 出生年月：
-                        .form-content 1988年4月
-                    .form-group
-                        label.control-label 文化程度：
-                        .form-content 本科
-                    .form-group
-                        label.control-label 政治面貌：
-                        .form-content 群众
-                    .form-group
-                        label.control-label 工作单位：
-                        .form-content 成都市双流县双流中学
-                    .form-group
-                        label.control-label 职业：
-                        .form-content 教师
-                    .form-group
-                        label.control-label 联系方式：
-                        .form-content 13989088765
+                .personnel-info-right.form-split(ng-controller="EditableResource" ng-repeat="wife in vm.lovers")
+                    .showing(ng-hide="lovers.length != 0 && editing")
+                        include self_info_lover_section
+                    .editing(ng-if="editing")
+                        include self_info_lover_edit
+                .personnel-info-right.form-split(ng-controller="EditableResource" ng-init="wife = vm.lovers.$new(); wife.relation='lover'" ng-if="vm.lovers.length == 0")
+                    .showing(ng-hide="editing")
+                        include self_info_lover_section
+                    .editing(ng-if="editing")
+                        include self_info_lover_edit
+
+
+
+
+
+section.clearfix(ng-init="vm.children = currentUser.familymembers.$search({relation: 'children'}); newChildren = []") 子女
+    table
+        tr
+            th 姓名
+            th 关系
+            th 性别
+            th 出生年月
+            th 常住户口所在地
+            th 学校或工作单位
+        tr(ng-repeat="child in vm.children")
+            td(ng-bind="child.name")
+            td(ng-bind="child.relationType")
+            td(ng-bind="child.gender")
+            td(ng-bind="child.birthday")
+            td(ng-bind="child.nativePlace")
+            td(ng-bind="child.company")
+        tr(ng-repeat="nc in newChildren" ng-init="nc.relation='children'")
+            td
+                input(ng-model="nc.name")
+            td
+                input(ng-model="nc.relationType")
+            td
+                input(ng-model="nc.gender")
+            td
+                input(ng-model="nc.birthday")
+            td
+                input(ng-model="nc.nativePlace")
+            td
+                input(ng-model="nc.company")
+            td
+                button(ng-click="vm.children.$create(nc);newChildren.splice($index, 1)") 新增
+
+    .add
+        button(ng-click="newChildren.push({})") 新增
+
+
+
+section.clearfix(ng-init="vm.other = currentUser.familymembers.$search({relation: 'other'}); newOther = []")
+    table
+        tr
+            th 姓名
+            th 关系
+            th 性别
+            th 出生年月
+            th 常住户口所在地
+            th 学校或工作单位
+        tr(ng-repeat="omg in other")
+            td(ng-bind="omg.name")
+            td(ng-bind="omg.relation_type")
+            td(ng-bind="omg.gender")
+            td(ng-bind="omg.birthday")
+            td(ng-bind="omg.native_place")
+            td(ng-bind="omg.company")
+        tr(ng-repeat="nc in newChildren" ng-init="nc.relation='other'")
+            td
+                input(ng-model="nc.name")
+            td
+                input(ng-model="nc.relationType")
+            td
+                input(ng-model="nc.gender")
+            td
+                input(ng-model="nc.birthday")
+            td
+                input(ng-model="nc.nativePlace")
+            td
+                input(ng-model="nc.company")
+            td
+                button(ng-click="vm.other.$create(nc);newOther.splice($index, 1)") 新增
+    .add
+        button(ng-click="newOther.push({})") 新增

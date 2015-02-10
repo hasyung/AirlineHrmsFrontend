@@ -49,18 +49,6 @@ class Route
                 }
 
             }
-            .state 'self.profile.basic.editing', {
-                url: '/editing/basic'
-                views: {
-                    "detail@self.profile": {
-                        controller: ProfileCtrl
-                        controllerAs: 'ctrl'
-                        templateUrl: 'partials/self/self_info_basic/self_info_basic_edit.html'
-                    }
-                }
-
-
-            }
             .state 'self.profile.members', {
                 url: '/members'
                 views: {

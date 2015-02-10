@@ -15,8 +15,7 @@ tabset
                             tr(ng-repeat="emp in currentEmps track by emp.id")
                                 td(ng-bind="::emp.employeeNo")
                                 td()
-                                    a(
-                                    ng-bind="::emp.name"
+                                    a(ng-bind="::emp.employee.name"
                                     nb-dialog="partials/personnel/info_basic.html"
                                     nb-dialog-class="ngdialog-theme-panel"
                                     nb-dialog-data="emp"
