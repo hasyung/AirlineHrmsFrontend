@@ -49,6 +49,7 @@
 
         .search-del {
             border: 0;
+            box-shadow: none;
 
             &:hover {
                 color: $danger;
@@ -56,6 +57,10 @@
         }
 
         .dropdown {
+            .dropdown-toggle {
+                margin-top: -1px;
+            }
+
             .dropdown-toggle:focus {
                 border-color: $focus;
             }
@@ -67,11 +72,13 @@
         }
 
         .search-type {
-            input {
-                border-width: 1px;
+            >div>input {
+                border: 1px solid #aaa;
+                border-radius: 2px;
                 box-shadow: none;
                 height: 34px;
                 min-width: 190px;
+                outline: none;
 
                 &:focus {
                     border-color: $focus;

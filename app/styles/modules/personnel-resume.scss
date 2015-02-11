@@ -1,5 +1,5 @@
 .resume-wrap {
-    font-size: $font-size-md;
+    font-size: $font-size-sm;
     padding: 0 50px;
     position: relative;
 
@@ -67,13 +67,21 @@
 
 .nice-table {
     @include clearfix();
-    padding: 0;
     margin-bottom: 20px;
+    padding: 0;
     width: 100%;
 
     .nice-table-row {
         @include clearfix();
         width: 100%;
+
+        &:nth-child(even) {
+            background-color: #fff;
+        }
+
+        &:nth-child(odd) {
+            background-color: #fafbfc;
+        }
 
         .nt-cell {
             display: block;
