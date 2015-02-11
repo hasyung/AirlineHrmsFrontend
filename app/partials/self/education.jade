@@ -1,12 +1,12 @@
 section.personnel-info-section(ng-init="educations = currentUser.educationExperiences.$refresh();param= {}")
     .personnel-top-header.clearfix
-        h4.pull-left 教育经历
-        button.pull-right(ng-click="param.newExp = {}") 新增
+        h4.pull-left 教育经历(入司前)
+        button.btn.btn-default.pull-right(ng-click="param.newExp = {}") 新增
     .personnel-content-body
         .personnel-section-wrap
             section.personnel-info-control.clearfix(ng-if="param.newExp")
                 form.personnel-info-right.form-split(name="eduEditForm", ng-submit="educations.$create(param.newExp);param.newExp = null;")
-                    .form-btn-group
+                    .form-btn-group.alive
                         button.btn.btn-info(type="submit") 创建
                         button.btn.btn-default(ng-click="param.newExp = null") 取消
                     .form-group
@@ -30,12 +30,11 @@ section.personnel-info-section(ng-init="educations = currentUser.educationExperi
                     .form-group
                         label.control-label 证明人：
                         input.form-control(ng-model="param.newExp.witness")
-        h4 入司前
         .personnel-section-wrap(ng-controller="EditableResource", ng-repeat="education in educations | filterBy: ['category']:'before'")
             section.personnel-info-control.clearfix(ng-hide="editing")
                 .personnel-info-right.form-split
                     .form-btn-group
-                        button.btn.btn-default(ng-click="edit()") 编辑
+                        button.btn.btn-info(ng-click="edit()") 编辑
                         button.btn.btn-default(ng-click="education.$destroy()") 删除
                     .form-group
                         label.control-label 入学日期：
@@ -60,7 +59,7 @@ section.personnel-info-section(ng-init="educations = currentUser.educationExperi
                         .form-content {{education.witness}}
             section.personnel-info-control.clearfix(ng-if="editing")
                 form.personnel-info-right.form-split(name="eduEditForm", ng-submit="save(education.$save())")
-                    .form-btn-group
+                    .form-btn-group.alive
                         button.btn.btn-info(type="submit" ng-disabled="eduEditForm.$invalid") 保存
                         button.btn.btn-default(ng-click="cancel(current, $event)") 取消
                     .form-group
@@ -84,7 +83,11 @@ section.personnel-info-section(ng-init="educations = currentUser.educationExperi
                     .form-group
                         label.control-label 证明人：
                         input.form-control(ng-model="education.witness")
-        h4 入司后
+
+section.personnel-info-section(ng-init="educations = currentUser.educationExperiences.$refresh();param= {}")
+    .personnel-top-header.clearfix
+        h4.pull-left 教育经历（入司后）
+    .personnel-content-body
         .personnel-section-wrap(ng-repeat="education in educations | filterBy: ['category']:'after'")
             section.personnel-info-control.clearfix
                 .personnel-info-right.form-split
@@ -109,4 +112,4 @@ section.personnel-info-section(ng-init="educations = currentUser.educationExperi
                     .form-group
                         label.control-label 证明人：
                         .form-content(ng-bind="education.witness")
-            
+
