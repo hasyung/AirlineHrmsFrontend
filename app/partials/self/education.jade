@@ -6,7 +6,7 @@ section.personnel-info-section(ng-init="educations = currentUser.educationExperi
         .personnel-section-wrap
             section.personnel-info-control.clearfix(ng-if="param.newExp")
                 form.personnel-info-right.form-split(name="eduEditForm", ng-submit="educations.$create(param.newExp);param.newExp = null;educations.$refresh()")
-                    .form-btn-group
+                    .form-btn-group.alive
                         button.btn.btn-info(type="submit") 创建
                         button.btn.btn-default(ng-click="param.newExp = null") 取消
                     .form-group
@@ -59,7 +59,7 @@ section.personnel-info-section(ng-init="educations = currentUser.educationExperi
                         .form-content {{education.witness}}
             section.personnel-info-control.clearfix(ng-if="editing")
                 form.personnel-info-right.form-split(name="eduEditForm", ng-submit="save(education.$save())")
-                    .form-btn-group
+                    .form-btn-group.alive
                         button.btn.btn-info(type="submit" ng-disabled="eduEditForm.$invalid") 保存
                         button.btn.btn-default(ng-click="cancel(current, $event)") 取消
                     .form-group
