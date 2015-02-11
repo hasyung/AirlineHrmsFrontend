@@ -41,13 +41,17 @@ div(nb-table='ctrl.records' nb-safe-src="ctrl.records")
                         th 理由
                 tbody
                     tr(ng-repeat="record in ctrl.records track by $index")
-                        td(ng-bind="record")
-                        
-                        td(ng-bind="record")
-                        td(ng-bind="record")
-                        td(ng-bind="record")
-                        td(ng-bind="record")
-                        //- TODO 用工性质
-                        td(ng-bind="record")
-                        td(ng-bind="record")
-                        td(ng-bind="record")
+                        td(ng-bind="record.employeeNo")
+                        td(ng-bind="record.name")
+                        td(ng-bind="record.department.name")
+                        td() 
+                            span(nb-popup-plus, position="left-bottom", offset="0.5") {{record.category}}
+                                popup-template.nb-popup.org-default-popup-template.panel.panel-default()
+                                    .panel-heading.popup-title {{change.name}}的基本变更
+                                    .panel-body.popup-body
+                                        
+                                            
+                        td(ng-bind="record.createdAt | date:'yyyy-MM-dd'")
+                        td(ng-bind="record.status")
+                        td(ng-bind="record.checkDate | date:'yyyy-MM-dd'")
+                        td(ng-bind="record.reason")
