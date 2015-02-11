@@ -56,7 +56,7 @@ User = (restmod, RMUtils, $Evt) ->
     }
     .single('/me')
 Education = (restmod, RMUtils, $Evt) ->
-    Education = restmod.model(null).mix 'nbRestApi', {
+    Education = restmod.model().mix 'nbRestApi', {
         admissionDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
         graduationDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
         $hooks: {
@@ -92,7 +92,7 @@ Education = (restmod, RMUtils, $Evt) ->
                     this.$send request, onSuccess, onErorr
     }
 Experience = (restmod, RMUtils, $Evt) ->
-    Experience = restmod.model(null).mix 'nbRestApi', {
+    Experience = restmod.model().mix 'nbRestApi', {
         startDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
         endDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
         $hooks: {
