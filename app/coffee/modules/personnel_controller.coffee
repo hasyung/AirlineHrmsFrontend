@@ -112,6 +112,18 @@ class ReviewCtrl extends nb.Controller
         @records = @Record.$collection().$fetch()
     searchRecord: (tableState)->
         @records.$refresh(tableState);
+    checkChanges: ()->
+        params = []
+        checked = _.filter @changes, (item)->
+            return item if item.status != "待审核"
+        _.forEach checked, (item)->
+            temp = {}
+            temp.id = item.id
+            temp.status = item.status
+            temp.reason = item.reason
+            params.push temp
+        @changes.checkChanges(params)
+
         
 
 app.config(Route)

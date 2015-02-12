@@ -311,7 +311,7 @@ class OrgsCtrl extends nb.Controller
         onSuccess = (res)->
             logs = res.data.change_logs
             groupedLogs = _.groupBy logs, (log) ->
-                moment.unix(log.created_at).format('YYYY')
+                moment(log.created_at).format('YYYY')
             logsArr = []
             angular.forEach groupedLogs, (item, key) ->
                 logsArr.push {logs:item, changeYear: key}
