@@ -1,6 +1,6 @@
 div(nb-table='ctrl.records' nb-safe-src="ctrl.records")
         .search-container(nb-search)
-            div(nb-predicate="名称" predicate-attr="name")
+            div(nb-predicate="姓名" predicate-attr="name")
                 input(name="name" placeholder="姓名" ng-model="name")
             div(nb-predicate="员工编号" predicate-attr="employee_no")
                 input(name="employee_no" placeholder="工号" ng-model="employee_no")
@@ -44,13 +44,13 @@ div(nb-table='ctrl.records' nb-safe-src="ctrl.records")
                         td(ng-bind="record.employeeNo")
                         td(ng-bind="record.name")
                         td(ng-bind="record.department.name")
-                        td() 
+                        td()
                             span(nb-popup-plus, position="left-bottom", offset="0.5") {{record.category}}
                                 popup-template.nb-popup.org-default-popup-template.panel.panel-default()
                                     .panel-heading.popup-title {{change.name}}的基本变更
                                     .panel-body.popup-body
-                                        
-                                            
+
+
                         td(ng-bind="record.createdAt | date:'yyyy-MM-dd'")
                         td(ng-bind="record.status")
                         td(ng-bind="record.checkDate | date:'yyyy-MM-dd'")
