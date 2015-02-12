@@ -355,7 +355,7 @@ class OrgCtrl extends nb.Controller
         @state = 'show' # show editing newsub
         # @scope.org = @Org.$find(@params.orgId)
         scope.$onRootScope 'org:link', @.orgLink.bind(@)
-        Evt.$on.call(scope,['org:update:success','org:update:error','org:newsub:success','org:newsub:error'], @.reset.bind(@))
+        Evt.$on.call(scope,['org:update:success','org:update:error'], @.reset.bind(@))
         scope.$onRootScope 'org:transfer', @.transfer.bind(@)
 
 
@@ -374,9 +374,11 @@ class OrgCtrl extends nb.Controller
             self.Evt.$send 'org:resetData'
 
     newsub: (form, neworg) ->
-        $Evt = @Evt
+        # $Evt = @Evt
+        self = @
         @scope.currentOrg.newSub(neworg).$then ->
-            $Evt.$send 'org:newsub', form
+            self.Evt.$send 'org:newsub', form
+            self.state = 'show'
 
 
 
@@ -387,7 +389,7 @@ class OrgCtrl extends nb.Controller
         scope = @scope
         scope.neworg = {}
         scope.copyOrg = @scope.currentOrg.$copy()
-        resetForm(scope.newsubForm, scope.updateForm)
+        resetForm(scope.updateForm)
         @state = 'show'
 
     destroy: (isConfirm) ->
