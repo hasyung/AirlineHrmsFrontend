@@ -1,11 +1,13 @@
 .modal-header.tl-top-header
 	button.close(type='button', data-dismiss='modal', aria-hidden='true', ng-click="closeThisDialog()") ×
 	h4.modal-title 时间轴
+	input(ng-model="selectDate" bs-datepicker)
 div.wrapper.org-timline(slimscroll, height="400px" ng-init="activeLog = {}")
 	//- ul.timeline(ng-repeat="yearItem in ctrl.changeLogs")
 	ul.timeline(ng-repeat="yearLogs in ngDialogData")
 		li.tl-header
 			div.btn.btn-info.year {{::yearLogs.changeYear}}
+
 			span.pull-right 有{{::yearLogs.logs.length || 0}}次变动
 		li.tl-item(ng-repeat="log in yearLogs.logs track by $index", ng-click="ctrl.expandLog(log)", ng-class="{'active': log.active}")
 			div.tl-wrap
