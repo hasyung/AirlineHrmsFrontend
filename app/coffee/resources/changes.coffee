@@ -3,18 +3,18 @@ resources = angular.module('resources')
 
 Change = (restmod, RMUtils, $Evt) ->
 
-    Change = restmod.model('/changes/check').mix 'nbRestApi', 'DirtyModel', {
+    Change = restmod.model('/employee_changes/check').mix 'nbRestApi', 'DirtyModel', {
         checkDate: {decode: 'date', param: 'yyyy年MM月dd日',mask: 'CU'}
         createdAt: {decode: 'date', param: 'yyyy年MM月dd日',mask: 'CU'}
         $config:
-            jsonRoot: 'change_actions'
+            jsonRoot: 'audits'
 
     }
 Record = (restmod, RMUtils, $Evt) ->
 
-    Record = restmod.model('/changes/record').mix 'nbRestApi', 'DirtyModel', {
+    Record = restmod.model('/employee_changes/record').mix 'nbRestApi', 'DirtyModel', {
         $config:
-            jsonRoot: 'change_actions'
+            jsonRoot: 'audits'
 
     }
 

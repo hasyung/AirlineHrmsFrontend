@@ -35,6 +35,7 @@ div(nb-table='ctrl.records' nb-safe-src="ctrl.records")
                         th 姓名
                         th 所属部门
                         th 信息变更模块
+                        th 变更类型
                         th 变更时间
                         th 状态
                         th 审核时间
@@ -50,7 +51,7 @@ div(nb-table='ctrl.records' nb-safe-src="ctrl.records")
                                     .panel-heading.popup-title {{change.name}}的基本变更
                                     .panel-body.popup-body
                                         
-                                            
+                        td(ng-bind="record.action")                    
                         td(ng-bind="record.createdAt | date:'yyyy-MM-dd'")
                         td(ng-bind="record.status")
                         td(ng-bind="record.checkDate | date:'yyyy-MM-dd'")
