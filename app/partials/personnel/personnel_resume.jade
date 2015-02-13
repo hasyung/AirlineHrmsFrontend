@@ -1,70 +1,70 @@
-.resume-wrap
+.resume-wrap(ng-init="resume = current.resume.$refresh()")
     .resume-header
         h3 个人履历
     .resume-btn-group
-        button.btn.btn-info 导出 PDF
+        a.btn.btn-info(ng-href="/api/employees/{{current.resume.id}}/export_resume") 导出 PDF
     .resume-body
         section.resume-section.form-split
             h4 基本情况
             .form-group
                 label.control-label 姓名：
-                .form-content 姜文峰
+                .form-content(ng-bind="resume.name")
             .form-group
                 label.control-label 性别：
-                .form-content 男
+                .form-content(ng-bind="resume.gender.displayName")
             .form-group
                 label.control-label 籍贯：
-                .form-content 四川成都
+                .form-content(ng-bind="resume.nativePlace")
             .form-group
                 label.control-label 民族：
-                .form-content 汉族
+                .form-content(ng-bind="resume.nation.displayName")
             .form-group
                 label.control-label 出生地：
-                .form-content 成都市武侯区燃灯寺东街
+                .form-content(ng-bind="resume.birthPlace")
             .form-group
                 label.control-label 出生年月：
-                .form-content 1986-12
+                .form-content(ng-bind="resume.birthday")
             .form-group
                 label.control-label 身份证号：
-                .form-content 510105198612162538
+                .form-content(ng-bind="resume.identityNo")
             .form-group
                 label.control-label 婚姻状况：
-                .form-content 未婚
+                .form-content(ng-bind="resume.martialStatus.displayName")
             .form-group
                 label.control-label 学历：
-                .form-content 本科
+                .form-content(ng-bind="resume.educationBackground.displayName")
             .form-group
                 label.control-label 学位：
-                .form-content 学士学位
+                .form-content(ng-bind="resume.degree.displayName")
             .form-group
                 label.control-label 毕业院校：
-                .form-content 四川大学
+                .form-content(ng-bind="resume.school")
             .form-group
                 label.control-label 专业：
-                .form-content 工商管理
+                .form-content(ng-bind="resume.major")
             .form-group
                 label.control-label 英语等级：
-                .form-content 大学英语四级
+                .form-content(ng-bind="resume.englishLevel.displayName")
         section.resume-section.form-split
             h4 个人联系方式
             .form-group
                 label.control-label 固定电话：
-                .form-content 028-85176315
+                .form-content(ng-bind="resume.contact.telephone")
             .form-group
                 label.control-label 移动电话：
-                .form-content 18628118505
+                .form-content(ng-bind="resume.contact.mobile")
             .form-group.block
                 label.control-label 家庭住址：
-                .form-content 四川省双流县东升芳草巷33号4栋2单元
+                .form-content(ng-bind="resume.contact.address")
             .form-group.block
                 label.control-label 通信地址：
-                .form-content 四川省双流县东升芳草巷33号4栋2单元
+                .form-content(ng-bind="resume.contact.mailingAddress")
             .form-group
                 label.control-label 邮政编码：
-                .form-content 610000
+                .form-content(ng-bind="resume.contact.postcode")
             .form-group
                 label.control-label 电子邮箱：
-                .form-content jiangwenfeng@163.com
+                .form-content(ng-bind="resume.contact.email")
         section.resume-section.form-split
             h4 教育经历
             .form-split

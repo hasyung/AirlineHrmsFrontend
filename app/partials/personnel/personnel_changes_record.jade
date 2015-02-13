@@ -1,4 +1,4 @@
-div(nb-table='ctrl.records' nb-safe-src="ctrl.records")
+div(nb-table='ctrl.records' nb-safe-src="ctrl.records" ng-init="ctrl.records = ctrl.records.$refresh()")
         .search-container(nb-search)
             div(nb-predicate="名称" predicate-attr="name")
                 input(name="name" placeholder="姓名" ng-model="name")

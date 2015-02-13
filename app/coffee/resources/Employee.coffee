@@ -13,6 +13,7 @@ Employee = (restmod, RMUtils, $Evt) ->
         startDate: {decode: 'date', param: 'yyyy年MM月dd日',mask: 'CU'}
 
         isSelected: {mask: "CU"}
+        resume: { hasOne: 'Resume', mask: 'CU'}
 
         $hooks: {
             'after-create': ->
@@ -114,7 +115,11 @@ FamilyMember = (restmod, RMUtils, $Evt) ->
         $config:
             jsonRoot: 'family_members'
     }
-
+Resume = (restmod, RMUtils, $Evt) ->
+    Resume = restmod.model().mix 'nbRestApi', {
+        $config:
+            jsonRoot: 'employee'
+    }
 
 resources.factory 'Employee',['restmod', 'RMUtils', '$nbEvent', Employee]
 resources.factory 'User',['restmod', 'RMUtils', '$nbEvent', User]
@@ -122,3 +127,4 @@ resources.factory 'Formerleaders',['restmod', 'RMUtils', '$nbEvent', Formerleade
 resources.factory 'Education',['restmod', 'RMUtils', '$nbEvent', Education]
 resources.factory 'Experience',['restmod', 'RMUtils', '$nbEvent', Experience]
 resources.factory 'FamilyMember',['restmod', 'RMUtils', '$nbEvent', FamilyMember]
+resources.factory 'Resume',['restmod', 'RMUtils', '$nbEvent', Resume]
