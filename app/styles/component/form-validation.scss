@@ -220,6 +220,7 @@
 .form-split {
     @include clearfix();
     position: relative;
+    font-size: 14px;
 
     &:hover {
         .form-btn-group {
@@ -253,6 +254,8 @@
         }
 
         .control-label {
+            color: $text-muted;
+            text-align: right;
             flex: none;
             width: 120px;
         }

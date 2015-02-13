@@ -1,8 +1,19 @@
 
 
+$font-family-sans-serif:  "Helvetica Neue", Helvetica, 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+
+
 //font
-$text-color:            #333;
-$text-muted:            lighten($text-color, 25%);
+$text-color:            rgba(#000, .87);
+$text-muted:            rgba(#000, .54);
+$text-hint:             rgba(#000, .26);
+
+$font-size-h1:            24px;
+$font-size-h2:            20px;
+$font-size-h3:            16px;
+
+
+
 $text-title:            #58666f;
 $a-color:               #468fce;
 $over-staff-color:      #d9534f;

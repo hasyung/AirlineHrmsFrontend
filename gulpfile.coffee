@@ -174,7 +174,7 @@ gulp.task "css-vendor", ->
 gulp.task "less-vendor", ->
     gulp.src(paths.lessVendorStyles)
         .pipe(less())
-        .pipe(rename("vendor2.css"))
+        .pipe(rename("angulr.css"))
         .pipe(gulp.dest(paths.distStylesPath))
 
 gulp.task "css-lint-app", ["sass-watch"],  ->
