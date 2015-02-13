@@ -114,12 +114,16 @@ class ReviewCtrl extends nb.Controller
         @records.$refresh(tableState);
     checkChanges: ()->
         params = []
+        # '无需审核': 0
+        # '待审核': 1
+        # '通过': 2
+        # '不通过': 3
         checked = _.filter @changes, (item)->
-            return item if item.status != "待审核"
+            return item if item.statusCd != 1
         _.forEach checked, (item)->
             temp = {}
             temp.id = item.id
-            temp.status = item.status
+            temp.status_cd = item.statusCd
             temp.reason = item.reason
             params.push temp
         @changes.checkChanges(params)

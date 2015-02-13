@@ -34,11 +34,11 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                             td(ng-bind="child.name")
                             td(ng-bind="child.relationType")
                             td(ng-bind="child.gender")
-                            td(ng-bind="child.birthday")
+                            td(ng-bind="child.birthday | date:'yyyy-MM-dd'")
                             td(ng-bind="child.nativePlace")
                             td(ng-bind="child.company")
                             td.control-td
-                                button.btn.fa.fa-times
+                                button.btn.fa.fa-times(ng-click="child.$destroy()")
                 form.form-split(ng-repeat="nc in newChildren" ng-init="nc.relation='children'")
                     .form-group
                         .control-label 姓名：
@@ -51,7 +51,7 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                         input.form-control(ng-model="nc.gender")
                     .form-group
                         .control-label 出生年月：
-                        input.form-control(ng-model="nc.birthday")
+                        input.form-control(ng-model="nc.birthday" bs-datepicker)
                     .form-group
                         .control-label 常住户口所在地：
                         input.form-control(ng-model="nc.nativePlace")
@@ -75,38 +75,38 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                         th 常住户口所在地
                         th 学校或工作单位
                         th 操作
-                    tr(ng-repeat="omg in other")
+                    tr(ng-repeat="omg in vm.other")
                         td(ng-bind="omg.name")
                         td(ng-bind="omg.relation_type")
                         td(ng-bind="omg.gender")
-                        td(ng-bind="omg.birthday")
+                        td(ng-bind="omg.birthday | date:'yyyy-MM-dd'")
                         td(ng-bind="omg.native_place")
                         td(ng-bind="omg.company")
                         td.control-td
-                                button.btn.fa.fa-times
+                            button.btn.fa.fa-times(ng-click="omg.$destroy()")
 
-                form.form-split(ng-repeat="nc in newChildren" ng-init="nc.relation='children'")
+                form.form-split(ng-repeat="no in newOther" ng-init="no.relation='other'")
                     .form-group
                         .control-label 姓名：
-                        input.form-control(ng-model="nc.name")
+                        input.form-control(ng-model="no.name")
                     .form-group
                         .control-label 关系：
-                        input.form-control(ng-model="nc.relationType")
+                        input.form-control(ng-model="no.relationType")
                     .form-group
                         .control-label 性别：
-                        input.form-control(ng-model="nc.gender")
+                        input.form-control(ng-model="no.gender")
                     .form-group
                         .control-label 出生年月：
-                        input.form-control(ng-model="nc.birthday")
+                        input.form-control(ng-model="no.birthday" bs-datepicker)
                     .form-group
                         .control-label 常住户口所在地：
-                        input.form-control(ng-model="nc.nativePlace")
+                        input.form-control(ng-model="no.nativePlace")
                     .form-group
                         .control-label 学校或工作单位：
-                        input.form-control(ng-model="nc.company")
+                        input.form-control(ng-model="no.company")
                     .btn-group
-                        button.btn.btn-info(ng-click="vm.children.$create(nc);newChildren.splice($index, 1)") 提交
+                        button.btn.btn-info(ng-click="vm.other.$create(no);newOther.splice($index, 1)") 提交
                         button.btn.btn-default() 取消
 
                 .add
-                    button.btn.btn-default.fa.fa-plus(ng-click="newChildren.push({})")
+                    button.btn.btn-default.fa.fa-plus(ng-click="newOther.push({})")

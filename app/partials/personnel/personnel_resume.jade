@@ -2,7 +2,7 @@
     .resume-header
         h3 个人履历
     .resume-btn-group
-        a.btn.btn-info(ng-href="/api/employees/{{current.resume.id}}/export_resume") 导出 PDF
+        a.btn.btn-info(ng-href="/api/employees/export_resume?employee_id={{resume.id}}") 导出 PDF
     .resume-body
         section.resume-section.form-split
             h4 基本情况
@@ -67,50 +67,28 @@
                 .form-content(ng-bind="resume.contact.email")
         section.resume-section.form-split
             h4 教育经历
-            .form-split
+            .form-split(ng-repeat="edu in resume.educationExperiences")
                 .form-group
                     label.control-label 入学日期：
-                    .form-content 2002-09
+                    .form-content(ng-bind="edu.admissionDate")
                 .form-group
                     label.control-label 毕业日期：
-                    .form-content 2005-06
+                    .form-content(ng-bind="edu.graduationDate")
                 .form-group
                     label.control-label 毕业院校：
-                    .form-content 双流中学
+                    .form-content(ng-bind="edu.school")
                 .form-group
                     label.control-label 专业：
-                    .form-content 暂无
+                    .form-content(ng-bind="edu.major")
                 .form-group
                     label.control-label 学历：
-                    .form-content 高中
+                    .form-content(ng-bind="edu.educationBackground")
                 .form-group
                     label.control-label 学位：
-                    .form-content 暂无
+                    .form-content(ng-bind="edu.degree")
                 .form-group
                     label.control-label 证明人：
-                    .form-content 陈安
-            .form-split
-                .form-group
-                    label.control-label 入学日期：
-                    .form-content 2005-09
-                .form-group
-                    label.control-label 毕业日期：
-                    .form-content 2009-06
-                .form-group
-                    label.control-label 毕业院校：
-                    .form-content 四川大学
-                .form-group
-                    label.control-label 专业：
-                    .form-content 工商管理
-                .form-group
-                    label.control-label 学历：
-                    .form-content 本科
-                .form-group
-                    label.control-label 学位：
-                    .form-content 学士学位
-                .form-group
-                    label.control-label 证明人：
-                    .form-content 张梦林
+                    .form-content(ng-bind="edu.witness")
         section.resume-section.form-split
             h4 工作后培训经历
             .form-split
@@ -137,28 +115,28 @@
                     .form-content.auto-height 提高员工忠诚度，增强员工适应度，提高员工工作效率，提高员工归属感，企业文化与理念，发展目标与愿景，企业规章制度，工作职责与方式。
         section.resume-section.form-split
             h4 工作经历：
-            .form-split
+            .form-split(ng-repeat="work in resume.workExperiences")
                 .form-group
                     label.control-label 开始日期：
-                    .form-content 2010-03
+                    .form-content(ng-model="work.startDate")
                 .form-group
                     label.control-label 结束日期：
-                    .form-content 2012-05
+                    .form-content(ng-model="work.endDate")
                 .form-group
                     label.control-label 单位名称：
-                    .form-content 成都任我行科技有限公司
+                    .form-content(ng-model="work.company")
                 .form-group
                     label.control-label 任职部门：
-                    .form-content 人力资源部
+                    .form-content(ng-model="work.department")
                 .form-group.block
                     label.control-label 担任职位：
-                    .form-content 人事主管
+                    .form-content(ng-model="work.position")
                 .form-group.block
                     label.control-label 工作描述：
-                    .form-content.auto-height 草拟、实施、维护员工内部竞岗和轮岗制度及其工作，提高人事配置效率
+                    .form-content.auto-height(ng-model="work.jobDesc")
                 .form-group
                     label.control-label 证明人：
-                    .form-content 刘艳
+                    .form-content(ng-model="work.witness")
         section.resume-section.form-split
             h4 到川航后任职记录
             .form-split
@@ -179,103 +157,56 @@
                     .form-content 段红
         section.resume-section.form-split
             h4 家庭主要成员情况
-            h5.form-group.block 配偶
-            .form-group
-                label.control-label 姓名：
-                .form-content 冯丽
-            .form-group
-                label.control-label 性别：
-                .form-content 女
-            .form-group
-                label.control-label 籍贯：
-                .form-content 四川成都
-            .form-group
-                label.control-label 民族：
-                .form-content 汉族
-            .form-group
-                label.control-label 出生年月：
-                .form-content 1988-08
-            .form-group
-                label.control-label 文化程度：
-                .form-content 本科
-            .form-group
-                label.control-label 政治面貌：
-                .form-content 群众
-            .form-group
-                label.control-label 工作单位：
-                .form-content 成都市双流县双流中学
-            .form-group
-                label.control-label 职务：
-                .form-content 教师
-            .form-group
-                label.control-label 联系方式：
-                .form-content 18347265341
-            h5 子女情况
-            ul.nice-table
-                li.nice-table-row
-                    span.nt-cell.nt-cell-md 姓名
-                    span.nt-cell.nt-cell-sm 关系
-                    span.nt-cell.nt-cell-sm 性别
-                    span.nt-cell.nt-cell-md 出生年月
-                    span.nt-cell.nt-cell-lg 常住户口所在地
-                    span.nt-cell.nt-cell-lg 学校或工作单位
-                li.nice-table-row
-                    span.nt-cell.nt-cell-md 姜小军
-                    span.nt-cell.nt-cell-sm 子
-                    span.nt-cell.nt-cell-sm 男
-                    span.nt-cell.nt-cell-md 2010-08
-                    span.nt-cell.nt-cell-lg 四川省双流县
-                    span.nt-cell.nt-cell-lg 金苹果幼儿园
-                li.nice-table-row
-                    span.nt-cell.nt-cell-md 姜小红
-                    span.nt-cell.nt-cell-sm 女
-                    span.nt-cell.nt-cell-sm 女
-                    span.nt-cell.nt-cell-md 2013-10
-                    span.nt-cell.nt-cell-lg 四川省双流县
-                    span.nt-cell.nt-cell-lg 无
-            h5 父母、兄妹、配偶父母情况
-            ul.nice-table
-                li.nice-table-row
-                    span.nt-cell.nt-cell-md 姓名
-                    span.nt-cell.nt-cell-sm 关系
-                    span.nt-cell.nt-cell-sm 性别
-                    span.nt-cell.nt-cell-md 出生年月
-                    span.nt-cell.nt-cell-lg 常住户口所在地
-                    span.nt-cell.nt-cell-lg 学校或工作单位
-                li.nice-table-row
-                    span.nt-cell.nt-cell-md 姜冲
-                    span.nt-cell.nt-cell-sm 父亲
-                    span.nt-cell.nt-cell-sm 男
-                    span.nt-cell.nt-cell-md 1960-07
-                    span.nt-cell.nt-cell-lg 四川省双流县
-                    span.nt-cell.nt-cell-lg 四川省双流县公安局
-                li.nice-table-row
-                    span.nt-cell.nt-cell-md 李梅
-                    span.nt-cell.nt-cell-sm 母亲
-                    span.nt-cell.nt-cell-sm 女
-                    span.nt-cell.nt-cell-md 1963-01
-                    span.nt-cell.nt-cell-lg 四川省双流县
-                    span.nt-cell.nt-cell-lg 四川省双流县土地局
-                li.nice-table-row
-                    span.nt-cell.nt-cell-md 姜文娟
-                    span.nt-cell.nt-cell-sm 妹
-                    span.nt-cell.nt-cell-sm 女
-                    span.nt-cell.nt-cell-md 1989-04
-                    span.nt-cell.nt-cell-lg 四川省双流县
-                    span.nt-cell.nt-cell-lg 成都市中级法院
-                li.nice-table-row
-                    span.nt-cell.nt-cell-md 冯章
-                    span.nt-cell.nt-cell-sm 岳父
-                    span.nt-cell.nt-cell-sm 男
-                    span.nt-cell.nt-cell-md 1950-06
-                    span.nt-cell.nt-cell-lg 四川省洪雅县
-                    span.nt-cell.nt-cell-lg 无业
-                li.nice-table-row
-                    span.nt-cell.nt-cell-md 刘青
-                    span.nt-cell.nt-cell-sm 岳母
-                    span.nt-cell.nt-cell-sm 女
-                    span.nt-cell.nt-cell-md 1951-12
-                    span.nt-cell.nt-cell-lg 四川省洪雅县
-                    span.nt-cell.nt-cell-lg 无业
-
-
+            div(ng-repeat="lover in resume.familyMembers | filterBy: ['relation']: 'lover' track by $index")
+                h5.form-group.block 配偶
+                .form-group
+                    label.control-label 姓名：
+                    .form-content(ng-model="lover.name")
+                .form-group
+                    label.control-label 性别：
+                    .form-content(ng-model="lover.gender")
+                .form-group
+                    label.control-label 籍贯：
+                    .form-content(ng-model="lover.nativePlace")
+                .form-group
+                    label.control-label 民族：
+                    .form-content(ng-model="lover.nation")
+                .form-group
+                    label.control-label 出生年月：
+                    .form-content(ng-model="lover.birthday")
+                .form-group
+                    label.control-label 文化程度：
+                    .form-content(ng-model="lover.educationBackground.name")
+                .form-group
+                    label.control-label 政治面貌：
+                    .form-content(ng-model="lover.politicalStatus")
+                .form-group
+                    label.control-label 工作单位：
+                    .form-content(ng-model="lover.company")
+                .form-group
+                    label.control-label 职务：
+                    .form-content(ng-model="lover.position")
+                .form-group
+                    label.control-label 联系方式：
+                    .form-content(ng-model="lover.mobile")
+            div
+                h5 子女情况
+                ul.nice-table
+                    li.nice-table-row(ng-repeat="children in resume.familyMembers | filterBy: ['relation']: 'children' track by $index")
+                        span.nt-cell.nt-cell-md(ng-bind="children.name")
+                        span.nt-cell.nt-cell-sm(ng-bind="children.relationType")
+                        span.nt-cell.nt-cell-sm(ng-bind="children.gender.displayName")
+                        span.nt-cell.nt-cell-md(ng-bind="children.birthday")
+                        span.nt-cell.nt-cell-lg(ng-bind="children.residenceBooklet")
+                        span.nt-cell.nt-cell-lg(ng-bind="children.company")
+            div
+                h5 父母、兄妹、配偶父母情况
+                ul.nice-table
+                    li.nice-table-row(ng-repeat="other in resume.familyMembers | filterBy: ['relation']: 'other' track by $index")
+                        span.nt-cell.nt-cell-md(ng-bind="other.name")
+                        span.nt-cell.nt-cell-sm(ng-bind="other.relationType")
+                        span.nt-cell.nt-cell-sm(ng-bind="other.gender.displayName")
+                        span.nt-cell.nt-cell-md(ng-bind="other.birthday")
+                        span.nt-cell.nt-cell-lg(ng-bind="other.residenceBooklet")
+                        span.nt-cell.nt-cell-lg(ng-bind="other.company")
+                    
