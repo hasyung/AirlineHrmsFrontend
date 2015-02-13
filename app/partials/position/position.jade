@@ -1,7 +1,7 @@
 .position-manage.app-content-wrapper
     div(nb-table='ctrl.positions' nb-safe-src="ctrl.positions")
         div.search-container(nb-search="positions-all")
-            div(nb-predicate="名称" predicate-attr="name")
+            div(nb-predicate="岗位名称" predicate-attr="name")
                 input(name="name" placeholder="岗位名称" ng-model="name")
             div(nb-predicate="岗位通道" predicate-attr="channel_id")
                 nb-dropdown( ng-model="channel_id", remote-key="channels", map="$item.id" name="channel" required)
@@ -54,4 +54,4 @@
                           span /{{pos.budgetedStaffing}}
                         td(ng-bind="pos.schedule.displayName")
                         td(ng-bind="pos.oaFileNo")
-            .custom-pages(nb-pagination="ctrl.positions.$metadata")
+        .custom-pages(nb-pagination="ctrl.positions.$metadata")

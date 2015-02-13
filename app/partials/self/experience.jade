@@ -1,73 +1,73 @@
-section.personnel-info-section(ng-init="experiences = currentUser.workExperiences")
+section.personnel-info-section(ng-init="experiences = currentUser.workExperiences.$fetch();param= {}")
     .personnel-top-header.clearfix
-        h4.pull-left 工作经历
-        button.pull-right(ng-click="createStatus=true") 新增
+        h4.pull-left 工作经历(入司前)
+        button.btn.btn-default.pull-right(ng-click="param.newExp={}") 新增
     .personnel-content-body
         .personnel-section-wrap
-            section.personnel-info-control.clearfix(ng-if="createStatus")
-                form.personnel-info-right.form-split(name="workEditForm", ng-submit="ctrl.createWork(work);createStatus=false")
-                    .form-btn-group
+            section.personnel-info-control.clearfix(ng-if="param.newExp")
+                form.personnel-info-right.form-split(name="workEditForm", ng-submit="experiences.$create(param.newExp);param.newExp=null;")
+                    .form-btn-group.alive
                         button.btn.btn-info(type="submit") 创建
-                        button.btn.btn-default(ng-click="createStatus = false") 取消
+                        button.btn.btn-default(ng-click="param.newExp = null") 取消
                     .form-group
-                        label.control-label 入学日期：
-                        input.form-control(ng-model="work.admissionDate")
+                        label.control-label 开始时间：
+                        input.form-control(ng-model="param.newExp.startDate" bs-datepicker)
                     .form-group
-                        label.control-label 毕业时间：
-                        input.form-control(ng-model="work.graduationDate")
+                        label.control-label 结束时间：
+                        input.form-control(ng-model="param.newExp.endDate" bs-datepicker)
                     .form-group
-                        label.control-label 毕业院校：
-                        input.form-control(ng-model="work.school")
+                        label.control-label 单位名称：
+                        input.form-control(ng-model="param.newExp.company")
                     .form-group
-                        label.control-label 专业：
-                        input.form-control(ng-model="work.major")
-                    .form-group
-                        label.control-label 学历：
-                        input.form-control(ng-model="work.workBackground.displayName")
-                    .form-group
-                        label.control-label 学位：
-                        input.form-control(ng-model="work.degree.displayName")
-                    .form-group
+                        label.control-label 任职部门：
+                        input.form-control(ng-model="param.newExp.department")
+                    .form-group.block
+                        label.control-label 担任职位：
+                        input.form-control(ng-model="param.newExp.jobTitle")
+                    .form-group.block
+                        label.control-label 工作描述：
+                        input.form-control(ng-model="param.newExp.jobDesc")
+                    .form-group.block
                         label.control-label 证明人：
-                        input.form-control(ng-model="work.witness")
-        h4 入川航之前
-        .personnel-section-wrap(ng-controller="EditableResource", ng-repeat="work in experiences.before")
+                        input.form-control(ng-model="param.newExp.witness")
+        .personnel-section-wrap(ng-controller="EditableResource", ng-repeat="work in experiences | filterBy: ['category']:'before'")
             section.personnel-info-control.clearfix(ng-hide="editing")
                 .personnel-info-right.form-split
                     .form-btn-group
-                        button.btn.btn-default(ng-click="edit()") 编辑
+                        button.btn.btn-info(ng-click="edit()") 编辑
+                        button.btn.btn-default(ng-click="work.$destroy()") 删除
                     .form-group
                         label.control-label 开始时间：
-                        .form-content {{work.startDate}}
+                        .form-content(ng-bind="work.startDate | date:'yyyy-MM-dd'")
                     .form-group
                         label.control-label 结束时间：
-                        .form-content {{work.endDate}}
+                        .form-content(ng-bind="work.endDate | date:'yyyy-MM-dd'")
                     .form-group
                         label.control-label 单位名称：
-                        .form-content {{work.company}}
+                        .form-content(ng-bind="work.company")
                     .form-group
                         label.control-label 任职部门：
-                        .form-content {{work.department}}
+                        .form-content(ng-bind="work.department")
                     .form-group
                         label.control-label 担任职位：
-                        .form-content {{work.jobTitle}}
+                        .form-content(ng-bind="work.jobTitle")
                     .form-group
                         label.control-label 工作描述：
-                        .form-content {{work.jobDesc}}
+                        .form-content(ng-bind="work.jobDesc")
                     .form-group
                         label.control-label 证明人：
-                        .form-content {{work.witness}}
+                        .form-content(ng-bind="work.witness")
             section.personnel-info-control.clearfix(ng-if="editing")
-                form.personnel-info-right.form-split(name="eduEditForm", ng-submit="ctrl.updateEdu()")
-                    .form-btn-group
+                form.personnel-info-right.form-split(name="eduEditForm", ng-submit="save(work.$save())")
+                    .form-btn-group.alive
                         button.btn.btn-info(type="submit") 保存
                         button.btn.btn-default(ng-click="cancel(current, $event)") 取消
                     .form-group
                         label.control-label 开始时间：
-                        input.form-control(ng-model="work.startDate")
+                        input.form-control(ng-model="work.startDate" bs-datepicker)
                     .form-group
                         label.control-label 结束时间：
-                        input.form-control(ng-model="work.endDate")
+                        input.form-control(ng-model="work.endDate" bs-datepicker)
                     .form-group
                         label.control-label 单位名称：
                         input.form-control(ng-model="work.company")
@@ -83,56 +83,35 @@ section.personnel-info-section(ng-init="experiences = currentUser.workExperience
                     .form-group.block
                         label.control-label 证明人：
                         input.form-control(ng-model="work.witness")
-        h4 入川航之后
-        .personnel-section-wrap(ng-controller="EditableResource", ng-repeat="work in experiences.after")
-            section.personnel-info-control.clearfix(ng-hide="editing")
+
+
+
+
+section.personnel-info-section(ng-init="experiences = currentUser.workExperiences.$fetch();param= {}")
+    .personnel-top-header.clearfix
+        h4.pull-left 工作经历（入司后）
+    .personnel-content-body
+        .personnel-section-wrap(ng-repeat="work in experiences | filterBy: ['category']:'after'")
+            section.personnel-info-control.clearfix
                 .personnel-info-right.form-split
-                    .form-btn-group
-                        button.btn.btn-default(ng-click="edit()") 编辑
                     .form-group
                         label.control-label 开始时间：
-                        .form-content {{work.startDate}}
+                        .form-content(ng-bind="work.startDate | date:'yyyy-MM-dd'")
                     .form-group
                         label.control-label 结束时间：
-                        .form-content {{work.endDate}}
+                        .form-content(ng-bind="work.endDate | date:'yyyy-MM-dd'")
                     .form-group
                         label.control-label 单位名称：
-                        .form-content {{work.company}}
+                        .form-content(ng-bind="work.company")
                     .form-group
                         label.control-label 任职部门：
-                        .form-content {{work.department}}
+                        .form-content(ng-bind="work.department")
                     .form-group
                         label.control-label 担任职位：
-                        .form-content {{work.jobTitle}}
+                        .form-content(ng-bind="work.jobTitle")
                     .form-group
                         label.control-label 工作描述：
-                        .form-content {{work.jobDesc}}
+                        .form-content(ng-bind="work.jobDesc")
                     .form-group
                         label.control-label 证明人：
-                        .form-content {{work.witness}}
-            section.personnel-info-control.clearfix(ng-if="editing")
-                form.personnel-info-right.form-split(name="eduEditForm", ng-submit="ctrl.updateEdu()")
-                    .form-btn-group
-                        button.btn.btn-info(type="submit") 保存
-                        button.btn.btn-default(ng-click="cancel(current, $event)") 取消
-                    .form-group
-                        label.control-label 开始时间：
-                        input.form-control(ng-model="work.startDate")
-                    .form-group
-                        label.control-label 结束时间：
-                        input.form-control(ng-model="work.endDate")
-                    .form-group
-                        label.control-label 单位名称：
-                        input.form-control(ng-model="work.company")
-                    .form-group
-                        label.control-label 任职部门：
-                        input.form-control(ng-model="work.department")
-                    .form-group.block
-                        label.control-label 担任职位：
-                        input.form-control(ng-model="work.jobTitle")
-                    .form-group.block
-                        label.control-label 工作描述：
-                        input.form-control(ng-model="work.jobDesc")
-                    .form-group.block
-                        label.control-label 证明人：
-                        input.form-control(ng-model="work.witness")
+                        .form-content(ng-bind="work.witness")

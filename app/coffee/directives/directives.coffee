@@ -145,5 +145,40 @@ angular.module 'nb.directives'
 
     ]
 
+    .directive 'radioBox', [()->
+        postLink = (scope, elem, attrs, ctrl) ->
+            scope.selected = null
+            scope.$watch 'pass', (newVal)->
+                if newVal
+                    scope.selected = "通过"
+                    scope.fail = false
+                if !(scope.pass || scope.fail)
+                    scope.selected = "待审核"
+            scope.$watch 'fail', (newVal)->
+                if newVal
+                    scope.selected = "不通过"
+                    scope.pass = false
+                if !(scope.pass || scope.fail)
+                    scope.selected = "待审核"
+                
+        return {
+            restrict: 'A'
+            link: postLink
+            template: '''
+            <div>
+                <input type="checkbox" ng-model="pass"/>
+                <label>通过</label>
+                <input type="checkbox" ng-model="fail"/>
+                <label>不通过</label>
+            </div>
+            '''
+            require: 'ngModel'
+            scope: {
+                selected: "=ngModel"
+            }
+            replace: true
+        }
+    ]
+
 
 

@@ -1,7 +1,7 @@
 .position-manage.app-content-wrapper
     div(nb-table='ctrl.employees' nb-safe-src="ctrl.employees")
         .search-container(nb-search)
-            div(nb-predicate="名称" predicate-attr="name")
+            div(nb-predicate="姓名" predicate-attr="name")
                 input(name="name" placeholder="姓名" ng-model="name")
             div(nb-predicate="员工编号" predicate-attr="employee_no")
                 input(name="employee_no" placeholder="工号" ng-model="employee_no")
@@ -73,4 +73,4 @@
                         //- TODO 用工性质
                         td(ng-bind="::emp.laborRelation.name")
                         td(ng-bind="::emp.joinScalDate")
-            .custom-pages(nb-pagination="ctrl.employees.$metadata")
+        .custom-pages(nb-pagination="ctrl.employees.$metadata")
