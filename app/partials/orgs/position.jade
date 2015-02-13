@@ -1,9 +1,9 @@
 .app-content-wrapper.org-pos-list
     .org-modal-posttop 岗位信息列表
         .btn-group.pull-right
-            
-            
-            
+
+
+
             button.btn.btn-default.fa.fa-trash-o.pull-right(
                 title="请选择要删除的岗位"
                 ng-disabled="ctrl.getSelectsIds().length == 0"
@@ -30,7 +30,7 @@
                             nb-title="您确定要将所选的{{ctrl.getSelectsIds().length}}个岗位，调整到{{ctrl.selectOrg.name}}吗?"
                             nb-text="岗位调整操作将在你点击确定后执行。") 确 定
                         div.btn.btn-default.pull-right(popup-close) 取 消
-            .pull-right.nb-dropdown(simple-dropdown, btn-text="导出")
+            .pull-right.nb-dropdown.right-align(simple-dropdown, btn-text="导出")
                 li( role="presentation")
                     a(role="menuitem" ng-href="/api/positions/export_to_xls?department_id={{currentOrg.id}}" ) 导出全部岗位
                 li( role="presentation",ng-show="ctrl.getSelectsIds().length != 0")

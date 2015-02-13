@@ -22,7 +22,7 @@ tabset
                                     nb-dialog-scope="this"
                                     )
                                 td(ng-bind="::emp.startDate")
-                    .custom-pages(nb-pagination="currentEmps.$metadata" per-page="15")
+                .custom-pages(nb-pagination="currentEmps.$metadata" per-page="15")
     tab(heading="历任领导信息")
         .position-manage
             div(nb-table='hisLeaders' nb-safe-src="hisLeaders")

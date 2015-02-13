@@ -1,7 +1,11 @@
 angular.module 'nb.directives'
     .directive 'nbDropdown', ['$http', 'inflector', '$document', ($http, inflector, $doc)->
 
-
+        # return array
+        # example:
+        #   {list:{item: 123}
+        # return ['list', 'item']
+        #
         parseMappedAttr = (mapped)->
             prefixIndex = mapped.indexOf('$item.')
             throw Error("map属性格式不正确, '必须符合 $item.xx.xx 格式'") if prefixIndex != 0
@@ -21,7 +25,7 @@ angular.module 'nb.directives'
                 self = @
                 @scope.isOpen = false
                 @options = []
-                @mapped = parseMappedAttr(@attrs.map) if @attrs.map
+                @mapped = mapped = parseMappedAttr(@attrs.map) if @attrs.map
 
 
 
@@ -31,16 +35,16 @@ angular.module 'nb.directives'
                             res[inflector.camelize(key)] = val
                             return res
                         , {})
-                onError = ->
-                    scope.$emit('dropdown:notfound:error')
-
+                    # 处理map 属性反向映射
+                    if scope.selected && attrs['map']
+                        scope.item = _.find @options, (opt) ->
+                            return getMappedAttr(mapped, opt) == scope.selected
 
                 if scope.options
                     @options = scope.options
                 else if attrs.remoteKey
                     @http.get("/api/enum?key=#{@attrs.remoteKey}")
                         .success onSuccess.bind(@)
-                        .error onError
                 else
                     throw new Error('dropdown need options')
             setSelected: ($index) ->
@@ -63,6 +67,11 @@ angular.module 'nb.directives'
             dropdownCtrl = $ctrl[0]
             ngModelCtrl = $ctrl[1]
             dropdownCtrl.ngModelCtrl = ngModelCtrl
+
+
+
+
+
             # 下面两行代码是为了防止点击元素后事件冒泡至body，然后影藏弹出框
             elem.on 'click', (e)->
                 e.stopPropagation()
