@@ -1,6 +1,6 @@
 div(nb-table='ctrl.records' nb-safe-src="ctrl.records")
         .search-container(nb-search)
-            div(nb-predicate="名称" predicate-attr="name")
+            div(nb-predicate="姓名" predicate-attr="name")
                 input(name="name" placeholder="姓名" ng-model="name")
             div(nb-predicate="员工编号" predicate-attr="employee_no")
                 input(name="employee_no" placeholder="工号" ng-model="employee_no")
@@ -35,19 +35,33 @@ div(nb-table='ctrl.records' nb-safe-src="ctrl.records")
                         th 姓名
                         th 所属部门
                         th 信息变更模块
+                        th 变更类型
                         th 变更时间
                         th 状态
                         th 审核时间
                         th 理由
                 tbody
                     tr(ng-repeat="record in ctrl.records track by $index")
-                        td(ng-bind="record")
-                        
-                        td(ng-bind="record")
-                        td(ng-bind="record")
-                        td(ng-bind="record")
-                        td(ng-bind="record")
-                        //- TODO 用工性质
-                        td(ng-bind="record")
-                        td(ng-bind="record")
-                        td(ng-bind="record")
+                        td(ng-bind="record.employeeNo")
+                        td(ng-bind="record.name")
+                        td(ng-bind="record.department.name")
+
+                        td()
+                            span(nb-popup-plus, position="left-bottom", offset="0.5") {{record.auditableType}}
+                                popup-template.nb-popup.org-default-popup-template.panel.panel-default()
+                                    .panel-heading.popup-title {{record.name}}的基本变更
+                                    .panel-body.popup-body
+                                        .row
+                                            .col-md-6 修改前
+                                            .col-md-6 修改后
+                                        .row(ng-repeat="(field, val) in record.auditedChanges")
+                                            .col-md-2() {{::field}}：
+                                            .col-md-4(ng-bind="val[0]")
+                                            .col-md-2() {{::field}}：
+                                            .col-md-4(ng-bind="val[1]")
+
+                        td(ng-bind="record.action")
+                        td(ng-bind="record.createdAt | date:'yyyy-MM-dd'")
+                        td(ng-bind="record.status")
+                        td(ng-bind="record.checkDate | date:'yyyy-MM-dd'")
+                        td(ng-bind="record.reason")

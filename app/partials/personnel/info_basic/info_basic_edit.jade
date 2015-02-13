@@ -1,5 +1,5 @@
 form(name="empEditForm" ng-submit="save(current.$save())")
-    .form-btn-group
+    .form-btn-group.alive
         button.btn.btn-info(type="submit" ng-disabled="empEditForm.$invalid") 保存
         button.btn.btn-default(ng-click="cancel(current, $event)") 取消
     .form-group.block

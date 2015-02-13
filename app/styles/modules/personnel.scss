@@ -12,7 +12,8 @@
         width: 100%;
 
         .avator-area {
-            border: 1px solid #e6e6e6;
+            background: url('../../../images/personnel/avator.jpg') no-repeat;
+            background-size: 100%;
             border-radius: 50%;
             height: 110px;
             margin: 25px auto 5px;
@@ -48,6 +49,9 @@
 
             a {
                 color: $text-color;
+                display: block;
+                height: 100%;
+                width: 100%;
             }
 
             &:hover {
@@ -95,6 +99,8 @@
     }
 
     .personnel-info-section {
+        margin-bottom: 30px;
+
         .personnel-info-row {
             height: 40px;
         }
@@ -138,6 +144,10 @@
             color: $text-title;
             font-size: $font-size-lg;
             line-height: 48px;
+        }
+
+        .btn {
+            margin: 7px 10px 0;
         }
     }
 
@@ -276,7 +286,8 @@
     }
 
     .form-split {
-        margin-top: 20px;
+        border-bottom: 1px solid $border-color;
+        margin-bottom: 10px;
 
         .form-control {
             margin-right: 10%;
@@ -285,6 +296,15 @@
         .control-label {
             height: 34px;
             line-height: 34px;
+        }
+    }
+
+    .btn-group {
+        margin-bottom: 20px;
+        margin-left: 190px;
+
+        .btn {
+            margin-left: 100px;
         }
     }
 }

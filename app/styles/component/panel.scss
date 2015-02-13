@@ -112,6 +112,9 @@
 }
 
 .custom-pages {
+    @include clearfix();
+    margin-bottom: 30px;
+
     .pagination {
         display: block;
         margin: 0 auto;

@@ -6,7 +6,7 @@ tabset
                 input(type="hidden" nb-pipe="ctrl.search(tableState)")
                 .table-container
                     h4 待审核列表
-                    button.pull-right 审核
+                    button.pull-right(ng-click="ctrl.checkChanges()") 审核
                     table.table.table-striped.custom-table
                         thead
                             tr
@@ -30,45 +30,22 @@ tabset
                                         popup-template.nb-popup.org-default-popup-template.panel.panel-default()
                                             .panel-heading.popup-title {{change.name}}的基本变更
                                             .panel-body.popup-body
-                                                .col-md-6
-                                                    |修改前
-                                                    .row
-                                                        label 姓名：
-                                                        span {{change.name}}
-                                                    .row
-                                                        label 性别：
-                                                        span {{change.name}}
-                                                    .row
-                                                        label 身份证号：
-                                                        span {{change.name}}
-                                                    .row
-                                                        label 手机号码：
-                                                        span {{change.name}}
-                                                    
-                                                .col-md-6
-                                                    |修改后
-                                                    label 姓名：
-                                                        span {{change.name}}
-                                                    .row
-                                                        label 性别：
-                                                        span {{change.name}}
-                                                    .row
-                                                        label 身份证号：
-                                                        span {{change.name}}
-                                                    .row
-                                                        label 手机号码：
-                                                        span {{change.name}}
-                                                
-                                            
+                                                .row 
+                                                    .col-md-6 修改前
+                                                    .col-md-6 修改后
+                                                .row(ng-repeat="(field, val) in change.auditedChanges")
+                                                    .col-md-2() {{::field}}：
+                                                    .col-md-4(ng-bind="val[0]")
+                                                    .col-md-2() {{::field}}：
+                                                    .col-md-4(ng-bind="val[1]")
+
+
                                 td(ng-bind="change.createdAt")
                                 td()
-                                    .radio-group
-                                        input(type="radio", ng-model="change.status", value="通过")
-                                        label 通过
-                                        input(type="radio", ng-model="change.status", value="不通过")
-                                        label 不通过
+                                    .radio-group(radio-box, ng-model="change.status")
+                                        
                                 td() 
-                                    span(nb-popup-plus, position="left-bottom", offset="0.5") {{change.reason || "请输入"}}
+                                    span(nb-popup-plus, position="left-bottom", offset="0.5") 请输入
                                         popup-template.nb-popup.org-default-popup-template.panel.panel-default()
                                             .panel-heading.popup-title 请输入理由
                                             .panel-body.popup-body

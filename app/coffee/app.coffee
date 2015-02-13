@@ -122,6 +122,11 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
 
     ]
 
+datepickerConf = ($datepickerProvider)->
+    angular.extend($datepickerProvider.defaults, {
+      dateFormat: 'yyyy-MM-dd'
+    })
+
 
 App
     .config ['$provide', 'ngDialogProvider', appConf]
