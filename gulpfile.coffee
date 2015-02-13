@@ -13,6 +13,7 @@ livereload      = require("gulp-livereload")
 # gutil           = require("gulp-util")
 minifyHTML      = require("gulp-minify-html")
 sass            = require("gulp-sass")
+sourcemaps      = require('gulp-sourcemaps')
 less            = require("gulp-less")
 csslint         = require("gulp-csslint")
 minifyCSS       = require("gulp-minify-css")
@@ -153,6 +154,7 @@ gulp.task "sass-lib", ->
     gulp.src(paths.sassStylesLib)
         .pipe(plumber())
         .pipe(sass())
+        .pipe(sourcemaps.write())
         .pipe(rename("lib.css"))
         .pipe(gulp.dest(paths.distStylesPath))
 
@@ -162,6 +164,7 @@ gulp.task "sass-deploy", ->
     gulp.src(paths.sassStylesMain)
         .pipe(plumber())
         .pipe(sass({includePaths: require('node-bourbon').includePaths}))
+        .pipe(sourcemaps.write())
         .pipe(rename("app.css"))
         .pipe(gulp.dest(paths.distStylesPath))
 

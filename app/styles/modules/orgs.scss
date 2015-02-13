@@ -3,15 +3,6 @@
     position: relative;
 }
 
-.modal-header {
-    background-color: #f6f8f8;
-    border-color: #edf1f2;
-}
-
-.panel-footer {
-    background-color: #f6f8f8;
-}
-
 // 机构 左侧部门菜单
 .org-dep {
     @include transition(left .5s ease-in);
