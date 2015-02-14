@@ -27,7 +27,7 @@ tabset
                                 td(ng-bind="change.department.name")
                                 td()
                                     span(nb-popup-plus, position="left-bottom", offset="0.5") 基本信息
-                                        popup-template.nb-popup.org-default-popup-template.panel.panel-default()
+                                        popup-template.nb-popup.panel.panel-default()
                                             .panel-heading.popup-title {{change.name}}的基本变更
                                             .panel-body.popup-body
                                                 .row 
@@ -45,7 +45,7 @@ tabset
                                     .radio-group(radio-box, ng-model="change.statusCd")
                                         
                                 td() 
-                                    span(nb-popup-plus, position="left-bottom", offset="0.5") 请输入
+                                    span(nb-popup-plus, position="left-bottom", offset="0.5") {{change.reason || '请输入'}}
                                         popup-template.nb-popup.org-default-popup-template.panel.panel-default()
                                             .panel-heading.popup-title 请输入理由
                                             .panel-body.popup-body
