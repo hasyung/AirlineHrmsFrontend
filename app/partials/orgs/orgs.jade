@@ -1,4 +1,4 @@
-div.org.app-content-wrapper
+.org
     .org-dep(ng-class="{'active': ctrl.isBarOpen}")
         .org-dep-badge
             a.toggle-bar.fa(
@@ -17,37 +17,36 @@ div.org.app-content-wrapper
                             title="{{org.name}}",
                             ng-class="{'active': org.id == (ctrl.treeRootOrg && ctrl.treeRootOrg.id)}"
                         )
+    section(layout="row" flex)
+        md-content
+            .org-chart-top(ng-class="{'org-chart-history': ctrl.isHistory}")
+                    h1 {{ctrl.treeRootOrg.name}}组织机构图
+                    h2(ng-show="ctrl.isHistory") {{ctrl.orgs.$metadata.created_at | date : 'yyyy年MM月dd日'}}— {{ctrl.orgs.$metadata.title}}
+                .top-btn-group
+                    //- button(ng-click="ctrl.print()") 导出
+                    button.btn.btn-m.btn-primary(
+                        nb-dialog="partials/orgs/org_history.html"
+                        nb-dialog-scope="this"
+                        prepare-data="ctrl.initialHistoryData()"
+                        ) 时间轴
+                    a.btn.btn-m.btn-info(ng-show="!ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导 出
+                    a.btn.btn-m.btn-info(ng-show="ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导 出
+                    button.btn.btn-info(ng-click="ctrl.resetData()" ng-show="ctrl.isHistory") 返回最新
 
-    .org-aside.org-aside-info.pull-right
-        //- .org-row(ui-view='sub' ng-controller="OrgCtrl as orgCtrl")
-        .org-row(ng-controller="OrgCtrl as orgCtrl")
-            include org
-    .app-main.org-chart
-        .org-chart-top(ng-class="{'org-chart-history': ctrl.isHistory}")
-                h1 {{ctrl.treeRootOrg.name}}组织机构图
-                h2(ng-show="ctrl.isHistory") {{ctrl.orgs.$metadata.created_at | date : 'yyyy年MM月dd日'}}— {{ctrl.orgs.$metadata.title}}
-            .top-btn-group
-                //- button(ng-click="ctrl.print()") 导出
-                button.btn.btn-m.btn-primary(
-                    nb-dialog="partials/orgs/org_history.html"
-                    nb-dialog-scope="this"
-                    prepare-data="ctrl.initialHistoryData()"
-                    ) 时间轴
-                a.btn.btn-m.btn-info(ng-show="!ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导 出
-                a.btn.btn-m.btn-info(ng-show="ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导 出
-                button.btn.btn-info(ng-click="ctrl.resetData()" ng-show="ctrl.isHistory") 返回最新
-
-                //- loading-btn.red(ng-click="ctrl.openHistoryPanel()" btn-loading-type="contract-overlay" btn-text="测试loading")
-        div.org-chart-window(id="org_chart_warpper")
-            div.svg-wrapper(org-chart id="org_chart" drag-on org-chart-data="ctrl.tree.data")
-            canvas(id="org_chart_print_canvas")
-            div.bottom-btn-group(ng-show="ctrl.tree.isModified")
-                button.btn.btn-info(
-                    nb-dialog="partials/orgs/shared/effect_changes.html"
-                    nb-dialog-scope="this"
-                    ) 生 效
-                button.btn.btn-default.color-title(
-                    nb-confirm="ctrl.revert(isConfirm)"
-                    nb-title="您确认要撤销当前的所有修改吗?"
-                    nb-text="当你点击确定时，你之前对机构做过的调整将被撤销。") 撤 销
+                    //- loading-btn.red(ng-click="ctrl.openHistoryPanel()" btn-loading-type="contract-overlay" btn-text="测试loading")
+            div.org-chart-window(id="org_chart_warpper")
+                div.svg-wrapper(org-chart id="org_chart" drag-on org-chart-data="ctrl.tree.data")
+                canvas(id="org_chart_print_canvas")
+                div.bottom-btn-group(ng-show="ctrl.tree.isModified")
+                    button.btn.btn-info(
+                        nb-dialog="partials/orgs/shared/effect_changes.html"
+                        nb-dialog-scope="this"
+                        ) 生 效
+                    button.btn.btn-default.color-title(
+                        nb-confirm="ctrl.revert(isConfirm)"
+                        nb-title="您确认要撤销当前的所有修改吗?"
+                        nb-text="当你点击确定时，你之前对机构做过的调整将被撤销。") 撤 销
+        md-sidenav.md-sidenav-right(md-is-locked-open="true")
+            .org-row(ng-controller="OrgCtrl as orgCtrl")
+                include org
 

@@ -1,31 +1,27 @@
 .navi-root {
-    left: 0;
-    position: fixed;
-    top: 0;
+    min-width: 200px;
     width: 200px;
-    z-index: 1050;
+
+    &.md-locked-open {
+        min-width: 200px;
+        width: 200px;
+    }
 
     .navi-root-header {
-        left: 0;
-        position: fixed;
-        top: 0;
-        z-index: 2000;
+        height: 50px;
+        min-height: 50px;
+    }
+}
+
+.top-menu-bar {
+    &.md-default-theme {
+        background-color: #fff;
+        height: 50px;
+        min-height: 50px;
     }
 
-    &:before {
-        background-color: inherit;
-        bottom: 0;
-        content: ' ';
-        display: block;
-        position: fixed;
-        top: 0;
-        width: inherit;
-        z-index: 1000;
-
-    }
-
-    .navi-wrap {
-        width: 200px;
+    .nav>li>a {
+        height: 50px;
     }
 }
 
@@ -101,100 +97,3 @@
         }
     }
 }
-
-// @media (min-width: 768px) {
-//     .app-aside-folded{
-//         .nav-sub-header{
-//             display: block !important;
-//             a{
-//                 padding: floor(($app-aside-folded-nav-height - $line-height-computed)/2) 20px !important;
-//             }
-//         }
-//         .navi{
-//             > ul {
-//                 > li {
-//                     > a {
-//                         position: relative;
-//                         padding: 0;
-//                         text-align: center;
-//                         height: $app-aside-folded-nav-height;
-//                         border: none;
-//                         span {
-//                             display: none;
-//                             &.pull-right{
-//                                 display: none !important;
-//                             }
-//                         }
-//                         i{
-//                             width: auto;
-//                             float: none;
-//                             display: block;
-//                             font-size: 16px;
-//                             margin: 0;
-//                             line-height: $app-aside-folded-nav-height;
-//                             border: none !important;
-//                             @include    transition(margin-top 0.2s);
-//                             b{
-//                                 left: 0 !important;
-//                             }
-//                         }
-//                         .badge,
-//                         .label{
-//                             position: absolute;
-//                             right: 12px;
-//                             top: 8px;
-//                             z-index: 3;
-//                         }
-//                     }
-//                 }
-//                 ul{
-//                     height: 0 !important;
-//                     position: absolute;
-//                     left: 100%;
-//                     top: 0 !important;
-//                     z-index: 1050;
-//                     width: $app-aside-width;
-//                     -webkit-webkit-box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-//                     -moz-webkit-box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-//                     -ms-webkit-box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-//                     -o-webkit-box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-//                     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-//                 }
-//             }
-//             li {
-//                 li{
-//                     a{
-//                         padding-left: 20px !important;
-//                     }
-//                 }
-//             }
-//         }
-//     }
-
-//     .app-aside-folded.app-aside-fixed .app-aside{
-//         > ul.nav {
-//             &:before{
-//                 content:"";
-//                 width: $app-aside-folded-width;
-//                 height: $app-aside-folded-nav-height;
-//                 position: absolute;
-//                 left: -$app-aside-folded-width;
-//                 top: 0;
-//             }
-//             z-index: 1010;
-//             opacity: 1;
-//             height: auto;
-//             overflow: visible;
-//             overflow-y: auto;
-//             display: block;
-//             width: $app-aside-width + $app-aside-folded-width;
-//             left: $app-aside-folded-width + 20;
-//             position: fixed;
-//             -webkit-overflow-scrolling: touch;
-//             a{
-//                 padding-left:    20px !important;
-//                 padding-right: 20px !important;
-//             }
-//         }
-//     }
-// }
