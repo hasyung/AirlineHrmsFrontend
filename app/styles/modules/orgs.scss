@@ -1,7 +1,3 @@
-.org {
-    position: relative;
-}
-
 // 机构 左侧部门菜单
 .org-dep {
     @include transition(left .5s ease-in);
@@ -80,77 +76,56 @@
 // 机构 左侧部门菜单结束
 
 // 机构树整体及容器部分
-.org-chart {
-    padding: 0 355px 15px 15px;
+.org-chart-history {
+    background-color: #fdf9e1;
+    border-bottom: 1px solid #faebca;
+    border-left: 1px solid #faebca;
+    border-right: 1px solid #faebca;
 
-    .org-chart-top {
-        height: 90px;
-        overflow: hidden;
+    h2 {
+        visibility: visible;
     }
+}
 
-    // h1 {
-    //     font-size: 25px;
-    //     margin: 25px 0 5px;
-    //     text-align: center;
+
+.org-chart-window {
+    // display: flex;
+
+    // .svg-wrapper {
+    //     -webkit-align-items: center;
+    //     align-items: center;
+    //     -webkit-justify-content: center;
+    //     justify-content: center;
     // }
 
-    // h2 {
-    //     font-size: 16px;
-    //     text-align: center;
-    //     visibility: none;
-    // }
+    .orgchart-box-active {
+        fill: #dfe5e7;
 
-    .org-chart-window {
-
-        // .svg-wrapper {
-
-        //     svg {
-        //         display: block;
-        //         margin: 0 auto;
-        //     }
-        // }
-
-        .orgchart-box-active {
-            fill: #dfe5e7;
-
-            &.active {
-                fill: #90d7ff;
-            }
-        }
-
-        svg text,
-        svg rect {
-            cursor: pointer;
-        }
-        // TODO: 以后用变量
-        .orgchart-box-create_inactive {
-            fill: #ffc490;
-        }
-
-        .orgchart-box-update_inactive {
-            fill: #ffc490;
-        }
-
-        .orgchart-box-transfer_inactive {
-            fill: #ffc490;
-        }
-
-        .orgchart-box-destroy_inactive {
-            fill: #ff9090;
+        &.active {
+            fill: #90d7ff;
         }
     }
 
-    .org-chart-history {
-        background-color: #fdf9e1;
-        border-bottom: 1px solid #faebca;
-        border-left: 1px solid #faebca;
-        border-right: 1px solid #faebca;
-
-        h2 {
-            visibility: visible;
-        }
+    svg text,
+    svg rect {
+        cursor: pointer;
+    }
+    // TODO: 以后用变量
+    .orgchart-box-create_inactive {
+        fill: #ffc490;
     }
 
+    .orgchart-box-update_inactive {
+        fill: #ffc490;
+    }
+
+    .orgchart-box-transfer_inactive {
+        fill: #ffc490;
+    }
+
+    .orgchart-box-destroy_inactive {
+        fill: #ff9090;
+    }
 }
 
 // 机构 右侧边栏 机构信息展示及操作
