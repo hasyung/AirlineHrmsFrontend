@@ -25,7 +25,7 @@
                                     nb-dropdown(ng-model="newEmp.politicalStatus", remote-key="political_status")
                                 .form-group.block
                                     label.control-label 学历：
-                                    nb-dropdown(ng-model="newEmp.educationBackgroud", remote-key="education_backgrounds")
+                                    nb-dropdown(ng-model="newEmp.educationBackground", remote-key="education_backgrounds")
                                 .form-group.block
                                     label.control-label 学位：
                                     nb-dropdown(ng-model="newEmp.degree", remote-key="degrees")
@@ -40,7 +40,7 @@
                                     nb-dropdown(ng-model="newEmp.englishLevel", remote-key="english_levels")
                                 .form-group.block
                                     label.control-label 手机号码：
-                                    input.form-control(type="text" placeholder="请输入手机号码" ng-model="newEmp.contactWay.mobile")
+                                    input.form-control(type="text" placeholder="请输入手机号码" ng-model="newEmp.contact.mobile")
                     section.personnel-section-wrap()
                         section.personnel-info-control.clearfix
                             .personnel-info-left
@@ -69,7 +69,7 @@
                                         nb-dropdown(ng-model="newEmp.laborRelation", remote-key="labor_relations")
                                     .form-group
                                         label.control-label 用工关系状态：
-                                        nb-dropdown(ng-model="newEmp.employeeStatus", remote-key="employment_status")
+                                        nb-dropdown(ng-model="newEmp.employmentStatus", remote-key="employment_status")
                                     .btn-group-actions.form-group
                                         button.btn.btn-info(type="submit") 提 交
                                         button.btn.btn-default(ng-click="cancel()") 取 消
