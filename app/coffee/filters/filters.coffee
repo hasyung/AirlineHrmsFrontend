@@ -11,12 +11,18 @@ module
 
             input.replace(new RegExp(opts.text, 'gi'), '<span class="highlightText">$&</span>')
 
-module
-	.filter 'nbDate', ['$filter', ($filter)->
-		return (dateStr, format) ->
-			# unixToDate 1422439743
-			date = moment.unix(dateStr)._i
-			return $filter('date')(date, format)
+# module
+# 	.filter 'nbDate', ['$filter', ($filter)->
+# 		return (dateStr, format) ->
+# 			# unixToDate 1422439743
+# 			date = moment.unix(dateStr)._i
+# 			return $filter('date')(date, format)
 
-	]
+# 	]
 
+# module
+#     .filter 'dictmap', [()->
+#         (input, module) ->
+            
+
+#     ]

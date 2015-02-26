@@ -6,9 +6,9 @@ div(nb-table='ctrl.records' nb-safe-src="ctrl.records" ng-init="ctrl.records = c
                 input(name="employee_no" placeholder="工号" ng-model="employee_no")
             
             div(nb-predicate="创建时间" predicate-attr="created_at")
-                input(ng-model="created_at.min" bs-datepicker)
+                input(ng-model="created_at.from" bs-datepicker)
                 span.gap 至
-                input(ng-model="created_at.max" bs-datepicker)
+                input(ng-model="created_at.to" bs-datepicker)
         .search-btn-group
             button.btn.btn-primary(nb-pipe="ctrl.searchRecord(tableState)") 开始搜索
 
@@ -57,3 +57,4 @@ div(nb-table='ctrl.records' nb-safe-src="ctrl.records" ng-init="ctrl.records = c
                         td(ng-bind="record.statusCd")
                         td(ng-bind="record.checkDate | date:'yyyy-MM-dd'")
                         td(ng-bind="record.reason")
+        .custom-pages(nb-pagination="ctrl.records.$metadata" per-page="15")
