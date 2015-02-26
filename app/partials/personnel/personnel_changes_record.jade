@@ -4,25 +4,11 @@ div(nb-table='ctrl.records' nb-safe-src="ctrl.records" ng-init="ctrl.records = c
                 input(name="name" placeholder="姓名" ng-model="name")
             div(nb-predicate="员工编号" predicate-attr="employee_no")
                 input(name="employee_no" placeholder="工号" ng-model="employee_no")
-            div(nb-predicate="机构" predicate-attr="department_ids")
-                ui-select(multiple ng-model="$parent.department_ids" theme="select2" style="width:600px" reset-search-input="true")
-                    ui-select-match(placeholder="请输入机构名称") {{ $item.name }}
-                    ui-select-choices(repeat="org.id as org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
-
-            div(nb-predicate="岗位名称" predicate-attr="position_name")
-                input(name="position_name" placeholder="岗位名称" ng-model="position_name")
-
-
-            div(nb-predicate="岗位通道" predicate-attr="channel_id")
-                nb-dropdown( ng-model="channel_id", remote-key="channels", map="$item.id" name="channel_id" required)
-
-            div(nb-predicate="属地" predicate-attr="location_id")
-                nb-dropdown( ng-model="location_id", remote-key="locations", map="$item.id" name="location_id" required)
-
-            div(nb-predicate="出生日期" predicate-attr="birthday")
-                input(ng-model="birthday.from" bs-datepicker)
+            
+            div(nb-predicate="创建时间" predicate-attr="created_at")
+                input(ng-model="created_at.min" bs-datepicker)
                 span.gap 至
-                input(ng-model="birthday.to" bs-datepicker)
+                input(ng-model="created_at.max" bs-datepicker)
         .search-btn-group
             button.btn.btn-primary(nb-pipe="ctrl.searchRecord(tableState)") 开始搜索
 
