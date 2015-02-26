@@ -1,4 +1,4 @@
-div(nb-table='ctrl.records' nb-safe-src="ctrl.records" ng-init="ctrl.records = ctrl.records.$refresh()")
+div(nb-table='ctrl.records' nb-safe-src="ctrl.records" ng-init="ctrl.records = ctrl.Record.$collection().$refresh()")
         .search-container(nb-search)
             div(nb-predicate="姓名" predicate-attr="name")
                 input(name="name" placeholder="姓名" ng-model="name")
@@ -34,17 +34,17 @@ div(nb-table='ctrl.records' nb-safe-src="ctrl.records" ng-init="ctrl.records = c
 
                         td()
                             span(nb-popup-plus, position="left-bottom", offset="0.5") {{record.auditableType}}
-                                popup-template.nb-popup.org-default-popup-template.panel.panel-default()
+                                popup-template.nb-popup.panel.panel-default()
                                     .panel-heading.popup-title {{record.name}}的基本变更
                                     .panel-body.popup-body(ng-if="record.action == 'update'")
                                         .row
                                             .col-md-6 修改前
                                             .col-md-6 修改后
                                         .row(ng-repeat="(field, val) in record.auditedChanges")
-                                            .col-md-2() {{::field}}：
-                                            .col-md-4(ng-bind="val[0]")
-                                            .col-md-2() {{::field}}：
-                                            .col-md-4(ng-bind="val[1]")
+                                            .col-md-3() {{::field}}：
+                                            .col-md-3(ng-bind="val[0]")
+                                            .col-md-3() {{::field}}：
+                                            .col-md-3(ng-bind="val[1]")
                                     .panel-body.popup-body(ng-if="record.action == 'create' || record.action == 'destroy'")
                                         .row
                                             .col-md-12(ng-bind="record.action")

@@ -108,8 +108,8 @@ class ReviewCtrl extends nb.Controller
         @loadInitailData()
 
     loadInitailData: ->
-        @changes = @Change.$collection().$fetch()
-        @records = @Record.$collection().$fetch()
+        # @changes = @Change.$collection().$fetch()
+        # @records = @Record.$collection().$fetch()
     searchRecord: (tableState)->
         @records.$refresh(tableState);
     checkChanges: ()->
