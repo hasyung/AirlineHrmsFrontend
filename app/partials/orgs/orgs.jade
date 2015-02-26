@@ -36,7 +36,7 @@
                     //- loading-btn.red(ng-click="ctrl.openHistoryPanel()" btn-loading-type="contract-overlay" btn-text="测试loading")
             div.org-chart-window(id="org_chart_warpper" layout="row" layout-align="center center")
                 div.svg-wrapper(org-chart id="org_chart" org-chart-data="ctrl.tree.data")
-                canvas(id="org_chart_print_canvas")
+
                 div.bottom-btn-group(ng-show="ctrl.tree.isModified")
                     button.btn.btn-info(
                         nb-dialog="partials/orgs/shared/effect_changes.html"

@@ -39,7 +39,7 @@ paths =
     distStylesPath: "dist/styles"
     distStyles: []
     sassStylesLib: "app/styles/lib.scss"
-    sassStylesMain: ["app/styles/web.scss",'app/styles/lib.scss']
+    sassStylesMain: ["app/styles/web.scss"]
     images: "app/images/**/*"
     svg: "app/svg/**/*"
     coffee: ["app/coffee/app.coffee"
