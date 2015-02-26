@@ -5,38 +5,69 @@ section.personnel-section-wrap(ng-controller="EditableResource")
                     .personnel-item-desc.bg-success 基本信息
             .personnel-info-right.form-split
                 div.showing(ng-hide="editing")
+                    md-input-container(flex="")
+                        label OA文件编号：
+                        input(ng-model="currentPos.oaFileNo")
+                    md-input-container(flex="")
+                        label 创建时间：
+                        input(ng-model="currentPos.createAt")
+                    md-input-container(flex="")
+                        label 岗位名称：
+                        input(ng-model="currentPos.name")
+                    md-input-container(flex="")
+                        label 所属部门：
+                        input(ng-model="currentPos.department.name")
+                    md-input-container(flex="")
+                        label 分类：
+                        input(ng-model="currentPos.category.displayName")
+                    md-input-container(flex="")
+                        label 通道：
+                        input(ng-model="currentPos.channel.displayName")
+                    md-input-container(flex="")
+                        label 类别：
+                        input(ng-model="currentPos.postType")
+                    md-input-container(flex="")
+                        label 编制：
+                        input(ng-model="currentPos.budgetedStaffing")
+                    md-input-container
+                        label 在岗人数：
+                        input(ng-model="currentPos.staffing")
+                    md-input-container
+                        label 超编：
+                        input(ng-model="currentPos.staffing")
+
                     .form-btn-group
                             button.btn.btn-default(ng-click="edit()") 编辑
-                    .form-group
-                        label.control-label OA文件编号：
-                        .form-content(ng-bind="currentPos.oaFileNo")
-                    .form-group
-                        label.control-label 创建时间：
-                        .form-content(ng-bind="currentPos.createAt")
-                    .form-group
-                        label.control-label 岗位名称：
-                        .form-content(ng-bind="currentPos.name")
-                    .form-group
-                        label.control-label 所属部门：
-                        .form-content(ng-bind="currentPos.department.name")
-                    .form-group
-                        label.control-label 分类：
-                        .form-content(ng-bind="currentPos.category.displayName || '无'")
-                    .form-group
-                        label.control-label 通道：
-                        .form-content(ng-bind="currentPos.channel.displayName || '无'")
-                    .form-group
-                        label.control-label 类别：
-                        .form-content(ng-bind="currentPos.postType")
-                    .form-group
-                        label.control-label 编制：
-                        .form-content(ng-bind="currentPos.budgetedStaffing")
-                    .form-group
-                        label.control-label 在岗人数：
-                        .form-content(ng-bind="currentPos.staffing")
-                    .form-group
-                        label.control-label 超编：
-                        .form-content {{currentPos.staffing - currentPos.budgetedStaffing}}
+                    //- .form-group
+                    //-     label.control-label OA文件编号：
+                    //-     .form-content(ng-bind="currentPos.oaFileNo")
+                    //- .form-group
+                    //-     label.control-label 创建时间：
+                    //-     .form-content(ng-bind="currentPos.createAt")
+                    //- .form-group
+                    //-     label.control-label 岗位名称：
+                    //-     .form-content(ng-bind="currentPos.name")
+                    //- .form-group
+                    //-     label.control-label 所属部门：
+                    //-     .form-content(ng-bind="currentPos.department.name")
+                    //- .form-group
+                    //-     label.control-label 分类：
+                    //-     .form-content(ng-bind="currentPos.category.displayName || '无'")
+                    //- .form-group
+                    //-     label.control-label 通道：
+                    //-     .form-content(ng-bind="currentPos.channel.displayName || '无'")
+                    //- .form-group
+                    //-     label.control-label 类别：
+                    //-     .form-content(ng-bind="currentPos.postType")
+                    //- .form-group
+                    //-     label.control-label 编制：
+                    //-     .form-content(ng-bind="currentPos.budgetedStaffing")
+                    //- .form-group
+                    //-     label.control-label 在岗人数：
+                    //-     .form-content(ng-bind="currentPos.staffing")
+                    //- .form-group
+                    //-     label.control-label 超编：
+                    //-     .form-content {{currentPos.staffing - currentPos.budgetedStaffing}}
                     //- .form-group
                     //-     label.control-label 职务职级：
                     //-     .form-content 一正

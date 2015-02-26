@@ -1,15 +1,12 @@
 .org {
-    height: inherit;
     position: relative;
 }
 
 // 机构 左侧部门菜单
 .org-dep {
     @include transition(left .5s ease-in);
-    background-color: #fff;
     border-bottom: 1px solid #d1dcde;
     border-right: 1px solid #d1dcde;
-    height: inherit;
     left: -182px;
     position: absolute;
     width: 183px;
@@ -50,14 +47,9 @@
         line-height: 40px;
         padding-left: 10px;
 
-        a {
-            color: $text-title;
-        }
     }
 
     .org-dep-wrapper {
-        height: inherit;
-        overflow: hidden;
 
         ul {
             padding-left: 5px;
@@ -65,16 +57,13 @@
     }
 
     .org-children-wrapper {
-        height: calc(100% - 40px);
-        overflow-y: scroll;
 
-        a {
+        .org-node {
             border-left: 3px solid transparent;
             color: $text-title;
             display: block;
             height: 35px;
             line-height: 35px;
-            overflow: hidden;
             padding: 0 0 0 18px;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -99,31 +88,27 @@
         overflow: hidden;
     }
 
-    h1 {
-        font-size: 25px;
-        margin: 25px 0 5px;
-        text-align: center;
-    }
+    // h1 {
+    //     font-size: 25px;
+    //     margin: 25px 0 5px;
+    //     text-align: center;
+    // }
 
-    h2 {
-        font-size: 16px;
-        text-align: center;
-        visibility: none;
-    }
+    // h2 {
+    //     font-size: 16px;
+    //     text-align: center;
+    //     visibility: none;
+    // }
 
     .org-chart-window {
-        overflow: hidden;
 
-        .svg-wrapper {
-            height: 100%;
-            overflow: hidden;
-            width: 100%;
+        // .svg-wrapper {
 
-            svg {
-                display: block;
-                margin: 0 auto;
-            }
-        }
+        //     svg {
+        //         display: block;
+        //         margin: 0 auto;
+        //     }
+        // }
 
         .orgchart-box-active {
             fill: #dfe5e7;
@@ -137,7 +122,7 @@
         svg rect {
             cursor: pointer;
         }
-
+        // TODO: 以后用变量
         .orgchart-box-create_inactive {
             fill: #ffc490;
         }
@@ -166,183 +151,40 @@
         }
     }
 
-    .top-btn-group {
-        position: absolute;
-        right: 365px;
-        top: 25px;
-
-        button {
-            float: right;
-            margin-left: 10px;
-
-            &:last-child {
-                margin-left: none;
-            }
-        }
-    }
-
-    .bottom-btn-group {
-        background-color: #000;
-        margin-left: calc(100% - 200px);
-
-        button {
-            float: right;
-            margin-left: 10px;
-            outline: none;
-
-            &:last-child {
-                margin-left: none;
-            }
-        }
-    }
-}
-
-.div-delete-btn {
-    background-color: #d9534f;
-    border-radius: 4px;
-    color: #fff;
-    cursor: pointer;
-    padding: 5px 10px;
-    // margin-top: 15px;
 }
 
 // 机构 右侧边栏 机构信息展示及操作
 .org-aside {
-    background-color: #fff;
-    height: calc(100%);
     width: 340px;
 
-    th {
-        color: $text-title;
-    }
+    // TODO: 全局通用
+    // .org-title {
+    //     border-bottom: 1px solid #c6d1d5;
+    //     height: 35px;
+    //     margin: 20px 20px 5px;
 
-    &.org-aside-info {
-        box-shadow: inset 0 2px 2px rgba(0, 0, 0, .05), inset 0 1px 0 rgba(0, 0, 0, .05);
-    }
+    //     > span {
+    //         border-bottom: 1px solid $focus;
+    //         font-size: 18px;
+    //     }
 
-    &:before {
-        background-color: inherit;
-        bottom: 0;
-        content: ' ';
-        display: block;
-        position: fixed;
-        top: 0;
-        width: inherit;
-        z-index: -1;
-    }
+    //     span {
+    //         color: $text-title;
+    //         line-height: 34px;
+    //         position: absolute;
+    //     }
 
-    .org-title {
-        border-bottom: 1px solid #c6d1d5;
-        height: 35px;
-        margin: 20px 20px 5px;
+    //     .btn-default {
+    //         box-shadow: 0;
+    //         color: #99a6ad !important;
+    //         float: right;
+    //         margin-left: 10px;
+    //     }
 
-        > span {
-            border-bottom: 1px solid $focus;
-            font-size: 18px;
-        }
+    //     .btn {
+    //         min-width: 35px;
+    //         padding: 5px 9px;
+    //     }
+    // }
 
-        span {
-            color: $text-title;
-            line-height: 34px;
-            position: absolute;
-        }
-
-        .btn-default {
-            box-shadow: 0;
-            color: #99a6ad !important;
-            float: right;
-            margin-left: 10px;
-        }
-
-        .btn {
-            min-width: 35px;
-            padding: 5px 9px;
-        }
-    }
-
-    .org-table {
-        padding: 0 20px;
-
-        table > thead > tr > th,
-        table > tbody > tr > td {
-            max-width: 170px;
-            padding: 8px;
-        }
-    }
-
-    .org-info {
-        @include clearfix();
-        padding: 20px;
-
-        input {
-            border: 1px solid #c6d1d5;
-            padding: 2px 5px;
-        }
-
-        .org-form-group {
-            @include clearfix();
-            margin-bottom: 20px;
-        }
-
-        label {
-            float: left;
-            font-size: 14px;
-            margin-bottom: 0;
-            text-align: right;
-            width: 80px;
-        }
-
-        .form-content {
-            float: left;
-            margin-left: 40px;
-            text-align: left;
-            width: 170px;
-
-            input {
-                font-size: 14px;
-                height: 34px;
-                padding-left: 10px;
-                width: inherit;
-            }
-        }
-
-        .org-form-btn-group {
-            .btn {
-                height: 34px;
-                width: 92px;
-            }
-
-            input {
-                margin-left: 10px;
-            }
-        }
-    }
-
-    .drop-label {
-        height: 34px;
-        line-height: 34px;
-    }
-
-    //下拉菜单 待后续抽出
-    .dropdown {
-        .dropdown-toggle {
-            text-align: left;
-            width: 100%;
-        }
-
-        .caret {
-            float: right;
-            margin-top: 7px;
-        }
-
-        .dropdown-menu {
-            width: 100%;
-        }
-    }
 }
-
-// 撤销 删除弹出泡泡提示框
-.org-default-popup-template {
-    width: 270px;
-}
-

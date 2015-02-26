@@ -13,9 +13,11 @@ deps = [
     'ngDialog'
     'ui.select'
     'ngAnimate'
+    'ngAria'
     'ui.bootstrap'
     'ngSanitize'
     'ngMessages'
+    'ngMaterial'
     'toaster'
     'restmod'    #rest api
     'angular.filter'
@@ -124,7 +126,7 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
 
 datepickerConf = ($datepickerProvider)->
     angular.extend($datepickerProvider.defaults, {
-      dateFormat: 'yyyy-MM-dd'
+        dateFormat: 'yyyy-MM-dd'
     })
 
 
