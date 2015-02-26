@@ -11,18 +11,19 @@ module
 
             input.replace(new RegExp(opts.text, 'gi'), '<span class="highlightText">$&</span>')
 
-# module
-# 	.filter 'nbDate', ['$filter', ($filter)->
-# 		return (dateStr, format) ->
-# 			# unixToDate 1422439743
-# 			date = moment.unix(dateStr)._i
-# 			return $filter('date')(date, format)
-
-# 	]
-
-# module
-#     .filter 'dictmap', [()->
-#         (input, module) ->
+module
+    .filter 'dictmap', [()->
+        #把map抽成一个service，各个模块的码表都放进去，统一在一个地方编辑。可好？
+        map = {
+            "personnel":{
+                '0': '无需审核',
+                '1': '待审核',
+                '2': '通过',
+                '3': '不通过',
+            }
+        }
+        (input, module) ->
+            return map[module][input.toString()]
             
 
-#     ]
+    ]

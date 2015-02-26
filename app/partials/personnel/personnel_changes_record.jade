@@ -54,7 +54,7 @@ div(nb-table='ctrl.records' nb-safe-src="ctrl.records" ng-init="ctrl.records = c
 
                         td(ng-bind="record.action")
                         td(ng-bind="record.createdAt | date:'yyyy-MM-dd'")
-                        td(ng-bind="record.statusCd")
+                        td(ng-bind="record.statusCd | dictmap:'personnel'")
                         td(ng-bind="record.checkDate | date:'yyyy-MM-dd'")
                         td(ng-bind="record.reason")
         .custom-pages(nb-pagination="ctrl.records.$metadata" per-page="15")
