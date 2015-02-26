@@ -14,6 +14,8 @@
 }
 
 .top-menu-bar {
+    z-index: 70;
+
     &.md-default-theme {
         background-color: #fff;
         height: 50px;

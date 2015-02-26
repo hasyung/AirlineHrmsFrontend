@@ -46,7 +46,7 @@
                         nb-confirm="ctrl.revert(isConfirm)"
                         nb-title="您确认要撤销当前的所有修改吗?"
                         nb-text="当你点击确定时，你之前对机构做过的调整将被撤销。") 撤 销
-        md-sidenav.md-sidenav-right(md-is-locked-open="true")
+        md-sidenav.md-sidenav-right.md-whiteframe-z2(md-is-locked-open="true")
             .org-row(ng-controller="OrgCtrl as orgCtrl")
                 include org
 
