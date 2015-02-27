@@ -129,36 +129,116 @@
 }
 
 // 机构 右侧边栏 机构信息展示及操作
-.org-aside {
-
     // TODO: 全局通用
-    // .org-title {
-    //     border-bottom: 1px solid #c6d1d5;
-    //     height: 35px;
-    //     margin: 20px 20px 5px;
+.org-title {
+    border-bottom: 1px solid #c6d1d5;
+    height: 35px;
+    margin: 20px 20px 5px;
 
-    //     > span {
-    //         border-bottom: 1px solid $focus;
-    //         font-size: 18px;
-    //     }
+    > span {
+        border-bottom: 1px solid $focus;
+        font-size: 18px;
+    }
 
-    //     span {
-    //         color: $text-title;
-    //         line-height: 34px;
-    //         position: absolute;
-    //     }
+    span {
+        color: $text-title;
+        line-height: 34px;
+        position: absolute;
+    }
 
-    //     .btn-default {
-    //         box-shadow: 0;
-    //         color: #99a6ad !important;
-    //         float: right;
-    //         margin-left: 10px;
-    //     }
+    .btn-default {
+        box-shadow: 0;
+        color: #99a6ad !important;
+        float: right;
+        margin-left: 10px;
+    }
 
-    //     .btn {
-    //         min-width: 35px;
-    //         padding: 5px 9px;
-    //     }
-    // }
-
+    .btn {
+        min-width: 35px;
+        padding: 5px 9px;
+    }
 }
+
+.org-info {
+    @include clearfix();
+}
+
+.form-actions {
+    float: right;
+    padding: 0 20px;
+
+    .md-button {
+        margin-left: 10px;
+        min-width: 80px;
+    }
+}
+
+// input展示状态
+.md-input {
+    padding-left: 0;
+    transition: all cubic-bezier(.25, .8, .25, 1) .25s;
+}
+
+md-select {
+    background: none;
+    border-radius: 0;
+    border-width: 0 0 1px;
+    display: block;
+    -ms-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    -ms-flex-order: 2;
+    -ms-flex-preferred-size: 26px;
+    line-height: 26px;
+    margin-top: 0;
+    -webkit-order: 2;
+    order: 2;
+    padding: 2px 2px 1px;
+
+    .md-select-label {
+        height: 30px;
+
+        span {
+            height: inherit;
+            line-height: 26px;
+        }
+    }
+}
+
+fieldset[disabled] {
+    label:not(.md-no-float),
+    .md-placeholder {
+        -webkit-transform: translate3d(0, 25px, 0) scale(1);
+        transform: translate3d(0, 25px, 0), scale(1);
+    }
+
+    .md-input {
+        padding-left: 70px;
+    }
+
+    .md-default-theme .md-input {
+        color: $text-color;
+    }
+
+    //md-select
+    md-select {
+        background-image: linear-gradient(to right, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.12) 33%, transparent 0%);
+        background-position: 0 bottom;
+        background-repeat: repeat-x;
+        background-size: 3px 1px;
+
+    }
+
+    .md-default-theme .md-select-label {
+        border-bottom-color: transparent;
+        font-size: $font-size-base;
+        padding-left: 70px;
+
+    }
+}
+
+
+
+
+
+
