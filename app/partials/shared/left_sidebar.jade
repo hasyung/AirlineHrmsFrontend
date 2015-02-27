@@ -63,15 +63,15 @@
               span 岗位管理
             ul.nav.nav-sub.dk
               li.nav-sub-header
-                a(ui-sref='position')
+                a(ui-sref="position.list")
               li
-                a(ui-sref='position')
+                a(ui-sref="position.list")
                   span 岗位列表
               li
                 a()
                   span 岗位分布图
               li
-                a()
+                a(ui-sref="position.changes")
                   span 岗位异动记录
           li(nav-toggle-active)
             a.auto(href="javascript:;")
