@@ -10,8 +10,7 @@ form(title="基本信息" name="posForm" novalidate ng-submit="save(currentPos.$
             .form-group-error(ng-message="required") OA文件必填
     .form-group
         label.control-label 创建时间：
-        //- input.form-control(type='text', placeholder='填写OA文件编号', name="fileName", ng-model="currentPos.oaFileNo", required)
-        input.form-control(ng-model="posForm.createdAt", disabled="disabled")
+        .form-content(ng-bind="currentPos.createdAt | date:'yyyy-MM-dd'")
     .form-group
         label.control-label 岗位名称：
         input.form-control(type='text', placeholder='岗位名称', ng-model="currentPos.name", name="name", required)
@@ -36,9 +35,8 @@ form(title="基本信息" name="posForm" novalidate ng-submit="save(currentPos.$
             .form-group-error(ng-message="required") 通道必选
     .form-group
         label.control-label 类别：
-        nb-dropdown.form-content(
-            ng-model="currentPos.category" remote-key="categories", required="true", name="category")
-        .form-control-error(ng-messages="posForm.category.$error", ng-if="posForm.category.$dirty")
+        input.form-control(type='text', placeholder='岗位类别', ng-model="currentPos.postType", name="postType", required)
+        .form-control-error(ng-messages="posForm.postType.$error", ng-if="posForm.postType.$dirty")
             .form-group-error(ng-message="required") 类别必选
     .form-group
         label.control-label 编制：
@@ -54,10 +52,7 @@ form(title="基本信息" name="posForm" novalidate ng-submit="save(currentPos.$
             .form-group-error(ng-message="number") 类型必须为数字
     .form-group
         label.control-label 超编：
-        input.form-control(type='number', placeholder='填写计划编制人数', name="budgetedStaffing", ng-model="currentPos.budgetedStaffing", required)
-        .form-control-error(ng-messages="posForm.budgetedStaffing.$error", ng-if="posForm.budgetedStaffing.$dirty")
-            .form-group-error(ng-message="required") 编制必填
-            .form-group-error(ng-message="number") 类型必须为数字
+        .form-content {{currentPos.staffing - currentPos.budgetedStaffing}}
     .form-group
         label.control-label 职务职级：
         input.form-control(type='number', placeholder='填写计划编制人数', name="budgetedStaffing", ng-model="currentPos.budgetedStaffing", required)
@@ -72,7 +67,7 @@ form(title="基本信息" name="posForm" novalidate ng-submit="save(currentPos.$
     .form-group
         label.control-label 岗位性质：
         nb-dropdown.form-content(
-            ng-model="currentPos.nature" remote-key="position_natures", required="true", name="nature")
+            ng-model="currentPos.positionNature" remote-key="position_natures", required="true", name="nature")
         .form-control-error(ng-messages="posForm.nature.$error", ng-if="posForm.nature.$dirty")
             .form-group-error(ng-message="required") 性质必选
 

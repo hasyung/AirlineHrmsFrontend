@@ -12,7 +12,7 @@ section.personnel-section-wrap(ng-controller="EditableResource")
                         .form-content(ng-bind="currentPos.oaFileNo")
                     .form-group
                         label.control-label 创建时间：
-                        .form-content(ng-bind="currentPos.createAt")
+                        .form-content(ng-bind="currentPos.createdAt | date:'yyyy-MM-dd'")
                     .form-group
                         label.control-label 岗位名称：
                         .form-content(ng-bind="currentPos.name")
@@ -45,7 +45,7 @@ section.personnel-section-wrap(ng-controller="EditableResource")
                         .form-content(ng-bind="currentPos.schedule.displayName || '无'")
                     .form-group
                         label.control-label 岗位性质：
-                        .form-content(ng-bind="currentPos.nature.displayName || '无'")
+                        .form-content(ng-bind="currentPos.positionNature.displayName || '无'")
 
                 div.editing(ng-if="editing")
                     include position_edit_basic
