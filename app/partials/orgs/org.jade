@@ -25,7 +25,7 @@ section.org-detail
                 md-input-container
                     label 编号
                     input(ng-model="currentOrg.serialNumber" disabled)
-                md-input-container.md-input-has-value
+                md-input-container.row-has-value
                     label 机构性质
                     md-select(ng-model="currentOrg.nature")
                         md-option(value="123") 123
@@ -39,46 +39,6 @@ section.org-detail
             .form-actions
                 md-button(type="button", ng-click="orgCtrl.cancel()") 取消
                 md-button.md-primary.md-raised(type="submit",ng-disabled="!updateForm.$valid") 保存
-        //- .org-form-group
-        //-     label.control-label.org-label 名称：
-        //-     .form-content(ng-bind="currentOrg.name")
-        //- .org-form-group
-        //-     label.control-label.org-label 编号：
-        //-     .form-content(ng-bind="currentOrg.serialNumber")
-        //- .org-form-group
-        //-     label.control-label.org-label 机构性质：
-        //-     .form-content(ng-bind="currentOrg.nature.displayName")
-        //- .org-form-group
-        //-     label.control-label.org-label 职级：
-        //-     .form-content(ng-bind="currentOrg.grade.displayName")
-    //- update
-
-    //- .org-info(ng-show="orgCtrl.state == 'editing'")
-    //-     form(novalidate, ng-submit="orgCtrl.update(updateForm, copyOrg)", name="updateForm")
-    //-         .org-form-group
-    //-             label.control-label.org-label.drop-label 名称：
-    //-             .form-content
-    //-                 input(ng-model="copyOrg.name", required="true", name="orgName")
-    //-                 div(ng-messages="updateForm.orgName.$error", ng-if="updateForm.orgName.$dirty")
-    //-                     .form-group-error(ng-message="required") 名称必填
-    //-         .org-form-group
-    //-             label.control-label.org-label 编号：
-    //-             .form-content {{copyOrg.serialNumber}}
-    //-         .org-form-group
-    //-             label.control-label.org-label.drop-label 机构性质：
-    //-             .form-content
-    //-                 nb-dropdown(ng-model="copyOrg.nature" remote-key="department_natures", name="orgAddr", required="true")
-    //-                 div(ng-messages="updateForm.orgAddr.$error", ng-if="updateForm.orgAddr.$dirty")
-    //-                     .form-group-error(ng-message="required") 地点必选
-
-    //-         .org-form-group
-    //-             label.control-label.org-label 职级：
-    //-             .form-content(ng-bind="copyOrg.grade.displayName")
-
-    //-         .org-form-group.org-form-btn-group
-    //-             input.btn.btn-info.pull-right(type="submit",value="保存" ,ng-disabled="!updateForm.$valid")
-    //-             button.btn.btn-default.pull-right(type="button", ng-click="orgCtrl.cancel()") 取消
-
     //- new sub
     .org-info(ng-if="orgCtrl.state == 'newsub' " ng-init="neworg = {}")
         form(novalidate, ng-submit="orgCtrl.newsub(newsubForm, neworg)", name="newsubForm")

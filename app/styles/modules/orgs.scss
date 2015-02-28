@@ -209,6 +209,7 @@ md-select {
     }
 }
 
+//展示状态下各个组件的样式
 fieldset[disabled] {
     label:not(.md-no-float),
     .md-placeholder {
@@ -226,7 +227,7 @@ fieldset[disabled] {
 
     //md-select
     md-select {
-        @include background-image(linear-gradient(to right,rgba(0, 0, 0, .12) 0, rgba(0, 0, 0, .12) 33%, transparent 0));
+        @include background-image(linear-gradient(to right, rgba(0, 0, 0, .12) 0, rgba(0, 0, 0, .12) 33%, transparent 0));
         background-position: 0 bottom;
         background-repeat: repeat-x;
         background-size: 3px 1px;
@@ -235,13 +236,34 @@ fieldset[disabled] {
 
     .md-default-theme .md-select-label {
         border-bottom-color: transparent;
+        color: $text-color;
         padding-left: 70px;
 
     }
+
+    .row-has-value {
+        label:not(.md-no-float) {
+            -webkit-transform: translate3d(0, 25px, 0) scale(1);
+            transform: translate3d(0, 25px, 0), scale(1);
+        }
+
+        .md-select-icon {
+            visibility: hidden;
+        }
+    }
 }
 
+md-input-container {
+    &.row-has-value {
+        label:not(.md-no-float) {
+            color: $text-muted;
+            -webkit-transform: translate3d(0, 4px, 0) scale(.75);
+            transform: translate3d(0, 4px, 0), scale(.75);
+        }
 
-
-
-
+        .md-select-icon {
+            visibility: visible;
+        }
+    }
+}
 
