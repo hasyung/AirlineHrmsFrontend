@@ -12,38 +12,21 @@ class Route
 
     constructor: (stateProvider) ->
         stateProvider
-            .state 'personnel', {
-                url: '/personnels'
-                template: '<div ui-view></div>'
-                controller: PersonnelCtrl
-                controllerAs: 'ctrl'
-                abstract:true
-                ncyBreadcrumb: {
-                    label: "人事管理"
-                }
-            }
-            .state 'personnel.list', {
-                url: ''
+            .state 'personnel_list', {
+                url: '/personnel'
                 templateUrl: 'partials/personnel/personnel.html'
                 controller: PersonnelCtrl
                 controllerAs: 'ctrl'
 
             }
-            .state 'personnel.fresh',{
-                url: '/fresh-list'
-                views: {
-                    "@": {
-                        controller: NewEmpsCtrl
-                        controllerAs: 'ctrl'
-                        templateUrl: 'partials/personnel/personnel_new_list.html'
-                    }
-                }
-                ncyBreadcrumb: {
-                    label: "新员工列表"
-                }
+            .state 'personnel_fresh',{
+                url: '/personnel/fresh-list'
+                controller: NewEmpsCtrl
+                controllerAs: 'ctrl'
+                templateUrl: 'partials/personnel/personnel_new_list.html'
             }
-            .state 'personnel.review', {
-                url: '/change-review'
+            .state 'personnel_review', {
+                url: '/personnel/change-review'
                 templateUrl: 'partials/personnel/change_review.html'
                 controller: ReviewCtrl
                 controllerAs: 'ctrl'
@@ -128,6 +111,6 @@ class ReviewCtrl extends nb.Controller
             params.push temp
         @changes.checkChanges(params)
 
-        
+
 
 app.config(Route)
