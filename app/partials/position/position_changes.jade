@@ -47,7 +47,7 @@ div(nb-table='ctrl.records' nb-safe-src="ctrl.changes" ng-init="ctrl.changes = c
                                                 td(ng-bind="field")
                                                 td(ng-bind-html="val[1] || '无'")
 
-                                    .panel-body.popup-body(ng-if="change.action == '新增' || change.action == '删除'")
+                                    .panel-body.popup-body(ng-if="change.action == '新增' || change.action == '删除'", slimscroll, height="300px")
                                         table.table.table-striped.custom-table
                                             tr
                                                 th(colspan="2") {{change.action}}

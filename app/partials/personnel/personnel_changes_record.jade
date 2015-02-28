@@ -36,7 +36,7 @@ div(nb-table='ctrl.records' nb-safe-src="ctrl.records" ng-init="ctrl.records = c
                             a(href="javascript:;", nb-popup-plus, position="left-bottom", offset="0.5") {{record.auditableType}}
                                 popup-template.nb-popup.panel.panel-default()
                                     .panel-heading.popup-title {{record.name}}的{{record.auditableType}}变更
-                                    .panel-body.popup-body(ng-if="record.action == '修改'", slimscroll, height="300px")
+                                    .panel-body.popup-body(ng-if="record.action == '修改'")
                                         table.table.table-striped.custom-table
                                             tr
                                                 th(colspan="2") 修改前
@@ -47,7 +47,7 @@ div(nb-table='ctrl.records' nb-safe-src="ctrl.records" ng-init="ctrl.records = c
                                                 td(ng-bind="field")
                                                 td(ng-bind="val[1] || '无'")
 
-                                    .panel-body.popup-body(ng-if="record.action == '新增' || record.action == '删除'")
+                                    .panel-body.popup-body(ng-if="record.action == '新增' || record.action == '删除'", slimscroll, height="300px")
                                         table.table.table-striped.custom-table
                                             tr
                                                 th(colspan="2") {{record.action}}
