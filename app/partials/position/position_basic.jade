@@ -36,7 +36,7 @@ section.personnel-section-wrap(ng-controller="EditableResource")
                         .form-content(ng-bind="currentPos.staffing")
                     .form-group
                         label.control-label 超编：
-                        .form-content {{currentPos.staffing - currentPos.budgetedStaffing}}
+                        .form-content {{currentPos.staffing - currentPos.budgetedStaffing < 0 ? '0' : currentPos.staffing - currentPos.budgetedStaffing}}
                     //- .form-group
                     //-     label.control-label 职务职级：
                     //-     .form-content 一正

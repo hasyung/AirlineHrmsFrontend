@@ -46,18 +46,13 @@ form(title="基本信息" name="posForm" novalidate ng-submit="save(currentPos.$
             .form-group-error(ng-message="number") 类型必须为数字
     .form-group
         label.control-label 在岗人数：
-        input.form-control(type='number', placeholder='填写计划编制人数', name="budgetedStaffing", ng-model="currentPos.budgetedStaffing", required)
-        .form-control-error(ng-messages="posForm.budgetedStaffing.$error", ng-if="posForm.budgetedStaffing.$dirty")
-            .form-group-error(ng-message="required") 编制必填
-            .form-group-error(ng-message="number") 类型必须为数字
+        .form-content(ng-bind="currentPos.staffing")
     .form-group
         label.control-label 超编：
-        .form-content {{currentPos.staffing - currentPos.budgetedStaffing}}
-    .form-group
-        label.control-label 职务职级：
-        input.form-control(type='number', placeholder='填写计划编制人数', name="budgetedStaffing", ng-model="currentPos.budgetedStaffing", required)
-        .form-control-error(ng-messages="posForm.budgetedStaffing.$error", ng-if="posForm.budgetedStaffing.$dirty")
-            .form-group-error(ng-message="required") 编制必填
+        .form-content {{currentPos.staffing - currentPos.budgetedStaffing < 0 ? '0' : currentPos.staffing - currentPos.budgetedStaffing}}
+    //- .form-group
+    //-     label.control-label 职务职级：
+        
     .form-group
         label.control-label 工时制度：
         nb-dropdown.form-content(
