@@ -134,7 +134,7 @@ App
     .config ['$provide', 'ngDialogProvider', appConf]
     .config ['restmodProvider', restConf]
     .config ['$stateProvider','$urlRouterProvider','$locationProvider', '$httpProvider', routeConf]
-    .run ['$state','$rootScope', 'toaster', '$http', 'Org', 'sweet', 'User', ($state, $rootScope, toaster, $http, Org, sweet, User) ->
+    .run ['$state','$rootScope', 'toaster', '$http', 'Org', 'sweet', 'User', '$enum', ($state, $rootScope, toaster, $http, Org, sweet, User, $enum) ->
         # for $state.includes in view
         $rootScope.$on '$stateChangeSuccess', (evt, to) ->
             console.debug "stateChangeSuccess: to ", to
@@ -156,6 +156,9 @@ App
         $rootScope.$state = $state
 
         $rootScope.allOrgs = Org.$search()
+
+        $rootScope.enums = $enum.get()
+        $rootScope.loadEnum = $enum.loadEnum()
 
     ]
 
