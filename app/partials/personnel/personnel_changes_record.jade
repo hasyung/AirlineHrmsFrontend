@@ -33,10 +33,10 @@ div(nb-table='ctrl.records' nb-safe-src="ctrl.records" ng-init="ctrl.records = c
                         td(ng-bind="record.department.name")
 
                         td()
-                            span(nb-popup-plus, position="left-bottom", offset="0.5") {{record.auditableType}}
-                                popup-template.nb-popup.panel.panel-default(style="width:400px;")
+                            a(href="javascript:;", nb-popup-plus, position="left-bottom", offset="0.5") {{record.auditableType}}
+                                popup-template.nb-popup.panel.panel-default()
                                     .panel-heading.popup-title {{record.name}}的{{record.auditableType}}变更
-                                    .panel-body.popup-body(ng-if="record.action == '修改'")
+                                    .panel-body.popup-body(ng-if="record.action == '修改'", slimscroll, height="300px")
                                         table.table.table-striped.custom-table
                                             tr
                                                 th(colspan="2") 修改前

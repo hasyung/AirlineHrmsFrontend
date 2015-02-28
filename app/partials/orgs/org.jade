@@ -45,9 +45,9 @@ aside.org-aside
                 .org-form-group
                     label.control-label.org-label.drop-label 机构性质：
                     .form-content
-                        nb-dropdown(ng-model="copyOrg.nature" remote-key="department_natures", name="orgAddr", required="true")
-                        div(ng-messages="updateForm.orgAddr.$error", ng-if="updateForm.orgAddr.$dirty")
-                            .form-group-error(ng-message="required") 地点必选
+                        nb-dropdown(ng-model="copyOrg.nature" remote-key="department_natures", name="nature", required="true")
+                        div(ng-messages="updateForm.nature.$error", ng-if="updateForm.nature.$dirty")
+                            .form-group-error(ng-message="required") 机构性质必选
 
                 .org-form-group
                     label.control-label.org-label 职级：
@@ -70,10 +70,10 @@ aside.org-aside
                 .org-form-group
                     label.control-label.org-label.drop-label 机构性质：
                     .form-content
-                        nb-dropdown(ng-model="neworg.nature" remote-key="department_natures", required="true", name="orgAddr")
+                        nb-dropdown(ng-model="neworg.nature" remote-key="department_natures", required="true", name="nature")
 
-                        div(ng-messages="newsubForm.orgAddr.$error", ng-if="newsubForm.orgAddr.$dirty")
-                            .form-group-error(ng-message="required") 地点必选
+                        div(ng-messages="newsubForm.nature.$error", ng-if="newsubForm.nature.$dirty")
+                            .form-group-error(ng-message="required") 机构性质必选
 
                 .org-form-group
                     label.control-label.org-label.drop-label 职级：
