@@ -92,6 +92,27 @@
     text-align: center;
 }
 
+.top-btn-group {
+    margin-right: 40px;
+
+    .md-button {
+        display: inline-block;
+        float: right;
+        margin-left: 20px;
+    }
+}
+
+.bottom-btn-group {
+    margin-right: 40px;
+
+    .md-button {
+        display: inline-block;
+        float: right;
+        margin-left: 20px;
+    }
+}
+
+
 
 .org-chart-window {
     // display: flex;
@@ -174,7 +195,6 @@
 
     .md-button {
         margin-left: 10px;
-        min-width: 80px;
     }
 }
 
@@ -184,7 +204,7 @@
     transition: all cubic-bezier(.25, .8, .25, 1) .25s;
 }
 
-md-button {
+.md-button {
     min-width: 80px;
 }
 

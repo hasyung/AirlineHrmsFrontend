@@ -1,3 +1,11 @@
+//重置material design影响标签的样式
 fieldset {
     border: 0;
+}
+
+body h3,
+html h3,
+body h4,
+html h4 {
+    margin: 0;
 }
