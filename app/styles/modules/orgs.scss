@@ -87,6 +87,11 @@
     }
 }
 
+.org-chart-top {
+    margin: 0 20px;
+    text-align: center;
+}
+
 
 .org-chart-window {
     // display: flex;
@@ -179,6 +184,9 @@
     transition: all cubic-bezier(.25, .8, .25, 1) .25s;
 }
 
+md-button {
+    min-width: 80px;
+}
 
 //md-select
 md-select {
