@@ -12,7 +12,7 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                         include self_info_lover_section
                     .editing(ng-if="editing")
                         include self_info_lover_edit
-                .personnel-info-right.form-split(ng-controller="EditableResource" ng-init="wife = vm.lovers.$new(); wife.relation='lover'" ng-if="vm.lovers.length == 0")
+                .personnel-info-right.form-split(ng-controller="EditableResource" ng-init="wife = vm.lovers.$new(); wife.relation='lover';wife.relationType='配偶'" ng-if="vm.lovers.length == 0")
                     .showing(ng-hide="editing")
                         include self_info_lover_section
                     .editing(ng-if="editing")
@@ -39,7 +39,7 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                             td(ng-bind="child.company")
                             td.control-td
                                 button.btn.fa.fa-times(ng-click="child.$destroy()")
-                form.form-split(ng-repeat="nc in newChildren" ng-init="nc.relation='children'")
+                form.form-split(ng-repeat="nc in newChildren" ng-init="nc.relation='children';")
                     .form-group
                         .control-label 姓名：
                         input.form-control(ng-model="nc.name")

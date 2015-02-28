@@ -100,7 +100,7 @@ aside.org-aside
                 ng-disabled="ctrl.isHistory"
                 )
         div.org-table(slimscroll height="400px")
-            table.table.table-striped
+            table.table.table-striped.custom-table
                 thead
                     tr
                         th 岗位名称
@@ -116,5 +116,5 @@ aside.org-aside
                                 nb-dialog-data="position"
                             ) {{position.name}}
                         td  {{position.budgetedStaffing}}
-                        td  {{position.staffing}}
+                        td(ng-class="{'overstaffed': position.isOverstaffed}")  {{position.staffing}}
 

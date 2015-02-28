@@ -190,12 +190,12 @@
                     label.control-label 联系方式：
                     .form-content(ng-bind="lover.mobile")
             div
-                h5 子女情况
+                h5 配偶，子女情况
                 ul.nice-table
-                    li.nice-table-row(ng-repeat="children in resume.familyMembers | filterBy: ['relation']: 'children' track by $index")
+                    li.nice-table-row(ng-repeat="children in resume.familyMembers | filterBy: ['relation']: ['children','lover'] track by $index")
                         span.nt-cell.nt-cell-md(ng-bind="children.name")
                         span.nt-cell.nt-cell-sm(ng-bind="children.relationType")
-                        span.nt-cell.nt-cell-sm(ng-bind="children.gender.displayName")
+                        span.nt-cell.nt-cell-sm(ng-bind="children.gender")
                         span.nt-cell.nt-cell-md(ng-bind="children.birthday")
                         span.nt-cell.nt-cell-lg(ng-bind="children.residenceBooklet")
                         span.nt-cell.nt-cell-lg(ng-bind="children.company")

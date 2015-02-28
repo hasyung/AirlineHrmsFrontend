@@ -36,18 +36,49 @@
         .line.dk.hidden-folded
       nav.navi.ng-scope
         ul.nav.ng-scope
-          li
-            a.auto(href='')
-              span.pull-right.text-muted
-                i.fa.fa-fw.fa-angle-down.text-active
-              i.glyphicon.glyphicon-home.nav-text-color1
-              span.font-bold 首页
+          //- li
+          //-   a.auto(href='')
+          //-     span.pull-right.text-muted
+          //-       i.fa.fa-fw.fa-angle-down.text-active
+          //-     i.glyphicon.glyphicon-home.nav-text-color1
+          //-     span.font-bold 首页
           //- li
           //-   a.auto(ui-sref='personnel')
           //-     span.pull-right.text-muted
           //-       i.fa.fa-fw.fa-angle-down.text-active
           //-     i.fa.fa-group.nav-text-color1
           //-     span.font-bold 人事信息
+          li(nav-toggle-active)
+            a.auto(href="javascript:;")
+              span.pull-right.text-muted
+                i.fa.fa-fw.fa-angle-right.text
+                i.fa.fa-fw.fa-angle-down.text-active
+              i.glyphicon.glyphicon-th-list.nav-text-color1
+              span 员工自助
+            ul.nav.nav-sub.dk
+              li.nav-sub-header
+                a(ui-sref='self.profile.basic')
+              li
+                a(ui-sref='self.profile.basic')
+                  span 我的基本信息
+              li
+                a(href='#/app/personnel/regulariz')
+                  span 优免票
+              li
+                a(href='#/app/personnel/regulariz')
+                  span 学历变更申请
+              li
+                a(href='#/app/personnel/regulariz')
+                  span 绩效申诉
+              li
+                a(href='#/app/personnel/regulariz')
+                  span 个人信息变更记录
+              li
+                a(href='#/app/personnel/regulariz')
+                  span 公司通讯录
+              li
+                a(href='#/app/personnel/regulariz')
+                  span 部门信箱
           li
             a.auto(ui-sref='org')
               span.pull-right.text-muted
@@ -244,37 +275,7 @@
               li
                 a()
                   span 绩效申诉管理
-          li(nav-toggle-active)
-            a.auto(href="javascript:;")
-              span.pull-right.text-muted
-                i.fa.fa-fw.fa-angle-right.text
-                i.fa.fa-fw.fa-angle-down.text-active
-              i.glyphicon.glyphicon-th-list.nav-text-color1
-              span 员工自助
-            ul.nav.nav-sub.dk
-              li.nav-sub-header
-                a(ui-sref='self.profile.basic')
-              li
-                a(ui-sref='self.profile.basic')
-                  span 我的基本信息
-              li
-                a(href='#/app/personnel/regulariz')
-                  span 优免票
-              li
-                a(href='#/app/personnel/regulariz')
-                  span 学历变更申请
-              li
-                a(href='#/app/personnel/regulariz')
-                  span 绩效申诉
-              li
-                a(href='#/app/personnel/regulariz')
-                  span 个人信息变更记录
-              li
-                a(href='#/app/personnel/regulariz')
-                  span 公司通讯录
-              li
-                a(href='#/app/personnel/regulariz')
-                  span 部门信箱
+          
           //- li(nav-toggle-active)
           //-   a.auto(href='')
           //-     span.pull-right.text-muted
