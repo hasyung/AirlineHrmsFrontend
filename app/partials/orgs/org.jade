@@ -27,10 +27,15 @@ section.org-detail
                     input(ng-model="currentOrg.serialNumber" disabled)
                 md-input-container
                     label 机构性质
-                    md-select(ng-model="currentOrg.nature")
-                        md-option(value="123") 123
-                        md-option(value="234") 234
-                        md-option(value="345") 345
+                    //- md-select(ng-model="currentOrg.nature")
+                    //-     md-option(value="123") 123
+                    //-     md-option(value="234") 234
+                    //-     md-option(value="345") 345
+
+                    //- nb-dropdown(ng-model="copyOrg.nature" remote-key="department_natures", name="orgAddr", required="true")
+                    md-select(ng-model="currentOrg.nature" md-on-open="loadEnum('department_natures')")
+                        md-select-label {{currentOrg.nature ? currentOrg.nature.displayName : '请选择'}}
+                        md-option(ng-value="nature" ng-repeat="nature in enums.department_natures") {{nature.displayName}}
                     //- input(ng-model="currentOrg.nature.displayName" name="orgNature")
                 md-input-container
                     label 职级
