@@ -23,7 +23,7 @@ section.personnel-info-section(ng-init="experiences = currentUser.workExperience
                         input.form-control(ng-model="param.newExp.endDate" bs-datepicker)
                     .form-group.block
                         label.control-label 担任职位：
-                        input.form-control(ng-model="param.newExp.jobTitle")
+                        input.form-control(ng-model="param.newExp.position")
                     .form-group.block
                         label.control-label 工作描述：
                         input.form-control(ng-model="param.newExp.jobDesc")
@@ -50,7 +50,7 @@ section.personnel-info-section(ng-init="experiences = currentUser.workExperience
                         .form-content(ng-bind="work.department")
                     .form-group
                         label.control-label 担任职位：
-                        .form-content(ng-bind="work.jobTitle")
+                        .form-content(ng-bind="work.position")
                     .form-group
                         label.control-label 工作描述：
                         .form-content(ng-bind="work.jobDesc")
@@ -76,7 +76,7 @@ section.personnel-info-section(ng-init="experiences = currentUser.workExperience
                         input.form-control(ng-model="work.department")
                     .form-group.block
                         label.control-label 担任职位：
-                        input.form-control(ng-model="work.jobTitle")
+                        input.form-control(ng-model="work.position")
                     .form-group.block
                         label.control-label 工作描述：
                         input.form-control(ng-model="work.jobDesc")
@@ -108,7 +108,7 @@ section.personnel-info-section(ng-init="experiences = currentUser.workExperience
                         .form-content(ng-bind="work.department")
                     .form-group
                         label.control-label 担任职位：
-                        .form-content(ng-bind="work.jobTitle")
+                        .form-content(ng-bind="work.position")
                     .form-group
                         label.control-label 工作描述：
                         .form-content(ng-bind="work.jobDesc")

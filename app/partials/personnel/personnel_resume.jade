@@ -82,10 +82,10 @@
                     .form-content(ng-bind="edu.major")
                 .form-group
                     label.control-label 学历：
-                    .form-content(ng-bind="edu.educationBackground")
+                    .form-content(ng-bind="edu.educationBackground.displayName")
                 .form-group
                     label.control-label 学位：
-                    .form-content(ng-bind="edu.degree")
+                    .form-content(ng-bind="edu.degree.displayName")
                 .form-group
                     label.control-label 证明人：
                     .form-content(ng-bind="edu.witness")
@@ -118,25 +118,25 @@
             .form-split(ng-repeat="work in resume.workExperiences")
                 .form-group
                     label.control-label 开始日期：
-                    .form-content(ng-model="work.startDate")
+                    .form-content(ng-bind="work.startDate")
                 .form-group
                     label.control-label 结束日期：
-                    .form-content(ng-model="work.endDate")
+                    .form-content(ng-bind="work.endDate")
                 .form-group
                     label.control-label 单位名称：
-                    .form-content(ng-model="work.company")
+                    .form-content(ng-bind="work.company")
                 .form-group
                     label.control-label 任职部门：
-                    .form-content(ng-model="work.department")
+                    .form-content(ng-bind="work.department")
                 .form-group.block
                     label.control-label 担任职位：
-                    .form-content(ng-model="work.position")
+                    .form-content(ng-bind="work.position")
                 .form-group.block
                     label.control-label 工作描述：
-                    .form-content.auto-height(ng-model="work.jobDesc")
+                    .form-content.auto-height(ng-bind="work.jobDesc")
                 .form-group
                     label.control-label 证明人：
-                    .form-content(ng-model="work.witness")
+                    .form-content(ng-bind="work.witness")
         section.resume-section.form-split
             h4 到川航后任职记录
             .form-split
@@ -161,34 +161,34 @@
                 h5.form-group.block 配偶
                 .form-group
                     label.control-label 姓名：
-                    .form-content(ng-model="lover.name")
+                    .form-content(ng-bind="lover.name")
                 .form-group
                     label.control-label 性别：
-                    .form-content(ng-model="lover.gender")
+                    .form-content(ng-bind="lover.gender")
                 .form-group
                     label.control-label 籍贯：
-                    .form-content(ng-model="lover.nativePlace")
+                    .form-content(ng-bind="lover.nativePlace")
                 .form-group
                     label.control-label 民族：
-                    .form-content(ng-model="lover.nation")
+                    .form-content(ng-bind="lover.nation")
                 .form-group
                     label.control-label 出生年月：
-                    .form-content(ng-model="lover.birthday")
+                    .form-content(ng-bind="lover.birthday")
                 .form-group
                     label.control-label 文化程度：
-                    .form-content(ng-model="lover.educationBackground.name")
+                    .form-content(ng-bind="lover.educationBackground.name")
                 .form-group
                     label.control-label 政治面貌：
-                    .form-content(ng-model="lover.politicalStatus")
+                    .form-content(ng-bind="lover.politicalStatus")
                 .form-group
                     label.control-label 工作单位：
-                    .form-content(ng-model="lover.company")
+                    .form-content(ng-bind="lover.company")
                 .form-group
                     label.control-label 职务：
-                    .form-content(ng-model="lover.position")
+                    .form-content(ng-bind="lover.position")
                 .form-group
                     label.control-label 联系方式：
-                    .form-content(ng-model="lover.mobile")
+                    .form-content(ng-bind="lover.mobile")
             div
                 h5 子女情况
                 ul.nice-table
