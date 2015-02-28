@@ -34,7 +34,7 @@ div(nb-table='ctrl.records' nb-safe-src="ctrl.changes" ng-init="ctrl.changes = c
 
                         td()
                             a(href="javascript:;", nb-popup-plus, position="left-bottom", offset="0.5") {{change.auditableType}}
-                                popup-template.nb-popup.panel.panel-default()
+                                popup-template.nb-popup.panel.panel-default(style="width:400px;")
                                     .panel-heading.popup-title “{{change.name}}”岗位的变更记录
                                     .panel-body.popup-body(ng-if="change.action == '修改'")
                                         table.table.table-striped.custom-table
