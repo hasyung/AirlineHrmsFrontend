@@ -25,7 +25,7 @@ div(nb-table='ctrl.records' nb-safe-src="ctrl.changes" ng-init="ctrl.changes = c
                         th 操作
                         th 信息变更模块
                         th 变更时间
-                tbody
+                tbody(nb-popup-management)
                     tr(ng-repeat="change in ctrl.changes track by $index")
                         td(ng-bind="$index + 1")
                         td(ng-bind="change.name")
@@ -36,7 +36,7 @@ div(nb-table='ctrl.records' nb-safe-src="ctrl.changes" ng-init="ctrl.changes = c
                             a(href="javascript:;", nb-popup-plus, position="left-bottom", offset="0.5") {{change.auditableType}}
                                 popup-template.nb-popup.panel.panel-default()
                                     .panel-heading.popup-title “{{change.name}}”岗位的变更记录
-                                    .panel-body.popup-body(ng-if="change.action == '修改'", slimscroll, height="400px")
+                                    .panel-body.popup-body(ng-if="change.action == '修改'")
                                         table.table.table-striped.custom-table
                                             tr
                                                 th(colspan="2") 修改前

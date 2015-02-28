@@ -170,9 +170,12 @@ angular.module 'nb.directives'
 
             @.$inject = ['$scope', '$element', '$transclude']
 
-            constructor: (@$scope, $elem, $transcludeFn) ->
+            constructor: (@scope, $elem, $transcludeFn) ->
 
-        postLink = (scope, elem, attrs, $ctrl, $transcludeFn) ->
+            hide: ()->
+                @scope.isShown = false
+
+        postLink = (scope, elem, attrs, $ctrl) ->
 
             $doc = angular.element $window.document
             scope.isShown = false
@@ -200,6 +203,8 @@ angular.module 'nb.directives'
             toggle = ()->
                 if scope.isShown then hide() else show()
             show = ()->
+                if $ctrl
+                    $ctrl.showPopup(tipElement)
                 tipElement.show()
                 # 重新定位，解决按钮位置被挤出后popover位置错乱的BUG
                 position = calcPosition elem
@@ -333,6 +338,8 @@ angular.module 'nb.directives'
                 e.stopPropagation()
                 hide()
                 return
+            scope.$watch 'isShown', (newVal)->
+                hide() if !newVal
 
             scope.$on '$destroy', ()->
                 $doc.off 'click', hideHandle
@@ -346,6 +353,23 @@ angular.module 'nb.directives'
             controller: PopupPlusController
             templateUrl: 'partials/common/popup.html'
             link: postLink
+            require: '^?nbPopupManagement'
+        }
+
+    ]
+    .directive 'nbPopupManagement', [ () ->
+
+        class ManmageCtrl
+            @.$inject = ['$scope']
+            constructor: (@scope) ->
+                @showEle = null
+            showPopup: (popup) ->
+                @showEle.hide() if @showEle
+                @showEle = popup
+
+        return {
+            restrict: 'AE'
+            controller: ManmageCtrl
         }
 
     ]

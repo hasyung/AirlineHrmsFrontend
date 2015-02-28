@@ -26,7 +26,7 @@ div(nb-table='ctrl.records' nb-safe-src="ctrl.records" ng-init="ctrl.records = c
                         th 状态
                         th 审核时间
                         th 理由
-                tbody
+                tbody(nb-popup-management)
                     tr(ng-repeat="record in ctrl.records track by $index")
                         td(ng-bind="record.employeeNo")
                         td(ng-bind="record.name")
