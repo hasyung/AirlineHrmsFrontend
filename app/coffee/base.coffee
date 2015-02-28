@@ -46,7 +46,8 @@ class EditableResourceCtrl
     constructor: (scope) ->
         scope.editing = false
 
-        scope.edit = () ->
+        scope.edit = (evt) ->
+            evt.preventDefault() if evt && evt.preventDefault
             scope.editing = true
 
         scope.save = (promise) ->
