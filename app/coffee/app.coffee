@@ -127,11 +127,14 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
 datepickerConf = ($datepickerProvider)->
     angular.extend($datepickerProvider.defaults, {
         dateFormat: 'yyyy-MM-dd'
+        modelDateFormat: 'yyyy-MM-dd'
+        dateType: 'string'
     })
 
 
 App
     .config ['$provide', 'ngDialogProvider', appConf]
+    .config ['$datepickerProvider', datepickerConf]
     .config ['restmodProvider', restConf]
     .config ['$stateProvider','$urlRouterProvider','$locationProvider', '$httpProvider', routeConf]
     .run ['$state','$rootScope', 'toaster', '$http', 'Org', 'sweet', 'User', '$enum', ($state, $rootScope, toaster, $http, Org, sweet, User, $enum) ->

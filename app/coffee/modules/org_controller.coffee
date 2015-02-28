@@ -259,12 +259,13 @@ class OrgsCtrl extends nb.Controller
                 self.buildTree(treeRootOrg)
                 self.treeRootOrg = treeRootOrg
 
+
     buildTree: (org = @treeRootOrg, depth = 9)->
         depth = 1 if org.depth == 1 #如果是顶级节点 则只显示一级
         @treeRootOrg = org
         @tree = @orgs.treeful(org, depth)
         currentOrg = org
-        @Evt.$send('org:link', currentOrg)
+        @Evt.$send('org:link', {org:currentOrg, status:@getHisVersion()})
 
     refreshTree: () ->
         return unless @treeRootOrg
@@ -284,7 +285,7 @@ class OrgsCtrl extends nb.Controller
     onItemClick: (evt, elem) -> #机构树 点击事件处理 重构？
         orgId = elem.oc_id
         currentOrg = _.find(@orgs, {id: orgId})
-        @Evt.$send('org:link', currentOrg)
+        @Evt.$send('org:link', {org:currentOrg, status:@getHisVersion()})
 
     revert: () ->
         @orgs.revert()
@@ -322,15 +323,18 @@ class OrgsCtrl extends nb.Controller
         promise.then onSuccess
     # 返回机构的指定版本
     backToPast: (version)->
-        self = @
+        # self = @
         if @currentLog
-            self.orgs.$refresh({version: @currentLog.id})
+            @orgs.$refresh({version: @currentLog.id})
         @isHistory = true
+        @Evt.$send('org:link', {org:@treeRootOrg, status:@getHisVersion()})
     expandLog: (log)->
         # 防止UI中出现多个被选中的item
         @currentLog.active = false if @currentLog
         log.active = true
         @currentLog = log
+    getHisVersion: ()->
+        status = if @isHistory then {version:@currentLog.id} else 'active'
 
     # print: () ->
     #     options = {
@@ -359,11 +363,15 @@ class OrgCtrl extends nb.Controller
         scope.$onRootScope 'org:transfer', @.transfer.bind(@)
 
 
-    orgLink: (evt, org)->
-        @scope.currentOrg = org
-        @scope.copyOrg = org.$copy()
-        @scope.positions = @scope.currentOrg.positions.$refresh()
-
+    orgLink: (evt, data)->
+        @scope.currentOrg = data.org
+        @scope.copyOrg = data.org.$copy()
+        #当处于历史状态时data.status为包含version的OBJ，否则为active
+        if data.status == 'active'
+            @scope.positions = @scope.currentOrg.positions.$refresh()
+        else
+            @scope.positions = @scope.currentOrg.positions.$refresh({version:data.status.version})
+    
     cancel: ->
         @state = 'show'
 

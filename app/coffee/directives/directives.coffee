@@ -148,18 +148,22 @@ angular.module 'nb.directives'
     .directive 'radioBox', [()->
         postLink = (scope, elem, attrs, ctrl) ->
             scope.selected = null
+            # '无需审核': 0
+            # '待审核': 1
+            # '通过': 2
+            # '不通过': 3
             scope.$watch 'pass', (newVal)->
                 if newVal
-                    scope.selected = "通过"
+                    scope.selected = "2"
                     scope.fail = false
                 if !(scope.pass || scope.fail)
-                    scope.selected = "待审核"
+                    scope.selected = "1"
             scope.$watch 'fail', (newVal)->
                 if newVal
-                    scope.selected = "不通过"
+                    scope.selected = "3"
                     scope.pass = false
                 if !(scope.pass || scope.fail)
-                    scope.selected = "待审核"
+                    scope.selected = "1"
                 
         return {
             restrict: 'A'

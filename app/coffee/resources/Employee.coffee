@@ -113,7 +113,8 @@ Experience = (restmod, RMUtils, $Evt) ->
 FamilyMember = (restmod, RMUtils, $Evt) ->
     FamilyMember = restmod.model().mix 'nbRestApi', {
         $config:
-            jsonRoot: 'family_members'
+            jsonRootSingle: 'family_member'
+            jsonRootMany: 'family_members'
     }
 Resume = (restmod, RMUtils, $Evt) ->
     Resume = restmod.model().mix 'nbRestApi', {

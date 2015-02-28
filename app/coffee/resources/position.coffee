@@ -95,7 +95,12 @@ Specification = (restmod, RMUtils, $Evt) ->
 
     }
 
+PositionChange = (restmod, RMUtils, $Evt) ->
+    PositionChange = restmod.model('/position_changes').mix 'nbRestApi', {
+        $config:
+            jsonRoot: 'audits'
 
+    }
 
 
 
@@ -103,3 +108,4 @@ Specification = (restmod, RMUtils, $Evt) ->
 
 resources.factory 'Position',['restmod', 'RMUtils', '$nbEvent', Position]
 resources.factory 'Specification',['restmod', 'RMUtils', '$nbEvent', Specification]
+resources.factory 'PositionChange',['restmod', 'RMUtils', '$nbEvent', PositionChange]

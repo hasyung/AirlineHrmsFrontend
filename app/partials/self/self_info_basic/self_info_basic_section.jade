@@ -14,7 +14,7 @@ section.personnel-info-control.clearfix
         .form-group
             label.control-label 性别：
             .form-content {{currentUser.gender.displayName}}
-        .form-group
+        .form-group.block
             label.control-label 身份证号：
             .form-content {{currentUser.identityNo}}
         .form-group
@@ -37,4 +37,4 @@ section.personnel-info-control.clearfix
             .form-content {{currentUser.englishLevel.displayName}}
         .form-group
             label.control-label 联系方式：
-            .form-content {{currentUser.contactWay.mobile}}
+            .form-content {{currentUser.contact.mobile}}

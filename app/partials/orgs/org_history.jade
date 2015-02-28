@@ -1,7 +1,6 @@
 .modal-header.tl-top-header
 	button.close(type='button', data-dismiss='modal', aria-hidden='true', ng-click="closeThisDialog()") ×
 	h4.modal-title 时间轴
-	input(ng-model="selectDate" bs-datepicker)
 div.wrapper.org-timline(slimscroll, height="400px" ng-init="activeLog = {}")
 	//- ul.timeline(ng-repeat="yearItem in ctrl.changeLogs")
 	ul.timeline(ng-repeat="yearLogs in ngDialogData")
