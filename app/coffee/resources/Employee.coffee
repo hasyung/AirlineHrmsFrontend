@@ -71,26 +71,8 @@ Education = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('education:update:error', "教育经历更新失败")
         }
         $config:
-            jsonRoot: 'education_experiences'
-        $extend:
-            Collection:
-                createEdu: (edu)->
-                    self = this
-                    onSuccess = (res)->
-                        console.log res
-                        self.$buidRow
-                        @.$dispatch 'after-newedu'
-                        self.$add()
-
-                    onErorr = ->
-                        @.$dispatch 'after-newedu-error', arguments
-                    url = this.$url()
-                    request = {
-                        url: url
-                        method: 'POST'
-                        data:edu
-                    }
-                    this.$send request, onSuccess, onErorr
+            jsonRootSingle: 'education_experience'
+            jsonRootMany: 'education_experiences'
     }
 Experience = (restmod, RMUtils, $Evt) ->
     Experience = restmod.model().mix 'nbRestApi', {
@@ -107,7 +89,8 @@ Experience = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('work:update:error', "工作经历更新失败")
         }
         $config:
-            jsonRoot: 'work_experiences'
+            jsonRootSingle: 'work_experience'
+            jsonRootMany: 'work_experiences'
     }
 
 FamilyMember = (restmod, RMUtils, $Evt) ->

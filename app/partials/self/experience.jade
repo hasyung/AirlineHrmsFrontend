@@ -10,17 +10,17 @@ section.personnel-info-section(ng-init="experiences = currentUser.workExperience
                         button.btn.btn-info(type="submit") 创建
                         button.btn.btn-default(ng-click="param.newExp = null") 取消
                     .form-group
-                        label.control-label 开始时间：
-                        input.form-control(ng-model="param.newExp.startDate" bs-datepicker)
-                    .form-group
-                        label.control-label 结束时间：
-                        input.form-control(ng-model="param.newExp.endDate" bs-datepicker)
-                    .form-group
                         label.control-label 单位名称：
                         input.form-control(ng-model="param.newExp.company")
                     .form-group
                         label.control-label 任职部门：
                         input.form-control(ng-model="param.newExp.department")
+                    .form-group.block
+                        label.control-label 开始时间：
+                        input.form-control(ng-model="param.newExp.startDate" bs-datepicker)
+                    .form-group.block
+                        label.control-label 结束时间：
+                        input.form-control(ng-model="param.newExp.endDate" bs-datepicker)
                     .form-group.block
                         label.control-label 担任职位：
                         input.form-control(ng-model="param.newExp.jobTitle")
