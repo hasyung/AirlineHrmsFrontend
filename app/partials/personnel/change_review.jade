@@ -1,7 +1,7 @@
 
-tabset
+tabset(flex)
     tab(heading="待审核")
-        .position-manage.app-content-wrapper(ng-init="ctrl.changes = ctrl.Change.$collection().$refresh()")
+        .app-content-wrapper(ng-init="ctrl.changes = ctrl.Change.$collection().$refresh()" flex)
             div(nb-table='ctrl.changes' nb-safe-src="ctrl.changes")
                 input(type="hidden" nb-pipe="ctrl.search(tableState)")
                 .table-container
@@ -18,7 +18,7 @@ tabset
                                 th 变更时间
                                 th 操作
                                 th 理由
-                                
+
                         tbody
                             tr(ng-repeat="change in ctrl.changes track by $index")
                                 //- td(select-row="emp" mode="multiple")
@@ -30,7 +30,7 @@ tabset
                                         popup-template.nb-popup.panel.panel-default()
                                             .panel-heading.popup-title {{change.name}}的基本变更
                                             .panel-body.popup-body
-                                                .row 
+                                                .row
                                                     .col-md-6 修改前
                                                     .col-md-6 修改后
                                                 .row(ng-repeat="(field, val) in change.auditedChanges")
@@ -43,8 +43,8 @@ tabset
                                 td(ng-bind="change.createdAt")
                                 td()
                                     .radio-group(radio-box, ng-model="change.statusCd")
-                                        
-                                td() 
+
+                                td()
                                     span(nb-popup-plus, position="left-bottom", offset="0.5") {{change.reason || '请输入'}}
                                         popup-template.nb-popup.org-default-popup-template.panel.panel-default()
                                             .panel-heading.popup-title 请输入理由
