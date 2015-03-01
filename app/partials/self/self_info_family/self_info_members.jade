@@ -60,7 +60,7 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                         input.form-control(ng-model="nc.company")
                     .btn-group
                         button.btn.btn-info(ng-click="vm.children.$create(nc);newChildren.splice($index, 1)") 提交
-                        button.btn.btn-default() 取消
+                        button.btn.btn-default(ng-click="newChildren.splice($index, 1)") 取消
 
                 .add
                     button.btn.btn-default.fa.fa-plus(ng-click="newChildren.push({})")
@@ -106,7 +106,7 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                         input.form-control(ng-model="no.company")
                     .btn-group
                         button.btn.btn-info(ng-click="vm.other.$create(no);newOther.splice($index, 1)") 提交
-                        button.btn.btn-default() 取消
+                        button.btn.btn-default(ng-click="newOther.splice($index, 1)") 取消
 
                 .add
                     button.btn.btn-default.fa.fa-plus(ng-click="newOther.push({})")
