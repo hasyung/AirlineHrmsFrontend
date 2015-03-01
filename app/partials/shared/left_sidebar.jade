@@ -58,7 +58,7 @@
             ul.nav.nav-sub.dk
               li.nav-sub-header
                 a(ui-sref='self.profile.basic')
-              li
+              li(ng-class="{'focus':$state.includes('self.profile.basic')}")
                 a(ui-sref='self.profile.basic')
                   span 我的基本信息
               li

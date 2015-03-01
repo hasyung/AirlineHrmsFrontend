@@ -390,6 +390,8 @@ class PositionCtrl extends nb.Controller
 
     search: (tableState) ->
         @positions.$refresh(tableState)
+    searchEmp: (tableState) ->
+
 
 
 

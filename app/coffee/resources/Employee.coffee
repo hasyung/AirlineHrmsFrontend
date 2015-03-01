@@ -8,9 +8,9 @@ Employee = (restmod, RMUtils, $Evt) ->
         departmentId: {mask: 'R', map: 'department.id'}
         department: {mask: 'CU'}
 
-        joinScalDate: {decode: 'date', param: 'yyyy年MM月dd日',mask: 'CU'}
+        joinScalDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
 
-        startDate: {decode: 'date', param: 'yyyy年MM月dd日',mask: 'CU'}
+        startDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
 
         isSelected: {mask: "CU"}
         resume: { hasOne: 'Resume', mask: 'CU'}
