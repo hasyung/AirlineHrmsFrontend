@@ -27,19 +27,18 @@
                                     td(ng-bind="change.department.name")
                                     td()
                                         a(href="javascript:;", nb-popup-plus, position="left-bottom", offset="0.5") 基本信息
-                                            popup-template.nb-popup.panel.panel-default()
-                                                .panel-heading.popup-title {{change.name}}的基本变更
+                                            popup-template.nb-popup.panel.panel-default(style="width:400px;")
+                                                .panel-heading.popup-title {{change.name}}的{{change.auditableType}}变更
                                                 .panel-body.popup-body
-                                                    .row 
-                                                        .col-md-6 修改前
-                                                        .col-md-6 修改后
-                                                    .row(ng-repeat="(field, val) in change.auditedChanges")
-                                                        .col-md-2() {{::field}}：
-                                                        .col-md-4(ng-bind="val[0]")
-                                                        .col-md-2() {{::field}}：
-                                                        .col-md-4(ng-bind="val[1]")
-
-
+                                                    table.table.table-striped.custom-table
+                                                        tr
+                                                            th(colspan="2") 修改前
+                                                            th(colspan="2") 修改后
+                                                        tr(ng-repeat="(field, val) in change.auditedChanges", ng-if="field != 'unused'")
+                                                            td(ng-bind="field")
+                                                            td.overflow-text(ng-bind="val[0] || '无'")
+                                                            td(ng-bind="field")
+                                                            td.overflow-text(ng-bind="val[1] || '无'")
                                     td(ng-bind="change.createdAt")
                                     td()
                                         .radio-group(radio-box, ng-model="change.statusCd")
