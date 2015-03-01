@@ -40,6 +40,7 @@ class PersonnelCtrl extends nb.Controller
 
     constructor: (@scope, @sweet, @Employee) ->
         @loadInitailData()
+        @selectedIndex =  1
 
     loadInitailData: ->
         @employees = @Employee.$collection().$fetch()
