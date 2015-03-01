@@ -70,7 +70,9 @@
 
 .custom-table {
     border-bottom: 1px solid #dde5e7;
-    table-layout: fixed;
+    &.popup-table{
+        table-layout: fixed;
+    }
 
     tr {
         cursor: pointer;

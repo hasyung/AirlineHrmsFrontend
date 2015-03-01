@@ -5,6 +5,9 @@ form(ng-submit="save(wife.$save())" ng-init="wife.relationType='配偶'")
     .form-group.block
         label.control-label 姓名：
         input.form-control(ng-model="wife.name")
+    .form-group.block
+        label.control-label 出生年月：
+        input.form-control(ng-model="wife.birthday", bs-datepicker)
     .form-group
         label.control-label 性别：
         input.form-control(ng-model="wife.gender")
@@ -14,12 +17,6 @@ form(ng-submit="save(wife.$save())" ng-init="wife.relationType='配偶'")
     .form-group
         label.control-label 民族：
         input.form-control(ng-model="wife.nation")
-    .form-group
-        label.control-label 出生年月：
-        input.form-control(ng-model="wife.birthday")
-    .form-group
-        label.control-label 身份证号：
-        input.form-control(ng-model="wife.identityNo")
     .form-group
         label.control-label 文化程度：
         input.form-control(ng-model="wife.educationBackground")
