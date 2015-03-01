@@ -133,31 +133,6 @@ class Route
                         return true
                 }
             }
-            # .state 'org.revert', Dialog.$build('revert', RevertChangesCtrl, 'partials/orgs/shared/revert_changes.html')
-            # .state 'org.active', nb.$buildDialog('active', ActiveCtrl, 'partials/orgs/shared/effect_changes.html')
-            # .state 'org.history', nb.$buildDialog('history', HistoryCtrl, 'partials/orgs/org_history.html', {size: 'sm'})
-            # .state 'org.transfer', nb.$buildDialog('transfer', TransferOrgCtrl, 'partials/orgs/shared/org_transfer.html', {size: 'sm'})
-            # .state 'org.position', nb.$buildPanel(':id/positions',PositionCtrl, 'partials/orgs/position.html')
-            # .state nb.$buildDialog {
-            #     name: 'org.active'
-            #     url: '/active'
-            #     controller: ActiveCtrl
-            #     templateUrl: 'partials/orgs/shared/effect_changes.html'
-            # }
-            # .state nb.$buildDialog {
-            #     name: 'org.history'
-            #     url:' /history'
-            #     controller: HistoryCtrl
-            #     templateUrl: 'partials/orgs/org_history.html'
-            #     size: 'sm'
-            # }
-            # .state nb.$buildDialog {
-            #     name: 'org.transfer'
-            #     url: '/transfer'
-            #     controller: TransferOrgCtrl
-            #     templateUrl: 'partials/orgs/shared/org_transfer.html'
-            #     size: 'sm'
-            # }
             .state {
                 name: 'org.position'
                 url: '/:id/positions'
@@ -173,60 +148,7 @@ class Route
                     label: "{{ ctrl.currentOrg.name || '岗位' }}"
                 }
             }
-            # .state {
-            #     name: 'org.position.detail'
-            #     url: '/{posId:[0-9]+}'
-            #     views: {
-            #         "@": {
-            #             controller: PosCtrl
-            #             controllerAs: 'ctrl'
-            #             templateUrl: 'partials/orgs/position_detail.html'
-            #         }
-            #     }
-            #     ncyBreadcrumb: {
-            #         label: "{{currentPos.name}}"
-            #     }
-            # }
-            # .state {
-            #     name: 'org.position.detail.editing'
-            #     url: '/editing/:template'
-            #     views: {
-            #         "@": {
-            #             controller: PosCtrl
-            #             controllerAs: 'ctrl'
-            #             templateUrl: (params) ->
-            #                 return "partials/orgs/position_edit_#{params.template}.html"
-            #         }
-            #     }
-            #     ncyBreadcrumb: {
-            #         label: "编辑"
-            #     }
-            # }
-            # .state {
-            #     name: 'org.position.new'
-            #     url: '/new'
-            #     views: {
-            #         "@": {
-            #             controller: PosCreateCtrl
-            #             controllerAs: 'ctrl'
-            #             templateUrl: 'partials/orgs/position_add.html'
-            #         }
-            #     }
-            #     ncyBreadcrumb: {
-            #         label: "新增"
-            #     }
-            # }
-
-
-
-            # nb.$buildPanel {
-            #     name: 'org.position'
-            #     url: ':id/positions'
-            #     controller: PositionCtrl
-            #     templateUrl: 'partials/orgs/position.html'
-            # }
-
-
+            
 
 
 class OrgsCtrl extends nb.Controller
@@ -273,6 +195,7 @@ class OrgsCtrl extends nb.Controller
         depth = 1 if @treeRootOrg.depth == 1 #如果是顶级节点 则只显示一级
 
         @tree = @orgs.treeful(@treeRootOrg, depth)
+        @Evt.$send('org:link', {org:@treeRootOrg, status:@getHisVersion()})
 
     #force 是否修改当前机构
     reset: (force) ->
@@ -294,9 +217,11 @@ class OrgsCtrl extends nb.Controller
         @resetData()
 
     active: (evt, data) ->
+        self = @
         #deparment_id 是否必要?
         data.department_id = @.treeRootOrg.id
-        @orgs.active(data)
+        @orgs.active(data).$then ()->
+            self.rootScope.allOrgs.$refresh()
         @resetData()
 
     resetData: () ->
