@@ -4,9 +4,10 @@ resources = angular.module('resources')
 
 Employee = (restmod, RMUtils, $Evt) ->
 
-    Employee = restmod.model('/employees').mix 'nbRestApi', 'DirtyModel', {
-        departmentId: {mask: 'R', map: 'department.id'}
-        department: {mask: 'CU'}
+    Employee = restmod.model('/employees').mix 'nbRestApi', 'DirtyModel', 'restmod.Preload', {
+        # departmentId: {mask: 'R', map: 'department.id'}
+        department: {mask: 'CU', belongsTo: 'Org'}
+        # dept: {belongsTo: 'Org', key: 'department_id'}
 
         joinScalDate: {decode: 'date', param: 'yyyy年MM月dd日',mask: 'CU'}
 

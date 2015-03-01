@@ -6,8 +6,7 @@ Position = (restmod, RMUtils, $Evt) ->
 
     # restmod.model('/positions')
     Position = restmod.model('/positions').mix 'nbRestApi', 'DirtyModel', {
-        department_id: {mask: 'R', map: 'department.id'}
-        department: {mask: 'C'}
+        department: {mask: 'C', belongsTo: 'Org'}
         isSelected: {mask: "CU"}
         employees: { hasMany: 'Employee'}
         # 部门领导

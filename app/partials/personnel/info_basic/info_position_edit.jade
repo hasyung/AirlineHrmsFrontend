@@ -1,4 +1,6 @@
-form(name="positionEditForm" ng-submit="save(current.$save())")
+form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="EditableResource" ng-init="params = {}")
+    .form-btn-group
+        md-button.md-primary(ng-click="edit($event)") 编辑
     .form-btn-group.alive
         button.btn.btn-info(type="submit" ng-disabled="positionEditForm.$invalid") 保存
         button.btn.btn-default(ng-click="cancel(current, $event)") 取消
@@ -12,15 +14,16 @@ form(name="positionEditForm" ng-submit="save(current.$save())")
             ui-select(
                 ng-model="current.department"
                 ng-change="params.orgPos = current.department.positions.length? current.department.positions: current.department.positions.$fetch()"
+                ng-init="params.orgPos = current.department.positions.length? current.department.positions: current.department.positions.$fetch()"
                 reset-search-input="true")
                 ui-select-match(placeholder="请输入机构名称") {{ $select.selected.name }}
                 ui-select-choices(repeat="org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
 
-        //- md-input-container
-        //-     label 岗位
-        //-     md-select(ng-model="current.position" md-on-open="Position.$search()")
-        //-         md-select-label
-        //-         md-option(ng-value="empStatus" ng-repeat="empStatus in enums.employment_status") {{empStatus.displayName}}
+        md-input-container
+            label 岗位
+            md-select(ng-model="current.position")
+                md-select-label {{current.position.name}}
+                md-option(ng-value="pos" ng-repeat="pos in params.orgPos") {{pos.name}}
         md-input-container
             label 分类
             md-select(ng-model="current.category" md-on-open="loadEnum('categories')")
