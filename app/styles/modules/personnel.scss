@@ -81,12 +81,8 @@
 }
 
 .personnel-content {
-    padding: 32px;
-    width: calc(100% - 270px);
-
     &.personnel-control {
-        padding: 0;
-        width: calc(100%);
+        padding-bottom: 100px;
 
         .personnel-top-header {
             border: 0;
@@ -103,6 +99,43 @@
 
         .personnel-info-row {
             height: 40px;
+        }
+
+        //material
+        fieldset[disabled] {
+            .md-default-theme .md-select-label {
+                padding-left: 150px;
+            }
+
+            .md-input {
+                padding-left: 150px;
+            }
+        }
+
+        .form-material-section {
+            position: relative;
+
+            &:hover {
+                .form-btn-group {
+                    visibility: visible;
+                }
+            }
+
+            .form-btn-group {
+                position: absolute;
+                right: 20px;
+                top: 10px;
+                visibility: hidden;
+
+                &.alive {
+                    visibility: visible;
+                }
+
+                .md-button {
+                    margin-left: 20px;
+                }
+
+            }
         }
     }
 

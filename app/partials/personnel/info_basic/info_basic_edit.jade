@@ -1,9 +1,9 @@
 form(name="empEditForm" ng-submit="save(current.$save())" ng-controller="EditableResource")
     .form-btn-group
-        md-button.md-primary(ng-click="edit($event)") 编辑
+        md-button.md-primary.md-raised(ng-click="edit($event)") 编辑
     .form-btn-group
-        md-button.md-primary(type="submit" ng-disabled="empEditForm.$invalid") 保存
         md-button(ng-click="cancel(current,$event)") 取消
+        md-button.md-primary.md-raised(type="submit" ng-disabled="empEditForm.$invalid") 保存
     fieldset(ng-disabled="!editing")
         md-input-container
             label 员工编号

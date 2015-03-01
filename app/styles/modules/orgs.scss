@@ -89,11 +89,16 @@
 
 .org-chart-top {
     margin: 0 20px;
+    padding-top: 15px;
+    position: relative;
     text-align: center;
 }
 
 .top-btn-group {
     margin-right: 40px;
+    position: absolute;
+    top: 5px;
+    right: 10px;
 
     .md-button {
         display: inline-block;
@@ -219,21 +224,30 @@ md-select {
     flex: 1;
     -ms-flex-order: 2;
     -ms-flex-preferred-size: 26px;
+    height: 30px;
     line-height: 26px;
     margin-top: 0;
     -webkit-order: 2;
     order: 2;
-    padding: 2px 2px 1px;
+    padding: 2px;
 
     .md-select-label {
         font-size: $font-size-base;
-        height: 30px;
+        padding-top: 8px;
         transition: all cubic-bezier(.25, .8, .25, 1) .25s;
 
         span {
             height: inherit;
             line-height: 26px;
         }
+    }
+
+}
+
+// bugfix: 解决下拉框中双滚动条的bug
+.md-select-menu-container {
+    md-select-menu {
+        overflow-y: auto;
     }
 }
 
@@ -256,7 +270,7 @@ fieldset[disabled] {
     //md-select
     md-select {
         @include background-image(linear-gradient(to right, rgba(0, 0, 0, .12) 0, rgba(0, 0, 0, .12) 33%, transparent 0));
-        background-position: 0 bottom;
+        background-position: 0 28px;
         background-repeat: repeat-x;
         background-size: 3px 1px;
 
@@ -271,6 +285,7 @@ fieldset[disabled] {
 
     .row-has-value {
         label:not(.md-no-float) {
+            // line-height: 18px;
             -webkit-transform: translate3d(0, 25px, 0) scale(1);
             transform: translate3d(0, 25px, 0), scale(1);
         }
@@ -282,6 +297,8 @@ fieldset[disabled] {
 }
 
 md-input-container {
+    font-size: $font-size-base;
+
     &.row-has-value {
         label:not(.md-no-float) {
             color: $text-muted;

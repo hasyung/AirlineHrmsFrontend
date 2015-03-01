@@ -108,8 +108,6 @@
             border-radius: 5px;
             color: #444;
             font-family: 'Helvetica',sans-serif;
-            font-size: 1.1em;
-            line-height: 1.5em;
             margin: 0 auto;
             max-width: 100%;
             padding: 1em;
@@ -180,7 +178,7 @@
         }
     }
 
-    //flat主题  有问题 进入样式 动画不正确
+    //flat主题
     &.ngdialog-theme-flat {
         padding-bottom: 100px;
         padding-top: 100px;
@@ -286,12 +284,8 @@
             -webkit-animation: ngdialog-scrollin .5s;
             animation: ngdialog-scrollin .5s;
             background: #fff;
-            // border-radius: 5px;
             color: $text-color;
             font-family: 'Helvetica',sans-serif;
-            padding: 20px 10px;
-            font-size: 1.1em;
-            line-height: 1.5em;
             min-height: 100%;
             position: absolute;
             right: 0;

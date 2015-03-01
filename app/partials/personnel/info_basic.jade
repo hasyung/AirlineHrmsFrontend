@@ -1,47 +1,22 @@
+md-toolbar
+    .md-toolbar-tools
+        span 人事信息
 .personnel-content.personnel-control
     section.personnel-info-section(ng-init= "current = ngDialogData")
-        tabset
-            tab(heading="基本人事信息")
+        md-tabs
+            md-tab(label="Tab #1")
                 div(layout="column")
-                    section
+                    section.form-material-section
                         md-subheader.md-primary 基本信息
                         include info_basic/info_basic_edit
-                    section
+                    section.form-material-section
                         md-subheader.md-warn 岗位信息
                         include info_basic/info_position_edit
-
-
-
-
-                //- section.personnel-section-wrap(ng-controller="EditableResource")
-                //-     section.personnel-info-control.clearfix
-                //-             .personnel-info-left
-                //-                     .personnel-item-icon.personnel-item1
-                //-                     .personnel-item-desc.bg-success 基本信息
-                //-             .personnel-info-right.form-split
-                //-                 div.showing(ng-hide="editing")
-                //-                     include info_basic/info_basic_section
-                //-                 div.editing(ng-if="editing")
-                //-                     include info_basic/info_basic_edit
-                //- section.personnel-section-wrap(ng-controller="EditableResource")
-                //-     section.personnel-info-control.clearfix
-                //-             .personnel-info-left
-                //-                     .personnel-item-icon.personnel-item1
-                //-                     .personnel-item-desc.bg-success 岗位信息
-                //-             .personnel-info-right.form-split
-                //-                 div.showing(ng-hide="editing")
-                //-                     include info_basic/info_position_section
-                //-                 div.editing(ng-if="editing")
-                //-                     include info_basic/info_position_edit
-            tab(heading="培训记录")
-                p 培训记录
-            tab(heading="奖惩记录")
-                p 奖惩记录
-            tab(heading="考勤信息")
-                p 考勤信息
-            tab(heading="绩效考核")
-                p 绩效考核
-            tab(heading="档案信息")
-                p 档案信息
-            tab(heading="个人履历")
-                include personnel_resume.jade
+            md-tab(label="Tab #2")
+                div(layout="column")
+                    section.form-material-section
+                        md-subheader.md-primary 基本信息
+                        include info_basic/info_basic_edit
+                    section.form-material-section
+                        md-subheader.md-warn 岗位信息
+                        include info_basic/info_position_edit
