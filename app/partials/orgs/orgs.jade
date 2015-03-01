@@ -5,10 +5,12 @@ div.org.app-content-wrapper
                 ng-class="{true: 'fa-chevron-left', false: 'fa-chevron-right'}[ctrl.isBarOpen]"
                 ng-click="ctrl.isBarOpen = !ctrl.isBarOpen")
         .org-dep-wrapper
-            div.org-dep-root
-                a(ng-click="ctrl.rootTree()") 四川航空
+            //- div.org-dep-root
+            //-     a(ng-click="ctrl.rootTree()") 四川航空
             .org-children-wrapper
                 ul
+                    li
+                        a.org-node(ng-click="ctrl.rootTree()", ng-class="{'active': '四川航空' == (ctrl.treeRootOrg && ctrl.treeRootOrg.name)}") 四川航空
                     li(ng-repeat="org in ctrl.orgs | filterBy: ['depth']: 2 track by $index" )
                         //- a.org-node(ng-click="ctrl.buildTree(org)" ng-bind="org.name", title="{{org.name}}")
                         a.org-node(
