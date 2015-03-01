@@ -259,6 +259,10 @@ fieldset[disabled] {
         transform: translate3d(0, 25px, 0), scale(1);
     }
 
+    md-input-container label {
+        color: $text-muted;
+    }
+
     .md-input {
         padding-left: 70px;
     }
@@ -312,3 +316,8 @@ md-input-container {
     }
 }
 
+.form-group {
+    label {
+        color: $text-muted;
+    }
+}

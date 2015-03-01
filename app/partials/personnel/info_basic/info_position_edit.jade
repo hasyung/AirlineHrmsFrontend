@@ -1,57 +1,62 @@
-form(name="positionEditForm" ng-submit="save(current.$save())")
-    .form-btn-group
+form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="EditableResource" ng-init="params = {}")
+    .form-btn-group(ng-hide="editing")
         md-button.md-primary.md-raised(ng-click="edit($event)") 编辑
-    .form-btn-group
-        md-button(ng-click="cancel(current, $event)") 取消
+    .form-btn-group.alive(ng-show="editing")
+        md-button.md-primary(ng-click="cancel(current, $event)") 取消
         md-button.md-primary.md-raised(type="submit" ng-disabled="positionEditForm.$invalid") 保存
 
     fieldset(ng-disabled="!editing")
-        //- md-input-container
-        //-     label 所属部门
-        //-     //- md-select(ng-model="current.department")
-        //-     //-     md-select-label {{current.department.name}}
-        //-     //-     md-option(ng-value="org" ng-repeat="org in allOrgs track by org.id") {{org.name}}
-        //-     ui-select(
-        //-         ng-model="current.department"
-        //-         ng-change="params.orgPos = current.department.positions.length? current.department.positions: current.department.positions.$fetch()"
-        //-         reset-search-input="true")
-        //-         ui-select-match(placeholder="请输入机构名称") {{ $select.selected.name }}
-        //-         ui-select-choices(repeat="org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
-
-        md-input-container.row-has-value
-            label 岗位
-            md-select(ng-model="current.position" md-on-open="Position.$search()")
-                md-select-label {{current.position? current.position.displayName : '无'}}
-                md-option(ng-value="empStatus" ng-repeat="empStatus in enums.employment_status") {{empStatus.displayName}}
-        md-input-container.row-has-value
-            label 分类
-            md-select(ng-model="current.category" md-on-open="loadEnum('categories')")
-                md-select-label {{current.category? current.category.displayName : '无'}}
-                md-option(ng-value="category" ng-repeat="category in enums.categories") {{category.displayName}}
-        md-input-container.row-has-value
-            label 通道
-            md-select(ng-model="current.channel" md-on-open="loadEnum('channels')")
-                md-select-label {{current.channel? current.channel.displayName : '无'}}
-                md-option(ng-value="channel" ng-repeat="channel in enums.channels") {{channel.displayName}}
-        md-input-container
-            label 类别
-            input(ng-model="current.position.postType")
-
-        md-input-container.row-has-value
-            label 属地化地点
-            md-select(ng-model="current.location" md-on-open="loadEnum('locations')")
-                md-select-label {{current.location? current.location.displayName : '无'}}
-                md-option(ng-value="location" ng-repeat="location in enums.locations") {{location.displayName}}
-        md-input-container.row-has-value
-            label 用工性质
-            md-select(ng-model="current.laborRelation" md-on-open="loadEnum('labor_relations')")
-                md-select-label {{current.laborRelation.displayName}}
-                md-option(ng-value="laborRelation" ng-repeat="laborRelation in enums.labor_relations") {{laborRelation.displayName}}
-        md-input-container.row-has-value
-            label 用工关系状态
-            md-select(ng-model="current.employmentStatus" md-on-open="loadEnum('employment_status')")
-                md-select-label {{current.employmentStatus.displayName}}
-                md-option(ng-value="empStatus" ng-repeat="empStatus in enums.employment_status") {{empStatus.displayName}}
+        .form-group
+            label 所属部门
+            //- md-select(ng-model="current.department")
+            //-     md-select-label {{current.department.name}}
+            //-     md-option(ng-value="org" ng-repeat="org in allOrgs track by org.id") {{org.name}}
+            ui-select(
+                ng-model="current.department"
+                ng-change="params.orgPos = current.department.positions.length? current.department.positions: current.department.positions.$fetch()"
+                ng-init="params.orgPos = current.department.positions.length? current.department.positions: current.department.positions.$fetch()"
+                reset-search-input="true"
+                style="width: 500px"
+                )
+                ui-select-match(placeholder="请输入机构名称") {{ $select.selected.name }}
+                ui-select-choices(repeat="org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
+        div(layout)
+            md-input-container.row-has-value(flex)
+                label 岗位
+                md-select(ng-model="current.position")
+                    md-select-label {{current.position.name || '无'}}
+                    md-option(ng-value="pos" ng-repeat="pos in params.orgPos") {{pos.name}}
+            md-input-container.row-has-value(flex)
+                label 分类
+                md-select(ng-model="current.category" md-on-open="loadEnum('categories')")
+                    md-select-label {{current.category? current.category.displayName : '无'}}
+                    md-option(ng-value="category" ng-repeat="category in enums.categories") {{category.displayName}}
+        div(layout)
+            md-input-container.row-has-value(flex)
+                label 通道
+                md-select(ng-model="current.channel" md-on-open="loadEnum('channels')")
+                    md-select-label {{current.channel? current.channel.displayName : '无'}}
+                    md-option(ng-value="channel" ng-repeat="channel in enums.channels") {{channel.displayName}}
+            md-input-container(flex)
+                label 类别
+                input(ng-model="current.position.postType")
+        div(layout)
+            md-input-container.row-has-value(flex)
+                label 属地化地点
+                md-select(ng-model="current.location" md-on-open="loadEnum('locations')")
+                    md-select-label {{current.location? current.location.displayName : '无'}}
+                    md-option(ng-value="location" ng-repeat="location in enums.locations") {{location.displayName}}
+            md-input-container.row-has-value(flex)
+                label 用工性质
+                md-select(ng-model="current.laborRelation" md-on-open="loadEnum('labor_relations')")
+                    md-select-label {{current.laborRelation? current.laborRelation.displayName : '无'}}
+                    md-option(ng-value="laborRelation" ng-repeat="laborRelation in enums.labor_relations") {{laborRelation.displayName}}
+        div(layout)
+            md-input-container.row-has-value(flex)
+                label 用工关系状态
+                md-select(ng-model="current.employmentStatus" md-on-open="loadEnum('employment_status')")
+                    md-select-label {{current.employmentStatus? current.employmentStatus.displayName : '无'}}
+                    md-option(ng-value="empStatus" ng-repeat="empStatus in enums.employment_status") {{empStatus.displayName}}
 
 
     //- .form-group.block
