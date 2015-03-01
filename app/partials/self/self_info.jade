@@ -1,4 +1,4 @@
-.app-content-wrapper(layout="row")
+.app-content-wrapper(layout="row" flex style="padding-left: 0")
     .personnel-menu
         .avator
             .avator-area
@@ -7,7 +7,7 @@
         .personnel-info-list
             ul
                 li(ui-sref-active="active")
-                    a(ui-sref=".basic")
+                    a(ui-sref=".profile")
                         span.switch-circle
                         | 基本信息
                 li(ui-sref-active="active")
@@ -40,8 +40,10 @@
                 li
                     span.switch-circle(ui-sref="^.resume")
                     | 档案信息
+
     .personnel-content(flex)
-        div(ui-view="detail")
+        div(ui-view="")
+
         //- include info_basic
         //- include info_detail
 

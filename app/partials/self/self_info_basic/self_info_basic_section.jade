@@ -1,40 +1,215 @@
-section.personnel-info-control.clearfix
-    .personnel-info-left
-        .personnel-item-icon.personnel-item1
-        .personnel-item-desc.bg-success 基本信息
-    .personnel-info-right.form-split
-        .form-btn-group
-            button.btn.btn-default(ng-click="edit()") 编辑
-        .form-group.block
-            label.control-label 员工编号：
-            .form-content {{currentUser.employeeNo}}
-        .form-group
-            label.control-label 姓名：
-            .form-content {{currentUser.name}}
-        .form-group
-            label.control-label 性别：
-            .form-content {{currentUser.gender.displayName}}
-        .form-group.block
-            label.control-label 身份证号：
-            .form-content {{currentUser.identityNo}}
-        .form-group
-            label.control-label 政治面貌：
-            .form-content {{currentUser.politicalStatus.displayName}}
-        .form-group
-            label.control-label 学历：
-            .form-content {{currentUser.educationBackground.displayName}}
-        .form-group
-            label.control-label 学位：
-            .form-content {{currentUser.degree.displayName}}
-        .form-group
-            label.control-label 毕业院校：
-            .form-content {{currentUser.school}}
-        .form-group
-            label.control-label 专业：
-            .form-content {{currentUser.major}}
-        .form-group
-            label.control-label 英语等级：
-            .form-content {{currentUser.englishLevel.displayName}}
-        .form-group
-            label.control-label 联系方式：
-            .form-content {{currentUser.contact.mobile}}
+form()
+    md-toolbar
+        .md-toolbar-tools
+            span 基本人事信息
+            span(flex)
+            span(ng-hide="editing")
+                md-button.md-raised(ng-click="edit($event)") 编辑
+            span(ng-show="editing")
+                md-button 取消
+                md-button.md-primary.md-raised() 保存
+    md-content
+        section.form-material-section
+            md-subheader.md-primary 个人信息
+            fieldset(ng-disabled="!editing")
+                md-input-container()
+                    label 员工编号
+                    input(disabled ng-model="currentUser.employeeNo")
+                div(layout)
+                    md-input-container(flex)
+                        label 姓名
+                        input(ng-model="current.name" name="name" required)
+                    md-input-container.row-has-value(flex)
+                        label 性别
+                        md-select(ng-model="current.gender" md-on-open="loadEnum('genders')" required)
+                            md-select-label {{current.gender ? current.gender.displayName : '无'}}
+                            md-option(ng-value="gender" ng-repeat="gender in enums.genders track by gender.id") {{gender.displayName}}
+                div(layout)
+                    md-input-container(flex)
+                        label 籍贯
+                        input(ng-model="current.name" name="name" required)
+                    md-input-container.row-has-value(flex)
+                        label 民族
+                        md-select(ng-model="current.gender" md-on-open="loadEnum('genders')" required)
+                            md-select-label {{current.gender ? current.gender.displayName : '无'}}
+                            md-option(ng-value="gender" ng-repeat="gender in enums.genders track by gender.id") {{gender.displayName}}
+                div(layout)
+                    md-input-container(flex)
+                        label 出生地
+                        input(ng-model="current.name" name="name" required)
+                    md-input-container.row-has-value(flex)
+                        label 婚姻状况
+                        md-select(ng-model="current.gender" md-on-open="loadEnum('genders')" required)
+                            md-select-label {{current.gender ? current.gender.displayName : '无'}}
+                            md-option(ng-value="gender" ng-repeat="gender in enums.genders track by gender.id") {{gender.displayName}}
+                div(layout)
+                    md-input-container(flex)
+                        label 身份证号
+                        input(ng-model="current.identityNo" name="identityNo" required)
+                    md-input-container.row-has-value(flex)
+                        label 政治面貌
+                        md-select(ng-model="current.politicalStatus" md-on-open="loadEnum('political_status')" name="political_status")
+                            md-select-label {{current.politicalStatus? current.politicalStatus.displayName : '无'}}
+                            md-option(ng-value="political" ng-repeat="political in enums.political_status") {{political.displayName}}
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 学历
+                        md-select(ng-model="current.educationBackground", md-on-open="loadEnum('education_backgrounds')")
+                            md-select-label {{current.educationBackground? current.educationBackground.displayName : '无'}}
+                            md-option(ng-value="edu" ng-repeat="edu in enums.education_backgrounds") {{edu.displayName}}
+                    md-input-container.row-has-value(flex)
+                        label 学位
+                        md-select(ng-model="current.degree", md-on-open="loadEnum('degrees')")
+                            md-select-label {{current.degree? current.degree.displayName: '无'}}
+                            md-option(ng-value="degree" ng-repeat="degree in enums.degrees") {{degree.displayName}}
+                div(layout)
+                    md-input-container(flex)
+                        label 毕业院校
+                        input(ng-model="current.school" name="school" required)
+                    md-input-container(flex)
+                        label 专业
+                        input(ng-model="current.major" name="major" required)
+                md-input-container.row-has-value
+                    label 英语等级
+                    md-select(ng-model="current.englishLevel", md-on-open="loadEnum('english_levels')")
+                        md-select-label {{current.englishLevel? current.englishLevel.displayName : '无'}}
+                        md-option(ng-value="englishLevel" ng-repeat="englishLevel in enums.english_levels") {{englishLevel.displayName}}
+
+            md-subheader.md-primary 联系方式
+            fieldset(ng-disabled="!editing")
+                div(layout)
+                    md-input-container(flex)
+                        label 固定电话
+                        input(ng-model="current.contact.mobile" name="mobile" required)
+                    md-input-container(flex)
+                        label 手机号码
+                        input(ng-model="current.contact.mobile" name="mobile" required)
+                md-input-container
+                    label 家庭住址
+                    input(ng-model="current.contact.mobile" name="mobile" required)
+                md-input-container
+                    label 通信地址
+                    input(ng-model="current.contact.mobile" name="mobile" required)
+                div(layout)
+                    md-input-container(flex)
+                        label 邮政编码
+                        input(ng-model="current.contact.mobile" name="mobile" required)
+                    md-input-container(flex)
+                        label 电子邮箱
+                        input(ng-model="current.contact.mobile" name="mobile" required)
+
+            md-subheader.md-primary 岗位信息
+            fieldset(ng-disabled="!editing")
+                .form-group
+                    label 所属部门
+                    //- md-select(ng-model="current.department")
+                    //-     md-select-label {{current.department.name}}
+                    //-     md-option(ng-value="org" ng-repeat="org in allOrgs track by org.id") {{org.name}}
+                    ui-select(
+                        ng-model="current.department"
+                        ng-change="params.orgPos = current.department.positions.length? current.department.positions: current.department.positions.$fetch();current.position = null"
+                        ng-init="params.orgPos = current.department.positions.length? current.department.positions: current.department.positions.$fetch();current.position = null"
+                        reset-search-input="true"
+                        style="width: 500px"
+                        )
+                        ui-select-match(placeholder="请输入机构名称") {{ $select.selected.name }}
+                        ui-select-choices(repeat="org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 岗位
+                        md-select(ng-model="current.position")
+                            md-select-label {{current.position.name || '无'}}
+                            md-option(ng-value="pos" ng-repeat="pos in params.orgPos") {{pos.name}}
+                    md-input-container.row-has-value(flex)
+                        label 分类
+                        md-select(ng-model="current.category" md-on-open="loadEnum('categories')")
+                            md-select-label {{current.category? current.category.displayName : '无'}}
+                            md-option(ng-value="category" ng-repeat="category in enums.categories") {{category.displayName}}
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 通道
+                        md-select(ng-model="current.channel" md-on-open="loadEnum('channels')")
+                            md-select-label {{current.channel? current.channel.displayName : '无'}}
+                            md-option(ng-value="channel" ng-repeat="channel in enums.channels") {{channel.displayName}}
+                    md-input-container(flex)
+                        label 类别
+                        input(ng-model="current.position.postType")
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 属地化地点
+                        md-select(ng-model="current.location" md-on-open="loadEnum('locations')")
+                            md-select-label {{current.location? current.location.displayName : '无'}}
+                            md-option(ng-value="location" ng-repeat="location in enums.locations") {{location.displayName}}
+                    md-input-container.row-has-value(flex)
+                        label 用工性质
+                        md-select(ng-model="current.laborRelation" md-on-open="loadEnum('labor_relations')")
+                            md-select-label {{current.laborRelation? current.laborRelation.displayName : '无'}}
+                            md-option(ng-value="laborRelation" ng-repeat="laborRelation in enums.labor_relations") {{laborRelation.displayName}}
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 用工关系状态
+                        md-select(ng-model="current.employmentStatus" md-on-open="loadEnum('employment_status')")
+                            md-select-label {{current.employmentStatus? current.employmentStatus.displayName : '无'}}
+                            md-option(ng-value="empStatus" ng-repeat="empStatus in enums.employment_status") {{empStatus.displayName}}
+
+            md-subheader.md-primary 职称信息
+            fieldset(ng-disabled="!editing")
+                div(layout)
+                    md-input-container(flex)
+                        label 职称
+                        md-select(ng-model="current.gender" md-on-open="loadEnum('genders')" required)
+                            md-select-label {{current.gender ? current.gender.displayName : '无'}}
+                            md-option(ng-value="gender" ng-repeat="gender in enums.genders track by gender.id") {{gender.displayName}}
+                    md-input-container.row-has-value(flex)
+                        label 职称级别
+                        md-select(ng-model="current.gender" md-on-open="loadEnum('genders')" required)
+                            md-select-label {{current.gender ? current.gender.displayName : '无'}}
+                            md-option(ng-value="gender" ng-repeat="gender in enums.genders track by gender.id") {{gender.displayName}}
+                md-input-container
+                    label 技术职务
+                    input(disabled ng-model="currentUser.employeeNo")
+                //- .form-group.block
+                //-     label.control-label 员工编号：
+                //-     .form-content {{currentUser.employeeNo}}
+                //- .form-group
+                //-     label.control-label 姓名：
+                //-     .form-content {{currentUser.name}}
+                //- .form-group
+                //-     label.control-label 性别：
+                //-     .form-content {{currentUser.gender.displayName}}
+                //- .form-group
+                //-     label.control-label 籍贯
+                //-     .form-content {{currentUser.name}}
+                //- .form-group
+                //-     label.control-label 民族
+                //-     .form-content {{currentUser.name}}
+                //- .form-group
+                //-     label.control-label 出生地
+                //-     .form-content {{currentUser.name}}
+                //- .form-group
+                //-     label.control-label 婚姻状况
+                //-     .form-content {{currentUser.name}}
+                //- .form-group.block
+                //-     label.control-label 身份证号：
+                //-     .form-content {{currentUser.identityNo}}
+                //- .form-group
+                //-     label.control-label 政治面貌：
+                //-     .form-content {{currentUser.politicalStatus.displayName}}
+                //- .form-group
+                //-     label.control-label 学历：
+                //-     .form-content {{currentUser.educationBackground.displayName}}
+                //- .form-group
+                //-     label.control-label 学位：
+                //-     .form-content {{currentUser.degree.displayName}}
+                //- .form-group
+                //-     label.control-label 毕业院校：
+                //-     .form-content {{currentUser.school}}
+                //- .form-group
+                //-     label.control-label 专业：
+                //-     .form-content {{currentUser.major}}
+                //- .form-group
+                //-     label.control-label 英语等级：
+                //-     .form-content {{currentUser.englishLevel.displayName}}
+            //- .form-group
+            //-     label.control-label 联系方式：
+            //-     .form-content {{currentUser.contact.mobile}}

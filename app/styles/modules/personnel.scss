@@ -1,4 +1,5 @@
 .personnel-menu {
+    border: 1px solid $text-muted;
     margin-right: 20px;
     width: 270px;
 
@@ -87,7 +88,6 @@
 
         .personnel-top-header {
             border: 0;
-            border-bottom: 1px solid #c3c3c3;
         }
 
         .personnel-content-body {
@@ -96,7 +96,7 @@
     }
 
     .personnel-info-section {
-        margin-bottom: 30px;
+        // margin-bottom: 30px;
 
         .personnel-info-row {
             height: 40px;

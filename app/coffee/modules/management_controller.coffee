@@ -17,39 +17,32 @@ class Route
         stateProvider
             .state 'self', {
                 url: '/self-service'
-                template: '<div ui-view="profile"></div>'
+                templateUrl: 'partials/self/self_info.html'
                 ncyBreadcrumb: {
                     label: "员工自助"
                 }
             }
             .state 'self.profile', {
                 url: '/profile'
-                views: {
-                    "profile@self": {
-                        controller: SelfCtrl
-                        controllerAs: 'ctrl'
-                        templateUrl: 'partials/self/self_info.html'
-                    }
-                }
-                ncyBreadcrumb: {
-                    label: "个人信息"
-                }
+                controller: ProfileCtrl
+                controllerAs: 'ctrl'
+                templateUrl: 'partials/self/self_info_basic/self_info_basic.html'
             }
-            .state 'self.profile.basic', {
-                url: ''
-                views: {
-                    "detail@self.profile": {
-                        controller: ProfileCtrl
-                        controllerAs: 'ctrl'
-                        templateUrl: 'partials/self/self_info_basic/self_info_basic.html'
-                    }
-                }
-                ncyBreadcrumb: {
-                    label: "我的基本信息"
-                }
+            # .state 'self.profile.basic', {
+            #     url: ''
+            #     views: {
+            #         "detail@self.profile": {
+            #             controller: ProfileCtrl
+            #             controllerAs: 'ctrl'
+            #             templateUrl: 'partials/self/self_info_basic/self_info_basic.html'
+            #         }
+            #     }
+            #     ncyBreadcrumb: {
+            #         label: "我的基本信息"
+            #     }
 
-            }
-            .state 'self.profile.members', {
+            # }
+            .state 'self.members', {
                 url: '/members'
                 views: {
                     "detail@self.profile": {
@@ -63,7 +56,7 @@ class Route
                 }
 
             }
-            .state 'self.profile.education', {
+            .state 'self.education', {
                 url: '/education'
                 views: {
                     "detail@self.profile": {
@@ -77,7 +70,7 @@ class Route
                 }
 
             }
-            .state 'self.profile.experience', {
+            .state 'self.experience', {
                 url: '/experience'
                 views: {
                     "detail@self.profile": {
@@ -92,16 +85,16 @@ class Route
 
             }
 
-class SelfCtrl extends nb.Controller
+# class SelfCtrl extends nb.Controller
 
-    @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope']
+#     @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope']
 
 
-    constructor: (@scope, @sweet, @Employee, @rootScope) ->
-        @scope.currentUser = @rootScope.currentUser
-        @loadInitailData()
+#     constructor: (@scope, @sweet, @Employee, @rootScope) ->
+#         @scope.currentUser = @rootScope.currentUser
+#         @loadInitailData()
 
-    loadInitailData: ->
+#     loadInitailData: ->
 
 
 
