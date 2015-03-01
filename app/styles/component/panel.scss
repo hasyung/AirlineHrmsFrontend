@@ -70,6 +70,7 @@
 
 .custom-table {
     border-bottom: 1px solid #dde5e7;
+    table-layout: fixed;
 
     tr {
         cursor: pointer;
@@ -89,6 +90,11 @@
                 input {
                     cursor: pointer;
                 }
+            }
+            &.overflow-text {
+                overflow:hidden;
+                white-space:nowrap;
+                text-overflow:ellipsis;
             }
         }
     }

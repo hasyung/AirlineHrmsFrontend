@@ -41,19 +41,19 @@ div(nb-table='ctrl.records' nb-safe-src="ctrl.records" ng-init="ctrl.records = c
                                             tr
                                                 th(colspan="2") 修改前
                                                 th(colspan="2") 修改后
-                                            tr(ng-repeat="(field, val) in record.auditedChanges")
+                                            tr(ng-repeat="(field, val) in record.auditedChanges", ng-if="field != 'unused'")
                                                 td(ng-bind="field")
-                                                td(ng-bind="val[0] || '无'")
+                                                td.overflow-text(ng-bind="val[0] || '无'")
                                                 td(ng-bind="field")
-                                                td(ng-bind="val[1] || '无'")
+                                                td.overflow-text(ng-bind="val[1] || '无'")
 
                                     .panel-body.popup-body(ng-if="record.action == '新增' || record.action == '删除'", slimscroll, height="300px")
                                         table.table.table-striped.custom-table
                                             tr
                                                 th(colspan="2") {{record.action}}
-                                            tr(ng-repeat="(field, val) in record.auditedChanges")
+                                            tr(ng-repeat="(field, val) in record.auditedChanges", ng-if="field != 'unused'")
                                                 td(ng-bind="field")
-                                                td(ng-bind="val || '无'")
+                                                td.overflow-text(ng-bind="val || '无'")
                                                 
                                         //- .row
                                         //-     .col-md-12(ng-bind="record.action")
