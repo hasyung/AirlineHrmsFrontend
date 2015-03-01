@@ -1,10 +1,10 @@
-div(nb-table='ctrl.records' nb-safe-src="ctrl.records" ng-init="ctrl.records = ctrl.Record.$collection().$refresh()")
+div.app-content-wrapper(nb-table='ctrl.records' nb-safe-src="ctrl.records" ng-init="ctrl.records = ctrl.Record.$collection().$refresh()")
         .search-container(nb-search)
             div(nb-predicate="姓名" predicate-attr="name")
                 input(name="name" placeholder="姓名" ng-model="name")
             div(nb-predicate="员工编号" predicate-attr="employee_no")
                 input(name="employee_no" placeholder="工号" ng-model="employee_no")
-            
+
             div(nb-predicate="创建时间" predicate-attr="created_at")
                 input(ng-model="created_at.from" bs-datepicker)
                 span.gap 至
@@ -54,7 +54,7 @@ div(nb-table='ctrl.records' nb-safe-src="ctrl.records" ng-init="ctrl.records = c
                                             tr(ng-repeat="(field, val) in record.auditedChanges")
                                                 td(ng-bind="field")
                                                 td(ng-bind="val || '无'")
-                                                
+
                                         //- .row
                                         //-     .col-md-12(ng-bind="record.action")
                                         //- .row(ng-repeat="(field, val) in record.auditedChanges" ng-if="val | isNotEqualTo:null")
