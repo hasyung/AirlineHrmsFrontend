@@ -1,5 +1,5 @@
-.app-content-wrapper.personnel-info
-    .personnel-menu.app-aside
+.app-content-wrapper(layout="row" flex style="padding-left: 0")
+    .personnel-menu
         .avator
             .avator-area
             h3(ng-bind="currentUser.name")
@@ -7,7 +7,7 @@
         .personnel-info-list
             ul
                 li(ui-sref-active="active")
-                    a(ui-sref=".basic")
+                    a(ui-sref=".profile")
                         span.switch-circle
                         | 基本信息
                 li(ui-sref-active="active")
@@ -40,8 +40,10 @@
                 li
                     span.switch-circle(ui-sref="^.resume")
                     | 档案信息
-    .personnel-content.pull-left
+
+    .personnel-content(flex)
         div(ui-view="")
+
         //- include info_basic
         //- include info_detail
 

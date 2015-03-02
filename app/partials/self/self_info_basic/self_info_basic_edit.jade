@@ -1,37 +1,33 @@
-form(ng-submit="save(currentUser.$save())" )
+form(ng-submit="save(currentUser.$save())" ng-controller="EditableResource")
+    md-toolbar
+        .md-toolbar-tools
+            span 基本人事信息
+    section.personnel-info-control
+        .form-btn-group
+            button.btn.btn-info(type="submit") 保存
+            button.btn.btn-default(ng-click="cancel(currentUser, $event)") 取消
+        .form-group.block
+            label.control-label 姓名：
+            input.form-control(ng-model="currentUser.name")
+        .form-group
+            label.control-label 性别：
+            nb-dropdown.form-content(ng-model="currentUser.gender", remote-key="genders")
+        .form-group
+            label.control-label 籍贯：
+            input.form-control(ng-model="currentUser.nativePlace")
+        .form-group
+            label.control-label 民族：
+            nb-dropdown.form-content(ng-model="currentUser.nation", remote-key="nations")
+        .form-group
+            label.control-label 出生地：
+            input.form-control(ng-model="currentUser.birthPlace")
+        .form-group
+            label.control-label 身份证号：
+            input.form-control(ng-model="currentUser.identityNo")
+        .form-group
+            label.control-label 婚姻状况：
+            nb-dropdown.form-content(ng-model="currentUser.maritalStatus", remote-key="marital_status")
     section.personnel-info-control.clearfix
-        .personnel-info-left
-            .personnel-item-icon.personnel-item1
-            .personnel-item-desc.bg-success 基本信息
-        .personnel-info-right.form-split
-                .form-btn-group
-                    button.btn.btn-info(type="submit") 保存
-                    button.btn.btn-default(ng-click="cancel(currentUser, $event)") 取消
-                .form-group.block
-                    label.control-label 姓名：
-                    input.form-control(ng-model="currentUser.name")
-                .form-group
-                    label.control-label 性别：
-                    nb-dropdown.form-content(ng-model="currentUser.gender", remote-key="genders")
-                .form-group
-                    label.control-label 籍贯：
-                    input.form-control(ng-model="currentUser.nativePlace")
-                .form-group
-                    label.control-label 民族：
-                    nb-dropdown.form-content(ng-model="currentUser.nation", remote-key="nations")
-                .form-group
-                    label.control-label 出生地：
-                    input.form-control(ng-model="currentUser.birthPlace")
-                .form-group
-                    label.control-label 身份证号：
-                    input.form-control(ng-model="currentUser.identityNo")
-                .form-group
-                    label.control-label 婚姻状况：
-                    nb-dropdown.form-content(ng-model="currentUser.maritalStatus", remote-key="marital_status")
-    section.personnel-info-control.clearfix
-        .personnel-info-left
-            .personnel-item-icon.personnel-item1
-            .personnel-item-desc.bg-success 联系方式
         .personnel-info-right.form-split
                 .form-group.block
                     label.control-label 固定电话：
