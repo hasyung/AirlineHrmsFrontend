@@ -12,28 +12,18 @@ class Route
 
     constructor: (stateProvider) ->
         stateProvider
-            .state 'position', {
+            .state 'position_list', {
                 url: '/positions'
-                template: '<div ui-view></div>'
-                controller: PositionCtrl
-                controllerAs: 'ctrl'
-                abstract:true
-            }
-            .state 'position.list', {
-                url: ''
                 templateUrl: 'partials/position/position.html'
                 controller: PositionCtrl
                 controllerAs: 'ctrl'
             }
-            .state 'position.changes', {
-                url: '/changes'
-                views: {
-                    "@": {
-                        controller: PositionChangesCtrl
-                        controllerAs: 'ctrl'
-                        templateUrl: 'partials/position/position_changes.html'
-                    }
-                }
+            .state 'position_changes', {
+                url: '/positions/changes'
+                controller: PositionChangesCtrl
+                controllerAs: 'ctrl'
+                templateUrl: 'partials/position/position_changes.html'
+
             }
 
 class PositionCtrl extends nb.Controller
@@ -65,6 +55,6 @@ class PositionChangesCtrl extends nb.Controller
         @changes.$refresh(tableState)
 
 
-    
+
 
 app.config(Route)
