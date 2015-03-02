@@ -40,49 +40,35 @@
 
 
 		form.org-postadd-detail.org-postadd-jd(title="岗位说明" wz-step canexit="posAdvancedForm.$valid" name="posAdvancedForm")
-			.org-desc-section
-				h3 工作职责
-				label.postadd-control-label 工作职责
-				textarea(simditor
-					toolbar="['bold', 'italic', 'underline', 'ol', 'ul']"
-					placeholder="这里输入内容"
-					autofocus, ng-model="specification.duty")
-			.org-desc-section
-				h3 工作权限
-				md-input-container(flex)
-					label 人事权限
-					input(type='text', placeholder='请输入人事权限', ng-model="specification.personnelPermission")
-				md-input-container(flex)
-					label 财务权限
-					input(type='text', placeholder='请输入财务权限', ng-model="specification.financialPermission")
-				md-input-container(flex)
-					label 业务权限
-					input(type='text', placeholder='请输入业务权限', ng-model="specification.businessPermission")
-			.org-desc-section
-				h3 工作关系
-				md-input-container(flex)
-					label 直属上级
-					input(type='text', placeholder='请输入直属上级', ng-model="specification.superior")
-				md-input-container(flex)
-					label 直属下级
-					input(type='text', placeholder='请输入直属下级', ng-model="specification.underling")
-				md-input-container(flex)
-					label 内部联系
-					input(type='text', placeholder='请输入内部联系', ng-model="specification.internalRelation")
-				md-input-container(flex)
-					label 外部联系
-					input(type='text', placeholder='请输入外部联系', ng-model="specification.externalRelation")
-			.org-desc-section
-				h3 任职条件
-				md-input-container(flex)
-					label 任职条件
-					textarea(
-						simditor
-						toolbar="['bold', 'italic', 'underline', 'ol', 'ul']"
-						placeholder="这里输入内容"
-						ng-model="specification.qualification")
+			md-input-container
+				label 工作职责
+				textarea(ng-model="specification.duty" placeholder="工作职责")
+			md-input-container(flex)
+				label 人事权限
+				input(type='text', placeholder='请输入人事权限', ng-model="specification.personnelPermission")
+			md-input-container(flex)
+				label 财务权限
+				input(type='text', placeholder='请输入财务权限', ng-model="specification.financialPermission")
+			md-input-container(flex)
+				label 业务权限
+				input(type='text', placeholder='请输入业务权限', ng-model="specification.businessPermission")
+			md-input-container(flex)
+				label 直属上级
+				input(type='text', placeholder='请输入直属上级', ng-model="specification.superior")
+			md-input-container(flex)
+				label 直属下级
+				input(type='text', placeholder='请输入直属下级', ng-model="specification.underling")
+			md-input-container(flex)
+				label 内部联系
+				input(type='text', placeholder='请输入内部联系', ng-model="specification.internalRelation")
+			md-input-container(flex)
+				label 外部联系
+				input(type='text', placeholder='请输入外部联系', ng-model="specification.externalRelation")
+			md-input-container
+				label 任职条件
+				textarea(ng-model="specification.qualification" placeholder="任职条件")
 
-				md-input-container(flex)
-					label
-					button.btn.btn-info(type='submit' wz-next="" ng-disabled="posAdvancedForm.$invalid") 完成
+			md-input-container(flex)
+				label
+				button.btn.btn-info(type='submit' wz-next="" ng-disabled="posAdvancedForm.$invalid") 完成
 
