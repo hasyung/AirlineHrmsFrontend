@@ -1,0 +1,11 @@
+form(name="positionEditForm" ng-submit="save(currentSpe.$save())" ng-controller="EditableResource" ng-init="params = {}")
+    .form-btn-group(ng-hide="editing")
+        md-button.md-primary.md-raised(ng-click="edit($event)") 编辑
+    .form-btn-group.alive(ng-show="editing")
+        md-button.md-primary(ng-click="cancel(currentSpe, $event)") 取消
+        md-button.md-primary.md-raised(type="submit" ng-disabled="positionEditForm.$invalid") 保存
+    fieldset(ng-disabled="!editing")
+        md-input-container
+            label 工作职责
+            textarea(ng-model="currentSpe.duty" columns="1" md-maxlength="250")
+
