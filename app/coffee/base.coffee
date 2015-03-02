@@ -69,5 +69,17 @@ class EditableResourceCtrl
             evt.preventDefault() if evt
             resource.$restore() if resource && resource.$restore
             scope.editing = false
+class NewResourceCtrl
+
+    @.$inject = ['$scope']
+
+    constructor: (scope) ->
+        scope.create = (resource, form) ->
+            return if form && form.$invalid
+            resource.$save() if resource.$save
+
+
+
 
 app.controller('EditableResource', EditableResourceCtrl)
+app.controller('NewResource', NewResourceCtrl)
