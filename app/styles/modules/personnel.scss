@@ -114,8 +114,8 @@
         }
 
         .form-material-section {
+            padding: 0 30px 30px;
             position: relative;
-            padding: 0 30px;
 
             &:hover {
                 .form-btn-group {
@@ -188,12 +188,15 @@
 
     .personnel-content-body {
         background-color: #fff;
-        border: 1px solid #c3c3c3;
+        // border: 1px solid #c3c3c3;
         border-top: 0;
         width: 100%;
     }
 
     .personnel-section-wrap {
+        border: 1px solid #c3c3c3;
+        margin-bottom: 30px;
+
         &:nth-child(odd) {
             background-color: #fff;
         }
