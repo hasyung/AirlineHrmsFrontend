@@ -50,17 +50,17 @@ section.org-detail
             .org-form-group
                 label.control-label.org-label.drop-label 名称：
                 .form-content
-                    input(ng-model="neworg.name", type="text", required="true", name="orgName")
+                    input(ng-model="neworg.name", type="text", required, name="orgName")
                     div(ng-messages="newsubForm.orgName.$error", ng-if="newsubForm.orgName.$dirty")
                         .form-group-error(ng-message="required") 名称必填
 
             .org-form-group
                 label.control-label.org-label.drop-label 机构性质：
                 .form-content
-                    nb-dropdown(ng-model="neworg.nature" remote-key="department_natures", required="true", name="orgAddr")
+                    nb-dropdown(ng-model="neworg.nature" remote-key="department_natures", required, name="orgAddr")
 
                     div(ng-messages="newsubForm.orgAddr.$error", ng-if="newsubForm.orgAddr.$dirty")
-                        .form-group-error(ng-message="required") 地点必选
+                        .form-group-error(ng-message="required") 机构性质必选
 
             .org-form-group
                 label.control-label.org-label.drop-label 职级：
@@ -103,5 +103,4 @@ section(ng-if="currentOrg.status !== 'destroy_inactive'")
                             nb-dialog-data="position"
                         ) {{position.name}}
                     td  {{position.budgetedStaffing}}
-                    td  {{position.staffing}}
-
+                    td(ng-class="{'overstaffed': position.isOverstaffed}")  {{position.staffing}}

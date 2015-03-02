@@ -26,6 +26,10 @@
                 input(ng-model="birthday.from" bs-datepicker)
                 span.gap 至
                 input(ng-model="birthday.to" bs-datepicker)
+            div(nb-predicate="入职时间" predicate-attr="join_scal_date")
+                input(ng-model="join_scal_date.from" bs-datepicker)
+                span.gap 至
+                input(ng-model="join_scal_date.to" bs-datepicker)
         .search-btn-group
             md-button.md-primary.md-raised(nb-pipe="ctrl.search(tableState)") 开始搜索
             .right-align.nb-dropdown.pull-right(simple-dropdown, btn-text="导出")

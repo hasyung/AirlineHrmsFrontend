@@ -36,18 +36,49 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
         .line.dk.hidden-folded
       nav.navi.ng-scope
         ul.nav.ng-scope
-          li
-            a.auto(href='')
-              span.pull-right.text-muted
-                i.fa.fa-fw.fa-angle-down.text-active
-              i.glyphicon.glyphicon-home.nav-text-color1
-              span.font-bold 首页
+          //- li
+          //-   a.auto(href='')
+          //-     span.pull-right.text-muted
+          //-       i.fa.fa-fw.fa-angle-down.text-active
+          //-     i.glyphicon.glyphicon-home.nav-text-color1
+          //-     span.font-bold 首页
           //- li
           //-   a.auto(ui-sref='personnel')
           //-     span.pull-right.text-muted
           //-       i.fa.fa-fw.fa-angle-down.text-active
           //-     i.fa.fa-group.nav-text-color1
           //-     span.font-bold 人事信息
+          li(nav-toggle-active)
+            a.auto(href="javascript:;")
+              span.pull-right.text-muted
+                i.fa.fa-fw.fa-angle-right.text
+                i.fa.fa-fw.fa-angle-down.text-active
+              i.glyphicon.glyphicon-th-list.nav-text-color1
+              span 员工自助
+            ul.nav.nav-sub.dk
+              li.nav-sub-header
+                a(ui-sref='self.profile')
+              li(ng-class="{'focus':$state.includes('self.profile.basic')}")
+                a(ui-sref='self.profile')
+                  span 我的基本信息
+              li
+                a(href='#/app/personnel/regulariz')
+                  span 优免票
+              li
+                a(href='#/app/personnel/regulariz')
+                  span 学历变更申请
+              li
+                a(href='#/app/personnel/regulariz')
+                  span 绩效申诉
+              li
+                a(href='#/app/personnel/regulariz')
+                  span 个人信息变更记录
+              li
+                a(href='#/app/personnel/regulariz')
+                  span 公司通讯录
+              li
+                a(href='#/app/personnel/regulariz')
+                  span 部门信箱
           li
             a.auto(ui-sref='org')
               span.pull-right.text-muted
@@ -59,7 +90,7 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
               span.pull-right.text-muted
                 i.fa.fa-fw.fa-angle-right.text
                 i.fa.fa-fw.fa-angle-down.text-active
-              i.fa.fa-sitemap.nav-text-color1
+              i.icon-mouse.nav-text-color1
               span 岗位管理
             ul.nav.nav-sub.dk
               li.nav-sub-header
@@ -97,7 +128,7 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
               span.pull-right.text-muted
                 i.fa.fa-fw.fa-angle-right.text
                 i.fa.fa-fw.fa-angle-down.text-active
-              i.fa.fa-clock-o.nav-text-color1
+              i.icon-clock.nav-text-color1
               span 考勤管理
             ul.nav.nav-sub.dk
               li.nav-sub-header
@@ -113,7 +144,7 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
               span.pull-right.text-muted
                 i.fa.fa-fw.fa-angle-right.text
                 i.fa.fa-fw.fa-angle-down.text-active
-              i.fa.fa-group.nav-text-color1
+              i.icon-screen-desktop.nav-text-color1
               span 培训管理
             ul.nav.nav-sub.dk
               li.nav-sub-header
@@ -135,7 +166,7 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
               span.pull-right.text-muted
                 i.fa.fa-fw.fa-angle-right.text
                 i.fa.fa-fw.fa-angle-down.text-active
-              i.fa.fa-group.nav-text-color1
+              i.icon-user.nav-text-color1
               span 福利
             ul.nav.nav-sub.dk
               li.nav-sub-header
@@ -160,7 +191,7 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
               span.pull-right.text-muted
                 i.fa.fa-fw.fa-angle-right.text
                 i.fa.fa-fw.fa-angle-down.text-active
-              i.fa.fa-group.nav-text-color1
+              i.icon-credit-card.nav-text-color1
               span 薪酬
             ul.nav.nav-sub.dk
               li.nav-sub-header
@@ -194,7 +225,7 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
               span.pull-right.text-muted
                 i.fa.fa-fw.fa-angle-right.text
                 i.fa.fa-fw.fa-angle-down.text-active
-              i.fa.fa-group.nav-text-color1
+              i.icon-briefcase.nav-text-color1
               span 劳动关系
             ul.nav.nav-sub.dk
               li.nav-sub-header
@@ -228,7 +259,7 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
               span.pull-right.text-muted
                 i.fa.fa-fw.fa-angle-right.text
                 i.fa.fa-fw.fa-angle-down.text-active
-              i.fa.fa-group.nav-text-color1
+              i.icon-note.nav-text-color1
               span 绩效管理
             ul.nav.nav-sub.dk
               li.nav-sub-header
@@ -242,37 +273,6 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
               li
                 a()
                   span 绩效申诉管理
-          li(nav-toggle-active)
-            a.auto(href="javascript:;")
-              span.pull-right.text-muted
-                i.fa.fa-fw.fa-angle-right.text
-                i.fa.fa-fw.fa-angle-down.text-active
-              i.glyphicon.glyphicon-th-list.nav-text-color2
-              span 员工自助
-            ul.nav.nav-sub.dk
-              li.nav-sub-header
-                a(ui-sref='self.profile')
-              li
-                a(ui-sref='self.profile')
-                  span 我的基本信息
-              li
-                a(href='#/app/personnel/regulariz')
-                  span 优免票
-              li
-                a(href='#/app/personnel/regulariz')
-                  span 学历变更申请
-              li
-                a(href='#/app/personnel/regulariz')
-                  span 绩效申诉
-              li
-                a(href='#/app/personnel/regulariz')
-                  span 个人信息变更记录
-              li
-                a(href='#/app/personnel/regulariz')
-                  span 公司通讯录
-              li
-                a(href='#/app/personnel/regulariz')
-                  span 部门信箱
           //- li(nav-toggle-active)
           //-   a.auto(href='')
           //-     span.pull-right.text-muted
