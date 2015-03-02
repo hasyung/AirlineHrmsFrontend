@@ -1,34 +1,46 @@
-form(ng-submit="save(wife.$save())" ng-init="wife.relationType='配偶'")
-    .form-btn-group
-        button.btn.btn-info(type="submit") 保存
-        button.btn.btn-default(ng-click="cancel(wife, $event)") 取消
-    .form-group.block
-        label.control-label 姓名：
-        input.form-control(ng-model="wife.name")
-    .form-group.block
-        label.control-label 出生年月：
-        input.form-control(ng-model="wife.birthday", bs-datepicker)
-    .form-group
-        label.control-label 性别：
-        input.form-control(ng-model="wife.gender")
-    .form-group
-        label.control-label 籍贯：
-        input.form-control(ng-model="wife.nativePlace")
-    .form-group
-        label.control-label 民族：
-        input.form-control(ng-model="wife.nation")
-    .form-group
-        label.control-label 文化程度：
-        input.form-control(ng-model="wife.educationBackground")
-    .form-group
-        label.control-label 政治面貌：
-        input.form-control(ng-model="wife.politicalStatus")
-    .form-group
-        label.control-label 工作单位：
-        input.form-control(ng-model="wife.company")
-    .form-group
-        label.control-label 职业：
-        input.form-control(ng-model="wife.position")
-    .form-group
-        label.control-label 联系方式：
-        input.form-control(ng-model="wife.mobile")
+form(ng-submit="save(wife.$save(),familymembersForm)" name="familymembersForm" ng-controller="EditableResource")
+    .form-btn-group(ng-hide="editing")
+        md-button.md-primary.md-raised(type="button" ng-click="edit($event)") 编辑
+    .form-btn-group.alive(ng-show="editing")
+        md-button(ng-click="cancel(wife, $event)") 取消
+        md-button.md-primary.md-raised(type="submit") 保存
+    fieledset(ng-disabled="!editing")
+
+        div(layout)
+            md-input-container(flex)
+                label 姓名
+                input(ng-model="wife.name")
+            md-input-container(flex)
+                label 性别
+                input(ng-model="wife.gender")
+        div(layout)
+            md-input-container(flex)
+                label 籍贯
+                input(ng-model="wife.nativePlace")
+            md-input-container(flex)
+                label 民族
+                input(ng-model="wife.nation")
+        div(layout)
+            md-input-container(flex)
+                label 出生年月
+                input(type="date" ng-model="wife.birthday")
+            md-input-container(flex)
+                label 身份证号
+                input(ng-model="wife.identityNo" type="number" max-length="18")
+        div(layout)
+            md-input-container(flex)
+                label 文化程度
+                input(ng-model="wife.educationBackground")
+            md-input-container(flex)
+                label 政治面貌
+                input(ng-model="wife.politicalStatus")
+        div(layout)
+            md-input-container(flex)
+                label 工作单位
+                input(ng-model="wife.company")
+            md-input-container(flex)
+                label 职业
+                input(ng-model="wife.position")
+        md-input-container
+            label 联系方式
+            input(ng-model="wife.mobile" type="tel")
