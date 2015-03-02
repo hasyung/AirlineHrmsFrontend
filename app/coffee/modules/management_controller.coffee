@@ -44,17 +44,9 @@ class Route
             # }
             .state 'self.members', {
                 url: '/members'
-                views: {
-                    "detail@self.profile": {
-                        controller: ProfileCtrl
-                        controllerAs: 'ctrl'
-                        templateUrl: 'partials/self/self_info_family/self_info_members.html'
-                    }
-                }
-                ncyBreadcrumb: {
-                    label: "家庭成员"
-                }
-
+                controller: ProfileCtrl
+                controllerAs: 'ctrl'
+                templateUrl: 'partials/self/self_info_family/self_info_members.html'
             }
             .state 'self.education', {
                 url: '/education'

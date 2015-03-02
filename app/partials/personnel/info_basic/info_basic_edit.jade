@@ -1,9 +1,9 @@
-form(name="empEditForm" ng-submit="save(current.$save())" ng-controller="EditableResource")
+form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-controller="EditableResource")
     .form-btn-group(ng-hide="editing")
         md-button.md-primary.md-raised(ng-click="edit($event)") 编辑
     .form-btn-group(ng-show="editing")
-        md-button(ng-click="cancel(current,$event)") 取消
-        md-button.md-primary.md-raised(type="submit" ng-disabled="empEditForm.$invalid") 保存
+        md-button(ng-click="cancel(current,$event, empEditForm)",) 取消
+        md-button.md-primary.md-raised(type="submit") 保存
     fieldset(ng-disabled="!editing")
         md-input-container
             label 员工编号
@@ -45,7 +45,7 @@ form(name="empEditForm" ng-submit="save(current.$save())" ng-controller="Editabl
                 input(type="text", ng-model="current.school")
             md-input-container(flex)
                 label 专业
-                input(type="text" placeholder="请输入专业" ng-model="current.major")
+                input(type="text" placeholder="请输入专业" ng-model="current.major" required)
         div(layout)
             md-input-container.row-has-value(flex)
                 label 英语等级

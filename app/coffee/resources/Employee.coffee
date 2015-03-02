@@ -9,9 +9,9 @@ Employee = (restmod, RMUtils, $Evt) ->
         department: {mask: 'CU', belongsTo: 'Org'}
         # dept: {belongsTo: 'Org', key: 'department_id'}
 
-        joinScalDate: {decode: 'date', param: 'yyyy年MM月dd日',mask: 'CU'}
+        joinScalDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
 
-        startDate: {decode: 'date', param: 'yyyy年MM月dd日',mask: 'CU'}
+        startDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
 
         isSelected: {mask: "CU"}
         resume: { hasOne: 'Resume', mask: 'CU'}
@@ -59,8 +59,8 @@ User = (restmod, RMUtils, $Evt) ->
     .single('/me')
 Education = (restmod, RMUtils, $Evt) ->
     Education = restmod.model().mix 'nbRestApi', {
-        admissionDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
-        graduationDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
+        admissionDate: {decode: 'date', param: 'yyyy-MM-dd'}
+        graduationDate: {decode: 'date', param: 'yyyy-MM-dd'}
         $hooks: {
             'after-create': ->
                 $Evt.$send('education:create:success', "教育经历创建成功")
@@ -72,31 +72,13 @@ Education = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('education:update:error', "教育经历更新失败")
         }
         $config:
-            jsonRoot: 'education_experiences'
-        $extend:
-            Collection:
-                createEdu: (edu)->
-                    self = this
-                    onSuccess = (res)->
-                        console.log res
-                        self.$buidRow
-                        @.$dispatch 'after-newedu'
-                        self.$add()
-
-                    onErorr = ->
-                        @.$dispatch 'after-newedu-error', arguments
-                    url = this.$url()
-                    request = {
-                        url: url
-                        method: 'POST'
-                        data:edu
-                    }
-                    this.$send request, onSuccess, onErorr
+            jsonRootSingle: 'education_experience'
+            jsonRootMany: 'education_experiences'
     }
 Experience = (restmod, RMUtils, $Evt) ->
     Experience = restmod.model().mix 'nbRestApi', {
-        startDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
-        endDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
+        startDate: {decode: 'date', param: 'yyyy-MM-dd'}
+        endDate: {decode: 'date', param: 'yyyy-MM-dd'}
         $hooks: {
             'after-create': ->
                 $Evt.$send('work:create:success', "工作经历创建成功")
@@ -108,7 +90,8 @@ Experience = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('work:update:error', "工作经历更新失败")
         }
         $config:
-            jsonRoot: 'work_experiences'
+            jsonRootSingle: 'work_experience'
+            jsonRootMany: 'work_experiences'
     }
 
 FamilyMember = (restmod, RMUtils, $Evt) ->

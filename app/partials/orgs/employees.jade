@@ -1,1 +1,45 @@
-h1 人员信息
+tabset
+    tab(heading="在岗人员信息")
+        .position-manage.app-content-wrapper
+            div(nb-table='currentEmps' nb-safe-src="currentEmps")
+                input(type="hidden" nb-pipe="ctrl.searchEmp(tableState)")
+                .table-container
+                    h4 人员明细
+                    table.table.table-striped.custom-table
+                        thead
+                            tr
+                                th(select-row="" mode='all')
+                                th 员工编码
+                                th 姓名
+                                th 到岗时间
+                                
+                        tbody
+                            tr(ng-repeat="emp in currentEmps track by emp.id")
+                                td(select-row="emp" mode="multiple")
+                                td(ng-bind="::emp.employee.employeeNo")
+                                td(ng-bind="emp.employee.name")
+                                td(ng-bind="::emp.startDate")
+                    .custom-pages(nb-pagination="currentEmps.$metadata")
+    tab(heading="历任领导信息")
+        .position-manage.app-content-wrapper
+            div(nb-table='currentEmps' nb-safe-src="currentEmps")
+                input(type="hidden" nb-pipe="ctrl.searchEmp(tableState)")
+                .table-container
+                    h4 人员明细
+                    table.table.table-striped.custom-table
+                        thead
+                            tr
+                                th(select-row="" mode='all')
+                                th 工号
+                                th 姓名
+                                th 到岗时间
+                                th 到岗时间
+                                
+                        tbody
+                            tr(ng-repeat="emp in currentEmps track by emp.id")
+                                td(select-row="emp" mode="multiple")
+                                td(ng-bind="::emp.employee.employeeNo")
+                                td(ng-bind="emp.employee.name")
+                                td(ng-bind="::emp.startDate")
+                                td(ng-bind="::emp.endDate")
+                    .custom-pages(nb-pagination="currentEmps.$metadata")
