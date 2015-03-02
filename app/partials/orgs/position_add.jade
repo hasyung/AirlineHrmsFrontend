@@ -42,7 +42,7 @@
 		form.org-postadd-detail.org-postadd-jd(title="岗位说明" wz-step canexit="posAdvancedForm.$valid" name="posAdvancedForm")
 			md-input-container
 				label 工作职责
-				textarea(ng-model="specification.duty" placeholder="工作职责")
+				textarea(ng-model="specification.duty" placeholder="工作职责" md-maxlength="200")
 			md-input-container(flex)
 				label 人事权限
 				input(type='text', placeholder='请输入人事权限', ng-model="specification.personnelPermission")
@@ -66,7 +66,7 @@
 				input(type='text', placeholder='请输入外部联系', ng-model="specification.externalRelation")
 			md-input-container
 				label 任职条件
-				textarea(ng-model="specification.qualification" placeholder="任职条件")
+				textarea(ng-model="specification.qualification" placeholder="任职条件" md-maxlength="200")
 
 			md-input-container(flex)
 				label
