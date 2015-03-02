@@ -50,31 +50,15 @@ class Route
             }
             .state 'self.education', {
                 url: '/education'
-                views: {
-                    "detail@self.profile": {
-                        controller: ProfileCtrl
-                        controllerAs: 'ctrl'
-                        templateUrl: 'partials/self/education.html'
-                    }
-                }
-                ncyBreadcrumb: {
-                    label: "教育经历"
-                }
-
+                controller: ProfileCtrl
+                controllerAs: 'ctrl'
+                templateUrl: 'partials/self/education.html'
             }
             .state 'self.experience', {
                 url: '/experience'
-                views: {
-                    "detail@self.profile": {
-                        controller: ProfileCtrl
-                        controllerAs: 'ctrl'
-                        templateUrl: 'partials/self/experience.html'
-                    }
-                }
-                ncyBreadcrumb: {
-                    label: "工作经历"
-                }
-
+                controller: ProfileCtrl
+                controllerAs: 'ctrl'
+                templateUrl: 'partials/self/experience.html'
             }
 
 # class SelfCtrl extends nb.Controller

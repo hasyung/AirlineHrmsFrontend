@@ -1,115 +1,211 @@
 section.personnel-info-section(ng-init="educations = currentUser.educationExperiences.$refresh();param= {}")
-    .personnel-top-header.clearfix
-        h4.pull-left 教育经历(入司前)
-        button.btn.btn-default.pull-right(ng-click="param.newExp = {}") 新增
     .personnel-content-body
-        .personnel-section-wrap
-            section.personnel-info-control.clearfix(ng-if="param.newExp")
-                form.personnel-info-right.form-split(name="eduEditForm", ng-submit="educations.$create(param.newExp);param.newExp = null;")
-                    .form-btn-group.alive
-                        button.btn.btn-info(type="submit") 创建
-                        button.btn.btn-default(ng-click="param.newExp = null") 取消
-                    .form-group
-                        label.control-label 入学日期：
-                        input.form-control(ng-model="param.newExp.admissionDate", bs-datepicker)
-                    .form-group
-                        label.control-label 毕业时间：
-                        input.form-control(ng-model="param.newExp.graduationDate", bs-datepicker)
-                    .form-group
-                        label.control-label 毕业院校：
-                        input.form-control(ng-model="param.newExp.school")
-                    .form-group
-                        label.control-label 专业：
-                        input.form-control(ng-model="param.newExp.major")
-                    .form-group
-                        label.control-label 学历：
-                        nb-dropdown(ng-model="param.newExp.educationBackground", remote-key="education_backgrounds")
-                    .form-group
-                        label.control-label 学位：
-                        nb-dropdown(ng-model="param.newExp.degree", remote-key="degrees")
-                    .form-group
-                        label.control-label 证明人：
-                        input.form-control(ng-model="param.newExp.witness")
-        .personnel-section-wrap(ng-controller="EditableResource", ng-repeat="education in educations | filterBy: ['category']:'before'")
-            section.personnel-info-control.clearfix(ng-hide="editing")
-                .personnel-info-right.form-split
-                    .form-btn-group
-                        button.btn.btn-info(ng-click="edit()") 编辑
-                        button.btn.btn-default(ng-click="education.$destroy()") 删除
-                    .form-group
-                        label.control-label 入学日期：
-                        .form-content {{education.admissionDate | date:'yyyy-MM-dd'}}
-                    .form-group
-                        label.control-label 毕业时间：
-                        .form-content {{education.graduationDate | date:'yyyy-MM-dd'}}
-                    .form-group
-                        label.control-label 毕业院校：
-                        .form-content {{education.school}}
-                    .form-group
-                        label.control-label 专业：
-                        .form-content {{education.major}}
-                    .form-group
-                        label.control-label 学历：
-                        .form-content {{education.educationBackground.displayName}}
-                    .form-group
-                        label.control-label 学位：
-                        .form-content {{education.degree.displayName}}
-                    .form-group
-                        label.control-label 证明人：
-                        .form-content {{education.witness}}
-            section.personnel-info-control.clearfix(ng-if="editing")
-                form.personnel-info-right.form-split(name="eduEditForm", ng-submit="save(education.$save())")
-                    .form-btn-group.alive
-                        button.btn.btn-info(type="submit" ng-disabled="eduEditForm.$invalid") 保存
-                        button.btn.btn-default(ng-click="cancel(current, $event)") 取消
-                    .form-group
-                        label.control-label 入学日期：
-                        input.form-control(ng-model="education.admissionDate", bs-datepicker)
-                    .form-group
-                        label.control-label 毕业时间：
-                        input.form-control(ng-model="education.graduationDate", bs-datepicker)
-                    .form-group
-                        label.control-label 毕业院校：
-                        input.form-control(ng-model="education.school")
-                    .form-group
-                        label.control-label 专业：
-                        input.form-control(ng-model="education.major")
-                    .form-group
-                        label.control-label 学历：
-                        nb-dropdown(ng-model="education.educationBackground", remote-key="education_backgrounds")
-                    .form-group
-                        label.control-label 学位：
-                        nb-dropdown(ng-model="education.degree", remote-key="degrees")
-                    .form-group
-                        label.control-label 证明人：
-                        input.form-control(ng-model="education.witness")
+        .personnel-section-wrap()
+            md-toolbar
+                .md-toolbar-tools
+                    span 教育经历（入司前）
+                    span(flex)
+                    span(ng-hide="editing")
+                        md-button.md-raised(ng-click="educations.$new({'category': 'before'})") 新增
+            md-content
+                section.form-material-section(ng-controller="EditableResource", ng-repeat="education in educations | filterBy: ['category']:'before'")
+                    .sep-40
+                    form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), infoForm)" name="infoForm")
+                        .form-btn-group(ng-hide="editing")
+                            md-button.md-primary.md-raised(ng-click="edit($event)") 编辑
+                        .form-btn-group(ng-show="editing")
+                            md-button(ng-click="cancel(current,$event, empEditForm)",) 取消
+                            md-button.md-primary.md-raised(type="submit") 保存
+                        fieldset(ng-disabled="!editing")
+                            div(layout)
+                                md-input-container(flex)
+                                    label 入学时间
+                                    input(type="date" ng-model="current.name")
+                                md-input-container(flex)
+                                    label 毕业时间
+                                    input(type="date" ng-model="current.name")
+                            div(layout)
+                                md-input-container(flex)
+                                    label 毕业院校
+                                    input(ng-model="current.school" name="school" required)
+                                md-input-container(flex)
+                                    label 专业
+                                    input(ng-model="current.major" name="major" required)
+                            div(layout)
+                                md-input-container.row-has-value(flex)
+                                    label 学历
+                                    md-select(ng-model="current.educationBackground", md-on-open="loadEnum('education_backgrounds')")
+                                        md-select-label {{current.educationBackground? current.educationBackground.displayName : '无'}}
+                                        md-option(ng-value="edu" ng-repeat="edu in enums.education_backgrounds") {{edu.displayName}}
+                                md-input-container.row-has-value(flex)
+                                    label 学位
+                                    md-select(ng-model="current.degree", md-on-open="loadEnum('degrees')")
+                                        md-select-label {{current.degree? current.degree.displayName: '无'}}
+                                        md-option(ng-value="degree" ng-repeat="degree in enums.degrees") {{degree.displayName}}
+                            md-input-container
+                                label 证明人
+                                input(ng-model="current.major" name="major" required)
+                    md-divider
 
-section.personnel-info-section(ng-init="educations = currentUser.educationExperiences.$refresh();param= {}")
-    .personnel-top-header.clearfix
-        h4.pull-left 教育经历（入司后）
-    .personnel-content-body
-        .personnel-section-wrap(ng-repeat="education in educations | filterBy: ['category']:'after'")
-            section.personnel-info-control.clearfix
-                .personnel-info-right.form-split
-                    .form-group
-                        label.control-label 入学日期：
-                        .form-content(ng-bind="education.admissionDate")
-                    .form-group
-                        label.control-label 毕业时间：
-                        .form-content(ng-bind="education.graduationDate")
-                    .form-group
-                        label.control-label 毕业院校：
-                        .form-content(ng-bind="education.school")
-                    .form-group
-                        label.control-label 专业：
-                        .form-content(ng-bind="education.major")
-                    .form-group
-                        label.control-label 学历：
-                        .form-content(ng-bind="education.educationBackground.displayName")
-                    .form-group
-                        label.control-label 学位：
-                        .form-content(ng-bind="education.degree.displayName")
-                    .form-group
-                        label.control-label 证明人：
-                        .form-content(ng-bind="education.witness")
+        .personnel-section-wrap()
+            md-toolbar
+                .md-toolbar-tools
+                    span 教育经历（入司后）
+                    span(flex)
+                    span(ng-hide="editing")
+                        md-button.md-raised(ng-click="educations.$new()") 新增
+            md-content
+                section.form-material-section(ng-controller="EditableResource", ng-repeat="education in educations | filterBy: ['category']:'after'")
+                    .sep-40
+                    form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), infoForm)" name="infoForm")
+                        .form-btn-group(ng-hide="editing")
+                            md-button.md-primary.md-raised(ng-click="edit($event)") 编辑
+                        .form-btn-group(ng-show="editing")
+                            md-button(ng-click="cancel(current,$event, empEditForm)",) 取消
+                            md-button.md-primary.md-raised(type="submit") 保存
+                        fieldset(ng-disabled="!editing")
+                            div(layout)
+                                md-input-container(flex)
+                                    label 入学时间
+                                    input(type="date" ng-model="current.name")
+                                md-input-container(flex)
+                                    label 毕业时间
+                                    input(type="date" ng-model="current.name")
+                            div(layout)
+                                md-input-container(flex)
+                                    label 毕业院校
+                                    input(ng-model="current.school" name="school" required)
+                                md-input-container(flex)
+                                    label 专业
+                                    input(ng-model="current.major" name="major" required)
+                            div(layout)
+                                md-input-container.row-has-value(flex)
+                                    label 学历
+                                    md-select(ng-model="current.educationBackground", md-on-open="loadEnum('education_backgrounds')")
+                                        md-select-label {{current.educationBackground? current.educationBackground.displayName : '无'}}
+                                        md-option(ng-value="edu" ng-repeat="edu in enums.education_backgrounds") {{edu.displayName}}
+                                md-input-container.row-has-value(flex)
+                                    label 学位
+                                    md-select(ng-model="current.degree", md-on-open="loadEnum('degrees')")
+                                        md-select-label {{current.degree? current.degree.displayName: '无'}}
+                                        md-option(ng-value="degree" ng-repeat="degree in enums.degrees") {{degree.displayName}}
+                            md-input-container
+                                label 证明人
+                                input(ng-model="current.major" name="major" required)
+                    md-divider
+
+//- section.personnel-info-section(ng-init="educations = currentUser.educationExperiences.$refresh();param= {}")
+//-     .personnel-top-header.clearfix
+//-         h4.pull-left 教育经历(入司前)
+//-         button.btn.btn-default.pull-right(ng-click="param.newExp = {}") 新增
+//-     .personnel-content-body
+//-         .personnel-section-wrap
+//-             section.personnel-info-control.clearfix(ng-if="param.newExp")
+//-                 form.personnel-info-right.form-split(name="eduEditForm", ng-submit="educations.$create(param.newExp);param.newExp = null;")
+//-                     .form-btn-group.alive
+//-                         button.btn.btn-info(type="submit") 创建
+//-                         button.btn.btn-default(ng-click="param.newExp = null") 取消
+//-                     .form-group
+//-                         label.control-label 入学日期：
+//-                         input.form-control(ng-model="param.newExp.admissionDate", bs-datepicker)
+//-                     .form-group
+//-                         label.control-label 毕业时间：
+//-                         input.form-control(ng-model="param.newExp.graduationDate", bs-datepicker)
+//-                     .form-group
+//-                         label.control-label 毕业院校：
+//-                         input.form-control(ng-model="param.newExp.school")
+//-                     .form-group
+//-                         label.control-label 专业：
+//-                         input.form-control(ng-model="param.newExp.major")
+//-                     .form-group
+//-                         label.control-label 学历：
+//-                         nb-dropdown(ng-model="param.newExp.educationBackground", remote-key="education_backgrounds")
+//-                     .form-group
+//-                         label.control-label 学位：
+//-                         nb-dropdown(ng-model="param.newExp.degree", remote-key="degrees")
+//-                     .form-group
+//-                         label.control-label 证明人：
+//-                         input.form-control(ng-model="param.newExp.witness")
+//-         .personnel-section-wrap(ng-controller="EditableResource", ng-repeat="education in educations | filterBy: ['category']:'before'")
+//-             section.personnel-info-control.clearfix(ng-hide="editing")
+//-                 .personnel-info-right.form-split
+//-                     .form-btn-group
+//-                         button.btn.btn-info(ng-click="edit()") 编辑
+//-                         button.btn.btn-default(ng-click="education.$destroy()") 删除
+//-                     .form-group
+//-                         label.control-label 入学日期：
+//-                         .form-content {{education.admissionDate | date:'yyyy-MM-dd'}}
+//-                     .form-group
+//-                         label.control-label 毕业时间：
+//-                         .form-content {{education.graduationDate | date:'yyyy-MM-dd'}}
+//-                     .form-group
+//-                         label.control-label 毕业院校：
+//-                         .form-content {{education.school}}
+//-                     .form-group
+//-                         label.control-label 专业：
+//-                         .form-content {{education.major}}
+//-                     .form-group
+//-                         label.control-label 学历：
+//-                         .form-content {{education.educationBackground.displayName}}
+//-                     .form-group
+//-                         label.control-label 学位：
+//-                         .form-content {{education.degree.displayName}}
+//-                     .form-group
+//-                         label.control-label 证明人：
+//-                         .form-content {{education.witness}}
+//-             section.personnel-info-control.clearfix(ng-if="editing")
+//-                 form.personnel-info-right.form-split(name="eduEditForm", ng-submit="save(education.$save())")
+//-                     .form-btn-group.alive
+//-                         button.btn.btn-info(type="submit" ng-disabled="eduEditForm.$invalid") 保存
+//-                         button.btn.btn-default(ng-click="cancel(current, $event)") 取消
+//-                     .form-group
+//-                         label.control-label 入学日期：
+//-                         input.form-control(ng-model="education.admissionDate", bs-datepicker)
+//-                     .form-group
+//-                         label.control-label 毕业时间：
+//-                         input.form-control(ng-model="education.graduationDate", bs-datepicker)
+//-                     .form-group
+//-                         label.control-label 毕业院校：
+//-                         input.form-control(ng-model="education.school")
+//-                     .form-group
+//-                         label.control-label 专业：
+//-                         input.form-control(ng-model="education.major")
+//-                     .form-group
+//-                         label.control-label 学历：
+//-                         nb-dropdown(ng-model="education.educationBackground", remote-key="education_backgrounds")
+//-                     .form-group
+//-                         label.control-label 学位：
+//-                         nb-dropdown(ng-model="education.degree", remote-key="degrees")
+//-                     .form-group
+//-                         label.control-label 证明人：
+//-                         input.form-control(ng-model="education.witness")
+
+//- section.personnel-info-section(ng-init="educations = currentUser.educationExperiences.$refresh();param= {}")
+//-     .personnel-top-header.clearfix
+//-         h4.pull-left 教育经历（入司后）
+//-     .personnel-content-body
+//-         .personnel-section-wrap(ng-repeat="education in educations | filterBy: ['category']:'after'")
+//-             section.personnel-info-control.clearfix
+//-                 .personnel-info-right.form-split
+//-                     .form-group
+//-                         label.control-label 入学日期：
+//-                         .form-content(ng-bind="education.admissionDate")
+//-                     .form-group
+//-                         label.control-label 毕业时间：
+//-                         .form-content(ng-bind="education.graduationDate")
+//-                     .form-group
+//-                         label.control-label 毕业院校：
+//-                         .form-content(ng-bind="education.school")
+//-                     .form-group
+//-                         label.control-label 专业：
+//-                         .form-content(ng-bind="education.major")
+//-                     .form-group
+//-                         label.control-label 学历：
+//-                         .form-content(ng-bind="education.educationBackground.displayName")
+//-                     .form-group
+//-                         label.control-label 学位：
+//-                         .form-content(ng-bind="education.degree.displayName")
+//-                     .form-group
+//-                         label.control-label 证明人：
+//-                         .form-content(ng-bind="education.witness")
 
