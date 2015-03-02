@@ -1,6 +1,4 @@
-section.personnel-info-section(
-    ng-init="experiences = currentUser.workExperiences.$fetch();param= {}"
-    )
+section.personnel-info-section(ng-init="experiences = currentUser.workExperiences.$refresh();param= {}")
     .personnel-content-body
         .personnel-section-wrap()
             md-toolbar
@@ -8,45 +6,17 @@ section.personnel-info-section(
                     span 工作经历（入司前）
                     span(flex)
                     span
-                        md-button.md-raised() 新增
+                        md-button.md-raised(ng-hide="param.newExp" ng-click="param.newExp= experiences.$build({category:'before'})") 新增
+
+            md-content(ng-if="param.newExp && param.newExp.category == 'before'" ng-init="newExp = param.newExp")
+                section.form-material-section
+                    .sep-40
+                    include experience/new_work_exp_form
+
             md-content
                 section.form-material-section(ng-controller="EditableResource", ng-repeat="work in experiences | filterBy: ['category']:'before'")
                     .sep-40
-                    form(ng-submit="save(work.$save(), infoForm)" name="infoForm")
-                        .form-btn-group(ng-hide="editing")
-                            md-button.md-raised(ng-click="work.$destroy()") 删除
-                            md-button.md-primary.md-raised(ng-click="edit($event)") 编辑
-                        .form-btn-group(ng-show="editing")
-                            md-button(ng-click="cancel(work,$event, empEditForm)") 取消
-                            md-button.md-primary.md-raised(type="submit") 保存
-                        fieldset(ng-disabled="!editing")
-                            div(layout)
-                                md-input-container(flex)
-                                    label 开始时间
-                                    input(type="date" ng-model="work.startDate")
-                                md-input-container(flex)
-                                    label 结束时间
-                                    input(type="date" ng-model="work.endDate")
-                            div(layout)
-                                md-input-container(flex)
-                                    label 单位名称
-                                    input(ng-model="work.company" name="company" required)
-                                md-input-container(flex)
-                                    label 任职部门
-                                    input(ng-model="work.department" name="department" required)
-                            div(layout)
-                                md-input-container.row-has-value(flex)
-                                    label 担任职位
-                                    input(ng-model="work.position" name="position" required)
-                                md-input-container.row-has-value(flex)
-                                    label 工作描述
-                                    input(ng-model="work.jobDesc" name="jobDesc" required)
-                            md-input-container
-                                label 证明人
-                                input(ng-model="work.witness" name="witness" required)
-                    md-divider
-
-    .personnel-content-body
+                    include experience/exit_work_exp_form
         .personnel-section-wrap()
             md-toolbar
                 .md-toolbar-tools
@@ -55,33 +25,7 @@ section.personnel-info-section(
             md-content
                 section.form-material-section(ng-controller="EditableResource", ng-repeat="work in experiences | filterBy: ['category']:'after'")
                     .sep-40
-                    form(ng-submit="save(work.$save(), infoForm)" name="infoForm")
-                        fieldset(ng-disabled="!editing")
-                            div(layout)
-                                md-input-container(flex)
-                                    label 开始时间
-                                    input(type="date" ng-model="work.startDate")
-                                md-input-container(flex)
-                                    label 结束时间
-                                    input(type="date" ng-model="work.endDate")
-                            div(layout)
-                                md-input-container(flex)
-                                    label 单位名称
-                                    input(ng-model="work.company" name="company" required)
-                                md-input-container(flex)
-                                    label 任职部门
-                                    input(ng-model="work.department" name="department" required)
-                            div(layout)
-                                md-input-container.row-has-value(flex)
-                                    label 担任职位
-                                    input(ng-model="work.position" name="position" required)
-                                md-input-container.row-has-value(flex)
-                                    label 工作描述
-                                    input(ng-model="work.jobDesc" name="jobDesc" required)
-                            md-input-container
-                                label 证明人
-                                input(ng-model="work.witness" name="witness" required)
-                    md-divider
+                    include experience/scal_work_exp_form
         
 //- section.personnel-info-section(ng-init="experiences = currentUser.workExperiences.$fetch();param= {}")
 //-     .personnel-top-header.clearfix

@@ -81,8 +81,8 @@ Education = (restmod, RMUtils, $Evt) ->
     }
 Experience = (restmod, RMUtils, $Evt) ->
     Experience = restmod.model().mix 'nbRestApi', {
-        startDate: {decode: 'date', param: 'yyyy-MM-dd'}
-        endDate: {decode: 'date', param: 'yyyy-MM-dd'}
+        startDate: {decode: 'nbDate'}
+        endDate: {decode: 'nbDate'}
         $hooks: {
             'after-create': ->
                 $Evt.$send('work:create:success', "工作经历创建成功")
