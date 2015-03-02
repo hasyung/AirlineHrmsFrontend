@@ -10,7 +10,7 @@ section.personnel-info-section(ng-init="educations = currentUser.educationExperi
             md-content
                 section.form-material-section(ng-controller="EditableResource", ng-repeat="education in educations | filterBy: ['category']:'before'")
                     .sep-40
-                    form()
+                    form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), infoForm)" name="infoForm")
                         .form-btn-group(ng-hide="editing")
                             md-button.md-primary.md-raised(ng-click="edit($event)") 编辑
                         .form-btn-group(ng-show="editing")
@@ -21,7 +21,7 @@ section.personnel-info-section(ng-init="educations = currentUser.educationExperi
                                 md-input-container(flex)
                                     label 入学时间
                                     input(type="date" ng-model="current.name")
-                                md-input-container.row-has-value(flex)
+                                md-input-container(flex)
                                     label 毕业时间
                                     input(type="date" ng-model="current.name")
                             div(layout)
@@ -42,7 +42,7 @@ section.personnel-info-section(ng-init="educations = currentUser.educationExperi
                                     md-select(ng-model="current.degree", md-on-open="loadEnum('degrees')")
                                         md-select-label {{current.degree? current.degree.displayName: '无'}}
                                         md-option(ng-value="degree" ng-repeat="degree in enums.degrees") {{degree.displayName}}
-                            md-input-container.row-has-value
+                            md-input-container
                                 label 证明人
                                 input(ng-model="current.major" name="major" required)
                     md-divider
@@ -55,9 +55,9 @@ section.personnel-info-section(ng-init="educations = currentUser.educationExperi
                     span(ng-hide="editing")
                         md-button.md-raised(ng-click="educations.$new()") 新增
             md-content
-                section.form-material-section(ng-controller="EditableResource", ng-repeat="education in educations | filterBy: ['category']:'before'")
+                section.form-material-section(ng-controller="EditableResource", ng-repeat="education in educations | filterBy: ['category']:'after'")
                     .sep-40
-                    form()
+                    form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), infoForm)" name="infoForm")
                         .form-btn-group(ng-hide="editing")
                             md-button.md-primary.md-raised(ng-click="edit($event)") 编辑
                         .form-btn-group(ng-show="editing")
@@ -68,7 +68,7 @@ section.personnel-info-section(ng-init="educations = currentUser.educationExperi
                                 md-input-container(flex)
                                     label 入学时间
                                     input(type="date" ng-model="current.name")
-                                md-input-container.row-has-value(flex)
+                                md-input-container(flex)
                                     label 毕业时间
                                     input(type="date" ng-model="current.name")
                             div(layout)
@@ -89,7 +89,7 @@ section.personnel-info-section(ng-init="educations = currentUser.educationExperi
                                     md-select(ng-model="current.degree", md-on-open="loadEnum('degrees')")
                                         md-select-label {{current.degree? current.degree.displayName: '无'}}
                                         md-option(ng-value="degree" ng-repeat="degree in enums.degrees") {{degree.displayName}}
-                            md-input-container.row-has-value
+                            md-input-container
                                 label 证明人
                                 input(ng-model="current.major" name="major" required)
                     md-divider
