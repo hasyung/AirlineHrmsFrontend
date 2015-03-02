@@ -50,7 +50,9 @@ class EditableResourceCtrl
             evt.preventDefault() if evt && evt.preventDefault
             scope.editing = true
 
-        scope.save = (promise) ->
+        scope.save = (promise, form) ->
+            return if form && form.$invalid
+
             if promise
                 if promise.then
                     promise.then () -> scope.editing = false

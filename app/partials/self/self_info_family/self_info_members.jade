@@ -1,6 +1,55 @@
 section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$search({relation: 'lover'})")
-    .personnel-top-header.clearfix
-        h4.pull-left 家庭成员
+    md-toolbar
+        h2.md-toolbar-tools
+            span 家庭成员
+    md-content
+        md-subheader 配偶
+        section
+            form(ng-submit="save(wife.$save(),familymembersForm)" name="familymembersForm" ng-controller="EditableResource")
+                fieledset(ng-disabled="!editing")
+                    .form-btn-group
+                        md-button.md-primary.md-raised(type="button" ng-click="edit($event)") 编辑
+                    .form-btn-group.alive
+                        md-button(ng-click="cancel(wife, $event)") 取消
+                        md-button.md-primary.md-raised(type="submit") 保存
+                    div(layout)
+                        md-input-container(flex)
+                            label 姓名
+                            input(ng-model="wife.name")
+                        md-input-container(flex)
+                            label 性别
+                            input(ng-model="wife.gender")
+                    div(layout)
+                        md-input-container(flex)
+                            label 籍贯
+                            input(ng-model="wife.nativePlace")
+                        md-input-container(flex)
+                            label 民族
+                            input(ng-model="wife.nation")
+                    div(layout)
+                        md-input-container(flex)
+                            label 出生年月
+                            input(type="date" ng-model="wife.birthday")
+                        md-input-container(flex)
+                            label 身份证号
+                            input(ng-model="wife.identityNo" type="number" max-length="18")
+                    div(layout)
+                        md-input-container(flex)
+                            label 文化程度
+                            input(ng-model="wife.educationBackground")
+                        md-input-container(flex)
+                            label 政治面貌
+                            input(ng-model="wife.politicalStatus")
+                    div(layout)
+                        md-input-container(flex)
+                            label 工作单位
+                            input(ng-model="wife.company")
+                        md-input-container(flex)
+                            label 职业
+                            input(ng-model="wife.position")
+                    md-input-container
+                        label 联系方式
+                        input(ng-model="wife.mobile" type="tel")
     .personnel-content-body
         .personnel-section-wrap
              section.personnel-info-control.clearfix
