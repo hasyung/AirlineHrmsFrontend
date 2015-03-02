@@ -24,6 +24,11 @@ module
         }
         (input, module) ->
             return map[module][input.toString()]
-            
+
 
     ]
+    .filter 'nbDate', ->
+
+        (input, opts) ->
+            return new Date(input)
+

@@ -3,159 +3,217 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
         h2.md-toolbar-tools
             span 家庭成员
     md-content
-        md-subheader 配偶
-        section
-            form(ng-submit="save(wife.$save(),familymembersForm)" name="familymembersForm" ng-controller="EditableResource")
-                fieledset(ng-disabled="!editing")
-                    .form-btn-group
-                        md-button.md-primary.md-raised(type="button" ng-click="edit($event)") 编辑
-                    .form-btn-group.alive
-                        md-button(ng-click="cancel(wife, $event)") 取消
-                        md-button.md-primary.md-raised(type="submit") 保存
-                    div(layout)
-                        md-input-container(flex)
-                            label 姓名
-                            input(ng-model="wife.name")
-                        md-input-container(flex)
-                            label 性别
-                            input(ng-model="wife.gender")
-                    div(layout)
-                        md-input-container(flex)
-                            label 籍贯
-                            input(ng-model="wife.nativePlace")
-                        md-input-container(flex)
-                            label 民族
-                            input(ng-model="wife.nation")
-                    div(layout)
-                        md-input-container(flex)
-                            label 出生年月
-                            input(type="date" ng-model="wife.birthday")
-                        md-input-container(flex)
-                            label 身份证号
-                            input(ng-model="wife.identityNo" type="number" max-length="18")
-                    div(layout)
-                        md-input-container(flex)
-                            label 文化程度
-                            input(ng-model="wife.educationBackground")
-                        md-input-container(flex)
-                            label 政治面貌
-                            input(ng-model="wife.politicalStatus")
-                    div(layout)
-                        md-input-container(flex)
-                            label 工作单位
-                            input(ng-model="wife.company")
-                        md-input-container(flex)
-                            label 职业
-                            input(ng-model="wife.position")
-                    md-input-container
-                        label 联系方式
-                        input(ng-model="wife.mobile" type="tel")
-    .personnel-content-body
-        .personnel-section-wrap
-             section.personnel-info-control.clearfix
-                .personnel-info-left
-                    .personnel-item-icon.personnel-item2
-                    .personnel-item-desc.bg-success 配偶
-                .personnel-info-right.form-split(ng-controller="EditableResource" ng-repeat="wife in vm.lovers")
-                    .showing(ng-hide="lovers.length != 0 && editing")
-                        include self_info_lover_section
-                    .editing(ng-if="editing")
-                        include self_info_lover_edit
-                .personnel-info-right.form-split(ng-controller="EditableResource" ng-init="wife = vm.lovers.$new(); wife.relation='lover';wife.relationType='配偶'" ng-if="vm.lovers.length == 0")
-                    .showing(ng-hide="editing")
-                        include self_info_lover_section
-                    .editing(ng-if="editing")
-                        include self_info_lover_edit
-            section.personnel-info-table.clearfix(ng-init="vm.children = currentUser.familymembers.$search({relation: 'children'}); newChildren = []")
-                h4 子女情况
-                table.custom-table
-                    thead
-                        tr
-                            th 姓名
-                            th 关系
-                            th 性别
-                            th 出生年月
-                            th 常住户口所在地
-                            th 学校或工作单位
-                            th 操作
-                    tbody
-                        tr(ng-repeat="child in vm.children")
-                            td(ng-bind="child.name")
-                            td(ng-bind="child.relationType")
-                            td(ng-bind="child.gender")
-                            td(ng-bind="child.birthday | date:'yyyy-MM-dd'")
-                            td(ng-bind="child.nativePlace")
-                            td(ng-bind="child.company")
-                            td.control-td
-                                button.btn.fa.fa-times(ng-click="child.$destroy()")
-                form.form-split(ng-repeat="nc in newChildren" ng-init="nc.relation='children';")
-                    .form-group
-                        .control-label 姓名：
-                        input.form-control(ng-model="nc.name")
-                    .form-group
-                        .control-label 关系：
-                        input.form-control(ng-model="nc.relationType")
-                    .form-group
-                        .control-label 性别：
-                        input.form-control(ng-model="nc.gender")
-                    .form-group
-                        .control-label 出生年月：
-                        input.form-control(ng-model="nc.birthday" bs-datepicker)
-                    .form-group
-                        .control-label 常住户口所在地：
-                        input.form-control(ng-model="nc.nativePlace")
-                    .form-group
-                        .control-label 学校或工作单位：
-                        input.form-control(ng-model="nc.company")
-                    .btn-group
-                        button.btn.btn-info(ng-click="vm.children.$create(nc);newChildren.splice($index, 1)") 提交
-                        button.btn.btn-default(ng-click="newChildren.splice($index, 1)") 取消
+        section.form-material-section(ng-if="vm.lovers.length != 0" ng-repeat="wife in vm.lovers")
+            md-subheader 配偶
+            include self_info_lover_edit
+        section.form-material-section(ng-if="vm.lovers.length == 0" ng-init="wife = vm.lovers.$new(); wife.relation='lover';wife.relationType='配偶'")
+            md-subheader 配偶
+            include self_info_lover_edit
+        md-divider
+    md-content(ng-init="vm.children = currentUser.familymembers.$search({relation: 'children'}); newChildren = []")
+        md-subheader 子女情况
+        table.table
+            thead
+                tr
+                    th 姓名
+                    th 关系
+                    th 性别
+                    th 出生年月
+                    th 常住户口所在地
+                    th 学校或工作单位
+                    th 操作
+            tbody
+                tr(ng-repeat="child in vm.children")
+                    td(ng-bind="child.name")
+                    td(ng-bind="child.relationType")
+                    td(ng-bind="child.gender")
+                    td(ng-bind="child.birthday | date:'yyyy-MM-dd'")
+                    td(ng-bind="child.nativePlace")
+                    td(ng-bind="child.company")
+                    td.control-td
+                        button.btn.fa.fa-times(ng-click="child.$destroy()")
+        form(ng-repeat="nc in newChildren" ng-init="nc.relation='children';")
+            div(layout)
+                md-input-container(flex)
+                    label 姓名
+                    input(ng-model="nc.name")
+                md-input-container(flex)
+                    label 关系
+                    input(ng-model="nc.relationType")
+            div(layout)
+                md-input-container(flex)
+                    label 性别
+                    input(ng-model="nc.gender")
+                md-input-container(flex)
+                    label 出生年月
+                    input(ng-model="nc.birthday" type="date")
+            md-input-container
+                label 常住户口所在地
+                input(ng-model="nc.nativePlace" columns="1")
+            md-input-container
+                label 学校或工作单位
+                input(ng-model="nc.company" columns="1")
+            .form-actions()
+                md-button.md-primary.md-raised(ng-click="vm.children.$create(nc);newChildren.splice($index, 1)") 提交
+                md-button(ng-click="newChildren.splice($index, 1)") 取消
 
-                .add
-                    button.btn.btn-default.fa.fa-plus(ng-click="newChildren.push({})")
-            section.personnel-info-table.clearfix(ng-init="vm.other = currentUser.familymembers.$search({relation: 'other'}); newOther = []")
-                h4 父母、兄妹、配偶父母情况
-                table.custom-table
-                    tr
-                        th 姓名
-                        th 关系
-                        th 性别
-                        th 出生年月
-                        th 常住户口所在地
-                        th 学校或工作单位
-                        th 操作
-                    tr(ng-repeat="omg in vm.other")
-                        td(ng-bind="omg.name")
-                        td(ng-bind="omg.relation_type")
-                        td(ng-bind="omg.gender")
-                        td(ng-bind="omg.birthday | date:'yyyy-MM-dd'")
-                        td(ng-bind="omg.native_place")
-                        td(ng-bind="omg.company")
-                        td.control-td
-                            button.btn.fa.fa-times(ng-click="omg.$destroy()")
+        .add
+            button.btn.btn-default.fa.fa-plus(ng-click="newChildren.push({})")
+        md-divider
+    md-content(ng-init="vm.other = currentUser.familymembers.$search({relation: 'other'}); newOther = []")
+        md-subheader 父母、兄妹、配偶父母情况
+        table.table
+            tr
+                th 姓名
+                th 关系
+                th 性别
+                th 出生年月
+                th 常住户口所在地
+                th 学校或工作单位
+                th 操作
+            tr(ng-repeat="omg in vm.other")
+                td(ng-bind="omg.name")
+                td(ng-bind="omg.relation_type")
+                td(ng-bind="omg.gender")
+                td(ng-bind="omg.birthday | date:'yyyy-MM-dd'")
+                td(ng-bind="omg.native_place")
+                td(ng-bind="omg.company")
+                td.control-td
+                    button.btn.fa.fa-times(ng-click="omg.$destroy()")
+        form(ng-repeat="no in newOther" ng-init="no.relation='other';")
+            div(layout)
+                md-input-container(flex)
+                    label 姓名
+                    input(ng-model="no.name")
+                md-input-container(flex)
+                    label 关系
+                    input(ng-model="no.relationType")
+            div(layout)
+                md-input-container(flex)
+                    label 性别
+                    input(ng-model="no.gender")
+                md-input-container(flex)
+                    label 出生年月
+                    input(ng-model="no.birthday" type="date")
+            md-input-container
+                label 常住户口所在地
+                input(ng-model="no.nativePlace")
+            md-input-container
+                label 学校或工作单位
+                input(ng-model="no.company")
+            .form-actions()
+                md-button.md-primary.md-raised(ng-click="vm.other.$create(no);newOther.splice($index, 1)") 提交
+                md-button(ng-click="newOther.splice($index, 1)") 取消
 
-                form.form-split(ng-repeat="no in newOther" ng-init="no.relation='other'")
-                    .form-group
-                        .control-label 姓名：
-                        input.form-control(ng-model="no.name")
-                    .form-group
-                        .control-label 关系：
-                        input.form-control(ng-model="no.relationType")
-                    .form-group
-                        .control-label 性别：
-                        input.form-control(ng-model="no.gender")
-                    .form-group
-                        .control-label 出生年月：
-                        input.form-control(ng-model="no.birthday" bs-datepicker)
-                    .form-group
-                        .control-label 常住户口所在地：
-                        input.form-control(ng-model="no.nativePlace")
-                    .form-group
-                        .control-label 学校或工作单位：
-                        input.form-control(ng-model="no.company")
-                    .btn-group
-                        button.btn.btn-info(ng-click="vm.other.$create(no);newOther.splice($index, 1)") 提交
-                        button.btn.btn-default(ng-click="newOther.splice($index, 1)") 取消
+        .add
+            button.btn.btn-default.fa.fa-plus(ng-click="newOther.push({})")
 
-                .add
-                    button.btn.btn-default.fa.fa-plus(ng-click="newOther.push({})")
+    //- .personnel-content-body
+    //-     .personnel-section-wrap
+    //-          section.personnel-info-control.clearfix
+    //-             .personnel-info-left
+    //-                 .personnel-item-icon.personnel-item2
+    //-                 .personnel-item-desc.bg-success 配偶
+    //-             .personnel-info-right.form-split(ng-controller="EditableResource" ng-repeat="wife in vm.lovers")
+    //-                 .showing(ng-hide="lovers.length != 0 && editing")
+    //-                     include self_info_lover_section
+    //-                 .editing(ng-if="editing")
+    //-                     include self_info_lover_edit
+    //-             .personnel-info-right.form-split(ng-controller="EditableResource" ng-init="wife = vm.lovers.$new(); wife.relation='lover';wife.relationType='配偶'" ng-if="vm.lovers.length == 0")
+    //-                 .showing(ng-hide="editing")
+    //-                     include self_info_lover_section
+    //-                 .editing(ng-if="editing")
+    //-                     include self_info_lover_edit
+    //-         section.personnel-info-table.clearfix(ng-init="vm.children = currentUser.familymembers.$search({relation: 'children'}); newChildren = []")
+    //-             h4 子女情况
+    //-             table.custom-table
+    //-                 thead
+    //-                     tr
+    //-                         th 姓名
+    //-                         th 关系
+    //-                         th 性别
+    //-                         th 出生年月
+    //-                         th 常住户口所在地
+    //-                         th 学校或工作单位
+    //-                         th 操作
+    //-                 tbody
+    //-                     tr(ng-repeat="child in vm.children")
+    //-                         td(ng-bind="child.name")
+    //-                         td(ng-bind="child.relationType")
+    //-                         td(ng-bind="child.gender")
+    //-                         td(ng-bind="child.birthday | date:'yyyy-MM-dd'")
+    //-                         td(ng-bind="child.nativePlace")
+    //-                         td(ng-bind="child.company")
+    //-                         td.control-td
+    //-                             button.btn.fa.fa-times(ng-click="child.$destroy()")
+    //-             form.form-split(ng-repeat="nc in newChildren" ng-init="nc.relation='children';")
+    //-                 .form-group
+    //-                     .control-label 姓名：
+    //-                     input.form-control(ng-model="nc.name")
+    //-                 .form-group
+    //-                     .control-label 关系：
+    //-                     input.form-control(ng-model="nc.relationType")
+    //-                 .form-group
+    //-                     .control-label 性别：
+    //-                     input.form-control(ng-model="nc.gender")
+    //-                 .form-group
+    //-                     .control-label 出生年月：
+    //-                     input.form-control(ng-model="nc.birthday" bs-datepicker)
+    //-                 .form-group
+    //-                     .control-label 常住户口所在地：
+    //-                     input.form-control(ng-model="nc.nativePlace")
+    //-                 .form-group
+    //-                     .control-label 学校或工作单位：
+    //-                     input.form-control(ng-model="nc.company")
+    //-                 .btn-group
+    //-                     button.btn.btn-info(ng-click="vm.children.$create(nc);newChildren.splice($index, 1)") 提交
+    //-                     button.btn.btn-default(ng-click="newChildren.splice($index, 1)") 取消
+
+    //-             .add
+    //-                 button.btn.btn-default.fa.fa-plus(ng-click="newChildren.push({})")
+    //-         section.personnel-info-table.clearfix(ng-init="vm.other = currentUser.familymembers.$search({relation: 'other'}); newOther = []")
+    //-             h4 父母、兄妹、配偶父母情况
+    //-             table.custom-table
+    //-                 tr
+    //-                     th 姓名
+    //-                     th 关系
+    //-                     th 性别
+    //-                     th 出生年月
+    //-                     th 常住户口所在地
+    //-                     th 学校或工作单位
+    //-                     th 操作
+    //-                 tr(ng-repeat="omg in vm.other")
+    //-                     td(ng-bind="omg.name")
+    //-                     td(ng-bind="omg.relation_type")
+    //-                     td(ng-bind="omg.gender")
+    //-                     td(ng-bind="omg.birthday | date:'yyyy-MM-dd'")
+    //-                     td(ng-bind="omg.native_place")
+    //-                     td(ng-bind="omg.company")
+    //-                     td.control-td
+    //-                         button.btn.fa.fa-times(ng-click="omg.$destroy()")
+
+    //-             form.form-split(ng-repeat="no in newOther" ng-init="no.relation='other'")
+    //-                 .form-group
+    //-                     .control-label 姓名：
+    //-                     input.form-control(ng-model="no.name")
+    //-                 .form-group
+    //-                     .control-label 关系：
+    //-                     input.form-control(ng-model="no.relationType")
+    //-                 .form-group
+    //-                     .control-label 性别：
+    //-                     input.form-control(ng-model="no.gender")
+    //-                 .form-group
+    //-                     .control-label 出生年月：
+    //-                     input.form-control(ng-model="no.birthday" bs-datepicker)
+    //-                 .form-group
+    //-                     .control-label 常住户口所在地：
+    //-                     input.form-control(ng-model="no.nativePlace")
+    //-                 .form-group
+    //-                     .control-label 学校或工作单位：
+    //-                     input.form-control(ng-model="no.company")
+    //-                 .btn-group
+    //-                     button.btn.btn-info(ng-click="vm.other.$create(no);newOther.splice($index, 1)") 提交
+    //-                     button.btn.btn-default(ng-click="newOther.splice($index, 1)") 取消
+
+    //-             .add
+    //-                 button.btn.btn-default.fa.fa-plus(ng-click="newOther.push({})")
