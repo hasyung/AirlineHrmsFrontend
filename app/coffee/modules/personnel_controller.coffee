@@ -103,7 +103,7 @@ class ReviewCtrl extends nb.Controller
         # '通过': 2
         # '不通过': 3
         checked = _.filter @changes, (item)->
-            return item if item.statusCd != 1
+            return item if item.statusCd != "1"
         _.forEach checked, (item)->
             temp = {}
             temp.id = item.id
