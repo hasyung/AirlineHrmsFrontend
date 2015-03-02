@@ -386,7 +386,8 @@ class PositionCtrl extends nb.Controller
         # newPos.specification = @Specification.$buildRaw(spe)
         # newPos.specification = spe
         #bug,
-        newPos = @positions.$create(newPos).$then (newpos)-> newpos.specification.$update(spe)
+        newPos = @positions.$create(newPos).$then (newpos)->
+            newpos.$createSpe(spe)
 
     search: (tableState) ->
         @positions.$refresh(tableState)

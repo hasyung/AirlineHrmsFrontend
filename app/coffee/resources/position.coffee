@@ -2,7 +2,7 @@ resources = angular.module('resources')
 
 # position.specifications.fetch()
 
-Position = (restmod, RMUtils, $Evt) ->
+Position = (restmod, RMUtils, $Evt, Specification) ->
 
     # restmod.model('/positions')
     Position = restmod.model('/positions').mix 'nbRestApi', 'DirtyModel', {
@@ -78,6 +78,25 @@ Position = (restmod, RMUtils, $Evt) ->
                         self.$dispatch 'after-destroy-error', res
 
                     this.$send(request, onSuccess, onErorr)
+            Record:
+                $createSpe: (spe) ->
+                    self = @
+                    url = @.$url()
+                    spe = Specification.$build(spe).$wrap()
+                    request = {
+                        method: 'POST',
+                        url: "#{url}/specification",
+                        data: spe
+                    }
+                    onSuccess = (res)->
+                        self.$dispatch 'specification-create', res
+
+                    onErorr = (res) ->
+                        self.$dispatch 'specification-create-error', res
+
+                    this.$send(request, onSuccess, onErorr)
+
+
 
     }
 
@@ -106,6 +125,6 @@ PositionChange = (restmod, RMUtils, $Evt) ->
 
 
 
-resources.factory 'Position',['restmod', 'RMUtils', '$nbEvent', Position]
+resources.factory 'Position',['restmod', 'RMUtils', '$nbEvent','Specification', Position]
 resources.factory 'Specification',['restmod', 'RMUtils', '$nbEvent', Specification]
 resources.factory 'PositionChange',['restmod', 'RMUtils', '$nbEvent', PositionChange]
