@@ -38,8 +38,8 @@ Formerleaders = (restmod, RMUtils, $Evt) ->
         $config:
             jsonRoot: 'employees'
 
-        startDate: {decode: 'date', param: 'yyyy年MM月dd日',mask: 'CU'}
-        endDate: {decode: 'date', param: 'yyyy年MM月dd日',mask: 'CU'}
+        startDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
+        endDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
 
 
         $extend:
@@ -70,6 +70,10 @@ Education = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('education:update:success', "教育经历更新成功")
             'after-update-error': ->
                 $Evt.$send('education:update:error', "教育经历更新失败")
+            'after-destroy': ->
+                $Evt.$send('education:update:success', "教育经历删除成功")
+            'after-destroy-error': ->
+                $Evt.$send('education:update:error', "教育经历删除失败")
         }
         $config:
             jsonRootSingle: 'education_experience'
@@ -88,6 +92,11 @@ Experience = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('work:update:success', "工作经历更新成功")
             'after-update-error': ->
                 $Evt.$send('work:update:error', "工作经历更新失败")
+            'after-destroy': ->
+                $Evt.$send('work:update:success', "工作经历删除成功")
+            'after-destroy-error': ->
+                $Evt.$send('work:update:error', "工作经历删除失败")
+
         }
         $config:
             jsonRootSingle: 'work_experience'
@@ -96,6 +105,20 @@ Experience = (restmod, RMUtils, $Evt) ->
 
 FamilyMember = (restmod, RMUtils, $Evt) ->
     FamilyMember = restmod.model().mix 'nbRestApi', {
+        $hooks: 
+            'after-create': ->
+                $Evt.$send('FamilyMember:create:success', "家庭成员创建成功")
+            'after-create-error': ->
+                $Evt.$send('FamilyMember:create:error', "家庭成员创建失败")
+            'after-update': ->
+                $Evt.$send('FamilyMember:update:success', "家庭成员更新成功")
+            'after-update-error': ->
+                $Evt.$send('FamilyMember:update:error', "家庭成员更新失败")
+            'after-destroy': ->
+                $Evt.$send('FamilyMember:update:success', "家庭成员删除成功")
+            'after-destroy-error': ->
+                $Evt.$send('FamilyMember:update:error', "家庭成员删除失败")
+        
         $config:
             jsonRootSingle: 'family_member'
             jsonRootMany: 'family_members'
