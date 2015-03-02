@@ -1,0 +1,33 @@
+
+form(ng-controller="NewResource", ng-submit="create(newExp,newEduBeforeForm); param.newExp = null" name="newEduBeforeForm")
+    .form-btn-group.alive
+        md-button(ng-click="param.newExp = null") 取消
+        md-button.md-primary.md-raised(type="submit") 保存
+    div(layout)
+        md-input-container(flex)
+            label 入学时间
+            input(type="date" ng-model="newExp.admissionDate")
+        md-input-container(flex)
+            label 毕业时间
+            input(type="date" ng-model="newExp.graduationDate")
+    div(layout)
+        md-input-container(flex)
+            label 毕业院校
+            input(required ng-model="newExp.school")
+        md-input-container(flex)
+            label 专业
+            input(ng-model="newExp.major" name="major" required)
+    div(layout)
+        md-input-container.row-has-value(flex)
+            label 学历
+            md-select(ng-model="newExp.educationBackground" md-on-open="loadEnum('education_backgrounds')")
+                md-select-label {{newExp.educationBackground.displayName || '无'}}
+                md-option(ng-value="edu" ng-repeat="edu in enums.education_backgrounds") {{edu.displayName}}
+        md-input-container.row-has-value(flex)
+            label 学位
+            md-select(ng-model="newExp.degree" md-on-open="loadEnum('degrees')")
+                md-select-label {{newExp.degree.displayName || '无'}}
+                md-option(ng-value="degree" ng-repeat="degree in enums.degrees") {{degree.displayName}}
+    md-input-container
+        label 证明人
+        input(ng-model="newExp.witness" name="witness" required)

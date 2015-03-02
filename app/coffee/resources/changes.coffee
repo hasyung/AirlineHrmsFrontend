@@ -11,7 +11,7 @@ Change = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('changes:check:success', "审核提交成功")
 
             'after-check-error': ->
-                $Evt.$send('changes:check:success', "审核提交失败")
+                $Evt.$send('changes:check:error', "审核提交失败")
         $config:
             jsonRoot: 'audits'
 

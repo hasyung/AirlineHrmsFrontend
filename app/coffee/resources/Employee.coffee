@@ -59,8 +59,8 @@ User = (restmod, RMUtils, $Evt) ->
     .single('/me')
 Education = (restmod, RMUtils, $Evt) ->
     Education = restmod.model().mix 'nbRestApi', {
-        admissionDate: {decode: 'date', param: 'yyyy-MM-dd'}
-        graduationDate: {decode: 'date', param: 'yyyy-MM-dd'}
+        admissionDate: {decode: 'nbDate'}
+        graduationDate: {decode: 'nbDate'}
         $hooks: {
             'after-create': ->
                 $Evt.$send('education:create:success', "教育经历创建成功")
@@ -81,8 +81,8 @@ Education = (restmod, RMUtils, $Evt) ->
     }
 Experience = (restmod, RMUtils, $Evt) ->
     Experience = restmod.model().mix 'nbRestApi', {
-        startDate: {decode: 'date', param: 'yyyy-MM-dd'}
-        endDate: {decode: 'date', param: 'yyyy-MM-dd'}
+        startDate: {decode: 'nbDate'}
+        endDate: {decode: 'nbDate'}
         $hooks: {
             'after-create': ->
                 $Evt.$send('work:create:success', "工作经历创建成功")
@@ -105,7 +105,7 @@ Experience = (restmod, RMUtils, $Evt) ->
 
 FamilyMember = (restmod, RMUtils, $Evt) ->
     FamilyMember = restmod.model().mix 'nbRestApi', {
-        $hooks: 
+        $hooks:
             'after-create': ->
                 $Evt.$send('FamilyMember:create:success', "家庭成员创建成功")
             'after-create-error': ->
@@ -118,7 +118,7 @@ FamilyMember = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('FamilyMember:update:success', "家庭成员删除成功")
             'after-destroy-error': ->
                 $Evt.$send('FamilyMember:update:error', "家庭成员删除失败")
-        
+
         $config:
             jsonRootSingle: 'family_member'
             jsonRootMany: 'family_members'
