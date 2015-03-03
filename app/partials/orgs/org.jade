@@ -42,22 +42,23 @@ section.org-detail(ng-controller="EditableResource")
     //- new sub
     .org-info(ng-if="orgCtrl.state == 'newsub' " ng-init="neworg = {}")
         form(novalidate, ng-submit="orgCtrl.newsub(newsubForm, neworg)", name="newsubForm")
-            md-input-container
-                label 名称
-                input(ng-model="neworg.name" required name="orgName")
-            md-input-container.row-has-value
-                label 机构性质
-                md-select(ng-model="neworg.nature" required md-on-open="loadEnum('department_natures')")
-                    md-select-label {{neworg.nature ? neworg.nature.displayName : '请选择'}}
-                    md-option(ng-value="nature" ng-repeat="nature in enums.department_natures") {{nature.displayName}}
-            md-input-container.row-has-value
-                label 职级
-                md-select(ng-model="neworg.grade" required md-on-open="loadEnum('department_grades')")
-                    md-select-label {{neworg.grade ? neworg.grade.displayName : '请选择'}}
-                    md-option(ng-value="grade" ng-repeat="grade in enums.department_grades") {{grade.displayName}}
-            .form-actions
-                md-button(type="button" ng-click="orgCtrl.state == 'show'") 取消
-                md-button.md-primary.md-raised(type="submit") 保存
+            fieldset
+                md-input-container
+                    label 名称
+                    input(ng-model="neworg.name" required name="orgName")
+                md-input-container.row-has-value
+                    label 机构性质
+                    md-select(ng-model="neworg.nature" required md-on-open="loadEnum('department_natures')")
+                        md-select-label {{neworg.nature ? neworg.nature.displayName : '请选择'}}
+                        md-option(ng-value="nature" ng-repeat="nature in enums.department_natures") {{nature.displayName}}
+                md-input-container.row-has-value
+                    label 职级
+                    md-select(ng-model="neworg.grade" required md-on-open="loadEnum('department_grades')")
+                        md-select-label {{neworg.grade ? neworg.grade.displayName : '请选择'}}
+                        md-option(ng-value="grade" ng-repeat="grade in enums.department_grades") {{grade.displayName}}
+                .form-actions
+                    md-button(type="button" ng-click="orgCtrl.state == 'show'") 取消
+                    md-button.md-primary.md-raised(type="submit") 保存
 
 section(ng-if="currentOrg.status !== 'destroy_inactive'")
     .org-title
