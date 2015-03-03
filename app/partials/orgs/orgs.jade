@@ -36,7 +36,7 @@ section(layout="row" flex)
                 md-button.md-raised.md-primary(ng-click="ctrl.resetData()" ng-show="ctrl.isHistory") 返回最新
 
                 //- loading-btn.red(ng-click="ctrl.openHistoryPanel()" btn-loading-type="contract-overlay" btn-text="测试loading")
-        md-content.org-chart-window(id="org_chart_warpper" flex)
+        md-content.org-chart-window(id="org_chart_warpper" flex scroll-center)
             div.svg-wrapper(org-chart id="org_chart" org-chart-data="ctrl.tree.data")
 
         div.bottom-btn-group(ng-show="ctrl.tree.isModified")
