@@ -45,12 +45,12 @@ section.org-detail(ng-controller="EditableResource")
             md-input-container
                 label 名称
                 input(ng-model="neworg.name" required name="orgName")
-            md-input-container
+            md-input-container.row-has-value
                 label 机构性质
                 md-select(ng-model="neworg.nature" required md-on-open="loadEnum('department_natures')")
                     md-select-label {{neworg.nature ? neworg.nature.displayName : '请选择'}}
                     md-option(ng-value="nature" ng-repeat="nature in enums.department_natures") {{nature.displayName}}
-            md-input-container
+            md-input-container.row-has-value
                 label 职级
                 md-select(ng-model="neworg.grade" required md-on-open="loadEnum('department_grades')")
                     md-select-label {{neworg.grade ? neworg.grade.displayName : '请选择'}}
