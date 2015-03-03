@@ -9,7 +9,7 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                     md-subheader 配偶
                     include self_info_lover_edit
                     md-divider
-                section.form-material-section(ng-if="vm.lovers.length == 0" ng-init="wife = vm.lovers.$new(); wife.relation='lover';wife.relationType='配偶'")
+                section.form-material-section(ng-if="vm.lovers.length == 0" ng-init="wife = vm.lovers.$new(); wife.relation='lover';")
                     md-subheader 配偶
                     include self_info_lover_edit
                     md-divider
