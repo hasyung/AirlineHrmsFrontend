@@ -56,14 +56,14 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                     md-input-container
                         label 学校或工作单位
                         input(ng-model="nc.company" columns="1")
-                    .form-actions()
-                        md-button.md-primary.md-raised(ng-click="vm.children.$create(nc);newChildren.splice($index, 1)") 提交
+                    .form-actions
                         md-button(ng-click="newChildren.splice($index, 1)") 取消
+                        md-button.md-primary.md-raised(ng-click="vm.children.$create(nc);newChildren.splice($index, 1)") 提交
 
-                .add
+                .add(ng-hide="newChildren.length")
                     button.btn.btn-default.fa.fa-plus(ng-click="newChildren.push({})")
-                md-divider
 
+                md-divider
             md-content.form-material-section.form-table-container(ng-init="vm.other = currentUser.familymembers.$search({relation: 'other'}); newOther = []")
                 md-subheader 父母、兄妹、配偶父母情况
                 table.table
@@ -108,10 +108,10 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                         label 学校或工作单位
                         input(ng-model="no.company")
                     .form-actions()
-                        md-button.md-primary.md-raised(ng-click="vm.other.$create(no);newOther.splice($index, 1)") 提交
                         md-button(ng-click="newOther.splice($index, 1)") 取消
+                        md-button.md-primary.md-raised(ng-click="vm.other.$create(no);newOther.splice($index, 1)") 提交
 
-                .add
+                .add(ng-hide="newOther.length")
                     button.btn.btn-default.fa.fa-plus(ng-click="newOther.push({})")
 
     //- .personnel-content-body

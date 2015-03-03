@@ -14,7 +14,7 @@
                 .form-content(ng-bind="resume.gender.displayName")
             .form-group.block
                 label.control-label 籍贯：
-                .form-content(ng-bind="resume.nativePlace")
+                .form-content.auto-height(ng-bind="resume.nativePlace")
             .form-group
                 label.control-label 民族：
                 .form-content(ng-bind="resume.nation.displayName")
@@ -55,7 +55,7 @@
                 .form-content(ng-bind="resume.contact.mobile")
             .form-group.block
                 label.control-label 家庭住址：
-                .form-content(ng-bind="resume.contact.address")
+                .form-content.auto-height(ng-bind="resume.contact.address")
             .form-group.block
                 label.control-label 通信地址：
                 .form-content(ng-bind="resume.contact.mailingAddress")
@@ -209,4 +209,3 @@
                         span.nt-cell.nt-cell-md(ng-bind="other.birthday  | date:'yyyy-MM-dd'")
                         span.nt-cell.nt-cell-lg(ng-bind="other.residenceBooklet")
                         span.nt-cell.nt-cell-lg(ng-bind="other.company")
-                    
