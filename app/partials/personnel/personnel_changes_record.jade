@@ -39,12 +39,12 @@ div.app-content-wrapper(nb-table='ctrl.records' nb-safe-src="ctrl.records" ng-in
                                     .panel-body.popup-body(ng-if="record.action == '修改'")
                                         table.table.table-striped.custom-table.popup-table
                                             tr
-                                                th(colspan="2") 修改前
-                                                th(colspan="2") 修改后
+                                                th() 字段
+                                                th() 修改前
+                                                th() 修改后
                                             tr(ng-repeat="(field, val) in record.auditedChanges", ng-if="field != 'unused'")
                                                 td(ng-bind="field")
                                                 td.overflow-text(ng-bind="val[0] || '无'", ng-attr-title="{{val[0]}}")
-                                                td(ng-bind="field")
                                                 td.overflow-text(ng-bind="val[1] || '无'" ng-attr-title="{{val[1]}}")
 
                                     .panel-body.popup-body(ng-if="record.action == '新增' || record.action == '删除'", slimscroll, height="300px")

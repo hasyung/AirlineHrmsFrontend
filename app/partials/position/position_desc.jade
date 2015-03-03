@@ -7,7 +7,7 @@ form(name="positionEditForm" ng-submit="save(currentSpe.$save())" ng-controller=
     fieldset(ng-disabled="!editing")
         md-input-container
             label 工作职责
-            textarea(ng-model="currentSpe.duty" columns="1" md-maxlength="250")
+            textarea(ng-model="currentSpe.duty" columns="1" md-maxlength="8000")
         md-input-container
             label 人事权限
             input(type='text', placeholder='请输入人事权限', ng-model="currentSpe.personnelPermission")
@@ -25,4 +25,4 @@ form(name="positionEditForm" ng-submit="save(currentSpe.$save())" ng-controller=
             input(type='text', placeholder='请输入外部联系', ng-model="currentSpe.externalRelation")
         md-input-container
             label 任职条件
-            textarea(ng-model="currentSpe.qualification" placeholder="任职条件")
+            textarea(ng-model="currentSpe.qualification" placeholder="任职条件" columns="1" md-maxlength="8000")

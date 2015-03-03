@@ -95,7 +95,7 @@
 
 .org-chart-top {
     margin: 0 20px;
-    padding-top: 15px;
+    padding-top: 30px;
     position: relative;
     text-align: center;
 }
@@ -104,7 +104,7 @@
     margin-right: 40px;
     position: absolute;
     right: 10px;
-    top: 5px;
+    top: 20px;
 
     .md-button {
         display: inline-block;
@@ -114,7 +114,10 @@
 }
 
 .bottom-btn-group {
+    bottom: 40px;
     margin-right: 40px;
+    position: absolute;
+    right: 10px;
 
     .md-button {
         display: inline-block;
@@ -202,8 +205,8 @@
 
 .form-actions {
     float: right;
-    padding: 0 20px;
     margin-bottom: 20px;
+    padding: 0 20px;
 
     .md-button {
         margin-left: 10px;
