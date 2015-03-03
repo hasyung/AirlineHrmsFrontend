@@ -146,9 +146,14 @@
         }
     }
 
-    svg text,
-    svg rect {
-        cursor: pointer;
+    svg {
+        display: block;
+        margin: 0 auto;
+
+        text,
+        rect {
+            cursor: pointer;
+        }
     }
     // TODO: 以后用变量
     .orgchart-box-create_inactive {
