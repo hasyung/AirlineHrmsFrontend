@@ -2,7 +2,7 @@ md-toolbar
     .md-toolbar-tools
         span 人事信息
 .personnel-content.personnel-control
-    section.personnel-info-section(ng-init= "current = ngDialogData; data = {}; data.selectedIndex = 0;")
+    section.personnel-info-section(ng-init= "current = ngDialogData; current.$refresh(); data = {}; data.selectedIndex = 0;")
         md-tabs(md-selected="data.selectedIndex")
             md-tab(id="tab1" label="基本人事信息" md-active)
                 //- div(role="tabpanel" layout="column" aria-labelledby="tab1")

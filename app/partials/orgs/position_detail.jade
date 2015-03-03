@@ -17,7 +17,7 @@
                 section.position-info(ng-controller="EditableResource")
                     div.showing(ng-hide="editing")
                         .btn-group.pull-right
-                            button.btn.btn-default(ng-click="edit()") 编辑
+                            button.btn.btn-default(ng-hide="ctrl.isHistory" ng-click="edit()") 编辑
                         h3 岗位信息
                         .editor-style
                             table
@@ -104,7 +104,7 @@
                 section.position-specification(ng-controller="EditableResource")
                     .showing(ng-hide="editing")
                         .custom-btn-group.pull-right
-                            button.btn.btn-default(ng-click="edit()") 编辑
+                            button.btn.btn-default(ng-hide="ctrl.isHistory" ng-click="edit()") 编辑
                         h3 工作职责
                         div(ng-bind-html="currentSpe.duty")
                             | 无
