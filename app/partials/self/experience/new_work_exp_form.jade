@@ -1,0 +1,28 @@
+form(ng-controller="NewResource", ng-submit="create(newExp,newWorkBeforeForm); param.newExp = null" name="newWorkBeforeForm")
+    .form-btn-group.alive
+        md-button(ng-click="param.newExp = null") 取消
+        md-button.md-primary.md-raised(type="submit") 保存
+    div(layout)
+        md-input-container(flex)
+            label 开始时间
+            input(type="date" ng-model="newExp.startDate")
+        md-input-container(flex)
+            label 结束时间
+            input(type="date" ng-model="newExp.endDate")
+    div(layout)
+        md-input-container(flex)
+            label 单位名称
+            input(ng-model="newExp.company" name="company" required)
+        md-input-container(flex)
+            label 任职部门
+            input(ng-model="newExp.department" name="department" required)
+    div(layout)
+        md-input-container(flex)
+            label 担任职位
+            input(ng-model="newExp.position" name="position" required)
+        md-input-container(flex)
+            label 工作描述
+            input(ng-model="newExp.jobDesc" name="jobDesc" required)
+    md-input-container
+        label 证明人
+        input(ng-model="newExp.witness" name="witness" required)

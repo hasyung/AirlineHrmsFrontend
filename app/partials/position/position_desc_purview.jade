@@ -1,0 +1,17 @@
+form(name="positionEditForm" ng-submit="save(currentSpe.$save())" ng-controller="EditableResource" ng-init="params = {}")
+    .form-btn-group(ng-hide="editing")
+        md-button.md-primary.md-raised(ng-click="edit($event)") 编辑
+    .form-btn-group.alive(ng-show="editing")
+        md-button.md-primary(ng-click="cancel(currentSpe, $event)") 取消
+        md-button.md-primary.md-raised(type="submit" ng-disabled="positionEditForm.$invalid") 保存
+    fieldset(ng-disabled="!editing")
+        md-input-container(flex)
+            label 人事权限
+            input(type='text', placeholder='请输入人事权限', ng-model="currentSpe.personnelPermission")
+        md-input-container(flex)
+            label 财务权限
+            input(type='text', placeholder='请输入财务权限', ng-model="currentSpe.financialPermission")
+        md-input-container(flex)
+            label 业务权限
+            input(type='text', placeholder='请输入业务权限', ng-model="currentSpe.businessPermission")
+

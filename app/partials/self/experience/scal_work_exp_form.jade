@@ -1,0 +1,27 @@
+form(ng-submit="save(work.$save(), infoForm)" name="infoForm")
+    fieldset(ng-disabled="!editing")
+        div(layout)
+            md-input-container(flex)
+                label 开始时间
+                input(type="date" ng-model="work.startDate")
+            md-input-container(flex)
+                label 结束时间
+                input(type="date" ng-model="work.endDate")
+        div(layout)
+            md-input-container(flex)
+                label 单位名称
+                input(ng-model="work.company" name="company" required)
+            md-input-container(flex)
+                label 任职部门
+                input(ng-model="work.department" name="department" required)
+        div(layout)
+            md-input-container.row-has-value(flex)
+                label 担任职位
+                input(ng-model="work.position" name="position" required)
+            md-input-container.row-has-value(flex)
+                label 工作描述
+                input(ng-model="work.jobDesc" name="jobDesc" required)
+        md-input-container
+            label 证明人
+            input(ng-model="work.witness" name="witness" required)
+md-divider(ng-show="!$last")
