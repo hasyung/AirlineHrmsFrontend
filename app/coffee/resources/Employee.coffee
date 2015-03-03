@@ -50,6 +50,12 @@ Formerleaders = (restmod, RMUtils, $Evt) ->
     }
 User = (restmod, RMUtils, $Evt) ->
     User = restmod.model(null).mix 'nbRestApi', {
+        $hooks: 
+            'after-update': ->
+                $Evt.$send('user:update:success', "个人信息更新成功")
+            'after-update-error': ->
+                $Evt.$send('user:update:error', "个人信息更新失败")
+
         educationExperiences: { hasMany: 'Education'}
         workExperiences: { hasMany: 'Experience'}
         resume: { hasOne: 'Resume', mask: 'CU'}

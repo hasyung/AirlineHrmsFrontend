@@ -6,7 +6,7 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
             span(ng-hide="editing")
                 md-button.md-raised(ng-click="edit($event)") 编辑
             span(ng-show="editing")
-                md-button.md-raised(ng-click="cancel($event)") 取消
+                md-button.md-raised(ng-click="cancel(currentUser, $event)") 取消
                 md-button.md-primary.md-raised(ng-click="submit") 保存
     md-content
         section.form-material-section
@@ -39,7 +39,7 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                         input(ng-model="currentUser.birthPlace" name="birthPlace" required)
                     md-input-container.row-has-value(flex)
                         label 婚姻状况
-                        md-select(ng-model="currentUser.maritalStatus" md-on-open="loadEnum('marital_status')" required)
+                        md-select(ng-model="currentUser.maritalStatus" md-on-open="loadEnum('marital_status')")
                             md-select-label {{currentUser.maritalStatus ? currentUser.maritalStatus.displayName : '无'}}
                             md-option(ng-value="maritalStatus" ng-repeat="maritalStatus in enums.marital_status track by maritalStatus.id") {{maritalStatus.displayName}}
                 div(layout)
@@ -115,9 +115,10 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                     ui-select(
                         ng-model="currentUser.department"
                         ng-change="params.orgPos = currentUser.department.positions.length? currentUser.department.positions: currentUser.department.positions.$fetch();currentUser.position = null"
-                        ng-init="params.orgPos = currentUser.department.positions.length? currentUser.department.positions: currentUser.department.positions.$fetch();currentUser.position = null"
+                        ng-init="params.orgPos = currentUser.department.positions.length? currentUser.department.positions: currentUser.department.positions.$fetch();"
                         reset-search-input="true"
                         style="width: 500px"
+                        disabled
                         )
                         ui-select-match(placeholder="请输入机构名称") {{ $select.selected.name }}
                         ui-select-choices(repeat="org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
@@ -129,7 +130,7 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                             md-option(ng-value="pos" ng-repeat="pos in params.orgPos") {{pos.name}}
                     md-input-container.row-has-value(flex)
                         label 分类
-                        md-select(ng-model="currentUser.category" md-on-open="loadEnum('categories')")
+                        md-select(ng-model="currentUser.category" md-on-open="loadEnum('categories')" disabled)
                             md-select-label {{currentUser.category? currentUser.category.displayName : '无'}}
                             md-option(ng-value="category" ng-repeat="category in enums.categories") {{category.displayName}}
                 div(layout)
