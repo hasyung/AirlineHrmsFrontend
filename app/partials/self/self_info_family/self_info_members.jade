@@ -30,7 +30,7 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                             td(ng-bind="child.relationType")
                             td(ng-bind="child.gender")
                             td(ng-bind="child.birthday | date:'yyyy-MM-dd'")
-                            td(ng-bind="child.nativePlace")
+                            td(ng-bind="child.residenceBooklet")
                             td(ng-bind="child.company")
                             td.control-td
                                 button.btn.fa.fa-times(ng-click="child.$destroy()")
@@ -51,7 +51,7 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                             input(ng-model="nc.birthday" type="date")
                     md-input-container
                         label 常住户口所在地
-                        input(ng-model="nc.nativePlace" columns="1")
+                        input(ng-model="nc.residenceBooklet" columns="1")
                     md-input-container
                         label 学校或工作单位
                         input(ng-model="nc.company" columns="1")
@@ -75,10 +75,10 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                         th 操作
                     tr(ng-repeat="omg in vm.other")
                         td(ng-bind="omg.name")
-                        td(ng-bind="omg.relation_type")
+                        td(ng-bind="omg.relationType")
                         td(ng-bind="omg.gender")
                         td(ng-bind="omg.birthday | date:'yyyy-MM-dd'")
-                        td(ng-bind="omg.native_place")
+                        td(ng-bind="omg.nativePlace")
                         td(ng-bind="omg.company")
                         td.control-td
                             button.btn.fa.fa-times(ng-click="omg.$destroy()")
@@ -99,7 +99,7 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                             input(ng-model="no.birthday" type="date")
                     md-input-container
                         label 常住户口所在地
-                        input(ng-model="no.nativePlace")
+                        input(ng-model="no.residenceBooklet")
                     md-input-container
                         label 学校或工作单位
                         input(ng-model="no.company")

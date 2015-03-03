@@ -52,6 +52,7 @@ User = (restmod, RMUtils, $Evt) ->
     User = restmod.model(null).mix 'nbRestApi', {
         educationExperiences: { hasMany: 'Education'}
         workExperiences: { hasMany: 'Experience'}
+        resume: { hasOne: 'Resume', mask: 'CU'}
         $config:
             jsonRoot: 'employee'
         familymembers: {hasMany: 'FamilyMember'}
