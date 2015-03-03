@@ -23,16 +23,10 @@ section.personnel-info-section(ng-init="educations = currentUser.educationExperi
                 .md-toolbar-tools
                     span 教育经历（入司后）
                     span(flex)
-                    span
-                        md-button.md-raised(ng-hide="param.newExp" ng-click="param.newExp= educations.$build({category:'after'})") 新增
-            md-content(ng-if="param.newExp && param.newExp.category == 'after'" ng-init="newExp = param.newExp")
-                section.form-material-section
-                    .sep-40
-                    include edu/new_edu_exp_form
             md-content
                 section.form-material-section(ng-controller="EditableResource", ng-repeat="education in educations | filterBy: ['category']:'after'")
                     .sep-40
-                    include edu/exist_edu_exp_form
+                    include edu/scal_edu_exp_form
                     md-divider(ng-show="!$last")
 
 //- section.personnel-info-section(ng-init="educations = currentUser.educationExperiences.$refresh();param= {}")

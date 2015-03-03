@@ -52,6 +52,7 @@ User = (restmod, RMUtils, $Evt) ->
     User = restmod.model(null).mix 'nbRestApi', {
         educationExperiences: { hasMany: 'Education'}
         workExperiences: { hasMany: 'Experience'}
+        resume: { hasOne: 'Resume', mask: 'CU'}
         $config:
             jsonRoot: 'employee'
         familymembers: {hasMany: 'FamilyMember'}
@@ -105,6 +106,7 @@ Experience = (restmod, RMUtils, $Evt) ->
 
 FamilyMember = (restmod, RMUtils, $Evt) ->
     FamilyMember = restmod.model().mix 'nbRestApi', {
+        birthday: {decode: 'nbDate'}
         $hooks:
             'after-create': ->
                 $Evt.$send('FamilyMember:create:success', "家庭成员创建成功")
