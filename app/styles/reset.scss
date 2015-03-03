@@ -3,6 +3,13 @@ fieldset {
     border: 0;
 }
 
+a {
+    &:hover {
+        cursor: pointer;
+        text-decoration: none;
+    }
+}
+
 body h3,
 html h3,
 body h4,
@@ -12,4 +19,9 @@ html h4 {
 
 .sep-40 {
     height: 40px;
+}
+
+.md-subheader {
+    font-family: 'SimHei' '微软雅黑' Arial;
+    font-size: 14px;
 }

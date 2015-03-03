@@ -59,6 +59,13 @@
             display: block;
             position: relative;
 
+            &.active {
+                >a {
+                    background-color: #16232d;
+                    color: #fff;
+                }
+            }
+
             li {
                 a {
                     padding-left: $app-aside-nav-height + 15px;
