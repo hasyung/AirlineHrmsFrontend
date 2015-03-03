@@ -66,5 +66,5 @@ div.app-content-wrapper(nb-table='ctrl.records' nb-safe-src="ctrl.records" ng-in
                         td(ng-bind="record.createdAt | date:'yyyy-MM-dd'")
                         td(ng-bind="record.statusCd | dictmap:'personnel'")
                         td(ng-bind="record.checkDate | date:'yyyy-MM-dd'")
-                        td(ng-bind="record.reason")
+                        td.long-text(ng-bind="record.reason")
         .custom-pages(nb-pagination="ctrl.records.$metadata" per-page="15")

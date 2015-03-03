@@ -75,6 +75,15 @@
     &.popup-table {
         table-layout: fixed;
     }
+    .long-text>a{
+        >span {
+            width: 100px;
+            overflow: hidden;
+            display: block;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
 
     tr {
         cursor: pointer;
