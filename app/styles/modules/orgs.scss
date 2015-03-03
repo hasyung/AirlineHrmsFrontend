@@ -203,6 +203,7 @@
 .form-actions {
     float: right;
     padding: 0 20px;
+    margin-bottom: 20px;
 
     .md-button {
         margin-left: 10px;
@@ -346,6 +347,7 @@ md-input-container {
     }
 
     .add-member {
+        @include clearfix();
         padding: 0 80px;
     }
 

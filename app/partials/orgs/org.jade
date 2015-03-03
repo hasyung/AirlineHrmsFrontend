@@ -45,12 +45,12 @@ section.org-detail(ng-controller="EditableResource")
             md-input-container
                 label 名称
                 input(ng-model="neworg.name" required name="orgName")
-            md-input-container
+            md-input-container.row-has-value
                 label 机构性质
                 md-select(ng-model="neworg.nature" required md-on-open="loadEnum('department_natures')")
                     md-select-label {{neworg.nature ? neworg.nature.displayName : '请选择'}}
                     md-option(ng-value="nature" ng-repeat="nature in enums.department_natures") {{nature.displayName}}
-            md-input-container
+            md-input-container.row-has-value
                 label 职级
                 md-select(ng-model="neworg.grade" required md-on-open="loadEnum('department_grades')")
                     md-select-label {{neworg.grade ? neworg.grade.displayName : '请选择'}}
@@ -63,14 +63,13 @@ section(ng-if="currentOrg.status !== 'destroy_inactive'")
     .org-title
         span 下属岗位信息
         button.btn.btn-default.fa.fa-cog(
-            ng-disabled="!ctrl.isHistory"
+            ng-disabled="ctrl.isHistory"
             title="设置岗位"
             nb-dialog="partials/orgs/position.html"
             nb-dialog-scope="this"
             nb-dialog-controller="OrgPosCtrl"
             nb-dialog-data="positions"
             nb-dialog-class="ngdialog-theme-panel"
-            ng-disabled="ctrl.isHistory"
             )
     div.org-table(slimscroll height="400px")
         table.table.table-striped
@@ -88,11 +87,11 @@ section(ng-if="currentOrg.status !== 'destroy_inactive'")
                             nb-dialog-class="ngdialog-theme-panel"
                             nb-dialog-data="position"
                         ) {{position.name}}
-                    td
+                    td.org-post(ng-if="ctrl.isHistory")
                         a(
                             nb-dialog="partials/orgs/position_detail_history.html"
                             nb-dialog-class="ngdialog-theme-panel"
                             nb-dialog-data="position"
-                            )
+                            ) {{position.name}}
                     td  {{position.budgetedStaffing}}
                     td(ng-class="{'overstaffed': position.overstaffedNum > 0}")  {{position.staffing}}

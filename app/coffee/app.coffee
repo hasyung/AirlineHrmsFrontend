@@ -63,10 +63,12 @@ restConf = (restmodProvider) ->
     restmodProvider.rebase 'AMSApi',
         $config:
             urlPrefix: 'api'
-        # $hooks: {
-        #     'before-request': (_req)->
-        #         _req.url += '.json'
-        # }
+
+mdThemingConf = ($mdThemingProvider) ->
+    $mdThemingProvider.theme('default')
+        .primaryPalette('light-blue')
+        .accentPalette('amber')
+        .warnPalette('deep-orange')
 
 
 routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider) ->
@@ -136,6 +138,7 @@ App
     .config ['$provide', 'ngDialogProvider', appConf]
     .config ['$datepickerProvider', datepickerConf]
     .config ['restmodProvider', restConf]
+    .config ['$mdThemingProvider', mdThemingConf]
     .config ['$stateProvider','$urlRouterProvider','$locationProvider', '$httpProvider', routeConf]
     .run ['$state','$rootScope', 'toaster', '$http', 'Org', 'sweet', 'User', '$enum', ($state, $rootScope, toaster, $http, Org, sweet, User, $enum) ->
         # for $state.includes in view
