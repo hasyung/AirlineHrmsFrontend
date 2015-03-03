@@ -14,7 +14,7 @@ form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="Ed
             ui-select(
                 ng-model="current.department"
                 ng-change="params.orgPos = current.department.positions.length? current.department.positions: current.department.positions.$fetch();current.position = null"
-                ng-init="params.orgPos = current.department.positions.length? current.department.positions: current.department.positions.$fetch();current.position = null"
+                ng-init="params.orgPos = current.department.positions.length? current.department.positions: current.department.positions.$fetch();"
                 reset-search-input="true"
                 style="width: 500px"
                 )
