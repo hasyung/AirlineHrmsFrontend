@@ -1,4 +1,4 @@
-.position-manage.app-content-wrapper(nb-table='ctrl.records' nb-safe-src="ctrl.changes" ng-init="ctrl.changes = ctrl.PositionChange.$collection().$refresh()")
+.app-content-wrapper(flex)(nb-table='ctrl.records' nb-safe-src="ctrl.changes" ng-init="ctrl.changes = ctrl.PositionChange.$collection().$refresh()")
     .search-container(nb-search)
         div(nb-predicate="岗位名称" predicate-attr="name")
             input(name="name" placeholder="岗位名称" ng-model="name")
@@ -6,7 +6,7 @@
             ui-select(multiple ng-model="$parent.department_ids" theme="select2" style="width:600px" reset-search-input="true")
                 ui-select-match(placeholder="请输入机构名称") {{ $item.name }}
                 ui-select-choices(repeat="org.id as org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
-        
+
         div(nb-predicate="创建时间" predicate-attr="created_at")
             input(ng-model="created_at.from" bs-datepicker)
             span.gap 至
@@ -55,5 +55,5 @@
                                             td(ng-bind="field")
                                             td.overflow-text(ng-bind-html="val || '无'" ng-attr-title="{{val}}")
                     td(ng-bind="change.createdAt | date:'yyyy-MM-dd'")
-                    
+
     .custom-pages(nb-pagination="ctrl.records.$metadata" per-page="15")
