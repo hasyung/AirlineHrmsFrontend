@@ -327,3 +327,33 @@ md-input-container {
         color: $text-muted;
     }
 }
+
+.form-table-container {
+    th {
+        color: $text-muted;
+    }
+
+    td {
+        color: $text-color;
+    }
+
+    .control-td {
+        .btn {
+            border: 0;
+            box-shadow: none;
+            padding: 2px 8px;
+        }
+    }
+
+    .add-member {
+        padding: 0 80px;
+    }
+
+    .add {
+        margin-bottom: 20px;
+    }
+}
+
+
+
+

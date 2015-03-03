@@ -2,7 +2,7 @@ form(ng-submit="save(education.$save(), eduForm)" name="eduForm")
     .form-btn-group(ng-hide="editing")
         md-button.md-warn(type="button" ng-click="education.$destroy()") 删除
         md-button.md-primary.md-raised(ng-click="edit($event)") 编辑
-    .form-btn-group(ng-show="editing")
+    .form-btn-group.alive(ng-show="editing")
         md-button(ng-click="cancel(current,$event, eduForm)",) 取消
         md-button.md-primary.md-raised(type="submit") 保存
     fieldset(ng-disabled="!editing")

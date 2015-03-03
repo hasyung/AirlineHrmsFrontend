@@ -13,7 +13,7 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                     md-subheader 配偶
                     include self_info_lover_edit
                     md-divider
-            md-content.form-material-section(ng-init="vm.children = currentUser.familymembers.$search({relation: 'children'}); newChildren = []")
+            md-content.form-material-section.form-table-container(ng-init="vm.children = currentUser.familymembers.$search({relation: 'children'}); newChildren = []")
                 md-subheader 子女情况
                 table.table
                     thead
@@ -34,8 +34,8 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                             td(ng-bind="child.residenceBooklet")
                             td(ng-bind="child.company")
                             td.control-td
-                                button.btn.fa.fa-times(ng-click="child.$destroy()")
-                form(ng-repeat="nc in newChildren" ng-init="nc.relation='children';")
+                                button.btn.btn-default.fa.fa-times(ng-click="child.$destroy()")
+                form.add-member(ng-repeat="nc in newChildren" ng-init="nc.relation='children';")
                     div(layout)
                         md-input-container(flex)
                             label 姓名
@@ -64,27 +64,29 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                     button.btn.btn-default.fa.fa-plus(ng-click="newChildren.push({})")
                 md-divider
 
-            md-content.form-material-section(ng-init="vm.other = currentUser.familymembers.$search({relation: 'other'}); newOther = []")
+            md-content.form-material-section.form-table-container(ng-init="vm.other = currentUser.familymembers.$search({relation: 'other'}); newOther = []")
                 md-subheader 父母、兄妹、配偶父母情况
                 table.table
-                    tr
-                        th 姓名
-                        th 关系
-                        th 性别
-                        th 出生年月
-                        th 常住户口所在地
-                        th 学校或工作单位
-                        th 操作
-                    tr(ng-repeat="omg in vm.other")
-                        td(ng-bind="omg.name")
-                        td(ng-bind="omg.relationType")
-                        td(ng-bind="omg.gender")
-                        td(ng-bind="omg.birthday | date:'yyyy-MM-dd'")
-                        td(ng-bind="omg.nativePlace")
-                        td(ng-bind="omg.company")
-                        td.control-td
-                            button.btn.fa.fa-times(ng-click="omg.$destroy()")
-                form(ng-repeat="no in newOther" ng-init="no.relation='other';")
+                    thead
+                        tr
+                            th 姓名
+                            th 关系
+                            th 性别
+                            th 出生年月
+                            th 常住户口所在地
+                            th 学校或工作单位
+                            th 操作
+                    tbody
+                        tr(ng-repeat="omg in vm.other")
+                            td(ng-bind="omg.name")
+                            td(ng-bind="omg.relation_type")
+                            td(ng-bind="omg.gender")
+                            td(ng-bind="omg.birthday | date:'yyyy-MM-dd'")
+                            td(ng-bind="omg.native_place")
+                            td(ng-bind="omg.company")
+                            td.control-td
+                                button.btn.btn-default.fa.fa-times(ng-click="omg.$destroy()")
+                form.add-member(ng-repeat="no in newOther" ng-init="no.relation='other';")
                     div(layout)
                         md-input-container(flex)
                             label 姓名
