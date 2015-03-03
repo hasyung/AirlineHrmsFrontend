@@ -40,6 +40,10 @@
                 li
                     span.switch-circle(ui-sref="^.resume")
                     | 档案信息
+                li(ui-sref-active="active")
+                    a(ui-sref=".resume")
+                        span.switch-circle
+                        | 个人履历
 
     .personnel-content(flex)
         div(ui-view="")

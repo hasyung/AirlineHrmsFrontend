@@ -12,9 +12,16 @@ Position = (restmod, RMUtils, $Evt, Specification) ->
         # 部门领导
         formerleaders: {hasMany: 'Formerleaders'}
         # 是否超编
-        isOverstaffed: {
+        # isOverstaffed: {
+        #     computed: (val) ->
+        #         this.staffing > this.budgetedStaffing
+        #     , mask: "CU"
+        # }
+        #超编人数，主要用这个，上面那个是否超编会逐渐取消，最后删除
+        overstaffedNum: {
             computed: (val) ->
-                this.staffing > this.budgetedStaffing
+                num = this.staffing - this.budgetedStaffing
+                if num > 0 then num else 0
             , mask: "CU"
         }
         specification: { hasOne: 'Specification', mask: "U"}
