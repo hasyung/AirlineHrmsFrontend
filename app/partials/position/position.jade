@@ -31,7 +31,7 @@
                 li( role="presentation")
                     a(role="menuitem" ng-href="/api/positions/export_specification_pdf" ) 导出全部岗位描述书
                 li( role="presentation" ng-if="ctrl.getExportParams().length != 0")
-                    a(role="menuitem" ng-href="/api/positions/export_specification_pdf?position_ids={{ctrl.getExportParams()}}" ) 获取所选岗位描述书
+                    a(role="menuitem" ng-href="/api/positions/export_specification_pdf?position_ids={{ctrl.getExportParams()}}" ) 导出所选岗位描述书
         .table-container
             h4 岗位信息列表
             table.table.table-striped.custom-table
