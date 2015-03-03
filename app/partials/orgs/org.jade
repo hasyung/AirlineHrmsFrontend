@@ -1,4 +1,4 @@
-section.org-detail
+section.org-detail(ng-controller="EditableResource")
     .org-title.org-form-row
         span(ng-show="orgCtrl.state != 'newsub'") 机构信息
         span(ng-show="orgCtrl.state == 'newsub'") 新增子机构信息
@@ -13,12 +13,12 @@ section.org-detail
                 nb-dialog-scope="this"
                 )
             //- button.btn.btn-default.fa.fa-pencil(ui-sref="^.edit({orgId: org.id})",title="编辑")
-            button.btn.btn-default.fa.fa-pencil(ng-click="orgCtrl.state = 'editing'",title="编辑")
+            button.btn.btn-default.fa.fa-pencil(ng-click="edit()",title="编辑")
             button.btn.btn-default.fa.fa-plus(title="新增子机构",ng-click="orgCtrl.state = 'newsub'", ng-if="currentOrg.grade.name !== 'secondly_positive'")
     //- show
     .org-info(ng-hide="orgCtrl.state == 'newsub'")
-        form(name="updateForm")
-            fieldset(ng-disabled="orgCtrl.state != 'editing'")
+        form(name="orgUpdateForm" ng-submit="save(currentOrg.$save(), orgUpdateForm)")
+            fieldset(ng-disabled="!editing")
                 md-input-container
                     label 名称
                     input(ng-model="currentOrg.name" required name="orgName")
@@ -27,11 +27,6 @@ section.org-detail
                     input(ng-model="currentOrg.serialNumber" disabled)
                 md-input-container.row-has-value
                     label 机构性质
-                    //- md-select(ng-model="currentOrg.nature")
-                    //-     md-option(value="123") 123
-                    //-     md-option(value="234") 234
-                    //-     md-option(value="345") 345
-
                     //- nb-dropdown(ng-model="copyOrg.nature" remote-key="department_natures", name="orgAddr", required="true")
                     md-select(ng-model="currentOrg.nature" md-on-open="loadEnum('department_natures')")
                         md-select-label {{currentOrg.nature ? currentOrg.nature.displayName : '请选择'}}
@@ -41,38 +36,28 @@ section.org-detail
                     label 职级
                     input(ng-model="currentOrg.grade.displayName" disabled)
 
-            .form-actions
-                md-button(type="button", ng-click="orgCtrl.cancel()") 取消
-                md-button.md-primary.md-raised(type="submit",ng-disabled="!updateForm.$valid") 保存
+            .form-actions(ng-hide="!editing")
+                md-button(type="button", ng-click="cancel(currentOrg, $event)") 取消
+                md-button.md-primary.md-raised(type="submit") 保存
     //- new sub
     .org-info(ng-if="orgCtrl.state == 'newsub' " ng-init="neworg = {}")
         form(novalidate, ng-submit="orgCtrl.newsub(newsubForm, neworg)", name="newsubForm")
-            .org-form-group
-                label.control-label.org-label.drop-label 名称：
-                .form-content
-                    input(ng-model="neworg.name", type="text", required, name="orgName")
-                    div(ng-messages="newsubForm.orgName.$error", ng-if="newsubForm.orgName.$dirty")
-                        .form-group-error(ng-message="required") 名称必填
-
-            .org-form-group
-                label.control-label.org-label.drop-label 机构性质：
-                .form-content
-                    nb-dropdown(ng-model="neworg.nature" remote-key="department_natures", required, name="orgAddr")
-
-                    div(ng-messages="newsubForm.orgAddr.$error", ng-if="newsubForm.orgAddr.$dirty")
-                        .form-group-error(ng-message="required") 机构性质必选
-
-            .org-form-group
-                label.control-label.org-label.drop-label 职级：
-                .form-content
-                    nb-dropdown(ng-model="neworg.grade" remote-key="department_grades", required="true", name="orgType", additory="false")
-                    div(ng-messages="newsubForm.orgType.$error", ng-if="newsubForm.orgType.$dirty || newsubForm.orgType.$dirty")
-                        .form-group-error(ng-message="required") 职级必选
-
-            .org-form-group.org-form-btn-group
-                input.btn.btn-info.pull-right(type="submit",value="保存",ng-disabled="!newsubForm.$valid")
-                button.btn.btn-default.pull-right(type="button", ng-click="orgCtrl.cancel()") 取消
-
+            md-input-container
+                label 名称
+                input(ng-model="neworg.name" required name="orgName")
+            md-input-container
+                label 机构性质
+                md-select(ng-model="neworg.nature" required md-on-open="loadEnum('department_natures')")
+                    md-select-label {{neworg.nature ? neworg.nature.displayName : '请选择'}}
+                    md-option(ng-value="nature" ng-repeat="nature in enums.department_natures") {{nature.displayName}}
+            md-input-container
+                label 职级
+                md-select(ng-model="neworg.grade" required md-on-open="loadEnum('department_grades')")
+                    md-select-label {{neworg.grade ? neworg.grade.displayName : '请选择'}}
+                    md-option(ng-value="grade" ng-repeat="grade in enums.department_grades") {{grade.displayName}}
+            .form-actions
+                md-button(type="button" ng-click="orgCtrl.state == 'show'") 取消
+                md-button.md-primary.md-raised(type="submit") 保存
 
 section(ng-if="currentOrg.status !== 'destroy_inactive'")
     .org-title
