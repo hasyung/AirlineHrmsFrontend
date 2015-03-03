@@ -17,11 +17,19 @@
             //-     input(name="category_id" placeholder="员工分类" ng-model="category_id")
 
             div(nb-predicate="岗位通道" predicate-attr="channel_id")
-                nb-dropdown( ng-model="channel_id", remote-key="channels", map="$item.id" name="channel_id" required)
+                nb-dropdown( ng-model="channel_id", remote-key="channels", map="$item.id" name="channel_id")
 
             div(nb-predicate="属地" predicate-attr="location_id")
-                nb-dropdown( ng-model="location_id", remote-key="locations", map="$item.id" name="location_id" required)
+                nb-dropdown( ng-model="location_id", remote-key="locations", map="$item.id" name="location_id")
 
+            div(nb-predicate="用工状态" predicate-attr="employment_status_id")
+                nb-dropdown( ng-model="employment_status_id", remote-key="employment_status", map="$item.id" name="employment_status_id")
+
+            div(nb-predicate="用工关系" predicate-attr="labor_relation_id")
+                nb-dropdown( ng-model="labor_relation_id", remote-key="labor_relations", map="$item.id" name="labor_relation_id")
+                //- md-select(ng-model="labor_relation_id", md-on-open="loadEnum('labor_relations')")
+                //-     md-select-label {{labor_relation_id.displayName || '无'}}
+                //-     md-option(ng-value="labor_relation_id" ng-repeat="labor_relation_id in enums.labor_relations") {{labor_relation_id.displayName}}
             div(nb-predicate="出生日期" predicate-attr="birthday")
                 input(ng-model="birthday.from" bs-datepicker)
                 span.gap 至

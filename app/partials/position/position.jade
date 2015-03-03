@@ -4,8 +4,12 @@
             div(nb-predicate="岗位名称" predicate-attr="name")
                 input(name="name" placeholder="岗位名称" ng-model="name")
             div(nb-predicate="岗位通道" predicate-attr="channel_id")
-                nb-dropdown( ng-model="channel_id", remote-key="channels", map="$item.id" name="channel" required)
-
+                nb-dropdown( ng-model="channel_id", remote-key="channels", map="$item.id" name="channel")
+            //- 后端需要字符串的true false
+            div(nb-predicate="是否超编" predicate-attr="staffing_surpass")
+                md-select(ng-model="staffing_surpass", ng-init="options=['false', 'true']")
+                    md-select-label {{staffing_surpass=='true' ?'是':'否'}}
+                    md-option(ng-value="staffing_surpass" ng-repeat="staffing_surpass in options") {{staffing_surpass=='true'?'是':'否'}}
             div(nb-predicate="创建时间" predicate-attr="created_at")
                 input(ng-model="created_at.from" bs-datepicker)
                 span.gap 至
