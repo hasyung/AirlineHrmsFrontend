@@ -81,12 +81,18 @@ section(ng-if="currentOrg.status !== 'destroy_inactive'")
                     th  在编人数
             tbody
                 tr(ng-repeat="position in positions track by position.id")
-                    td.org-post(ng-click="")
+                    td.org-post(ng-if="!ctrl.isHistory")
                         //- a(ui-sref=".position.detail({posId: position.id,id:currentOrg.id})") {{position.name}}
                         a(
                             nb-dialog="partials/position/position_detail.html"
                             nb-dialog-class="ngdialog-theme-panel"
                             nb-dialog-data="position"
                         ) {{position.name}}
+                    td
+                        a(
+                            nb-dialog="partials/orgs/position_detail_history.html"
+                            nb-dialog-class="ngdialog-theme-panel"
+                            nb-dialog-data="position"
+                            )
                     td  {{position.budgetedStaffing}}
                     td(ng-class="{'overstaffed': position.overstaffedNum > 0}")  {{position.staffing}}
