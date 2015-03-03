@@ -60,6 +60,12 @@ class Route
                 controllerAs: 'ctrl'
                 templateUrl: 'partials/self/experience.html'
             }
+            .state 'self.resume', {
+                url: '/resume'
+                controller: ProfileCtrl
+                controllerAs: 'ctrl'
+                templateUrl: 'partials/self/self_resume.html'
+            }
 
 # class SelfCtrl extends nb.Controller
 

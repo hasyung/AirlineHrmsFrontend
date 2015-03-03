@@ -23,7 +23,7 @@
                 .form-content(ng-bind="resume.birthPlace")
             .form-group
                 label.control-label 出生年月：
-                .form-content(ng-bind="resume.birthday")
+                .form-content(ng-bind="resume.birthday  | date:'yyyy-MM-dd'")
             .form-group
                 label.control-label 身份证号：
                 .form-content(ng-bind="resume.identityNo")
@@ -70,10 +70,10 @@
             .form-split(ng-repeat="edu in resume.educationExperiences")
                 .form-group
                     label.control-label 入学日期：
-                    .form-content(ng-bind="edu.admissionDate")
+                    .form-content(ng-bind="edu.admissionDate  | date:'yyyy-MM-dd'")
                 .form-group
                     label.control-label 毕业日期：
-                    .form-content(ng-bind="edu.graduationDate")
+                    .form-content(ng-bind="edu.graduationDate | date:'yyyy-MM-dd'")
                 .form-group
                     label.control-label 毕业院校：
                     .form-content(ng-bind="edu.school")
@@ -118,10 +118,10 @@
             .form-split(ng-repeat="work in resume.workExperiences")
                 .form-group
                     label.control-label 开始日期：
-                    .form-content(ng-bind="work.startDate")
+                    .form-content(ng-bind="work.startDate | date:'yyyy-MM-dd'")
                 .form-group
                     label.control-label 结束日期：
-                    .form-content(ng-bind="work.endDate")
+                    .form-content(ng-bind="work.endDate | date:'yyyy-MM-dd'")
                 .form-group
                     label.control-label 单位名称：
                     .form-content(ng-bind="work.company")
@@ -173,7 +173,7 @@
                     .form-content(ng-bind="lover.nation")
                 .form-group
                     label.control-label 出生年月：
-                    .form-content(ng-bind="lover.birthday")
+                    .form-content(ng-bind="lover.birthday  | date:'yyyy-MM-dd'")
                 .form-group
                     label.control-label 文化程度：
                     .form-content(ng-bind="lover.educationBackground.name")
@@ -190,13 +190,13 @@
                     label.control-label 联系方式：
                     .form-content(ng-bind="lover.mobile")
             div
-                h5 配偶，子女情况
+                h5 子女情况
                 ul.nice-table
-                    li.nice-table-row(ng-repeat="children in resume.familyMembers | filterBy: ['relation']: ['children','lover'] track by $index")
+                    li.nice-table-row(ng-repeat="children in resume.familyMembers | filterBy: ['relation']: 'children' track by $index")
                         span.nt-cell.nt-cell-md(ng-bind="children.name")
                         span.nt-cell.nt-cell-sm(ng-bind="children.relationType")
                         span.nt-cell.nt-cell-sm(ng-bind="children.gender")
-                        span.nt-cell.nt-cell-md(ng-bind="children.birthday")
+                        span.nt-cell.nt-cell-md(ng-bind="children.birthday  | date:'yyyy-MM-dd'")
                         span.nt-cell.nt-cell-lg(ng-bind="children.residenceBooklet")
                         span.nt-cell.nt-cell-lg(ng-bind="children.company")
             div
@@ -206,7 +206,7 @@
                         span.nt-cell.nt-cell-md(ng-bind="other.name")
                         span.nt-cell.nt-cell-sm(ng-bind="other.relationType")
                         span.nt-cell.nt-cell-sm(ng-bind="other.gender.displayName")
-                        span.nt-cell.nt-cell-md(ng-bind="other.birthday")
+                        span.nt-cell.nt-cell-md(ng-bind="other.birthday  | date:'yyyy-MM-dd'")
                         span.nt-cell.nt-cell-lg(ng-bind="other.residenceBooklet")
                         span.nt-cell.nt-cell-lg(ng-bind="other.company")
                     

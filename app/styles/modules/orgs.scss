@@ -1,8 +1,10 @@
 // 机构 左侧部门菜单
 .org-dep {
     @include transition(left .5s ease-in);
+    background-color: #fff;
     border-bottom: 1px solid #d1dcde;
     border-right: 1px solid #d1dcde;
+    height: 100%;
     left: -182px;
     position: absolute;
     width: 183px;
@@ -47,7 +49,7 @@
 
     .org-dep-wrapper {
         height: inherit;
-        overflow: hidden;
+        overflow-x: scroll;
         padding-top: 20px;
 
         ul {
@@ -63,10 +65,11 @@
             display: block;
             height: 35px;
             line-height: 35px;
+            overflow: hidden;
             padding: 0 0 0 18px;
             text-overflow: ellipsis;
             white-space: nowrap;
-            width: 100%;
+            width: 90%;
 
             &:hover,
             &.active {
@@ -100,8 +103,8 @@
 .top-btn-group {
     margin-right: 40px;
     position: absolute;
-    top: 5px;
     right: 10px;
+    top: 5px;
 
     .md-button {
         display: inline-block;
@@ -324,3 +327,33 @@ md-input-container {
         color: $text-muted;
     }
 }
+
+.form-table-container {
+    th {
+        color: $text-muted;
+    }
+
+    td {
+        color: $text-color;
+    }
+
+    .control-td {
+        .btn {
+            border: 0;
+            box-shadow: none;
+            padding: 2px 8px;
+        }
+    }
+
+    .add-member {
+        padding: 0 80px;
+    }
+
+    .add {
+        margin-bottom: 20px;
+    }
+}
+
+
+
+
