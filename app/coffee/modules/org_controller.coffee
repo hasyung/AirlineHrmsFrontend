@@ -148,7 +148,7 @@ class Route
                     label: "{{ ctrl.currentOrg.name || '岗位' }}"
                 }
             }
-            
+
 
 
 class OrgsCtrl extends nb.Controller
@@ -296,7 +296,7 @@ class OrgCtrl extends nb.Controller
             @scope.positions = @scope.currentOrg.positions.$refresh()
         else
             @scope.positions = @scope.currentOrg.positions.$refresh({version:data.status.version})
-    
+
     cancel: ->
         @state = 'show'
 
@@ -307,6 +307,7 @@ class OrgCtrl extends nb.Controller
             self.Evt.$send 'org:resetData'
 
     newsub: (form, neworg) ->
+        return if form.$invalid
         # $Evt = @Evt
         self = @
         @scope.currentOrg.newSub(neworg).$then ->

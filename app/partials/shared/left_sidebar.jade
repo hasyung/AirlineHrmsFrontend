@@ -34,8 +34,8 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
             li
               a(ui-sref='access.signin') Logout
         .line.dk.hidden-folded
-      nav.navi.ng-scope
-        ul.nav.ng-scope
+      nav.navi
+        ul.nav
           //- li
           //-   a.auto(href='')
           //-     span.pull-right.text-muted
@@ -56,9 +56,7 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
               i.fa.fa-user.nav-text-color1
               span 员工自助
             ul.nav.nav-sub.dk
-              li.nav-sub-header
-                a(ui-sref='self.profile')
-              li(ng-class="{'focus':$state.includes('self.profile.basic')}")
+              li(ng-class="{'active':$state.includes('self')}")
                 a(ui-sref='self.profile')
                   span 我的基本信息
               li
@@ -93,15 +91,13 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
               i.fa.fa-cube.nav-text-color1
               span 岗位管理
             ul.nav.nav-sub.dk
-              li.nav-sub-header
-                a(ui-sref="position.list")
-              li
+              li(ui-sref-active="active")
                 a(ui-sref="position.list")
                   span 岗位列表
               li
                 a()
                   span 岗位分布图
-              li
+              li(ui-sref-active="active")
                 a(ui-sref="position.changes")
                   span 岗位异动记录
           li(nav-toggle-active)
@@ -112,13 +108,13 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
               i.fa.fa-group.nav-text-color1
               span 人事信息
             ul.nav.nav-sub.dk
-              li
+              li(ui-sref-active="active")
                 a(ui-sref='personnel_list')
                   span 人事花名册
-              li
+              li(ui-sref-active="active")
                 a(ui-sref='personnel_fresh')
                   span 新员工列表
-              li
+              li(ui-sref-active="active")
                 a(ui-sref='personnel_review')
                   span 人事变更信息
 
