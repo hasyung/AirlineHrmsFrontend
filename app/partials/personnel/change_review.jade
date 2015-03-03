@@ -18,7 +18,7 @@ tabset(flex)
                                 th 操作
                                 th 理由
 
-                        tbody
+                        tbody(nb-popup-management)
                             tr(ng-repeat="change in ctrl.changes track by $index")
                                 //- td(select-row="emp" mode="multiple")
                                 td(ng-bind="change.employeeNo")
@@ -31,12 +31,12 @@ tabset(flex)
                                             .panel-body.popup-body
                                                 table.table.table-striped.custom-table.popup-table
                                                     tr
-                                                        th(colspan="2") 修改前
-                                                        th(colspan="2") 修改后
+                                                        th() 字段
+                                                        th() 修改前
+                                                        th() 修改后
                                                     tr(ng-repeat="(field, val) in change.auditedChanges", ng-if="field != 'unused'")
                                                         td(ng-bind="field")
                                                         td.overflow-text(ng-bind="val[0] || '无'", ng-attr-title="{{val[0]}}")
-                                                        td(ng-bind="field")
                                                         td.overflow-text(ng-bind="val[1] || '无'", ng-attr-title="{{val[1]}}")
                                 td(ng-bind="change.createdAt")
                                 td()

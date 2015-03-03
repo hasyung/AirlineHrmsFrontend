@@ -1,11 +1,12 @@
-.personnel-content
+.personnel-content(ng-controller="NewResource")
     section.personnel-info-section(ng-init= "selectEmp = ngDialogData; params = {}")
         md-toolbar
             .md-toolbar-tools
                 span 岗位详情
         .form-material-section
             md-subheader.md-primary 基本信息
-            form(ng-submit="save(ctrl.regEmployee(newEmp), newEmpForm) && closeThisDialog()" name="newEmpForm")
+            //- 应该得到请求结果后才判断是否关闭dialog
+            form(ng-submit="save(ctrl.regEmployee(newEmp), newEmpForm, closeThisDialog())" name="newEmpForm")
                 .form-btn-group()
                     md-button(type="button" ng-click="cancel()") 取消
                     md-button.md-primary.md-raised(type="submit") 保存
