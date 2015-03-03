@@ -6,8 +6,8 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
             span(ng-hide="editing")
                 md-button.md-raised(ng-click="edit($event)") 编辑
             span(ng-show="editing")
-                md-button 取消
-                md-button.md-primary.md-raised() 保存
+                md-button.md-raised(ng-click="cancel($event)") 取消
+                md-button.md-primary.md-raised(ng-click="submit") 保存
     md-content
         section.form-material-section
             md-subheader.md-primary 个人信息
@@ -78,6 +78,8 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                         md-select-label {{currentUser.englishLevel? currentUser.englishLevel.displayName : '无'}}
                         md-option(ng-value="englishLevel" ng-repeat="englishLevel in enums.english_levels") {{englishLevel.displayName}}
 
+            md-divider
+
             md-subheader.md-primary 联系方式
             fieldset(ng-disabled="!editing")
                 div(layout)
@@ -100,6 +102,8 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                     md-input-container(flex)
                         label 电子邮箱
                         input(ng-model="currentUser.contact.email" name="email")
+
+            md-divider
 
             md-subheader.md-primary 岗位信息
             fieldset(disabled)

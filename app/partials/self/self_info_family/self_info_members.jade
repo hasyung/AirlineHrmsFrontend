@@ -8,11 +8,12 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                 section.form-material-section(ng-if="vm.lovers.length != 0" ng-repeat="wife in vm.lovers")
                     md-subheader 配偶
                     include self_info_lover_edit
+                    md-divider
                 section.form-material-section(ng-if="vm.lovers.length == 0" ng-init="wife = vm.lovers.$new(); wife.relation='lover';wife.relationType='配偶'")
                     md-subheader 配偶
                     include self_info_lover_edit
-                md-divider
-            md-content(ng-init="vm.children = currentUser.familymembers.$search({relation: 'children'}); newChildren = []")
+                    md-divider
+            md-content.form-material-section(ng-init="vm.children = currentUser.familymembers.$search({relation: 'children'}); newChildren = []")
                 md-subheader 子女情况
                 table.table
                     thead
@@ -62,7 +63,8 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                 .add
                     button.btn.btn-default.fa.fa-plus(ng-click="newChildren.push({})")
                 md-divider
-            md-content(ng-init="vm.other = currentUser.familymembers.$search({relation: 'other'}); newOther = []")
+
+            md-content.form-material-section(ng-init="vm.other = currentUser.familymembers.$search({relation: 'other'}); newOther = []")
                 md-subheader 父母、兄妹、配偶父母情况
                 table.table
                     tr
