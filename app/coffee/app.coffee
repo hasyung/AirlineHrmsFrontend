@@ -66,7 +66,7 @@ restConf = (restmodProvider) ->
 
 mdThemingConf = ($mdThemingProvider) ->
     $mdThemingProvider.theme('default')
-        .primaryPalette('light-blue')
+        # .primaryPalette('light-blue')
         .accentPalette('amber')
         .warnPalette('deep-orange')
 
