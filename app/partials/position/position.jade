@@ -54,7 +54,7 @@
                         td(ng-bind="pos.channel.displayName")
                         //- td(ng-class="{'invalid': pos.budgetedStaffing < pos.staffing}") {{pos.staffing}}/{{pos.budgetedStaffing}}
                         td.org-preparation
-                          span(ng-class="{'overstaffed': pos.isOverstaffed}") {{pos.staffing}}
+                          span(ng-class="{'overstaffed': pos.overstaffedNum > 0}") {{pos.staffing}}
                           span /{{pos.budgetedStaffing}}
                         td(ng-bind="pos.schedule.displayName")
                         td(ng-bind="pos.oaFileNo")

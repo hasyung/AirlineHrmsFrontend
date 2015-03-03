@@ -49,20 +49,20 @@ form(name="posEditForm" ng-submit="save(currentPos.$save(), posEditForm)" ng-con
         div(layout)
             md-input-container(flex)
                 label 在岗人数
-                input(ng-model="currentPos.staffing")
+                input(ng-model="currentPos.staffing" disabled)
             md-input-container(flex)
                 label 超编
-                input(ng-model="currentPos.staffing")
+                input(ng-model="currentPos.overstaffedNum" disabled)
         div(layout)
-            md-input-container(flex)
-                label 职务职级
-                input(ng-model="")
+            //- md-input-container(flex)
+            //-     label 职务职级
+            //-     input(ng-model="")
             md-input-container(flex)
                 label 工时制度
                 input(ng-model="currentPos.schedule.displayName")
-        md-input-container
-            label 岗位性质
-            input(ng-model="currentPos.positionNature.displayName")
+            md-input-container(flex)
+                label 岗位性质
+                input(ng-model="currentPos.positionNature.displayName")
 
         //- .form-btn-group
         //-     button.btn.btn-default(ng-click="edit()") 编辑

@@ -88,4 +88,4 @@ section(ng-if="currentOrg.status !== 'destroy_inactive'")
                             nb-dialog-data="position"
                         ) {{position.name}}
                     td  {{position.budgetedStaffing}}
-                    td(ng-class="{'overstaffed': position.isOverstaffed}")  {{position.staffing}}
+                    td(ng-class="{'overstaffed': position.overstaffedNum > 0}")  {{position.staffing}}
