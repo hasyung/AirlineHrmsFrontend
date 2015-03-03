@@ -39,15 +39,15 @@ section(layout="row" flex)
         md-content.org-chart-window(id="org_chart_warpper" flex)
             div.svg-wrapper(org-chart id="org_chart" org-chart-data="ctrl.tree.data")
 
-            div.bottom-btn-group(ng-show="ctrl.tree.isModified")
-                md-button.md-raised.md-primary(
-                    nb-dialog="partials/orgs/shared/effect_changes.html"
-                    nb-dialog-scope="this"
-                    ) 生 效
-                md-button.md-raised.md-primary(
-                    nb-confirm="ctrl.revert(isConfirm)"
-                    nb-title="您确认要撤销当前的所有修改吗?"
-                    nb-text="当你点击确定时，你之前对机构做过的调整将被撤销。") 撤 销
+        div.bottom-btn-group(ng-show="ctrl.tree.isModified")
+            md-button.md-raised.md-primary(
+                nb-dialog="partials/orgs/shared/effect_changes.html"
+                nb-dialog-scope="this"
+                ) 生 效
+            md-button.md-raised.md-primary(
+                nb-confirm="ctrl.revert(isConfirm)"
+                nb-title="您确认要撤销当前的所有修改吗?"
+                nb-text="当你点击确定时，你之前对机构做过的调整将被撤销。") 撤 销
     md-sidenav.md-sidenav-right.md-whiteframe-z2(md-is-locked-open="true")
         .org-row(ng-controller="OrgCtrl as orgCtrl")
             include org
