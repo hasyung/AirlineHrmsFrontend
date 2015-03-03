@@ -45,11 +45,11 @@
             thead
                 tr
                     th(select-row="" mode="all")
-                    th    岗位名称
-                    th    通道
-                    th    编制数
-                    th    工作时间
-                    th    OA文件编号
+                    th 岗位名称
+                    th 通道
+                    th 编制数
+                    th 工作时间
+                    th OA文件编号
             tbody
                 tr(ng-repeat="pos in ctrl.positions track by pos.id")
                     td.has-checkbox(select-row="pos" mode="multiple")
