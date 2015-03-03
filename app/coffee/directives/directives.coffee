@@ -149,7 +149,8 @@ angular.module 'nb.directives'
 
             scrollCenter = ->
                 width = elem.width()
-                elem.scrollLeft( width / 2 )
+                svgWidth = elem.find('svg').width()
+                elem.scrollLeft( (svgWidth - width ) / 2 )
 
             elem.on 'resize',scrollCenter
 
