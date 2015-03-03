@@ -187,7 +187,7 @@ class OrgsCtrl extends nb.Controller
         @treeRootOrg = org
         @tree = @orgs.treeful(org, depth)
         currentOrg = org
-        @Evt.$send('org:link', {org:currentOrg, status:@getHisVersion()})
+        @Evt.$send('org:link', {org:currentOrg})
 
     refreshTree: () ->
         return unless @treeRootOrg
@@ -195,7 +195,7 @@ class OrgsCtrl extends nb.Controller
         depth = 1 if @treeRootOrg.depth == 1 #如果是顶级节点 则只显示一级
 
         @tree = @orgs.treeful(@treeRootOrg, depth)
-        @Evt.$send('org:link', {org:@treeRootOrg, status:@getHisVersion()})
+        @Evt.$send('org:link', {org:@treeRootOrg})
 
     #force 是否修改当前机构
     reset: (force) ->
@@ -208,13 +208,14 @@ class OrgsCtrl extends nb.Controller
     onItemClick: (evt, elem) -> #机构树 点击事件处理 重构？
         orgId = elem.oc_id
         currentOrg = _.find(@orgs, {id: orgId})
-        @Evt.$send('org:link', {org:currentOrg, status:@getHisVersion()})
+        @Evt.$send('org:link', {org:currentOrg})
 
-    revert: () ->
-        @orgs.revert()
-        # 是否可以将两步合成一步
-        # 即撤销后，后端返回当前机构信息
-        @resetData()
+    revert: (isConfirm) ->
+        if isConfirm
+            @orgs.revert()
+            # 是否可以将两步合成一步
+            # 即撤销后，后端返回当前机构信息
+            @resetData()
 
     active: (evt, data) ->
         self = @
@@ -252,14 +253,14 @@ class OrgsCtrl extends nb.Controller
         if @currentLog
             @orgs.$refresh({version: @currentLog.id})
         @isHistory = true
-        @Evt.$send('org:link', {org:@treeRootOrg, status:@getHisVersion()})
+        @Evt.$send('org:link', {org:@treeRootOrg})
     expandLog: (log)->
         # 防止UI中出现多个被选中的item
         @currentLog.active = false if @currentLog
         log.active = true
         @currentLog = log
-    getHisVersion: ()->
-        status = if @isHistory then {version:@currentLog.id} else 'active'
+    # getHisVersion: ()->
+    #     status = if @isHistory then {version:@currentLog.id} else 'active'
 
     # print: () ->
     #     options = {
@@ -292,10 +293,8 @@ class OrgCtrl extends nb.Controller
         @scope.currentOrg = data.org
         @scope.copyOrg = data.org.$copy()
         #当处于历史状态时data.status为包含version的OBJ，否则为active
-        if data.status == 'active'
-            @scope.positions = @scope.currentOrg.positions.$refresh()
-        else
-            @scope.positions = @scope.currentOrg.positions.$refresh({version:data.status.version})
+        queryParam = if @scope.ctrl.isHistory then {version: @scope.ctrl.currentLog.id} else {}
+        @scope.positions = @scope.currentOrg.positions.$refresh(queryParam)
 
     cancel: ->
         @state = 'show'
