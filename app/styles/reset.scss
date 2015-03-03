@@ -10,6 +10,10 @@ a {
     }
 }
 
+ul {
+    list-style-type: none;
+}
+
 body h3,
 html h3,
 body h4,
@@ -17,15 +21,23 @@ html h4 {
     margin: 0;
 }
 
+//重置 图标按钮的字体颜色
 .fa.btn {
     color: #99a6ad !important;
 }
 
+//用于分隔的附加块
 .sep-40 {
     height: 40px;
 }
 
+//md-subheader的字体 字号
 .md-subheader {
     font-family: 'SimHei' '微软雅黑' Arial;
     font-size: 14px;
+}
+
+//超编颜色
+.overstaffed {
+    color: $danger;
 }

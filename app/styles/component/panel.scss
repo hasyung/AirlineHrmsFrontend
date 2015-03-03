@@ -1,7 +1,7 @@
 //机构各种切换窗口公共样式
 .app-content-wrapper {
-    padding: 20px;
     height: 100%;
+    padding: 20px;
 }
 
 .org-pos-list {
@@ -71,8 +71,18 @@
 
 .custom-table {
     border-bottom: 1px solid #dde5e7;
-    &.popup-table{
+
+    &.popup-table {
         table-layout: fixed;
+    }
+    .long-text>a{
+        >span {
+            width: 100px;
+            overflow: hidden;
+            display: block;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
     }
 
     tr {
@@ -94,16 +104,13 @@
                     cursor: pointer;
                 }
             }
+
             &.overflow-text {
-                overflow:hidden;
-                white-space:nowrap;
-                text-overflow:ellipsis;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
         }
-    }
-
-    .overstaffed {
-        color: $danger;
     }
 
     tbody > tr:nth-child(odd) > td {

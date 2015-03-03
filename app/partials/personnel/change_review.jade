@@ -42,7 +42,7 @@ tabset(flex)
                                 td()
                                     .radio-group(radio-box, ng-model="change.statusCd")
 
-                                td()
+                                td.long-text
                                     a(href="javascript:;", nb-popup-plus, position="left-bottom", offset="0.5") {{change.reason || '请输入'}}
                                         popup-template.nb-popup.org-default-popup-template.panel.panel-default()
                                             .panel-heading.popup-title 请输入理由
