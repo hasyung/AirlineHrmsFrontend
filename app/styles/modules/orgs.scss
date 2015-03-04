@@ -228,6 +228,13 @@
     min-width: 80px;
 }
 
+//md-toolbar
+.md-toolbar-tools {
+    .md-button {
+        margin-left: 20px;
+    }
+}
+
 //md-select
 md-select {
     background: none;

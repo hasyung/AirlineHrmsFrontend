@@ -66,6 +66,15 @@
         height: 50px;
         line-height: 50px;
         padding-left: 40px;
+
+        .md-button {
+            font-size: $font-size-sm;
+            line-height: 1.43em;
+            margin-right: 20px;
+            margin-top: 10px;
+            padding: 6px 12px;
+        }
+
     }
 }
 

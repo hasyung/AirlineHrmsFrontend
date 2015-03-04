@@ -12,7 +12,7 @@
             span.gap 至
             input(ng-model="created_at.to" bs-datepicker)
     .search-btn-group
-        button.btn.btn-primary(nb-pipe="ctrl.searchChanges(tableState)") 开始搜索
+        md-button.md-raised.md-primary(nb-pipe="ctrl.searchChanges(tableState)") 开始搜索
 
     .table-container
         h4 岗位变更记录列表

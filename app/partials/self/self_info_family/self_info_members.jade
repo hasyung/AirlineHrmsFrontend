@@ -57,7 +57,7 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                         label 学校或工作单位
                         input(ng-model="nc.company" columns="1")
                     .form-actions
-                        md-button(ng-click="newChildren.splice($index, 1)") 取消
+                        md-button.md-raised(ng-click="newChildren.splice($index, 1)") 取消
                         md-button.md-primary.md-raised(ng-click="vm.children.$create(nc);newChildren.splice($index, 1)") 提交
 
                 .add(ng-hide="newChildren.length")
@@ -108,7 +108,7 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                         label 学校或工作单位
                         input(ng-model="no.company")
                     .form-actions()
-                        md-button(ng-click="newOther.splice($index, 1)") 取消
+                        md-button.md-raised(ng-click="newOther.splice($index, 1)") 取消
                         md-button.md-primary.md-raised(ng-click="vm.other.$create(no);newOther.splice($index, 1)") 提交
 
                 .add(ng-hide="newOther.length")
