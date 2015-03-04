@@ -50,14 +50,14 @@ class EditableResourceCtrl
             evt.preventDefault() if evt && evt.preventDefault
             scope.editing = true
 
-        scope.save = (resource, form) ->
+        scope.save = (promise, form) ->
             return if form && form.$invalid
 
             if promise
                 if promise.then
                     promise.then () -> scope.editing = false
-                else if promise.$save
-                    promise.$save().$then () -> scope.editing =false
+                else if promise.$then
+                    promise.$then () -> scope.editing =false
 
                 else
                     throw new Error('promise 参数错误')
