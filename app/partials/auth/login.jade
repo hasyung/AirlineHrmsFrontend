@@ -1,9 +1,8 @@
 .modal-backdrop.fade.in
 .container(style="width:100%;height:100%;z-index:1000000;position:absolute;")
-  .w-xxl.w-auto-xs(style="margin:0 auto;background-color:#fff;padding:20px 30px;", ng-controller="LoginController as ctrl")
+  .w-xxl.w-auto-xs(style="margin:50px auto;background-color:#fff;padding:20px 30px;", ng-controller="LoginController as ctrl")
     .m-b-lg
-      .wrapper.text-center
-        strong 请登录
+      .wrapper.text-center 请登录
       form.form-validation(name='form')
         .text-danger.wrapper.text-center(ng-show='authError')
           | {{authError}}
