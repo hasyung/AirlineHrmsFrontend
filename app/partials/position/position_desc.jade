@@ -17,6 +17,12 @@ form(name="positionEditForm" ng-submit="save(currentSpe.$save())" ng-controller=
         md-input-container
             label 业务权限
             input(type='text', placeholder='请输入业务权限', ng-model="currentSpe.businessPermission")
+        md-input-container()
+            label 直属上级
+            input(type='text', placeholder='请输入直属上级', ng-model="currentSpe.superior")
+        md-input-container()
+            label 直属下级
+            input(type='text', placeholder='请输入直属下级', ng-model="currentSpe.underling")
         md-input-container
             label 内部联系
             input(type='text', placeholder='请输入内部联系', ng-model="currentSpe.internalRelation")
