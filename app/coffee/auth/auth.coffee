@@ -5,10 +5,10 @@ app = nb.app
 class LoginController extends nb.Controller
 
 
-    @.$inject = ['$http','$stateParams', '$state', '$scope', '$rootScope', '$cookies', 'User', '$timeout']
+    @.$inject = ['$http','$stateParams', '$state', '$scope', '$rootScope', '$cookies', 'User', '$timeout', 'Org']
 
 
-    constructor: (@http, @params, @state, @scope, @rootScope, @cookies, @User, @timeout)->
+    constructor: (@http, @params, @state, @scope, @rootScope, @cookies, @User, @timeout, @Org)->
         @scope.currentUser = null #当前用户
 
     loadInitialData: () -> #初始化数据
@@ -23,6 +23,7 @@ class LoginController extends nb.Controller
                 #$cookies will attempt to refresh every 100ms
                 self.timeout ()->
                     self.rootScope.currentUser = self.User.$fetch()
+                    self.rootScope.allOrgs = self.Org.$search()
                     self.state.go "home"
                 , 100
                 
