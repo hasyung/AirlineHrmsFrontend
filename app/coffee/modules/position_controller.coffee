@@ -47,9 +47,9 @@ class PositionCtrl extends nb.Controller
                 .join(',')
 class PositionChangesCtrl extends nb.Controller
 
-    @.$inject = ['PositionChange']
+    @.$inject = ['PositionChange', '$mdDialog']
 
-    constructor: (@PositionChange) ->
+    constructor: (@PositionChange, @mdDialog) ->
 
     searchChanges: (tableState)->
         @changes.$refresh(tableState)
