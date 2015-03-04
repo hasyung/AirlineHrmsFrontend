@@ -27,6 +27,7 @@ class LoginController extends nb.Controller
 
             .error (data) ->
                 self.$emit 'error', '#{data.message}'
+    
 
 
 

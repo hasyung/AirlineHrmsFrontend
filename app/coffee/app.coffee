@@ -140,8 +140,8 @@ App
     .config ['restmodProvider', restConf]
     .config ['$mdThemingProvider', mdThemingConf]
     .config ['$stateProvider','$urlRouterProvider','$locationProvider', '$httpProvider', routeConf]
-    .run ['$state','$rootScope', 'toaster', '$http', 'Org', 'sweet', 'User', '$enum', '$timeout',
-    ($state, $rootScope, toaster, $http, Org, sweet, User, $enum, $timeout) ->
+    .run ['$state','$rootScope', 'toaster', '$http', 'Org', 'sweet', 'User', '$enum', '$timeout', '$cookies',
+    ($state, $rootScope, toaster, $http, Org, sweet, User, $enum, $timeout, $cookies) ->
 
         cancelLoading = ->
             $rootScope.loading = false
@@ -170,6 +170,10 @@ App
         $rootScope.$state = $state
 
         $rootScope.allOrgs = Org.$search()
+
+        $rootScope.logout = ()->
+            $http.delete('/api/sign_out')
+
 
         $rootScope.enums = $enum.get()
         $rootScope.loadEnum = $enum.loadEnum()
