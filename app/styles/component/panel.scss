@@ -42,9 +42,13 @@
         margin-top: 10px;
     }
 
-    .btn-info {
-        padding-bottom: 3px;
-        padding-top: 3px;
+    >.btn-info {
+        border-radius: 4px;
+        font-size: 14px;
+        line-height: 1.43em;
+        margin-right: 20px;
+        margin-top: 10px;
+        padding: 6px 12px;
     }
 
     .btn-submit {
@@ -53,6 +57,14 @@
 
     ul {
         line-height: 21px;
+    }
+
+    .md-button {
+        font-size: 14px;
+        line-height: 1.43em;
+        margin-right: 20px;
+        margin-top: 10px;
+        padding: 6px 12px;
     }
 }
 
