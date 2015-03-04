@@ -45,6 +45,7 @@
     }
 
     .form-control-label {
+        display: inline-block;
         margin-bottom: 0;
         margin-right: 20px;
         text-align: right;
@@ -219,8 +220,8 @@
 // form-split 样式
 .form-split {
     @include clearfix();
-    position: relative;
     font-size: 14px;
+    position: relative;
 
     &:hover {
         .form-btn-group {
@@ -255,8 +256,8 @@
 
         .control-label {
             color: $text-muted;
-            text-align: right;
             flex: none;
+            text-align: right;
             width: 120px;
         }
 

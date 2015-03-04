@@ -1,3 +1,7 @@
+.app-content-body.md-default-theme {
+    background-color: #f0f3f4;
+}
+
 // 机构 左侧部门菜单
 .org-dep {
     @include transition(left .5s ease-in);
@@ -175,10 +179,15 @@
 
 // 机构 右侧边栏 机构信息展示及操作
     // TODO: 全局通用
+.org-sidebar-right.md-sidenav-right {
+    min-width: 320px;
+    width: 320px;
+}
+
 .org-title {
     border-bottom: 1px solid #c6d1d5;
     height: 35px;
-    margin: 20px 20px 5px;
+    margin: 20px 15px 5px;
 
     > span {
         border-bottom: 1px solid $focus;
@@ -199,8 +208,21 @@
     }
 
     .btn {
-        min-width: 35px;
-        padding: 5px 9px;
+        margin-top: 5px;
+        min-width: 32px;
+        padding: 2px 9px;
+    }
+}
+
+.org-table {
+    padding: 0 15px;
+
+    .table-striped > tbody > tr:nth-of-type(odd) {
+        background-color: #fafbfc;
+    }
+
+    .table > tbody > tr > td {
+        border-color: #eaeff0;
     }
 }
 

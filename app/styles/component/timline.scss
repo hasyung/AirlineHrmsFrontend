@@ -1,56 +1,66 @@
 .org-timline {
-    .tl-item{
+    .tl-item {
         .tl-content {
             @include transition(all .5s linear);
             cursor: pointer;
-            width: 210px;
+            width: 400px;
+
             h1 {
                 color: #000;
                 font-size: $font-size-md;
                 margin: 0;
+
+                span {
+                    font-size: 12px;
+                }
             }
+
             h2 {
+                color: #23b7e5;
                 font-size: $font-size-sm;
                 margin-top: 10px;
-                color: #23b7e5;
             }
+
             p {
                 font-size: $font-size-base;
                 // border-top: 1px dotted #cee0eb;
                 padding-top: 10px;
             }
         }
-        
+
         .tl-wrap {
             margin-left: 30px;
         }
+
         .bg-info {
             border-color: #daedf8;
+
             p {
                 color: #000;
             }
         }
+
         &.active {
-            .tl-wrap{
+            .tl-wrap {
                 border-color: #31b0d5;
             }
-            .tl-content{
+
+            .tl-content {
                 background-color: #31b0d5;
                 color: #fff;
-                h1,h2{
+
+                h1,
+                h2,
+                span {
                     color: #fff;
                 }
+
             }
-            .arrow.left:after{
+
+            .arrow.left:after {
                 border-right-color: #31b0d5;
             }
         }
-    }
-
-    span.pull-right {
-        color: #23b7e5;
-        font-size: $font-size-sm;
-        line-height: 34px;
     }
 
     .tl-header {
@@ -62,16 +72,6 @@
             padding: 6px 14px;
         }
     }
-
-    //这是什么。。。？
-    // .org-delete-template {
-    //     position: absolute;
-    //     background-color: #fff;
-    //     top: -40px;
-    //     left: -160px;
-    //     width: 270px;
-    //     z-index: 99999;
-    // }
 
 }
 
