@@ -97,6 +97,10 @@
 
     .personnel-info-section {
         // margin-bottom: 30px;
+        //消除Tab页标题的圆角
+        .nav-pills>li>a {
+            border-radius: 0;
+        }
 
         .personnel-info-row {
             height: 40px;

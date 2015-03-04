@@ -140,10 +140,10 @@ angular.module 'nb.directives'
             transclude: true
             template: '''
             <div class="dropdown", ng-class="{\'open\': isOpen}">
-              <button ng-click="dropdown.toggle()" class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">
+              <md-button ng-click="dropdown.toggle()" class="md-primary md-raised dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">
                 {{btnText}}
                 <span class="caret"></span>
-              </button>
+              </md-button>
               <ul class="dropdown-menu" ng-if="isOpen" role="menu" aria-labelledby="dropdownMenu1" ng-transclude>
               </ul>
             </div>
