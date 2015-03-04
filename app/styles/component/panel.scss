@@ -84,13 +84,14 @@
     &.popup-table {
         table-layout: fixed;
     }
-    .long-text>a{
+
+    .long-text>a {
         >span {
-            width: 100px;
-            overflow: hidden;
             display: block;
+            overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            width: 100px;
         }
     }
 

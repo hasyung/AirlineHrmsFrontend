@@ -43,10 +43,25 @@ html h4 {
     height: 40px;
 }
 
+//确定的宽度 多用于需要表格单元固定宽度换行
+.kw-50 {
+    width: 80px;
+}
+
+.kw-120 {
+    width: 120px;
+}
+
 //md-subheader的字体 字号
 .md-subheader {
     font-family: 'SimHei' '微软雅黑' Arial;
     font-size: 14px;
+}
+
+md-content {
+    &.md-default-theme {
+        background-color: transparent;
+    }
 }
 
 //超编颜色

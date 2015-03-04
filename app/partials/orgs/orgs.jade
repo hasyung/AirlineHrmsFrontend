@@ -26,29 +26,29 @@ section(layout="row" flex)
                 h2(ng-show="ctrl.isHistory") {{ctrl.orgs.$metadata.created_at | date : 'yyyy年MM月dd日'}}— {{ctrl.orgs.$metadata.title}}
             .top-btn-group
                 //- button(ng-click="ctrl.print()") 导出
-                md-button.md-raised.md-primary(
+                md-button.md-raised.purple(
                     nb-dialog="partials/orgs/org_history.html"
                     nb-dialog-scope="this"
                     prepare-data="ctrl.initialHistoryData()"
                     ) 时间轴
-                md-button.md-raised.md-primary(ng-show="!ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导 出
-                md-button.md-raised.md-primary(ng-show="ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导 出
-                md-button.md-raised.md-primary(ng-click="ctrl.resetData()" ng-show="ctrl.isHistory") 返回最新
+                md-button.md-raised.skyblue(ng-show="!ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导 出
+                md-button.md-raised.skyblue(ng-show="ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导 出
+                md-button.md-raised.skyblue(ng-click="ctrl.resetData()" ng-show="ctrl.isHistory") 返回最新
 
                 //- loading-btn.red(ng-click="ctrl.openHistoryPanel()" btn-loading-type="contract-overlay" btn-text="测试loading")
         md-content.org-chart-window(id="org_chart_warpper" flex scroll-center)
             div.svg-wrapper(org-chart id="org_chart" org-chart-data="ctrl.tree.data")
 
         div.bottom-btn-group(ng-show="ctrl.tree.isModified")
-            md-button.md-raised.md-primary(
+            md-button.md-raised.skyblue(
                 nb-dialog="partials/orgs/shared/effect_changes.html"
                 nb-dialog-scope="this"
                 ) 生 效
-            md-button.md-raised.md-primary(
+            md-button.md-raised.white(
                 nb-confirm="ctrl.revert(isConfirm)"
                 nb-title="您确认要撤销当前的所有修改吗?"
                 nb-text="当你点击确定时，你之前对机构做过的调整将被撤销。") 撤 销
-    md-sidenav.md-sidenav-right.md-whiteframe-z2(md-is-locked-open="true")
+    md-sidenav.org-sidebar-right.md-sidenav-right.md-whiteframe-z2(md-is-locked-open="true")
         .org-row(ng-controller="OrgCtrl as orgCtrl")
             include org
 
