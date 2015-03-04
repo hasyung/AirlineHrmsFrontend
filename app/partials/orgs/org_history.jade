@@ -8,7 +8,6 @@ div(layout layout-align="center")
             bs-datepicker=""  container="body" data-autoclose="1"
             min-date="{{ngDialogData.minDate}}" max-date="today" ng-model="selectedDate"
             ng-change="ctrl.pickLog(selectedDate, ngDialogData.changeLogs)")
-        p {{ngDialogData.minDate}}
 div.wrapper.org-timline(slimscroll, height="400px" ng-init="activeLog = {}")
     //- ul.timeline(ng-repeat="yearItem in ctrl.changeLogs")
     ul.timeline(ng-repeat="yearLogs in ngDialogData.changeLogs")
