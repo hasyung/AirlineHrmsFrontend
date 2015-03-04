@@ -205,7 +205,7 @@
                     li.nice-table-row(ng-repeat="other in resume.familyMembers | filterBy: ['relation']: 'other' track by $index")
                         span.nt-cell.nt-cell-md(ng-bind="other.name")
                         span.nt-cell.nt-cell-sm(ng-bind="other.relationType")
-                        span.nt-cell.nt-cell-sm(ng-bind="other.gender.displayName")
+                        span.nt-cell.nt-cell-sm(ng-bind="other.gender")
                         span.nt-cell.nt-cell-md(ng-bind="other.birthday  | date:'yyyy-MM-dd'")
                         span.nt-cell.nt-cell-lg(ng-bind="other.residenceBooklet")
                         span.nt-cell.nt-cell-lg(ng-bind="other.company")
