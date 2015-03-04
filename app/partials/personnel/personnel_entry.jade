@@ -13,7 +13,7 @@
                 div
                     md-input-container(flex)
                         label 姓名
-                        input(type="text" placeholder="请输入姓名" ng-model="newEmp.name")
+                        input(type="text" placeholder="请输入姓名" ng-model="newEmp.name" required)
                     md-input-container.row-has-value(flex)
                         label 性别
                         md-select(ng-model="newEmp.gender", md-on-open="loadEnum('genders')")
