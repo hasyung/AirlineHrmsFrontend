@@ -2,7 +2,7 @@ form(ng-submit="save(wife.$save(),familymembersForm)" name="familymembersForm" n
     .form-btn-group(ng-hide="editing")
         md-button.md-primary.md-raised(type="button" ng-click="edit($event)") 编辑
     .form-btn-group.alive(ng-show="editing")
-        md-button(ng-click="cancel(wife, $event)") 取消
+        md-button.md-raised(ng-click="cancel(wife, $event)") 取消
         md-button.md-primary.md-raised(type="submit") 保存
     fieldset(ng-disabled="!editing")
         div(layout)

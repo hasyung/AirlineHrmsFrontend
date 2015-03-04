@@ -5,7 +5,7 @@ tabset(flex)
                 input(type="hidden" nb-pipe="ctrl.search(tableState)")
                 .table-container
                     h4 待审核列表
-                    button.pull-right(ng-click="ctrl.checkChanges()") 审核
+                        md-button.md-primary.md-raised.pull-right(ng-click="ctrl.checkChanges()") 审核
                     table.table.table-striped.custom-table
                         thead
                             tr

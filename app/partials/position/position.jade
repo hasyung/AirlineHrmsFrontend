@@ -22,7 +22,7 @@
             //-     li(ng-model="has_phone") 有电话
             //-     li(ng-model="has_number") 有工号
         .search-btn-group
-            button.btn.btn-primary(nb-pipe="ctrl.search(tableState)") 开始搜索
+            md-button.md-raised.md-primary(nb-pipe="ctrl.search(tableState)") 开始搜索
             .btn-export.nb-dropdown.pull-right(simple-dropdown, btn-text="导出")
                 li( role="presentation")
                     a(role="menuitem" ng-href="/api/positions/export_to_xls" ) 导出全部岗位

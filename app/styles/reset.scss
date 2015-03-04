@@ -27,6 +27,11 @@ body h4,
 html h4 {
     margin: 0;
 }
+//重置bootstrap中 btn-default-focus样式
+.btn-default-focus {
+    box-shadow: none;
+    outline: none;
+}
 
 //重置 图标按钮的字体颜色
 .fa.btn {
