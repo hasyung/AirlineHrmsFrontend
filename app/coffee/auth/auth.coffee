@@ -5,10 +5,10 @@ app = nb.app
 class LoginController extends nb.Controller
 
 
-    @.$inject = ['$http','$stateParams', '$state', '$scope', '$rootScope', '$cookies']
+    @.$inject = ['$http','$stateParams', '$state', '$scope', '$rootScope', '$cookies', 'User']
 
 
-    constructor: (@http, @params, @state, @scope, @rootScope, @cookies)->
+    constructor: (@http, @params, @state, @scope, @rootScope, @cookies, @User)->
         @scope.currentUser = null #当前用户
 
     loadInitialData: () -> #初始化数据
@@ -20,7 +20,7 @@ class LoginController extends nb.Controller
             .success (data) ->
                 self.cookies.token = data.token
                 #后期做权限的时候此处一定要改
-                self.cookies.currentUserNo = user.employee_no
+                self.rootScope.currentUser = self.User.$fetch()
                 # self.rootScope.currentUser = user
                 #####end
                 self.state.go "home"

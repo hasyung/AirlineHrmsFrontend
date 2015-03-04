@@ -133,8 +133,8 @@ class ReviewCtrl extends nb.Controller
         @changes.checkChanges(params)
 
 class DialogCtrl extends nb.Controller
-    @.$inject = ['$scope', 'data']
-    constructor: (@scope, @data) ->
+    @.$inject = ['$scope', 'data', '$mdDialog']
+    constructor: (@scope, @data, @mdDialog) ->
         self = @
         @scope.data = @data
 
