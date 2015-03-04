@@ -65,7 +65,7 @@ class NewEmpsCtrl extends nb.Controller
         collection_param = {
             predicate: {
                 join_scal_date: {
-                    from: moment().startOf('year').format("YYYY-MM-DD")
+                    from: moment().subtract(1, 'year').format('YYYY-MM-DD')
                     to: moment().format("YYYY-MM-DD")
                 }
             }
@@ -73,10 +73,11 @@ class NewEmpsCtrl extends nb.Controller
                 join_scal_date: 'desc'
             }
         }
-
         @employees = @Employee.$collection(collection_param).$fetch()
     regEmployee: (employee)->
-        @Employee.$build(employee).$save()
+        self = @
+        @employees.$build(employee).$save().$then ()->
+            self.loadInitailData()
 
     getExportParams: ->
         @employees
@@ -84,11 +85,30 @@ class NewEmpsCtrl extends nb.Controller
                 .map (emp) -> emp.id
                 .join(',')
     search: (tableState) ->
+        tableState = @mergeParams(tableState)
         @employees.$refresh(tableState)
+    mergeParams: (tableState)->
+        params = {
+            predicate: {
+                join_scal_date: {
+                    from: moment().subtract(1, 'year').format('YYYY-MM-DD')
+                    to: moment().format("YYYY-MM-DD")
+                }
+            }
+            sort: {
+                join_scal_date: 'desc'
+            }
+        }
+        angular.forEach params, (val, key)->
+            if angular.isObject(val)
+                angular.forEach val, (nestedVal, nestedKey)->
+                    tableState[key][nestedKey] = nestedVal
+        return tableState
+
 
 class ReviewCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Change', 'Record']
-    constructor: (@scope, @Change, @Record) ->
+    @.$inject = ['$scope', 'Change', 'Record', '$mdDialog']
+    constructor: (@scope, @Change, @Record, @mdDialog) ->
         @loadInitailData()
 
     loadInitailData: ->
@@ -112,6 +132,16 @@ class ReviewCtrl extends nb.Controller
             params.push temp
         @changes.checkChanges(params)
 
+class DialogCtrl extends nb.Controller
+    @.$inject = ['$scope', 'data']
+    constructor: (@scope, @data) ->
+        self = @
+        @scope.data = @data
+
+
+    
+
 
 
 app.config(Route)
+app.controller('DialogCtrl', DialogCtrl)

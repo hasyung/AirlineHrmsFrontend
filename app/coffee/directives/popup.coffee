@@ -231,6 +231,7 @@ angular.module 'nb.directives'
                 elemHeight = element.outerHeight()
                 #合并代码之后offset()获取到的left值比实际值要大，后续检查，先用暴力方法
                 # elemPosition = {left: element[0].offsetLeft, top: element[0].offsetTop}
+                # 在变更记录中当出现滚动条后position()获取位置存在问题
                 elemPosition = element.position()
                 tipWidth = tipElement.outerWidth()
                 tipHeight = tipElement.outerHeight()
