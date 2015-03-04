@@ -5,10 +5,10 @@ app = nb.app
 class LoginController extends nb.Controller
 
 
-    @.$inject = ['$http','$stateParams', '$state', '$scope', '$rootScope', '$cookies', 'User']
+    @.$inject = ['$http','$stateParams', '$state', '$scope', '$rootScope', '$cookies', 'User', '$timeout']
 
 
-    constructor: (@http, @params, @state, @scope, @rootScope, @cookies, @User)->
+    constructor: (@http, @params, @state, @scope, @rootScope, @cookies, @User, @timeout)->
         @scope.currentUser = null #当前用户
 
     loadInitialData: () -> #初始化数据
@@ -20,14 +20,19 @@ class LoginController extends nb.Controller
             .success (data) ->
                 self.cookies.token = data.token
                 #后期做权限的时候此处一定要改
-                self.rootScope.currentUser = self.User.$fetch()
+                #$cookies will attempt to refresh every 100ms
+                self.timeout ()->
+                    self.rootScope.currentUser = self.User.$fetch()
+                    self.state.go "home"
+                , 100
+                
                 # self.rootScope.currentUser = user
                 #####end
-                self.state.go "home"
+                
 
             .error (data) ->
                 self.$emit 'error', '#{data.message}'
-    
+
 
 
 
