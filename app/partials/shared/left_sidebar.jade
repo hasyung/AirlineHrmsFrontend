@@ -33,21 +33,41 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
             li.divider
             li
               a(ui-sref='access.signin') Logout
-        .line.dk.hidden-folded
-      nav.navi
+        .line.dk.hidden-folded 
+      nav.navi(ng-if="currentUser.permissionCode == 1")
         ul.nav
-          //- li
-          //-   a.auto(href='')
-          //-     span.pull-right.text-muted
-          //-       i.fa.fa-fw.fa-angle-down.text-active
-          //-     i.glyphicon.glyphicon-home.nav-text-color1
-          //-     span.font-bold 首页
-          //- li
-          //-   a.auto(ui-sref='personnel')
-          //-     span.pull-right.text-muted
-          //-       i.fa.fa-fw.fa-angle-down.text-active
-          //-     i.fa.fa-group.nav-text-color1
-          //-     span.font-bold 人事信息
+          li(nav-toggle-active)
+            a.auto(href="javascript:;")
+              span.pull-right.text-muted
+                i.fa.fa-fw.fa-angle-right.text
+                i.fa.fa-fw.fa-angle-down.text-active
+              i.fa.fa-user.nav-text-color1
+              span 员工自助
+            ul.nav.nav-sub.dk
+              li(ng-class="{'active':$state.includes('self')}")
+                a(ui-sref='self.profile')
+                  span 我的基本信息
+              li
+                a(href='#/app/personnel/regulariz')
+                  span 优免票
+              li
+                a(href='#/app/personnel/regulariz')
+                  span 学历变更申请
+              li
+                a(href='#/app/personnel/regulariz')
+                  span 绩效申诉
+              li
+                a(href='#/app/personnel/regulariz')
+                  span 信息变更记录
+              li
+                a(href='#/app/personnel/regulariz')
+                  span 公司通讯录
+              li
+                a(href='#/app/personnel/regulariz')
+                  span 部门信箱
+          
+      nav.navi(ng-if="currentUser.permissionCode == 0")
+        ul.nav
           li(nav-toggle-active)
             a.auto(href="javascript:;")
               span.pull-right.text-muted
@@ -269,114 +289,4 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
               li
                 a()
                   span 绩效申诉管理
-          //- li(nav-toggle-active)
-          //-   a.auto(href='')
-          //-     span.pull-right.text-muted
-          //-       i.fa.fa-fw.fa-angle-right.text
-          //-       i.fa.fa-fw.fa-angle-down.text-active
-          //-     i.glyphicon.glyphicon-briefcase.nav-text-color2
-          //-     span 劳动关系管理
-          //-   ul.nav.nav-sub.dk
-          //-     li.nav-sub-header
-          //-       a(href='#/app/personnel/entry')
-          //-     li
-          //-       a(href='#/app/personnel/regulariz')
-          //-         span 入职管理
-          //-     li
-          //-       a(href='#/app/personnel/entry')
-          //-         span 转正管理
-          //-     li
-          //-       a(href='#/app/personnel/regulariz')
-          //-         span 岗位调动
-          //-     li
-          //-       a(href='#/app/personnel/regulariz')
-          //-         span 辞职管理
-          //-     li
-          //-       a(href='#/app/personnel/regulariz')
-          //-         span 退休管理
-          //-     li
-          //-       a(href='#/app/personnel/regulariz')
-          //-         span 退养管理
-          //-     li
-          //-       a(href='#/app/personnel/entry')
-          //-         span 辞退管理
-          //-     li
-          //-       a(href='#/app/personnel/entry')
-          //-         span 合同管理
-          //- li(nav-toggle-active)
-          //-   a.auto(href='')
-          //-     span.pull-right.text-muted
-          //-       i.fa.fa-fw.fa-angle-right.text
-          //-       i.fa.fa-fw.fa-angle-down.text-active
-          //-     b.badge.bg-info.pull-right
-          //-     i.fa.fa-mortar-board.nav-text-color2
-          //-     span 培训管理
-          //-   ul.nav.nav-sub.dk
-          //-     li.nav-sub-header
-          //-       a(href='#/app/personnel/entry')
-          //-     li
-          //-       a(href='#/app/personnel/regulariz')
-          //-         span 教员管理
-          //-     li
-          //-       a(href='#/app/personnel/entry')
-          //-         span 教学考评管理
-          //-     li
-          //-       a(href='#/app/personnel/regulariz')
-          //-         span 学历变更管理
-          //- li.line.dk
-          //- li
-          //-   a.auto(href='')
-          //-     span.pull-right.text-muted
-          //-       i.fa.fa-fw.fa-angle-right.text
-          //-       i.fa.fa-fw.fa-angle-down.text-active
-          //-     b.badge.bg-info.pull-right
-          //-     i.icon-calculator
-          //-     span 绩效考核
-          //-   ul.nav.nav-sub.dk
-          //-     li.nav-sub-header
-          //-       a(href='#/app/personnel/entry')
-          //-     li
-          //-       a(href='#/app/personnel/regulariz')
-          //-         span 绩效数据管理
-          //- li
-          //-   a.auto(href='')
-          //-     span.pull-right.text-muted
-          //-       i.fa.fa-fw.fa-angle-right.text
-          //-       i.fa.fa-fw.fa-angle-down.text-active
-          //-     b.badge.bg-info.pull-right
-          //-     i.fa.fa-clock-o
-          //-     span 考勤管理
-          //-   ul.nav.nav-sub.dk
-          //-     li.nav-sub-header
-          //-       a(href='#/app/personnel/entry')
-          //-     li
-          //-       a(href='#/app/personnel/regulariz')
-          //-         span 请假管理
-          //- li
-          //-   a.auto(href='')
-          //-     span.pull-right.text-muted
-          //-       i.fa.fa-fw.fa-angle-right.text
-          //-       i.fa.fa-fw.fa-angle-down.text-active
-          //-     b.badge.bg-info.pull-right
-          //-     i.fa.fa-jpy
-          //-     span 薪酬福利
-          //-   ul.nav.nav-sub.dk
-          //-     li.nav-sub-header
-          //-       a(href='#/app/personnel/entry')
-          //-     li
-          //-       a(href='#/app/personnel/regulariz')
-          //-         span 飞行数据管理
-          //-     li
-          //-       a(href='#/app/personnel/regulariz')
-          //-         span 飞行员基本工资管理
-          //-     li
-          //-       a(href='#/app/personnel/regulariz')
-          //-         span 加班工资管理
-          //-     li
-          //-       a(href='#/app/personnel/regulariz')
-          //-         span 薪酬数据导入
-          //- li.line.dk.hidden-folded
-          //- li
-          //-   a(href='#/app/page/profile')
-          //-     i.icon-settings.icon
-          //-     span 系统设置
+          
