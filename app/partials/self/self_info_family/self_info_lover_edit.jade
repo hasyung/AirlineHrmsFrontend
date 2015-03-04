@@ -2,7 +2,7 @@ form(ng-submit="save(wife.$save(),familymembersForm)" name="familymembersForm" n
     .form-btn-group(ng-hide="editing")
         md-button.md-primary.md-raised(type="button" ng-click="edit($event)") 编辑
     .form-btn-group.alive(ng-show="editing")
-        md-button.md-raised(ng-click="cancel(wife, $event)") 取消
+        md-button.md-raised(ng-click="cancel(wife, $event, familymembersForm)") 取消
         md-button.md-primary.md-raised(type="submit") 保存
     fieldset(ng-disabled="!editing")
         div(layout)
@@ -25,7 +25,11 @@ form(ng-submit="save(wife.$save(),familymembersForm)" name="familymembersForm" n
                 input(type="date" ng-model="wife.birthday")
             md-input-container(flex)
                 label 身份证号
-                input(ng-model="wife.identityNo" type="number" max-length="18")
+                input(ng-model="wife.identityNo" type="text" required name="identityNo" minlength="15" maxlength="18")
+                div(ng-if="familymembersForm.$submitted || familymembersForm.identityNo.$touched" ng-messages="familymembersForm.identityNo.$error")
+                    div(ng-message="required") 您需要填写有效身份证号码
+                    div(ng-message="minlength") 身份证长度最低15位
+                    div(ng-message="maxlength") 身份证长度不应超过19位
         div(layout)
             md-input-container(flex)
                 label 文化程度

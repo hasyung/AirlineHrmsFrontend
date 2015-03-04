@@ -240,13 +240,34 @@ class OrgsCtrl extends nb.Controller
             groupedLogs = _.groupBy logs, (log) ->
                 moment(log.created_at).format('YYYY')
             logsArr = []
-            angular.forEach groupedLogs, (item, key) ->
-                logsArr.push {logs:item, changeYear: key}
+            angular.forEach groupedLogs, (yeardLog, key) ->
+                logsArr.push {logs:yeardLog, changeYear: key}
 
             changeLogs = _.sortBy(logsArr, 'changeYear').reverse()
 
+            firstDate = _.last(logs).created_at
+
+            minDate = moment(firstDate).subtract(1,'days').format('DD/MM/YYYY')
+
+
+            return {
+                changeLogs: changeLogs
+                minDate: minDate
+            }
+
+
         promise = @http.get('/api/departments/change_logs')
         promise.then onSuccess
+
+    pickLog: (date, changeLogs) ->
+
+        sortedLogs = _.flatten(_.pluck(changeLogs, 'logs'))
+        selectedMoment =  moment(date)
+        log = _.find sortedLogs, (log) ->
+            return selectedMoment.isAfter(log.created_at)
+        @expandLog(log) if log
+
+
     # 返回机构的指定版本
     backToPast: (version)->
         # self = @

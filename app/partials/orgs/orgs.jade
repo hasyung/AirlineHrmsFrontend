@@ -22,7 +22,7 @@ section(layout="row" flex)
     md-content(layout="column" flex)
 
         .org-chart-top(ng-class="{'org-chart-history': ctrl.isHistory}")
-                h1 {{ctrl.treeRootOrg.name}}组织机构图
+                h1 {{ctrl.treeRootOrg.$cmStatus.name}}组织机构图
                 h2(ng-show="ctrl.isHistory") {{ctrl.orgs.$metadata.created_at | date : 'yyyy年MM月dd日'}}— {{ctrl.orgs.$metadata.title}}
             .top-btn-group
                 //- button(ng-click="ctrl.print()") 导出
