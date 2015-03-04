@@ -39,7 +39,7 @@
                 span.gap 至
                 input(ng-model="join_scal_date.to" bs-datepicker)
         .search-btn-group
-            md-button.md-primary.md-raised(nb-pipe="ctrl.search(tableState)") 开始搜索
+            md-button.purple.md-raised(nb-pipe="ctrl.search(tableState)") 开始搜索
             .right-align.nb-dropdown.pull-right(simple-dropdown, btn-text="导出")
                 li( role="presentation")
                     a(role="menuitem" ng-href="/api/employees/export_to_xls" ) 导出全部人员明细
