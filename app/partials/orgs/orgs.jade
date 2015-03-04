@@ -19,7 +19,7 @@
                         ng-class="{'active': org.id == (ctrl.treeRootOrg && ctrl.treeRootOrg.id)}"
                     )
 section(layout="row" flex)
-    md-content(layout="column" flex)
+    md-content(layout="column" flex style="background-color: #f0f3f4;")
 
         .org-chart-top(ng-class="{'org-chart-history': ctrl.isHistory}")
                 h1 {{ctrl.treeRootOrg.$cmStatus.name}}组织机构图
@@ -36,11 +36,11 @@ section(layout="row" flex)
                 md-button.md-raised.skyblue(ng-click="ctrl.resetData()" ng-show="ctrl.isHistory") 返回最新
 
                 //- loading-btn.red(ng-click="ctrl.openHistoryPanel()" btn-loading-type="contract-overlay" btn-text="测试loading")
-        md-content.org-chart-window(id="org_chart_warpper" flex scroll-center ng-if="ctrl.treeRootOrg.depth != 1")
+        md-content.org-chart-window(id="org_chart_warpper" flex scroll-center ng-if="ctrl.treeRootOrg.depth != 1" style="background-color: #f0f3f4;")
             div.svg-wrapper(org-chart id="org_chart" org-chart-data="ctrl.tree.data")
 
         md-content.org-chart-window(ng-if="ctrl.treeRootOrg.depth == 1" style="height: 700px")
-            div(style="width: 100%;background-image: url('/images/org_bg.jpg');height: 100%;background-position: center center;background-repeat: no-repeat;")
+            div(style="width: 100%;background-image: url('/images/org_bg.jpg');height: 100%;background-position: center center;background-repeat: no-repeat; background-color: #f0f3f4;")
         div.bottom-btn-group(ng-show="ctrl.tree.isModified")
             md-button.md-raised.skyblue(
                 nb-dialog="partials/orgs/shared/effect_changes.html"
