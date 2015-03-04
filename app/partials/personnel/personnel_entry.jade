@@ -21,7 +21,7 @@
                             md-option(ng-value="gender" ng-repeat="gender in enums.genders") {{gender.displayName}}
                     md-input-container(flex)
                         label 身份证号码
-                        input(type="text" placeholder="身份证号" ng-model="newEmp.identityNo")
+                        input(type="text" placeholder="身份证号" ng-model="newEmp.identityNo" required)
                     md-input-container.row-has-value(flex)
                         label 政治面貌
                         md-select(ng-model="newEmp.politicalStatus", md-on-open="loadEnum('political_status')")
@@ -64,7 +64,7 @@
                             ui-select-choices(repeat="org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name}}
                     md-input-container.row-has-value(flex)
                         label 岗位
-                        md-select(ng-model="newEmp.position")
+                        md-select(ng-model="newEmp.position" required)
                             md-select-label {{newEmp.position.name || '无'}}
                             md-option(ng-value="pos" ng-repeat="pos in params.orgPos") {{pos.name}}
                     md-input-container.row-has-value(flex)
