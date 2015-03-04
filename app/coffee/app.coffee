@@ -36,7 +36,7 @@ nb.app = App = angular.module 'nb',deps
 
 
 appConf = ($provide, ngDialogProvider) ->
-    # 事件广播 始终锁定在 rootscope 上 ， 提高性能
+    # 事件广播 始终锁定在 rootScope 上 ， 提高性能
     $provide.decorator '$rootScope', ['$delegate', ($delegate) ->
 
         Object.defineProperty $delegate.constructor.prototype, '$onRootScope', {
@@ -66,7 +66,7 @@ restConf = (restmodProvider) ->
 
 mdThemingConf = ($mdThemingProvider) ->
     $mdThemingProvider.theme('default')
-        # .primaryPalette('light-blue')
+        .primaryPalette('indigo')
         .accentPalette('amber')
         .warnPalette('deep-orange')
 
@@ -140,18 +140,26 @@ App
     .config ['restmodProvider', restConf]
     .config ['$mdThemingProvider', mdThemingConf]
     .config ['$stateProvider','$urlRouterProvider','$locationProvider', '$httpProvider', routeConf]
-    .run ['$state','$rootScope', 'toaster', '$http', 'Org', 'sweet', 'User', '$enum', ($state, $rootScope, toaster, $http, Org, sweet, User, $enum) ->
-        # for $state.includes in view
-        $rootScope.$on '$stateChangeSuccess', (evt, to) ->
-            console.debug "stateChangeSuccess: to ", to
-            # $uiViewScroll()
+    .run ['$state','$rootScope', 'toaster', '$http', 'Org', 'sweet', 'User', '$enum', '$timeout',
+    ($state, $rootScope, toaster, $http, Org, sweet, User, $enum, $timeout) ->
 
-        $rootScope.$on 'process', () ->
+        cancelLoading = ->
+            $rootScope.loading = false
+        startLoading = ->
             $rootScope.loading = true
+
+        # for $state.includes in view
+
+        $rootScope.$on '$stateChangeStart', ->
+            startLoading()
+            $timeout cancelLoading, 1000
+
+
+        $rootScope.$on 'process', startLoading
 
         $rootScope.$on 'success', (code, info)->
             toaster.pop(code.name, "提示", info)
-            $rootScope.loading = false
+            cancelLoading()
 
         $rootScope.$on 'error', (code, info)->
             $rootScope.loading = false

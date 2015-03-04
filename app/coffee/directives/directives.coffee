@@ -144,6 +144,18 @@ angular.module 'nb.directives'
 
 
     ]
+    .directive 'scrollCenter', ->
+        postLink = (scope, elem, attrs) ->
+
+            scrollCenter = ->
+                width = elem.width()
+                svgWidth = elem.find('svg').width()
+                elem.scrollLeft( (svgWidth - width ) / 2 )
+
+            elem.on 'resize',scrollCenter
+
+            scope.$on '$destroy', ->
+                elem.off 'resize', scrollCenter
 
     .directive 'radioBox', [()->
         postLink = (scope, elem, attrs, ctrl) ->
@@ -164,7 +176,7 @@ angular.module 'nb.directives'
                     scope.pass = false
                 if !(scope.pass || scope.fail)
                     scope.selected = "1"
-                
+
         return {
             restrict: 'A'
             link: postLink
