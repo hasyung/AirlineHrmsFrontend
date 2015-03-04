@@ -107,8 +107,8 @@ class NewEmpsCtrl extends nb.Controller
 
 
 class ReviewCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Change', 'Record']
-    constructor: (@scope, @Change, @Record) ->
+    @.$inject = ['$scope', 'Change', 'Record', '$mdDialog']
+    constructor: (@scope, @Change, @Record, @mdDialog) ->
         @loadInitailData()
 
     loadInitailData: ->
@@ -132,6 +132,16 @@ class ReviewCtrl extends nb.Controller
             params.push temp
         @changes.checkChanges(params)
 
+class DialogCtrl extends nb.Controller
+    @.$inject = ['$scope', 'data']
+    constructor: (@scope, @data) ->
+        self = @
+        @scope.data = @data
+
+
+    
+
 
 
 app.config(Route)
+app.controller('DialogCtrl', DialogCtrl)

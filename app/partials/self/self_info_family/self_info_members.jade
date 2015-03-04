@@ -79,10 +79,10 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                     tbody
                         tr(ng-repeat="omg in vm.other")
                             td(ng-bind="omg.name")
-                            td(ng-bind="omg.relation_type")
+                            td(ng-bind="omg.relationType")
                             td(ng-bind="omg.gender")
                             td(ng-bind="omg.birthday | date:'yyyy-MM-dd'")
-                            td(ng-bind="omg.native_place")
+                            td(ng-bind="omg.residenceBooklet")
                             td(ng-bind="omg.company")
                             td.control-td
                                 button.btn.btn-default.fa.fa-times(ng-click="omg.$destroy()")

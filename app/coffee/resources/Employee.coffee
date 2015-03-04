@@ -4,7 +4,7 @@ resources = angular.module('resources')
 
 Employee = (restmod, RMUtils, $Evt) ->
 
-    Employee = restmod.model('/employees').mix 'nbRestApi', 'DirtyModel', 'restmod.Preload', {
+    Employee = restmod.model('/employees').mix 'nbRestApi', 'DirtyModel', {
         # departmentId: {mask: 'R', map: 'department.id'}
         department: {mask: 'CU', belongsTo: 'Org'}
         # dept: {belongsTo: 'Org', key: 'department_id'}
@@ -49,8 +49,8 @@ Formerleaders = (restmod, RMUtils, $Evt) ->
 
     }
 User = (restmod, RMUtils, $Evt) ->
-    User = restmod.model(null).mix 'nbRestApi', {
-        $hooks: 
+    User = restmod.model(null).mix 'nbRestApi', 'DirtyModel', {
+        $hooks:
             'after-update': ->
                 $Evt.$send('user:update:success', "个人信息更新成功")
             'after-update-error': ->

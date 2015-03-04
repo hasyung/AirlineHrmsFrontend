@@ -58,6 +58,7 @@ class EditableResourceCtrl
                     promise.then () -> scope.editing = false
                 else if promise.$then
                     promise.$then () -> scope.editing =false
+
                 else
                     throw new Error('promise 参数错误')
 
@@ -65,9 +66,10 @@ class EditableResourceCtrl
 
 
 
-        scope.cancel = (resource, evt) ->
+        scope.cancel = (resource, evt, form) ->
             evt.preventDefault() if evt
             resource.$restore() if resource && resource.$restore
+            form.$setPristine() if form && form.$setPristine
             scope.editing = false
 class NewResourceCtrl
 
