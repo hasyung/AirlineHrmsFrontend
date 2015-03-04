@@ -75,7 +75,9 @@ class NewEmpsCtrl extends nb.Controller
         }
         @employees = @Employee.$collection(collection_param).$fetch()
     regEmployee: (employee)->
-        @employees.$build(employee).$save()
+        self = @
+        @employees.$build(employee).$save().$then ()->
+            self.loadInitailData()
 
     getExportParams: ->
         @employees
