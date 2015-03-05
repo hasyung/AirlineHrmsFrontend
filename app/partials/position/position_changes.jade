@@ -1,4 +1,4 @@
-.app-content-wrapper(flex)(nb-table='ctrl.records' nb-safe-src="ctrl.changes" ng-init="ctrl.changes = ctrl.PositionChange.$collection().$refresh()")
+.app-content-wrapper(flex nb-table='ctrl.records' nb-safe-src="ctrl.changes" ng-init="ctrl.changes = ctrl.PositionChange.$collection().$refresh()")
     .search-container(nb-search)
         div(nb-predicate="岗位名称" predicate-attr="name")
             input(name="name" placeholder="岗位名称" ng-model="name")
