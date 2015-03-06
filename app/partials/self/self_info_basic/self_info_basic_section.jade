@@ -17,6 +17,7 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                     input(disabled ng-model="currentUser.employeeNo")
                 div(layout)
                     md-input-container(flex)
+                        div.anth-attr(title="该属性需要审核" ng-class="{auditing: currentUser.$meta.auditing}")
                         label 姓名
                         input(ng-model="currentUser.name" name="name" required)
                     md-input-container.row-has-value(flex)
