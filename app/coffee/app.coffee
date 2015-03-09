@@ -172,7 +172,8 @@ App
         $rootScope.allOrgs = Org.$search()
 
         $rootScope.logout = ()->
-            $http.delete('/api/sign_out')
+            $http.delete('/api/sign_out').success ()->
+                $rootScope.currentUser = null
 
 
         $rootScope.enums = $enum.get()
