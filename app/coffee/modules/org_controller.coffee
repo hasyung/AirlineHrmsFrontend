@@ -5,14 +5,13 @@ extend = angular.extend
 resetForm = nb.resetForm
 Modal = nb.Modal
 
-
+#机构组织架构图
 orgChart = () ->
     link = (scope, $el, attrs) ->
         #
         #raphael paper
         paper = null
         active_rect = null
-
 
         click_handler = (evt, elem) ->
             # elem.setAttribute("class", 'active')
@@ -62,6 +61,7 @@ orgChart = () ->
         link: link
     }
 
+#机构选择树
 orgTree = (Org, $parse) ->
 
     postLink = (scope, elem, attrs, $ctrl) ->
@@ -118,6 +118,9 @@ class Route
 
     constructor: (stateProvider) ->
 
+        orgs = (Org)-> Org.$collection().$fetch(edit_mode: true).$asPromise()
+
+
 
         stateProvider
             .state 'org', {
@@ -125,27 +128,8 @@ class Route
                 templateUrl: 'partials/orgs/orgs.html'
                 controller: 'OrgsCtrl'
                 controllerAs: 'ctrl'
-                ncyBreadcrumb: {
-                    label: "机构"
-                }
                 resolve: {
-                    eidtMode: ()->
-                        return true
-                }
-            }
-            .state {
-                name: 'org.position'
-                url: '/:id/positions'
-                controller: PositionCtrl
-                views: {
-                    "@": {
-                        controller: PositionCtrl
-                        controllerAs: 'ctrl'
-                        templateUrl: 'partials/orgs/position.html'
-                    }
-                }
-                ncyBreadcrumb: {
-                    label: "{{ ctrl.currentOrg.name || '岗位' }}"
+                    orgs: orgs
                 }
             }
 
@@ -154,32 +138,29 @@ class Route
 class OrgsCtrl extends nb.Controller
 
 
-    @.$inject = ['Org', '$http','$stateParams', '$state', '$scope', '$modal', '$panel', '$rootScope', '$nbEvent', 'eidtMode']
+    @.$inject = ['orgs', '$http','$stateParams', '$state', '$scope', '$rootScope', '$nbEvent']
 
 
-    constructor: (@Org, @http, @params, @state, @scope, @modal, @panel, @rootScope, @Evt, @eidtMode)->
-        @treeRootOrg = null # 当前树的顶级节点
-        @orgs = null    #集合
+    constructor: (@orgs, @http, @params, @state, @scope, @rootScope, @Evt)->
+        @treeRootOrg = _.find orgs, (org) -> org.depth == 1 # 当前树的顶级节点
         @tree = null    # tree化的 orgs 数据
+
         #for ui status
         @isBarOpen = false
 
-        @loadInitialData()
-
-
-        scope.$onRootScope 'org:active', @.active.bind(@)
         scope.$onRootScope 'org:refresh', @.refreshTree.bind(@)
         scope.$onRootScope 'org:resetData', @.resetData.bind(@)
 
-    loadInitialData: () -> #初始化数据
-        self = @
-        rootScope = @rootScope
-        Evt = @Evt
-        @orgs = @Org.$collection().$fetch({'edit_mode': @eidtMode})
-            .$then (orgs) ->
-                treeRootOrg = _.find orgs, (org) -> org.depth == 1
-                self.buildTree(treeRootOrg)
-                self.treeRootOrg = treeRootOrg
+        @buildTree(@treeRootOrg)
+
+    # loadInitialData: () -> #初始化数据
+    #     self = @
+    #     rootScope = @rootScope
+    #     @orgs = @Org.$collection().$fetch({'edit_mode': @eidtMode})
+    #         .$then (orgs) ->
+    #             treeRootOrg = _.find orgs, (org) -> org.depth == 1
+    #             self.buildTree(treeRootOrg)
+    #             self.treeRootOrg = treeRootOrg
 
 
     buildTree: (org = @treeRootOrg, depth = 9)->
@@ -187,7 +168,7 @@ class OrgsCtrl extends nb.Controller
         @treeRootOrg = org
         @tree = @orgs.treeful(org, depth)
         currentOrg = org
-        @Evt.$send('org:link', {org:currentOrg})
+        @Evt.$send('org:link', {org: currentOrg})
 
     refreshTree: () ->
         return unless @treeRootOrg
@@ -203,7 +184,6 @@ class OrgsCtrl extends nb.Controller
         #数据入口不止一个，需要解决
         @orgs.$refresh({edit_mode: @eidtMode}).$then () ->
             self.buildTree()
-            # self.rootScope.$emit('orgs:link', _.find(@orgs, {id: orgId}))
 
     onItemClick: (evt, elem) -> #机构树 点击事件处理 重构？
         orgId = elem.oc_id
@@ -226,14 +206,13 @@ class OrgsCtrl extends nb.Controller
         @resetData()
 
     resetData: () ->
-        self = @
         @isHistory = false
-        @orgs.$refresh({'edit_mode': @eidtMode})
+        @orgs.$refresh({'edit_mode': true})
 
     rootTree: () ->
-        self = @
-        treeRootOrg = _.find self.orgs, (org) -> org.depth == 1
-        self.buildTree(treeRootOrg)
+        treeRootOrg = _.find @orgs, (org) -> org.depth == 1
+        @buildTree(treeRootOrg)
+
     initialHistoryData: ->
         onSuccess = (res)->
             logs = res.data.change_logs
@@ -280,8 +259,6 @@ class OrgsCtrl extends nb.Controller
         @currentLog.active = false if @currentLog
         log.active = true
         @currentLog = log
-    # getHisVersion: ()->
-    #     status = if @isHistory then {version:@currentLog.id} else 'active'
 
     # print: () ->
     #     options = {
@@ -305,21 +282,15 @@ class OrgCtrl extends nb.Controller
     constructor: (@Org, @params, @scope, @rootScope, @Evt, @Position , @sweet) ->
         @state = 'show' # show editing newsub
         # @scope.org = @Org.$find(@params.orgId)
-        scope.$onRootScope 'org:link', @.orgLink.bind(@)
-        Evt.$on.call(scope,['org:update:success','org:update:error'], @.reset.bind(@))
-        scope.$onRootScope 'org:transfer', @.transfer.bind(@)
+        # scope.$onRootScope 'org:link', @.orgLink.bind(@)
 
+        scope.$watch('ctrl.currentOrg', @orgLink.bind(@))
 
     orgLink: (evt, data)->
         @scope.currentOrg = data.org
-        @scope.copyOrg = data.org.$copy()
         #当处于历史状态时data.status为包含version的OBJ，否则为active
         queryParam = if @scope.ctrl.isHistory then {version: @scope.ctrl.currentLog.id} else {}
         @scope.positions = @scope.currentOrg.positions.$refresh(queryParam)
-
-    cancel: ->
-        @state = 'show'
-
 
     transfer: (destOrg) ->
         self = @
@@ -328,23 +299,8 @@ class OrgCtrl extends nb.Controller
 
     newsub: (form, neworg) ->
         return if form.$invalid
-        # $Evt = @Evt
         self = @
-        @scope.currentOrg.newSub(neworg).$then ->
-            self.Evt.$send 'org:newsub', form
-            self.state = 'show'
-
-
-
-    update: (form, copyOrg) ->
-        @scope.currentOrg.$update(copyOrg)
-
-    reset: (evt)->
-        scope = @scope
-        scope.neworg = {}
-        scope.copyOrg = @scope.currentOrg.$copy()
-        resetForm(scope.updateForm)
-        @state = 'show'
+        @scope.currentOrg.newSub(neworg).$then -> self.state = 'show'
 
     destroy: (isConfirm) ->
         sweet = @sweet
@@ -413,57 +369,6 @@ class PositionCtrl extends nb.Controller
     search: (tableState) ->
         @positions.$refresh(tableState)
     searchEmp: (tableState) ->
-
-
-
-
-# class PosCtrl extends nb.Controller
-#     @.$inject = ['$stateParams', 'Position', '$scope', '$state', 'Org']
-
-#     constructor: (@params, @Position, @scope, @state, @Org) ->
-#         @loadInitialData()
-#     loadInitialData: () ->
-#         self = @
-#         orgId = @params.id
-#         posId = @params.posId
-#         @Position.$find(posId).$then (position) ->
-#             self.scope.currentPos = position
-#             # self.scope.copyPos = position.$copy()
-
-#             spe = position.specification.$fetch()
-#             spe.$asPromise().then (spe) ->
-#                 self.scope.currentSpe = spe
-#                 # self.scope.copySpe = spe.$copy()
-
-
-#         @scope.currentOrg = @Org.$find orgId
-
-#     updateDetail: (position) ->
-#         position.$save()
-#     updateAdvanced: (advance) ->
-#         @scope.currentSpe.$update(advance)
-
-
-
-# class PosCreateCtrl extends nb.Controller
-#     @.$inject = ['$stateParams', 'Position', '$scope', 'Org']
-
-#     constructor: (@params, @Position, @scope, @Org) ->
-#         @orgId = @params.id
-#         @loadInitialData()
-
-#     loadInitialData: () ->
-#         @scope.currentOrg = @Org.$find @orgId
-#     createPos: () ->
-#         self = @
-#         @position.departmentId = @orgId
-#         @position.specification = @specification
-#         #将页面跳转放在then里，防止当跳转过去时新创建的岗位未被添加到岗位列表
-#         newPos = @Position.$create(@position)
-#     store: (attr, value) ->
-#         this[attr] = value
-
-
 
 
 

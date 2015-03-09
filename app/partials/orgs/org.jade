@@ -23,7 +23,7 @@ section.org-detail(ng-controller="EditableResource")
                     input(ng-model="currentOrg.name" required name="orgName")
                 md-input-container
                     label 编号
-                    input(ng-model="currentOrg.serialNumber" disabled)
+                    input(ng-model="::currentOrg.serialNumber" disabled)
                 md-input-container.row-has-value
                     label 机构性质
                     //- nb-dropdown(ng-model="copyOrg.nature" remote-key="department_natures", name="orgAddr", required="true")
@@ -33,7 +33,7 @@ section.org-detail(ng-controller="EditableResource")
                     //- input(ng-model="currentOrg.nature.displayName" name="orgNature")
                 md-input-container
                     label 职级
-                    input(ng-model="currentOrg.grade.displayName" disabled)
+                    input(ng-model="::currentOrg.grade.displayName" disabled)
 
             .form-actions(ng-hide="!editing")
                 md-button(type="button", ng-click="cancel(currentOrg, $event)") 取消
