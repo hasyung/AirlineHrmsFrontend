@@ -144,6 +144,7 @@ class OrgsCtrl extends nb.Controller
     constructor: (@orgs, @http, @params, @state, @scope, @rootScope, @Evt)->
         @treeRootOrg = _.find orgs, (org) -> org.depth == 1 # 当前树的顶级节点
         @tree = null    # tree化的 orgs 数据
+        @currentOrg = null
 
         #for ui status
         @isBarOpen = false
@@ -167,8 +168,8 @@ class OrgsCtrl extends nb.Controller
         depth = 1 if org.depth == 1 #如果是顶级节点 则只显示一级
         @treeRootOrg = org
         @tree = @orgs.treeful(org, depth)
-        currentOrg = org
-        @Evt.$send('org:link', {org: currentOrg})
+        #在orgCtrl中会监听该值得变化，用于更新右侧信息
+        @currentOrg = org
 
     refreshTree: () ->
         return unless @treeRootOrg
@@ -176,7 +177,7 @@ class OrgsCtrl extends nb.Controller
         depth = 1 if @treeRootOrg.depth == 1 #如果是顶级节点 则只显示一级
 
         @tree = @orgs.treeful(@treeRootOrg, depth)
-        @Evt.$send('org:link', {org:@treeRootOrg})
+        @currentOrg = @treeRootOrg
 
     #force 是否修改当前机构
     reset: (force) ->
@@ -187,8 +188,7 @@ class OrgsCtrl extends nb.Controller
 
     onItemClick: (evt, elem) -> #机构树 点击事件处理 重构？
         orgId = elem.oc_id
-        currentOrg = _.find(@orgs, {id: orgId})
-        @Evt.$send('org:link', {org:currentOrg})
+        @currentOrg = _.find(@orgs, {id: orgId})
 
     revert: (isConfirm) ->
         if isConfirm
@@ -253,7 +253,7 @@ class OrgsCtrl extends nb.Controller
         if @currentLog
             @orgs.$refresh({version: @currentLog.id})
         @isHistory = true
-        @Evt.$send('org:link', {org:@treeRootOrg})
+        @currentOrg = @treeRootOrg
     expandLog: (log)->
         # 防止UI中出现多个被选中的item
         @currentLog.active = false if @currentLog
@@ -283,12 +283,12 @@ class OrgCtrl extends nb.Controller
         @state = 'show' # show editing newsub
         # @scope.org = @Org.$find(@params.orgId)
         # scope.$onRootScope 'org:link', @.orgLink.bind(@)
+        self = @
+        scope.$parent.$watch 'ctrl.currentOrg', (newval)->
+            self.orgLink(newval)
 
-        scope.$watch('ctrl.currentOrg', @orgLink.bind(@))
-
-    orgLink: (evt, data)->
-        @scope.currentOrg = data.org
-        #当处于历史状态时data.status为包含version的OBJ，否则为active
+    orgLink: (org)->
+        @scope.currentOrg = org
         queryParam = if @scope.ctrl.isHistory then {version: @scope.ctrl.currentLog.id} else {}
         @scope.positions = @scope.currentOrg.positions.$refresh(queryParam)
 
