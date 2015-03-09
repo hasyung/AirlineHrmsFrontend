@@ -2,7 +2,6 @@ resources = angular.module('resources')
 
 
 Change = (restmod, RMUtils, $Evt) ->
-
     Change = restmod.model('/employee_changes/check').mix 'nbRestApi', 'DirtyModel', {
         checkDate: {decode: 'date', param: 'yyyy年MM月dd日',mask: 'CU'}
         createdAt: {decode: 'date', param: 'yyyy年MM月dd日',mask: 'CU'}
@@ -10,8 +9,6 @@ Change = (restmod, RMUtils, $Evt) ->
             'after-check': ->
                 $Evt.$send('changes:check:success', "审核提交成功")
 
-            'after-check-error': ->
-                $Evt.$send('changes:check:error', "审核提交失败")
         $config:
             jsonRoot: 'audits'
 
@@ -30,10 +27,7 @@ Change = (restmod, RMUtils, $Evt) ->
                             self.$remove item
                         self.$dispatch 'after-check', res
 
-                    onErorr = (res) ->
-                        self.$dispatch 'after-check-error', res
-
-                    this.$send(request, onSuccess, onErorr)
+                    this.$send(request, onSuccess)
 
     }
 Record = (restmod, RMUtils, $Evt) ->
