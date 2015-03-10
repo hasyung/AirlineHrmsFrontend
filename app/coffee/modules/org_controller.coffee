@@ -281,8 +281,6 @@ class OrgCtrl extends nb.Controller
 
     constructor: (@Org, @params, @scope, @rootScope, @Evt, @Position , @sweet) ->
         @state = 'show' # show editing newsub
-        # @scope.org = @Org.$find(@params.orgId)
-        # scope.$onRootScope 'org:link', @.orgLink.bind(@)
         self = @
         scope.$parent.$watch 'ctrl.currentOrg', (newval)->
             self.orgLink(newval)
@@ -320,12 +318,6 @@ class PositionCtrl extends nb.Controller
     constructor: (@scope, @Evt, @Position, @stateParams, @Org, @Specification) ->
         @positions = scope.ngDialogData # from parent ctrl
         scope.ctrl = this
-        # orgId = @stateParams.id
-        # @currentOrg = Org.$find(orgId)
-        # @positions = @currentOrg.positions.$fetch()
-        # @selectOrg = null # 划转所选择的机构 rework
-        # @scope.allSelect = false
-        # @scope.$onRootScope 'position:refresh', @.resetData.bind(@)
 
     getSelectsIds: ()->
         @positions

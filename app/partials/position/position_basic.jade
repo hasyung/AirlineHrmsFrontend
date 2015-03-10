@@ -11,7 +11,7 @@ form(name="posEditForm" ng-submit="save(currentPos.$save(), posEditForm)" ng-con
                 input(ng-model="currentPos.oaFileNo")
             md-input-container(flex)
                 label 创建时间
-                input(type="date" ng-model="currentPos.createAt")
+                input(disabled type="date" ng-model="currentPos.createAt")
         div(layout)
             md-input-container(flex)
                 label 岗位名称
