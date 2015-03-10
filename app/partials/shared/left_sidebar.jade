@@ -33,7 +33,7 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
             li.divider
             li
               a(ui-sref='access.signin') Logout
-        .line.dk.hidden-folded 
+        .line.dk.hidden-folded
       nav.navi(ng-if="currentUser.permissionCode == 1")
         ul.nav
           li(nav-toggle-active)
@@ -65,7 +65,7 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
               li
                 a(href='#/app/personnel/regulariz')
                   span 部门信箱
-          
+
       nav.navi(ng-if="currentUser.permissionCode == 0")
         ul.nav
           li(nav-toggle-active)
@@ -289,4 +289,4 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
               li
                 a()
                   span 绩效申诉管理
-          
+

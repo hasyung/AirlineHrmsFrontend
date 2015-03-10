@@ -22,6 +22,10 @@
                     a(ui-sref=".experience")
                         span.switch-circle
                         | 工作经历
+                li(ui-sref-active="active")
+                    a(ui-sref=".attendance")
+                        span.switch-circle
+                        | 我的考勤
                 li
                     span.switch-circle
                     | 任职记录
@@ -42,6 +46,10 @@
                     | 档案信息
                 li(ui-sref-active="active")
                     a(ui-sref=".resume")
+                        span.switch-circle
+                        | 个人履历
+                li(ui-sref-active="active")
+                    a(nb-dialog="partials/")
                         span.switch-circle
                         | 个人履历
 
