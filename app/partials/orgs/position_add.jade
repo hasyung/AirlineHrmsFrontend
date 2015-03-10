@@ -30,16 +30,13 @@
 				md-select(ng-model="newPos.nature", md-on-open="loadEnum('position_natures')")
 					md-select-label {{newPos.nature.displayName || '无'}}
 					md-option(ng-value="nature" ng-repeat="nature in enums.position_natures") {{nature.displayName}}
-
 			md-input-container(flex)
 				label 所在部门
-				span.postadd-control-text(ng-bind="currentOrg.name")
-			md-input-container(flex)
-				label.postadd-control-label
-				button.btn.btn-info(type="submit" wz-next="" ng-disabled="posForm.$invalid") 下一步
+				input(disabled ng-model="currentOrg.name")
+			button.btn.btn-info.pull-right(style="width: 80px; margin-bottom: 20px;" type="submit" wz-next="" ng-disabled="posForm.$invalid") 下一步
 
 
-		form.org-postadd-detail.org-postadd-jd(title="岗位说明" wz-step canexit="posAdvancedForm.$valid" name="posAdvancedForm")
+		form(title="岗位说明" wz-step canexit="posAdvancedForm.$valid" name="posAdvancedForm")
 			md-input-container
 				label 工作职责
 				textarea(ng-model="specification.duty" placeholder="工作职责" md-maxlength="8000")
@@ -68,7 +65,5 @@
 				label 任职条件
 				textarea(ng-model="specification.qualification" placeholder="任职条件" md-maxlength="8000")
 
-			md-input-container(flex)
-				label
-				button.btn.btn-info(type='submit' wz-next="" ng-disabled="posAdvancedForm.$invalid") 完成
+			button.btn.btn-info.pull-right(style="width: 80px; margin-bottom: 20px;" type='submit' wz-next="" ng-disabled="posAdvancedForm.$invalid") 完成
 

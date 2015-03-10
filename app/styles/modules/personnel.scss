@@ -96,7 +96,6 @@
     }
 
     .personnel-info-section {
-        // margin-bottom: 30px;
         //消除Tab页标题的圆角
         .nav-pills>li>a {
             border-radius: 0;
@@ -201,7 +200,6 @@
 
     .personnel-content-body {
         background-color: #fff;
-        // border: 1px solid #c3c3c3;
         border-top: 0;
         width: 100%;
     }
@@ -256,59 +254,6 @@
 
 }
 
-.personnel-info-control {
-    display: flex;
-    padding: 0 30px;
-    position: relative;
-
-    .form-split {
-        padding: 50px 0;
-
-        .control-label {
-            height: 34px;
-            line-height: 34px;
-        }
-
-        .form-content {
-            height: 34px;
-            line-height: 34px;
-        }
-
-        .form-control {
-            margin-right: 10%;
-        }
-
-        .form-group.block {
-            .form-control {
-                margin-right: 5%;
-            }
-        }
-        //暴力解决 ui-select中小三角位置的问题
-        .ui-select-bootstrap .ui-select-toggle > .caret {
-            margin-top: 7px;
-            position: static;
-        }
-    }
-
-    .personnel-info-left {
-        flex: none;
-        margin-right: 30px;
-        padding-top: 50px;
-        width: 80px;
-    }
-
-    .personnel-info-right {
-        flex: 1;
-        min-height: 240px;
-
-        &.break-lines {
-            margin-right: 5%;
-            padding-bottom: 50px;
-            padding-top: 50px;
-        }
-    }
-}
-
 .personnel-info-table {
     padding: 20px;
 
@@ -335,20 +280,6 @@
         }
     }
 
-    .form-split {
-        border-bottom: 1px solid $border-color;
-        margin-bottom: 10px;
-
-        .form-control {
-            margin-right: 10%;
-        }
-
-        .control-label {
-            height: 34px;
-            line-height: 34px;
-        }
-    }
-
     .btn-group {
         margin-bottom: 20px;
         margin-left: 190px;
@@ -369,6 +300,7 @@
     }
 }
 
+//新增员工弹出页 按钮组
 .form-bottom-group {
     margin-bottom: 50px;
 
