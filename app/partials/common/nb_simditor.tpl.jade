@@ -1,0 +1,9 @@
+div()
+    div(ng-hide="editing" ng-bind-html="modelVal")
+
+    div(ng-if="editing" ng-init="clicked = false")
+        div(ng-show="!clicked" ng-bind-html="modelVal" ng-click="clicked = true" style="border: 1px solid #ccc; padding:10px 15px;")
+        div(ng-show="clicked")
+            textarea(placeholder="这里输入内容")
+
+

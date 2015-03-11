@@ -110,7 +110,7 @@ Position = (restmod, RMUtils, $Evt, Specification) ->
 
 
 Specification = (restmod, RMUtils, $Evt) ->
-    Specification = restmod.model().mix 'nbRestApi', {
+    Specification = restmod.model().mix 'nbRestApi', 'DirtyModel', {
         $config:
             jsonRoot: 'specification'
 
