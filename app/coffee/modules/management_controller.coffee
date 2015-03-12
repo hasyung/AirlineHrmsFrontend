@@ -99,5 +99,8 @@ class AttendanceCtrl
 
     requestLeave: () ->
 
+    submitForm: (requestData) ->
+        console.log requestData
+
 
 app.config(Route)

@@ -21,27 +21,28 @@ md-toolbar.top-menu-bar
         li.divider
         li
           a(ui-sref='access.signin', href='#/access/signin') 退出
-    li.dropdown.pull-right
-      a.dropdown-toggle(href='')
-        i.icon-bell.fa-fw
-        span.visible-xs-inline 提醒
-        span.badge.badge-sm.up.bg-danger.pull-right-xs 1
-      .dropdown-menu.w-xl.animated.fadeInUp
-        .panel.bg-white
-          .panel-heading.b-light.bg-light
-            strong
-              | 你有
-              span 1
-              | 项提醒
-          .list-group
-            a.media.list-group-item(href='')
-              span.pull-left.thumb-sm
-                img.img-circle(src='img/a0.jpg', alt='...')
-              span.media-body.block.m-b-none
-                | 新员工入职培训
-                br
-                small.text-muted 10 分钟之前
-          .panel-footer.text-sm
-            a.pull-right(href='')
-              i.fa.fa-cog
-            a(href='#notes', data-toggle='class:show animated fadeInRight') 查看所有提醒
+    li(nb-notification)
+    //- li.dropdown.pull-right
+    //-   a.dropdown-toggle(href='')
+    //-     i.icon-bell.fa-fw
+    //-     span.visible-xs-inline 提醒
+    //-     span.badge.badge-sm.up.bg-danger.pull-right-xs 1
+    //-   .dropdown-menu.w-xl.animated.fadeInUp
+    //-     .panel.bg-white
+    //-       .panel-heading.b-light.bg-light
+    //-         strong
+    //-           | 你有
+    //-           span 1
+    //-           | 项提醒
+    //-       .list-group
+    //-         a.media.list-group-item(href='')
+    //-           span.pull-left.thumb-sm
+    //-             img.img-circle(src='img/a0.jpg', alt='...')
+    //-           span.media-body.block.m-b-none
+    //-             | 新员工入职培训
+    //-             br
+    //-             small.text-muted 10 分钟之前
+    //-       .panel-footer.text-sm
+    //-         a.pull-right(href='')
+    //-           i.fa.fa-cog
+    //-         a(href='#notes', data-toggle='class:show animated fadeInRight') 查看所有提醒
