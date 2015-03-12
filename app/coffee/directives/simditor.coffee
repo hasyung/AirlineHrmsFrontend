@@ -73,7 +73,6 @@ angular.module 'nb.directives'
                 modelVal: '=ngModel'
                 toolbar: '='
             }
-            priority:5
             link: (scope,elem,attrs,ctrl) ->
                 customOpt = {}
                 editor = null
@@ -103,11 +102,14 @@ angular.module 'nb.directives'
                 scope.$watch 'editable',(newVal,old) ->
                     if newVal == false
                         editor.body.attr('contenteditable',false)
-                scope.$watch 'editing', (newVal)->
-                    if newVal
-                        editor = createEditor()
-                    else
-                        editor.destroy() if editor
+                if angular.isUndefined scope.editing
+                    editor = createEditor()
+                else
+                    scope.$watch 'editing', (newVal)->
+                        if newVal
+                            editor = createEditor()
+                        else
+                            editor.destroy() if editor
 
 
                 scope.$on '$destroy', () ->
