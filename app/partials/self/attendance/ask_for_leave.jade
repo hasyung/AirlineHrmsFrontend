@@ -1,4 +1,4 @@
-form(ng-submit="submitForm()")
+form(ng-submit="ctrl.submitForm()")
     md-input-container
         label 请假类别
         md-select(ng-model="leaveRequest.type")
@@ -13,7 +13,7 @@ form(ng-submit="submitForm()")
         input(type="date" ng-model="leaveRequest.endDate" bs-datepicker container="body")
     md-input-container
         label message
-        textarea
+        textarea(ng-model="leaveRequest.message")
     .form-actions
         md-button(type="submit") 提交
         md-button(type="button" ng-click="closeThisDialog()") 取消

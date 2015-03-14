@@ -111,6 +111,9 @@ paths =
         'deps/jquery-slimscroll/jquery.slimscroll.js'
         'deps/angularjs-toaster/toaster.js'
         'deps/angular-material/angular-material.js'
+        'compat/socket.io.js'
+        'compat/pomeloclient.js'
+        'compat/communite.js'
         # 'deps/angular-ui-utils/ui-utils.js'
         # 'deps/jasny-bootstrap/dist/js/jasny-bootstrap.js' jasny bootstrap 增强版，提供一些好用组件
     ]
