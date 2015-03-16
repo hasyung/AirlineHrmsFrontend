@@ -94,13 +94,13 @@ class ProfileCtrl extends nb.Controller
         # @scope.currentUser.$update()
 
 class AttendanceCtrl
-
-    constructor: () ->
+    @.$inject = ['$scope', 'Leave']
+    constructor: (@scope, @Leave) ->
 
     requestLeave: () ->
 
     submitForm: (requestData) ->
-        console.log requestData
+        @Leave.$create({day:3, desc:"因为某事需求请假三天"})
 
 
 app.config(Route)

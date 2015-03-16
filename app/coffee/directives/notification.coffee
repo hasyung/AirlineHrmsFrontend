@@ -46,7 +46,7 @@ class NotificationCtrl
     connect: ()->
         @listen()
         parms = {
-            host: "192.168.6.21"
+            host: "192.168.6.19"
             port: "9927"
             log: true
         }
