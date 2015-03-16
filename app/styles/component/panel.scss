@@ -152,11 +152,10 @@
 .custom-pages {
     @include clearfix();
     margin-bottom: 30px;
+    text-align: center;
 
     .pagination {
-        display: block;
-        margin: 0 auto;
-        width: 450px;
+        @include clearfix();
     }
 }
 
