@@ -1,4 +1,12 @@
 .pagination(ng-if="pages.length >= 2")
     ul.pagination
+        li
+            a 首页
+        li
+            a 上一页
         li(ng-repeat="page in pages" ng-class="{active: page == currentPage}")
             a(ng-click="selectPage(page)" ng-bind="page")
+        li
+            a 下一页
+        li
+            a 尾页

@@ -92,6 +92,7 @@
 
 .custom-table {
     border-bottom: 1px solid #dde5e7;
+    margin-bottom: 0;
 
     &.popup-table {
         table-layout: fixed;
@@ -151,12 +152,23 @@
 
 .custom-pages {
     @include clearfix();
+    background-color: #fff;
+    border: 1px solid #dde5e7;
+    border-top: 0;
     margin-bottom: 30px;
+    text-align: right;
 
     .pagination {
-        display: block;
-        margin: 0 auto;
-        width: 450px;
+        @include clearfix();
+        margin: 0;
+
+        .pagination {
+            margin-top: 4px;
+
+            a {
+                border: 0;
+            }
+        }
     }
 }
 
