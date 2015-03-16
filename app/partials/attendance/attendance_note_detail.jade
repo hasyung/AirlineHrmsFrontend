@@ -1,0 +1,46 @@
+md-dialog()
+    md-subheader 
+        h3 请假单
+        md-button.pull-right(ng-click="ctrl.mdDialog.hide()") 关闭
+    md-content
+        h4 请假单号：
+        hr
+
+        section
+            md-subheader 请假信息
+            fieldset(disabled)
+                md-input-container
+                    label 请假人
+                    input(ng-model="currentPos.name")
+                md-input-container
+                    label 假别
+                    input(ng-model="currentPos.name")
+                md-input-container
+                    label 假期开始日期
+                    input(ng-model="currentPos.name")
+                md-input-container
+                    label 假期结束日期
+                    input(ng-model="currentPos.name")
+                md-input-container
+                    label 请假长度
+                    input(ng-model="currentPos.name")
+                md-input-container
+                    label 请假事由
+                    textarea(ng-model="currentPos.name")
+
+        section
+            md-subheader 审批信息
+
+        section
+            md-subheader 审批意见
+
+            form(ng-submit="")
+                md-input-container
+                    label 审核意见
+                    textarea(ng-model="currentPos.name")
+
+                .form-btn-group
+                    md-button.md-raised.white(type="button" ng-click="cancel(currentPos,$event, posEditForm)",) 驳回
+                    md-button.skyblue.md-raised(type="button") 通过
+
+        

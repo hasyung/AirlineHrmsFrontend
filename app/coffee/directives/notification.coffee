@@ -29,8 +29,8 @@ angular.module 'nb.directives'
     ]
 
 class NotificationCtrl
-    @.$inject = ['$scope', '$window']
-    constructor: (@scope, @window) ->
+    @.$inject = ['$scope', '$window', '$rootScope']
+    constructor: (@scope, @window, @rootScope) ->
         @isShow = false
         @pomelo = @window.pomelo
         @notifications = []
@@ -44,6 +44,7 @@ class NotificationCtrl
             console.log(data)
 
     connect: ()->
+        self = @
         @listen()
         parms = {
             host: "192.168.6.19"
@@ -55,7 +56,9 @@ class NotificationCtrl
                 console.log "#FF0000   DUPLICATE_ERROR"
         sender = ()->
             cEvent = "connector.entryHandler.enter"
-            data = {username: 'lxs', rid: 'com.avatar.airline_hrms#uniq_key_here'}
+            data = {username: self.rootScope.currentUser.employeeNo, rid: 'com.avatar.airline_hrms#uniq_key_here'}
+            console.log data
+            console.log self.rootScope.currentUser
             pomelo.request(cEvent,data, callBack)
         pomelo.init parms, sender
 
