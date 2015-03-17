@@ -13,28 +13,25 @@ div.app-content-wrapper(nb-table='ctrl.records' nb-safe-src="ctrl.records" ng-in
         md-button.md-raised.purple(nb-pipe="ctrl.searchRecord(tableState)") 开始搜索
 
     .table-container
-        h4 人事信息列表
+        h4 考勤记录表
         table.table.table-striped.custom-table
             thead
                 tr
                     th 员工编码
                     th 姓名
                     th 所属部门
-                    th 信息变更模块
-                    th 变更类型
-                    th 变更时间
-                    th 状态
-                    th 审核时间
-                    th 理由
+                    th 岗位
+                    th 分类
+                    th 通道
+                    th 考勤类型
+                    th 记录日期
+                    th 操作
             tbody(nb-popup-management)
                 tr(ng-repeat="record in ctrl.records track by $index")
                     td(ng-bind="record.employeeNo")
                     td(ng-bind="record.name")
                     td(ng-bind="record.department.name")
                     td(ng-if="record.action == '修改'")
-                        a(href="javascript:;" ng-click="ctrl.mdDialog.show({templateUrl:'partials/common/update_change_review.tpl.html',locals:{data:record}, controller:'DialogCtrl', controllerAs:'ctrl'})") {{record.auditableType}}
-                    td(ng-if="record.action == '新增' || record.action == '删除'")
-                        a(href="javascript:;" ng-click="ctrl.mdDialog.show({templateUrl:'partials/common/create_change_review.tpl.html',locals:{data:record}, controller:'DialogCtrl', controllerAs:'ctrl'})") {{record.auditableType}}
                     td(ng-bind="record.action")
                     td(ng-bind="record.createdAt | date:'yyyy-MM-dd'")
                     td(ng-bind="record.statusCd | dictmap:'personnel'")

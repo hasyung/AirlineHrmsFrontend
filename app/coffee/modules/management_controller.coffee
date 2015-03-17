@@ -100,7 +100,7 @@ class AttendanceCtrl
     requestLeave: () ->
 
     submitForm: (requestData) ->
-        @Leave.$create({day:3, desc:"因为某事需求请假三天"})
+        @Leave.$create({day:3, desc:"因为某事需求请假三天",flowType: "Flow::SickLeave"})
 
 
 app.config(Route)

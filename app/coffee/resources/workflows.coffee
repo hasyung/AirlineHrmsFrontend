@@ -2,7 +2,7 @@ resources = angular.module('resources')
 
 
 Leave = (restmod, RMUtils, $Evt) ->
-    Leave = restmod.model('/workflows/Flow::Leave').mix 'nbRestApi', 'DirtyModel', {
+    Leave = restmod.model('/workflows/leave').mix 'nbRestApi', 'DirtyModel', {
         
 
     }
