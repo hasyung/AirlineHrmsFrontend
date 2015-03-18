@@ -158,6 +158,14 @@
     margin-bottom: 30px;
     text-align: right;
 
+    .pagination-detail {
+        color: $text-muted;
+        float: left;
+        line-height: 36px;
+        padding-left: 10px;
+    }
+
+
     .pagination {
         @include clearfix();
         margin: 0;
