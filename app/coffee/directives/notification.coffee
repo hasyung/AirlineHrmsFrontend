@@ -1,5 +1,5 @@
 angular.module 'nb.directives'
-    .directive 'nbNotification', ['$document', ($doc)->
+    .directive 'nbNotification', ['$document', 'WebsocketClient', ($doc, WebsocketClient)->
         postLink = (scope, elem, attr, ctrl)->
             closeNotePan = (e)->
                 e.stopPropagation()
@@ -8,6 +8,13 @@ angular.module 'nb.directives'
                 return
 
             ctrl.connect()
+            # listen = (pomelo)->
+            #     pomelo.on 'Message', (data)->
+            #         console.log(data)
+
+            # WebsocketClient.startConnect(listen)
+
+
             elem.on 'click', (e)->
                 e.stopPropagation()
 
@@ -29,11 +36,15 @@ angular.module 'nb.directives'
     ]
 
 class NotificationCtrl
-    @.$inject = ['$scope', '$window', '$rootScope']
-    constructor: (@scope, @window, @rootScope) ->
+    @.$inject = ['$scope', '$window', '$rootScope', 'Notification']
+    constructor: (@scope, @window, @rootScope, @Notification) ->
         @isShow = false
         @pomelo = @window.pomelo
         @notifications = []
+        @loadInitailData()
+
+    loadInitailData: ()->
+        @notifications = @Notification.$collection({status:'unread'}).$fetch()
     toggleClick: ()->
         @isShow = !@isShow
 
@@ -42,12 +53,14 @@ class NotificationCtrl
         @pomelo.on 'Message', (data)->
             self.notifications.push data
             console.log(data)
+        @pomelo.on 'RemoveMessage', (data)->
+            #删除已经处理的通知
 
     connect: ()->
         self = @
         @listen()
         parms = {
-            host: "192.168.6.19"
+            host: "192.168.6.32"
             port: "9927"
             log: true
         }

@@ -24,9 +24,9 @@ class Route
 
 class AttendanceCtrl extends nb.Controller
 
-    @.$inject = ['$scope', 'Leave']
+    @.$inject = ['$scope', 'Leave', '$mdDialog']
 
-    constructor: (@scope, @Leave) ->
+    constructor: (@scope, @Leave, @mdDialog) ->
         @loadInitailData()
 
     loadInitailData: ()->
@@ -34,7 +34,25 @@ class AttendanceCtrl extends nb.Controller
     searchLeaves: (tableState)->
         @leaves.$refresh(tableState)
 
+class AttendanceDialogCtrl extends nb.Controller
+    @.$inject = ['$scope', 'data', '$mdDialog']
+    constructor: (@scope, @data, @mdDialog) ->
+        self = @
+        @scope.data = @data
+
+    pass: (leave)->
+        self = @
+        leave.audit.opinion = true
+        leave.$update().$then ()->
+            self.mdDialog.hide()
+    reject: (leave)->
+        self = @
+        leave.audit.opinion = false
+        leave.$update().$then ()->
+            self.mdDialog.hide()
+
 
     
 
 app.config(Route)
+app.controller('AttendanceDialogCtrl', AttendanceDialogCtrl)
