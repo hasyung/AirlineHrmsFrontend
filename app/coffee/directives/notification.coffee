@@ -7,13 +7,21 @@ angular.module 'nb.directives'
                     ctrl.isShow = false
                 return
 
-            ctrl.connect()
-            # listen = (pomelo)->
-            #     pomelo.on 'Message', (data)->
-            #         console.log(data)
 
-            # WebsocketClient.startConnect(listen)
-
+            WebsocketClient.startupConnection()
+            
+            WebsocketClient.addListener {
+                name:"Message",
+                hander:(data)->
+                    scope.$apply ()->
+                        ctrl.notifications.push data
+                    console.log data
+            }
+            WebsocketClient.addListener {
+                name:"RemoveMessage",
+                hander:(data)->
+                    console.log data
+            }
 
             elem.on 'click', (e)->
                 e.stopPropagation()
@@ -47,39 +55,6 @@ class NotificationCtrl
         @notifications = @Notification.$collection({status:'unread'}).$fetch()
     toggleClick: ()->
         @isShow = !@isShow
-
-    listen: ()->
-        self = @
-        @pomelo.on 'Message', (data)->
-            self.notifications.push data
-            console.log(data)
-        @pomelo.on 'RemoveMessage', (data)->
-            #删除已经处理的通知
-
-    connect: ()->
-        self = @
-        @listen()
-        parms = {
-            host: "192.168.6.32"
-            port: "9927"
-            log: true
-        }
-        callBack = (data)->
-            if data.code == 'failed'
-                console.log "#FF0000   DUPLICATE_ERROR"
-        sender = ()->
-            cEvent = "connector.entryHandler.enter"
-            data = {username: self.rootScope.currentUser.employeeNo, rid: 'com.avatar.airline_hrms#uniq_key_here'}
-            console.log data
-            console.log self.rootScope.currentUser
-            pomelo.request(cEvent,data, callBack)
-        pomelo.init parms, sender
-
-    send: (data)->
-        cEvent = "message.messageHandler.send"
-
-        @pomelo.request cEvent, data, (data)->
-            console.log data
 
             
 

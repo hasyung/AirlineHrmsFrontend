@@ -13,7 +13,7 @@ class WebsocketService extends nb.Service
         @listeners = []
 
 
-    startConnect: (listen)->
+    startupConnection: ()->
         self = @
         parms = {
             host: "192.168.6.32"
@@ -21,7 +21,6 @@ class WebsocketService extends nb.Service
             log: true
         }
         #绑定监听事件
-        listen @pomelo
         callBack = (data)->
             if data.code == 'failed'
                 console.log "#FF0000   DUPLICATE_ERROR"
