@@ -16,7 +16,7 @@ class WebsocketService extends nb.Service
     startupConnection: ()->
         self = @
         parms = {
-            host: "192.168.6.32"
+            host: "192.168.6.16"
             port: "9927"
             log: true
         }
