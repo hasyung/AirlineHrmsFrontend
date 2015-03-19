@@ -174,6 +174,7 @@ App
         $rootScope.logout = ()->
             $http.delete('/api/sign_out').success ()->
                 $rootScope.currentUser = null
+                $cookies.token = null
 
 
         $rootScope.enums = $enum.get()

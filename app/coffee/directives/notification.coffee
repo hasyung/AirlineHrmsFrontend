@@ -1,5 +1,5 @@
 angular.module 'nb.directives'
-    .directive 'nbNotification', ['$document', ($doc)->
+    .directive 'nbNotification', ['$document', 'WebsocketClient', ($doc, WebsocketClient)->
         postLink = (scope, elem, attr, ctrl)->
             closeNotePan = (e)->
                 e.stopPropagation()
@@ -7,7 +7,22 @@ angular.module 'nb.directives'
                     ctrl.isShow = false
                 return
 
-            ctrl.connect()
+
+            WebsocketClient.startupConnection()
+            
+            WebsocketClient.addListener {
+                name:"Message",
+                hander:(data)->
+                    scope.$apply ()->
+                        ctrl.notifications.push data
+                    console.log data
+            }
+            WebsocketClient.addListener {
+                name:"RemoveMessage",
+                hander:(data)->
+                    console.log data
+            }
+
             elem.on 'click', (e)->
                 e.stopPropagation()
 
@@ -29,41 +44,17 @@ angular.module 'nb.directives'
     ]
 
 class NotificationCtrl
-    @.$inject = ['$scope', '$window']
-    constructor: (@scope, @window) ->
+    @.$inject = ['$scope', '$window', '$rootScope', 'Notification']
+    constructor: (@scope, @window, @rootScope, @Notification) ->
         @isShow = false
         @pomelo = @window.pomelo
         @notifications = []
+        @loadInitailData()
+
+    loadInitailData: ()->
+        @notifications = @Notification.$collection({status:'unread'}).$fetch()
     toggleClick: ()->
         @isShow = !@isShow
-
-    listen: ()->
-        self = @
-        @pomelo.on 'Message', (data)->
-            self.notifications.push data
-            console.log(data)
-
-    connect: ()->
-        @listen()
-        parms = {
-            host: "192.168.6.21"
-            port: "9927"
-            log: true
-        }
-        callBack = (data)->
-            if data.code == 'failed'
-                console.log "#FF0000   DUPLICATE_ERROR"
-        sender = ()->
-            cEvent = "connector.entryHandler.enter"
-            data = {username: 'lxs', rid: 'com.avatar.airline_hrms#uniq_key_here'}
-            pomelo.request(cEvent,data, callBack)
-        pomelo.init parms, sender
-
-    send: (data)->
-        cEvent = "message.messageHandler.send"
-
-        @pomelo.request cEvent, data, (data)->
-            console.log data
 
             
 
