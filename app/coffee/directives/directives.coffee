@@ -132,6 +132,9 @@ angular.module 'nb.directives'
                     # preCloseCallback: attrs.ngDialogPreCloseCallback || defaults.preCloseCallback
 
                 }
+
+            scope.$on '$destroy', -> elem.off('click')
+
         return {
             restrict: 'A'
             scope: {
