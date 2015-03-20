@@ -1,0 +1,3 @@
+.annex-container
+    .pull-left.annex-item(ng-repeat="annex in ctrl.annexs" ng-click="ctrl.showAnnex(annex)" )
+        img(ng-src="{{annex.url}}" style="width:100px;height:60px;")
