@@ -34,39 +34,7 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
             li
               a(ui-sref='access.signin') Logout
         .line.dk.hidden-folded 
-      nav.navi(ng-if="currentUser.permissionCode == 1")
-        ul.nav
-          li(nav-toggle-active)
-            a.auto(href="javascript:;")
-              span.pull-right.text-muted
-                i.fa.fa-fw.fa-angle-right.text
-                i.fa.fa-fw.fa-angle-down.text-active
-              i.fa.fa-user.nav-text-color1
-              span 员工自助
-            ul.nav.nav-sub.dk
-              li(ng-class="{'active':$state.includes('self')}")
-                a(ui-sref='self.profile')
-                  span 我的基本信息
-              li
-                a(href='#/app/personnel/regulariz')
-                  span 优免票
-              li
-                a(href='#/app/personnel/regulariz')
-                  span 学历变更申请
-              li
-                a(href='#/app/personnel/regulariz')
-                  span 绩效申诉
-              li
-                a(href='#/app/personnel/regulariz')
-                  span 信息变更记录
-              li
-                a(href='#/app/personnel/regulariz')
-                  span 公司通讯录
-              li
-                a(href='#/app/personnel/regulariz')
-                  span 部门信箱
-          
-      nav.navi(ng-if="currentUser.permissionCode == 0")
+      nav.navi
         ul.nav
           li(nav-toggle-active)
             a.auto(href="javascript:;")
