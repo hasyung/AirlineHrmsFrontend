@@ -1,10 +1,13 @@
 angular.module 'nb.directives'
     .directive 'nbGalleryBox', [()->
         class ImgBoxsCtrl
-            @.$inject = ['$scope']
-            constructor: (@scope)->
+            @.$inject = ['$scope', '$mdDialog']
+            constructor: (@scope, @mdDialog)->
                 @annexs = [{url:'images/test/test1.jpg'}, {url:'images/test/test2.jpg'}]
                 @currentImg = @annexs[@selectIndex]
+            showAnnexs: (selectedIndex)->
+                @mdDialog.show({template: '<md-dialog nb-gallery></md-dialog>'})
+
 
         postLink = (scope, elem, attr, ctrl)->
 
