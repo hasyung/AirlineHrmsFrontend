@@ -29,5 +29,5 @@ div.wrapper.org-timline(slimscroll, height="400px" ng-init="activeLog = {}")
                                 p {{::step}}
 
 .panel-footer.org-timline-footer.clearfix
-    button.btn.btn-info.btn-sm.pull-right(ng-click="ctrl.backToPast() && closeThisDialog()") 确 定
+    button.btn.btn-info.btn-sm.pull-right(ng-click="ctrl.backToPast() && closeThisDialog()" ng-disabled="!ctrl.currentLog") 确 定
     button.btn.btn-default.btn-sm.pull-right(ng-click='closeThisDialog()') 取 消
