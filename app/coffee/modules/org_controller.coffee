@@ -249,11 +249,11 @@ class OrgsCtrl extends nb.Controller
 
     # 返回机构的指定版本
     backToPast: (version)->
-        # self = @
+        self = @
         if @currentLog
-            @orgs.$refresh({version: @currentLog.id})
-        @isHistory = true
-        @currentOrg = @treeRootOrg
+            @orgs.$refresh({version: @currentLog.id}).$then ()->
+                self.isHistory = true
+                self.currentOrg = self.treeRootOrg
     expandLog: (log)->
         # 防止UI中出现多个被选中的item
         @currentLog.active = false if @currentLog
