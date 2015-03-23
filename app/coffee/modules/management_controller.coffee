@@ -55,6 +55,10 @@ class Route
                 controllerAs: 'ctrl'
                 templateUrl: 'partials/self/self_attendance.html'
             }
+            .state 'self_position', {
+                url: '/self-service-position'
+                templateUrl: 'partials/self/transfer_position.html'
+            }
 
 # class SelfCtrl extends nb.Controller
 

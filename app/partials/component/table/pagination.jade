@@ -1,18 +1,18 @@
 .pagination-detail
     | 共
-    span 200
+    span {{count || '“说好的数据项数呢？”'}}
     | 条信息，共
-    span 10
+    span {{pagesCount}}
     | 页
 .pagination(ng-if="pages.length >= 2")
     ul.pagination
         li
-            a 首页
+            a(ng-click="selectPage(1)") 首页
         li
-            a 上一页
+            a(ng-click="currentPage > 1 ? selectPage(currentPage - 1) : selectPage(currentPage)") 上一页
         li(ng-repeat="page in pages" ng-class="{active: page == currentPage}")
             a(ng-click="selectPage(page)" ng-bind="page")
         li
-            a 下一页
+            a(ng-click="currentPage < pagesCount ? selectPage(currentPage + 1) : selectPage(currentPage)") 下一页
         li
-            a 尾页
+            a(ng-click="selectPage(pagesCount)") 尾页

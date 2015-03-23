@@ -545,6 +545,7 @@ nbPaginationDirective = ->
             scope.currentPage = newValue.page
             scope.perPage = newValue.per_page
             scope.pagesCount = newValue.pages_count
+            scope.count = newValue.count
             redraw()
 
         # TODO: 下拉框选择每张表个数

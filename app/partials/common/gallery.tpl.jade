@@ -1,0 +1,12 @@
+.container
+    .img-box(style="width: 1024px;height: 700px;").pull-left
+        img(ng-src="{{ctrl.currentImg.url}}" style="width: 900px;height: 700px;")
+
+        .img-name(ng-bind="ctrl.currentImg.name")
+        .next-img(ng-click="ctrl.nextImg()")
+
+        .prev-img(ng-click="ctrl.prevImg()")
+
+    .img-list.pull-right
+        .img-list-item(ng-repeat="img in ctrl.imgs" ng-click="ctrl.setSelectImg($index)")
+            img(ng-src="{{img.url}}" style="width: 90px;height: 50px;")

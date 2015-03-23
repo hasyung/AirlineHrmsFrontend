@@ -48,7 +48,10 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
                 a(ui-sref='self.profile')
                   span 我的基本信息
               li
-                a(href='#/app/personnel/regulariz')
+                a(ui-sref='self_position')
+                  span 我要调岗
+              li
+                a(ui-sref='self_position')
                   span 优免票
               li
                 a(href='#/app/personnel/regulariz')
@@ -224,7 +227,7 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
                 a()
                   span 员工转正
               li
-                a()
+                a(ui-sref="labors_transfer")
                   span 员工调动
               li
                 a()
