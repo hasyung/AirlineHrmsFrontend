@@ -1,0 +1,11 @@
+
+<div style="z-index:9999;position:fixed;width:100%;height:100%;left:0;top:0;background-color:rgba(0,0,0,0.6)" class="modal-container">
+  <div style="width: 1024px;height: 700px;" class="img-box pull-left"><img ng-src="{{ctrl.currentImg.url}}" style="width: 900px;height: 700px;"/>
+    <div ng-bind="ctrl.currentImg.name" class="img-name"></div>
+    <div ng-click="ctrl.nextImg()" class="next-img"></div>
+    <div ng-click="ctrl.prevImg()" class="prev-img"></div>
+  </div>
+  <div class="img-list pull-right">
+    <div ng-repeat="img in ctrl.imgs" ng-click="ctrl.setSelectImg($index)" class="img-list-item"><img ng-src="{{img.url}}" style="width: 90px;height: 50px;"/></div>
+  </div>
+</div>
