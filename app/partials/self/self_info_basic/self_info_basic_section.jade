@@ -22,7 +22,7 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                         input(ng-model="currentUser.name" name="name" required)
                     md-input-container.row-has-value(flex)
                         label 性别
-                        md-select(ng-model="currentUser.gender" md-on-open="loadEnum('genders')" required)
+                        md-select(ng-model="currentUser.gender" md-on-open="loadEnum('genders')" required ng-disabled="!editing")
                             md-select-label {{currentUser.gender ? currentUser.gender.displayName : '无'}}
                             md-option(ng-value="gender" ng-repeat="gender in enums.genders track by gender.id") {{gender.displayName}}
                 div(layout)
@@ -31,7 +31,7 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                         input(ng-model="currentUser.nativePlace" name="nativePlace" required)
                     md-input-container.row-has-value(flex)
                         label 民族
-                        md-select(ng-model="currentUser.nation" md-on-open="loadEnum('nations')" required)
+                        md-select(ng-model="currentUser.nation" md-on-open="loadEnum('nations')" required ng-disabled="!editing")
                             md-select-label {{currentUser.nation ? currentUser.nation.displayName : '无'}}
                             md-option(ng-value="nation" ng-repeat="nation in enums.nations track by nation.id") {{nation.displayName}}
                 div(layout)
@@ -40,7 +40,7 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                         input(ng-model="currentUser.birthPlace" name="birthPlace" required)
                     md-input-container.row-has-value(flex)
                         label 婚姻状况
-                        md-select(ng-model="currentUser.maritalStatus" md-on-open="loadEnum('marital_status')")
+                        md-select(ng-model="currentUser.maritalStatus" md-on-open="loadEnum('marital_status')" ng-disabled="!editing")
                             md-select-label {{currentUser.maritalStatus ? currentUser.maritalStatus.displayName : '无'}}
                             md-option(ng-value="maritalStatus" ng-repeat="maritalStatus in enums.marital_status track by maritalStatus.id") {{maritalStatus.displayName}}
                 div(layout)
@@ -49,7 +49,7 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                         input(ng-model="currentUser.identityNo" name="identityNo" required)
                     md-input-container.row-has-value(flex)
                         label 政治面貌
-                        md-select(ng-model="currentUser.politicalStatus" md-on-open="loadEnum('political_status')" name="political_status" disabled)
+                        md-select(ng-model="currentUser.politicalStatus" md-on-open="loadEnum('political_status')" name="political_status" disabled ng-disabled="!editing")
                             md-select-label {{currentUser.politicalStatus? currentUser.politicalStatus.displayName : '无'}}
                             md-option(ng-value="political" ng-repeat="political in enums.political_status") {{political.displayName}}
                 div(layout)
@@ -126,7 +126,7 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                 div(layout)
                     md-input-container.row-has-value(flex)
                         label 岗位
-                        md-select(ng-model="currentUser.position")
+                        md-select(ng-model="currentUser.position" disabled)
                             md-select-label {{currentUser.position.name || '无'}}
                             md-option(ng-value="pos" ng-repeat="pos in params.orgPos") {{pos.name}}
                     md-input-container.row-has-value(flex)
@@ -137,7 +137,7 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                 div(layout)
                     md-input-container.row-has-value(flex)
                         label 通道
-                        md-select(ng-model="currentUser.channel" md-on-open="loadEnum('channels')")
+                        md-select(ng-model="currentUser.channel" md-on-open="loadEnum('channels')" disabled)
                             md-select-label {{currentUser.channel? currentUser.channel.displayName : '无'}}
                             md-option(ng-value="channel" ng-repeat="channel in enums.channels") {{channel.displayName}}
                     md-input-container(flex)
@@ -146,18 +146,18 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                 div(layout)
                     md-input-container.row-has-value(flex)
                         label 属地化地点
-                        md-select(ng-model="currentUser.location" md-on-open="loadEnum('locations')")
+                        md-select(ng-model="currentUser.location" md-on-open="loadEnum('locations')" disabled)
                             md-select-label {{currentUser.location? currentUser.location.displayName : '无'}}
                             md-option(ng-value="location" ng-repeat="location in enums.locations") {{location.displayName}}
                     md-input-container.row-has-value(flex)
                         label 用工性质
-                        md-select(ng-model="currentUser.laborRelation" md-on-open="loadEnum('labor_relations')")
+                        md-select(ng-model="currentUser.laborRelation" md-on-open="loadEnum('labor_relations')" disabled)
                             md-select-label {{currentUser.laborRelation? currentUser.laborRelation.displayName : '无'}}
                             md-option(ng-value="laborRelation" ng-repeat="laborRelation in enums.labor_relations") {{laborRelation.displayName}}
                 div(layout)
                     md-input-container.row-has-value(flex)
                         label 用工关系状态
-                        md-select(ng-model="currentUser.employmentStatus" md-on-open="loadEnum('employment_status')")
+                        md-select(ng-model="currentUser.employmentStatus" md-on-open="loadEnum('employment_status')" disabled)
                             md-select-label {{currentUser.employmentStatus? currentUser.employmentStatus.displayName : '无'}}
                             md-option(ng-value="empStatus" ng-repeat="empStatus in enums.employment_status") {{empStatus.displayName}}
             //- 职称信息先不显示，后端数据没提供
