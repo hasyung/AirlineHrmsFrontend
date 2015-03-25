@@ -4436,6 +4436,9 @@
       isSelected: {
         mask: "CU"
       },
+      createdAt: {
+        decode: 'nbDate'
+      },
       employees: {
         hasMany: 'Employee'
       },
