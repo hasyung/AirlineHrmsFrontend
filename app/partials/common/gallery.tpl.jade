@@ -1,12 +1,16 @@
-.container
-    .img-box(style="width: 1024px;height: 700px;").pull-left
-        img(ng-src="{{ctrl.currentImg.url}}" style="width: 900px;height: 700px;")
+.modal-container
+    .img-box.pull-left
+        img.main-img(ng-src="{{ctrl.currentImg.url}}")
+        .next-img.nb-modal-touchable(ng-click="ctrl.nextImg()")
+        .prev-img.nb-modal-touchable(ng-click="ctrl.prevImg()")
+    .img-list.pull-right.nb-modal-touchable
+        .img-list-item(ng-repeat="img in ctrl.imgs",
+            ng-click="ctrl.setSelectedImg($index)",
+            ng-class="{'active': ctrl.currentImg == img}"
+        )
+            a(href="javascript:;")
+                img(ng-src="{{img.url}}" style="width: 90px;height: 50px;")
+    .img-info-bar.nb-modal-touchable
+        .img-name(ng-bind="ctrl.currentImg.name || 'xxxxxx.jpg'") 
 
-        .img-name(ng-bind="ctrl.currentImg.name")
-        .next-img(ng-click="ctrl.nextImg()")
 
-        .prev-img(ng-click="ctrl.prevImg()")
-
-    .img-list.pull-right
-        .img-list-item(ng-repeat="img in ctrl.imgs" ng-click="ctrl.setSelectImg($index)")
-            img(ng-src="{{img.url}}" style="width: 90px;height: 50px;")
