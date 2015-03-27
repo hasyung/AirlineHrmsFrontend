@@ -1,3 +1,3 @@
 .annex-container
-    .pull-left.annex-item(ng-repeat="img in ctrl.imgs" ng-click="ctrl.setSelectedImg($index)")
+    .pull-left.annex-item(ng-repeat="img in imgs" ng-click="ctrl.setSelectedImg($index)")
         img(ng-src="{{img.url}}" style="width:100px;height:60px;")

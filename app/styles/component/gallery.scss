@@ -44,5 +44,24 @@
         font-family: 'Helvetica Neue', 'Hiragino Sans GB', 冬青黑体, Helvetica, Arial, sans-serif;
         line-height: 50px;
         text-align: center;
+
+        .gallery-control{
+            position: absolute;
+            right: 0px;
+            height: 50px;
+            bottom: 0px;
+            font-size: 20px;
+            line-height: 50px;
+            width: 120px;
+            a{
+                display: inline-block;
+                width: 60px;
+                color: #aaa;
+                &:hover{
+                    background-color: #000;
+                    color: #fff;
+                }
+            }
+        }
     }
 }

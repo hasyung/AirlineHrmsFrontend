@@ -77,25 +77,28 @@ angular.module 'nb.directives'
             controllerAs: 'ctrl'
             templateUrl: 'partials/common/gallery_box.tpl.html'
             link: postLink
+            scope:{
+                imgs: "=galleryData"
+            }
 
         }
     ]
 class ImgBoxsCtrl
     @.$inject = ['$scope']
     constructor: (@scope)->
-        @imgs = [{url:'images/test/test1.jpg'}, {url:'images/test/test2.jpg'},{url:'images/test/test1.jpg'}, {url:'images/test/test2.jpg'},{url:'images/test/test1.jpg'}, {url:'images/test/test2.jpg'},{url:'images/test/test1.jpg'}, {url:'images/test/test2.jpg'},{url:'images/test/test1.jpg'}, {url:'images/test/test2.jpg'},{url:'images/test/test1.jpg'}, {url:'images/test/test2.jpg'},{url:'images/test/test1.jpg'}, {url:'images/test/test2.jpg'},{url:'images/test/test1.jpg'}, {url:'images/test/test2.jpg'},{url:'images/test/test1.jpg'}, {url:'images/test/test2.jpg'},{url:'images/test/test1.jpg'}, {url:'images/test/test2.jpg'},{url:'images/test/test1.jpg'}, {url:'images/test/test2.jpg'},{url:'images/test/test1.jpg'}, {url:'images/test/test2.jpg'}]
+        # @scope.imgs = [{url:'images/test/test1.jpg'}, {url:'images/test/test2.jpg'},{url:'images/test/test1.jpg'}, {url:'images/test/test2.jpg'},{url:'images/test/test1.jpg'}, {url:'images/test/test2.jpg'},{url:'images/test/test1.jpg'}, {url:'images/test/test2.jpg'},{url:'images/test/test1.jpg'}, {url:'images/test/test2.jpg'},{url:'images/test/test1.jpg'}, {url:'images/test/test2.jpg'},{url:'images/test/test1.jpg'}, {url:'images/test/test2.jpg'},{url:'images/test/test1.jpg'}, {url:'images/test/test2.jpg'},{url:'images/test/test1.jpg'}, {url:'images/test/test2.jpg'},{url:'images/test/test1.jpg'}, {url:'images/test/test2.jpg'},{url:'images/test/test1.jpg'}, {url:'images/test/test2.jpg'},{url:'images/test/test1.jpg'}, {url:'images/test/test2.jpg'}]
         @selectedIndex = 0
-        @currentImg = @imgs[@selectedIndex]
+        @currentImg = @scope.imgs[@selectedIndex]
         @scope.modalShow = false
     setSelectedImg: (index)->
         @selectedIndex = index
         @setCurrentImg()
 
     setCurrentImg: ()->
-       @currentImg = @imgs[@selectedIndex] 
+       @currentImg = @scope.imgs[@selectedIndex] 
 
     nextImg: ()->
-        if @selectedIndex < (@imgs.length - 1) then @selectedIndex +=1 else @selectedIndex
+        if @selectedIndex < (@scope.imgs.length - 1) then @selectedIndex +=1 else @selectedIndex
         @setCurrentImg()
     prevImg: ()->
         if @selectedIndex > 0 then @selectedIndex -= 1 else @selectedIndex
