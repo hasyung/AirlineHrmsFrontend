@@ -74,10 +74,6 @@ app    = @nb.app
 # URL_BASE = "/api/workflows"
 
 
-# joinUrl = (_head, _tail) ->
-#     return null if(!_head || !_tail)
-#     return (_head+'').replace(/\/$/, '') + '/' + (_tail+'').replace(/^\//, '')
-
 
 
 
@@ -154,8 +150,28 @@ app    = @nb.app
 
 
 
+joinUrl = (_head) ->
+    return null if(!_head)
+    _tail = Array.prototype.slice.call(arguments, 1).join('/')
+    return (_head+'').replace(/\/$/, '') + '/' + _tail.replace(/^\/+/g, '').replace(/\/{2,}/g, '/')
 
 
+
+flowRelationDataDirective = ($timeout)->
+
+    postLink = (scope, elem, attrs) ->
+        getRelationDataHTML = () ->
+            scope.html = elem.html()
+
+        $timeout getRelationDataHTML, 2000
+
+    return {
+        require: 'ngModel'
+        scope: {
+            html: '=ngModel'
+        }
+        link: postLink
+    }
 
 
 
@@ -164,24 +180,47 @@ FlowHandlerDirective = (ngDialog)->
 
     template = '''
         <div class="flow-contianenr">
-            <div class="flow-info" ng-bind-html="flow.submitdata">
 
+            <div class="sponsor-info">
+                <div class="box"><label for="">申请人</label><span ng-bind="::flow.sponsor.name"></span></div>
+                <div class="box"><label for="">员工编码</label><span ng-bind="::flow.sponsor.employeeNo"></span></div>
+                <div class="box"><label for="">当前部门</label><span ng-bind="::flow.sponsor.departmentName"></span></div>
+                <div class="box"><label for="">当前岗位</label><span ng-bind="::flow.sponsor.positionName"></span></div>
 
             </div>
+
+            <div class="flow-relations" ng-bind-html="::flow.relation_data">
+
+            </div>
+            <div class="flow-info">
+                <div class="box" ng-repeat="item in ::flow.formData">
+                    <label for="" ng-bind="::data.name"></label>
+                    <span ng-bind="::item.value"></span>
+                </div>
+            </div>
             <div class="flow-steps">
-                <flow-item-box ng-repeat="">
+                <flow-item-box>
 
                 </flow-item-box>
             </div>
-            <div class="flow-feedback">
-                <form action="">
-                    <textarea name="feedback" id="" cols="30" rows="10"></textarea>
-                </form>
-            </div>
-            <flow-actions>
-                <button class="accept" ng-click="accept()">批准</button>
-                <button class="reject" ng-click="reject()">驳回</button>
-            </flow-actions>
+            <form name="flow_handle_form" ng-submit="submitFlow(req, flow)" >
+                <div class="opinion">
+                    <md-radio-group ng-model="req.opinion">
+                        <md-radio-button ng-value="CHOICE.ACCEPT">通过</md-radio-button>
+                        <md-radio-button ng-value="CHOICE.REJECT">驳回</md-radio-button>
+                    </md-radio-group>
+                </div>
+                <div class="flow-feedback">
+                    <textarea name="desc" ng-model="req.desc" cols="30" rows="10"></textarea>
+                    <div class="extra-form" ng-if="flow.$extraForm && req.opinion == true ">
+                        #extraFormLayout#
+                    </div>
+                </div>
+                <flow-actions>
+                    <button type="submit" class="accept">批准</button>
+                    <button type="button" ng-click="clostThisDialog()">取消</button>
+                </flow-actions>
+            </form>
         </div>
     '''
 
@@ -191,21 +230,32 @@ FlowHandlerDirective = (ngDialog)->
 
         defaults = ngDialog.getDefaults()
 
-        ngDialog.open {
-            template: template
-            plain: true
-            className: defaults.className
-            controller: 'FlowController'
-            scope: scope
-            data: scope.flow
-            # showClose: attrs.ngDialogShowClose === 'false' ? false : (attrs.ngDialogShowClose === 'true' ? true : defaults.showClose),
-            # closeByDocument: attrs.ngDialogCloseByDocument === 'false' ? false :
-            # (attrs.ngDialogCloseByDocument === 'true' ? true : defaults.closeByDocument),
-            # closeByEscape: attrs.ngDialogCloseByEscape === 'false' ? false
-            # : (attrs.ngDialogCloseByEscape === 'true' ? true : defaults.closeByEscape),
-            # preCloseCallback: attrs.ngDialogPreCloseCallback || defaults.preCloseCallback
-        }
+        offeredExtraForm = (flow) ->
+            return template.replace(/#extraFormLayout#/, `flow.$extraForm ? flow.$extraForm : ''`)
 
+        openDialog = ->
+            scope.flow = scope.flow.$refresh()
+            promise = scope.flow.$asPromise()
+            promise.then(offeredExtraForm).then (template)->
+                ngDialog.open {
+                    template: template
+                    plain: true
+                    className: defaults.className
+                    controller: 'FlowController'
+                    scope: scope
+                    data: scope.flow
+                    # showClose: attrs.ngDialogShowClose === 'false' ? false : (attrs.ngDialogShowClose === 'true' ? true : defaults.showClose),
+                    # closeByDocument: attrs.ngDialogCloseByDocument === 'false' ? false :
+                    # (attrs.ngDialogCloseByDocument === 'true' ? true : defaults.closeByDocument),
+                    # closeByEscape: attrs.ngDialogCloseByEscape === 'false' ? false
+                    # : (attrs.ngDialogCloseByEscape === 'true' ? true : defaults.closeByEscape),
+                    # preCloseCallback: attrs.ngDialogPreCloseCallback || defaults.preCloseCallback
+                }
+        elem.on 'click', openDialog
+        scope.$on '$destroy', -> elem.off 'click', openDialog
+
+
+    comiple = () ->
 
 
     return {
@@ -218,25 +268,31 @@ FlowHandlerDirective = (ngDialog)->
 
 class FlowController
 
-    @.$inject = ['$http']
+    @.$inject = ['$http','$scope']
 
-    constructor: (@http) ->
+    constructor: (http, scope) ->
 
-    accept: (msg)->
-        flowInstance.handle(msg, true)
+        FLOW_HTTP_PREFIX = "/api/workflows"
 
-    reject: (msg)->
-        flowInstance.handle(msg, false)
+        scope.CHOICE = {
+            ACCEPT: true
+            REJECT: false
+        }
 
-    setFlow: (flowInstance) ->
-        @flowInstance = flowInstance
+        scope.req = {
+            opinion: true
+        }
 
-
+        scope.submitFlow = (req, flow) ->
+            url = joinUrl(FLOW_HTTP_PREFIX, flow.type, flow.id)
+            promise = http.put(url, req)
+            promise.then(scope.closeThisDialog)
 
 
 
 app.controller 'FlowController', FlowController
-app.directive 'FlowHandlerDirective', ['ngDialog', FlowHandlerDirective]
+app.directive 'flowHandler', ['ngDialog', FlowHandlerDirective]
+app.directive 'flowRelationData', ['$timeout', flowRelationDataDirective]
 
 
 

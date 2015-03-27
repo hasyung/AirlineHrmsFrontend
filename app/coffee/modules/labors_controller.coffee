@@ -23,14 +23,13 @@ class Route
 
 class LaborCtrl extends nb.Controller
 
-    @.$inject = ['$scope', '$mdDialog']
+    @.$inject = ['$scope', '$mdDialog', 'Flow::AdjustPosition']
 
-    constructor: (@scope, @mdDialog) ->
-        @loadInitailData()
+    constructor: (@scope, @mdDialog, flow) ->
+        @flows  = flow.$collection().$fetch()
 
-    loadInitailData: ()->
-
-    searchLeaves: (tableState)->
+    search: (tableState)->
+        @flows.$refresh(tableState)
 
 class LaborDialogCtrl extends nb.Controller
     @.$inject = ['$scope', 'data', '$mdDialog']
@@ -50,7 +49,7 @@ class LaborDialogCtrl extends nb.Controller
             self.mdDialog.hide()
 
 
-    
+
 
 app.config(Route)
 app.controller('LaborDialogCtrl', LaborDialogCtrl)
