@@ -101,9 +101,6 @@ Position = (restmod, RMUtils, $Evt, Specification) ->
                         self.$dispatch 'specification-create-error', res
 
                     this.$send(request, onSuccess, onErorr)
-
-
-
     }
 
 

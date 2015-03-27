@@ -4,13 +4,21 @@
         .next-img.nb-modal-touchable(ng-click="ctrl.nextImg()")
         .prev-img.nb-modal-touchable(ng-click="ctrl.prevImg()")
     .img-list.pull-right.nb-modal-touchable
-        .img-list-item(ng-repeat="img in ctrl.imgs",
+        .img-list-item(ng-repeat="img in imgs",
             ng-click="ctrl.setSelectedImg($index)",
             ng-class="{'active': ctrl.currentImg == img}"
         )
             a(href="javascript:;")
                 img(ng-src="{{img.url}}" style="width: 90px;height: 50px;")
     .img-info-bar.nb-modal-touchable
-        .img-name(ng-bind="ctrl.currentImg.name || 'xxxxxx.jpg'") 
+        span.img-name(ng-bind="ctrl.currentImg.url.split('/').pop() || 'xxxxxx.jpg'") 
+        .gallery-control
+            span.download-file
+                a(ng-href="{{ctrl.currentImg.url}}" target="_blank" download="{{ctrl.currentImg.url.split('/').pop()}}" title="下载")
+                    i.fa.fa-download
+            span.view-file
+                a(ng-href="{{ctrl.currentImg.url}}" target="_blank" title="查看")
+                    i.fa.fa-external-link
+
 
 

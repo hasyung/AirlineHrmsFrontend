@@ -177,6 +177,9 @@ App
                 $cookies.token = null
 
 
+        $rootScope.createFlow = (data, flowname) ->
+            $http.post("/api/workflows/#{flowname}", data)
+
         $rootScope.enums = $enum.get()
         $rootScope.loadEnum = $enum.loadEnum()
 
