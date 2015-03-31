@@ -9,8 +9,8 @@ section.org-detail(ng-controller="EditableResource")
                 nb-text="删除操作将在点击组织结构树 '生效' 按钮并关联 OA 文件号后真正生效, 在这之前您可以随时撤销未生效的操作")
             button.btn.btn-sm.btn-default.fa.fa-retweet(
                 title="划转"
-                nb-dialog="partials/orgs/shared/org_transfer.html"
-                nb-dialog-scope="this"
+                nb-dialog
+                template-url="partials/orgs/shared/org_transfer.html"
                 )
             button.btn.btn-sm.btn-default.fa.fa-pencil(ng-click="edit()",title="编辑")
             button.btn.btn-sm.btn-default.fa.fa-plus(title="新增子机构",ng-click="orgCtrl.state = 'newsub'", ng-if="currentOrg.grade.name !== 'secondly_positive'")
@@ -65,8 +65,8 @@ section(ng-if="currentOrg.status !== 'destroy_inactive'")
         button.btn.btn-default.fa.fa-cog(
             ng-disabled="ctrl.isHistory"
             title="设置岗位"
-            nb-dialog="partials/orgs/position.html"
-            nb-dialog-scope="this"
+            nb-panel="partials/orgs/position.html"
+            controller="OrgPosCtrl"
             nb-dialog-controller="OrgPosCtrl"
             nb-dialog-data="positions"
             nb-dialog-class="ngdialog-theme-panel"
@@ -83,13 +83,13 @@ section(ng-if="currentOrg.status !== 'destroy_inactive'")
                     td.org-post(ng-if="!ctrl.isHistory")
                         //- a(ui-sref=".position.detail({posId: position.id,id:currentOrg.id})") {{position.name}}
                         a(
-                            nb-dialog="partials/position/position_detail.html"
+                            nb-panel="partials/position/position_detail.html"
                             nb-dialog-class="ngdialog-theme-panel"
                             nb-dialog-data="position"
                         ) {{position.name}}
                     td.org-post(ng-if="ctrl.isHistory")
                         a(
-                            nb-dialog="partials/orgs/position_detail_history.html"
+                            nb-panel="partials/orgs/position_detail_history.html"
                             nb-dialog-class="ngdialog-theme-panel"
                             nb-dialog-data="position"
                             ) {{position.name}}
