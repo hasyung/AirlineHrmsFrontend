@@ -102,7 +102,7 @@ angular.module 'nb.directives'
             link: postLink
         }
     ]
-    .directive 'nbDialog',['ngDialog', (ngDialog) ->
+    .directive 'nbPanel',['ngDialog', (ngDialog) ->
 
         postLink = (scope, elem, attrs) ->
             elem.on 'click', (e) ->
@@ -144,6 +144,84 @@ angular.module 'nb.directives'
             }
             link: postLink
         }
+
+
+    ]
+    .directive 'nbDialog',['$mdDialog', ($mdDialog) ->
+
+        postLink = (scope, elem, attrs) ->
+
+            throw new Error('所有dialog都需要templateUrl') if !angular.isDefined(attrs.templateUrl)
+            options = {}
+
+            openDialog = (evt) ->
+                #scope evt 生命周期仅限于本次点击
+                opts = angular.extend({scope: scope.$new(), targetEvent: evt}, options)
+
+                angular.forEach ['locals','resolve'], (key) ->
+                    opts[key] = scope.$eval(attrs[key]) if angular.isDefined(attrs[key])
+
+                $mdDialog.show opts
+
+
+            angular.forEach ['controller', 'templateUrl', 'template'], (key) ->
+                options[key] = attrs[key] if angular.isDefined(attrs[key])
+
+
+            falseValueRegExp = /^(false|0|)$/
+            angular.forEach ['clickOutsideToClose', 'focusOnOpen', 'bindToController'], (key) ->
+                options[key] = !falseValueRegExp.test(attrs[key]) if angular.isDefined(attrs[key])
+
+            elem.on 'click', openDialog
+
+            scope.$on '$destroy', -> elem.off('click', openDialog)
+
+        return {
+            restrict: 'A'
+            link: postLink
+        }
+
+    ]
+
+
+
+    .directive 'nbConfirm', ['$mdDialog', ($mdDialog) ->
+
+        postLink = (scope, elem, attrs) ->
+
+            attrs.$observe 'nbTitle', (newValue) ->
+                scope.title = newValue || '提示'
+
+            attrs.$observe 'nbContent', (newValue) ->
+                scope.content = newValue || '缺少内容'
+
+            performConfirm = (evt) ->
+                confirm = $mdDialog.confirm()
+                    .title(scope.title)
+                    .content(scope.content)
+                    .ok(attrs['okText'] || '确定')
+                    .cancel(attrs['cancleText'] || '取消')
+                    .targetEvent(evt)
+
+            callback = (isConfirm) ->
+                return -> scope.onComplete(isConfirm: isConfirm)
+
+
+            elem.on 'click', (evt) ->
+                confirm = performConfirm(evt)
+                promise = $mdDialog.show(confirm)
+                promise.then(callback(true), callback(false)) if angular.isDefined(attrs.onComplete)
+
+            scope.$on 'destroy', -> elem.off 'click'
+
+
+        return {
+            link: postLink
+            scope: {
+                'onComplete': '&nbConfirm'
+            }
+        }
+
 
 
     ]
