@@ -193,36 +193,38 @@ FlowHandlerDirective = (ngDialog)->
                         <span class="serial-number" ng-bind="flow.sponsor.employeeNo"></span>
                     </div>
                     <div class="approval-position"> {{::flow.sponsor.departmentName}}/ {{::flow.sponsor.positionName}}</div>
-                    <div layout="layout">
-                        <div flex="flex" class="approval-cell">
-                            <span class="cell-title">学历</span>
-                            <span class="cell-content">大学本科</span>
+                    <div class="approval-relations">
+                        <div layout="layout">
+                            <div flex="flex" class="approval-cell">
+                                <span class="cell-title">学历</span>
+                                <span class="cell-content">大学本科</span>
+                            </div>
+                            <div flex="flex" class="approval-cell">
+                                <span class="cell-title">英语等级</span>
+                                <span class="cell-content">大学英语四级</span>
+                            </div>
                         </div>
-                        <div flex="flex" class="approval-cell">
-                            <span class="cell-title">英语等级</span>
-                            <span class="cell-content">大学英语四级</span>
+                        <div layout="layout">
+                            <div flex="flex" class="approval-cell">
+                                <span class="cell-title">学位</span>
+                                <span class="cell-content">学士</span>
+                            </div>
+                            <div flex="flex" class="approval-cell">
+                                <span class="cell-title">当前岗位年限</span>
+                                <span class="cell-content">3年</span>
+                            </div>
+                        </div>
+                        <div layout="layout">
+                            <div flex="flex" class="approval-cell">
+                                <span class="cell-title">通道</span>
+                                <span class="cell-content">管理</span>
+                            </div>
+                            <div flex="flex" class="approval-cell">
+                                <span class="cell-title">近6个月绩效</span>
+                                <span class="cell-content">优秀 2/良好 2/合格 2/待改进 2/不合格 2</span>
+                            </div>
                         </div>
                     </div>
-                    <div layout="layout">
-                        <div flex="flex" class="approval-cell">
-                            <span class="cell-title">学位</span>
-                            <span class="cell-content">学士</span>
-                        </div>
-                        <div flex="flex" class="approval-cell">
-                            <span class="cell-title">当前岗位年限</span>
-                            <span class="cell-content">3年</span>
-                        </div>
-                    </div>
-                    <div layout="layout">
-                        <div flex="flex" class="approval-cell">
-                            <span class="cell-title">通道</span>
-                            <span class="cell-content">管理</span>
-                        </div>
-                        <div flex="flex" class="approval-cell">
-                            <span class="cell-title">近6个月绩效</span>
-                            <span class="cell-content">优秀 2/良好 2/合格 2/待改进 2/不合格 2</span>
-                        </div>
-                  </div>
                 </div>
                 <div class="approval-info">
                     <div class="approval-subheader">调岗信息</div>
