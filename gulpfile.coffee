@@ -71,6 +71,7 @@ paths =
         'deps/moment/min/moment.min.js'
         'deps/jquery/dist/jquery.min.js'
         'deps/jqtree/tree.jquery.js'
+        'compat/vendor/d3.min.js'
         #alert
         'deps/sweetalert/lib/sweet-alert.js'
 

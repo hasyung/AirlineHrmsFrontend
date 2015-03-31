@@ -37,5 +37,5 @@ div.app-content-wrapper(flex nb-table='ctrl.flows' nb-safe-src="ctrl.flows")
                     td(ng-bind="flow.workflowState")
                     td(ng-bind="flow.endDate | date:'yyyy-MM-dd'")
                     td
-                        a(href="javscript:void(0);" flow-handler="flow") 查看
+                        a(href="javscript:void(0);" flow-handler="flow" options="{className:'ngdialog-theme-panel'}") 查看
     .custom-pages(nb-pagination="ctrl.laborsTransfers.$metadata" per-page="15")

@@ -189,10 +189,10 @@ FlowHandlerDirective = (ngDialog)->
                 <div class="approval-info">
                     <div class="approval-subheader">申请人信息</div>
                     <div class="approval-info-head">
-                        <span class="name">姜文峰</span>
-                        <span class="serial-number">008863</span>
+                        <span class="name" ng-bind="flow.sponsor.name"></span>
+                        <span class="serial-number" ng-bind="flow.sponsor.employeeNo"></span>
                     </div>
-                    <div class="approval-position">人力资源部-人事调配室 / 人事调配室副主任</div>
+                    <div class="approval-position"> {{::flow.sponsor.departmentName}}/ {{::flow.sponsor.positionName}}</div>
                     <div layout="layout">
                         <div flex="flex" class="approval-cell">
                             <span class="cell-title">学历</span>
@@ -304,6 +304,8 @@ FlowHandlerDirective = (ngDialog)->
     postLink = (scope, elem, attrs, ctrl) ->
 
         defaults = ngDialog.getDefaults()
+        # options = JSON.parse(attrs.options) if attrs.options
+        # options = angular.extend {}, defaults, options
 
         offeredExtraForm = (flow) ->
             return template.replace(/#extraFormLayout#/, `flow.$extraForm ? flow.$extraForm : ''`)
@@ -315,7 +317,7 @@ FlowHandlerDirective = (ngDialog)->
                 ngDialog.open {
                     template: template
                     plain: true
-                    className: defaults.className
+                    className: "ngdialog-theme-panel"
                     controller: 'FlowController'
                     scope: scope
                     data: scope.flow
