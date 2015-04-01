@@ -27,6 +27,7 @@ deps = [
     'ngCookies'
     'nb.filters'
     'nb.component'
+    'angularFileUpload'
     #'nb.controller.site'
 ]
 resources = angular.module('resources',[])

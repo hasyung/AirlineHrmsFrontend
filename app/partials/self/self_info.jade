@@ -4,6 +4,7 @@
             .avator-area
             h3(ng-bind="currentUser.$cmStatus.name")
             p(ng-bind="currentUser.employeeNo")
+            input(type="file" nv-file-select="" uploader="uploader")
         .personnel-info-list
             ul
                 li(ui-sref-active="active")

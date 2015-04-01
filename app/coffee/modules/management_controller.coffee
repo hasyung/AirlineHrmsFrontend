@@ -18,6 +18,8 @@ class Route
             .state 'self', {
                 url: '/self-service'
                 templateUrl: 'partials/self/self_info.html'
+                controller: ProfileCtrl
+                controllerAs: 'ctrl'
                 ncyBreadcrumb: {
                     label: "员工自助"
                 }
@@ -83,12 +85,19 @@ class Route
 
 class ProfileCtrl extends nb.Controller
 
-    @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope']
+    @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope', 'FileUploader']
 
 
-    constructor: (@scope, @sweet, @Employee, @rootScope) ->
+    constructor: (@scope, @sweet, @Employee, @rootScope, @FileUploader) ->
         @loadInitailData()
         @status = 'show'
+        uploader = @scope.uploader = new FileUploader {
+            url: '/api/me/upload_favicon'
+            method: 'PUT'
+        }
+        uploader.onAfterAddingFile = (fileItem)->
+            console.log fileItem
+            fileItem.upload()
 
     loadInitailData: ->
         @scope.currentUser = @rootScope.currentUser
