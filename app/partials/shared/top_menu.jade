@@ -1,21 +1,21 @@
 md-toolbar.top-menu-bar
   ul.nav.navbar-nav
-    li.dropdown.pull-right(user-info-dropdown)
+    .right-align.nb-dropdown.pull-right(user-info-dropdown, btn-text="导出")
       li
         a(ui-sref="changePwd") 修改密码
       li
         a(ui-sref="login", ng-click="logout()") 退出
-        //- li
-        //-   a(href='')
-        //-     span.badge.bg-danger.pull-right 30%
-        //-     span 设置
-        //- li
-        //-   a(ui-sref='app.page.profile', href='#/app/page/profile') 个人信息
-        //- li
-        //-   a(ui-sref='app.docs', href='#/app/docs')
-        //-     span.label.bg-info.pull-right new
-        //-     | 帮助
-        //- li.divider
+          //- li
+          //-   a(href='')
+          //-     span.badge.bg-danger.pull-right 30%
+          //-     span 设置
+          //- li
+          //-   a(ui-sref='app.page.profile', href='#/app/page/profile') 个人信息
+          //- li
+          //-   a(ui-sref='app.docs', href='#/app/docs')
+          //-     span.label.bg-info.pull-right new
+          //-     | 帮助
+          //- li.divider
     li.dropdown.pull-right
       a.dropdown-toggle(href='')
         i.icon-bell.fa-fw

@@ -168,8 +168,7 @@ angular.module 'nb.directives'
                 return
             # 下面两行代码是为了防止点击元素后事件冒泡至body，然后影藏弹出框
             elem.on 'click', (e)->
-                # if e.target.nodeName is "BUTTON"
-                #     e.stopPropagation()
+                e.stopPropagation()
 
             $doc.on 'click', closeDropdown
 
@@ -184,12 +183,12 @@ angular.module 'nb.directives'
             scope:{}
             transclude: true
             template: '''
-                <li class="dropdown", ng-class="{\'open\': isOpen}">
-                    <a href="" data-toggle="dropdown" class="dropdown-toggle clear" ng-click="dropdown.toggle()">
+                <li class="dropdown", ng-class="{\'open\': isOpen}" ng-click="dropdown.toggle()">
+                    <a href="" data-toggle="dropdown" class="dropdown-toggle clear">
                         <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
                             <img src="../../images/01.jpg" alt="..."/><i class="on md b-white bottom"></i>
                         </span>
-                        <span ng-bind="currentUser.name"></span>
+                        <span ng-bind="dropdown.rootScope.currentUser.name"></span>
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu" ng-if="isOpen" role="menu" aria-labelledby="dropdownMenu1" ng-transclude>
@@ -214,8 +213,8 @@ class SimpleDropdownCtrl
         @scope.isOpen = !@scope.isOpen
 
 class UserInfoDropdownCtrl
-    @.$inject = ['$scope', '$attrs']
-    constructor: (@scope, @attrs) ->
-        @scope.isOpen = true
+    @.$inject = ['$scope', '$attrs', '$rootScope']
+    constructor: (@scope, @attrs, @rootScope) ->
+        @scope.isOpen = false
     toggle: () ->
         @scope.isOpen = !@scope.isOpen
