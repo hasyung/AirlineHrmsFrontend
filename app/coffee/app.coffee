@@ -109,6 +109,10 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
             url: '/sigup'
             templateUrl: 'partials/auth/sigup.html'
         }
+        .state 'changePwd', {
+            url: '/change-possword'
+            templateUrl: 'partials/auth/change_pwd.html'
+        }
 
     $httpProvider.interceptors.push ['$q', '$location', 'toaster', 'sweet', ($q, $location, toaster, sweet) ->
 

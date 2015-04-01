@@ -111,6 +111,7 @@ paths =
         'deps/jquery-slimscroll/jquery.slimscroll.js'
         'deps/angularjs-toaster/toaster.js'
         'deps/angular-material/angular-material.js'
+        'deps/angular-file-upload/angular-file-upload.js'
         # 'deps/angular-ui-utils/ui-utils.js'
         # 'deps/jasny-bootstrap/dist/js/jasny-bootstrap.js' jasny bootstrap 增强版，提供一些好用组件
     ]
@@ -282,10 +283,10 @@ gulp.task "express", ->
     app = express()
 
 
-    proxyOptions = url.parse('http://192.168.6.99:4000')
+    # proxyOptions = url.parse('http://192.168.6.99:4000')
     # proxyOptions = url.parse('http://114.215.142.122:9002')
     # proxyOptions = url.parse('http://192.168.6.16:3000')
-    # proxyOptions = url.parse('http://192.168.6.40:3000')
+    proxyOptions = url.parse('http://192.168.6.40:3000')
 
     proxyOptions.route = '/api'
 
