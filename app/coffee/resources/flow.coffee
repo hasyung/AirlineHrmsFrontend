@@ -179,48 +179,125 @@ flowRelationDataDirective = ($timeout)->
 FlowHandlerDirective = (ngDialog)->
 
     template = '''
-        <div class="flow-contianenr">
-
-            <div class="sponsor-info">
-                <div class="box"><label for="">申请人</label><span ng-bind="::flow.sponsor.name"></span></div>
-                <div class="box"><label for="">员工编码</label><span ng-bind="::flow.sponsor.employeeNo"></span></div>
-                <div class="box"><label for="">当前部门</label><span ng-bind="::flow.sponsor.departmentName"></span></div>
-                <div class="box"><label for="">当前岗位</label><span ng-bind="::flow.sponsor.positionName"></span></div>
-
-            </div>
-
-            <div class="flow-relations" ng-bind-html="::flow.relation_data">
-
-            </div>
-            <div class="flow-info">
-                <div class="box" ng-repeat="item in ::flow.formData">
-                    <label for="" ng-bind="::data.name"></label>
-                    <span ng-bind="::item.value"></span>
+        <div class="approval-wapper">
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <span>调岗申请单</span>
                 </div>
-            </div>
-            <div class="flow-steps">
-                <flow-item-box>
-
-                </flow-item-box>
-            </div>
-            <form name="flow_handle_form" ng-submit="submitFlow(req, flow)" >
-                <div class="opinion">
-                    <md-radio-group ng-model="req.opinion">
-                        <md-radio-button ng-value="CHOICE.ACCEPT">通过</md-radio-button>
-                        <md-radio-button ng-value="CHOICE.REJECT">驳回</md-radio-button>
-                    </md-radio-group>
-                </div>
-                <div class="flow-feedback">
-                    <textarea name="desc" ng-model="req.desc" cols="30" rows="10"></textarea>
-                    <div class="extra-form" ng-if="flow.$extraForm && req.opinion == true ">
-                        #extraFormLayout#
+            </md-toolbar>
+            <div class="approval-container">
+                <div class="approval-info">
+                    <div class="approval-subheader">申请人信息</div>
+                    <div class="approval-info-head">
+                        <span class="name" ng-bind="flow.sponsor.name"></span>
+                        <span class="serial-number" ng-bind="flow.sponsor.employeeNo"></span>
+                    </div>
+                    <div class="approval-position"> {{::flow.sponsor.departmentName}}/ {{::flow.sponsor.positionName}}</div>
+                    <div class="approval-relations">
+                        <div layout="layout">
+                            <div flex="flex" class="approval-cell">
+                                <span class="cell-title">学历</span>
+                                <span class="cell-content">大学本科</span>
+                            </div>
+                            <div flex="flex" class="approval-cell">
+                                <span class="cell-title">英语等级</span>
+                                <span class="cell-content">大学英语四级</span>
+                            </div>
+                        </div>
+                        <div layout="layout">
+                            <div flex="flex" class="approval-cell">
+                                <span class="cell-title">学位</span>
+                                <span class="cell-content">学士</span>
+                            </div>
+                            <div flex="flex" class="approval-cell">
+                                <span class="cell-title">当前岗位年限</span>
+                                <span class="cell-content">3年</span>
+                            </div>
+                        </div>
+                        <div layout="layout">
+                            <div flex="flex" class="approval-cell">
+                                <span class="cell-title">通道</span>
+                                <span class="cell-content">管理</span>
+                            </div>
+                            <div flex="flex" class="approval-cell">
+                                <span class="cell-title">近6个月绩效</span>
+                                <span class="cell-content">优秀 2/良好 2/合格 2/待改进 2/不合格 2</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <flow-actions>
-                    <button type="submit" class="accept">批准</button>
-                    <button type="button" ng-click="clostThisDialog()">取消</button>
-                </flow-actions>
-            </form>
+                <div class="approval-info">
+                    <div class="approval-subheader">调岗信息</div>
+                    <div layout="layout">
+                        <div flex="flex" class="approval-cell">
+                            <span class="cell-title">转入部门</span>
+                            <span class="cell-content">信息技术部-测试组</span>
+                        </div>
+                    </div>
+                    <div layout="layout">
+                        <div flex="flex" class="approval-cell">
+                            <span class="cell-title">转入岗位</span>
+                            <span class="cell-content">测试组组长</span>
+                        </div>
+                    </div>
+                    <div layout="layout">
+                        <div flex="flex" class="approval-cell">
+                            <span class="cell-title">申请理由</span>
+                            <span class="cell-content">
+                                几年的工作经历，使我迫切的希望进一步拓宽知识面，
+                                同时也希望有一个直接到一线去工作的机会，所以，
+                                我希望能够对工作岗位进行适当的调整，调往生产部，
+                                给自己一个锻炼的机会，也争取为本单位多做一份贡献。
+                            </span>
+                        </div>
+                    </div>
+                    <div layout="layout">
+                        <div flex="flex" class="approval-cell">
+                            <span class="cell-title">试岗时长</span>
+                            <span class="cell-content">3个月</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="approval-msg">
+                    <div class="approval-subheader">审批信息</div>
+                    <div approval="approval" class="approval-progress-container"></div>
+                    <div class="approval-msg-cell">
+                        <div class="approval-msg-header">
+                            <i class="circle"></i>
+                            <span class="approval-header-title">合规性检查意见</span>
+                            <span class="approval-header-name">李枝林</span>
+                            <span class="approval-header-time">2015-04-01</span>
+                        </div>
+                        <div class="approval-msg-content">
+                            经党委会讨论，批准姜文峰同志转为中共正式党员，
+                            当年从1989年10月20日算起。经党委会讨论，批
+                            准姜文峰同志转为中共正式党员，当年从1989年
+                            10月20日算起。经党委会讨论，批准姜文峰同志转
+                            为中共正式党员，当年从1989年10月20日算起。经
+                            党委会讨论，批准姜文峰同志转为中共正式党员，当
+                            年从1989年10月20日算起。
+                        </div>
+                    </div>
+                </div>
+                <div class="approval-opinions">
+                    <div class="approval-subheader">审批意见</div>
+                    <form>
+                        <div class="approval-opinions-check">
+                            <md-radio-group ng-model="data.group1">
+                                <md-radio-button value="通过" class="skyblue">通过</md-radio-button>
+                                <md-radio-button value="驳回" class="skyblue">驳回</md-radio-button>
+                            </md-radio-group>
+                        </div>
+                        <md-input-container>
+                            <textarea placeholder="请输入审批意见" columns="1"></textarea>
+                        </md-input-container>
+                        <div class="approval-buttons">
+                            <md-button class="md-raised white">取消</md-button>
+                            <md-button class="md-raised skyblue">提交</md-button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     '''
 
@@ -229,6 +306,8 @@ FlowHandlerDirective = (ngDialog)->
     postLink = (scope, elem, attrs, ctrl) ->
 
         defaults = ngDialog.getDefaults()
+        # options = JSON.parse(attrs.options) if attrs.options
+        # options = angular.extend {}, defaults, options
 
         offeredExtraForm = (flow) ->
             return template.replace(/#extraFormLayout#/, `flow.$extraForm ? flow.$extraForm : ''`)
@@ -240,7 +319,7 @@ FlowHandlerDirective = (ngDialog)->
                 ngDialog.open {
                     template: template
                     plain: true
-                    className: defaults.className
+                    className: "ngdialog-theme-panel"
                     controller: 'FlowController'
                     scope: scope
                     data: scope.flow

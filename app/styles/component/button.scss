@@ -52,3 +52,27 @@
         }
     }
 }
+
+//单选框 radio
+md-radio-group {
+    border: 0;
+
+    &:focus {
+        border: 0;
+    }
+}
+
+md-radio-button.md-default-theme {
+    margin: 0;
+
+    &.skyblue {
+        .md-off {
+            border-color: #23b7e5;
+        }
+
+        .md-on {
+            background-color: #23b7e5;
+        }
+    }
+}
+

@@ -11,7 +11,7 @@
             a(href="javascript:;")
                 img(ng-src="{{img.url}}" style="width: 90px;height: 50px;")
     .img-info-bar.nb-modal-touchable
-        span.img-name(ng-bind="ctrl.currentImg.url.split('/').pop() || 'xxxxxx.jpg'") 
+        span.img-name(ng-bind="ctrl.currentImg.url.split('/').pop()") 
         .gallery-control
             span.download-file
                 a(ng-href="{{ctrl.currentImg.url}}" target="_blank" download="{{ctrl.currentImg.url.split('/').pop()}}" title="下载")
