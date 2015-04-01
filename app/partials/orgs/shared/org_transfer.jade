@@ -6,6 +6,6 @@ md-dialog
             nb-org-tree(ng-model="transfer_dest_org" tree-data="allOrgs" required)
         .button-group.panel-footer.clearfix
             button.btn.btn-info.btn-sm.pull-right(type='submit' ng-disabled="trans_form.$invalid") 确定
-            button.btn.btn-default.btn-sm.pull-right(type='button',ng-click='closeThisDialog()') 取消
+            button.btn.btn-default.btn-sm.pull-right(type='button',ng-click='dialog.cancel()') 取消
 
 
