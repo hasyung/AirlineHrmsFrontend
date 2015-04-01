@@ -120,7 +120,7 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
                     sweet.error('操作失败',response.data.message || JSON.stringify(response.data))
 
                 if /^5/.test(Number(response.status).toString()) # if server error
-                    toaster.pop('error', '服务器错误', response.data.message || JSON.stringify(response.data))
+                    toaster.pop('error', '服务器错误', response.data.message || JSON.stringify(response.data || response))
                 return $q.reject(response)
         }
 

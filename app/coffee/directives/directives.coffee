@@ -158,13 +158,22 @@ angular.module 'nb.directives'
                 #scope evt 生命周期仅限于本次点击
                 opts = angular.extend({scope: scope.$new(), targetEvent: evt}, options)
 
+                opts = angular.extend(opts, {
+                        controller: ->
+                            @close = (res) -> $mdDialog.hide(res)
+                            @cancel = (res) -> $mdDialog.cancel(res)
+                            return
+                        controllerAs: 'dialog'
+                        bindToController: true
+                    })
+
                 angular.forEach ['locals','resolve'], (key) ->
                     opts[key] = scope.$eval(attrs[key]) if angular.isDefined(attrs[key])
 
                 $mdDialog.show opts
 
-
-            angular.forEach ['controller', 'templateUrl', 'template'], (key) ->
+            # 暂定所有 dialog 无独立 controller , 交给parent控制
+            angular.forEach ['templateUrl', 'template'], (key) ->
                 options[key] = attrs[key] if angular.isDefined(attrs[key])
 
 
@@ -277,5 +286,105 @@ angular.module 'nb.directives'
         }
     ]
 
+# var ngIfDirective = ['$animate', function($animate) {
+#   return {
+#     multiElement: true,
+#     transclude: 'element',
+#     priority: 600,
+#     terminal: true,
+#     restrict: 'A',
+#     $$tlb: true,
+#     link: function($scope, $element, $attr, ctrl, $transclude) {
+#         var block, childScope, previousElements;
+#         $scope.$watch($attr.ngIf, function ngIfWatchAction(value) {
+#           if (value) {
+#             if (!childScope) {
+#               $transclude(function(clone, newScope) {
+#                 childScope = newScope;
+#                 clone[clone.length++] = document.createComment(' end ngIf: ' + $attr.ngIf + ' ');
+#                 // Note: We only need the first/last node of the cloned nodes.
+#                 // However, we need to keep the reference to the jqlite wrapper as it might be changed later
+#                 // by a directive with templateUrl when its template arrives.
+#                 block = {
+#                   clone: clone
+#                 };
+#                 $animate.enter(clone, $element.parent(), $element);
+#               });
+#             }
+#           } else {
+#             if (previousElements) {
+#               previousElements.remove();
+#               previousElements = null;
+#             }
+#             if (childScope) {
+#               childScope.$destroy();
+#               childScope = null;
+#             }
+#             if (block) {
+#               previousElements = getBlockNodes(block.clone);
+#               $animate.leave(previousElements).then(function() {
+#                 previousElements = null;
+#               });
+#               block = null;
+#             }
+#           }
+#         });
+#     }
+#   };
+# }];
 
 
+
+    #
+    # permission 支持单一权限与组合权限
+    #
+    # 90%情况 单一权限能满足需求
+    #
+    # 基于性能考虑与实际业务， 不支持动态权限
+    # 所有权限使用较高优先级指令优先check, 如果不满足需求
+    #
+    #
+    #  usage:
+    #
+    # <div has-permission="department_index"></div>
+    # <div has-permission="['department_index','department_active']"></div>
+
+    .directive 'has-permission', [(AuthService) ->
+
+        postLink = (scope, elem, attrs, ctrl, $transclude) ->
+            if AuthService.has(attrs.permission)
+                $transclude (clone, newScope) ->
+                    $animate.enter(clone, elem.parent, elem)
+
+            # scope.$watch attrs.permission, (value) ->
+            #     if value
+            #         if !childScope
+            #             $transclude (clone, newScope) ->
+            #                 childScope = newScope
+            #                 clone[clone.length++] = document.createComment("end permission #{attrs.permission}")
+            #                 block = {clone: clone}
+
+            #                 $animate.enter(clone, $element.parent, $element)
+
+            #     else
+            #         if previousElements
+            #             previousElements.remove()
+            #             previousElements = null
+            #         if childScope
+            #             childScope.$destroy()
+            #             childScope = null
+            #         if block
+            #             previousElements = getBlockNodes(block.clone)
+            #             $animate.leave(previousElements).then -> previousElements = null
+            #             block = null
+
+        return {
+            transclude: 'element'
+            priority: 600
+            terminal: true
+            restrict: 'A'
+            $$tlb: true
+            link: postLink
+        }
+
+    ]

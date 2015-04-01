@@ -2,6 +2,38 @@
 nb = @.nb
 app = nb.app
 
+
+
+class AuthService extends nb.Service
+
+    @.$inject = ['$http', '$rootScope']
+
+    ARRAY_LIKE = /^\[[\W,\w]*\]$/ # test array like string
+
+    constructor: (http, rootScope) ->
+        @permissions = rootScope.currentUser.permissions || [] if rootScope.currentUser
+    set: (permissions) ->
+        @permissions = permissions
+    # string | array
+    has: (permission) ->
+        hasPermission = false
+
+        permission = permission.trim()
+
+        if  ARRAY_LIKE.test(permission)
+            hasPermission = @permissions.indexOf(permission) != -1
+        else if angular.isArray(permission)
+            try
+                permission_array = JSON.parse(permission)
+            catch e
+                # array格式错误
+                throw new Error('permission format error')
+            hasPermission = permission_array.every((perm)-> perm.indexOf(@permissions) != -1)
+
+        return hasPermission
+
+
+
 class LoginController extends nb.Controller
 
 
@@ -26,10 +58,10 @@ class LoginController extends nb.Controller
                     self.rootScope.allOrgs = self.Org.$search()
                     self.state.go "home"
                 , 100
-                
+
                 # self.rootScope.currentUser = user
                 #####end
-                
+
 
             .error (data) ->
                 self.$emit 'error', '#{data.message}'
@@ -61,3 +93,4 @@ class SigupController extends nb.Controller
 
 app.controller('LoginController', LoginController)
 app.controller('SigupController', SigupController)
+app.controller('AuthService', AuthService)
