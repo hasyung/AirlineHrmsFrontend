@@ -19,12 +19,8 @@ Employee = (restmod, RMUtils, $Evt) ->
         $hooks: {
             'after-create': ->
                 $Evt.$send('employee:create:success', "新员工创建成功")
-            'after-create-error': ->
-                $Evt.$send('employee:create:error', "新员工创建失败")
             'after-update': ->
                 $Evt.$send('employee:update:success', "员工信息更新成功")
-            'after-update-error': ->
-                $Evt.$send('employee:update:error', "员工信息跟新失败")
         }
         $extend:
             Collection:
