@@ -1,11 +1,12 @@
 md-dialog
-    form.clearfix(ng-submit="orgCtrl.transfer(transfer_dest_org) && closeThisDialog()" name="trans_form")
-        .modal-header
-            h4.modal-title 机构划转
-        div(slimscroll height="300px")
-            nb-org-tree(ng-model="transfer_dest_org" tree-data="allOrgs" required)
-        .button-group.panel-footer.clearfix
-            button.btn.btn-info.btn-sm.pull-right(type='submit' ng-disabled="trans_form.$invalid") 确定
-            button.btn.btn-default.btn-sm.pull-right(type='button',ng-click='dialog.cancel()') 取消
+    form.clearfix(ng-submit="orgCtrl.transfer(transfer_dest_org) && dialog.close()" name="trans_form")
+        md-content.sticky-container
+            md-subheader.md-sticky-no-effect 机构划转
+            .dialog-content
+                div(slimscroll height="300px")
+                    nb-org-tree(ng-model="transfer_dest_org" tree-data="allOrgs" required)
+        .md-actions
+            md-button(type='button',ng-click='dialog.cancel()') 取消
+            md-button.md-primary(type='submit' ng-disabled="trans_form.$invalid") 确定
 
 
