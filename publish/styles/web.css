@@ -1154,12 +1154,14 @@ md-input-container {
     overflow: hidden;
     width: 100%; }
     .personnel-menu .avator .avator-area {
-      background: url('../../../images/personnel/avator.jpg') no-repeat;
-      background-size: 100%;
       border-radius: 50%;
       height: 110px;
       margin: 25px auto 5px;
-      width: 110px; }
+      width: 110px;
+      overflow: hidden; }
+      .personnel-menu .avator .avator-area img {
+        height: 100%;
+        width: 100%; }
     .personnel-menu .avator h3 {
       color: #468fce;
       font-size: 18px;

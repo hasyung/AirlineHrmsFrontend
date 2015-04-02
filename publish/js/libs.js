@@ -18454,7 +18454,7 @@ for(n=[],r=[],s=0,f=t.rows[0].cells.length,c=t.clientWidth;f>s;)l=t.rows[0].cell
 t.events.push(["addFonts",function(t){var e,n,i,o,a,u="Unicode";for(n in t.fonts)t.fonts.hasOwnProperty(n)&&(e=t.fonts[n],i=s[u][e.PostScriptName],i&&(o=e.metadata[u]?e.metadata[u]:e.metadata[u]={},o.widths=i.widths,o.kerning=i.kerning),a=r[u][e.PostScriptName],a&&(o=e.metadata[u]?e.metadata[u]:e.metadata[u]={},o.encoding=a,a.codePages&&a.codePages.length&&(e.encoding=a.codePages[0])))}])}(n.API),function(t){"use strict";t.putTotalPages=function(t){for(var e=new RegExp(t,"g"),n=1;n<=this.internal.getNumberOfPages();n++)for(var r=0;r<this.internal.pages[n].length;r++)this.internal.pages[n][r]=this.internal.pages[n][r].replace(e,this.internal.getNumberOfPages());return this}}(n.API),function(t){"use strict";if(t.URL=t.URL||t.webkitURL,t.Blob&&t.URL)try{return void new Blob}catch(e){}var n=t.BlobBuilder||t.WebKitBlobBuilder||t.MozBlobBuilder||function(t){var e=function(t){return Object.prototype.toString.call(t).match(/^\[object\s(.*)\]$/)[1]},n=function(){this.data=[]},r=function(t,e,n){this.data=t,this.size=t.length,this.type=e,this.encoding=n},s=n.prototype,i=r.prototype,o=t.FileReaderSync,a=function(t){this.code=this[this.name=t]},u="NOT_FOUND_ERR SECURITY_ERR ABORT_ERR NOT_READABLE_ERR ENCODING_ERR NO_MODIFICATION_ALLOWED_ERR INVALID_STATE_ERR SYNTAX_ERR".split(" "),c=u.length,l=t.URL||t.webkitURL||t,f=l.createObjectURL,d=l.revokeObjectURL,h=l,p=t.btoa,m=t.atob,w=t.ArrayBuffer,g=t.Uint8Array,y=/^[\w-]+:\/*\[?[\w\.:-]+\]?(?::[0-9]+)?/;for(r.fake=i.fake=!0;c--;)a.prototype[u[c]]=c+1;return l.createObjectURL||(h=t.URL=function(t){var e,n=document.createElementNS("http://www.w3.org/1999/xhtml","a");return n.href=t,"origin"in n||("data:"===n.protocol.toLowerCase()?n.origin=null:(e=t.match(y),n.origin=e&&e[1])),n}),h.createObjectURL=function(t){var e,n=t.type;return null===n&&(n="application/octet-stream"),t instanceof r?(e="data:"+n,"base64"===t.encoding?e+";base64,"+t.data:"URI"===t.encoding?e+","+decodeURIComponent(t.data):p?e+";base64,"+p(t.data):e+","+encodeURIComponent(t.data)):f?f.call(l,t):void 0},h.revokeObjectURL=function(t){"data:"!==t.substring(0,5)&&d&&d.call(l,t)},s.append=function(t){var n=this.data;if(g&&(t instanceof w||t instanceof g)){for(var s="",i=new g(t),u=0,c=i.length;c>u;u++)s+=String.fromCharCode(i[u]);n.push(s)}else if("Blob"===e(t)||"File"===e(t)){if(!o)throw new a("NOT_READABLE_ERR");var l=new o;n.push(l.readAsBinaryString(t))}else t instanceof r?"base64"===t.encoding&&m?n.push(m(t.data)):"URI"===t.encoding?n.push(decodeURIComponent(t.data)):"raw"===t.encoding&&n.push(t.data):("string"!=typeof t&&(t+=""),n.push(unescape(encodeURIComponent(t))))},s.getBlob=function(t){return arguments.length||(t=null),new r(this.data.join(""),t,"raw")},s.toString=function(){return"[object BlobBuilder]"},i.slice=function(t,e,n){var s=arguments.length;return 3>s&&(n=null),new r(this.data.slice(t,s>1?e:this.data.length),n,this.encoding)},i.toString=function(){return"[object Blob]"},i.close=function(){this.size=0,delete this.data},n}(t);t.Blob=function(t,e){var r=e?e.type||"":"",s=new n;if(t)for(var i=0,o=t.length;o>i;i++)s.append(t[i]);return s.getBlob(r)}}("undefined"!=typeof self&&self||"undefined"!=typeof window&&window||this.content||this);var r=r||"undefined"!=typeof navigator&&navigator.msSaveOrOpenBlob&&navigator.msSaveOrOpenBlob.bind(navigator)||function(t){"use strict";if("undefined"==typeof navigator||!/MSIE [1-9]\./.test(navigator.userAgent)){var e=t.document,n=function(){return t.URL||t.webkitURL||t},r=e.createElementNS("http://www.w3.org/1999/xhtml","a"),s="download"in r,i=function(n){var r=e.createEvent("MouseEvents");r.initMouseEvent("click",!0,!1,t,0,0,0,0,0,!1,!1,!1,!1,0,null),n.dispatchEvent(r)},o=t.webkitRequestFileSystem,a=t.requestFileSystem||o||t.mozRequestFileSystem,u=function(e){(t.setImmediate||t.setTimeout)(function(){throw e},0)},c="application/octet-stream",l=0,f=10,d=function(e){var r=function(){"string"==typeof e?n().revokeObjectURL(e):e.remove()};t.chrome?r():setTimeout(r,f)},h=function(t,e,n){e=[].concat(e);for(var r=e.length;r--;){var s=t["on"+e[r]];if("function"==typeof s)try{s.call(t,n||t)}catch(i){u(i)}}},p=function(e,u){var f,p,m,w=this,g=e.type,y=!1,v=function(){h(w,"writestart progress write writeend".split(" "))},b=function(){if((y||!f)&&(f=n().createObjectURL(e)),p)p.location.href=f;else{var r=t.open(f,"_blank");void 0==r&&"undefined"!=typeof safari&&(t.location.href=f)}w.readyState=w.DONE,v(),d(f)},q=function(t){return function(){return w.readyState!==w.DONE?t.apply(this,arguments):void 0}},x={create:!0,exclusive:!1};return w.readyState=w.INIT,u||(u="download"),s?(f=n().createObjectURL(e),r.href=f,r.download=u,i(r),w.readyState=w.DONE,v(),void d(f)):(t.chrome&&g&&g!==c&&(m=e.slice||e.webkitSlice,e=m.call(e,0,e.size,c),y=!0),o&&"download"!==u&&(u+=".download"),(g===c||o)&&(p=t),a?(l+=e.size,void a(t.TEMPORARY,l,q(function(t){t.root.getDirectory("saved",x,q(function(t){var n=function(){t.getFile(u,x,q(function(t){t.createWriter(q(function(n){n.onwriteend=function(e){p.location.href=t.toURL(),w.readyState=w.DONE,h(w,"writeend",e),d(t)},n.onerror=function(){var t=n.error;t.code!==t.ABORT_ERR&&b()},"writestart progress write abort".split(" ").forEach(function(t){n["on"+t]=w["on"+t]}),n.write(e),w.abort=function(){n.abort(),w.readyState=w.DONE},w.readyState=w.WRITING}),b)}),b)};t.getFile(u,{create:!1},q(function(t){t.remove(),n()}),q(function(t){t.code===t.NOT_FOUND_ERR?n():b()}))}),b)}),b)):void b())},m=p.prototype,w=function(t,e){return new p(t,e)};return m.abort=function(){var t=this;t.readyState=t.DONE,h(t,"abort")},m.readyState=m.INIT=0,m.WRITING=1,m.DONE=2,m.error=m.onwritestart=m.onprogress=m.onwrite=m.onabort=m.onerror=m.onwriteend=null,w}}("undefined"!=typeof self&&self||"undefined"!=typeof window&&window||this.content);"undefined"!=typeof module&&null!==module&&(module.exports=r),void function(t,e){"object"==typeof module?module.exports=e():t.adler32cs=e()}(n,function(){var t="function"==typeof ArrayBuffer&&"function"==typeof Uint8Array,e=null,n=function(){if(!t)return function(){return!1};try{var n=require("buffer");"function"==typeof n.Buffer&&(e=n.Buffer)}catch(r){}return function(t){return t instanceof ArrayBuffer||null!==e&&t instanceof e}}(),r=function(){return null!==e?function(t){return new e(t,"utf8").toString("binary")}:function(t){return unescape(encodeURIComponent(t))}}(),s=65521,i=function(t,e){for(var n=65535&t,r=t>>>16,i=0,o=e.length;o>i;i++)n=(n+(255&e.charCodeAt(i)))%s,r=(r+n)%s;return(r<<16|n)>>>0},o=function(t,e){for(var n=65535&t,r=t>>>16,i=0,o=e.length;o>i;i++)n=(n+e[i])%s,r=(r+n)%s;return(r<<16|n)>>>0},a={},u=a.Adler32=function(){var e=function(t){if(!(this instanceof e))throw new TypeError("Constructor cannot called be as a function.");if(!isFinite(t=null==t?1:+t))throw new Error("First arguments needs to be a finite number.");this.checksum=t>>>0},s=e.prototype={};return s.constructor=e,e.from=function(t){return t.prototype=s,t}(function(t){if(!(this instanceof e))throw new TypeError("Constructor cannot called be as a function.");if(null==t)throw new Error("First argument needs to be a string.");this.checksum=i(1,t.toString())}),e.fromUtf8=function(t){return t.prototype=s,t}(function(t){if(!(this instanceof e))throw new TypeError("Constructor cannot called be as a function.");if(null==t)throw new Error("First argument needs to be a string.");var n=r(t.toString());this.checksum=i(1,n)}),t&&(e.fromBuffer=function(t){return t.prototype=s,t}(function(t){if(!(this instanceof e))throw new TypeError("Constructor cannot called be as a function.");if(!n(t))throw new Error("First argument needs to be ArrayBuffer.");var r=new Uint8Array(t);return this.checksum=o(1,r)})),s.update=function(t){if(null==t)throw new Error("First argument needs to be a string.");return t=t.toString(),this.checksum=i(this.checksum,t)},s.updateUtf8=function(t){if(null==t)throw new Error("First argument needs to be a string.");var e=r(t.toString());return this.checksum=i(this.checksum,e)},t&&(s.updateBuffer=function(t){if(!n(t))throw new Error("First argument needs to be ArrayBuffer.");var e=new Uint8Array(t);return this.checksum=o(this.checksum,e)}),s.clone=function(){return new u(this.checksum)},e}();return a.from=function(t){if(null==t)throw new Error("First argument needs to be a string.");return i(1,t.toString())},a.fromUtf8=function(t){if(null==t)throw new Error("First argument needs to be a string.");var e=r(t.toString());return i(1,e)},t&&(a.fromBuffer=function(t){if(!n(t))throw new Error("First argument need to be ArrayBuffer.");var e=new Uint8Array(t);return o(1,e)}),a});var s=function(){function t(){function t(t){var e,n,s,i,a,u,c=r.dyn_tree,l=r.stat_desc.static_tree,f=r.stat_desc.extra_bits,h=r.stat_desc.extra_base,p=r.stat_desc.max_length,m=0;for(i=0;o>=i;i++)t.bl_count[i]=0;for(c[2*t.heap[t.heap_max]+1]=0,e=t.heap_max+1;d>e;e++)n=t.heap[e],i=c[2*c[2*n+1]+1]+1,i>p&&(i=p,m++),c[2*n+1]=i,n>r.max_code||(t.bl_count[i]++,a=0,n>=h&&(a=f[n-h]),u=c[2*n],t.opt_len+=u*(i+a),l&&(t.static_len+=u*(l[2*n+1]+a)));if(0!==m){do{for(i=p-1;0===t.bl_count[i];)i--;t.bl_count[i]--,t.bl_count[i+1]+=2,t.bl_count[p]--,m-=2}while(m>0);for(i=p;0!==i;i--)for(n=t.bl_count[i];0!==n;)s=t.heap[--e],s>r.max_code||(c[2*s+1]!=i&&(t.opt_len+=(i-c[2*s+1])*c[2*s],c[2*s+1]=i),n--)}}function e(t,e){var n=0;do n|=1&t,t>>>=1,n<<=1;while(--e>0);return n>>>1}function n(t,n,r){var s,i,a,u=[],c=0;for(s=1;o>=s;s++)u[s]=c=c+r[s-1]<<1;for(i=0;n>=i;i++)a=t[2*i+1],0!==a&&(t[2*i]=e(u[a]++,a))}var r=this;r.build_tree=function(e){var s,i,o,a=r.dyn_tree,u=r.stat_desc.static_tree,c=r.stat_desc.elems,l=-1;for(e.heap_len=0,e.heap_max=d,s=0;c>s;s++)0!==a[2*s]?(e.heap[++e.heap_len]=l=s,e.depth[s]=0):a[2*s+1]=0;for(;e.heap_len<2;)o=e.heap[++e.heap_len]=2>l?++l:0,a[2*o]=1,e.depth[o]=0,e.opt_len--,u&&(e.static_len-=u[2*o+1]);for(r.max_code=l,s=Math.floor(e.heap_len/2);s>=1;s--)e.pqdownheap(a,s);o=c;do s=e.heap[1],e.heap[1]=e.heap[e.heap_len--],e.pqdownheap(a,1),i=e.heap[1],e.heap[--e.heap_max]=s,e.heap[--e.heap_max]=i,a[2*o]=a[2*s]+a[2*i],e.depth[o]=Math.max(e.depth[s],e.depth[i])+1,a[2*s+1]=a[2*i+1]=o,e.heap[1]=o++,e.pqdownheap(a,1);while(e.heap_len>=2);e.heap[--e.heap_max]=e.heap[1],t(e),n(a,r.max_code,e.bl_count)}}function e(t,e,n,r,s){var i=this;i.static_tree=t,i.extra_bits=e,i.extra_base=n,i.elems=r,i.max_length=s}function n(t,e,n,r,s){var i=this;i.good_length=t,i.max_lazy=e,i.nice_length=n,i.max_chain=r,i.func=s}function r(t,e,n,r){var s=t[2*e],i=t[2*n];return i>s||s==i&&r[e]<=r[n]}function s(){function n(){var t;for(Te=2*Ce,Be[Pe-1]=0,t=0;Pe-1>t;t++)Be[t]=0;Je=N[Xe].max_lazy,Ke=N[Xe].good_length,Qe=N[Xe].nice_length,Ve=N[Xe].max_chain,Me=0,Ue=0,Ge=0,Ne=We=Z-1,je=0,Oe=0}function s(){var t;for(t=0;f>t;t++)$e[2*t]=0;for(t=0;a>t;t++)Ze[2*t]=0;for(t=0;u>t;t++)tn[2*t]=0;$e[2*h]=1,en.opt_len=en.static_len=0,un=ln=0}function i(){nn.dyn_tree=$e,nn.stat_desc=e.static_l_desc,rn.dyn_tree=Ze,rn.stat_desc=e.static_d_desc,sn.dyn_tree=tn,sn.stat_desc=e.static_bl_desc,dn=0,hn=0,fn=8,s()}function o(t,e){var n,r,s=-1,i=t[1],o=0,a=7,u=4;for(0===i&&(a=138,u=3),t[2*(e+1)+1]=65535,n=0;e>=n;n++)r=i,i=t[2*(n+1)+1],++o<a&&r==i||(u>o?tn[2*r]+=o:0!==r?(r!=s&&tn[2*r]++,tn[2*m]++):10>=o?tn[2*w]++:tn[2*g]++,o=0,s=r,0===i?(a=138,u=3):r==i?(a=6,u=3):(a=7,u=4))}function c(){var e;for(o($e,nn.max_code),o(Ze,rn.max_code),sn.build_tree(en),e=u-1;e>=3&&0===tn[2*t.bl_order[e]+1];e--);return en.opt_len+=3*(e+1)+5+5+4,e}function d(t){en.pending_buf[en.pending++]=t}function p(t){d(255&t),d(t>>>8&255)}function O(t){d(t>>8&255),d(255&t&255)}function ne(t,e){var n,r=e;hn>y-r?(n=t,dn|=n<<hn&65535,p(dn),dn=n>>>y-hn,hn+=r-y):(dn|=t<<hn&65535,hn+=r)}function re(t,e){var n=2*t;ne(65535&e[n],65535&e[n+1])}function se(t,e){var n,r,s=-1,i=t[1],o=0,a=7,u=4;for(0===i&&(a=138,u=3),n=0;e>=n;n++)if(r=i,i=t[2*(n+1)+1],!(++o<a&&r==i)){if(u>o){do re(r,tn);while(0!==--o)}else 0!==r?(r!=s&&(re(r,tn),o--),re(m,tn),ne(o-3,2)):10>=o?(re(w,tn),ne(o-3,3)):(re(g,tn),ne(o-11,7));o=0,s=r,0===i?(a=138,u=3):r==i?(a=6,u=3):(a=7,u=4)}}function ie(e,n,r){var s;for(ne(e-257,5),ne(n-1,5),ne(r-4,4),s=0;r>s;s++)ne(tn[2*t.bl_order[s]+1],3);se($e,e-1),se(Ze,n-1)}function oe(){16==hn?(p(dn),dn=0,hn=0):hn>=8&&(d(255&dn),dn>>>=8,hn-=8)}function ae(){ne(Q<<1,3),re(h,e.static_ltree),oe(),9>1+fn+10-hn&&(ne(Q<<1,3),re(h,e.static_ltree),oe()),fn=7}function ue(e,n){var r,s,i;if(en.pending_buf[cn+2*un]=e>>>8&255,en.pending_buf[cn+2*un+1]=255&e,en.pending_buf[on+un]=255&n,un++,0===e?$e[2*n]++:(ln++,e--,$e[2*(t._length_code[n]+l+1)]++,Ze[2*t.d_code(e)]++),0===(8191&un)&&Xe>2){for(r=8*un,s=Me-Ue,i=0;a>i;i++)r+=Ze[2*i]*(5+t.extra_dbits[i]);if(r>>>=3,ln<Math.floor(un/2)&&r<Math.floor(s/2))return!0}return un==an-1}function ce(e,n){var r,s,i,o,a=0;if(0!==un)do r=en.pending_buf[cn+2*a]<<8&65280|255&en.pending_buf[cn+2*a+1],s=255&en.pending_buf[on+a],a++,0===r?re(s,e):(i=t._length_code[s],re(i+l+1,e),o=t.extra_lbits[i],0!==o&&(s-=t.base_length[i],ne(s,o)),r--,i=t.d_code(r),re(i,n),o=t.extra_dbits[i],0!==o&&(r-=t.base_dist[i],ne(r,o)));while(un>a);re(h,e),fn=e[2*h+1]}function le(){hn>8?p(dn):hn>0&&d(255&dn),dn=0,hn=0}function fe(t,e,n){le(),fn=8,n&&(p(e),p(~e)),en.pending_buf.set(ze.subarray(t,t+e),en.pending),en.pending+=e}function de(t,e,n){ne((K<<1)+(n?1:0),3),fe(t,e,!0)}function he(t,n,r){var i,o,a=0;Xe>0?(nn.build_tree(en),rn.build_tree(en),a=c(),i=en.opt_len+3+7>>>3,o=en.static_len+3+7>>>3,i>=o&&(i=o)):i=o=n+5,i>=n+4&&-1!=t?de(t,n,r):o==i?(ne((Q<<1)+(r?1:0),3),ce(e.static_ltree,e.static_dtree)):(ne(($<<1)+(r?1:0),3),ie(nn.max_code+1,rn.max_code+1,a+1),ce($e,Ze)),s(),r&&le()}function pe(t){he(Ue>=0?Ue:-1,Me-Ue,t),Ue=Me,qe.flush_pending()}function me(){var t,e,n,r;do{if(r=Te-Ge-Me,0===r&&0===Me&&0===Ge)r=Ce;else if(-1==r)r--;else if(Me>=Ce+Ce-ee){ze.set(ze.subarray(Ce,Ce+Ce),0),He-=Ce,Me-=Ce,Ue-=Ce,t=Pe,n=t;do e=65535&Be[--n],Be[n]=e>=Ce?e-Ce:0;while(0!==--t);t=Ce,n=t;do e=65535&Ie[--n],Ie[n]=e>=Ce?e-Ce:0;while(0!==--t);r+=Ce}if(0===qe.avail_in)return;t=qe.read_buf(ze,Me+Ge,r),Ge+=t,Ge>=Z&&(Oe=255&ze[Me],Oe=(Oe<<De^255&ze[Me+1])&Fe)}while(ee>Ge&&0!==qe.avail_in)}function we(t){var e,n=65535;for(n>ke-5&&(n=ke-5);;){if(1>=Ge){if(me(),0===Ge&&t==k)return j;if(0===Ge)break}if(Me+=Ge,Ge=0,e=Ue+n,(0===Me||Me>=e)&&(Ge=Me-e,Me=e,pe(!1),0===qe.avail_out))return j;if(Me-Ue>=Ce-ee&&(pe(!1),0===qe.avail_out))return j}return pe(t==C),0===qe.avail_out?t==C?H:j:t==C?G:M}function ge(t){var e,n,r=Ve,s=Me,i=We,o=Me>Ce-ee?Me-(Ce-ee):0,a=Qe,u=Ee,c=Me+te,l=ze[s+i-1],f=ze[s+i];We>=Ke&&(r>>=2),a>Ge&&(a=Ge);do if(e=t,ze[e+i]==f&&ze[e+i-1]==l&&ze[e]==ze[s]&&ze[++e]==ze[s+1]){s+=2,e++;do;while(ze[++s]==ze[++e]&&ze[++s]==ze[++e]&&ze[++s]==ze[++e]&&ze[++s]==ze[++e]&&ze[++s]==ze[++e]&&ze[++s]==ze[++e]&&ze[++s]==ze[++e]&&ze[++s]==ze[++e]&&c>s);if(n=te-(c-s),s=c-te,n>i){if(He=t,i=n,n>=a)break;l=ze[s+i-1],f=ze[s+i]}}while((t=65535&Ie[t&u])>o&&0!==--r);return Ge>=i?i:Ge}function ye(t){for(var e,n=0;;){if(ee>Ge){if(me(),ee>Ge&&t==k)return j;if(0===Ge)break}if(Ge>=Z&&(Oe=(Oe<<De^255&ze[Me+(Z-1)])&Fe,n=65535&Be[Oe],Ie[Me&Ee]=Be[Oe],Be[Oe]=Me),0!==n&&Ce-ee>=(Me-n&65535)&&Ye!=q&&(Ne=ge(n)),Ne>=Z)if(e=ue(Me-He,Ne-Z),Ge-=Ne,Je>=Ne&&Ge>=Z){Ne--;do Me++,Oe=(Oe<<De^255&ze[Me+(Z-1)])&Fe,n=65535&Be[Oe],Ie[Me&Ee]=Be[Oe],Be[Oe]=Me;while(0!==--Ne);Me++}else Me+=Ne,Ne=0,Oe=255&ze[Me],Oe=(Oe<<De^255&ze[Me+1])&Fe;else e=ue(0,255&ze[Me]),Ge--,Me++;if(e&&(pe(!1),0===qe.avail_out))return j}return pe(t==C),0===qe.avail_out?t==C?H:j:t==C?G:M}function ve(t){for(var e,n,r=0;;){if(ee>Ge){if(me(),ee>Ge&&t==k)return j;if(0===Ge)break}if(Ge>=Z&&(Oe=(Oe<<De^255&ze[Me+(Z-1)])&Fe,r=65535&Be[Oe],Ie[Me&Ee]=Be[Oe],Be[Oe]=Me),We=Ne,Le=He,Ne=Z-1,0!==r&&Je>We&&Ce-ee>=(Me-r&65535)&&(Ye!=q&&(Ne=ge(r)),5>=Ne&&(Ye==b||Ne==Z&&Me-He>4096)&&(Ne=Z-1)),We>=Z&&We>=Ne){n=Me+Ge-Z,e=ue(Me-1-Le,We-Z),Ge-=We-1,We-=2;do++Me<=n&&(Oe=(Oe<<De^255&ze[Me+(Z-1)])&Fe,r=65535&Be[Oe],Ie[Me&Ee]=Be[Oe],Be[Oe]=Me);while(0!==--We);if(je=0,Ne=Z-1,Me++,e&&(pe(!1),0===qe.avail_out))return j}else if(0!==je){if(e=ue(0,255&ze[Me-1]),e&&pe(!1),Me++,Ge--,0===qe.avail_out)return j}else je=1,Me++,Ge--}return 0!==je&&(e=ue(0,255&ze[Me-1]),je=0),pe(t==C),0===qe.avail_out?t==C?H:j:t==C?G:M}function be(t){return t.total_in=t.total_out=0,t.msg=null,en.pending=0,en.pending_out=0,xe=J,Ae=k,i(),n(),S}var qe,xe,ke,_e,Ae,Ce,Se,Ee,ze,Te,Ie,Be,Oe,Pe,Re,Fe,De,Ue,Ne,Le,je,Me,He,Ge,We,Ve,Je,Xe,Ye,Ke,Qe,$e,Ze,tn,en=this,nn=new t,rn=new t,sn=new t;en.depth=[];var on,an,un,cn,ln,fn,dn,hn;en.bl_count=[],en.heap=[],$e=[],Ze=[],tn=[],en.pqdownheap=function(t,e){for(var n=en.heap,s=n[e],i=e<<1;i<=en.heap_len&&(i<en.heap_len&&r(t,n[i+1],n[i],en.depth)&&i++,!r(t,s,n[i],en.depth));)n[e]=n[i],e=i,i<<=1;n[e]=s},en.deflateInit=function(t,e,n,r,s,i){return r||(r=Y),s||(s=R),i||(i=x),t.msg=null,e==v&&(e=6),1>s||s>P||r!=Y||9>n||n>15||0>e||e>9||0>i||i>q?T:(t.dstate=en,Se=n,Ce=1<<Se,Ee=Ce-1,Re=s+7,Pe=1<<Re,Fe=Pe-1,De=Math.floor((Re+Z-1)/Z),ze=new Uint8Array(2*Ce),Ie=[],Be=[],an=1<<s+6,en.pending_buf=new Uint8Array(4*an),ke=4*an,cn=Math.floor(an/2),on=3*an,Xe=e,Ye=i,_e=255&r,be(t))},en.deflateEnd=function(){return xe!=V&&xe!=J&&xe!=X?T:(en.pending_buf=null,Be=null,Ie=null,ze=null,en.dstate=null,xe==J?I:S)},en.deflateParams=function(t,e,n){var r=S;return e==v&&(e=6),0>e||e>9||0>n||n>q?T:(N[Xe].func!=N[e].func&&0!==t.total_in&&(r=t.deflate(_)),Xe!=e&&(Xe=e,Je=N[Xe].max_lazy,Ke=N[Xe].good_length,Qe=N[Xe].nice_length,Ve=N[Xe].max_chain),Ye=n,r)},en.deflateSetDictionary=function(t,e,n){var r,s=n,i=0;if(!e||xe!=V)return T;if(Z>s)return S;for(s>Ce-ee&&(s=Ce-ee,i=n-s),ze.set(e.subarray(i,i+s),0),Me=s,Ue=s,Oe=255&ze[0],Oe=(Oe<<De^255&ze[1])&Fe,r=0;s-Z>=r;r++)Oe=(Oe<<De^255&ze[r+(Z-1)])&Fe,Ie[r&Ee]=Be[Oe],Be[Oe]=r;return S},en.deflate=function(t,e){var n,r,s,i,o;if(e>C||0>e)return T;if(!t.next_out||!t.next_in&&0!==t.avail_in||xe==X&&e!=C)return t.msg=L[z-T],T;if(0===t.avail_out)return t.msg=L[z-B],B;if(qe=t,i=Ae,Ae=e,xe==V&&(r=Y+(Se-8<<4)<<8,s=(Xe-1&255)>>1,s>3&&(s=3),r|=s<<6,0!==Me&&(r|=W),r+=31-r%31,xe=J,O(r)),0!==en.pending){if(qe.flush_pending(),0===qe.avail_out)return Ae=-1,S}else if(0===qe.avail_in&&i>=e&&e!=C)return qe.msg=L[z-B],B;if(xe==X&&0!==qe.avail_in)return t.msg=L[z-B],B;if(0!==qe.avail_in||0!==Ge||e!=k&&xe!=X){switch(o=-1,N[Xe].func){case F:o=we(e);break;case D:o=ye(e);break;case U:o=ve(e)}if((o==H||o==G)&&(xe=X),o==j||o==H)return 0===qe.avail_out&&(Ae=-1),S;if(o==M){if(e==_)ae();else if(de(0,0,!1),e==A)for(n=0;Pe>n;n++)Be[n]=0;if(qe.flush_pending(),0===qe.avail_out)return Ae=-1,S}}return e!=C?S:E}}function i(){var t=this;t.next_in_index=0,t.next_out_index=0,t.avail_in=0,t.total_in=0,t.avail_out=0,t.total_out=0}var o=15,a=30,u=19,c=29,l=256,f=l+1+c,d=2*f+1,h=256,p=7,m=16,w=17,g=18,y=16,v=-1,b=1,q=2,x=0,k=0,_=1,A=3,C=4,S=0,E=1,z=2,T=-2,I=-3,B=-5,O=[0,1,2,3,4,4,5,5,6,6,6,6,7,7,7,7,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,16,17,18,18,19,19,20,20,20,20,21,21,21,21,22,22,22,22,22,22,22,22,23,23,23,23,23,23,23,23,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29,29];t._length_code=[0,1,2,3,4,5,6,7,8,8,9,9,10,10,11,11,12,12,12,12,13,13,13,13,14,14,14,14,15,15,15,15,16,16,16,16,16,16,16,16,17,17,17,17,17,17,17,17,18,18,18,18,18,18,18,18,19,19,19,19,19,19,19,19,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,28],t.base_length=[0,1,2,3,4,5,6,7,8,10,12,14,16,20,24,28,32,40,48,56,64,80,96,112,128,160,192,224,0],t.base_dist=[0,1,2,3,4,6,8,12,16,24,32,48,64,96,128,192,256,384,512,768,1024,1536,2048,3072,4096,6144,8192,12288,16384,24576],t.d_code=function(t){return 256>t?O[t]:O[256+(t>>>7)]},t.extra_lbits=[0,0,0,0,0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,0],t.extra_dbits=[0,0,0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13],t.extra_blbits=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,3,7],t.bl_order=[16,17,18,0,8,7,9,6,10,5,11,4,12,3,13,2,14,1,15],e.static_ltree=[12,8,140,8,76,8,204,8,44,8,172,8,108,8,236,8,28,8,156,8,92,8,220,8,60,8,188,8,124,8,252,8,2,8,130,8,66,8,194,8,34,8,162,8,98,8,226,8,18,8,146,8,82,8,210,8,50,8,178,8,114,8,242,8,10,8,138,8,74,8,202,8,42,8,170,8,106,8,234,8,26,8,154,8,90,8,218,8,58,8,186,8,122,8,250,8,6,8,134,8,70,8,198,8,38,8,166,8,102,8,230,8,22,8,150,8,86,8,214,8,54,8,182,8,118,8,246,8,14,8,142,8,78,8,206,8,46,8,174,8,110,8,238,8,30,8,158,8,94,8,222,8,62,8,190,8,126,8,254,8,1,8,129,8,65,8,193,8,33,8,161,8,97,8,225,8,17,8,145,8,81,8,209,8,49,8,177,8,113,8,241,8,9,8,137,8,73,8,201,8,41,8,169,8,105,8,233,8,25,8,153,8,89,8,217,8,57,8,185,8,121,8,249,8,5,8,133,8,69,8,197,8,37,8,165,8,101,8,229,8,21,8,149,8,85,8,213,8,53,8,181,8,117,8,245,8,13,8,141,8,77,8,205,8,45,8,173,8,109,8,237,8,29,8,157,8,93,8,221,8,61,8,189,8,125,8,253,8,19,9,275,9,147,9,403,9,83,9,339,9,211,9,467,9,51,9,307,9,179,9,435,9,115,9,371,9,243,9,499,9,11,9,267,9,139,9,395,9,75,9,331,9,203,9,459,9,43,9,299,9,171,9,427,9,107,9,363,9,235,9,491,9,27,9,283,9,155,9,411,9,91,9,347,9,219,9,475,9,59,9,315,9,187,9,443,9,123,9,379,9,251,9,507,9,7,9,263,9,135,9,391,9,71,9,327,9,199,9,455,9,39,9,295,9,167,9,423,9,103,9,359,9,231,9,487,9,23,9,279,9,151,9,407,9,87,9,343,9,215,9,471,9,55,9,311,9,183,9,439,9,119,9,375,9,247,9,503,9,15,9,271,9,143,9,399,9,79,9,335,9,207,9,463,9,47,9,303,9,175,9,431,9,111,9,367,9,239,9,495,9,31,9,287,9,159,9,415,9,95,9,351,9,223,9,479,9,63,9,319,9,191,9,447,9,127,9,383,9,255,9,511,9,0,7,64,7,32,7,96,7,16,7,80,7,48,7,112,7,8,7,72,7,40,7,104,7,24,7,88,7,56,7,120,7,4,7,68,7,36,7,100,7,20,7,84,7,52,7,116,7,3,8,131,8,67,8,195,8,35,8,163,8,99,8,227,8],e.static_dtree=[0,5,16,5,8,5,24,5,4,5,20,5,12,5,28,5,2,5,18,5,10,5,26,5,6,5,22,5,14,5,30,5,1,5,17,5,9,5,25,5,5,5,21,5,13,5,29,5,3,5,19,5,11,5,27,5,7,5,23,5],e.static_l_desc=new e(e.static_ltree,t.extra_lbits,l+1,f,o),e.static_d_desc=new e(e.static_dtree,t.extra_dbits,0,a,o),e.static_bl_desc=new e(null,t.extra_blbits,0,u,p);var P=9,R=8,F=0,D=1,U=2,N=[new n(0,0,0,0,F),new n(4,4,8,4,D),new n(4,5,16,8,D),new n(4,6,32,32,D),new n(4,4,16,16,U),new n(8,16,32,32,U),new n(8,16,128,128,U),new n(8,32,128,256,U),new n(32,128,258,1024,U),new n(32,258,258,4096,U)],L=["need dictionary","stream end","","","stream error","data error","","buffer error","",""],j=0,M=1,H=2,G=3,W=32,V=42,J=113,X=666,Y=8,K=0,Q=1,$=2,Z=3,te=258,ee=te+Z+1;return i.prototype={deflateInit:function(t,e){var n=this;return n.dstate=new s,e||(e=o),n.dstate.deflateInit(n,t,e)},deflate:function(t){var e=this;return e.dstate?e.dstate.deflate(e,t):T},deflateEnd:function(){var t=this;if(!t.dstate)return T;var e=t.dstate.deflateEnd();return t.dstate=null,e},deflateParams:function(t,e){var n=this;return n.dstate?n.dstate.deflateParams(n,t,e):T},deflateSetDictionary:function(t,e){var n=this;return n.dstate?n.dstate.deflateSetDictionary(n,t,e):T},read_buf:function(t,e,n){var r=this,s=r.avail_in;return s>n&&(s=n),0===s?0:(r.avail_in-=s,t.set(r.next_in.subarray(r.next_in_index,r.next_in_index+s),e),r.next_in_index+=s,r.total_in+=s,s)},flush_pending:function(){var t=this,e=t.dstate.pending;e>t.avail_out&&(e=t.avail_out),0!==e&&(t.next_out.set(t.dstate.pending_buf.subarray(t.dstate.pending_out,t.dstate.pending_out+e),t.next_out_index),t.next_out_index+=e,t.dstate.pending_out+=e,t.total_out+=e,t.avail_out-=e,t.dstate.pending-=e,0===t.dstate.pending&&(t.dstate.pending_out=0))}},function(t){var e=this,n=new i,r=512,s=k,o=new Uint8Array(r);"undefined"==typeof t&&(t=v),n.deflateInit(t),n.next_out=o,e.append=function(t,e){var i,a,u=[],c=0,l=0,f=0;if(t.length){n.next_in_index=0,n.next_in=t,n.avail_in=t.length;do{if(n.next_out_index=0,n.avail_out=r,i=n.deflate(s),i!=S)throw"deflating: "+n.msg;n.next_out_index&&u.push(n.next_out_index==r?new Uint8Array(o):new Uint8Array(o.subarray(0,n.next_out_index))),f+=n.next_out_index,e&&n.next_in_index>0&&n.next_in_index!=c&&(e(n.next_in_index),c=n.next_in_index)}while(n.avail_in>0||0===n.avail_out);return a=new Uint8Array(f),u.forEach(function(t){a.set(t,l),l+=t.length}),a}},e.flush=function(){var t,e,s=[],i=0,a=0;do{if(n.next_out_index=0,n.avail_out=r,t=n.deflate(C),t!=E&&t!=S)throw"deflating: "+n.msg;r-n.avail_out>0&&s.push(new Uint8Array(o.subarray(0,n.next_out_index))),a+=n.next_out_index}while(n.avail_in>0||0===n.avail_out);return n.deflateEnd(),e=new Uint8Array(a),s.forEach(function(t){e.set(t,i),i+=t.length}),e}}}(this);!function(t){var e;e=function(){function e(t){var e,n,r,s,i,o,a,u,c,l,f,d,h,p,m;for(this.data=t,this.pos=8,this.palette=[],this.imgData=[],this.transparency={},this.animation=null,this.text={},o=null;;){switch(e=this.readUInt32(),l=function(){var t,e;for(e=[],a=t=0;4>t;a=++t)e.push(String.fromCharCode(this.data[this.pos++]));return e}.call(this).join("")){case"IHDR":this.width=this.readUInt32(),this.height=this.readUInt32(),this.bits=this.data[this.pos++],this.colorType=this.data[this.pos++],this.compressionMethod=this.data[this.pos++],this.filterMethod=this.data[this.pos++],this.interlaceMethod=this.data[this.pos++];break;case"acTL":this.animation={numFrames:this.readUInt32(),numPlays:this.readUInt32()||1/0,frames:[]};break;case"PLTE":this.palette=this.read(e);break;case"fcTL":o&&this.animation.frames.push(o),this.pos+=4,o={width:this.readUInt32(),height:this.readUInt32(),xOffset:this.readUInt32(),yOffset:this.readUInt32()},i=this.readUInt16(),s=this.readUInt16()||100,o.delay=1e3*i/s,o.disposeOp=this.data[this.pos++],o.blendOp=this.data[this.pos++],o.data=[];break;case"IDAT":case"fdAT":for("fdAT"===l&&(this.pos+=4,e-=4),t=(null!=o?o.data:void 0)||this.imgData,a=h=0;e>=0?e>h:h>e;a=e>=0?++h:--h)t.push(this.data[this.pos++]);break;case"tRNS":switch(this.transparency={},this.colorType){case 3:if(r=this.palette.length/3,this.transparency.indexed=this.read(e),this.transparency.indexed.length>r)throw new Error("More transparent colors than palette size");if(f=r-this.transparency.indexed.length,f>0)for(a=p=0;f>=0?f>p:p>f;a=f>=0?++p:--p)this.transparency.indexed.push(255);break;case 0:this.transparency.grayscale=this.read(e)[0];break;case 2:this.transparency.rgb=this.read(e)}break;case"tEXt":d=this.read(e),u=d.indexOf(0),c=String.fromCharCode.apply(String,d.slice(0,u)),this.text[c]=String.fromCharCode.apply(String,d.slice(u+1));break;case"IEND":return o&&this.animation.frames.push(o),this.colors=function(){switch(this.colorType){case 0:case 3:case 4:return 1;case 2:case 6:return 3}}.call(this),this.hasAlphaChannel=4===(m=this.colorType)||6===m,n=this.colors+(this.hasAlphaChannel?1:0),this.pixelBitlength=this.bits*n,this.colorSpace=function(){switch(this.colors){case 1:return"DeviceGray";case 3:return"DeviceRGB"}}.call(this),void(this.imgData=new Uint8Array(this.imgData));default:this.pos+=e}if(this.pos+=4,this.pos>this.data.length)throw new Error("Incomplete or corrupt PNG file")}}var n,r,s,i,a,u,c,l;e.load=function(t,n,r){var s;return"function"==typeof n&&(r=n),s=new XMLHttpRequest,s.open("GET",t,!0),s.responseType="arraybuffer",s.onload=function(){var t,i;return t=new Uint8Array(s.response||s.mozResponseArrayBuffer),i=new e(t),"function"==typeof(null!=n?n.getContext:void 0)&&i.render(n),"function"==typeof r?r(i):void 0},s.send(null)},i=0,s=1,a=2,r=0,n=1,e.prototype.read=function(t){var e,n,r;for(r=[],e=n=0;t>=0?t>n:n>t;e=t>=0?++n:--n)r.push(this.data[this.pos++]);return r},e.prototype.readUInt32=function(){var t,e,n,r;return t=this.data[this.pos++]<<24,e=this.data[this.pos++]<<16,n=this.data[this.pos++]<<8,r=this.data[this.pos++],t|e|n|r},e.prototype.readUInt16=function(){var t,e;return t=this.data[this.pos++]<<8,e=this.data[this.pos++],t|e},e.prototype.decodePixels=function(t){var e,n,r,s,i,a,u,c,l,f,d,h,p,m,w,g,y,v,b,q,x,k,_;if(null==t&&(t=this.imgData),0===t.length)return new Uint8Array(0);for(t=new o(t),t=t.getBytes(),h=this.pixelBitlength/8,g=h*this.width,p=new Uint8Array(g*this.height),a=t.length,w=0,m=0,n=0;a>m;){switch(t[m++]){case 0:for(s=b=0;g>b;s=b+=1)p[n++]=t[m++];break;case 1:for(s=q=0;g>q;s=q+=1)e=t[m++],i=h>s?0:p[n-h],p[n++]=(e+i)%256;break;case 2:for(s=x=0;g>x;s=x+=1)e=t[m++],r=(s-s%h)/h,y=w&&p[(w-1)*g+r*h+s%h],p[n++]=(y+e)%256;break;case 3:for(s=k=0;g>k;s=k+=1)e=t[m++],r=(s-s%h)/h,i=h>s?0:p[n-h],y=w&&p[(w-1)*g+r*h+s%h],p[n++]=(e+Math.floor((i+y)/2))%256;break;case 4:for(s=_=0;g>_;s=_+=1)e=t[m++],r=(s-s%h)/h,i=h>s?0:p[n-h],0===w?y=v=0:(y=p[(w-1)*g+r*h+s%h],v=r&&p[(w-1)*g+(r-1)*h+s%h]),u=i+y-v,c=Math.abs(u-i),f=Math.abs(u-y),d=Math.abs(u-v),l=f>=c&&d>=c?i:d>=f?y:v,p[n++]=(e+l)%256;break;default:throw new Error("Invalid filter algorithm: "+t[m-1])}w++}return p},e.prototype.decodePalette=function(){var t,e,n,r,s,i,o,a,u,c;for(r=this.palette,o=this.transparency.indexed||[],i=new Uint8Array((o.length||0)+r.length),s=0,n=r.length,t=0,e=a=0,u=r.length;u>a;e=a+=3)i[s++]=r[e],i[s++]=r[e+1],i[s++]=r[e+2],i[s++]=null!=(c=o[t++])?c:255;return i},e.prototype.copyToImageData=function(t,e){var n,r,s,i,o,a,u,c,l,f,d;if(r=this.colors,l=null,n=this.hasAlphaChannel,this.palette.length&&(l=null!=(d=this._decodedPalette)?d:this._decodedPalette=this.decodePalette(),r=4,n=!0),s=t.data||t,c=s.length,o=l||e,i=a=0,1===r)for(;c>i;)u=l?4*e[i/4]:a,f=o[u++],s[i++]=f,s[i++]=f,s[i++]=f,s[i++]=n?o[u++]:255,a=u;else for(;c>i;)u=l?4*e[i/4]:a,s[i++]=o[u++],s[i++]=o[u++],s[i++]=o[u++],s[i++]=n?o[u++]:255,a=u},e.prototype.decode=function(){var t;return t=new Uint8Array(this.width*this.height*4),this.copyToImageData(t,this.decodePixels()),t};try{c=t.document.createElement("canvas"),l=c.getContext("2d")}catch(f){return-1}return u=function(t){var e;return l.width=t.width,l.height=t.height,l.clearRect(0,0,t.width,t.height),l.putImageData(t,0,0),e=new Image,e.src=c.toDataURL(),e},e.prototype.decodeFrames=function(t){var e,n,r,s,i,o,a,c;if(this.animation){for(a=this.animation.frames,c=[],n=i=0,o=a.length;o>i;n=++i)e=a[n],r=t.createImageData(e.width,e.height),s=this.decodePixels(new Uint8Array(e.data)),this.copyToImageData(r,s),e.imageData=r,c.push(e.image=u(r));return c}},e.prototype.renderFrame=function(t,e){var n,i,o;return i=this.animation.frames,n=i[e],o=i[e-1],0===e&&t.clearRect(0,0,this.width,this.height),(null!=o?o.disposeOp:void 0)===s?t.clearRect(o.xOffset,o.yOffset,o.width,o.height):(null!=o?o.disposeOp:void 0)===a&&t.putImageData(o.imageData,o.xOffset,o.yOffset),n.blendOp===r&&t.clearRect(n.xOffset,n.yOffset,n.width,n.height),t.drawImage(n.image,n.xOffset,n.yOffset)},e.prototype.animate=function(t){var e,n,r,s,i,o,a=this;return n=0,o=this.animation,s=o.numFrames,r=o.frames,i=o.numPlays,(e=function(){var o,u;return o=n++%s,u=r[o],a.renderFrame(t,o),s>1&&i>n/s?a.animation._timeout=setTimeout(e,u.delay):void 0
 })()},e.prototype.stopAnimation=function(){var t;return clearTimeout(null!=(t=this.animation)?t._timeout:void 0)},e.prototype.render=function(t){var e,n;return t._png&&t._png.stopAnimation(),t._png=this,t.width=this.width,t.height=this.height,e=t.getContext("2d"),this.animation?(this.decodeFrames(e),this.animate(e)):(n=e.createImageData(this.width,this.height),this.copyToImageData(n,this.decodePixels()),e.putImageData(n,0,0))},e}(),t.PNG=e}("undefined"!=typeof window&&window||this);var i=function(){function t(){this.pos=0,this.bufferLength=0,this.eof=!1,this.buffer=null}return t.prototype={ensureBuffer:function(t){var e=this.buffer,n=e?e.byteLength:0;if(n>t)return e;for(var r=512;t>r;)r<<=1;for(var s=new Uint8Array(r),i=0;n>i;++i)s[i]=e[i];return this.buffer=s},getByte:function(){for(var t=this.pos;this.bufferLength<=t;){if(this.eof)return null;this.readBlock()}return this.buffer[this.pos++]},getBytes:function(t){var e=this.pos;if(t){this.ensureBuffer(e+t);for(var n=e+t;!this.eof&&this.bufferLength<n;)this.readBlock();var r=this.bufferLength;n>r&&(n=r)}else{for(;!this.eof;)this.readBlock();var n=this.bufferLength}return this.pos=n,this.buffer.subarray(e,n)},lookChar:function(){for(var t=this.pos;this.bufferLength<=t;){if(this.eof)return null;this.readBlock()}return String.fromCharCode(this.buffer[this.pos])},getChar:function(){for(var t=this.pos;this.bufferLength<=t;){if(this.eof)return null;this.readBlock()}return String.fromCharCode(this.buffer[this.pos++])},makeSubStream:function(t,e,n){for(var r=t+e;this.bufferLength<=r&&!this.eof;)this.readBlock();return new Stream(this.buffer,t,e,n)},skip:function(t){t||(t=1),this.pos+=t},reset:function(){this.pos=0}},t}(),o=function(){function t(t){throw new Error(t)}function e(e){var n=0,r=e[n++],s=e[n++];(-1==r||-1==s)&&t("Invalid header in flate stream"),8!=(15&r)&&t("Unknown compression method in flate stream"),((r<<8)+s)%31!=0&&t("Bad FCHECK in flate stream"),32&s&&t("FDICT bit set in flate stream"),this.bytes=e,this.bytesPos=n,this.codeSize=0,this.codeBuf=0,i.call(this)}if("undefined"==typeof Uint32Array)return void 0;var n=new Uint32Array([16,17,18,0,8,7,9,6,10,5,11,4,12,3,13,2,14,1,15]),r=new Uint32Array([3,4,5,6,7,8,9,10,65547,65549,65551,65553,131091,131095,131099,131103,196643,196651,196659,196667,262211,262227,262243,262259,327811,327843,327875,327907,258,258,258]),s=new Uint32Array([1,2,3,4,65541,65543,131081,131085,196625,196633,262177,262193,327745,327777,393345,393409,459009,459137,524801,525057,590849,591361,657409,658433,724993,727041,794625,798721,868353,876545]),o=[new Uint32Array([459008,524368,524304,524568,459024,524400,524336,590016,459016,524384,524320,589984,524288,524416,524352,590048,459012,524376,524312,589968,459028,524408,524344,590032,459020,524392,524328,59e4,524296,524424,524360,590064,459010,524372,524308,524572,459026,524404,524340,590024,459018,524388,524324,589992,524292,524420,524356,590056,459014,524380,524316,589976,459030,524412,524348,590040,459022,524396,524332,590008,524300,524428,524364,590072,459009,524370,524306,524570,459025,524402,524338,590020,459017,524386,524322,589988,524290,524418,524354,590052,459013,524378,524314,589972,459029,524410,524346,590036,459021,524394,524330,590004,524298,524426,524362,590068,459011,524374,524310,524574,459027,524406,524342,590028,459019,524390,524326,589996,524294,524422,524358,590060,459015,524382,524318,589980,459031,524414,524350,590044,459023,524398,524334,590012,524302,524430,524366,590076,459008,524369,524305,524569,459024,524401,524337,590018,459016,524385,524321,589986,524289,524417,524353,590050,459012,524377,524313,589970,459028,524409,524345,590034,459020,524393,524329,590002,524297,524425,524361,590066,459010,524373,524309,524573,459026,524405,524341,590026,459018,524389,524325,589994,524293,524421,524357,590058,459014,524381,524317,589978,459030,524413,524349,590042,459022,524397,524333,590010,524301,524429,524365,590074,459009,524371,524307,524571,459025,524403,524339,590022,459017,524387,524323,589990,524291,524419,524355,590054,459013,524379,524315,589974,459029,524411,524347,590038,459021,524395,524331,590006,524299,524427,524363,590070,459011,524375,524311,524575,459027,524407,524343,590030,459019,524391,524327,589998,524295,524423,524359,590062,459015,524383,524319,589982,459031,524415,524351,590046,459023,524399,524335,590014,524303,524431,524367,590078,459008,524368,524304,524568,459024,524400,524336,590017,459016,524384,524320,589985,524288,524416,524352,590049,459012,524376,524312,589969,459028,524408,524344,590033,459020,524392,524328,590001,524296,524424,524360,590065,459010,524372,524308,524572,459026,524404,524340,590025,459018,524388,524324,589993,524292,524420,524356,590057,459014,524380,524316,589977,459030,524412,524348,590041,459022,524396,524332,590009,524300,524428,524364,590073,459009,524370,524306,524570,459025,524402,524338,590021,459017,524386,524322,589989,524290,524418,524354,590053,459013,524378,524314,589973,459029,524410,524346,590037,459021,524394,524330,590005,524298,524426,524362,590069,459011,524374,524310,524574,459027,524406,524342,590029,459019,524390,524326,589997,524294,524422,524358,590061,459015,524382,524318,589981,459031,524414,524350,590045,459023,524398,524334,590013,524302,524430,524366,590077,459008,524369,524305,524569,459024,524401,524337,590019,459016,524385,524321,589987,524289,524417,524353,590051,459012,524377,524313,589971,459028,524409,524345,590035,459020,524393,524329,590003,524297,524425,524361,590067,459010,524373,524309,524573,459026,524405,524341,590027,459018,524389,524325,589995,524293,524421,524357,590059,459014,524381,524317,589979,459030,524413,524349,590043,459022,524397,524333,590011,524301,524429,524365,590075,459009,524371,524307,524571,459025,524403,524339,590023,459017,524387,524323,589991,524291,524419,524355,590055,459013,524379,524315,589975,459029,524411,524347,590039,459021,524395,524331,590007,524299,524427,524363,590071,459011,524375,524311,524575,459027,524407,524343,590031,459019,524391,524327,589999,524295,524423,524359,590063,459015,524383,524319,589983,459031,524415,524351,590047,459023,524399,524335,590015,524303,524431,524367,590079]),9],a=[new Uint32Array([327680,327696,327688,327704,327684,327700,327692,327708,327682,327698,327690,327706,327686,327702,327694,0,327681,327697,327689,327705,327685,327701,327693,327709,327683,327699,327691,327707,327687,327703,327695,0]),5];return e.prototype=Object.create(i.prototype),e.prototype.getBits=function(e){for(var n,r=this.codeSize,s=this.codeBuf,i=this.bytes,o=this.bytesPos;e>r;)"undefined"==typeof(n=i[o++])&&t("Bad encoding in flate stream"),s|=n<<r,r+=8;return n=s&(1<<e)-1,this.codeBuf=s>>e,this.codeSize=r-=e,this.bytesPos=o,n},e.prototype.getCode=function(e){for(var n=e[0],r=e[1],s=this.codeSize,i=this.codeBuf,o=this.bytes,a=this.bytesPos;r>s;){var u;"undefined"==typeof(u=o[a++])&&t("Bad encoding in flate stream"),i|=u<<s,s+=8}var c=n[i&(1<<r)-1],l=c>>16,f=65535&c;return(0==s||l>s||0==l)&&t("Bad encoding in flate stream"),this.codeBuf=i>>l,this.codeSize=s-l,this.bytesPos=a,f},e.prototype.generateHuffmanTable=function(t){for(var e=t.length,n=0,r=0;e>r;++r)t[r]>n&&(n=t[r]);for(var s=1<<n,i=new Uint32Array(s),o=1,a=0,u=2;n>=o;++o,a<<=1,u<<=1)for(var c=0;e>c;++c)if(t[c]==o){for(var l=0,f=a,r=0;o>r;++r)l=l<<1|1&f,f>>=1;for(var r=l;s>r;r+=u)i[r]=o<<16|c;++a}return[i,n]},e.prototype.readBlock=function(){function e(t,e,n,r,s){for(var i=t.getBits(n)+r;i-->0;)e[k++]=s}var i=this.getBits(3);if(1&i&&(this.eof=!0),i>>=1,0==i){var u,c=this.bytes,l=this.bytesPos;"undefined"==typeof(u=c[l++])&&t("Bad block header in flate stream");var f=u;"undefined"==typeof(u=c[l++])&&t("Bad block header in flate stream"),f|=u<<8,"undefined"==typeof(u=c[l++])&&t("Bad block header in flate stream");var d=u;"undefined"==typeof(u=c[l++])&&t("Bad block header in flate stream"),d|=u<<8,d!=(65535&~f)&&t("Bad uncompressed block length in flate stream"),this.codeBuf=0,this.codeSize=0;var h=this.bufferLength,p=this.ensureBuffer(h+f),m=h+f;this.bufferLength=m;for(var w=h;m>w;++w){if("undefined"==typeof(u=c[l++])){this.eof=!0;break}p[w]=u}return void(this.bytesPos=l)}var g,y;if(1==i)g=o,y=a;else if(2==i){for(var v=this.getBits(5)+257,b=this.getBits(5)+1,q=this.getBits(4)+4,x=Array(n.length),k=0;q>k;)x[n[k++]]=this.getBits(3);for(var _=this.generateHuffmanTable(x),A=0,k=0,C=v+b,S=new Array(C);C>k;){var E=this.getCode(_);16==E?e(this,S,2,3,A):17==E?e(this,S,3,3,A=0):18==E?e(this,S,7,11,A=0):S[k++]=A=E}g=this.generateHuffmanTable(S.slice(0,v)),y=this.generateHuffmanTable(S.slice(v,C))}else t("Unknown block type in flate stream");for(var p=this.buffer,z=p?p.length:0,T=this.bufferLength;;){var I=this.getCode(g);if(256>I)T+1>=z&&(p=this.ensureBuffer(T+1),z=p.length),p[T++]=I;else{if(256==I)return void(this.bufferLength=T);I-=257,I=r[I];var B=I>>16;B>0&&(B=this.getBits(B));var A=(65535&I)+B;I=this.getCode(y),I=s[I],B=I>>16,B>0&&(B=this.getBits(B));var O=(65535&I)+B;T+A>=z&&(p=this.ensureBuffer(T+A),z=p.length);for(var P=0;A>P;++P,++T)p[T]=p[T-O]}}},e}();!function(t){var e="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";"undefined"==typeof t.btoa&&(t.btoa=function(t){var n,r,s,i,o,a,u,c,l=0,f=0,d="",h=[];if(!t)return t;do n=t.charCodeAt(l++),r=t.charCodeAt(l++),s=t.charCodeAt(l++),c=n<<16|r<<8|s,i=c>>18&63,o=c>>12&63,a=c>>6&63,u=63&c,h[f++]=e.charAt(i)+e.charAt(o)+e.charAt(a)+e.charAt(u);while(l<t.length);d=h.join("");var p=t.length%3;return(p?d.slice(0,p-3):d)+"===".slice(p||3)}),"undefined"==typeof t.atob&&(t.atob=function(t){var n,r,s,i,o,a,u,c,l=0,f=0,d="",h=[];if(!t)return t;t+="";do i=e.indexOf(t.charAt(l++)),o=e.indexOf(t.charAt(l++)),a=e.indexOf(t.charAt(l++)),u=e.indexOf(t.charAt(l++)),c=i<<18|o<<12|a<<6|u,n=c>>16&255,r=c>>8&255,s=255&c,h[f++]=64==a?String.fromCharCode(n):64==u?String.fromCharCode(n,r):String.fromCharCode(n,r,s);while(l<t.length);return d=h.join("")}),Array.prototype.map||(Array.prototype.map=function(t){if(void 0===this||null===this||"function"!=typeof t)throw new TypeError;for(var e=Object(this),n=e.length>>>0,r=new Array(n),s=arguments.length>1?arguments[1]:void 0,i=0;n>i;i++)i in e&&(r[i]=t.call(s,e[i],i,e));return r}),Array.isArray||(Array.isArray=function(t){return"[object Array]"===Object.prototype.toString.call(t)}),Array.prototype.forEach||(Array.prototype.forEach=function(t,e){"use strict";if(void 0===this||null===this||"function"!=typeof t)throw new TypeError;for(var n=Object(this),r=n.length>>>0,s=0;r>s;s++)s in n&&t.call(e,n[s],s,n)}),Object.keys||(Object.keys=function(){"use strict";var t=Object.prototype.hasOwnProperty,e=!{toString:null}.propertyIsEnumerable("toString"),n=["toString","toLocaleString","valueOf","hasOwnProperty","isPrototypeOf","propertyIsEnumerable","constructor"],r=n.length;return function(s){if("object"!=typeof s&&("function"!=typeof s||null===s))throw new TypeError;var i,o,a=[];for(i in s)t.call(s,i)&&a.push(i);if(e)for(o=0;r>o;o++)t.call(s,n[o])&&a.push(n[o]);return a}}()),String.prototype.trim||(String.prototype.trim=function(){return this.replace(/^\s+|\s+$/g,"")}),String.prototype.trimLeft||(String.prototype.trimLeft=function(){return this.replace(/^\s+/g,"")}),String.prototype.trimRight||(String.prototype.trimRight=function(){return this.replace(/\s+$/g,"")})}("undefined"!=typeof self&&self||"undefined"!=typeof window&&window||this)}({},function(){return this}());
 /**
- * @license AngularJS v1.3.7
+ * @license AngularJS v1.3.14
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -18509,7 +18509,7 @@ function minErr(module, ErrorConstructor) {
       return match;
     });
 
-    message = message + '\nhttp://errors.angularjs.org/1.3.7/' +
+    message = message + '\nhttp://errors.angularjs.org/1.3.14/' +
       (module ? module + '/' : '') + code;
     for (i = 2; i < arguments.length; i++) {
       message = message + (i == 2 ? '?' : '&') + 'p' + (i - 2) + '=' +
@@ -18836,8 +18836,7 @@ function nextUid() {
 function setHashKey(obj, h) {
   if (h) {
     obj.$$hashKey = h;
-  }
-  else {
+  } else {
     delete obj.$$hashKey;
   }
 }
@@ -18920,6 +18919,8 @@ noop.$inject = [];
        return (transformationFn || angular.identity)(value);
      };
    ```
+  * @param {*} value to be returned.
+  * @returns {*} the value passed in.
  */
 function identity($) {return $;}
 identity.$inject = [];
@@ -19144,7 +19145,7 @@ function isElement(node) {
 function makeMap(str) {
   var obj = {}, items = str.split(","), i;
   for (i = 0; i < items.length; i++)
-    obj[ items[i] ] = true;
+    obj[items[i]] = true;
   return obj;
 }
 
@@ -19174,7 +19175,7 @@ function arrayRemove(array, value) {
  * Creates a deep copy of `source`, which should be an object or an array.
  *
  * * If no destination is supplied, a copy of the object or array is created.
- * * If a destination is provided, all of its elements (for array) or properties (for objects)
+ * * If a destination is provided, all of its elements (for arrays) or properties (for objects)
  *   are deleted and then all elements/properties from the source are copied to it.
  * * If `source` is not an object or array (inc. `null` and `undefined`), `source` is returned.
  * * If `source` is identical to 'destination' an exception will be thrown.
@@ -19512,7 +19513,7 @@ function toJson(obj, pretty) {
  * Deserializes a JSON string.
  *
  * @param {string} json JSON string to deserialize.
- * @returns {Object|Array|string|number} Deserialized thingy.
+ * @returns {Object|Array|string|number} Deserialized JSON string.
  */
 function fromJson(json) {
   return isString(json)
@@ -19685,7 +19686,7 @@ function getNgAttribute(element, ngAttr) {
  * {@link angular.bootstrap} instead. AngularJS applications cannot be nested within each other.
  *
  * You can specify an **AngularJS module** to be used as the root module for the application.  This
- * module will be loaded into the {@link auto.$injector} when the application is bootstrapped and
+ * module will be loaded into the {@link auto.$injector} when the application is bootstrapped. It
  * should contain the application code needed or have dependencies on other modules that will
  * contain the code. See {@link angular.module} for more information.
  *
@@ -19693,7 +19694,7 @@ function getNgAttribute(element, ngAttr) {
  * document would not be compiled, the `AppController` would not be instantiated and the `{{ a+b }}`
  * would not be resolved to `3`.
  *
- * `ngApp` is the easiest, and most common, way to bootstrap an application.
+ * `ngApp` is the easiest, and most common way to bootstrap an application.
  *
  <example module="ngAppDemo">
    <file name="index.html">
@@ -19855,7 +19856,7 @@ function angularInit(element, bootstrap) {
  * @param {DOMElement} element DOM element which is the root of angular application.
  * @param {Array<String|Function|Array>=} modules an array of modules to load into the application.
  *     Each item in the array should be the name of a predefined module or a (DI annotated)
- *     function that will be invoked by the injector as a run block.
+ *     function that will be invoked by the injector as a `config` block.
  *     See: {@link angular.module modules}
  * @param {Object=} config an object for defining configuration options for the application. The
  *     following keys are supported:
@@ -19925,8 +19926,12 @@ function bootstrap(element, modules, config) {
     forEach(extraModules, function(module) {
       modules.push(module);
     });
-    doBootstrap();
+    return doBootstrap();
   };
+
+  if (isFunction(angular.resumeDeferredBootstrap)) {
+    angular.resumeDeferredBootstrap();
+  }
 }
 
 /**
@@ -20571,11 +20576,11 @@ function toDebugString(obj) {
  * - `codeName` – `{string}` – Code name of the release, such as "jiggling-armfat".
  */
 var version = {
-  full: '1.3.7',    // all of these placeholder strings will be replaced by grunt's
+  full: '1.3.14',    // all of these placeholder strings will be replaced by grunt's
   major: 1,    // package task
   minor: 3,
-  dot: 7,
-  codeName: 'leaky-obstruction'
+  dot: 14,
+  codeName: 'instantaneous-browserification'
 };
 
 
@@ -22610,7 +22615,7 @@ function createInjector(modulesToLoad, strictDi) {
       }
 
       var args = [],
-          $inject = annotate(fn, strictDi, serviceName),
+          $inject = createInjector.$$annotate(fn, strictDi, serviceName),
           length, i,
           key;
 
@@ -22639,7 +22644,7 @@ function createInjector(modulesToLoad, strictDi) {
       // Check if Type is annotated and use just the given function at n-1 as parameter
       // e.g. someModule.factory('greeter', ['$window', function(renamed$window) {}]);
       // Object creation: http://jsperf.com/create-constructor/2
-      var instance = Object.create((isArray(Type) ? Type[Type.length - 1] : Type).prototype);
+      var instance = Object.create((isArray(Type) ? Type[Type.length - 1] : Type).prototype || null);
       var returnedValue = invoke(Type, instance, locals, serviceName);
 
       return isObject(returnedValue) || isFunction(returnedValue) ? returnedValue : instance;
@@ -22649,7 +22654,7 @@ function createInjector(modulesToLoad, strictDi) {
       invoke: invoke,
       instantiate: instantiate,
       get: getService,
-      annotate: annotate,
+      annotate: createInjector.$$annotate,
       has: function(name) {
         return providerCache.hasOwnProperty(name + providerSuffix) || cache.hasOwnProperty(name);
       }
@@ -25618,6 +25623,10 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
 
           // use class as directive
           className = node.className;
+          if (isObject(className)) {
+              // Maybe SVGAnimatedString
+              className = className.animVal;
+          }
           if (isString(className) && className !== '') {
             while (match = CLASS_DIRECTIVE_REGEXP.exec(className)) {
               nName = directiveNormalize(match[2]);
@@ -26319,8 +26328,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
           afterTemplateChildLinkFn,
           beforeTemplateCompileNode = $compileNode[0],
           origAsyncDirective = directives.shift(),
-          // The fact that we have to copy and patch the directive seems wrong!
-          derivedSyncDirective = extend({}, origAsyncDirective, {
+          derivedSyncDirective = inherit(origAsyncDirective, {
             templateUrl: null, transclude: null, replace: null, $$originalDirective: origAsyncDirective
           }),
           templateUrl = (isFunction(origAsyncDirective.templateUrl))
@@ -26773,6 +26781,8 @@ function removeComments(jqNodes) {
   return jqNodes;
 }
 
+var $controllerMinErr = minErr('$controller');
+
 /**
  * @ngdoc provider
  * @name $controllerProvider
@@ -26860,7 +26870,12 @@ function $ControllerProvider() {
       }
 
       if (isString(expression)) {
-        match = expression.match(CNTRL_REG),
+        match = expression.match(CNTRL_REG);
+        if (!match) {
+          throw $controllerMinErr('ctrlfmt',
+            "Badly formed controller string '{0}'. " +
+            "Must match `__name__ as __id__` or `__name__`.", expression);
+        }
         constructor = match[1],
         identifier = identifier || match[3];
         expression = controllers.hasOwnProperty(constructor)
@@ -26884,7 +26899,7 @@ function $ControllerProvider() {
         // Object creation: http://jsperf.com/create-constructor/2
         var controllerPrototype = (isArray(expression) ?
           expression[expression.length - 1] : expression).prototype;
-        instance = Object.create(controllerPrototype);
+        instance = Object.create(controllerPrototype || null);
 
         if (identifier) {
           addIdentifier(locals, identifier, instance, constructor || expression.name);
@@ -27380,7 +27395,7 @@ function $HttpProvider() {
      *
      * Both requests and responses can be transformed using transformation functions: `transformRequest`
      * and `transformResponse`. These properties can be a single function that returns
-     * the transformed value (`{function(data, headersGetter, status)`) or an array of such transformation functions,
+     * the transformed value (`function(data, headersGetter, status)`) or an array of such transformation functions,
      * which allows you to `push` or `unshift` a new transformation function into the transformation chain.
      *
      * ### Default Transformations
@@ -29769,7 +29784,7 @@ function $LocationProvider() {
       // TODO(vojta): rewrite link when opening in new tab/window (in legacy browser)
       // currently we open nice url link and redirect then
 
-      if (!html5Mode.rewriteLinks || event.ctrlKey || event.metaKey || event.which == 2) return;
+      if (!html5Mode.rewriteLinks || event.ctrlKey || event.metaKey || event.shiftKey || event.which == 2 || event.button == 2) return;
 
       var elm = jqLite(event.target);
 
@@ -29811,7 +29826,7 @@ function $LocationProvider() {
 
 
     // rewrite hashbang url <> html5 url
-    if ($location.absUrl() != initialUrl) {
+    if (trimEmptyHash($location.absUrl()) != trimEmptyHash(initialUrl)) {
       $browser.url($location.absUrl(), true);
     }
 
@@ -30721,7 +30736,7 @@ Parser.prototype = {
     }, {
       assign: function(scope, value, locals) {
         var o = object(scope, locals);
-        if (!o) object.assign(scope, o = {});
+        if (!o) object.assign(scope, o = {}, locals);
         return getter.assign(o, value);
       }
     });
@@ -30747,7 +30762,7 @@ Parser.prototype = {
         var key = ensureSafeMemberName(indexFn(self, locals), expression);
         // prevent overwriting of Function.constructor which would break ensureSafeObject check
         var o = ensureSafeObject(obj(self, locals), expression);
-        if (!o) obj.assign(self, o = {});
+        if (!o) obj.assign(self, o = {}, locals);
         return o[key] = value;
       }
     });
@@ -30784,6 +30799,11 @@ Parser.prototype = {
       var v = fn.apply
             ? fn.apply(context, args)
             : fn(args[0], args[1], args[2], args[3], args[4]);
+
+      if (args) {
+        // Free-up the memory (arguments of the last function call).
+        args.length = 0;
+      }
 
       return ensureSafeObject(v, expressionText);
       };
@@ -30857,18 +30877,19 @@ Parser.prototype = {
 // Parser helper functions
 //////////////////////////////////////////////////
 
-function setter(obj, path, setValue, fullExp) {
+function setter(obj, locals, path, setValue, fullExp) {
   ensureSafeObject(obj, fullExp);
+  ensureSafeObject(locals, fullExp);
 
   var element = path.split('.'), key;
   for (var i = 0; element.length > 1; i++) {
     key = ensureSafeMemberName(element.shift(), fullExp);
-    var propertyObj = ensureSafeObject(obj[key], fullExp);
+    var propertyObj = (i === 0 && locals && locals[key]) || obj[key];
     if (!propertyObj) {
       propertyObj = {};
       obj[key] = propertyObj;
     }
-    obj = propertyObj;
+    obj = ensureSafeObject(propertyObj, fullExp);
   }
   key = ensureSafeMemberName(element.shift(), fullExp);
   ensureSafeObject(obj[key], fullExp);
@@ -30995,8 +31016,8 @@ function getterFn(path, options, fullExp) {
   }
 
   fn.sharedGetter = true;
-  fn.assign = function(self, value) {
-    return setter(self, path, value, path);
+  fn.assign = function(self, value, locals) {
+    return setter(self, locals, path, value, path);
   };
   getterFnCache[path] = fn;
   return fn;
@@ -31655,8 +31676,7 @@ function qFactory(nextTick, exceptionHandler) {
           'qcycle',
           "Expected promise to be resolved with value other than itself '{0}'",
           val));
-      }
-      else {
+      } else {
         this.$$resolve(val);
       }
 
@@ -32952,7 +32972,7 @@ function $RootScopeProvider() {
        * @kind function
        *
        * @description
-       * Schedule the invokation of $apply to occur at a later time. The actual time difference
+       * Schedule the invocation of $apply to occur at a later time. The actual time difference
        * varies across browsers, but is typically around ~10 milliseconds.
        *
        * This can be used to queue up multiple expressions which need to be evaluated in the same
@@ -34449,7 +34469,7 @@ var $compileMinErr = minErr('$compile');
  * @description
  * The `$templateRequest` service downloads the provided template using `$http` and, upon success,
  * stores the contents inside of `$templateCache`. If the HTTP request fails or the response data
- * of the HTTP request is empty then a `$compile` error will be thrown (the exception can be thwarted
+ * of the HTTP request is empty, a `$compile` error will be thrown (the exception can be thwarted
  * by setting the 2nd parameter of the function to true).
  *
  * @param {string} tpl The HTTP request template URL
@@ -34462,8 +34482,7 @@ var $compileMinErr = minErr('$compile');
 function $TemplateRequestProvider() {
   this.$get = ['$templateCache', '$http', '$q', function($templateCache, $http, $q) {
     function handleRequestFn(tpl, ignoreRequestError) {
-      var self = handleRequestFn;
-      self.totalPendingRequests++;
+      handleRequestFn.totalPendingRequests++;
 
       var transformResponse = $http.defaults && $http.defaults.transformResponse;
 
@@ -34481,13 +34500,14 @@ function $TemplateRequestProvider() {
       };
 
       return $http.get(tpl, httpOptions)
+        .finally(function() {
+          handleRequestFn.totalPendingRequests--;
+        })
         .then(function(response) {
-          self.totalPendingRequests--;
           return response.data;
         }, handleError);
 
       function handleError(resp) {
-        self.totalPendingRequests--;
         if (!ignoreRequestError) {
           throw $compileMinErr('tpload', 'Failed to load template: {0}', tpl);
         }
@@ -35009,18 +35029,25 @@ function $FilterProvider($provide) {
  *
  *   Can be one of:
  *
- *   - `string`: The string is evaluated as an expression and the resulting value is used for substring match against
- *     the contents of the `array`. All strings or objects with string properties in `array` that contain this string
- *     will be returned. The predicate can be negated by prefixing the string with `!`.
+ *   - `string`: The string is used for matching against the contents of the `array`. All strings or
+ *     objects with string properties in `array` that match this string will be returned. This also
+ *     applies to nested object properties.
+ *     The predicate can be negated by prefixing the string with `!`.
  *
  *   - `Object`: A pattern object can be used to filter specific properties on objects contained
  *     by `array`. For example `{name:"M", phone:"1"}` predicate will return an array of items
  *     which have property `name` containing "M" and property `phone` containing "1". A special
  *     property name `$` can be used (as in `{$:"text"}`) to accept a match against any
- *     property of the object. That's equivalent to the simple substring match with a `string`
- *     as described above. The predicate can be negated by prefixing the string with `!`.
- *     For Example `{name: "!M"}` predicate will return an array of items which have property `name`
+ *     property of the object or its nested object properties. That's equivalent to the simple
+ *     substring match with a `string` as described above. The predicate can be negated by prefixing
+ *     the string with `!`.
+ *     For example `{name: "!M"}` predicate will return an array of items which have property `name`
  *     not containing "M".
+ *
+ *     Note that a named property will match properties on the same level only, while the special
+ *     `$` property will match properties on the same level or deeper. E.g. an array item like
+ *     `{name: {first: 'John', last: 'Doe'}}` will **not** be matched by `{name: 'John'}`, but
+ *     **will** be matched by `{$: 'John'}`.
  *
  *   - `function(value, index)`: A predicate function can be used to write arbitrary filters. The
  *     function is called for each element of `array`. The final result is an array of those
@@ -35034,10 +35061,10 @@ function $FilterProvider($provide) {
  *
  *   - `function(actual, expected)`:
  *     The function will be given the object value and the predicate value to compare and
- *     should return true if the item should be included in filtered result.
+ *     should return true if both values should be considered equal.
  *
- *   - `true`: A shorthand for `function(actual, expected) { return angular.equals(expected, actual)}`.
- *     this is essentially strict comparison of expected and actual.
+ *   - `true`: A shorthand for `function(actual, expected) { return angular.equals(actual, expected)}`.
+ *     This is essentially strict comparison of expected and actual.
  *
  *   - `false|undefined`: A short hand for a function which will look for a substring match in case
  *     insensitive way.
@@ -35140,6 +35167,7 @@ function filterFilter() {
 
 // Helper functions for `filterFilter`
 function createPredicateFn(expression, comparator, matchAgainstAnyProp) {
+  var shouldMatchPrimitives = isObject(expression) && ('$' in expression);
   var predicateFn;
 
   if (comparator === true) {
@@ -35158,19 +35186,22 @@ function createPredicateFn(expression, comparator, matchAgainstAnyProp) {
   }
 
   predicateFn = function(item) {
+    if (shouldMatchPrimitives && !isObject(item)) {
+      return deepCompare(item, expression.$, comparator, false);
+    }
     return deepCompare(item, expression, comparator, matchAgainstAnyProp);
   };
 
   return predicateFn;
 }
 
-function deepCompare(actual, expected, comparator, matchAgainstAnyProp) {
+function deepCompare(actual, expected, comparator, matchAgainstAnyProp, dontMatchWholeObject) {
   var actualType = typeof actual;
   var expectedType = typeof expected;
 
   if ((expectedType === 'string') && (expected.charAt(0) === '!')) {
     return !deepCompare(actual, expected.substring(1), comparator, matchAgainstAnyProp);
-  } else if (actualType === 'array') {
+  } else if (isArray(actual)) {
     // In case `actual` is an array, consider it a match
     // if ANY of it's items matches `expected`
     return actual.some(function(item) {
@@ -35183,11 +35214,11 @@ function deepCompare(actual, expected, comparator, matchAgainstAnyProp) {
       var key;
       if (matchAgainstAnyProp) {
         for (key in actual) {
-          if ((key.charAt(0) !== '$') && deepCompare(actual[key], expected, comparator)) {
+          if ((key.charAt(0) !== '$') && deepCompare(actual[key], expected, comparator, true)) {
             return true;
           }
         }
-        return false;
+        return dontMatchWholeObject ? false : deepCompare(actual, expected, comparator, false);
       } else if (expectedType === 'object') {
         for (key in expected) {
           var expectedVal = expected[key];
@@ -35195,9 +35226,9 @@ function deepCompare(actual, expected, comparator, matchAgainstAnyProp) {
             continue;
           }
 
-          var keyIsDollar = key === '$';
-          var actualVal = keyIsDollar ? actual : actual[key];
-          if (!deepCompare(actualVal, expectedVal, comparator, keyIsDollar)) {
+          var matchAnyProperty = key === '$';
+          var actualVal = matchAnyProperty ? actual : actual[key];
+          if (!deepCompare(actualVal, expectedVal, comparator, matchAnyProperty, matchAnyProperty)) {
             return false;
           }
         }
@@ -35566,7 +35597,7 @@ var DATE_FORMATS_SPLIT = /((?:[^yMdHhmsaZEw']+)|(?:'(?:[^']|'')*')|(?:E+|y+|M+|d
  *   * `'m'`: Minute in hour (0-59)
  *   * `'ss'`: Second in minute, padded (00-59)
  *   * `'s'`: Second in minute (0-59)
- *   * `'.sss' or ',sss'`: Millisecond in second, padded (000-999)
+ *   * `'sss'`: Millisecond in second, padded (000-999)
  *   * `'a'`: AM/PM marker
  *   * `'Z'`: 4 digit (+sign) representation of the timezone offset (-1200-+1200)
  *   * `'ww'`: Week of year, padded (00-53). Week 01 is the week with the first Thursday of the year
@@ -35861,37 +35892,12 @@ function limitToFilter() {
       limit = int(limit);
     }
 
-    if (isString(input)) {
-      //NaN check on limit
-      if (limit) {
-        return limit >= 0 ? input.slice(0, limit) : input.slice(limit, input.length);
-      } else {
-        return "";
-      }
-    }
-
-    var out = [],
-      i, n;
-
-    // if abs(limit) exceeds maximum length, trim it
-    if (limit > input.length)
-      limit = input.length;
-    else if (limit < -input.length)
-      limit = -input.length;
-
-    if (limit > 0) {
-      i = 0;
-      n = limit;
+    //NaN check on limit
+    if (limit) {
+      return limit > 0 ? input.slice(0, limit) : input.slice(limit);
     } else {
-      i = input.length + limit;
-      n = input.length;
+      return isString(input) ? "" : [];
     }
-
-    for (; i < n; i++) {
-      out.push(input[i]);
-    }
-
-    return out;
   };
 }
 
@@ -36025,9 +36031,7 @@ function orderByFilter($parse) {
         }
         if (predicate === '') {
           // Effectively no predicate was passed so we compare identity
-          return reverseComparator(function(a, b) {
-            return compare(a, b);
-          }, descending);
+          return reverseComparator(compare, descending);
         }
         get = $parse(predicate);
         if (get.constant) {
@@ -36069,12 +36073,12 @@ function orderByFilter($parse) {
 
     function objectToString(value) {
       if (value === null) return 'null';
-      if (typeof value.toString === 'function') {
-        value = value.toString();
-        if (isPrimitive(value)) return value;
-      }
       if (typeof value.valueOf === 'function') {
         value = value.valueOf();
+        if (isPrimitive(value)) return value;
+      }
+      if (typeof value.toString === 'function') {
+        value = value.toString();
         if (isPrimitive(value)) return value;
       }
       return '';
@@ -36129,6 +36133,9 @@ var htmlAnchorDirective = valueFn({
   compile: function(element, attr) {
     if (!attr.href && !attr.xlinkHref && !attr.name) {
       return function(scope, element) {
+        // If the linked element is not an anchor tag anymore, do nothing
+        if (element[0].nodeName.toLowerCase() !== 'a') return;
+
         // SVGAElement does not use the href attribute, but rather the 'xlinkHref' attribute.
         var href = toString.call(element.prop('href')) === '[object SVGAnimatedString]' ?
                    'xlink:href' : 'href';
@@ -36302,20 +36309,23 @@ var htmlAnchorDirective = valueFn({
  *
  * @description
  *
- * We shouldn't do this, because it will make the button enabled on Chrome/Firefox but not on IE8 and older IEs:
+ * This directive sets the `disabled` attribute on the element if the
+ * {@link guide/expression expression} inside `ngDisabled` evaluates to truthy.
+ *
+ * A special directive is necessary because we cannot use interpolation inside the `disabled`
+ * attribute.  The following example would make the button enabled on Chrome/Firefox
+ * but not on older IEs:
+ *
  * ```html
- * <div ng-init="scope = { isDisabled: false }">
- *  <button disabled="{{scope.isDisabled}}">Disabled</button>
+ * <div ng-init="isDisabled = false">
+ *  <button disabled="{{isDisabled}}">Disabled</button>
  * </div>
  * ```
  *
- * The HTML specification does not require browsers to preserve the values of boolean attributes
- * such as disabled. (Their presence means true and their absence means false.)
+ * This is because the HTML specification does not require browsers to preserve the values of
+ * boolean attributes such as `disabled` (Their presence means true and their absence means false.)
  * If we put an Angular interpolation expression into such an attribute then the
  * binding information would be lost when the browser removes the attribute.
- * The `ngDisabled` directive solves this problem for the `disabled` attribute.
- * This complementary directive is not removed by the browser and so provides
- * a permanent reliable place to store the binding information.
  *
  * @example
     <example>
@@ -36334,7 +36344,7 @@ var htmlAnchorDirective = valueFn({
  *
  * @element INPUT
  * @param {expression} ngDisabled If the {@link guide/expression expression} is truthy,
- *     then special attribute "disabled" will be set on the element
+ *     then the `disabled` attribute will be set on the element
  */
 
 
@@ -36729,6 +36739,9 @@ function FormController(element, attrs, $scope, $animate, $interpolate) {
     forEach(form.$error, function(value, name) {
       form.$setValidity(name, null, control);
     });
+    forEach(form.$$success, function(value, name) {
+      form.$setValidity(name, null, control);
+    });
 
     arrayRemove(controls, control);
   };
@@ -36746,23 +36759,23 @@ function FormController(element, attrs, $scope, $animate, $interpolate) {
   addSetValidityMethod({
     ctrl: this,
     $element: element,
-    set: function(object, property, control) {
+    set: function(object, property, controller) {
       var list = object[property];
       if (!list) {
-        object[property] = [control];
+        object[property] = [controller];
       } else {
-        var index = list.indexOf(control);
+        var index = list.indexOf(controller);
         if (index === -1) {
-          list.push(control);
+          list.push(controller);
         }
       }
     },
-    unset: function(object, property, control) {
+    unset: function(object, property, controller) {
       var list = object[property];
       if (!list) {
         return;
       }
-      arrayRemove(list, control);
+      arrayRemove(list, controller);
       if (list.length === 0) {
         delete object[property];
       }
@@ -37055,19 +37068,19 @@ var formDirectiveFactory = function(isNgForm) {
                 alias = controller.$name;
 
             if (alias) {
-              setter(scope, alias, controller, alias);
+              setter(scope, null, alias, controller, alias);
               attr.$observe(attr.name ? 'name' : 'ngForm', function(newValue) {
                 if (alias === newValue) return;
-                setter(scope, alias, undefined, alias);
+                setter(scope, null, alias, undefined, alias);
                 alias = newValue;
-                setter(scope, alias, controller, alias);
+                setter(scope, null, alias, controller, alias);
                 parentFormCtrl.$$renameControl(controller, alias);
               });
             }
             formElement.on('$destroy', function() {
               parentFormCtrl.$removeControl(controller);
               if (alias) {
-                setter(scope, alias, undefined, alias);
+                setter(scope, null, alias, undefined, alias);
               }
               extend(controller, nullFormCtrl); //stop propagating child destruction handlers upwards
             });
@@ -37083,12 +37096,13 @@ var formDirectiveFactory = function(isNgForm) {
 var formDirective = formDirectiveFactory();
 var ngFormDirective = formDirectiveFactory(true);
 
-/* global VALID_CLASS: true,
-  INVALID_CLASS: true,
-  PRISTINE_CLASS: true,
-  DIRTY_CLASS: true,
-  UNTOUCHED_CLASS: true,
-  TOUCHED_CLASS: true,
+/* global VALID_CLASS: false,
+  INVALID_CLASS: false,
+  PRISTINE_CLASS: false,
+  DIRTY_CLASS: false,
+  UNTOUCHED_CLASS: false,
+  TOUCHED_CLASS: false,
+  $ngModelMinErr: false,
 */
 
 // Regex code is obtained from SO: https://stackoverflow.com/questions/3143070/javascript-regex-iso-datetime#answer-3143231
@@ -37101,9 +37115,6 @@ var DATETIMELOCAL_REGEXP = /^(\d{4})-(\d\d)-(\d\d)T(\d\d):(\d\d)(?::(\d\d)(\.\d{
 var WEEK_REGEXP = /^(\d{4})-W(\d\d)$/;
 var MONTH_REGEXP = /^(\d{4})-(\d\d)$/;
 var TIME_REGEXP = /^(\d\d):(\d\d)(?::(\d\d)(\.\d{1,3})?)?$/;
-var DEFAULT_REGEXP = /(\s+|^)default(\s+|$)/;
-
-var $ngModelMinErr = new minErr('ngModel');
 
 var inputType = {
 
@@ -37146,19 +37157,21 @@ var inputType = {
          <script>
            angular.module('textInputExample', [])
              .controller('ExampleController', ['$scope', function($scope) {
-               $scope.text = 'guest';
-               $scope.word = /^\s*\w*\s*$/;
+               $scope.example = {
+                 text: 'guest',
+                 word: /^\s*\w*\s*$/
+               };
              }]);
          </script>
          <form name="myForm" ng-controller="ExampleController">
-           Single word: <input type="text" name="input" ng-model="text"
-                               ng-pattern="word" required ng-trim="false">
+           Single word: <input type="text" name="input" ng-model="example.text"
+                               ng-pattern="example.word" required ng-trim="false">
            <span class="error" ng-show="myForm.input.$error.required">
              Required!</span>
            <span class="error" ng-show="myForm.input.$error.pattern">
              Single word only!</span>
 
-           <tt>text = {{text}}</tt><br/>
+           <tt>text = {{example.text}}</tt><br/>
            <tt>myForm.input.$valid = {{myForm.input.$valid}}</tt><br/>
            <tt>myForm.input.$error = {{myForm.input.$error}}</tt><br/>
            <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
@@ -37166,9 +37179,9 @@ var inputType = {
           </form>
         </file>
         <file name="protractor.js" type="protractor">
-          var text = element(by.binding('text'));
+          var text = element(by.binding('example.text'));
           var valid = element(by.binding('myForm.input.$valid'));
-          var input = element(by.model('text'));
+          var input = element(by.model('example.text'));
 
           it('should initialize to model', function() {
             expect(text.getText()).toContain('guest');
@@ -37230,18 +37243,20 @@ var inputType = {
        <script>
           angular.module('dateInputExample', [])
             .controller('DateController', ['$scope', function($scope) {
-              $scope.value = new Date(2013, 9, 22);
+              $scope.example = {
+                value: new Date(2013, 9, 22)
+              };
             }]);
        </script>
        <form name="myForm" ng-controller="DateController as dateCtrl">
           Pick a date in 2013:
-          <input type="date" id="exampleInput" name="input" ng-model="value"
+          <input type="date" id="exampleInput" name="input" ng-model="example.value"
               placeholder="yyyy-MM-dd" min="2013-01-01" max="2013-12-31" required />
           <span class="error" ng-show="myForm.input.$error.required">
               Required!</span>
           <span class="error" ng-show="myForm.input.$error.date">
               Not a valid date!</span>
-           <tt>value = {{value | date: "yyyy-MM-dd"}}</tt><br/>
+           <tt>value = {{example.value | date: "yyyy-MM-dd"}}</tt><br/>
            <tt>myForm.input.$valid = {{myForm.input.$valid}}</tt><br/>
            <tt>myForm.input.$error = {{myForm.input.$error}}</tt><br/>
            <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
@@ -37249,9 +37264,9 @@ var inputType = {
        </form>
      </file>
      <file name="protractor.js" type="protractor">
-        var value = element(by.binding('value | date: "yyyy-MM-dd"'));
+        var value = element(by.binding('example.value | date: "yyyy-MM-dd"'));
         var valid = element(by.binding('myForm.input.$valid'));
-        var input = element(by.model('value'));
+        var input = element(by.model('example.value'));
 
         // currently protractor/webdriver does not support
         // sending keys to all known HTML5 input controls
@@ -37321,18 +37336,20 @@ var inputType = {
       <script>
         angular.module('dateExample', [])
           .controller('DateController', ['$scope', function($scope) {
-            $scope.value = new Date(2010, 11, 28, 14, 57);
+            $scope.example = {
+              value: new Date(2010, 11, 28, 14, 57)
+            };
           }]);
       </script>
       <form name="myForm" ng-controller="DateController as dateCtrl">
         Pick a date between in 2013:
-        <input type="datetime-local" id="exampleInput" name="input" ng-model="value"
+        <input type="datetime-local" id="exampleInput" name="input" ng-model="example.value"
             placeholder="yyyy-MM-ddTHH:mm:ss" min="2001-01-01T00:00:00" max="2013-12-31T00:00:00" required />
         <span class="error" ng-show="myForm.input.$error.required">
             Required!</span>
         <span class="error" ng-show="myForm.input.$error.datetimelocal">
             Not a valid date!</span>
-        <tt>value = {{value | date: "yyyy-MM-ddTHH:mm:ss"}}</tt><br/>
+        <tt>value = {{example.value | date: "yyyy-MM-ddTHH:mm:ss"}}</tt><br/>
         <tt>myForm.input.$valid = {{myForm.input.$valid}}</tt><br/>
         <tt>myForm.input.$error = {{myForm.input.$error}}</tt><br/>
         <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
@@ -37340,9 +37357,9 @@ var inputType = {
       </form>
     </file>
     <file name="protractor.js" type="protractor">
-      var value = element(by.binding('value | date: "yyyy-MM-ddTHH:mm:ss"'));
+      var value = element(by.binding('example.value | date: "yyyy-MM-ddTHH:mm:ss"'));
       var valid = element(by.binding('myForm.input.$valid'));
-      var input = element(by.model('value'));
+      var input = element(by.model('example.value'));
 
       // currently protractor/webdriver does not support
       // sending keys to all known HTML5 input controls
@@ -37413,18 +37430,20 @@ var inputType = {
      <script>
       angular.module('timeExample', [])
         .controller('DateController', ['$scope', function($scope) {
-          $scope.value = new Date(1970, 0, 1, 14, 57, 0);
+          $scope.example = {
+            value: new Date(1970, 0, 1, 14, 57, 0)
+          };
         }]);
      </script>
      <form name="myForm" ng-controller="DateController as dateCtrl">
         Pick a between 8am and 5pm:
-        <input type="time" id="exampleInput" name="input" ng-model="value"
+        <input type="time" id="exampleInput" name="input" ng-model="example.value"
             placeholder="HH:mm:ss" min="08:00:00" max="17:00:00" required />
         <span class="error" ng-show="myForm.input.$error.required">
             Required!</span>
         <span class="error" ng-show="myForm.input.$error.time">
             Not a valid date!</span>
-        <tt>value = {{value | date: "HH:mm:ss"}}</tt><br/>
+        <tt>value = {{example.value | date: "HH:mm:ss"}}</tt><br/>
         <tt>myForm.input.$valid = {{myForm.input.$valid}}</tt><br/>
         <tt>myForm.input.$error = {{myForm.input.$error}}</tt><br/>
         <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
@@ -37432,9 +37451,9 @@ var inputType = {
      </form>
    </file>
    <file name="protractor.js" type="protractor">
-      var value = element(by.binding('value | date: "HH:mm:ss"'));
+      var value = element(by.binding('example.value | date: "HH:mm:ss"'));
       var valid = element(by.binding('myForm.input.$valid'));
-      var input = element(by.model('value'));
+      var input = element(by.model('example.value'));
 
       // currently protractor/webdriver does not support
       // sending keys to all known HTML5 input controls
@@ -37504,18 +37523,20 @@ var inputType = {
       <script>
       angular.module('weekExample', [])
         .controller('DateController', ['$scope', function($scope) {
-          $scope.value = new Date(2013, 0, 3);
+          $scope.example = {
+            value: new Date(2013, 0, 3)
+          };
         }]);
       </script>
       <form name="myForm" ng-controller="DateController as dateCtrl">
         Pick a date between in 2013:
-        <input id="exampleInput" type="week" name="input" ng-model="value"
+        <input id="exampleInput" type="week" name="input" ng-model="example.value"
             placeholder="YYYY-W##" min="2012-W32" max="2013-W52" required />
         <span class="error" ng-show="myForm.input.$error.required">
             Required!</span>
         <span class="error" ng-show="myForm.input.$error.week">
             Not a valid date!</span>
-        <tt>value = {{value | date: "yyyy-Www"}}</tt><br/>
+        <tt>value = {{example.value | date: "yyyy-Www"}}</tt><br/>
         <tt>myForm.input.$valid = {{myForm.input.$valid}}</tt><br/>
         <tt>myForm.input.$error = {{myForm.input.$error}}</tt><br/>
         <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
@@ -37523,9 +37544,9 @@ var inputType = {
       </form>
     </file>
     <file name="protractor.js" type="protractor">
-      var value = element(by.binding('value | date: "yyyy-Www"'));
+      var value = element(by.binding('example.value | date: "yyyy-Www"'));
       var valid = element(by.binding('myForm.input.$valid'));
-      var input = element(by.model('value'));
+      var input = element(by.model('example.value'));
 
       // currently protractor/webdriver does not support
       // sending keys to all known HTML5 input controls
@@ -37595,18 +37616,20 @@ var inputType = {
      <script>
       angular.module('monthExample', [])
         .controller('DateController', ['$scope', function($scope) {
-          $scope.value = new Date(2013, 9, 1);
+          $scope.example = {
+            value: new Date(2013, 9, 1)
+          };
         }]);
      </script>
      <form name="myForm" ng-controller="DateController as dateCtrl">
-       Pick a month int 2013:
-       <input id="exampleInput" type="month" name="input" ng-model="value"
+       Pick a month in 2013:
+       <input id="exampleInput" type="month" name="input" ng-model="example.value"
           placeholder="yyyy-MM" min="2013-01" max="2013-12" required />
        <span class="error" ng-show="myForm.input.$error.required">
           Required!</span>
        <span class="error" ng-show="myForm.input.$error.month">
           Not a valid month!</span>
-       <tt>value = {{value | date: "yyyy-MM"}}</tt><br/>
+       <tt>value = {{example.value | date: "yyyy-MM"}}</tt><br/>
        <tt>myForm.input.$valid = {{myForm.input.$valid}}</tt><br/>
        <tt>myForm.input.$error = {{myForm.input.$error}}</tt><br/>
        <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
@@ -37614,9 +37637,9 @@ var inputType = {
      </form>
    </file>
    <file name="protractor.js" type="protractor">
-      var value = element(by.binding('value | date: "yyyy-MM"'));
+      var value = element(by.binding('example.value | date: "yyyy-MM"'));
       var valid = element(by.binding('myForm.input.$valid'));
-      var input = element(by.model('value'));
+      var input = element(by.model('example.value'));
 
       // currently protractor/webdriver does not support
       // sending keys to all known HTML5 input controls
@@ -37692,17 +37715,19 @@ var inputType = {
          <script>
            angular.module('numberExample', [])
              .controller('ExampleController', ['$scope', function($scope) {
-               $scope.value = 12;
+               $scope.example = {
+                 value: 12
+               };
              }]);
          </script>
          <form name="myForm" ng-controller="ExampleController">
-           Number: <input type="number" name="input" ng-model="value"
+           Number: <input type="number" name="input" ng-model="example.value"
                           min="0" max="99" required>
            <span class="error" ng-show="myForm.input.$error.required">
              Required!</span>
            <span class="error" ng-show="myForm.input.$error.number">
              Not valid number!</span>
-           <tt>value = {{value}}</tt><br/>
+           <tt>value = {{example.value}}</tt><br/>
            <tt>myForm.input.$valid = {{myForm.input.$valid}}</tt><br/>
            <tt>myForm.input.$error = {{myForm.input.$error}}</tt><br/>
            <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
@@ -37710,9 +37735,9 @@ var inputType = {
           </form>
         </file>
         <file name="protractor.js" type="protractor">
-          var value = element(by.binding('value'));
+          var value = element(by.binding('example.value'));
           var valid = element(by.binding('myForm.input.$valid'));
-          var input = element(by.model('value'));
+          var input = element(by.model('example.value'));
 
           it('should initialize to model', function() {
             expect(value.getText()).toContain('12');
@@ -37780,16 +37805,18 @@ var inputType = {
          <script>
            angular.module('urlExample', [])
              .controller('ExampleController', ['$scope', function($scope) {
-               $scope.text = 'http://google.com';
+               $scope.url = {
+                 text: 'http://google.com'
+               };
              }]);
          </script>
          <form name="myForm" ng-controller="ExampleController">
-           URL: <input type="url" name="input" ng-model="text" required>
+           URL: <input type="url" name="input" ng-model="url.text" required>
            <span class="error" ng-show="myForm.input.$error.required">
              Required!</span>
            <span class="error" ng-show="myForm.input.$error.url">
              Not valid url!</span>
-           <tt>text = {{text}}</tt><br/>
+           <tt>text = {{url.text}}</tt><br/>
            <tt>myForm.input.$valid = {{myForm.input.$valid}}</tt><br/>
            <tt>myForm.input.$error = {{myForm.input.$error}}</tt><br/>
            <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
@@ -37798,9 +37825,9 @@ var inputType = {
           </form>
         </file>
         <file name="protractor.js" type="protractor">
-          var text = element(by.binding('text'));
+          var text = element(by.binding('url.text'));
           var valid = element(by.binding('myForm.input.$valid'));
-          var input = element(by.model('text'));
+          var input = element(by.model('url.text'));
 
           it('should initialize to model', function() {
             expect(text.getText()).toContain('http://google.com');
@@ -37869,16 +37896,18 @@ var inputType = {
          <script>
            angular.module('emailExample', [])
              .controller('ExampleController', ['$scope', function($scope) {
-               $scope.text = 'me@example.com';
+               $scope.email = {
+                 text: 'me@example.com'
+               };
              }]);
          </script>
            <form name="myForm" ng-controller="ExampleController">
-             Email: <input type="email" name="input" ng-model="text" required>
+             Email: <input type="email" name="input" ng-model="email.text" required>
              <span class="error" ng-show="myForm.input.$error.required">
                Required!</span>
              <span class="error" ng-show="myForm.input.$error.email">
                Not valid email!</span>
-             <tt>text = {{text}}</tt><br/>
+             <tt>text = {{email.text}}</tt><br/>
              <tt>myForm.input.$valid = {{myForm.input.$valid}}</tt><br/>
              <tt>myForm.input.$error = {{myForm.input.$error}}</tt><br/>
              <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
@@ -37887,9 +37916,9 @@ var inputType = {
            </form>
          </file>
         <file name="protractor.js" type="protractor">
-          var text = element(by.binding('text'));
+          var text = element(by.binding('email.text'));
           var valid = element(by.binding('myForm.input.$valid'));
-          var input = element(by.model('text'));
+          var input = element(by.model('email.text'));
 
           it('should initialize to model', function() {
             expect(text.getText()).toContain('me@example.com');
@@ -37936,7 +37965,9 @@ var inputType = {
          <script>
            angular.module('radioExample', [])
              .controller('ExampleController', ['$scope', function($scope) {
-               $scope.color = 'blue';
+               $scope.color = {
+                 name: 'blue'
+               };
                $scope.specialValue = {
                  "id": "12345",
                  "value": "green"
@@ -37944,20 +37975,20 @@ var inputType = {
              }]);
          </script>
          <form name="myForm" ng-controller="ExampleController">
-           <input type="radio" ng-model="color" value="red">  Red <br/>
-           <input type="radio" ng-model="color" ng-value="specialValue"> Green <br/>
-           <input type="radio" ng-model="color" value="blue"> Blue <br/>
-           <tt>color = {{color | json}}</tt><br/>
+           <input type="radio" ng-model="color.name" value="red">  Red <br/>
+           <input type="radio" ng-model="color.name" ng-value="specialValue"> Green <br/>
+           <input type="radio" ng-model="color.name" value="blue"> Blue <br/>
+           <tt>color = {{color.name | json}}</tt><br/>
           </form>
           Note that `ng-value="specialValue"` sets radio item's value to be the value of `$scope.specialValue`.
         </file>
         <file name="protractor.js" type="protractor">
           it('should change state', function() {
-            var color = element(by.binding('color'));
+            var color = element(by.binding('color.name'));
 
             expect(color.getText()).toContain('blue');
 
-            element.all(by.model('color')).get(0).click();
+            element.all(by.model('color.name')).get(0).click();
 
             expect(color.getText()).toContain('red');
           });
@@ -37987,28 +38018,30 @@ var inputType = {
          <script>
            angular.module('checkboxExample', [])
              .controller('ExampleController', ['$scope', function($scope) {
-               $scope.value1 = true;
-               $scope.value2 = 'YES'
+               $scope.checkboxModel = {
+                value1 : true,
+                value2 : 'YES'
+              };
              }]);
          </script>
          <form name="myForm" ng-controller="ExampleController">
-           Value1: <input type="checkbox" ng-model="value1"> <br/>
-           Value2: <input type="checkbox" ng-model="value2"
+           Value1: <input type="checkbox" ng-model="checkboxModel.value1"> <br/>
+           Value2: <input type="checkbox" ng-model="checkboxModel.value2"
                           ng-true-value="'YES'" ng-false-value="'NO'"> <br/>
-           <tt>value1 = {{value1}}</tt><br/>
-           <tt>value2 = {{value2}}</tt><br/>
+           <tt>value1 = {{checkboxModel.value1}}</tt><br/>
+           <tt>value2 = {{checkboxModel.value2}}</tt><br/>
           </form>
         </file>
         <file name="protractor.js" type="protractor">
           it('should change state', function() {
-            var value1 = element(by.binding('value1'));
-            var value2 = element(by.binding('value2'));
+            var value1 = element(by.binding('checkboxModel.value1'));
+            var value2 = element(by.binding('checkboxModel.value2'));
 
             expect(value1.getText()).toContain('true');
             expect(value2.getText()).toContain('YES');
 
-            element(by.model('value1')).click();
-            element(by.model('value2')).click();
+            element(by.model('checkboxModel.value1')).click();
+            element(by.model('checkboxModel.value2')).click();
 
             expect(value1.getText()).toContain('false');
             expect(value2.getText()).toContain('NO');
@@ -38313,7 +38346,7 @@ function numberInputType(scope, element, attr, ctrl, $sniffer, $browser) {
     return value;
   });
 
-  if (attr.min || attr.ngMin) {
+  if (isDefined(attr.min) || attr.ngMin) {
     var minVal;
     ctrl.$validators.min = function(value) {
       return ctrl.$isEmpty(value) || isUndefined(minVal) || value >= minVal;
@@ -38329,7 +38362,7 @@ function numberInputType(scope, element, attr, ctrl, $sniffer, $browser) {
     });
   }
 
-  if (attr.max || attr.ngMax) {
+  if (isDefined(attr.max) || attr.ngMax) {
     var maxVal;
     ctrl.$validators.max = function(value) {
       return ctrl.$isEmpty(value) || isUndefined(maxVal) || value <= maxVal;
@@ -38605,1344 +38638,6 @@ var inputDirective = ['$browser', '$sniffer', '$filter', '$parse',
   };
 }];
 
-var VALID_CLASS = 'ng-valid',
-    INVALID_CLASS = 'ng-invalid',
-    PRISTINE_CLASS = 'ng-pristine',
-    DIRTY_CLASS = 'ng-dirty',
-    UNTOUCHED_CLASS = 'ng-untouched',
-    TOUCHED_CLASS = 'ng-touched',
-    PENDING_CLASS = 'ng-pending';
-
-/**
- * @ngdoc type
- * @name ngModel.NgModelController
- *
- * @property {string} $viewValue Actual string value in the view.
- * @property {*} $modelValue The value in the model that the control is bound to.
- * @property {Array.<Function>} $parsers Array of functions to execute, as a pipeline, whenever
-       the control reads value from the DOM. The functions are called in array order, each passing
-       its return value through to the next. The last return value is forwarded to the
-       {@link ngModel.NgModelController#$validators `$validators`} collection.
-
-Parsers are used to sanitize / convert the {@link ngModel.NgModelController#$viewValue
-`$viewValue`}.
-
-Returning `undefined` from a parser means a parse error occurred. In that case,
-no {@link ngModel.NgModelController#$validators `$validators`} will run and the `ngModel`
-will be set to `undefined` unless {@link ngModelOptions `ngModelOptions.allowInvalid`}
-is set to `true`. The parse error is stored in `ngModel.$error.parse`.
-
- *
- * @property {Array.<Function>} $formatters Array of functions to execute, as a pipeline, whenever
-       the model value changes. The functions are called in reverse array order, each passing the value through to the
-       next. The last return value is used as the actual DOM value.
-       Used to format / convert values for display in the control.
- * ```js
- * function formatter(value) {
- *   if (value) {
- *     return value.toUpperCase();
- *   }
- * }
- * ngModel.$formatters.push(formatter);
- * ```
- *
- * @property {Object.<string, function>} $validators A collection of validators that are applied
- *      whenever the model value changes. The key value within the object refers to the name of the
- *      validator while the function refers to the validation operation. The validation operation is
- *      provided with the model value as an argument and must return a true or false value depending
- *      on the response of that validation.
- *
- * ```js
- * ngModel.$validators.validCharacters = function(modelValue, viewValue) {
- *   var value = modelValue || viewValue;
- *   return /[0-9]+/.test(value) &&
- *          /[a-z]+/.test(value) &&
- *          /[A-Z]+/.test(value) &&
- *          /\W+/.test(value);
- * };
- * ```
- *
- * @property {Object.<string, function>} $asyncValidators A collection of validations that are expected to
- *      perform an asynchronous validation (e.g. a HTTP request). The validation function that is provided
- *      is expected to return a promise when it is run during the model validation process. Once the promise
- *      is delivered then the validation status will be set to true when fulfilled and false when rejected.
- *      When the asynchronous validators are triggered, each of the validators will run in parallel and the model
- *      value will only be updated once all validators have been fulfilled. As long as an asynchronous validator
- *      is unfulfilled, its key will be added to the controllers `$pending` property. Also, all asynchronous validators
- *      will only run once all synchronous validators have passed.
- *
- * Please note that if $http is used then it is important that the server returns a success HTTP response code
- * in order to fulfill the validation and a status level of `4xx` in order to reject the validation.
- *
- * ```js
- * ngModel.$asyncValidators.uniqueUsername = function(modelValue, viewValue) {
- *   var value = modelValue || viewValue;
- *
- *   // Lookup user by username
- *   return $http.get('/api/users/' + value).
- *      then(function resolved() {
- *        //username exists, this means validation fails
- *        return $q.reject('exists');
- *      }, function rejected() {
- *        //username does not exist, therefore this validation passes
- *        return true;
- *      });
- * };
- * ```
- *
- * @property {Array.<Function>} $viewChangeListeners Array of functions to execute whenever the
- *     view value has changed. It is called with no arguments, and its return value is ignored.
- *     This can be used in place of additional $watches against the model value.
- *
- * @property {Object} $error An object hash with all failing validator ids as keys.
- * @property {Object} $pending An object hash with all pending validator ids as keys.
- *
- * @property {boolean} $untouched True if control has not lost focus yet.
- * @property {boolean} $touched True if control has lost focus.
- * @property {boolean} $pristine True if user has not interacted with the control yet.
- * @property {boolean} $dirty True if user has already interacted with the control.
- * @property {boolean} $valid True if there is no error.
- * @property {boolean} $invalid True if at least one error on the control.
- * @property {string} $name The name attribute of the control.
- *
- * @description
- *
- * `NgModelController` provides API for the {@link ngModel `ngModel`} directive.
- * The controller contains services for data-binding, validation, CSS updates, and value formatting
- * and parsing. It purposefully does not contain any logic which deals with DOM rendering or
- * listening to DOM events.
- * Such DOM related logic should be provided by other directives which make use of
- * `NgModelController` for data-binding to control elements.
- * Angular provides this DOM logic for most {@link input `input`} elements.
- * At the end of this page you can find a {@link ngModel.NgModelController#custom-control-example
- * custom control example} that uses `ngModelController` to bind to `contenteditable` elements.
- *
- * @example
- * ### Custom Control Example
- * This example shows how to use `NgModelController` with a custom control to achieve
- * data-binding. Notice how different directives (`contenteditable`, `ng-model`, and `required`)
- * collaborate together to achieve the desired result.
- *
- * Note that `contenteditable` is an HTML5 attribute, which tells the browser to let the element
- * contents be edited in place by the user.  This will not work on older browsers.
- *
- * We are using the {@link ng.service:$sce $sce} service here and include the {@link ngSanitize $sanitize}
- * module to automatically remove "bad" content like inline event listener (e.g. `<span onclick="...">`).
- * However, as we are using `$sce` the model can still decide to provide unsafe content if it marks
- * that content using the `$sce` service.
- *
- * <example name="NgModelController" module="customControl" deps="angular-sanitize.js">
-    <file name="style.css">
-      [contenteditable] {
-        border: 1px solid black;
-        background-color: white;
-        min-height: 20px;
-      }
-
-      .ng-invalid {
-        border: 1px solid red;
-      }
-
-    </file>
-    <file name="script.js">
-      angular.module('customControl', ['ngSanitize']).
-        directive('contenteditable', ['$sce', function($sce) {
-          return {
-            restrict: 'A', // only activate on element attribute
-            require: '?ngModel', // get a hold of NgModelController
-            link: function(scope, element, attrs, ngModel) {
-              if (!ngModel) return; // do nothing if no ng-model
-
-              // Specify how UI should be updated
-              ngModel.$render = function() {
-                element.html($sce.getTrustedHtml(ngModel.$viewValue || ''));
-              };
-
-              // Listen for change events to enable binding
-              element.on('blur keyup change', function() {
-                scope.$evalAsync(read);
-              });
-              read(); // initialize
-
-              // Write data to the model
-              function read() {
-                var html = element.html();
-                // When we clear the content editable the browser leaves a <br> behind
-                // If strip-br attribute is provided then we strip this out
-                if ( attrs.stripBr && html == '<br>' ) {
-                  html = '';
-                }
-                ngModel.$setViewValue(html);
-              }
-            }
-          };
-        }]);
-    </file>
-    <file name="index.html">
-      <form name="myForm">
-       <div contenteditable
-            name="myWidget" ng-model="userContent"
-            strip-br="true"
-            required>Change me!</div>
-        <span ng-show="myForm.myWidget.$error.required">Required!</span>
-       <hr>
-       <textarea ng-model="userContent"></textarea>
-      </form>
-    </file>
-    <file name="protractor.js" type="protractor">
-    it('should data-bind and become invalid', function() {
-      if (browser.params.browser == 'safari' || browser.params.browser == 'firefox') {
-        // SafariDriver can't handle contenteditable
-        // and Firefox driver can't clear contenteditables very well
-        return;
-      }
-      var contentEditable = element(by.css('[contenteditable]'));
-      var content = 'Change me!';
-
-      expect(contentEditable.getText()).toEqual(content);
-
-      contentEditable.clear();
-      contentEditable.sendKeys(protractor.Key.BACK_SPACE);
-      expect(contentEditable.getText()).toEqual('');
-      expect(contentEditable.getAttribute('class')).toMatch(/ng-invalid-required/);
-    });
-    </file>
- * </example>
- *
- *
- */
-var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$parse', '$animate', '$timeout', '$rootScope', '$q', '$interpolate',
-    function($scope, $exceptionHandler, $attr, $element, $parse, $animate, $timeout, $rootScope, $q, $interpolate) {
-  this.$viewValue = Number.NaN;
-  this.$modelValue = Number.NaN;
-  this.$$rawModelValue = undefined; // stores the parsed modelValue / model set from scope regardless of validity.
-  this.$validators = {};
-  this.$asyncValidators = {};
-  this.$parsers = [];
-  this.$formatters = [];
-  this.$viewChangeListeners = [];
-  this.$untouched = true;
-  this.$touched = false;
-  this.$pristine = true;
-  this.$dirty = false;
-  this.$valid = true;
-  this.$invalid = false;
-  this.$error = {}; // keep invalid keys here
-  this.$$success = {}; // keep valid keys here
-  this.$pending = undefined; // keep pending keys here
-  this.$name = $interpolate($attr.name || '', false)($scope);
-
-
-  var parsedNgModel = $parse($attr.ngModel),
-      parsedNgModelAssign = parsedNgModel.assign,
-      ngModelGet = parsedNgModel,
-      ngModelSet = parsedNgModelAssign,
-      pendingDebounce = null,
-      ctrl = this;
-
-  this.$$setOptions = function(options) {
-    ctrl.$options = options;
-    if (options && options.getterSetter) {
-      var invokeModelGetter = $parse($attr.ngModel + '()'),
-          invokeModelSetter = $parse($attr.ngModel + '($$$p)');
-
-      ngModelGet = function($scope) {
-        var modelValue = parsedNgModel($scope);
-        if (isFunction(modelValue)) {
-          modelValue = invokeModelGetter($scope);
-        }
-        return modelValue;
-      };
-      ngModelSet = function($scope, newValue) {
-        if (isFunction(parsedNgModel($scope))) {
-          invokeModelSetter($scope, {$$$p: ctrl.$modelValue});
-        } else {
-          parsedNgModelAssign($scope, ctrl.$modelValue);
-        }
-      };
-    } else if (!parsedNgModel.assign) {
-      throw $ngModelMinErr('nonassign', "Expression '{0}' is non-assignable. Element: {1}",
-          $attr.ngModel, startingTag($element));
-    }
-  };
-
-  /**
-   * @ngdoc method
-   * @name ngModel.NgModelController#$render
-   *
-   * @description
-   * Called when the view needs to be updated. It is expected that the user of the ng-model
-   * directive will implement this method.
-   *
-   * The `$render()` method is invoked in the following situations:
-   *
-   * * `$rollbackViewValue()` is called.  If we are rolling back the view value to the last
-   *   committed value then `$render()` is called to update the input control.
-   * * The value referenced by `ng-model` is changed programmatically and both the `$modelValue` and
-   *   the `$viewValue` are different to last time.
-   *
-   * Since `ng-model` does not do a deep watch, `$render()` is only invoked if the values of
-   * `$modelValue` and `$viewValue` are actually different to their previous value. If `$modelValue`
-   * or `$viewValue` are objects (rather than a string or number) then `$render()` will not be
-   * invoked if you only change a property on the objects.
-   */
-  this.$render = noop;
-
-  /**
-   * @ngdoc method
-   * @name ngModel.NgModelController#$isEmpty
-   *
-   * @description
-   * This is called when we need to determine if the value of an input is empty.
-   *
-   * For instance, the required directive does this to work out if the input has data or not.
-   *
-   * The default `$isEmpty` function checks whether the value is `undefined`, `''`, `null` or `NaN`.
-   *
-   * You can override this for input directives whose concept of being empty is different to the
-   * default. The `checkboxInputType` directive does this because in its case a value of `false`
-   * implies empty.
-   *
-   * @param {*} value The value of the input to check for emptiness.
-   * @returns {boolean} True if `value` is "empty".
-   */
-  this.$isEmpty = function(value) {
-    return isUndefined(value) || value === '' || value === null || value !== value;
-  };
-
-  var parentForm = $element.inheritedData('$formController') || nullFormCtrl,
-      currentValidationRunId = 0;
-
-  /**
-   * @ngdoc method
-   * @name ngModel.NgModelController#$setValidity
-   *
-   * @description
-   * Change the validity state, and notify the form.
-   *
-   * This method can be called within $parsers/$formatters or a custom validation implementation.
-   * However, in most cases it should be sufficient to use the `ngModel.$validators` and
-   * `ngModel.$asyncValidators` collections which will call `$setValidity` automatically.
-   *
-   * @param {string} validationErrorKey Name of the validator. The `validationErrorKey` will be assigned
-   *        to either `$error[validationErrorKey]` or `$pending[validationErrorKey]`
-   *        (for unfulfilled `$asyncValidators`), so that it is available for data-binding.
-   *        The `validationErrorKey` should be in camelCase and will get converted into dash-case
-   *        for class name. Example: `myError` will result in `ng-valid-my-error` and `ng-invalid-my-error`
-   *        class and can be bound to as  `{{someForm.someControl.$error.myError}}` .
-   * @param {boolean} isValid Whether the current state is valid (true), invalid (false), pending (undefined),
-   *                          or skipped (null). Pending is used for unfulfilled `$asyncValidators`.
-   *                          Skipped is used by Angular when validators do not run because of parse errors and
-   *                          when `$asyncValidators` do not run because any of the `$validators` failed.
-   */
-  addSetValidityMethod({
-    ctrl: this,
-    $element: $element,
-    set: function(object, property) {
-      object[property] = true;
-    },
-    unset: function(object, property) {
-      delete object[property];
-    },
-    parentForm: parentForm,
-    $animate: $animate
-  });
-
-  /**
-   * @ngdoc method
-   * @name ngModel.NgModelController#$setPristine
-   *
-   * @description
-   * Sets the control to its pristine state.
-   *
-   * This method can be called to remove the `ng-dirty` class and set the control to its pristine
-   * state (`ng-pristine` class). A model is considered to be pristine when the control
-   * has not been changed from when first compiled.
-   */
-  this.$setPristine = function() {
-    ctrl.$dirty = false;
-    ctrl.$pristine = true;
-    $animate.removeClass($element, DIRTY_CLASS);
-    $animate.addClass($element, PRISTINE_CLASS);
-  };
-
-  /**
-   * @ngdoc method
-   * @name ngModel.NgModelController#$setDirty
-   *
-   * @description
-   * Sets the control to its dirty state.
-   *
-   * This method can be called to remove the `ng-pristine` class and set the control to its dirty
-   * state (`ng-dirty` class). A model is considered to be dirty when the control has been changed
-   * from when first compiled.
-   */
-  this.$setDirty = function() {
-    ctrl.$dirty = true;
-    ctrl.$pristine = false;
-    $animate.removeClass($element, PRISTINE_CLASS);
-    $animate.addClass($element, DIRTY_CLASS);
-    parentForm.$setDirty();
-  };
-
-  /**
-   * @ngdoc method
-   * @name ngModel.NgModelController#$setUntouched
-   *
-   * @description
-   * Sets the control to its untouched state.
-   *
-   * This method can be called to remove the `ng-touched` class and set the control to its
-   * untouched state (`ng-untouched` class). Upon compilation, a model is set as untouched
-   * by default, however this function can be used to restore that state if the model has
-   * already been touched by the user.
-   */
-  this.$setUntouched = function() {
-    ctrl.$touched = false;
-    ctrl.$untouched = true;
-    $animate.setClass($element, UNTOUCHED_CLASS, TOUCHED_CLASS);
-  };
-
-  /**
-   * @ngdoc method
-   * @name ngModel.NgModelController#$setTouched
-   *
-   * @description
-   * Sets the control to its touched state.
-   *
-   * This method can be called to remove the `ng-untouched` class and set the control to its
-   * touched state (`ng-touched` class). A model is considered to be touched when the user has
-   * first focused the control element and then shifted focus away from the control (blur event).
-   */
-  this.$setTouched = function() {
-    ctrl.$touched = true;
-    ctrl.$untouched = false;
-    $animate.setClass($element, TOUCHED_CLASS, UNTOUCHED_CLASS);
-  };
-
-  /**
-   * @ngdoc method
-   * @name ngModel.NgModelController#$rollbackViewValue
-   *
-   * @description
-   * Cancel an update and reset the input element's value to prevent an update to the `$modelValue`,
-   * which may be caused by a pending debounced event or because the input is waiting for a some
-   * future event.
-   *
-   * If you have an input that uses `ng-model-options` to set up debounced events or events such
-   * as blur you can have a situation where there is a period when the `$viewValue`
-   * is out of synch with the ngModel's `$modelValue`.
-   *
-   * In this case, you can run into difficulties if you try to update the ngModel's `$modelValue`
-   * programmatically before these debounced/future events have resolved/occurred, because Angular's
-   * dirty checking mechanism is not able to tell whether the model has actually changed or not.
-   *
-   * The `$rollbackViewValue()` method should be called before programmatically changing the model of an
-   * input which may have such events pending. This is important in order to make sure that the
-   * input field will be updated with the new model value and any pending operations are cancelled.
-   *
-   * <example name="ng-model-cancel-update" module="cancel-update-example">
-   *   <file name="app.js">
-   *     angular.module('cancel-update-example', [])
-   *
-   *     .controller('CancelUpdateController', ['$scope', function($scope) {
-   *       $scope.resetWithCancel = function(e) {
-   *         if (e.keyCode == 27) {
-   *           $scope.myForm.myInput1.$rollbackViewValue();
-   *           $scope.myValue = '';
-   *         }
-   *       };
-   *       $scope.resetWithoutCancel = function(e) {
-   *         if (e.keyCode == 27) {
-   *           $scope.myValue = '';
-   *         }
-   *       };
-   *     }]);
-   *   </file>
-   *   <file name="index.html">
-   *     <div ng-controller="CancelUpdateController">
-   *       <p>Try typing something in each input.  See that the model only updates when you
-   *          blur off the input.
-   *        </p>
-   *        <p>Now see what happens if you start typing then press the Escape key</p>
-   *
-   *       <form name="myForm" ng-model-options="{ updateOn: 'blur' }">
-   *         <p>With $rollbackViewValue()</p>
-   *         <input name="myInput1" ng-model="myValue" ng-keydown="resetWithCancel($event)"><br/>
-   *         myValue: "{{ myValue }}"
-   *
-   *         <p>Without $rollbackViewValue()</p>
-   *         <input name="myInput2" ng-model="myValue" ng-keydown="resetWithoutCancel($event)"><br/>
-   *         myValue: "{{ myValue }}"
-   *       </form>
-   *     </div>
-   *   </file>
-   * </example>
-   */
-  this.$rollbackViewValue = function() {
-    $timeout.cancel(pendingDebounce);
-    ctrl.$viewValue = ctrl.$$lastCommittedViewValue;
-    ctrl.$render();
-  };
-
-  /**
-   * @ngdoc method
-   * @name ngModel.NgModelController#$validate
-   *
-   * @description
-   * Runs each of the registered validators (first synchronous validators and then
-   * asynchronous validators).
-   * If the validity changes to invalid, the model will be set to `undefined`,
-   * unless {@link ngModelOptions `ngModelOptions.allowInvalid`} is `true`.
-   * If the validity changes to valid, it will set the model to the last available valid
-   * modelValue, i.e. either the last parsed value or the last value set from the scope.
-   */
-  this.$validate = function() {
-    // ignore $validate before model is initialized
-    if (isNumber(ctrl.$modelValue) && isNaN(ctrl.$modelValue)) {
-      return;
-    }
-
-    var viewValue = ctrl.$$lastCommittedViewValue;
-    // Note: we use the $$rawModelValue as $modelValue might have been
-    // set to undefined during a view -> model update that found validation
-    // errors. We can't parse the view here, since that could change
-    // the model although neither viewValue nor the model on the scope changed
-    var modelValue = ctrl.$$rawModelValue;
-
-    // Check if the there's a parse error, so we don't unset it accidentially
-    var parserName = ctrl.$$parserName || 'parse';
-    var parserValid = ctrl.$error[parserName] ? false : undefined;
-
-    var prevValid = ctrl.$valid;
-    var prevModelValue = ctrl.$modelValue;
-
-    var allowInvalid = ctrl.$options && ctrl.$options.allowInvalid;
-
-    ctrl.$$runValidators(parserValid, modelValue, viewValue, function(allValid) {
-      // If there was no change in validity, don't update the model
-      // This prevents changing an invalid modelValue to undefined
-      if (!allowInvalid && prevValid !== allValid) {
-        // Note: Don't check ctrl.$valid here, as we could have
-        // external validators (e.g. calculated on the server),
-        // that just call $setValidity and need the model value
-        // to calculate their validity.
-        ctrl.$modelValue = allValid ? modelValue : undefined;
-
-        if (ctrl.$modelValue !== prevModelValue) {
-          ctrl.$$writeModelToScope();
-        }
-      }
-    });
-
-  };
-
-  this.$$runValidators = function(parseValid, modelValue, viewValue, doneCallback) {
-    currentValidationRunId++;
-    var localValidationRunId = currentValidationRunId;
-
-    // check parser error
-    if (!processParseErrors(parseValid)) {
-      validationDone(false);
-      return;
-    }
-    if (!processSyncValidators()) {
-      validationDone(false);
-      return;
-    }
-    processAsyncValidators();
-
-    function processParseErrors(parseValid) {
-      var errorKey = ctrl.$$parserName || 'parse';
-      if (parseValid === undefined) {
-        setValidity(errorKey, null);
-      } else {
-        setValidity(errorKey, parseValid);
-        if (!parseValid) {
-          forEach(ctrl.$validators, function(v, name) {
-            setValidity(name, null);
-          });
-          forEach(ctrl.$asyncValidators, function(v, name) {
-            setValidity(name, null);
-          });
-          return false;
-        }
-      }
-      return true;
-    }
-
-    function processSyncValidators() {
-      var syncValidatorsValid = true;
-      forEach(ctrl.$validators, function(validator, name) {
-        var result = validator(modelValue, viewValue);
-        syncValidatorsValid = syncValidatorsValid && result;
-        setValidity(name, result);
-      });
-      if (!syncValidatorsValid) {
-        forEach(ctrl.$asyncValidators, function(v, name) {
-          setValidity(name, null);
-        });
-        return false;
-      }
-      return true;
-    }
-
-    function processAsyncValidators() {
-      var validatorPromises = [];
-      var allValid = true;
-      forEach(ctrl.$asyncValidators, function(validator, name) {
-        var promise = validator(modelValue, viewValue);
-        if (!isPromiseLike(promise)) {
-          throw $ngModelMinErr("$asyncValidators",
-            "Expected asynchronous validator to return a promise but got '{0}' instead.", promise);
-        }
-        setValidity(name, undefined);
-        validatorPromises.push(promise.then(function() {
-          setValidity(name, true);
-        }, function(error) {
-          allValid = false;
-          setValidity(name, false);
-        }));
-      });
-      if (!validatorPromises.length) {
-        validationDone(true);
-      } else {
-        $q.all(validatorPromises).then(function() {
-          validationDone(allValid);
-        }, noop);
-      }
-    }
-
-    function setValidity(name, isValid) {
-      if (localValidationRunId === currentValidationRunId) {
-        ctrl.$setValidity(name, isValid);
-      }
-    }
-
-    function validationDone(allValid) {
-      if (localValidationRunId === currentValidationRunId) {
-
-        doneCallback(allValid);
-      }
-    }
-  };
-
-  /**
-   * @ngdoc method
-   * @name ngModel.NgModelController#$commitViewValue
-   *
-   * @description
-   * Commit a pending update to the `$modelValue`.
-   *
-   * Updates may be pending by a debounced event or because the input is waiting for a some future
-   * event defined in `ng-model-options`. this method is rarely needed as `NgModelController`
-   * usually handles calling this in response to input events.
-   */
-  this.$commitViewValue = function() {
-    var viewValue = ctrl.$viewValue;
-
-    $timeout.cancel(pendingDebounce);
-
-    // If the view value has not changed then we should just exit, except in the case where there is
-    // a native validator on the element. In this case the validation state may have changed even though
-    // the viewValue has stayed empty.
-    if (ctrl.$$lastCommittedViewValue === viewValue && (viewValue !== '' || !ctrl.$$hasNativeValidators)) {
-      return;
-    }
-    ctrl.$$lastCommittedViewValue = viewValue;
-
-    // change to dirty
-    if (ctrl.$pristine) {
-      this.$setDirty();
-    }
-    this.$$parseAndValidate();
-  };
-
-  this.$$parseAndValidate = function() {
-    var viewValue = ctrl.$$lastCommittedViewValue;
-    var modelValue = viewValue;
-    var parserValid = isUndefined(modelValue) ? undefined : true;
-
-    if (parserValid) {
-      for (var i = 0; i < ctrl.$parsers.length; i++) {
-        modelValue = ctrl.$parsers[i](modelValue);
-        if (isUndefined(modelValue)) {
-          parserValid = false;
-          break;
-        }
-      }
-    }
-    if (isNumber(ctrl.$modelValue) && isNaN(ctrl.$modelValue)) {
-      // ctrl.$modelValue has not been touched yet...
-      ctrl.$modelValue = ngModelGet($scope);
-    }
-    var prevModelValue = ctrl.$modelValue;
-    var allowInvalid = ctrl.$options && ctrl.$options.allowInvalid;
-    ctrl.$$rawModelValue = modelValue;
-
-    if (allowInvalid) {
-      ctrl.$modelValue = modelValue;
-      writeToModelIfNeeded();
-    }
-
-    // Pass the $$lastCommittedViewValue here, because the cached viewValue might be out of date.
-    // This can happen if e.g. $setViewValue is called from inside a parser
-    ctrl.$$runValidators(parserValid, modelValue, ctrl.$$lastCommittedViewValue, function(allValid) {
-      if (!allowInvalid) {
-        // Note: Don't check ctrl.$valid here, as we could have
-        // external validators (e.g. calculated on the server),
-        // that just call $setValidity and need the model value
-        // to calculate their validity.
-        ctrl.$modelValue = allValid ? modelValue : undefined;
-        writeToModelIfNeeded();
-      }
-    });
-
-    function writeToModelIfNeeded() {
-      if (ctrl.$modelValue !== prevModelValue) {
-        ctrl.$$writeModelToScope();
-      }
-    }
-  };
-
-  this.$$writeModelToScope = function() {
-    ngModelSet($scope, ctrl.$modelValue);
-    forEach(ctrl.$viewChangeListeners, function(listener) {
-      try {
-        listener();
-      } catch (e) {
-        $exceptionHandler(e);
-      }
-    });
-  };
-
-  /**
-   * @ngdoc method
-   * @name ngModel.NgModelController#$setViewValue
-   *
-   * @description
-   * Update the view value.
-   *
-   * This method should be called when an input directive want to change the view value; typically,
-   * this is done from within a DOM event handler.
-   *
-   * For example {@link ng.directive:input input} calls it when the value of the input changes and
-   * {@link ng.directive:select select} calls it when an option is selected.
-   *
-   * If the new `value` is an object (rather than a string or a number), we should make a copy of the
-   * object before passing it to `$setViewValue`.  This is because `ngModel` does not perform a deep
-   * watch of objects, it only looks for a change of identity. If you only change the property of
-   * the object then ngModel will not realise that the object has changed and will not invoke the
-   * `$parsers` and `$validators` pipelines.
-   *
-   * For this reason, you should not change properties of the copy once it has been passed to
-   * `$setViewValue`. Otherwise you may cause the model value on the scope to change incorrectly.
-   *
-   * When this method is called, the new `value` will be staged for committing through the `$parsers`
-   * and `$validators` pipelines. If there are no special {@link ngModelOptions} specified then the staged
-   * value sent directly for processing, finally to be applied to `$modelValue` and then the
-   * **expression** specified in the `ng-model` attribute.
-   *
-   * Lastly, all the registered change listeners, in the `$viewChangeListeners` list, are called.
-   *
-   * In case the {@link ng.directive:ngModelOptions ngModelOptions} directive is used with `updateOn`
-   * and the `default` trigger is not listed, all those actions will remain pending until one of the
-   * `updateOn` events is triggered on the DOM element.
-   * All these actions will be debounced if the {@link ng.directive:ngModelOptions ngModelOptions}
-   * directive is used with a custom debounce for this particular event.
-   *
-   * Note that calling this function does not trigger a `$digest`.
-   *
-   * @param {string} value Value from the view.
-   * @param {string} trigger Event that triggered the update.
-   */
-  this.$setViewValue = function(value, trigger) {
-    ctrl.$viewValue = value;
-    if (!ctrl.$options || ctrl.$options.updateOnDefault) {
-      ctrl.$$debounceViewValueCommit(trigger);
-    }
-  };
-
-  this.$$debounceViewValueCommit = function(trigger) {
-    var debounceDelay = 0,
-        options = ctrl.$options,
-        debounce;
-
-    if (options && isDefined(options.debounce)) {
-      debounce = options.debounce;
-      if (isNumber(debounce)) {
-        debounceDelay = debounce;
-      } else if (isNumber(debounce[trigger])) {
-        debounceDelay = debounce[trigger];
-      } else if (isNumber(debounce['default'])) {
-        debounceDelay = debounce['default'];
-      }
-    }
-
-    $timeout.cancel(pendingDebounce);
-    if (debounceDelay) {
-      pendingDebounce = $timeout(function() {
-        ctrl.$commitViewValue();
-      }, debounceDelay);
-    } else if ($rootScope.$$phase) {
-      ctrl.$commitViewValue();
-    } else {
-      $scope.$apply(function() {
-        ctrl.$commitViewValue();
-      });
-    }
-  };
-
-  // model -> value
-  // Note: we cannot use a normal scope.$watch as we want to detect the following:
-  // 1. scope value is 'a'
-  // 2. user enters 'b'
-  // 3. ng-change kicks in and reverts scope value to 'a'
-  //    -> scope value did not change since the last digest as
-  //       ng-change executes in apply phase
-  // 4. view should be changed back to 'a'
-  $scope.$watch(function ngModelWatch() {
-    var modelValue = ngModelGet($scope);
-
-    // if scope model value and ngModel value are out of sync
-    // TODO(perf): why not move this to the action fn?
-    if (modelValue !== ctrl.$modelValue) {
-      ctrl.$modelValue = ctrl.$$rawModelValue = modelValue;
-
-      var formatters = ctrl.$formatters,
-          idx = formatters.length;
-
-      var viewValue = modelValue;
-      while (idx--) {
-        viewValue = formatters[idx](viewValue);
-      }
-      if (ctrl.$viewValue !== viewValue) {
-        ctrl.$viewValue = ctrl.$$lastCommittedViewValue = viewValue;
-        ctrl.$render();
-
-        ctrl.$$runValidators(undefined, modelValue, viewValue, noop);
-      }
-    }
-
-    return modelValue;
-  });
-}];
-
-
-/**
- * @ngdoc directive
- * @name ngModel
- *
- * @element input
- * @priority 1
- *
- * @description
- * The `ngModel` directive binds an `input`,`select`, `textarea` (or custom form control) to a
- * property on the scope using {@link ngModel.NgModelController NgModelController},
- * which is created and exposed by this directive.
- *
- * `ngModel` is responsible for:
- *
- * - Binding the view into the model, which other directives such as `input`, `textarea` or `select`
- *   require.
- * - Providing validation behavior (i.e. required, number, email, url).
- * - Keeping the state of the control (valid/invalid, dirty/pristine, touched/untouched, validation errors).
- * - Setting related css classes on the element (`ng-valid`, `ng-invalid`, `ng-dirty`, `ng-pristine`, `ng-touched`, `ng-untouched`) including animations.
- * - Registering the control with its parent {@link ng.directive:form form}.
- *
- * Note: `ngModel` will try to bind to the property given by evaluating the expression on the
- * current scope. If the property doesn't already exist on this scope, it will be created
- * implicitly and added to the scope.
- *
- * For best practices on using `ngModel`, see:
- *
- *  - [Understanding Scopes](https://github.com/angular/angular.js/wiki/Understanding-Scopes)
- *
- * For basic examples, how to use `ngModel`, see:
- *
- *  - {@link ng.directive:input input}
- *    - {@link input[text] text}
- *    - {@link input[checkbox] checkbox}
- *    - {@link input[radio] radio}
- *    - {@link input[number] number}
- *    - {@link input[email] email}
- *    - {@link input[url] url}
- *    - {@link input[date] date}
- *    - {@link input[datetime-local] datetime-local}
- *    - {@link input[time] time}
- *    - {@link input[month] month}
- *    - {@link input[week] week}
- *  - {@link ng.directive:select select}
- *  - {@link ng.directive:textarea textarea}
- *
- * # CSS classes
- * The following CSS classes are added and removed on the associated input/select/textarea element
- * depending on the validity of the model.
- *
- *  - `ng-valid`: the model is valid
- *  - `ng-invalid`: the model is invalid
- *  - `ng-valid-[key]`: for each valid key added by `$setValidity`
- *  - `ng-invalid-[key]`: for each invalid key added by `$setValidity`
- *  - `ng-pristine`: the control hasn't been interacted with yet
- *  - `ng-dirty`: the control has been interacted with
- *  - `ng-touched`: the control has been blurred
- *  - `ng-untouched`: the control hasn't been blurred
- *  - `ng-pending`: any `$asyncValidators` are unfulfilled
- *
- * Keep in mind that ngAnimate can detect each of these classes when added and removed.
- *
- * ## Animation Hooks
- *
- * Animations within models are triggered when any of the associated CSS classes are added and removed
- * on the input element which is attached to the model. These classes are: `.ng-pristine`, `.ng-dirty`,
- * `.ng-invalid` and `.ng-valid` as well as any other validations that are performed on the model itself.
- * The animations that are triggered within ngModel are similar to how they work in ngClass and
- * animations can be hooked into using CSS transitions, keyframes as well as JS animations.
- *
- * The following example shows a simple way to utilize CSS transitions to style an input element
- * that has been rendered as invalid after it has been validated:
- *
- * <pre>
- * //be sure to include ngAnimate as a module to hook into more
- * //advanced animations
- * .my-input {
- *   transition:0.5s linear all;
- *   background: white;
- * }
- * .my-input.ng-invalid {
- *   background: red;
- *   color:white;
- * }
- * </pre>
- *
- * @example
- * <example deps="angular-animate.js" animations="true" fixBase="true" module="inputExample">
-     <file name="index.html">
-       <script>
-        angular.module('inputExample', [])
-          .controller('ExampleController', ['$scope', function($scope) {
-            $scope.val = '1';
-          }]);
-       </script>
-       <style>
-         .my-input {
-           -webkit-transition:all linear 0.5s;
-           transition:all linear 0.5s;
-           background: transparent;
-         }
-         .my-input.ng-invalid {
-           color:white;
-           background: red;
-         }
-       </style>
-       Update input to see transitions when valid/invalid.
-       Integer is a valid value.
-       <form name="testForm" ng-controller="ExampleController">
-         <input ng-model="val" ng-pattern="/^\d+$/" name="anim" class="my-input" />
-       </form>
-     </file>
- * </example>
- *
- * ## Binding to a getter/setter
- *
- * Sometimes it's helpful to bind `ngModel` to a getter/setter function.  A getter/setter is a
- * function that returns a representation of the model when called with zero arguments, and sets
- * the internal state of a model when called with an argument. It's sometimes useful to use this
- * for models that have an internal representation that's different than what the model exposes
- * to the view.
- *
- * <div class="alert alert-success">
- * **Best Practice:** It's best to keep getters fast because Angular is likely to call them more
- * frequently than other parts of your code.
- * </div>
- *
- * You use this behavior by adding `ng-model-options="{ getterSetter: true }"` to an element that
- * has `ng-model` attached to it. You can also add `ng-model-options="{ getterSetter: true }"` to
- * a `<form>`, which will enable this behavior for all `<input>`s within it. See
- * {@link ng.directive:ngModelOptions `ngModelOptions`} for more.
- *
- * The following example shows how to use `ngModel` with a getter/setter:
- *
- * @example
- * <example name="ngModel-getter-setter" module="getterSetterExample">
-     <file name="index.html">
-       <div ng-controller="ExampleController">
-         <form name="userForm">
-           Name:
-           <input type="text" name="userName"
-                  ng-model="user.name"
-                  ng-model-options="{ getterSetter: true }" />
-         </form>
-         <pre>user.name = <span ng-bind="user.name()"></span></pre>
-       </div>
-     </file>
-     <file name="app.js">
-       angular.module('getterSetterExample', [])
-         .controller('ExampleController', ['$scope', function($scope) {
-           var _name = 'Brian';
-           $scope.user = {
-             name: function(newName) {
-               if (angular.isDefined(newName)) {
-                 _name = newName;
-               }
-               return _name;
-             }
-           };
-         }]);
-     </file>
- * </example>
- */
-var ngModelDirective = ['$rootScope', function($rootScope) {
-  return {
-    restrict: 'A',
-    require: ['ngModel', '^?form', '^?ngModelOptions'],
-    controller: NgModelController,
-    // Prelink needs to run before any input directive
-    // so that we can set the NgModelOptions in NgModelController
-    // before anyone else uses it.
-    priority: 1,
-    compile: function ngModelCompile(element) {
-      // Setup initial state of the control
-      element.addClass(PRISTINE_CLASS).addClass(UNTOUCHED_CLASS).addClass(VALID_CLASS);
-
-      return {
-        pre: function ngModelPreLink(scope, element, attr, ctrls) {
-          var modelCtrl = ctrls[0],
-              formCtrl = ctrls[1] || nullFormCtrl;
-
-          modelCtrl.$$setOptions(ctrls[2] && ctrls[2].$options);
-
-          // notify others, especially parent forms
-          formCtrl.$addControl(modelCtrl);
-
-          attr.$observe('name', function(newValue) {
-            if (modelCtrl.$name !== newValue) {
-              formCtrl.$$renameControl(modelCtrl, newValue);
-            }
-          });
-
-          scope.$on('$destroy', function() {
-            formCtrl.$removeControl(modelCtrl);
-          });
-        },
-        post: function ngModelPostLink(scope, element, attr, ctrls) {
-          var modelCtrl = ctrls[0];
-          if (modelCtrl.$options && modelCtrl.$options.updateOn) {
-            element.on(modelCtrl.$options.updateOn, function(ev) {
-              modelCtrl.$$debounceViewValueCommit(ev && ev.type);
-            });
-          }
-
-          element.on('blur', function(ev) {
-            if (modelCtrl.$touched) return;
-
-            if ($rootScope.$$phase) {
-              scope.$evalAsync(modelCtrl.$setTouched);
-            } else {
-              scope.$apply(modelCtrl.$setTouched);
-            }
-          });
-        }
-      };
-    }
-  };
-}];
-
-
-/**
- * @ngdoc directive
- * @name ngChange
- *
- * @description
- * Evaluate the given expression when the user changes the input.
- * The expression is evaluated immediately, unlike the JavaScript onchange event
- * which only triggers at the end of a change (usually, when the user leaves the
- * form element or presses the return key).
- *
- * The `ngChange` expression is only evaluated when a change in the input value causes
- * a new value to be committed to the model.
- *
- * It will not be evaluated:
- * * if the value returned from the `$parsers` transformation pipeline has not changed
- * * if the input has continued to be invalid since the model will stay `null`
- * * if the model is changed programmatically and not by a change to the input value
- *
- *
- * Note, this directive requires `ngModel` to be present.
- *
- * @element input
- * @param {expression} ngChange {@link guide/expression Expression} to evaluate upon change
- * in input value.
- *
- * @example
- * <example name="ngChange-directive" module="changeExample">
- *   <file name="index.html">
- *     <script>
- *       angular.module('changeExample', [])
- *         .controller('ExampleController', ['$scope', function($scope) {
- *           $scope.counter = 0;
- *           $scope.change = function() {
- *             $scope.counter++;
- *           };
- *         }]);
- *     </script>
- *     <div ng-controller="ExampleController">
- *       <input type="checkbox" ng-model="confirmed" ng-change="change()" id="ng-change-example1" />
- *       <input type="checkbox" ng-model="confirmed" id="ng-change-example2" />
- *       <label for="ng-change-example2">Confirmed</label><br />
- *       <tt>debug = {{confirmed}}</tt><br/>
- *       <tt>counter = {{counter}}</tt><br/>
- *     </div>
- *   </file>
- *   <file name="protractor.js" type="protractor">
- *     var counter = element(by.binding('counter'));
- *     var debug = element(by.binding('confirmed'));
- *
- *     it('should evaluate the expression if changing from view', function() {
- *       expect(counter.getText()).toContain('0');
- *
- *       element(by.id('ng-change-example1')).click();
- *
- *       expect(counter.getText()).toContain('1');
- *       expect(debug.getText()).toContain('true');
- *     });
- *
- *     it('should not evaluate the expression if changing from model', function() {
- *       element(by.id('ng-change-example2')).click();
-
- *       expect(counter.getText()).toContain('0');
- *       expect(debug.getText()).toContain('true');
- *     });
- *   </file>
- * </example>
- */
-var ngChangeDirective = valueFn({
-  restrict: 'A',
-  require: 'ngModel',
-  link: function(scope, element, attr, ctrl) {
-    ctrl.$viewChangeListeners.push(function() {
-      scope.$eval(attr.ngChange);
-    });
-  }
-});
-
-
-var requiredDirective = function() {
-  return {
-    restrict: 'A',
-    require: '?ngModel',
-    link: function(scope, elm, attr, ctrl) {
-      if (!ctrl) return;
-      attr.required = true; // force truthy in case we are on non input element
-
-      ctrl.$validators.required = function(modelValue, viewValue) {
-        return !attr.required || !ctrl.$isEmpty(viewValue);
-      };
-
-      attr.$observe('required', function() {
-        ctrl.$validate();
-      });
-    }
-  };
-};
-
-
-var patternDirective = function() {
-  return {
-    restrict: 'A',
-    require: '?ngModel',
-    link: function(scope, elm, attr, ctrl) {
-      if (!ctrl) return;
-
-      var regexp, patternExp = attr.ngPattern || attr.pattern;
-      attr.$observe('pattern', function(regex) {
-        if (isString(regex) && regex.length > 0) {
-          regex = new RegExp('^' + regex + '$');
-        }
-
-        if (regex && !regex.test) {
-          throw minErr('ngPattern')('noregexp',
-            'Expected {0} to be a RegExp but was {1}. Element: {2}', patternExp,
-            regex, startingTag(elm));
-        }
-
-        regexp = regex || undefined;
-        ctrl.$validate();
-      });
-
-      ctrl.$validators.pattern = function(value) {
-        return ctrl.$isEmpty(value) || isUndefined(regexp) || regexp.test(value);
-      };
-    }
-  };
-};
-
-
-var maxlengthDirective = function() {
-  return {
-    restrict: 'A',
-    require: '?ngModel',
-    link: function(scope, elm, attr, ctrl) {
-      if (!ctrl) return;
-
-      var maxlength = -1;
-      attr.$observe('maxlength', function(value) {
-        var intVal = int(value);
-        maxlength = isNaN(intVal) ? -1 : intVal;
-        ctrl.$validate();
-      });
-      ctrl.$validators.maxlength = function(modelValue, viewValue) {
-        return (maxlength < 0) || ctrl.$isEmpty(modelValue) || (viewValue.length <= maxlength);
-      };
-    }
-  };
-};
-
-var minlengthDirective = function() {
-  return {
-    restrict: 'A',
-    require: '?ngModel',
-    link: function(scope, elm, attr, ctrl) {
-      if (!ctrl) return;
-
-      var minlength = 0;
-      attr.$observe('minlength', function(value) {
-        minlength = int(value) || 0;
-        ctrl.$validate();
-      });
-      ctrl.$validators.minlength = function(modelValue, viewValue) {
-        return ctrl.$isEmpty(viewValue) || viewValue.length >= minlength;
-      };
-    }
-  };
-};
-
-
-/**
- * @ngdoc directive
- * @name ngList
- *
- * @description
- * Text input that converts between a delimited string and an array of strings. The default
- * delimiter is a comma followed by a space - equivalent to `ng-list=", "`. You can specify a custom
- * delimiter as the value of the `ngList` attribute - for example, `ng-list=" | "`.
- *
- * The behaviour of the directive is affected by the use of the `ngTrim` attribute.
- * * If `ngTrim` is set to `"false"` then whitespace around both the separator and each
- *   list item is respected. This implies that the user of the directive is responsible for
- *   dealing with whitespace but also allows you to use whitespace as a delimiter, such as a
- *   tab or newline character.
- * * Otherwise whitespace around the delimiter is ignored when splitting (although it is respected
- *   when joining the list items back together) and whitespace around each list item is stripped
- *   before it is added to the model.
- *
- * ### Example with Validation
- *
- * <example name="ngList-directive" module="listExample">
- *   <file name="app.js">
- *      angular.module('listExample', [])
- *        .controller('ExampleController', ['$scope', function($scope) {
- *          $scope.names = ['morpheus', 'neo', 'trinity'];
- *        }]);
- *   </file>
- *   <file name="index.html">
- *    <form name="myForm" ng-controller="ExampleController">
- *      List: <input name="namesInput" ng-model="names" ng-list required>
- *      <span class="error" ng-show="myForm.namesInput.$error.required">
- *        Required!</span>
- *      <br>
- *      <tt>names = {{names}}</tt><br/>
- *      <tt>myForm.namesInput.$valid = {{myForm.namesInput.$valid}}</tt><br/>
- *      <tt>myForm.namesInput.$error = {{myForm.namesInput.$error}}</tt><br/>
- *      <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
- *      <tt>myForm.$error.required = {{!!myForm.$error.required}}</tt><br/>
- *     </form>
- *   </file>
- *   <file name="protractor.js" type="protractor">
- *     var listInput = element(by.model('names'));
- *     var names = element(by.exactBinding('names'));
- *     var valid = element(by.binding('myForm.namesInput.$valid'));
- *     var error = element(by.css('span.error'));
- *
- *     it('should initialize to model', function() {
- *       expect(names.getText()).toContain('["morpheus","neo","trinity"]');
- *       expect(valid.getText()).toContain('true');
- *       expect(error.getCssValue('display')).toBe('none');
- *     });
- *
- *     it('should be invalid if empty', function() {
- *       listInput.clear();
- *       listInput.sendKeys('');
- *
- *       expect(names.getText()).toContain('');
- *       expect(valid.getText()).toContain('false');
- *       expect(error.getCssValue('display')).not.toBe('none');
- *     });
- *   </file>
- * </example>
- *
- * ### Example - splitting on whitespace
- * <example name="ngList-directive-newlines">
- *   <file name="index.html">
- *    <textarea ng-model="list" ng-list="&#10;" ng-trim="false"></textarea>
- *    <pre>{{ list | json }}</pre>
- *   </file>
- *   <file name="protractor.js" type="protractor">
- *     it("should split the text by newlines", function() {
- *       var listInput = element(by.model('list'));
- *       var output = element(by.binding('list | json'));
- *       listInput.sendKeys('abc\ndef\nghi');
- *       expect(output.getText()).toContain('[\n  "abc",\n  "def",\n  "ghi"\n]');
- *     });
- *   </file>
- * </example>
- *
- * @element input
- * @param {string=} ngList optional delimiter that should be used to split the value.
- */
-var ngListDirective = function() {
-  return {
-    restrict: 'A',
-    priority: 100,
-    require: 'ngModel',
-    link: function(scope, element, attr, ctrl) {
-      // We want to control whitespace trimming so we use this convoluted approach
-      // to access the ngList attribute, which doesn't pre-trim the attribute
-      var ngList = element.attr(attr.$attr.ngList) || ', ';
-      var trimValues = attr.ngTrim !== 'false';
-      var separator = trimValues ? trim(ngList) : ngList;
-
-      var parse = function(viewValue) {
-        // If the viewValue is invalid (say required but empty) it will be `undefined`
-        if (isUndefined(viewValue)) return;
-
-        var list = [];
-
-        if (viewValue) {
-          forEach(viewValue.split(separator), function(value) {
-            if (value) list.push(trimValues ? trim(value) : value);
-          });
-        }
-
-        return list;
-      };
-
-      ctrl.$parsers.push(parse);
-      ctrl.$formatters.push(function(value) {
-        if (isArray(value)) {
-          return value.join(ngList);
-        }
-
-        return undefined;
-      });
-
-      // Override the standard $isEmpty because an empty array means the input is empty.
-      ctrl.$isEmpty = function(value) {
-        return !value || !value.length;
-      };
-    }
-  };
-};
 
 
 var CONSTANT_VALUE_REGEXP = /^(true|false|\d+)$/;
@@ -40022,281 +38717,6 @@ var ngValueDirective = function() {
     }
   };
 };
-
-/**
- * @ngdoc directive
- * @name ngModelOptions
- *
- * @description
- * Allows tuning how model updates are done. Using `ngModelOptions` you can specify a custom list of
- * events that will trigger a model update and/or a debouncing delay so that the actual update only
- * takes place when a timer expires; this timer will be reset after another change takes place.
- *
- * Given the nature of `ngModelOptions`, the value displayed inside input fields in the view might
- * be different than the value in the actual model. This means that if you update the model you
- * should also invoke {@link ngModel.NgModelController `$rollbackViewValue`} on the relevant input field in
- * order to make sure it is synchronized with the model and that any debounced action is canceled.
- *
- * The easiest way to reference the control's {@link ngModel.NgModelController `$rollbackViewValue`}
- * method is by making sure the input is placed inside a form that has a `name` attribute. This is
- * important because `form` controllers are published to the related scope under the name in their
- * `name` attribute.
- *
- * Any pending changes will take place immediately when an enclosing form is submitted via the
- * `submit` event. Note that `ngClick` events will occur before the model is updated. Use `ngSubmit`
- * to have access to the updated model.
- *
- * `ngModelOptions` has an effect on the element it's declared on and its descendants.
- *
- * @param {Object} ngModelOptions options to apply to the current model. Valid keys are:
- *   - `updateOn`: string specifying which event should the input be bound to. You can set several
- *     events using an space delimited list. There is a special event called `default` that
- *     matches the default events belonging of the control.
- *   - `debounce`: integer value which contains the debounce model update value in milliseconds. A
- *     value of 0 triggers an immediate update. If an object is supplied instead, you can specify a
- *     custom value for each event. For example:
- *     `ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"`
- *   - `allowInvalid`: boolean value which indicates that the model can be set with values that did
- *     not validate correctly instead of the default behavior of setting the model to undefined.
- *   - `getterSetter`: boolean value which determines whether or not to treat functions bound to
-       `ngModel` as getters/setters.
- *   - `timezone`: Defines the timezone to be used to read/write the `Date` instance in the model for
- *     `<input type="date">`, `<input type="time">`, ... . Right now, the only supported value is `'UTC'`,
- *     otherwise the default timezone of the browser will be used.
- *
- * @example
-
-  The following example shows how to override immediate updates. Changes on the inputs within the
-  form will update the model only when the control loses focus (blur event). If `escape` key is
-  pressed while the input field is focused, the value is reset to the value in the current model.
-
-  <example name="ngModelOptions-directive-blur" module="optionsExample">
-    <file name="index.html">
-      <div ng-controller="ExampleController">
-        <form name="userForm">
-          Name:
-          <input type="text" name="userName"
-                 ng-model="user.name"
-                 ng-model-options="{ updateOn: 'blur' }"
-                 ng-keyup="cancel($event)" /><br />
-
-          Other data:
-          <input type="text" ng-model="user.data" /><br />
-        </form>
-        <pre>user.name = <span ng-bind="user.name"></span></pre>
-      </div>
-    </file>
-    <file name="app.js">
-      angular.module('optionsExample', [])
-        .controller('ExampleController', ['$scope', function($scope) {
-          $scope.user = { name: 'say', data: '' };
-
-          $scope.cancel = function(e) {
-            if (e.keyCode == 27) {
-              $scope.userForm.userName.$rollbackViewValue();
-            }
-          };
-        }]);
-    </file>
-    <file name="protractor.js" type="protractor">
-      var model = element(by.binding('user.name'));
-      var input = element(by.model('user.name'));
-      var other = element(by.model('user.data'));
-
-      it('should allow custom events', function() {
-        input.sendKeys(' hello');
-        input.click();
-        expect(model.getText()).toEqual('say');
-        other.click();
-        expect(model.getText()).toEqual('say hello');
-      });
-
-      it('should $rollbackViewValue when model changes', function() {
-        input.sendKeys(' hello');
-        expect(input.getAttribute('value')).toEqual('say hello');
-        input.sendKeys(protractor.Key.ESCAPE);
-        expect(input.getAttribute('value')).toEqual('say');
-        other.click();
-        expect(model.getText()).toEqual('say');
-      });
-    </file>
-  </example>
-
-  This one shows how to debounce model changes. Model will be updated only 1 sec after last change.
-  If the `Clear` button is pressed, any debounced action is canceled and the value becomes empty.
-
-  <example name="ngModelOptions-directive-debounce" module="optionsExample">
-    <file name="index.html">
-      <div ng-controller="ExampleController">
-        <form name="userForm">
-          Name:
-          <input type="text" name="userName"
-                 ng-model="user.name"
-                 ng-model-options="{ debounce: 1000 }" />
-          <button ng-click="userForm.userName.$rollbackViewValue(); user.name=''">Clear</button><br />
-        </form>
-        <pre>user.name = <span ng-bind="user.name"></span></pre>
-      </div>
-    </file>
-    <file name="app.js">
-      angular.module('optionsExample', [])
-        .controller('ExampleController', ['$scope', function($scope) {
-          $scope.user = { name: 'say' };
-        }]);
-    </file>
-  </example>
-
-  This one shows how to bind to getter/setters:
-
-  <example name="ngModelOptions-directive-getter-setter" module="getterSetterExample">
-    <file name="index.html">
-      <div ng-controller="ExampleController">
-        <form name="userForm">
-          Name:
-          <input type="text" name="userName"
-                 ng-model="user.name"
-                 ng-model-options="{ getterSetter: true }" />
-        </form>
-        <pre>user.name = <span ng-bind="user.name()"></span></pre>
-      </div>
-    </file>
-    <file name="app.js">
-      angular.module('getterSetterExample', [])
-        .controller('ExampleController', ['$scope', function($scope) {
-          var _name = 'Brian';
-          $scope.user = {
-            name: function(newName) {
-              return angular.isDefined(newName) ? (_name = newName) : _name;
-            }
-          };
-        }]);
-    </file>
-  </example>
- */
-var ngModelOptionsDirective = function() {
-  return {
-    restrict: 'A',
-    controller: ['$scope', '$attrs', function($scope, $attrs) {
-      var that = this;
-      this.$options = $scope.$eval($attrs.ngModelOptions);
-      // Allow adding/overriding bound events
-      if (this.$options.updateOn !== undefined) {
-        this.$options.updateOnDefault = false;
-        // extract "default" pseudo-event from list of events that can trigger a model update
-        this.$options.updateOn = trim(this.$options.updateOn.replace(DEFAULT_REGEXP, function() {
-          that.$options.updateOnDefault = true;
-          return ' ';
-        }));
-      } else {
-        this.$options.updateOnDefault = true;
-      }
-    }]
-  };
-};
-
-// helper methods
-function addSetValidityMethod(context) {
-  var ctrl = context.ctrl,
-      $element = context.$element,
-      classCache = {},
-      set = context.set,
-      unset = context.unset,
-      parentForm = context.parentForm,
-      $animate = context.$animate;
-
-  classCache[INVALID_CLASS] = !(classCache[VALID_CLASS] = $element.hasClass(VALID_CLASS));
-
-  ctrl.$setValidity = setValidity;
-
-  function setValidity(validationErrorKey, state, options) {
-    if (state === undefined) {
-      createAndSet('$pending', validationErrorKey, options);
-    } else {
-      unsetAndCleanup('$pending', validationErrorKey, options);
-    }
-    if (!isBoolean(state)) {
-      unset(ctrl.$error, validationErrorKey, options);
-      unset(ctrl.$$success, validationErrorKey, options);
-    } else {
-      if (state) {
-        unset(ctrl.$error, validationErrorKey, options);
-        set(ctrl.$$success, validationErrorKey, options);
-      } else {
-        set(ctrl.$error, validationErrorKey, options);
-        unset(ctrl.$$success, validationErrorKey, options);
-      }
-    }
-    if (ctrl.$pending) {
-      cachedToggleClass(PENDING_CLASS, true);
-      ctrl.$valid = ctrl.$invalid = undefined;
-      toggleValidationCss('', null);
-    } else {
-      cachedToggleClass(PENDING_CLASS, false);
-      ctrl.$valid = isObjectEmpty(ctrl.$error);
-      ctrl.$invalid = !ctrl.$valid;
-      toggleValidationCss('', ctrl.$valid);
-    }
-
-    // re-read the state as the set/unset methods could have
-    // combined state in ctrl.$error[validationError] (used for forms),
-    // where setting/unsetting only increments/decrements the value,
-    // and does not replace it.
-    var combinedState;
-    if (ctrl.$pending && ctrl.$pending[validationErrorKey]) {
-      combinedState = undefined;
-    } else if (ctrl.$error[validationErrorKey]) {
-      combinedState = false;
-    } else if (ctrl.$$success[validationErrorKey]) {
-      combinedState = true;
-    } else {
-      combinedState = null;
-    }
-    toggleValidationCss(validationErrorKey, combinedState);
-    parentForm.$setValidity(validationErrorKey, combinedState, ctrl);
-  }
-
-  function createAndSet(name, value, options) {
-    if (!ctrl[name]) {
-      ctrl[name] = {};
-    }
-    set(ctrl[name], value, options);
-  }
-
-  function unsetAndCleanup(name, value, options) {
-    if (ctrl[name]) {
-      unset(ctrl[name], value, options);
-    }
-    if (isObjectEmpty(ctrl[name])) {
-      ctrl[name] = undefined;
-    }
-  }
-
-  function cachedToggleClass(className, switchValue) {
-    if (switchValue && !classCache[className]) {
-      $animate.addClass($element, className);
-      classCache[className] = true;
-    } else if (!switchValue && classCache[className]) {
-      $animate.removeClass($element, className);
-      classCache[className] = false;
-    }
-  }
-
-  function toggleValidationCss(validationErrorKey, isValid) {
-    validationErrorKey = validationErrorKey ? '-' + snake_case(validationErrorKey, '-') : '';
-
-    cachedToggleClass(VALID_CLASS + validationErrorKey, isValid === true);
-    cachedToggleClass(INVALID_CLASS + validationErrorKey, isValid === false);
-  }
-}
-
-function isObjectEmpty(obj) {
-  if (obj) {
-    for (var prop in obj) {
-      return false;
-    }
-  }
-  return true;
-}
 
 /**
  * @ngdoc directive
@@ -40504,6 +38924,83 @@ var ngBindHtmlDirective = ['$sce', '$parse', '$compile', function($sce, $parse, 
   };
 }];
 
+/**
+ * @ngdoc directive
+ * @name ngChange
+ *
+ * @description
+ * Evaluate the given expression when the user changes the input.
+ * The expression is evaluated immediately, unlike the JavaScript onchange event
+ * which only triggers at the end of a change (usually, when the user leaves the
+ * form element or presses the return key).
+ *
+ * The `ngChange` expression is only evaluated when a change in the input value causes
+ * a new value to be committed to the model.
+ *
+ * It will not be evaluated:
+ * * if the value returned from the `$parsers` transformation pipeline has not changed
+ * * if the input has continued to be invalid since the model will stay `null`
+ * * if the model is changed programmatically and not by a change to the input value
+ *
+ *
+ * Note, this directive requires `ngModel` to be present.
+ *
+ * @element input
+ * @param {expression} ngChange {@link guide/expression Expression} to evaluate upon change
+ * in input value.
+ *
+ * @example
+ * <example name="ngChange-directive" module="changeExample">
+ *   <file name="index.html">
+ *     <script>
+ *       angular.module('changeExample', [])
+ *         .controller('ExampleController', ['$scope', function($scope) {
+ *           $scope.counter = 0;
+ *           $scope.change = function() {
+ *             $scope.counter++;
+ *           };
+ *         }]);
+ *     </script>
+ *     <div ng-controller="ExampleController">
+ *       <input type="checkbox" ng-model="confirmed" ng-change="change()" id="ng-change-example1" />
+ *       <input type="checkbox" ng-model="confirmed" id="ng-change-example2" />
+ *       <label for="ng-change-example2">Confirmed</label><br />
+ *       <tt>debug = {{confirmed}}</tt><br/>
+ *       <tt>counter = {{counter}}</tt><br/>
+ *     </div>
+ *   </file>
+ *   <file name="protractor.js" type="protractor">
+ *     var counter = element(by.binding('counter'));
+ *     var debug = element(by.binding('confirmed'));
+ *
+ *     it('should evaluate the expression if changing from view', function() {
+ *       expect(counter.getText()).toContain('0');
+ *
+ *       element(by.id('ng-change-example1')).click();
+ *
+ *       expect(counter.getText()).toContain('1');
+ *       expect(debug.getText()).toContain('true');
+ *     });
+ *
+ *     it('should not evaluate the expression if changing from model', function() {
+ *       element(by.id('ng-change-example2')).click();
+
+ *       expect(counter.getText()).toContain('0');
+ *       expect(debug.getText()).toContain('true');
+ *     });
+ *   </file>
+ * </example>
+ */
+var ngChangeDirective = valueFn({
+  restrict: 'A',
+  require: 'ngModel',
+  link: function(scope, element, attr, ctrl) {
+    ctrl.$viewChangeListeners.push(function() {
+      scope.$eval(attr.ngChange);
+    });
+  }
+});
+
 function classDirective(name, selector) {
   name = 'ngClass' + name;
   return ['$animate', function($animate) {
@@ -40645,8 +39142,9 @@ function classDirective(name, selector) {
  * new classes are added.
  *
  * @animations
- * add - happens just before the class is applied to the element
- * remove - happens just before the class is removed from the element
+ * **add** - happens just before the class is applied to the elements
+ *
+ * **remove** - happens just before the class is removed from the element
  *
  * @element ANY
  * @param {expression} ngClass {@link guide/expression Expression} to eval. The result
@@ -41988,7 +40486,7 @@ var ngIfDirective = ['$animate', function($animate) {
        <select ng-model="template" ng-options="t.name for t in templates">
         <option value="">(blank)</option>
        </select>
-       url of the template: <tt>{{template.url}}</tt>
+       url of the template: <code>{{template.url}}</code>
        <hr/>
        <div class="slide-animate-container">
          <div class="slide-animate" ng-include="template.url"></div>
@@ -42112,7 +40610,7 @@ var ngIfDirective = ['$animate', function($animate) {
  * @name ngInclude#$includeContentError
  * @eventType emit on the scope ngInclude was declared in
  * @description
- * Emitted when a template HTTP request yields an erronous response (status < 200 || status > 299)
+ * Emitted when a template HTTP request yields an erroneous response (status < 200 || status > 299)
  *
  * @param {Object} angularEvent Synthetic event object.
  * @param {String} src URL of content to load.
@@ -42252,7 +40750,7 @@ var ngIncludeFillContentDirective = ['$compile',
  * **Note**: If you have assignment in `ngInit` along with {@link ng.$filter `$filter`}, make
  * sure you have parenthesis for correct precedence:
  * <pre class="prettyprint">
- *   <div ng-init="test1 = (data | orderBy:'name')"></div>
+ * `<div ng-init="test1 = (data | orderBy:'name')"></div>`
  * </pre>
  * </div>
  *
@@ -42299,6 +40797,1465 @@ var ngInitDirective = ngDirective({
     };
   }
 });
+
+/**
+ * @ngdoc directive
+ * @name ngList
+ *
+ * @description
+ * Text input that converts between a delimited string and an array of strings. The default
+ * delimiter is a comma followed by a space - equivalent to `ng-list=", "`. You can specify a custom
+ * delimiter as the value of the `ngList` attribute - for example, `ng-list=" | "`.
+ *
+ * The behaviour of the directive is affected by the use of the `ngTrim` attribute.
+ * * If `ngTrim` is set to `"false"` then whitespace around both the separator and each
+ *   list item is respected. This implies that the user of the directive is responsible for
+ *   dealing with whitespace but also allows you to use whitespace as a delimiter, such as a
+ *   tab or newline character.
+ * * Otherwise whitespace around the delimiter is ignored when splitting (although it is respected
+ *   when joining the list items back together) and whitespace around each list item is stripped
+ *   before it is added to the model.
+ *
+ * ### Example with Validation
+ *
+ * <example name="ngList-directive" module="listExample">
+ *   <file name="app.js">
+ *      angular.module('listExample', [])
+ *        .controller('ExampleController', ['$scope', function($scope) {
+ *          $scope.names = ['morpheus', 'neo', 'trinity'];
+ *        }]);
+ *   </file>
+ *   <file name="index.html">
+ *    <form name="myForm" ng-controller="ExampleController">
+ *      List: <input name="namesInput" ng-model="names" ng-list required>
+ *      <span class="error" ng-show="myForm.namesInput.$error.required">
+ *        Required!</span>
+ *      <br>
+ *      <tt>names = {{names}}</tt><br/>
+ *      <tt>myForm.namesInput.$valid = {{myForm.namesInput.$valid}}</tt><br/>
+ *      <tt>myForm.namesInput.$error = {{myForm.namesInput.$error}}</tt><br/>
+ *      <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
+ *      <tt>myForm.$error.required = {{!!myForm.$error.required}}</tt><br/>
+ *     </form>
+ *   </file>
+ *   <file name="protractor.js" type="protractor">
+ *     var listInput = element(by.model('names'));
+ *     var names = element(by.exactBinding('names'));
+ *     var valid = element(by.binding('myForm.namesInput.$valid'));
+ *     var error = element(by.css('span.error'));
+ *
+ *     it('should initialize to model', function() {
+ *       expect(names.getText()).toContain('["morpheus","neo","trinity"]');
+ *       expect(valid.getText()).toContain('true');
+ *       expect(error.getCssValue('display')).toBe('none');
+ *     });
+ *
+ *     it('should be invalid if empty', function() {
+ *       listInput.clear();
+ *       listInput.sendKeys('');
+ *
+ *       expect(names.getText()).toContain('');
+ *       expect(valid.getText()).toContain('false');
+ *       expect(error.getCssValue('display')).not.toBe('none');
+ *     });
+ *   </file>
+ * </example>
+ *
+ * ### Example - splitting on whitespace
+ * <example name="ngList-directive-newlines">
+ *   <file name="index.html">
+ *    <textarea ng-model="list" ng-list="&#10;" ng-trim="false"></textarea>
+ *    <pre>{{ list | json }}</pre>
+ *   </file>
+ *   <file name="protractor.js" type="protractor">
+ *     it("should split the text by newlines", function() {
+ *       var listInput = element(by.model('list'));
+ *       var output = element(by.binding('list | json'));
+ *       listInput.sendKeys('abc\ndef\nghi');
+ *       expect(output.getText()).toContain('[\n  "abc",\n  "def",\n  "ghi"\n]');
+ *     });
+ *   </file>
+ * </example>
+ *
+ * @element input
+ * @param {string=} ngList optional delimiter that should be used to split the value.
+ */
+var ngListDirective = function() {
+  return {
+    restrict: 'A',
+    priority: 100,
+    require: 'ngModel',
+    link: function(scope, element, attr, ctrl) {
+      // We want to control whitespace trimming so we use this convoluted approach
+      // to access the ngList attribute, which doesn't pre-trim the attribute
+      var ngList = element.attr(attr.$attr.ngList) || ', ';
+      var trimValues = attr.ngTrim !== 'false';
+      var separator = trimValues ? trim(ngList) : ngList;
+
+      var parse = function(viewValue) {
+        // If the viewValue is invalid (say required but empty) it will be `undefined`
+        if (isUndefined(viewValue)) return;
+
+        var list = [];
+
+        if (viewValue) {
+          forEach(viewValue.split(separator), function(value) {
+            if (value) list.push(trimValues ? trim(value) : value);
+          });
+        }
+
+        return list;
+      };
+
+      ctrl.$parsers.push(parse);
+      ctrl.$formatters.push(function(value) {
+        if (isArray(value)) {
+          return value.join(ngList);
+        }
+
+        return undefined;
+      });
+
+      // Override the standard $isEmpty because an empty array means the input is empty.
+      ctrl.$isEmpty = function(value) {
+        return !value || !value.length;
+      };
+    }
+  };
+};
+
+/* global VALID_CLASS: true,
+  INVALID_CLASS: true,
+  PRISTINE_CLASS: true,
+  DIRTY_CLASS: true,
+  UNTOUCHED_CLASS: true,
+  TOUCHED_CLASS: true,
+*/
+
+var VALID_CLASS = 'ng-valid',
+    INVALID_CLASS = 'ng-invalid',
+    PRISTINE_CLASS = 'ng-pristine',
+    DIRTY_CLASS = 'ng-dirty',
+    UNTOUCHED_CLASS = 'ng-untouched',
+    TOUCHED_CLASS = 'ng-touched',
+    PENDING_CLASS = 'ng-pending';
+
+
+var $ngModelMinErr = new minErr('ngModel');
+
+/**
+ * @ngdoc type
+ * @name ngModel.NgModelController
+ *
+ * @property {string} $viewValue Actual string value in the view.
+ * @property {*} $modelValue The value in the model that the control is bound to.
+ * @property {Array.<Function>} $parsers Array of functions to execute, as a pipeline, whenever
+       the control reads value from the DOM. The functions are called in array order, each passing
+       its return value through to the next. The last return value is forwarded to the
+       {@link ngModel.NgModelController#$validators `$validators`} collection.
+
+Parsers are used to sanitize / convert the {@link ngModel.NgModelController#$viewValue
+`$viewValue`}.
+
+Returning `undefined` from a parser means a parse error occurred. In that case,
+no {@link ngModel.NgModelController#$validators `$validators`} will run and the `ngModel`
+will be set to `undefined` unless {@link ngModelOptions `ngModelOptions.allowInvalid`}
+is set to `true`. The parse error is stored in `ngModel.$error.parse`.
+
+ *
+ * @property {Array.<Function>} $formatters Array of functions to execute, as a pipeline, whenever
+       the model value changes. The functions are called in reverse array order, each passing the value through to the
+       next. The last return value is used as the actual DOM value.
+       Used to format / convert values for display in the control.
+ * ```js
+ * function formatter(value) {
+ *   if (value) {
+ *     return value.toUpperCase();
+ *   }
+ * }
+ * ngModel.$formatters.push(formatter);
+ * ```
+ *
+ * @property {Object.<string, function>} $validators A collection of validators that are applied
+ *      whenever the model value changes. The key value within the object refers to the name of the
+ *      validator while the function refers to the validation operation. The validation operation is
+ *      provided with the model value as an argument and must return a true or false value depending
+ *      on the response of that validation.
+ *
+ * ```js
+ * ngModel.$validators.validCharacters = function(modelValue, viewValue) {
+ *   var value = modelValue || viewValue;
+ *   return /[0-9]+/.test(value) &&
+ *          /[a-z]+/.test(value) &&
+ *          /[A-Z]+/.test(value) &&
+ *          /\W+/.test(value);
+ * };
+ * ```
+ *
+ * @property {Object.<string, function>} $asyncValidators A collection of validations that are expected to
+ *      perform an asynchronous validation (e.g. a HTTP request). The validation function that is provided
+ *      is expected to return a promise when it is run during the model validation process. Once the promise
+ *      is delivered then the validation status will be set to true when fulfilled and false when rejected.
+ *      When the asynchronous validators are triggered, each of the validators will run in parallel and the model
+ *      value will only be updated once all validators have been fulfilled. As long as an asynchronous validator
+ *      is unfulfilled, its key will be added to the controllers `$pending` property. Also, all asynchronous validators
+ *      will only run once all synchronous validators have passed.
+ *
+ * Please note that if $http is used then it is important that the server returns a success HTTP response code
+ * in order to fulfill the validation and a status level of `4xx` in order to reject the validation.
+ *
+ * ```js
+ * ngModel.$asyncValidators.uniqueUsername = function(modelValue, viewValue) {
+ *   var value = modelValue || viewValue;
+ *
+ *   // Lookup user by username
+ *   return $http.get('/api/users/' + value).
+ *      then(function resolved() {
+ *        //username exists, this means validation fails
+ *        return $q.reject('exists');
+ *      }, function rejected() {
+ *        //username does not exist, therefore this validation passes
+ *        return true;
+ *      });
+ * };
+ * ```
+ *
+ * @property {Array.<Function>} $viewChangeListeners Array of functions to execute whenever the
+ *     view value has changed. It is called with no arguments, and its return value is ignored.
+ *     This can be used in place of additional $watches against the model value.
+ *
+ * @property {Object} $error An object hash with all failing validator ids as keys.
+ * @property {Object} $pending An object hash with all pending validator ids as keys.
+ *
+ * @property {boolean} $untouched True if control has not lost focus yet.
+ * @property {boolean} $touched True if control has lost focus.
+ * @property {boolean} $pristine True if user has not interacted with the control yet.
+ * @property {boolean} $dirty True if user has already interacted with the control.
+ * @property {boolean} $valid True if there is no error.
+ * @property {boolean} $invalid True if at least one error on the control.
+ * @property {string} $name The name attribute of the control.
+ *
+ * @description
+ *
+ * `NgModelController` provides API for the {@link ngModel `ngModel`} directive.
+ * The controller contains services for data-binding, validation, CSS updates, and value formatting
+ * and parsing. It purposefully does not contain any logic which deals with DOM rendering or
+ * listening to DOM events.
+ * Such DOM related logic should be provided by other directives which make use of
+ * `NgModelController` for data-binding to control elements.
+ * Angular provides this DOM logic for most {@link input `input`} elements.
+ * At the end of this page you can find a {@link ngModel.NgModelController#custom-control-example
+ * custom control example} that uses `ngModelController` to bind to `contenteditable` elements.
+ *
+ * @example
+ * ### Custom Control Example
+ * This example shows how to use `NgModelController` with a custom control to achieve
+ * data-binding. Notice how different directives (`contenteditable`, `ng-model`, and `required`)
+ * collaborate together to achieve the desired result.
+ *
+ * Note that `contenteditable` is an HTML5 attribute, which tells the browser to let the element
+ * contents be edited in place by the user.  This will not work on older browsers.
+ *
+ * We are using the {@link ng.service:$sce $sce} service here and include the {@link ngSanitize $sanitize}
+ * module to automatically remove "bad" content like inline event listener (e.g. `<span onclick="...">`).
+ * However, as we are using `$sce` the model can still decide to provide unsafe content if it marks
+ * that content using the `$sce` service.
+ *
+ * <example name="NgModelController" module="customControl" deps="angular-sanitize.js">
+    <file name="style.css">
+      [contenteditable] {
+        border: 1px solid black;
+        background-color: white;
+        min-height: 20px;
+      }
+
+      .ng-invalid {
+        border: 1px solid red;
+      }
+
+    </file>
+    <file name="script.js">
+      angular.module('customControl', ['ngSanitize']).
+        directive('contenteditable', ['$sce', function($sce) {
+          return {
+            restrict: 'A', // only activate on element attribute
+            require: '?ngModel', // get a hold of NgModelController
+            link: function(scope, element, attrs, ngModel) {
+              if (!ngModel) return; // do nothing if no ng-model
+
+              // Specify how UI should be updated
+              ngModel.$render = function() {
+                element.html($sce.getTrustedHtml(ngModel.$viewValue || ''));
+              };
+
+              // Listen for change events to enable binding
+              element.on('blur keyup change', function() {
+                scope.$evalAsync(read);
+              });
+              read(); // initialize
+
+              // Write data to the model
+              function read() {
+                var html = element.html();
+                // When we clear the content editable the browser leaves a <br> behind
+                // If strip-br attribute is provided then we strip this out
+                if ( attrs.stripBr && html == '<br>' ) {
+                  html = '';
+                }
+                ngModel.$setViewValue(html);
+              }
+            }
+          };
+        }]);
+    </file>
+    <file name="index.html">
+      <form name="myForm">
+       <div contenteditable
+            name="myWidget" ng-model="userContent"
+            strip-br="true"
+            required>Change me!</div>
+        <span ng-show="myForm.myWidget.$error.required">Required!</span>
+       <hr>
+       <textarea ng-model="userContent"></textarea>
+      </form>
+    </file>
+    <file name="protractor.js" type="protractor">
+    it('should data-bind and become invalid', function() {
+      if (browser.params.browser == 'safari' || browser.params.browser == 'firefox') {
+        // SafariDriver can't handle contenteditable
+        // and Firefox driver can't clear contenteditables very well
+        return;
+      }
+      var contentEditable = element(by.css('[contenteditable]'));
+      var content = 'Change me!';
+
+      expect(contentEditable.getText()).toEqual(content);
+
+      contentEditable.clear();
+      contentEditable.sendKeys(protractor.Key.BACK_SPACE);
+      expect(contentEditable.getText()).toEqual('');
+      expect(contentEditable.getAttribute('class')).toMatch(/ng-invalid-required/);
+    });
+    </file>
+ * </example>
+ *
+ *
+ */
+var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$parse', '$animate', '$timeout', '$rootScope', '$q', '$interpolate',
+    function($scope, $exceptionHandler, $attr, $element, $parse, $animate, $timeout, $rootScope, $q, $interpolate) {
+  this.$viewValue = Number.NaN;
+  this.$modelValue = Number.NaN;
+  this.$$rawModelValue = undefined; // stores the parsed modelValue / model set from scope regardless of validity.
+  this.$validators = {};
+  this.$asyncValidators = {};
+  this.$parsers = [];
+  this.$formatters = [];
+  this.$viewChangeListeners = [];
+  this.$untouched = true;
+  this.$touched = false;
+  this.$pristine = true;
+  this.$dirty = false;
+  this.$valid = true;
+  this.$invalid = false;
+  this.$error = {}; // keep invalid keys here
+  this.$$success = {}; // keep valid keys here
+  this.$pending = undefined; // keep pending keys here
+  this.$name = $interpolate($attr.name || '', false)($scope);
+
+
+  var parsedNgModel = $parse($attr.ngModel),
+      parsedNgModelAssign = parsedNgModel.assign,
+      ngModelGet = parsedNgModel,
+      ngModelSet = parsedNgModelAssign,
+      pendingDebounce = null,
+      parserValid,
+      ctrl = this;
+
+  this.$$setOptions = function(options) {
+    ctrl.$options = options;
+    if (options && options.getterSetter) {
+      var invokeModelGetter = $parse($attr.ngModel + '()'),
+          invokeModelSetter = $parse($attr.ngModel + '($$$p)');
+
+      ngModelGet = function($scope) {
+        var modelValue = parsedNgModel($scope);
+        if (isFunction(modelValue)) {
+          modelValue = invokeModelGetter($scope);
+        }
+        return modelValue;
+      };
+      ngModelSet = function($scope, newValue) {
+        if (isFunction(parsedNgModel($scope))) {
+          invokeModelSetter($scope, {$$$p: ctrl.$modelValue});
+        } else {
+          parsedNgModelAssign($scope, ctrl.$modelValue);
+        }
+      };
+    } else if (!parsedNgModel.assign) {
+      throw $ngModelMinErr('nonassign', "Expression '{0}' is non-assignable. Element: {1}",
+          $attr.ngModel, startingTag($element));
+    }
+  };
+
+  /**
+   * @ngdoc method
+   * @name ngModel.NgModelController#$render
+   *
+   * @description
+   * Called when the view needs to be updated. It is expected that the user of the ng-model
+   * directive will implement this method.
+   *
+   * The `$render()` method is invoked in the following situations:
+   *
+   * * `$rollbackViewValue()` is called.  If we are rolling back the view value to the last
+   *   committed value then `$render()` is called to update the input control.
+   * * The value referenced by `ng-model` is changed programmatically and both the `$modelValue` and
+   *   the `$viewValue` are different to last time.
+   *
+   * Since `ng-model` does not do a deep watch, `$render()` is only invoked if the values of
+   * `$modelValue` and `$viewValue` are actually different to their previous value. If `$modelValue`
+   * or `$viewValue` are objects (rather than a string or number) then `$render()` will not be
+   * invoked if you only change a property on the objects.
+   */
+  this.$render = noop;
+
+  /**
+   * @ngdoc method
+   * @name ngModel.NgModelController#$isEmpty
+   *
+   * @description
+   * This is called when we need to determine if the value of an input is empty.
+   *
+   * For instance, the required directive does this to work out if the input has data or not.
+   *
+   * The default `$isEmpty` function checks whether the value is `undefined`, `''`, `null` or `NaN`.
+   *
+   * You can override this for input directives whose concept of being empty is different to the
+   * default. The `checkboxInputType` directive does this because in its case a value of `false`
+   * implies empty.
+   *
+   * @param {*} value The value of the input to check for emptiness.
+   * @returns {boolean} True if `value` is "empty".
+   */
+  this.$isEmpty = function(value) {
+    return isUndefined(value) || value === '' || value === null || value !== value;
+  };
+
+  var parentForm = $element.inheritedData('$formController') || nullFormCtrl,
+      currentValidationRunId = 0;
+
+  /**
+   * @ngdoc method
+   * @name ngModel.NgModelController#$setValidity
+   *
+   * @description
+   * Change the validity state, and notify the form.
+   *
+   * This method can be called within $parsers/$formatters or a custom validation implementation.
+   * However, in most cases it should be sufficient to use the `ngModel.$validators` and
+   * `ngModel.$asyncValidators` collections which will call `$setValidity` automatically.
+   *
+   * @param {string} validationErrorKey Name of the validator. The `validationErrorKey` will be assigned
+   *        to either `$error[validationErrorKey]` or `$pending[validationErrorKey]`
+   *        (for unfulfilled `$asyncValidators`), so that it is available for data-binding.
+   *        The `validationErrorKey` should be in camelCase and will get converted into dash-case
+   *        for class name. Example: `myError` will result in `ng-valid-my-error` and `ng-invalid-my-error`
+   *        class and can be bound to as  `{{someForm.someControl.$error.myError}}` .
+   * @param {boolean} isValid Whether the current state is valid (true), invalid (false), pending (undefined),
+   *                          or skipped (null). Pending is used for unfulfilled `$asyncValidators`.
+   *                          Skipped is used by Angular when validators do not run because of parse errors and
+   *                          when `$asyncValidators` do not run because any of the `$validators` failed.
+   */
+  addSetValidityMethod({
+    ctrl: this,
+    $element: $element,
+    set: function(object, property) {
+      object[property] = true;
+    },
+    unset: function(object, property) {
+      delete object[property];
+    },
+    parentForm: parentForm,
+    $animate: $animate
+  });
+
+  /**
+   * @ngdoc method
+   * @name ngModel.NgModelController#$setPristine
+   *
+   * @description
+   * Sets the control to its pristine state.
+   *
+   * This method can be called to remove the `ng-dirty` class and set the control to its pristine
+   * state (`ng-pristine` class). A model is considered to be pristine when the control
+   * has not been changed from when first compiled.
+   */
+  this.$setPristine = function() {
+    ctrl.$dirty = false;
+    ctrl.$pristine = true;
+    $animate.removeClass($element, DIRTY_CLASS);
+    $animate.addClass($element, PRISTINE_CLASS);
+  };
+
+  /**
+   * @ngdoc method
+   * @name ngModel.NgModelController#$setDirty
+   *
+   * @description
+   * Sets the control to its dirty state.
+   *
+   * This method can be called to remove the `ng-pristine` class and set the control to its dirty
+   * state (`ng-dirty` class). A model is considered to be dirty when the control has been changed
+   * from when first compiled.
+   */
+  this.$setDirty = function() {
+    ctrl.$dirty = true;
+    ctrl.$pristine = false;
+    $animate.removeClass($element, PRISTINE_CLASS);
+    $animate.addClass($element, DIRTY_CLASS);
+    parentForm.$setDirty();
+  };
+
+  /**
+   * @ngdoc method
+   * @name ngModel.NgModelController#$setUntouched
+   *
+   * @description
+   * Sets the control to its untouched state.
+   *
+   * This method can be called to remove the `ng-touched` class and set the control to its
+   * untouched state (`ng-untouched` class). Upon compilation, a model is set as untouched
+   * by default, however this function can be used to restore that state if the model has
+   * already been touched by the user.
+   */
+  this.$setUntouched = function() {
+    ctrl.$touched = false;
+    ctrl.$untouched = true;
+    $animate.setClass($element, UNTOUCHED_CLASS, TOUCHED_CLASS);
+  };
+
+  /**
+   * @ngdoc method
+   * @name ngModel.NgModelController#$setTouched
+   *
+   * @description
+   * Sets the control to its touched state.
+   *
+   * This method can be called to remove the `ng-untouched` class and set the control to its
+   * touched state (`ng-touched` class). A model is considered to be touched when the user has
+   * first focused the control element and then shifted focus away from the control (blur event).
+   */
+  this.$setTouched = function() {
+    ctrl.$touched = true;
+    ctrl.$untouched = false;
+    $animate.setClass($element, TOUCHED_CLASS, UNTOUCHED_CLASS);
+  };
+
+  /**
+   * @ngdoc method
+   * @name ngModel.NgModelController#$rollbackViewValue
+   *
+   * @description
+   * Cancel an update and reset the input element's value to prevent an update to the `$modelValue`,
+   * which may be caused by a pending debounced event or because the input is waiting for a some
+   * future event.
+   *
+   * If you have an input that uses `ng-model-options` to set up debounced events or events such
+   * as blur you can have a situation where there is a period when the `$viewValue`
+   * is out of synch with the ngModel's `$modelValue`.
+   *
+   * In this case, you can run into difficulties if you try to update the ngModel's `$modelValue`
+   * programmatically before these debounced/future events have resolved/occurred, because Angular's
+   * dirty checking mechanism is not able to tell whether the model has actually changed or not.
+   *
+   * The `$rollbackViewValue()` method should be called before programmatically changing the model of an
+   * input which may have such events pending. This is important in order to make sure that the
+   * input field will be updated with the new model value and any pending operations are cancelled.
+   *
+   * <example name="ng-model-cancel-update" module="cancel-update-example">
+   *   <file name="app.js">
+   *     angular.module('cancel-update-example', [])
+   *
+   *     .controller('CancelUpdateController', ['$scope', function($scope) {
+   *       $scope.resetWithCancel = function(e) {
+   *         if (e.keyCode == 27) {
+   *           $scope.myForm.myInput1.$rollbackViewValue();
+   *           $scope.myValue = '';
+   *         }
+   *       };
+   *       $scope.resetWithoutCancel = function(e) {
+   *         if (e.keyCode == 27) {
+   *           $scope.myValue = '';
+   *         }
+   *       };
+   *     }]);
+   *   </file>
+   *   <file name="index.html">
+   *     <div ng-controller="CancelUpdateController">
+   *       <p>Try typing something in each input.  See that the model only updates when you
+   *          blur off the input.
+   *        </p>
+   *        <p>Now see what happens if you start typing then press the Escape key</p>
+   *
+   *       <form name="myForm" ng-model-options="{ updateOn: 'blur' }">
+   *         <p>With $rollbackViewValue()</p>
+   *         <input name="myInput1" ng-model="myValue" ng-keydown="resetWithCancel($event)"><br/>
+   *         myValue: "{{ myValue }}"
+   *
+   *         <p>Without $rollbackViewValue()</p>
+   *         <input name="myInput2" ng-model="myValue" ng-keydown="resetWithoutCancel($event)"><br/>
+   *         myValue: "{{ myValue }}"
+   *       </form>
+   *     </div>
+   *   </file>
+   * </example>
+   */
+  this.$rollbackViewValue = function() {
+    $timeout.cancel(pendingDebounce);
+    ctrl.$viewValue = ctrl.$$lastCommittedViewValue;
+    ctrl.$render();
+  };
+
+  /**
+   * @ngdoc method
+   * @name ngModel.NgModelController#$validate
+   *
+   * @description
+   * Runs each of the registered validators (first synchronous validators and then
+   * asynchronous validators).
+   * If the validity changes to invalid, the model will be set to `undefined`,
+   * unless {@link ngModelOptions `ngModelOptions.allowInvalid`} is `true`.
+   * If the validity changes to valid, it will set the model to the last available valid
+   * modelValue, i.e. either the last parsed value or the last value set from the scope.
+   */
+  this.$validate = function() {
+    // ignore $validate before model is initialized
+    if (isNumber(ctrl.$modelValue) && isNaN(ctrl.$modelValue)) {
+      return;
+    }
+
+    var viewValue = ctrl.$$lastCommittedViewValue;
+    // Note: we use the $$rawModelValue as $modelValue might have been
+    // set to undefined during a view -> model update that found validation
+    // errors. We can't parse the view here, since that could change
+    // the model although neither viewValue nor the model on the scope changed
+    var modelValue = ctrl.$$rawModelValue;
+
+    var prevValid = ctrl.$valid;
+    var prevModelValue = ctrl.$modelValue;
+
+    var allowInvalid = ctrl.$options && ctrl.$options.allowInvalid;
+
+    ctrl.$$runValidators(modelValue, viewValue, function(allValid) {
+      // If there was no change in validity, don't update the model
+      // This prevents changing an invalid modelValue to undefined
+      if (!allowInvalid && prevValid !== allValid) {
+        // Note: Don't check ctrl.$valid here, as we could have
+        // external validators (e.g. calculated on the server),
+        // that just call $setValidity and need the model value
+        // to calculate their validity.
+        ctrl.$modelValue = allValid ? modelValue : undefined;
+
+        if (ctrl.$modelValue !== prevModelValue) {
+          ctrl.$$writeModelToScope();
+        }
+      }
+    });
+
+  };
+
+  this.$$runValidators = function(modelValue, viewValue, doneCallback) {
+    currentValidationRunId++;
+    var localValidationRunId = currentValidationRunId;
+
+    // check parser error
+    if (!processParseErrors()) {
+      validationDone(false);
+      return;
+    }
+    if (!processSyncValidators()) {
+      validationDone(false);
+      return;
+    }
+    processAsyncValidators();
+
+    function processParseErrors() {
+      var errorKey = ctrl.$$parserName || 'parse';
+      if (parserValid === undefined) {
+        setValidity(errorKey, null);
+      } else {
+        if (!parserValid) {
+          forEach(ctrl.$validators, function(v, name) {
+            setValidity(name, null);
+          });
+          forEach(ctrl.$asyncValidators, function(v, name) {
+            setValidity(name, null);
+          });
+        }
+        // Set the parse error last, to prevent unsetting it, should a $validators key == parserName
+        setValidity(errorKey, parserValid);
+        return parserValid;
+      }
+      return true;
+    }
+
+    function processSyncValidators() {
+      var syncValidatorsValid = true;
+      forEach(ctrl.$validators, function(validator, name) {
+        var result = validator(modelValue, viewValue);
+        syncValidatorsValid = syncValidatorsValid && result;
+        setValidity(name, result);
+      });
+      if (!syncValidatorsValid) {
+        forEach(ctrl.$asyncValidators, function(v, name) {
+          setValidity(name, null);
+        });
+        return false;
+      }
+      return true;
+    }
+
+    function processAsyncValidators() {
+      var validatorPromises = [];
+      var allValid = true;
+      forEach(ctrl.$asyncValidators, function(validator, name) {
+        var promise = validator(modelValue, viewValue);
+        if (!isPromiseLike(promise)) {
+          throw $ngModelMinErr("$asyncValidators",
+            "Expected asynchronous validator to return a promise but got '{0}' instead.", promise);
+        }
+        setValidity(name, undefined);
+        validatorPromises.push(promise.then(function() {
+          setValidity(name, true);
+        }, function(error) {
+          allValid = false;
+          setValidity(name, false);
+        }));
+      });
+      if (!validatorPromises.length) {
+        validationDone(true);
+      } else {
+        $q.all(validatorPromises).then(function() {
+          validationDone(allValid);
+        }, noop);
+      }
+    }
+
+    function setValidity(name, isValid) {
+      if (localValidationRunId === currentValidationRunId) {
+        ctrl.$setValidity(name, isValid);
+      }
+    }
+
+    function validationDone(allValid) {
+      if (localValidationRunId === currentValidationRunId) {
+
+        doneCallback(allValid);
+      }
+    }
+  };
+
+  /**
+   * @ngdoc method
+   * @name ngModel.NgModelController#$commitViewValue
+   *
+   * @description
+   * Commit a pending update to the `$modelValue`.
+   *
+   * Updates may be pending by a debounced event or because the input is waiting for a some future
+   * event defined in `ng-model-options`. this method is rarely needed as `NgModelController`
+   * usually handles calling this in response to input events.
+   */
+  this.$commitViewValue = function() {
+    var viewValue = ctrl.$viewValue;
+
+    $timeout.cancel(pendingDebounce);
+
+    // If the view value has not changed then we should just exit, except in the case where there is
+    // a native validator on the element. In this case the validation state may have changed even though
+    // the viewValue has stayed empty.
+    if (ctrl.$$lastCommittedViewValue === viewValue && (viewValue !== '' || !ctrl.$$hasNativeValidators)) {
+      return;
+    }
+    ctrl.$$lastCommittedViewValue = viewValue;
+
+    // change to dirty
+    if (ctrl.$pristine) {
+      this.$setDirty();
+    }
+    this.$$parseAndValidate();
+  };
+
+  this.$$parseAndValidate = function() {
+    var viewValue = ctrl.$$lastCommittedViewValue;
+    var modelValue = viewValue;
+    parserValid = isUndefined(modelValue) ? undefined : true;
+
+    if (parserValid) {
+      for (var i = 0; i < ctrl.$parsers.length; i++) {
+        modelValue = ctrl.$parsers[i](modelValue);
+        if (isUndefined(modelValue)) {
+          parserValid = false;
+          break;
+        }
+      }
+    }
+    if (isNumber(ctrl.$modelValue) && isNaN(ctrl.$modelValue)) {
+      // ctrl.$modelValue has not been touched yet...
+      ctrl.$modelValue = ngModelGet($scope);
+    }
+    var prevModelValue = ctrl.$modelValue;
+    var allowInvalid = ctrl.$options && ctrl.$options.allowInvalid;
+    ctrl.$$rawModelValue = modelValue;
+
+    if (allowInvalid) {
+      ctrl.$modelValue = modelValue;
+      writeToModelIfNeeded();
+    }
+
+    // Pass the $$lastCommittedViewValue here, because the cached viewValue might be out of date.
+    // This can happen if e.g. $setViewValue is called from inside a parser
+    ctrl.$$runValidators(modelValue, ctrl.$$lastCommittedViewValue, function(allValid) {
+      if (!allowInvalid) {
+        // Note: Don't check ctrl.$valid here, as we could have
+        // external validators (e.g. calculated on the server),
+        // that just call $setValidity and need the model value
+        // to calculate their validity.
+        ctrl.$modelValue = allValid ? modelValue : undefined;
+        writeToModelIfNeeded();
+      }
+    });
+
+    function writeToModelIfNeeded() {
+      if (ctrl.$modelValue !== prevModelValue) {
+        ctrl.$$writeModelToScope();
+      }
+    }
+  };
+
+  this.$$writeModelToScope = function() {
+    ngModelSet($scope, ctrl.$modelValue);
+    forEach(ctrl.$viewChangeListeners, function(listener) {
+      try {
+        listener();
+      } catch (e) {
+        $exceptionHandler(e);
+      }
+    });
+  };
+
+  /**
+   * @ngdoc method
+   * @name ngModel.NgModelController#$setViewValue
+   *
+   * @description
+   * Update the view value.
+   *
+   * This method should be called when an input directive want to change the view value; typically,
+   * this is done from within a DOM event handler.
+   *
+   * For example {@link ng.directive:input input} calls it when the value of the input changes and
+   * {@link ng.directive:select select} calls it when an option is selected.
+   *
+   * If the new `value` is an object (rather than a string or a number), we should make a copy of the
+   * object before passing it to `$setViewValue`.  This is because `ngModel` does not perform a deep
+   * watch of objects, it only looks for a change of identity. If you only change the property of
+   * the object then ngModel will not realise that the object has changed and will not invoke the
+   * `$parsers` and `$validators` pipelines.
+   *
+   * For this reason, you should not change properties of the copy once it has been passed to
+   * `$setViewValue`. Otherwise you may cause the model value on the scope to change incorrectly.
+   *
+   * When this method is called, the new `value` will be staged for committing through the `$parsers`
+   * and `$validators` pipelines. If there are no special {@link ngModelOptions} specified then the staged
+   * value sent directly for processing, finally to be applied to `$modelValue` and then the
+   * **expression** specified in the `ng-model` attribute.
+   *
+   * Lastly, all the registered change listeners, in the `$viewChangeListeners` list, are called.
+   *
+   * In case the {@link ng.directive:ngModelOptions ngModelOptions} directive is used with `updateOn`
+   * and the `default` trigger is not listed, all those actions will remain pending until one of the
+   * `updateOn` events is triggered on the DOM element.
+   * All these actions will be debounced if the {@link ng.directive:ngModelOptions ngModelOptions}
+   * directive is used with a custom debounce for this particular event.
+   *
+   * Note that calling this function does not trigger a `$digest`.
+   *
+   * @param {string} value Value from the view.
+   * @param {string} trigger Event that triggered the update.
+   */
+  this.$setViewValue = function(value, trigger) {
+    ctrl.$viewValue = value;
+    if (!ctrl.$options || ctrl.$options.updateOnDefault) {
+      ctrl.$$debounceViewValueCommit(trigger);
+    }
+  };
+
+  this.$$debounceViewValueCommit = function(trigger) {
+    var debounceDelay = 0,
+        options = ctrl.$options,
+        debounce;
+
+    if (options && isDefined(options.debounce)) {
+      debounce = options.debounce;
+      if (isNumber(debounce)) {
+        debounceDelay = debounce;
+      } else if (isNumber(debounce[trigger])) {
+        debounceDelay = debounce[trigger];
+      } else if (isNumber(debounce['default'])) {
+        debounceDelay = debounce['default'];
+      }
+    }
+
+    $timeout.cancel(pendingDebounce);
+    if (debounceDelay) {
+      pendingDebounce = $timeout(function() {
+        ctrl.$commitViewValue();
+      }, debounceDelay);
+    } else if ($rootScope.$$phase) {
+      ctrl.$commitViewValue();
+    } else {
+      $scope.$apply(function() {
+        ctrl.$commitViewValue();
+      });
+    }
+  };
+
+  // model -> value
+  // Note: we cannot use a normal scope.$watch as we want to detect the following:
+  // 1. scope value is 'a'
+  // 2. user enters 'b'
+  // 3. ng-change kicks in and reverts scope value to 'a'
+  //    -> scope value did not change since the last digest as
+  //       ng-change executes in apply phase
+  // 4. view should be changed back to 'a'
+  $scope.$watch(function ngModelWatch() {
+    var modelValue = ngModelGet($scope);
+
+    // if scope model value and ngModel value are out of sync
+    // TODO(perf): why not move this to the action fn?
+    if (modelValue !== ctrl.$modelValue) {
+      ctrl.$modelValue = ctrl.$$rawModelValue = modelValue;
+      parserValid = undefined;
+
+      var formatters = ctrl.$formatters,
+          idx = formatters.length;
+
+      var viewValue = modelValue;
+      while (idx--) {
+        viewValue = formatters[idx](viewValue);
+      }
+      if (ctrl.$viewValue !== viewValue) {
+        ctrl.$viewValue = ctrl.$$lastCommittedViewValue = viewValue;
+        ctrl.$render();
+
+        ctrl.$$runValidators(modelValue, viewValue, noop);
+      }
+    }
+
+    return modelValue;
+  });
+}];
+
+
+/**
+ * @ngdoc directive
+ * @name ngModel
+ *
+ * @element input
+ * @priority 1
+ *
+ * @description
+ * The `ngModel` directive binds an `input`,`select`, `textarea` (or custom form control) to a
+ * property on the scope using {@link ngModel.NgModelController NgModelController},
+ * which is created and exposed by this directive.
+ *
+ * `ngModel` is responsible for:
+ *
+ * - Binding the view into the model, which other directives such as `input`, `textarea` or `select`
+ *   require.
+ * - Providing validation behavior (i.e. required, number, email, url).
+ * - Keeping the state of the control (valid/invalid, dirty/pristine, touched/untouched, validation errors).
+ * - Setting related css classes on the element (`ng-valid`, `ng-invalid`, `ng-dirty`, `ng-pristine`, `ng-touched`, `ng-untouched`) including animations.
+ * - Registering the control with its parent {@link ng.directive:form form}.
+ *
+ * Note: `ngModel` will try to bind to the property given by evaluating the expression on the
+ * current scope. If the property doesn't already exist on this scope, it will be created
+ * implicitly and added to the scope.
+ *
+ * For best practices on using `ngModel`, see:
+ *
+ *  - [Understanding Scopes](https://github.com/angular/angular.js/wiki/Understanding-Scopes)
+ *
+ * For basic examples, how to use `ngModel`, see:
+ *
+ *  - {@link ng.directive:input input}
+ *    - {@link input[text] text}
+ *    - {@link input[checkbox] checkbox}
+ *    - {@link input[radio] radio}
+ *    - {@link input[number] number}
+ *    - {@link input[email] email}
+ *    - {@link input[url] url}
+ *    - {@link input[date] date}
+ *    - {@link input[datetime-local] datetime-local}
+ *    - {@link input[time] time}
+ *    - {@link input[month] month}
+ *    - {@link input[week] week}
+ *  - {@link ng.directive:select select}
+ *  - {@link ng.directive:textarea textarea}
+ *
+ * # CSS classes
+ * The following CSS classes are added and removed on the associated input/select/textarea element
+ * depending on the validity of the model.
+ *
+ *  - `ng-valid`: the model is valid
+ *  - `ng-invalid`: the model is invalid
+ *  - `ng-valid-[key]`: for each valid key added by `$setValidity`
+ *  - `ng-invalid-[key]`: for each invalid key added by `$setValidity`
+ *  - `ng-pristine`: the control hasn't been interacted with yet
+ *  - `ng-dirty`: the control has been interacted with
+ *  - `ng-touched`: the control has been blurred
+ *  - `ng-untouched`: the control hasn't been blurred
+ *  - `ng-pending`: any `$asyncValidators` are unfulfilled
+ *
+ * Keep in mind that ngAnimate can detect each of these classes when added and removed.
+ *
+ * ## Animation Hooks
+ *
+ * Animations within models are triggered when any of the associated CSS classes are added and removed
+ * on the input element which is attached to the model. These classes are: `.ng-pristine`, `.ng-dirty`,
+ * `.ng-invalid` and `.ng-valid` as well as any other validations that are performed on the model itself.
+ * The animations that are triggered within ngModel are similar to how they work in ngClass and
+ * animations can be hooked into using CSS transitions, keyframes as well as JS animations.
+ *
+ * The following example shows a simple way to utilize CSS transitions to style an input element
+ * that has been rendered as invalid after it has been validated:
+ *
+ * <pre>
+ * //be sure to include ngAnimate as a module to hook into more
+ * //advanced animations
+ * .my-input {
+ *   transition:0.5s linear all;
+ *   background: white;
+ * }
+ * .my-input.ng-invalid {
+ *   background: red;
+ *   color:white;
+ * }
+ * </pre>
+ *
+ * @example
+ * <example deps="angular-animate.js" animations="true" fixBase="true" module="inputExample">
+     <file name="index.html">
+       <script>
+        angular.module('inputExample', [])
+          .controller('ExampleController', ['$scope', function($scope) {
+            $scope.val = '1';
+          }]);
+       </script>
+       <style>
+         .my-input {
+           -webkit-transition:all linear 0.5s;
+           transition:all linear 0.5s;
+           background: transparent;
+         }
+         .my-input.ng-invalid {
+           color:white;
+           background: red;
+         }
+       </style>
+       Update input to see transitions when valid/invalid.
+       Integer is a valid value.
+       <form name="testForm" ng-controller="ExampleController">
+         <input ng-model="val" ng-pattern="/^\d+$/" name="anim" class="my-input" />
+       </form>
+     </file>
+ * </example>
+ *
+ * ## Binding to a getter/setter
+ *
+ * Sometimes it's helpful to bind `ngModel` to a getter/setter function.  A getter/setter is a
+ * function that returns a representation of the model when called with zero arguments, and sets
+ * the internal state of a model when called with an argument. It's sometimes useful to use this
+ * for models that have an internal representation that's different than what the model exposes
+ * to the view.
+ *
+ * <div class="alert alert-success">
+ * **Best Practice:** It's best to keep getters fast because Angular is likely to call them more
+ * frequently than other parts of your code.
+ * </div>
+ *
+ * You use this behavior by adding `ng-model-options="{ getterSetter: true }"` to an element that
+ * has `ng-model` attached to it. You can also add `ng-model-options="{ getterSetter: true }"` to
+ * a `<form>`, which will enable this behavior for all `<input>`s within it. See
+ * {@link ng.directive:ngModelOptions `ngModelOptions`} for more.
+ *
+ * The following example shows how to use `ngModel` with a getter/setter:
+ *
+ * @example
+ * <example name="ngModel-getter-setter" module="getterSetterExample">
+     <file name="index.html">
+       <div ng-controller="ExampleController">
+         <form name="userForm">
+           Name:
+           <input type="text" name="userName"
+                  ng-model="user.name"
+                  ng-model-options="{ getterSetter: true }" />
+         </form>
+         <pre>user.name = <span ng-bind="user.name()"></span></pre>
+       </div>
+     </file>
+     <file name="app.js">
+       angular.module('getterSetterExample', [])
+         .controller('ExampleController', ['$scope', function($scope) {
+           var _name = 'Brian';
+           $scope.user = {
+             name: function(newName) {
+               if (angular.isDefined(newName)) {
+                 _name = newName;
+               }
+               return _name;
+             }
+           };
+         }]);
+     </file>
+ * </example>
+ */
+var ngModelDirective = ['$rootScope', function($rootScope) {
+  return {
+    restrict: 'A',
+    require: ['ngModel', '^?form', '^?ngModelOptions'],
+    controller: NgModelController,
+    // Prelink needs to run before any input directive
+    // so that we can set the NgModelOptions in NgModelController
+    // before anyone else uses it.
+    priority: 1,
+    compile: function ngModelCompile(element) {
+      // Setup initial state of the control
+      element.addClass(PRISTINE_CLASS).addClass(UNTOUCHED_CLASS).addClass(VALID_CLASS);
+
+      return {
+        pre: function ngModelPreLink(scope, element, attr, ctrls) {
+          var modelCtrl = ctrls[0],
+              formCtrl = ctrls[1] || nullFormCtrl;
+
+          modelCtrl.$$setOptions(ctrls[2] && ctrls[2].$options);
+
+          // notify others, especially parent forms
+          formCtrl.$addControl(modelCtrl);
+
+          attr.$observe('name', function(newValue) {
+            if (modelCtrl.$name !== newValue) {
+              formCtrl.$$renameControl(modelCtrl, newValue);
+            }
+          });
+
+          scope.$on('$destroy', function() {
+            formCtrl.$removeControl(modelCtrl);
+          });
+        },
+        post: function ngModelPostLink(scope, element, attr, ctrls) {
+          var modelCtrl = ctrls[0];
+          if (modelCtrl.$options && modelCtrl.$options.updateOn) {
+            element.on(modelCtrl.$options.updateOn, function(ev) {
+              modelCtrl.$$debounceViewValueCommit(ev && ev.type);
+            });
+          }
+
+          element.on('blur', function(ev) {
+            if (modelCtrl.$touched) return;
+
+            if ($rootScope.$$phase) {
+              scope.$evalAsync(modelCtrl.$setTouched);
+            } else {
+              scope.$apply(modelCtrl.$setTouched);
+            }
+          });
+        }
+      };
+    }
+  };
+}];
+
+var DEFAULT_REGEXP = /(\s+|^)default(\s+|$)/;
+
+/**
+ * @ngdoc directive
+ * @name ngModelOptions
+ *
+ * @description
+ * Allows tuning how model updates are done. Using `ngModelOptions` you can specify a custom list of
+ * events that will trigger a model update and/or a debouncing delay so that the actual update only
+ * takes place when a timer expires; this timer will be reset after another change takes place.
+ *
+ * Given the nature of `ngModelOptions`, the value displayed inside input fields in the view might
+ * be different than the value in the actual model. This means that if you update the model you
+ * should also invoke {@link ngModel.NgModelController `$rollbackViewValue`} on the relevant input field in
+ * order to make sure it is synchronized with the model and that any debounced action is canceled.
+ *
+ * The easiest way to reference the control's {@link ngModel.NgModelController `$rollbackViewValue`}
+ * method is by making sure the input is placed inside a form that has a `name` attribute. This is
+ * important because `form` controllers are published to the related scope under the name in their
+ * `name` attribute.
+ *
+ * Any pending changes will take place immediately when an enclosing form is submitted via the
+ * `submit` event. Note that `ngClick` events will occur before the model is updated. Use `ngSubmit`
+ * to have access to the updated model.
+ *
+ * `ngModelOptions` has an effect on the element it's declared on and its descendants.
+ *
+ * @param {Object} ngModelOptions options to apply to the current model. Valid keys are:
+ *   - `updateOn`: string specifying which event should the input be bound to. You can set several
+ *     events using an space delimited list. There is a special event called `default` that
+ *     matches the default events belonging of the control.
+ *   - `debounce`: integer value which contains the debounce model update value in milliseconds. A
+ *     value of 0 triggers an immediate update. If an object is supplied instead, you can specify a
+ *     custom value for each event. For example:
+ *     `ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"`
+ *   - `allowInvalid`: boolean value which indicates that the model can be set with values that did
+ *     not validate correctly instead of the default behavior of setting the model to undefined.
+ *   - `getterSetter`: boolean value which determines whether or not to treat functions bound to
+       `ngModel` as getters/setters.
+ *   - `timezone`: Defines the timezone to be used to read/write the `Date` instance in the model for
+ *     `<input type="date">`, `<input type="time">`, ... . Right now, the only supported value is `'UTC'`,
+ *     otherwise the default timezone of the browser will be used.
+ *
+ * @example
+
+  The following example shows how to override immediate updates. Changes on the inputs within the
+  form will update the model only when the control loses focus (blur event). If `escape` key is
+  pressed while the input field is focused, the value is reset to the value in the current model.
+
+  <example name="ngModelOptions-directive-blur" module="optionsExample">
+    <file name="index.html">
+      <div ng-controller="ExampleController">
+        <form name="userForm">
+          Name:
+          <input type="text" name="userName"
+                 ng-model="user.name"
+                 ng-model-options="{ updateOn: 'blur' }"
+                 ng-keyup="cancel($event)" /><br />
+
+          Other data:
+          <input type="text" ng-model="user.data" /><br />
+        </form>
+        <pre>user.name = <span ng-bind="user.name"></span></pre>
+      </div>
+    </file>
+    <file name="app.js">
+      angular.module('optionsExample', [])
+        .controller('ExampleController', ['$scope', function($scope) {
+          $scope.user = { name: 'say', data: '' };
+
+          $scope.cancel = function(e) {
+            if (e.keyCode == 27) {
+              $scope.userForm.userName.$rollbackViewValue();
+            }
+          };
+        }]);
+    </file>
+    <file name="protractor.js" type="protractor">
+      var model = element(by.binding('user.name'));
+      var input = element(by.model('user.name'));
+      var other = element(by.model('user.data'));
+
+      it('should allow custom events', function() {
+        input.sendKeys(' hello');
+        input.click();
+        expect(model.getText()).toEqual('say');
+        other.click();
+        expect(model.getText()).toEqual('say hello');
+      });
+
+      it('should $rollbackViewValue when model changes', function() {
+        input.sendKeys(' hello');
+        expect(input.getAttribute('value')).toEqual('say hello');
+        input.sendKeys(protractor.Key.ESCAPE);
+        expect(input.getAttribute('value')).toEqual('say');
+        other.click();
+        expect(model.getText()).toEqual('say');
+      });
+    </file>
+  </example>
+
+  This one shows how to debounce model changes. Model will be updated only 1 sec after last change.
+  If the `Clear` button is pressed, any debounced action is canceled and the value becomes empty.
+
+  <example name="ngModelOptions-directive-debounce" module="optionsExample">
+    <file name="index.html">
+      <div ng-controller="ExampleController">
+        <form name="userForm">
+          Name:
+          <input type="text" name="userName"
+                 ng-model="user.name"
+                 ng-model-options="{ debounce: 1000 }" />
+          <button ng-click="userForm.userName.$rollbackViewValue(); user.name=''">Clear</button><br />
+        </form>
+        <pre>user.name = <span ng-bind="user.name"></span></pre>
+      </div>
+    </file>
+    <file name="app.js">
+      angular.module('optionsExample', [])
+        .controller('ExampleController', ['$scope', function($scope) {
+          $scope.user = { name: 'say' };
+        }]);
+    </file>
+  </example>
+
+  This one shows how to bind to getter/setters:
+
+  <example name="ngModelOptions-directive-getter-setter" module="getterSetterExample">
+    <file name="index.html">
+      <div ng-controller="ExampleController">
+        <form name="userForm">
+          Name:
+          <input type="text" name="userName"
+                 ng-model="user.name"
+                 ng-model-options="{ getterSetter: true }" />
+        </form>
+        <pre>user.name = <span ng-bind="user.name()"></span></pre>
+      </div>
+    </file>
+    <file name="app.js">
+      angular.module('getterSetterExample', [])
+        .controller('ExampleController', ['$scope', function($scope) {
+          var _name = 'Brian';
+          $scope.user = {
+            name: function(newName) {
+              return angular.isDefined(newName) ? (_name = newName) : _name;
+            }
+          };
+        }]);
+    </file>
+  </example>
+ */
+var ngModelOptionsDirective = function() {
+  return {
+    restrict: 'A',
+    controller: ['$scope', '$attrs', function($scope, $attrs) {
+      var that = this;
+      this.$options = $scope.$eval($attrs.ngModelOptions);
+      // Allow adding/overriding bound events
+      if (this.$options.updateOn !== undefined) {
+        this.$options.updateOnDefault = false;
+        // extract "default" pseudo-event from list of events that can trigger a model update
+        this.$options.updateOn = trim(this.$options.updateOn.replace(DEFAULT_REGEXP, function() {
+          that.$options.updateOnDefault = true;
+          return ' ';
+        }));
+      } else {
+        this.$options.updateOnDefault = true;
+      }
+    }]
+  };
+};
+
+
+
+// helper methods
+function addSetValidityMethod(context) {
+  var ctrl = context.ctrl,
+      $element = context.$element,
+      classCache = {},
+      set = context.set,
+      unset = context.unset,
+      parentForm = context.parentForm,
+      $animate = context.$animate;
+
+  classCache[INVALID_CLASS] = !(classCache[VALID_CLASS] = $element.hasClass(VALID_CLASS));
+
+  ctrl.$setValidity = setValidity;
+
+  function setValidity(validationErrorKey, state, controller) {
+    if (state === undefined) {
+      createAndSet('$pending', validationErrorKey, controller);
+    } else {
+      unsetAndCleanup('$pending', validationErrorKey, controller);
+    }
+    if (!isBoolean(state)) {
+      unset(ctrl.$error, validationErrorKey, controller);
+      unset(ctrl.$$success, validationErrorKey, controller);
+    } else {
+      if (state) {
+        unset(ctrl.$error, validationErrorKey, controller);
+        set(ctrl.$$success, validationErrorKey, controller);
+      } else {
+        set(ctrl.$error, validationErrorKey, controller);
+        unset(ctrl.$$success, validationErrorKey, controller);
+      }
+    }
+    if (ctrl.$pending) {
+      cachedToggleClass(PENDING_CLASS, true);
+      ctrl.$valid = ctrl.$invalid = undefined;
+      toggleValidationCss('', null);
+    } else {
+      cachedToggleClass(PENDING_CLASS, false);
+      ctrl.$valid = isObjectEmpty(ctrl.$error);
+      ctrl.$invalid = !ctrl.$valid;
+      toggleValidationCss('', ctrl.$valid);
+    }
+
+    // re-read the state as the set/unset methods could have
+    // combined state in ctrl.$error[validationError] (used for forms),
+    // where setting/unsetting only increments/decrements the value,
+    // and does not replace it.
+    var combinedState;
+    if (ctrl.$pending && ctrl.$pending[validationErrorKey]) {
+      combinedState = undefined;
+    } else if (ctrl.$error[validationErrorKey]) {
+      combinedState = false;
+    } else if (ctrl.$$success[validationErrorKey]) {
+      combinedState = true;
+    } else {
+      combinedState = null;
+    }
+
+    toggleValidationCss(validationErrorKey, combinedState);
+    parentForm.$setValidity(validationErrorKey, combinedState, ctrl);
+  }
+
+  function createAndSet(name, value, controller) {
+    if (!ctrl[name]) {
+      ctrl[name] = {};
+    }
+    set(ctrl[name], value, controller);
+  }
+
+  function unsetAndCleanup(name, value, controller) {
+    if (ctrl[name]) {
+      unset(ctrl[name], value, controller);
+    }
+    if (isObjectEmpty(ctrl[name])) {
+      ctrl[name] = undefined;
+    }
+  }
+
+  function cachedToggleClass(className, switchValue) {
+    if (switchValue && !classCache[className]) {
+      $animate.addClass($element, className);
+      classCache[className] = true;
+    } else if (!switchValue && classCache[className]) {
+      $animate.removeClass($element, className);
+      classCache[className] = false;
+    }
+  }
+
+  function toggleValidationCss(validationErrorKey, isValid) {
+    validationErrorKey = validationErrorKey ? '-' + snake_case(validationErrorKey, '-') : '';
+
+    cachedToggleClass(VALID_CLASS + validationErrorKey, isValid === true);
+    cachedToggleClass(INVALID_CLASS + validationErrorKey, isValid === false);
+  }
+}
+
+function isObjectEmpty(obj) {
+  if (obj) {
+    for (var prop in obj) {
+      return false;
+    }
+  }
+  return true;
+}
 
 /**
  * @ngdoc directive
@@ -42585,6 +42542,78 @@ var ngPluralizeDirective = ['$locale', '$interpolate', function($locale, $interp
  * Creating aliases for these properties is possible with {@link ng.directive:ngInit `ngInit`}.
  * This may be useful when, for instance, nesting ngRepeats.
  *
+ * # Iterating over object properties
+ *
+ * It is possible to get `ngRepeat` to iterate over the properties of an object using the following
+ * syntax:
+ *
+ * ```js
+ * <div ng-repeat="(key, value) in myObj"> ... </div>
+ * ```
+ *
+ * You need to be aware that the JavaScript specification does not define what order
+ * it will return the keys for an object. In order to have a guaranteed deterministic order
+ * for the keys, Angular versions up to and including 1.3 **sort the keys alphabetically**.
+ *
+ * If this is not desired, the recommended workaround is to convert your object into an array
+ * that is sorted into the order that you prefer before providing it to `ngRepeat`.  You could
+ * do this with a filter such as [toArrayFilter](http://ngmodules.org/modules/angular-toArrayFilter)
+ * or implement a `$watch` on the object yourself.
+ *
+ * In version 1.4 we will remove the sorting, since it seems that browsers generally follow the
+ * strategy of providing keys in the order in which they were defined, although there are exceptions
+ * when keys are deleted and reinstated.
+ *
+ *
+ * # Tracking and Duplicates
+ *
+ * When the contents of the collection change, `ngRepeat` makes the corresponding changes to the DOM:
+ *
+ * * When an item is added, a new instance of the template is added to the DOM.
+ * * When an item is removed, its template instance is removed from the DOM.
+ * * When items are reordered, their respective templates are reordered in the DOM.
+ *
+ * By default, `ngRepeat` does not allow duplicate items in arrays. This is because when
+ * there are duplicates, it is not possible to maintain a one-to-one mapping between collection
+ * items and DOM elements.
+ *
+ * If you do need to repeat duplicate items, you can substitute the default tracking behavior
+ * with your own using the `track by` expression.
+ *
+ * For example, you may track items by the index of each item in the collection, using the
+ * special scope property `$index`:
+ * ```html
+ *    <div ng-repeat="n in [42, 42, 43, 43] track by $index">
+ *      {{n}}
+ *    </div>
+ * ```
+ *
+ * You may use arbitrary expressions in `track by`, including references to custom functions
+ * on the scope:
+ * ```html
+ *    <div ng-repeat="n in [42, 42, 43, 43] track by myTrackingFunction(n)">
+ *      {{n}}
+ *    </div>
+ * ```
+ *
+ * If you are working with objects that have an identifier property, you can track
+ * by the identifier instead of the whole object. Should you reload your data later, `ngRepeat`
+ * will not have to rebuild the DOM elements for items it has already rendered, even if the
+ * JavaScript objects in the collection have been substituted for new ones:
+ * ```html
+ *    <div ng-repeat="model in collection track by model.id">
+ *      {{model.name}}
+ *    </div>
+ * ```
+ *
+ * When no `track by` expression is provided, it is equivalent to tracking by the built-in
+ * `$id` function, which tracks items by their identity:
+ * ```html
+ *    <div ng-repeat="obj in collection track by $id(obj)">
+ *      {{obj.prop}}
+ *    </div>
+ * ```
+ *
  * # Special repeat start and end points
  * To repeat a series of elements instead of just one parent element, ngRepeat (as well as other ng directives) supports extending
  * the range of the repeater by defining explicit start and end points by using **ng-repeat-start** and **ng-repeat-end** respectively.
@@ -42652,12 +42681,12 @@ var ngPluralizeDirective = ['$locale', '$interpolate', function($locale, $interp
  *
  *     For example: `(name, age) in {'adam':10, 'amalie':12}`.
  *
- *   * `variable in expression track by tracking_expression` – You can also provide an optional tracking function
- *     which can be used to associate the objects in the collection with the DOM elements. If no tracking function
- *     is specified the ng-repeat associates elements by identity in the collection. It is an error to have
- *     more than one tracking function to resolve to the same key. (This would mean that two distinct objects are
- *     mapped to the same DOM element, which is not possible.)  Filters should be applied to the expression,
- *     before specifying a tracking expression.
+ *   * `variable in expression track by tracking_expression` – You can also provide an optional tracking expression
+ *     which can be used to associate the objects in the collection with the DOM elements. If no tracking expression
+ *     is specified, ng-repeat associates elements by identity. It is an error to have
+ *     more than one tracking expression value resolve to the same key. (This would mean that two distinct objects are
+ *     mapped to the same DOM element, which is not possible.)  If filters are used in the expression, they should be
+ *     applied before the tracking expression.
  *
  *     For example: `item in items` is equivalent to `item in items track by $id(item)`. This implies that the DOM elements
  *     will be associated by item identity in the array.
@@ -42829,7 +42858,7 @@ var ngRepeatDirective = ['$parse', '$animate', function($parse, $animate) {
       var keyIdentifier = match[2];
 
       if (aliasAs && (!/^[$a-zA-Z_][$a-zA-Z0-9_]*$/.test(aliasAs) ||
-          /^(null|undefined|this|\$index|\$first|\$middle|\$last|\$even|\$odd|\$parent)$/.test(aliasAs))) {
+          /^(null|undefined|this|\$index|\$first|\$middle|\$last|\$even|\$odd|\$parent|\$root|\$id)$/.test(aliasAs))) {
         throw ngRepeatMinErr('badident', "alias '{0}' is invalid --- must be a valid JS identifier which is not a reserved name.",
           aliasAs);
       }
@@ -43041,10 +43070,11 @@ var NG_HIDE_IN_PROGRESS_CLASS = 'ng-hide-animate';
  *
  * By default, the `.ng-hide` class will style the element with `display: none!important`. If you wish to change
  * the hide behavior with ngShow/ngHide then this can be achieved by restating the styles for the `.ng-hide`
- * class in CSS:
+ * class CSS. Note that the selector that needs to be used is actually `.ng-hide:not(.ng-hide-animate)` to cope
+ * with extra animation classes that can be added.
  *
  * ```css
- * .ng-hide {
+ * .ng-hide:not(.ng-hide-animate) {
  *   /&#42; this is just another form of hiding an element &#42;/
  *   display: block!important;
  *   position: absolute;
@@ -43382,12 +43412,12 @@ var ngHideDirective = ['$animate', function($animate) {
    </example>
  */
 var ngStyleDirective = ngDirective(function(scope, element, attr) {
-  scope.$watch(attr.ngStyle, function ngStyleWatchAction(newStyles, oldStyles) {
+  scope.$watchCollection(attr.ngStyle, function ngStyleWatchAction(newStyles, oldStyles) {
     if (oldStyles && (newStyles !== oldStyles)) {
       forEach(oldStyles, function(val, style) { element.css(style, '');});
     }
     if (newStyles) element.css(newStyles);
-  }, true);
+  });
 });
 
 /**
@@ -43728,14 +43758,15 @@ var ngOptionsMinErr = minErr('ngOptions');
  *
  * The `ngOptions` attribute can be used to dynamically generate a list of `<option>`
  * elements for the `<select>` element using the array or object obtained by evaluating the
- * `ngOptions` comprehension_expression.
+ * `ngOptions` comprehension expression.
  *
  * In many cases, `ngRepeat` can be used on `<option>` elements instead of `ngOptions` to achieve a
- * similar result. However, the `ngOptions` provides some benefits such as reducing memory and
+ * similar result. However, `ngOptions` provides some benefits such as reducing memory and
  * increasing speed by not creating a new scope for each repeated instance, as well as providing
- * more flexibility in how the `select`'s model is assigned via `select as`. `ngOptions` should be
- * used when the `select` model needs to be bound to a non-string value. This is because an option
- * element can only be bound to string values at present.
+ * more flexibility in how the `<select>`'s model is assigned via the `select` **`as`** part of the
+ * comprehension expression. `ngOptions` should be used when the `<select>` model needs to be bound
+ *  to a non-string value. This is because an option element can only be bound to string values at
+ * present.
  *
  * When an item in the `<select>` menu is selected, the array element or object property
  * represented by the selected option will be bound to the model identified by the `ngModel`
@@ -43750,28 +43781,51 @@ var ngOptionsMinErr = minErr('ngOptions');
  * array of objects. See an example [in this jsfiddle](http://jsfiddle.net/qWzTb/).
  * </div>
  *
- * ## `select as`
+ * ## `select` **`as`**
  *
- * Using `select as` will bind the result of the `select as` expression to the model, but
+ * Using `select` **`as`** will bind the result of the `select` expression to the model, but
  * the value of the `<select>` and `<option>` html elements will be either the index (for array data sources)
- * or property name (for object data sources) of the value within the collection. If a `track by` expression
+ * or property name (for object data sources) of the value within the collection. If a **`track by`** expression
  * is used, the result of that expression will be set as the value of the `option` and `select` elements.
  *
- * ### `select as` with `track by`
  *
- * Using `select as` together with `track by` is not recommended. Reasoning:
+ * ### `select` **`as`** and **`track by`**
  *
- * - Example: &lt;select ng-options="item.subItem as item.label for item in values track by item.id" ng-model="selected"&gt;
- *   values: [{id: 1, label: 'aLabel', subItem: {name: 'aSubItem'}}, {id: 2, label: 'bLabel', subItem: {name: 'bSubItem'}}],
- *   $scope.selected = {name: 'aSubItem'};
- * - track by is always applied to `value`, with the purpose of preserving the selection,
- *   (to `item` in this case)
- * - to calculate whether an item is selected we do the following:
- *   1. apply `track by` to the values in the array, e.g.
- *      In the example: [1,2]
- *   2. apply `track by` to the already selected value in `ngModel`:
- *      In the example: this is not possible, as `track by` refers to `item.id`, but the selected
- *      value from `ngModel` is `{name: aSubItem}`.
+ * <div class="alert alert-warning">
+ * Do not use `select` **`as`** and **`track by`** in the same expression. They are not designed to work together.
+ * </div>
+ *
+ * Consider the following example:
+ *
+ * ```html
+ * <select ng-options="item.subItem as item.label for item in values track by item.id" ng-model="selected">
+ * ```
+ *
+ * ```js
+ * $scope.values = [{
+ *   id: 1,
+ *   label: 'aLabel',
+ *   subItem: { name: 'aSubItem' }
+ * }, {
+ *   id: 2,
+ *   label: 'bLabel',
+ *   subItem: { name: 'bSubItem' }
+ * }];
+ *
+ * $scope.selected = { name: 'aSubItem' };
+ * ```
+ *
+ * With the purpose of preserving the selection, the **`track by`** expression is always applied to the element
+ * of the data source (to `item` in this example). To calculate whether an element is selected, we do the
+ * following:
+ *
+ * 1. Apply **`track by`** to the elements in the array. In the example: `[1, 2]`
+ * 2. Apply **`track by`** to the already selected value in `ngModel`.
+ *    In the example: this is not possible as **`track by`** refers to `item.id`, but the selected
+ *    value from `ngModel` is `{name: 'aSubItem'}`, so the **`track by`** expression is applied to
+ *    a wrong object, the selected element can't be found, `<select>` is always reset to the "not
+ *    selected" option.
+ *
  *
  * @param {string} ngModel Assignable angular expression to data-bind to.
  * @param {string=} name Property name of the form under which the control is published.
@@ -44470,6 +44524,96 @@ var styleDirective = valueFn({
   restrict: 'E',
   terminal: false
 });
+
+var requiredDirective = function() {
+  return {
+    restrict: 'A',
+    require: '?ngModel',
+    link: function(scope, elm, attr, ctrl) {
+      if (!ctrl) return;
+      attr.required = true; // force truthy in case we are on non input element
+
+      ctrl.$validators.required = function(modelValue, viewValue) {
+        return !attr.required || !ctrl.$isEmpty(viewValue);
+      };
+
+      attr.$observe('required', function() {
+        ctrl.$validate();
+      });
+    }
+  };
+};
+
+
+var patternDirective = function() {
+  return {
+    restrict: 'A',
+    require: '?ngModel',
+    link: function(scope, elm, attr, ctrl) {
+      if (!ctrl) return;
+
+      var regexp, patternExp = attr.ngPattern || attr.pattern;
+      attr.$observe('pattern', function(regex) {
+        if (isString(regex) && regex.length > 0) {
+          regex = new RegExp('^' + regex + '$');
+        }
+
+        if (regex && !regex.test) {
+          throw minErr('ngPattern')('noregexp',
+            'Expected {0} to be a RegExp but was {1}. Element: {2}', patternExp,
+            regex, startingTag(elm));
+        }
+
+        regexp = regex || undefined;
+        ctrl.$validate();
+      });
+
+      ctrl.$validators.pattern = function(value) {
+        return ctrl.$isEmpty(value) || isUndefined(regexp) || regexp.test(value);
+      };
+    }
+  };
+};
+
+
+var maxlengthDirective = function() {
+  return {
+    restrict: 'A',
+    require: '?ngModel',
+    link: function(scope, elm, attr, ctrl) {
+      if (!ctrl) return;
+
+      var maxlength = -1;
+      attr.$observe('maxlength', function(value) {
+        var intVal = int(value);
+        maxlength = isNaN(intVal) ? -1 : intVal;
+        ctrl.$validate();
+      });
+      ctrl.$validators.maxlength = function(modelValue, viewValue) {
+        return (maxlength < 0) || ctrl.$isEmpty(viewValue) || (viewValue.length <= maxlength);
+      };
+    }
+  };
+};
+
+var minlengthDirective = function() {
+  return {
+    restrict: 'A',
+    require: '?ngModel',
+    link: function(scope, elm, attr, ctrl) {
+      if (!ctrl) return;
+
+      var minlength = 0;
+      attr.$observe('minlength', function(value) {
+        minlength = int(value) || 0;
+        ctrl.$validate();
+      });
+      ctrl.$validators.minlength = function(modelValue, viewValue) {
+        return ctrl.$isEmpty(viewValue) || viewValue.length >= minlength;
+      };
+    }
+  };
+};
 
   if (window.angular.bootstrap) {
     //AngularJS is already loaded, so we can return here...
@@ -45179,6 +45323,11 @@ return hotkeys;
 }));
 
 
+/*!
+* Simditor v2.1.5
+* http://simditor.tower.im/
+* 2015-07-03
+*/
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module unless amdModuleId is set
@@ -45195,12 +45344,14 @@ return hotkeys;
   }
 }(this, function ($, SimpleModule, simpleHotkeys, simpleUploader) {
 
-var Selection,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+var BlockquoteButton, BoldButton, Button, CodeButton, CodePopover, ColorButton, Formatter, HrButton, ImageButton, ImagePopover, IndentButton, InputManager, ItalicButton, Keystroke, LinkButton, LinkPopover, ListButton, OrderListButton, OutdentButton, Popover, Selection, Simditor, SourceButton, StrikethroughButton, TableButton, TitleButton, Toolbar, UnderlineButton, UndoManager, UnorderListButton, Util,
+  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty,
+  indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; },
+  slice = [].slice;
 
-Selection = (function(_super) {
-  __extends(Selection, _super);
+Selection = (function(superClass) {
+  extend(Selection, superClass);
 
   function Selection() {
     return Selection.__super__.constructor.apply(this, arguments);
@@ -45480,13 +45631,8 @@ Selection = (function(_super) {
 
 })(SimpleModule);
 
-var Formatter,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-  __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
-
-Formatter = (function(_super) {
-  __extends(Formatter, _super);
+Formatter = (function(superClass) {
+  extend(Formatter, superClass);
 
   function Formatter() {
     return Formatter.__super__.constructor.apply(this, arguments);
@@ -45494,10 +45640,15 @@ Formatter = (function(_super) {
 
   Formatter.pluginName = 'Formatter';
 
+  Formatter.prototype.opts = {
+    allowedTags: null,
+    allowedAttributes: null
+  };
+
   Formatter.prototype._init = function() {
     this.editor = this._module;
-    this._allowedTags = ['br', 'a', 'img', 'b', 'strong', 'i', 'u', 'font', 'p', 'ul', 'ol', 'li', 'blockquote', 'pre', 'h1', 'h2', 'h3', 'h4', 'hr'];
-    this._allowedAttributes = {
+    this._allowedTags = this.opts.allowedTags || ['br', 'a', 'img', 'b', 'strong', 'i', 'u', 'font', 'p', 'ul', 'ol', 'li', 'blockquote', 'pre', 'h1', 'h2', 'h3', 'h4', 'hr'];
+    this._allowedAttributes = this.opts.allowedAttributes || {
       img: ['src', 'alt', 'width', 'height', 'data-image-src', 'data-image-size', 'data-image-name', 'data-non-image'],
       a: ['href', 'target'],
       font: ['color'],
@@ -45531,7 +45682,7 @@ Formatter = (function(_super) {
   };
 
   Formatter.prototype.autolink = function($el) {
-    var $node, findLinkNode, lastIndex, linkNodes, match, re, replaceEls, text, uri, _i, _len;
+    var $node, findLinkNode, j, lastIndex, len, linkNodes, match, re, replaceEls, text, uri;
     if ($el == null) {
       $el = this.editor.body;
     }
@@ -45552,8 +45703,8 @@ Formatter = (function(_super) {
     };
     findLinkNode($el);
     re = /(https?:\/\/|www\.)[\w\-\.\?&=\/#%:,@\!\+]+/ig;
-    for (_i = 0, _len = linkNodes.length; _i < _len; _i++) {
-      $node = linkNodes[_i];
+    for (j = 0, len = linkNodes.length; j < len; j++) {
+      $node = linkNodes[j];
       text = $node.text();
       replaceEls = [];
       match = null;
@@ -45571,7 +45722,7 @@ Formatter = (function(_super) {
   };
 
   Formatter.prototype.format = function($el) {
-    var $node, blockNode, n, node, _i, _j, _len, _len1, _ref, _ref1;
+    var $node, blockNode, j, k, len, len1, n, node, ref, ref1;
     if ($el == null) {
       $el = this.editor.body;
     }
@@ -45579,14 +45730,14 @@ Formatter = (function(_super) {
       $el.append('<p>' + this.editor.util.phBr + '</p>');
       return $el;
     }
-    _ref = $el.contents();
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      n = _ref[_i];
+    ref = $el.contents();
+    for (j = 0, len = ref.length; j < len; j++) {
+      n = ref[j];
       this.cleanNode(n, true);
     }
-    _ref1 = $el.contents();
-    for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-      node = _ref1[_j];
+    ref1 = $el.contents();
+    for (k = 0, len1 = ref1.length; k < len1; k++) {
+      node = ref1[k];
       $node = $(node);
       if ($node.is('br')) {
         if (typeof blockNode !== "undefined" && blockNode !== null) {
@@ -45615,7 +45766,7 @@ Formatter = (function(_super) {
   };
 
   Formatter.prototype.cleanNode = function(node, recursive) {
-    var $childImg, $node, $p, $td, allowedAttributes, attr, contents, isDecoration, n, text, textNode, _i, _j, _len, _len1, _ref, _ref1;
+    var $childImg, $node, $p, $td, allowedAttributes, attr, contents, isDecoration, j, k, len, len1, n, ref, ref1, text, textNode;
     $node = $(node);
     if (!($node.length > 0)) {
       return;
@@ -45643,10 +45794,10 @@ Formatter = (function(_super) {
       }
       if (!isDecoration) {
         allowedAttributes = this._allowedAttributes[$node[0].tagName.toLowerCase()];
-        _ref = $.makeArray($node[0].attributes);
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          attr = _ref[_i];
-          if (!((allowedAttributes != null) && (_ref1 = attr.name, __indexOf.call(allowedAttributes, _ref1) >= 0))) {
+        ref = $.makeArray($node[0].attributes);
+        for (j = 0, len = ref.length; j < len; j++) {
+          attr = ref[j];
+          if (!((allowedAttributes != null) && (ref1 = attr.name, indexOf.call(allowedAttributes, ref1) >= 0))) {
             $node.removeAttr(attr.name);
           }
         }
@@ -45678,8 +45829,8 @@ Formatter = (function(_super) {
       contents = null;
     }
     if (recursive && (contents != null) && !$node.is('pre')) {
-      for (_j = 0, _len1 = contents.length; _j < _len1; _j++) {
-        n = contents[_j];
+      for (k = 0, len1 = contents.length; k < len1; k++) {
+        n = contents[k];
         this.cleanNode(n, true);
       }
     }
@@ -45738,14 +45889,8 @@ Formatter = (function(_super) {
 
 })(SimpleModule);
 
-var InputManager,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-  __slice = [].slice,
-  __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
-
-InputManager = (function(_super) {
-  __extends(InputManager, _super);
+InputManager = (function(superClass) {
+  extend(InputManager, superClass);
 
   function InputManager() {
     return InputManager.__super__.constructor.apply(this, arguments);
@@ -45767,10 +45912,10 @@ InputManager = (function(_super) {
     this.throttledTrigger = this.editor.util.throttle((function(_this) {
       return function() {
         var args;
-        args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+        args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
         return setTimeout(function() {
-          var _ref;
-          return (_ref = _this.editor).trigger.apply(_ref, args);
+          var ref;
+          return (ref = _this.editor).trigger.apply(ref, args);
         }, 10);
       };
     })(this), 300);
@@ -45792,16 +45937,6 @@ InputManager = (function(_super) {
       tabIndex: '-1',
       contentEditable: true
     }).addClass('simditor-paste-area').appendTo(this.editor.el);
-    this._cleanPasteArea = $('<textarea/>').css({
-      width: '1px',
-      height: '1px',
-      overflow: 'hidden',
-      position: 'fixed',
-      right: '0',
-      bottom: '101px'
-    }).attr({
-      tabIndex: '-1'
-    }).addClass('simditor-clean-paste-area').appendTo(this.editor.el);
     $(document).on('selectionchange.simditor' + this.editor.id, (function(_this) {
       return function(e) {
         if (!_this.focused) {
@@ -45916,11 +46051,11 @@ InputManager = (function(_super) {
   };
 
   InputManager.prototype._onBlur = function(e) {
-    var _ref;
+    var ref;
     this.editor.el.removeClass('focus');
     this.editor.sync();
     this.focused = false;
-    this.lastCaretPosition = (_ref = this.editor.undoManager.currentState()) != null ? _ref.caret : void 0;
+    this.lastCaretPosition = (ref = this.editor.undoManager.currentState()) != null ? ref.caret : void 0;
     return this.editor.triggerHandler('blur');
   };
 
@@ -45935,7 +46070,7 @@ InputManager = (function(_super) {
   };
 
   InputManager.prototype._onKeyDown = function(e) {
-    var result, _base, _ref, _ref1;
+    var base, ref, ref1, result;
     if (this.editor.triggerHandler(e) === false) {
       return false;
     }
@@ -45943,18 +46078,18 @@ InputManager = (function(_super) {
       return;
     }
     if (e.which in this._keystrokeHandlers) {
-      result = typeof (_base = this._keystrokeHandlers[e.which])['*'] === "function" ? _base['*'](e) : void 0;
+      result = typeof (base = this._keystrokeHandlers[e.which])['*'] === "function" ? base['*'](e) : void 0;
       if (result) {
         this.editor.trigger('valuechanged');
         return false;
       }
       this.editor.util.traverseUp((function(_this) {
         return function(node) {
-          var handler, _ref;
+          var handler, ref;
           if (node.nodeType !== document.ELEMENT_NODE) {
             return;
           }
-          handler = (_ref = _this._keystrokeHandlers[e.which]) != null ? _ref[node.tagName.toLowerCase()] : void 0;
+          handler = (ref = _this._keystrokeHandlers[e.which]) != null ? ref[node.tagName.toLowerCase()] : void 0;
           result = typeof handler === "function" ? handler(e, $(node)) : void 0;
           if (result === true || result === false) {
             return false;
@@ -45966,7 +46101,7 @@ InputManager = (function(_super) {
         return false;
       }
     }
-    if ((_ref = e.which, __indexOf.call(this._modifierKeys, _ref) >= 0) || (_ref1 = e.which, __indexOf.call(this._arrowKeys, _ref1) >= 0)) {
+    if ((ref = e.which, indexOf.call(this._modifierKeys, ref) >= 0) || (ref1 = e.which, indexOf.call(this._arrowKeys, ref1) >= 0)) {
       return;
     }
     if (this.editor.util.metaKey(e) && e.which === 86) {
@@ -45985,11 +46120,11 @@ InputManager = (function(_super) {
   };
 
   InputManager.prototype._onKeyUp = function(e) {
-    var p, _ref;
+    var p, ref;
     if (this.editor.triggerHandler(e) === false) {
       return false;
     }
-    if (!this.editor.util.support.onselectionchange && (_ref = e.which, __indexOf.call(this._arrowKeys, _ref) >= 0)) {
+    if (!this.editor.util.support.onselectionchange && (ref = e.which, indexOf.call(this._arrowKeys, ref) >= 0)) {
       this.editor.trigger('selectionchanged');
       return;
     }
@@ -46001,7 +46136,7 @@ InputManager = (function(_super) {
   };
 
   InputManager.prototype._onPaste = function(e) {
-    var $blockEl, cleanPaste, imageFile, pasteItem, range, uploadOpt, _ref;
+    var $blockEl, cleanPaste, imageFile, pasteContent, pasteItem, processPasteContent, range, ref, uploadOpt;
     if (this.editor.triggerHandler(e) === false) {
       return false;
     }
@@ -46023,47 +46158,15 @@ InputManager = (function(_super) {
         }
         uploadOpt = {};
         uploadOpt[this.opts.pasteImage] = true;
-        if ((_ref = this.editor.uploader) != null) {
-          _ref.upload(imageFile, uploadOpt);
+        if ((ref = this.editor.uploader) != null) {
+          ref.upload(imageFile, uploadOpt);
         }
         return false;
       }
     }
-    this.editor.selection.save(range);
-    if (cleanPaste) {
-      this._cleanPasteArea.focus();
-      if (this.editor.util.browser.firefox) {
-        e.preventDefault();
-        this._cleanPasteArea.val(e.originalEvent.clipboardData.getData('text/plain'));
-      } else if (this.editor.util.browser.msie && this.editor.util.browser.version === 10) {
-        e.preventDefault();
-        this._cleanPasteArea.val(window.clipboardData.getData('Text'));
-      }
-    } else {
-      this._pasteArea.focus();
-      if (this.editor.util.browser.msie && this.editor.util.browser.version === 10) {
-        e.preventDefault();
-        this._pasteArea.html(window.clipboardData.getData('Text'));
-      }
-    }
-    return setTimeout((function(_this) {
-      return function() {
-        var $img, blob, children, insertPosition, lastLine, line, lines, node, pasteContent, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m, _ref1, _ref2, _ref3;
-        if (_this._pasteArea.is(':empty') && !_this._cleanPasteArea.val()) {
-          pasteContent = null;
-        } else if (cleanPaste) {
-          pasteContent = _this._cleanPasteArea.val();
-        } else {
-          pasteContent = $('<div/>').append(_this._pasteArea.contents());
-          pasteContent.find('table colgroup').remove();
-          _this.editor.formatter.format(pasteContent);
-          _this.editor.formatter.decorate(pasteContent);
-          _this.editor.formatter.beautify(pasteContent.children());
-          pasteContent = pasteContent.contents();
-        }
-        _this._pasteArea.empty();
-        _this._cleanPasteArea.val('');
-        range = _this.editor.selection.restore();
+    processPasteContent = (function(_this) {
+      return function(pasteContent) {
+        var $img, blob, children, insertPosition, j, k, l, lastLine, len, len1, len2, len3, len4, line, lines, m, node, o, ref1, ref2, ref3;
         if (_this.editor.triggerHandler('pasting', [pasteContent]) === false) {
           return;
         }
@@ -46073,23 +46176,23 @@ InputManager = (function(_super) {
           if ($blockEl.is('table')) {
             lines = pasteContent.split('\n');
             lastLine = lines.pop();
-            for (_i = 0, _len = lines.length; _i < _len; _i++) {
-              line = lines[_i];
+            for (j = 0, len = lines.length; j < len; j++) {
+              line = lines[j];
               _this.editor.selection.insertNode(document.createTextNode(line));
               _this.editor.selection.insertNode($('<br/>'));
             }
             _this.editor.selection.insertNode(document.createTextNode(lastLine));
           } else {
             pasteContent = $('<div/>').text(pasteContent);
-            _ref1 = pasteContent.contents();
-            for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-              node = _ref1[_j];
+            ref1 = pasteContent.contents();
+            for (k = 0, len1 = ref1.length; k < len1; k++) {
+              node = ref1[k];
               _this.editor.selection.insertNode($(node)[0], range);
             }
           }
         } else if ($blockEl.is(_this.editor.body)) {
-          for (_k = 0, _len2 = pasteContent.length; _k < _len2; _k++) {
-            node = pasteContent[_k];
+          for (l = 0, len2 = pasteContent.length; l < len2; l++) {
+            node = pasteContent[l];
             _this.editor.selection.insertNode(node, range);
           }
         } else if (pasteContent.length < 1) {
@@ -46107,16 +46210,16 @@ InputManager = (function(_super) {
                 blob.name = "Clipboard Image.png";
                 uploadOpt = {};
                 uploadOpt[_this.opts.pasteImage] = true;
-                if ((_ref2 = _this.editor.uploader) != null) {
-                  _ref2.upload(blob, uploadOpt);
+                if ((ref2 = _this.editor.uploader) != null) {
+                  ref2.upload(blob, uploadOpt);
                 }
                 return;
               } else if ($img.is('img[src^="webkit-fake-url://"]')) {
                 return;
               }
             }
-            for (_l = 0, _len3 = children.length; _l < _len3; _l++) {
-              node = children[_l];
+            for (m = 0, len3 = children.length; m < len3; m++) {
+              node = children[m];
               _this.editor.selection.insertNode(node, range);
             }
           } else if ($blockEl.is('p') && _this.editor.util.isEmptyNode($blockEl)) {
@@ -46125,9 +46228,9 @@ InputManager = (function(_super) {
           } else if (pasteContent.is('ul, ol')) {
             if (pasteContent.find('li').length === 1) {
               pasteContent = $('<div/>').text(pasteContent.text());
-              _ref3 = pasteContent.contents();
-              for (_m = 0, _len4 = _ref3.length; _m < _len4; _m++) {
-                node = _ref3[_m];
+              ref3 = pasteContent.contents();
+              for (o = 0, len4 = ref3.length; o < len4; o++) {
+                node = ref3[o];
                 _this.editor.selection.insertNode($(node)[0], range);
               }
             } else if ($blockEl.is('li')) {
@@ -46158,7 +46261,40 @@ InputManager = (function(_super) {
         }
         return _this.editor.trigger('valuechanged');
       };
-    })(this), 10);
+    })(this);
+    if (cleanPaste) {
+      e.preventDefault();
+      if (this.editor.util.browser.msie) {
+        pasteContent = window.clipboardData.getData('Text');
+      } else {
+        pasteContent = e.originalEvent.clipboardData.getData('text/plain');
+      }
+      return processPasteContent(pasteContent);
+    } else {
+      this.editor.selection.save(range);
+      this._pasteArea.focus();
+      if (this.editor.util.browser.msie && this.editor.util.browser.version === 10) {
+        e.preventDefault();
+        this._pasteArea.html(window.clipboardData.getData('Text'));
+      }
+      return setTimeout((function(_this) {
+        return function() {
+          if (_this._pasteArea.is(':empty')) {
+            pasteContent = null;
+          } else {
+            pasteContent = $('<div/>').append(_this._pasteArea.contents());
+            pasteContent.find('table colgroup').remove();
+            _this.editor.formatter.format(pasteContent);
+            _this.editor.formatter.decorate(pasteContent);
+            _this.editor.formatter.beautify(pasteContent.children());
+            pasteContent = pasteContent.contents();
+          }
+          _this._pasteArea.empty();
+          range = _this.editor.selection.restore();
+          return processPasteContent(pasteContent);
+        };
+      })(this), 10);
+    }
   };
 
   InputManager.prototype._onDrop = function(e) {
@@ -46191,12 +46327,8 @@ InputManager = (function(_super) {
 
 })(SimpleModule);
 
-var Keystroke,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-Keystroke = (function(_super) {
-  __extends(Keystroke, _super);
+Keystroke = (function(superClass) {
+  extend(Keystroke, superClass);
 
   function Keystroke() {
     return Keystroke.__super__.constructor.apply(this, arguments);
@@ -46449,12 +46581,8 @@ Keystroke = (function(_super) {
 
 })(SimpleModule);
 
-var UndoManager,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-UndoManager = (function(_super) {
-  __extends(UndoManager, _super);
+UndoManager = (function(superClass) {
+  extend(UndoManager, superClass);
 
   function UndoManager() {
     return UndoManager.__super__.constructor.apply(this, arguments);
@@ -46639,11 +46767,11 @@ UndoManager = (function(_super) {
   };
 
   UndoManager.prototype._getNodeByPosition = function(position) {
-    var child, childNodes, i, node, offset, _i, _len, _ref;
+    var child, childNodes, i, j, len, node, offset, ref;
     node = this.editor.body[0];
-    _ref = position.slice(0, position.length - 1);
-    for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-      offset = _ref[i];
+    ref = position.slice(0, position.length - 1);
+    for (i = j = 0, len = ref.length; j < len; i = ++j) {
+      offset = ref[i];
       childNodes = node.childNodes;
       if (offset > childNodes.length - 1) {
         if (i === position.length - 2 && $(node).is('pre')) {
@@ -46710,12 +46838,8 @@ UndoManager = (function(_super) {
 
 })(SimpleModule);
 
-var Util,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-Util = (function(_super) {
-  __extends(Util, _super);
+Util = (function(superClass) {
+  extend(Util, superClass);
 
   function Util() {
     return Util.__super__.constructor.apply(this, arguments);
@@ -46751,7 +46875,7 @@ Util = (function(_super) {
   })();
 
   Util.prototype.browser = (function() {
-    var chrome, firefox, ie, safari, ua, _ref, _ref1, _ref2, _ref3;
+    var chrome, firefox, ie, ref, ref1, ref2, ref3, safari, ua;
     ua = navigator.userAgent;
     ie = /(msie|trident)/i.test(ua);
     chrome = /chrome|crios/i.test(ua);
@@ -46760,25 +46884,25 @@ Util = (function(_super) {
     if (ie) {
       return {
         msie: true,
-        version: ((_ref = ua.match(/(msie |rv:)(\d+(\.\d+)?)/i)) != null ? _ref[2] : void 0) * 1
+        version: ((ref = ua.match(/(msie |rv:)(\d+(\.\d+)?)/i)) != null ? ref[2] : void 0) * 1
       };
     } else if (chrome) {
       return {
         webkit: true,
         chrome: true,
-        version: ((_ref1 = ua.match(/(?:chrome|crios)\/(\d+(\.\d+)?)/i)) != null ? _ref1[1] : void 0) * 1
+        version: ((ref1 = ua.match(/(?:chrome|crios)\/(\d+(\.\d+)?)/i)) != null ? ref1[1] : void 0) * 1
       };
     } else if (safari) {
       return {
         webkit: true,
         safari: true,
-        version: ((_ref2 = ua.match(/version\/(\d+(\.\d+)?)/i)) != null ? _ref2[1] : void 0) * 1
+        version: ((ref2 = ua.match(/version\/(\d+(\.\d+)?)/i)) != null ? ref2[1] : void 0) * 1
       };
     } else if (firefox) {
       return {
         mozilla: true,
         firefox: true,
-        version: ((_ref3 = ua.match(/firefox\/(\d+(\.\d+)?)/i)) != null ? _ref3[1] : void 0) * 1
+        version: ((ref3 = ua.match(/firefox\/(\d+(\.\d+)?)/i)) != null ? ref3[1] : void 0) * 1
       };
     } else {
       return {};
@@ -46831,12 +46955,14 @@ Util = (function(_super) {
     return $node.is(':empty') || (!$node.text() && !$node.find(':not(br, span, div)').length);
   };
 
+  Util.prototype.blockNodes = ["div", "p", "ul", "ol", "li", "blockquote", "hr", "pre", "h1", "h2", "h3", "h4", "table"];
+
   Util.prototype.isBlockNode = function(node) {
     node = $(node)[0];
     if (!node || node.nodeType === 3) {
       return false;
     }
-    return /^(div|p|ul|ol|li|blockquote|hr|pre|h1|h2|h3|h4|table)$/.test(node.nodeName.toLowerCase());
+    return new RegExp("^(" + (this.blockNodes.join('|')) + ")$").test(node.nodeName.toLowerCase());
   };
 
   Util.prototype.closestBlockEl = function(node) {
@@ -46892,7 +47018,7 @@ Util = (function(_super) {
   };
 
   Util.prototype.furthestBlockEl = function(node) {
-    return this.furthestNode(node, this.isBlockNode);
+    return this.furthestNode(node, $.proxy(this.isBlockNode, this));
   };
 
   Util.prototype.getNodeLength = function(node) {
@@ -46909,7 +47035,7 @@ Util = (function(_super) {
   };
 
   Util.prototype.traverseUp = function(callback, node) {
-    var n, nodes, range, result, _i, _len, _results;
+    var j, len, n, nodes, range, result, results1;
     if (node == null) {
       range = this.editor.selection.getRange();
       node = range != null ? range.commonAncestorContainer : void 0;
@@ -46919,21 +47045,21 @@ Util = (function(_super) {
     }
     nodes = $(node).parentsUntil(this.editor.body).get();
     nodes.unshift(node);
-    _results = [];
-    for (_i = 0, _len = nodes.length; _i < _len; _i++) {
-      n = nodes[_i];
+    results1 = [];
+    for (j = 0, len = nodes.length; j < len; j++) {
+      n = nodes[j];
       result = callback(n);
       if (result === false) {
         break;
       } else {
-        _results.push(void 0);
+        results1.push(void 0);
       }
     }
-    return _results;
+    return results1;
   };
 
   Util.prototype.indent = function() {
-    var $blockEl, $childList, $nextTd, $parentLi, $td, indentLevel, range, spaceNode, tagName, _ref;
+    var $blockEl, $childList, $nextTd, $parentLi, $td, indentLevel, range, ref, spaceNode, tagName;
     $blockEl = this.editor.util.closestBlockEl();
     if (!($blockEl && $blockEl.length > 0)) {
       return false;
@@ -46956,7 +47082,7 @@ Util = (function(_super) {
       }
       this.editor.selection.restore();
     } else if ($blockEl.is('p, h1, h2, h3, h4')) {
-      indentLevel = (_ref = $blockEl.attr('data-indent')) != null ? _ref : 0;
+      indentLevel = (ref = $blockEl.attr('data-indent')) != null ? ref : 0;
       indentLevel = indentLevel * 1 + 1;
       if (indentLevel > 10) {
         indentLevel = 10;
@@ -46982,7 +47108,7 @@ Util = (function(_super) {
   };
 
   Util.prototype.outdent = function() {
-    var $blockEl, $parent, $parentLi, $prevTd, $td, button, indentLevel, range, _ref;
+    var $blockEl, $parent, $parentLi, $prevTd, $td, button, indentLevel, range, ref;
     $blockEl = this.editor.util.closestBlockEl();
     if (!($blockEl && $blockEl.length > 0)) {
       return false;
@@ -47009,7 +47135,7 @@ Util = (function(_super) {
       }
       this.editor.selection.restore();
     } else if ($blockEl.is('p, h1, h2, h3, h4')) {
-      indentLevel = (_ref = $blockEl.attr('data-indent')) != null ? _ref : 0;
+      indentLevel = (ref = $blockEl.attr('data-indent')) != null ? ref : 0;
       indentLevel = indentLevel * 1 - 1;
       if (indentLevel < 0) {
         indentLevel = 0;
@@ -47034,7 +47160,7 @@ Util = (function(_super) {
   };
 
   Util.prototype.dataURLtoBlob = function(dataURL) {
-    var BlobBuilder, arrayBuffer, bb, byteString, hasArrayBufferViewSupport, hasBlobConstructor, i, intArray, mimeString, _i, _ref;
+    var BlobBuilder, arrayBuffer, bb, byteString, hasArrayBufferViewSupport, hasBlobConstructor, i, intArray, j, mimeString, ref;
     hasBlobConstructor = window.Blob && (function() {
       var e;
       try {
@@ -47064,7 +47190,7 @@ Util = (function(_super) {
     }
     arrayBuffer = new ArrayBuffer(byteString.length);
     intArray = new Uint8Array(arrayBuffer);
-    for (i = _i = 0, _ref = byteString.length; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+    for (i = j = 0, ref = byteString.length; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
       intArray[i] = byteString.charCodeAt(i);
     }
     mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
@@ -47114,16 +47240,51 @@ Util = (function(_super) {
     };
   };
 
+  Util.prototype.formatHTML = function(html) {
+    var cursor, indentString, lastMatch, level, match, re, repeatString, result, str;
+    re = /<(\/?)(.+?)(\/?)>/g;
+    result = '';
+    level = 0;
+    lastMatch = null;
+    indentString = '  ';
+    repeatString = function(str, n) {
+      return new Array(n + 1).join(str);
+    };
+    while ((match = re.exec(html)) !== null) {
+      match.isBlockNode = $.inArray(match[2], this.blockNodes) > -1;
+      match.isStartTag = match[1] !== '/' && match[3] !== '/';
+      match.isEndTag = match[1] === '/' || match[3] === '/';
+      cursor = lastMatch ? lastMatch.index + lastMatch[0].length : 0;
+      if ((str = html.substring(cursor, match.index)).length > 0 && $.trim(str)) {
+        result += str;
+      }
+      if (match.isBlockNode && match.isEndTag && !match.isStartTag) {
+        level -= 1;
+      }
+      if (match.isBlockNode && match.isStartTag) {
+        if (!(lastMatch && lastMatch.isBlockNode && lastMatch.isEndTag)) {
+          result += '\n';
+        }
+        result += repeatString(indentString, level);
+      }
+      result += match[0];
+      if (match.isBlockNode && match.isEndTag) {
+        result += '\n';
+      }
+      if (match.isBlockNode && match.isStartTag) {
+        level += 1;
+      }
+      lastMatch = match;
+    }
+    return $.trim(result);
+  };
+
   return Util;
 
 })(SimpleModule);
 
-var Toolbar,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-Toolbar = (function(_super) {
-  __extends(Toolbar, _super);
+Toolbar = (function(superClass) {
+  extend(Toolbar, superClass);
 
   function Toolbar() {
     return Toolbar.__super__.constructor.apply(this, arguments);
@@ -47220,13 +47381,13 @@ Toolbar = (function(_super) {
   };
 
   Toolbar.prototype._render = function() {
-    var name, _i, _len, _ref;
+    var j, len, name, ref;
     this.buttons = [];
     this.wrapper = $(this._tpl.wrapper).prependTo(this.editor.wrapper);
     this.list = this.wrapper.find('ul');
-    _ref = this.opts.toolbar;
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      name = _ref[_i];
+    ref = this.opts.toolbar;
+    for (j = 0, len = ref.length; j < len; j++) {
+      name = ref[j];
       if (name === '|') {
         $(this._tpl.separator).appendTo(this.list);
         continue;
@@ -47254,9 +47415,9 @@ Toolbar = (function(_super) {
     buttons = this.buttons.slice(0);
     return this.editor.util.traverseUp((function(_this) {
       return function(node) {
-        var button, i, removeButtons, _i, _j, _len, _len1;
+        var button, i, j, k, len, len1, removeButtons;
         removeButtons = [];
-        for (i = _i = 0, _len = buttons.length; _i < _len; i = ++_i) {
+        for (i = j = 0, len = buttons.length; j < len; i = ++j) {
           button = buttons[i];
           if ((name != null) && button.name !== name) {
             continue;
@@ -47265,8 +47426,8 @@ Toolbar = (function(_super) {
             removeButtons.push(button);
           }
         }
-        for (_j = 0, _len1 = removeButtons.length; _j < _len1; _j++) {
-          button = removeButtons[_j];
+        for (k = 0, len1 = removeButtons.length; k < len1; k++) {
+          button = removeButtons[k];
           i = $.inArray(button, buttons);
           buttons.splice(i, 1);
         }
@@ -47293,12 +47454,8 @@ Toolbar = (function(_super) {
 
 })(SimpleModule);
 
-var Simditor,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-Simditor = (function(_super) {
-  __extends(Simditor, _super);
+Simditor = (function(superClass) {
+  extend(Simditor, superClass);
 
   function Simditor() {
     return Simditor.__super__.constructor.apply(this, arguments);
@@ -47384,13 +47541,14 @@ Simditor = (function(_super) {
   Simditor.prototype._tpl = "<div class=\"simditor\">\n  <div class=\"simditor-wrapper\">\n    <div class=\"simditor-placeholder\"></div>\n    <div class=\"simditor-body\" contenteditable=\"true\">\n    </div>\n  </div>\n</div>";
 
   Simditor.prototype._render = function() {
-    var key, val, _ref, _results;
+    var key, ref, results1, val;
     this.el = $(this._tpl).insertBefore(this.textarea);
     this.wrapper = this.el.find('.simditor-wrapper');
     this.body = this.wrapper.find('.simditor-body');
     this.placeholderEl = this.wrapper.find('.simditor-placeholder').append(this.opts.placeholder);
-    this.el.append(this.textarea).data('simditor', this);
-    this.textarea.data('simditor', this).hide().blur();
+    this.el.data('simditor', this);
+    this.wrapper.append(this.textarea);
+    this.textarea.data('simditor', this).blur();
     this.body.attr('tabindex', this.textarea.attr('tabindex'));
     if (this.util.os.mac) {
       this.el.addClass('simditor-mac');
@@ -47401,24 +47559,24 @@ Simditor = (function(_super) {
       this.el.addClass('simditor-mobile');
     }
     if (this.opts.params) {
-      _ref = this.opts.params;
-      _results = [];
-      for (key in _ref) {
-        val = _ref[key];
-        _results.push($('<input/>', {
+      ref = this.opts.params;
+      results1 = [];
+      for (key in ref) {
+        val = ref[key];
+        results1.push($('<input/>', {
           type: 'hidden',
           name: key,
           value: val
         }).insertAfter(this.textarea));
       }
-      return _results;
+      return results1;
     }
   };
 
   Simditor.prototype._placeholder = function() {
-    var children, _ref;
+    var children, ref;
     children = this.body.children();
-    if (children.length === 0 || (children.length === 1 && this.util.isEmptyNode(children) && ((_ref = children.data('indent')) != null ? _ref : 0) < 1)) {
+    if (children.length === 0 || (children.length === 1 && this.util.isEmptyNode(children) && ((ref = children.data('indent')) != null ? ref : 0) < 1)) {
       return this.placeholderEl.show();
     } else {
       return this.placeholderEl.hide();
@@ -47467,21 +47625,29 @@ Simditor = (function(_super) {
 
   Simditor.prototype.focus = function() {
     var $blockEl, range;
+    if (this.sourceMode) {
+      this.textarea.focus();
+      return;
+    }
     if (this.inputManager.lastCaretPosition) {
       return this.undoManager.caretPosition(this.inputManager.lastCaretPosition);
     } else {
-      $blockEl = this.body.find('p, li, pre, h1, h2, h3, h4, td').first();
+      $blockEl = this.body.find('p').last();
       if (!($blockEl.length > 0)) {
-        return;
+        $blockEl = $('<p/>').append(this.util.phBr).appendTo(this.body);
       }
       range = document.createRange();
-      this.selection.setRangeAtStartOf($blockEl, range);
+      this.selection.setRangeAtEndOf($blockEl, range);
       return this.body.focus();
     }
   };
 
   Simditor.prototype.blur = function() {
-    return this.body.blur();
+    if (this.sourceMode) {
+      return this.textarea.blur();
+    } else {
+      return this.body.blur();
+    }
   };
 
   Simditor.prototype.hidePopover = function() {
@@ -47547,18 +47713,14 @@ Simditor.i18n = {
     'insertColumnRight': '在右边插入列',
     'deleteTable': '删除表格',
     'title': '标题',
+    'source': 'HTML源代码',
     'normalText': '普通文本',
     'underline': '下划线文字'
   }
 };
 
-var Button,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-  __slice = [].slice;
-
-Button = (function(_super) {
-  __extends(Button, _super);
+Button = (function(superClass) {
+  extend(Button, superClass);
 
   Button.prototype._tpl = {
     item: '<li><a tabindex="-1" unselectable="on" class="toolbar-item" href="javascript:;"><span></span></a></li>',
@@ -47596,7 +47758,7 @@ Button = (function(_super) {
   }
 
   Button.prototype._init = function() {
-    var tag, _i, _len, _ref, _results;
+    var j, len, ref, results1, tag;
     this.render();
     this.el.on('mousedown', (function(_this) {
       return function(e) {
@@ -47646,6 +47808,9 @@ Button = (function(_super) {
     })(this));
     this.editor.on('blur', (function(_this) {
       return function() {
+        if (_this.editor.sourceMode) {
+          return;
+        }
         _this.setActive(false);
         return _this.setDisabled(false);
       };
@@ -47658,54 +47823,54 @@ Button = (function(_super) {
         };
       })(this));
     }
-    _ref = this.htmlTag.split(',');
-    _results = [];
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      tag = _ref[_i];
+    ref = this.htmlTag.split(',');
+    results1 = [];
+    for (j = 0, len = ref.length; j < len; j++) {
+      tag = ref[j];
       tag = $.trim(tag);
       if (tag && $.inArray(tag, this.editor.formatter._allowedTags) < 0) {
-        _results.push(this.editor.formatter._allowedTags.push(tag));
+        results1.push(this.editor.formatter._allowedTags.push(tag));
       } else {
-        _results.push(void 0);
+        results1.push(void 0);
       }
     }
-    return _results;
+    return results1;
   };
 
   Button.prototype.render = function() {
     this.wrapper = $(this._tpl.item).appendTo(this.editor.toolbar.list);
     this.el = this.wrapper.find('a.toolbar-item');
-    this.el.attr('title', this.title).addClass('toolbar-item-' + this.name).data('button', this);
-    this.el.find('span').addClass(this.icon ? 'fa fa-' + this.icon : '').text(this.text);
+    this.el.attr('title', this.title).addClass("toolbar-item-" + this.name).data('button', this);
+    this.el.find('span').addClass(this.icon ? "simditor-icon simditor-icon-" + this.icon : '').text(this.text);
     if (!this.menu) {
       return;
     }
     this.menuWrapper = $(this._tpl.menuWrapper).appendTo(this.wrapper);
-    this.menuWrapper.addClass('toolbar-menu-' + this.name);
+    this.menuWrapper.addClass("toolbar-menu-" + this.name);
     return this.renderMenu();
   };
 
   Button.prototype.renderMenu = function() {
-    var $menuBtntnEl, $menuItemEl, menuItem, _i, _len, _ref, _ref1, _results;
+    var $menuBtntnEl, $menuItemEl, j, len, menuItem, ref, ref1, results1;
     if (!$.isArray(this.menu)) {
       return;
     }
     this.menuEl = $('<ul/>').appendTo(this.menuWrapper);
-    _ref = this.menu;
-    _results = [];
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      menuItem = _ref[_i];
+    ref = this.menu;
+    results1 = [];
+    for (j = 0, len = ref.length; j < len; j++) {
+      menuItem = ref[j];
       if (menuItem === '|') {
         $(this._tpl.separator).appendTo(this.menuEl);
         continue;
       }
       $menuItemEl = $(this._tpl.menuItem).appendTo(this.menuEl);
-      _results.push($menuBtntnEl = $menuItemEl.find('a.menu-item').attr({
-        'title': (_ref1 = menuItem.title) != null ? _ref1 : menuItem.text,
+      results1.push($menuBtntnEl = $menuItemEl.find('a.menu-item').attr({
+        'title': (ref1 = menuItem.title) != null ? ref1 : menuItem.text,
         'data-param': menuItem.param
       }).addClass('menu-item-' + menuItem.name).find('span').text(menuItem.text));
     }
-    return _results;
+    return results1;
   };
 
   Button.prototype.setActive = function(active) {
@@ -47742,11 +47907,11 @@ Button = (function(_super) {
   Button.prototype.command = function(param) {};
 
   Button.prototype._t = function() {
-    var args, result, _ref;
-    args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    var args, ref, result;
+    args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
     result = Button.__super__._t.apply(this, args);
     if (!result) {
-      result = (_ref = this.editor)._t.apply(_ref, args);
+      result = (ref = this.editor)._t.apply(ref, args);
     }
     return result;
   };
@@ -47757,12 +47922,8 @@ Button = (function(_super) {
 
 Simditor.Button = Button;
 
-var Popover,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-Popover = (function(_super) {
-  __extends(Popover, _super);
+Popover = (function(superClass) {
+  extend(Popover, superClass);
 
   Popover.prototype.offset = {
     top: 4,
@@ -47872,18 +48033,94 @@ Popover = (function(_super) {
     return this.el.remove();
   };
 
+  Popover.prototype._t = function() {
+    var args, ref, result;
+    args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
+    result = Popover.__super__._t.apply(this, args);
+    if (!result) {
+      result = (ref = this.button)._t.apply(ref, args);
+    }
+    return result;
+  };
+
   return Popover;
 
 })(SimpleModule);
 
 Simditor.Popover = Popover;
 
-var TitleButton,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+SourceButton = (function(superClass) {
+  extend(SourceButton, superClass);
 
-TitleButton = (function(_super) {
-  __extends(TitleButton, _super);
+  function SourceButton() {
+    return SourceButton.__super__.constructor.apply(this, arguments);
+  }
+
+  SourceButton.prototype.name = 'source';
+
+  SourceButton.prototype.icon = 'html5';
+
+  SourceButton.prototype.needFocus = false;
+
+  SourceButton.prototype._init = function() {
+    SourceButton.__super__._init.call(this);
+    this.editor.textarea.on('focus', (function(_this) {
+      return function(e) {
+        return _this.editor.el.addClass('focus').removeClass('error');
+      };
+    })(this));
+    this.editor.textarea.on('blur', (function(_this) {
+      return function(e) {
+        _this.editor.el.removeClass('focus');
+        return _this.editor.setValue(_this.editor.textarea.val());
+      };
+    })(this));
+    return this.editor.textarea.on('input', (function(_this) {
+      return function(e) {
+        return _this._resizeTextarea();
+      };
+    })(this));
+  };
+
+  SourceButton.prototype.status = function($node) {
+    return true;
+  };
+
+  SourceButton.prototype.command = function() {
+    var button, j, len, ref;
+    this.editor.blur();
+    this.editor.el.toggleClass('simditor-source-mode');
+    this.editor.sourceMode = this.editor.el.hasClass('simditor-source-mode');
+    if (this.editor.sourceMode) {
+      this.editor.hidePopover();
+      this.editor.textarea.val(this.editor.util.formatHTML(this.editor.textarea.val()));
+      this._resizeTextarea();
+    }
+    ref = this.editor.toolbar.buttons;
+    for (j = 0, len = ref.length; j < len; j++) {
+      button = ref[j];
+      if (button.name === 'source') {
+        button.setActive(this.editor.sourceMode);
+      } else {
+        button.setDisabled(this.editor.sourceMode);
+      }
+    }
+    return null;
+  };
+
+  SourceButton.prototype._resizeTextarea = function() {
+    this._textareaPadding || (this._textareaPadding = this.editor.textarea.innerHeight() - this.editor.textarea.height());
+    return this.editor.textarea.height(0).height(this.editor.textarea[0].scrollHeight - this._textareaPadding);
+  };
+
+  return SourceButton;
+
+})(Button);
+
+Simditor.Toolbar.addButton(SourceButton);
+
+TitleButton = (function(superClass) {
+  extend(TitleButton, superClass);
 
   function TitleButton() {
     return TitleButton.__super__.constructor.apply(this, arguments);
@@ -47935,7 +48172,7 @@ TitleButton = (function(_super) {
   };
 
   TitleButton.prototype.status = function($node) {
-    var param, _ref;
+    var param, ref;
     if ($node != null) {
       this.setDisabled($node.is(this.disableTag));
     }
@@ -47943,14 +48180,14 @@ TitleButton = (function(_super) {
       return true;
     }
     if ($node != null) {
-      param = (_ref = $node[0].tagName) != null ? _ref.toLowerCase() : void 0;
+      param = (ref = $node[0].tagName) != null ? ref.toLowerCase() : void 0;
       this.setActive($node.is(this.htmlTag), param);
     }
     return this.active;
   };
 
   TitleButton.prototype.command = function(param) {
-    var $contents, $endBlock, $startBlock, endNode, node, range, results, startNode, _i, _len, _ref;
+    var $contents, $endBlock, $startBlock, endNode, j, len, node, range, ref, results, startNode;
     range = this.editor.selection.getRange();
     startNode = range.startContainer;
     endNode = range.endContainer;
@@ -47963,19 +48200,19 @@ TitleButton = (function(_super) {
     results = [];
     $contents.children().each((function(_this) {
       return function(i, el) {
-        var c, converted, _i, _len, _results;
+        var c, converted, j, len, results1;
         converted = _this._convertEl(el, param);
-        _results = [];
-        for (_i = 0, _len = converted.length; _i < _len; _i++) {
-          c = converted[_i];
-          _results.push(results.push(c));
+        results1 = [];
+        for (j = 0, len = converted.length; j < len; j++) {
+          c = converted[j];
+          results1.push(results.push(c));
         }
-        return _results;
+        return results1;
       };
     })(this));
-    _ref = results.reverse();
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      node = _ref[_i];
+    ref = results.reverse();
+    for (j = 0, len = ref.length; j < len; j++) {
+      node = ref[j];
       range.insertNode(node[0]);
     }
     this.editor.selection.restore();
@@ -48001,12 +48238,8 @@ TitleButton = (function(_super) {
 
 Simditor.Toolbar.addButton(TitleButton);
 
-var BoldButton,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-BoldButton = (function(_super) {
-  __extends(BoldButton, _super);
+BoldButton = (function(superClass) {
+  extend(BoldButton, superClass);
 
   function BoldButton() {
     return BoldButton.__super__.constructor.apply(this, arguments);
@@ -48059,12 +48292,8 @@ BoldButton = (function(_super) {
 
 Simditor.Toolbar.addButton(BoldButton);
 
-var ItalicButton,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-ItalicButton = (function(_super) {
-  __extends(ItalicButton, _super);
+ItalicButton = (function(superClass) {
+  extend(ItalicButton, superClass);
 
   function ItalicButton() {
     return ItalicButton.__super__.constructor.apply(this, arguments);
@@ -48117,12 +48346,8 @@ ItalicButton = (function(_super) {
 
 Simditor.Toolbar.addButton(ItalicButton);
 
-var UnderlineButton,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-UnderlineButton = (function(_super) {
-  __extends(UnderlineButton, _super);
+UnderlineButton = (function(superClass) {
+  extend(UnderlineButton, superClass);
 
   function UnderlineButton() {
     return UnderlineButton.__super__.constructor.apply(this, arguments);
@@ -48175,13 +48400,8 @@ UnderlineButton = (function(_super) {
 
 Simditor.Toolbar.addButton(UnderlineButton);
 
-var ColorButton,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-  __slice = [].slice;
-
-ColorButton = (function(_super) {
-  __extends(ColorButton, _super);
+ColorButton = (function(superClass) {
+  extend(ColorButton, superClass);
 
   function ColorButton() {
     return ColorButton.__super__.constructor.apply(this, arguments);
@@ -48189,7 +48409,7 @@ ColorButton = (function(_super) {
 
   ColorButton.prototype.name = 'color';
 
-  ColorButton.prototype.icon = 'font';
+  ColorButton.prototype.icon = 'tint';
 
   ColorButton.prototype.disableTag = 'pre';
 
@@ -48197,7 +48417,7 @@ ColorButton = (function(_super) {
 
   ColorButton.prototype.render = function() {
     var args;
-    args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
     return ColorButton.__super__.render.apply(this, args);
   };
 
@@ -48262,12 +48482,8 @@ ColorButton = (function(_super) {
 
 Simditor.Toolbar.addButton(ColorButton);
 
-var ListButton, OrderListButton, UnorderListButton,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-ListButton = (function(_super) {
-  __extends(ListButton, _super);
+ListButton = (function(superClass) {
+  extend(ListButton, superClass);
 
   function ListButton() {
     return ListButton.__super__.constructor.apply(this, arguments);
@@ -48299,7 +48515,7 @@ ListButton = (function(_super) {
   };
 
   ListButton.prototype.command = function(param) {
-    var $contents, $endBlock, $furthestEnd, $furthestStart, $parent, $startBlock, endLevel, endNode, getListLevel, node, range, results, startLevel, startNode, _i, _len, _ref;
+    var $contents, $endBlock, $furthestEnd, $furthestStart, $parent, $startBlock, endLevel, endNode, getListLevel, j, len, node, range, ref, results, startLevel, startNode;
     range = this.editor.selection.getRange();
     startNode = range.startContainer;
     endNode = range.endContainer;
@@ -48339,23 +48555,23 @@ ListButton = (function(_super) {
     results = [];
     $contents.children().each((function(_this) {
       return function(i, el) {
-        var c, converted, _i, _len, _results;
+        var c, converted, j, len, results1;
         converted = _this._convertEl(el);
-        _results = [];
-        for (_i = 0, _len = converted.length; _i < _len; _i++) {
-          c = converted[_i];
+        results1 = [];
+        for (j = 0, len = converted.length; j < len; j++) {
+          c = converted[j];
           if (results.length && results[results.length - 1].is(_this.type) && c.is(_this.type)) {
-            _results.push(results[results.length - 1].append(c.children()));
+            results1.push(results[results.length - 1].append(c.children()));
           } else {
-            _results.push(results.push(c));
+            results1.push(results.push(c));
           }
         }
-        return _results;
+        return results1;
       };
     })(this));
-    _ref = results.reverse();
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      node = _ref[_i];
+    ref = results.reverse();
+    for (j = 0, len = ref.length; j < len; j++) {
+      node = ref[j];
       range.insertNode(node[0]);
     }
     this.editor.selection.restore();
@@ -48363,7 +48579,7 @@ ListButton = (function(_super) {
   };
 
   ListButton.prototype._convertEl = function(el) {
-    var $el, anotherType, block, child, children, results, _i, _len, _ref;
+    var $el, anotherType, block, child, children, j, len, ref, results;
     $el = $(el);
     results = [];
     anotherType = this.type === 'ul' ? 'ol' : 'ul';
@@ -48384,9 +48600,9 @@ ListButton = (function(_super) {
       block = $('<' + this.type + '/>').append($el.html());
       results.push(block);
     } else if ($el.is('blockquote')) {
-      _ref = $el.children().get();
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        child = _ref[_i];
+      ref = $el.children().get();
+      for (j = 0, len = ref.length; j < len; j++) {
+        child = ref[j];
         children = this._convertEl(child);
       }
       $.merge(results, children);
@@ -48404,8 +48620,8 @@ ListButton = (function(_super) {
 
 })(Button);
 
-OrderListButton = (function(_super) {
-  __extends(OrderListButton, _super);
+OrderListButton = (function(superClass) {
+  extend(OrderListButton, superClass);
 
   function OrderListButton() {
     return OrderListButton.__super__.constructor.apply(this, arguments);
@@ -48435,8 +48651,8 @@ OrderListButton = (function(_super) {
 
 })(ListButton);
 
-UnorderListButton = (function(_super) {
-  __extends(UnorderListButton, _super);
+UnorderListButton = (function(superClass) {
+  extend(UnorderListButton, superClass);
 
   function UnorderListButton() {
     return UnorderListButton.__super__.constructor.apply(this, arguments);
@@ -48470,12 +48686,8 @@ Simditor.Toolbar.addButton(OrderListButton);
 
 Simditor.Toolbar.addButton(UnorderListButton);
 
-var BlockquoteButton,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-BlockquoteButton = (function(_super) {
-  __extends(BlockquoteButton, _super);
+BlockquoteButton = (function(superClass) {
+  extend(BlockquoteButton, superClass);
 
   function BlockquoteButton() {
     return BlockquoteButton.__super__.constructor.apply(this, arguments);
@@ -48490,7 +48702,7 @@ BlockquoteButton = (function(_super) {
   BlockquoteButton.prototype.disableTag = 'pre, table';
 
   BlockquoteButton.prototype.command = function() {
-    var $contents, $endBlock, $startBlock, endNode, node, range, results, startNode, _i, _len, _ref;
+    var $contents, $endBlock, $startBlock, endNode, j, len, node, range, ref, results, startNode;
     range = this.editor.selection.getRange();
     startNode = range.startContainer;
     endNode = range.endContainer;
@@ -48503,23 +48715,23 @@ BlockquoteButton = (function(_super) {
     results = [];
     $contents.children().each((function(_this) {
       return function(i, el) {
-        var c, converted, _i, _len, _results;
+        var c, converted, j, len, results1;
         converted = _this._convertEl(el);
-        _results = [];
-        for (_i = 0, _len = converted.length; _i < _len; _i++) {
-          c = converted[_i];
+        results1 = [];
+        for (j = 0, len = converted.length; j < len; j++) {
+          c = converted[j];
           if (results.length && results[results.length - 1].is(_this.htmlTag) && c.is(_this.htmlTag)) {
-            _results.push(results[results.length - 1].append(c.children()));
+            results1.push(results[results.length - 1].append(c.children()));
           } else {
-            _results.push(results.push(c));
+            results1.push(results.push(c));
           }
         }
-        return _results;
+        return results1;
       };
     })(this));
-    _ref = results.reverse();
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      node = _ref[_i];
+    ref = results.reverse();
+    for (j = 0, len = ref.length; j < len; j++) {
+      node = ref[j];
       range.insertNode(node[0]);
     }
     this.editor.selection.restore();
@@ -48549,13 +48761,8 @@ BlockquoteButton = (function(_super) {
 
 Simditor.Toolbar.addButton(BlockquoteButton);
 
-var CodeButton, CodePopover,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-  __slice = [].slice;
-
-CodeButton = (function(_super) {
-  __extends(CodeButton, _super);
+CodeButton = (function(superClass) {
+  extend(CodeButton, superClass);
 
   function CodeButton() {
     return CodeButton.__super__.constructor.apply(this, arguments);
@@ -48589,7 +48796,7 @@ CodeButton = (function(_super) {
 
   CodeButton.prototype.render = function() {
     var args;
-    args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
     CodeButton.__super__.render.apply(this, args);
     return this.popover = new CodePopover({
       button: this
@@ -48626,7 +48833,7 @@ CodeButton = (function(_super) {
   };
 
   CodeButton.prototype.command = function() {
-    var $contents, $endBlock, $startBlock, endNode, node, range, results, startNode, _i, _len, _ref;
+    var $contents, $endBlock, $startBlock, endNode, j, len, node, range, ref, results, startNode;
     range = this.editor.selection.getRange();
     startNode = range.startContainer;
     endNode = range.endContainer;
@@ -48638,23 +48845,23 @@ CodeButton = (function(_super) {
     results = [];
     $contents.children().each((function(_this) {
       return function(i, el) {
-        var c, converted, _i, _len, _results;
+        var c, converted, j, len, results1;
         converted = _this._convertEl(el);
-        _results = [];
-        for (_i = 0, _len = converted.length; _i < _len; _i++) {
-          c = converted[_i];
+        results1 = [];
+        for (j = 0, len = converted.length; j < len; j++) {
+          c = converted[j];
           if (results.length && results[results.length - 1].is(_this.htmlTag) && c.is(_this.htmlTag)) {
-            _results.push(results[results.length - 1].append(c.contents()));
+            results1.push(results[results.length - 1].append(c.contents()));
           } else {
-            _results.push(results.push(c));
+            results1.push(results.push(c));
           }
         }
-        return _results;
+        return results1;
       };
     })(this));
-    _ref = results.reverse();
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      node = _ref[_i];
+    ref = results.reverse();
+    for (j = 0, len = ref.length; j < len; j++) {
+      node = ref[j];
       range.insertNode(node[0]);
     }
     this.editor.selection.setRangeAtEndOf(results[0]);
@@ -48684,8 +48891,8 @@ CodeButton = (function(_super) {
 
 })(Button);
 
-CodePopover = (function(_super) {
-  __extends(CodePopover, _super);
+CodePopover = (function(superClass) {
+  extend(CodePopover, superClass);
 
   function CodePopover() {
     return CodePopover.__super__.constructor.apply(this, arguments);
@@ -48696,7 +48903,7 @@ CodePopover = (function(_super) {
   CodePopover.prototype.render = function() {
     this.el.addClass('code-popover').append(this._tpl);
     this.selectEl = this.el.find('.select-lang');
-    return this.selectEl.on('change', (function(_this) {
+    this.selectEl.on('change', (function(_this) {
       return function(e) {
         var selected;
         _this.lang = _this.selectEl.val();
@@ -48711,11 +48918,18 @@ CodePopover = (function(_super) {
         }
       };
     })(this));
+    return this.editor.on('valuechanged', (function(_this) {
+      return function(e) {
+        if (_this.active) {
+          return _this.refresh();
+        }
+      };
+    })(this));
   };
 
   CodePopover.prototype.show = function() {
     var args;
-    args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
     CodePopover.__super__.show.apply(this, args);
     this.lang = this.target.attr('data-lang');
     if (this.lang != null) {
@@ -48731,13 +48945,8 @@ CodePopover = (function(_super) {
 
 Simditor.Toolbar.addButton(CodeButton);
 
-var LinkButton, LinkPopover,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-  __slice = [].slice;
-
-LinkButton = (function(_super) {
-  __extends(LinkButton, _super);
+LinkButton = (function(superClass) {
+  extend(LinkButton, superClass);
 
   function LinkButton() {
     return LinkButton.__super__.constructor.apply(this, arguments);
@@ -48753,7 +48962,7 @@ LinkButton = (function(_super) {
 
   LinkButton.prototype.render = function() {
     var args;
-    args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
     LinkButton.__super__.render.apply(this, args);
     return this.popover = new LinkPopover({
       button: this
@@ -48836,8 +49045,8 @@ LinkButton = (function(_super) {
 
 })(Button);
 
-LinkPopover = (function(_super) {
-  __extends(LinkPopover, _super);
+LinkPopover = (function(superClass) {
+  extend(LinkPopover, superClass);
 
   function LinkPopover() {
     return LinkPopover.__super__.constructor.apply(this, arguments);
@@ -48845,7 +49054,7 @@ LinkPopover = (function(_super) {
 
   LinkPopover.prototype.render = function() {
     var tpl;
-    tpl = "<div class=\"link-settings\">\n  <div class=\"settings-field\">\n    <label>" + (this._t('text')) + "</label>\n    <input class=\"link-text\" type=\"text\"/>\n    <a class=\"btn-unlink\" href=\"javascript:;\" title=\"" + (this._t('removeLink')) + "\" tabindex=\"-1\"><span class=\"fa fa-unlink\"></span></a>\n  </div>\n  <div class=\"settings-field\">\n    <label>" + (this._t('linkUrl')) + "</label>\n    <input class=\"link-url\" type=\"text\"/>\n  </div>\n</div>";
+    tpl = "<div class=\"link-settings\">\n  <div class=\"settings-field\">\n    <label>" + (this._t('text')) + "</label>\n    <input class=\"link-text\" type=\"text\"/>\n    <a class=\"btn-unlink\" href=\"javascript:;\" title=\"" + (this._t('removeLink')) + "\" tabindex=\"-1\"><span class=\"simditor-icon simditor-icon-unlink\"></span></a>\n  </div>\n  <div class=\"settings-field\">\n    <label>" + (this._t('linkUrl')) + "</label>\n    <input class=\"link-url\" type=\"text\"/>\n  </div>\n</div>";
     this.el.addClass('link-popover').append(tpl);
     this.textEl = this.el.find('.link-text');
     this.urlEl = this.el.find('.link-url');
@@ -48900,7 +49109,7 @@ LinkPopover = (function(_super) {
 
   LinkPopover.prototype.show = function() {
     var args;
-    args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
     LinkPopover.__super__.show.apply(this, args);
     this.textEl.val(this.target.text());
     return this.urlEl.val(this.target.attr('href'));
@@ -48912,13 +49121,8 @@ LinkPopover = (function(_super) {
 
 Simditor.Toolbar.addButton(LinkButton);
 
-var ImageButton, ImagePopover,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-  __slice = [].slice;
-
-ImageButton = (function(_super) {
-  __extends(ImageButton, _super);
+ImageButton = (function(superClass) {
+  extend(ImageButton, superClass);
 
   function ImageButton() {
     return ImageButton.__super__.constructor.apply(this, arguments);
@@ -48937,13 +49141,13 @@ ImageButton = (function(_super) {
   ImageButton.prototype.needFocus = false;
 
   ImageButton.prototype._init = function() {
-    var item, _i, _len, _ref;
+    var item, j, len, ref;
     if (this.editor.opts.imageButton) {
       if (Array.isArray(this.editor.opts.imageButton)) {
         this.menu = [];
-        _ref = this.editor.opts.imageButton;
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          item = _ref[_i];
+        ref = this.editor.opts.imageButton;
+        for (j = 0, len = ref.length; j < len; j++) {
+          item = ref[j];
           this.menu.push({
             name: item + '-image',
             text: this._t(item + 'Image')
@@ -49033,7 +49237,7 @@ ImageButton = (function(_super) {
 
   ImageButton.prototype.render = function() {
     var args;
-    args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
     ImageButton.__super__.render.apply(this, args);
     this.popover = new ImagePopover({
       button: this
@@ -49120,29 +49324,27 @@ ImageButton = (function(_super) {
         });
       };
     })(this));
-    this.editor.uploader.on('uploadprogress', (function(_this) {
-      return function(e, file, loaded, total) {
-        var $img, $mask, $txt, percent;
-        if (!file.inline) {
-          return;
-        }
-        percent = loaded / total;
-        percent = (percent * 100).toFixed(0);
-        if (percent > 99) {
-          percent = 99;
-        }
-        $mask = file.img.data('mask');
-        if ($mask) {
-          $img = $mask.data('img');
-          $txt = $mask.find('span');
-          if ($img && $img.parent().length > 0 && percent !== $txt.text()) {
-            return $txt.text(percent);
-          } else {
-            return $mask.remove();
-          }
-        }
-      };
-    })(this));
+    this.editor.uploader.on('uploadprogress', $.proxy(this.editor.util.throttle(function(e, file, loaded, total) {
+      var $img, $mask, percent;
+      if (!file.inline) {
+        return;
+      }
+      $mask = file.img.data('mask');
+      if (!$mask) {
+        return;
+      }
+      $img = $mask.data('img');
+      if (!($img.hasClass('uploading') && $img.parent().length > 0)) {
+        $mask.remove();
+        return;
+      }
+      percent = loaded / total;
+      percent = (percent * 100).toFixed(0);
+      if (percent > 99) {
+        percent = 99;
+      }
+      return $mask.find('.progress').height((100 - percent) + "%");
+    }, 500), this));
     this.editor.uploader.on('uploadsuccess', (function(_this) {
       return function(e, file, result) {
         var $img, $mask, msg;
@@ -49150,13 +49352,26 @@ ImageButton = (function(_super) {
           return;
         }
         $img = file.img;
+        if (!($img.hasClass('uploading') && $img.parent().length > 0)) {
+          return;
+        }
         $img.removeData('file');
-        $img.removeClass('uploading');
+        $img.removeClass('uploading').removeClass('loading');
         $mask = $img.data('mask');
         if ($mask) {
           $mask.remove();
         }
         $img.removeData('mask');
+        if (typeof result !== 'object') {
+          try {
+            result = $.parseJSON(result);
+          } catch (_error) {
+            e = _error;
+            result = {
+              success: false
+            };
+          }
+        }
         if (result.success === false) {
           msg = result.msg || _this._t('uploadFailed');
           alert(msg);
@@ -49194,8 +49409,11 @@ ImageButton = (function(_super) {
           alert(msg);
         }
         $img = file.img;
+        if (!($img.hasClass('uploading') && $img.parent().length > 0)) {
+          return;
+        }
         $img.removeData('file');
-        $img.removeClass('uploading');
+        $img.removeClass('uploading').removeClass('loading');
         $mask = $img.data('mask');
         if ($mask) {
           $mask.remove();
@@ -49224,21 +49442,33 @@ ImageButton = (function(_super) {
   };
 
   ImageButton.prototype.loadImage = function($img, src, callback) {
-    var $mask, img;
+    var $mask, img, positionMask;
+    positionMask = (function(_this) {
+      return function() {
+        var imgOffset, wrapperOffset;
+        imgOffset = $img.offset();
+        wrapperOffset = _this.editor.wrapper.offset();
+        return $mask.css({
+          top: imgOffset.top - wrapperOffset.top,
+          left: imgOffset.left - wrapperOffset.left,
+          width: $img.width(),
+          height: $img.height()
+        }).show();
+      };
+    })(this);
+    $img.addClass('loading');
     $mask = $img.data('mask');
     if (!$mask) {
-      $mask = $('<div class="simditor-image-loading"><span></span></div>').hide().appendTo(this.editor.wrapper);
-      if ($img.hasClass('uploading')) {
-        $mask.addClass('uploading');
-      }
+      $mask = $('<div class="simditor-image-loading"><div class="progress"></div></div>').hide().appendTo(this.editor.wrapper);
+      positionMask();
       $img.data('mask', $mask);
       $mask.data('img', $img);
     }
     img = new Image();
     img.onload = (function(_this) {
       return function() {
-        var height, imgOffset, width, wrapperOffset;
-        if ($mask.hasClass('uploading') && !$img.hasClass('uploading')) {
+        var height, width;
+        if (!$img.hasClass('loading') && !$img.hasClass('uploading')) {
           return;
         }
         width = img.width;
@@ -49246,17 +49476,10 @@ ImageButton = (function(_super) {
         $img.attr({
           src: src,
           'data-image-size': width + ',' + height
-        });
+        }).removeClass('loading');
         if ($img.hasClass('uploading')) {
           _this.editor.util.reflow(_this.editor.body);
-          wrapperOffset = _this.editor.wrapper.offset();
-          imgOffset = $img.offset();
-          $mask.css({
-            top: imgOffset.top - wrapperOffset.top,
-            left: imgOffset.left - wrapperOffset.left,
-            width: $img.width(),
-            height: $img.height()
-          }).show();
+          positionMask();
         } else {
           $mask.remove();
           $img.removeData('mask');
@@ -49268,7 +49491,7 @@ ImageButton = (function(_super) {
       return function() {
         callback(false);
         $mask.remove();
-        return $img.removeData('mask');
+        return $img.removeData('mask').removeClass('loading');
       };
     })(this);
     return img.src = src;
@@ -49319,8 +49542,8 @@ ImageButton = (function(_super) {
 
 })(Button);
 
-ImagePopover = (function(_super) {
-  __extends(ImagePopover, _super);
+ImagePopover = (function(superClass) {
+  extend(ImagePopover, superClass);
 
   function ImagePopover() {
     return ImagePopover.__super__.constructor.apply(this, arguments);
@@ -49333,7 +49556,7 @@ ImagePopover = (function(_super) {
 
   ImagePopover.prototype.render = function() {
     var tpl;
-    tpl = "<div class=\"link-settings\">\n  <div class=\"settings-field\">\n    <label>" + (this._t('imageUrl')) + "</label>\n    <input class=\"image-src\" type=\"text\" tabindex=\"1\" />\n    <a class=\"btn-upload\" href=\"javascript:;\" title=\"" + (this._t('uploadImage')) + "\" tabindex=\"-1\">\n      <span class=\"fa fa-upload\"></span>\n    </a>\n  </div>\n  <div class=\"settings-field\">\n    <label>" + (this._t('imageSize')) + "</label>\n    <input class=\"image-size\" id=\"image-width\" type=\"text\" tabindex=\"2\" />\n    <span class=\"times\">×</span>\n    <input class=\"image-size\" id=\"image-height\" type=\"text\" tabindex=\"3\" />\n    <a class=\"btn-restore\" href=\"javascript:;\" title=\"" + (this._t('restoreImageSize')) + "\" tabindex=\"-1\">\n      <span class=\"fa fa-reply\"></span>\n    </a>\n  </div>\n</div>";
+    tpl = "<div class=\"link-settings\">\n  <div class=\"settings-field\">\n    <label>" + (this._t('imageUrl')) + "</label>\n    <input class=\"image-src\" type=\"text\" tabindex=\"1\" />\n    <a class=\"btn-upload\" href=\"javascript:;\" title=\"" + (this._t('uploadImage')) + "\" tabindex=\"-1\">\n      <span class=\"simditor-icon simditor-icon-upload\"></span>\n    </a>\n  </div>\n  <div class=\"settings-field\">\n    <label>" + (this._t('imageSize')) + "</label>\n    <input class=\"image-size\" id=\"image-width\" type=\"text\" tabindex=\"2\" />\n    <span class=\"times\">×</span>\n    <input class=\"image-size\" id=\"image-height\" type=\"text\" tabindex=\"3\" />\n    <a class=\"btn-restore\" href=\"javascript:;\" title=\"" + (this._t('restoreImageSize')) + "\" tabindex=\"-1\">\n      <span class=\"simditor-icon simditor-icon-undo\"></span>\n    </a>\n  </div>\n</div>";
     this.el.addClass('image-popover').append(tpl);
     this.srcEl = this.el.find('.image-src');
     this.srcEl.on('keydown', (function(_this) {
@@ -49485,8 +49708,8 @@ ImagePopover = (function(_super) {
   };
 
   ImagePopover.prototype._restoreImg = function() {
-    var size, _ref;
-    size = ((_ref = this.target.data('image-size')) != null ? _ref.split(",") : void 0) || [this.width, this.height];
+    var ref, size;
+    size = ((ref = this.target.data('image-size')) != null ? ref.split(",") : void 0) || [this.width, this.height];
     this.target.attr({
       width: size[0] * 1,
       height: size[1] * 1
@@ -49497,7 +49720,7 @@ ImagePopover = (function(_super) {
 
   ImagePopover.prototype.show = function() {
     var $img, args;
-    args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
     ImagePopover.__super__.show.apply(this, args);
     $img = this.target;
     this.width = $img.width();
@@ -49517,12 +49740,8 @@ ImagePopover = (function(_super) {
 
 Simditor.Toolbar.addButton(ImageButton);
 
-var IndentButton,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-IndentButton = (function(_super) {
-  __extends(IndentButton, _super);
+IndentButton = (function(superClass) {
+  extend(IndentButton, superClass);
 
   function IndentButton() {
     return IndentButton.__super__.constructor.apply(this, arguments);
@@ -49551,12 +49770,8 @@ IndentButton = (function(_super) {
 
 Simditor.Toolbar.addButton(IndentButton);
 
-var OutdentButton,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-OutdentButton = (function(_super) {
-  __extends(OutdentButton, _super);
+OutdentButton = (function(superClass) {
+  extend(OutdentButton, superClass);
 
   function OutdentButton() {
     return OutdentButton.__super__.constructor.apply(this, arguments);
@@ -49585,12 +49800,8 @@ OutdentButton = (function(_super) {
 
 Simditor.Toolbar.addButton(OutdentButton);
 
-var HrButton,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-HrButton = (function(_super) {
-  __extends(HrButton, _super);
+HrButton = (function(superClass) {
+  extend(HrButton, superClass);
 
   function HrButton() {
     return HrButton.__super__.constructor.apply(this, arguments);
@@ -49631,12 +49842,8 @@ HrButton = (function(_super) {
 
 Simditor.Toolbar.addButton(HrButton);
 
-var TableButton,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-TableButton = (function(_super) {
-  __extends(TableButton, _super);
+TableButton = (function(superClass) {
+  extend(TableButton, superClass);
 
   function TableButton() {
     return TableButton.__super__.constructor.apply(this, arguments);
@@ -49744,7 +49951,7 @@ TableButton = (function(_super) {
     $resizeHandle = $('<div class="simditor-resize-handle" contenteditable="false"></div>').appendTo($wrapper);
     $wrapper.on('mousemove', 'td', (function(_this) {
       return function(e) {
-        var $col, $td, index, x, _ref, _ref1;
+        var $col, $td, index, ref, ref1, x;
         if ($wrapper.hasClass('resizing')) {
           return;
         }
@@ -49757,13 +49964,13 @@ TableButton = (function(_super) {
           $resizeHandle.hide();
           return;
         }
-        if ((_ref = $resizeHandle.data('td')) != null ? _ref.is($td) : void 0) {
+        if ((ref = $resizeHandle.data('td')) != null ? ref.is($td) : void 0) {
           $resizeHandle.show();
           return;
         }
         index = $td.parent().find('td').index($td);
         $col = $colgroup.find('col').eq(index);
-        if ((_ref1 = $resizeHandle.data('col')) != null ? _ref1.is($col) : void 0) {
+        if ((ref1 = $resizeHandle.data('col')) != null ? ref1.is($col) : void 0) {
           $resizeHandle.show();
           return;
         }
@@ -49907,12 +50114,12 @@ TableButton = (function(_super) {
   };
 
   TableButton.prototype.createTable = function(row, col, phBr) {
-    var $table, $tbody, $td, $tr, c, r, _i, _j;
+    var $table, $tbody, $td, $tr, c, j, k, r, ref, ref1;
     $table = $('<table/>');
     $tbody = $('<tbody/>').appendTo($table);
-    for (r = _i = 0; 0 <= row ? _i < row : _i > row; r = 0 <= row ? ++_i : --_i) {
+    for (r = j = 0, ref = row; 0 <= ref ? j < ref : j > ref; r = 0 <= ref ? ++j : --j) {
       $tr = $('<tr/>').appendTo($tbody);
-      for (c = _j = 0; 0 <= col ? _j < col : _j > col; c = 0 <= col ? ++_j : --_j) {
+      for (c = k = 0, ref1 = col; 0 <= ref1 ? k < ref1 : k > ref1; c = 0 <= ref1 ? ++k : --k) {
         $td = $('<td/>').appendTo($tr);
         if (phBr) {
           $td.append(this.editor.util.phBr);
@@ -49963,7 +50170,7 @@ TableButton = (function(_super) {
   };
 
   TableButton.prototype.insertRow = function($td, direction) {
-    var $newTr, $table, $tr, colNum, i, index, _i;
+    var $newTr, $table, $tr, colNum, i, index, j, ref;
     if (direction == null) {
       direction = 'after';
     }
@@ -49976,7 +50183,7 @@ TableButton = (function(_super) {
       };
     })(this));
     $newTr = $('<tr/>');
-    for (i = _i = 1; 1 <= colNum ? _i <= colNum : _i >= colNum; i = 1 <= colNum ? ++_i : --_i) {
+    for (i = j = 1, ref = colNum; 1 <= ref ? j <= ref : j >= ref; i = 1 <= ref ? ++j : --j) {
       $('<td/>').append(this.editor.util.phBr).appendTo($newTr);
     }
     $tr[direction]($newTr);
@@ -50077,12 +50284,8 @@ TableButton = (function(_super) {
 
 Simditor.Toolbar.addButton(TableButton);
 
-var StrikethroughButton,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-StrikethroughButton = (function(_super) {
-  __extends(StrikethroughButton, _super);
+StrikethroughButton = (function(superClass) {
+  extend(StrikethroughButton, superClass);
 
   function StrikethroughButton() {
     return StrikethroughButton.__super__.constructor.apply(this, arguments);
@@ -86601,3 +86804,1852 @@ TabsDirective.$inject = ["$mdTheming"];
 (function(){ 
  angular.module("material.core").constant("$MD_THEME_CSS", "md-autocomplete {  background: '{{background-50}}'; }  md-autocomplete button md-icon path {    fill: '{{background-600}}'; }  md-autocomplete button:after {    background: '{{background-600-0.3}}'; }  md-autocomplete ul {    background: '{{background-50}}'; }    md-autocomplete ul li {      border-top: 1px solid '{{background-400}}';      color: '{{background-900}}'; }      md-autocomplete ul li .highlight {        color: '{{background-600}}'; }      md-autocomplete ul li:hover, md-autocomplete ul li.selected {        background: '{{background-200}}'; }md-backdrop.md-opaque.md-THEME_NAME-theme {  background-color: '{{foreground-4-0.5}}'; }md-bottom-sheet.md-THEME_NAME-theme {  background-color: '{{background-50}}';  border-top-color: '{{background-300}}'; }  md-bottom-sheet.md-THEME_NAME-theme.md-list md-item {    color: '{{foreground-1}}'; }  md-bottom-sheet.md-THEME_NAME-theme .md-subheader {    background-color: '{{background-50}}'; }  md-bottom-sheet.md-THEME_NAME-theme .md-subheader {    color: '{{foreground-1}}'; }md-toolbar .md-button.md-THEME_NAME-theme.md-fab {  background-color: white; }.md-button.md-THEME_NAME-theme {  border-radius: 3px; }  .md-button.md-THEME_NAME-theme:not([disabled]):hover, .md-button.md-THEME_NAME-theme:not([disabled]):focus {    background-color: '{{background-500-0.2}}'; }  .md-button.md-THEME_NAME-theme.md-primary {    color: '{{primary-color}}'; }    .md-button.md-THEME_NAME-theme.md-primary.md-raised, .md-button.md-THEME_NAME-theme.md-primary.md-fab {      color: '{{primary-contrast}}';      background-color: '{{primary-color}}'; }      .md-button.md-THEME_NAME-theme.md-primary.md-raised:not([disabled]):hover, .md-button.md-THEME_NAME-theme.md-primary.md-raised:not([disabled]):focus, .md-button.md-THEME_NAME-theme.md-primary.md-fab:not([disabled]):hover, .md-button.md-THEME_NAME-theme.md-primary.md-fab:not([disabled]):focus {        background-color: '{{primary-600}}'; }  .md-button.md-THEME_NAME-theme.md-fab {    border-radius: 50%;    background-color: '{{accent-color}}';    color: '{{accent-contrast}}'; }    .md-button.md-THEME_NAME-theme.md-fab:not([disabled]):hover, .md-button.md-THEME_NAME-theme.md-fab:not([disabled]):focus {      background-color: '{{accent-A700}}'; }  .md-button.md-THEME_NAME-theme.md-raised {    color: '{{background-contrast}}';    background-color: '{{background-50}}'; }    .md-button.md-THEME_NAME-theme.md-raised:not([disabled]):hover, .md-button.md-THEME_NAME-theme.md-raised:not([disabled]):focus {      background-color: '{{background-200}}'; }  .md-button.md-THEME_NAME-theme.md-warn {    color: '{{warn-color}}'; }    .md-button.md-THEME_NAME-theme.md-warn.md-raised, .md-button.md-THEME_NAME-theme.md-warn.md-fab {      color: '{{warn-contrast}}';      background-color: '{{warn-color}}'; }      .md-button.md-THEME_NAME-theme.md-warn.md-raised:not([disabled]):hover, .md-button.md-THEME_NAME-theme.md-warn.md-raised:not([disabled]):focus, .md-button.md-THEME_NAME-theme.md-warn.md-fab:not([disabled]):hover, .md-button.md-THEME_NAME-theme.md-warn.md-fab:not([disabled]):focus {        background-color: '{{warn-700}}'; }  .md-button.md-THEME_NAME-theme.md-accent {    color: '{{accent-color}}'; }    .md-button.md-THEME_NAME-theme.md-accent.md-raised, .md-button.md-THEME_NAME-theme.md-accent.md-fab {      color: '{{accent-contrast}}';      background-color: '{{accent-color}}'; }      .md-button.md-THEME_NAME-theme.md-accent.md-raised:not([disabled]):hover, .md-button.md-THEME_NAME-theme.md-accent.md-raised:not([disabled]):focus, .md-button.md-THEME_NAME-theme.md-accent.md-fab:not([disabled]):hover, .md-button.md-THEME_NAME-theme.md-accent.md-fab:not([disabled]):focus {        background-color: '{{accent-700}}'; }  .md-button.md-THEME_NAME-theme[disabled], .md-button.md-THEME_NAME-theme.md-raised[disabled], .md-button.md-THEME_NAME-theme.md-fab[disabled] {    color: '{{foreground-3}}';    background-color: transparent;    cursor: not-allowed; }md-card.md-THEME_NAME-theme {  border-radius: 2px; }  md-card.md-THEME_NAME-theme .md-card-image {    border-radius: 2px 2px 0 0; }md-checkbox.md-THEME_NAME-theme .md-ripple {  color: '{{accent-600}}'; }md-checkbox.md-THEME_NAME-theme.md-checked .md-ripple {  color: '{{background-600}}'; }md-checkbox.md-THEME_NAME-theme .md-icon {  border-color: '{{foreground-2}}'; }md-checkbox.md-THEME_NAME-theme.md-checked .md-icon {  background-color: '{{accent-color-0.87}}'; }md-checkbox.md-THEME_NAME-theme.md-checked .md-icon:after {  border-color: '{{background-200}}'; }md-checkbox.md-THEME_NAME-theme:not([disabled]).md-primary .md-ripple {  color: '{{primary-600}}'; }md-checkbox.md-THEME_NAME-theme:not([disabled]).md-primary.md-checked .md-ripple {  color: '{{background-600}}'; }md-checkbox.md-THEME_NAME-theme:not([disabled]).md-primary .md-icon {  border-color: '{{foreground-2}}'; }md-checkbox.md-THEME_NAME-theme:not([disabled]).md-primary.md-checked .md-icon {  background-color: '{{primary-color-0.87}}'; }md-checkbox.md-THEME_NAME-theme:not([disabled]).md-primary.md-checked .md-icon:after {  border-color: '{{background-200}}'; }md-checkbox.md-THEME_NAME-theme:not([disabled]).md-warn .md-ripple {  color: '{{warn-600}}'; }md-checkbox.md-THEME_NAME-theme:not([disabled]).md-warn .md-icon {  border-color: '{{foreground-2}}'; }md-checkbox.md-THEME_NAME-theme:not([disabled]).md-warn.md-checked .md-icon {  background-color: '{{warn-color-0.87}}'; }md-checkbox.md-THEME_NAME-theme:not([disabled]).md-warn.md-checked .md-icon:after {  border-color: '{{background-200}}'; }md-checkbox.md-THEME_NAME-theme[disabled] .md-icon {  border-color: '{{foreground-3}}'; }md-checkbox.md-THEME_NAME-theme[disabled].md-checked .md-icon {  background-color: '{{foreground-3}}'; }md-content.md-THEME_NAME-theme {  background-color: '{{background-hue-3}}'; }md-dialog.md-THEME_NAME-theme {  border-radius: 4px;  background-color: '{{background-hue-3}}'; }  md-dialog.md-THEME_NAME-theme.md-content-overflow .md-actions {    border-top-color: '{{foreground-4}}'; }md-divider.md-THEME_NAME-theme {  border-top-color: '{{foreground-4}}'; }md-icon.md-THEME_NAME-theme.md-primary {  color: '{{primary-color}}'; }md-icon.md-THEME_NAME-theme.md-accent {  color: '{{accent-color}}'; }md-icon.md-THEME_NAME-theme.md-warn {  color: '{{warn-color}}'; }md-icon.md-THEME_NAME-theme.md-danger {  color: '{{danger-color}}'; }md-input-container.md-THEME_NAME-theme .md-input {  color: '{{foreground-1}}';  border-color: '{{foreground-4}}';  text-shadow: '{{foreground-shadow}}'; }  md-input-container.md-THEME_NAME-theme .md-input::-webkit-input-placeholder, md-input-container.md-THEME_NAME-theme .md-input::-moz-placeholder, md-input-container.md-THEME_NAME-theme .md-input:-moz-placeholder, md-input-container.md-THEME_NAME-theme .md-input:-ms-input-placeholder {    color: '{{foreground-3}}'; }md-input-container.md-THEME_NAME-theme > md-icon {  fill: '{{foreground-1}}'; }md-input-container.md-THEME_NAME-theme label, md-input-container.md-THEME_NAME-theme .md-placeholder {  text-shadow: '{{foreground-shadow}}';  color: '{{foreground-3}}'; }md-input-container.md-THEME_NAME-theme:not(.md-input-invalid).md-input-has-value label {  color: '{{foreground-2}}'; }md-input-container.md-THEME_NAME-theme:not(.md-input-invalid).md-input-focused .md-input {  border-color: '{{primary-500}}'; }md-input-container.md-THEME_NAME-theme:not(.md-input-invalid).md-input-focused label {  color: '{{primary-500}}'; }md-input-container.md-THEME_NAME-theme:not(.md-input-invalid).md-input-focused md-icon {  fill: '{{primary-500}}'; }md-input-container.md-THEME_NAME-theme:not(.md-input-invalid).md-input-focused.md-accent .md-input {  border-color: '{{accent-500}}'; }md-input-container.md-THEME_NAME-theme:not(.md-input-invalid).md-input-focused.md-accent label {  color: '{{accent-500}}'; }md-input-container.md-THEME_NAME-theme:not(.md-input-invalid).md-input-focused.md-warn .md-input {  border-color: '{{warn-500}}'; }md-input-container.md-THEME_NAME-theme:not(.md-input-invalid).md-input-focused.md-warn label {  color: '{{warn-500}}'; }md-input-container.md-THEME_NAME-theme.md-input-invalid .md-input {  border-color: '{{warn-500}}'; }md-input-container.md-THEME_NAME-theme.md-input-invalid label {  color: '{{warn-500}}'; }md-input-container.md-THEME_NAME-theme.md-input-invalid ng-message, md-input-container.md-THEME_NAME-theme.md-input-invalid data-ng-message, md-input-container.md-THEME_NAME-theme.md-input-invalid x-ng-message, md-input-container.md-THEME_NAME-theme.md-input-invalid [ng-message], md-input-container.md-THEME_NAME-theme.md-input-invalid [data-ng-message], md-input-container.md-THEME_NAME-theme.md-input-invalid [x-ng-message], md-input-container.md-THEME_NAME-theme.md-input-invalid .md-char-counter {  color: '{{warn-500}}'; }md-input-container.md-THEME_NAME-theme .md-input[disabled], [disabled] md-input-container.md-THEME_NAME-theme .md-input {  border-bottom-color: transparent;  color: '{{foreground-3}}';  background-image: linear-gradient(to right, '{{foreground-4}}' 0%, '{{foreground-4}}' 33%, transparent 0%);  background-image: -ms-linear-gradient(left, transparent 0%, '{{foreground-4}}' 100%); }md-progress-circular.md-THEME_NAME-theme {  background-color: transparent; }  md-progress-circular.md-THEME_NAME-theme .md-inner .md-gap {    border-top-color: '{{primary-color}}';    border-bottom-color: '{{primary-color}}'; }  md-progress-circular.md-THEME_NAME-theme .md-inner .md-left .md-half-circle, md-progress-circular.md-THEME_NAME-theme .md-inner .md-right .md-half-circle {    border-top-color: '{{primary-color}}'; }  md-progress-circular.md-THEME_NAME-theme .md-inner .md-right .md-half-circle {    border-right-color: '{{primary-color}}'; }  md-progress-circular.md-THEME_NAME-theme .md-inner .md-left .md-half-circle {    border-left-color: '{{primary-color}}'; }  md-progress-circular.md-THEME_NAME-theme.md-warn .md-inner .md-gap {    border-top-color: '{{warn-color}}';    border-bottom-color: '{{warn-color}}'; }  md-progress-circular.md-THEME_NAME-theme.md-warn .md-inner .md-left .md-half-circle, md-progress-circular.md-THEME_NAME-theme.md-warn .md-inner .md-right .md-half-circle {    border-top-color: '{{warn-color}}'; }  md-progress-circular.md-THEME_NAME-theme.md-warn .md-inner .md-right .md-half-circle {    border-right-color: '{{warn-color}}'; }  md-progress-circular.md-THEME_NAME-theme.md-warn .md-inner .md-left .md-half-circle {    border-left-color: '{{warn-color}}'; }  md-progress-circular.md-THEME_NAME-theme.md-accent .md-inner .md-gap {    border-top-color: '{{accent-color}}';    border-bottom-color: '{{accent-color}}'; }  md-progress-circular.md-THEME_NAME-theme.md-accent .md-inner .md-left .md-half-circle, md-progress-circular.md-THEME_NAME-theme.md-accent .md-inner .md-right .md-half-circle {    border-top-color: '{{accent-color}}'; }  md-progress-circular.md-THEME_NAME-theme.md-accent .md-inner .md-right .md-half-circle {    border-right-color: '{{accent-color}}'; }  md-progress-circular.md-THEME_NAME-theme.md-accent .md-inner .md-left .md-half-circle {    border-left-color: '{{accent-color}}'; }md-progress-linear.md-THEME_NAME-theme .md-container {  background-color: '{{primary-100}}'; }md-progress-linear.md-THEME_NAME-theme .md-bar {  background-color: '{{primary-color}}'; }md-progress-linear.md-THEME_NAME-theme.md-warn .md-container {  background-color: '{{warn-100}}'; }md-progress-linear.md-THEME_NAME-theme.md-warn .md-bar {  background-color: '{{warn-color}}'; }md-progress-linear.md-THEME_NAME-theme.md-accent .md-container {  background-color: '{{accent-100}}'; }md-progress-linear.md-THEME_NAME-theme.md-accent .md-bar {  background-color: '{{accent-color}}'; }md-progress-linear.md-THEME_NAME-theme[md-mode=buffer].md-warn .md-bar1 {  background-color: '{{warn-100}}'; }md-progress-linear.md-THEME_NAME-theme[md-mode=buffer].md-warn .md-dashed:before {  background: radial-gradient('{{warn-100}}' 0%, '{{warn-100}}' 16%, transparent 42%); }md-progress-linear.md-THEME_NAME-theme[md-mode=buffer].md-accent .md-bar1 {  background-color: '{{accent-100}}'; }md-progress-linear.md-THEME_NAME-theme[md-mode=buffer].md-accent .md-dashed:before {  background: radial-gradient('{{accent-100}}' 0%, '{{accent-100}}' 16%, transparent 42%); }md-radio-button.md-THEME_NAME-theme .md-off {  border-color: '{{foreground-2}}'; }md-radio-button.md-THEME_NAME-theme .md-on {  background-color: '{{accent-color-0.87}}'; }md-radio-button.md-THEME_NAME-theme.md-checked .md-off {  border-color: '{{accent-color-0.87}}'; }md-radio-button.md-THEME_NAME-theme.md-checked .md-ink-ripple {  color: '{{accent-color-0.87}}'; }md-radio-button.md-THEME_NAME-theme .md-container .md-ripple {  color: '{{accent-600}}'; }md-radio-button.md-THEME_NAME-theme:not([disabled]).md-primary .md-on {  background-color: '{{primary-color-0.87}}'; }md-radio-button.md-THEME_NAME-theme:not([disabled]).md-primary.md-checked .md-off {  border-color: '{{primary-color-0.87}}'; }md-radio-button.md-THEME_NAME-theme:not([disabled]).md-primary.md-checked .md-ink-ripple {  color: '{{primary-color-0.87}}'; }md-radio-button.md-THEME_NAME-theme:not([disabled]).md-primary .md-container .md-ripple {  color: '{{primary-600}}'; }md-radio-button.md-THEME_NAME-theme:not([disabled]).md-warn .md-on {  background-color: '{{warn-color-0.87}}'; }md-radio-button.md-THEME_NAME-theme:not([disabled]).md-warn.md-checked .md-off {  border-color: '{{warn-color-0.87}}'; }md-radio-button.md-THEME_NAME-theme:not([disabled]).md-warn.md-checked .md-ink-ripple {  color: '{{warn-color-0.87}}'; }md-radio-button.md-THEME_NAME-theme:not([disabled]).md-warn .md-container .md-ripple {  color: '{{warn-600}}'; }md-radio-button.md-THEME_NAME-theme[disabled] .md-container .md-off {  border-color: '{{foreground-3}}'; }md-radio-button.md-THEME_NAME-theme[disabled] .md-container .md-on {  border-color: '{{foreground-3}}'; }md-radio-group.md-THEME_NAME-theme:focus:not(:empty) {  border-color: '{{foreground-1}}'; }md-select.md-THEME_NAME-theme:not([disabled]):focus .md-select-label {  border-bottom-color: '{{primary-color}}';  color: '{{ foreground-1 }}'; }  md-select.md-THEME_NAME-theme:not([disabled]):focus .md-select-label.md-placeholder {    color: '{{ foreground-1 }}'; }md-select.md-THEME_NAME-theme:not([disabled]):focus.md-accent .md-select-label {  border-bottom-color: '{{accent-color}}'; }md-select.md-THEME_NAME-theme:not([disabled]):focus.md-warn .md-select-label {  border-bottom-color: '{{warn-color}}'; }md-select.md-THEME_NAME-theme[disabled] .md-select-label {  color: '{{foreground-3}}'; }  md-select.md-THEME_NAME-theme[disabled] .md-select-label.md-placeholder {    color: '{{foreground-3}}'; }md-select.md-THEME_NAME-theme .md-select-label {  border-bottom-color: '{{foreground-4}}'; }  md-select.md-THEME_NAME-theme .md-select-label.md-placeholder {    color: '{{foreground-2}}'; }md-select-menu.md-THEME_NAME-theme md-optgroup {  color: '{{foreground-2}}'; }  md-select-menu.md-THEME_NAME-theme md-optgroup md-option {    color: '{{foreground-1}}'; }md-select-menu.md-THEME_NAME-theme md-option[selected] {  background-color: '{{primary-50}}'; }  md-select-menu.md-THEME_NAME-theme md-option[selected]:focus {    background-color: '{{primary-100}}'; }  md-select-menu.md-THEME_NAME-theme md-option[selected].md-accent {    background-color: '{{accent-50}}'; }    md-select-menu.md-THEME_NAME-theme md-option[selected].md-accent:focus {      background-color: '{{accent-100}}'; }md-select-menu.md-THEME_NAME-theme md-option:focus:not([selected]) {  background: '{{background-200}}'; }md-sidenav.md-THEME_NAME-theme {  background-color: '{{background-hue-3}}'; }md-slider.md-THEME_NAME-theme .md-track {  background-color: '{{foreground-3}}'; }md-slider.md-THEME_NAME-theme .md-track-ticks {  background-color: '{{foreground-4}}'; }md-slider.md-THEME_NAME-theme .md-focus-thumb {  background-color: '{{foreground-2}}'; }md-slider.md-THEME_NAME-theme .md-focus-ring {  border-color: '{{foreground-4}}'; }md-slider.md-THEME_NAME-theme .md-disabled-thumb {  border-color: '{{background-hue-3}}'; }md-slider.md-THEME_NAME-theme.md-min .md-thumb:after {  background-color: '{{background-hue-3}}'; }md-slider.md-THEME_NAME-theme .md-track.md-track-fill {  background-color: '{{accent-color}}'; }md-slider.md-THEME_NAME-theme .md-thumb:after {  border-color: '{{accent-color}}';  background-color: '{{accent-color}}'; }md-slider.md-THEME_NAME-theme .md-sign {  background-color: '{{accent-color}}'; }  md-slider.md-THEME_NAME-theme .md-sign:after {    border-top-color: '{{accent-color}}'; }md-slider.md-THEME_NAME-theme .md-thumb-text {  color: '{{accent-contrast}}'; }md-slider.md-THEME_NAME-theme.md-warn .md-track.md-track-fill {  background-color: '{{warn-color}}'; }md-slider.md-THEME_NAME-theme.md-warn .md-thumb:after {  border-color: '{{warn-color}}';  background-color: '{{warn-color}}'; }md-slider.md-THEME_NAME-theme.md-warn .md-sign {  background-color: '{{warn-color}}'; }  md-slider.md-THEME_NAME-theme.md-warn .md-sign:after {    border-top-color: '{{warn-color}}'; }md-slider.md-THEME_NAME-theme.md-warn .md-thumb-text {  color: '{{warn-contrast}}'; }md-slider.md-THEME_NAME-theme.md-primary .md-track.md-track-fill {  background-color: '{{primary-color}}'; }md-slider.md-THEME_NAME-theme.md-primary .md-thumb:after {  border-color: '{{primary-color}}';  background-color: '{{primary-color}}'; }md-slider.md-THEME_NAME-theme.md-primary .md-sign {  background-color: '{{primary-color}}'; }  md-slider.md-THEME_NAME-theme.md-primary .md-sign:after {    border-top-color: '{{primary-color}}'; }md-slider.md-THEME_NAME-theme.md-primary .md-thumb-text {  color: '{{primary-contrast}}'; }md-slider.md-THEME_NAME-theme[disabled] .md-thumb:after {  border-color: '{{foreground-3}}'; }md-slider.md-THEME_NAME-theme[disabled]:not(.md-min) .md-thumb:after {  background-color: '{{foreground-3}}'; }.md-subheader.md-THEME_NAME-theme {  color: '{{ foreground-2-0.23 }}';  background-color: '{{background-hue-3}}'; }  .md-subheader.md-THEME_NAME-theme.md-primary {    color: '{{primary-color}}'; }  .md-subheader.md-THEME_NAME-theme.md-accent {    color: '{{accent-color}}'; }  .md-subheader.md-THEME_NAME-theme.md-warn {    color: '{{warn-color}}'; }md-switch.md-THEME_NAME-theme .md-thumb {  background-color: '{{background-50}}'; }md-switch.md-THEME_NAME-theme .md-bar {  background-color: '{{background-500}}'; }md-switch.md-THEME_NAME-theme.md-checked .md-thumb {  background-color: '{{accent-color}}'; }md-switch.md-THEME_NAME-theme.md-checked .md-bar {  background-color: '{{accent-color-0.5}}'; }md-switch.md-THEME_NAME-theme.md-checked.md-primary .md-thumb {  background-color: '{{primary-color}}'; }md-switch.md-THEME_NAME-theme.md-checked.md-primary .md-bar {  background-color: '{{primary-color-0.5}}'; }md-switch.md-THEME_NAME-theme.md-checked.md-warn .md-thumb {  background-color: '{{warn-color}}'; }md-switch.md-THEME_NAME-theme.md-checked.md-warn .md-bar {  background-color: '{{warn-color-0.5}}'; }md-switch.md-THEME_NAME-theme[disabled] .md-thumb {  background-color: '{{background-400}}'; }md-switch.md-THEME_NAME-theme[disabled] .md-bar {  background-color: '{{foreground-4}}'; }md-switch.md-THEME_NAME-theme:focus .md-label:not(:empty) {  border-color: '{{foreground-1}}';  border-style: dotted; }md-tabs.md-THEME_NAME-theme .md-header {  background-color: transparent; }md-tabs.md-THEME_NAME-theme .md-paginator md-icon {  color: '{{primary-color}}'; }md-tabs.md-THEME_NAME-theme.md-accent .md-header {  background-color: '{{accent-color}}'; }md-tabs.md-THEME_NAME-theme.md-accent md-tab:not([disabled]) {  color: '{{accent-100}}'; }  md-tabs.md-THEME_NAME-theme.md-accent md-tab:not([disabled]).active {    color: '{{accent-contrast}}'; }md-tabs.md-THEME_NAME-theme.md-primary .md-header {  background-color: '{{primary-color}}'; }md-tabs.md-THEME_NAME-theme.md-primary md-tab:not([disabled]) {  color: '{{primary-100}}'; }  md-tabs.md-THEME_NAME-theme.md-primary md-tab:not([disabled]).active {    color: '{{primary-contrast}}'; }md-tabs.md-THEME_NAME-theme.md-primary md-tab {  color: '{{primary-100}}'; }  md-tabs.md-THEME_NAME-theme.md-primary md-tab[disabled] {    color: '{{foreground-3}}'; }  md-tabs.md-THEME_NAME-theme.md-primary md-tab:focus {    color: '{{primary-contrast}}';    background-color: '{{primary-contrast-0.1}}'; }  md-tabs.md-THEME_NAME-theme.md-primary md-tab.active {    color: '{{primary-contrast}}'; }  md-tabs.md-THEME_NAME-theme.md-primary md-tab .md-ripple-container {    color: '{{primary-contrast}}'; }md-tabs.md-THEME_NAME-theme.md-warn .md-header {  background-color: '{{warn-color}}'; }md-tabs.md-THEME_NAME-theme.md-warn md-tab:not([disabled]) {  color: '{{warn-100}}'; }  md-tabs.md-THEME_NAME-theme.md-warn md-tab:not([disabled]).active {    color: '{{warn-contrast}}'; }md-tabs.md-THEME_NAME-theme md-tabs-ink-bar {  color: '{{accent-color}}';  background: '{{accent-color}}'; }md-tabs.md-THEME_NAME-theme md-tab {  color: '{{foreground-2}}'; }  md-tabs.md-THEME_NAME-theme md-tab[disabled] {    color: '{{foreground-3}}'; }  md-tabs.md-THEME_NAME-theme md-tab:focus {    color: '{{foreground-1}}'; }  md-tabs.md-THEME_NAME-theme md-tab.active {    color: '{{primary-color}}'; }  md-tabs.md-THEME_NAME-theme md-tab .md-ripple-container {    color: '{{accent-100}}'; }md-input-group.md-THEME_NAME-theme input, md-input-group.md-THEME_NAME-theme textarea {  text-shadow: '{{foreground-shadow}}'; }  md-input-group.md-THEME_NAME-theme input::-webkit-input-placeholder, md-input-group.md-THEME_NAME-theme input::-moz-placeholder, md-input-group.md-THEME_NAME-theme input:-moz-placeholder, md-input-group.md-THEME_NAME-theme input:-ms-input-placeholder, md-input-group.md-THEME_NAME-theme textarea::-webkit-input-placeholder, md-input-group.md-THEME_NAME-theme textarea::-moz-placeholder, md-input-group.md-THEME_NAME-theme textarea:-moz-placeholder, md-input-group.md-THEME_NAME-theme textarea:-ms-input-placeholder {    color: '{{foreground-3}}'; }md-input-group.md-THEME_NAME-theme label {  text-shadow: '{{foreground-shadow}}';  color: '{{foreground-3}}'; }md-input-group.md-THEME_NAME-theme input, md-input-group.md-THEME_NAME-theme textarea {  color: '{{foreground-1}}';  border-color: '{{foreground-4}}'; }md-input-group.md-THEME_NAME-theme.md-input-focused input, md-input-group.md-THEME_NAME-theme.md-input-focused textarea {  border-color: '{{primary-500}}'; }md-input-group.md-THEME_NAME-theme.md-input-focused label {  color: '{{primary-500}}'; }md-input-group.md-THEME_NAME-theme.md-input-focused.md-accent input, md-input-group.md-THEME_NAME-theme.md-input-focused.md-accent textarea {  border-color: '{{accent-500}}'; }md-input-group.md-THEME_NAME-theme.md-input-focused.md-accent label {  color: '{{accent-500}}'; }md-input-group.md-THEME_NAME-theme.md-input-has-value:not(.md-input-focused) label {  color: '{{foreground-2}}'; }md-input-group.md-THEME_NAME-theme .md-input[disabled] {  border-bottom-color: '{{foreground-4}}';  color: '{{foreground-3}}'; }md-toast.md-THEME_NAME-theme {  background-color: '{{foreground-1}}';  color: '{{background-50}}'; }  md-toast.md-THEME_NAME-theme .md-button {    color: '{{background-50}}'; }    md-toast.md-THEME_NAME-theme .md-button.md-highlight {      color: '{{primary-A200}}'; }      md-toast.md-THEME_NAME-theme .md-button.md-highlight.md-accent {        color: '{{accent-A200}}'; }      md-toast.md-THEME_NAME-theme .md-button.md-highlight.md-warn {        color: '{{warn-A200}}'; }md-toolbar.md-THEME_NAME-theme {  background-color: '{{primary-color}}';  color: '{{primary-contrast}}'; }  md-toolbar.md-THEME_NAME-theme .md-button {    color: '{{primary-contrast}}'; }  md-toolbar.md-THEME_NAME-theme.md-accent {    background-color: '{{accent-color}}';    color: '{{accent-contrast}}'; }  md-toolbar.md-THEME_NAME-theme.md-warn {    background-color: '{{warn-color}}';    color: '{{warn-contrast}}'; }md-tooltip.md-THEME_NAME-theme {  color: '{{background-A100}}'; }  md-tooltip.md-THEME_NAME-theme .md-background {    background-color: '{{foreground-2}}'; }"); 
 })();
+/**
+ * @license MIT
+ */
+(function(window, document, undefined) {'use strict';
+  // ie10+
+  var ie10plus = window.navigator.msPointerEnabled;
+  /**
+   * Flow.js is a library providing multiple simultaneous, stable and
+   * resumable uploads via the HTML5 File API.
+   * @param [opts]
+   * @param {number} [opts.chunkSize]
+   * @param {bool} [opts.forceChunkSize]
+   * @param {number} [opts.simultaneousUploads]
+   * @param {bool} [opts.singleFile]
+   * @param {string} [opts.fileParameterName]
+   * @param {number} [opts.progressCallbacksInterval]
+   * @param {number} [opts.speedSmoothingFactor]
+   * @param {Object|Function} [opts.query]
+   * @param {Object|Function} [opts.headers]
+   * @param {bool} [opts.withCredentials]
+   * @param {Function} [opts.preprocess]
+   * @param {string} [opts.method]
+   * @param {string|Function} [opts.testMethod]
+   * @param {string|Function} [opts.uploadMethod]
+   * @param {bool} [opts.prioritizeFirstAndLastChunk]
+   * @param {string|Function} [opts.target]
+   * @param {number} [opts.maxChunkRetries]
+   * @param {number} [opts.chunkRetryInterval]
+   * @param {Array.<number>} [opts.permanentErrors]
+   * @param {Array.<number>} [opts.successStatuses]
+   * @param {Function} [opts.generateUniqueIdentifier]
+   * @constructor
+   */
+  function Flow(opts) {
+    /**
+     * Supported by browser?
+     * @type {boolean}
+     */
+    this.support = (
+        typeof File !== 'undefined' &&
+        typeof Blob !== 'undefined' &&
+        typeof FileList !== 'undefined' &&
+        (
+          !!Blob.prototype.slice || !!Blob.prototype.webkitSlice || !!Blob.prototype.mozSlice ||
+          false
+        ) // slicing files support
+    );
+
+    if (!this.support) {
+      return ;
+    }
+
+    /**
+     * Check if directory upload is supported
+     * @type {boolean}
+     */
+    this.supportDirectory = /WebKit/.test(window.navigator.userAgent);
+
+    /**
+     * List of FlowFile objects
+     * @type {Array.<FlowFile>}
+     */
+    this.files = [];
+
+    /**
+     * Default options for flow.js
+     * @type {Object}
+     */
+    this.defaults = {
+      chunkSize: 1024 * 1024,
+      forceChunkSize: false,
+      simultaneousUploads: 3,
+      singleFile: false,
+      fileParameterName: 'file',
+      progressCallbacksInterval: 500,
+      speedSmoothingFactor: 0.1,
+      query: {},
+      headers: {},
+      withCredentials: false,
+      preprocess: null,
+      method: 'multipart',
+      testMethod: 'GET',
+      uploadMethod: 'POST',
+      prioritizeFirstAndLastChunk: false,
+      target: '/',
+      testChunks: true,
+      generateUniqueIdentifier: null,
+      maxChunkRetries: 0,
+      chunkRetryInterval: null,
+      permanentErrors: [404, 415, 500, 501],
+      successStatuses: [200, 201, 202],
+      onDropStopPropagation: false
+    };
+
+    /**
+     * Current options
+     * @type {Object}
+     */
+    this.opts = {};
+
+    /**
+     * List of events:
+     *  key stands for event name
+     *  value array list of callbacks
+     * @type {}
+     */
+    this.events = {};
+
+    var $ = this;
+
+    /**
+     * On drop event
+     * @function
+     * @param {MouseEvent} event
+     */
+    this.onDrop = function (event) {
+      if ($.opts.onDropStopPropagation) {
+        event.stopPropagation();
+      }
+      event.preventDefault();
+      var dataTransfer = event.dataTransfer;
+      if (dataTransfer.items && dataTransfer.items[0] &&
+        dataTransfer.items[0].webkitGetAsEntry) {
+        $.webkitReadDataTransfer(event);
+      } else {
+        $.addFiles(dataTransfer.files, event);
+      }
+    };
+
+    /**
+     * Prevent default
+     * @function
+     * @param {MouseEvent} event
+     */
+    this.preventEvent = function (event) {
+      event.preventDefault();
+    };
+
+
+    /**
+     * Current options
+     * @type {Object}
+     */
+    this.opts = Flow.extend({}, this.defaults, opts || {});
+  }
+
+  Flow.prototype = {
+    /**
+     * Set a callback for an event, possible events:
+     * fileSuccess(file), fileProgress(file), fileAdded(file, event),
+     * fileRetry(file), fileError(file, message), complete(),
+     * progress(), error(message, file), pause()
+     * @function
+     * @param {string} event
+     * @param {Function} callback
+     */
+    on: function (event, callback) {
+      event = event.toLowerCase();
+      if (!this.events.hasOwnProperty(event)) {
+        this.events[event] = [];
+      }
+      this.events[event].push(callback);
+    },
+
+    /**
+     * Remove event callback
+     * @function
+     * @param {string} [event] removes all events if not specified
+     * @param {Function} [fn] removes all callbacks of event if not specified
+     */
+    off: function (event, fn) {
+      if (event !== undefined) {
+        event = event.toLowerCase();
+        if (fn !== undefined) {
+          if (this.events.hasOwnProperty(event)) {
+            arrayRemove(this.events[event], fn);
+          }
+        } else {
+          delete this.events[event];
+        }
+      } else {
+        this.events = {};
+      }
+    },
+
+    /**
+     * Fire an event
+     * @function
+     * @param {string} event event name
+     * @param {...} args arguments of a callback
+     * @return {bool} value is false if at least one of the event handlers which handled this event
+     * returned false. Otherwise it returns true.
+     */
+    fire: function (event, args) {
+      // `arguments` is an object, not array, in FF, so:
+      args = Array.prototype.slice.call(arguments);
+      event = event.toLowerCase();
+      var preventDefault = false;
+      if (this.events.hasOwnProperty(event)) {
+        each(this.events[event], function (callback) {
+          preventDefault = callback.apply(this, args.slice(1)) === false || preventDefault;
+        }, this);
+      }
+      if (event != 'catchall') {
+        args.unshift('catchAll');
+        preventDefault = this.fire.apply(this, args) === false || preventDefault;
+      }
+      return !preventDefault;
+    },
+
+    /**
+     * Read webkit dataTransfer object
+     * @param event
+     */
+    webkitReadDataTransfer: function (event) {
+      var $ = this;
+      var queue = event.dataTransfer.items.length;
+      var files = [];
+      each(event.dataTransfer.items, function (item) {
+        var entry = item.webkitGetAsEntry();
+        if (!entry) {
+          decrement();
+          return ;
+        }
+        if (entry.isFile) {
+          // due to a bug in Chrome's File System API impl - #149735
+          fileReadSuccess(item.getAsFile(), entry.fullPath);
+        } else {
+          entry.createReader().readEntries(readSuccess, readError);
+        }
+      });
+      function readSuccess(entries) {
+        queue += entries.length;
+        each(entries, function(entry) {
+          if (entry.isFile) {
+            var fullPath = entry.fullPath;
+            entry.file(function (file) {
+              fileReadSuccess(file, fullPath);
+            }, readError);
+          } else if (entry.isDirectory) {
+            entry.createReader().readEntries(readSuccess, readError);
+          }
+        });
+        decrement();
+      }
+      function fileReadSuccess(file, fullPath) {
+        // relative path should not start with "/"
+        file.relativePath = fullPath.substring(1);
+        files.push(file);
+        decrement();
+      }
+      function readError(fileError) {
+        throw fileError;
+      }
+      function decrement() {
+        if (--queue == 0) {
+          $.addFiles(files, event);
+        }
+      }
+    },
+
+    /**
+     * Generate unique identifier for a file
+     * @function
+     * @param {FlowFile} file
+     * @returns {string}
+     */
+    generateUniqueIdentifier: function (file) {
+      var custom = this.opts.generateUniqueIdentifier;
+      if (typeof custom === 'function') {
+        return custom(file);
+      }
+      // Some confusion in different versions of Firefox
+      var relativePath = file.relativePath || file.webkitRelativePath || file.fileName || file.name;
+      return file.size + '-' + relativePath.replace(/[^0-9a-zA-Z_-]/img, '');
+    },
+
+    /**
+     * Upload next chunk from the queue
+     * @function
+     * @returns {boolean}
+     * @private
+     */
+    uploadNextChunk: function (preventEvents) {
+      // In some cases (such as videos) it's really handy to upload the first
+      // and last chunk of a file quickly; this let's the server check the file's
+      // metadata and determine if there's even a point in continuing.
+      var found = false;
+      if (this.opts.prioritizeFirstAndLastChunk) {
+        each(this.files, function (file) {
+          if (!file.paused && file.chunks.length &&
+            file.chunks[0].status() === 'pending' &&
+            file.chunks[0].preprocessState === 0) {
+            file.chunks[0].send();
+            found = true;
+            return false;
+          }
+          if (!file.paused && file.chunks.length > 1 &&
+            file.chunks[file.chunks.length - 1].status() === 'pending' &&
+            file.chunks[0].preprocessState === 0) {
+            file.chunks[file.chunks.length - 1].send();
+            found = true;
+            return false;
+          }
+        });
+        if (found) {
+          return found;
+        }
+      }
+
+      // Now, simply look for the next, best thing to upload
+      each(this.files, function (file) {
+        if (!file.paused) {
+          each(file.chunks, function (chunk) {
+            if (chunk.status() === 'pending' && chunk.preprocessState === 0) {
+              chunk.send();
+              found = true;
+              return false;
+            }
+          });
+        }
+        if (found) {
+          return false;
+        }
+      });
+      if (found) {
+        return true;
+      }
+
+      // The are no more outstanding chunks to upload, check is everything is done
+      var outstanding = false;
+      each(this.files, function (file) {
+        if (!file.isComplete()) {
+          outstanding = true;
+          return false;
+        }
+      });
+      if (!outstanding && !preventEvents) {
+        // All chunks have been uploaded, complete
+        async(function () {
+          this.fire('complete');
+        }, this);
+      }
+      return false;
+    },
+
+
+    /**
+     * Assign a browse action to one or more DOM nodes.
+     * @function
+     * @param {Element|Array.<Element>} domNodes
+     * @param {boolean} isDirectory Pass in true to allow directories to
+     * @param {boolean} singleFile prevent multi file upload
+     * @param {Object} attributes set custom attributes:
+     *  http://www.w3.org/TR/html-markup/input.file.html#input.file-attributes
+     *  eg: accept: 'image/*'
+     * be selected (Chrome only).
+     */
+    assignBrowse: function (domNodes, isDirectory, singleFile, attributes) {
+      if (typeof domNodes.length === 'undefined') {
+        domNodes = [domNodes];
+      }
+
+      each(domNodes, function (domNode) {
+        var input;
+        if (domNode.tagName === 'INPUT' && domNode.type === 'file') {
+          input = domNode;
+        } else {
+          input = document.createElement('input');
+          input.setAttribute('type', 'file');
+          // display:none - not working in opera 12
+          extend(input.style, {
+            visibility: 'hidden',
+            position: 'absolute'
+          });
+          // for opera 12 browser, input must be assigned to a document
+          domNode.appendChild(input);
+          // https://developer.mozilla.org/en/using_files_from_web_applications)
+          // event listener is executed two times
+          // first one - original mouse click event
+          // second - input.click(), input is inside domNode
+          domNode.addEventListener('click', function() {
+            input.click();
+          }, false);
+        }
+        if (!this.opts.singleFile && !singleFile) {
+          input.setAttribute('multiple', 'multiple');
+        }
+        if (isDirectory) {
+          input.setAttribute('webkitdirectory', 'webkitdirectory');
+        }
+        each(attributes, function (value, key) {
+          input.setAttribute(key, value);
+        });
+        // When new files are added, simply append them to the overall list
+        var $ = this;
+        input.addEventListener('change', function (e) {
+          $.addFiles(e.target.files, e);
+          e.target.value = '';
+        }, false);
+      }, this);
+    },
+
+    /**
+     * Assign one or more DOM nodes as a drop target.
+     * @function
+     * @param {Element|Array.<Element>} domNodes
+     */
+    assignDrop: function (domNodes) {
+      if (typeof domNodes.length === 'undefined') {
+        domNodes = [domNodes];
+      }
+      each(domNodes, function (domNode) {
+        domNode.addEventListener('dragover', this.preventEvent, false);
+        domNode.addEventListener('dragenter', this.preventEvent, false);
+        domNode.addEventListener('drop', this.onDrop, false);
+      }, this);
+    },
+
+    /**
+     * Un-assign drop event from DOM nodes
+     * @function
+     * @param domNodes
+     */
+    unAssignDrop: function (domNodes) {
+      if (typeof domNodes.length === 'undefined') {
+        domNodes = [domNodes];
+      }
+      each(domNodes, function (domNode) {
+        domNode.removeEventListener('dragover', this.preventEvent);
+        domNode.removeEventListener('dragenter', this.preventEvent);
+        domNode.removeEventListener('drop', this.onDrop);
+      }, this);
+    },
+
+    /**
+     * Returns a boolean indicating whether or not the instance is currently
+     * uploading anything.
+     * @function
+     * @returns {boolean}
+     */
+    isUploading: function () {
+      var uploading = false;
+      each(this.files, function (file) {
+        if (file.isUploading()) {
+          uploading = true;
+          return false;
+        }
+      });
+      return uploading;
+    },
+
+    /**
+     * should upload next chunk
+     * @function
+     * @returns {boolean|number}
+     */
+    _shouldUploadNext: function () {
+      var num = 0;
+      var should = true;
+      var simultaneousUploads = this.opts.simultaneousUploads;
+      each(this.files, function (file) {
+        each(file.chunks, function(chunk) {
+          if (chunk.status() === 'uploading') {
+            num++;
+            if (num >= simultaneousUploads) {
+              should = false;
+              return false;
+            }
+          }
+        });
+      });
+      // if should is true then return uploading chunks's length
+      return should && num;
+    },
+
+    /**
+     * Start or resume uploading.
+     * @function
+     */
+    upload: function () {
+      // Make sure we don't start too many uploads at once
+      var ret = this._shouldUploadNext();
+      if (ret === false) {
+        return;
+      }
+      // Kick off the queue
+      this.fire('uploadStart');
+      var started = false;
+      for (var num = 1; num <= this.opts.simultaneousUploads - ret; num++) {
+        started = this.uploadNextChunk(true) || started;
+      }
+      if (!started) {
+        async(function () {
+          this.fire('complete');
+        }, this);
+      }
+    },
+
+    /**
+     * Resume uploading.
+     * @function
+     */
+    resume: function () {
+      each(this.files, function (file) {
+        file.resume();
+      });
+    },
+
+    /**
+     * Pause uploading.
+     * @function
+     */
+    pause: function () {
+      each(this.files, function (file) {
+        file.pause();
+      });
+    },
+
+    /**
+     * Cancel upload of all FlowFile objects and remove them from the list.
+     * @function
+     */
+    cancel: function () {
+      for (var i = this.files.length - 1; i >= 0; i--) {
+        this.files[i].cancel();
+      }
+    },
+
+    /**
+     * Returns a number between 0 and 1 indicating the current upload progress
+     * of all files.
+     * @function
+     * @returns {number}
+     */
+    progress: function () {
+      var totalDone = 0;
+      var totalSize = 0;
+      // Resume all chunks currently being uploaded
+      each(this.files, function (file) {
+        totalDone += file.progress() * file.size;
+        totalSize += file.size;
+      });
+      return totalSize > 0 ? totalDone / totalSize : 0;
+    },
+
+    /**
+     * Add a HTML5 File object to the list of files.
+     * @function
+     * @param {File} file
+     * @param {Event} [event] event is optional
+     */
+    addFile: function (file, event) {
+      this.addFiles([file], event);
+    },
+
+    /**
+     * Add a HTML5 File object to the list of files.
+     * @function
+     * @param {FileList|Array} fileList
+     * @param {Event} [event] event is optional
+     */
+    addFiles: function (fileList, event) {
+      var files = [];
+      each(fileList, function (file) {
+        // Uploading empty file IE10/IE11 hangs indefinitely
+        // see https://connect.microsoft.com/IE/feedback/details/813443/uploading-empty-file-ie10-ie11-hangs-indefinitely
+        // Directories have size `0` and name `.`
+        // Ignore already added files
+        if ((!ie10plus || ie10plus && file.size > 0) && !(file.size % 4096 === 0 && (file.name === '.' || file.fileName === '.')) &&
+          !this.getFromUniqueIdentifier(this.generateUniqueIdentifier(file))) {
+          var f = new FlowFile(this, file);
+          if (this.fire('fileAdded', f, event)) {
+            files.push(f);
+          }
+        }
+      }, this);
+      if (this.fire('filesAdded', files, event)) {
+        each(files, function (file) {
+          if (this.opts.singleFile && this.files.length > 0) {
+            this.removeFile(this.files[0]);
+          }
+          this.files.push(file);
+        }, this);
+      }
+      this.fire('filesSubmitted', files, event);
+    },
+
+
+    /**
+     * Cancel upload of a specific FlowFile object from the list.
+     * @function
+     * @param {FlowFile} file
+     */
+    removeFile: function (file) {
+      for (var i = this.files.length - 1; i >= 0; i--) {
+        if (this.files[i] === file) {
+          this.files.splice(i, 1);
+          file.abort();
+        }
+      }
+    },
+
+    /**
+     * Look up a FlowFile object by its unique identifier.
+     * @function
+     * @param {string} uniqueIdentifier
+     * @returns {boolean|FlowFile} false if file was not found
+     */
+    getFromUniqueIdentifier: function (uniqueIdentifier) {
+      var ret = false;
+      each(this.files, function (file) {
+        if (file.uniqueIdentifier === uniqueIdentifier) {
+          ret = file;
+        }
+      });
+      return ret;
+    },
+
+    /**
+     * Returns the total size of all files in bytes.
+     * @function
+     * @returns {number}
+     */
+    getSize: function () {
+      var totalSize = 0;
+      each(this.files, function (file) {
+        totalSize += file.size;
+      });
+      return totalSize;
+    },
+
+    /**
+     * Returns the total size uploaded of all files in bytes.
+     * @function
+     * @returns {number}
+     */
+    sizeUploaded: function () {
+      var size = 0;
+      each(this.files, function (file) {
+        size += file.sizeUploaded();
+      });
+      return size;
+    },
+
+    /**
+     * Returns remaining time to upload all files in seconds. Accuracy is based on average speed.
+     * If speed is zero, time remaining will be equal to positive infinity `Number.POSITIVE_INFINITY`
+     * @function
+     * @returns {number}
+     */
+    timeRemaining: function () {
+      var sizeDelta = 0;
+      var averageSpeed = 0;
+      each(this.files, function (file) {
+        if (!file.paused && !file.error) {
+          sizeDelta += file.size - file.sizeUploaded();
+          averageSpeed += file.averageSpeed;
+        }
+      });
+      if (sizeDelta && !averageSpeed) {
+        return Number.POSITIVE_INFINITY;
+      }
+      if (!sizeDelta && !averageSpeed) {
+        return 0;
+      }
+      return Math.floor(sizeDelta / averageSpeed);
+    }
+  };
+
+
+
+
+
+
+  /**
+   * FlowFile class
+   * @name FlowFile
+   * @param {Flow} flowObj
+   * @param {File} file
+   * @constructor
+   */
+  function FlowFile(flowObj, file) {
+
+    /**
+     * Reference to parent Flow instance
+     * @type {Flow}
+     */
+    this.flowObj = flowObj;
+
+    /**
+     * Reference to file
+     * @type {File}
+     */
+    this.file = file;
+
+    /**
+     * File name. Some confusion in different versions of Firefox
+     * @type {string}
+     */
+    this.name = file.fileName || file.name;
+
+    /**
+     * File size
+     * @type {number}
+     */
+    this.size = file.size;
+
+    /**
+     * Relative file path
+     * @type {string}
+     */
+    this.relativePath = file.relativePath || file.webkitRelativePath || this.name;
+
+    /**
+     * File unique identifier
+     * @type {string}
+     */
+    this.uniqueIdentifier = flowObj.generateUniqueIdentifier(file);
+
+    /**
+     * List of chunks
+     * @type {Array.<FlowChunk>}
+     */
+    this.chunks = [];
+
+    /**
+     * Indicated if file is paused
+     * @type {boolean}
+     */
+    this.paused = false;
+
+    /**
+     * Indicated if file has encountered an error
+     * @type {boolean}
+     */
+    this.error = false;
+
+    /**
+     * Average upload speed
+     * @type {number}
+     */
+    this.averageSpeed = 0;
+
+    /**
+     * Current upload speed
+     * @type {number}
+     */
+    this.currentSpeed = 0;
+
+    /**
+     * Date then progress was called last time
+     * @type {number}
+     * @private
+     */
+    this._lastProgressCallback = Date.now();
+
+    /**
+     * Previously uploaded file size
+     * @type {number}
+     * @private
+     */
+    this._prevUploadedSize = 0;
+
+    /**
+     * Holds previous progress
+     * @type {number}
+     * @private
+     */
+    this._prevProgress = 0;
+
+    this.bootstrap();
+  }
+
+  FlowFile.prototype = {
+    /**
+     * Update speed parameters
+     * @link http://stackoverflow.com/questions/2779600/how-to-estimate-download-time-remaining-accurately
+     * @function
+     */
+    measureSpeed: function () {
+      var timeSpan = Date.now() - this._lastProgressCallback;
+      if (!timeSpan) {
+        return ;
+      }
+      var smoothingFactor = this.flowObj.opts.speedSmoothingFactor;
+      var uploaded = this.sizeUploaded();
+      // Prevent negative upload speed after file upload resume
+      this.currentSpeed = Math.max((uploaded - this._prevUploadedSize) / timeSpan * 1000, 0);
+      this.averageSpeed = smoothingFactor * this.currentSpeed + (1 - smoothingFactor) * this.averageSpeed;
+      this._prevUploadedSize = uploaded;
+    },
+
+    /**
+     * For internal usage only.
+     * Callback when something happens within the chunk.
+     * @function
+     * @param {FlowChunk} chunk
+     * @param {string} event can be 'progress', 'success', 'error' or 'retry'
+     * @param {string} [message]
+     */
+    chunkEvent: function (chunk, event, message) {
+      switch (event) {
+        case 'progress':
+          if (Date.now() - this._lastProgressCallback <
+            this.flowObj.opts.progressCallbacksInterval) {
+            break;
+          }
+          this.measureSpeed();
+          this.flowObj.fire('fileProgress', this, chunk);
+          this.flowObj.fire('progress');
+          this._lastProgressCallback = Date.now();
+          break;
+        case 'error':
+          this.error = true;
+          this.abort(true);
+          this.flowObj.fire('fileError', this, message, chunk);
+          this.flowObj.fire('error', message, this, chunk);
+          break;
+        case 'success':
+          if (this.error) {
+            return;
+          }
+          this.measureSpeed();
+          this.flowObj.fire('fileProgress', this, chunk);
+          this.flowObj.fire('progress');
+          this._lastProgressCallback = Date.now();
+          if (this.isComplete()) {
+            this.currentSpeed = 0;
+            this.averageSpeed = 0;
+            this.flowObj.fire('fileSuccess', this, message, chunk);
+          }
+          break;
+        case 'retry':
+          this.flowObj.fire('fileRetry', this, chunk);
+          break;
+      }
+    },
+
+    /**
+     * Pause file upload
+     * @function
+     */
+    pause: function() {
+      this.paused = true;
+      this.abort();
+    },
+
+    /**
+     * Resume file upload
+     * @function
+     */
+    resume: function() {
+      this.paused = false;
+      this.flowObj.upload();
+    },
+
+    /**
+     * Abort current upload
+     * @function
+     */
+    abort: function (reset) {
+      this.currentSpeed = 0;
+      this.averageSpeed = 0;
+      var chunks = this.chunks;
+      if (reset) {
+        this.chunks = [];
+      }
+      each(chunks, function (c) {
+        if (c.status() === 'uploading') {
+          c.abort();
+          this.flowObj.uploadNextChunk();
+        }
+      }, this);
+    },
+
+    /**
+     * Cancel current upload and remove from a list
+     * @function
+     */
+    cancel: function () {
+      this.flowObj.removeFile(this);
+    },
+
+    /**
+     * Retry aborted file upload
+     * @function
+     */
+    retry: function () {
+      this.bootstrap();
+      this.flowObj.upload();
+    },
+
+    /**
+     * Clear current chunks and slice file again
+     * @function
+     */
+    bootstrap: function () {
+      this.abort(true);
+      this.error = false;
+      // Rebuild stack of chunks from file
+      this._prevProgress = 0;
+      var round = this.flowObj.opts.forceChunkSize ? Math.ceil : Math.floor;
+      var chunks = Math.max(
+        round(this.file.size / this.flowObj.opts.chunkSize), 1
+      );
+      for (var offset = 0; offset < chunks; offset++) {
+        this.chunks.push(
+          new FlowChunk(this.flowObj, this, offset)
+        );
+      }
+    },
+
+    /**
+     * Get current upload progress status
+     * @function
+     * @returns {number} from 0 to 1
+     */
+    progress: function () {
+      if (this.error) {
+        return 1;
+      }
+      if (this.chunks.length === 1) {
+        this._prevProgress = Math.max(this._prevProgress, this.chunks[0].progress());
+        return this._prevProgress;
+      }
+      // Sum up progress across everything
+      var bytesLoaded = 0;
+      each(this.chunks, function (c) {
+        // get chunk progress relative to entire file
+        bytesLoaded += c.progress() * (c.endByte - c.startByte);
+      });
+      var percent = bytesLoaded / this.size;
+      // We don't want to lose percentages when an upload is paused
+      this._prevProgress = Math.max(this._prevProgress, percent > 0.9999 ? 1 : percent);
+      return this._prevProgress;
+    },
+
+    /**
+     * Indicates if file is being uploaded at the moment
+     * @function
+     * @returns {boolean}
+     */
+    isUploading: function () {
+      var uploading = false;
+      each(this.chunks, function (chunk) {
+        if (chunk.status() === 'uploading') {
+          uploading = true;
+          return false;
+        }
+      });
+      return uploading;
+    },
+
+    /**
+     * Indicates if file is has finished uploading and received a response
+     * @function
+     * @returns {boolean}
+     */
+    isComplete: function () {
+      var outstanding = false;
+      each(this.chunks, function (chunk) {
+        var status = chunk.status();
+        if (status === 'pending' || status === 'uploading' || chunk.preprocessState === 1) {
+          outstanding = true;
+          return false;
+        }
+      });
+      return !outstanding;
+    },
+
+    /**
+     * Count total size uploaded
+     * @function
+     * @returns {number}
+     */
+    sizeUploaded: function () {
+      var size = 0;
+      each(this.chunks, function (chunk) {
+        size += chunk.sizeUploaded();
+      });
+      return size;
+    },
+
+    /**
+     * Returns remaining time to finish upload file in seconds. Accuracy is based on average speed.
+     * If speed is zero, time remaining will be equal to positive infinity `Number.POSITIVE_INFINITY`
+     * @function
+     * @returns {number}
+     */
+    timeRemaining: function () {
+      if (this.paused || this.error) {
+        return 0;
+      }
+      var delta = this.size - this.sizeUploaded();
+      if (delta && !this.averageSpeed) {
+        return Number.POSITIVE_INFINITY;
+      }
+      if (!delta && !this.averageSpeed) {
+        return 0;
+      }
+      return Math.floor(delta / this.averageSpeed);
+    },
+
+    /**
+     * Get file type
+     * @function
+     * @returns {string}
+     */
+    getType: function () {
+      return this.file.type && this.file.type.split('/')[1];
+    },
+
+    /**
+     * Get file extension
+     * @function
+     * @returns {string}
+     */
+    getExtension: function () {
+      return this.name.substr((~-this.name.lastIndexOf(".") >>> 0) + 2).toLowerCase();
+    }
+  };
+
+
+
+
+
+
+
+
+  /**
+   * Class for storing a single chunk
+   * @name FlowChunk
+   * @param {Flow} flowObj
+   * @param {FlowFile} fileObj
+   * @param {number} offset
+   * @constructor
+   */
+  function FlowChunk(flowObj, fileObj, offset) {
+
+    /**
+     * Reference to parent flow object
+     * @type {Flow}
+     */
+    this.flowObj = flowObj;
+
+    /**
+     * Reference to parent FlowFile object
+     * @type {FlowFile}
+     */
+    this.fileObj = fileObj;
+
+    /**
+     * File size
+     * @type {number}
+     */
+    this.fileObjSize = fileObj.size;
+
+    /**
+     * File offset
+     * @type {number}
+     */
+    this.offset = offset;
+
+    /**
+     * Indicates if chunk existence was checked on the server
+     * @type {boolean}
+     */
+    this.tested = false;
+
+    /**
+     * Number of retries performed
+     * @type {number}
+     */
+    this.retries = 0;
+
+    /**
+     * Pending retry
+     * @type {boolean}
+     */
+    this.pendingRetry = false;
+
+    /**
+     * Preprocess state
+     * @type {number} 0 = unprocessed, 1 = processing, 2 = finished
+     */
+    this.preprocessState = 0;
+
+    /**
+     * Bytes transferred from total request size
+     * @type {number}
+     */
+    this.loaded = 0;
+
+    /**
+     * Total request size
+     * @type {number}
+     */
+    this.total = 0;
+
+    /**
+     * Size of a chunk
+     * @type {number}
+     */
+    var chunkSize = this.flowObj.opts.chunkSize;
+
+    /**
+     * Chunk start byte in a file
+     * @type {number}
+     */
+    this.startByte = this.offset * chunkSize;
+
+    /**
+     * Chunk end byte in a file
+     * @type {number}
+     */
+    this.endByte = Math.min(this.fileObjSize, (this.offset + 1) * chunkSize);
+
+    /**
+     * XMLHttpRequest
+     * @type {XMLHttpRequest}
+     */
+    this.xhr = null;
+
+    if (this.fileObjSize - this.endByte < chunkSize &&
+        !this.flowObj.opts.forceChunkSize) {
+      // The last chunk will be bigger than the chunk size,
+      // but less than 2*chunkSize
+      this.endByte = this.fileObjSize;
+    }
+
+    var $ = this;
+
+
+    /**
+     * Send chunk event
+     * @param event
+     * @param {...} args arguments of a callback
+     */
+    this.event = function (event, args) {
+      args = Array.prototype.slice.call(arguments);
+      args.unshift($);
+      $.fileObj.chunkEvent.apply($.fileObj, args);
+    };
+    /**
+     * Catch progress event
+     * @param {ProgressEvent} event
+     */
+    this.progressHandler = function(event) {
+      if (event.lengthComputable) {
+        $.loaded = event.loaded ;
+        $.total = event.total;
+      }
+      $.event('progress', event);
+    };
+
+    /**
+     * Catch test event
+     * @param {Event} event
+     */
+    this.testHandler = function(event) {
+      var status = $.status(true);
+      if (status === 'error') {
+        $.event(status, $.message());
+        $.flowObj.uploadNextChunk();
+      } else if (status === 'success') {
+        $.tested = true;
+        $.event(status, $.message());
+        $.flowObj.uploadNextChunk();
+      } else if (!$.fileObj.paused) {
+        // Error might be caused by file pause method
+        // Chunks does not exist on the server side
+        $.tested = true;
+        $.send();
+      }
+    };
+
+    /**
+     * Upload has stopped
+     * @param {Event} event
+     */
+    this.doneHandler = function(event) {
+      var status = $.status();
+      if (status === 'success' || status === 'error') {
+        $.event(status, $.message());
+        $.flowObj.uploadNextChunk();
+      } else {
+        $.event('retry', $.message());
+        $.pendingRetry = true;
+        $.abort();
+        $.retries++;
+        var retryInterval = $.flowObj.opts.chunkRetryInterval;
+        if (retryInterval !== null) {
+          setTimeout(function () {
+            $.send();
+          }, retryInterval);
+        } else {
+          $.send();
+        }
+      }
+    };
+  }
+
+  FlowChunk.prototype = {
+    /**
+     * Get params for a request
+     * @function
+     */
+    getParams: function () {
+      return {
+        flowChunkNumber: this.offset + 1,
+        flowChunkSize: this.flowObj.opts.chunkSize,
+        flowCurrentChunkSize: this.endByte - this.startByte,
+        flowTotalSize: this.fileObjSize,
+        flowIdentifier: this.fileObj.uniqueIdentifier,
+        flowFilename: this.fileObj.name,
+        flowRelativePath: this.fileObj.relativePath,
+        flowTotalChunks: this.fileObj.chunks.length
+      };
+    },
+
+    /**
+     * Get target option with query params
+     * @function
+     * @param params
+     * @returns {string}
+     */
+    getTarget: function(target, params){
+      if(target.indexOf('?') < 0) {
+        target += '?';
+      } else {
+        target += '&';
+      }
+      return target + params.join('&');
+    },
+
+    /**
+     * Makes a GET request without any data to see if the chunk has already
+     * been uploaded in a previous session
+     * @function
+     */
+    test: function () {
+      // Set up request and listen for event
+      this.xhr = new XMLHttpRequest();
+      this.xhr.addEventListener("load", this.testHandler, false);
+      this.xhr.addEventListener("error", this.testHandler, false);
+      var testMethod = evalOpts(this.flowObj.opts.testMethod, this.fileObj, this);
+      var data = this.prepareXhrRequest(testMethod, true);
+      this.xhr.send(data);
+    },
+
+    /**
+     * Finish preprocess state
+     * @function
+     */
+    preprocessFinished: function () {
+      this.preprocessState = 2;
+      this.send();
+    },
+
+    /**
+     * Uploads the actual data in a POST call
+     * @function
+     */
+    send: function () {
+      var preprocess = this.flowObj.opts.preprocess;
+      if (typeof preprocess === 'function') {
+        switch (this.preprocessState) {
+          case 0:
+            this.preprocessState = 1;
+            preprocess(this);
+            return;
+          case 1:
+            return;
+        }
+      }
+      if (this.flowObj.opts.testChunks && !this.tested) {
+        this.test();
+        return;
+      }
+
+      this.loaded = 0;
+      this.total = 0;
+      this.pendingRetry = false;
+
+      var func = (this.fileObj.file.slice ? 'slice' :
+        (this.fileObj.file.mozSlice ? 'mozSlice' :
+          (this.fileObj.file.webkitSlice ? 'webkitSlice' :
+            'slice')));
+      var bytes = this.fileObj.file[func](this.startByte, this.endByte, this.fileObj.file.type);
+
+      // Set up request and listen for event
+      this.xhr = new XMLHttpRequest();
+      this.xhr.upload.addEventListener('progress', this.progressHandler, false);
+      this.xhr.addEventListener("load", this.doneHandler, false);
+      this.xhr.addEventListener("error", this.doneHandler, false);
+
+      var uploadMethod = evalOpts(this.flowObj.opts.uploadMethod, this.fileObj, this);
+      var data = this.prepareXhrRequest(uploadMethod, false, this.flowObj.opts.method, bytes);
+      this.xhr.send(data);
+    },
+
+    /**
+     * Abort current xhr request
+     * @function
+     */
+    abort: function () {
+      // Abort and reset
+      var xhr = this.xhr;
+      this.xhr = null;
+      if (xhr) {
+        xhr.abort();
+      }
+    },
+
+    /**
+     * Retrieve current chunk upload status
+     * @function
+     * @returns {string} 'pending', 'uploading', 'success', 'error'
+     */
+    status: function (isTest) {
+      if (this.pendingRetry || this.preprocessState === 1) {
+        // if pending retry then that's effectively the same as actively uploading,
+        // there might just be a slight delay before the retry starts
+        return 'uploading';
+      } else if (!this.xhr) {
+        return 'pending';
+      } else if (this.xhr.readyState < 4) {
+        // Status is really 'OPENED', 'HEADERS_RECEIVED'
+        // or 'LOADING' - meaning that stuff is happening
+        return 'uploading';
+      } else {
+        if (this.flowObj.opts.successStatuses.indexOf(this.xhr.status) > -1) {
+          // HTTP 200, perfect
+		      // HTTP 202 Accepted - The request has been accepted for processing, but the processing has not been completed.
+          return 'success';
+        } else if (this.flowObj.opts.permanentErrors.indexOf(this.xhr.status) > -1 ||
+            !isTest && this.retries >= this.flowObj.opts.maxChunkRetries) {
+          // HTTP 415/500/501, permanent error
+          return 'error';
+        } else {
+          // this should never happen, but we'll reset and queue a retry
+          // a likely case for this would be 503 service unavailable
+          this.abort();
+          return 'pending';
+        }
+      }
+    },
+
+    /**
+     * Get response from xhr request
+     * @function
+     * @returns {String}
+     */
+    message: function () {
+      return this.xhr ? this.xhr.responseText : '';
+    },
+
+    /**
+     * Get upload progress
+     * @function
+     * @returns {number}
+     */
+    progress: function () {
+      if (this.pendingRetry) {
+        return 0;
+      }
+      var s = this.status();
+      if (s === 'success' || s === 'error') {
+        return 1;
+      } else if (s === 'pending') {
+        return 0;
+      } else {
+        return this.total > 0 ? this.loaded / this.total : 0;
+      }
+    },
+
+    /**
+     * Count total size uploaded
+     * @function
+     * @returns {number}
+     */
+    sizeUploaded: function () {
+      var size = this.endByte - this.startByte;
+      // can't return only chunk.loaded value, because it is bigger than chunk size
+      if (this.status() !== 'success') {
+        size = this.progress() * size;
+      }
+      return size;
+    },
+
+    /**
+     * Prepare Xhr request. Set query, headers and data
+     * @param {string} method GET or POST
+     * @param {bool} isTest is this a test request
+     * @param {string} [paramsMethod] octet or form
+     * @param {Blob} [blob] to send
+     * @returns {FormData|Blob|Null} data to send
+     */
+    prepareXhrRequest: function(method, isTest, paramsMethod, blob) {
+      // Add data from the query options
+      var query = evalOpts(this.flowObj.opts.query, this.fileObj, this, isTest);
+      query = extend(this.getParams(), query);
+
+      var target = evalOpts(this.flowObj.opts.target, this.fileObj, this, isTest);
+      var data = null;
+      if (method === 'GET' || paramsMethod === 'octet') {
+        // Add data from the query options
+        var params = [];
+        each(query, function (v, k) {
+          params.push([encodeURIComponent(k), encodeURIComponent(v)].join('='));
+        });
+        target = this.getTarget(target, params);
+        data = blob || null;
+      } else {
+        // Add data from the query options
+        data = new FormData();
+        each(query, function (v, k) {
+          data.append(k, v);
+        });
+        data.append(this.flowObj.opts.fileParameterName, blob, this.fileObj.file.name);
+      }
+
+      this.xhr.open(method, target, true);
+      this.xhr.withCredentials = this.flowObj.opts.withCredentials;
+
+      // Add data from header options
+      each(evalOpts(this.flowObj.opts.headers, this.fileObj, this, isTest), function (v, k) {
+        this.xhr.setRequestHeader(k, v);
+      }, this);
+
+      return data;
+    }
+  };
+
+  /**
+   * Remove value from array
+   * @param array
+   * @param value
+   */
+  function arrayRemove(array, value) {
+    var index = array.indexOf(value);
+    if (index > -1) {
+      array.splice(index, 1);
+    }
+  }
+
+  /**
+   * If option is a function, evaluate it with given params
+   * @param {*} data
+   * @param {...} args arguments of a callback
+   * @returns {*}
+   */
+  function evalOpts(data, args) {
+    if (typeof data === "function") {
+      // `arguments` is an object, not array, in FF, so:
+      args = Array.prototype.slice.call(arguments);
+      data = data.apply(null, args.slice(1));
+    }
+    return data;
+  }
+  Flow.evalOpts = evalOpts;
+
+  /**
+   * Execute function asynchronously
+   * @param fn
+   * @param context
+   */
+  function async(fn, context) {
+    setTimeout(fn.bind(context), 0);
+  }
+
+  /**
+   * Extends the destination object `dst` by copying all of the properties from
+   * the `src` object(s) to `dst`. You can specify multiple `src` objects.
+   * @function
+   * @param {Object} dst Destination object.
+   * @param {...Object} src Source object(s).
+   * @returns {Object} Reference to `dst`.
+   */
+  function extend(dst, src) {
+    each(arguments, function(obj) {
+      if (obj !== dst) {
+        each(obj, function(value, key){
+          dst[key] = value;
+        });
+      }
+    });
+    return dst;
+  }
+  Flow.extend = extend;
+
+  /**
+   * Iterate each element of an object
+   * @function
+   * @param {Array|Object} obj object or an array to iterate
+   * @param {Function} callback first argument is a value and second is a key.
+   * @param {Object=} context Object to become context (`this`) for the iterator function.
+   */
+  function each(obj, callback, context) {
+    if (!obj) {
+      return ;
+    }
+    var key;
+    // Is Array?
+    if (typeof(obj.length) !== 'undefined') {
+      for (key = 0; key < obj.length; key++) {
+        if (callback.call(context, obj[key], key) === false) {
+          return ;
+        }
+      }
+    } else {
+      for (key in obj) {
+        if (obj.hasOwnProperty(key) && callback.call(context, obj[key], key) === false) {
+          return ;
+        }
+      }
+    }
+  }
+  Flow.each = each;
+
+  /**
+   * FlowFile constructor
+   * @type {FlowFile}
+   */
+  Flow.FlowFile = FlowFile;
+
+  /**
+   * FlowFile constructor
+   * @type {FlowChunk}
+   */
+  Flow.FlowChunk = FlowChunk;
+
+  /**
+   * Library version
+   * @type {string}
+   */
+  Flow.version = '2.9.0';
+
+  if ( typeof module === "object" && module && typeof module.exports === "object" ) {
+    // Expose Flow as module.exports in loaders that implement the Node
+    // module pattern (including browserify). Do not create the global, since
+    // the user will be storing it themselves locally, and globals are frowned
+    // upon in the Node module world.
+    module.exports = Flow;
+  } else {
+    // Otherwise expose Flow to the global object as usual
+    window.Flow = Flow;
+
+    // Register as a named AMD module, since Flow can be concatenated with other
+    // files that may use define, but not via a proper concatenation script that
+    // understands anonymous AMD modules. A named AMD is safest and most robust
+    // way to register. Lowercase flow is used because AMD module names are
+    // derived from file names, and Flow is normally delivered in a lowercase
+    // file name. Do this after creating the global so that if an AMD module wants
+    // to call noConflict to hide this version of Flow, it will work.
+    if ( typeof define === "function" && define.amd ) {
+      define( "flow", [], function () { return Flow; } );
+    }
+  }
+})(window, document);
+
+/**
+ * @description
+ * var app = angular.module('App', ['flow.provider'], function(flowFactoryProvider){
+ *    flowFactoryProvider.defaults = {target: '/'};
+ * });
+ * @name flowFactoryProvider
+ */
+angular.module('flow.provider', [])
+.provider('flowFactory', function() {
+  'use strict';
+  /**
+   * Define the default properties for flow.js
+   * @name flowFactoryProvider.defaults
+   * @type {Object}
+   */
+  this.defaults = {};
+
+  /**
+   * Flow, MaybeFlow or NotFlow
+   * @name flowFactoryProvider.factory
+   * @type {function}
+   * @return {Flow}
+   */
+  this.factory = function (options) {
+    return new Flow(options);
+  };
+
+  /**
+   * Define the default events
+   * @name flowFactoryProvider.events
+   * @type {Array}
+   * @private
+   */
+  this.events = [];
+
+  /**
+   * Add default events
+   * @name flowFactoryProvider.on
+   * @function
+   * @param {string} event
+   * @param {Function} callback
+   */
+  this.on = function (event, callback) {
+    this.events.push([event, callback]);
+  };
+
+  this.$get = function() {
+    var fn = this.factory;
+    var defaults = this.defaults;
+    var events = this.events;
+    return {
+      'create': function(opts) {
+        // combine default options with global options and options
+        var flow = fn(angular.extend({}, defaults, opts));
+        angular.forEach(events, function (event) {
+          flow.on(event[0], event[1]);
+        });
+        return flow;
+      }
+    };
+  };
+});
+angular.module('flow.init', ['flow.provider'])
+  .controller('flowCtrl', ['$scope', '$attrs', '$parse', 'flowFactory',
+  function ($scope, $attrs, $parse, flowFactory) {
+
+    var options = angular.extend({}, $scope.$eval($attrs.flowInit));
+
+    // use existing flow object or create a new one
+    var flow  = $scope.$eval($attrs.flowObject) || flowFactory.create(options);
+
+    var catchAllHandler = function(eventName){
+      var args = Array.prototype.slice.call(arguments);
+      args.shift();
+      var event = $scope.$broadcast.apply($scope, ['flow::' + eventName, flow].concat(args));
+      if ({
+        'progress':1, 'filesSubmitted':1, 'fileSuccess': 1, 'fileError': 1, 'complete': 1
+      }[eventName]) {
+        $scope.$apply();
+      }
+      if (event.defaultPrevented) {
+        return false;
+      }
+    };
+
+    flow.on('catchAll', catchAllHandler);
+    $scope.$on('$destroy', function(){
+        flow.off('catchAll', catchAllHandler);
+    });
+
+    $scope.$flow = flow;
+
+    if ($attrs.hasOwnProperty('flowName')) {
+      $parse($attrs.flowName).assign($scope, flow);
+      $scope.$on('$destroy', function () {
+        $parse($attrs.flowName).assign($scope);
+      });
+    }
+  }])
+  .directive('flowInit', [function() {
+    return {
+      scope: true,
+      controller: 'flowCtrl'
+    };
+  }]);
+angular.module('flow.btn', ['flow.init'])
+.directive('flowBtn', [function() {
+  return {
+    'restrict': 'EA',
+    'scope': false,
+    'require': '^flowInit',
+    'link': function(scope, element, attrs) {
+      var isDirectory = attrs.hasOwnProperty('flowDirectory');
+      var isSingleFile = attrs.hasOwnProperty('flowSingleFile');
+      var inputAttrs = attrs.hasOwnProperty('flowAttrs') && scope.$eval(attrs.flowAttrs);
+      scope.$flow.assignBrowse(element, isDirectory, isSingleFile, inputAttrs);
+    }
+  };
+}]);
+angular.module('flow.dragEvents', ['flow.init'])
+/**
+ * @name flowPreventDrop
+ * Prevent loading files then dropped on element
+ */
+  .directive('flowPreventDrop', function() {
+    return {
+      'scope': false,
+      'link': function(scope, element, attrs) {
+        element.bind('drop dragover', function (event) {
+          event.preventDefault();
+        });
+      }
+    };
+  })
+/**
+ * @name flowDragEnter
+ * executes `flowDragEnter` and `flowDragLeave` events
+ */
+  .directive('flowDragEnter', ['$timeout', function($timeout) {
+    return {
+      'scope': false,
+      'link': function(scope, element, attrs) {
+        var promise;
+        var enter = false;
+        element.bind('dragover', function (event) {
+          if (!isFileDrag(event)) {
+            return ;
+          }
+          if (!enter) {
+            scope.$apply(attrs.flowDragEnter);
+            enter = true;
+          }
+          $timeout.cancel(promise);
+          event.preventDefault();
+        });
+        element.bind('dragleave drop', function (event) {
+          $timeout.cancel(promise);
+          promise = $timeout(function () {
+            scope.$eval(attrs.flowDragLeave);
+            promise = null;
+            enter = false;
+          }, 100);
+        });
+        function isFileDrag(dragEvent) {
+          var fileDrag = false;
+          var dataTransfer = dragEvent.dataTransfer || dragEvent.originalEvent.dataTransfer;
+          angular.forEach(dataTransfer && dataTransfer.types, function(val) {
+            if (val === 'Files') {
+              fileDrag = true;
+            }
+          });
+          return fileDrag;
+        }
+      }
+    };
+  }]);
+
+angular.module('flow.drop', ['flow.init'])
+.directive('flowDrop', function() {
+  return {
+    'scope': false,
+    'require': '^flowInit',
+    'link': function(scope, element, attrs) {
+      if (attrs.flowDropEnabled) {
+        scope.$watch(attrs.flowDropEnabled, function (value) {
+          if (value) {
+            assignDrop();
+          } else {
+            unAssignDrop();
+          }
+        });
+      } else {
+        assignDrop();
+      }
+      function assignDrop() {
+        scope.$flow.assignDrop(element);
+      }
+      function unAssignDrop() {
+        scope.$flow.unAssignDrop(element);
+      }
+    }
+  };
+});
+
+!function (angular) {'use strict';
+  var module = angular.module('flow.events', ['flow.init']);
+  var events = {
+    fileSuccess: ['$file', '$message'],
+    fileProgress: ['$file'],
+    fileAdded: ['$file', '$event'],
+    filesAdded: ['$files', '$event'],
+    filesSubmitted: ['$files', '$event'],
+    fileRetry: ['$file'],
+    fileError: ['$file', '$message'],
+    uploadStart: [],
+    complete: [],
+    progress: [],
+    error: ['$message', '$file']
+  };
+
+  angular.forEach(events, function (eventArgs, eventName) {
+    var name = 'flow' + capitaliseFirstLetter(eventName);
+    if (name == 'flowUploadStart') {
+      name = 'flowUploadStarted';// event alias
+    }
+    module.directive(name, [function() {
+      return {
+        require: '^flowInit',
+        controller: ['$scope', '$attrs', function ($scope, $attrs) {
+          $scope.$on('flow::' + eventName, function () {
+            var funcArgs = Array.prototype.slice.call(arguments);
+            var event = funcArgs.shift();// remove angular event
+            // remove flow object and ignore event if it is from parent directive
+            if ($scope.$flow !== funcArgs.shift()) {
+              return ;
+            }
+            var args = {};
+            angular.forEach(eventArgs, function(value, key) {
+              args[value] = funcArgs[key];
+            });
+            if ($scope.$eval($attrs[name], args) === false) {
+              event.preventDefault();
+            }
+          });
+        }]
+      };
+    }]);
+  });
+
+  function capitaliseFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+}(angular);
+angular.module('flow.img', ['flow.init'])
+.directive('flowImg', [function() {
+  return {
+    'scope': false,
+    'require': '^flowInit',
+    'link': function(scope, element, attrs) {
+      var file = attrs.flowImg;
+      scope.$watch(file, function (file) {
+        if (!file) {
+          return ;
+        }
+        var fileReader = new FileReader();
+        fileReader.readAsDataURL(file.file);
+        fileReader.onload = function (event) {
+          scope.$apply(function () {
+            attrs.$set('src', event.target.result);
+          });
+        };
+      });
+    }
+  };
+}]);
+angular.module('flow.transfers', ['flow.init'])
+.directive('flowTransfers', [function() {
+  return {
+    'scope': true,
+    'require': '^flowInit',
+    'link': function(scope) {
+      scope.transfers = scope.$flow.files;
+    }
+  };
+}]);
+angular.module('flow', ['flow.provider', 'flow.init', 'flow.events', 'flow.btn',
+  'flow.drop', 'flow.transfers', 'flow.img', 'flow.dragEvents']);

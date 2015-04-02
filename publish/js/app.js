@@ -3,7 +3,7 @@
 
   this.nb = nb = {};
 
-  deps = ['ct.ui.router.extras', 'mgo-angular-wizard', 'mgcrea.ngStrap.datepicker', 'ngDialog', 'ui.select', 'ngAnimate', 'ngAria', 'ui.bootstrap', 'ngSanitize', 'ngMessages', 'ngMaterial', 'toaster', 'restmod', 'angular.filter', 'resources', 'nb.directives', 'toaster', 'ngCookies', 'nb.filters', 'nb.component'];
+  deps = ['ct.ui.router.extras', 'mgo-angular-wizard', 'mgcrea.ngStrap.datepicker', 'ngDialog', 'ui.select', 'ngAnimate', 'ngAria', 'ui.bootstrap', 'ngSanitize', 'ngMessages', 'ngMaterial', 'toaster', 'restmod', 'angular.filter', 'resources', 'nb.directives', 'toaster', 'ngCookies', 'nb.filters', 'nb.component', 'flow'];
 
   resources = angular.module('resources', []);
 
@@ -59,6 +59,9 @@
     }).state('sigup', {
       url: '/sigup',
       templateUrl: 'partials/auth/sigup.html'
+    }).state('changePwd', {
+      url: '/change-possword',
+      templateUrl: 'partials/auth/change_pwd.html'
     });
     return $httpProvider.interceptors.push([
       '$q', '$location', 'toaster', 'sweet', function($q, $location, toaster, sweet) {
@@ -70,8 +73,11 @@
             if (response.status === 403) {
               sweet.error('操作失败', response.data.message || JSON.stringify(response.data));
             }
+            if (response.status === 400) {
+              toaster.pop('error', '参数错误', response.data.message || JSON.stringify(response.data) || response);
+            }
             if (/^5/.test(Number(response.status).toString())) {
-              toaster.pop('error', '服务器错误', response.data.message || JSON.stringify(response.data));
+              toaster.pop('error', '服务器错误', response.data.message || JSON.stringify(response.data) || response);
             }
             return $q.reject(response);
           }
@@ -884,7 +890,7 @@
 }).call(this);
 
 (function() {
-  var SimpleDropdownCtrl;
+  var SimpleDropdownCtrl, UserInfoDropdownCtrl;
 
   angular.module('nb.directives').directive('nbDropdown', [
     '$http', 'inflector', '$document', function($http, inflector, $doc) {
@@ -1037,6 +1043,37 @@
         link: postLink
       };
     }
+  ]).directive('userInfoDropdown', [
+    '$document', function($doc) {
+      var postLink;
+      postLink = function(scope, elem, attr) {
+        var closeDropdown;
+        closeDropdown = function(e) {
+          e.stopPropagation();
+          scope.$apply(function() {
+            return scope.isOpen = false;
+          });
+        };
+        elem.on('click', function(e) {
+          return e.stopPropagation();
+        });
+        $doc.on('click', closeDropdown);
+        return scope.$on('$destroy', function() {
+          $doc.off('click', closeDropdown);
+          return elem.off('click');
+        });
+      };
+      return {
+        restrict: 'EA',
+        replace: true,
+        scope: {},
+        transclude: true,
+        template: '<li class="dropdown", ng-class="{\'open\': isOpen}" ng-click="dropdown.toggle()">\n    <a href="" data-toggle="dropdown" class="dropdown-toggle clear">\n        <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">\n            <img src="../../images/01.jpg" alt="..."/><i class="on md b-white bottom"></i>\n        </span>\n        <span ng-bind="dropdown.rootScope.currentUser.name"></span>\n        <b class="caret"></b>\n    </a>\n    <ul class="dropdown-menu" ng-if="isOpen" role="menu" aria-labelledby="dropdownMenu1" ng-transclude>\n    </ul>\n</li>',
+        controller: UserInfoDropdownCtrl,
+        controllerAs: 'dropdown',
+        link: postLink
+      };
+    }
   ]);
 
   SimpleDropdownCtrl = (function() {
@@ -1058,6 +1095,24 @@
     };
 
     return SimpleDropdownCtrl;
+
+  })();
+
+  UserInfoDropdownCtrl = (function() {
+    UserInfoDropdownCtrl.$inject = ['$scope', '$attrs', '$rootScope'];
+
+    function UserInfoDropdownCtrl(scope, attrs, rootScope) {
+      this.scope = scope;
+      this.attrs = attrs;
+      this.rootScope = rootScope;
+      this.scope.isOpen = false;
+    }
+
+    UserInfoDropdownCtrl.prototype.toggle = function() {
+      return this.scope.isOpen = !this.scope.isOpen;
+    };
+
+    return UserInfoDropdownCtrl;
 
   })();
 
@@ -2956,9 +3011,9 @@
   LoginController = (function(_super) {
     __extends(LoginController, _super);
 
-    LoginController.$inject = ['$http', '$stateParams', '$state', '$scope', '$rootScope', '$cookies', 'User', '$timeout', 'Org'];
+    LoginController.$inject = ['$http', '$stateParams', '$state', '$scope', '$rootScope', '$cookies', 'User', '$timeout', 'Org', '$nbEvent'];
 
-    function LoginController(http, params, state, scope, rootScope, cookies, User, timeout, Org) {
+    function LoginController(http, params, state, scope, rootScope, cookies, User, timeout, Org, Evt) {
       this.http = http;
       this.params = params;
       this.state = state;
@@ -2968,6 +3023,7 @@
       this.User = User;
       this.timeout = timeout;
       this.Org = Org;
+      this.Evt = Evt;
       this.scope.currentUser = null;
     }
 
@@ -2985,9 +3041,21 @@
           self.rootScope.allOrgs = self.Org.$search();
           return self.state.go("home");
         }, 100);
-      }).error(function(data) {
-        return self.$emit('error', '#{data.message}');
-      });
+      }).error(function(data) {});
+    };
+
+    LoginController.prototype.changePwd = function(user) {
+      var self;
+      self = this;
+      if (user.new_password !== user.password_confirm) {
+        self.Evt.$send('password:confirm:error', "两次输入新密码不一致");
+        return;
+      }
+      return self.http.put('/api/me/update_password', user).success(function(data) {
+        self.Evt.$send('password:update:success', '密码修改成功，请重新登录');
+        self.rootScope.logout();
+        return self.state.go("login");
+      }).error(function(data) {});
     };
 
     return LoginController;
@@ -3099,6 +3167,8 @@
       stateProvider.state('self', {
         url: '/self-service',
         templateUrl: 'partials/self/self_info.html',
+        controller: ProfileCtrl,
+        controllerAs: 'ctrl',
         ncyBreadcrumb: {
           label: "员工自助"
         }
@@ -3981,14 +4051,8 @@
         'after-create': function() {
           return $Evt.$send('employee:create:success', "新员工创建成功");
         },
-        'after-create-error': function() {
-          return $Evt.$send('employee:create:error', "新员工创建失败");
-        },
         'after-update': function() {
           return $Evt.$send('employee:update:success', "员工信息更新成功");
-        },
-        'after-update-error': function() {
-          return $Evt.$send('employee:update:error', "员工信息跟新失败");
         }
       },
       $extend: {
@@ -4267,9 +4331,6 @@
           $Evt.$send('org:refresh');
           return $Evt.$send('org:active:success', "生效成功");
         },
-        'after-active-error': function() {
-          return $Evt.$send('org:active:error', arguments);
-        },
         'after-revert': function() {
           $Evt.$send('org:refresh');
           return $Evt.$send('org:revert:success', "撤销成功");
@@ -4278,15 +4339,9 @@
           $Evt.$send('org:refresh');
           return $Evt.$send('org:update:success', "修改成功");
         },
-        'after-update-error': function() {
-          return $Evt.$send('org:update:error');
-        },
         'after-newsub': function() {
           $Evt.$send('org:refresh');
           return $Evt.$send('org:newsub:success', "机构创建成功");
-        },
-        'after-newsub-error': function() {
-          return $Evt.$send('org:newsub:error');
         },
         'after-transfer': function() {
           return $Evt.$send('org:transfer:success', "划转机构成功");
@@ -4295,7 +4350,7 @@
       $extend: {
         Resource: {
           active: function(formdata) {
-            var onErorr, onSuccess, request, self, url;
+            var onSuccess, request, self, url;
             self = this;
             url = RMUtils.joinUrl(this.$url(), 'active');
             request = {
@@ -4308,13 +4363,10 @@
               self.$dispatch('after-active', res);
               return $Evt.$send('org:refresh');
             };
-            onErorr = function(res) {
-              return self.$dispatch('after-active-error', res);
-            };
-            return this.$send(request, onSuccess, onErorr);
+            return this.$send(request, onSuccess);
           },
           revert: function() {
-            var onErorr, onSuccess, request, self, url;
+            var onSuccess, request, self, url;
             self = this;
             url = RMUtils.joinUrl(this.$url(), 'revert');
             request = {
@@ -4325,10 +4377,7 @@
               self.$dispatch('after-revert', res);
               return $Evt.$send('org:refresh');
             };
-            onErorr = function(res) {
-              return self.$dispatch('after-revert-error', res);
-            };
-            return this.$send(request, onSuccess, onErorr);
+            return this.$send(request, onSuccess);
           }
         },
         Collection: {
@@ -4382,26 +4431,20 @@
         },
         Record: {
           newSub: function(org) {
-            var onErorr, onSuccess;
+            var onSuccess;
             onSuccess = function() {
               return this.$dispatch('after-newsub');
             };
-            onErorr = function() {
-              return this.$dispatch('after-newsub-error', arguments);
-            };
             org = this.$scope.$build(org);
             org.parentId = this.$pk;
-            return org.$save().$then(onSuccess, onErorr);
+            return org.$save().$then(onSuccess);
           },
           transfer: function(to_dep_id) {
-            var onErorr, onSuccess, request, self, url;
+            var onSuccess, request, self, url;
             self = this;
             onSuccess = function() {
               this.parentId = to_dep_id;
               return this.$dispatch('after-transfer');
-            };
-            onErorr = function() {
-              return this.$dispatch('after-transfer-error', arguments);
             };
             url = this.$url();
             request = {
@@ -4411,7 +4454,7 @@
                 to_department_id: to_dep_id
               }
             };
-            return this.$send(request, onSuccess, onErorr);
+            return this.$send(request, onSuccess);
           }
         }
       }
@@ -4471,20 +4514,14 @@
         'after-destroy': function() {
           return $Evt.$send('position:destroy:success', "岗位删除成功");
         },
-        'after-destroy-error': function() {
-          return $Evt.$send('position:destroy:success', arguments);
-        },
         'after-adjust': function() {
           return $Evt.$send('position:adjust:success', "岗位调整成功");
-        },
-        'after-adjust-error': function() {
-          return $Evt.$send('position:adjust:success', arguments);
         }
       },
       $extend: {
         Collection: {
           $adjust: function(infoData) {
-            var onErorr, onSuccess, request, self;
+            var onSuccess, request, self;
             self = this;
             request = {
               method: 'POST',
@@ -4501,13 +4538,10 @@
               });
               return self.$dispatch('after-adjust', res);
             };
-            onErorr = function(res) {
-              return self.$dispatch('after-adjust-error', res);
-            };
-            return this.$send(request, onSuccess, onErorr);
+            return this.$send(request, onSuccess);
           },
           $batchRemove: function(ids) {
-            var onErorr, onSuccess, request, self;
+            var onSuccess, request, self;
             self = this;
             request = {
               method: 'POST',
@@ -4524,15 +4558,12 @@
               });
               return self.$dispatch('after-destroy', res);
             };
-            onErorr = function(res) {
-              return self.$dispatch('after-destroy-error', res);
-            };
-            return this.$send(request, onSuccess, onErorr);
+            return this.$send(request, onSuccess);
           }
         },
         Record: {
           $createSpe: function(spe) {
-            var onErorr, onSuccess, request, self, url;
+            var onSuccess, request, self, url;
             self = this;
             url = this.$url();
             spe = Specification.$build(spe).$wrap();
@@ -4544,10 +4575,7 @@
             onSuccess = function(res) {
               return self.$dispatch('specification-create', res);
             };
-            onErorr = function(res) {
-              return self.$dispatch('specification-create-error', res);
-            };
-            return this.$send(request, onSuccess, onErorr);
+            return this.$send(request, onSuccess);
           }
         }
       }
