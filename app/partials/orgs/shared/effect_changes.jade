@@ -1,25 +1,15 @@
-form.form-validator-dialog(novalidate, name="active_form", ng-submit="ctrl.active(active_form, log) && closeThisDialog()")
-    fieldset
-        md-input-container
-            label OA文件名
-            input(type="text" ng-model="log.oa_file_no" placeholder="文件编号",required="true")
-        md-input-container
-            label 日志标题
-            input(type="text" ng-model="log.title" placeholder="文件编号",required="true")
-        .form-group-row
-            .pull-right.button-group
-                md-button.md-raised(type='button',ng-click="closeThisDialog()") 取消
-                md-button.md-raised.md-primary(ng-disabled="active_form.$invalid" type="submit") 确定
-
-    //- .form-group-row
-    //-     label.form-control-label  OA文件名：
-    //-     input.form-control-input(type="text" name="oa_file_no" ng-model="log.oa_file_no" placeholder="文件编号", required="true")
-    //-     div.form-control-error(ng-messages="active_form.oa_file_no.$error", ng-if="active_form.oa_file_no.$touched")
-    //-         .form-group-error(ng-message="required") OA文件名必填
-    //- .form-group-row
-    //-     label.form-control-label  日志标题：
-    //-     input.form-control-input(type="text" name="title", ng-model="log.title", placeholder="操作说明", required="true")
-    //-     div.form-control-error(ng-messages="active_form.title.$error", ng-if="active_form.title.$touched")
-    //-         .form-group-error(ng-message="required") 日志必填
-
-
+md-dialog
+    form.form-validator-dialog(novalidate, name="active_form", ng-submit="ctrl.active(active_form, log) && closeThisDialog()")
+        md-content.sticky-container
+            md-subheader.md-sticky-no-effect 提交川航新的组织架构
+            .dialog-content
+                fieldset
+                    md-input-container
+                        label OA文件名
+                        input(type="text" ng-model="log.oa_file_no" placeholder="文件编号",required="true")
+                    md-input-container
+                        label 文件内容
+                        textarea(type="text" md-maxlength="100" ng-model="log.title" placeholder="文件编号",required="true")
+            .md-actions
+                md-button(type='button',ng-click="closeThisDialog()") 取消
+                md-button.md-primary(ng-disabled="active_form.$invalid" type="submit") 确定
