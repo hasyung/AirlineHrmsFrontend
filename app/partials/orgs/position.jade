@@ -6,11 +6,11 @@
                 ng-disabled="ctrl.getSelectsIds().length == 0"
                 nb-confirm="ctrl.batchRemove(isConfirm)"
                 nb-title="您确定要删除所选的{{ctrl.getSelectsIds().length}}个岗位吗?"
-                nb-text="删除操作将在你点击确定后执行，岗位删除后将无法恢复。")
+                nb-content="删除操作将在你点击确定后执行，岗位删除后将无法恢复。")
             button.btn.btn-default.fa.fa-plus.pull-right(
                 title="新增岗位"
-                nb-dialog="partials/orgs/position_add.html"
-                nb-dialog-scope="this"
+                nb-dialog
+                template-url="partials/orgs/position_add.html"
             )
             button.btn.btn-info.pull-right(title="", nb-popup-plus, position="left-bottom", offset="0.05") 调整机构
                 popup-template.nb-popup.org-default-popup-template.panel.panel-default()
@@ -52,9 +52,8 @@
                     td.has-checkbox(select-row="pos" mode="multiple")
                     td.org-post
                         a(
-                        nb-dialog="partials/position/position_detail.html"
-                        nb-dialog-class="ngdialog-theme-panel"
-                        nb-dialog-data="pos"
+                        nb-dialog
+                        template-url="partials/position/position_detail.html"
                         ) {{pos.name}}
                     td(ng-bind="pos.channel.displayName")
                     //- td.org-preparation

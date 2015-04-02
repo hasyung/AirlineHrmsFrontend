@@ -318,8 +318,8 @@ class OrgCtrl extends nb.Controller
 class PositionCtrl extends nb.Controller
     @.$inject = ['$scope', '$nbEvent', 'Position', '$stateParams', 'Org', 'Specification']
     constructor: (@scope, @Evt, @Position, @stateParams, @Org, @Specification) ->
-        @positions = scope.ngDialogData # from parent ctrl
-        scope.ctrl = this
+        @positions = @scope.panel.data # from parent ctrl
+        @scope.ctrl = this
         # orgId = @stateParams.id
         # @currentOrg = Org.$find(orgId)
         # @positions = @currentOrg.positions.$fetch()
@@ -343,11 +343,12 @@ class PositionCtrl extends nb.Controller
             # 通知被划转岗位和目标机构必选
             @Evt.$send "position:transfer:error", "被划转岗位和目标机构必选"
 
-    batchRemove: () ->
-        if @getSelectsIds().length != 0
-            @positions.$batchRemove({ids:@getSelectsIds()})
-        else
-            @Evt.$send "position:remove:error", "你还没选择所要删除的岗位"
+    batchRemove: (isConfirm) ->
+        if isConfirm
+            if @getSelectsIds().length != 0
+                @positions.$batchRemove({ids:@getSelectsIds()})
+            else
+                @Evt.$send "position:remove:error", "你还没选择所要删除的岗位"
 
     getExportParams: (id) ->
         ids = @getSelectsIds()

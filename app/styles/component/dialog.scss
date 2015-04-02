@@ -580,3 +580,16 @@ body.ngdialog-open {
         transform: translateX(900px);
     }
 }
+
+// material dialog
+md-dialog {
+    .sticky-container {
+        padding: 0;
+
+        >.md-subheader {
+            background-color: #f6f8f8;
+            margin-right: 0;
+        }
+    }
+}
+
