@@ -6,7 +6,7 @@ section.org-detail(ng-controller="EditableResource")
             button.btn.btn-sm.btn-default.fa.fa-trash-o(
                 nb-confirm="orgCtrl.destroy(isConfirm)"
                 nb-title="您确定要删除{{currentOrg.name}}吗?"
-                nb-text="删除操作将在点击组织结构树 '生效' 按钮并关联 OA 文件号后真正生效, 在这之前您可以随时撤销未生效的操作")
+                nb-content="删除操作将在点击组织结构树 '生效' 按钮并关联 OA 文件号后真正生效, 在这之前您可以随时撤销未生效的操作")
             button.btn.btn-sm.btn-default.fa.fa-retweet(
                 title="划转"
                 nb-dialog
@@ -65,11 +65,10 @@ section(ng-if="currentOrg.status !== 'destroy_inactive'")
         button.btn.btn-default.fa.fa-cog(
             ng-disabled="ctrl.isHistory"
             title="设置岗位"
-            nb-panel="partials/orgs/position.html"
-            controller="OrgPosCtrl"
-            nb-dialog-controller="OrgPosCtrl"
-            nb-dialog-data="positions"
-            nb-dialog-class="ngdialog-theme-panel"
+            nb-panel
+            template-url="partials/orgs/position.html"
+            panel-controller="OrgPosCtrl"
+            panel-data="positions"
             )
     div.org-table(slimscroll height="400px")
         table.table.table-striped

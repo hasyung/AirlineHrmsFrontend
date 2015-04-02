@@ -1,6 +1,6 @@
 md-dialog
     .modal-header.tl-top-header
-        button.close(type='button', data-dismiss='modal', aria-hidden='true', ng-click="closeThisDialog()") ×
+        button.close(type='button', data-dismiss='modal', aria-hidden='true', ng-click="dialog.close()") ×
         h4.modal-title 时间轴
     div(layout layout-align="center")
         md-input-container(flex)
@@ -31,4 +31,4 @@ md-dialog
 
     .md-actions
         md-button(ng-click='dialog.close()') 取 消
-        md-button.md-primary(ng-click="ctrl.backToPast() && closeThisDialog()") 确 定
+        md-button.md-primary(ng-click="ctrl.backToPast() ; dialog.close()") 确 定

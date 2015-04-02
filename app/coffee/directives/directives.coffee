@@ -102,43 +102,40 @@ angular.module 'nb.directives'
             link: postLink
         }
     ]
+    #facade ngDialog
     .directive 'nbPanel',['ngDialog', (ngDialog) ->
 
+        getCustomConfig = (attrs) ->
+            configAttrs = _.pick(attrs, (val, key) -> return /^panel/.test(key))
+            customConfig = _.transform configAttrs, (res, val, key) ->
+                attr = key.slice(5) #remove prefix 'panel'
+                cusKey = _.camelCase(attr)
+
+
         postLink = (scope, elem, attrs) ->
+            options = {}
+
+            options['controller'] = attrs.panelController if angular.isDefined(attrs.panelController)
+            options['template'] = attrs.templateUrl || 'partials/404.html'
+            options['scope'] = scope.$parent
+
             elem.on 'click', (e) ->
                 e.preventDefault()
+                opts = {}
+                angular.isDefined(attrs.panelClosePrevious) && ngDialog.close(attrs.nbDialogClosePrevious)
 
-                dialogScope = `angular.isDefined(scope.nbDialogScope)? scope.nbDialogScope : scope.$parent`
-                angular.isDefined(attrs.nbDialogClosePrevious) && ngDialog.close(attrs.nbDialogClosePrevious)
-
-                defaults = ngDialog.getDefaults()
-
-                data = scope.nbDialogData
+                opts['data'] = options.scope.$eval(attrs.panelData) if angular.isDefined(attrs.panelData)
                 #link https://github.com/angular/angular.js/issues/6404
-                data = scope.prepareData() if attrs.prepareData
+                opts['data'] = scope.prepareData() if angular.isDefined(attrs.prepareData)
 
-                ngDialog.open {
-
-                    template: attrs.nbDialog
-                    className: attrs.nbDialogClass || defaults.className
-                    controller: attrs.nbDialogController
-                    scope: dialogScope
-                    data: data
-                    # showClose: attrs.ngDialogShowClose === 'false' ? false : (attrs.ngDialogShowClose === 'true' ? true : defaults.showClose),
-                    # closeByDocument: attrs.ngDialogCloseByDocument === 'false' ? false :
-                    # (attrs.ngDialogCloseByDocument === 'true' ? true : defaults.closeByDocument),
-                    # closeByEscape: attrs.ngDialogCloseByEscape === 'false' ? false
-                    # : (attrs.ngDialogCloseByEscape === 'true' ? true : defaults.closeByEscape),
-                    # preCloseCallback: attrs.ngDialogPreCloseCallback || defaults.preCloseCallback
-
-                }
+                angular.extend(opts, options , {className: 'ngdialog-theme-panel'})
+                ngDialog.open opts
 
             scope.$on '$destroy', -> elem.off('click')
 
         return {
             restrict: 'A'
             scope: {
-                nbDialogScope : '='
                 prepareData: '&?'
                 nbDialogData: '='
             }
@@ -219,7 +216,8 @@ angular.module 'nb.directives'
             elem.on 'click', (evt) ->
                 confirm = performConfirm(evt)
                 promise = $mdDialog.show(confirm)
-                promise.then(callback(true), callback(false)) if angular.isDefined(attrs.onComplete)
+
+                promise.then(callback(true), callback(false)) if angular.isDefined(scope.onComplete)
 
             scope.$on 'destroy', -> elem.off 'click'
 
@@ -418,54 +416,6 @@ angular.module 'nb.directives'
         }
 
     ]
-
-# var ngIfDirective = ['$animate', function($animate) {
-#   return {
-#     multiElement: true,
-#     transclude: 'element',
-#     priority: 600,
-#     terminal: true,
-#     restrict: 'A',
-#     $$tlb: true,
-#     link: function($scope, $element, $attr, ctrl, $transclude) {
-#         var block, childScope, previousElements;
-#         $scope.$watch($attr.ngIf, function ngIfWatchAction(value) {
-#           if (value) {
-#             if (!childScope) {
-#               $transclude(function(clone, newScope) {
-#                 childScope = newScope;
-#                 clone[clone.length++] = document.createComment(' end ngIf: ' + $attr.ngIf + ' ');
-#                 // Note: We only need the first/last node of the cloned nodes.
-#                 // However, we need to keep the reference to the jqlite wrapper as it might be changed later
-#                 // by a directive with templateUrl when its template arrives.
-#                 block = {
-#                   clone: clone
-#                 };
-#                 $animate.enter(clone, $element.parent(), $element);
-#               });
-#             }
-#           } else {
-#             if (previousElements) {
-#               previousElements.remove();
-#               previousElements = null;
-#             }
-#             if (childScope) {
-#               childScope.$destroy();
-#               childScope = null;
-#             }
-#             if (block) {
-#               previousElements = getBlockNodes(block.clone);
-#               $animate.leave(previousElements).then(function() {
-#                 previousElements = null;
-#               });
-#               block = null;
-#             }
-#           }
-#         });
-#     }
-#   };
-# }];
-
 
 
     #
