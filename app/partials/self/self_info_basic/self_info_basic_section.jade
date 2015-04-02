@@ -73,11 +73,15 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                     md-input-container(flex)
                         label 专业
                         input(ng-model="currentUser.major" name="major" disabled)
-                md-input-container.row-has-value
-                    label 英语等级
-                    md-select(ng-model="currentUser.englishLevel", md-on-open="loadEnum('english_levels')" disabled)
-                        md-select-label {{currentUser.englishLevel? currentUser.englishLevel.displayName : '无'}}
-                        md-option(ng-value="englishLevel" ng-repeat="englishLevel in enums.english_levels") {{englishLevel.displayName}}
+                div(layout disabled)
+                    md-input-container.row-has-value(flex)
+                        label 英语等级
+                        md-select(ng-model="currentUser.englishLevel", md-on-open="loadEnum('english_levels')" disabled)
+                            md-select-label {{currentUser.englishLevel? currentUser.englishLevel.displayName : '无'}}
+                            md-option(ng-value="englishLevel" ng-repeat="englishLevel in enums.english_levels") {{englishLevel.displayName}}
+                    md-input-container(flex)
+                        label 到岗时间
+                        input(ng-model="currentUser.joinScalDate" name="joinScalDate" disabled)
 
             md-divider
 

@@ -5,10 +5,10 @@ app = nb.app
 class LoginController extends nb.Controller
 
 
-    @.$inject = ['$http','$stateParams', '$state', '$scope', '$rootScope', '$cookies', 'User', '$timeout', 'Org']
+    @.$inject = ['$http','$stateParams', '$state', '$scope', '$rootScope', '$cookies', 'User', '$timeout', 'Org', '$nbEvent']
 
 
-    constructor: (@http, @params, @state, @scope, @rootScope, @cookies, @User, @timeout, @Org)->
+    constructor: (@http, @params, @state, @scope, @rootScope, @cookies, @User, @timeout, @Org, @Evt)->
         @scope.currentUser = null #当前用户
 
     loadInitialData: () -> #初始化数据
@@ -32,7 +32,21 @@ class LoginController extends nb.Controller
                 
 
             .error (data) ->
-                self.$emit 'error', '#{data.message}'
+    changePwd: (user)->
+        self = @
+        if user.new_password != user.password_confirm
+            self.Evt.$send 'password:confirm:error', "两次输入新密码不一致"
+            return
+
+        self.http.put('/api/me/update_password', user)
+            .success (data) ->
+                self.Evt.$send 'password:update:success', '密码修改成功，请重新登录'
+                self.rootScope.logout()
+                self.state.go "login"
+
+            .error (data) ->
+
+
 
 
 

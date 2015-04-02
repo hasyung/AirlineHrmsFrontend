@@ -56,18 +56,18 @@
                 thead
                     tr
                         th(select-row="" mode='all')
-                        th 员工编号
-                        th 姓名
                         th 所属部门
+                        th 姓名
+                        th 员工编号
                         th 岗位
                         th 分类
                         th 通道
                         th 用工性质
-                        th 入职日期
+                        th 到岗时间
                 tbody
                     tr(ng-repeat="emp in ctrl.employees track by emp.id")
                         td(select-row="emp" mode="multiple")
-                        td(ng-bind="::emp.employeeNo")
+                        td(ng-bind="emp.department.name")
                         td.org-post
                             //- a(ui-sref="^.detail.basic({empId: emp.id})" ng-bind="emp.name")
                             a(
@@ -76,7 +76,7 @@
                                 nb-dialog-data="emp"
                                 nb-dialog-scope="this"
                             ) {{emp.name}}
-                        td(ng-bind="emp.department.name")
+                        td(ng-bind="::emp.employeeNo")
                         td(ng-bind="emp.position.name")
                         td(ng-bind="emp.category.displayName")
                         td(ng-bind="emp.channel.displayName")

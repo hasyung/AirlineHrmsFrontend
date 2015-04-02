@@ -37,14 +37,9 @@ Position = (restmod, RMUtils, $Evt, Specification) ->
             'after-destroy': ->
                 $Evt.$send('position:destroy:success',"岗位删除成功")
 
-            'after-destroy-error': ->
-                $Evt.$send('position:destroy:success', arguments)
-
             'after-adjust': ->
                 $Evt.$send('position:adjust:success',"岗位调整成功")
 
-            'after-adjust-error': ->
-                $Evt.$send('position:adjust:success', arguments)
         $extend:
             Collection:
                 $adjust: (infoData)->
@@ -62,10 +57,7 @@ Position = (restmod, RMUtils, $Evt, Specification) ->
                             self.$remove item
                         self.$dispatch 'after-adjust', res
 
-                    onErorr = (res) ->
-                        self.$dispatch 'after-adjust-error', res
-
-                    this.$send(request, onSuccess, onErorr)
+                    this.$send(request, onSuccess)
 
                 $batchRemove: (ids) ->
                     self = @
@@ -81,10 +73,8 @@ Position = (restmod, RMUtils, $Evt, Specification) ->
 
                         self.$dispatch 'after-destroy', res
 
-                    onErorr = (res) ->
-                        self.$dispatch 'after-destroy-error', res
 
-                    this.$send(request, onSuccess, onErorr)
+                    this.$send(request, onSuccess)
             Record:
                 $createSpe: (spe) ->
                     self = @
@@ -98,12 +88,7 @@ Position = (restmod, RMUtils, $Evt, Specification) ->
                     onSuccess = (res)->
                         self.$dispatch 'specification-create', res
 
-                    onErorr = (res) ->
-                        self.$dispatch 'specification-create-error', res
-
-                    this.$send(request, onSuccess, onErorr)
-
-
+                    this.$send(request, onSuccess)
 
     }
 

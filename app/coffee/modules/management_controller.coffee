@@ -18,6 +18,8 @@ class Route
             .state 'self', {
                 url: '/self-service'
                 templateUrl: 'partials/self/self_info.html'
+                controller: ProfileCtrl
+                controllerAs: 'ctrl'
                 ncyBreadcrumb: {
                     label: "员工自助"
                 }
