@@ -413,6 +413,41 @@ md-input-container {
         margin-bottom: 20px;
     }
 }
+//划转机构操作的 dialog
+md-dialog.org-transfer {
+    .dialog-content {
+        padding: 0 0 0 20px;
+        width: 270px;
+    }
+
+    .md-actions {
+        background-color: #f6f8f8;
+    }
+}
+
+md-dialog.org_history {
+    .dialog-content {
+        width: 270px;
+    }
+
+    .md-actions {
+        background-color: #f6f8f8;
+    }
+
+    md-input-container {
+        margin: 0 20px;
+    }
+
+    .org-timline {
+        padding: 0 20px;
+    }
+}
+
+md-dialog.effect_changes {
+    .dialog-content {
+        width: 270px;
+    }
+}
 
 
 
