@@ -56,6 +56,10 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
                 label 联系方式
                 input(type="text", ng-model="current.contact.mobile", name="contact")
 
+        md-input-container
+            label 到岗时间
+            input(disabled ng-model="current.joinScalDate")
+
 
 
 

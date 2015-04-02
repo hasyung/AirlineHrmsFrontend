@@ -57,6 +57,17 @@ form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="Ed
                 md-select(ng-model="current.employmentStatus" md-on-open="loadEnum('employment_status')" ng-disabled="!editing")
                     md-select-label {{current.employmentStatus? current.employmentStatus.displayName : '无'}}
                     md-option(ng-value="empStatus" ng-repeat="empStatus in enums.employment_status") {{empStatus.displayName}}
+        div(layout)
+            md-input-container.row-has-value(flex)
+                label 职称
+                md-select(ng-model="current.jobTitle", md-on-open="loadEnum('job_titles')" ng-disabled="!editing")
+                    md-select-label {{current.jobTitle? current.jobTitle.displayName : '无'}}
+                    md-option(ng-value="jobTitle" ng-repeat="jobTitle in enums.job_titles") {{jobTitle.displayName}}
+            md-input-container.row-has-value(flex)
+                label 职称级别
+                md-select(ng-model="current.jobTitleDegree", md-on-open="loadEnum('job_title_degrees')" ng-disabled="!editing")
+                    md-select-label {{current.jobTitleDegree? current.jobTitleDegree.displayName : '无'}}
+                    md-option(ng-value="jobTitleDegree" ng-repeat="jobTitleDegree in enums.job_title_degrees") {{jobTitleDegree.displayName}}
     //- .form-group.block
     //-     label.control-label 所属部门：
     //-     ui-select(
