@@ -6,11 +6,11 @@ md-dialog.org_history
                 label 机构历史版本
                 input(
                     bs-datepicker=""  container="body" data-autoclose="1"
-                    min-date="{{ngDialogData.minDate}}" max-date="today" ng-model="selectedDate"
-                    ng-change="ctrl.pickLog(selectedDate, ngDialogData.changeLogs)")
+                    min-date="{{dialog.historyData.minDate}}" max-date="today" ng-model="selectedDate"
+                    ng-change="ctrl.pickLog(selectedDate, dialog.historyData.changeLogs)")
         div.wrapper.org-timline(slimscroll, height="400px" ng-init="activeLog = {}")
             //- ul.timeline(ng-repeat="yearItem in ctrl.changeLogs")
-            ul.timeline(ng-repeat="yearLogs in ngDialogData.changeLogs")
+            ul.timeline(ng-repeat="yearLogs in dialog.historyData.changeLogs")
                 li.tl-header
                     div.btn.btn-info.year {{::yearLogs.changeYear}}
 
