@@ -142,15 +142,15 @@ class OrgsCtrl extends nb.Controller
 
 
     constructor: (@orgs, @http, @params, @state, @scope, @rootScope, @Evt)->
-        @treeRootOrg = _.find orgs, (org) -> org.depth == 1 # 当前树的顶级节点
+        @treeRootOrg = _.find @orgs, (org) -> org.depth == 1 # 当前树的顶级节点
         @tree = null    # tree化的 orgs 数据
         @currentOrg = null
 
         #for ui status
         @isBarOpen = false
 
-        scope.$onRootScope 'org:refresh', @.refreshTree.bind(@)
-        scope.$onRootScope 'org:resetData', @.resetData.bind(@)
+        @scope.$onRootScope 'org:refresh', @.refreshTree.bind(@)
+        @scope.$onRootScope 'org:resetData', @.resetData.bind(@)
 
         @buildTree(@treeRootOrg)
 
@@ -284,7 +284,7 @@ class OrgCtrl extends nb.Controller
         # @scope.org = @Org.$find(@params.orgId)
         # scope.$onRootScope 'org:link', @.orgLink.bind(@)
         self = @
-        scope.$parent.$watch 'ctrl.currentOrg', (newval)->
+        @scope.$parent.$watch 'ctrl.currentOrg', (newval)->
             self.orgLink(newval)
 
     orgLink: (org)->

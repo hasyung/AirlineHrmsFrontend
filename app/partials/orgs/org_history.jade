@@ -29,6 +29,6 @@ md-dialog
                                 li(ng-repeat="step in log.step_desc track by $index")
                                     p {{::step}}
 
-    .panel-footer.org-timline-footer.clearfix
-        button.btn.btn-info.btn-sm.pull-right(ng-click="ctrl.backToPast() && closeThisDialog()") 确 定
-        button.btn.btn-default.btn-sm.pull-right(ng-click='closeThisDialog()') 取 消
+    .md-actions
+        md-button(ng-click='dialog.close()') 取 消
+        md-button.md-primary(ng-click="ctrl.backToPast() && closeThisDialog()") 确 定
