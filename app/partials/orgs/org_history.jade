@@ -1,33 +1,32 @@
-md-dialog
-    .modal-header.tl-top-header
-        button.close(type='button', data-dismiss='modal', aria-hidden='true', ng-click="dialog.close()") ×
-        h4.modal-title 时间轴
-    div(layout layout-align="center")
-        md-input-container(flex)
-            label 机构历史版本
-            input(
-                bs-datepicker=""  container="body" data-autoclose="1"
-                min-date="{{ngDialogData.minDate}}" max-date="today" ng-model="selectedDate"
-                ng-change="ctrl.pickLog(selectedDate, ngDialogData.changeLogs)")
-    div.wrapper.org-timline(slimscroll, height="400px" ng-init="activeLog = {}")
-        //- ul.timeline(ng-repeat="yearItem in ctrl.changeLogs")
-        ul.timeline(ng-repeat="yearLogs in ngDialogData.changeLogs")
-            li.tl-header
-                div.btn.btn-info.year {{::yearLogs.changeYear}}
+md-dialog.org_history
+    md-content.sticky-container
+        md-subheader.md-sticky-no-effect 机构划转
+        .dialog-content(layout layout-align="center")
+            md-input-container(flex)
+                label 机构历史版本
+                input(
+                    bs-datepicker=""  container="body" data-autoclose="1"
+                    min-date="{{ngDialogData.minDate}}" max-date="today" ng-model="selectedDate"
+                    ng-change="ctrl.pickLog(selectedDate, ngDialogData.changeLogs)")
+        div.wrapper.org-timline(slimscroll, height="400px" ng-init="activeLog = {}")
+            //- ul.timeline(ng-repeat="yearItem in ctrl.changeLogs")
+            ul.timeline(ng-repeat="yearLogs in ngDialogData.changeLogs")
+                li.tl-header
+                    div.btn.btn-info.year {{::yearLogs.changeYear}}
 
-                span.pull-right 有{{::yearLogs.logs.length || 0}}次变动
-            li.tl-item(ng-repeat="log in yearLogs.logs track by $index", ng-click="ctrl.expandLog(log)", ng-class="{'active': log.active}")
-                div.tl-wrap
-                    div.tl-content.panel.padder.b-a
-                        span.arrow.left.pull-up
-                        div
+                    span.pull-right 有{{::yearLogs.logs.length || 0}}次变动
+                li.tl-item(ng-repeat="log in yearLogs.logs track by $index", ng-click="ctrl.expandLog(log)", ng-class="{'active': log.active}")
+                    div.tl-wrap
+                        div.tl-content.panel.padder.b-a
+                            span.arrow.left.pull-up
+                            div
 
-                            h1 {{log.title}}
-                                span.pull-right 依据文件: {{log.oa_file_no}}
-                            h2 {{::log.created_at | date: 'MM月dd日'}} - {{::log.dep_name}}
-                            ul(ng-show="log.active")
-                                li(ng-repeat="step in log.step_desc track by $index")
-                                    p {{::step}}
+                                h1 {{log.title}}
+                                    span.pull-right 依据文件: {{log.oa_file_no}}
+                                h2 {{::log.created_at | date: 'MM月dd日'}} - {{::log.dep_name}}
+                                ul(ng-show="log.active")
+                                    li(ng-repeat="step in log.step_desc track by $index")
+                                        p {{::step}}
 
     .md-actions
         md-button(ng-click='dialog.close()') 取 消
