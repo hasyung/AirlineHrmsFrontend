@@ -13,7 +13,6 @@ div.app-content-wrapper(flex nb-table='ctrl.flows' nb-safe-src="ctrl.flows")
         table.table.table-striped.custom-table
             thead
                 tr
-                    th(select-row="" mode='all')
                     th 员工编码
                     th 姓名
                     th 当前部门
@@ -21,21 +20,18 @@ div.app-content-wrapper(flex nb-table='ctrl.flows' nb-safe-src="ctrl.flows")
                     th 转入部门
                     th 转入岗位
                     th 申请日期
+                    th 状态
                     th 详细
-            tbody
+            tbody(ng-init="dialogOption = {className:'ngdialog-theme-panel'}")
                 tr(ng-repeat="flow in ctrl.flows track by $index")
-                    td(select-row="flow" mode="multiple")
                     td(ng-bind="flow.sponsor.employeeNo")
                     td(ng-bind="flow.sponsor.name")
                     td(ng-bind="flow.sponsor.departmentName")
                     td(ng-bind="flow.sponsor.positionName")
-                    td(ng-bind="flow.createdAt | date:'yyyy-MM-dd'")
                     td(ng-bind="flow.category")
                     td(ng-bind="flow.name")
-                    td(ng-bind="flow.createdAt | date:'yyyy-MM-dd'")
-                    td() 1天
                     td(ng-bind="flow.workflowState")
-                    td(ng-bind="flow.endDate | date:'yyyy-MM-dd'")
+                    td(ng-bind="flow.createdAt | date:'yyyy-MM-dd'")
                     td
-                        a(href="javscript:void(0);" flow-handler="flow" options="{className:'ngdialog-theme-panel'}") 查看
+                        a(href="javscript:void(0);" flow-handler="flow" options="dialogOption") 查看
     .custom-pages(nb-pagination="ctrl.laborsTransfers.$metadata" per-page="15")

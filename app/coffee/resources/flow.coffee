@@ -178,6 +178,19 @@ flowRelationDataDirective = ($timeout)->
 
 FlowHandlerDirective = (ngDialog)->
 
+    relationSlips = '''
+        <div layout="layout">
+            <div flex="flex" class="approval-cell">
+                <span class="cell-title">通道</span>
+                <span class="cell-content">管理</span>
+            </div>
+            <div flex="flex" class="approval-cell">
+                <span class="cell-title">近6个月绩效</span>
+                <span class="cell-content">优秀 2/良好 2/合格 2/待改进 2/不合格 2</span>
+            </div>
+        </div>
+    '''
+
     template = '''
         <div class="approval-wapper">
             <md-toolbar>
@@ -193,37 +206,7 @@ FlowHandlerDirective = (ngDialog)->
                         <span class="serial-number" ng-bind="flow.sponsor.employeeNo"></span>
                     </div>
                     <div class="approval-position"> {{::flow.sponsor.departmentName}}/ {{::flow.sponsor.positionName}}</div>
-                    <div class="approval-relations">
-                        <div layout="layout">
-                            <div flex="flex" class="approval-cell">
-                                <span class="cell-title">学历</span>
-                                <span class="cell-content">大学本科</span>
-                            </div>
-                            <div flex="flex" class="approval-cell">
-                                <span class="cell-title">英语等级</span>
-                                <span class="cell-content">大学英语四级</span>
-                            </div>
-                        </div>
-                        <div layout="layout">
-                            <div flex="flex" class="approval-cell">
-                                <span class="cell-title">学位</span>
-                                <span class="cell-content">学士</span>
-                            </div>
-                            <div flex="flex" class="approval-cell">
-                                <span class="cell-title">当前岗位年限</span>
-                                <span class="cell-content">3年</span>
-                            </div>
-                        </div>
-                        <div layout="layout">
-                            <div flex="flex" class="approval-cell">
-                                <span class="cell-title">通道</span>
-                                <span class="cell-content">管理</span>
-                            </div>
-                            <div flex="flex" class="approval-cell">
-                                <span class="cell-title">近6个月绩效</span>
-                                <span class="cell-content">优秀 2/良好 2/合格 2/待改进 2/不合格 2</span>
-                            </div>
-                        </div>
+                    <div class="approval-relations" ng-bind-html="flow.relationData">
                     </div>
                 </div>
                 <div class="approval-info">
@@ -306,8 +289,7 @@ FlowHandlerDirective = (ngDialog)->
     postLink = (scope, elem, attrs, ctrl) ->
 
         defaults = ngDialog.getDefaults()
-        # options = JSON.parse(attrs.options) if attrs.options
-        # options = angular.extend {}, defaults, options
+        options = angular.extend {}, defaults, scope.options
 
         offeredExtraForm = (flow) ->
             return template.replace(/#extraFormLayout#/, `flow.$extraForm ? flow.$extraForm : ''`)
@@ -319,7 +301,7 @@ FlowHandlerDirective = (ngDialog)->
                 ngDialog.open {
                     template: template
                     plain: true
-                    className: "ngdialog-theme-panel"
+                    className: options.className
                     controller: 'FlowController'
                     scope: scope
                     data: scope.flow
@@ -340,6 +322,7 @@ FlowHandlerDirective = (ngDialog)->
     return {
         scope: {
             flow: "=flowHandler"
+            options: "=?"
         }
         link: postLink
     }

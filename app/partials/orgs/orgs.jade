@@ -29,7 +29,7 @@ section(layout="row" flex)
                 md-button.md-raised.purple(
                     nb-dialog
                     template-url="partials/orgs/org_history.html"
-                    prepare-data="ctrl.initialHistoryData()"
+                    locals="{'historyData': ctrl.initialHistoryData()}"
                     ) 时间轴
                 md-button.md-raised.skyblue(ng-show="!ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导 出
                 md-button.md-raised.skyblue(ng-show="ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导 出
