@@ -2,7 +2,7 @@ gulp            = require("gulp")
 jade            = require("gulp-jade")
 _               = require("lodash")
 url             = require('url')
-
+argv            = require('minimist')(process.argv.slice(2))
 coffee          = require("gulp-coffee")
 concat          = require("gulp-concat")
 uglify          = require("gulp-uglify")
@@ -10,7 +10,7 @@ plumber         = require("gulp-plumber")
 wrap            = require("gulp-wrap")
 rename          = require("gulp-rename")
 livereload      = require("gulp-livereload")
-# gutil           = require("gulp-util")
+# gutil         = require("gulp-util")
 minifyHTML      = require("gulp-minify-html")
 sass            = require("gulp-sass")
 sourcemaps      = require('gulp-sourcemaps')
@@ -22,12 +22,21 @@ scsslint        = require("gulp-scss-lint")
 newer           = require("gulp-newer")
 cache           = require("gulp-cached")
 jadeInheritance = require('gulp-jade-inheritance')
-fs = require("fs")
+fs              = require("fs")
 
 
-proxy   = require('./compat/proxy-middleware')
+proxy           = require('./compat/proxy-middleware')
 
-debugMode = true
+debugMode       = true
+
+LR_PORT         = argv.port || argv.p || 4000
+IP_SUFFIX       = argv.suffix || argv.s || 99
+
+if argv.localhost
+    PROXY_SERVER_ADDR = "http://localhost:3000"
+else
+    PROXY_SERVER_ADDR =  "http://192.168.6.#{IP_SUFFIX}:#{LR_PORT}"
+
 
 paths =
     app: "app"
@@ -286,10 +295,10 @@ gulp.task "express", ->
     app = express()
 
 
-    proxyOptions = url.parse('http://192.168.6.99:4000')
+    # proxyOptions = url.parse('http://192.168.6.99:4000')
     # proxyOptions = url.parse('http://114.215.142.122:9002')
-    # proxyOptions = url.parse('http://192.168.6.19:3000')
-    # proxyOptions = url.parse('http://192.168.6.34:3000')
+    # proxyOptions = url.parse('')
+    proxyOptions = url.parse(PROXY_SERVER_ADDR)
 
     proxyOptions.route = '/api'
 
