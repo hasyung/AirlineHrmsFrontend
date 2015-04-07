@@ -12,21 +12,10 @@
                 nb-dialog
                 template-url="partials/orgs/position_add.html"
             )
-            button.btn.btn-info.pull-right(title="", nb-popup-plus, position="left-bottom", offset="0.05") 调整机构
-                popup-template.nb-popup.org-default-popup-template.panel.panel-default()
-                    .panel-heading.popup-title 组织机构
-                    .panel-body.popup-body
-                        div(slimscroll height="300px")
-                            nb-org-tree(tree-data="allOrgs" ng-model="ctrl.selectOrg")
-                    .panel-footer.clearfix.button-group
-                        //- div.btn.btn-info.pull-right.btn-submit(popup-close, ng-click="ctrl.posTransfer()") 确 定
-                        .btn.btn-info.pull-right.btn-submit(
-                            popup-close
-                            ng-disabled="!(ctrl.getSelectsIds().length != 0 && (!!ctrl.selectOrg))"
-                            nb-confirm="ctrl.posTransfer(isConfirm)"
-                            nb-title="您确定要将所选的{{ctrl.getSelectsIds().length}}个岗位，调整到{{ctrl.selectOrg.name}}吗?"
-                            nb-text="岗位调整操作将在你点击确定后执行。") 确 定
-                        div.btn.btn-default.pull-right(popup-close) 取 消
+            button.btn.btn-info.pull-right(
+                nb-dialog
+                template-url="partials/position/position_transfer.html"
+                ) 调整机构
             .pull-right.nb-dropdown.right-align(simple-dropdown, btn-text="导出")
                 li( role="presentation")
                     a(role="menuitem" ng-href="/api/positions/export_to_xls?department_id={{currentOrg.id}}" ) 导出全部岗位
@@ -52,8 +41,10 @@
                     td.has-checkbox(select-row="pos" mode="multiple")
                     td.org-post
                         a(
-                        nb-dialog
                         template-url="partials/position/position_detail.html"
+                        title="岗位详情"
+                        nb-panel
+                        panel-data="pos"
                         ) {{pos.name}}
                     td(ng-bind="pos.channel.displayName")
                     //- td.org-preparation
