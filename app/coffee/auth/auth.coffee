@@ -50,21 +50,10 @@ class LoginController extends nb.Controller
         # user.employee_no = user.employee_no + ""
         self.http.post('/api/sign_in', {user: user})
             .success (data) ->
-                self.cookies.token = data.token
-                #后期做权限的时候此处一定要改
-                #$cookies will attempt to refresh every 100ms
-                self.timeout ()->
-                    self.rootScope.currentUser = self.User.$fetch()
-                    self.rootScope.allOrgs = self.Org.$search()
-                    self.state.go "home"
-                , 100
-
-                # self.rootScope.currentUser = user
-                #####end
-
-
-            .error (data) ->
-                self.$emit 'error', '#{data.message}'
+                self.rootScope.currentUser = self.User.$fetch()
+                self.rootScope.allOrgs = self.Org.$search()
+                self.state.go "home"
+                
 
 
 
