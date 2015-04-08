@@ -71,10 +71,9 @@
                         td.org-post
                             //- a(ui-sref="^.detail.basic({empId: emp.id})" ng-bind="emp.name")
                             a(
-                                nb-dialog="partials/personnel/info_basic.html"
-                                nb-dialog-class="ngdialog-theme-panel"
+                                nb-panel
+                                template-url="partials/personnel/info_basic.html"
                                 nb-dialog-data="emp"
-                                nb-dialog-scope="this"
                             ) {{emp.name}}
                         td(ng-bind="::emp.employeeNo")
                         td(ng-bind="emp.position.name")

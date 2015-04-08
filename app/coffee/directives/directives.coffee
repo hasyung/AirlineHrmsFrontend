@@ -115,7 +115,7 @@ angular.module 'nb.directives'
         postLink = (scope, elem, attrs) ->
             options = {}
 
-            options['controller'] = attrs.panelController if angular.isDefined(attrs.panelController)
+            options['controller'] = attrs.panelController || angular.noop
             options['template'] = attrs.templateUrl || 'partials/404.html'
             options['scope'] = scope.$parent
 
@@ -124,11 +124,12 @@ angular.module 'nb.directives'
                 opts = {}
                 angular.isDefined(attrs.panelClosePrevious) && ngDialog.close(attrs.nbDialogClosePrevious)
 
-                opts['data'] = options.scope.$eval(attrs.panelData) if angular.isDefined(attrs.panelData)
-                #link https://github.com/angular/angular.js/issues/6404
-                opts['data'] = scope.prepareData() if angular.isDefined(attrs.prepareData)
-
-                angular.extend(opts, options , {className: 'ngdialog-theme-panel'})
+                opts['locals'] = options.scope.$eval(attrs.locals) || {}
+                angular.extend(opts, options , {
+                    bindToController: true
+                    className: 'ngdialog-theme-panel'
+                    controllerAs: 'panel'
+                })
                 ngDialog.open opts
 
             scope.$on '$destroy', -> elem.off('click')
