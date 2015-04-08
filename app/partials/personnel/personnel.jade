@@ -73,8 +73,9 @@
                             a(
                                 nb-panel
                                 template-url="partials/personnel/info_basic.html"
-                                nb-dialog-data="emp"
-                            ) {{emp.name}}
+                                ng-bind="emp.name"
+                                locals="{employee: emp}"
+                            )
                         td(ng-bind="::emp.employeeNo")
                         td(ng-bind="emp.position.name")
                         td(ng-bind="emp.category.displayName")

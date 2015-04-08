@@ -54,6 +54,15 @@
                     a(ui-sref=".resume")
                         span.switch-circle
                         | 个人履历
+                li(ui-sref-active="active")
+                    a(
+                        href="javascript:;"
+                        nb-dialog
+                        template-url="partials/self/self_resume.html"
+                        locals="{currentUser:currentUser}"
+                    )
+                        span.switch-circle
+                        | 个人履历
                 
 
     .personnel-content(flex)

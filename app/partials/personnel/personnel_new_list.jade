@@ -42,8 +42,9 @@
                 li( role="presentation" ng-if="ctrl.getExportParams().length != 0")
                     a(role="menuitem" ng-href="/api/employees/export_resume?employee_ids={{ ctrl.getExportParams() }}" ) 导出所选人员的履历
             md-button.md-raised.skyblue.pull-right(
-                 nb-dialog="partials/personnel/personnel_entry.html"
-                 nb-dialog-class="ngdialog-theme-panel"
+                nb-panel
+                template-url="partials/personnel/personnel_entry.html"
+                locals="{personnelCtrl: ctrl}"
             ) 新员工入职
         .table-container
             h4 新员工列表
@@ -62,19 +63,20 @@
                 tbody
                     tr(ng-repeat="emp in ctrl.employees track by emp.id")
                         td(select-row="emp" mode="multiple")
-                        td(ng-bind="::emp.department.name")
+                        td(ng-bind="emp.department.name")
                         td.org-post
                             //- a(ui-sref="^.detail.basic({empId: emp.id})" ng-bind="emp.name")
                             a(
                                 nb-panel
                                 template-url="partials/personnel/info_basic.html"
                                 locals="{'employee': emp}"
-                            ) {{emp.name}}
-                        td(ng-bind="::emp.employeeNo")
-                        td(ng-bind="::emp.position.name")
-                        td(ng-bind="::emp.category.displayName")
-                        td(ng-bind="::emp.channel.displayName")
+                                ng-bind="emp.name"
+                            )
+                        td(ng-bind="emp.employeeNo")
+                        td(ng-bind="emp.position.name")
+                        td(ng-bind="emp.category.displayName")
+                        td(ng-bind="emp.channel.displayName")
                         //- TODO 用工性质
-                        td(ng-bind="::emp.laborRelation.displayName")
-                        td(ng-bind="::emp.joinScalDate")
+                        td(ng-bind="emp.laborRelation.displayName")
+                        td(ng-bind="emp.joinScalDate")
         .custom-pages(nb-pagination="ctrl.employees.$metadata")
