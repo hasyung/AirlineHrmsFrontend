@@ -44,7 +44,7 @@
                         template-url="partials/position/position_detail.html"
                         title="岗位详情"
                         nb-panel
-                        prepare-data="pos"
+                        locals="{position: pos}"
                         ) {{pos.name}}
                     td(ng-bind="pos.channel.displayName")
                     //- td.org-preparation
