@@ -27,8 +27,6 @@ angular.module 'nb.directives'
                 @options = []
                 @mapped = mapped = parseMappedAttr(@attrs.map) if @attrs.map
 
-
-
                 onSuccess = (data, status) ->
                     @options = _.map data.result, (item) ->
                         _.reduce(item, (res, val, key) ->
@@ -40,8 +38,8 @@ angular.module 'nb.directives'
                         scope.item = _.find @options, (opt) ->
                             return getMappedAttr(mapped, opt) == scope.selected
 
-                if scope.options
-                    @options = scope.options
+                if @scope.options
+                    @options = @scope.options
                 else if attrs.remoteKey
                     @http.get("/api/enum?key=#{@attrs.remoteKey}")
                         .success onSuccess.bind(@)

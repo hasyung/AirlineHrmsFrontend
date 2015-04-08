@@ -156,13 +156,13 @@ class NbSearchCtrl
 
     constructor: (@scope, @Filter, @attrs) ->
         self = @
-        @conditionCode = attrs.nbSearch
-        scope.filters = Filter.$search({code: @conditionCode})
-        scope.predicateObject = {}
+        @conditionCode = @attrs.nbSearch
+        @scope.filters = @Filter.$search({code: @conditionCode})
+        @scope.predicateObject = {}
         inactivePredicates = []
         activePredicates = []
         @scope.conditions = @conditions = []
-        @predicates = scope.predicates = Object.create {} ,{
+        @predicates = @scope.predicates = Object.create {} ,{
             asArray: {
                 enumerable: false
                 get: ->
@@ -219,7 +219,7 @@ class NbSearchCtrl
                             $transcludeFn: $transcludeFn
                             transclude: (element, initialData) ->
                                 that = @
-                                newScope = scope.$new()
+                                newScope = self.scope.$new()
                                 angular.forEach initialData, ((v, k ) -> newScope[key] = v ) if initialData
 
                                 @.$transcludeFn newScope, (clone, newScope) ->
