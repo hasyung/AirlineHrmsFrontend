@@ -97,9 +97,6 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
         .state 'home', {
             url: '/'
             templateUrl: 'partials/home.html'
-            ncyBreadcrumb: {
-                skip: true
-            }
         }
         .state 'login', {
             url: '/login'
@@ -140,19 +137,31 @@ App
     .config ['restmodProvider', restConf]
     .config ['$mdThemingProvider', mdThemingConf]
     .config ['$stateProvider','$urlRouterProvider','$locationProvider', '$httpProvider', routeConf]
-    .run ['$state','$rootScope', 'toaster', '$http', 'Org', 'sweet', 'User', '$enum', '$timeout', '$cookies',
-    ($state, $rootScope, toaster, $http, Org, sweet, User, $enum, $timeout, $cookies) ->
+    .run ['$state', '$location','$rootScope', 'toaster', '$http', 'Org', 'sweet', 'User', '$enum', '$timeout', 'AuthService',
+    ($state, $location, $rootScope, toaster, $http, Org, sweet, User, $enum, $timeout, AuthServ) ->
 
         cancelLoading = ->
-            $rootScope.loading = false
+            $timeout(
+                ()-> $rootScope.loading = false
+                100
+            )
         startLoading = ->
             $rootScope.loading = true
 
         # for $state.includes in view
 
-        $rootScope.$on '$stateChangeStart', ->
+        $rootScope.$on '$stateChangeStart', (evt, _to , _toParam, _from, _fromParam) ->
             startLoading()
-            $timeout cancelLoading, 1000
+            unless AuthServ.isLogged()
+                evt.preventDefault()
+                if AuthServ.isLogging()
+                    AuthServ.promise.then () -> $state.go(_to, _toParam)
+                else
+                    cancelLoading()
+                    $location.path('/login')
+
+        $rootScope.$on '$stateChangeSuccess', (evt, _to, _toParam, _from, _fromParam) ->
+            cancelLoading()
 
 
         $rootScope.$on 'process', startLoading
@@ -165,16 +174,12 @@ App
             $rootScope.loading = false
             toaster.pop(code.name, "提示", info)
 
-        $rootScope.currentUser = User.$fetch()
-
         $rootScope.$state = $state
 
         $rootScope.allOrgs = Org.$search()
 
-        $rootScope.logout = ()->
-            $http.delete('/api/sign_out').success ()->
-                $rootScope.currentUser = null
-                $cookies.token = null
+        $rootScope.logout = () -> AuthServ.logout()
+
 
 
         $rootScope.createFlow = (data, flowname) ->

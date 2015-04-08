@@ -13,7 +13,7 @@ section.org-detail(ng-controller="EditableResource")
                 template-url="partials/orgs/shared/org_transfer.html"
                 )
             button.btn.btn-sm.btn-default.fa.fa-pencil(ng-click="edit()",title="编辑")
-            button.btn.btn-sm.btn-default.fa.fa-plus(title="新增子机构",ng-click="orgCtrl.state = 'newsub'", ng-if="currentOrg.grade.name !== 'secondly_positive'")
+            button.btn.btn-sm.btn-default.fa.fa-plus(has-permission="departments_create" title="新增子机构",ng-click="orgCtrl.state = 'newsub'", ng-if="currentOrg.grade.name !== 'secondly_positive'")
     //- show
     .org-info(ng-hide="orgCtrl.state == 'newsub'")
         form(name="orgUpdateForm" ng-submit="save(currentOrg.$save(), orgUpdateForm)")

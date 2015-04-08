@@ -6,13 +6,37 @@ app = nb.app
 
 class AuthService extends nb.Service
 
-    @.$inject = ['$http', '$rootScope']
+    @.$inject = ['$http', '$rootScope', 'User']
 
     ARRAY_LIKE = /^\[[\W,\w]*\]$/ # test array like string
 
-    constructor: (http, rootScope) ->
-        @permissions = rootScope.currentUser.permissions || [] if rootScope.currentUser
-    set: (permissions) ->
+    login: false
+
+
+    initialized: false # 是否初始化成功, 如果false 切 this.promise != null , 则在登录中
+
+    constructor: (http, @rootScope, @User) ->
+        self = @
+        @permissions = []
+
+        promise = @setupCurrentUser()
+        promise.then (user) ->
+            self.permissions = [].concat user.permissions
+            self.initialized = true
+            delete self.promise
+
+    setupCurrentUser: () ->
+        self = @
+        # export current User to rootScope
+        user =  @user = @rootScope.currentUser = @User.$fetch()
+        @promise = user.$asPromise()
+
+
+    getPermissions: () ->
+        return @permissions
+
+
+    setPermissions: (permissions) ->
         @permissions = permissions
     # string | array
     has: (permission) ->
@@ -20,40 +44,51 @@ class AuthService extends nb.Service
 
         permission = permission.trim()
 
-        if  ARRAY_LIKE.test(permission)
+        if  !ARRAY_LIKE.test(permission)
             hasPermission = @permissions.indexOf(permission) != -1
-        else if angular.isArray(permission)
+        else
             try
                 permission_array = JSON.parse(permission)
             catch e
                 # array格式错误
                 throw new Error('permission format error')
-            hasPermission = permission_array.every((perm)-> perm.indexOf(@permissions) != -1)
+            hasPermission = permission_array.every((perm)-> @permissions.indexOf(perm) != -1)
 
         return hasPermission
+
+    isLogged: () ->
+        return @initialized
+
+    isLogging: () ->
+        return !!@promise
+
+    logout: () ->
+        onSuccess = ->
+            @rootScope.currentUser = null
+            @cookies.token = null
+        @http.delete('/api/sign_out').success onSuccess.bind(@)
 
 
 
 class LoginController extends nb.Controller
 
 
-    @.$inject = ['$http','$stateParams', '$state', '$scope', '$rootScope', '$cookies', 'User', '$timeout', 'Org']
+    @.$inject = ['$http', '$state', '$rootScope', 'User', 'Org', 'AuthService']
 
 
-    constructor: (@http, @params, @state, @scope, @rootScope, @cookies, @User, @timeout, @Org)->
-        @scope.currentUser = null #当前用户
-
-    loadInitialData: () -> #初始化数据
+    constructor: (@http, @state, @rootScope, @User, @Org, @Auth)->
 
     login: (user) ->
-        self = @
+        rootScope = @rootScope
+        onSuccess = ->
+            @Auth.setupCurrentUser()
+            #TODO: consider initial enums resource to service
+            @rootScope.allOrgs = @Org.$search()
+            @state.go "home"
+
         # user.employee_no = user.employee_no + ""
-        self.http.post('/api/sign_in', {user: user})
-            .success (data) ->
-                self.rootScope.currentUser = self.User.$fetch()
-                self.rootScope.allOrgs = self.Org.$search()
-                self.state.go "home"
-                
+        @http.post('/api/sign_in', {user: user})
+            .success onSuccess.bind(@)
 
 
 
@@ -82,4 +117,4 @@ class SigupController extends nb.Controller
 
 app.controller('LoginController', LoginController)
 app.controller('SigupController', SigupController)
-app.controller('AuthService', AuthService)
+app.service('AuthService', AuthService)

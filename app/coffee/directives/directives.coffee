@@ -426,18 +426,18 @@ angular.module 'nb.directives'
     # 基于性能考虑与实际业务， 不支持动态权限
     # 所有权限使用较高优先级指令优先check, 如果不满足需求
     #
-    #
     #  usage:
     #
     # <div has-permission="department_index"></div>
     # <div has-permission="['department_index','department_active']"></div>
 
-    .directive 'has-permission', [(AuthService) ->
+    .directive 'hasPermission', ['AuthService', '$animate', (AuthService, $animate) ->
 
         postLink = (scope, elem, attrs, ctrl, $transclude) ->
-            if AuthService.has(attrs.permission)
+            if AuthService.has(attrs.hasPermission)
                 $transclude (clone, newScope) ->
-                    $animate.enter(clone, elem.parent, elem)
+                    clone[clone.length++] = document.createComment(" end hasPermission: #{attrs.hasPermission}")
+                    $animate.enter(clone, elem.parent(), elem)
 
             # scope.$watch attrs.permission, (value) ->
             #     if value
@@ -462,8 +462,9 @@ angular.module 'nb.directives'
             #             block = null
 
         return {
+            multiElement: true
             transclude: 'element'
-            priority: 600
+            priority: 601
             terminal: true
             restrict: 'A'
             $$tlb: true
