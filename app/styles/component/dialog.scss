@@ -583,13 +583,13 @@ body.ngdialog-open {
 
 // material dialog
 md-dialog {
+    .md-subheader.md-sticky-no-effect {
+        background-color: #f6f8f8;
+        margin-right: 0;
+    }
+
     .sticky-container {
         padding: 0;
-
-        >.md-subheader {
-            background-color: #f6f8f8;
-            margin-right: 0;
-        }
     }
 }
 

@@ -216,6 +216,7 @@ class OrgsCtrl extends nb.Controller
     initialHistoryData: ->
         onSuccess = (res)->
             logs = res.data.change_logs
+            return if logs.length == 0
             groupedLogs = _.groupBy logs, (log) ->
                 moment(log.created_at).format('YYYY')
             logsArr = []
@@ -332,13 +333,13 @@ class PositionCtrl extends nb.Controller
             .filter (pos) -> return pos.isSelected
             .map (pos) -> return pos.id
 
-    posTransfer: () -> #将岗位批量划转到另外一个机构下
+    posTransfer: (selectOrg, isConfirm) -> #将岗位批量划转到另外一个机构下
+        return if !isConfirm
         self = @
         selectedPosIds = @getSelectsIds()
-        if selectedPosIds.length > 0 && @selectOrg
+        if selectedPosIds.length > 0 && selectOrg
             @positions
-                .$adjust({department_id: @selectOrg.id, position_ids: selectedPosIds })
-            self.selectOrg = null
+                .$adjust({department_id: selectOrg.id, position_ids: selectedPosIds })
         else
             # 通知被划转岗位和目标机构必选
             @Evt.$send "position:transfer:error", "被划转岗位和目标机构必选"
