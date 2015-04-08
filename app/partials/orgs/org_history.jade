@@ -30,4 +30,4 @@ md-dialog.org_history
 
     .md-actions
         md-button(ng-click='dialog.close()') 取 消
-        md-button.md-primary(ng-click="ctrl.backToPast() ; dialog.close()") 确 定
+        md-button.md-primary(ng-click="ctrl.backToPast() ; dialog.close()" ng-disabled="!ctrl.currentLog") 确 定

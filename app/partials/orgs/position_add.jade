@@ -72,4 +72,74 @@ md-dialog(ng-init="newPos = {departmentId: currentOrg.id}; specification = {}" s
 				md-input-container(flex)
 					label
 					button.btn.btn-info(type='submit' wz-next="" ng-disabled="posAdvancedForm.$invalid") 完成
+//- =======
+//- .app-content-wrapper(ng-init="newPos = {departmentId: currentOrg.id}; specification = {}")
+//- 	wizard(on-finish="ctrl.createPos(newPos, specification) && closeThisDialog()")
+//- 		form(title="基本信息" wz-step canexit="posForm.$valid" name="posForm" novalidate )
+//- 			md-input-container(flex)
+//- 				label 岗位名称
+//- 				input(type='text', placeholder='岗位名称', ng-model="newPos.name", name="name", required)
+//- 			md-input-container.row-has-value(flex)
+//- 				label 岗位通道
+//- 				md-select(ng-model="newPos.channel", md-on-open="loadEnum('channels')")
+//- 					md-select-label {{newPos.channel.displayName || '无'}}
+//- 					md-option(ng-value="channel" ng-repeat="channel in enums.channels") {{channel.displayName}}
+//- 			md-input-container(flex)
+//- 				label OA文件编号
+//- 				input(type='text', placeholder='填写OA文件编号', name="fileName", ng-model="newPos.oaFileNo", required)
+//- 			md-input-container(flex)
+//- 				label 编制
+//- 				input(type='number', placeholder='填写计划编制人数', name="budgetedStaffing", ng-model="newPos.budgetedStaffing", required)
+//- 			md-input-container.row-has-value(flex)
+//- 				label 工时制度
+//- 				md-select(ng-model="newPos.schedule", md-on-open="loadEnum('position_schedules')")
+//- 					md-select-label {{newPos.schedule.displayName || '无'}}
+//- 					md-option(ng-value="schedule" ng-repeat="schedule in enums.position_schedules") {{schedule.displayName}}
+//- 			md-input-container.row-has-value(flex)
+//- 				label 分类
+//- 				md-select(ng-model="newPos.category", md-on-open="loadEnum('categories')")
+//- 					md-select-label {{newPos.category.displayName || '无'}}
+//- 					md-option(ng-value="category" ng-repeat="category in enums.categories") {{category.displayName}}
+//- 			md-input-container.row-has-value(flex)
+//- 				label 岗位性质
+//- 				md-select(ng-model="newPos.nature", md-on-open="loadEnum('position_natures')")
+//- 					md-select-label {{newPos.nature.displayName || '无'}}
+//- 					md-option(ng-value="nature" ng-repeat="nature in enums.position_natures") {{nature.displayName}}
+//- 			md-input-container(flex)
+//- 				label 所在部门
+//- 				input(disabled ng-model="currentOrg.name")
+//- 			button.btn.btn-info.pull-right(style="width: 80px; margin-bottom: 20px;" type="submit" wz-next="" ng-disabled="posForm.$invalid") 下一步
+
+
+//- 		form(title="岗位说明" wz-step canexit="posAdvancedForm.$valid" name="posAdvancedForm")
+//- 			md-input-container
+//- 				label 工作职责
+//- 				textarea(ng-model="specification.duty" placeholder="工作职责" md-maxlength="8000")
+//- 			md-input-container(flex)
+//- 				label 人事权限
+//- 				input(type='text', placeholder='请输入人事权限', ng-model="specification.personnelPermission")
+//- 			md-input-container(flex)
+//- 				label 财务权限
+//- 				input(type='text', placeholder='请输入财务权限', ng-model="specification.financialPermission")
+//- 			md-input-container(flex)
+//- 				label 业务权限
+//- 				input(type='text', placeholder='请输入业务权限', ng-model="specification.businessPermission")
+//- 			md-input-container(flex)
+//- 				label 直属上级
+//- 				input(type='text', placeholder='请输入直属上级', ng-model="specification.superior")
+//- 			md-input-container(flex)
+//- 				label 直属下级
+//- 				input(type='text', placeholder='请输入直属下级', ng-model="specification.underling")
+//- 			md-input-container(flex)
+//- 				label 内部联系
+//- 				input(type='text', placeholder='请输入内部联系', ng-model="specification.internalRelation")
+//- 			md-input-container(flex)
+//- 				label 外部联系
+//- 				input(type='text', placeholder='请输入外部联系', ng-model="specification.externalRelation")
+//- 			md-input-container
+//- 				label 任职条件
+//- 				textarea(ng-model="specification.qualification" placeholder="任职条件" md-maxlength="8000")
+
+//- 			button.btn.btn-info.pull-right(style="width: 80px; margin-bottom: 20px;" type='submit' wz-next="" ng-disabled="posAdvancedForm.$invalid") 完成
+//- >>>>>>> typo
 

@@ -1,0 +1,30 @@
+div(flow-init="{target: '/api/me/upload_favicon', uploadMethod:'PUT', testChunks:false, singleFile:true}"
+    flow-file-success="currentUser.$refresh() && closeThisDialog()"
+)
+    .modal-header.tl-top-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true', ng-click="closeThisDialog()") ×
+        h4.modal-title 头像设置
+    .modal-content
+        .thumbnail(ng-hide="$flow.files.length")
+            img(src="http://www.placehold.it/500x357/EFEFEF/AAAAAA&text=no+image")
+        .thumbnail(ng-show="$flow.files.length")
+            img(flow-img="$flow.files[0]" style="width:500px;height:357px;")
+            //- .avator-preview(flex="30")
+            //-     .big-avator
+            //-         img(ng-if="!$flow.files.length" ng-src="{{currentUser.favicon}}")
+            //-         img(ng-if="$flow.files.length" flow-img="$flow.files[0]")
+            //-     .mid-avator
+            //-         img(ng-if="!$flow.files.length" ng-src="{{currentUser.favicon}}")
+            //-         img(ng-if="$flow.files.length" flow-img="$flow.files[0]")
+            //-     .sml-avator
+            //-         img(ng-if="!$flow.files.length" ng-src="{{currentUser.favicon}}")
+            //-         img(ng-if="$flow.files.length" flow-img="$flow.files[0]")
+        div
+            a.btn(href="javascript:;" ng-hide="$flow.files.length" flow-btn flow-attrs="{accept:'image/*'}") 选择图片
+            a.btn(href="javascript:;" ng-show="$flow.files.length" flow-btn flow-attrs="{accept:'image/*'}") 更改图片
+            a.btn.btn-danger(href="javascript:;" ng-show="$flow.files.length" ng-click="$flow.cancel()") 删除图片
+
+    .modal-footer.clearfix
+        button.btn.btn-info.btn-sm.pull-right(ng-click="$flow.upload()") 确 定
+        button.btn.btn-default.btn-sm.pull-right(ng-click='closeThisDialog()') 取 消
+

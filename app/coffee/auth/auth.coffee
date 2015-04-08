@@ -90,6 +90,17 @@ class LoginController extends nb.Controller
         @http.post('/api/sign_in', {user: user})
             .success onSuccess.bind(@)
 
+    changePwd: (user)->
+        self = @
+        if user.new_password != user.password_confirm
+            self.Evt.$send 'password:confirm:error', "两次输入新密码不一致"
+            return
+
+        self.http.put('/api/me/update_password', user)
+            .success (data) ->
+                self.Evt.$send 'password:update:success', '密码修改成功，请重新登录'
+                self.rootScope.logout()
+                self.state.go "login"
 
 
 

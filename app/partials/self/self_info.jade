@@ -1,9 +1,15 @@
 .app-content-wrapper(layout="row" flex style="padding-left: 0")
     .personnel-menu
         .avator
-            .avator-area
+            .avator-area(
+                nb-dialog="partials/self/self_info_basic/avator_upload.tpl.html"
+                nb-dialog-scope="this"
+            )
+                img(ng-src="{{currentUser.favicon}}")
             h3(ng-bind="currentUser.$cmStatus.name")
             p(ng-bind="currentUser.employeeNo")
+            //- input(type="file" nv-file-select="" uploader="uploader")
+                
         .personnel-info-list
             ul
                 li(ui-sref-active="active")

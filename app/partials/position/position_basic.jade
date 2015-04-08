@@ -11,7 +11,7 @@ form(name="posEditForm" ng-submit="save(currentPos.$save(), posEditForm)" ng-con
                 input(ng-model="currentPos.oaFileNo")
             md-input-container(flex)
                 label 创建时间
-                input(type="date" ng-model="currentPos.createAt")
+                input(disabled type="date" ng-model="currentPos.createAt")
         div(layout)
             md-input-container(flex)
                 label 岗位名称
@@ -31,12 +31,12 @@ form(name="posEditForm" ng-submit="save(currentPos.$save(), posEditForm)" ng-con
         div(layout)
             md-input-container.row-has-value(flex)
                 label 分类
-                md-select(ng-model="currentPos.category" md-on-open="loadEnum('categories')")
+                md-select(ng-model="currentPos.category" md-on-open="loadEnum('categories')" ng-disabled="!editing")
                     md-select-label {{currentPos.category? currentPos.category.displayName : '无'}}
                     md-option(ng-value="category" ng-repeat="category in enums.categories") {{category.displayName}}
             md-input-container.row-has-value(flex)
                 label 通道
-                md-select(ng-model="currentPos.channel" md-on-open="loadEnum('channels')")
+                md-select(ng-model="currentPos.channel" md-on-open="loadEnum('channels')" ng-disabled="!editing")
                     md-select-label {{currentPos.channel? currentPos.channel.displayName : '无'}}
                     md-option(ng-value="channel" ng-repeat="channel in enums.channels") {{channel.displayName}}
         div(layout)

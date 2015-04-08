@@ -1,13 +1,11 @@
 .position-manage {
     padding: 15px;
+}
 
-    .searchbar {
-        input {
-            padding: 6px 12px;
-        }
-    }
-
-    .search-commit {
-        margin: 10px 40px;
-    }
+.steps-indicator {
+    position: relative;
+}
+//左边栏菜单的
+.arrow.left.arrow-info:after {
+    border-right-color: #daedf8;
 }

@@ -155,6 +155,52 @@ angular.module 'nb.directives'
         }
     ]
 
+
+
+    .directive 'userInfoDropdown', ['$document', ($doc)->
+
+        postLink = (scope, elem, attr)->
+
+            closeDropdown = (e)->
+                e.stopPropagation()
+                scope.$apply ()->
+                    scope.isOpen = false
+                return
+            # 下面两行代码是为了防止点击元素后事件冒泡至body，然后影藏弹出框
+            elem.on 'click', (e)->
+                e.stopPropagation()
+
+            $doc.on 'click', closeDropdown
+
+            scope.$on '$destroy', () ->
+                $doc.off 'click', closeDropdown
+                elem.off 'click'
+
+
+        return {
+            restrict: 'EA'
+            replace: true
+            scope:{}
+            transclude: true
+            template: '''
+                <li class="dropdown", ng-class="{\'open\': isOpen}" ng-click="dropdown.toggle()">
+                    <a href="" data-toggle="dropdown" class="dropdown-toggle clear">
+                        <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
+                            <img src="../../images/01.jpg" alt="..."/><i class="on md b-white bottom"></i>
+                        </span>
+                        <span ng-bind="dropdown.rootScope.currentUser.name"></span>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu" ng-if="isOpen" role="menu" aria-labelledby="dropdownMenu1" ng-transclude>
+                    </ul>
+                </li>
+            '''
+            controller: UserInfoDropdownCtrl
+            controllerAs: 'dropdown'
+            link: postLink
+
+        }
+    ]
 class SimpleDropdownCtrl
     @.$inject = ['$scope', '$attrs']
     constructor: (@scope, @attrs) ->
@@ -163,5 +209,12 @@ class SimpleDropdownCtrl
             @scope.btnText = @attrs.btnText
         else
             throw Error("btn-text attribute is required")
+    toggle: () ->
+        @scope.isOpen = !@scope.isOpen
+
+class UserInfoDropdownCtrl
+    @.$inject = ['$scope', '$attrs', '$rootScope']
+    constructor: (@scope, @attrs, @rootScope) ->
+        @scope.isOpen = false
     toggle: () ->
         @scope.isOpen = !@scope.isOpen

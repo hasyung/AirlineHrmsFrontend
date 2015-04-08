@@ -27,7 +27,7 @@ section.org-detail(ng-controller="EditableResource")
                 md-input-container.row-has-value
                     label 机构性质
                     //- nb-dropdown(ng-model="copyOrg.nature" remote-key="department_natures", name="orgAddr", required="true")
-                    md-select(ng-model="currentOrg.nature" md-on-open="loadEnum('department_natures')")
+                    md-select(ng-model="currentOrg.nature" md-on-open="loadEnum('department_natures')" ng-disabled="!editing")
                         md-select-label {{currentOrg.nature ? currentOrg.nature.displayName : '无'}}
                         md-option(ng-value="nature" ng-repeat="nature in enums.department_natures") {{nature.displayName}}
                     //- input(ng-model="currentOrg.nature.displayName" name="orgNature")
@@ -38,6 +38,7 @@ section.org-detail(ng-controller="EditableResource")
             .form-actions(ng-hide="!editing")
                 md-button.md-raised.white(type="button", ng-click="cancel(currentOrg, $event)") 取消
                 md-button.skyblue.md-raised(type="submit") 保存
+
     //- new sub
     .org-info(ng-if="orgCtrl.state == 'newsub' " ng-init="neworg = {}")
         form(novalidate, ng-submit="orgCtrl.newsub(newsubForm, neworg)", name="newsubForm")
@@ -58,6 +59,7 @@ section.org-detail(ng-controller="EditableResource")
                 .form-actions
                     md-button.md-raised.white(type="button" ng-click="orgCtrl.state = 'show'") 取消
                     md-button.skyblue.md-raised(type="submit") 保存
+
 
 section(ng-if="currentOrg.status !== 'destroy_inactive'")
     .org-title

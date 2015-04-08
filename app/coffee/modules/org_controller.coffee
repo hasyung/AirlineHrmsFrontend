@@ -250,11 +250,11 @@ class OrgsCtrl extends nb.Controller
 
     # 返回机构的指定版本
     backToPast: (version)->
-        # self = @
+        self = @
         if @currentLog
-            @orgs.$refresh({version: @currentLog.id})
-        @isHistory = true
-        @currentOrg = @treeRootOrg
+            @orgs.$refresh({version: @currentLog.id}).$then ()->
+                self.isHistory = true
+                self.currentOrg = self.treeRootOrg
     expandLog: (log)->
         # 防止UI中出现多个被选中的item
         @currentLog.active = false if @currentLog
@@ -282,8 +282,6 @@ class OrgCtrl extends nb.Controller
 
     constructor: (@Org, @params, @scope, @rootScope, @Evt, @Position , @sweet) ->
         @state = 'show' # show editing newsub
-        # @scope.org = @Org.$find(@params.orgId)
-        # scope.$onRootScope 'org:link', @.orgLink.bind(@)
         self = @
         @scope.$parent.$watch 'ctrl.currentOrg', (newval)->
             self.orgLink(newval)
@@ -327,6 +325,7 @@ class PositionCtrl extends nb.Controller
         # @selectOrg = null # 划转所选择的机构 rework
         # @scope.allSelect = false
         # @scope.$onRootScope 'position:refresh', @.resetData.bind(@)
+
 
     getSelectsIds: ()->
         @positions

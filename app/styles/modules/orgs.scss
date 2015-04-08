@@ -133,15 +133,6 @@
 
 
 .org-chart-window {
-    // display: flex;
-
-    // .svg-wrapper {
-    //     -webkit-align-items: center;
-    //     align-items: center;
-    //     -webkit-justify-content: center;
-    //     justify-content: center;
-    // }
-
     .orgchart-box-active {
         fill: #dfe5e7;
 
@@ -239,7 +230,6 @@
         margin-left: 10px;
     }
 }
-
 // input编辑状态
 .md-input {
     padding-left: 0;
@@ -448,7 +438,5 @@ md-dialog.effect_changes {
         width: 270px;
     }
 }
-
-
 
 

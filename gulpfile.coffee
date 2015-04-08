@@ -124,6 +124,7 @@ paths =
         'compat/socket.io.js'
         'compat/pomeloclient.js'
         'compat/communite.js'
+        'deps/ng-flow/dist/ng-flow-standalone.js'
         # 'deps/angular-ui-utils/ui-utils.js'
         # 'deps/jasny-bootstrap/dist/js/jasny-bootstrap.js' jasny bootstrap 增强版，提供一些好用组件
     ]
