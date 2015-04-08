@@ -132,16 +132,4 @@ class ReviewCtrl extends nb.Controller
             params.push temp
         @changes.checkChanges(params)
 
-class DialogCtrl extends nb.Controller
-    @.$inject = ['$scope', 'data', '$mdDialog']
-    constructor: (@scope, @data, @mdDialog) ->
-        self = @
-        @scope.data = @data
-
-
-    
-
-
-
 app.config(Route)
-app.controller('DialogCtrl', DialogCtrl)
