@@ -317,8 +317,8 @@ class OrgCtrl extends nb.Controller
 class PositionCtrl extends nb.Controller
     @.$inject = ['$scope', '$nbEvent', 'Position', '$stateParams', 'Org', 'Specification']
     constructor: (@scope, @Evt, @Position, @stateParams, @Org, @Specification) ->
-        @positions = @scope.panel.data # from parent ctrl
-        @scope.ctrl = this
+        # @positions = @scope.panel.data # from parent ctrl
+        # @scope.ctrl = this
         # orgId = @stateParams.id
         # @currentOrg = Org.$find(orgId)
         # @positions = @currentOrg.positions.$fetch()
