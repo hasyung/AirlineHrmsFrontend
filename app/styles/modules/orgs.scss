@@ -303,9 +303,17 @@ fieldset[disabled] {
         transform: translate3d(0, 25px, 0), scale(1);
     }
 
-    md-input-container label {
-        color: $text-muted;
+    md-input-container {
+        padding-bottom: 9px;
+
+        label {
+            color: $text-muted;
+        }
     }
+
+    // md-input-container label {
+    //     color: $text-muted;
+    // }
 
     .md-input {
         padding-left: 70px;
@@ -413,6 +421,7 @@ md-input-container {
         margin-bottom: 20px;
     }
 }
+
 //划转机构操作的 dialog
 md-dialog.org-transfer {
     .dialog-content {
