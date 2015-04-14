@@ -1,9 +1,20 @@
 
 
+$font-family-sans-serif:  "Helvetica Neue", Helvetica, 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+$icon-font-path: 'fonts/';
+
 //font
-$text-color:            #333;
-$text-muted:            lighten($text-color, 25%);
-$text-title:            #58666e;
+$text-color:            rgba(#000, .87);
+$text-muted:            rgba(#000, .54);
+$text-hint:             rgba(#000, .26);
+
+$font-size-h1:            24px;
+$font-size-h2:            20px;
+$font-size-h3:            16px;
+
+
+
+$text-title:            #58666f;
 $a-color:               #468fce;
 $over-staff-color:      #d9534f;
 
@@ -35,7 +46,15 @@ $scroll-bar-width:                   17px;
 $bg-black:             #3a3f52;
 $bg-black-dk:          #31374b;
 
+$bg-header:            #f6f8f8;
+
+//border-color
+$border-color:         #edf1f2;
+
+//table-color
+// $table-bg-accent:     #fafbfc;
+
 //status colors
-$success :             #86c440;
+$success :             #27c24c;
 $danger :              #ff7976;
 $focus :               #46b8da;

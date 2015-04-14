@@ -3,9 +3,17 @@
         span(ng-bind="selected.displayName || item.displayName || '请选择'")
         span.caret
     ul.dropdown-menu(role="menu")
-        li(role="presentation", ng-repeat="item in dropdown.options track by  item.displayName")
+        li(role="presentation", ng-repeat="item in dropdown.options track by $index")
             a(
             role="menuitem", tabindex="-1"
             href="javascript:void(0);"
             ng-click="dropdown.setSelected($index)"
             ng-bind="item.displayName")
+//- md-select(ng-model="selected")
+//-     md-select-label {{selected.displayName || item.displayName || '请选择'}}
+//-     md-option(ng-value="item" ng-repeat="item in dropdown.options track by $index") {{item.displayName}}
+
+//- <md-select ng-model="user" md-on-open="loadUsers()" style="min-width: 200px;">
+//-       <md-select-label>{{ user ? user.name : 'Assign to user' }}</md-select-label>
+//-       <md-option ng-value="user" ng-repeat="user in users">{{user.name}}</md-option>
+//-     </md-select>

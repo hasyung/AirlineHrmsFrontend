@@ -1,7 +1,11 @@
 angular.module 'nb.directives'
     .directive 'nbDropdown', ['$http', 'inflector', '$document', ($http, inflector, $doc)->
 
-
+        # return array
+        # example:
+        #   {list:{item: 123}
+        # return ['list', 'item']
+        #
         parseMappedAttr = (mapped)->
             prefixIndex = mapped.indexOf('$item.')
             throw Error("map属性格式不正确, '必须符合 $item.xx.xx 格式'") if prefixIndex != 0
@@ -21,7 +25,7 @@ angular.module 'nb.directives'
                 self = @
                 @scope.isOpen = false
                 @options = []
-                @mapped = parseMappedAttr(@attrs.map) if @attrs.map
+                @mapped = mapped = parseMappedAttr(@attrs.map) if @attrs.map
 
 
 
@@ -31,16 +35,16 @@ angular.module 'nb.directives'
                             res[inflector.camelize(key)] = val
                             return res
                         , {})
-                onError = ->
-                    scope.$emit('dropdown:notfound:error')
-
+                    # 处理map 属性反向映射
+                    if scope.selected && attrs['map']
+                        scope.item = _.find @options, (opt) ->
+                            return getMappedAttr(mapped, opt) == scope.selected
 
                 if scope.options
                     @options = scope.options
                 else if attrs.remoteKey
                     @http.get("/api/enum?key=#{@attrs.remoteKey}")
                         .success onSuccess.bind(@)
-                        .error onError
                 else
                     throw new Error('dropdown need options')
             setSelected: ($index) ->
@@ -63,6 +67,11 @@ angular.module 'nb.directives'
             dropdownCtrl = $ctrl[0]
             ngModelCtrl = $ctrl[1]
             dropdownCtrl.ngModelCtrl = ngModelCtrl
+
+
+
+
+
             # 下面两行代码是为了防止点击元素后事件冒泡至body，然后影藏弹出框
             elem.on 'click', (e)->
                 e.stopPropagation()
@@ -76,7 +85,7 @@ angular.module 'nb.directives'
             scope.$watch(
                 -> dropdownCtrl.isOpen
                 ,
-                (newValue, oldValue) -> 
+                (newValue, oldValue) ->
                     if newValue == true
                         $doc.on 'click', closeDropdown
                     else
@@ -103,47 +112,7 @@ angular.module 'nb.directives'
 
         }
     ]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     .directive 'simpleDropdown', ['$document', ($doc)->
-
-        class simDropdownCtrl
-            @.$inject = ['$scope', '$attrs']
-            constructor: (@scope, @attrs) ->
-                @scope.isOpen = false
-                if @attrs.btnText
-                    @scope.btnText = @attrs.btnText
-                else
-                    throw Error("btn-text attribute is required")
-            toggle: () ->
-                @scope.isOpen = !@scope.isOpen
 
         postLink = (scope, elem, attr)->
 
@@ -169,18 +138,83 @@ angular.module 'nb.directives'
             replace: true
             scope:{}
             transclude: true
-            template: '<div class="dropdown", ng-class="{\'open\': isOpen}">' +
-                        '  <button ng-click="dropdown.toggle()" class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">' +
-                        '    {{btnText}}' +
-                        '    <span class="caret"></span>' +
-                        '  </button>' +
-                        '  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" ng-transclude>' +
-                        '  </ul>' +
-                        '</div>'
-            controller: simDropdownCtrl
+            template: '''
+            <div class="dropdown", ng-class="{\'open\': isOpen}">
+              <md-button ng-click="dropdown.toggle()" class="skyblue  md-raised dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">
+                {{btnText}}
+                <span class="caret"></span>
+              </md-button>
+              <ul class="dropdown-menu" ng-if="isOpen" role="menu" aria-labelledby="dropdownMenu1" ng-transclude>
+              </ul>
+            </div>
+            '''
+            controller: SimpleDropdownCtrl
             controllerAs: 'dropdown'
             link: postLink
 
         }
     ]
 
+
+
+    .directive 'userInfoDropdown', ['$document', ($doc)->
+
+        postLink = (scope, elem, attr)->
+
+            closeDropdown = (e)->
+                e.stopPropagation()
+                scope.$apply ()->
+                    scope.isOpen = false
+                return
+            # 下面两行代码是为了防止点击元素后事件冒泡至body，然后影藏弹出框
+            elem.on 'click', (e)->
+                e.stopPropagation()
+
+            $doc.on 'click', closeDropdown
+
+            scope.$on '$destroy', () ->
+                $doc.off 'click', closeDropdown
+                elem.off 'click'
+
+
+        return {
+            restrict: 'EA'
+            replace: true
+            scope:{}
+            transclude: true
+            template: '''
+                <li class="dropdown", ng-class="{\'open\': isOpen}" ng-click="dropdown.toggle()">
+                    <a href="" data-toggle="dropdown" class="dropdown-toggle clear">
+                        <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
+                            <img src="../../images/01.jpg" alt="..."/><i class="on md b-white bottom"></i>
+                        </span>
+                        <span ng-bind="dropdown.rootScope.currentUser.name"></span>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu" ng-if="isOpen" role="menu" aria-labelledby="dropdownMenu1" ng-transclude>
+                    </ul>
+                </li>
+            '''
+            controller: UserInfoDropdownCtrl
+            controllerAs: 'dropdown'
+            link: postLink
+
+        }
+    ]
+class SimpleDropdownCtrl
+    @.$inject = ['$scope', '$attrs']
+    constructor: (@scope, @attrs) ->
+        @scope.isOpen = false
+        if @attrs.btnText
+            @scope.btnText = @attrs.btnText
+        else
+            throw Error("btn-text attribute is required")
+    toggle: () ->
+        @scope.isOpen = !@scope.isOpen
+
+class UserInfoDropdownCtrl
+    @.$inject = ['$scope', '$attrs', '$rootScope']
+    constructor: (@scope, @attrs, @rootScope) ->
+        @scope.isOpen = false
+    toggle: () ->
+        @scope.isOpen = !@scope.isOpen

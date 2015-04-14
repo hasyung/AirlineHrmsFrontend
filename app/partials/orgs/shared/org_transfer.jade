@@ -1,11 +1,10 @@
-.modal-header
-    button.close(type='button', data-dismiss='modal', aria-hidden='true', ng-click="ctrl.cancel($event)") ×
-    h4.modal-title 机构
-.modal-body
+form.clearfix(ng-submit="orgCtrl.transfer(transfer_dest_org) && closeThisDialog()" name="trans_form")
+    .modal-header
+        h4.modal-title 机构划转
     div(slimscroll height="300px")
-        nb-org-tree(selected-data="ctrl.selectedData")
-.modal-footer
-    .pull-right.button-group
-        button.btn.btn-default.btn-sm(type='button',ng-click='ctrl.cancel($event)') 取消
-        button.btn.btn-info.btn-sm(type='button', ng-click="ctrl.ok()") 确定
+        nb-org-tree(ng-model="transfer_dest_org" tree-data="allOrgs" required)
+    .button-group.panel-footer.clearfix
+        button.btn.btn-info.btn-sm.pull-right(type='submit' ng-disabled="trans_form.$invalid") 确定
+        button.btn.btn-default.btn-sm.pull-right(type='button',ng-click='closeThisDialog()') 取消
+
 

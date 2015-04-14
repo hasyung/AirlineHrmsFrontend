@@ -1,0 +1,14 @@
+md-dialog(ng-init="change = data")
+    md-subheader 
+        h3 {{change.name}}的"{{change.auditableType}}信息"修改记录
+        md-button.pull-right(ng-click="ctrl.mdDialog.hide()") 关闭
+    md-content
+        table.table.table-striped.custom-table.popup-table
+            tr
+                th() 字段
+                th() 修改前
+                th() 修改后
+            tr(ng-repeat="(field, val) in change.auditedChanges", ng-if="field != 'unused'")
+                td(ng-bind="field")
+                td.overflow-text(ng-bind-html="val[0] || '无'", ng-attr-title="{{val[0]}}")
+                td.overflow-text(ng-bind-html="val[1] || '无'", ng-attr-title="{{val[1]}}")

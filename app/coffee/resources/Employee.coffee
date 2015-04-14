@@ -4,29 +4,46 @@ resources = angular.module('resources')
 
 Employee = (restmod, RMUtils, $Evt) ->
 
-    # restmod.model('/positions')
-    Employee = restmod.model('/employees').mix 'nbRestApi', {
-        department_id: {mask: 'R', map: 'department.id'}
-        department: {mask: 'CU'}
-        # isSelected: {mask: "CU"}
-        # 是否超编
+    Employee = restmod.model('/employees').mix 'nbRestApi', 'DirtyModel', {
+        # departmentId: {mask: 'R', map: 'department.id'}
+        department: {mask: 'CU', belongsTo: 'Org'}
+        # dept: {belongsTo: 'Org', key: 'department_id'}
+
+        joinScalDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
+
+        startDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
+
+        isSelected: {mask: "CU"}
+        resume: { hasOne: 'Resume', mask: 'CU'}
 
         $hooks: {
-
+            'after-create': ->
+                $Evt.$send('employee:create:success', "新员工创建成功")
+            'after-update': ->
+                $Evt.$send('employee:update:success', "员工信息更新成功")
         }
         $extend:
-            Collection: {}
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
 
 
     }
+Formerleaders = (restmod, RMUtils, $Evt) ->
+    Leader = restmod.model('/formerleaders').mix 'nbRestApi', {
+        $config:
+            jsonRoot: 'employees'
+
+        startDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
+        endDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
 
 
+        $extend:
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
 
-
-
-
-
-
-
+    }
 
 resources.factory 'Employee',['restmod', 'RMUtils', '$nbEvent', Employee]
+resources.factory 'Formerleaders',['restmod', 'RMUtils', '$nbEvent', Formerleaders]

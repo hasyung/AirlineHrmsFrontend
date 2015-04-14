@@ -1,7 +1,7 @@
 //机构各种切换窗口公共样式
 .app-content-wrapper {
     height: 100%;
-    overflow: scroll;
+    padding: 20px;
 }
 
 .org-pos-list {
@@ -25,7 +25,8 @@
 }
 
 .org-modal-posttop {
-    font-size: $font-size-md;
+    color: $text-title;
+    font-size: $font-size-lg;
     height: 50px;
     line-height: 50px;
     padding-left: 15px;
@@ -41,9 +42,13 @@
         margin-top: 10px;
     }
 
-    .btn-info {
-        padding-bottom: 3px;
-        padding-top: 3px;
+    >.btn-info {
+        border-radius: 4px;
+        font-size: 14px;
+        line-height: 1.43em;
+        margin-right: 20px;
+        margin-top: 10px;
+        padding: 6px 12px;
     }
 
     .btn-submit {
@@ -53,15 +58,67 @@
     ul {
         line-height: 21px;
     }
+
+    .md-button {
+        font-size: 14px;
+        line-height: 1.43em;
+        margin-right: 20px;
+        margin-top: 10px;
+        padding: 6px 12px;
+    }
+}
+
+.table-container {
+    border: 1px solid #dde5e7;
+    border-bottom: 0;
+
+    h4 {
+        background-color: $bg-header;
+        color: $text-title;
+        height: 50px;
+        line-height: 50px;
+        padding-left: 40px;
+
+        .md-button {
+            font-size: $font-size-sm;
+            line-height: 1.43em;
+            margin-right: 20px;
+            margin-top: 10px;
+            padding: 6px 12px;
+        }
+
+    }
 }
 
 .custom-table {
-    border: 1px solid #e6e6e6;
+    border-bottom: 1px solid #dde5e7;
+
+    &.popup-table {
+        table-layout: fixed;
+    }
+
+    .long-text>a {
+        >span {
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 100px;
+        }
+    }
 
     tr {
         cursor: pointer;
 
+        th {
+            background-color: #fff;
+            color: $text-title;
+            font-size: $font-size-md;
+        }
+
         td {
+            font-size: $font-size-sm;
+
             &.has-checkbox {
                 width: 44px;
 
@@ -69,18 +126,20 @@
                     cursor: pointer;
                 }
             }
+
+            &.overflow-text {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
         }
     }
 
-    .overstaffed {
-        color: $danger;
-    }
-
-    tbody > tr:nth-child(even) > td {
+    tbody > tr:nth-child(odd) > td {
         background-color: #fff;
     }
 
-    tbody > tr:nth-child(odd) > td {
+    tbody > tr:nth-child(even) > td {
         background-color: #fafbfc;
     }
 
@@ -91,6 +150,9 @@
 }
 
 .custom-pages {
+    @include clearfix();
+    margin-bottom: 30px;
+
     .pagination {
         display: block;
         margin: 0 auto;
@@ -114,6 +176,23 @@
     left: 0;
     right: auto;
 }
+
+.nb-dropdown {
+
+    &.right-align {
+        > .dropdown-menu {
+            left: auto;
+            right: 0;
+        }
+    }
+
+    >.dropdown-menu {
+        left: 0;
+        right: auto;
+    }
+
+}
+
 
 .button-group>.btn {
     margin-left: 7px;

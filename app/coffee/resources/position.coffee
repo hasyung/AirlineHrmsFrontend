@@ -2,17 +2,27 @@ resources = angular.module('resources')
 
 # position.specifications.fetch()
 
-Position = (restmod, RMUtils, $Evt) ->
+Position = (restmod, RMUtils, $Evt, Specification) ->
 
     # restmod.model('/positions')
-    Position = restmod.model('/positions').mix 'nbRestApi', {
-        department_id: {mask: 'R', map: 'department.id'}
-        department: {mask: 'CU'}
+    Position = restmod.model('/positions').mix 'nbRestApi', 'DirtyModel', {
+        department: {mask: 'C', belongsTo: 'Org'}
         isSelected: {mask: "CU"}
+        createdAt: {decode: 'nbDate'}
+        employees: { hasMany: 'Employee'}
+        # 部门领导
+        formerleaders: {hasMany: 'Formerleaders'}
         # 是否超编
-        isOverstaffed: {
+        # isOverstaffed: {
+        #     computed: (val) ->
+        #         this.staffing > this.budgetedStaffing
+        #     , mask: "CU"
+        # }
+        #超编人数，主要用这个，上面那个是否超编会逐渐取消，最后删除
+        overstaffedNum: {
             computed: (val) ->
-                this.staffing > this.budgetedStaffing
+                num = this.staffing - this.budgetedStaffing
+                if num > 0 then num else 0
             , mask: "CU"
         }
         specification: { hasOne: 'Specification', mask: "U"}
@@ -26,13 +36,11 @@ Position = (restmod, RMUtils, $Evt) ->
 
             'after-destroy': ->
                 $Evt.$send('position:destroy:success',"岗位删除成功")
-            'after-destroy-error': ->
-                $Evt.$send('position:destroy:success', arguments)
+
             'after-adjust': ->
                 $Evt.$send('position:adjust:success',"岗位调整成功")
-            'after-adjust-error': ->
-                $Evt.$send('position:adjust:success', arguments)
-    	$extend:
+
+        $extend:
             Collection:
                 $adjust: (infoData)->
                     self = @
@@ -49,10 +57,7 @@ Position = (restmod, RMUtils, $Evt) ->
                             self.$remove item
                         self.$dispatch 'after-adjust', res
 
-                    onErorr = (res) ->
-                        self.$dispatch 'after-adjust-error', res
-
-                    this.$send(request, onSuccess, onErorr)
+                    this.$send(request, onSuccess)
 
                 $batchRemove: (ids) ->
                     self = @
@@ -68,11 +73,22 @@ Position = (restmod, RMUtils, $Evt) ->
 
                         self.$dispatch 'after-destroy', res
 
-                    onErorr = (res) ->
-                        self.$dispatch 'after-destroy-error', res
 
-                    this.$send(request, onSuccess, onErorr)
+                    this.$send(request, onSuccess)
+            Record:
+                $createSpe: (spe) ->
+                    self = @
+                    url = @.$url()
+                    spe = Specification.$build(spe).$wrap()
+                    request = {
+                        method: 'POST',
+                        url: "#{url}/specification",
+                        data: spe
+                    }
+                    onSuccess = (res)->
+                        self.$dispatch 'specification-create', res
 
+                    this.$send(request, onSuccess)
 
     }
 
@@ -80,7 +96,7 @@ Position = (restmod, RMUtils, $Evt) ->
 
 
 Specification = (restmod, RMUtils, $Evt) ->
-    Specification = restmod.model().mix 'nbRestApi', {
+    Specification = restmod.model().mix 'nbRestApi', 'DirtyModel', {
         $config:
             jsonRoot: 'specification'
 
@@ -90,11 +106,17 @@ Specification = (restmod, RMUtils, $Evt) ->
 
     }
 
+PositionChange = (restmod, RMUtils, $Evt) ->
+    PositionChange = restmod.model('/position_changes').mix 'nbRestApi', {
+        $config:
+            jsonRoot: 'audits'
+
+    }
 
 
 
 
 
-
-resources.factory 'Position',['restmod', 'RMUtils', '$nbEvent', Position]
+resources.factory 'Position',['restmod', 'RMUtils', '$nbEvent','Specification', Position]
 resources.factory 'Specification',['restmod', 'RMUtils', '$nbEvent', Specification]
+resources.factory 'PositionChange',['restmod', 'RMUtils', '$nbEvent', PositionChange]

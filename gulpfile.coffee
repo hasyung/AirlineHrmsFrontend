@@ -13,6 +13,7 @@ livereload      = require("gulp-livereload")
 # gutil           = require("gulp-util")
 minifyHTML      = require("gulp-minify-html")
 sass            = require("gulp-sass")
+sourcemaps      = require('gulp-sourcemaps')
 less            = require("gulp-less")
 csslint         = require("gulp-csslint")
 minifyCSS       = require("gulp-minify-css")
@@ -38,7 +39,7 @@ paths =
     distStylesPath: "dist/styles"
     distStyles: []
     sassStylesLib: "app/styles/lib.scss"
-    sassStylesMain: "app/styles/web.scss"
+    sassStylesMain: ["app/styles/web.scss"]
     images: "app/images/**/*"
     svg: "app/svg/**/*"
     coffee: ["app/coffee/app.coffee"
@@ -76,9 +77,11 @@ paths =
         #组织机构树
         'compat/vendor/drag-on.js'
         'compat/vendor/lib-gg-orgchart.js'
+        'deps/canvg/dist/canvg.bundle.js'
+        'deps/jspdf/dist/jspdf.min.js'
         #end
         'deps/angular/angular.js'
-        'deps/angular-i18n/angular-locale_zh-cn.js'
+        # 'deps/angular-i18n/angular-locale_zh-cn.js'
         #http://harvesthq.github.io/chosen/
         'deps/simple-module/lib/module.js'
         'deps/simple-uploader/lib/uploader.js'
@@ -87,15 +90,19 @@ paths =
         'deps/angular-cookies/angular-cookies.js'
         'deps/angular-restmod/dist/angular-restmod-bundle.js'
         'deps/angular-restmod/dist/styles/ams.js'
+        'deps/angular-restmod/dist/plugins/dirty.js'
+        'deps/angular-restmod/dist/plugins/preload.js'
         'deps/angular-messages/angular-messages.js'
         'deps/angular-animate/angular-animate.js'
+        'deps/angular-aria/angular-aria.js'
         'deps/angular-sanitize/angular-sanitize.js'
         'deps/angular-filter/dist/angular-filter.js'
         'deps/angular-strap/dist/angular-strap.js'
         'deps/angular-strap/dist/angular-strap.tpl.js'
         'deps/angular-ui-router/release/angular-ui-router.js'
         'deps/ui-router-extras/release/ct-ui-router-extras.js'
-        'compat/vendor/breadcrumb.js'
+        'deps/ngDialog/js/ngDialog.js'
+        # 'compat/vendor/breadcrumb.js'
         'compat/vendor/wizard.js'
         'compat/vendor/ui-bootstrap-custom-tpls-0.12.0.js'
         # 'deps/ngInfiniteScroll/build/ng-infinite-scroll.js'
@@ -103,6 +110,8 @@ paths =
         'deps/angular-ui-select/dist/select.js'
         'deps/jquery-slimscroll/jquery.slimscroll.js'
         'deps/angularjs-toaster/toaster.js'
+        'deps/angular-material/angular-material.js'
+        'deps/ng-flow/dist/ng-flow-standalone.js'
         # 'deps/angular-ui-utils/ui-utils.js'
         # 'deps/jasny-bootstrap/dist/js/jasny-bootstrap.js' jasny bootstrap 增强版，提供一些好用组件
     ]
@@ -149,6 +158,7 @@ gulp.task "sass-lib", ->
     gulp.src(paths.sassStylesLib)
         .pipe(plumber())
         .pipe(sass())
+        .pipe(sourcemaps.write())
         .pipe(rename("lib.css"))
         .pipe(gulp.dest(paths.distStylesPath))
 
@@ -158,6 +168,7 @@ gulp.task "sass-deploy", ->
     gulp.src(paths.sassStylesMain)
         .pipe(plumber())
         .pipe(sass({includePaths: require('node-bourbon').includePaths}))
+        .pipe(sourcemaps.write())
         .pipe(rename("app.css"))
         .pipe(gulp.dest(paths.distStylesPath))
 
@@ -170,7 +181,7 @@ gulp.task "css-vendor", ->
 gulp.task "less-vendor", ->
     gulp.src(paths.lessVendorStyles)
         .pipe(less())
-        .pipe(rename("vendor2.css"))
+        .pipe(rename("angulr.css"))
         .pipe(gulp.dest(paths.distStylesPath))
 
 gulp.task "css-lint-app", ["sass-watch"],  ->
@@ -272,10 +283,11 @@ gulp.task "express", ->
     app = express()
 
 
-    proxyOptions = url.parse('http://192.168.6.99:9002')
+    proxyOptions = url.parse('http://192.168.6.99:4000')
     # proxyOptions = url.parse('http://114.215.142.122:9002')
+    # proxyOptions = url.parse('http://192.168.6.16:3000')
     # proxyOptions = url.parse('http://192.168.6.40:3000')
-    # proxyOptions = url.parse('http://192.168.6.18:3000')
+
     proxyOptions.route = '/api'
 
     # 反向代理 webapi

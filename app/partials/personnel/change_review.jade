@@ -1,0 +1,42 @@
+tabset(flex)
+    tab(heading="待审核")
+        .position-manage.app-content-wrapper(ng-init="ctrl.changes = ctrl.Change.$collection().$refresh()")
+            div(nb-table='ctrl.changes' nb-safe-src="ctrl.changes")
+                input(type="hidden" nb-pipe="ctrl.search(tableState)")
+                .table-container
+                    h4 待审核列表
+                        md-button.skyblue.md-raised.pull-right(ng-click="ctrl.checkChanges()") 审核
+                    table.table.table-striped.custom-table
+                        thead
+                            tr
+                                //- th(select-row="" mode='all')
+                                th 员工编号
+                                th 姓名
+                                th 所属部门
+                                th 信息变更模块
+                                th 变更时间
+                                th 操作
+                                th 理由
+
+                        tbody(nb-popup-management)
+                            tr(ng-repeat="change in ctrl.changes track by $index")
+                                //- td(select-row="emp" mode="multiple")
+                                td(ng-bind="change.employeeNo")
+                                td(ng-bind="change.name")
+                                td(ng-bind="change.department.name")
+                                td(ng-if="change.action == '修改'")
+                                    a(href="javascript:;" ng-click="ctrl.mdDialog.show({templateUrl:'partials/common/update_change_review.tpl.html',locals:{data:change}, controller:'DialogCtrl', controllerAs:'ctrl'})") {{change.auditableType}}
+                                td(ng-if="change.action == '新增' || change.action == '删除'")
+                                    a(href="javascript:;" ng-click="ctrl.mdDialog.show({templateUrl:'partials/common/create_change_review.tpl.html',locals:{data:change}, controller:'DialogCtrl', controllerAs:'ctrl'})") {{record.auditableType}}
+                                td(ng-bind="change.createdAt")
+                                td()
+                                    .radio-group(radio-box, ng-model="change.statusCd")
+
+                                td.long-text
+                                    a(href="javascript:;", nb-popup-plus, position="left-bottom", offset="0.5") {{change.reason || '请输入'}}
+                                        popup-template.nb-popup.org-default-popup-template.panel.panel-default()
+                                            .panel-heading.popup-title 请输入理由
+                                            .panel-body.popup-body
+                                                textarea(ng-model="change.reason")
+    tab(heading="变更记录")
+        include personnel_changes_record

@@ -1,0 +1,108 @@
+.resume-wrap {
+    font-size: $font-size-sm;
+    padding: 0 50px;
+    position: relative;
+
+    .resume-header {
+        font-size: $font-size-lg;
+        text-align: center;
+
+        h3 {
+            height: 60px;
+            line-height: 60px;
+        }
+    }
+
+    .resume-btn-group {
+        position: absolute;
+        right: 20px;
+        top: 15px;
+
+        .btn {
+            margin-left: 20px;
+        }
+    }
+
+    h4 {
+        margin-bottom: 10px;
+    }
+
+    h5 {
+        font-size: $font-size-lg;
+        margin-bottom: 10px;
+    }
+
+    .form-split {
+        padding: 20px;
+
+        .control-label {
+            height: 34px;
+            line-height: 34px;
+            margin-left: 20px;
+        }
+
+        .form-content {
+            height: 34px;
+            line-height: 34px;
+        }
+
+        .form-control {
+            margin-right: 10%;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+
+            &.block {
+                .form-control {
+                    margin-right: 5%;
+                }
+            }
+        }
+
+        .auto-height {
+            height: auto;
+        }
+    }
+}
+
+.nice-table {
+    @include clearfix();
+    list-style-type: none;
+    margin-bottom: 20px;
+    padding: 0;
+    width: 100%;
+
+    .nice-table-row {
+        @include clearfix();
+        width: 100%;
+
+        &:nth-child(even) {
+            background-color: #fff;
+        }
+
+        &:nth-child(odd) {
+            background-color: #fafbfc;
+        }
+
+        .nt-cell {
+            display: block;
+            float: left;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+        }
+
+        .nt-cell-sm {
+            width: 10%;
+        }
+
+        .nt-cell-md {
+            width: 15%;
+        }
+
+        .nt-cell-lg {
+            width: 25%;
+        }
+    }
+}

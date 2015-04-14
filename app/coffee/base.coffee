@@ -13,6 +13,7 @@
 #
 
 nb = @.nb
+app = nb.app
 
 class Base
 
@@ -38,3 +39,49 @@ class Controller extends Base
 nb.Base = Base
 nb.Service= Service
 nb.Controller = Controller
+
+
+class EditableResourceCtrl
+    @.$inject = ['$scope']
+    constructor: (scope) ->
+        scope.editing = false
+
+        scope.edit = (evt) ->
+            evt.preventDefault() if evt && evt.preventDefault
+            scope.editing = true
+
+        scope.save = (promise, form) ->
+            return if form && form.$invalid
+
+            if promise
+                if promise.then
+                    promise.then () -> scope.editing = false
+                else if promise.$then
+                    promise.$then () -> scope.editing =false
+
+                else
+                    throw new Error('promise 参数错误')
+
+            else scope.editing =false
+
+
+
+        scope.cancel = (resource, evt, form) ->
+            evt.preventDefault() if evt
+            resource.$restore() if resource && resource.$restore
+            form.$setPristine() if form && form.$setPristine
+            scope.editing = false
+class NewResourceCtrl
+
+    @.$inject = ['$scope']
+
+    constructor: (scope) ->
+        scope.create = (resource, form) ->
+            return if form && form.$invalid
+            resource.$save() if resource.$save
+
+
+
+
+app.controller('EditableResource', EditableResourceCtrl)
+app.controller('NewResource', NewResourceCtrl)

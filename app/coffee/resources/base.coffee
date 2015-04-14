@@ -36,17 +36,20 @@ nbRestApi = (restmod, RMUtils, $rootScope, $Evt) ->
 
                 @.$send request, onSuccess, onErorr
 
-        'Record.$copy': ->
-            raw = this.$wrap()
-            if angular.isUndefined(this.$scope.$buildRaw)
-                copy = _.omit(@, (v, k) -> k[0] == '$' )
-            # copy = this.$scope.$new(this.$type.inferKey(raw))
-            # copy.$type.decode(copy, raw, RMUtils.READ_MASK)
-            # copy.$pk = copy.$type.inferKey(raw)
-                # copy = this.$new(this.$type.inferKey(raw));
-            else
-                copy = this.$scope.$buildRaw(raw)
-            return copy
+        # 'Record.$copy': ->
+        #     raw = this.$wrap()
+        #     if angular.isUndefined(this.$scope.$buildRaw)
+        #         copy = _.omit(@, (v, k) -> k[0] == '$' )
+        #     # copy = this.$scope.$new(this.$type.inferKey(raw))
+        #     # copy.$type.decode(copy, raw, RMUtils.READ_MASK)
+        #     # copy.$pk = copy.$type.inferKey(raw)
+        #         # copy = this.$new(this.$type.inferKey(raw));
+        #     else
+        #         copy = this.$scope.$buildRaw(raw)
+        #     return copy
+        'Model.encodeUrlName': (_name)->
+            _name.replace(/[A-Z]/g, "_$&").toLowerCase()
+
     }
 
 

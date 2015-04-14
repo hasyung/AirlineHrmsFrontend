@@ -1,0 +1,111 @@
+form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="EditableResource" ng-init="params = {}")
+    .form-btn-group(ng-hide="editing")
+        md-button.skyblue.md-raised(ng-click="edit($event)") 编辑
+    .form-btn-group.alive(ng-show="editing")
+        md-button.md-raised.white(ng-click="cancel(current, $event)") 取消
+        md-button.skyblue.md-raised(type="submit" ng-disabled="positionEditForm.$invalid") 保存
+
+    fieldset(ng-disabled="!editing")
+        .form-group
+            label 所属部门
+            //- md-select(ng-model="current.department" ng-disabled="!editing")
+            //-     md-select-label {{current.department.name}}
+            //-     md-option(ng-value="org" ng-repeat="org in allOrgs track by org.id") {{org.name}}
+            ui-select(
+                ng-model="current.department"
+                ng-change="params.orgPos = current.department.positions.length? current.department.positions: current.department.positions.$fetch();current.position = null"
+                ng-init="params.orgPos = current.department.positions.length? current.department.positions: current.department.positions.$fetch();"
+                reset-search-input="true"
+                style="width: 500px"
+                )
+                ui-select-match(placeholder="请输入机构名称") {{ $select.selected.name }}
+                ui-select-choices(repeat="org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
+        div(layout)
+            md-input-container.row-has-value(flex)
+                label 岗位
+                md-select(ng-model="current.position" ng-disabled="!editing")
+                    md-select-label {{current.position.name || '无'}}
+                    md-option(ng-value="pos" ng-repeat="pos in params.orgPos") {{pos.name}}
+            md-input-container.row-has-value(flex)
+                label 分类
+                md-select(ng-model="current.category" md-on-open="loadEnum('categories')" ng-disabled="!editing")
+                    md-select-label {{current.category? current.category.displayName : '无'}}
+                    md-option(ng-value="category" ng-repeat="category in enums.categories") {{category.displayName}}
+        div(layout)
+            md-input-container.row-has-value(flex)
+                label 通道
+                md-select(ng-model="current.channel" md-on-open="loadEnum('channels')" ng-disabled="!editing")
+                    md-select-label {{current.channel? current.channel.displayName : '无'}}
+                    md-option(ng-value="channel" ng-repeat="channel in enums.channels") {{channel.displayName}}
+            md-input-container(flex)
+                label 类别
+                input(ng-model="current.position.postType")
+        div(layout)
+            md-input-container.row-has-value(flex)
+                label 属地化地点
+                md-select(ng-model="current.location" md-on-open="loadEnum('locations')" ng-disabled="!editing")
+                    md-select-label {{current.location? current.location.displayName : '无'}}
+                    md-option(ng-value="location" ng-repeat="location in enums.locations") {{location.displayName}}
+            md-input-container.row-has-value(flex)
+                label 用工性质
+                md-select(ng-model="current.laborRelation" md-on-open="loadEnum('labor_relations')" ng-disabled="!editing")
+                    md-select-label {{current.laborRelation? current.laborRelation.displayName : '无'}}
+                    md-option(ng-value="laborRelation" ng-repeat="laborRelation in enums.labor_relations") {{laborRelation.displayName}}
+        div(layout)
+            md-input-container.row-has-value(flex)
+                label 用工关系状态
+                md-select(ng-model="current.employmentStatus" md-on-open="loadEnum('employment_status')" ng-disabled="!editing")
+                    md-select-label {{current.employmentStatus? current.employmentStatus.displayName : '无'}}
+                    md-option(ng-value="empStatus" ng-repeat="empStatus in enums.employment_status") {{empStatus.displayName}}
+        div(layout)
+            md-input-container.row-has-value(flex)
+                label 职称
+                md-select(ng-model="current.jobTitle", md-on-open="loadEnum('job_titles')" ng-disabled="!editing")
+                    md-select-label {{current.jobTitle? current.jobTitle.displayName : '无'}}
+                    md-option(ng-value="jobTitle" ng-repeat="jobTitle in enums.job_titles") {{jobTitle.displayName}}
+            md-input-container.row-has-value(flex)
+                label 职称级别
+                md-select(ng-model="current.jobTitleDegree", md-on-open="loadEnum('job_title_degrees')" ng-disabled="!editing")
+                    md-select-label {{current.jobTitleDegree? current.jobTitleDegree.displayName : '无'}}
+                    md-option(ng-value="jobTitleDegree" ng-repeat="jobTitleDegree in enums.job_title_degrees") {{jobTitleDegree.displayName}}
+    //- .form-group.block
+    //-     label.control-label 所属部门：
+    //-     ui-select(
+    //-         ng-model="current.department"
+    //-         ng-change="params.orgPos = current.department.positions.length? current.department.positions: current.department.positions.$fetch()"
+    //-         reset-search-input="true")
+    //-         ui-select-match(placeholder="请输入机构名称") {{ $select.selected.name }}
+    //-         ui-select-choices(repeat="org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
+    //- .form-group
+    //-     label.control-label 岗位：
+    //-     ui-select(ng-model="current.position" required)
+    //-         ui-select-match(placeholder="请输入岗位名称") {{ $select.selected.name }}
+    //-         ui-select-choices(repeat="pos in params.orgPos | filter:$select.search | limitTo: 5") {{ pos.name }}
+    //- .form-group
+    //-     label.control-label 分类：
+    //-     nb-dropdown(
+    //-         ng-model="current.category", remote-key="categories",
+    //-         name="category")
+    //- .form-group
+    //-     label.control-label 通道：
+    //-     nb-dropdown(
+    //-         ng-model="current.channel", remote-key="channels",
+    //-         name="channel")
+    //- .form-group
+    //-     label.control-label 类别：
+    //-     input.form-control(ng-model="current.position.postType")
+    //- .form-group
+    //-     label.control-label 属地化地点：
+    //-     nb-dropdown(
+    //-         ng-model="current.location", remote-key="locations",
+    //-         name="location")
+    //- .form-group
+    //-     label.control-label 用工性质：
+    //-     nb-dropdown(
+    //-         ng-model="current.laborRelation", remote-key="labor_relations",
+    //-         name="laborRelation")
+    //- .form-group
+    //-     label.control-label 用工关系状态：
+    //-     nb-dropdown(
+    //-         ng-model="current.employmentStatus", remote-key="employment_status",
+    //-         name="employeeStatus")

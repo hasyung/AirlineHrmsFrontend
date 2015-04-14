@@ -61,3 +61,59 @@ angular.module 'nb.directives'
                     editor.destroy()
         }
     ]
+
+    .directive 'nbSimditor', ['simditorConfig', (defaultConfig) ->
+        return {
+            restrict: 'A'
+            require: 'ngModel'
+            replace: true
+            templateUrl: 'partials/common/nb_simditor.tpl.html'
+            scope: {
+                editing: '=?editing'
+                modelVal: '=ngModel'
+                toolbar: '='
+            }
+            link: (scope,elem,attrs,ctrl) ->
+                customOpt = {}
+                editor = null
+                createEditor = ()->
+
+                    textarea = elem.find("textarea")
+                    customOpt.toolbar = scope.toolbar if scope.toolbar
+
+                    opts = angular.extend {},defaultConfig, customOpt,{textarea: textarea}
+
+                    onValueChanged = _.throttle(() ->
+                        # scope.$apply ()->
+                        ctrl.$setViewValue editor.getValue()
+
+                    ,2000)
+                    editor = new Simditor opts
+                    editor.on 'valuechanged', onValueChanged
+                    editor.setValue(ctrl.$modelValue)
+                    
+                    
+                    return editor
+                # if attrs.editable == "false"
+                #     editor.body.attr("contenteditable", false)
+                #当编辑文章时初始化文本
+                # ctrl.$render = () ->
+                #     editor.setValue(ctrl.$modelValue) if editor
+                scope.$watch 'editable',(newVal,old) ->
+                    if newVal == false
+                        editor.body.attr('contenteditable',false)
+                if angular.isUndefined scope.editing
+                    editor = createEditor()
+                else
+                    scope.$watch 'editing', (newVal)->
+                        if newVal
+                            editor = createEditor()
+                        else
+                            editor.destroy() if editor
+
+
+                scope.$on '$destroy', () ->
+                    editor.destroy() if editor
+            
+        }
+    ]

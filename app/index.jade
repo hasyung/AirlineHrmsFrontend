@@ -9,24 +9,21 @@ html
         meta(name="viewport", content="width=device-width, user-scalable=no")
         //- angulr 模板样式
         link(rel="stylesheet", href="/styles/vendor1.css?v=#{v}")
-        link(rel="stylesheet", href="/styles/vendor2.css?v=#{v}")
+        link(rel="stylesheet", href="/styles/angulr.css?v=#{v}")
         link(rel="stylesheet", href="/styles/lib.css?v=#{v}")
         link(rel="stylesheet", href="/styles/web.css?v=#{v}")
         link(rel="icon", type="image/png", href="/images/favicon.png")
     //- body(ng-app="nb" ng-controller="AppController")
-    body(ng-app="nb")
+    body(ng-app="nb" layout="row")
         include partials/shared/left_sidebar
-        include partials/shared/top_menu
-        //- include partials/orgs/position_detail
-        //- include partials/orgs/position_add
 
         toaster-container(toaster-options="{'time-out': 3000, 'close-button':true, 'animation-class': 'toast-top-right'}")
         nb-loading.nb-loading(ng-show="loading")
         //- .org-container.smooth(ui-view)
-        .app-content()
+        div(layout="column" flex)
+            include partials/shared/top_menu
             .butterbar(ui-butterbar)
-            .well(ncy-breadcrumb)
-            .app-content-body.smooth(ui-view nb-responsive-height)
+            md-content.app-content-body.smooth(ui-view flex layout="row")
 
         if debugMode
             each script in libs
@@ -35,4 +32,3 @@ html
         else
             script(src="/js/libs.js?v=#{v}")
         script(src="/js/app.js")
-        script(src="/js/appjs.js")

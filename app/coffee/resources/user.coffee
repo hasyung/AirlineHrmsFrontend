@@ -1,40 +1,84 @@
-
+###
+# 与用户相关联的资源
+#
+#
+# File: user.coffee
+###
 
 resources = angular.module('resources')
 
 
-User = (restmod) ->
-    User = restmod.model('/users').mix('nbRestApi', {
-        # created_at: { serialize: 'RailsDate' } #todo 序列化器
-        updated_at: { decode: 'date', param: 'yyyy年mm月dd日',mask: 'CUR' } #不 send CURD 操作时
-        permissions: { belongsToMany: 'Permission', keys: 'permission_ids'}
-        # permission_ids: { mask: 'CU' }
-        organ: { mask: 'CU'}
-        organs: { hasMany: 'Organ'}
-        gender: { mask: 'U'}
-        # orgName: { map: 'organ'}
-
-        # decode: () ->
-        #     console.debug 'decode debug :', arguments
-
-        orgName: { ignore: true }
-
-        $extend:
-            Model:
-                unpack: (resource,_raw) ->
-                    console.debug 'resource,raw',resource,_raw
-                    _raw.orgName = _.pluck(_raw.organ,'name').join(',')
-                    _raw
-
+User = (restmod, RMUtils, $Evt) ->
+    User = restmod.model(null).mix 'nbRestApi', 'DirtyModel', {
         $hooks:
-            'after-feed-many': (raw) ->
-                console.debug 'after feed many this:' ,this
-            'after-feed': (raw) ->
-                org = raw.organ
-                this.orgName = _.pluck(org,'name').join(',')
+            'after-update': ->
+                $Evt.$send('user:update:success', "个人信息更新成功")
 
+        educationExperiences: { hasMany: 'Education'}
+        workExperiences: { hasMany: 'Experience'}
+        resume: { hasOne: 'Resume', mask: 'CU'}
+        $config:
+            jsonRoot: 'employee'
+        familymembers: {hasMany: 'FamilyMember'}
+    }
+    .single('/me')
+Education = (restmod, RMUtils, $Evt) ->
+    Education = restmod.model().mix 'nbRestApi', {
+        admissionDate: {decode: 'nbDate'}
+        graduationDate: {decode: 'nbDate'}
+        $hooks: {
+            'after-create': ->
+                $Evt.$send('education:create:success', "教育经历创建成功")
+            'after-update': ->
+                $Evt.$send('education:update:success', "教育经历更新成功")
+            'after-destroy': ->
+                $Evt.$send('education:update:success', "教育经历删除成功")
+        }
+        $config:
+            jsonRootSingle: 'education_experience'
+            jsonRootMany: 'education_experiences'
+    }
+Experience = (restmod, RMUtils, $Evt) ->
+    Experience = restmod.model().mix 'nbRestApi', {
+        startDate: {decode: 'nbDate'}
+        endDate: {decode: 'nbDate'}
+        $hooks: {
+            'after-create': ->
+                $Evt.$send('work:create:success', "工作经历创建成功")
+            'after-update': ->
+                $Evt.$send('work:update:success', "工作经历更新成功")
+            'after-destroy': ->
+                $Evt.$send('work:update:success', "工作经历删除成功")
 
+        }
+        $config:
+            jsonRootSingle: 'work_experience'
+            jsonRootMany: 'work_experiences'
+    }
 
-    })
+FamilyMember = (restmod, RMUtils, $Evt) ->
+    FamilyMember = restmod.model().mix 'nbRestApi', {
+        birthday: {decode: 'nbDate'}
+        $hooks:
+            'after-create': ->
+                $Evt.$send('FamilyMember:create:success', "家庭成员创建成功")
+            'after-update': ->
+                $Evt.$send('FamilyMember:update:success', "家庭成员更新成功")
+            'after-destroy': ->
+                $Evt.$send('FamilyMember:update:success', "家庭成员删除成功")
 
-resources.factory 'User',['restmod', User]
+        $config:
+            jsonRootSingle: 'family_member'
+            jsonRootMany: 'family_members'
+    }
+Resume = (restmod, RMUtils, $Evt) ->
+    Resume = restmod.model().mix 'nbRestApi', {
+        $config:
+            jsonRoot: 'employee'
+    }
+
+resources.factory 'User',['restmod', 'RMUtils', '$nbEvent', User]
+resources.factory 'Education',['restmod', 'RMUtils', '$nbEvent', Education]
+resources.factory 'Experience',['restmod', 'RMUtils', '$nbEvent', Experience]
+resources.factory 'FamilyMember',['restmod', 'RMUtils', '$nbEvent', FamilyMember]
+resources.factory 'Resume',['restmod', 'RMUtils', '$nbEvent', Resume]

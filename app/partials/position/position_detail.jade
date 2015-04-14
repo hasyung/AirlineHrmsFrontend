@@ -1,0 +1,69 @@
+div(
+    ng-init="currentPos = ngDialogData;\
+    currentEmps = currentPos.employees.$refresh();\
+    hisLeaders = currentPos.formerleaders.$refresh();\
+    currentSpe = currentPos.specification.$refresh();")
+    md-toolbar
+        .md-toolbar-tools
+            span 岗位详情
+    .personnel-content.personnel-control
+        section.personnel-info-section(ng-init= "current = ngDialogData; data = {}; data.selectedIndex = 0;")
+            tabset(type="pills")
+                tab(heading="基本信息")
+                    section.form-material-section
+                        md-subheader.md-primary 基本信息
+                        include position_basic
+                    section.form-material-section
+                        md-subheader.md-warn 岗位描述
+                        include position_desc
+
+                tab(heading="人员明细")
+                    include position_employees
+
+                tab(heading="考勤体系")
+
+                tab(heading="绩效体系")
+
+                tab(heading="薪酬体系")
+
+                tab(heading="福利体系")
+
+                tab(heading="培训体系")
+
+            //- md-tabs(md-selected="data.selectedIndex")
+            //-     md-tab(id="tab1" label="基本信息" md-active)
+            //-     md-tab(id="tab2" label="人员明细")
+            //-     md-tab(id="tab3" label="考勤体系")
+            //-     md-tab(id="tab4" label="绩效体系")
+            //-     md-tab(id="tab5" label="薪酬体系")
+            //-     md-tab(id="tab6" label="福利体系")
+            //-     md-tab(id="tab7" label="培训体系")
+            //- div.tabpanel-container(ng-switch="data.selectedIndex")
+            //-     div(role="tabpanel" layout="column" aria-labelledby="tab1" ng-switch-when="0")
+            //-         section.form-material-section
+            //-             md-subheader.md-primary 基本信息
+            //-             include position_basic
+            //-         section.form-material-section
+            //-             md-subheader.md-warn 工作职责
+            //-             include position_desc
+            //-         section.form-material-section
+            //-             md-subheader.md-primary 工作权限
+            //-             include position_desc_purview
+            //-         section.form-material-section
+            //-             md-subheader.md-warn 工作关系
+            //-             include position_desc_relative
+            //-         section.form-material-section
+            //-             md-subheader.md-primary 任职条件
+            //-             include position_desc_qualifacation
+            //-     div(role="tabpanel" layout="column" aria-labelledby="tab2" ng-switch-when="1")
+            //-         span 1234444
+            //-     div(role="tabpanel" layout="column" aria-labelledby="tab3" ng-switch-when="2")
+            //-         span 1234444
+            //-     div(role="tabpanel" layout="column" aria-labelledby="tab4" ng-switch-when="3")
+            //-         span 1234444
+            //-     div(role="tabpanel" layout="column" aria-labelledby="tab5" ng-switch-when="4")
+            //-         span 1234444
+            //-     div(role="tabpanel" layout="column" aria-labelledby="tab6" ng-switch-when="5")
+            //-         span 1234444
+            //-     div(role="tabpanel" layout="column" aria-labelledby="tab6" ng-switch-when="6")
+            //-         span 1234444

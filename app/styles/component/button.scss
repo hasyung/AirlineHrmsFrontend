@@ -1,13 +1,55 @@
-.btn-primary {
-    background-color: #7266ba;
-    border-color: #7266ba;
+//系统中的 material风格下的按钮样式 依赖md-button
+.md-button.md-default-theme {
+    &.md-raised {
+        color: #fff;
 
-    &:hover {
-        background-color: #6154af;
-        border-color: #7266ba;
+        &.skyblue {
+            background-color: #23b7e5;
+
+            &:hover {
+                background-color: #23b7e5;
+            }
+
+            &:focus {
+                background-color: #23b7e5;
+            }
+        }
+
+        &.purple {
+            background-color: #7266ba;
+
+            &:hover {
+                background-color: #7266ba;
+            }
+
+            &:focus {
+                background-color: #7266ba;
+            }
+        }
+
+        &.white {
+            background-color: #fff;
+            color: $text-muted;
+
+            &:hover {
+                background-color: #fff;
+            }
+
+            &:focus {
+                background-color: #fff;
+            }
+        }
+
+        &.red {
+            background-color: #f05050;
+
+            &:hover {
+                background-color: #f05050;
+            }
+
+            &:focus {
+                background-color: #f05050;
+            }
+        }
     }
-}
-
-.btn-default {
-    border-color: #c4cfd3;
 }

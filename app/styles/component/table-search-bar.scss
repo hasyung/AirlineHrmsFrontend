@@ -1,18 +1,44 @@
+.btn-export {
+    display: inline-block;
+    margin-left: 20px;
+    // margin-right: 100px;
+}
+
+.search-btn-group {
+    margin: 10px 0;
+    padding-left: 56px;
+}
+
 .searchbar {
     h3 {
-        background-color: #f2f3f8;
-        border: 1px solid #c3c3c3;
+        background-color: $bg-header;
+        border: 1px solid #dde5e7;
         color: $text-title;
-        font-size: $font-size-sm;
-        height: 40px;
-        line-height: 40px;
+        font-size: $font-size-lg;
+        height: 55px;
+        line-height: 55px;
         padding-left: 40px;
+        // input {
+        //     padding: 6px 12px;
+        // }
+
+        .md-button {
+            font-size: $font-size-sm;
+            line-height: 1.43em;
+            margin-right: 20px;
+            margin-top: 10px;
+            padding: 6px 12px;
+        }
+
+        > a {
+            margin: 10px 10px 0 0;
+        }
     }
 
     .search-content {
-        border-bottom: 1px solid #c3c3c3;
-        border-left: 1px solid #c3c3c3;
-        border-right: 1px solid #c3c3c3;
+        border-bottom: 1px solid #dde5e7;
+        border-left: 1px solid #dde5e7;
+        border-right: 1px solid #dde5e7;
         padding: 10px;
     }
 
@@ -29,6 +55,7 @@
 
         .search-del {
             border: 0;
+            box-shadow: none;
 
             &:hover {
                 color: $danger;
@@ -36,6 +63,10 @@
         }
 
         .dropdown {
+            .dropdown-toggle {
+                margin-top: -1px;
+            }
+
             .dropdown-toggle:focus {
                 border-color: $focus;
             }
@@ -47,11 +78,13 @@
         }
 
         .search-type {
-            input {
-                border-width: 1px;
+            >div>input {
+                border: 1px solid #aaa;
+                border-radius: 2px;
                 box-shadow: none;
                 height: 34px;
                 min-width: 190px;
+                outline: none;
 
                 &:focus {
                     border-color: $focus;
@@ -72,7 +105,7 @@
         }
 
         .ui-select-match {
-            min-width: 190px;
+            min-width: 160px;
 
             .caret {
                 margin-top: 0;

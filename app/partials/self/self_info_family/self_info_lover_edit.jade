@@ -1,0 +1,49 @@
+form(ng-submit="save(wife.$save(),familymembersForm)" name="familymembersForm" ng-controller="EditableResource")
+    .form-btn-group(ng-hide="editing")
+        md-button.skyblue.md-raised(type="button" ng-click="edit($event)") 编辑
+    .form-btn-group.alive(ng-show="editing")
+        md-button.md-raised.white(ng-click="cancel(wife, $event, familymembersForm)") 取消
+        md-button.skyblue.md-raised(type="submit") 保存
+    fieldset(ng-disabled="!editing")
+        div(layout)
+            md-input-container(flex)
+                label 姓名
+                input(ng-model="wife.name")
+            md-input-container(flex)
+                label 性别
+                input(ng-model="wife.gender")
+        div(layout)
+            md-input-container(flex)
+                label 籍贯
+                input(ng-model="wife.nativePlace")
+            md-input-container(flex)
+                label 民族
+                input(ng-model="wife.nation")
+        div(layout)
+            md-input-container(flex)
+                label 出生年月
+                input(type="date" ng-model="wife.birthday")
+            md-input-container(flex)
+                label 身份证号
+                input(ng-model="wife.identityNo" type="text" required name="identityNo" minlength="15" maxlength="18")
+                div(ng-if="familymembersForm.$submitted || familymembersForm.identityNo.$touched" ng-messages="familymembersForm.identityNo.$error")
+                    div(ng-message="required") 您需要填写有效身份证号码
+                    div(ng-message="minlength") 身份证长度最低15位
+                    div(ng-message="maxlength") 身份证长度不应超过19位
+        div(layout)
+            md-input-container(flex)
+                label 文化程度
+                input(ng-model="wife.educationBackground")
+            md-input-container(flex)
+                label 政治面貌
+                input(ng-model="wife.politicalStatus")
+        div(layout)
+            md-input-container(flex)
+                label 工作单位
+                input(ng-model="wife.company")
+            md-input-container(flex)
+                label 职业
+                input(ng-model="wife.position")
+        md-input-container
+            label 联系方式
+            input(ng-model="wife.mobile" type="tel")

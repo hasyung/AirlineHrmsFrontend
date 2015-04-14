@@ -1,57 +1,42 @@
-.app-header.navbar.ng-scope
-  .collapse.navbar-collapse.bg-white-only.inset-box-shadow
-    ul.nav.navbar-nav.navbar-right
-      li.dropdown.hidden-sm(is-open='lang.isopen')
-        a.dropdown-toggle(href='', data-toggle='dropdown')
-        ul.dropdown-menu.animated.fadeInRight.w
-          li.ng-scope
-            a.ng-binding(href='') German
-          li.ng-scope
-            a.ng-binding(href='') English
-          li.ng-scope
-            a.ng-binding(href='') Italian
-      li.dropdown
-        a.dropdown-toggle(href='')
-          i.icon-bell.fa-fw
-          span.visible-xs-inline 提醒
-          span.badge.badge-sm.up.bg-danger.pull-right-xs 1
-        .dropdown-menu.w-xl.animated.fadeInUp
-          .panel.bg-white
-            .panel-heading.b-light.bg-light
-              strong
-                | 你有
-                span 1
-                | 项提醒
-            .list-group
-              a.media.list-group-item(href='')
-                span.pull-left.thumb-sm
-                  img.img-circle(src='img/a0.jpg', alt='...')
-                span.media-body.block.m-b-none
-                  | 新员工入职培训
-                  br
-                  small.text-muted 10 分钟之前
-            .panel-footer.text-sm
-              a.pull-right(href='')
-                i.fa.fa-cog
-              a(href='#notes', data-toggle='class:show animated fadeInRight') 查看所有提醒
-      li.dropdown
-        a.dropdown-toggle.clear(href='', data-toggle='dropdown')
-          span.thumb-sm.avatar.pull-right.m-t-n-sm.m-b-n-sm.m-l-sm
-            img(src='../../images/01.jpg', alt='...')
-            i.on.md.b-white.bottom
-          span.hidden-sm.hidden-md(ui-sref="login") 注销
-          //- b.caret
-        ul.dropdown-menu.animated.fadeInRight.w
-          li
-            a(href='')
-              span.badge.bg-danger.pull-right 30%
-              span 设置
-          li
-            a(ui-sref='app.page.profile', href='#/app/page/profile') 个人信息
-          li
-            a(ui-sref='app.docs', href='#/app/docs')
-              span.label.bg-info.pull-right new
-              | 帮助
-          li.divider
-          li
-            a(ui-sref='access.signin', href='#/access/signin') 退出
+md-toolbar.top-menu-bar
+  ul.nav.navbar-nav
+    .right-align.nb-dropdown.pull-right(user-info-dropdown, btn-text="导出")
+      li
+        a(ui-sref="changePwd") 修改密码
+      li
+        a(ui-sref="login", ng-click="logout()") 退出
+          //- li
+          //-   a(href='')
+          //-     span.badge.bg-danger.pull-right 30%
+          //-     span 设置
+          //- li
+          //-   a(ui-sref='app.page.profile', href='#/app/page/profile') 个人信息
+          //- li
+          //-   a(ui-sref='app.docs', href='#/app/docs')
+          //-     span.label.bg-info.pull-right new
+          //-     | 帮助
+          //- li.divider
+    li.dropdown.pull-right
+      a.dropdown-toggle(href='')
+        i.icon-bell.fa-fw
+        span.visible-xs-inline 提醒
+        span.badge.badge-sm.up.bg-danger.pull-right-xs 1
+      .dropdown-menu.w-xl.animated.fadeInUp
+        .panel.bg-white
+          .panel-heading.b-light.bg-light
+            strong
+              | 你有
+              span 1
+              | 项提醒
+          .list-group
+            a.media.list-group-item(href='')
+              span.pull-left.thumb-sm
+                img.img-circle(src='img/a0.jpg', alt='...')
+              span.media-body.block.m-b-none
+                | 新员工入职培训
+                br
+                small.text-muted 10 分钟之前
+          .panel-footer.text-sm
+            a.pull-right(href='')
+              i.fa.fa-cog
+            a(href='#notes', data-toggle='class:show animated fadeInRight') 查看所有提醒

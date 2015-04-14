@@ -1,0 +1,61 @@
+.app-content-wrapper(layout="row" flex style="padding-left: 0")
+    .personnel-menu
+        .avator
+            .avator-area(
+                nb-dialog="partials/self/self_info_basic/avator_upload.tpl.html"
+                nb-dialog-scope="this"
+            )
+                img(ng-src="{{currentUser.favicon}}")
+            h3(ng-bind="currentUser.$cmStatus.name")
+            p(ng-bind="currentUser.employeeNo")
+            //- input(type="file" nv-file-select="" uploader="uploader")
+                
+        .personnel-info-list
+            ul
+                li(ui-sref-active="active")
+                    a(ui-sref=".profile")
+                        span.switch-circle
+                        | 基本信息
+                li(ui-sref-active="active")
+                    a(ui-sref=".members")
+                        span.switch-circle
+                        | 家庭成员
+                li(ui-sref-active="active")
+                    a(ui-sref=".education")
+                        span.switch-circle
+                        | 教育经历
+                li(ui-sref-active="active")
+                    a(ui-sref=".experience")
+                        span.switch-circle
+                        | 工作经历
+                li
+                    span.switch-circle
+                    | 任职记录
+                li
+                    span.switch-circle
+                    | 培训记录
+                li
+                    span.switch-circle
+                    | 奖惩记录
+                li
+                    span.switch-circle
+                    | 考勤信息
+                li
+                    span.switch-circle
+                    | 绩效考核
+                li
+                    span.switch-circle(ui-sref="^.resume")
+                    | 档案信息
+                li(ui-sref-active="active")
+                    a(ui-sref=".resume")
+                        span.switch-circle
+                        | 个人履历
+
+    .personnel-content(flex)
+        div(ui-view="")
+
+        //- include info_basic
+        //- include info_detail
+
+
+

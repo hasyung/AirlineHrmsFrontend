@@ -1,0 +1,317 @@
+.personnel-menu {
+    border: 1px solid #c3c3c3;
+    margin-right: 20px;
+    width: 270px;
+
+    &:before {
+        box-shadow: 1px 0 2px #bbb, 4px 0 4px #ddd;
+    }
+
+    .avator {
+        background-color: #fff;
+        height: 210px;
+        overflow: hidden;
+        width: 100%;
+
+        .avator-area {
+            border-radius: 50%;
+            height: 110px;
+            margin: 25px auto 5px;
+            width: 110px;
+            overflow: hidden;
+
+            img {
+                height: 100%;
+                width: 100%;
+            }
+        }
+
+        h3 {
+            color: $a-color;
+            font-size: $font-size-lg;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        p {
+            color: $text-muted;
+            font-size: $font-size-md;
+            text-align: center;
+        }
+    }
+
+    .personnel-info-list {
+        ul {
+            padding: 0;
+        }
+
+        li {
+            color: $text-muted;
+            cursor: pointer;
+            font-size: $font-size-md;
+            height: 50px;
+            line-height: 50px;
+            padding-left: 40px;
+
+            a {
+                color: $text-color;
+                display: block;
+                height: 100%;
+                width: 100%;
+            }
+
+            &:hover {
+                background-color: rgb(230, 230, 230);
+            }
+
+            &.active {
+                background-color: rgb(230, 230, 230);
+
+                .switch-circle {
+                    background-color: $success;
+                }
+            }
+        }
+
+        .switch-circle {
+            background-color: rgba(191, 203, 206, 1);
+            border-radius: 50%;
+            display: inline-block;
+            height: 8px;
+            margin-right: 25px;
+            vertical-align: middle;
+            width: 8px;
+        }
+    }
+
+}
+
+.personnel-content {
+    &.personnel-control {
+        padding-bottom: 100px;
+
+        .personnel-top-header {
+            border: 0;
+        }
+
+        .personnel-content-body {
+            border: 0;
+        }
+    }
+
+    .personnel-info-section {
+        //消除Tab页标题的圆角
+        .nav-pills>li>a {
+            border-radius: 0;
+        }
+
+        .personnel-info-row {
+            height: 40px;
+        }
+
+        //material
+        fieldset[disabled] {
+            .md-default-theme .md-select-label {
+                padding-left: 100px;
+            }
+
+            .md-input {
+                padding-left: 100px;
+            }
+        }
+
+        .form-material-section {
+            padding: 0 30px 30px;
+            position: relative;
+
+            &:hover {
+                .form-btn-group {
+                    visibility: visible;
+                }
+            }
+
+            .form-btn-group {
+                position: absolute;
+                right: 20px;
+                top: 10px;
+                visibility: hidden;
+
+                &.alive {
+                    visibility: visible;
+                }
+
+                .md-button {
+                    margin-left: 20px;
+                }
+
+            }
+
+            .ui-select-container {
+                .ui-select-match {
+                    >span {
+                        width: 100%;
+                    }
+
+                }
+            }
+        }
+    }
+
+    .personnel-table-wrapper {
+        padding: 0 5px;
+    }
+
+    .personnel-info-table {
+        border: 0;
+
+        thead > tr > th {
+            background-color: #fafbfc;
+            font-size: $font-size-md;
+            padding: 8px 15px;
+        }
+
+        tbody > tr > td {
+            font-size: $font-size-md;
+            padding: 8px 15px;
+        }
+
+        tbody > tr:nth-child(odd) > td {
+            background-color: #fff;
+        }
+
+        tbody > tr:nth-child(even) > td {
+            background-color: #fafbfc;
+        }
+    }
+
+    .personnel-top-header {
+        background-color: #f2f3f8;
+        border: 1px solid #c3c3c3;
+        font-size: 14px;
+        height: 50px;
+        padding-left: 40px;
+
+        h4 {
+            color: $text-title;
+            font-size: $font-size-lg;
+            line-height: 48px;
+        }
+
+        .btn {
+            margin: 7px 10px 0;
+        }
+    }
+
+    .personnel-content-body {
+        background-color: #fff;
+        border-top: 0;
+        width: 100%;
+    }
+
+    .personnel-section-wrap {
+        border: 1px solid #c3c3c3;
+        margin-bottom: 30px;
+
+        &:nth-child(odd) {
+            background-color: #fff;
+        }
+
+        &:nth-child(even) {
+            background-color: #fafbfd;
+        }
+    }
+
+
+    .personnel-info-left {
+        .personnel-item-icon {
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 62px;
+            margin: 0 auto 10px;
+            width: 70px;
+        }
+
+        .personnel-item-desc {
+            border-radius: 15px;
+            color: #fff;
+            font-size: $font-size-sm;
+            font-weight: bold;
+            height: 25px;
+            line-height: 25px;
+            margin: 0 auto;
+            text-align: center;
+            width: 70px;
+        }
+
+        .personnel-item1 {
+            background-image: url('../../../images/personnel/1.png');
+        }
+
+        .personnel-item2 {
+            background-image: url('../../../images/personnel/2.png');
+        }
+
+        .personnel-item3 {
+            background-image: url('../../../images/personnel/3.png');
+        }
+    }
+
+}
+
+.personnel-info-table {
+    padding: 20px;
+
+    h4 {
+        margin: 10px 0;
+    }
+
+    .custom-table {
+        margin-bottom: 20px;
+        width: 100%;
+
+        .control-td .btn {
+            background: transparent;
+            border: 0;
+            box-shadow: none;
+            color: $danger;
+            font-size: $font-size-lg;
+            outline: none;
+            visibility: hidden;
+        }
+
+        tr:hover .control-td .btn {
+            visibility: visible;
+        }
+    }
+
+    .btn-group {
+        margin-bottom: 20px;
+        margin-left: 190px;
+
+        .btn {
+            margin-left: 100px;
+        }
+    }
+}
+
+.btn-group-actions {
+    bottom: -10px;
+    left: 140px;
+    position: absolute;
+
+    .btn {
+        margin-right: 100px;
+    }
+}
+
+//新增员工弹出页 按钮组
+.form-bottom-group {
+    margin-bottom: 50px;
+
+    .md-button {
+        margin-left: 20px;
+    }
+}
+
+
+

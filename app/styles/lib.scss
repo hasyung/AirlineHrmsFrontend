@@ -3,7 +3,8 @@
 
 //simple e icons
 // @import 'lib/simple-line-icons';
-
+@import 'variables';
+@import 'bootstrap';
 
 // //富文本编辑器
 @import '../../deps/simditor/styles/simditor';
@@ -13,3 +14,39 @@
 
 @import 'compat/jqtree';
 @import 'animate';
+
+
+.datepicker.dropdown-menu {
+    width: 250px;
+    height: 270px
+}
+
+.datepicker.dropdown-menu button {
+    outline: 0;
+    border: 0
+}
+
+.datepicker.dropdown-menu tbody {
+    height: 180px
+}
+
+.datepicker.dropdown-menu tbody button {
+    padding: 6px
+}
+
+.datepicker.dropdown-menu.datepicker-mode-1 tbody button,.datepicker.dropdown-menu.datepicker-mode-2 tbody button {
+    height: 65px
+}
+
+.timepicker.dropdown-menu {
+    padding: 0 4px
+}
+
+.timepicker.dropdown-menu button {
+    outline: 0;
+    border: 0
+}
+
+.timepicker.dropdown-menu tbody button {
+    padding: 6px
+}

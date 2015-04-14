@@ -1,44 +1,57 @@
-div.org.app-content-wrapper
-    .org-dep(ng-class="{'active': ctrl.isBarOpen}")
-        .org-dep-badge
-            a.toggle-bar.fa(
-                ng-class="{true: 'fa-chevron-left', false: 'fa-chevron-right'}[ctrl.isBarOpen]"
-                ng-click="ctrl.isBarOpen = !ctrl.isBarOpen")
-        .org-dep-wrapper
-            div.org-dep-root
-                a(ng-click="ctrl.rootTree()") 四川航空
-            .org-children-wrapper
-                ul
-                    li(ng-repeat="org in ctrl.orgs | filterBy: ['depth']: 2 track by org.id" )
-                        //- a.org-node(ng-click="ctrl.buildTree(org)" ng-bind="org.name", title="{{org.name}}")
-                        a.org-node(
-                            ng-click="ctrl.buildTree(org)",
-                            ng-bind="org.name",
-                            title="{{org.name}}",
-                            ng-class="{'active': org.id == (ctrl.treeRootOrg && ctrl.treeRootOrg.id)}"
-                        )
+.org-dep(ng-class="{'active': ctrl.isBarOpen}")
+    .org-dep-badge
+        a.toggle-bar.fa(
+            ng-class="{true: 'fa-chevron-left', false: 'fa-chevron-right'}[ctrl.isBarOpen]"
+            ng-click="ctrl.isBarOpen = !ctrl.isBarOpen")
+    .org-dep-wrapper
+        //- div.org-dep-root
+        //-     a(ng-click="ctrl.rootTree()") 四川航空
+        .org-children-wrapper
+            ul
+                li
+                    a.org-node(ng-click="ctrl.rootTree()", ng-class="{'active': '四川航空' == (ctrl.treeRootOrg && ctrl.treeRootOrg.name)}") 四川航空
+                li(ng-repeat="org in ctrl.orgs | filterBy: ['depth']: 2 track by $index" )
+                    //- a.org-node(ng-click="ctrl.buildTree(org)" ng-bind="org.name", title="{{org.name}}")
+                    a.org-node(
+                        ng-click="ctrl.buildTree(org)",
+                        ng-bind="org.name",
+                        title="{{org.name}}",
+                        ng-class="{'active': org.id == (ctrl.treeRootOrg && ctrl.treeRootOrg.id)}"
+                    )
+section(layout="row" flex)
+    md-content(layout="column" flex style="background-color: #f0f3f4;")
 
-    .org-aside.org-aside-info.pull-right
-        //- .org-row(ui-view='sub' ng-controller="OrgCtrl as orgCtrl")
-        .org-row(ng-controller="OrgCtrl as orgCtrl")
-            include org
-    .app-main.org-chart
         .org-chart-top(ng-class="{'org-chart-history': ctrl.isHistory}")
-                h1 {{ctrl.treeRootOrg.name}}组织机构图
-                h2(ng-show="ctrl.isHistory") {{ctrl.orgs.$metadata.created_at | unixToDate : 'yyyy年MM月dd日'}}— {{ctrl.orgs.$metadata.title}}
+                h1 {{ctrl.treeRootOrg.$cmStatus.name}}组织机构图
+                h2(ng-show="ctrl.isHistory") {{ctrl.orgs.$metadata.created_at | date : 'yyyy年MM月dd日'}}— {{ctrl.orgs.$metadata.title}}
             .top-btn-group
-                button.btn.btn-m.btn-primary(ui-sref=".history") 时间轴
-                a.btn.btn-m.btn-info(ng-show="!ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导 出
-                a.btn.btn-m.btn-info(ng-show="ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导 出
-                button.btn.btn-info(ng-click="ctrl.resetData()" ng-show="ctrl.isHistory") 返回最新
+                //- button(ng-click="ctrl.print()") 导出
+                md-button.md-raised.purple(
+                    nb-dialog="partials/orgs/org_history.html"
+                    nb-dialog-scope="this"
+                    prepare-data="ctrl.initialHistoryData()"
+                    ) 时间轴
+                md-button.md-raised.skyblue(ng-show="!ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导 出
+                md-button.md-raised.skyblue(ng-show="ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导 出
+                md-button.md-raised.skyblue(ng-click="ctrl.resetData()" ng-show="ctrl.isHistory") 返回最新
 
                 //- loading-btn.red(ng-click="ctrl.openHistoryPanel()" btn-loading-type="contract-overlay" btn-text="测试loading")
-        div.org-chart-window
-            div.svg-wrapper(org-chart drag-on org-chart-data="ctrl.tree.data")
-            div.bottom-btn-group(ng-show="ctrl.tree.isModified")
-                button.btn.btn-info(ui-sref=".active") 生 效
-                button.btn.btn-default(
-                    nb-confirm="ctrl.revert(isConfirm)"
-                    nb-title="您确认要撤销当前的所有修改吗?"
-                    nb-text="当你点击确定时，你之前对机构做过的调整将被撤销。") 撤销
+
+        md-content.org-chart-window(id="org_chart_warpper" flex scroll-center style="background-color: #f0f3f4;")
+            div.svg-wrapper(org-chart id="org_chart" org-chart-data="ctrl.tree.data")
+
+        //- md-content.org-chart-window(ng-if="ctrl.treeRootOrg.depth == 1" style="height: 700px")
+        //-     div(style="width: 100%;background-image: url('/images/org_bg.jpg');height: 100%;background-position: center center;background-repeat: no-repeat; background-color: #f0f3f4;")
+        div.bottom-btn-group(ng-show="ctrl.tree.isModified")
+            md-button.md-raised.skyblue(
+                nb-dialog="partials/orgs/shared/effect_changes.html"
+                nb-dialog-scope="this"
+                ) 生 效
+            md-button.md-raised.white(
+                nb-confirm="ctrl.revert(isConfirm)"
+                nb-title="您确认要撤销当前的所有修改吗?"
+                nb-text="当你点击确定时，你之前对机构做过的调整将被撤销。") 撤 销
+    md-sidenav.org-sidebar-right.md-sidenav-right.md-whiteframe-z2(md-is-locked-open="true")
+        .org-row(ng-controller="OrgCtrl as orgCtrl")
+            include org
 

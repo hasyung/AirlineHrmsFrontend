@@ -5,14 +5,13 @@ extend = angular.extend
 resetForm = nb.resetForm
 Modal = nb.Modal
 
-
+#机构组织架构图
 orgChart = () ->
     link = (scope, $el, attrs) ->
         #
         #raphael paper
         paper = null
         active_rect = null
-
 
         click_handler = (evt, elem) ->
             # elem.setAttribute("class", 'active')
@@ -62,9 +61,13 @@ orgChart = () ->
         link: link
     }
 
+#机构选择树
 orgTree = (Org, $parse) ->
 
     postLink = (scope, elem, attrs, $ctrl) ->
+
+        # getter = $parse('org')
+        # setter = getter.assign
 
         $tree = null
         getData = (node) ->
@@ -77,25 +80,29 @@ orgTree = (Org, $parse) ->
                     data[k] = v
             return data
 
-        orgs = Org.$search().$then (orgs) ->
-            treeData = orgs.jqTreeful()
-            $tree = elem.tree {data: treeData,autoOpen: 0}
-            $tree.bind 'tree.select', (evt) ->
-                if evt.node
-                    node = evt.node
-                    scope.$apply ()->
-                        scope.selectedData = getData(node)
-                else
-            return
+        # $ctrl.$formatters.push (value)->
+        #     if value
+        #         return setOrgRoute value
+
+
+        treeData = scope.treeData.jqTreeful()
+        $tree = elem.tree {data: treeData,autoOpen: 0}
+        $tree.bind 'tree.select', (evt) ->
+            node = evt.node
+            # setter(scope, getData(node).id)
+            $ctrl.$setViewValue(getData(node))
+
+
         scope.$on '$destroy', () ->
             $tree.tree('destroy') if $tree && $tree.tree #for nest router
             $tree = null
 
     return {
         scope: {
-            selectedData: '='
-            treeData: '@'
+            org: "=ngModel"
+            treeData: '='
         }
+        require: 'ngModel'
         link: postLink
     }
 
@@ -111,6 +118,9 @@ class Route
 
     constructor: (stateProvider) ->
 
+        orgs = (Org)-> Org.$collection().$fetch(edit_mode: true).$asPromise()
+
+
 
         stateProvider
             .state 'org', {
@@ -118,148 +128,48 @@ class Route
                 templateUrl: 'partials/orgs/orgs.html'
                 controller: 'OrgsCtrl'
                 controllerAs: 'ctrl'
-                ncyBreadcrumb: {
-                    label: "机构"
-                }
                 resolve: {
-                    eidtMode: ->
-                        return true
+                    orgs: orgs
                 }
             }
-            # .state 'org.revert', Dialog.$build('revert', RevertChangesCtrl, 'partials/orgs/shared/revert_changes.html')
-            # .state 'org.active', nb.$buildDialog('active', ActiveCtrl, 'partials/orgs/shared/effect_changes.html')
-            # .state 'org.history', nb.$buildDialog('history', HistoryCtrl, 'partials/orgs/org_history.html', {size: 'sm'})
-            # .state 'org.transfer', nb.$buildDialog('transfer', TransferOrgCtrl, 'partials/orgs/shared/org_transfer.html', {size: 'sm'})
-            # .state 'org.position', nb.$buildPanel(':id/positions',PositionCtrl, 'partials/orgs/position.html')
-            .state nb.$buildDialog {
-                name: 'org.active'
-                url: '/active'
-                controller: ActiveCtrl
-                templateUrl: 'partials/orgs/shared/effect_changes.html'
-            }
-            .state nb.$buildDialog {
-                name: 'org.history'
-                url:' /history'
-                controller: HistoryCtrl
-                templateUrl: 'partials/orgs/org_history.html'
-                size: 'sm'
-            }
-            .state nb.$buildDialog {
-                name: 'org.transfer'
-                url: '/transfer'
-                controller: TransferOrgCtrl
-                templateUrl: 'partials/orgs/shared/org_transfer.html'
-                size: 'sm'
-            }
-            .state {
-                name: 'org.position'
-                url: '/:id/positions'
-                controller: PositionCtrl
-                views: {
-                    "@": {
-                        controller: PositionCtrl
-                        controllerAs: 'ctrl'
-                        templateUrl: 'partials/orgs/position.html'
-                    }
-                }
-                ncyBreadcrumb: {
-                    label: "{{ ctrl.currentOrg.name || '岗位' }}"
-                }
-            }
-            .state {
-                name: 'org.position.detail'
-                url: '/{posId:[0-9]+}'
-                views: {
-                    "@": {
-                        controller: PosCtrl
-                        controllerAs: 'ctrl'
-                        templateUrl: 'partials/orgs/position_detail.html'
-                    }
-                }
-                ncyBreadcrumb: {
-                    label: "{{currentPos.name}}"
-                }
-            }
-            .state {
-                name: 'org.position.detail.editing'
-                url: '/editing/:template'
-                views: {
-                    "@": {
-                        controller: PosCtrl
-                        controllerAs: 'ctrl'
-                        templateUrl: (params) ->
-                            return "partials/orgs/position_edit_#{params.template}.html"
-                    }
-                }
-                ncyBreadcrumb: {
-                    label: "编辑"
-                }
-            }
-            .state {
-                name: 'org.position.new'
-                url: '/new'
-                views: {
-                    "@": {
-                        controller: PosCreateCtrl
-                        controllerAs: 'ctrl'
-                        templateUrl: 'partials/orgs/position_add.html'
-                    }
-                }
-                ncyBreadcrumb: {
-                    label: "新增"
-                }
-            }
-
-
-
-            # nb.$buildPanel {
-            #     name: 'org.position'
-            #     url: ':id/positions'
-            #     controller: PositionCtrl
-            #     templateUrl: 'partials/orgs/position.html'
-            # }
-
 
 
 
 class OrgsCtrl extends nb.Controller
 
 
-    @.$inject = ['Org', '$http','$stateParams', '$state', '$scope', '$modal', '$panel', '$rootScope', '$nbEvent', 'eidtMode']
+    @.$inject = ['orgs', '$http','$stateParams', '$state', '$scope', '$rootScope', '$nbEvent']
 
 
-    constructor: (@Org, @http, @params, @state, @scope, @modal, @panel, @rootScope, @Evt, @eidtMode)->
-        @treeRootOrg = null # 当前树的顶级节点
-        @orgs = null    #集合
+    constructor: (@orgs, @http, @params, @state, @scope, @rootScope, @Evt)->
+        @treeRootOrg = _.find orgs, (org) -> org.depth == 1 # 当前树的顶级节点
         @tree = null    # tree化的 orgs 数据
+        @currentOrg = null
+
         #for ui status
         @isBarOpen = false
 
-        @loadInitialData()
-
-
-        scope.$onRootScope 'org:active', @.active.bind(@)
-        scope.$onRootScope 'org:history', @.history.bind(@)
         scope.$onRootScope 'org:refresh', @.refreshTree.bind(@)
         scope.$onRootScope 'org:resetData', @.resetData.bind(@)
 
-    loadInitialData: () -> #初始化数据
-        self = @
-        rootScope = @rootScope
-        Evt = @Evt
-        @orgs = @Org.$collection().$fetch({'edit_mode': @eidtMode})
-            .$then (orgs) ->
-                treeRootOrg = _.find orgs, (org) -> org.depth == 1
-                Evt.$send('org:link', treeRootOrg)
-                self.buildTree(treeRootOrg)
-                self.treeRootOrg = treeRootOrg
+        @buildTree(@treeRootOrg)
+
+    # loadInitialData: () -> #初始化数据
+    #     self = @
+    #     rootScope = @rootScope
+    #     @orgs = @Org.$collection().$fetch({'edit_mode': @eidtMode})
+    #         .$then (orgs) ->
+    #             treeRootOrg = _.find orgs, (org) -> org.depth == 1
+    #             self.buildTree(treeRootOrg)
+    #             self.treeRootOrg = treeRootOrg
+
 
     buildTree: (org = @treeRootOrg, depth = 9)->
         depth = 1 if org.depth == 1 #如果是顶级节点 则只显示一级
         @treeRootOrg = org
         @tree = @orgs.treeful(org, depth)
-        currentOrg = org
-        @Evt.$send('org:link', currentOrg)
+        #在orgCtrl中会监听该值得变化，用于更新右侧信息
+        @currentOrg = org
 
     refreshTree: () ->
         return unless @treeRootOrg
@@ -267,6 +177,7 @@ class OrgsCtrl extends nb.Controller
         depth = 1 if @treeRootOrg.depth == 1 #如果是顶级节点 则只显示一级
 
         @tree = @orgs.treeful(@treeRootOrg, depth)
+        @currentOrg = @treeRootOrg
 
     #force 是否修改当前机构
     reset: (force) ->
@@ -274,40 +185,93 @@ class OrgsCtrl extends nb.Controller
         #数据入口不止一个，需要解决
         @orgs.$refresh({edit_mode: @eidtMode}).$then () ->
             self.buildTree()
-            # self.rootScope.$emit('orgs:link', _.find(@orgs, {id: orgId}))
 
     onItemClick: (evt, elem) -> #机构树 点击事件处理 重构？
         orgId = elem.oc_id
-        currentOrg = _.find(@orgs, {id: orgId})
-        @Evt.$send('org:link', currentOrg)
+        @currentOrg = _.find(@orgs, {id: orgId})
 
-    revert: () ->
-        @orgs.revert()
-        # 是否可以将两步合成一步
-        # 即撤销后，后端返回当前机构信息
-        @resetData()
+    revert: (isConfirm) ->
+        if isConfirm
+            @orgs.revert()
+            # 是否可以将两步合成一步
+            # 即撤销后，后端返回当前机构信息
+            @resetData()
 
     active: (evt, data) ->
+        self = @
         #deparment_id 是否必要?
         data.department_id = @.treeRootOrg.id
-        @orgs.active(data)
+        @orgs.active(data).$then ()->
+            self.rootScope.allOrgs.$refresh()
         @resetData()
-
-
-    history: (evt, history_param) ->
-        self = @
-        @isHistory = true
-        @orgs.$refresh(history_param)
-
 
     resetData: () ->
         @isHistory = false
-        @orgs.$refresh({'edit_mode': @eidtMode})
+        @orgs.$refresh({'edit_mode': true})
 
     rootTree: () ->
+        treeRootOrg = _.find @orgs, (org) -> org.depth == 1
+        @buildTree(treeRootOrg)
+
+    initialHistoryData: ->
+        onSuccess = (res)->
+            logs = res.data.change_logs
+            groupedLogs = _.groupBy logs, (log) ->
+                moment(log.created_at).format('YYYY')
+            logsArr = []
+            angular.forEach groupedLogs, (yeardLog, key) ->
+                logsArr.push {logs:yeardLog, changeYear: key}
+
+            changeLogs = _.sortBy(logsArr, 'changeYear').reverse()
+
+            firstDate = _.last(logs).created_at
+
+            minDate = moment(firstDate).subtract(1,'days').format('DD/MM/YYYY')
+
+
+            return {
+                changeLogs: changeLogs
+                minDate: minDate
+            }
+
+
+        promise = @http.get('/api/departments/change_logs')
+        promise.then onSuccess
+
+    pickLog: (date, changeLogs) ->
+
+        sortedLogs = _.flatten(_.pluck(changeLogs, 'logs'))
+        selectedMoment =  moment(date)
+        log = _.find sortedLogs, (log) ->
+            return selectedMoment.isAfter(log.created_at)
+        @expandLog(log) if log
+
+
+    # 返回机构的指定版本
+    backToPast: (version)->
         self = @
-        treeRootOrg = _.find self.orgs, (org) -> org.depth == 1
-        self.buildTree(treeRootOrg)
+        if @currentLog
+            @orgs.$refresh({version: @currentLog.id}).$then ()->
+                self.isHistory = true
+                self.currentOrg = self.treeRootOrg
+    expandLog: (log)->
+        # 防止UI中出现多个被选中的item
+        @currentLog.active = false if @currentLog
+        log.active = true
+        @currentLog = log
+
+    # print: () ->
+    #     options = {
+    #         container: 'org_chart',
+    #         pdf_canvas: 'org_chart_print_canvas'
+    #         pdf_filename: '机构组织架构图.pdf'
+    #         oc_zdp_width_internal: $('svg').width(),
+    #         oc_zdp_height_internal: $('svg').height()
+    #     }
+
+    #     ggOrgChart.print(options)
+
+
 
 
 
@@ -317,47 +281,24 @@ class OrgCtrl extends nb.Controller
 
     constructor: (@Org, @params, @scope, @rootScope, @Evt, @Position , @sweet) ->
         @state = 'show' # show editing newsub
-        # @scope.org = @Org.$find(@params.orgId)
-        scope.$onRootScope 'org:link', @.orgLink.bind(@)
-        Evt.$on.call(scope,['org:update:success','org:update:error','org:newsub:success','org:newsub:error'], @.reset.bind(@))
-        scope.$onRootScope 'org:transfer', @.transfer.bind(@)
+        self = @
+        scope.$parent.$watch 'ctrl.currentOrg', (newval)->
+            self.orgLink(newval)
 
-
-    orgLink: (evt, org)->
+    orgLink: (org)->
         @scope.currentOrg = org
-        @scope.copyOrg = org.$copy()
-        @loadPosition()
+        queryParam = if @scope.ctrl.isHistory then {version: @scope.ctrl.currentLog.id} else {}
+        @scope.positions = @scope.currentOrg.positions.$refresh(queryParam)
 
-    cancel: ->
-        @state = 'show'
-
-
-    transfer: (evt, destOrg) ->
-        @scope.currentOrg.transfer(destOrg.id)
-        @Evt.$send 'org:resetData'
+    transfer: (destOrg) ->
+        self = @
+        @scope.currentOrg.transfer(destOrg.id).$then ()->
+            self.Evt.$send 'org:resetData'
 
     newsub: (form, neworg) ->
-        $Evt = @Evt
-        @scope.currentOrg.newSub(neworg).$then ->
-            $Evt.$send 'org:newsub', form
-
-
-
-    update: (form, copyOrg) ->
-        @scope.currentOrg.$update(copyOrg)
-
-    reset: (evt)->
-        scope = @scope
-        scope.neworg = {}
-        scope.copyOrg = @scope.currentOrg.$copy()
-        resetForm(scope.newsubForm, scope.updateForm)
-        @state = 'show'
-
-    loadPosition: () ->
+        return if form.$invalid
         self = @
-        @scope.positions = @scope.currentOrg.positions.$fetch()
-        # @Position.$search({department_id:@scope.currentOrg.id}).$then (positions) ->
-        #     self.scope.positions = positions
+        @scope.currentOrg.newSub(neworg).$then -> self.state = 'show'
 
     destroy: (isConfirm) ->
         sweet = @sweet
@@ -372,68 +313,11 @@ class OrgCtrl extends nb.Controller
             sweet.error("您取消了删除#{@scope.currentOrg.name}")
 
 
-class ActiveCtrl extends Modal
-    @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$injector']
-    constructor: (@dialog, @scope, @Evt, @memoName, @injector) ->
-        super(dialog, scope, memoName)
-    active: (log, form) ->
-        @Evt.$send('org:active',log)
-        @dialog.close()
-
-class HistoryCtrl extends Modal
-    @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$http', '$injector']
-    constructor: (@dialog, @scope, @Evt, @memoName, @http, @injector) ->
-        @loadInitialData()
-        super(dialog, scope, memoName)
-
-    loadInitialData: ()->
-        self = @
-        onError = (res)->
-            self.Evt.$send('org:history:error',res)
-        onSuccess = (res)->
-            logs = res.data.change_logs
-            groupedLogs = _.groupBy logs, (log) ->
-                moment.unix(log.created_at).format('YYYY')
-            logsArr = []
-            angular.forEach groupedLogs, (item, key) ->
-                logsArr.push {logs:item, changeYear: key}
-
-            self.changeLogs = _.sortBy(logsArr, 'changeYear').reverse()
-
-        promise = @http.get('/api/departments/change_logs')
-        promise.then onSuccess.bind(@), onError.bind(@)
-
-    expandLog: (log)->
-        # 防止UI中出现多个被选中的item
-        @currentLog.active = false if @currentLog
-        log.active = true
-        @currentLog = log
-
-    submit: ()->
-        @Evt.$send('org:history', {version: @currentLog.id}) if @currentLog
-        @dialog.close()
-
-
-class TransferOrgCtrl extends Modal
-    @.$inject = ['$modalInstance', '$scope', '$nbEvent','memoName', '$injector']
-    constructor: (@dialog, @scope, @Evt, @memoName, @injector) ->
-        super(dialog, scope, memoName)
-        @selectedData = null
-
-    ok: () ->
-        @Evt.$send('org:transfer',@selectedData)
-        @dialog.close()
-
-
 class PositionCtrl extends nb.Controller
-    @.$inject = ['$scope', '$nbEvent', 'Position', '$stateParams', 'Org']
-    constructor: (@scope, @Evt, @Position, @stateParams, @Org) ->
-        orgId = @stateParams.id
-        @currentOrg = Org.$find(orgId)
-        @positions = @currentOrg.positions.$fetch()
-        @selectOrg = null # 划转所选择的机构 rework
-        @scope.allSelect = false
-        # @scope.$onRootScope 'position:refresh', @.resetData.bind(@)
+    @.$inject = ['$scope', '$nbEvent', 'Position', '$stateParams', 'Org', 'Specification']
+    constructor: (@scope, @Evt, @Position, @stateParams, @Org, @Specification) ->
+        @positions = scope.ngDialogData # from parent ctrl
+        scope.ctrl = this
 
     getSelectsIds: ()->
         @positions
@@ -457,76 +341,33 @@ class PositionCtrl extends nb.Controller
         else
             @Evt.$send "position:remove:error", "你还没选择所要删除的岗位"
 
-    getExportParams: () ->
+    getExportParams: (id) ->
         ids = @getSelectsIds()
         if ids.length == 0
-            return 'department_id=' + @currentOrg.id
+            return 'department_id=' + id
         else
-            return 'department_id=' + @currentOrg.id  + '&position_ids=' + ids.join(',')
+            return 'department_id=' + id  + '&position_ids=' + ids.join(',')
+    createPos: (newPos, spe) ->
+        # self = @
+        # @position.departmentId = @orgId
+        # @position.specification = @specification
+        #将页面跳转放在then里，防止当跳转过去时新创建的岗位未被添加到岗位列表
+        # newPos.specification = @Specification.$buildRaw(spe)
+        # newPos.specification = spe
+        #bug,
+        newPos = @positions.$create(newPos).$then (newpos)->
+            newpos.$createSpe(spe)
 
     search: (tableState) ->
         @positions.$refresh(tableState)
-
-
-
-class PosCtrl extends nb.Controller
-    @.$inject = ['$stateParams', 'Position', '$scope', '$state', 'Org']
-
-    constructor: (@params, @Position, @scope, @state, @Org) ->
-        @loadInitialData()
-    loadInitialData: () ->
-        self = @
-        orgId = @params.id
-        posId = @params.posId
-        @Position.$find(posId).$then (position) ->
-            self.scope.currentPos = position
-            # self.scope.copyPos = position.$copy()
-
-            spe = position.specification.$fetch()
-            spe.$asPromise().then (spe) ->
-                self.scope.currentSpe = spe
-                # self.scope.copySpe = spe.$copy()
-
-
-        @scope.currentOrg = @Org.$find orgId
-
-    updateDetail: (position) ->
-        self = @
-        position.$save().$then () -> self.state.go "^"
-    updateAdvanced: (advance) ->
-        self = @
-        @scope.currentSpe.$update(advance).$then ()->
-            self.state.go '^'
-
-
-
-
-class PosCreateCtrl extends nb.Controller
-    @.$inject = ['$stateParams', 'Position', '$scope', 'Org', '$state']
-
-    constructor: (@params, @Position, @scope, @Org, @state) ->
-        @orgId = @params.id
-        @loadInitialData()
-
-    loadInitialData: () ->
-        @scope.currentOrg = @Org.$find @orgId
-    createPos: () ->
-        self = @
-        @position.departmentId = @orgId
-        @position.specification = @specification
-        #将页面跳转放在then里，防止当跳转过去时新创建的岗位未被添加到岗位列表
-        newPos = @Position.$create(@position).$then ()->
-            self.state.go '^'
-    store: (attr, value) ->
-        this[attr] = value
-
-
+    searchEmp: (tableState) ->
 
 
 
 app.config(Route)
 app.controller('OrgsCtrl', OrgsCtrl)
 app.controller('OrgCtrl', OrgCtrl)
+app.controller('OrgPosCtrl', PositionCtrl)
 
 
 

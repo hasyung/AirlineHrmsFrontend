@@ -170,9 +170,12 @@ angular.module 'nb.directives'
 
             @.$inject = ['$scope', '$element', '$transclude']
 
-            constructor: (@$scope, $elem, $transcludeFn) ->
+            constructor: (@scope, $elem, $transcludeFn) ->
 
-        postLink = (scope, elem, attrs, $ctrl, $transcludeFn) ->
+            hide: ()->
+                @scope.isShown = false
+
+        postLink = (scope, elem, attrs, $ctrl) ->
 
             $doc = angular.element $window.document
             scope.isShown = false
@@ -200,6 +203,8 @@ angular.module 'nb.directives'
             toggle = ()->
                 if scope.isShown then hide() else show()
             show = ()->
+                if $ctrl
+                    $ctrl.showPopup(tipElement)
                 tipElement.show()
                 # 重新定位，解决按钮位置被挤出后popover位置错乱的BUG
                 position = calcPosition elem
@@ -225,7 +230,9 @@ angular.module 'nb.directives'
                 elemWidth = element.outerWidth()
                 elemHeight = element.outerHeight()
                 #合并代码之后offset()获取到的left值比实际值要大，后续检查，先用暴力方法
-                elemPosition = {left: element[0].offsetLeft, top: element[0].offsetTop}
+                # elemPosition = {left: element[0].offsetLeft, top: element[0].offsetTop}
+                # 在变更记录中当出现滚动条后position()获取位置存在问题
+                elemPosition = element.position()
                 tipWidth = tipElement.outerWidth()
                 tipHeight = tipElement.outerHeight()
 
@@ -332,6 +339,8 @@ angular.module 'nb.directives'
                 e.stopPropagation()
                 hide()
                 return
+            scope.$watch 'isShown', (newVal)->
+                hide() if !newVal
 
             scope.$on '$destroy', ()->
                 $doc.off 'click', hideHandle
@@ -345,6 +354,23 @@ angular.module 'nb.directives'
             controller: PopupPlusController
             templateUrl: 'partials/common/popup.html'
             link: postLink
+            require: '^?nbPopupManagement'
+        }
+
+    ]
+    .directive 'nbPopupManagement', [ () ->
+
+        class ManmageCtrl
+            @.$inject = ['$scope']
+            constructor: (@scope) ->
+                @showEle = null
+            showPopup: (popup) ->
+                @showEle.hide() if @showEle
+                @showEle = popup
+
+        return {
+            restrict: 'AE'
+            controller: ManmageCtrl
         }
 
     ]

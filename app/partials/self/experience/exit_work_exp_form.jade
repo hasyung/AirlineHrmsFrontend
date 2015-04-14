@@ -1,0 +1,33 @@
+form(ng-submit="save(work.$save(), infoForm)" name="infoForm")
+    .form-btn-group(ng-hide="editing")
+        md-button.md-raised.red(ng-click="work.$destroy()" type="button") 删除
+        md-button.skyblue.md-raised(ng-click="edit($event)") 编辑
+    .form-btn-group.alive(ng-show="editing")
+        md-button.md-raised.white(ng-click="cancel(work,$event, empEditForm)") 取消
+        md-button.skyblue.md-raised(type="submit") 保存
+    fieldset(ng-disabled="!editing")
+        div(layout)
+            md-input-container(flex)
+                label 开始时间
+                input(type="date" ng-model="work.startDate")
+            md-input-container(flex)
+                label 结束时间
+                input(type="date" ng-model="work.endDate")
+        div(layout)
+            md-input-container(flex)
+                label 单位名称
+                input(ng-model="work.company" name="company" required)
+            md-input-container(flex)
+                label 任职部门
+                input(ng-model="work.department" name="department" required)
+        div(layout)
+            md-input-container.row-has-value(flex)
+                label 担任职位
+                input(ng-model="work.position" name="position" required)
+            md-input-container.row-has-value(flex)
+                label 工作描述
+                input(ng-model="work.jobDesc" name="jobDesc" required)
+        md-input-container
+            label 证明人
+            input(ng-model="work.witness" name="witness" required)
+md-divider(ng-show="!$last")

@@ -79,7 +79,7 @@ Org = (restmod, RMUtils, $Evt) ->
 
 
 
-    Org = restmod.model('/departments').mix 'nbRestApi', {
+    Org = restmod.model('/departments').mix 'nbRestApi', 'DirtyModel', {
 
         positions: { hasMany: 'Position'}
 
@@ -95,9 +95,6 @@ Org = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('org:refresh')
                 $Evt.$send('org:active:success', "生效成功")
 
-            'after-active-error': ->
-                $Evt.$send('org:active:error', arguments)
-
             'after-revert': ->
                 $Evt.$send('org:refresh')
                 $Evt.$send('org:revert:success', "撤销成功")
@@ -106,15 +103,9 @@ Org = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('org:refresh')
                 $Evt.$send('org:update:success', "修改成功")
 
-            'after-update-error': ->
-                $Evt.$send('org:update:error')
-
             'after-newsub': ->
                 $Evt.$send('org:refresh')
                 $Evt.$send('org:newsub:success', "机构创建成功")
-
-            'after-newsub-error': ->
-                $Evt.$send('org:newsub:error')
 
             'after-transfer': ->
                 $Evt.$send('org:transfer:success', "划转机构成功")
@@ -131,10 +122,7 @@ Org = (restmod, RMUtils, $Evt) ->
                         self.$dispatch 'after-active', res
                         $Evt.$send('org:refresh')
 
-                    onErorr = (res) ->
-                        self.$dispatch 'after-active-error', res
-
-                    this.$send(request, onSuccess, onErorr)
+                    this.$send(request, onSuccess)
 
                 revert: ->
                     self = @
@@ -145,10 +133,7 @@ Org = (restmod, RMUtils, $Evt) ->
                         self.$dispatch 'after-revert', res
                         $Evt.$send('org:refresh')
 
-                    onErorr = (res) ->
-                        self.$dispatch 'after-revert-error', res
-
-                    this.$send(request, onSuccess, onErorr)
+                    this.$send(request, onSuccess)
 
 
 
@@ -170,9 +155,12 @@ Org = (restmod, RMUtils, $Evt) ->
                         return false if orgItem.depth - rootDepth > DEPTH
 
                         isChild = _.str.startsWith(orgItem.serial_number,rootSerialNumber) #子机构的serialNumber number 前缀和父机构相同
-                        isModified = true if isChild and IneffectiveOrg(orgItem)
+                        # isModified = true if isChild and IneffectiveOrg(orgItem)
 
                         return isChild
+                    #待优化
+                    _.forEach cachedIndexOrgs, (orgItem) ->
+                        isModified = true if IneffectiveOrg(orgItem)
 
                     treeData = transform(treeData, {'name': 'title'})
                     treeData = treeful(treeData, DEPTH, org)
@@ -192,12 +180,10 @@ Org = (restmod, RMUtils, $Evt) ->
                 newSub: (org) ->
                     onSuccess = ->
                         @.$dispatch 'after-newsub'
-                    onErorr = ->
-                        @.$dispatch 'after-newsub-error', arguments
 
                     org = this.$scope.$build(org)
                     org.parentId = this.$pk
-                    org.$save().$then onSuccess, onErorr
+                    org.$save().$then onSuccess
 
 
                 transfer: (to_dep_id) -> #划转机构 {to_department_id: to_id}
@@ -206,8 +192,6 @@ Org = (restmod, RMUtils, $Evt) ->
                     onSuccess = -> # bug? 直接修改属性 collection 中数据可能不会改变, 会影响到机构树
                         @parentId = to_dep_id
                         @.$dispatch 'after-transfer'
-                    onErorr = ->
-                        @.$dispatch 'after-transfer-error', arguments
 
                     url = this.$url()
                     request = {
@@ -217,7 +201,7 @@ Org = (restmod, RMUtils, $Evt) ->
                             to_department_id: to_dep_id
                         }
                     }
-                    @.$send request, onSuccess, onErorr
+                    @.$send request, onSuccess
 
 
     }

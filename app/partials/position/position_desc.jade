@@ -1,0 +1,34 @@
+form(name="speEditForm" ng-submit="save(currentSpe.$save(), speEditForm)" ng-controller="EditableResource" ng-init="params = {}")
+    .form-btn-group(ng-hide="editing")
+        md-button.skyblue.md-raised(ng-click="edit($event)") 编辑
+    .form-btn-group.alive(ng-show="editing")
+        md-button.md-raised.white(ng-click="cancel(currentSpe, $event, speEditForm)") 取消
+        md-button.md-raised.skyblue(type="submit" ng-disabled="speEditForm.$invalid") 保存
+    fieldset(ng-disabled="!editing")
+        md-input-container
+            label 工作职责
+            textarea(nb-simditor, toolbar="['bold', 'italic', 'underline', 'ol', 'ul']", placeholder="这里输入内容", ng-model="currentSpe.duty", editing)
+        md-input-container
+            label 人事权限
+            input(type='text', placeholder='请输入人事权限', ng-model="currentSpe.personnelPermission")
+        md-input-container
+            label 财务权限
+            input(type='text', placeholder='请输入财务权限', ng-model="currentSpe.financialPermission")
+        md-input-container
+            label 业务权限
+            input(type='text', placeholder='请输入业务权限', ng-model="currentSpe.businessPermission")
+        md-input-container()
+            label 直属上级
+            input(type='text', placeholder='请输入直属上级', ng-model="currentSpe.superior")
+        md-input-container()
+            label 直属下级
+            input(type='text', placeholder='请输入直属下级', ng-model="currentSpe.underling")
+        md-input-container
+            label 内部联系
+            input(type='text', placeholder='请输入内部联系', ng-model="currentSpe.internalRelation")
+        md-input-container
+            label 外部联系
+            input(type='text', placeholder='请输入外部联系', ng-model="currentSpe.externalRelation")
+        md-input-container
+            label 任职条件
+            textarea(nb-simditor, toolbar="['bold', 'italic', 'underline', 'ol', 'ul']", placeholder="这里输入内容", ng-model="currentSpe.qualification", editing)

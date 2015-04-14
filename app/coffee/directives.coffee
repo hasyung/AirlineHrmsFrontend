@@ -5,4 +5,7 @@
 #
 # 不通用指令考虑放在 controller 文件中
 #
+
+
 angular.module 'nb.directives', []
+angular.module 'nb.component', []
