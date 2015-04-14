@@ -1,6 +1,7 @@
 
 
 @nb = nb = {}
+metadata = @metadata
 
 
 
@@ -35,6 +36,10 @@ resources = angular.module('resources',[])
 nb.app = App = angular.module 'nb',deps
 # nb.models = models = angular.module 'models', []
 
+
+if metadata #permissions employee
+    angular.forEach metadata, (value, key) ->
+        angular.constant key, value
 
 appConf = ($provide, ngDialogProvider) ->
     # 事件广播 始终锁定在 rootScope 上 ， 提高性能
@@ -115,12 +120,12 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
             templateUrl: 'partials/auth/change_pwd.html'
         }
 
-    $httpProvider.interceptors.push ['$q', '$location', 'toaster', 'sweet', ($q, $location, toaster, sweet) ->
+    $httpProvider.interceptors.push ['$q', '$location', 'toaster', 'sweet', 'AuthService', ($q, $location, toaster, sweet, AuthServ) ->
 
         return {
             'responseError': (response) ->
                 if response.status == 401
-                    $location.path('/login')
+                    AuthService.redirectToLogin()
                 if response.status == 403
                     sweet.error('操作失败',response.data.message || JSON.stringify(response.data))
                 if response.status == 400
@@ -159,7 +164,17 @@ App
 
         $rootScope.$on '$stateChangeStart', ->
             startLoading()
-            $timeout cancelLoading, 1000
+
+            unless AuthServ.isLogged()
+                evt.preventDefault() #prevent route
+                if AuthServ.isLogging()
+                    AuthServ.promise.then () -> $state.go(_to, _toParam)
+                else
+                    cancelLoading()
+                    $location.path('/login')
+
+        $rootScope.$on '$stateChangeSuccess', (evt, _to, _toParam, _from, _fromParam) ->
+            cancelLoading()
 
 
         $rootScope.$on 'process', startLoading

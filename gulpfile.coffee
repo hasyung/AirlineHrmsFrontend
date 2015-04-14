@@ -22,10 +22,28 @@ scsslint        = require("gulp-scss-lint")
 newer           = require("gulp-newer")
 cache           = require("gulp-cached")
 jadeInheritance = require('gulp-jade-inheritance')
-fs = require("fs")
+
+fs              = require("fs")
+request         = require("request")
 
 
-proxy   = require('./compat/proxy-middleware')
+proxy           = require('./compat/proxy-middleware')
+
+debugMode       = true
+
+LOCAL_TEST_SERVER = "http://192.168.6.99:4000"
+REMOTE_TEST_SERVER = "http://114.215.142.122:9002"
+LOCAL_SERVER = "http://localhost:3000"
+
+
+if argv.localhost
+    PROXY_SERVER_ADDR = LOCAL_SERVER
+else if argv.remote
+    PROXY_SERVER_ADDR =  REMOTE_TEST_SERVER
+else if argv.addr
+    PROXY_SERVER_ADDR = "http://#{argv.addr}"
+else
+    PROXY_SERVER_ADDR = LOCAL_TEST_SERVER
 
 debugMode = true
 
@@ -282,13 +300,10 @@ gulp.task "express", ->
     express = require("express")
     app = express()
 
-
-    proxyOptions = url.parse('http://192.168.6.99:4000')
-    # proxyOptions = url.parse('http://114.215.142.122:9002')
-    # proxyOptions = url.parse('http://192.168.6.16:3000')
-    # proxyOptions = url.parse('http://192.168.6.40:3000')
-
+    proxyOptions = url.parse(PROXY_SERVER_ADDR)
     proxyOptions.route = '/api'
+    app.set('views', __dirname + '/app')
+    app.set('view engine', 'jade')
 
     # 反向代理 webapi
     app.use(proxy(proxyOptions))
@@ -302,9 +317,14 @@ gulp.task "express", ->
     app.use("/fonts", express.static("#{__dirname}/dist/fonts"))
     app.use("/plugins", express.static("#{__dirname}/dist/plugins"))
 
+
+
+    # Just send the index.html for other files to support HTML5Mode
     app.all "/*", (req, res, next) ->
-        # Just send the index.html for other files to support HTML5Mode
-        res.sendFile("index.html", {root: "#{__dirname}/dist/"})
+        request "http://192.168.6.3:3000", (err, response, body) ->
+            res.render('index', {meta: body})
+
+
 
     app.listen(9001)
 

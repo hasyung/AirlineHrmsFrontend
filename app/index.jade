@@ -13,6 +13,9 @@ html
         link(rel="stylesheet", href="/styles/lib.css?v=#{v}")
         link(rel="stylesheet", href="/styles/web.css?v=#{v}")
         link(rel="icon", type="image/png", href="/images/favicon.png")
+
+        script(id="CONFIG_SERVER_CODE").
+            !{meta}
     //- body(ng-app="nb" ng-controller="AppController")
     body(ng-app="nb" layout="row")
         include partials/shared/left_sidebar
