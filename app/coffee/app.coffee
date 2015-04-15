@@ -126,7 +126,7 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
         return {
             'responseError': (response) ->
                 if response.status == 401
-                    location.replace("#{location.origin}/sessions/new")
+                    location.replace("#{location.origin}/sessions/new/")
                 if response.status == 403
                     sweet.error('操作失败',response.data.message || JSON.stringify(response.data))
                 if response.status == 400

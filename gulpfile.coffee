@@ -318,12 +318,13 @@ gulp.task "express", ->
     app.use("/plugins", express.static("#{__dirname}/dist/plugins"))
 
 
+    app.get "/sessions/new/", (req, res, next) ->
+        res.send("<h1>Hello HRMSX</h1>")
 
-    # Just send the index.html for other files to support HTML5Mode
-    app.all "/*", (req, res, next) ->
+    app.get "/", (req, res, next) ->
         request "http://192.168.6.3:3000", (err, response, body) ->
             res.render('index', {meta: body})
-
+        # Just send the index.html for other files to support HTML5Mode
 
 
     app.listen(9001)
