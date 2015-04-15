@@ -36,6 +36,7 @@
     "gulp-wrap": "^0.3.0",
     "jade": "^1.9.2",
     "lodash": "^2.4.1",
+    "minimist": "^1.1.1",
     "node-bourbon": "^1.2.3",
     "request": "^2.55.0",
     "wrench": "^1.5.8"

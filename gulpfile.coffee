@@ -2,7 +2,7 @@ gulp            = require("gulp")
 jade            = require("gulp-jade")
 _               = require("lodash")
 url             = require('url')
-
+argv            = require('minimist')(process.argv.slice(2))
 coffee          = require("gulp-coffee")
 concat          = require("gulp-concat")
 uglify          = require("gulp-uglify")
@@ -152,11 +152,11 @@ gulp.task "jade-watch", ->
         .pipe(jade({pretty: true}))
         .pipe(gulp.dest("#{paths.dist}"))
 
-gulp.task "template",['copy'], ->
-    gulp.src("#{paths.app}/index.jade")
-        .pipe(plumber())
-        .pipe(jade({pretty: true, locals:{debugMode: debugMode,v: (new Date()).getTime(),libs: generate_scripts()}}))
-        .pipe(gulp.dest("#{paths.dist}"))
+# gulp.task "template",['copy'], ->
+#     gulp.src("#{paths.app}/index.jade")
+#         .pipe(plumber())
+#         .pipe(jade({pretty: true, locals:{debugMode: debugMode,v: (new Date()).getTime(),libs: generate_scripts()}}))
+#         .pipe(gulp.dest("#{paths.dist}"))
 
 gulp.task "sass-lint", ->
     gulp.src([paths.scssStyles, '!app/styles/lib/**/*.scss'])
@@ -222,18 +222,6 @@ gulp.task "styles-deploy", ["sass-deploy", "css-vendor"], ->
 # JS Related tasks
 ##############################################################################
 
-# 国际化
-# gulp.task "locales", ->
-#     gulp.src("app/locales/en/app.json")
-#         .pipe(wrap("angular.module('taigaLocales').constant('localesEnglish', <%= contents %>);"))
-#         .pipe(rename("localeEnglish.coffee"))
-#         .pipe(gulp.dest("app/coffee/modules/locales"))
-
-#     gulp.src("app/locales/es/app.json")
-#         .pipe(wrap("angular.module('locales.es', []).constant('locales.es', <%= contents %>);"))
-#         .pipe(rename("locale.es.coffee"))
-#         .pipe(gulp.dest("app/coffee/"))
-
 gulp.task "coffee-watch", ->
     gulp.src(paths.coffee)
         .pipe(plumber())
@@ -296,7 +284,7 @@ gulp.task "copy",  ->
         .pipe(gulp.dest("#{paths.dist}/vendor/"))
 
 
-gulp.task "express", ->
+gulp.task "express", ['copy'],  ->
     express = require("express")
     app = express()
 
@@ -317,27 +305,43 @@ gulp.task "express", ->
     app.use("/fonts", express.static("#{__dirname}/dist/fonts"))
     app.use("/plugins", express.static("#{__dirname}/dist/plugins"))
 
-
+    jar = request.jar()
     app.get "/sessions/new/", (req, res, next) ->
-        res.send("<h1>Hello HRMSX</h1>")
+        request.post {
+            url: "#{PROXY_SERVER_ADDR}/api/sign_in"
+            formData: {
+                'user[employee_no]': '000881'
+                'user[password]': '123456'
+            }
+            jar: jar
+        }, (err, response, body) ->
+            cooks = jar.getCookies(response.request.href)
+            tokenCookie =  _.find cooks, (cook) -> cook.key == 'token'
+            res.cookie('token', tokenCookie.value)
+            res.redirect('/')
+
 
     app.get "/", (req, res, next) ->
-        request "http://192.168.6.3:3000", (err, response, body) ->
-            res.render('index', {meta: body})
+        request {
+            url: "#{PROXY_SERVER_ADDR}/metadata"
+            jar: jar
+        }, (err, response, body) ->
+
+            metadata = if !err && response.statusCode == 200 then body else "alert('meta data initial failed');alert(#{body});"
+            res.render('index', {meta: metadata, libs: libs, debugMode: debugMode})
         # Just send the index.html for other files to support HTML5Mode
-
-
     app.listen(9001)
 
+    libs = generate_scripts()
+
 # Rerun the task when a file changes
-gulp.task "watch", ->
+gulp.task "watch", ['jade-deploy'],  ->
     livereload.listen()
     gulp.watch(paths.jade, ["jade-watch"])
-    gulp.watch("#{paths.app}/index.jade", ["template"])
     gulp.watch(paths.scssStyles, ["sass-watch"])
     gulp.watch(paths.coffee, ["coffee-watch"])
     gulp.watch(paths.js, ["js-watch"])
-    gulp.watch(paths.vendorJsLibs, ["copy"])
+
     gulp.watch(["dist/index.html","dist/js/app.js","dist/styles/web.css","dist/partials/**/*.html"])
         .on("change",livereload.changed)
 
@@ -355,16 +359,16 @@ gulp.task "deploy", [
 # bugfix: copy 异步 template 同步 ,后者依赖前者
 # 添加 lib 文件后，先执行 gulp copy
 gulp.task "default", [
-    "jade-deploy",
-    "less-vendor",
-    "css-vendor",
-    "template",
-    "sass-watch",
-    "sass-lib",
-    "coffee-watch",
-    "js-watch",
-    "jslibs-watch",
-    "express",
+    "jade-deploy"
+    "less-vendor"
+    "css-vendor"
+    # "template"
+    "sass-watch"
+    "sass-lib"
+    "coffee-watch"
+    "js-watch"
+    "jslibs-watch"
+    "express"
     "watch"
 ]
 

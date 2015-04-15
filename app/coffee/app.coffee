@@ -39,7 +39,7 @@ nb.app = App = angular.module 'nb',deps
 
 if metadata #permissions employee
     angular.forEach metadata, (value, key) ->
-        angular.constant key, value
+        App.constant key, value
 
 appConf = ($provide, ngDialogProvider) ->
     # 事件广播 始终锁定在 rootScope 上 ， 提高性能
