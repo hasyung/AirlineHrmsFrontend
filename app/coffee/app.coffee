@@ -8,7 +8,6 @@ metadata = @metadata
 deps = [
     # 'ui.router'
     'ct.ui.router.extras'
-    # 'ncy-angular-breadcrumb'
     'mgo-angular-wizard'
     'mgcrea.ngStrap.datepicker'
     'ngDialog'
@@ -36,10 +35,10 @@ resources = angular.module('resources',[])
 nb.app = App = angular.module 'nb',deps
 # nb.models = models = angular.module 'models', []
 
+#初始化在<head> <script> 标签中, 如果不存在， 系统行为待定
+App.constant 'PERMISSIONS', metadata.permissions || []
+App.constant 'USER_META', metadata.employee || {}
 
-if metadata #permissions employee
-    angular.forEach metadata, (value, key) ->
-        App.constant key, value
 
 appConf = ($provide, ngDialogProvider) ->
     # 事件广播 始终锁定在 rootScope 上 ， 提高性能
@@ -92,41 +91,19 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
     #     return result
 
 
-    # $breadcrumbProvider.setOptions {
-    #     prefixStateName: 'home'
-    #     template: 'bootstrap3'
-    # }
-
     #default route
     $urlRouterProvider.otherwise('/')
     $stateProvider
         .state 'home', {
             url: '/'
             templateUrl: 'partials/home.html'
-            ncyBreadcrumb: {
-                skip: true
-            }
-        }
-        .state 'login', {
-            url: '/login'
-            templateUrl: 'partials/auth/login.html'
-        }
-        .state 'sigup', {
-            url: '/sigup'
-            templateUrl: 'partials/auth/sigup.html'
-        }
-        .state 'changePwd', {
-            url: '/change-possword'
-            templateUrl: 'partials/auth/change_pwd.html'
         }
 
-
-    $httpProvider.interceptors.push ['$q', '$location', 'toaster', 'sweet', '$window', ($q, $location, toaster, sweet, $window) ->
-        location = $window.location
+    $httpProvider.interceptors.push ['$q', 'toaster', 'sweet', 'AuthService', ($q, toaster, sweet, AuthServ) ->
         return {
             'responseError': (response) ->
                 if response.status == 401
-                    location.replace("#{location.origin}/sessions/new/")
+                    AuthServ.logout()
                 if response.status == 403
                     sweet.error('操作失败',response.data.message || JSON.stringify(response.data))
                 if response.status == 400
@@ -166,17 +143,8 @@ App
         $rootScope.$on '$stateChangeStart', ->
             startLoading()
 
-            unless AuthServ.isLogged()
-                evt.preventDefault() #prevent route
-                if AuthServ.isLogging()
-                    AuthServ.promise.then () -> $state.go(_to, _toParam)
-                else
-                    cancelLoading()
-                    $location.path('/login')
-
-        $rootScope.$on '$stateChangeSuccess', (evt, _to, _toParam, _from, _fromParam) ->
+        $rootScope.$on '$stateChangeSuccess', () ->
             cancelLoading()
-
 
         $rootScope.$on 'process', startLoading
 
@@ -193,11 +161,6 @@ App
         $rootScope.$state = $state
 
         $rootScope.allOrgs = Org.$search()
-
-        $rootScope.logout = ()->
-            $http.delete('/api/sign_out').success ()->
-                $rootScope.currentUser = null
-
 
         $rootScope.enums = $enum.get()
         $rootScope.loadEnum = $enum.loadEnum()
