@@ -120,12 +120,13 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
             templateUrl: 'partials/auth/change_pwd.html'
         }
 
-    $httpProvider.interceptors.push ['$q', '$location', 'toaster', 'sweet', 'AuthService', ($q, $location, toaster, sweet, AuthServ) ->
 
+    $httpProvider.interceptors.push ['$q', '$location', 'toaster', 'sweet', '$window', ($q, $location, toaster, sweet, $window) ->
+        location = $window.location
         return {
             'responseError': (response) ->
                 if response.status == 401
-                    AuthService.redirectToLogin()
+                    location.replace("#{location.origin}/sessions/new")
                 if response.status == 403
                     sweet.error('操作失败',response.data.message || JSON.stringify(response.data))
                 if response.status == 400
