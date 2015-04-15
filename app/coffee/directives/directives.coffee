@@ -198,3 +198,58 @@ angular.module 'nb.directives'
 
 
 
+
+    #
+    # permission 支持单一权限与组合权限
+    #
+    # 90%情况 单一权限能满足需求
+    #
+    # 基于性能考虑与实际业务， 不支持动态权限
+    # 所有权限使用较高优先级指令优先check, 如果不满足需求
+    #
+    #  usage:
+    #
+    # <div has-permission="department_index"></div>
+    # <div has-permission="['department_index','department_active']"></div>
+
+    .directive 'hasPermission', ['AuthService', '$animate', (AuthService, $animate) ->
+
+        postLink = (scope, elem, attrs, ctrl, $transclude) ->
+            if AuthService.has(attrs.hasPermission)
+                $transclude (clone, newScope) ->
+                    clone[clone.length++] = document.createComment(" end hasPermission: #{attrs.hasPermission}")
+                    $animate.enter(clone, elem.parent(), elem)
+
+            # scope.$watch attrs.permission, (value) ->
+            #     if value
+            #         if !childScope
+            #             $transclude (clone, newScope) ->
+            #                 childScope = newScope
+            #                 clone[clone.length++] = document.createComment("end permission #{attrs.permission}")
+            #                 block = {clone: clone}
+
+            #                 $animate.enter(clone, $element.parent, $element)
+
+            #     else
+            #         if previousElements
+            #             previousElements.remove()
+            #             previousElements = null
+            #         if childScope
+            #             childScope.$destroy()
+            #             childScope = null
+            #         if block
+            #             previousElements = getBlockNodes(block.clone)
+            #             $animate.leave(previousElements).then -> previousElements = null
+            #             block = null
+
+        return {
+            multiElement: true
+            transclude: 'element'
+            priority: 601
+            terminal: true
+            restrict: 'A'
+            $$tlb: true
+            link: postLink
+        }
+
+    ]
