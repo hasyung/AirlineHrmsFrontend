@@ -302,7 +302,10 @@ gulp.task "express", ->
     app.use("/fonts", express.static("#{__dirname}/dist/fonts"))
     app.use("/plugins", express.static("#{__dirname}/dist/plugins"))
 
-    app.all "/*", (req, res, next) ->
+    app.get "/sessions/new/", (req, res, next) ->
+        res.send("<h1>Hello HRMSX</h1>")
+
+    app.get "/", (req, res, next) ->
         # Just send the index.html for other files to support HTML5Mode
         res.sendFile("index.html", {root: "#{__dirname}/dist/"})
 
