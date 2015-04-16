@@ -152,11 +152,11 @@ gulp.task "jade-watch", ->
         .pipe(jade({pretty: true}))
         .pipe(gulp.dest("#{paths.dist}"))
 
-# gulp.task "template",['copy'], ->
-#     gulp.src("#{paths.app}/index.jade")
-#         .pipe(plumber())
-#         .pipe(jade({pretty: true, locals:{debugMode: debugMode,v: (new Date()).getTime(),libs: generate_scripts()}}))
-#         .pipe(gulp.dest("#{paths.dist}"))
+gulp.task "template",['copy'], ->
+    gulp.src("#{paths.app}/index.jade")
+        .pipe(plumber())
+        .pipe(jade({pretty: true, locals:{debugMode: debugMode,v: (new Date()).getTime(),libs: generate_scripts()}}))
+        .pipe(gulp.dest("#{paths.dist}"))
 
 gulp.task "sass-lint", ->
     gulp.src([paths.scssStyles, '!app/styles/lib/**/*.scss'])
@@ -342,7 +342,7 @@ gulp.task "watch", ['jade-deploy'],  ->
     gulp.watch(paths.coffee, ["coffee-watch"])
     gulp.watch(paths.js, ["js-watch"])
 
-    gulp.watch(["dist/index.html","dist/js/app.js","dist/styles/web.css","dist/partials/**/*.html"])
+    gulp.watch(["dist/js/app.js","dist/styles/web.css","dist/partials/**/*.html"])
         .on("change",livereload.changed)
 
 
@@ -362,7 +362,7 @@ gulp.task "default", [
     "jade-deploy"
     "less-vendor"
     "css-vendor"
-    # "template"
+    "template"
     "sass-watch"
     "sass-lib"
     "coffee-watch"
