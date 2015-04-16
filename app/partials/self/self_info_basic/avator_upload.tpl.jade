@@ -4,7 +4,7 @@ div(flow-init="{target: '/api/me/upload_favicon', uploadMethod:'PUT', testChunks
     .modal-header.tl-top-header
         button.close(type='button', data-dismiss='modal', aria-hidden='true', ng-click="closeThisDialog()") ×
         h4.modal-title 头像设置
-    .modal-content
+    div
         .thumbnail(ng-hide="$flow.files.length")
             img(src="http://www.placehold.it/500x357/EFEFEF/AAAAAA&text=no+image")
         .thumbnail(ng-show="$flow.files.length")
