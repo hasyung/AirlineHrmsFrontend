@@ -78,9 +78,6 @@ paths =
              # "app/coffee/modules/user-settings/*.coffee"
              # "app/plugins/**/*.coffee"
     ]
-    js: [
-        "app/coffee/modules/*.js"
-    ]
     vendorJsLibs: [
         'deps/lodash/dist/lodash.min.js'
         'deps/underscore.string/lib/underscore.string.js'
@@ -340,7 +337,6 @@ gulp.task "watch", ['jade-deploy'],  ->
     gulp.watch(paths.jade, ["jade-watch"])
     gulp.watch(paths.scssStyles, ["sass-watch"])
     gulp.watch(paths.coffee, ["coffee-watch"])
-    gulp.watch(paths.js, ["js-watch"])
 
     gulp.watch(["dist/js/app.js","dist/styles/web.css","dist/partials/**/*.html"])
         .on("change",livereload.changed)
@@ -348,12 +344,16 @@ gulp.task "watch", ['jade-deploy'],  ->
 
 
 gulp.task "deploy", [
-    "jade-deploy",
-    "template",
-    "copy",
-    "coffee-deploy",
-    "jslibs-deploy",
-    "styles-deploy"
+    "jade-deploy"
+    "less-vendor"
+    "css-vendor"
+    "template"
+    "sass-watch"
+    "sass-lib"
+    "coffee-watch"
+    # "coffee-deploy"
+    "jslibs-watch"
+    # "styles-deploy"
 ]
 
 # bugfix: copy 异步 template 同步 ,后者依赖前者
@@ -366,7 +366,6 @@ gulp.task "default", [
     "sass-watch"
     "sass-lib"
     "coffee-watch"
-    "js-watch"
     "jslibs-watch"
     "express"
     "watch"
