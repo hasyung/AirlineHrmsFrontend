@@ -22,20 +22,28 @@ scsslint        = require("gulp-scss-lint")
 newer           = require("gulp-newer")
 cache           = require("gulp-cached")
 jadeInheritance = require('gulp-jade-inheritance')
+
 fs              = require("fs")
+request         = require("request")
 
 
 proxy           = require('./compat/proxy-middleware')
 
 debugMode       = true
 
-LR_PORT         = argv.port || argv.p || 4000
-IP_SUFFIX       = argv.suffix || argv.s || 99
+LOCAL_TEST_SERVER = "http://192.168.6.99:4000"
+REMOTE_TEST_SERVER = "http://114.215.142.122:9002"
+LOCAL_SERVER = "http://localhost:3000"
+
 
 if argv.localhost
-    PROXY_SERVER_ADDR = "http://localhost:3000"
+    PROXY_SERVER_ADDR = LOCAL_SERVER
+else if argv.remote
+    PROXY_SERVER_ADDR =  REMOTE_TEST_SERVER
+else if argv.addr
+    PROXY_SERVER_ADDR = "http://#{argv.addr}"
 else
-    PROXY_SERVER_ADDR =  "http://192.168.6.#{IP_SUFFIX}:#{LR_PORT}"
+    PROXY_SERVER_ADDR = LOCAL_TEST_SERVER
 
 
 paths =
@@ -68,9 +76,6 @@ paths =
              # "app/coffee/modules/resources/*.coffee"
              # "app/coffee/modules/user-settings/*.coffee"
              # "app/plugins/**/*.coffee"
-    ]
-    js: [
-        "app/coffee/modules/*.js"
     ]
     vendorJsLibs: [
         'deps/lodash/dist/lodash.min.js'
@@ -217,18 +222,6 @@ gulp.task "styles-deploy", ["sass-deploy", "css-vendor"], ->
 # JS Related tasks
 ##############################################################################
 
-# 国际化
-# gulp.task "locales", ->
-#     gulp.src("app/locales/en/app.json")
-#         .pipe(wrap("angular.module('taigaLocales').constant('localesEnglish', <%= contents %>);"))
-#         .pipe(rename("localeEnglish.coffee"))
-#         .pipe(gulp.dest("app/coffee/modules/locales"))
-
-#     gulp.src("app/locales/es/app.json")
-#         .pipe(wrap("angular.module('locales.es', []).constant('locales.es', <%= contents %>);"))
-#         .pipe(rename("locale.es.coffee"))
-#         .pipe(gulp.dest("app/coffee/"))
-
 gulp.task "coffee-watch", ->
     gulp.src(paths.coffee)
         .pipe(plumber())
@@ -291,17 +284,15 @@ gulp.task "copy",  ->
         .pipe(gulp.dest("#{paths.dist}/vendor/"))
 
 
-gulp.task "express", ->
+gulp.task "express", ['copy'],  ->
     express = require("express")
     app = express()
 
 
-    # proxyOptions = url.parse('http://192.168.6.99:4000')
-    # proxyOptions = url.parse('http://114.215.142.122:9002')
-    # proxyOptions = url.parse('')
     proxyOptions = url.parse(PROXY_SERVER_ADDR)
-
     proxyOptions.route = '/api'
+    app.set('views', __dirname + '/app')
+    app.set('view engine', 'jade')
 
     # 反向代理 webapi
     app.use(proxy(proxyOptions))
@@ -315,48 +306,72 @@ gulp.task "express", ->
     app.use("/fonts", express.static("#{__dirname}/dist/fonts"))
     app.use("/plugins", express.static("#{__dirname}/dist/plugins"))
 
-    app.all "/*", (req, res, next) ->
-        # Just send the index.html for other files to support HTML5Mode
-        res.sendFile("index.html", {root: "#{__dirname}/dist/"})
+    jar = request.jar()
+    app.get "/sessions/new/", (req, res, next) ->
+        request.post {
+            url: "#{PROXY_SERVER_ADDR}/sessions"
+            formData: {
+                'user[employee_no]': '001631'
+                'user[password]': '123456'
+            }
+            jar: jar
+        }, (err, response, body) ->
+            cooks = jar.getCookies(response.request.href)
+            tokenCookie =  _.find cooks, (cook) -> cook.key == 'token'
+            res.cookie('token', tokenCookie.value)
+            res.redirect('/')
 
+
+    app.get "/", (req, res, next) ->
+        request {
+            url: "#{PROXY_SERVER_ADDR}/metadata"
+            jar: jar
+        }, (err, response, body) ->
+
+            metadata = if !err && response.statusCode == 200 then body else "alert('meta data initial failed');alert(#{body});"
+            res.render('index', {meta: metadata, libs: libs, debugMode: debugMode})
+        # Just send the index.html for other files to support HTML5Mode
     app.listen(9001)
 
+    libs = generate_scripts()
+
 # Rerun the task when a file changes
-gulp.task "watch", ->
+gulp.task "watch", ['jade-deploy'],  ->
     livereload.listen()
     gulp.watch(paths.jade, ["jade-watch"])
-    gulp.watch("#{paths.app}/index.jade", ["template"])
     gulp.watch(paths.scssStyles, ["sass-watch"])
     gulp.watch(paths.coffee, ["coffee-watch"])
-    gulp.watch(paths.js, ["js-watch"])
-    gulp.watch(paths.vendorJsLibs, ["copy"])
-    gulp.watch(["dist/index.html","dist/js/app.js","dist/styles/web.css","dist/partials/**/*.html"])
+
+    gulp.watch(["dist/js/app.js","dist/styles/web.css","dist/partials/**/*.html"])
         .on("change",livereload.changed)
 
 
 
 gulp.task "deploy", [
-    "jade-deploy",
-    "template",
-    "copy",
-    "coffee-deploy",
-    "jslibs-deploy",
-    "styles-deploy"
+    "jade-deploy"
+    "less-vendor"
+    "css-vendor"
+    "template"
+    "sass-watch"
+    "sass-lib"
+    "coffee-watch"
+    # "coffee-deploy"
+    "jslibs-watch"
+    # "styles-deploy"
 ]
 
 # bugfix: copy 异步 template 同步 ,后者依赖前者
 # 添加 lib 文件后，先执行 gulp copy
 gulp.task "default", [
-    "jade-deploy",
-    "less-vendor",
-    "css-vendor",
-    "template",
-    "sass-watch",
-    "sass-lib",
-    "coffee-watch",
-    "js-watch",
-    "jslibs-watch",
-    "express",
+    "jade-deploy"
+    "less-vendor"
+    "css-vendor"
+    "template"
+    "sass-watch"
+    "sass-lib"
+    "coffee-watch"
+    "jslibs-watch"
+    "express"
     "watch"
 ]
 

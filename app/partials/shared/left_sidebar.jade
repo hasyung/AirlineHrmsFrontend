@@ -68,7 +68,7 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
               li
                 a(href='#/app/personnel/regulariz')
                   span 部门信箱
-          li
+          li(ui-sref-active="active" has-permission="departments_index")
             a.auto(ui-sref='org')
               span.pull-right.text-muted
                 i.fa.fa-fw.fa-angle-down.text-active
@@ -82,7 +82,7 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
               i.fa.fa-cube.nav-text-color1
               span 岗位管理
             ul.nav.nav-sub.dk
-              li(ui-sref-active="active")
+              li(ui-sref-active="active" has-permission="positions_index")
                 a(ui-sref="position_list")
                   span 岗位列表
               li

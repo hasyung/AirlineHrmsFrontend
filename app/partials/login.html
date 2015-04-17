@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    body {
+        font-family: "微软雅黑", Helvetica, Arial, sans-serif;
+        font-weight: 300;
+        width: 100%;
+        height: 100%;
+        background-image: url('/images/login-bg.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    #content-wrap {
+        position: relative;
+        display: block;
+        top: 40px;
+    }
+
+    #top-bar {
+        display: block;
+        position: relative;
+        margin: 0 auto;
+        width: 327px;
+        height: 8px;
+        background: #d53d3d;
+        top: 1px;
+        border-radius: 5px 5px 0 0;
+    }
+
+    #login-wrap {
+        display: block;
+        position: relative;
+        margin: 0 auto;
+        width: 327px;
+        height: 382px;
+        background: rgba(255,255,255,.7);
+        border-radius: 0 0 4px 4px;
+        top: 0px;
+    }
+
+    #login-wrap img#locator {
+        padding-top: 40px;
+        margin: 0 auto;
+        display: block;
+    }
+
+    #login-wrap form {
+        position: relative;
+    }
+
+    #login-wrap form input#employee_no {
+        background: url('/images/username.png') no-repeat;
+        background-size: 6%;
+        background-position: 268px center;
+    }
+
+    #login-wrap form input#password {
+        background: url('/images/password.png') no-repeat;
+        background-size: 5%;
+        background-position: 270px center;
+    }
+
+    #login-wrap form input[type=text],
+    #login-wrap form input[type=password] {
+        display: block;
+        margin: 10px auto;
+        padding: 8px 10px;
+        border: none;
+        width: 85%;
+        border-radius: 4px;
+        font-size: 1.05em;
+        font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        font-weight: 300;
+        color: #6B6D71;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        transition: border-color ease-in-out .2s, box-shadow ease-in-out .2s;
+    }
+
+    #login-wrap form input:focus {
+        box-shadow: none;
+        outline: none;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 7px rgba(0, 0, 0, 0.4);
+        border-color: rgba(29, 92, 171, 0.4);
+    }
+
+    #login-wrap form button#submit {
+        display: block;
+        position: relative;
+        width: 220px;
+        height: 43px;
+        margin: 0 auto;
+        border-radius: 4px;
+        border: none;
+        background-color: #d53d3d;
+        color: white;
+        font-size: 1.15em;
+        font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        font-weight: 300;
+    }
+
+    #login-wrap button#submit:focus {
+        outline: none;
+    }
+
+    #login-wrap button#submit:hover {
+        cursor: pointer;
+        opacity: 0.95;
+    }
+
+    #login-wrap button#submit:active {
+        background-color: #195299;
+    }
+
+    p#forgot {
+        text-align: center;
+        margin-top: 35px;
+        font-size: 0.8em;
+        color: #6B6D71;
+    }
+
+    p#forgot a,
+    p#forgot a:visited {
+        text-decoration: none;
+        border-bottom: 1px solid #6B6D71;
+        color: #6B6D71;
+    }
+
+    p#forgot a:hover {
+        border-bottom: none;
+        color: #6B6D71;
+    }
+
+    .error {
+        font-size: 14px;
+        height: 30px;
+        line-height: 30px;
+        color: #d53d3d;
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 30px;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="content-wrap">
+        <div id="top-bar"></div>
+        <div id="login-wrap">
+            <img id="locator" src="/images/login-avator.png" width="240px" style="margin-bottom: 20px;">
+            <div class="error">
+                你的账号/密码输入错误
+            </div>
+            <form>
+                <input id="employee_no" required minlength="6" type="text" name="user[employee_no]" placeholder="员工编号" />
+                <input id="password" type="password" name="user[password]" placeholder="密码" />
+                <br />
+                <button id="submit">登录</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

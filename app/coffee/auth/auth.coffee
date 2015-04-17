@@ -6,68 +6,45 @@ app = nb.app
 
 class AuthService extends nb.Service
 
-    @.$inject = ['$http', '$rootScope', 'User']
+    @.$inject = ['$cookies', '$rootScope', 'PERMISSIONS']
 
     ARRAY_LIKE = /^\[[\W,\w]*\]$/ # test array like string
 
-    login: false
-
-
-    initialized: false # 是否初始化成功, 如果false 切 this.promise != null , 则在登录中
-
-    constructor: (http, @rootScope, @User) ->
-        self = @
-        @permissions = []
-
-        promise = @setupCurrentUser()
-        promise.then (user) ->
-            self.permissions = [].concat user.permissions
-            self.initialized = true
-            delete self.promise
-
-    setupCurrentUser: () ->
-        self = @
-        # export current User to rootScope
-        user =  @user = @rootScope.currentUser = @User.$fetch()
-        @promise = user.$asPromise()
-
-
-    getPermissions: () ->
-        return @permissions
-
-
-    setPermissions: (permissions) ->
-        @permissions = permissions
+    constructor: (@cookies, @rootScope, @permissions) ->
+    #
+    # DESC： 判断用户是否存在某权限
+    #
     # string | array
+    #
     has: (permission) ->
-        hasPermission = false
-
+        permit = false
         permission = permission.trim()
 
         if  !ARRAY_LIKE.test(permission)
-            hasPermission = @permissions.indexOf(permission) != -1
+            permit = @permissions.indexOf(permission) != -1
         else
             try
                 permission_array = JSON.parse(permission)
             catch e
                 # array格式错误
                 throw new Error('permission format error')
-            hasPermission = permission_array.every((perm)-> @permissions.indexOf(perm) != -1)
+            permit = permission_array.every((perm)-> @permissions.indexOf(perm) != -1)
 
-        return hasPermission
+        return permit
 
-    isLogged: () ->
-        return @initialized
-
-    isLogging: () ->
-        return !!@promise
-
+    #TIPS: 目前无权限 系统行为和用户执行退出操作一致。可能会更改
     logout: () ->
-        onSuccess = ->
-            @rootScope.currentUser = null
-            @cookies.token = null
-        @http.delete('/api/sign_out').success onSuccess.bind(@)
+        location = window.location
+        delete @cookies.token # angular 1.4 break change @cookies.remove("token")
+        location.replace("#{location.origin}/sessions/new/")
 
+
+class AuthController extends nb.Controller
+
+    @.$inject = ['$scope', 'AuthService']
+
+    constructor: (scope, AuthService) ->
+        scope.logout = -> AuthService.logout()
 
 
 class LoginController extends nb.Controller
@@ -129,3 +106,4 @@ class SigupController extends nb.Controller
 app.controller('LoginController', LoginController)
 app.controller('SigupController', SigupController)
 app.service('AuthService', AuthService)
+app.controller('AuthController', AuthController)

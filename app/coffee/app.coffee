@@ -1,13 +1,13 @@
 
 
 @nb = nb = {}
+metadata = @metadata
 
 
 
 deps = [
     # 'ui.router'
     'ct.ui.router.extras'
-    # 'ncy-angular-breadcrumb'
     'mgo-angular-wizard'
     'mgcrea.ngStrap.datepicker'
     'ngDialog'
@@ -34,6 +34,10 @@ resources = angular.module('resources',[])
 
 nb.app = App = angular.module 'nb',deps
 # nb.models = models = angular.module 'models', []
+
+#初始化在<head> <script> 标签中, 如果不存在， 系统行为待定
+App.constant 'PERMISSIONS', metadata.permissions || []
+App.constant 'USER_META', metadata.employee || {}
 
 
 appConf = ($provide, ngDialogProvider) ->
@@ -87,11 +91,6 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
     #     return result
 
 
-    # $breadcrumbProvider.setOptions {
-    #     prefixStateName: 'home'
-    #     template: 'bootstrap3'
-    # }
-
     #default route
     $urlRouterProvider.otherwise('/')
     $stateProvider
@@ -99,25 +98,12 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
             url: '/'
             templateUrl: 'partials/home.html'
         }
-        .state 'login', {
-            url: '/login'
-            templateUrl: 'partials/auth/login.html'
-        }
-        .state 'sigup', {
-            url: '/sigup'
-            templateUrl: 'partials/auth/sigup.html'
-        }
-        .state 'changePwd', {
-            url: '/change-possword'
-            templateUrl: 'partials/auth/change_pwd.html'
-        }
 
-    $httpProvider.interceptors.push ['$q', '$location', 'toaster', 'sweet', ($q, $location, toaster, sweet) ->
-
+    $httpProvider.interceptors.push ['$q', 'toaster', 'sweet', 'AuthService', ($q, toaster, sweet, AuthServ) ->
         return {
             'responseError': (response) ->
                 if response.status == 401
-                    $location.path('/login')
+                    AuthServ.logout()
                 if response.status == 403
                     sweet.error('操作失败',response.data.message || JSON.stringify(response.data))
                 if response.status == 400
@@ -160,17 +146,9 @@ App
 
         $rootScope.$on '$stateChangeStart', (evt, _to , _toParam, _from, _fromParam) ->
             startLoading()
-            unless AuthServ.isLogged()
-                evt.preventDefault()
-                if AuthServ.isLogging()
-                    AuthServ.promise.then () -> $state.go(_to, _toParam)
-                else
-                    cancelLoading()
-                    $location.path('/login')
 
-        $rootScope.$on '$stateChangeSuccess', (evt, _to, _toParam, _from, _fromParam) ->
+        $rootScope.$on '$stateChangeSuccess', () ->
             cancelLoading()
-
 
         $rootScope.$on 'process', startLoading
 
@@ -185,9 +163,6 @@ App
         $rootScope.$state = $state
 
         $rootScope.allOrgs = Org.$search()
-
-        $rootScope.logout = () -> AuthServ.logout()
-
 
 
         $rootScope.createFlow = (data, flowname) ->
