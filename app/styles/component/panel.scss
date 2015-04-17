@@ -151,14 +151,34 @@
 
 .custom-pages {
     @include clearfix();
+    background-color: #fff;
+    border: 1px solid #dde5e7;
+    border-top: 0;
     margin-bottom: 30px;
+    text-align: right;
+
+    .pagination-detail {
+        color: $text-muted;
+        float: left;
+        line-height: 36px;
+        padding-left: 10px;
+    }
+
 
     .pagination {
-        display: block;
-        margin: 0 auto;
-        width: 450px;
+        @include clearfix();
+        margin: 0;
+
+        .pagination {
+            margin-top: 4px;
+
+            a {
+                border: 0;
+            }
+        }
     }
 }
+
 
 //调整机构部分样式
 .popup-title {
