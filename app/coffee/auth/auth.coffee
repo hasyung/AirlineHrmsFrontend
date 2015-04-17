@@ -39,6 +39,13 @@ class AuthService extends nb.Service
         location.replace("#{location.origin}/sessions/new/")
 
 
+class AuthController extends nb.Controller
+
+    @.$inject = ['$scope', 'AuthService']
+
+    constructor: (scope, AuthService) ->
+        scope.logout = -> AuthService.logout()
+
 
 class LoginController extends nb.Controller
 
@@ -74,6 +81,8 @@ class LoginController extends nb.Controller
 
 
 
+
+
 class SigupController extends nb.Controller
 
 
@@ -99,3 +108,4 @@ class SigupController extends nb.Controller
 app.controller('LoginController', LoginController)
 app.controller('SigupController', SigupController)
 app.service('AuthService', AuthService)
+app.controller('AuthController', AuthController)

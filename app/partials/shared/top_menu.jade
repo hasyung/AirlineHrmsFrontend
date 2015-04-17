@@ -1,10 +1,10 @@
 md-toolbar.top-menu-bar
   ul.nav.navbar-nav
-    .right-align.nb-dropdown.pull-right(user-info-dropdown, btn-text="导出")
+    .right-align.nb-dropdown.pull-right(user-info-dropdown, btn-text="导出" )
       li
         a(ui-sref="changePwd") 修改密码
-      li
-        a(ui-sref="login", ng-click="logout()") 退出
+      li(ng-controller="AuthController")
+        a(ng-click="logout()") 退出
           //- li
           //-   a(href='')
           //-     span.badge.bg-danger.pull-right 30%

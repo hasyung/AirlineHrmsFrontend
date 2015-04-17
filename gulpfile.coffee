@@ -307,7 +307,7 @@ gulp.task "express", ['copy'],  ->
         request.post {
             url: "#{PROXY_SERVER_ADDR}/sessions"
             formData: {
-                'user[employee_no]': '000881'
+                'user[employee_no]': '001631'
                 'user[password]': '123456'
             }
             jar: jar
