@@ -24,7 +24,7 @@ div(flow-init="{target: '/api/me/upload_favicon', uploadMethod:'PUT', testChunks
             a.btn(href="javascript:;" ng-show="$flow.files.length" flow-btn flow-attrs="{accept:'image/*'}") 更改图片
             a.btn.btn-danger(href="javascript:;" ng-show="$flow.files.length" ng-click="$flow.cancel()") 删除图片
 
-    .modal-footer.clearfix
+    .modal-footer.clearfix(style="border:none;")
         button.btn.btn-info.btn-sm.pull-right(ng-click="$flow.upload()") 确 定
         button.btn.btn-default.btn-sm.pull-right(ng-click='closeThisDialog()') 取 消
 
