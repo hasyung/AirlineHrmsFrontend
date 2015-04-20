@@ -6,7 +6,7 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
             span(ng-hide="editing")
                 md-button.md-raised.white(ng-click="edit($event)") 编辑
             span(ng-show="editing")
-                md-button.md-raised.white(ng-click="cancel(currentUser, $event)") 取消
+                md-button.md-raised.white(ng-click="cancel(currentUser, $event, infoForm)") 取消
                 md-button.md-raised.skyblue(ng-click="submit" style="margin-left: 20px") 保存
     md-content
         section.form-material-section

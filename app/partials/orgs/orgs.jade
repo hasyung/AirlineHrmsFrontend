@@ -31,8 +31,8 @@ section(layout="row" flex)
                     nb-dialog-scope="this"
                     prepare-data="ctrl.initialHistoryData()"
                     ) 时间轴
-                md-button.md-raised.skyblue(ng-show="!ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导 出
-                md-button.md-raised.skyblue(ng-show="ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导 出
+                md-button.md-raised.skyblue(has-permission="departments_export_to_xls" ng-show="!ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导 出
+                md-button.md-raised.skyblue(has-permission="departments_export_to_xls" ng-show="ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导 出
                 md-button.md-raised.skyblue(ng-click="ctrl.resetData()" ng-show="ctrl.isHistory") 返回最新
 
                 //- loading-btn.red(ng-click="ctrl.openHistoryPanel()" btn-loading-type="contract-overlay" btn-text="测试loading")
@@ -44,10 +44,12 @@ section(layout="row" flex)
         //-     div(style="width: 100%;background-image: url('/images/org_bg.jpg');height: 100%;background-position: center center;background-repeat: no-repeat; background-color: #f0f3f4;")
         div.bottom-btn-group(ng-show="ctrl.tree.isModified")
             md-button.md-raised.skyblue(
+                has-permission="departments_active"
                 nb-dialog="partials/orgs/shared/effect_changes.html"
                 nb-dialog-scope="this"
                 ) 生 效
             md-button.md-raised.white(
+                has-permission="departments_revert"
                 nb-confirm="ctrl.revert(isConfirm)"
                 nb-title="您确认要撤销当前的所有修改吗?"
                 nb-text="当你点击确定时，你之前对机构做过的调整将被撤销。") 撤 销
