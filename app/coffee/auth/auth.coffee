@@ -71,6 +71,8 @@ class LoginController extends nb.Controller
                 self.Evt.$send 'password:update:success', '密码修改成功，请重新登录'
                 self.rootScope.logout()
                 self.state.go "login"
+    logout: ()->
+        @Auth.logout();
 
 
 

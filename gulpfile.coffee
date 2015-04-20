@@ -310,7 +310,7 @@ gulp.task "express", ['copy'],  ->
         request.post {
             url: "#{PROXY_SERVER_ADDR}/sessions"
             formData: {
-                'user[employee_no]': '000881'
+                'user[employee_no]': '003740'
                 'user[password]': '123456'
             }
             jar: jar
@@ -327,7 +327,7 @@ gulp.task "express", ['copy'],  ->
             jar: jar
         }, (err, response, body) ->
 
-            metadata = if !err && response.statusCode == 200 then body else "alert('meta data initial failed');alert(#{body});"
+            metadata = if !err && response.statusCode == 200 then body else "alert('meta data initial failed');console.log(#{body});"
             res.render('index', {meta: metadata, libs: libs, debugMode: debugMode})
         # Just send the index.html for other files to support HTML5Mode
     app.listen(9001)
