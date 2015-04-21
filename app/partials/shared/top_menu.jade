@@ -1,9 +1,9 @@
 md-toolbar.top-menu-bar
-  ul.nav.navbar-nav
+  ul.nav.navbar-nav(ng-controller="AuthController as ctrl")
     .right-align.nb-dropdown.pull-right(user-info-dropdown, btn-text="导出" )
       li
-        a(ui-sref="changePwd") 修改密码
-      li(ng-controller="AuthController")
+        a(nb-dialog="partials/auth/change_pwd.html") 修改密码
+      li()
         a(ng-click="logout()") 退出
           //- li
           //-   a(href='')
