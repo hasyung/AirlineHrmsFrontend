@@ -41,9 +41,9 @@ class AuthService extends nb.Service
 
 class AuthController extends nb.Controller
 
-    @.$inject = ['$scope', 'AuthService', "$http"]
+    @.$inject = ["$scope", "AuthService", "$http", "$nbEvent"]
 
-    constructor: (scope, AuthService, @http) ->
+    constructor: (scope, AuthService, @http, @Evt) ->
         scope.logout = -> AuthService.logout()
 
     changePwd: (user)->
@@ -54,7 +54,7 @@ class AuthController extends nb.Controller
 
         self.http.put('/api/me/update_password', user)
             .success (data) ->
-                self.Evt.$send 'password:update:success', '密码修改成功，请重新登录'
+                self.Evt.$send 'password:update:success', '密码修改成功'
             .error (data) ->
                 console.log "error"
 

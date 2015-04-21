@@ -290,11 +290,11 @@ gulp.task "express", ['copy'],  ->
     proxyOptions.route = '/api'
     app.set('views', __dirname + '/app/')
     app.set('view engine', 'jade')
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded());
 
     # 反向代理 webapi
     app.use(proxy(proxyOptions))
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded());
     app.use("/js", express.static("#{__dirname}/dist/js"))
     app.use("/api", express.static("#{__dirname}/dist/api"))
     app.use("/vendor", express.static("#{__dirname}/dist/vendor"))
