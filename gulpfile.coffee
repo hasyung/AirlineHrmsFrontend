@@ -293,8 +293,8 @@ gulp.task "express", ['copy'],  ->
 
     # 反向代理 webapi
     app.use(proxy(proxyOptions))
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded());
+    app.use(bodyParser.json())
+    app.use(bodyParser.urlencoded())
     app.use("/js", express.static("#{__dirname}/dist/js"))
     app.use("/api", express.static("#{__dirname}/dist/api"))
     app.use("/vendor", express.static("#{__dirname}/dist/vendor"))
@@ -333,8 +333,12 @@ gulp.task "express", ['copy'],  ->
         }, (err, response, body) ->
             cooks = jar.getCookies(response.request.href)
             tokenCookie =  _.find cooks, (cook) -> cook.key == 'token'
-            res.cookie('token', tokenCookie.value)
-            res.redirect('/')
+            if tokenCookie && tokenCookie.value
+                res.cookie('token', tokenCookie.value)
+                res.redirect('/')
+            else
+                res.redirect('/sessions/new/')
+
 
     app.get "/", (req, res, next) ->
         request {
