@@ -2,20 +2,24 @@
     .org-modal-posttop 岗位信息列表
         .btn-group.pull-right
             button.btn.btn-default.fa.fa-trash-o.pull-right(
+                has-permission="positions_batch_destroy"
                 title="请选择要删除的岗位"
                 ng-disabled="ctrl.getSelectsIds().length == 0"
                 nb-confirm="ctrl.batchRemove(isConfirm)"
                 nb-title="您确定要删除所选的{{ctrl.getSelectsIds().length}}个岗位吗?"
                 nb-content="删除操作将在你点击确定后执行，岗位删除后将无法恢复。")
             button.btn.btn-default.fa.fa-plus.pull-right(
+                has-permission="positions_create"
                 title="新增岗位"
                 nb-dialog
                 template-url="partials/orgs/position_add.html"
             )
             button.btn.btn-info.pull-right(
+                has-permission="positions_adjust"
                 nb-dialog
                 template-url="partials/position/position_transfer.html"
                 ) 调整机构
+
             .pull-right.nb-dropdown.right-align(simple-dropdown, btn-text="导出")
                 li( role="presentation")
                     a(role="menuitem" ng-href="/api/positions/export_to_xls?department_id={{currentOrg.id}}" ) 导出全部岗位

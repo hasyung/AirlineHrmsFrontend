@@ -71,10 +71,10 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
           li(ui-sref-active="active" has-permission="departments_index")
             a.auto(ui-sref='org')
               span.pull-right.text-muted
-                i.fa.fa-fw.fa-angle-down.text-active
+                i.fa.fa-fw.text-active
               i.fa.fa-sitemap.nav-text-color1
               span.font-bold 组织机构
-          li(nav-toggle-active)
+          li(nav-toggle-active has-permission="positions_index")
             a.auto(href="javascript:;")
               span.pull-right.text-muted
                 i.fa.fa-fw.fa-angle-right.text
@@ -82,16 +82,16 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
               i.fa.fa-cube.nav-text-color1
               span 岗位管理
             ul.nav.nav-sub.dk
-              li(ui-sref-active="active" has-permission="positions_index")
+              li(ui-sref-active="active")
                 a(ui-sref="position_list")
                   span 岗位列表
               li
                 a()
                   span 岗位分布图
-              li(ui-sref-active="active")
+              li(ui-sref-active="active" has-permission="position_changes_index")
                 a(ui-sref="position_changes")
                   span 岗位异动记录
-          li(nav-toggle-active)
+          li(nav-toggle-active has-permission="employees_index")
             a.auto(href="javascript:;")
               span.pull-right.text-muted
                 i.fa.fa-fw.fa-angle-right.text
@@ -105,7 +105,7 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
               li(ui-sref-active="active")
                 a(ui-sref='personnel_fresh')
                   span 新员工列表
-              li(ui-sref-active="active")
+              li(ui-sref-active="active" has-permission="employee_changes_check")
                 a(ui-sref='personnel_review')
                   span 人事变更信息
 

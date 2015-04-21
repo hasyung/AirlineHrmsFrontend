@@ -1,5 +1,5 @@
 .position-manage(ng-if="currentPos.category.key != 'LingDao'")
-    div(nb-table='currentEmps' nb-safe-src="currentEmps")
+    div(nb-table='currentEmps' nb-safe-src="currentEmps" has-permission="positions_employees")
         input(type="hidden" nb-pipe="currentEmps.search(tableState)")
         .table-container
             h4 在职员工信息
@@ -20,7 +20,7 @@
                             )
                         td(ng-bind="::emp.startDate")
         .custom-pages(nb-pagination="currentEmps.$metadata" per-page="15")
-.position-manage(ng-if="currentPos.category.key == 'LingDao'")
+.position-manage(ng-if="currentPos.category.key == 'LingDao'" has-permission="positions_formerleaders")
     div(nb-table='hisLeaders' nb-safe-src="hisLeaders")
         input(type="hidden" nb-pipe="hisLeaders.search(tableState)")
         .table-container

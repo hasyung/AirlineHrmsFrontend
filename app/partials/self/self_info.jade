@@ -4,6 +4,7 @@
             .avator-area(
                 nb-dialog="partials/self/self_info_basic/avator_upload.tpl.html"
                 nb-dialog-scope="this"
+                style="cursor: pointer;"
             )
                 img(ng-src="{{currentUser.favicon}}")
             h3(ng-bind="currentUser.$cmStatus.name")

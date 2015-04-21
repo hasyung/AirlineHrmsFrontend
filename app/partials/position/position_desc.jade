@@ -1,5 +1,5 @@
 form(name="speEditForm" ng-submit="save(currentSpe.$save(), speEditForm)" ng-controller="EditableResource" ng-init="params = {}")
-    .form-btn-group(ng-hide="editing")
+    .form-btn-group(ng-hide="editing" has-permission="positions_update")
         md-button.skyblue.md-raised(ng-click="edit($event)") 编辑
     .form-btn-group.alive(ng-show="editing")
         md-button.md-raised.white(ng-click="cancel(currentSpe, $event, speEditForm)") 取消

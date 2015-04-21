@@ -543,6 +543,7 @@ nbPaginationDirective = ->
         scope.$watch 'pageState', (newValue) ->
             return if angular.isUndefined(newValue)
             scope.currentPage = newValue.page
+            scope.count = newValue.count
             scope.perPage = newValue.per_page
             scope.pagesCount = newValue.pages_count
             scope.count = newValue.count
