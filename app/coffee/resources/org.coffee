@@ -1,10 +1,10 @@
 
 
 resources = angular.module('resources')
+find = _.find
 
 
-
-Org = (restmod, RMUtils, $Evt) ->
+Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
 
     Constants = {
         NODE_INDEX: 3 # serial_number 生成策略是parent_node.serial_number+node_index，node_index由3位构成，值为创建该node时，其parent_node.children_count
@@ -77,6 +77,20 @@ Org = (restmod, RMUtils, $Evt) ->
         return unflatten(treeData, DEPTH, parent)
 
 
+    computeFullName = (ttl, initalArr = []) ->
+        initalArr.unshift(this.name) && ttl--
+
+        if ttl == 0
+            initalArr.join(">")
+        else
+            if this.parentId || this.parent_id
+                parentDep = find DEPARTMENTS, 'id', this.parentId || this.parent_id
+                if !parentDep
+                    throw new Error("机构数据结构错误 机构#{this.name}：#{this.id} 找不到parent #{this.parentId} 的机构")
+                else
+                    return computeFullName.call(parentDep, ttl, initalArr)
+            else
+                return initalArr.join(">")
 
 
     Org = restmod.model('/departments').mix 'nbRestApi', 'DirtyModel', {
@@ -85,9 +99,7 @@ Org = (restmod, RMUtils, $Evt) ->
 
         fullName: {
             computed: (val) ->
-
-
-
+                computeFullName.call(this, 3)
             mask: "CU"
         }
 
@@ -217,4 +229,4 @@ Org = (restmod, RMUtils, $Evt) ->
 
 
 
-resources.factory 'Org',['restmod', 'RMUtils', '$nbEvent', Org]
+resources.factory 'Org',['restmod', 'RMUtils', '$nbEvent', 'DEPARTMENTS', Org]

@@ -40,7 +40,7 @@
     "angular-restmod": "https://github.com/sandwich99/angular-restmod.git#f539ddf76b72a8dd2ed170724c68b396c986a2cb",
     "underscore.string": "~2.4.0",
     "bourbon": "~4.0.2",
-    "lodash": "~2.4.1",
+    "lodash": "~3.7.0",
     "ng-grid": "~2.0.14",
     "angular-ui-bootstrap-bower": "~0.12.0",
     "jqtree": "~0.22.0",

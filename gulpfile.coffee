@@ -78,7 +78,7 @@ paths =
              # "app/plugins/**/*.coffee"
     ]
     vendorJsLibs: [
-        'deps/lodash/dist/lodash.min.js'
+        'deps/lodash/lodash.js'
         'deps/underscore.string/lib/underscore.string.js'
         'deps/raphael/raphael.js'
         'deps/store.js/store.js'
