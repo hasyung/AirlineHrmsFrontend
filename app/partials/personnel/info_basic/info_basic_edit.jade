@@ -55,10 +55,13 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
             md-input-container(flex)
                 label 联系方式
                 input(type="text", ng-model="current.contact.mobile", name="contact")
-
-        md-input-container
-            label 到岗时间
-            input(disabled ng-model="current.joinScalDate")
+        div(layout)
+            md-input-container(flex)
+                label 到岗时间
+                input(ng-model="current.joinScalDate" type="date")
+            md-input-container(flex)
+                label 参工时间
+                input(ng-model="current.startWorkDate" type="date")
 
 
 
