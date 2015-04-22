@@ -83,7 +83,7 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
         if ttl == 0
             initalArr.join(">")
         else
-            if this.parentId || this.parent_id
+            if ( this.parentId || this.parent_id ) && this.depth > 2
                 parentDep = find DEPARTMENTS, 'id', this.parentId || this.parent_id
                 if !parentDep
                     throw new Error("机构数据结构错误 机构#{this.name}：#{this.id} 找不到parent #{this.parentId} 的机构")
