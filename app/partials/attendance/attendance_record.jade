@@ -1,0 +1,40 @@
+div.app-content-wrapper(nb-table='ctrl.records' nb-safe-src="ctrl.records" ng-init="ctrl.records = ctrl.Record.$collection().$refresh()")
+    .search-container(nb-search)
+        div(nb-predicate="姓名" predicate-attr="name")
+            input(name="name" placeholder="姓名" ng-model="name")
+        div(nb-predicate="员工编号" predicate-attr="employee_no")
+            input(name="employee_no" placeholder="工号" ng-model="employee_no")
+
+        div(nb-predicate="创建时间" predicate-attr="created_at")
+            input(ng-model="created_at.from" bs-datepicker)
+            span.gap 至
+            input(ng-model="created_at.to" bs-datepicker)
+    .search-btn-group
+        md-button.md-raised.purple(nb-pipe="ctrl.searchRecord(tableState)") 开始搜索
+
+    .table-container
+        h4 考勤记录表
+        table.table.table-striped.custom-table
+            thead
+                tr
+                    th 员工编码
+                    th 姓名
+                    th 所属部门
+                    th 岗位
+                    th 分类
+                    th 通道
+                    th 考勤类型
+                    th 记录日期
+                    th 操作
+            tbody(nb-popup-management)
+                tr(ng-repeat="record in ctrl.records track by $index")
+                    td(ng-bind="record.employeeNo")
+                    td(ng-bind="record.name")
+                    td(ng-bind="record.department.name")
+                    td(ng-if="record.action == '修改'")
+                    td(ng-bind="record.action")
+                    td(ng-bind="record.createdAt | date:'yyyy-MM-dd'")
+                    td(ng-bind="record.statusCd | dictmap:'personnel'")
+                    td(ng-bind="record.checkDate | date:'yyyy-MM-dd'")
+                    td.long-text(ng-bind="record.reason")
+    .custom-pages(nb-pagination="ctrl.records.$metadata" per-page="15")

@@ -14,10 +14,9 @@
                         td(ng-bind="::emp.employeeNo")
                         td()
                             a(ng-bind="::emp.employee.name"
-                            nb-dialog="partials/personnel/info_basic.html"
-                            nb-dialog-class="ngdialog-theme-panel"
-                            nb-dialog-data="emp"
-                            nb-dialog-scope="this"
+                            nb-panel
+                            template-url="partials/personnel/info_basic.html"
+                            locals="{'employee': emp}"
                             )
                         td(ng-bind="::emp.startDate")
         .custom-pages(nb-pagination="currentEmps.$metadata" per-page="15")

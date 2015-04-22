@@ -1,37 +1,25 @@
 .app-content-wrapper.org-pos-list
     .org-modal-posttop 岗位信息列表
         .btn-group.pull-right
-
-
-
             button.btn.btn-default.fa.fa-trash-o.pull-right(
                 has-permission="positions_batch_destroy"
                 title="请选择要删除的岗位"
                 ng-disabled="ctrl.getSelectsIds().length == 0"
                 nb-confirm="ctrl.batchRemove(isConfirm)"
                 nb-title="您确定要删除所选的{{ctrl.getSelectsIds().length}}个岗位吗?"
-                nb-text="删除操作将在你点击确定后执行，岗位删除后将无法恢复。")
+                nb-content="删除操作将在你点击确定后执行，岗位删除后将无法恢复。")
             button.btn.btn-default.fa.fa-plus.pull-right(
                 has-permission="positions_create"
                 title="新增岗位"
-                nb-dialog="partials/orgs/position_add.html"
-                nb-dialog-scope="this"
+                nb-dialog
+                template-url="partials/orgs/position_add.html"
             )
-            button.btn.btn-info.pull-right(has-permission="positions_adjust" title="", nb-popup-plus, position="left-bottom", offset="0.05") 调整机构
-                popup-template.nb-popup.org-default-popup-template.panel.panel-default()
-                    .panel-heading.popup-title 组织机构
-                    .panel-body.popup-body
-                        div(slimscroll height="300px")
-                            nb-org-tree(tree-data="allOrgs" ng-model="ctrl.selectOrg")
-                    .panel-footer.clearfix.button-group
-                        //- div.btn.btn-info.pull-right.btn-submit(popup-close, ng-click="ctrl.posTransfer()") 确 定
-                        .btn.btn-info.pull-right.btn-submit(
-                            popup-close
-                            ng-disabled="!(ctrl.getSelectsIds().length != 0 && (!!ctrl.selectOrg))"
-                            nb-confirm="ctrl.posTransfer(isConfirm)"
-                            nb-title="您确定要将所选的{{ctrl.getSelectsIds().length}}个岗位，调整到{{ctrl.selectOrg.name}}吗?"
-                            nb-text="岗位调整操作将在你点击确定后执行。") 确 定
-                        div.btn.btn-default.pull-right(popup-close) 取 消
+            button.btn.btn-info.pull-right(
+                has-permission="positions_adjust"
+                nb-dialog
+                template-url="partials/position/position_transfer.html"
+                ) 调整机构
+
             .pull-right.nb-dropdown.right-align(simple-dropdown, btn-text="导出")
                 li( role="presentation")
                     a(role="menuitem" ng-href="/api/positions/export_to_xls?department_id={{currentOrg.id}}" ) 导出全部岗位
@@ -57,9 +45,10 @@
                     td.has-checkbox(select-row="pos" mode="multiple")
                     td.org-post
                         a(
-                        nb-dialog="partials/position/position_detail.html"
-                        nb-dialog-class="ngdialog-theme-panel"
-                        nb-dialog-data="pos"
+                        template-url="partials/position/position_detail.html"
+                        title="岗位详情"
+                        nb-panel
+                        locals="{position: pos}"
                         ) {{pos.name}}
                     td(ng-bind="pos.channel.displayName")
                     //- td.org-preparation

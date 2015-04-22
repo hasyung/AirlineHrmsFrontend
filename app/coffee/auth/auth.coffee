@@ -96,8 +96,6 @@ class LoginController extends nb.Controller
 
 
 
-
-
 class SigupController extends nb.Controller
 
 

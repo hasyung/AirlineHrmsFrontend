@@ -20,9 +20,6 @@ class Route
                 templateUrl: 'partials/self/self_info.html'
                 controller: ProfileCtrl
                 controllerAs: 'ctrl'
-                ncyBreadcrumb: {
-                    label: "员工自助"
-                }
             }
             .state 'self.profile', {
                 url: '/profile'
@@ -30,20 +27,6 @@ class Route
                 controllerAs: 'ctrl'
                 templateUrl: 'partials/self/self_info_basic/self_info_basic.html'
             }
-            # .state 'self.profile.basic', {
-            #     url: ''
-            #     views: {
-            #         "detail@self.profile": {
-            #             controller: ProfileCtrl
-            #             controllerAs: 'ctrl'
-            #             templateUrl: 'partials/self/self_info_basic/self_info_basic.html'
-            #         }
-            #     }
-            #     ncyBreadcrumb: {
-            #         label: "我的基本信息"
-            #     }
-
-            # }
             .state 'self.members', {
                 url: '/members'
                 controller: ProfileCtrl
@@ -67,6 +50,16 @@ class Route
                 controller: ProfileCtrl
                 controllerAs: 'ctrl'
                 templateUrl: 'partials/self/self_resume.html'
+            }
+            .state 'self.attendance', {
+                url: '/attendance'
+                controller: AttendanceCtrl
+                controllerAs: 'ctrl'
+                templateUrl: 'partials/self/self_attendance.html'
+            }
+            .state 'self_position', {
+                url: '/self-service-position'
+                templateUrl: 'partials/self/transfer_position.html'
             }
 
 # class SelfCtrl extends nb.Controller
@@ -97,19 +90,23 @@ class ProfileCtrl extends nb.Controller
         # @scope.currentUser.educationExperiences.$refresh()
         # @scope.currentUser.workExperiences.$fetch()
 
-
     # 员工自助中员工编辑自己的信息
     updateInfo: ->
         @scope.currentUser.$update()
     updateEdu: (edu)->
         edu.$save()
     createEdu: (edu)->
-        @scope.currentUser.educationExperiences.createEdu(edu);
+        @scope.currentUser.educationExperiences.createEdu(edu)
         # @scope.currentUser.$update()
 
+class AttendanceCtrl
+    @.$inject = ['$scope', 'Leave']
+    constructor: (@scope, @Leave) ->
 
+    requestLeave: () ->
 
-
+    submitForm: (requestData) ->
+        @Leave.$create({day:3, desc:"因为某事需求请假三天",flowType: "Flow::SickLeave"})
 
 
 app.config(Route)

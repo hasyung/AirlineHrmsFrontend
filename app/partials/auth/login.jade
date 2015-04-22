@@ -8,9 +8,9 @@
           | {{authError}}
         .list-group.list-group-sm
           .list-group-item
-            input.form-control.no-border(type='text', placeholder='工号', ng-model='user.employee_no', required='true')
+            input.form-control.no-border(type='text', placeholder='工号', ng-model='user.employee_no', required)
           .list-group-item
-            input.form-control.no-border(type='password', placeholder='密码', ng-model='user.password', required='true')
+            input.form-control.no-border(type='password', placeholder='密码', ng-model='user.password', required)
         button.btn.btn-lg.btn-primary.btn-block(type='submit', ng-click='ctrl.login(user)', ng-disabled='form.$invalid') 登录
         .text-center.m-t.m-b
           a(href="javascript:;") 忘记密码?

@@ -142,15 +142,15 @@ class OrgsCtrl extends nb.Controller
 
 
     constructor: (@orgs, @http, @params, @state, @scope, @rootScope, @Evt)->
-        @treeRootOrg = _.find orgs, (org) -> org.depth == 1 # 当前树的顶级节点
+        @treeRootOrg = _.find @orgs, (org) -> org.depth == 1 # 当前树的顶级节点
         @tree = null    # tree化的 orgs 数据
         @currentOrg = null
 
         #for ui status
         @isBarOpen = false
 
-        scope.$onRootScope 'org:refresh', @.refreshTree.bind(@)
-        scope.$onRootScope 'org:resetData', @.resetData.bind(@)
+        @scope.$onRootScope 'org:refresh', @.refreshTree.bind(@)
+        @scope.$onRootScope 'org:resetData', @.resetData.bind(@)
 
         @buildTree(@treeRootOrg)
 
@@ -216,6 +216,7 @@ class OrgsCtrl extends nb.Controller
     initialHistoryData: ->
         onSuccess = (res)->
             logs = res.data.change_logs
+            return if logs.length == 0
             groupedLogs = _.groupBy logs, (log) ->
                 moment(log.created_at).format('YYYY')
             logsArr = []
@@ -282,7 +283,7 @@ class OrgCtrl extends nb.Controller
     constructor: (@Org, @params, @scope, @rootScope, @Evt, @Position , @sweet) ->
         @state = 'show' # show editing newsub
         self = @
-        scope.$parent.$watch 'ctrl.currentOrg', (newval)->
+        @scope.$parent.$watch 'ctrl.currentOrg', (newval)->
             self.orgLink(newval)
 
     orgLink: (org)->
@@ -316,30 +317,38 @@ class OrgCtrl extends nb.Controller
 class PositionCtrl extends nb.Controller
     @.$inject = ['$scope', '$nbEvent', 'Position', '$stateParams', 'Org', 'Specification']
     constructor: (@scope, @Evt, @Position, @stateParams, @Org, @Specification) ->
-        @positions = scope.ngDialogData # from parent ctrl
-        scope.ctrl = this
+        # @positions = @scope.panel.data # from parent ctrl
+        # @scope.ctrl = this
+        # orgId = @stateParams.id
+        # @currentOrg = Org.$find(orgId)
+        # @positions = @currentOrg.positions.$fetch()
+        # @selectOrg = null # 划转所选择的机构 rework
+        # @scope.allSelect = false
+        # @scope.$onRootScope 'position:refresh', @.resetData.bind(@)
+
 
     getSelectsIds: ()->
         @positions
             .filter (pos) -> return pos.isSelected
             .map (pos) -> return pos.id
 
-    posTransfer: () -> #将岗位批量划转到另外一个机构下
+    posTransfer: (selectOrg, isConfirm) -> #将岗位批量划转到另外一个机构下
+        return if !isConfirm
         self = @
         selectedPosIds = @getSelectsIds()
-        if selectedPosIds.length > 0 && @selectOrg
+        if selectedPosIds.length > 0 && selectOrg
             @positions
-                .$adjust({department_id: @selectOrg.id, position_ids: selectedPosIds })
-            self.selectOrg = null
+                .$adjust({department_id: selectOrg.id, position_ids: selectedPosIds })
         else
             # 通知被划转岗位和目标机构必选
             @Evt.$send "position:transfer:error", "被划转岗位和目标机构必选"
 
-    batchRemove: () ->
-        if @getSelectsIds().length != 0
-            @positions.$batchRemove({ids:@getSelectsIds()})
-        else
-            @Evt.$send "position:remove:error", "你还没选择所要删除的岗位"
+    batchRemove: (isConfirm) ->
+        if isConfirm
+            if @getSelectsIds().length != 0
+                @positions.$batchRemove({ids:@getSelectsIds()})
+            else
+                @Evt.$send "position:remove:error", "你还没选择所要删除的岗位"
 
     getExportParams: (id) ->
         ids = @getSelectsIds()

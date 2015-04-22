@@ -1,0 +1,48 @@
+div.app-content-wrapper(nb-table='ctrl.leaves' nb-safe-src="ctrl.leaves" ng-init="ctrl.leaves = ctrl.Leave.$collection().$refresh()")
+    .search-container(nb-search)
+        div(nb-predicate="姓名" predicate-attr="name")
+            input(name="name" placeholder="姓名" ng-model="name")
+        div(nb-predicate="员工编号" predicate-attr="employee_no")
+            input(name="employee_no" placeholder="工号" ng-model="employee_no")
+
+    .search-btn-group
+        md-button.md-raised.purple(nb-pipe="ctrl.searchLeaves(tableState)") 开始搜索
+
+    .table-container
+        h4 请假列表
+        table.table.table-striped.custom-table
+            thead
+                tr
+                    th(select-row="" mode='all')
+                    th 员工编号
+                    th 姓名
+                    th 所属部门
+                    th 岗位
+                    th 申请日期
+                    th 操作类型
+                    th 假别
+                    th 开始时间
+                    th 天数
+                    th 状态
+                    th 审核时间
+                    th 详细
+            tbody
+                tr(ng-repeat="leave in ctrl.leaves track by $index")
+                    td(select-row="leave" mode="multiple")
+                    td(ng-bind="leave.sponsor.employeeNo")
+                    td(ng-bind="leave.sponsor.name")
+                    td(ng-bind="leave.sponsor.departmentName")
+                    td(ng-bind="leave.sponsor.positionName")
+                    td(ng-bind="leave.createdAt | date:'yyyy-MM-dd'")
+                    td(ng-bind="leave.category")
+                    td(ng-bind="leave.name")
+                    td(ng-bind="leave.createdAt | date:'yyyy-MM-dd'")
+                    td() 1天
+                    td(ng-bind="leave.workflowState")
+                    td(ng-bind="leave.endDate | date:'yyyy-MM-dd'")
+                    td
+                        //- a(href="javascript:;"
+                        //-     ng-click="ctrl.mdDialog.show({templateUrl:'partials/attendance/attendance_note_detail.html',locals:{data:leave}, controller:'AttendanceDialogCtrl', controllerAs:'ctrl'})") 详细信息
+                        button(flow-handler="leave") 处理
+    .custom-pages(nb-pagination="ctrl.leaves.$metadata" per-page="15")
+

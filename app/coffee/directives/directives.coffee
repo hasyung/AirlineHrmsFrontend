@@ -102,45 +102,129 @@ angular.module 'nb.directives'
             link: postLink
         }
     ]
-    .directive 'nbDialog',['ngDialog', (ngDialog) ->
+    #facade ngDialog
+    .directive 'nbPanel',['ngDialog', (ngDialog) ->
+
+        getCustomConfig = (attrs) ->
+            configAttrs = _.pick(attrs, (val, key) -> return /^panel/.test(key))
+            customConfig = _.transform configAttrs, (res, val, key) ->
+                attr = key.slice(5) #remove prefix 'panel'
+                cusKey = _.camelCase(attr)
+
 
         postLink = (scope, elem, attrs) ->
+            options = {
+                controller: attrs.panelController || angular.noop
+                template: attrs.templateUrl || 'partials/404.html'
+                scope: scope
+                controllerAs: attrs.controllerAs || 'panel'
+                bindToController: true
+                className: 'ngdialog-theme-panel'
+            }
+
             elem.on 'click', (e) ->
                 e.preventDefault()
+                opts = {}
+                angular.isDefined(attrs.panelClosePrevious) && ngDialog.close(attrs.nbDialogClosePrevious)
 
-                dialogScope = `angular.isDefined(scope.nbDialogScope)? scope.nbDialogScope : scope.$parent`
-                angular.isDefined(attrs.nbDialogClosePrevious) && ngDialog.close(attrs.nbDialogClosePrevious)
+                opts['locals'] = scope.$eval(attrs.locals) || {}
+                angular.extend(opts, options)
+                ngDialog.open opts
 
-                defaults = ngDialog.getDefaults()
+            scope.$on '$destroy', -> elem.off('click')
 
-                data = scope.nbDialogData
-                #link https://github.com/angular/angular.js/issues/6404
-                data = scope.prepareData() if attrs.prepareData
-
-                ngDialog.open {
-
-                    template: attrs.nbDialog
-                    className: attrs.nbDialogClass || defaults.className
-                    controller: attrs.nbDialogController
-                    scope: dialogScope
-                    data: data
-                    # showClose: attrs.ngDialogShowClose === 'false' ? false : (attrs.ngDialogShowClose === 'true' ? true : defaults.showClose),
-                    # closeByDocument: attrs.ngDialogCloseByDocument === 'false' ? false :
-                    # (attrs.ngDialogCloseByDocument === 'true' ? true : defaults.closeByDocument),
-                    # closeByEscape: attrs.ngDialogCloseByEscape === 'false' ? false
-                    # : (attrs.ngDialogCloseByEscape === 'true' ? true : defaults.closeByEscape),
-                    # preCloseCallback: attrs.ngDialogPreCloseCallback || defaults.preCloseCallback
-
-                }
         return {
             restrict: 'A'
-            scope: {
-                nbDialogScope : '='
-                prepareData: '&?'
-                nbDialogData: '='
-            }
             link: postLink
         }
+
+
+    ]
+    .directive 'nbDialog',['$mdDialog', ($mdDialog) ->
+
+        postLink = (scope, elem, attrs) ->
+
+            throw new Error('所有dialog都需要templateUrl') if !angular.isDefined(attrs.templateUrl)
+            options = {}
+
+            openDialog = (evt) ->
+                #scope evt 生命周期仅限于本次点击
+                opts = angular.extend({scope: scope.$new(), targetEvent: evt}, options)
+
+                opts = angular.extend(opts, {
+                        controller: ->
+                            @close = (res) -> $mdDialog.hide(res)
+                            @cancel = (res) -> $mdDialog.cancel(res)
+                            return
+                        controllerAs: 'dialog'
+                        bindToController: true
+                    })
+
+                angular.forEach ['locals','resolve'], (key) ->
+                    opts[key] = scope.$eval(attrs[key]) if angular.isDefined(attrs[key])
+
+                $mdDialog.show opts
+
+            # 暂定所有 dialog 无独立 controller , 交给parent控制
+            angular.forEach ['templateUrl', 'template'], (key) ->
+                options[key] = attrs[key] if angular.isDefined(attrs[key])
+
+
+            falseValueRegExp = /^(false|0|)$/
+            angular.forEach ['clickOutsideToClose', 'focusOnOpen', 'bindToController'], (key) ->
+                options[key] = !falseValueRegExp.test(attrs[key]) if angular.isDefined(attrs[key])
+
+            elem.on 'click', openDialog
+
+            scope.$on '$destroy', -> elem.off('click', openDialog)
+
+        return {
+            restrict: 'A'
+            link: postLink
+        }
+
+    ]
+
+
+
+    .directive 'nbConfirm', ['$mdDialog', ($mdDialog) ->
+
+        postLink = (scope, elem, attrs) ->
+
+            attrs.$observe 'nbTitle', (newValue) ->
+                scope.title = newValue || '提示'
+
+            attrs.$observe 'nbContent', (newValue) ->
+                scope.content = newValue || '缺少内容'
+
+            performConfirm = (evt) ->
+                confirm = $mdDialog.confirm()
+                    .title(scope.title)
+                    .content(scope.content)
+                    .ok(attrs['okText'] || '确定')
+                    .cancel(attrs['cancleText'] || '取消')
+                    .targetEvent(evt)
+
+            callback = (isConfirm) ->
+                return -> scope.onComplete(isConfirm: isConfirm)
+
+
+            elem.on 'click', (evt) ->
+                confirm = performConfirm(evt)
+                promise = $mdDialog.show(confirm)
+
+                promise.then(callback(true), callback(false)) if angular.isDefined(scope.onComplete)
+
+            scope.$on 'destroy', -> elem.off 'click'
+
+
+        return {
+            link: postLink
+            scope: {
+                'onComplete': '&nbConfirm'
+            }
+        }
+
 
 
     ]
@@ -195,8 +279,139 @@ angular.module 'nb.directives'
             replace: true
         }
     ]
+    .directive 'approval', [ () ->
 
+        postLink = (scope, elem, attrs) ->
+            padding =
+                top: 20
+                right: 20
+                bottom: 20
+                left: 20
 
+            width = 900
+            height = 92
+                #树的高
+            duration = 750
+            data = [
+                {
+                    'status': 'done'
+                    'des': '请假单'
+                }
+                {
+                    'status': 'done'
+                    'des': '领导审批'
+                }
+                {
+                    'status': 'undo'
+                    'des': '上级领导审批'
+                }
+                {
+                    'status': 'unreachable'
+                    'des': '最终审批'
+                }
+                {
+                    'status': 'unreachable'
+                    'des': '超级最终审批'
+                }
+                {
+                    'status': 'unreachable'
+                    'des': '超级最终审批'
+                }
+                {
+                    'status': 'unreachable'
+                    'des': '超级最终审批'
+                }
+                {
+                    'status': 'unreachable'
+                    'des': '超级最终审批'
+                }
+                {
+                    'status': 'unreachable'
+                    'des': '超级最终审批'
+                }
+                {
+                    'status': 'unreachable'
+                    'des': '超级最终审批'
+                }
+                {
+                    'status': 'unreachable'
+                    'des': '超级最终审批'
+                }
+            ]
+            radius = 6
+            single_area_width = width / data.length
+            single_area_height = 2 * radius + 40
+
+            svg = d3.select(elem[0]).append('svg')
+            .attr('class', 'lw-svg')
+                .attr('width', width)
+                .attr('height', height)
+            #- .append("g")
+            #- .attr("transform", "translate(" + margin.left + "," + margin.top + ")");  //使svg区域与上、左有一定距离
+            #
+            svg.selectAll('line').data(data).enter().append('line').style('stroke', (d, i) ->
+              if d.status == 'done'
+                '#2cc350'
+              else if d.status == 'undo'
+                '#24afff'
+              else if d.status == 'reject'
+                '#f34e4c'
+              else
+                '#eee'
+            ).style('stroke-width', '3').attr('class', 'step-line').attr('x1', (d, i) ->
+              single_area_width * (i + .5)
+            ).attr('y1', single_area_height - radius).attr('x2', (d, i) ->
+              if i != 0
+                single_area_width * (i - .5)
+              else
+                single_area_width * (i + .5)
+            ).attr 'y2', single_area_height - radius
+
+            svg.selectAll('circle').data(data).enter().append('circle').attr('class', 'step-point').attr('fill', (d) ->
+              if d.status == 'done'
+                '#2cc350'
+              else if d.status == 'undo'
+                '#24afff'
+              else if d.status == 'reject'
+                '#f34e4c'
+              else
+                '#eee'
+            ).attr('cx', (d, i) ->
+              single_area_width * (i + .5)
+            ).attr('cy', single_area_height - radius)
+            .attr('r', (d,i) ->
+                if d.status == 'undo'
+                    2*radius
+                else
+                    radius
+            )
+
+            svg.selectAll('text').data(data).enter().append('text')
+            .attr('class', 'step-title')
+            .attr('x', (d, i) ->
+              single_area_width * (i + .5)
+            )
+            .attr('y', (d, i) ->
+                if i%2 == 0
+                    single_area_height - radius - 20
+                else
+                    single_area_height + 20 +radius
+            )
+            .attr('fill',(d,i) ->
+                if d.status == 'unreachable'
+                    'rgba(0,0,0,.54)'
+                else
+                    'rgba(0,0,0,.87)'
+            )
+            .attr('text-anchor', 'middle')
+            .attr('font-size', '12px').text (d, i) ->
+              d.des
+
+        return {
+            link: postLink
+        }
+
+    ]
 
 
     #
