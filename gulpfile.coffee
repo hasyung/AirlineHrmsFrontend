@@ -283,15 +283,18 @@ gulp.task "copy",  ->
 
 gulp.task "express", ['copy'],  ->
     express = require("express")
+    bodyParser = require('body-parser')
     app = express()
 
     proxyOptions = url.parse(PROXY_SERVER_ADDR)
     proxyOptions.route = '/api'
-    app.set('views', __dirname + '/app')
+    app.set('views', __dirname + '/app/')
     app.set('view engine', 'jade')
 
     # 反向代理 webapi
     app.use(proxy(proxyOptions))
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded());
     app.use("/js", express.static("#{__dirname}/dist/js"))
     app.use("/api", express.static("#{__dirname}/dist/api"))
     app.use("/vendor", express.static("#{__dirname}/dist/vendor"))
@@ -304,11 +307,27 @@ gulp.task "express", ['copy'],  ->
 
     jar = request.jar()
     app.get "/sessions/new/", (req, res, next) ->
+        res.render("partials/cust_login")
+
+        # request.post {
+        #     url: "#{PROXY_SERVER_ADDR}/sessions"
+        #     formData: {
+        #         'user[employee_no]': '003740'
+        #         'user[password]': '123456'
+        #     }
+        #     jar: jar
+        # }, (err, response, body) ->
+        #     cooks = jar.getCookies(response.request.href)
+        #     tokenCookie =  _.find cooks, (cook) -> cook.key == 'token'
+        #     res.cookie('token', tokenCookie.value)
+        #     res.redirect('/')
+    app.post "/sessions", (req, res) ->
+        user = req.body.user
         request.post {
             url: "#{PROXY_SERVER_ADDR}/sessions"
             formData: {
-                'user[employee_no]': '003740'
-                'user[password]': '123456'
+                'user[employee_no]': user.employee_no
+                'user[password]': user.password
             }
             jar: jar
         }, (err, response, body) ->
@@ -316,7 +335,6 @@ gulp.task "express", ['copy'],  ->
             tokenCookie =  _.find cooks, (cook) -> cook.key == 'token'
             res.cookie('token', tokenCookie.value)
             res.redirect('/')
-
 
     app.get "/", (req, res, next) ->
         request {
