@@ -31,7 +31,7 @@ proxy           = require('./compat/proxy-middleware')
 
 debugMode       = true
 
-LOCAL_TEST_SERVER = "http://192.168.6.99:4000"
+LOCAL_TEST_SERVER = "http://192.168.6.99:9001"
 REMOTE_TEST_SERVER = "http://114.215.142.122:9002"
 LOCAL_SERVER = "http://localhost:3000"
 
