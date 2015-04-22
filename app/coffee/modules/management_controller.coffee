@@ -78,15 +78,15 @@ class Route
 
 class ProfileCtrl extends nb.Controller
 
-    @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope']
+    @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope', 'User', 'USER_META']
 
 
-    constructor: (@scope, @sweet, @Employee, @rootScope) ->
+    constructor: (@scope, @sweet, @Employee, @rootScope, @User, @USER_META) ->
         @loadInitailData()
         @status = 'show'
 
     loadInitailData: ->
-        @scope.currentUser = @rootScope.currentUser
+        @scope.currentUser = @User.$fetch()
         # @scope.currentUser.educationExperiences.$refresh()
         # @scope.currentUser.workExperiences.$fetch()
 
