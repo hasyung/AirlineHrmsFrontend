@@ -55,7 +55,7 @@ render = (root, options) ->
     # cleanup
     d3.select(container.querySelector('svg')).selectAll("*").remove()
 
-    if root.depth == 1
+    if root.xdepth == 1
         drawOrgChart(root, options)
     else
         drawTreeChart(root, options)
@@ -99,7 +99,8 @@ drawOrgChart = (root, options) ->
             # 计算根节点、奇数列 正确位置
             fixed_odd_position = if typed_orgs.length%2 !=0 && name == 'root' then typed_orgs.length + 1 else typed_orgs.length
             typed_orgs.forEach (d, i) ->
-                d.x = (600/2 - ((fixed_odd_position - 1)*rectHorizontalSpacing + fixed_odd_position*rectWidth)/2) + i*(rectHorizontalSpacing + rectWidth)
+                d.x = (600/2 - ((fixed_odd_position - 1)*rectHorizontalSpacing +
+                    fixed_odd_position*rectWidth)/2) + i*(rectHorizontalSpacing + rectWidth)
 
         return nodes
 
