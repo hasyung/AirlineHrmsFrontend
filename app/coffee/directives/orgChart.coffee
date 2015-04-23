@@ -1,8 +1,12 @@
 # // depth 修改
 
-treeData = {
-    root: root
-}
+# treeData = {
+#     root: root
+# }
+
+
+app = @nb.app
+
 
 
 orgChartDirective = ->
@@ -14,7 +18,7 @@ orgChartDirective = ->
 
 
         options = {
-            container: elem
+            container: elem[0]
             rectBgColor: '#dfe5e7'  #树节点的正常状态的颜色
             hasChildColor: '#C9D4D7'  #还有为展开的子节点的节点的颜色
             rectWidth: 36  #节点宽度
@@ -32,14 +36,15 @@ orgChartDirective = ->
 
         destroyChart = -> d3.select(elem.find('svg')[0]).remove()
 
-        scope.$watch 'treeData', (newVal) -> render(newVal, options)
+        # scope.$watch 'treeData', (newVal) -> render(newVal, options)
         scope.$on '$destroy', () -> destroyChart()
 
+        render(scope.orgChartData, options)
 
     return {
         link: postLink
         scope: {
-            treeData: '@'
+            orgChartData: '='
             onItemClick: '&'
         }
     }
@@ -48,7 +53,7 @@ orgChartDirective = ->
 render = (root, options) ->
     container = options.container
     # cleanup
-    d3.select(container.find('svg')[0]).selectAll("*").remove()
+    d3.select(container.querySelector('svg')).selectAll("*").remove()
 
     if root.depth == 1
         drawOrgChart(root, options)
@@ -75,14 +80,14 @@ drawOrgChart = (root, options) ->
 
     computeLayerMaxLength = (root) ->
         length_group = _.countBy root.children, (org) -> return org.nature.name
-        length_arr = _.keys(length_group)
-        return length_arr.reduce (pre, value) -> return +value if !pre || +value > pre
+        return _.max(_.values(length_group))
 
 
     nodesDecorator = (root, tree) ->
         nodes = tree.nodes(root)
         nodes.forEach (d) ->
-            branch = nature_type_order.indexOf(d.nature.name) + 1
+            type = if d.nature then d.nature.name else 'root'
+            branch = nature_type_order.indexOf(type) + 1
             d.y = d.depth*(rectHeight + rectVerticalSpacing)
         grouped_org = _.groupBy root.children, (org) -> return org.nature.name
         grouped_org['root'] = [root]
@@ -92,7 +97,7 @@ drawOrgChart = (root, options) ->
             # 计算根节点、奇数列 正确位置
             fixed_odd_position = if typed_orgs.length%2 !=0 && name == 'root' then typed_orgs.length + 1 else typed_orgs.length
             typed_orgs.forEach (d, i) ->
-                d.x = (width/2 - ((computeLen - 1)*rectHorizontalSpacing + computeLen*rectWidth)/2) + i*(rectHorizontalSpacing + rectWidth)
+                d.x = (600/2 - ((fixed_odd_position - 1)*rectHorizontalSpacing + fixed_odd_position*rectWidth)/2) + i*(rectHorizontalSpacing + rectWidth)
 
         return nodes
 
@@ -106,8 +111,8 @@ drawOrgChart = (root, options) ->
                 .attr "d", (d, i) ->
                     """
                      M#{root.x+ rectWidth/2} #{root.y+rectHeight}
-                     L#{root.x + rectWidth/2} #{d.y - rectSpacing/2}
-                     L#{d.x + rectWidth/2} #{d.y - rectSpacing/2}
+                     L#{root.x + rectWidth/2} #{d.y - rectVerticalSpacing/2}
+                     L#{d.x + rectWidth/2} #{d.y - rectVerticalSpacing/2}
                      L#{d.x + rectWidth/2} #{d.x + rectWidth/2} #{d.y}
                     """
                 .attr("stroke", linkColor)
@@ -145,17 +150,16 @@ drawOrgChart = (root, options) ->
                 .text (d) -> d.name
 
 
-
-
-        svg.attr("width",rectWidth*layerMaxLength + rectSpacing*(layerMaxLength - 1) + 140)
-            .attr("height",(rectHeight + rectSpacing)*4)
-        tree.size([rectWidth*layerMaxLength + rectSpacing*(layerMaxLength - 1) + 40,(rectHeight + rectSpacing)*3+40])
+        svg.attr("width",rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + 140)
+            .attr("height",(rectHeight + rectVerticalSpacing)*4)
+        tree.size([rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + 40,(rectHeight + rectVerticalSpacing)*3+40])
 
 
 
     layerMaxLength = computeLayerMaxLength(root)
     tree = d3.layout.tree()
     svg = d3.select(container).append('svg')
+    nodes = nodesDecorator(root, tree)
     draw(svg, tree, nodes, layerMaxLength, root)
 
 
@@ -176,4 +180,7 @@ drawTreeChart = ->
 
 companyOrgnizationArchitectureLine = ->
 computeCompanyOrgReact = ->
+
+
+app.directive('orgChart',[orgChartDirective])
 
