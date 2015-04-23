@@ -47,6 +47,7 @@ orgChartDirective = ->
 
 render = (root, options) ->
     container = options.container
+    active_node = null
     # cleanup
     d3.select(container.find('svg')[0]).selectAll("*").remove()
 
@@ -123,8 +124,13 @@ drawOrgChart = (root, options) ->
                 .append("g")
                 .style("cursor", "pointer")
                 .on 'click', (d,i) ->   #To Do:
+                    active_node
+                        .classed('node',true)
+
                     d3.select(this)
                         .classed('node active',true)
+
+                    active_node = d3.select(this)
 
             nodeEnter.append("rect")
                 .attr("class", "chart-box")
@@ -151,6 +157,9 @@ drawOrgChart = (root, options) ->
         svg.attr("width",rectWidth*layerMaxLength + rectSpacing*(layerMaxLength - 1) + 40)
             .attr("height",(rectHeight + rectSpacing)*4)
         tree.size([rectWidth*layerMaxLength + rectSpacing*(layerMaxLength - 1) + 40,(rectHeight + rectSpacing)*3+40])
+
+        drawPath()
+        drawRect()
 
 
 
@@ -254,12 +263,16 @@ drawTreeChart = (root, options) ->
             .attr("height",(rectHeight + rectSpacing)*3)
         tree.size([rectWidth*layerMaxLength + rectSpacing*(layerMaxLength - 1) + 40,(rectHeight + rectSpacing)*3+40])
 
+        drawPath()
+        drawRect()
+
     #方法调用
     layerMaxLength = computeLayerMaxLength(root)
     tree = d3.layout.tree()
     svg = d3.select(container).append('svg')
     nodes = nodesDecorator(root, tree)
     draw(svg, tree, nodes, layerMaxLength, root)
+
 companyOrgnizationArchitectureLine = ->
-computeCompanyOrgReact = ->
+computeCompanyOrgRect = ->
 
