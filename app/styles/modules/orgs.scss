@@ -143,11 +143,20 @@
 
     svg {
         display: block;
-        margin: 0 auto;
 
         text,
         rect {
             cursor: pointer;
+        }
+
+        .node {
+            rect {
+                fill: #dfe5e7;
+            }
+
+            &.active rect {
+                fill: #90d7ff;
+            }
         }
     }
     // TODO: 以后用变量

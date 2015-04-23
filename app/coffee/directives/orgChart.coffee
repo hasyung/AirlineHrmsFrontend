@@ -16,7 +16,6 @@ orgChartDirective = ->
         # onItemClick = ->
         #     scope.$apply -> scope.onItemClick()
 
-
         options = {
             container: elem[0]
             rectBgColor: '#dfe5e7'  #树节点的正常状态的颜色
@@ -52,7 +51,6 @@ orgChartDirective = ->
 
 render = (root, options) ->
     container = options.container
-    active_node = null
     # cleanup
     d3.select(container.querySelector('svg')).selectAll("*").remove()
 
@@ -67,6 +65,8 @@ update = () ->
 # jiguanbumen
 # fengongsijidi
 drawOrgChart = (root, options) ->
+    active_node = null
+
     container             = options.container
     nature_type_order     = ['jiguanbumen', 'shengchanbumen', 'fengongsijidi']
     nature_type_order.unshift('root') # root not exist nature
@@ -90,7 +90,7 @@ drawOrgChart = (root, options) ->
         nodes = tree.nodes(root)
         nodes.forEach (d) ->
             type = if d.nature then d.nature.name else 'root'
-            branch = nature_type_order.indexOf(type) + 1
+            branch = nature_type_order.indexOf(type)
             d.y = branch*(rectHeight + rectVerticalSpacing)
         grouped_org = _.groupBy root.children, (org) -> return org.nature.name
         grouped_org['root'] = [root]
@@ -100,7 +100,7 @@ drawOrgChart = (root, options) ->
             # 计算根节点、奇数列 正确位置
             fixed_odd_position = if typed_orgs.length%2 !=0 && name == 'root' then typed_orgs.length + 1 else typed_orgs.length
             typed_orgs.forEach (d, i) ->
-                d.x = (600/2 - ((fixed_odd_position - 1)*rectHorizontalSpacing +
+                d.x = ((rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + 40)/2 - ((fixed_odd_position - 1)*rectHorizontalSpacing +
                     fixed_odd_position*rectWidth)/2) + i*(rectHorizontalSpacing + rectWidth)
 
         return nodes
@@ -112,6 +112,7 @@ drawOrgChart = (root, options) ->
                 .data(nodes)
                 .enter()
                 .append("path")
+                .attr("class","link")
                 .attr "d", (d, i) ->
                     """
                      M#{root.x+ rectWidth/2} #{root.y+rectHeight}
@@ -128,15 +129,13 @@ drawOrgChart = (root, options) ->
                 .data(nodes)
                 .enter()
                 .append("g")
+                .attr("class","node")
                 .style("cursor", "pointer")
                 .on 'click', (d,i) ->   #To Do:
-                    active_node
-                        .classed('node',true)
-
-                    d3.select(this)
-                        .classed('node active',true)
-
+                    active_node.classed("active",false)
+                    d3.select(this).classed("active",true)
                     active_node = d3.select(this)
+
 
             nodeEnter.append("rect")
                 .attr("class", "chart-box")
@@ -146,7 +145,7 @@ drawOrgChart = (root, options) ->
                 .attr("ry", rectBorderRadius)
                 .attr("stroke", linkColor)
                 .attr("stroke-width", borderWidth)
-                .attr "x", (d) -> d.x
+                .attr "x", (d,i) -> d.x
                 .attr "y", (d) -> d.y
                 .attr "class", (d) -> #TODO: 根据状态确定方块颜色class
 
@@ -166,6 +165,8 @@ drawOrgChart = (root, options) ->
 
         drawPath()
         drawRect()
+        active_node = d3.select(".node")
+
 
 
 
