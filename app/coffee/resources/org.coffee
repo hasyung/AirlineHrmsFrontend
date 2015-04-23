@@ -50,7 +50,6 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
             return
         ttl = ttl - 1
 
-
         children = _.filter array, (child) ->
             if typeof parent.id == 'undefined'
                 return child.parent_id == undefined or child.parent_id == 0
@@ -178,11 +177,11 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
                         # isModified = true if isChild and IneffectiveOrg(orgItem)
 
                         return isChild
+
                     #待优化
                     _.forEach cachedIndexOrgs, (orgItem) ->
                         isModified = true if IneffectiveOrg(orgItem)
 
-                    treeData = transform(treeData, {'name': 'title'})
                     treeData = treeful(treeData, DEPTH, org)
 
                     return {
