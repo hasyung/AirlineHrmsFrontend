@@ -86,6 +86,7 @@ orgTree = (Org, $parse) ->
 
 
         treeData = scope.treeData.jqTreeful()
+        console.log treeData
         $tree = elem.tree {data: treeData,autoOpen: 0}
         $tree.bind 'tree.select', (evt) ->
             node = evt.node

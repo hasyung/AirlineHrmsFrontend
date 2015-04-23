@@ -132,4 +132,45 @@ class ReviewCtrl extends nb.Controller
             params.push temp
         @changes.checkChanges(params)
 
+class PersonnelSort extends nb.Controller
+    @.$inject = ['$scope', '$rootScope', 'Position', 'Employee', '$http']
+    constructor: (@scope, @rootScope, @Position, @Employee, @http) ->
+        @orgLinks = []
+        @loadInitailData()
+
+    loadInitailData: ->
+        @currentOrgs = @rootScope.allOrgs.jqTreeful()[0]
+        @orgLinks.push @currentOrgs
+
+    orgSelectBack: ->
+        if @orgLinks.length > 1
+            @orgLinks.pop()
+            @currentOrgs = @orgLinks[@orgLinks.length-1]
+
+    showChildsOrg: (org)->
+        @orgLinks.push(org)
+        @currentOrgs = org
+    setHeigher: (collection, index)->
+        return if index == 0
+        temp = collection[index]
+        collection[index] = collection[index-1]
+        collection[index-1] = temp
+    setLower: (collection, index)->
+        return if index >= collection.length-1
+        temp = collection[index]
+        collection[index] = collection[index+1]
+        collection[index+1] = temp
+
+    changeOrder: ()->
+        promise = @http.get('/api/departments/change_logs')
+        # promise.then onSuccess
+
+
+
+
+    
+
+
+
 app.config(Route)
+app.controller('PersonnelSort', PersonnelSort)
