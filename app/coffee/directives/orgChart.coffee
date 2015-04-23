@@ -72,6 +72,8 @@ drawOrgChart = (root, options) ->
     linkWidth             = options.linkWidth
     rectBorderRadius      = options.rectBorderRadius
     borderWidth           = options.borderWidth
+    rectBgColor           = options.rectBgColor
+    selectColor           = options.selectColor
 
     computeLayerMaxLength = (root) ->
         length_group = _.countBy root.children, (org) -> return org.nature.name
@@ -83,7 +85,7 @@ drawOrgChart = (root, options) ->
         nodes = tree.nodes(root)
         nodes.forEach (d) ->
             branch = nature_type_order.indexOf(d.nature.name) + 1
-            d.y = d.depth*(rectHeight + rectVerticalSpacing)
+            d.y = branch*(rectHeight + rectVerticalSpacing)
         grouped_org = _.groupBy root.children, (org) -> return org.nature.name
         grouped_org['root'] = [root]
 
@@ -108,7 +110,7 @@ drawOrgChart = (root, options) ->
                      M#{root.x+ rectWidth/2} #{root.y+rectHeight}
                      L#{root.x + rectWidth/2} #{d.y - rectSpacing/2}
                      L#{d.x + rectWidth/2} #{d.y - rectSpacing/2}
-                     L#{d.x + rectWidth/2} #{d.x + rectWidth/2} #{d.y}
+                     L#{d.x + rectWidth/2} #{d.y}
                     """
                 .attr("stroke", linkColor)
                 .attr("stroke-width", linkWidth)
@@ -120,7 +122,9 @@ drawOrgChart = (root, options) ->
                 .enter()
                 .append("g")
                 .style("cursor", "pointer")
-                .on 'click', () -> #TODO
+                .on 'click', (d,i) ->   #To Do:
+                    d3.select(this)
+                        .classed('node active',true)
 
             nodeEnter.append("rect")
                 .attr("class", "chart-box")
@@ -144,10 +148,7 @@ drawOrgChart = (root, options) ->
                 .attr "y", (d) -> d.y + rectHeight/2
                 .text (d) -> d.name
 
-
-
-
-        svg.attr("width",rectWidth*layerMaxLength + rectSpacing*(layerMaxLength - 1) + 140)
+        svg.attr("width",rectWidth*layerMaxLength + rectSpacing*(layerMaxLength - 1) + 40)
             .attr("height",(rectHeight + rectSpacing)*4)
         tree.size([rectWidth*layerMaxLength + rectSpacing*(layerMaxLength - 1) + 40,(rectHeight + rectSpacing)*3+40])
 
@@ -156,6 +157,7 @@ drawOrgChart = (root, options) ->
     layerMaxLength = computeLayerMaxLength(root)
     tree = d3.layout.tree()
     svg = d3.select(container).append('svg')
+    nodes = nodesDecorator(root, tree)
     draw(svg, tree, nodes, layerMaxLength, root)
 
 
@@ -166,14 +168,98 @@ drawOrgChart = (root, options) ->
 
 
 
-drawTreeChart = ->
-    # // compute leaf size 树的宽度与叶子节点个数线性相关
-    # // compute canvas h w
-    # // compute tree h w
-    # // 篡改tree插件生成的Y坐标
-    drawPath = ->
-    drawReat = ->
 
+
+drawTreeChart = (root, options) ->
+    container             = options.container
+    rectHeight            = options.rectHeight || 180
+    rectWidth             = options.rectWidth || 36
+    rectVerticalSpacing   = options.rectVerticalSpacing
+    rectHorizontalSpacing = options.rectHorizontalSpacing
+    linkColor             = options.linkColor
+    linkWidth             = options.linkWidth
+    rectBorderRadius      = options.rectBorderRadius
+    borderWidth           = options.borderWidth
+    # // compute leaf size 树的宽度与叶子节点个数线性相关
+    computeLayerMaxLength = (source) ->
+        leaf = 0
+        countLeaf(source)
+        countLeaf = (source) ->
+            if source.children
+                source.children.forEach(countLeaf)
+            else if source._children
+                source._children.forEach(countLeaf)
+            else
+                leaf++
+        return leaf
+    # // 篡改tree插件生成的Y坐标
+    nodesDecorator = (root, tree) ->
+        nodes = tree.nodes(root)
+        nodes.forEach (d) ->
+            d.y = d.depth*(rectHeight + rectVerticalSpacing)
+        return nodes
+
+    #  绘制子机构树
+    draw =  (svg, tree, nodes,layerMaxLength, root) ->
+
+        drawPath = ->
+            svg.selectAll("path")
+                .data(nodes)
+                .enter()
+                .append("path")
+                .attr "d", (d, i) ->
+                    """
+                     M#{d.x} #{d.y}
+                     L#{d.x} #{d.y - rectSpacing/2}
+                     L#{d.parent.x} #{d.y - rectSpacing/2}
+                     L#{d.parent.x} #{d.parent.y+rectHeight}
+                    """
+                .attr("stroke", linkColor)
+                .attr("stroke-width", linkWidth)
+                .attr("fill", "transparent")
+
+        drawRect = ->
+
+            nodeEnter = svg.selectAll("g.node")
+                .data(nodes)
+                .enter()
+                .append("g")
+                .style("cursor","pointer")
+                .on "click", () -> #ToDo
+
+            nodeEnter.append("rect")
+                .attr("class","chart-box")
+                .attr("width",rectWidth)
+                .attr("height",rectHeight)
+                .attr "x", (d) ->
+                    return d.x - rectWidth/2
+                .attr "y", (d) ->
+                    return d.y
+                .attr("rx",rectBorderRadius)
+                .attr("ry",rectBorderRadius)
+                .attr("stroke",linkColor)
+                .attr("stroke-width",borderWidth)
+
+            nodeEnter.append("text")
+                .attr("class","orgchart-text")
+                .attr("text-anchor", "middle")
+                .attr("glyph-orientation-vertical", 0)
+                .attr("writing-mode", "tb")
+                .style("font-size", "12px")
+                .attr "x", (d) -> d.x
+                .attr "y", (d) -> d.y + rectHeight/2
+                .text (d) -> d.name
+            # // compute canvas h w
+        svg.attr("width",rectWidth*layerMaxLength + rectSpacing*(layerMaxLength - 1) + 40)
+            .attr("height",(rectHeight + rectSpacing)*3)
+        tree.size([rectWidth*layerMaxLength + rectSpacing*(layerMaxLength - 1) + 40,(rectHeight + rectSpacing)*3+40])
+
+    #方法调用
+    layerMaxLength = computeLayerMaxLength(root)
+    tree = d3.layout.tree()
+    svg = d3.select(container).append('svg')
+    nodes = nodesDecorator(root, tree)
+    draw(svg, tree, nodes, layerMaxLength, root)
 companyOrgnizationArchitectureLine = ->
 computeCompanyOrgReact = ->
 
