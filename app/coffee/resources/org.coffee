@@ -82,7 +82,7 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
         if ttl == 0
             initalArr.join(">")
         else
-            if ( this.parentId || this.parent_id ) && this.depth > 2
+            if ( this.parentId || this.parent_id ) && this.xdepth > 2
                 parentDep = find DEPARTMENTS, 'id', this.parentId || this.parent_id
                 if !parentDep
                     throw new Error("机构数据结构错误 机构#{this.name}：#{this.id} 找不到parent #{this.parentId} 的机构")
@@ -164,14 +164,14 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
                     allOrgs =  @$wrap()
                     cachedIndexOrgs = cacheIndex(allOrgs)
                     rootSerialNumber = org.serialNumber
-                    rootDepth = org.depth
+                    rootDepth = org.xdepth
 
                     isModified = false  #当前组织机构树是否被修改过
 
                     treeData = _.filter cachedIndexOrgs, (orgItem) ->
                         throw Error('serial number if required') if not orgItem.serial_number
                         #tree 数据深度不能超过 DEPTH
-                        return false if orgItem.depth - rootDepth > DEPTH
+                        return false if orgItem.xdepth - rootDepth > DEPTH
 
                         isChild = _.str.startsWith(orgItem.serial_number,rootSerialNumber) #子机构的serialNumber number 前缀和父机构相同
                         # isModified = true if isChild and IneffectiveOrg(orgItem)

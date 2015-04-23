@@ -137,7 +137,7 @@ class OrgsCtrl extends nb.Controller
 
 
     constructor: (@orgs, @http, @params, @state, @scope, @rootScope, @Evt)->
-        @treeRootOrg = _.find @orgs, (org) -> org.depth == 1 # 当前树的顶级节点
+        @treeRootOrg = _.find @orgs, (org) -> org.xdepth == 1 # 当前树的顶级节点
 
 
         @tree = null    # tree化的 orgs 数据
@@ -154,13 +154,13 @@ class OrgsCtrl extends nb.Controller
     #     rootScope = @rootScope
     #     @orgs = @Org.$collection().$fetch({'edit_mode': @eidtMode})
     #         .$then (orgs) ->
-    #             treeRootOrg = _.find orgs, (org) -> org.depth == 1
+    #             treeRootOrg = _.find orgs, (org) -> org.xdepth == 1
     #             self.buildTree(treeRootOrg)
     #             self.treeRootOrg = treeRootOrg
 
 
     buildTree: (org = @treeRootOrg, depth = 9)->
-        depth = 1 if org.depth == 1 #如果是顶级节点 则只显示一级
+        depth = 1 if org.xdepth == 1 #如果是顶级节点 则只显示一级
         @treeRootOrg = org
         @tree = @orgs.treeful(org, depth)
         #在orgCtrl中会监听该值得变化，用于更新右侧信息
@@ -169,7 +169,7 @@ class OrgsCtrl extends nb.Controller
     refreshTree: () ->
         return unless @treeRootOrg
         depth = 9
-        depth = 1 if @treeRootOrg.depth == 1 #如果是顶级节点 则只显示一级
+        depth = 1 if @treeRootOrg.xdepth == 1 #如果是顶级节点 则只显示一级
 
         @tree = @orgs.treeful(@treeRootOrg, depth)
         @currentOrg = @treeRootOrg
@@ -205,7 +205,7 @@ class OrgsCtrl extends nb.Controller
         @orgs.$refresh({'edit_mode': true})
 
     rootTree: () ->
-        treeRootOrg = _.find @orgs, (org) -> org.depth == 1
+        treeRootOrg = _.find @orgs, (org) -> org.xdepth == 1
         @buildTree(treeRootOrg)
 
     initialHistoryData: ->
