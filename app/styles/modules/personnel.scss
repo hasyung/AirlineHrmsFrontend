@@ -24,6 +24,20 @@
                 height: 100%;
                 width: 100%;
             }
+            .edit-icon-container{
+                background-color: #f44e4c;
+                width: 24px;
+                height: 24px;
+                border-radius: 12px;
+                position: absolute;
+                color: #fff;
+                font-size: 18px;
+                padding-left: 4px;
+                left: 160px;
+                top: 130px;
+                cursor: pointer;
+            }
+
         }
 
         h3 {
@@ -38,6 +52,7 @@
             font-size: $font-size-md;
             text-align: center;
         }
+            
     }
 
     .personnel-info-list {
