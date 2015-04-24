@@ -251,7 +251,7 @@ class NbSearchCtrl
             (res, cur) ->
                 predicate = cur.selected
                 value = predicate.getter(predicate.block.scope)
-                res[predicate.key] = value  if value && !_.str.isBlank(value)
+                res[predicate.key] = value  if value && !s.isBlank(value)
                 return res
             , {})
 

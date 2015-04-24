@@ -201,7 +201,7 @@ function BreadcrumbDirective($interpolate, $breadcrumb, $rootScope) {
                 scope.steps = [];
 
 
-                var startsWith = _.str.startsWith
+                var startsWith = s.startsWith
 
                 function nestedStates(steps) {
                     var lastStep = _.last(scope.steps)

@@ -180,6 +180,8 @@ class OrgsCtrl extends nb.Controller
         #数据入口不止一个，需要解决
         @orgs.$refresh({edit_mode: @eidtMode}).$then () ->
             self.buildTree()
+    queryMatchedOrg: (text) ->
+        @primaryOrgs.filter (org) -> s.include(org.name, text)
 
     searchOrgChart: (org) ->
         @currentOrg = _.find(@orgs, {id: org.id})

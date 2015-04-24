@@ -79,7 +79,7 @@ paths =
     ]
     vendorJsLibs: [
         'deps/lodash/lodash.js'
-        'deps/underscore.string/lib/underscore.string.js'
+        'deps/underscore.string/dist/underscore.string.js'
         'deps/raphael/raphael.js'
         'deps/store.js/store.js'
         'deps/moment/min/moment.min.js'
