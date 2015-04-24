@@ -157,6 +157,23 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
 
 
             Collection:
+
+                queryPrimaryOrg: (org) ->
+                    self = @
+                    PRIMARY_ORG_DEPTH = 2 #一正机构 深度
+                    depth = org.xdepth
+                    accumulator = org
+
+                    parentOrg = (childOrgId) ->
+                        _.find self, (item) -> item.id == childOrgId
+
+                    if depth <= PRIMARY_ORG_DEPTH
+                        return org
+                    else
+                        diff = depth - PRIMARY_ORG_DEPTH
+                        accumulator = parentOrg(accumulator.parentId) while diff-- > 0
+                    return accumulator
+
                 treeful: (org, DEPTH = 4) ->
                     IneffectiveOrg = (org)-> #系统还有未生效的组织机构
                         return /inactive$/.test org.status
@@ -203,7 +220,6 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
                     org = this.$scope.$build(org)
                     org.parentId = this.$pk
                     org.$save().$then onSuccess
-
 
                 transfer: (to_dep_id) -> #划转机构 {to_department_id: to_id}
                     self = @

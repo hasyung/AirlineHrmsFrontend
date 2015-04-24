@@ -161,7 +161,7 @@ class OrgsCtrl extends nb.Controller
 
     buildTree: (org = @treeRootOrg, depth = 9)->
         depth = 1 if org.xdepth == 1 #如果是顶级节点 则只显示一级
-        @treeRootOrg = org
+        # @treeRootOrg = org
         @tree = @orgs.treeful(org, depth)
         #在orgCtrl中会监听该值得变化，用于更新右侧信息
         @currentOrg = org
@@ -185,6 +185,7 @@ class OrgsCtrl extends nb.Controller
 
     selectOrgChart: (org) ->
         @currentOrg = _.find(@orgs, {id: org.id})
+        @treeRootOrg = @orgs.queryPrimaryOrg(@currentOrg)
         @buildTree(@currentOrg)
 
     onItemClick: (evt) -> #机构树 点击事件处理 重构？
