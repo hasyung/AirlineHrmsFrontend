@@ -255,6 +255,36 @@
             background-image: url('../../../images/personnel/3.png');
         }
     }
+    .sm-avator-area {
+        border-radius: 50%;
+        height: 72px;
+        width: 72px;
+        overflow: hidden;
+
+        img {
+            height: 100%;
+            width: 100%;
+        }
+    }
+    .employee-info {
+        padding-top: 10px;
+        margin-left: 20px;
+
+        .employee-name {
+            font-size: 18px;
+            color: #23b7e5;
+        }
+
+        .employee-others-info{
+            margin-top: 5px;
+            font-size: 15px;
+            color: rgba(0,0,0,0.54);
+
+            .last{
+                margin-left: 10px;
+            }
+        }
+    }
 
 }
 
