@@ -1,8 +1,8 @@
 section(layout="row" flex)
     md-content(layout="column" flex style="background-color: #f0f3f4;")
         .org-chart-top(ng-class="{'org-chart-history': ctrl.isHistory}")
-                h1 {{ctrl.treeRootOrg.$cmStatus.name}}组织机构图
-                h2(ng-show="ctrl.isHistory") {{ctrl.orgs.$metadata.created_at | date : 'yyyy年MM月dd日'}}— {{ctrl.orgs.$metadata.title}}
+            h1 {{ctrl.treeRootOrg.$cmStatus.name}}组织机构图
+            h2(ng-show="ctrl.isHistory") {{ctrl.orgs.$metadata.created_at | date : 'yyyy年MM月dd日'}}— {{ctrl.orgs.$metadata.title}}
             .org-chart-search
                 md-autocomplete(
                         md-items="org in ctrl.queryMatchedOrg(ctrl.searchText)"
@@ -12,7 +12,7 @@ section(layout="row" flex)
                         md-min-length="0"
                         placeholder="想查找啥机构呢？"
                         md-selected-item-change="ctrl.selectOrgChart(org)"
-                        md-delay="500"
+                        md-delay="200"
                         md-autoselect
                         md-autofocus
                         md-no-cache="true"

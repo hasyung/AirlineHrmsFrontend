@@ -108,8 +108,9 @@
     .org-chart-search {
         margin-left: 40px;
         position: absolute;
-        left: 10px;
-        width: 200px;
+        top: 25px;
+        width: 300px;
+        z-index: 1;
     }
 
     .top-btn-group {
