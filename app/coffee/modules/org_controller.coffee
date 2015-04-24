@@ -183,7 +183,7 @@ class OrgsCtrl extends nb.Controller
     queryMatchedOrg: (text) ->
         @primaryOrgs.filter (org) -> s.include(org.name, text)
 
-    searchOrgChart: (org) ->
+    selectOrgChart: (org) ->
         @currentOrg = _.find(@orgs, {id: org.id})
         @buildTree(@currentOrg)
 
