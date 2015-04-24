@@ -39,7 +39,7 @@ orgChartDirective = ->
 
         destroyChart = -> d3.select(elem.find('svg')[0]).remove()
 
-        # scope.$watch 'treeData', (newVal) -> render(newVal, options)
+        scope.$watch 'orgChartData', (newVal) -> render(newVal, options) if newVal
         scope.$on '$destroy', () -> destroyChart()
         render(scope.orgChartData, options)
 
@@ -55,7 +55,7 @@ orgChartDirective = ->
 render = (root, options) ->
     container = options.container
     # cleanup
-    d3.select(container.querySelector('svg')).selectAll("*").remove()
+    d3.select(container.querySelector('svg')).remove()
 
     if root.xdepth == 1
         drawOrgChart(root, options)
@@ -195,20 +195,16 @@ drawTreeChart = (root, options) ->
     rectBorderRadius      = options.rectBorderRadius
     borderWidth           = options.borderWidth
     duration              = options.duration || 750
-    i                     = 0
+    leaf                  = 0
     # compute leaf size 树的宽度与叶子节点个数线性相关
-
     computeLayerMaxLength = (source) ->
-        leaf = 0
-        countLeaf(source)
-        countLeaf = (source) ->
-            if source.children
-                source.children.forEach(countLeaf)
-            else if source._children
-                source._children.forEach(countLeaf)
-            else
-                leaf++
-        return leaf
+        if source.children
+            source.children.forEach(computeLayerMaxLength)
+        else if source._children
+            source._children.forEach(computeLayerMaxLength)
+        else
+            leaf++
+
     # 篡改tree插件生成的Y坐标
     nodesDecorator = (root, tree) ->
         nodes = tree.nodes(root)
@@ -225,12 +221,13 @@ drawTreeChart = (root, options) ->
                 .enter()
                 .append("path")
                 .attr "d", (d, i) ->
-                    """
-                     M#{d.x} #{d.y}
-                     L#{d.x} #{d.y - rectVerticalSpacing/2}
-                     L#{d.parent.x} #{d.y - rectHorizontalSpacing/2}
-                     L#{d.parent.x} #{d.parent.y+rectHeight}
-                    """
+                    if d.depth != 0
+                        return    """
+                             M#{d.x} #{d.y}
+                             L#{d.x} #{d.y - rectVerticalSpacing/2}
+                             L#{d.parent.x} #{d.y - rectVerticalSpacing/2}
+                             L#{d.parent.x} #{d.parent.y+rectHeight}
+                            """
                 .attr("stroke", linkColor)
                 .attr("stroke-width", linkWidth)
                 .attr("fill", "transparent")
@@ -239,7 +236,6 @@ drawTreeChart = (root, options) ->
 
             nodeEnter = svg.selectAll("g.node")
                 .data(nodes)
-                .filter (nodes) -> nodes.isOpen = true
                 .enter()
                 .append("g")
                 .attr("class","node")
@@ -269,62 +265,20 @@ drawTreeChart = (root, options) ->
                 .attr "y", (d) -> d.y + rectHeight/2
                 .text (d) -> d.name
 
-        # updateTreeChart = (source) ->
-        #     computeChildren = (source) ->
-        #         leaf = 0
-        #         countLeaf(source)
-        #         countLeaf = (source) ->
-        #             if source.children
-        #                 source.children.forEach(countLeaf)
-        #             else
-        #                 leaf++
-        #         return leaf
-
-
-        #     if source.children
-        #         source._children = source.children
-        #         source.children = null
-        #     else
-        #         source.children = source._children
-        #         source._children = null
-
-        #     leafLen = computeChildren(root)
-
-
-
-        #     updateLink = (nodes) ->
-        #         link = svg.selectAll("path")
-        #             .data(nodes, (d) -> return d.id || (d.id = ++i))
-
-        #         linkEnter = link.enter()
-        #             .append("path")
-        #             .attr("class","link")
-
-
-
-
-
-            svg.transition()
-                .duration(duration)
-                .attr("width",rectWidth*leafLen + rectHorizontalSpacing*(leafLen - 1) + 40)
-                .attr("height",(rectVerticalSpacing + rectHeight)*3)
-            tree.size([rectWidth*leafLen + rectHorizontalSpacing*(leafLen - 1) + 40,(rectVerticalSpacing + rectHeight)*3+40])
-
-
-
-
         # // compute canvas h w
-        svg.attr("width",rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + 40)
-            .attr("height",(rectHeight + rectVerticalSpacing)*3)
-        tree.size([rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + 40,(rectHeight + rectVerticalSpacing)*3+40])
-
         drawPath()
         drawRect()
 
     #方法调用
-    layerMaxLength = computeLayerMaxLength(root)
+    computeLayerMaxLength(root)
+    layerMaxLength = leaf
     tree = d3.layout.tree()
     svg = d3.select(container).append('svg')
+
+    svg.attr("width",rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + 40)
+        .attr("height",(rectHeight + rectVerticalSpacing)*3)
+    tree.size([rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + 40,(rectHeight + rectVerticalSpacing)*3+40])
+
     nodes = nodesDecorator(root, tree)
     draw(svg, tree, nodes, layerMaxLength, root)
 
