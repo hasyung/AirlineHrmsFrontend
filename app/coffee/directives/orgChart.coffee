@@ -37,7 +37,6 @@ orgChartDirective = ->
 
         # scope.$watch 'treeData', (newVal) -> render(newVal, options)
         scope.$on '$destroy', () -> destroyChart()
-
         render(scope.orgChartData, options)
 
     return {
@@ -178,14 +177,6 @@ drawOrgChart = (root, options) ->
 
 
 
-
-
-
-
-
-
-
-
 drawTreeChart = (root, options) ->
     container             = options.container
     rectHeight            = options.rectHeight || 180
@@ -196,7 +187,9 @@ drawTreeChart = (root, options) ->
     linkWidth             = options.linkWidth
     rectBorderRadius      = options.rectBorderRadius
     borderWidth           = options.borderWidth
-    # // compute leaf size 树的宽度与叶子节点个数线性相关
+    duration              = options.duration || 750
+    i                     = 0
+    # compute leaf size 树的宽度与叶子节点个数线性相关
     computeLayerMaxLength = (source) ->
         leaf = 0
         countLeaf(source)
@@ -208,7 +201,7 @@ drawTreeChart = (root, options) ->
             else
                 leaf++
         return leaf
-    # // 篡改tree插件生成的Y坐标
+    # 篡改tree插件生成的Y坐标
     nodesDecorator = (root, tree) ->
         nodes = tree.nodes(root)
         nodes.forEach (d) ->
@@ -238,10 +231,12 @@ drawTreeChart = (root, options) ->
 
             nodeEnter = svg.selectAll("g.node")
                 .data(nodes)
+                .filter (nodes) -> nodes.isOpen = true
                 .enter()
                 .append("g")
+                .attr("class","node")
                 .style("cursor","pointer")
-                .on "click", () -> #ToDo
+                .on "click", () -> #TODO
 
             nodeEnter.append("rect")
                 .attr("class","chart-box")
@@ -265,7 +260,82 @@ drawTreeChart = (root, options) ->
                 .attr "x", (d) -> d.x
                 .attr "y", (d) -> d.y + rectHeight/2
                 .text (d) -> d.name
-            # // compute canvas h w
+
+        updateTreeChart = (source) ->
+            computeChildren = (source) ->
+                leaf = 0
+                countLeaf(source)
+                countLeaf = (source) ->
+                    if source.children
+                        source.children.forEach(countLeaf)
+                    else
+                        leaf++
+                return leaf
+
+
+            if source.children
+                source._children = source.children
+                source.children = null
+            else
+                source.children = source._children
+                source._children = null
+
+            leafLen = computeChildren(root)
+
+
+
+            updateLink = (nodes) ->
+                link = svg.selectAll("path")
+                    .data(nodes, (d) -> return d.id || (d.id = ++i))
+
+                linkEnter = link.enter()
+                    .append("path")
+                    .attr("class","link")
+                    .attr()
+
+                # var linkEnter = link.enter().append("path")
+                #     .attr("class", "link")
+                #     .attr("d",function(d,i){
+                #         if(d.depth != 0){
+                #             return "M"+ source.x0+" "+ (source.y0+rectHeight)+" "+"L"+source.x0+" "+ (source.y0+rectHeight)+" "+"L"+ source.x0+" "+(source.y0+rectHeight)+" "+"L"+ source.x0+" "+(source.y0+rectHeight);
+                #         }
+                #     })
+                #     .attr("stroke",linkColor)
+                #     .attr("stroke-width",linkWidth)
+                #     .attr("fill","transparent");
+
+                # var linkUpdate = link.transition()
+                #     .duration(duration)
+                #     .attr("d",function(d,i){
+                #         if(d.depth != 0){
+                #             return "M"+ d.x+" "+ d.y+" "+"L"+d.x+" "+ (d.y - rectSpacing/2)+" "+"L"+ d.parent.x+" "+(d.y - rectSpacing/2)+" "+"L"+ d.parent.x+" "+(d.parent.y+rectHeight);
+                #         }
+                #     });
+
+                # var linkExit = link.exit()
+                #     .transition()
+                #     .duration(duration)
+                #     .attr("d",function(d,i){
+                #         if(d.depth != 0){
+                #             return "M"+ source.x+" "+ (source.y+rectHeight)+" "+"L"+source.x+" "+ (source.y+rectHeight)+" "+"L"+ source.x+" "+(source.y+rectHeight)+" "+"L"+ source.x+" "+(source.y+rectHeight);
+                #         }
+                #     })
+                #     .remove();
+
+
+
+
+
+            svg.transition()
+                .duration(duration)
+                .attr("width",rectWidth*leafLen + rectHorizontalSpacing*(leafLen - 1) + 40)
+                .attr("height",(rectVerticalSpacing + rectHeight)*3)
+            tree.size([rectWidth*leafLen + rectHorizontalSpacing*(leafLen - 1) + 40,(rectVerticalSpacing + rectHeight)*3+40])
+
+
+
+
+        # // compute canvas h w
         svg.attr("width",rectWidth*layerMaxLength + rectSpacing*(layerMaxLength - 1) + 40)
             .attr("height",(rectHeight + rectSpacing)*3)
         tree.size([rectWidth*layerMaxLength + rectSpacing*(layerMaxLength - 1) + 40,(rectHeight + rectSpacing)*3+40])
@@ -279,6 +349,9 @@ drawTreeChart = (root, options) ->
     svg = d3.select(container).append('svg')
     nodes = nodesDecorator(root, tree)
     draw(svg, tree, nodes, layerMaxLength, root)
+
+
+
 
 companyOrgnizationArchitectureLine = ->
 computeCompanyOrgRect = ->
