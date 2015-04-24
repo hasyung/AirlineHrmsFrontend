@@ -2,11 +2,15 @@ section(layout="row" flex)
     md-content(layout="column" flex style="background-color: #f0f3f4;")
         .org-top-search
             md-autocomplete(
-                    md-items="org in ctrl.orgs"
-                    md-item-text="org.fullName"
+                    md-items="org in ::ctrl.primaryOrgs"
+                    md-item-text="org.name"
+                    md-selected-item="org"
                     md-min-length="2"
                     placeholder="想查找啥机构呢？"
-                    md-selected-item-change=""
+                    md-selected-item-change="ctrl.searchOrgChart(org)"
+                    md-delay="500"
+                    md-autoselect
+                    md-autofocus
                 )
                 span(md-highlight-text="" md-highlight-flags="^i") {{org.fullName}}
         .org-chart-top(ng-class="{'org-chart-history': ctrl.isHistory}")
@@ -26,7 +30,7 @@ section(layout="row" flex)
                 //- loading-btn.red(ng-click="ctrl.openHistoryPanel()" btn-loading-type="contract-overlay" btn-text="测试loading")
 
         md-content.org-chart-window(id="org_chart_warpper" flex scroll-center style="background-color: #f0f3f4;")
-            div.svg-wrapper(org-chart org-chart-data="ctrl.tree.data")
+            div.svg-wrapper(org-chart org-chart-data="ctrl.tree.data" on-item-click="ctrl.onItemClick(evt)")
 
         //- md-content.org-chart-window(ng-if="ctrl.treeRootOrg.depth == 1" style="height: 700px")
         //-     div(style="width: 100%;background-image: url('/images/org_bg.jpg');height: 100%;background-position: center center;background-repeat: no-repeat; background-color: #f0f3f4;")

@@ -15,22 +15,26 @@ orgChartDirective = ->
 
         # onItemClick = ->
         #     scope.$apply -> scope.onItemClick()
+        clickHandler = (evt) ->
+            scope.$apply ->
+                scope.onItemClick(evt:evt)
+
 
         options = {
             container: elem[0]
             rectBgColor: '#dfe5e7'  #树节点的正常状态的颜色
             hasChildColor: '#C9D4D7'  #还有为展开的子节点的节点的颜色
             rectWidth: 36  #节点宽度
-            rectHeight: 180  #节点高度
+            rectHeight: 160  #节点高度
             rectBorderRadius: 8  #节点方块的圆角半径
             borderWidth: 1  #节点方块的边框线宽
             rectVerticalSpacing: 50  #节点方块之间的垂直间距
-            rectHorizontalSpacing: 50 #节点之间水平间距
+            rectHorizontalSpacing: 30 #节点之间水平间距
             linkColor: '#c4cfd3'  #连接线的颜色
             linkWidth: '3'  #连接线的线宽
             selectColor: '#90d7ff'  #节点方块被选中状态的颜色
             duration: 750  #动画效果的时长
-            # onItemClick: scope.onItemClick
+            clickHandler: clickHandler
         }
 
         destroyChart = -> d3.select(elem.find('svg')[0]).remove()
@@ -79,6 +83,7 @@ drawOrgChart = (root, options) ->
     borderWidth           = options.borderWidth
     rectBgColor           = options.rectBgColor
     selectColor           = options.selectColor
+    rectClickHandler      = options.clickHandler
 
     computeLayerMaxLength = (root) ->
         length_group = _.countBy root.children, (org) -> return org.nature.name
@@ -99,7 +104,8 @@ drawOrgChart = (root, options) ->
             # 计算根节点、奇数列 正确位置
             fixed_odd_position = if typed_orgs.length%2 !=0 && name == 'root' then typed_orgs.length + 1 else typed_orgs.length
             typed_orgs.forEach (d, i) ->
-                d.x = ((rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + 40)/2 - ((fixed_odd_position - 1)*rectHorizontalSpacing +
+                d.x = ((rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + 40)/2 -
+                    ((fixed_odd_position - 1)*rectHorizontalSpacing +
                     fixed_odd_position*rectWidth)/2) + i*(rectHorizontalSpacing + rectWidth)
 
         return nodes
@@ -134,6 +140,7 @@ drawOrgChart = (root, options) ->
                     active_node.classed("active",false)
                     d3.select(this).classed("active",true)
                     active_node = d3.select(this)
+                    rectClickHandler(target: d.id)
 
 
             nodeEnter.append("rect")
@@ -190,6 +197,7 @@ drawTreeChart = (root, options) ->
     duration              = options.duration || 750
     i                     = 0
     # compute leaf size 树的宽度与叶子节点个数线性相关
+
     computeLayerMaxLength = (source) ->
         leaf = 0
         countLeaf(source)
@@ -219,8 +227,8 @@ drawTreeChart = (root, options) ->
                 .attr "d", (d, i) ->
                     """
                      M#{d.x} #{d.y}
-                     L#{d.x} #{d.y - rectSpacing/2}
-                     L#{d.parent.x} #{d.y - rectSpacing/2}
+                     L#{d.x} #{d.y - rectVerticalSpacing/2}
+                     L#{d.parent.x} #{d.y - rectHorizontalSpacing/2}
                      L#{d.parent.x} #{d.parent.y+rectHeight}
                     """
                 .attr("stroke", linkColor)
@@ -236,7 +244,7 @@ drawTreeChart = (root, options) ->
                 .append("g")
                 .attr("class","node")
                 .style("cursor","pointer")
-                .on "click", () -> #TODO
+                .on "click", (d) -> rectClickHandler(target: d.id)
 
             nodeEnter.append("rect")
                 .attr("class","chart-box")
@@ -261,66 +269,36 @@ drawTreeChart = (root, options) ->
                 .attr "y", (d) -> d.y + rectHeight/2
                 .text (d) -> d.name
 
-        updateTreeChart = (source) ->
-            computeChildren = (source) ->
-                leaf = 0
-                countLeaf(source)
-                countLeaf = (source) ->
-                    if source.children
-                        source.children.forEach(countLeaf)
-                    else
-                        leaf++
-                return leaf
+        # updateTreeChart = (source) ->
+        #     computeChildren = (source) ->
+        #         leaf = 0
+        #         countLeaf(source)
+        #         countLeaf = (source) ->
+        #             if source.children
+        #                 source.children.forEach(countLeaf)
+        #             else
+        #                 leaf++
+        #         return leaf
 
 
-            if source.children
-                source._children = source.children
-                source.children = null
-            else
-                source.children = source._children
-                source._children = null
+        #     if source.children
+        #         source._children = source.children
+        #         source.children = null
+        #     else
+        #         source.children = source._children
+        #         source._children = null
 
-            leafLen = computeChildren(root)
+        #     leafLen = computeChildren(root)
 
 
 
-            updateLink = (nodes) ->
-                link = svg.selectAll("path")
-                    .data(nodes, (d) -> return d.id || (d.id = ++i))
+        #     updateLink = (nodes) ->
+        #         link = svg.selectAll("path")
+        #             .data(nodes, (d) -> return d.id || (d.id = ++i))
 
-                linkEnter = link.enter()
-                    .append("path")
-                    .attr("class","link")
-                    .attr()
-
-                # var linkEnter = link.enter().append("path")
-                #     .attr("class", "link")
-                #     .attr("d",function(d,i){
-                #         if(d.depth != 0){
-                #             return "M"+ source.x0+" "+ (source.y0+rectHeight)+" "+"L"+source.x0+" "+ (source.y0+rectHeight)+" "+"L"+ source.x0+" "+(source.y0+rectHeight)+" "+"L"+ source.x0+" "+(source.y0+rectHeight);
-                #         }
-                #     })
-                #     .attr("stroke",linkColor)
-                #     .attr("stroke-width",linkWidth)
-                #     .attr("fill","transparent");
-
-                # var linkUpdate = link.transition()
-                #     .duration(duration)
-                #     .attr("d",function(d,i){
-                #         if(d.depth != 0){
-                #             return "M"+ d.x+" "+ d.y+" "+"L"+d.x+" "+ (d.y - rectSpacing/2)+" "+"L"+ d.parent.x+" "+(d.y - rectSpacing/2)+" "+"L"+ d.parent.x+" "+(d.parent.y+rectHeight);
-                #         }
-                #     });
-
-                # var linkExit = link.exit()
-                #     .transition()
-                #     .duration(duration)
-                #     .attr("d",function(d,i){
-                #         if(d.depth != 0){
-                #             return "M"+ source.x+" "+ (source.y+rectHeight)+" "+"L"+source.x+" "+ (source.y+rectHeight)+" "+"L"+ source.x+" "+(source.y+rectHeight)+" "+"L"+ source.x+" "+(source.y+rectHeight);
-                #         }
-                #     })
-                #     .remove();
+        #         linkEnter = link.enter()
+        #             .append("path")
+        #             .attr("class","link")
 
 
 
@@ -336,9 +314,9 @@ drawTreeChart = (root, options) ->
 
 
         # // compute canvas h w
-        svg.attr("width",rectWidth*layerMaxLength + rectSpacing*(layerMaxLength - 1) + 40)
-            .attr("height",(rectHeight + rectSpacing)*3)
-        tree.size([rectWidth*layerMaxLength + rectSpacing*(layerMaxLength - 1) + 40,(rectHeight + rectSpacing)*3+40])
+        svg.attr("width",rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + 40)
+            .attr("height",(rectHeight + rectVerticalSpacing)*3)
+        tree.size([rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + 40,(rectHeight + rectVerticalSpacing)*3+40])
 
         drawPath()
         drawRect()
@@ -349,13 +327,6 @@ drawTreeChart = (root, options) ->
     svg = d3.select(container).append('svg')
     nodes = nodesDecorator(root, tree)
     draw(svg, tree, nodes, layerMaxLength, root)
-
-
-
-
-companyOrgnizationArchitectureLine = ->
-computeCompanyOrgRect = ->
-
 
 app.directive('orgChart',[orgChartDirective])
 
