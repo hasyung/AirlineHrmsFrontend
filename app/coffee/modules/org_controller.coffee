@@ -138,7 +138,7 @@ class OrgsCtrl extends nb.Controller
 
     constructor: (@orgs, @http, @params, @state, @scope, @rootScope, @Evt)->
         @treeRootOrg = _.find @orgs, (org) -> org.xdepth == 1 # 当前树的顶级节点
-
+        @primaryOrgs = orgs.$asList (orgs) -> orgs.filter (org) -> org.xdepth <= 2
 
         @tree = null    # tree化的 orgs 数据
         @currentOrg = null
@@ -181,8 +181,12 @@ class OrgsCtrl extends nb.Controller
         @orgs.$refresh({edit_mode: @eidtMode}).$then () ->
             self.buildTree()
 
-    onItemClick: (evt, elem) -> #机构树 点击事件处理 重构？
-        orgId = elem.oc_id
+    searchOrgChart: (org) ->
+        @currentOrg = _.find(@orgs, {id: org.id})
+        @buildTree(@currentOrg)
+
+    onItemClick: (evt) -> #机构树 点击事件处理 重构？
+        orgId = evt.target
         @currentOrg = _.find(@orgs, {id: orgId})
 
     revert: (isConfirm) ->

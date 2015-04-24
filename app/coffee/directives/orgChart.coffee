@@ -15,22 +15,26 @@ orgChartDirective = ->
 
         # onItemClick = ->
         #     scope.$apply -> scope.onItemClick()
+        clickHandler = (evt) ->
+            scope.$apply ->
+                scope.onItemClick(evt:evt)
+
 
         options = {
             container: elem[0]
             rectBgColor: '#dfe5e7'  #树节点的正常状态的颜色
             hasChildColor: '#C9D4D7'  #还有为展开的子节点的节点的颜色
             rectWidth: 36  #节点宽度
-            rectHeight: 180  #节点高度
+            rectHeight: 160  #节点高度
             rectBorderRadius: 8  #节点方块的圆角半径
             borderWidth: 1  #节点方块的边框线宽
             rectVerticalSpacing: 50  #节点方块之间的垂直间距
-            rectHorizontalSpacing: 50 #节点之间水平间距
+            rectHorizontalSpacing: 30 #节点之间水平间距
             linkColor: '#c4cfd3'  #连接线的颜色
             linkWidth: '3'  #连接线的线宽
             selectColor: '#90d7ff'  #节点方块被选中状态的颜色
             duration: 750  #动画效果的时长
-            # onItemClick: scope.onItemClick
+            clickHandler: clickHandler
         }
 
         destroyChart = -> d3.select(elem.find('svg')[0]).remove()
@@ -80,6 +84,7 @@ drawOrgChart = (root, options) ->
     borderWidth           = options.borderWidth
     rectBgColor           = options.rectBgColor
     selectColor           = options.selectColor
+    rectClickHandler      = options.clickHandler
 
     computeLayerMaxLength = (root) ->
         length_group = _.countBy root.children, (org) -> return org.nature.name
@@ -100,7 +105,8 @@ drawOrgChart = (root, options) ->
             # 计算根节点、奇数列 正确位置
             fixed_odd_position = if typed_orgs.length%2 !=0 && name == 'root' then typed_orgs.length + 1 else typed_orgs.length
             typed_orgs.forEach (d, i) ->
-                d.x = ((rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + 40)/2 - ((fixed_odd_position - 1)*rectHorizontalSpacing +
+                d.x = ((rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + 40)/2 -
+                    ((fixed_odd_position - 1)*rectHorizontalSpacing +
                     fixed_odd_position*rectWidth)/2) + i*(rectHorizontalSpacing + rectWidth)
 
         return nodes
@@ -135,6 +141,7 @@ drawOrgChart = (root, options) ->
                     active_node.classed("active",false)
                     d3.select(this).classed("active",true)
                     active_node = d3.select(this)
+                    rectClickHandler(target: d.id)
 
 
             nodeEnter.append("rect")
@@ -196,6 +203,7 @@ drawTreeChart = (root, options) ->
     linkWidth             = options.linkWidth
     rectBorderRadius      = options.rectBorderRadius
     borderWidth           = options.borderWidth
+
     # // compute leaf size 树的宽度与叶子节点个数线性相关
     computeLayerMaxLength = (source) ->
         leaf = 0
@@ -241,7 +249,7 @@ drawTreeChart = (root, options) ->
                 .enter()
                 .append("g")
                 .style("cursor","pointer")
-                .on "click", () -> #ToDo
+                .on "click", (d) -> rectClickHandler(target: d.id)
 
             nodeEnter.append("rect")
                 .attr("class","chart-box")
@@ -279,10 +287,6 @@ drawTreeChart = (root, options) ->
     svg = d3.select(container).append('svg')
     nodes = nodesDecorator(root, tree)
     draw(svg, tree, nodes, layerMaxLength, root)
-
-companyOrgnizationArchitectureLine = ->
-computeCompanyOrgRect = ->
-
 
 app.directive('orgChart',[orgChartDirective])
 
