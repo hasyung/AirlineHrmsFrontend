@@ -185,6 +185,8 @@ drawOrgChart = (root, options) ->
 
 
 drawTreeChart = (root, options) ->
+    active_node = null
+
     container             = options.container
     rectHeight            = options.rectHeight || 180
     rectWidth             = options.rectWidth || 36
@@ -195,6 +197,7 @@ drawTreeChart = (root, options) ->
     rectBorderRadius      = options.rectBorderRadius
     borderWidth           = options.borderWidth
     duration              = options.duration || 750
+    rectClickHandler      = options.clickHandler
     leaf                  = 0
     # compute leaf size 树的宽度与叶子节点个数线性相关
     computeLayerMaxLength = (source) ->
@@ -240,7 +243,11 @@ drawTreeChart = (root, options) ->
                 .append("g")
                 .attr("class","node")
                 .style("cursor","pointer")
-                .on "click", (d) -> rectClickHandler(target: d.id)
+                .on "click", (d) ->
+                    active_node.classed("active",false)
+                    d3.select(this).classed("active",true)
+                    active_node = d3.select(this)
+                    rectClickHandler(target: d.id)
 
             nodeEnter.append("rect")
                 .attr("class","chart-box")
@@ -268,6 +275,7 @@ drawTreeChart = (root, options) ->
         # // compute canvas h w
         drawPath()
         drawRect()
+        active_node = d3.select(".node")
 
     #方法调用
     computeLayerMaxLength(root)
