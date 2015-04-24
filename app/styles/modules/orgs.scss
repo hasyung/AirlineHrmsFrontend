@@ -97,24 +97,34 @@
     }
 }
 
+
+
 .org-chart-top {
     margin: 0 20px;
     padding-top: 30px;
     position: relative;
     text-align: center;
-}
 
-.top-btn-group {
-    margin-right: 40px;
-    position: absolute;
-    right: 10px;
-    top: 20px;
-
-    .md-button {
-        display: inline-block;
-        float: right;
-        margin-left: 20px;
+    .org-chart-search {
+        margin-left: 40px;
+        position: absolute;
+        left: 10px;
+        width: 200px;
     }
+
+    .top-btn-group {
+        margin-right: 40px;
+        position: absolute;
+        right: 10px;
+        top: 20px;
+
+        .md-button {
+            display: inline-block;
+            float: right;
+            margin-left: 20px;
+        }
+    }
+
 }
 
 .bottom-btn-group {
