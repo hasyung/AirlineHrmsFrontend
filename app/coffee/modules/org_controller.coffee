@@ -181,7 +181,7 @@ class OrgsCtrl extends nb.Controller
         @orgs.$refresh({edit_mode: @eidtMode}).$then () ->
             self.buildTree()
     queryMatchedOrg: (text) ->
-        @primaryOrgs.filter (org) -> s.include(org.name, text)
+        @orgs.filter (org) -> s.include(org.fullName, text)
 
     selectOrgChart: (org) ->
         @currentOrg = _.find(@orgs, {id: org.id})

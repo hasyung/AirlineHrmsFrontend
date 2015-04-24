@@ -80,20 +80,14 @@ paths =
     vendorJsLibs: [
         'deps/lodash/lodash.js'
         'deps/underscore.string/dist/underscore.string.js'
-        'deps/raphael/raphael.js'
         'deps/store.js/store.js'
         'deps/moment/min/moment.min.js'
         'deps/jquery/dist/jquery.min.js'
         'deps/jqtree/tree.jquery.js'
-        'compat/vendor/d3.min.js'
+        'deps/d3/d3.js'
         #alert
         'deps/sweetalert/lib/sweet-alert.js'
 
-        #组织机构树
-        'compat/vendor/drag-on.js'
-        'compat/vendor/lib-gg-orgchart.js'
-        'deps/canvg/dist/canvg.bundle.js'
-        'deps/jspdf/dist/jspdf.min.js'
         #end
         'deps/angular/angular.js'
         # 'deps/angular-i18n/angular-locale_zh-cn.js'

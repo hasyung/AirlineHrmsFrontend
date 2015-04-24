@@ -6,7 +6,7 @@ section(layout="row" flex)
             .org-chart-search
                 md-autocomplete(
                         md-items="org in ctrl.queryMatchedOrg(ctrl.searchText)"
-                        md-item-text="org.name"
+                        md-item-text="org.fullName"
                         md-selected-item="org"
                         md-search-text="ctrl.searchText"
                         md-min-length="0"
