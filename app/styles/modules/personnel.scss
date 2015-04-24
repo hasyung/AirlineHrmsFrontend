@@ -357,6 +357,44 @@
         margin-left: 20px;
     }
 }
+.avator-edit-body{
+    .src-avator-container{
+        text-align: center;
+        padding-top: 140px;
+    }
+    .avator-preview{
+        width: 132px;
+        text-align: center;
+        height: 360px;
+        .avator-preview-item{
+            margin-top: 33px;
+        }
+        .big-avator{
+            img{
+                width: 110px;
+                height: 110px;
+                border-radius: 55px;
+            }
+
+        }
+        .mid-avator{
+            img{
+                width: 72px;
+                height: 72px;
+                border-radius: 36px;
+            }
+            
+        }
+        .sml-avator{
+            img{
+                width: 40px;
+                height: 40px;
+                border-radius: 20px;
+            }
+            
+        }
+    }
+}
 
 
 
