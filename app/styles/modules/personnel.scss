@@ -313,5 +313,40 @@
     }
 }
 
+//for org/positions/employee search
+.org-sort-container, .pos-sort-container{
+    padding: 5px;
+}
+.offset-header-text{
+    padding-left: 0;
+    .md-subheader-content{
+        border-left: 3px solid rgb(46, 55, 169);
+        padding-left: 10px;
+    }
+}
+.cust-content-toolbar{
+    background-color: #f6f8f8;
+    font-size: 26px;
+    padding-left: 15px;
+    line-height: 26px;
+    height: 28px;
+    i:hover{
+        cursor: pointer;
+    }
+}
+.org-sort-content{
+    border: 3px solid #f6f8f8;
+}
+.cust-list-item{
+    font-size: 14px;
+    padding: 5px 10px;
+    height: 45px;
+    overflow: hidden;
+    &.active{
+        background-color: #337ab7;
+        color: #fff;
+    }
+}
+
 
 

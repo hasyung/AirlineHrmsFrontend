@@ -1,15 +1,19 @@
-div(ng-controller="PersonnelSort as ctrl")
+md-toolbar
+    .md-toolbar-tools
+        span 人/岗/机构&nbsp;排序
+div(ng-controller="PersonnelSort as ctrl" style="margin-left: 10px;")
     div(layout ng-init="initData = {};")
 
-        div(flex)
+        div.org-sort-container(flex)
             section
-                md-subheader 机构
+                md-subheader.offset-header-text 机构
                 div
-                    div(style="padding: 5px 10px;font-size:20px;")
-                        button.btn.btn-info(ng-click="ctrl.orgSelectBack()") 返回
-                    div(height="300px" slimscroll style="padding: 5px 10px;")
+                    div.cust-content-toolbar
+                        i.fa.fa-angle-left(ng-click="ctrl.orgSelectBack()")
+                        span(style="font-size:18px; margin-left:15px;" ng-bind="ctrl.orgLinks[ctrl.orgLinks.length-1].label") 人力资源部
+                    div.org-sort-content(height="300px" slimscroll)
                         md-list
-                            md-list-item(
+                            md-list-item.cust-list-item(
                                 layout="row"
                                 ng-repeat="org in ctrl.currentOrgs.children"
                                 ng-click="initData.selectOrg = org;\
@@ -19,24 +23,33 @@ div(ng-controller="PersonnelSort as ctrl")
                                 ng-class="{'active': initData.selectOrg.id == org.id}"
 
                             )
-                                span(flex="40" ng-bind="org.label")
-                                button(flex="20" ng-click="ctrl.showChildsOrg(org)" ng-if="org.children") 展开
-                                button(flex="20" ng-click="ctrl.setHeigher(ctrl.currentOrgs.children, $index)") 向上
-                                button(flex="20" ng-click="ctrl.setLower(ctrl.currentOrgs.children, $index)") 向下
+                                span(flex="50" ng-bind="org.label")
+                                span(flex="40")
+                                    i.fa.fa-caret-right(ng-click="ctrl.showChildsOrg(org)" ng-if="org.children")
+                                span(flex="10")
+                                    div
+                                        i.fa.fa-chevron-up(ng-click="ctrl.setHeigher(ctrl.currentOrgs.children, $index)")
+                                    div
+                                        i.fa.fa-chevron-down(ng-click="ctrl.setLower(ctrl.currentOrgs.children, $index)")
 
 
-        div(flex)
+        div.pos-sort-container(flex)
             section()
-                md-subheader 岗位
+                md-subheader.offset-header-text 岗位
 
                 md-list
-                    md-list-item(
+                    md-list-item.cust-list-item(
                         layout="row"
                         ng-repeat="pos in initData.positions"
+                        ng-click="initData.selectPos = pos;"
+                        ng-class="{'active': initData.selectPos.id == pos.id}"
                     )
-                        span(flex="60" ng-bind="pos.name")
-                        button(flex) 向上
-                        button(flex) 向下
+                        span(flex="90" ng-bind="pos.name")
+                        span(flex="10")
+                            div
+                                i.fa.fa-chevron-up(ng-click="ctrl.setHeigher(initData.positions, $index)")
+                            div
+                                i.fa.fa-chevron-down(ng-click="ctrl.setLower(initData.positions, $index)")
     div(flex)
         section
             md-subheader 员工列表
@@ -64,6 +77,8 @@ div(ng-controller="PersonnelSort as ctrl")
                             td(ng-bind="::emp.employeeNo")
                             td(ng-bind="emp.position.name")
                             td
-                                button 向上
-                                button 向下
+                                div
+                                    i.fa.fa-chevron-up()
+                                div
+                                    i.fa.fa-chevron-down()
 
