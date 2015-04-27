@@ -179,7 +179,6 @@ class PersonnelSort extends nb.Controller
             collection[index+1] = temp
 
     changeOrder: (params)->
-        # url = "/api/sort?category=#{}"
         promise = @http.get '/api/sort', {params:params}
         # promise.then onSuccess
 

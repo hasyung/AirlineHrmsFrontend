@@ -55,7 +55,7 @@ div(ng-controller="PersonnelSort as ctrl" style="margin-left: 10px;")
             md-subheader 员工列表
             .table-container
                 h4 人事信息列表
-                table.table.table-striped.custom-table
+                table.table.employees-sort
                     thead
                         tr
                             th 所属部门
@@ -64,7 +64,11 @@ div(ng-controller="PersonnelSort as ctrl" style="margin-left: 10px;")
                             th 岗位
                             th 操作
                     tbody
-                        tr(ng-repeat="emp in initData.employees track by emp.id")
+                        tr(
+                            ng-repeat="emp in initData.employees track by emp.id"
+                            ng-click="initData.selectEmp = emp;"
+                            ng-class="{'active': initData.selectEmp.id == emp.id}"
+                        )
                             td(ng-bind="emp.department.name")
                             td.org-post
                                 //- a(ui-sref="^.detail.basic({empId: emp.id})" ng-bind="emp.name")
@@ -78,7 +82,7 @@ div(ng-controller="PersonnelSort as ctrl" style="margin-left: 10px;")
                             td(ng-bind="emp.position.name")
                             td
                                 div
-                                    i.fa.fa-chevron-up(ng-click="ctrl.setHeigher(initData.positions, $index, 'employee')")
+                                    i.fa.fa-chevron-up(ng-click="ctrl.setHeigher(initData.employees, $index, 'employee')")
                                 div
-                                    i.fa.fa-chevron-down(ng-click="ctrl.setLower(initData.positions, $index, 'employee')")
+                                    i.fa.fa-chevron-down(ng-click="ctrl.setLower(initData.employees, $index, 'employee')")
 
