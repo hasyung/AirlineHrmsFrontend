@@ -63,7 +63,6 @@ render = (root, options, select_org_id) ->
     else
         drawTreeChart(root, options, select_org_id)
 
-update = () ->
 # nature.name 分类
 # shengchanbumen
 # jiguanbumen
@@ -143,6 +142,13 @@ drawOrgChart = (root, options, select_org_id) ->
                     d3.select(this).classed("active",true)
                     active_node = d3.select(this)
                     rectClickHandler(target: d.id)
+                .call (d) ->
+                    if d.status == 'create_inactive'
+                        d3.select(this).classed 'chart-box-create_inactive', true
+                    else if d.status == 'update_inactive'
+                        d3.select(this).classed 'chart-box-update_inactive', true
+                    else if d.status == 'delete_inactive'
+                        d3.select(this).classed 'chart-box-delete_inactive', true
 
             nodeEnter.append("rect")
                 .attr("class", "chart-box")
@@ -154,7 +160,6 @@ drawOrgChart = (root, options, select_org_id) ->
                 .attr("stroke-width", borderWidth)
                 .attr "x", (d,i) -> d.x
                 .attr "y", (d) -> d.y
-                .attr "class", (d) -> #TODO: 根据状态确定方块颜色class
 
             nodeEnter.append("text")
                 .attr("class", "orgchart-text")
@@ -173,7 +178,7 @@ drawOrgChart = (root, options, select_org_id) ->
         drawPath()
         drawRect()
         active_node = svg.select("org_#{select_org_id}")
-        active_node.attr 'class', 'active'
+        active_node.classed 'active',true
 
 
 
@@ -250,6 +255,13 @@ drawTreeChart = (root, options, select_org_id) ->
                     d3.select(this).classed("active",true)
                     active_node = d3.select(this)
                     rectClickHandler(target: d.id)
+                .call (d) ->
+                    if d.status == 'create_inactive'
+                        d3.select(this).classed 'chart-box-create_inactive', true
+                    else if d.status == 'update_inactive'
+                        d3.select(this).classed 'chart-box-update_inactive', true
+                    else if d.status == 'delete_inactive'
+                        d3.select(this).classed 'chart-box-delete_inactive', true
 
             nodeEnter.append("rect")
                 .attr("class","chart-box")
