@@ -180,6 +180,7 @@ drawOrgChart = (root, options, select_org_id) ->
 
         drawPath()
         drawRect()
+        console.log select_org_id
         active_node = svg.select("#org_#{select_org_id}")
         active_node.classed 'active',true
 

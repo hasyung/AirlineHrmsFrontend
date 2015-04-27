@@ -138,10 +138,9 @@ class OrgsCtrl extends nb.Controller
 
     constructor: (@orgs, @http, @params, @state, @scope, @rootScope, @Evt)->
         @treeRootOrg = _.find @orgs, (org) -> org.xdepth == 1 # 当前树的顶级节点
-        @primaryOrgs = orgs.$asList (orgs) -> orgs.filter (org) -> org.xdepth <= 2
 
         @tree = null    # tree化的 orgs 数据
-        @currentOrg = null
+        @currentOrg = @treeRootOrg
 
 
         @scope.$onRootScope 'org:refresh', @.refreshTree.bind(@)
