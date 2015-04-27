@@ -2,10 +2,11 @@
     .personnel-menu
         .avator
             .avator-area
-                img(ng-src="{{currentUser.favicon}}")
+                img(ng-src="{{currentUser.favicon.middle}}")
                 .edit-icon-container(
                     nb-dialog="partials/self/self_info_basic/avator_upload.tpl.html"
                     nb-dialog-scope="this"
+                    nb-dialog-class="ngdialog-theme-plain cust-avator-dialog-width"
                 )
                     i.fa.fa-edit
             h3(ng-bind="currentUser.$cmStatus.name")
