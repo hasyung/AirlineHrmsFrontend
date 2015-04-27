@@ -390,7 +390,10 @@
         &.active{
             td{
                 background-color: #337ab7 !important;
-                color: #fff; 
+                color: #fff;
+                a{
+                    color: #fff;
+                }
             }
         }
     }

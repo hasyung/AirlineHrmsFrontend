@@ -52,9 +52,8 @@ div(ng-controller="PersonnelSort as ctrl" style="margin-left: 10px;")
                                 i.fa.fa-chevron-down(ng-click="ctrl.setLower(initData.positions, $index, 'position')")
     div(flex)
         section
-            md-subheader 员工列表
+            md-subheader.offset-header-text 员工列表
             .table-container
-                h4 人事信息列表
                 table.table.employees-sort
                     thead
                         tr
