@@ -32,7 +32,11 @@ section(layout="row" flex)
                 //- loading-btn.red(ng-click="ctrl.openHistoryPanel()" btn-loading-type="contract-overlay" btn-text="测试loading")
 
         md-content.org-chart-window(id="org_chart_warpper" flex scroll-center style="background-color: #f0f3f4;")
-            div.svg-wrapper(org-chart org-chart-data="ctrl.tree.data" on-item-click="ctrl.onItemClick(evt)")
+            div.svg-wrapper(
+                org-chart
+                org-chart-data="ctrl.tree.data"
+                init-select-org-id="ctrl.currentOrg.id"
+                on-item-click="ctrl.onItemClick(evt)")
 
         //- md-content.org-chart-window(ng-if="ctrl.treeRootOrg.depth == 1" style="height: 700px")
         //-     div(style="width: 100%;background-image: url('/images/org_bg.jpg');height: 100%;background-position: center center;background-repeat: no-repeat; background-color: #f0f3f4;")

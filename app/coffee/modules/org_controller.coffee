@@ -186,7 +186,7 @@ class OrgsCtrl extends nb.Controller
     selectOrgChart: (org) ->
         @currentOrg = _.find(@orgs, {id: org.id})
         @treeRootOrg = @orgs.queryPrimaryOrg(@currentOrg)
-        @buildTree(@currentOrg)
+        @buildTree(@treeRootOrg)
 
     onItemClick: (evt) -> #机构树 点击事件处理 重构？
         orgId = evt.target

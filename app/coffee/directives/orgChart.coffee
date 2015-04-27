@@ -39,7 +39,7 @@ orgChartDirective = ->
 
         destroyChart = -> d3.select(elem.find('svg')[0]).remove()
 
-        scope.$watch 'orgChartData', (newVal) -> render(newVal, options) if newVal
+        scope.$watch 'orgChartData', (newVal) -> render(newVal, options, scope.initSelectOrgId) if newVal
         scope.$on '$destroy', () -> destroyChart()
         render(scope.orgChartData, options)
 
@@ -48,26 +48,27 @@ orgChartDirective = ->
         scope: {
             orgChartData: '='
             onItemClick: '&'
+            initSelectOrgId: '='
         }
     }
 
 
-render = (root, options) ->
+render = (root, options, select_org_id) ->
     container = options.container
     # cleanup
     d3.select(container.querySelector('svg')).remove()
 
     if root.xdepth == 1
-        drawOrgChart(root, options)
+        drawOrgChart(root, options, select_org_id)
     else
-        drawTreeChart(root, options)
+        drawTreeChart(root, options, select_org_id)
 
 update = () ->
 # nature.name 分类
 # shengchanbumen
 # jiguanbumen
 # fengongsijidi
-drawOrgChart = (root, options) ->
+drawOrgChart = (root, options, select_org_id) ->
     active_node = null
 
     container             = options.container
@@ -136,12 +137,12 @@ drawOrgChart = (root, options) ->
                 .append("g")
                 .attr("class","node")
                 .style("cursor", "pointer")
+                .attr 'id', (d) -> "org_#{d.id}"
                 .on 'click', (d,i) ->   #To Do:
                     active_node.classed("active",false)
                     d3.select(this).classed("active",true)
                     active_node = d3.select(this)
                     rectClickHandler(target: d.id)
-
 
             nodeEnter.append("rect")
                 .attr("class", "chart-box")
@@ -171,8 +172,8 @@ drawOrgChart = (root, options) ->
 
         drawPath()
         drawRect()
-        active_node = d3.select(".node")
-
+        active_node = svg.select("org_#{select_org_id}")
+        active_node.attr 'class', 'active'
 
 
 
@@ -184,7 +185,7 @@ drawOrgChart = (root, options) ->
 
 
 
-drawTreeChart = (root, options) ->
+drawTreeChart = (root, options, select_org_id) ->
     active_node = null
 
     container             = options.container
@@ -243,6 +244,7 @@ drawTreeChart = (root, options) ->
                 .append("g")
                 .attr("class","node")
                 .style("cursor","pointer")
+                .attr 'id', (d) -> "org_#{d.id}"
                 .on "click", (d) ->
                     active_node.classed("active",false)
                     d3.select(this).classed("active",true)
@@ -275,7 +277,9 @@ drawTreeChart = (root, options) ->
         # // compute canvas h w
         drawPath()
         drawRect()
-        active_node = d3.select(".node")
+        active_node = svg.select("#org_#{select_org_id}")
+        active_node.classed 'active',true
+
 
     #方法调用
     computeLayerMaxLength(root)
