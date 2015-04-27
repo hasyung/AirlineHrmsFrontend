@@ -163,8 +163,6 @@ class OrgsCtrl extends nb.Controller
         depth = 1 if org.xdepth == 1 #如果是顶级节点 则只显示一级
         # @treeRootOrg = org
         @tree = @orgs.treeful(org, depth)
-        #在orgCtrl中会监听该值得变化，用于更新右侧信息
-        @currentOrg = org
 
     refreshTree: () ->
         return unless @treeRootOrg
