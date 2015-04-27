@@ -142,8 +142,7 @@ class PersonnelSort extends nb.Controller
         self = @
         @currentOrgs = @Org.$search().$then (data)->
             self.currentOrgs = data.jqTreeful()[0]
-
-        @orgLinks.push @currentOrgs
+            self.orgLinks.push self.currentOrgs
 
     orgSelectBack: ->
         if @orgLinks.length > 1
