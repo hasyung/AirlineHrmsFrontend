@@ -41,7 +41,7 @@ orgChartDirective = ->
 
         scope.$watch 'orgChartData', (newVal) -> render(newVal, options, scope.initSelectOrgId) if newVal
         scope.$on '$destroy', () -> destroyChart()
-        render(scope.orgChartData, options)
+        # render(scope.orgChartData, options)
 
     return {
         link: postLink
@@ -139,7 +139,7 @@ drawOrgChart = (root, options, select_org_id) ->
                         return "node chart-box-create_inactive"
                     else if d.status == 'update_inactive'
                         return "node chart-box-update_inactive"
-                    else if d.status == 'delete_inactive'
+                    else if d.status == 'destroy_inactive'
                         return "node chart-box-destroy_inactive"
                     else if d.status == 'transfer_inactive'
                         return "node chart-box-transfer_inactive"
