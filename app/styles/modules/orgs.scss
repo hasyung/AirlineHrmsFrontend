@@ -169,23 +169,23 @@
             &.active rect {
                 fill: #90d7ff;
             }
+
+            &.chart-box-create_inactive rect {
+                fill: #ffc490;
+            }
+
+            &.chart-box-update_inactive rect {
+                fill: #ffc490;
+            }
+
+            &.chart-box-transfer_inactive rect {
+                fill: #ffc490;
+            }
+
+            &.chart-box-destroy_inactive rect {
+                fill: #ff9090;
+            }
         }
-    }
-    // TODO: 以后用变量
-    .orgchart-box-create_inactive {
-        fill: #ffc490;
-    }
-
-    .orgchart-box-update_inactive {
-        fill: #ffc490;
-    }
-
-    .orgchart-box-transfer_inactive {
-        fill: #ffc490;
-    }
-
-    .orgchart-box-destroy_inactive {
-        fill: #ff9090;
     }
 }
 

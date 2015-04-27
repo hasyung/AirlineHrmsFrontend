@@ -134,7 +134,17 @@ drawOrgChart = (root, options, select_org_id) ->
                 .data(nodes)
                 .enter()
                 .append("g")
-                .attr("class","node")
+                .attr "class", (d) ->
+                    if d.status == 'create_inactive'
+                        return "node chart-box-create_inactive"
+                    else if d.status == 'update_inactive'
+                        return "node chart-box-update_inactive"
+                    else if d.status == 'delete_inactive'
+                        return "node chart-box-destroy_inactive"
+                    else if d.status == 'transfer_inactive'
+                        return "node chart-box-transfer_inactive"
+                    else
+                        return "node"
                 .style("cursor", "pointer")
                 .attr 'id', (d) -> "org_#{d.id}"
                 .on 'click', (d,i) ->   #To Do:
@@ -142,16 +152,9 @@ drawOrgChart = (root, options, select_org_id) ->
                     d3.select(this).classed("active",true)
                     active_node = d3.select(this)
                     rectClickHandler(target: d.id)
-                .call (d) ->
-                    if d.status == 'create_inactive'
-                        d3.select(this).classed 'chart-box-create_inactive', true
-                    else if d.status == 'update_inactive'
-                        d3.select(this).classed 'chart-box-update_inactive', true
-                    else if d.status == 'delete_inactive'
-                        d3.select(this).classed 'chart-box-delete_inactive', true
+
 
             nodeEnter.append("rect")
-                .attr("class", "chart-box")
                 .attr("width", rectWidth)
                 .attr("height", rectHeight)
                 .attr("rx", rectBorderRadius)
@@ -177,7 +180,7 @@ drawOrgChart = (root, options, select_org_id) ->
 
         drawPath()
         drawRect()
-        active_node = svg.select("org_#{select_org_id}")
+        active_node = svg.select("#org_#{select_org_id}")
         active_node.classed 'active',true
 
 
@@ -247,7 +250,17 @@ drawTreeChart = (root, options, select_org_id) ->
                 .data(nodes)
                 .enter()
                 .append("g")
-                .attr("class","node")
+                .attr "class", (d) ->
+                    if d.status == 'create_inactive'
+                        return "node chart-box-create_inactive"
+                    else if d.status == 'update_inactive'
+                        return "node chart-box-update_inactive"
+                    else if d.status == 'delete_inactive'
+                        return "node chart-box-destroy_inactive"
+                    else if d.status == 'transfer_inactive'
+                        return "node chart-box-transfer_inactive"
+                    else
+                        return "node"
                 .style("cursor","pointer")
                 .attr 'id', (d) -> "org_#{d.id}"
                 .on "click", (d) ->
@@ -255,13 +268,6 @@ drawTreeChart = (root, options, select_org_id) ->
                     d3.select(this).classed("active",true)
                     active_node = d3.select(this)
                     rectClickHandler(target: d.id)
-                .call (d) ->
-                    if d.status == 'create_inactive'
-                        d3.select(this).classed 'chart-box-create_inactive', true
-                    else if d.status == 'update_inactive'
-                        d3.select(this).classed 'chart-box-update_inactive', true
-                    else if d.status == 'delete_inactive'
-                        d3.select(this).classed 'chart-box-delete_inactive', true
 
             nodeEnter.append("rect")
                 .attr("class","chart-box")
