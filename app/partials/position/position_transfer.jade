@@ -1,0 +1,16 @@
+md-dialog.org-transfer
+    form.clearfix(ng-submit="dialog.close()" name="trans_form")
+        md-content.sticky-container
+            md-subheader.md-sticky-no-effect 机构划转
+            .dialog-content
+                div(slimscroll height="300px")
+                    nb-org-tree(ng-model="selectedOrg" tree-data="allOrgs" required)
+            .md-actions
+                md-button(type='button',ng-click='dialog.cancel()') 取消
+                md-button.md-primary(type='submit' ng-disabled="trans_form.$invalid"
+                    nb-confirm="ctrl.posTransfer(selectedOrg, isConfirm)"
+                    nb-title="您确定要将所选的{{ctrl.getSelectsIds().length}}个岗位，调整到{{selectedOrg.name}}吗?"
+                    nb-text="岗位调整操作将在你点击确定后执行。"
+                    ) 确定
+
+

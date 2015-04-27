@@ -1,4 +1,6 @@
-section.personnel-info-section
-    .personnel-content-body
-        .personnel-section-wrap(ng-init="current = currentUser")
-            include ../personnel/personnel_resume
+md-dialog(ng-init="current = dialog.currentUser")
+    md-subheader 
+        h3 {{::current.name}}的个人履历
+        md-button.pull-right(ng-click="dialog.close()") 关闭
+    md-content
+        include ../personnel/personnel_resume

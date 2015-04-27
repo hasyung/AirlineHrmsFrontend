@@ -32,9 +32,21 @@ div.app-content-wrapper(nb-table='ctrl.records' nb-safe-src="ctrl.records" ng-in
                         td(ng-bind="record.name")
                         td(ng-bind="record.department.name")
                         td(ng-if="record.action == '修改'")
-                            a(href="javascript:;" ng-click="ctrl.mdDialog.show({templateUrl:'partials/common/update_change_review.tpl.html',locals:{data:record}, controller:'DialogCtrl', controllerAs:'ctrl'})") {{record.auditableType}}
+                            a(
+                                href="javascript:void(0);"
+                                nb-dialog
+                                template-url="partials/common/update_change_review.tpl.html"
+                                ng-bind="record.auditableType"
+                                locals="{'change': record}"
+                            )
                         td(ng-if="record.action == '新增' || record.action == '删除'")
-                            a(href="javascript:;" ng-click="ctrl.mdDialog.show({templateUrl:'partials/common/create_change_review.tpl.html',locals:{data:record}, controller:'DialogCtrl', controllerAs:'ctrl'})") {{record.auditableType}}
+                            a(
+                                href="javascript:void(0);"
+                                nb-dialog
+                                template-url="partials/common/create_change_review.tpl.html"
+                                ng-bind="record.auditableType"
+                                locals="{'change': record}"
+                            )
                         td(ng-bind="record.action")
                         td(ng-bind="record.createdAt | date:'yyyy-MM-dd'")
                         td(ng-bind="record.statusCd | dictmap:'personnel'")

@@ -49,7 +49,11 @@
                     a(role="menuitem" ng-href="/api/employees/export_resume" ) 导出全部人员履历
                 li( role="presentation" ng-if="ctrl.getExportParams().length != 0")
                     a(role="menuitem" ng-href="/api/employees/export_resume?employee_ids={{ ctrl.getExportParams() }}" ) 导出所选人员的履历
-
+            md-button.skyblue.md-raised.pull-right(
+                nb-panel
+                template-url="partials/personnel/org_pos_per_sort.html"
+                style="margin-right: 10px;"
+            ) 排序       
         .table-container
             h4 人事信息列表
             table.table.table-striped.custom-table
@@ -71,11 +75,11 @@
                         td.org-post
                             //- a(ui-sref="^.detail.basic({empId: emp.id})" ng-bind="emp.name")
                             a(
-                                nb-dialog="partials/personnel/info_basic.html"
-                                nb-dialog-class="ngdialog-theme-panel"
-                                nb-dialog-data="emp"
-                                nb-dialog-scope="this"
-                            ) {{emp.name}}
+                                nb-panel
+                                template-url="partials/personnel/info_basic.html"
+                                ng-bind="emp.name"
+                                locals="{employee: emp}"
+                            )
                         td(ng-bind="::emp.employeeNo")
                         td(ng-bind="emp.position.name")
                         td(ng-bind="emp.category.displayName")

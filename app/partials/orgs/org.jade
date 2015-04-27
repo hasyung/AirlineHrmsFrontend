@@ -7,13 +7,14 @@ section.org-detail(ng-controller="EditableResource")
                 has-permission="departments_destroy"
                 nb-confirm="orgCtrl.destroy(isConfirm)"
                 nb-title="您确定要删除{{currentOrg.name}}吗?"
-                nb-text="删除操作将在点击组织结构树 '生效' 按钮并关联 OA 文件号后真正生效, 在这之前您可以随时撤销未生效的操作")
+                nb-content="删除操作将在点击组织结构树 '生效' 按钮并关联 OA 文件号后真正生效, 在这之前您可以随时撤销未生效的操作")
             button.btn.btn-sm.btn-default.fa.fa-retweet(
                 has-permission="departments_transfer"
                 title="划转"
-                nb-dialog="partials/orgs/shared/org_transfer.html"
-                nb-dialog-scope="this"
+                nb-dialog
+                template-url="partials/orgs/shared/org_transfer.html"
                 )
+
             button.btn.btn-sm.btn-default.fa.fa-pencil(has-permission="departments_update" ng-click="edit()",title="编辑")
             button.btn.btn-sm.btn-default.fa.fa-plus(has-permission="departments_create" title="新增子机构",ng-click="orgCtrl.state = 'newsub'", ng-if="currentOrg.grade.name !== 'secondly_positive'")
     //- show
@@ -39,7 +40,8 @@ section.org-detail(ng-controller="EditableResource")
 
             .form-actions(ng-hide="!editing")
                 md-button.md-raised.white(type="button", ng-click="cancel(currentOrg, $event)") 取消
-                md-button.md-primary.md-raised(type="submit") 保存
+                md-button.skyblue.md-raised(type="submit") 保存
+
     //- new sub
     .org-info(ng-if="orgCtrl.state == 'newsub' " ng-init="neworg = {}")
         form(novalidate, ng-submit="orgCtrl.newsub(newsubForm, neworg)", name="newsubForm")
@@ -59,7 +61,8 @@ section.org-detail(ng-controller="EditableResource")
                         md-option(ng-value="grade" ng-repeat="grade in enums.department_grades") {{grade.displayName}}
                 .form-actions
                     md-button.md-raised.white(type="button" ng-click="orgCtrl.state = 'show'") 取消
-                    md-button.md-primary.md-raised(type="submit") 保存
+                    md-button.skyblue.md-raised(type="submit") 保存
+
 
 section(ng-if="currentOrg.status !== 'destroy_inactive'")
     .org-title
@@ -67,11 +70,11 @@ section(ng-if="currentOrg.status !== 'destroy_inactive'")
         button.btn.btn-default.fa.fa-cog(
             ng-disabled="ctrl.isHistory"
             title="设置岗位"
-            nb-dialog="partials/orgs/position.html"
-            nb-dialog-scope="this"
-            nb-dialog-controller="OrgPosCtrl"
-            nb-dialog-data="positions"
-            nb-dialog-class="ngdialog-theme-panel"
+            nb-panel
+            template-url="partials/orgs/position.html"
+            panel-controller="OrgPosCtrl"
+            controller-as="ctrl"
+            locals="{positions: positions}"
             )
     div.org-table(slimscroll height="400px")
         table.table.table-striped
@@ -85,15 +88,15 @@ section(ng-if="currentOrg.status !== 'destroy_inactive'")
                     td.org-post(ng-if="!ctrl.isHistory")
                         //- a(ui-sref=".position.detail({posId: position.id,id:currentOrg.id})") {{position.name}}
                         a(
-                            nb-dialog="partials/position/position_detail.html"
-                            nb-dialog-class="ngdialog-theme-panel"
-                            nb-dialog-data="position"
+                            nb-panel
+                            template-url="partials/position/position_detail.html"
+                            locals="{'position': position}"
                         ) {{position.name}}
                     td.org-post(ng-if="ctrl.isHistory")
                         a(
-                            nb-dialog="partials/orgs/position_detail_history.html"
-                            nb-dialog-class="ngdialog-theme-panel"
-                            nb-dialog-data="position"
+                            nb-panel
+                            template-url="partials/orgs/position_detail_history.html"
+                            locals="{'position': position}"
                             ) {{position.name}}
                     td  {{position.budgetedStaffing}}
                     td(ng-class="{'overstaffed': position.overstaffedNum > 0}")  {{position.staffing}}

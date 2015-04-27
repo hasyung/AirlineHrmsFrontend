@@ -27,8 +27,6 @@ angular.module 'nb.directives'
                 @options = []
                 @mapped = mapped = parseMappedAttr(@attrs.map) if @attrs.map
 
-
-
                 onSuccess = (data, status) ->
                     @options = _.map data.result, (item) ->
                         _.reduce(item, (res, val, key) ->
@@ -40,8 +38,8 @@ angular.module 'nb.directives'
                         scope.item = _.find @options, (opt) ->
                             return getMappedAttr(mapped, opt) == scope.selected
 
-                if scope.options
-                    @options = scope.options
+                if @scope.options
+                    @options = @scope.options
                 else if attrs.remoteKey
                     @http.get("/api/enum?key=#{@attrs.remoteKey}")
                         .success onSuccess.bind(@)
@@ -188,7 +186,7 @@ angular.module 'nb.directives'
                         <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
                             <img src="../../images/01.jpg" alt="..."/><i class="on md b-white bottom"></i>
                         </span>
-                        <span ng-bind="dropdown.rootScope.currentUser.name"></span>
+                        <span ng-bind="dropdown.USER_META.name"></span>
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu" ng-if="isOpen" role="menu" aria-labelledby="dropdownMenu1" ng-transclude>
@@ -213,8 +211,8 @@ class SimpleDropdownCtrl
         @scope.isOpen = !@scope.isOpen
 
 class UserInfoDropdownCtrl
-    @.$inject = ['$scope', '$attrs', '$rootScope']
-    constructor: (@scope, @attrs, @rootScope) ->
+    @.$inject = ['$scope', '$attrs', 'USER_META']
+    constructor: (@scope, @attrs, @USER_META) ->
         @scope.isOpen = false
     toggle: () ->
         @scope.isOpen = !@scope.isOpen

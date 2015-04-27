@@ -10,7 +10,7 @@ plumber         = require("gulp-plumber")
 wrap            = require("gulp-wrap")
 rename          = require("gulp-rename")
 livereload      = require("gulp-livereload")
-# gutil           = require("gulp-util")
+# gutil         = require("gulp-util")
 minifyHTML      = require("gulp-minify-html")
 sass            = require("gulp-sass")
 sourcemaps      = require('gulp-sourcemaps')
@@ -31,7 +31,7 @@ proxy           = require('./compat/proxy-middleware')
 
 debugMode       = true
 
-LOCAL_TEST_SERVER = "http://192.168.6.99:4000"
+LOCAL_TEST_SERVER = "http://192.168.6.99:9001"
 REMOTE_TEST_SERVER = "http://114.215.142.122:9002"
 LOCAL_SERVER = "http://localhost:3000"
 
@@ -45,7 +45,6 @@ else if argv.addr
 else
     PROXY_SERVER_ADDR = LOCAL_TEST_SERVER
 
-debugMode = true
 
 paths =
     app: "app"
@@ -86,6 +85,7 @@ paths =
         'deps/moment/min/moment.min.js'
         'deps/jquery/dist/jquery.min.js'
         'deps/jqtree/tree.jquery.js'
+        'compat/vendor/d3.min.js'
         #alert
         'deps/sweetalert/lib/sweet-alert.js'
 
@@ -126,6 +126,9 @@ paths =
         'deps/jquery-slimscroll/jquery.slimscroll.js'
         'deps/angularjs-toaster/toaster.js'
         'deps/angular-material/angular-material.js'
+        'compat/socket.io.js'
+        'compat/pomeloclient.js'
+        'compat/communite.js'
         'deps/ng-flow/dist/ng-flow-standalone.js'
         # 'deps/angular-ui-utils/ui-utils.js'
         # 'deps/jasny-bootstrap/dist/js/jasny-bootstrap.js' jasny bootstrap 增强版，提供一些好用组件
@@ -286,6 +289,7 @@ gulp.task "express", ['copy'],  ->
     bodyParser = require('body-parser')
     app = express()
 
+
     proxyOptions = url.parse(PROXY_SERVER_ADDR)
     proxyOptions.route = '/api'
     app.set('views', __dirname + '/app/')
@@ -293,8 +297,8 @@ gulp.task "express", ['copy'],  ->
 
     # 反向代理 webapi
     app.use(proxy(proxyOptions))
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded());
+    app.use(bodyParser.json())
+    app.use(bodyParser.urlencoded())
     app.use("/js", express.static("#{__dirname}/dist/js"))
     app.use("/api", express.static("#{__dirname}/dist/api"))
     app.use("/vendor", express.static("#{__dirname}/dist/vendor"))
@@ -333,8 +337,12 @@ gulp.task "express", ['copy'],  ->
         }, (err, response, body) ->
             cooks = jar.getCookies(response.request.href)
             tokenCookie =  _.find cooks, (cook) -> cook.key == 'token'
-            res.cookie('token', tokenCookie.value)
-            res.redirect('/')
+            if tokenCookie && tokenCookie.value
+                res.cookie('token', tokenCookie.value)
+                res.redirect('/')
+            else
+                res.redirect('/sessions/new/')
+
 
     app.get "/", (req, res, next) ->
         request {

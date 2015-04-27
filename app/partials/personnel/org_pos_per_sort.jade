@@ -1,0 +1,87 @@
+md-toolbar
+    .md-toolbar-tools
+        span 人/岗/机构&nbsp;排序
+div(ng-controller="PersonnelSort as ctrl" style="margin-left: 10px;")
+    div(layout ng-init="initData = {};")
+
+        div.org-sort-container(flex)
+            section
+                md-subheader.offset-header-text 机构
+                div
+                    div.cust-content-toolbar
+                        i.fa.fa-angle-left(ng-click="ctrl.orgSelectBack()")
+                        span(style="font-size:18px; margin-left:15px;" ng-bind="ctrl.orgLinks[ctrl.orgLinks.length-1].label") 人力资源部
+                    div.org-sort-content(height="300px" slimscroll)
+                        md-list
+                            md-list-item.cust-list-item(
+                                layout="row"
+                                ng-repeat="org in ctrl.currentOrgs.children"
+                                ng-click="initData.selectOrg = org;\
+                                    initData.positions = ctrl.Position.$collection().$refresh({department_id:org.id});\
+                                    initData.employees = ctrl.Employee.$collection().$refresh({department_id:org.id});\
+                                "
+                                ng-class="{'active': initData.selectOrg.id == org.id}"
+
+                            )
+                                span(flex="50" ng-bind="org.label")
+                                span(flex="40")
+                                    i.fa.fa-caret-right(ng-click="ctrl.showChildsOrg(org)" ng-if="org.children")
+                                span(flex="10")
+                                    div
+                                        i.fa.fa-chevron-up(ng-click="ctrl.setHeigher(ctrl.currentOrgs.children, $index, 'department')")
+                                    div
+                                        i.fa.fa-chevron-down(ng-click="ctrl.setLower(ctrl.currentOrgs.children, $index, 'department')")
+
+
+        div.pos-sort-container(flex)
+            section()
+                md-subheader.offset-header-text 岗位
+
+                md-list
+                    md-list-item.cust-list-item(
+                        layout="row"
+                        ng-repeat="pos in initData.positions"
+                        ng-click="initData.selectPos = pos;"
+                        ng-class="{'active': initData.selectPos.id == pos.id}"
+                    )
+                        span(flex="90" ng-bind="pos.name")
+                        span(flex="10")
+                            div
+                                i.fa.fa-chevron-up(ng-click="ctrl.setHeigher(initData.positions, $index, 'position')")
+                            div
+                                i.fa.fa-chevron-down(ng-click="ctrl.setLower(initData.positions, $index, 'position')")
+    div(flex)
+        section
+            md-subheader.offset-header-text 员工列表
+            .table-container
+                table.table.employees-sort
+                    thead
+                        tr
+                            th 所属部门
+                            th 姓名
+                            th 员工编号
+                            th 岗位
+                            th 操作
+                    tbody
+                        tr(
+                            ng-repeat="emp in initData.employees track by emp.id"
+                            ng-click="initData.selectEmp = emp;"
+                            ng-class="{'active': initData.selectEmp.id == emp.id}"
+                        )
+                            td(ng-bind="emp.department.name")
+                            td.org-post
+                                //- a(ui-sref="^.detail.basic({empId: emp.id})" ng-bind="emp.name")
+                                a(
+                                    nb-panel
+                                    template-url="partials/personnel/info_basic.html"
+                                    ng-bind="emp.name"
+                                    locals="{employee: emp}"
+                                )
+                            td(ng-bind="::emp.employeeNo")
+                            td(ng-bind="emp.position.name")
+                            td
+                                div
+                                    i.fa.fa-chevron-up(ng-click="ctrl.setHeigher(initData.employees, $index, 'employee')")
+                                div
+                                    i.fa.fa-chevron-down(ng-click="ctrl.setLower(initData.employees, $index, 'employee')")
+
