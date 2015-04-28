@@ -49,7 +49,11 @@
                     a(role="menuitem" ng-href="/api/employees/export_resume" ) 导出全部人员履历
                 li( role="presentation" ng-if="ctrl.getExportParams().length != 0")
                     a(role="menuitem" ng-href="/api/employees/export_resume?employee_ids={{ ctrl.getExportParams() }}" ) 导出所选人员的履历
-
+            md-button.skyblue.md-raised.pull-right(
+                nb-panel
+                template-url="partials/personnel/org_pos_per_sort.html"
+                style="margin-right: 10px;"
+            ) 排序       
         .table-container
             h4 人事信息列表
             table.table.table-striped.custom-table
@@ -82,5 +86,5 @@
                         td(ng-bind="emp.channel.displayName")
                         //- TODO 用工性质
                         td(ng-bind="emp.laborRelation.displayName")
-                        td(ng-bind="emp.joinScalDate")
+                        td(ng-bind="emp.joinScalDate | date:'yyyy-MM-dd'")
         .custom-pages(nb-pagination="ctrl.employees.$metadata" per-page="15")

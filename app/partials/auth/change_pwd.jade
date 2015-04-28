@@ -1,4 +1,4 @@
-.container
+.container(style="width:360px;margin:40px auto;")
   .w-xxl.w-auto-xs
     .m-b-lg
       .wrapper.text-center 修改密码
@@ -13,7 +13,3 @@
           .list-group-item
             input.form-control.no-border(type='password', placeholder='密码确认', ng-model='user.password_confirm', required='true')
         button.btn.btn-lg.btn-primary.btn-block(type='submit', ng-click='ctrl.changePwd(user);closeThisDialog()', ng-disabled='form.$invalid') 确认修改
-        .text-center.m-t.m-b
-          a(ui-sref='/sessions/new') 返回登录
-        
-    //- .text-center(ng-include='"tpl/blocks/page_footer.html"')

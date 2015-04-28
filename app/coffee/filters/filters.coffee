@@ -30,5 +30,6 @@ module
     .filter 'nbDate', ->
 
         (input, opts) ->
-            return new Date(input)
+            if input then new Date(input) else ""
+
 
