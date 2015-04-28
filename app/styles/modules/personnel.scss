@@ -480,49 +480,75 @@
 
 // <<<<<<< HEAD
 //for org/positions/employee search
-.org-sort-container, .pos-sort-container{
-    padding: 5px;
-}
-.offset-header-text{
-    padding-left: 0;
-    .md-subheader-content{
-        border-left: 3px solid rgb(46, 55, 169);
-        padding-left: 10px;
+.personnel-sort-body{
+
+    .org-sort-container, .pos-sort-container{
+        padding: 5px;
+        .list-text{
+            height: 40px;
+            line-height: 40px;
+        }
+        .list-row{
+            outline: none;
+            border-bottom: 1px solid #eee; 
+        }
     }
-}
-.cust-content-toolbar{
-    background-color: #f6f8f8;
-    font-size: 26px;
-    padding-left: 15px;
-    line-height: 26px;
-    height: 28px;
-    i:hover{
-        cursor: pointer;
+    .offset-header-text{
+        padding-left: 0;
+        .md-subheader-content{
+            border-left: 3px solid rgb(46, 55, 169);
+            padding-left: 10px;
+        }
     }
-}
-.org-sort-content{
-    border: 3px solid #f6f8f8;
-}
-.cust-list-item{
-    font-size: 14px;
-    padding: 5px 10px;
-    height: 45px;
-    overflow: hidden;
-    &.active{
-        background-color: #337ab7;
-        color: #fff;
+    .cust-content-toolbar{
+        background-color: #f6f8f8;
+        font-size: 26px;
+        padding-left: 15px;
+        line-height: 26px;
+        height: 28px;
+        i:hover{
+            cursor: pointer;
+        }
     }
-}
-.employees-sort{
-    tr{
+    .org-sort-content{
+        border: 3px solid #f6f8f8;
+        .open-orgs{
+            height: 40px;
+            line-height: 40px;
+            font-size: 30px;
+        }
+    }
+    .cust-list-item{
+        font-size: 14px;
+        padding: 5px 10px;
+        height: 45px;
+        overflow: hidden;
         &.active{
+            background-color: #eee;
+        }
+    }
+    .employees-sort{
+        tr{
+            outline: none;
             td{
-                background-color: #337ab7 !important;
-                color: #fff;
-                a{
-                    color: #fff;
+                height: 40px;
+                line-height: 40px;
+            }
+            &.active{
+                td{
+                    background-color: #eee !important;
                 }
             }
+        }
+    }
+    .icon-container{
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        font-size: 20px;
+        text-align: center;
+        &:hover{
+            background-color: #eee;
         }
     }
 }

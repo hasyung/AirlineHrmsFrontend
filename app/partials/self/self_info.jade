@@ -7,11 +7,7 @@
                 template-url="partials/self/self_resume.html"
                 locals="{currentUser:currentUser}"
             )
-            .avator-area(
-                nb-dialog="partials/self/self_info_basic/avator_upload.tpl.html"
-                nb-dialog-scope="this"
-                style="cursor: pointer;"
-            )
+            .avator-area
                 img(ng-src="{{currentUser.favicon.middle}}")
                 .edit-icon-container(
                     nb-dialog
