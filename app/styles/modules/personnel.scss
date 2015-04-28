@@ -68,7 +68,7 @@
             font-size: $font-size-lg;
             text-align: center;
         }
-            
+
     }
 
     .personnel-info-list {
@@ -170,7 +170,7 @@
         }
 
         .form-material-section {
-            padding: 0 30px 30px;
+            padding: 0 30px;
             position: relative;
 
             &:hover {
@@ -459,7 +459,7 @@
                 height: 72px;
                 border-radius: 36px;
             }
-            
+
         }
         .sml-avator{
             img{
@@ -467,7 +467,7 @@
                 height: 40px;
                 border-radius: 20px;
             }
-            
+
         }
     }
 }
@@ -490,7 +490,7 @@
         }
         .list-row{
             outline: none;
-            border-bottom: 1px solid #eee; 
+            border-bottom: 1px solid #eee;
         }
     }
     .offset-header-text{
