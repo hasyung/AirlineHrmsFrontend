@@ -25,9 +25,21 @@ tabset(flex)
                                 td(ng-bind="change.name")
                                 td(ng-bind="change.department.name")
                                 td(ng-if="change.action == '修改'")
-                                    a(href="javascript:;" ng-click="ctrl.mdDialog.show({templateUrl:'partials/common/update_change_review.tpl.html',locals:{data:change}, controller:'DialogCtrl', controllerAs:'ctrl'})") {{change.auditableType}}
+                                    a(
+                                        href="javascript:void(0);"
+                                        nb-dialog
+                                        template-url="partials/common/update_change_review.tpl.html"
+                                        ng-bind="change.auditableType"
+                                        locals="{'change': change}"
+                                    )
                                 td(ng-if="change.action == '新增' || change.action == '删除'")
-                                    a(href="javascript:;" ng-click="ctrl.mdDialog.show({templateUrl:'partials/common/create_change_review.tpl.html',locals:{data:change}, controller:'DialogCtrl', controllerAs:'ctrl'})") {{record.auditableType}}
+                                    a(
+                                        href="javascript:void(0);"
+                                        nb-dialog
+                                        template-url="partials/common/create_change_review.tpl.html"
+                                        ng-bind="change.auditableType"
+                                        locals="{'change': change}"
+                                    )
                                 td(ng-bind="change.createdAt")
                                 td()
                                     .radio-group(radio-box, ng-model="change.statusCd")

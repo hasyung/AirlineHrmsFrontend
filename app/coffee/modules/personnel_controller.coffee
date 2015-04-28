@@ -132,11 +132,56 @@ class ReviewCtrl extends nb.Controller
             params.push temp
         @changes.checkChanges(params)
 
-class DialogCtrl extends nb.Controller
-    @.$inject = ['$scope', 'data', '$mdDialog']
-    constructor: (@scope, @data, @mdDialog) ->
+class PersonnelSort extends nb.Controller
+    @.$inject = ['$scope', 'Org', 'Position', 'Employee', '$http']
+    constructor: (@scope, @Org, @Position, @Employee, @http) ->
+        @orgLinks = []
+        @loadInitailData()
+
+    loadInitailData: ->
         self = @
-        @scope.data = @data
+        @currentOrgs = @Org.$search().$then (data)->
+            self.currentOrgs = data.jqTreeful()[0]
+            self.orgLinks.push self.currentOrgs
+
+    orgSelectBack: ->
+        if @orgLinks.length > 1
+            @orgLinks.pop()
+            @currentOrgs = @orgLinks[@orgLinks.length-1]
+
+    showChildsOrg: (org)->
+        @orgLinks.push(org)
+        @currentOrgs = org
+    setHeigher: (collection, index, category)->
+        return if index == 0 || (!category)
+        params = {
+            category:category
+            current_id: collection[index].id
+            target_id:collection[index-1].id
+        }
+        promise = @changeOrder params
+        promise.then ()->
+            temp = collection[index]
+            collection[index] = collection[index-1]
+            collection[index-1] = temp
+    setLower: (collection, index, category)->
+        return if index >= collection.length-1 || (!category)
+        params = {
+            category:category
+            current_id: collection[index].id
+            target_id:collection[index+1].id
+        }
+        promise = @changeOrder params
+        promise.then ()->
+            temp = collection[index]
+            collection[index] = collection[index+1]
+            collection[index+1] = temp
+
+    changeOrder: (params)->
+        promise = @http.get '/api/sort', {params:params}
+        # promise.then onSuccess
+
+
 
 
     
@@ -144,4 +189,4 @@ class DialogCtrl extends nb.Controller
 
 
 app.config(Route)
-app.controller('DialogCtrl', DialogCtrl)
+app.controller('PersonnelSort', PersonnelSort)

@@ -1,13 +1,13 @@
 div(
-    ng-init="currentPos = ngDialogData;\
+    ng-init="currentPos = panel.position;\
     currentEmps = currentPos.employees.$refresh();\
     hisLeaders = currentPos.formerleaders.$refresh();\
     currentSpe = currentPos.specification.$refresh();")
     md-toolbar
         .md-toolbar-tools
             span 岗位详情
-    .personnel-content.personnel-control
-        section.personnel-info-section(ng-init= "current = ngDialogData; data = {}; data.selectedIndex = 0;")
+    .personnel-content
+        section.personnel-info-section(ng-init= "current = panel.position; data = {}; data.selectedIndex = 0;")
             tabset(type="pills")
                 tab(heading="基本信息")
                     section.form-material-section
@@ -30,14 +30,21 @@ div(
 
                 tab(heading="培训体系")
 
-            //- md-tabs(md-selected="data.selectedIndex")
-            //-     md-tab(id="tab1" label="基本信息" md-active)
+            //- md-tabs.md-padding(md-selected="data.selectedIndex")
+            //-     md-tab(id="tab1" label="基本信息")
+            //-         p 11111
             //-     md-tab(id="tab2" label="人员明细")
+            //-         p 222
             //-     md-tab(id="tab3" label="考勤体系")
+            //-         p 333
             //-     md-tab(id="tab4" label="绩效体系")
+            //-         p 444
             //-     md-tab(id="tab5" label="薪酬体系")
+            //-         p 555
             //-     md-tab(id="tab6" label="福利体系")
+            //-         p 666
             //-     md-tab(id="tab7" label="培训体系")
+            //-         p 777
             //- div.tabpanel-container(ng-switch="data.selectedIndex")
             //-     div(role="tabpanel" layout="column" aria-labelledby="tab1" ng-switch-when="0")
             //-         section.form-material-section

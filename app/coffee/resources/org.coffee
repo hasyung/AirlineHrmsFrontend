@@ -83,6 +83,13 @@ Org = (restmod, RMUtils, $Evt) ->
 
         positions: { hasMany: 'Position'}
 
+        fullName: {
+            computed: (val) ->
+
+
+
+            mask: "CU"
+        }
 
         $hooks:
             'after-fetch-many': -> $Evt.$send('org:refresh')
@@ -113,6 +120,7 @@ Org = (restmod, RMUtils, $Evt) ->
 
         $extend:
             Resource:
+                #生效所有已执行的机构操作
                 active: (formdata)->
                     self = @
                     url = RMUtils.joinUrl(this.$url(), 'active')
@@ -123,7 +131,7 @@ Org = (restmod, RMUtils, $Evt) ->
                         $Evt.$send('org:refresh')
 
                     this.$send(request, onSuccess)
-
+                #撤销所有已执行的操作
                 revert: ->
                     self = @
                     url = RMUtils.joinUrl(this.$url(), 'revert')

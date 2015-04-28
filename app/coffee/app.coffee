@@ -110,7 +110,8 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
                     toaster.pop('error', '参数错误', response.data.message || JSON.stringify(response.data) || response)
 
                 if /^5/.test(Number(response.status).toString()) # if server error
-                    toaster.pop('error', '服务器错误', response.data.message || JSON.stringify(response.data) || response)
+                    toaster.pop('error', '服务器错误', response.data.message || JSON.stringify(response.data || response))
+
                 return $q.reject(response)
         }
 
@@ -130,17 +131,20 @@ App
     .config ['restmodProvider', restConf]
     .config ['$mdThemingProvider', mdThemingConf]
     .config ['$stateProvider','$urlRouterProvider','$locationProvider', '$httpProvider', routeConf]
-    .run ['$state','$rootScope', 'toaster', '$http', 'Org', 'sweet', 'User', '$enum', '$timeout', '$cookies',
-    ($state, $rootScope, toaster, $http, Org, sweet, User, $enum, $timeout, $cookies) ->
+    .run ['$state', '$location','$rootScope', 'toaster', '$http', 'Org', 'sweet', 'User', '$enum', '$timeout', 'AuthService',
+    ($state, $location, $rootScope, toaster, $http, Org, sweet, User, $enum, $timeout, AuthServ) ->
 
         cancelLoading = ->
-            $rootScope.loading = false
+            $timeout(
+                ()-> $rootScope.loading = false
+                100
+            )
         startLoading = ->
             $rootScope.loading = true
 
         # for $state.includes in view
 
-        $rootScope.$on '$stateChangeStart', ->
+        $rootScope.$on '$stateChangeStart', (evt, _to , _toParam, _from, _fromParam) ->
             startLoading()
 
         $rootScope.$on '$stateChangeSuccess', () ->
@@ -156,11 +160,13 @@ App
             $rootScope.loading = false
             toaster.pop(code.name, "提示", info)
 
-        $rootScope.currentUser = User.$fetch()
-
         $rootScope.$state = $state
 
         $rootScope.allOrgs = Org.$search()
+
+
+        $rootScope.createFlow = (data, flowname) ->
+            $http.post("/api/workflows/#{flowname}", data)
 
         $rootScope.enums = $enum.get()
         $rootScope.loadEnum = $enum.loadEnum()

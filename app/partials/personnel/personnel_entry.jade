@@ -1,12 +1,12 @@
 .personnel-content(ng-controller="NewResource")
-    section.personnel-info-section(ng-init= "selectEmp = ngDialogData; params = {}")
+    section.personnel-info-section(ng-init= "params = {}")
         md-toolbar
             .md-toolbar-tools
                 span 新员工入职
         .form-material-section
             md-subheader.md-primary 基本信息
             //- 应该得到请求结果后才判断是否关闭dialog
-            form(ng-submit="save(ctrl.regEmployee(newEmp), newEmpForm, closeThisDialog())" name="newEmpForm")
+            form(ng-submit="ctrl.regEmployee(newEmp);panel.close();" name="newEmpForm")
                 div
                     md-input-container(flex)
                         label 姓名
@@ -94,6 +94,6 @@
                         input(ng-model="newEmp.startWorkDate" type="date")
                     md-input-container(flex)
                 .form-bottom-group.pull-right()
-                    md-button.md-raised.white(type="button" ng-click="closeThisDialog()") 取消
+                    md-button.md-raised.white(type="button" ng-click="panel.close()") 取消
                     md-button.md-primary.md-raised(type="submit") 保存
 

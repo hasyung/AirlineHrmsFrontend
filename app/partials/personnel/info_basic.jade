@@ -2,7 +2,7 @@ md-toolbar
     .md-toolbar-tools
         span 人事信息
 .personnel-content.personnel-control
-    section.personnel-info-section(ng-init= "current = ngDialogData; current.$refresh(); data = {}; data.selectedIndex = 0;")
+    section.personnel-info-section(ng-init= "current = panel.employee; current.$refresh();")
         tabset(type="pills")
             tab(heading="基本人事信息")
                 div(layout="column")
@@ -13,15 +13,15 @@ md-toolbar
                         md-subheader.md-warn 岗位信息
                         include info_basic/info_position_edit
             tab(heading="培训记录")
-                
+
             tab(heading="奖惩记录")
-                
+
             tab(heading="考勤信息")
-                
+
             tab(heading="绩效考核")
-                
+
             tab(heading="档案信息")
-                
+
             tab(heading="个人履历" has-permission="employees_resume")
                 include personnel_resume
         //- md-tabs(md-selected="data.selectedIndex")
@@ -38,39 +38,3 @@ md-toolbar
         //-     md-tab(label="考勤信息")
         //-     md-tab(label="档案信息")
         //-     md-tab(label="个人履历")
-
-        
-        //- div.tabpanel-container(ng-switch="data.selectedIndex")
-        //-     div(role="tabpanel" layout="column" aria-labelledby="tab1" ng-switch-when="0")
-        //-         section.form-material-section
-        //-             md-subheader.md-primary 基本信息
-        //-             include info_basic/info_basic_edit
-        //-         section.form-material-section
-        //-             md-subheader.md-warn 岗位信息
-        //-             include info_basic/info_position_edit
-        //-     div(role="tabpanel" layout="column" aria-labelledby="tab2" ng-switch-when="1")
-        //-         span 1234444
-        //-     div(role="tabpanel" layout="column" aria-labelledby="tab3" ng-switch-when="2")
-        //-         span 1234444
-        //-     div(role="tabpanel" layout="column" aria-labelledby="tab4" ng-switch-when="3")
-        //-         span 1234444
-        //-     div(role="tabpanel" layout="column" aria-labelledby="tab5" ng-switch-when="4")
-        //-         include personnel_resume
-        //-     div(role="tabpanel" layout="column" aria-labelledby="tab6" ng-switch-when="5")
-        //-         include personnel_resume
-            //-     section.form-material-section
-            //-         md-subheader.md-primary 基本信息
-            //-         include info_basic/info_basic_edit
-            //-     section.form-material-section
-            //-         md-subheader.md-warn 岗位信息
-            //-         include info_basic/info_position_edit
-
-//- <div role="tabpanel"
-//-              id="tab1-content"
-//-              aria-labelledby="tab1"
-//-              ng-switch-when="0"
-//-              md-swipe-left="next()"
-//-              md-swipe-right="previous()" >
-//-             View for Item #1<br/>
-//-             data.selectedIndex = 0
-//-         </div>
