@@ -48,7 +48,7 @@
     "sweetalert": "~0.4.1",
     "ngDialog": "https://github.com/sandwich99/ngDialog.git#e116ff98e5843ab2f98d5206476f967efd4ca7f9",
     "bootstrap-sass": "~3.3.3",
-    "angular-material": "~0.9.0",
+    "angular-material": "~0.8.2",
     "ng-flow": "~2",
     "underscore.string": "~3.0.3",
     "d3": "~3.5.5"
