@@ -34,6 +34,7 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
         return newarr
 
     # 将数组根据 parent_id 转为 tree 形式
+    # 子机构顺序根据机构sort_no 排序
     #
     #  tree 结构为
     #  [{
@@ -55,6 +56,7 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
                 return child.parent_id == undefined or child.parent_id == 0
             else
                 child.parent_id == parent.id
+        children.sort (a, b) -> a.sort_no - b.sort_no
 
         if not _.isEmpty( children )
             if parent.id == undefined
