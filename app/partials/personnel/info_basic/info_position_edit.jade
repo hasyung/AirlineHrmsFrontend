@@ -4,8 +4,10 @@ form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="Ed
     .form-btn-group.alive(ng-show="editing")
         md-button.md-raised.white(ng-click="cancel(current, $event)") 取消
         md-button.skyblue.md-raised(type="submit" ng-disabled="positionEditForm.$invalid") 保存
+    fieldset()
 
-    fieldset(ng-disabled="!editing")
+        div(org-muti-pos ng-model="current.positions")
+
         .form-group
             label 所属部门
             //- md-select(ng-model="current.department" ng-disabled="!editing")
