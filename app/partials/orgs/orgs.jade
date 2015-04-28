@@ -32,8 +32,8 @@ section(layout="row" flex)
 
             h1 {{ctrl.treeRootOrg.$cmStatus.name}}组织机构图
             h2(ng-show="ctrl.isHistory")
-                span.glyphicon.glyphicon-time(style="margin-right: 10px; color: skyblue;font-size: 16px;")
-                {{ctrl.orgs.$metadata.created_at | date : 'yyyy年MM月dd日'}}— {{ctrl.orgs.$metadata.title}}
+                i.glyphicon.glyphicon-time(style="margin-right: 10px; color: skyblue;font-size: 24px;")
+                span {{ctrl.orgs.$metadata.created_at | date : 'yyyy年MM月dd日'}}— {{ctrl.orgs.$metadata.title}}
         md-content.org-chart-window(id="org_chart_warpper" flex scroll-center style="background-color: #f0f3f4;")
             div.svg-wrapper(
                 org-chart

@@ -27,6 +27,11 @@
         font-weight: normal;
         margin: 0;
         margin-bottom: 10px;
+
+        span {
+            position: relative;
+            top: -4px;
+        }
     }
 
     .org-chart-search {
