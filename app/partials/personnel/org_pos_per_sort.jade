@@ -28,9 +28,9 @@ div(ng-controller="PersonnelSort as ctrl" style="margin-left: 10px;")
                                     i.fa.fa-caret-right(ng-click="ctrl.showChildsOrg(org)" ng-if="org.children")
                                 span(flex="10")
                                     div
-                                        i.fa.fa-chevron-up(ng-click="ctrl.setHeigher(ctrl.currentOrgs.children, $index, 'department')")
+                                        i.fa.fa-angle-up(ng-click="ctrl.setHeigher(ctrl.currentOrgs.children, $index, 'department')")
                                     div
-                                        i.fa.fa-chevron-down(ng-click="ctrl.setLower(ctrl.currentOrgs.children, $index, 'department')")
+                                        i.fa.fa-angle-down(ng-click="ctrl.setLower(ctrl.currentOrgs.children, $index, 'department')")
 
 
         div.pos-sort-container(flex)
@@ -47,9 +47,9 @@ div(ng-controller="PersonnelSort as ctrl" style="margin-left: 10px;")
                         span(flex="90" ng-bind="pos.name")
                         span(flex="10")
                             div
-                                i.fa.fa-chevron-up(ng-click="ctrl.setHeigher(initData.positions, $index, 'position')")
+                                i.fa.fa-angle-up(ng-click="ctrl.setHeigher(initData.positions, $index, 'position')")
                             div
-                                i.fa.fa-chevron-down(ng-click="ctrl.setLower(initData.positions, $index, 'position')")
+                                i.fa.fa-angle-down(ng-click="ctrl.setLower(initData.positions, $index, 'position')")
     div(flex)
         section
             md-subheader.offset-header-text 员工列表
@@ -81,7 +81,7 @@ div(ng-controller="PersonnelSort as ctrl" style="margin-left: 10px;")
                             td(ng-bind="emp.position.name")
                             td
                                 div
-                                    i.fa.fa-chevron-up(ng-click="ctrl.setHeigher(initData.employees, $index, 'employee')")
+                                    i.fa.fa-angle-up(ng-click="ctrl.setHeigher(initData.employees, $index, 'employee')")
                                 div
-                                    i.fa.fa-chevron-down(ng-click="ctrl.setLower(initData.employees, $index, 'employee')")
+                                    i.fa.fa-angle-down(ng-click="ctrl.setLower(initData.employees, $index, 'employee')")
 
