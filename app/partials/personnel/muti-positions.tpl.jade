@@ -19,7 +19,7 @@ div()
                         ui-select-choices(repeat="org in allOrgs | filter:$select.search | limitTo: 10") {{ org.fullName }}
                 md-input-container.row-has-value
                     label 岗位
-                    md-select(ng-model="posItem.position" ng-disabled="!editing")
+                    md-select(ng-model="posItem.position")
                         md-select-label {{posItem.position.name || '无'}}
                         md-option(ng-value="pos" ng-repeat="pos in itemParams.orgPos") {{::pos.name}}
                 md-radio-group(layout ng-model="posItem.category")
