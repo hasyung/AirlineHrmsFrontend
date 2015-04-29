@@ -1,5 +1,5 @@
 md-dialog(flow-init="{target: '/api/me/upload_favicon', uploadMethod:'PUT', testChunks:false, singleFile:true}"
-    flow-file-success="currentUser.$refresh() && closeThisDialog()"
+    flow-file-success="currentUser.$refresh() && dialog.close()"
 )
     .modal-header.tl-top-header
         button.close(type='button', data-dismiss='modal', aria-hidden='true', ng-click="dialog.close()") ×
@@ -34,6 +34,6 @@ md-dialog(flow-init="{target: '/api/me/upload_favicon', uploadMethod:'PUT', test
         //-     a.btn.btn-danger(href="javascript:;" ng-show="$flow.files.length" ng-click="$flow.cancel()") 删除图片
 
     .modal-footer.avator-footer.clearfix(style="border:none;")
-        button.btn.btn-info.btn-sm.pull-right(ng-click="$flow.upload() && dialog.close()") 确 定
+        button.btn.btn-info.btn-sm.pull-right(ng-click="$flow.upload()") 确 定
         button.btn.btn-default.btn-sm.pull-right(ng-click='dialog.close()') 取 消
 
