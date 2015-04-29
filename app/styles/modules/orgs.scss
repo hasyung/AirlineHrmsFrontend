@@ -65,18 +65,11 @@
 
 
 
-.org-chart-window {
-    .orgchart-box-active {
-        fill: #dfe5e7;
-
-        &.active {
-            fill: #90d7ff;
-        }
-    }
-
+.svg-wrapper {
     svg {
         display: block;
         margin: 0 auto;
+        transform-origin: 0% 0%;
 
         text,
         rect {
@@ -263,5 +256,3 @@ md-dialog.effect_changes {
         width: 270px;
     }
 }
-
-

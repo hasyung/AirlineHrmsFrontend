@@ -51,6 +51,7 @@
     "angular-material": "~0.8.2",
     "ng-flow": "~2",
     "underscore.string": "~3.0.3",
-    "d3": "~3.5.5"
+    "d3": "~3.5.5",
+    "print-area": "~2.4.1"
   }
 }
