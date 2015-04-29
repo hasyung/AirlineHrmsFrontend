@@ -5,16 +5,6 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
         md-button.md-raised.white(type="button" ng-click="cancel(current,$event, empEditForm)",) 取消
         md-button.skyblue.md-raised(type="submit") 保存
     fieldset(ng-disabled="!editing")
-        div(layout)
-            .sm-avator-area
-                img(ng-src="{{current.favicon}}" ng-if="current.favicon")
-                img(src="http://www.placehold.it/72x72/EFEFEF/AAAAAA&text=no+image" ng-if="!current.favicon")
-                //- img(src="http://192.168.6.99:9001/uploads/employees/favicons/11556/791d7d2bbee699f891b164d3e86ad9ce.png")
-            .employee-info
-                .employee-name(ng-bind="current.name")
-                .employee-others-info
-                    span(ng-bind="current.position.name")
-                    span.last(ng-bind="current.contact.mobile")
         md-input-container
             label 员工编号
             input(disabled ng-model="current.employeeNo")

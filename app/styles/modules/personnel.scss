@@ -114,6 +114,52 @@
     }
 
 }
+.big-avator-area {
+    border-radius: 50%;
+    height: 120px;
+    width: 120px;
+    overflow: hidden;
+    padding: 5px;
+    background-color: #fff;
+
+    img {
+        height: 100%;
+        width: 100%;
+    }
+}
+.personnel-base-info{
+    height: 180px;
+    background-image: url("/images/personnel/personnel_banner_bg.jpg");
+    padding: 30px 64px;
+
+    .employee-info {
+        padding-top: 15px;
+        margin-left: 64px;
+
+        .employee-name {
+            font-size: 32px;
+            color: rgba(0, 0, 0, 0.87);
+            .resume-button{
+                width: 24px;
+                height: 24px;
+                background-image: url("/images/personnel/resume-icon.png");
+                background-size: 24px 24px;
+                display: inline-block;
+                margin-left: 20px;
+            }
+        }
+
+        .employee-others-info{
+            margin-top: 15px;
+            margin-top: 5px;
+            font-size: 14px;
+            color: rgba(0,0,0,0.87);
+            div:last-child{
+                margin-top: 10px;
+            }
+        }
+    }
+}
 
 .personnel-content {
     &.self-info-content {
@@ -128,12 +174,12 @@
     }
 
     .md-subheader {
-        border-left: 3px solid #f44336;
+        // border-left: 3px solid #f44336;
         color: $text-color !important;
         font-size: $font-size-md;
         margin: 38px 0 0;
         padding: 0;
-        padding-left: 5px;
+        // padding-left: 5px;
     }
 
     &.personnel-control {
@@ -307,36 +353,7 @@
             background-image: url('../../../images/personnel/3.png');
         }
     }
-    .sm-avator-area {
-        border-radius: 50%;
-        height: 72px;
-        width: 72px;
-        overflow: hidden;
-
-        img {
-            height: 100%;
-            width: 100%;
-        }
-    }
-    .employee-info {
-        padding-top: 10px;
-        margin-left: 20px;
-
-        .employee-name {
-            font-size: 18px;
-            color: #23b7e5;
-        }
-
-        .employee-others-info{
-            margin-top: 5px;
-            font-size: 15px;
-            color: rgba(0,0,0,0.54);
-
-            .last{
-                margin-left: 10px;
-            }
-        }
-    }
+    
 
 }
 
