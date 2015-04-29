@@ -10,12 +10,13 @@ div(
         section.personnel-info-section(ng-init= "current = panel.position; data = {}; data.selectedIndex = 0;")
             tabset(type="pills")
                 tab(heading="基本信息")
-                    section.form-material-section
-                        md-subheader.md-primary 基本信息
-                        include position_basic
-                    section.form-material-section
-                        md-subheader.md-warn 岗位描述
-                        include position_desc
+                    md-content
+                        section.form-material-section
+                            md-subheader.md-primary 基本信息
+                            include position_basic
+                        section.form-material-section
+                            md-subheader.md-warn 岗位描述
+                            include position_desc
 
                 tab(heading="人员明细")
                     include position_employees
