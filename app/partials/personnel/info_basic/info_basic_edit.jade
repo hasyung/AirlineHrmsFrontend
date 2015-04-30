@@ -6,19 +6,13 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
         md-button.md-raised.white(type="button" ng-click="cancel(current,$event, empEditForm)",) 取消
         md-button.skyblue.md-raised(type="submit") 保存
     fieldset(ng-disabled="!editing")
-        md-input-container
-            label 员工编号
-            input(disabled ng-model="current.employeeNo")
-
         div(layout)
             md-input-container(flex)
                 label 姓名
                 input(ng-model="current.name" name="name" required)
-            md-input-container.row-has-value(flex)
-                label 性别
-                md-select(ng-model="current.gender" md-on-open="loadEnum('genders')" required ng-disabled="!editing")
-                    md-select-label {{current.gender ? current.gender.displayName : '无'}}
-                    md-option(ng-value="gender" ng-repeat="gender in enums.genders track by gender.id") {{gender.displayName}}
+            md-input-container(flex)
+                label 员工编号
+                input(disabled ng-model="current.employeeNo")
 
         div(layout)
             md-input-container(flex)
@@ -29,6 +23,14 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
                 md-select(ng-model="current.politicalStatus" md-on-open="loadEnum('political_status')" name="political_status" ng-disabled="!editing")
                     md-select-label {{current.politicalStatus? current.politicalStatus.displayName : '无'}}
                     md-option(ng-value="political" ng-repeat="political in enums.political_status") {{political.displayName}}
+        
+        div(layout)
+            md-input-container(flex)
+                label 毕业院校
+                input(type="text", ng-model="current.school")
+            md-input-container(flex)
+                label 专业
+                input(type="text" placeholder="请输入专业" ng-model="current.major")
         div(layout)
             md-input-container.row-has-value(flex)
                 label 学历
@@ -40,29 +42,21 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
                 md-select(ng-model="current.degree", md-on-open="loadEnum('degrees')" ng-disabled="!editing")
                     md-select-label {{current.degree? current.degree.displayName: '无'}}
                     md-option(ng-value="degree" ng-repeat="degree in enums.degrees") {{degree.displayName}}
-        div(layout)
-            md-input-container(flex)
-                label 毕业院校
-                input(type="text", ng-model="current.school")
-            md-input-container(flex)
-                label 专业
-                input(type="text" placeholder="请输入专业" ng-model="current.major")
-        div(layout)
             md-input-container.row-has-value(flex)
                 label 英语等级
                 md-select(ng-model="current.englishLevel", md-on-open="loadEnum('english_levels')" ng-disabled="!editing")
                     md-select-label {{current.englishLevel? current.englishLevel.displayName : '无'}}
                     md-option(ng-value="englishLevel" ng-repeat="englishLevel in enums.english_levels") {{englishLevel.displayName}}
+        div(layout)
             md-input-container(flex)
                 label 联系方式
                 input(type="text", ng-model="current.contact.mobile", name="contact")
-        div(layout)
-            md-input-container(flex)
-                label 到岗时间
-                input(ng-model="current.joinScalDate" type="date")
             md-input-container(flex)
                 label 参工时间
                 input(ng-model="current.startWorkDate" type="date")
+            md-input-container(flex)
+                label 到岗时间
+                input(ng-model="current.joinScalDate" type="date")
 
 
 
