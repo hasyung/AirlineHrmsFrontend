@@ -77,9 +77,8 @@ class NbFilterCtrl
 
     filter_template_definition =
         string: '''
-            <md-input-container>
-                <label>${ displayName }</label>
-                <input type="text" ng-model="${ name }">
+            <md-input-container md-no-float>
+                <input type="text" placeholder="${ displayName }" ng-model="${ name }">
             </md-input-container>
         '''
     @.$inject = ['$scope', '$element', '$attrs', '$parse', '$compile', 'SerializedFilter']
@@ -230,20 +229,22 @@ NbFilterDirective = ->
 
 
     template = '''
-        <md-content>
-            <div>
-                <h1>筛选条件</h1>
-                <md-button nb-dialog template-url="partials/component/table/save_filter_dialog.html">保存</md-button>
-                <md-select ng-model="filter.serializedFilter"
-                ng-change="filter.restoreFilter(filter.serializedFilter.parse())">
-                    <md-option ng-value="f" ng-repeat="f in filter.filters">{{f.name}}</md-option>
-                </md-select>
-            </div>
+        <md-content class="search-container">
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <h2>筛选条件</h2>
+                    <div flex></div>
+                    <md-button class="md-primary md-raised" nb-dialog template-url="partials/component/table/save_filter_dialog.html">保存</md-button>
+                    <md-select ng-model="filter.serializedFilter"
+                    ng-change="filter.restoreFilter(filter.serializedFilter.parse())" placeholder="请选择筛选条件">
+                        <md-option ng-value="f" ng-repeat="f in filter.filters">{{f.name}}</md-option>
+                    </md-select>
+                </div>
+            </md-toolbar>
 
-            <md-divider></md-divider>
             <form ng-submit="search(filter.exportQueryParams())">
                 <div ng-form="conditionForm" class="search-row" ng-repeat="condition in filter.conditions">
-                    <button type="button" class="del" ng-click="filter.removeCondition(condition)">删除</button>
+                    <md-button type="button" class="md-icon-button" ng-click="filter.removeCondition(condition)">删除</md-button>
                     <md-select ng-model="condition.selectedConstraint">
                         <md-select-label>{{ condition.selectedConstraint.displayName }}</md-select-label>
                         <md-option ng-value="inert_cons" ng-repeat="inert_cons in filter.inertConstraints() track by inert_cons.name">
@@ -251,12 +252,12 @@ NbFilterDirective = ->
                         </md-option>
                     </md-select>
                     <condition-input-container></condition-input-container>
-                    <button type="button" class="plus"
+                    <md-button type="button" class="md-icon-button"
                         ng-show="$last && filter.inertConstraints().length > 0"
-                        ng-click="filter.addNewCondition(filter.inertConstraints()[0])">新增</button>
+                        ng-click="filter.addNewCondition(filter.inertConstraints()[0])">新增</md-button>
                 </div>
-                <div>
-                    <input type="submit"/>
+                <div class="search-footer">
+                    <md-button class="md-primary md-raised" type="submit">搜索</md-button>
                 </div>
             </form>
         </md-content>
