@@ -12,29 +12,32 @@ nbRestApi = (restmod, RMUtils, $rootScope, $Evt) ->
         created_at: { decode: 'date', param: 'yyyy年mm月dd日',mask: 'CU' }
         updated_at: { decode: 'date', param: 'yyyy年mm月dd日',mask: 'CU' } #不 send CURD 操作时
 
-        hooks:
+        $hooks:
+            'before-fetch-many': (req) ->
+                this.$queryParams = req.params if req.params
+
             'after-request-error': (res)->
                 $Evt.$send('global:request:error',res)
 
 
 
-        'Record.$store': (_patch) ->
-            self = @
-            self.$action () ->
-                url = Utils.joinUrl(self.$url('update'),_patch)
+        # 'Record.$store': (_patch) ->
+        #     self = @
+        #     self.$action () ->
+        #         url = Utils.joinUrl(self.$url('update'),_patch)
 
-                request =
-                    method: 'PATCH'
-                    url: url
-                    data: self.$wrap (_name) -> _patch.indexOf(_name) == -1
+        #         request =
+        #             method: 'PATCH'
+        #             url: url
+        #             data: self.$wrap (_name) -> _patch.indexOf(_name) == -1
 
-                onSuccess = (_response) ->
-                    self[_patch] = _response.data
+        #         onSuccess = (_response) ->
+        #             self[_patch] = _response.data
 
-                onErorr = (_response) ->
-                    self.$dispatch 'after-store-error', [_response]
+        #         onErorr = (_response) ->
+        #             self.$dispatch 'after-store-error', [_response]
 
-                @.$send request, onSuccess, onErorr
+        #         @.$send request, onSuccess, onErorr
 
         # 'Record.$copy': ->
         #     raw = this.$wrap()
