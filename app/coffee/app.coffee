@@ -17,7 +17,7 @@ deps = [
     'ui.grid'
     'ui.grid.selection'
     'ui.grid.pinning'
-    # 'ui.grid.pagination'
+    'ui.grid.pagination'
     'ngAnimate'
     'ngAria'
     'ui.bootstrap'

@@ -868,7 +868,7 @@ GridPaginationTemplate = """
 
 nbGridDirective = ($parse)->
     nbGridTemplate =  '''
-        <div ui-grid="gridOptions" ui-grid-selection ui-grid-pinning></div>
+        <div ui-grid="gridOptions" ui-grid-selection ui-grid-pagination ui-grid-pinning></div>
     '''
     # defaultOptions = {
     #     enableSorting: false
@@ -905,38 +905,53 @@ nbGridDirective = ($parse)->
     # }
 
 
-    defaultOptions = {
-        # flatEntityAccess: true
-        enableSorting: false
-        enableRowSelection: true
-        # useExternalSorting: false
-        useExternalPagination: true
-        # enableSelectAll: true
-        selectionRowHeaderWidth: 35
-        rowHeight: 35
-
-        # paginationTemplate: ''' ''' #分页组件模板， 需要集成 ui-grid-paper
-        # totalItems: xxx
-        # paginationCurrentPage: xxx
-        paginationPageSizes: [25, 50, 75]
-        paginationPageSize: 25
-
-        excludeProperties: [
-            '$$dsp'
-            '$pk'
-            '$cmStatus'
-            '$position'
-            '$resolved'
-            '$super'
-            '$$hashKey'
-            '$scope'
-        ]
-
-    }
 
     postLink = (scope, elem, attrs) ->
         columnDefs = scope.columnDefs
         safeSrc = scope.safeSrc
+        pageGetter = $parse('safeSrc.$metadata.page')
+        itemCountGetter = $parse('safeSrc.$metadata.count')
+
+        defaultOptions = {
+            # flatEntityAccess: true
+            enableSorting: false
+            enableRowSelection: true
+            # useExternalSorting: false
+            useExternalPagination: true
+            # enableSelectAll: true
+            selectionRowHeaderWidth: 35
+            rowHeight: 35
+
+            # paginationTemplate: ''' ''' #分页组件模板， 需要集成 ui-grid-paper
+            # totalItems: xxx
+            paginationCurrentPage: 1
+            paginationPageSizes: [20, 40, 80]
+            paginationPageSize: 20
+
+            onRegisterApi: (gridApi) ->
+
+                gridApi.pagination.on.paginationChanged scope, (newPage, pageSize) ->
+                    currentQueryParams = safeSrc.$queryParams || {}
+                    queryParams = angular.extend {}, currentQueryParams, {
+                        page: newPage
+                        per_page: pageSize
+                    }
+                    safeSrc.$refresh(queryParams)
+
+
+            excludeProperties: [
+                '$$dsp'
+                '$pk'
+                '$cmStatus'
+                '$position'
+                '$resolved'
+                '$super'
+                '$$hashKey'
+                '$scope'
+                '$queryParams'
+            ]
+
+        }
 
         options = angular.extend {
             columnDefs: columnDefs
@@ -945,8 +960,17 @@ nbGridDirective = ($parse)->
 
         scope.gridOptions = options
 
-        scope.$watch('safeSrc.$matadata.count', (newVal) -> options.totalItems =  newVal )
-        scope.$watch('safeSrc.$matadata.page', (newVal) -> options.paginationCurrentPage =  newVal )
+
+        scope.$watch(
+            -> itemCountGetter(scope)
+            ,
+            (newValue) -> options.totalItems =  newValue if newValue
+            )
+        scope.$watch(
+            -> pageGetter(scope)
+            ,
+            (newValue) -> options.paginationCurrentPage =  newValue if newValue
+            )
         # scope.$watch('gridOptions.paginationPageSize') #watch 每页数据
 
 
@@ -959,12 +983,6 @@ nbGridDirective = ($parse)->
             safeSrc: '='
         }
     }
-
-
-
-
-
-
 
 
 app.directive 'nbGrid', nbGridDirective
