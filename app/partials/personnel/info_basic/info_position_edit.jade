@@ -1,6 +1,6 @@
 form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="EditableResource" ng-init="params = {}")
     .form-btn-group(ng-hide="editing" has-permission="employees_update")
-        md-button.md-fab(ng-click="edit($event)")
+        md-button.md-fab.md-primary(ng-click="edit($event)")
             md-icon(md-svg-src="/images/svg/edit_24px.svg" alt="修改")
     .form-btn-group.alive(ng-show="editing")
         md-button.md-raised.white(ng-click="cancel(current, $event)") 取消
@@ -22,12 +22,12 @@ form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="Ed
         md-input-container
             label 岗位备注
             input
-        div(layout)
-            md-input-container.row-has-value(flex)
-                label 岗位
-                md-select(ng-model="current.position" ng-disabled="!editing")
-                    md-select-label {{current.position.name || '无'}}
-                    md-option(ng-value="pos" ng-repeat="pos in params.orgPos") {{pos.name}}
+        //- div(layout)
+        //-     md-input-container.row-has-value(flex)
+        //-         label 岗位
+        //-         md-select(ng-model="current.position" ng-disabled="!editing")
+        //-             md-select-label {{current.position.name || '无'}}
+        //-             md-option(ng-value="pos" ng-repeat="pos in params.orgPos") {{pos.name}}
         div(layout)
             md-input-container.row-has-value(flex)
                 label 分类

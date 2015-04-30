@@ -9,7 +9,12 @@ div(ng-init= "current = panel.employee; current.$refresh();")
             //- img(src="http://192.168.6.99:9001/uploads/employees/favicons/11556/791d7d2bbee699f891b164d3e86ad9ce.png")
         .employee-info
             .employee-name() {{::current.name}}
-                span.resume-button
+                md-button.md-fab.resume-button(
+                    nb-dialog
+                    template-url="partials/self/self_resume.html"
+                    locals="{currentUser:current}"
+                )
+                    md-icon(md-svg-src="/images/svg/resume_24px.svg")
             .employee-others-info
                 div(ng-bind="current.employeeNo")
                 div(ng-bind="current.department.name")
