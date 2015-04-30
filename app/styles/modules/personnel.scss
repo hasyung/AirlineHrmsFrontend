@@ -140,12 +140,20 @@
             font-size: 32px;
             color: rgba(0, 0, 0, 0.87);
             .resume-button{
-                width: 24px;
-                height: 24px;
-                background-image: url("/images/personnel/resume-icon.png");
-                background-size: 24px 24px;
+                width: 30px;
+                height: 29px;
                 display: inline-block;
                 margin-left: 20px;
+                background-color: #e84e40;
+                md-icon{
+                    color: #fff;
+                    width: 24px;
+                    height: 24px;
+                    margin-left: -4px;
+                }
+                &:hover{
+                    background-color: #e51c23;
+                }
             }
         }
 
