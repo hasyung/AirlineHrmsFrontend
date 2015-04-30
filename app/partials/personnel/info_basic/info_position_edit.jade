@@ -11,6 +11,10 @@ form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="Ed
             //- md-select(ng-model="current.department" ng-disabled="!editing")
             //-     md-select-label {{current.department.name}}
             //-     md-option(ng-value="org" ng-repeat="org in allOrgs track by org.id") {{org.name}}
+            org-search(
+                ng-model="current.department"
+                floating-label=""
+                selected-item-change="")
             ui-select(
                 ng-model="current.department"
                 ng-change="params.orgPos = current.department.positions.length? current.department.positions: current.department.positions.$fetch();current.position = null"

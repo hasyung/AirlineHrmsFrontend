@@ -3,20 +3,7 @@ section(layout="row" flex)
         .org-chart-top(ng-class="{'org-chart-history': ctrl.isHistory}")
             div(layout)
                 .org-chart-search(flex)
-                    md-autocomplete(
-                            md-items="org in ctrl.queryMatchedOrg(ctrl.searchText)"
-                            md-item-text="org.fullName"
-                            md-selected-item="org"
-                            md-search-text="ctrl.searchText"
-                            md-min-length="0"
-                            placeholder="想查找啥机构呢？"
-                            md-selected-item-change="ctrl.selectOrgChart(org)"
-                            md-delay="200"
-                            md-autoselect
-                            md-autofocus
-                            md-no-cache="true"
-                        )
-                        span(md-highlight-text="ctrl.searchText" md-highlight-flags="^i") {{org.fullName}}
+                    org-search(selected-item-change="ctrl.selectOrgChart(org)")
                 .top-btn-group
                     //- button(ng-click="ctrl.print()") 导出
                     md-button.md-raised.md-primary(
