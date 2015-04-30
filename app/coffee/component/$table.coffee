@@ -2,8 +2,6 @@
 nb = @nb
 app = nb.app
 
-ISO_DATE_REGEXP = /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/
-
 
 # [{
 #     displayName: '姓名'
@@ -84,10 +82,13 @@ class NbFilterCtrl
                 <input type="text" ng-model="${ name }">
             </md-input-container>
         '''
-    @.$inject = ['$scope', '$element', '$attrs', '$parse', '$compile']
-    constructor: (scope, elem, attrs, $parse, @compile) ->
+    @.$inject = ['$scope', '$element', '$attrs', '$parse', '$compile', 'SerializedFilter']
+    constructor: (scope, elem, attrs, $parse, @compile, SerializedFilter) ->
         options = scope.nbFilter
-        deps    = options.constraintDefs
+        @conditionCode = options.name
+        defs    = options.constraintDefs
+
+        @filters = SerializedFilter.$search({code: @conditionCode})
 
         constraints = defs.reduce((res, val, index) ->
             propertyGetter = $parse(val.name)
@@ -153,16 +154,17 @@ class NbFilterCtrl
         conditionIndex = @conditions.indexOf(condition)
         @conditions.splice(conditionIndex, 1)
 
-    addNewCondition: (constraint, intiialValue) ->
+    addNewCondition: (constraint, initialValue) ->
         return if !constraint
         constraint.startup()
         condition = {
             selectedConstraint: constraint
         }
-        condition.intiialValue = intiialValue if intiialValue
+        condition.initialValue = initialValue if initialValue
         @conditions.push(condition)
-    initialCondition: (currentConstraint, parentScope, parentElem) ->
+    initialCondition: (currentConstraint, parentScope, parentElem, initialValue) ->
         scope = parentScope.$new()
+        scope[currentConstraint.name] = initialValue if initialValue
         $el = @compile(currentConstraint.template) scope, (cloned, scope) ->
             parentElem.append(cloned)
 
@@ -195,8 +197,8 @@ class NbFilterCtrl
         @.$clearAllCondition()
         self = @
         @constraints.forEach (constraint) ->
-            intiialValue = queryParams[constraint.name]
-            self.addNewCondition(constraint, intiialValue) if intiialValue
+            initialValue = queryParams[constraint.name]
+            self.addNewCondition(constraint, initialValue) if initialValue
 
 
 
@@ -213,7 +215,7 @@ conditionInputContainer = ->
 
     postLink = (scope, elem, attr, ctrl) ->
 
-        ctrl.initialCondition(scope.condition.selectedConstraint, scope, elem)
+        ctrl.initialCondition(scope.condition.selectedConstraint, scope, elem, scope.condition.initialValue)
         scope.$watch 'condition.selectedConstraint', (newValue, old) ->
             ctrl.switchCondition(newValue, old, scope, elem) if newValue != old && !newValue.block
 
@@ -232,7 +234,9 @@ NbFilterDirective = ->
             <div>
                 <h1>筛选条件</h1>
                 <md-button nb-dialog template-url="partials/component/table/save_filter_dialog.html">保存</md-button>
-                <md-select ng-model="eqw">
+                <md-select ng-model="filter.serializedFilter"
+                ng-change="filter.restoreFilter(filter.serializedFilter.parse())">
+                    <md-option ng-value="f" ng-repeat="f in filter.filters">{{f.name}}</md-option>
                 </md-select>
             </div>
 
@@ -267,11 +271,9 @@ NbFilterDirective = ->
             scope.onSearch({state: queryParams})
 
 
-
     return {
         scope: {
             nbFilter: '='
-            filterOptions: '='
             onSearch: '&'
         }
         link: postLink
@@ -611,14 +613,6 @@ class NbSearchCtrl
         delete predicate.block
         return
 
-    $$parseFilter: (filter) ->
-
-        reviver = (k , v) ->
-            return v if k == ''
-            return new Date(v) if typeof v == 'string' && ISO_DATE_REGEXP.test(v)
-            return v
-
-        return JSON.parse(filter, reviver)
 
     # predicate: () ->
 

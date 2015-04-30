@@ -80,7 +80,7 @@ class PersonnelCtrl extends nb.Controller
 
 
         ]
-        filter_options = {
+        @filterOptions = {
             name: 'personnel'
             constraintDefs: [
                 {
