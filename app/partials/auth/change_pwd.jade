@@ -1,19 +1,18 @@
-.container
-  .w-xxl.w-auto-xs
-    .m-b-lg
-      .wrapper.text-center 修改密码
-      form.form-validation(name='form')
-        //- .text-danger.wrapper.text-center(ng-show='authError')
-        //-   | {{authError}}
-        .list-group.list-group-sm
-          .list-group-item
-            input.form-control.no-border(type='password', placeholder="原始密码", ng-model='user.password', required='true')
-          .list-group-item
-            input.form-control.no-border(type='password', placeholder='新密码', ng-model='user.new_password', required='true')
-          .list-group-item
-            input.form-control.no-border(type='password', placeholder='密码确认', ng-model='user.password_confirm', required='true')
-        button.btn.btn-lg.btn-primary.btn-block(type='submit', ng-click='ctrl.changePwd(user);closeThisDialog()', ng-disabled='form.$invalid') 确认修改
-        .text-center.m-t.m-b
-          a(ui-sref='/sessions/new') 返回登录
-        
-    //- .text-center(ng-include='"tpl/blocks/page_footer.html"')
+md-dialog.container(style="width:360px;margin:40px auto;")
+    form(novalidate, name="changePwdForm", ng-submit="ctrl.changePwd(user) && dialog.close()")
+        md-content.sticky-container
+            md-subheader.md-sticky-no-effect 修改密码
+            .dialog-content
+                fieldset
+                    md-input-container
+                        label 原始密码
+                        input(type="text" ng-model="user.password" placeholder="原始密码",required="true")
+                    md-input-container
+                        label 新密码
+                        input(type="text" ng-model="user.new_password" placeholder="新密码",required="true")
+                    md-input-container
+                        label 密码确认
+                        input(type="text" ng-model="user.password_confirm" placeholder="密码确认",required="true")
+            .md-actions
+                md-button(type='button',ng-click="dialog.close()") 取消
+                md-button.md-primary(ng-disabled="changePwdForm.$invalid" type="submit") 确认修改

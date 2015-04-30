@@ -57,6 +57,7 @@
     right: 0;
     top: 0;
     z-index: 70;
+    font-family: $font-family-sans-serif;
 
     //关闭过程中的动画
     &.ngdialog-closing {
@@ -107,7 +108,7 @@
             background: #f0f0f0;
             border-radius: 5px;
             color: #444;
-            font-family: 'Helvetica',sans-serif;
+            font-family: $font-family-sans-serif;
             margin: 0 auto;
             max-width: 100%;
             padding: 1em;
@@ -162,7 +163,7 @@
             border-radius: 3px;
             cursor: pointer;
             float: right;
-            font-family: inherit;
+            font-family: $font-family-sans-serif;
             font-size: .8em;
             letter-spacing: .1em;
             line-height: 1em;
@@ -221,7 +222,7 @@
                 background: #27ae60;
                 color: #fff;
                 display: block;
-                font-family: "Helvetica Neue",sans-serif;
+                font-family: $font-family-sans-serif;
                 font-size: 1em;
                 font-weight: 100;
                 height: 1.25em;
@@ -261,7 +262,7 @@
             border: 0;
             cursor: pointer;
             float: right;
-            font-family: inherit;
+            font-family: $font-family-sans-serif;
             font-size: 1em;
             letter-spacing: .1em;
             line-height: 1em;
@@ -285,7 +286,7 @@
             animation: ngdialog-scrollin .5s;
             background: #fff;
             color: $text-color;
-            font-family: 'Helvetica',sans-serif;
+            font-family: $font-family-sans-serif;
             min-height: 100%;
             position: absolute;
             right: 0;
@@ -340,7 +341,7 @@
             border-radius: 3px;
             cursor: pointer;
             float: right;
-            font-family: inherit;
+            font-family: $font-family-sans-serif;
             font-size: .8em;
             letter-spacing: .1em;
             line-height: 1em;
@@ -383,7 +384,7 @@
 .ngdialog-close:before {
     content: '\00D7';
     cursor: pointer;
-    font-family: 'Helvetica', Arial, sans-serif;
+    font-family: $font-family-sans-serif;
 }
 
 .ngdialog.ngdialog-theme-default .ngdialog-close:hover:before,

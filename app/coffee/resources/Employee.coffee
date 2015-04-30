@@ -9,7 +9,9 @@ Employee = (restmod, RMUtils, $Evt) ->
         department: {mask: 'CU', belongsTo: 'Org'}
         # dept: {belongsTo: 'Org', key: 'department_id'}
 
-        joinScalDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
+        # joinScalDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
+        joinScalDate: {decode: 'nbDate'}
+        startWorkDate: {decode: 'nbDate'}
 
         startDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
 

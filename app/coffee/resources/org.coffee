@@ -56,6 +56,7 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
                 return child.parent_id == undefined or child.parent_id == 0
             else
                 child.parent_id == parent.id
+
         children.sort (a, b) -> a.sort_no - b.sort_no
 
         if not _.isEmpty( children )

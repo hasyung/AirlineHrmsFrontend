@@ -74,9 +74,10 @@ restConf = (restmodProvider) ->
 
 mdThemingConf = ($mdThemingProvider) ->
     $mdThemingProvider.theme('default')
-        .primaryPalette('indigo')
-        .accentPalette('amber')
-        .warnPalette('deep-orange')
+        .primaryPalette('blue')
+        .accentPalette('light-green')
+        .warnPalette('red')
+
 
 
 routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider) ->
