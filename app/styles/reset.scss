@@ -21,6 +21,10 @@ ul {
     list-style-type: none;
 }
 
+.nb-card {
+    margin: 20px 20px 0;
+}
+
 .md-button {
     height: 36px;
     line-height: 36px;
@@ -43,6 +47,11 @@ ul {
     }
 }
 
+.md-subheader {
+    font-family: 'SimHei' '微软雅黑' Arial;
+    font-size: 14px;
+    margin: 0;
+}
 
 md-input-container > md-select {
     margin-top: 0;
@@ -77,18 +86,6 @@ html h4 {
 
 .kw-120 {
     width: 120px;
-}
-
-//md-subheader的字体 字号
-.md-subheader {
-    font-family: 'SimHei' '微软雅黑' Arial;
-    font-size: 14px;
-}
-
-md-content {
-    // &.md-default-theme {
-    //     background-color: transparent;
-    // }
 }
 
 //超编颜色
