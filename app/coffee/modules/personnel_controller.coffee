@@ -181,8 +181,47 @@ class PersonnelSort extends nb.Controller
         promise = @http.get '/api/sort', {params:params}
         # promise.then onSuccess
 
+orgMutiPos = ($rootScope)->
+    class PersonnelPositions extends nb.Controller
+        @.$inject = ['$scope', '$rootScope']
+        constructor: (@scope, @rootScope) ->
+            @scope.positions = []
+            @scope.allOrgs = @rootScope.allOrgs
+
+        addPositions: ->
+            @scope.positions.push {
+                position_id: ""
+                category: ""
+            }
+        removePosition: (index)->
+            @scope.positions.splice index, 1
+
+        setHeigher: (index)->
+            return if index == 0
+            temp = @scope.positions[index]
+            @scope.positions[index] = @scope.positions[index-1]
+            @scope.positions[index-1] = temp
 
 
+    postLink = (elem, attrs, ctrl)->
+
+
+    return {
+        scope: {
+            positions: "=ngModel"
+        }
+        replace: true
+        templateUrl: "partials/personnel/muti-positions.tpl.html"
+        require: 'ngModel'
+        link: postLink
+        controller: PersonnelPositions
+        controllerAs: "ctrl"
+    }
+
+app.directive('orgMutiPos',[orgMutiPos])
+
+        
+    
 
     
 

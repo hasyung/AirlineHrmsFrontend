@@ -217,6 +217,9 @@ fieldset[disabled] {
     md-input-container label {
         color: $text-muted;
     }
+    md-input-container{
+        padding-bottom: 9px;
+    }
 
     .md-input {
         padding-left: 70px;
@@ -328,6 +331,31 @@ md-input-container {
     .add {
         margin-bottom: 20px;
     }
+}
+
+.nb-card-container{
+    background-color: #f5f5f5;
+    .nb-card{
+        background-color: #fff;
+        .form-icon{
+            font-size: 16px;
+            margin-right: 10px;
+            color: rgb(45, 87, 200);
+            margin-top: -2px;
+        }
+    }
+    md-card{
+        box-shadow: none;
+    }
+    md-card:last-child{
+        margin-bottom: 20px;
+    }
+    fieldset{
+        padding: 0px;
+        margin: 0px;
+    }
+    
+
 }
 
 

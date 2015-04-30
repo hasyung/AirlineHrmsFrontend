@@ -1,0 +1,39 @@
+div()
+    md-subheader.cust-md-subheader 岗位信息
+        md-button(type="button" ng-click="ctrl.addPositions()") 添加岗位
+    div
+        .position-item(layout ng-repeat="posItem in positions"
+            ng-init="itemParams={};"
+            )
+            .form-control-container(layout flex="70")
+                .form-group(flex="60")
+                    label 所属部门
+                    ui-select(
+                        ng-model="posItem.department"
+                        ng-change="itemParams.orgPos = posItem.department.positions.length? posItem.department.positions: posItem.department.positions.$fetch();"
+                        ng-init="itemParams.orgPos = posItem.department.positions.length? posItem.department.positions: posItem.department.positions.$fetch();"
+                        reset-search-input="true"
+                        )
+                        ui-select-match(placeholder="请输入机构名称") {{ $select.selected.fullName }}
+                        ui-select-choices(repeat="org in allOrgs | filter:$select.search | limitTo: 10") {{ org.fullName }}
+                md-input-container.row-has-value(flex="20")
+                    label 岗位
+                    md-select(ng-model="posItem.position")
+                        md-select-label {{posItem.position.name || '无'}}
+                        md-option(ng-value="pos" ng-repeat="pos in itemParams.orgPos") {{::pos.name}}
+                md-input-container.row-has-value(flex="20")
+                    label 岗位性质
+                    md-select(ng-model="posItem.category")
+                        md-select-label {{posItem.category || '无'}}
+                        md-option(aria-label="primary" value="主职") 主职
+                        md-option(aria-label="part" value="兼职") 兼职
+                        md-option(aria-label="proxy" value="代理") 代理
+                //- md-radio-group(layout flex="20" ng-model="posItem.category")
+                //-     md-radio-button(aria-label="primary" value="主职") 主职
+                //-     md-radio-button(aria-label="part" value="兼职") 兼职
+                //-     md-radio-button(aria-label="proxy" value="代理") 代理
+
+                
+            .item-action-container(flex="30")
+                md-button(type="button" ng-click="ctrl.setHeigher($index)") 上移
+                md-button(type="button" ng-click="ctrl.removePosition($index)") 删除

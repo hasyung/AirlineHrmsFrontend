@@ -1,0 +1,24 @@
+.cust-nav-justified{
+    height: 56px;
+    margin: 0px;
+    background-color: #fff;
+    .nb-nav-item{
+        display: inline-block;
+        width: 130px;
+        text-align: center;
+        a{
+            cursor: pointer;
+            color: rgba(0, 0, 0, 0.87);
+            font-size: 16px;
+            display: inline-block;
+            height: 53px;
+            line-height: 53px;
+        }
+        &.active{
+            a{
+                color: #e51c23;
+            }
+            border-bottom: 3px solid #e84e40;
+        }
+    }
+}
