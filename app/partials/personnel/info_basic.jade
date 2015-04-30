@@ -20,12 +20,19 @@ div(ng-init= "current = panel.employee; current.$refresh();")
                     md-content.nb-card-container(md-theme="none" layout="column")
                         md-card.form-material-section.nb-card
                             md-subheader.md-primary 
-                                md-icon.form-icon(md-svg-src="/images/svg/personnel.svg" alt="基本信息")
+                                md-icon.form-icon(md-svg-src="/images/svg/personnel_24.svg" alt="基本信息")
                                 |基本信息
                             include info_basic/info_basic_edit
                         md-card.form-material-section.nb-card
-                            md-subheader.md-warn 岗位信息
+                            md-subheader.md-primary
+                                md-icon.form-icon(md-svg-src="/images/svg/positions_info_24.svg" alt="岗位信息")
+                                |岗位信息
                             include info_basic/info_position_edit
+                        md-card.form-material-section.nb-card
+                            md-subheader.md-primary
+                                md-icon.form-icon(md-svg-src="/images/svg/star_24.svg" alt="职称信息")
+                                |职称信息
+                            
                 tab(heading="培训记录")
 
                 tab(heading="奖惩记录")
