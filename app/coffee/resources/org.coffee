@@ -245,6 +245,27 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
     }
 
 
+class OrgStore extends nb.Service
+    @.$inject = ['Org']
+
+    constructor: (@Org) ->
+
+    initialize: () ->
+        @orgs = @Org.$collection().$fetch()
+
+    get: ->
+        return @orgs
+
+    queryMatchedOrgs: (text) ->
+        @orgs.filter (org) -> s.include(org.fullName, text)
+
+
+
+
+
+
+
 
 
 resources.factory 'Org',['restmod', 'RMUtils', '$nbEvent', 'DEPARTMENTS', Org]
+resources.service 'OrgStore',['Org', OrgStore]

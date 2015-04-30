@@ -14,6 +14,10 @@ deps = [
     'mgcrea.ngStrap.datepicker'
     'ngDialog'
     'ui.select'
+    'ui.grid'
+    'ui.grid.selection'
+    'ui.grid.pinning'
+    'ui.grid.pagination'
     'ngAnimate'
     'ngAria'
     'ui.bootstrap'
@@ -135,9 +139,24 @@ App
     .config ['restmodProvider', restConf]
     .config ['$mdThemingProvider', mdThemingConf]
     .config ['$stateProvider','$urlRouterProvider','$locationProvider', '$httpProvider', routeConf]
-    .run ['$state', '$location','$rootScope', 'toaster', '$http', 'Org', 'sweet', 'User', '$enum', '$timeout', 'AuthService',
-    ($state, $location, $rootScope, toaster, $http, Org, sweet, User, $enum, $timeout, AuthServ) ->
+    .run [
+        '$state'
+        'i18nService'
+        '$location'
+        '$rootScope'
+        'toaster'
+        '$http'
+        'Org'
+        'OrgStore'
+        'sweet'
+        'User'
+        '$enum'
+        '$timeout'
+        'AuthService'
+    ($state, i18nService, $location, $rootScope, toaster, $http, Org, OrgStore, sweet, User, $enum, $timeout, AuthServ) ->
 
+        i18nService.setCurrentLang('zh-cn')
+        OrgStore.initialize() #初始化OrgStore
         cancelLoading = ->
             $timeout(
                 ()-> $rootScope.loading = false
