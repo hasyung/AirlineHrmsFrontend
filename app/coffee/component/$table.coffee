@@ -5,6 +5,282 @@ app = nb.app
 ISO_DATE_REGEXP = /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/
 
 
+# [{
+#     displayName: '姓名'
+#     name: 'name'
+#     placeholder: '姓名'
+#     type: 'string'
+# }]
+
+# preCompile = ->
+
+
+
+# string_template =
+
+# type: ['date-range', 'string', 'number', 'date']
+
+
+
+
+
+
+
+
+
+# createFilter(defs) ->
+#     active_constraint = []
+#     inert_constraint = []
+
+#     getter = $parse(opt.name)
+
+#     Elem = $compile(template)(scope.$new())
+
+#     destroyBefore = ->
+#         scope.$destroy()
+#         elem.remove()
+#         elem = null
+
+
+#     defs.forEach (def, idx) ->
+#         constraint = {}
+#         propertyGetter = $parse(val.name)
+#         template = preCompileTemplate(def)
+
+
+
+
+#     Object.observe
+
+
+
+
+
+
+
+
+'<div nb-filter="constraintDefs"></div>'
+
+
+
+
+class NbFilterCtrl
+
+    #@desc 预编译模板
+    #@param constraint definition
+    preCompileTemplate = (def)->
+        type = def.type || 'string'
+        if !filter_template_definition[type]
+            throw "filter template type: #{type} is not implemented"
+        else
+            template = filter_template_definition[type]
+        compiled = _.template(template)
+        return compiled(def)
+
+    filter_template_definition =
+        string: '''
+            <md-input-container>
+                <label>${ displayName }</label>
+                <input type="text" ng-model="${ name }">
+            </md-input-container>
+        '''
+    @.$inject = ['$scope', '$element', '$attrs', '$parse', '$compile']
+    constructor: (scope, elem, attrs, $parse, @compile) ->
+        options = scope.nbFilter
+        deps    = options.constraintDefs
+
+        constraints = defs.reduce((res, val, index) ->
+            propertyGetter = $parse(val.name)
+            template = preCompileTemplate(val)
+            constraint = {
+                propertyGetter: propertyGetter
+                template: template
+                displayName: val.displayName
+                active: false
+                name: val.name
+            }
+            Object.defineProperties constraint, {
+                destroy: {
+                    enumerable: false
+                    value: () ->
+                        if this.block
+                            block = this.block
+                            block.scope.$destroy()
+                            block.element.remove()
+                            block = null
+                            delete this.block
+                        this.active = false
+                }
+                startup: {
+                    enumerable: false
+                    value: () ->
+                        this.active = true
+                }
+                exportData: {
+                    enumerable: false
+                    value: () ->
+                        getter = this.propertyGetter
+                        scope = this.block.scope
+                        return getter(scope)
+                }
+            }
+
+            res.push constraint
+            return res
+        ,[])
+
+        @constraints = constraints
+        @conditions = []
+
+
+    initialize: ->
+        first = @constraints[0]
+        first.startup()
+        @conditions.push({selectedConstraint: first})
+
+    inertConstraints: ->
+        @constraints.filter (cons) -> cons.active == false
+    activeConstraints: ->
+        @constraints.filter (cons) -> cons.active == true
+
+    removeCondition: (condition) ->
+
+        return if @conditions.length == 1
+        #先销毁constraint, 因为缓存了element , scope
+        constraint = condition.selectedConstraint
+        constraint.destroy()
+
+        conditionIndex = @conditions.indexOf(condition)
+        @conditions.splice(conditionIndex, 1)
+
+    addNewCondition: (constraint, intiialValue) ->
+        return if !constraint
+        constraint.startup()
+        condition = {
+            selectedConstraint: constraint
+        }
+        condition.intiialValue = intiialValue if intiialValue
+        @conditions.push(condition)
+    initialCondition: (currentConstraint, parentScope, parentElem) ->
+        scope = parentScope.$new()
+        $el = @compile(currentConstraint.template) scope, (cloned, scope) ->
+            parentElem.append(cloned)
+
+        currentConstraint.block = {
+            scope: scope
+            element: $el
+        }
+
+    exportQueryParams: () ->
+        @activeConstraints().reduce((res, single) ->
+            res[single.name] = single.exportData()
+            return res
+        , {})
+
+    switchCondition: (newValue, old, parentScope, parentElem) ->
+        old.destroy()
+        newValue.startup()
+        @initialCondition(newValue, parentScope, parentElem)
+
+    saveFilter: (filterName) ->
+
+        request_data = {
+            name: filterName
+            code: @conditionCode
+            condition: JSON.stringify(@exportQueryParams())
+        }
+
+        promise = @filters.$create(request_data)
+    restoreFilter: (queryParams) ->
+        @.$clearAllCondition()
+        self = @
+        @constraints.forEach (constraint) ->
+            intiialValue = queryParams[constraint.name]
+            self.addNewCondition(constraint, intiialValue) if intiialValue
+
+
+
+    $clearAllCondition: () ->
+        @activeConstraints().forEach (cstris) -> cstris.destroy()
+        @conditions.splice(0, @conditions.length)
+
+
+
+
+
+
+conditionInputContainer = ->
+
+    postLink = (scope, elem, attr, ctrl) ->
+
+        ctrl.initialCondition(scope.condition.selectedConstraint, scope, elem)
+        scope.$watch 'condition.selectedConstraint', (newValue, old) ->
+            ctrl.switchCondition(newValue, old, scope, elem) if newValue != old && !newValue.block
+
+    return {
+        require: '^nbFilter'
+        link: postLink
+    }
+
+
+
+NbFilterDirective = ->
+
+
+    template = '''
+        <md-content>
+            <div>
+                <h1>筛选条件</h1>
+                <md-button nb-dialog template-url="partials/component/table/save_filter_dialog.html">保存</md-button>
+                <md-select ng-model="eqw">
+                </md-select>
+            </div>
+
+            <md-divider></md-divider>
+            <form ng-submit="search(filter.exportQueryParams())">
+                <div ng-form="conditionForm" class="search-row" ng-repeat="condition in filter.conditions">
+                    <button type="button" class="del" ng-click="filter.removeCondition(condition)">删除</button>
+                    <md-select ng-model="condition.selectedConstraint">
+                        <md-select-label>{{ condition.selectedConstraint.displayName }}</md-select-label>
+                        <md-option ng-value="inert_cons" ng-repeat="inert_cons in filter.inertConstraints() track by inert_cons.name">
+                            {{inert_cons.displayName}}
+                        </md-option>
+                    </md-select>
+                    <condition-input-container></condition-input-container>
+                    <button type="button" class="plus"
+                        ng-show="$last && filter.inertConstraints().length > 0"
+                        ng-click="filter.addNewCondition(filter.inertConstraints()[0])">新增</button>
+                </div>
+                <div>
+                    <input type="submit"/>
+                </div>
+            </form>
+        </md-content>
+    '''
+
+    postLink = (scope, elem, attr, ctrl) ->
+
+        ctrl.initialize()
+
+
+        scope.search = (queryParams)->
+            scope.onSearch({state: queryParams})
+
+
+
+    return {
+        scope: {
+            nbFilter: '='
+            filterOptions: '='
+            onSearch: '&'
+        }
+        link: postLink
+        template: template
+        controller: NbFilterCtrl
+        controllerAs: 'filter'
+    }
+
+
 class NbTableCtrl
     @.$inject = ['$scope', '$parse', '$filter', '$attrs']
 
@@ -575,15 +851,141 @@ filterSelectorDirective = ->
 
 
 
+GridPaginationTemplate = """
 
-app.controller 'nbSearchCtrl', NbSearchCtrl
-app.directive 'nbTable', ['$timeout', nbTableDirective]
-app.directive 'nbSearch', nbSearchDirective
-app.directive 'nbConditionContainer', nbConditionContainerDirective
-app.directive 'nbPredicate', ['$parse', nbPredicateDirective]
-app.directive 'nbPipe', nbPipeDirective
-app.directive 'nbSelectRow', nbSelectRowDirective
-app.directive 'selectRow', nbSelectRowDirective2
+
+        <div ui-grid="gridOptions"></div>
+
+
+    """
+
+
+'''
+
+    <div nb-grid column-def="columnsDefs">
+
+    </div>
+
+'''
+
+
+
+
+
+nbGridDirective = ($parse)->
+    nbGridTemplate =  '''
+        <div ui-grid="gridOptions" ui-grid-selection ui-grid-pinning></div>
+    '''
+    # defaultOptions = {
+    #     enableSorting: false
+    #     columnDefs: [
+    #         {
+    #             field: 'name'
+    #             minWidth: 200
+    #             width: 150 || '30%'
+    #             enableColumnResizing: false
+    #             cellFilter: 'mapGender '
+    #             cellTooltip: (row, col) ->
+    #                 return "Name: #{row.entity.name} Company: #{row.entity.company}"
+    #                 return "FullOrgName:#{row.entity.fullName}" # 可行否？
+
+    #         }
+    #     ]
+    #     data: data
+    #     useExternalPagination: true
+    #     useExternalSorting: false
+    #     # paginationTemplate: ''' ''' #分页组件模板， 需要集成 ui-grid-paper
+    #     # totalItems: xxx
+    #     # paginationCurrentPage: xxx
+    #     # paginationPageSizes: [25, 50, 75]
+    #     # paginationPageSize: 25
+
+    #     onRegisterApi: (gridApi) ->
+
+    #         gridApi.core.on.paginationChanged $scope, (newPage, pageSize) ->
+
+    #         gridApi.core.on.filterChanged $scope, () ->
+    #             grid = this.grid
+    #             if grid.columns[1].filters[0].term == 'maile'
+    #                 $http.get('/xxx/data').then -> scope.gridOptions.data = data
+    # }
+
+
+    defaultOptions = {
+        # flatEntityAccess: true
+        enableSorting: false
+        enableRowSelection: true
+        # useExternalSorting: false
+        useExternalPagination: true
+        # enableSelectAll: true
+        selectionRowHeaderWidth: 35
+        rowHeight: 35
+
+        # paginationTemplate: ''' ''' #分页组件模板， 需要集成 ui-grid-paper
+        # totalItems: xxx
+        # paginationCurrentPage: xxx
+        paginationPageSizes: [25, 50, 75]
+        paginationPageSize: 25
+
+        excludeProperties: [
+            '$$dsp'
+            '$pk'
+            '$cmStatus'
+            '$position'
+            '$resolved'
+            '$super'
+            '$$hashKey'
+            '$scope'
+        ]
+
+    }
+
+    postLink = (scope, elem, attrs) ->
+        columnDefs = scope.columnDefs
+        safeSrc = scope.safeSrc
+
+        options = angular.extend {
+            columnDefs: columnDefs
+            data: safeSrc
+        }, defaultOptions
+
+        scope.gridOptions = options
+
+        scope.$watch('safeSrc.$matadata.count', (newVal) -> options.totalItems =  newVal )
+        scope.$watch('safeSrc.$matadata.page', (newVal) -> options.paginationCurrentPage =  newVal )
+        # scope.$watch('gridOptions.paginationPageSize') #watch 每页数据
+
+
+
+    return {
+        link: postLink
+        template: nbGridTemplate
+        scope: {
+            columnDefs: '='
+            safeSrc: '='
+        }
+    }
+
+
+
+
+
+
+
+
+app.directive 'nbGrid', nbGridDirective
+app.directive 'nbFilter', NbFilterDirective
+app.directive 'conditionInputContainer', conditionInputContainer
+# app.directive 'nbFilter', NbFilterDirective
+
+# app.controller 'nbSearchCtrl', NbSearchCtrl
+# app.directive 'nbTable', ['$timeout', nbTableDirective]
+# app.directive 'nbSearch', nbSearchDirective
+# app.directive 'nbConditionContainer', nbConditionContainerDirective
+# app.directive 'nbPredicate', ['$parse', nbPredicateDirective]
+# app.directive 'nbPipe', nbPipeDirective
+# app.directive 'nbSelectRow', nbSelectRowDirective
+# app.directive 'selectRow', nbSelectRowDirective2
 
 app.directive 'nbPagination', nbPaginationDirective
 

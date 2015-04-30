@@ -15,7 +15,7 @@
             div.search-opt(ng-model="condition.selected", nb-dropdown="predicates.inactivePredicates" prevent-clone default-option)
 
             //- .condition-detail.search-type(nb-watch-select)
-            //- container 下的 scope 与 ng-repeat 不一致, 清楚之前需要手动释放资源
+            //- container 下的 scope 与 ng-repeat 不一致, 清除之前需要手动释放资源
             .condition-detail.search-type(nb-condition-container)
 
             //- .condition(ng-repeat="option in predicate" ng-if="option === predicate.selected")
@@ -24,3 +24,4 @@
             button.search-plus.btn.btn-default.fa.fa-plus(ng-click="ctrl.addNewCondition()" ng-show="$last && predicates.inactivePredicates.length > 0")
         //- .advanced_options
         //-     span(ng-repeat="opt in advanced_options" ng-class="{yes,no,none}" ng-bind="opt.name")
+
