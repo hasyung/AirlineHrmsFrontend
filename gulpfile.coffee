@@ -120,6 +120,7 @@ paths =
         'deps/jquery-slimscroll/jquery.slimscroll.js'
         'deps/angularjs-toaster/toaster.js'
         'deps/angular-material/angular-material.js'
+        'compat/vendor/ui-grid.js'
         'compat/socket.io.js'
         'compat/pomeloclient.js'
         'compat/communite.js'

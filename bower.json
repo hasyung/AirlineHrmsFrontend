@@ -37,20 +37,19 @@
     "angular-restmod": "https://github.com/sandwich99/angular-restmod.git#f539ddf76b72a8dd2ed170724c68b396c986a2cb",
     "bourbon": "~4.0.2",
     "lodash": "~3.7.0",
-    "ng-grid": "~2.0.14",
     "angular-ui-bootstrap-bower": "~0.12.0",
     "jqtree": "~0.22.0",
     "angular-filter": "~0.5.1",
     "AngularJS-Toaster": "~0.4.9",
     "angular-bootstrap": "~0.12.0",
     "angular-strap": "~2.1.6",
-    "select2": "3.5.2",
     "sweetalert": "~0.4.1",
     "ngDialog": "https://github.com/sandwich99/ngDialog.git#e116ff98e5843ab2f98d5206476f967efd4ca7f9",
     "bootstrap-sass": "~3.3.3",
     "angular-material": "~0.9.0",
     "ng-flow": "~2",
     "underscore.string": "~3.0.3",
-    "d3": "~3.5.5"
+    "d3": "~3.5.5",
+    "angular-ui-grid": "~3.0.0-rc.20"
   }
 }
