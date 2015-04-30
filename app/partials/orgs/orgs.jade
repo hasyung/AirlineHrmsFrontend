@@ -1,44 +1,45 @@
-.org-dep(ng-class="{'active': ctrl.isBarOpen}")
-    .org-dep-badge
-        a.toggle-bar.fa(
-            ng-class="{true: 'fa-chevron-left', false: 'fa-chevron-right'}[ctrl.isBarOpen]"
-            ng-click="ctrl.isBarOpen = !ctrl.isBarOpen")
-    .org-dep-wrapper
-        //- div.org-dep-root
-        //-     a(ng-click="ctrl.rootTree()") 四川航空
-        .org-children-wrapper
-            ul
-                li
-                    a.org-node(ng-click="ctrl.rootTree()", ng-class="{'active': '四川航空' == (ctrl.treeRootOrg && ctrl.treeRootOrg.name)}") 四川航空
-                li(ng-repeat="org in ctrl.orgs | filterBy: ['depth']: 2 track by $index" )
-                    //- a.org-node(ng-click="ctrl.buildTree(org)" ng-bind="org.name", title="{{org.name}}")
-                    a.org-node(
-                        ng-click="ctrl.buildTree(org)",
-                        ng-bind="org.name",
-                        title="{{org.name}}",
-                        ng-class="{'active': org.id == (ctrl.treeRootOrg && ctrl.treeRootOrg.id)}"
-                    )
 section(layout="row" flex)
     md-content(layout="column" flex style="background-color: #f0f3f4;")
-
         .org-chart-top(ng-class="{'org-chart-history': ctrl.isHistory}")
-                h1 {{ctrl.treeRootOrg.$cmStatus.name}}组织机构图
-                h2(ng-show="ctrl.isHistory") {{ctrl.orgs.$metadata.created_at | date : 'yyyy年MM月dd日'}}— {{ctrl.orgs.$metadata.title}}
-            .top-btn-group
-                //- button(ng-click="ctrl.print()") 导出
-                md-button.md-raised.purple(
-                    nb-dialog
-                    template-url="partials/orgs/org_history.html"
-                    locals="{'historyData': ctrl.initialHistoryData()}"
-                    ) 时间轴
-                md-button.md-raised.skyblue(has-permission="departments_export_to_xls" ng-show="!ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导 出
-                md-button.md-raised.skyblue(has-permission="departments_export_to_xls" ng-show="ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导 出
-                md-button.md-raised.skyblue(ng-click="ctrl.resetData()" ng-show="ctrl.isHistory") 返回最新
+            div(layout)
+                .org-chart-search(flex)
+                    md-autocomplete(
+                            md-items="org in ctrl.queryMatchedOrg(ctrl.searchText)"
+                            md-item-text="org.fullName"
+                            md-selected-item="org"
+                            md-search-text="ctrl.searchText"
+                            md-min-length="0"
+                            placeholder="想查找啥机构呢？"
+                            md-selected-item-change="ctrl.selectOrgChart(org)"
+                            md-delay="200"
+                            md-autoselect
+                            md-autofocus
+                            md-no-cache="true"
+                        )
+                        span(md-highlight-text="ctrl.searchText" md-highlight-flags="^i") {{org.fullName}}
+                .top-btn-group
+                    //- button(ng-click="ctrl.print()") 导出
+                    md-button.md-raised.md-primary(
+                        nb-dialog
+                        template-url="partials/orgs/org_history.html"
+                        locals="{'historyData': ctrl.initialHistoryData()}"
+                        ) 时间轴
+                    md-button.md-raised.md-primary(has-permission="departments_export_to_xls" ng-show="!ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导 出
+                    md-button.md-raised.md-primary(has-permission="departments_export_to_xls" ng-show="ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导 出
+                    md-button.md-raised.md-primary(ng-click="ctrl.resetData()" ng-show="ctrl.isHistory") 返回最新
 
-                //- loading-btn.red(ng-click="ctrl.openHistoryPanel()" btn-loading-type="contract-overlay" btn-text="测试loading")
+                    //- loading-btn.red(ng-click="ctrl.openHistoryPanel()" btn-loading-type="contract-overlay" btn-text="测试loading")
 
+            h1 {{ctrl.treeRootOrg.$cmStatus.name}}组织机构图
+            h2(ng-show="ctrl.isHistory")
+                i.glyphicon.glyphicon-time(style="margin-right: 10px; color: skyblue;font-size: 24px;")
+                span {{ctrl.orgs.$metadata.created_at | date : 'yyyy年MM月dd日'}}— {{ctrl.orgs.$metadata.title}}
         md-content.org-chart-window(id="org_chart_warpper" flex scroll-center style="background-color: #f0f3f4;")
-            div.svg-wrapper(org-chart id="org_chart" org-chart-data="ctrl.tree.data")
+            div.svg-wrapper(
+                org-chart
+                org-chart-data="ctrl.tree.data"
+                init-select-org-id="ctrl.currentOrg.id"
+                on-item-click="ctrl.onItemClick(evt)")
 
         //- md-content.org-chart-window(ng-if="ctrl.treeRootOrg.depth == 1" style="height: 700px")
         //-     div(style="width: 100%;background-image: url('/images/org_bg.jpg');height: 100%;background-position: center center;background-repeat: no-repeat; background-color: #f0f3f4;")

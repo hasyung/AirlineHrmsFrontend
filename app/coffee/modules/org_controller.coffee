@@ -6,60 +6,60 @@ resetForm = nb.resetForm
 Modal = nb.Modal
 
 #机构组织架构图
-orgChart = () ->
-    link = (scope, $el, attrs) ->
-        #
-        #raphael paper
-        paper = null
-        active_rect = null
+# orgChart = () ->
+#     link = (scope, $el, attrs) ->
+#         #
+#         #raphael paper
+#         paper = null
+#         active_rect = null
 
-        click_handler = (evt, elem) ->
-            # elem.setAttribute("class", 'active')
-            rect = elem[0]
-            if active_rect != null
-                active_rect.classList.remove('active')
-            rect.classList = _.uniq rect.classList.add 'active'
-            active_rect = rect
-            params = arguments
-            scope.$apply ->
-                scope.ctrl.onItemClick.apply(scope.ctrl,params)
+#         click_handler = (evt, elem) ->
+#             # elem.setAttribute("class", 'active')
+#             rect = elem[0]
+#             if active_rect != null
+#                 active_rect.classList.remove('active')
+#             rect.classList = _.uniq rect.classList.add 'active'
+#             active_rect = rect
+#             params = arguments
+#             scope.$apply ->
+#                 scope.ctrl.onItemClick.apply(scope.ctrl,params)
 
 
-        oc_options_2 = {
-            data_id           : 90943,                    # identifies the ID of the "data" JSON object that is paired with these options
-            container         : $el[0],     # name of the DIV where the chart will be drawn
-            box_color         : '#dfe5e7',               # fill color of boxes
-            box_color_hover   : '#cad4d7',               # fill color of boxes when mouse is over them
-            box_border_color  : '#c4cfd3',               # stroke color of boxes
-            box_html_template : null,                 # id of element with template; don't use if you are using the box_click_handler
-            line_color        : '#c4cfd3',               # color of connectors
-            title_color       : '#000',               # color of titles
-            subtitle_color    : '#707',               # color of subtitles
-            max_text_width    : 1,                   # max width (in chars) of each line of text ('0' for no limit)
-            text_font         : 'Courier',            # font family to use (should be monospaced)
-            use_images        : false,                # use images within boxes?
-            box_click_handler : click_handler,        # handler (function) called on click on boxes (set to null if no handler)
-            use_zoom_print    : false,                # wheter to use zoom and print or not (only one graph per web page can do so)
-            debug             : false                 # set to true if you want to debug the library
-        }
+#         oc_options_2 = {
+#             data_id           : 90943,                    # identifies the ID of the "data" JSON object that is paired with these options
+#             container         : $el[0],     # name of the DIV where the chart will be drawn
+#             box_color         : '#dfe5e7',               # fill color of boxes
+#             box_color_hover   : '#cad4d7',               # fill color of boxes when mouse is over them
+#             box_border_color  : '#c4cfd3',               # stroke color of boxes
+#             box_html_template : null,                 # id of element with template; don't use if you are using the box_click_handler
+#             line_color        : '#c4cfd3',               # color of connectors
+#             title_color       : '#000',               # color of titles
+#             subtitle_color    : '#707',               # color of subtitles
+#             max_text_width    : 1,                   # max width (in chars) of each line of text ('0' for no limit)
+#             text_font         : 'Courier',            # font family to use (should be monospaced)
+#             use_images        : false,                # use images within boxes?
+#             box_click_handler : click_handler,        # handler (function) called on click on boxes (set to null if no handler)
+#             use_zoom_print    : false,                # wheter to use zoom and print or not (only one graph per web page can do so)
+#             debug             : false                 # set to true if you want to debug the library
+#         }
 
-        scope.$watch attrs.orgChartData, (newval ,old) ->
-            if typeof newval == 'undefined'
-                return
-            if paper?
-                active_rect = null
-                paper.remove()
-            data = {id:90943, title: '', root: newval}
-            paper =ggOrgChart.render(oc_options_2, data)
-            active_rect = $el.find('rect').last()[0] #默认选择顶级节点
-            active_rect.classList.add 'active'
-            $el.trigger('resize') # 触发滚动居中
-        return
+#         scope.$watch attrs.orgChartData, (newval ,old) ->
+#             if typeof newval == 'undefined'
+#                 return
+#             if paper?
+#                 active_rect = null
+#                 paper.remove()
+#             data = {id:90943, title: '', root: newval}
+#             paper =ggOrgChart.render(oc_options_2, data)
+#             active_rect = $el.find('rect').last()[0] #默认选择顶级节点
+#             active_rect.classList.add 'active'
+#             $el.trigger('resize') # 触发滚动居中
+#         return
 
-    return {
-        restrict: 'A'
-        link: link
-    }
+#     return {
+#         restrict: 'A'
+#         link: link
+#     }
 
 #机构选择树
 orgTree = (Org, $parse) ->
@@ -79,11 +79,6 @@ orgTree = (Org, $parse) ->
                 )
                     data[k] = v
             return data
-
-        # $ctrl.$formatters.push (value)->
-        #     if value
-        #         return setOrgRoute value
-
 
         treeData = scope.treeData.jqTreeful()
         $tree = elem.tree {data: treeData,autoOpen: 0}
@@ -107,7 +102,7 @@ orgTree = (Org, $parse) ->
     }
 
 
-app.directive('orgChart',[orgChart])
+# app.directive('orgChart',[orgChart])
 app.directive('nbOrgTree',['Org', '$parse', orgTree])
 
 
@@ -142,12 +137,11 @@ class OrgsCtrl extends nb.Controller
 
 
     constructor: (@orgs, @http, @params, @state, @scope, @rootScope, @Evt)->
-        @treeRootOrg = _.find @orgs, (org) -> org.depth == 1 # 当前树的顶级节点
-        @tree = null    # tree化的 orgs 数据
-        @currentOrg = null
+        @treeRootOrg = _.find @orgs, (org) -> org.xdepth == 1 # 当前树的顶级节点
 
-        #for ui status
-        @isBarOpen = false
+        @tree = null    # tree化的 orgs 数据
+        @currentOrg = @treeRootOrg
+
 
         @scope.$onRootScope 'org:refresh', @.refreshTree.bind(@)
         @scope.$onRootScope 'org:resetData', @.resetData.bind(@)
@@ -159,22 +153,20 @@ class OrgsCtrl extends nb.Controller
     #     rootScope = @rootScope
     #     @orgs = @Org.$collection().$fetch({'edit_mode': @eidtMode})
     #         .$then (orgs) ->
-    #             treeRootOrg = _.find orgs, (org) -> org.depth == 1
+    #             treeRootOrg = _.find orgs, (org) -> org.xdepth == 1
     #             self.buildTree(treeRootOrg)
     #             self.treeRootOrg = treeRootOrg
 
 
     buildTree: (org = @treeRootOrg, depth = 9)->
-        depth = 1 if org.depth == 1 #如果是顶级节点 则只显示一级
-        @treeRootOrg = org
+        depth = 1 if org.xdepth == 1 #如果是顶级节点 则只显示一级
+        # @treeRootOrg = org
         @tree = @orgs.treeful(org, depth)
-        #在orgCtrl中会监听该值得变化，用于更新右侧信息
-        @currentOrg = org
 
     refreshTree: () ->
         return unless @treeRootOrg
         depth = 9
-        depth = 1 if @treeRootOrg.depth == 1 #如果是顶级节点 则只显示一级
+        depth = 1 if @treeRootOrg.xdepth == 1 #如果是顶级节点 则只显示一级
 
         @tree = @orgs.treeful(@treeRootOrg, depth)
         @currentOrg = @treeRootOrg
@@ -185,9 +177,16 @@ class OrgsCtrl extends nb.Controller
         #数据入口不止一个，需要解决
         @orgs.$refresh({edit_mode: @eidtMode}).$then () ->
             self.buildTree()
+    queryMatchedOrg: (text) ->
+        @orgs.filter (org) -> s.include(org.fullName, text)
 
-    onItemClick: (evt, elem) -> #机构树 点击事件处理 重构？
-        orgId = elem.oc_id
+    selectOrgChart: (org) ->
+        @currentOrg = _.find(@orgs, {id: org.id})
+        @treeRootOrg = @orgs.queryPrimaryOrg(@currentOrg)
+        @buildTree(@treeRootOrg)
+
+    onItemClick: (evt) -> #机构树 点击事件处理 重构？
+        orgId = evt.target
         @currentOrg = _.find(@orgs, {id: orgId})
 
     revert: (isConfirm) ->
@@ -210,7 +209,7 @@ class OrgsCtrl extends nb.Controller
         @orgs.$refresh({'edit_mode': true})
 
     rootTree: () ->
-        treeRootOrg = _.find @orgs, (org) -> org.depth == 1
+        treeRootOrg = _.find @orgs, (org) -> org.xdepth == 1
         @buildTree(treeRootOrg)
 
     initialHistoryData: ->

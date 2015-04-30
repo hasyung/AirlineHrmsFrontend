@@ -1,7 +1,9 @@
 
 
 @nb = nb = {}
-metadata = @metadata
+
+metadata = @metadata #用户元数据
+dep_info = @dep_info #机构数据
 
 
 
@@ -38,6 +40,7 @@ nb.app = App = angular.module 'nb',deps
 #初始化在<head> <script> 标签中, 如果不存在， 系统行为待定
 App.constant 'PERMISSIONS', metadata.permissions || []
 App.constant 'USER_META', metadata.employee || {}
+App.constant 'DEPARTMENTS', dep_info.departments || []
 
 
 appConf = ($provide, ngDialogProvider) ->

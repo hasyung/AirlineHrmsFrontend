@@ -1,96 +1,11 @@
 .app-content-body.md-default-theme {
     background-color: #f0f3f4;
 }
-
-// 机构 左侧部门菜单
-.org-dep {
-    @include transition(left .5s ease-in);
-    background-color: #fff;
-    border-bottom: 1px solid #d1dcde;
-    border-right: 1px solid #d1dcde;
-    height: 100%;
-    left: -182px;
-    position: absolute;
-    width: 183px;
-    z-index: 10;
-
-    &.active {
-        left: 0;
-    }
-
-    .org-dep-badge {
-        background-color: #fff;
-        border: 1px solid #d1dcde;
-        border-bottom-right-radius: 5px;
-        border-top-right-radius: 5px;
-        height: 72px;
-        left: 182px;
-        position: absolute;
-        top: 38px;
-        width: 24px;
-
-        .toggle-bar {
-            display: block;
-            height: 72px;
-            line-height: 72px;
-            text-align: center;
-            width: 24px;
-        }
-
-        a {
-            color: #99a6ad;
-        }
-    }
-
-    .org-dep-root {
-        background-color: #f6f8f8;
-        font-size: $font-size-lg;
-        height: 40px;
-        line-height: 40px;
-        padding-left: 10px;
-
-    }
-
-    .org-dep-wrapper {
-        height: inherit;
-        overflow-x: scroll;
-        padding-top: 20px;
-
-        ul {
-            padding-left: 5px;
-        }
-    }
-
-    .org-children-wrapper {
-
-        .org-node {
-            border-left: 3px solid transparent;
-            color: $text-title;
-            display: block;
-            height: 35px;
-            line-height: 35px;
-            overflow: hidden;
-            padding: 0 0 0 18px;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            width: 90%;
-
-            &:hover,
-            &.active {
-                border-left: 3px solid $danger;
-                color: $danger;
-            }
-        }
-    }
-}
 // 机构 左侧部门菜单结束
 
 // 机构树整体及容器部分
 .org-chart-history {
-    background-color: #fdf9e1;
-    border-bottom: 1px solid #faebca;
-    border-left: 1px solid #faebca;
-    border-right: 1px solid #faebca;
+    background-color: #dfe7e9;
 
     h2 {
         visibility: visible;
@@ -98,23 +13,41 @@
 }
 
 .org-chart-top {
-    margin: 0 20px;
-    padding-top: 30px;
+    padding-top: 20px;
     position: relative;
     text-align: center;
-}
 
-.top-btn-group {
-    margin-right: 40px;
-    position: absolute;
-    right: 10px;
-    top: 20px;
+    h1 {
+        font-size: 24px;
+        font-weight: normal;
+    }
 
-    .md-button {
-        display: inline-block;
-        float: right;
+    h2 {
+        font-size: $font-size-md;
+        font-weight: normal;
+        margin: 0;
+        margin-bottom: 10px;
+
+        span {
+            position: relative;
+            top: -4px;
+        }
+    }
+
+    .org-chart-search {
         margin-left: 20px;
     }
+
+    .top-btn-group {
+        margin-right: 20px;
+
+        .md-button {
+            float: right;
+            margin-left: 20px;
+            margin-top: 3px;
+        }
+    }
+
 }
 
 .bottom-btn-group {
@@ -149,22 +82,32 @@
         rect {
             cursor: pointer;
         }
-    }
-    // TODO: 以后用变量
-    .orgchart-box-create_inactive {
-        fill: #ffc490;
-    }
 
-    .orgchart-box-update_inactive {
-        fill: #ffc490;
-    }
+        .node {
+            rect {
+                fill: #dfe5e7;
+            }
 
-    .orgchart-box-transfer_inactive {
-        fill: #ffc490;
-    }
+            &.active rect {
+                fill: #90d7ff;
+            }
 
-    .orgchart-box-destroy_inactive {
-        fill: #ff9090;
+            &.chart-box-create_inactive rect {
+                fill: #ffc490;
+            }
+
+            &.chart-box-update_inactive rect {
+                fill: #ffc490;
+            }
+
+            &.chart-box-transfer_inactive rect {
+                fill: #ffc490;
+            }
+
+            &.chart-box-destroy_inactive rect {
+                fill: #ff9090;
+            }
+        }
     }
 }
 
