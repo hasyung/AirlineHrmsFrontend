@@ -31,24 +31,24 @@ ul {
     margin: auto;
 
     &.md-fab {
-        border-radius: 15px;
-        height: 30px;
-        line-height: 30px;
-        width: 30px;
+        border-radius: 14px;
+        height: 28px;
+        line-height: 28px;
+        width: 28px;
 
         .md-ripple-container {
             border-radius: 15px;
         }
 
         md-icon {
-            height: 15px;
-            width: 15px;
+            height: 14px;
+            width: 14px;
         }
     }
 }
 
 .md-subheader {
-    font-family: 'SimHei' '微软雅黑' Arial;
+    font-family: $font-family-sans-serif;
     font-size: 14px;
     margin: 0;
 }
@@ -91,4 +91,14 @@ html h4 {
 //超编颜色
 .overstaffed {
     color: $danger;
+}
+md-toolbar.md-default-theme{
+    background-color: #fff;
+    color: rgba(0, 0, 0, 0.87);
+}
+.md-button.md-default-theme.md-fab{
+    background-color: #fff;
+}
+md-content.md-default-theme{
+    background-color: #f5f5f5;
 }

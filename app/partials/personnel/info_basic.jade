@@ -1,5 +1,5 @@
 div(ng-init= "current = panel.employee; current.$refresh();")
-    md-toolbar(md-theme="none")
+    md-toolbar()
         .md-toolbar-tools
             span 人事信息
     .personnel-base-info(layout)
@@ -14,7 +14,7 @@ div(ng-init= "current = panel.employee; current.$refresh();")
                     template-url="partials/self/self_resume.html"
                     locals="{currentUser:current}"
                 )
-                    md-icon(md-svg-src="/images/svg/resume_24px.svg")
+                    md-icon(md-svg-src="/images/svg/resume_24px.svg" aria-label="简历")
             .employee-others-info
                 div(ng-bind="current.employeeNo")
                 div(ng-bind="current.department.name")
@@ -22,7 +22,7 @@ div(ng-init= "current = panel.employee; current.$refresh();")
         section.personnel-info-section
             tabset(type="pills")
                 tab(heading="基本信息")
-                    md-content.nb-card-container(md-theme="none" layout="column")
+                    md-content.nb-card-container(layout="column")
                         md-card.form-material-section.nb-card
                             md-subheader.md-primary 
                                 md-icon.form-icon(md-svg-src="/images/svg/personnel_24.svg" alt="基本信息")

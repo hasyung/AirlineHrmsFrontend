@@ -1,7 +1,7 @@
 form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-controller="EditableResource")
     .form-btn-group(ng-hide="editing" has-permission="employees_update")
         md-button.md-fab(ng-click="edit($event)")
-            md-icon(md-svg-src="/images/svg/edit_24px.svg" alt="修改")
+            md-icon(md-svg-src="/images/svg/edit_24px.svg" aria-label="修改")
     .form-btn-group.alive(ng-show="editing")
         md-button.md-raised.white(type="button" ng-click="cancel(current,$event, empEditForm)",) 取消
         md-button.skyblue.md-raised(type="submit") 保存
@@ -19,6 +19,7 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
                     md-option(ng-value="jobTitleDegree" ng-repeat="jobTitleDegree in enums.job_title_degrees") {{jobTitleDegree.displayName}}
             md-input-container.row-has-value(flex)
                 label 技术职务
+                input(ng-model="current.technicalDuty")
                 //- md-select(ng-model="current.jobTitleDegree", md-on-open="loadEnum('job_title_degrees')" ng-disabled="!editing")
                 //-     md-select-label {{current.jobTitleDegree? current.jobTitleDegree.displayName : '无'}}
                 //-     md-option(ng-value="jobTitleDegree" ng-repeat="jobTitleDegree in enums.job_title_degrees") {{jobTitleDegree.displayName}}

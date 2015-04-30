@@ -1,7 +1,7 @@
 form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-controller="EditableResource")
     .form-btn-group(ng-hide="editing" has-permission="employees_update")
         md-button.md-fab(ng-click="edit($event)")
-            md-icon(md-svg-src="/images/svg/edit_24px.svg" alt="修改")
+            md-icon(md-svg-src="/images/svg/edit_24px.svg" aria-label="修改")
     .form-btn-group.alive(ng-show="editing")
         md-button.md-raised.white(type="button" ng-click="cancel(current,$event, empEditForm)",) 取消
         md-button.skyblue.md-raised(type="submit") 保存
@@ -17,7 +17,7 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
         div(layout)
             md-input-container(flex)
                 label 身份证号
-                input(ng-model="current.identityNo", name="identityNo")
+                input(ng-model="current.identityNo", name="identityNo" required)
             md-input-container.row-has-value(flex)
                 label 政治面貌
                 md-select(ng-model="current.politicalStatus" md-on-open="loadEnum('political_status')" name="political_status" ng-disabled="!editing")

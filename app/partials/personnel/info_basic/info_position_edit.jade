@@ -1,11 +1,11 @@
 form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="EditableResource" ng-init="params = {}")
     .form-btn-group(ng-hide="editing" has-permission="employees_update")
-        md-button.md-fab.md-primary(ng-click="edit($event)")
-            md-icon(md-svg-src="/images/svg/edit_24px.svg" alt="修改")
+        md-button.md-fab(ng-click="edit($event)")
+            md-icon(md-svg-src="/images/svg/edit_24px.svg" aria-label="修改")
     .form-btn-group.alive(ng-show="editing")
         md-button.md-raised.white(ng-click="cancel(current, $event)") 取消
         md-button.skyblue.md-raised(type="submit" ng-disabled="positionEditForm.$invalid") 保存
-    fieldset()
+    fieldset(ng-disabled="!editing")
 
         //- div(org-muti-pos ng-model="current.positions")
         //- .form-group
@@ -19,9 +19,9 @@ form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="Ed
         //-         )
         //-         ui-select-match(placeholder="请输入机构名称") {{ $select.selected.fullName }}
         //-         ui-select-choices(repeat="org in allOrgs | filter:$select.search | limitTo: 10") {{ org.fullName }}
-        md-input-container
+        md-input-container.row-has-value
             label 岗位备注
-            input
+            input(ng-model="current.positionRemark")
         //- div(layout)
         //-     md-input-container.row-has-value(flex)
         //-         label 岗位
@@ -45,9 +45,9 @@ form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="Ed
         div(layout)
             md-input-container.row-has-value(flex)
                 label 职务职级
-                //- md-select(ng-model="current.laborRelation" md-on-open="loadEnum('labor_relations')" ng-disabled="!editing")
-                //-     md-select-label {{current.laborRelation? current.laborRelation.displayName : '无'}}
-                //-     md-option(ng-value="laborRelation" ng-repeat="laborRelation in enums.labor_relations") {{laborRelation.displayName}}
+                md-select(ng-model="current.dutyRank" md-on-open="loadEnum('employee_duty_ranks')" ng-disabled="!editing")
+                    md-select-label {{current.dutyRank? current.dutyRank.displayName : '无'}}
+                    md-option(ng-value="dutyRank" ng-repeat="dutyRank in enums.employee_duty_ranks") {{dutyRank.displayName}}
             
             md-input-container.row-has-value(flex)
                 label 用工性质
