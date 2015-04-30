@@ -40,6 +40,20 @@
                 height: 100%;
                 width: 100%;
             }
+            .edit-icon-container{
+                background-color: #f44e4c;
+                width: 24px;
+                height: 24px;
+                border-radius: 12px;
+                position: absolute;
+                color: #fff;
+                font-size: 18px;
+                padding-left: 4px;
+                left: 160px;
+                top: 130px;
+                cursor: pointer;
+            }
+
         }
 
         h3 {
@@ -54,6 +68,7 @@
             font-size: $font-size-lg;
             text-align: center;
         }
+
     }
 
     .personnel-info-list {
@@ -155,7 +170,7 @@
         }
 
         .form-material-section {
-            padding: 0 30px 30px;
+            padding: 0 30px;
             position: relative;
 
             &:hover {
@@ -292,6 +307,36 @@
             background-image: url('../../../images/personnel/3.png');
         }
     }
+    .sm-avator-area {
+        border-radius: 50%;
+        height: 72px;
+        width: 72px;
+        overflow: hidden;
+
+        img {
+            height: 100%;
+            width: 100%;
+        }
+    }
+    .employee-info {
+        padding-top: 10px;
+        margin-left: 20px;
+
+        .employee-name {
+            font-size: 18px;
+            color: #23b7e5;
+        }
+
+        .employee-others-info{
+            margin-top: 5px;
+            font-size: 15px;
+            color: rgba(0,0,0,0.54);
+
+            .last{
+                margin-left: 10px;
+            }
+        }
+    }
 
 }
 
@@ -349,13 +394,171 @@
         margin-left: 20px;
     }
 }
+.ngdialog.ngdialog-theme-plain.cust-avator-dialog-width{
+    .ngdialog-content{
+        width: 540px;
+        border-radius: 5px;
+        color: #444;
+        margin: 50px auto;
+        max-width: 100%;
+        padding: 1em;
+        position: relative;
+    }
+}
+.avator-edit-body{
+    .avator-offset{
+        margin-left: 16px;
+        &.first{
+            margin-left: 0px;
+        }
+    }
+    .src-avator{
+        width: 360px;
 
+        .avator-box{
+            width: 100%;
+            height: 360px;
+        }
+        .btn-avator-add{
+            i{
+                margin-right: 7px;
+                color: #f44e4c;
+            }
+        }
+    }
+    .avator-upload-box{
+        text-align: center;
+        padding-top: 140px;
+        background-color: #f2f2f5;
+    }
+    .avator-preview{
+        width: 132px;
+        text-align: center;
+        background-color: #f2f2f5;
+        height: 360px;
+        p{
+            margin-top: 25px;
+        }
+        .avator-preview-item{
+            margin-top: 25px;
+            &.first{
+                margin-top: 0px;
+            }
+        }
+        .big-avator{
+            img{
+                width: 110px;
+                height: 110px;
+                border-radius: 55px;
+            }
+
+        }
+        .mid-avator{
+            img{
+                width: 72px;
+                height: 72px;
+                border-radius: 36px;
+            }
+
+        }
+        .sml-avator{
+            img{
+                width: 40px;
+                height: 40px;
+                border-radius: 20px;
+            }
+
+        }
+    }
+}
+.avator-footer{
+    padding-right: 148px;
+    button{
+        margin-left: 16px;
+    }
+}
+
+// <<<<<<< HEAD
+//for org/positions/employee search
+.personnel-sort-body{
+
+    .org-sort-container, .pos-sort-container{
+        padding: 5px;
+        .list-text{
+            height: 40px;
+            line-height: 40px;
+        }
+        .list-row{
+            outline: none;
+            border-bottom: 1px solid #eee;
+        }
+    }
+    .offset-header-text{
+        padding-left: 0;
+        .md-subheader-content{
+            border-left: 3px solid rgb(46, 55, 169);
+            padding-left: 10px;
+        }
+    }
+    .cust-content-toolbar{
+        background-color: #f6f8f8;
+        font-size: 26px;
+        padding-left: 15px;
+        line-height: 26px;
+        height: 28px;
+        i:hover{
+            cursor: pointer;
+        }
+    }
+    .org-sort-content{
+        border: 3px solid #f6f8f8;
+        .open-orgs{
+            height: 40px;
+            line-height: 40px;
+            font-size: 30px;
+        }
+    }
+    .cust-list-item{
+        font-size: 14px;
+        padding: 5px 10px;
+        height: 45px;
+        overflow: hidden;
+        &.active{
+            background-color: #eee;
+        }
+    }
+    .employees-sort{
+        tr{
+            outline: none;
+            td{
+                height: 40px;
+                line-height: 40px;
+            }
+            &.active{
+                td{
+                    background-color: #eee !important;
+                }
+            }
+        }
+    }
+    .icon-container{
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        font-size: 20px;
+        text-align: center;
+        &:hover{
+            background-color: #eee;
+        }
+    }
+}
 // @media (max-width: 1280px) {
 //     .personnel-content {
 //         margin: 60px auto;
 //         width: 680px;
 //     }
 // }
+
 
 
 

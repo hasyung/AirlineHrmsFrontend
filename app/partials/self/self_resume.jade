@@ -1,6 +1,8 @@
 md-dialog(ng-init="current = dialog.currentUser")
-    md-subheader 
-        h3 {{::current.name}}的个人履历
-        md-button.pull-right(ng-click="dialog.close()") 关闭
+    md-toolbar(style="background: #f2f2f2; color: rgba(0,0,0,.56)")
+        .md-toolbar-tools
+            h3 {{::current.name}}的个人履历
+            span(flex)
+            md-button.pull-right.md-primary(ng-click="dialog.close()") 关闭
     md-content
         include ../personnel/personnel_resume

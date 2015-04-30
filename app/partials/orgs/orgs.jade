@@ -11,8 +11,15 @@ section(layout="row" flex)
                         template-url="partials/orgs/org_history.html"
                         locals="{'historyData': ctrl.initialHistoryData()}"
                         ) 时间轴
-                    md-button.md-raised.md-primary(has-permission="departments_export_to_xls" ng-show="!ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导 出
-                    md-button.md-raised.md-primary(has-permission="departments_export_to_xls" ng-show="ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导 出
+                    .right-align.nb-dropdown.pull-right(simple-dropdown, btn-text="导出")
+                        li( role="presentation" ng-hide="ctrl.isHistory")
+                            a(role="menuitem" ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}" ) 导出Excel
+                        li( role="presentation" ng-show="ctrl.isHistory")
+                            a(role="menuitem" ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}" ) 导出Excel
+                        li( role="presentation")
+                            a(role="menuitem" ng-click="ctrl.print()" ) 导出PDF
+                    //- md-button.md-raised.md-primary(has-permission="departments_export_to_xls" ng-show="!ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导 出
+                    //- md-button.md-raised.md-primary(has-permission="departments_export_to_xls" ng-show="ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导 出
                     md-button.md-raised.md-primary(ng-click="ctrl.resetData()" ng-show="ctrl.isHistory") 返回最新
 
                     //- loading-btn.red(ng-click="ctrl.openHistoryPanel()" btn-loading-type="contract-overlay" btn-text="测试loading")

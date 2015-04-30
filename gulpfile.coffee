@@ -85,6 +85,7 @@ paths =
         'deps/jquery/dist/jquery.min.js'
         'deps/jqtree/tree.jquery.js'
         'deps/d3/d3.js'
+        'deps/print-area/demo/jquery.PrintArea.js'
         #alert
         'deps/sweetalert/lib/sweet-alert.js'
 

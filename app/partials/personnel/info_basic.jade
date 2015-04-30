@@ -5,7 +5,7 @@ md-toolbar
     section.personnel-info-section(ng-init= "current = panel.employee; current.$refresh();")
         tabset(type="pills")
             tab(heading="基本人事信息")
-                div(layout="column")
+                md-content(layout="column")
                     section.form-material-section
                         md-subheader.md-primary 基本信息
                         include info_basic/info_basic_edit

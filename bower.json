@@ -50,6 +50,6 @@
     "ng-flow": "~2",
     "underscore.string": "~3.0.3",
     "d3": "~3.5.5",
-    "angular-ui-grid": "~3.0.0-rc.20"
+    "print-area": "~2.4.1"
   }
 }

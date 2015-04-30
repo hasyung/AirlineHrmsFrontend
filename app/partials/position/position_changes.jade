@@ -7,7 +7,7 @@
                 ui-select-match(placeholder="请输入机构名称") {{ $item.name }}
                 ui-select-choices(repeat="org.id as org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
 
-        div(nb-predicate="创建时间" predicate-attr="created_at")
+        div(nb-predicate="变更时间" predicate-attr="created_at")
             input(ng-model="created_at.from" bs-datepicker)
             span.gap 至
             input(ng-model="created_at.to" bs-datepicker)
@@ -50,4 +50,4 @@
 
                     td(ng-bind="change.createdAt | date:'yyyy-MM-dd'")
 
-    .custom-pages(nb-pagination="ctrl.records.$metadata" per-page="15")
+    .custom-pages(nb-pagination="ctrl.changes.$metadata")

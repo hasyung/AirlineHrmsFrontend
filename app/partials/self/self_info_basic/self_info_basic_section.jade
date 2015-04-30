@@ -82,6 +82,9 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                     md-input-container(flex)
                         label 到岗时间
                         input(ng-model="currentUser.joinScalDate" name="joinScalDate" disabled)
+                md-input-container.row-has-value(flex)
+                    label 参工时间
+                    input(ng-model="currentUser.startWorkDate" name="startWorkDate" disabled)
 
             md-divider
 

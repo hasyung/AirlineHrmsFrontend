@@ -260,7 +260,28 @@ class OrgsCtrl extends nb.Controller
         log.active = true
         @currentLog = log
 
-    # print: () ->
+    print: () ->
+        console.log 111
+        $svg = $('.svg-wrapper svg')
+        sWidth = $svg.attr('width')
+        sHeight = $svg.attr('height')
+        A4Width = 1123
+        A4Height = 670
+
+        if sWidth > A4Width
+            $svg.css("transform", "scale(" + A4Width/sWidth + ")")
+
+        $('.svg-wrapper').printArea({
+            popWd : 200
+            popHt : 200
+            mode : "popup"
+            popTitle : "机构组织图"
+            popClose : false
+        })
+
+        $svg.css("transform", "scale(1)")
+
+
     #     options = {
     #         container: 'org_chart',
     #         pdf_canvas: 'org_chart_print_canvas'
