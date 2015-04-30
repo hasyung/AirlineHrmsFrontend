@@ -68,7 +68,7 @@
             font-size: $font-size-lg;
             text-align: center;
         }
-            
+
     }
 
     .personnel-info-list {
@@ -219,21 +219,20 @@
             padding: 0 30px 30px;
             position: relative;
 
-            &:hover {
-                .form-btn-group {
-                    visibility: visible;
-                }
-            }
+            // &:hover {
+            //     .form-btn-group {
+            //         visibility: visible;
+            //     }
+            // }
 
             .form-btn-group {
                 position: absolute;
                 right: 20px;
                 top: 10px;
-                visibility: hidden;
 
-                &.alive {
-                    visibility: visible;
-                }
+                // &.alive {
+                //     visibility: visible;
+                // }
 
                 .md-button {
                     margin-left: 20px;
@@ -353,7 +352,7 @@
             background-image: url('../../../images/personnel/3.png');
         }
     }
-    
+
 
 }
 
@@ -476,7 +475,7 @@
                 height: 72px;
                 border-radius: 36px;
             }
-            
+
         }
         .sml-avator{
             img{
@@ -484,7 +483,7 @@
                 height: 40px;
                 border-radius: 20px;
             }
-            
+
         }
     }
 }
@@ -507,7 +506,7 @@
         }
         .list-row{
             outline: none;
-            border-bottom: 1px solid #eee; 
+            border-bottom: 1px solid #eee;
         }
     }
     .offset-header-text{

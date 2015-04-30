@@ -25,6 +25,22 @@ ul {
     height: 36px;
     line-height: 36px;
     margin: auto;
+
+    &.md-fab {
+        border-radius: 15px;
+        height: 30px;
+        line-height: 30px;
+        width: 30px;
+
+        .md-ripple-container {
+            border-radius: 15px;
+        }
+
+        md-icon {
+            height: 15px;
+            width: 15px;
+        }
+    }
 }
 
 

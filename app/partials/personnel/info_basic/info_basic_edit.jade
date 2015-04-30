@@ -1,6 +1,6 @@
 form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-controller="EditableResource")
     .form-btn-group(ng-hide="editing" has-permission="employees_update")
-        md-button.md-fab.md-mini(ng-click="edit($event)")
+        md-button.md-fab(ng-click="edit($event)")
             md-icon(md-svg-src="/images/svg/edit_24px.svg" alt="修改")
     .form-btn-group.alive(ng-show="editing")
         md-button.md-raised.white(type="button" ng-click="cancel(current,$event, empEditForm)",) 取消
