@@ -1,3 +1,9 @@
 .app-content-wrapper(flex style="height: 700px;")
     div(nb-filter="ctrl.filterOptions")
+    div()
+        md-button(
+            nb-panel
+            template-url="partials/personnel/org_pos_per_sort.html"
+            style="margin-right: 10px;"
+        ) 排序
     div.ui-grid-container(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.employees")
