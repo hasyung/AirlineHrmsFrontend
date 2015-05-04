@@ -6,13 +6,13 @@ md-dialog.container(style="width:360px;margin:40px auto;")
                 fieldset
                     md-input-container
                         label 原始密码
-                        input(type="text" ng-model="user.password" placeholder="原始密码",required="true")
+                        input(type="text" ng-model="user.password" required="true")
                     md-input-container
                         label 新密码
-                        input(type="text" ng-model="user.new_password" placeholder="新密码",required="true")
+                        input(type="text" ng-model="user.new_password" required="true")
                     md-input-container
                         label 密码确认
-                        input(type="text" ng-model="user.password_confirm" placeholder="密码确认",required="true")
+                        input(type="text" ng-model="user.password_confirm" required="true")
             .md-actions
                 md-button(type='button',ng-click="dialog.close()") 取消
                 md-button.md-primary(ng-disabled="changePwdForm.$invalid" type="submit") 确认修改
