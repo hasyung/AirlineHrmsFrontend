@@ -20,36 +20,61 @@ class Route
                 controller: LaborCtrl
                 controllerAs: 'ctrl'
             }
+            .state 'labors_early_retirement', {
+                url: '/labor-eary-retirement'
+                templateUrl: 'partials/labors/labors_early_retirement.html'
+                controller: EarlyRetirementCtrl
+                controllerAs: 'ctrl'
+            }
 
 class LaborCtrl extends nb.Controller
 
     @.$inject = ['$scope', '$mdDialog', 'Flow::AdjustPosition']
 
-    constructor: (@scope, @mdDialog, flow) ->
+    constructor: (@scope, @mdDialog, @flow) ->
         @flows  = flow.$collection().$fetch()
 
     search: (tableState)->
         @flows.$refresh(tableState)
 
-class LaborDialogCtrl extends nb.Controller
-    @.$inject = ['$scope', 'data', '$mdDialog']
-    constructor: (@scope, @data, @mdDialog) ->
-        self = @
-        @scope.data = @data
 
-    pass: (leave)->
-        self = @
-        leave.audit.opinion = true
-        leave.$update().$then ()->
-            self.mdDialog.hide()
-    reject: (leave)->
-        self = @
-        leave.audit.opinion = false
-        leave.$update().$then ()->
-            self.mdDialog.hide()
+class EarlyRetirementCtrl extends nb.Controller
+
+    @.$inject = ['$scope', 'Flow::EarlyRetirement', '$mdDialog']
+
+    constructor: (@scope, @EarlyRetirement, @mdDialog) ->
+        @loadInitailData()
+        @columnDef = [
+            {displayName: '所属部门', name: 'sponsor.departmentName'}
+            {displayName: '姓名', field: 'sponsor.name'}
+            {displayName: '状态', field: 'workflowState'}
+            {displayName: '创建时间', field: 'createdAt'}
+            {
+                displayName: '审批'
+                name: '审批'
+                cellTemplate: '''
+                <a class="ui-grid-cell-contents"
+                    flow-handler="row.entity"
+                    ">
+                    审批
+                </a>'
+                '''
+            }
+        ]
+
+    loadInitailData: ()->
+        @flows = @EarlyRetirement.$collection().$fetch()
+
+
+
+
+    
+
+
+
 
 
 
 
 app.config(Route)
-app.controller('LaborDialogCtrl', LaborDialogCtrl)
+

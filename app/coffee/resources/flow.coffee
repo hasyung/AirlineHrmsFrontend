@@ -264,7 +264,7 @@ FlowHandlerDirective = (ngDialog)->
                 </div>
                 <div class="approval-opinions">
                     <div class="approval-subheader">审批意见</div>
-                    <form ng-submit="submitFlow(req, flow)">
+                    <form ng-submit="submitFlow(req, flow);dialog.close();">
                         <div class="approval-opinions-check">
                             <md-radio-group ng-model="req.opinion">
                                 <md-radio-button ng-value="CHOICE.ACCEPT" class="skyblue">通过</md-radio-button>
@@ -275,8 +275,8 @@ FlowHandlerDirective = (ngDialog)->
                             <textarea ng-model="req.desc" placeholder="请输入审批意见" columns="1"></textarea>
                         </md-input-container>
                         <div class="approval-buttons">
-                            <md-button class="md-raised white">取消</md-button>
-                            <md-button class="md-raised skyblue">提交</md-button>
+                            <md-button class="md-raised white" type="button" ng-click="closeThisDialog();">取消</md-button>
+                            <md-button class="md-raised skyblue" type="submit">提交</md-button>
                         </div>
                     </form>
                 </div>
@@ -294,7 +294,7 @@ FlowHandlerDirective = (ngDialog)->
         offeredExtraForm = (flow) ->
             return template.replace(/#extraFormLayout#/, `flow.$extraForm ? flow.$extraForm : ''`)
 
-        openDialog = ->
+        openDialog = (evt)->
             scope.flow = scope.flow.$refresh()
             promise = scope.flow.$asPromise()
             promise.then(offeredExtraForm).then (template)->
@@ -312,6 +312,22 @@ FlowHandlerDirective = (ngDialog)->
                     # : (attrs.ngDialogCloseByEscape === 'true' ? true : defaults.closeByEscape),
                     # preCloseCallback: attrs.ngDialogPreCloseCallback || defaults.preCloseCallback
                 }
+
+            # opts = angular.extend({scope: scope.$new(), targetEvent: evt}, options)
+
+            # opts = angular.extend(opts, {
+            #         controller: ->
+            #             @close = (res) -> $mdDialog.hide(res)
+            #             @cancel = (res) -> $mdDialog.cancel(res)
+            #             return
+            #         controllerAs: 'dialog'
+            #         bindToController: true
+            #     })
+
+            # angular.forEach ['locals','resolve'], (key) ->
+            #     opts[key] = scope.$eval(attrs[key]) if angular.isDefined(attrs[key])
+
+            # $mdDialog.show opts
         elem.on 'click', openDialog
         scope.$on '$destroy', -> elem.off 'click', openDialog
 
