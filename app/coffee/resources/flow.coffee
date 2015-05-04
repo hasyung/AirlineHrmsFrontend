@@ -264,15 +264,15 @@ FlowHandlerDirective = (ngDialog)->
                 </div>
                 <div class="approval-opinions">
                     <div class="approval-subheader">审批意见</div>
-                    <form>
+                    <form ng-submit="submitFlow(req, flow)">
                         <div class="approval-opinions-check">
-                            <md-radio-group ng-model="data.group1">
-                                <md-radio-button value="通过" class="skyblue">通过</md-radio-button>
-                                <md-radio-button value="驳回" class="skyblue">驳回</md-radio-button>
+                            <md-radio-group ng-model="req.opinion">
+                                <md-radio-button ng-value="CHOICE.ACCEPT" class="skyblue">通过</md-radio-button>
+                                <md-radio-button ng-value="CHOICE.REJECT" class="skyblue">驳回</md-radio-button>
                             </md-radio-group>
                         </div>
                         <md-input-container>
-                            <textarea placeholder="请输入审批意见" columns="1"></textarea>
+                            <textarea ng-model="req.desc" placeholder="请输入审批意见" columns="1"></textarea>
                         </md-input-container>
                         <div class="approval-buttons">
                             <md-button class="md-raised white">取消</md-button>
@@ -304,7 +304,7 @@ FlowHandlerDirective = (ngDialog)->
                     className: options.className
                     controller: 'FlowController'
                     scope: scope
-                    data: scope.flow
+                    locals: scope.flow
                     # showClose: attrs.ngDialogShowClose === 'false' ? false : (attrs.ngDialogShowClose === 'true' ? true : defaults.showClose),
                     # closeByDocument: attrs.ngDialogCloseByDocument === 'false' ? false :
                     # (attrs.ngDialogCloseByDocument === 'true' ? true : defaults.closeByDocument),

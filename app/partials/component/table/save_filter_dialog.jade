@@ -1,5 +1,5 @@
 md-dialog
-    form.form-validator-dialog(name="filter_form" ng-submit="ctrl.saveFilter(filter_name) && dialog.close()")
+    form.form-validator-dialog(name="filter_form" ng-submit="filter.saveFilter(filter_name) && dialog.close()")
         .form-group-row
             label.form-control-label  过滤器名称：
             input.form-control-input(type="text" required ng-model="filter_name")

@@ -1,7 +1,7 @@
 resources = angular.module('resources')
 
 #流程资源集合，用于批量生成流程资源
-workflows = ['Leave','Flow::AdjustPosition']
+workflows = ['Flow::EarlyRetirement','Flow::AdjustPosition']
 
 
 CustomConfig = {
@@ -29,7 +29,7 @@ angular.forEach workflows, (item)->
 
 
     resource = (restmod, RMUtils, $Evt) ->
-        resource = restmod.model("/workflows/#{item.toLowerCase()}").mix 'nbRestApi','Workflow', {
+        resource = restmod.model("/workflows/#{item}").mix 'nbRestApi','Workflow', {
             $config:
                 jsonRootMany: 'workflows'
                 jsonRootSingle: 'workflow'

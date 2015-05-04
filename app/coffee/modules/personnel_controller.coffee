@@ -42,6 +42,65 @@ class PersonnelCtrl extends nb.Controller
         @loadInitailData()
         @selectedIndex =  1
 
+
+        @columnDef = [
+            {displayName: '所属部门', name: 'department.name'}
+            {
+                displayName: '姓名'
+                field: 'name'
+                pinnedLeft: true
+                cellTemplate: '''
+                <a class="ui-grid-cell-contents" nb-panel
+                    template-url="partials/personnel/info_basic.html"
+                    locals="{employee: row.entity}">
+                    {{grid.getCellValue(row, col)}}
+                </a>'
+                '''
+            }
+            {displayName: '员工编号', field: 'employeeNo'}
+            {displayName: '岗位', name: 'position.name'}
+            {displayName: '分类', name: 'category.displayName'}
+            {displayName: '通道', name: 'channel.displayName'}
+            {displayName: '用工性质', name: 'laborRelation.displayName'}
+            {displayName: '到岗时间', field: 'joinScalDate'}
+        ]
+            # div(nb-predicate="姓名" predicate-attr="name")
+            #     input(name="name" placeholder="姓名" ng-model="name")
+            # div(nb-predicate="员工编号" predicate-attr="employee_no")
+            #     input(name="employee_no" placeholder="工号" ng-model="employee_no")
+            # div(nb-predicate="机构" predicate-attr="department_ids")
+            #     ui-select(multiple ng-model="$parent.department_ids" theme="select2" style="width:600px" reset-search-input="true")
+            #         ui-select-match(placeholder="请输入机构名称") {{ $item.name }}
+            #         ui-select-choices(repeat="org.id as org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
+
+            # div(nb-predicate="岗位名称" predicate-attr="position_name")
+            #     input(name="position_name" placeholder="岗位名称" ng-model="position_name")
+
+        @constraints = [
+
+
+        ]
+        @filterOptions = {
+            name: 'personnel'
+            constraintDefs: [
+                {
+                    name: 'name'
+                    displayName: '姓名'
+                    type: 'string'
+                    placeholder: '姓名'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                    placeholder: '员工编号'
+                }
+            ]
+        }
+
+
+
+
     loadInitailData: ->
         @employees = @Employee.$collection().$fetch()
 
@@ -115,7 +174,7 @@ class ReviewCtrl extends nb.Controller
         # @changes = @Change.$collection().$fetch()
         # @records = @Record.$collection().$fetch()
     searchRecord: (tableState)->
-        @records.$refresh(tableState);
+        @records.$refresh(tableState)
     checkChanges: ()->
         params = []
         # '无需审核': 0
