@@ -1,49 +1,34 @@
-div.personal-data
-    div.item
-        span 申请人
-        span {{}}
-    div.item
-        span 员工编码
-        span {{}}
-    div.item
-        span 当前部门
-        span {{}}
-    div.item
-        span 当前岗位
-        span {{}}
-div.relation-data(flow-relation-data ng-model="relation_data")
-    div 学位： {{::currentUser.name}}
-    | 学位：
-    | 学历：
-    | 英语等级：
-    | 当前岗位工作年限：
-    | 通道：
-    | 最近6个月绩效：
+md-dialog
+    div.personal-data
+        div.item
+            span 申请人
+            span {{}}
+        div.item
+            span 员工编码
+            span {{}}
+        div.item
+            span 当前部门
+            span {{}}
+        div.item
+            span 当前岗位
+            span {{}}
+    div.relation-data(flow-relation-data ng-model="relation_data")
+        div 学位： {{::currentUser.name}}
+        | 学位：
+        | 学历：
+        | 英语等级：
+        | 当前岗位工作年限：
+        | 通道：
+        | 最近6个月绩效：
 
 
 
-form(name="adjust_form" ng-submit="req.relation_data = relation_data;createFlow(req,'Flow::AdjustPosition')" ng-init="params = {};req = {}")
-    .form-group
-        label 转入部门
-        ui-select(
-            ng-model="department"
-            ng-change="params.orgPos = department.positions.length? department.positions: department.positions.$fetch();req.to_position_id = null"
-            ng-init="params.orgPos = department.positions.length? department.positions: department.positions.$fetch();"
-            reset-search-input="true"
-            style="width: 500px"
-            )
-            ui-select-match(placeholder="请输入机构名称") {{ $select.selected.name }}
-            ui-select-choices(repeat="org in allOrgs | filter:$select.search | limitTo: 10") {{ org.name }}
+    form(name="adjust_form" ng-submit="req.relation_data = relation_data;createFlow(req,'Flow::EarlyRetirement')" ng-init="params = {};req = {}")
 
-    md-input-container
-        label 转入岗位
-        md-select(ng-model="req.to_position_id")
-            //- md-select-label {{current.position.name || '无'}}
-            md-option(ng-value="pos.id" ng-repeat="pos in params.orgPos") {{pos.name}}
-    md-input-container
-        label 申请理由
-        textarea(type="text" ng-model="req.desc" container="body")
+        md-input-container
+            label 申请理由
+            textarea(type="text" ng-model="req.desc" container="body")
 
-    .form-actions
-        md-button(type="submit") 提交
-        md-button(type="button" ng-click="closeThisDialog()") 取消
+        .form-actions
+            md-button(type="submit") 提交
+            md-button(type="button" ng-click="dialog.close()") 取消
