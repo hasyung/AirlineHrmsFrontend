@@ -22,7 +22,10 @@ ul {
 }
 
 .nb-card {
-    margin: 20px 20px 0;
+    margin: 10px 20px 0;
+    &:first-child{
+        margin-top: 20px;
+    }
 }
 
 .md-button {
