@@ -29,6 +29,7 @@ ul {
     height: 36px;
     line-height: 36px;
     margin: auto;
+    min-height: 36px;
 
     &.md-fab {
         border-radius: 14px;
@@ -51,6 +52,7 @@ ul {
     font-family: $font-family-sans-serif;
     font-size: 14px;
     margin: 0;
+
     .md-subheader-inner {
         padding: 0;
     }
@@ -99,13 +101,12 @@ html h4 {
 .overstaffed {
     color: $danger;
 }
-md-toolbar.md-default-theme{
+
+md-toolbar.md-default-theme {
     background-color: #fff;
-    color: rgba(0, 0, 0, 0.87);
+    color: rgba(0, 0, 0, .87);
 }
-.md-button.md-default-theme.md-fab{
+
+.md-button.md-default-theme.md-fab {
     background-color: #fff;
-}
-md-content.md-default-theme{
-    background-color: #f5f5f5;
 }
