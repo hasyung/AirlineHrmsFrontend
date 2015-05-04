@@ -29,7 +29,8 @@ ul {
     height: 36px;
     line-height: 36px;
     margin: auto;
-    min-height: 36px;
+    min-height: 0;
+    min-width: 0;
 
     &.md-fab {
         border-radius: 14px;
@@ -100,13 +101,4 @@ html h4 {
 //超编颜色
 .overstaffed {
     color: $danger;
-}
-
-md-toolbar.md-default-theme {
-    background-color: #fff;
-    color: rgba(0, 0, 0, .87);
-}
-
-.md-button.md-default-theme.md-fab {
-    background-color: #fff;
 }
