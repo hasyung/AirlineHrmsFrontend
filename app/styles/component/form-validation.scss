@@ -341,13 +341,15 @@ md-input-container {
             margin-right: 10px;
             color: rgb(45, 87, 200);
             margin-top: -2px;
+            width: 24px;
+            height: 24px;
         }
     }
     md-card{
         box-shadow: none;
     }
     md-card:last-child{
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
     fieldset{
         padding: 0px;
