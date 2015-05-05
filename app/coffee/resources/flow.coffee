@@ -264,7 +264,7 @@ FlowHandlerDirective = (ngDialog)->
                 </div>
                 <div class="approval-opinions">
                     <div class="approval-subheader">审批意见</div>
-                    <form ng-submit="submitFlow(req, flow)">
+                    <form ng-submit="submitFlow(req, flow, dialog)">
                         <div class="approval-opinions-check">
                             <md-radio-group ng-model="req.opinion">
                                 <md-radio-button ng-value="CHOICE.ACCEPT" class="skyblue">通过</md-radio-button>
@@ -275,7 +275,7 @@ FlowHandlerDirective = (ngDialog)->
                             <textarea ng-model="req.desc" placeholder="请输入审批意见" columns="1"></textarea>
                         </md-input-container>
                         <div class="approval-buttons">
-                            <md-button class="md-raised white" type="button" ng-click="closeThisDialog()">取消</md-button>
+                            <md-button class="md-raised white" type="button" ng-click="dialog.close()">取消</md-button>
                             <md-button class="md-raised skyblue" type="submit">提交</md-button>
                         </div>
                     </form>
@@ -303,6 +303,7 @@ FlowHandlerDirective = (ngDialog)->
                     plain: true
                     className: 'ngdialog-theme-panel'
                     controller: 'FlowController'
+                    controllerAs: 'dialog'
                     scope: scope
                     locals: scope.flow
                     # showClose: attrs.ngDialogShowClose === 'false' ? false : (attrs.ngDialogShowClose === 'true' ? true : defaults.showClose),
@@ -312,24 +313,6 @@ FlowHandlerDirective = (ngDialog)->
                     # : (attrs.ngDialogCloseByEscape === 'true' ? true : defaults.closeByEscape),
                     # preCloseCallback: attrs.ngDialogPreCloseCallback || defaults.preCloseCallback
                 }
-
-                # opts = angular.extend({scope: scope.$new(), targetEvent: evt}, scope.options)
-
-                # opts = angular.extend(opts, {
-                #         template: template
-                #         # controller: ->
-                #         #     @close = (res) -> $mdDialog.hide(res)
-                #         #     @cancel = (res) -> $mdDialog.cancel(res)
-                #         #     return
-                #         controller: FlowController
-                #         controllerAs: 'dialog'
-                #         bindToController: true
-                #     })
-
-                # angular.forEach ['locals','resolve'], (key) ->
-                #     opts[key] = scope.$eval(attrs[key]) if angular.isDefined(attrs[key])
-
-                # $mdDialog.show opts
         elem.on 'click', openDialog
         scope.$on '$destroy', -> elem.off 'click', openDialog
 
@@ -363,10 +346,10 @@ class FlowController
             opinion: true
         }
 
-        scope.submitFlow = (req, flow) ->
+        scope.submitFlow = (req, flow, dialog) ->
             url = joinUrl(FLOW_HTTP_PREFIX, flow.type, flow.id)
             promise = http.put(url, req)
-            promise.then(scope.closeThisDialog)
+            promise.then(dialog.close())
 
 
 
