@@ -78,6 +78,9 @@ class NbFilterCtrl
                 <md-option value="" ng-repeat="item in $enum.get(${ params.type })" ></md-option>
             </md-select>
         '''
+        'org-search': '''
+            <org-search multiple ng-model="${ name }"></org-search>
+        '''
 
 
     @.$inject = ['$scope', '$element', '$attrs', '$parse', '$compile', 'SerializedFilter']
