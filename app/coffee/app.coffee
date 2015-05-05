@@ -86,7 +86,7 @@ mdThemingConf = ($mdThemingProvider) ->
     $mdThemingProvider.theme 'hrms'
         .primaryPalette 'grey', {
             'default': 'A100'
-            
+
         }
         .accentPalette 'grey', {
             'default': 'A100'
@@ -144,8 +144,8 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
 datepickerConf = ($datepickerProvider)->
     angular.extend($datepickerProvider.defaults, {
         dateFormat: 'yyyy-MM-dd'
-        modelDateFormat: 'yyyy-MM-dd'
-        dateType: 'string'
+        autoclose: true
+        # dateType: 'string'
     })
 
 
