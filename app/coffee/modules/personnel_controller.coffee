@@ -59,12 +59,12 @@ class PersonnelCtrl extends nb.Controller
                 '''
             }
             {displayName: '所属部门', name: 'department.name'}
-            {displayName: '员工编号', field: 'employeeNo'}
+            {displayName: '员工编号', name: 'employeeNo'}
             {displayName: '岗位', name: 'position.name'}
             {displayName: '分类', name: 'category.displayName'}
             {displayName: '通道', name: 'channel.displayName'}
             {displayName: '用工性质', name: 'laborRelation.displayName'}
-            {displayName: '到岗时间', field: 'joinScalDate'}
+            {displayName: '到岗时间', name: 'joinScalDate'}
         ]
         @constraints = [
 
