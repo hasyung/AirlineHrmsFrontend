@@ -262,20 +262,20 @@ FlowHandlerDirective = (ngDialog)->
                         </div>
                     </div>
                 </div>
-                <div class="approval-opinions" ng-init="req = {opinion:'true'}">
+                <div class="approval-opinions">
                     <div class="approval-subheader">审批意见</div>
-                    <form ng-submit="dialog.submitFlow(req, flow);">
+                    <form ng-submit="submitFlow(req, flow)">
                         <div class="approval-opinions-check">
                             <md-radio-group ng-model="req.opinion">
-                                <md-radio-button value="true" class="skyblue">通过</md-radio-button>
-                                <md-radio-button value="false" class="skyblue">驳回</md-radio-button>
+                                <md-radio-button ng-value="CHOICE.ACCEPT" class="skyblue">通过</md-radio-button>
+                                <md-radio-button ng-value="CHOICE.REJECT" class="skyblue">驳回</md-radio-button>
                             </md-radio-group>
                         </div>
                         <md-input-container>
                             <textarea ng-model="req.desc" placeholder="请输入审批意见" columns="1"></textarea>
                         </md-input-container>
                         <div class="approval-buttons">
-                            <md-button class="md-raised white" type="button" ng-click="dialog.close();">取消</md-button>
+                            <md-button class="md-raised white" type="button" ng-click="closeThisDialog()">取消</md-button>
                             <md-button class="md-raised skyblue" type="submit">提交</md-button>
                         </div>
                     </form>
@@ -350,24 +350,23 @@ class FlowController
 
     @.$inject = ['$http','$scope']
 
-    constructor: (@http, @scope) ->
+    constructor: (http, scope) ->
 
-        @FLOW_HTTP_PREFIX = "/api/workflows"
+        FLOW_HTTP_PREFIX = "/api/workflows"
 
-        # @CHOICE = {
-        #     ACCEPT: true
-        #     REJECT: false
-        # }
+        scope.CHOICE = {
+            ACCEPT: true
+            REJECT: false
+        }
 
-        # @req = {
-        #     opinion: true
-        # }
+        scope.req = {
+            opinion: true
+        }
 
-    submitFlow: (req, flow) ->
-        req.opinion = JSON.parse req.opinion
-        url = joinUrl(@FLOW_HTTP_PREFIX, flow.type, flow.id)
-        promise = @http.put(url, req)
-        promise.then()
+        scope.submitFlow = (req, flow) ->
+            url = joinUrl(FLOW_HTTP_PREFIX, flow.type, flow.id)
+            promise = http.put(url, req)
+            promise.then(scope.closeThisDialog)
 
 
 
