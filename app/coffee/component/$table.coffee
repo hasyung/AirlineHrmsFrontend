@@ -75,7 +75,8 @@ class NbFilterCtrl
         '''
         'select': '''
             <md-select placeholder="${ displayName }" ng-model="${ name }">
-                <md-option value="" ng-repeat="item in $enum.get(${ params.type })" ></md-option>
+                <md-select-label>{{ ${ name } ? $parent.$enum.parseLabel(${name}, '${params.type}') : '无' }}</md-select-label>
+                <md-option ng-value="item.id" ng-repeat="item in $parent.$enum.get('${ params.type }')">{{item.label}}</md-option>
             </md-select>
         '''
         'org-search': '''
@@ -212,9 +213,10 @@ class NbFilterCtrl
 
 
 
-conditionInputContainer = ->
+conditionInputContainer = ($enum) ->
 
     postLink = (scope, elem, attr, ctrl) ->
+        scope.$enum = $enum
 
         ctrl.initialCondition(scope.condition.selectedConstraint, scope, elem, scope.condition.initialValue)
         scope.$watch 'condition.selectedConstraint', (newValue, old) ->
