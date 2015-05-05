@@ -62,6 +62,22 @@ md-content.search-container {
             margin-top: 8px;
         }
 
+        condition-input-container {
+            width: 700px;
+
+            .md-chips {
+                padding-bottom: 3px;
+
+                .md-chip {
+                    margin-top: 5px;
+                }
+
+                .md-chip-input-container {
+                    margin-top: 5px;
+                }
+            }
+        }
+
         .md-icon-button {
             height: 48px;
             line-height: 48px;
