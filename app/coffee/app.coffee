@@ -85,12 +85,14 @@ mdThemingConf = ($mdThemingProvider) ->
     $mdThemingProvider.theme 'hrms'
         .primaryPalette 'grey', {
             'default': 'A100'
-            
+
         }
         .accentPalette 'grey', {
             'default': 'A100'
         }
-        .warnPalette 'grey'
+        .warnPalette 'red', {
+            'default': '400'
+        }
         .backgroundPalette 'grey', {
             'default': '100'
             'hue-1': 'A100'

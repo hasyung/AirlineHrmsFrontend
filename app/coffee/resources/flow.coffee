@@ -193,93 +193,100 @@ FlowHandlerDirective = (ngDialog)->
 
     template = '''
         <div class="approval-wapper">
-            <md-toolbar>
+            <md-toolbar md-theme="hrms" class="md-warn">
                 <div class="md-toolbar-tools">
                     <span>调岗申请单</span>
                 </div>
             </md-toolbar>
             <div class="approval-container">
-                <div class="approval-info">
-                    <div class="approval-subheader">申请人信息</div>
-                    <div class="approval-info-head">
-                        <span class="name" ng-bind="flow.sponsor.name"></span>
-                        <span class="serial-number" ng-bind="flow.sponsor.employeeNo"></span>
+                <form ng-submit="submitFlow(req, flow)">
+                    <md-card>
+                        <div class="approval-info">
+                            <div class="approval-info-head">
+                                <span class="name" ng-bind="flow.sponsor.name"></span>
+                                <span class="serial-number" ng-bind="flow.sponsor.employeeNo"></span>
+                            </div>
+                            <div class="approval-position"> {{::flow.sponsor.departmentName}}/ {{::flow.sponsor.positionName}}</div>
+                            <div class="approval-relations" ng-bind-html="flow.relationData">
+                            </div>
+                        </div>
+                    </md-card>
+                    <md-card>
+                        <div class="approval-info">
+                            <div class="approval-subheader">调岗信息</div>
+                            <div layout="layout">
+                                <div flex="flex" class="approval-cell">
+                                    <span class="cell-title">转入部门</span>
+                                    <span class="cell-content">信息技术部-测试组</span>
+                                </div>
+                            </div>
+                            <div layout="layout">
+                                <div flex="flex" class="approval-cell">
+                                    <span class="cell-title">转入岗位</span>
+                                    <span class="cell-content">测试组组长</span>
+                                </div>
+                            </div>
+                            <div layout="layout">
+                                <div flex="flex" class="approval-cell">
+                                    <span class="cell-title">申请理由</span>
+                                    <span class="cell-content">
+                                        几年的工作经历，使我迫切的希望进一步拓宽知识面，
+                                        同时也希望有一个直接到一线去工作的机会，所以，
+                                        我希望能够对工作岗位进行适当的调整，调往生产部，
+                                        给自己一个锻炼的机会，也争取为本单位多做一份贡献。
+                                    </span>
+                                </div>
+                            </div>
+                            <div layout="layout">
+                                <div flex="flex" class="approval-cell">
+                                    <span class="cell-title">试岗时长</span>
+                                    <span class="cell-content">3个月</span>
+                                </div>
+                            </div>
+                        </div>
+                    </md-card>
+                    <md-card>
+                        <div class="approval-msg">
+                            <div class="approval-subheader">审批信息</div>
+                            <div approval="approval" class="approval-progress-container"></div>
+                            <div class="approval-msg-cell">
+                                <div class="approval-msg-header">
+                                    <i class="circle"></i>
+                                    <span class="approval-header-title">合规性检查意见</span>
+                                    <span class="approval-header-name">李枝林</span>
+                                    <span class="approval-header-time">2015-04-01</span>
+                                </div>
+                                <div class="approval-msg-content">
+                                    经党委会讨论，批准姜文峰同志转为中共正式党员，
+                                    当年从1989年10月20日算起。经党委会讨论，批
+                                    准姜文峰同志转为中共正式党员，当年从1989年
+                                    10月20日算起。经党委会讨论，批准姜文峰同志转
+                                    为中共正式党员，当年从1989年10月20日算起。经
+                                    党委会讨论，批准姜文峰同志转为中共正式党员，当
+                                    年从1989年10月20日算起。
+                                </div>
+                            </div>
+                        </div>
+                    </md-card>
+                    <md-card>
+                        <div class="approval-opinions">
+                            <div class="approval-subheader">审批意见</div>
+                            <div class="approval-opinions-check">
+                                <md-radio-group ng-model="req.opinion">
+                                    <md-radio-button ng-value="CHOICE.ACCEPT" class="skyblue">通过</md-radio-button>
+                                    <md-radio-button ng-value="CHOICE.REJECT" class="skyblue">驳回</md-radio-button>
+                                </md-radio-group>
+                            </div>
+                            <md-input-container>
+                                <textarea ng-model="req.desc" placeholder="请输入审批意见" columns="1"></textarea>
+                            </md-input-container>
+                        </div>
+                    </md-card>
+                    <div class="approval-buttons">
+                        <md-button class="md-raised white" type="button" ng-click="closeThisDialog()">取消</md-button>
+                        <md-button class="md-raised skyblue" type="submit">提交</md-button>
                     </div>
-                    <div class="approval-position"> {{::flow.sponsor.departmentName}}/ {{::flow.sponsor.positionName}}</div>
-                    <div class="approval-relations" ng-bind-html="flow.relationData">
-                    </div>
-                </div>
-                <div class="approval-info">
-                    <div class="approval-subheader">调岗信息</div>
-                    <div layout="layout">
-                        <div flex="flex" class="approval-cell">
-                            <span class="cell-title">转入部门</span>
-                            <span class="cell-content">信息技术部-测试组</span>
-                        </div>
-                    </div>
-                    <div layout="layout">
-                        <div flex="flex" class="approval-cell">
-                            <span class="cell-title">转入岗位</span>
-                            <span class="cell-content">测试组组长</span>
-                        </div>
-                    </div>
-                    <div layout="layout">
-                        <div flex="flex" class="approval-cell">
-                            <span class="cell-title">申请理由</span>
-                            <span class="cell-content">
-                                几年的工作经历，使我迫切的希望进一步拓宽知识面，
-                                同时也希望有一个直接到一线去工作的机会，所以，
-                                我希望能够对工作岗位进行适当的调整，调往生产部，
-                                给自己一个锻炼的机会，也争取为本单位多做一份贡献。
-                            </span>
-                        </div>
-                    </div>
-                    <div layout="layout">
-                        <div flex="flex" class="approval-cell">
-                            <span class="cell-title">试岗时长</span>
-                            <span class="cell-content">3个月</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="approval-msg">
-                    <div class="approval-subheader">审批信息</div>
-                    <div approval="approval" class="approval-progress-container"></div>
-                    <div class="approval-msg-cell">
-                        <div class="approval-msg-header">
-                            <i class="circle"></i>
-                            <span class="approval-header-title">合规性检查意见</span>
-                            <span class="approval-header-name">李枝林</span>
-                            <span class="approval-header-time">2015-04-01</span>
-                        </div>
-                        <div class="approval-msg-content">
-                            经党委会讨论，批准姜文峰同志转为中共正式党员，
-                            当年从1989年10月20日算起。经党委会讨论，批
-                            准姜文峰同志转为中共正式党员，当年从1989年
-                            10月20日算起。经党委会讨论，批准姜文峰同志转
-                            为中共正式党员，当年从1989年10月20日算起。经
-                            党委会讨论，批准姜文峰同志转为中共正式党员，当
-                            年从1989年10月20日算起。
-                        </div>
-                    </div>
-                </div>
-                <div class="approval-opinions">
-                    <div class="approval-subheader">审批意见</div>
-                    <form ng-submit="submitFlow(req, flow)">
-                        <div class="approval-opinions-check">
-                            <md-radio-group ng-model="req.opinion">
-                                <md-radio-button ng-value="CHOICE.ACCEPT" class="skyblue">通过</md-radio-button>
-                                <md-radio-button ng-value="CHOICE.REJECT" class="skyblue">驳回</md-radio-button>
-                            </md-radio-group>
-                        </div>
-                        <md-input-container>
-                            <textarea ng-model="req.desc" placeholder="请输入审批意见" columns="1"></textarea>
-                        </md-input-container>
-                        <div class="approval-buttons">
-                            <md-button class="md-raised white" type="button" ng-click="closeThisDialog()">取消</md-button>
-                            <md-button class="md-raised skyblue" type="submit">提交</md-button>
-                        </div>
-                    </form>
-                </div>
+                </form>
             </div>
         </div>
     '''

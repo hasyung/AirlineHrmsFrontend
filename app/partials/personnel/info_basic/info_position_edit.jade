@@ -1,6 +1,6 @@
 form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="EditableResource" ng-init="params = {}")
     .form-btn-group(ng-hide="editing" has-permission="employees_update")
-        md-button.md-fab(ng-click="edit($event)")
+        md-button.md-fab.md-primary(ng-click="edit($event)")
             md-icon(md-svg-src="/images/svg/edit_24px.svg" aria-label="修改")
     .form-btn-group.alive(ng-show="editing")
         md-button.md-raised.white(ng-click="cancel(current, $event)") 取消
@@ -48,7 +48,7 @@ form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="Ed
                 md-select(ng-model="current.dutyRank" md-on-open="loadEnum('employee_duty_ranks')" ng-disabled="!editing")
                     md-select-label {{current.dutyRank? current.dutyRank.displayName : '无'}}
                     md-option(ng-value="dutyRank" ng-repeat="dutyRank in enums.employee_duty_ranks") {{dutyRank.displayName}}
-            
+
             md-input-container.row-has-value(flex)
                 label 用工性质
                 md-select(ng-model="current.laborRelation" md-on-open="loadEnum('labor_relations')" ng-disabled="!editing")
@@ -66,4 +66,3 @@ form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="Ed
                     md-select-label {{current.location? current.location.displayName : '无'}}
                     md-option(ng-value="location" ng-repeat="location in enums.locations") {{location.displayName}}
 
-        

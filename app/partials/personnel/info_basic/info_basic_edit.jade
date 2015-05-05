@@ -1,6 +1,6 @@
 form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-controller="EditableResource")
     .form-btn-group(ng-hide="editing" has-permission="employees_update")
-        md-button.md-fab(ng-click="edit($event)")
+        md-button.md-fab.md-primary(ng-click="edit($event)")
             md-icon(md-svg-src="/images/svg/edit_24px.svg" aria-label="修改")
     .form-btn-group.alive(ng-show="editing")
         md-button.md-raised.white(type="button" ng-click="cancel(current,$event, empEditForm)",) 取消
@@ -23,7 +23,7 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
                 md-select(ng-model="current.politicalStatus" md-on-open="loadEnum('political_status')" name="political_status" ng-disabled="!editing")
                     md-select-label {{current.politicalStatus? current.politicalStatus.displayName : '无'}}
                     md-option(ng-value="political" ng-repeat="political in enums.political_status") {{political.displayName}}
-        
+
         div(layout)
             md-input-container(flex)
                 label 毕业院校
