@@ -397,7 +397,7 @@ angular.module 'nb.directives'
                 .attr('cy', single_area_height - radius)
                 .attr('r', (d,i) ->
                     if d.status == 'undo'
-                        1.5*radius
+                        7+radius
                     else
                         radius
                 )
