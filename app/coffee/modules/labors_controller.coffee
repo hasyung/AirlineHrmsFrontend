@@ -40,9 +40,9 @@ class LaborCtrl extends nb.Controller
 
 class EarlyRetirementCtrl extends nb.Controller
 
-    @.$inject = ['$scope', 'Flow::EarlyRetirement', '$mdDialog']
+    @.$inject = ['$scope', 'Flow::EarlyRetirement']
 
-    constructor: (@scope, @EarlyRetirement, @mdDialog) ->
+    constructor: (@scope, @EarlyRetirement) ->
         @loadInitailData()
         @columnDef = [
             {displayName: '所属部门', name: 'sponsor.departmentName'}
@@ -55,6 +55,7 @@ class EarlyRetirementCtrl extends nb.Controller
                 cellTemplate: '''
                 <a class="ui-grid-cell-contents"
                     flow-handler="row.entity"
+                    flows="grid.options.data"
                     ">
                     审批
                 </a>'
@@ -64,6 +65,9 @@ class EarlyRetirementCtrl extends nb.Controller
 
     loadInitailData: ()->
         @flows = @EarlyRetirement.$collection().$fetch()
+
+    refreshFlows: ()->
+        @flows.$refresh()
 
 
 

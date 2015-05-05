@@ -323,6 +323,7 @@ FlowHandlerDirective = (ngDialog)->
     return {
         scope: {
             flow: "=flowHandler"
+            flowSet: "=flows"
             options: "=?"
         }
         link: postLink
@@ -334,7 +335,6 @@ class FlowController
     @.$inject = ['$http','$scope']
 
     constructor: (http, scope) ->
-
         FLOW_HTTP_PREFIX = "/api/workflows"
 
         scope.CHOICE = {
@@ -349,7 +349,9 @@ class FlowController
         scope.submitFlow = (req, flow, dialog) ->
             url = joinUrl(FLOW_HTTP_PREFIX, flow.type, flow.id)
             promise = http.put(url, req)
-            promise.then(dialog.close())
+            promise.then ()->
+                scope.flowSet.$refresh()
+                dialog.close()
 
 
 
