@@ -90,6 +90,45 @@ class PersonnelCtrl extends nb.Controller
                     displayName: '机构'
                     type: 'org-search'
                 }
+                {
+                    name: 'position_name'
+                    displayName: '岗位名称'
+                    type: 'string'
+                }
+                {
+                    name: 'location_id'
+                    type: 'select'
+                    displayName: '属地'
+                    params: {
+                        type: 'locations'
+                    }
+                }
+                {
+                    name: 'channel_id'
+                    type: 'select'
+                    displayName: '岗位通道'
+                    params: {
+                        type: 'channels'
+                    }
+                }
+                {
+                    name: 'employment_status_id'
+                    type: 'select'
+                    displayName: '用工状态'
+                    params: {
+                        type: 'employment_status'
+                    }
+                }
+                {
+                    name: 'birthday'
+                    type: 'date-range'
+                    displayName: '出生日期'
+                }
+                {
+                    name: 'join_scal_date'
+                    type: 'date-range'
+                    displayName: '入职时间'
+                }
             ]
         }
 
