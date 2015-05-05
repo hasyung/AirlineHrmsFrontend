@@ -95,6 +95,13 @@ class PersonnelCtrl extends nb.Controller
                     type: 'string'
                     placeholder: '员工编号'
                 }
+                {
+                    name: 'department_id'
+                    displayName: '机构'
+                    type: 'select'
+                    params:
+                        type: 'deparment_grade'
+                }
             ]
         }
 
@@ -279,10 +286,10 @@ orgMutiPos = ($rootScope)->
 
 app.directive('orgMutiPos',[orgMutiPos])
 
-        
-    
 
-    
+
+
+
 
 
 
