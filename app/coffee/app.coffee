@@ -43,8 +43,9 @@ nb.app = App = angular.module 'nb',deps
 
 #初始化在<head> <script> 标签中, 如果不存在， 系统行为待定
 App.constant 'PERMISSIONS', metadata.permissions || []
-App.constant 'USER_META', metadata.employee || {}
+App.constant 'USER_META', metadata.user || {}
 App.constant 'DEPARTMENTS', dep_info.departments || []
+App.constant 'nbConstants', metadata.resources || []
 
 
 appConf = ($provide, ngDialogProvider) ->
@@ -199,6 +200,7 @@ App
             toaster.pop(code.name, "提示", info)
 
         $rootScope.$state = $state
+        $rootScope.$enum  = $enum
 
         $rootScope.allOrgs = Org.$search()
 
@@ -206,8 +208,6 @@ App
         $rootScope.createFlow = (data, flowname) ->
             $http.post("/api/workflows/#{flowname}", data)
 
-        $rootScope.enums = $enum.get()
-        $rootScope.loadEnum = $enum.loadEnum()
 
     ]
 
