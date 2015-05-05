@@ -334,7 +334,6 @@ md-input-container {
 }
 
 .nb-card-container{
-    background-color: #f5f5f5;
     .nb-card{
         background-color: #fff;
         .form-icon{
@@ -342,17 +341,32 @@ md-input-container {
             margin-right: 10px;
             color: rgb(45, 87, 200);
             margin-top: -2px;
+            width: 24px;
+            height: 24px;
         }
     }
     md-card{
         box-shadow: none;
     }
     md-card:last-child{
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
     fieldset{
         padding: 0px;
+        padding-bottom: 30px;
         margin: 0px;
+        &[disabled] {
+            .md-select-label {
+                padding-left: 90px;
+                border-bottom: 1px inset rgba(0,0,0,0);
+                color: rgba(0,0,0,.87);
+            }
+
+            .md-input {
+                padding-left: 90px;
+                color: rgba(0,0,0,.87);
+            }
+        }
     }
     
 

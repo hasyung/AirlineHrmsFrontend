@@ -245,7 +245,9 @@ NbFilterDirective = ()->
 
             <form ng-submit="search(filter.exportQueryParams())">
                 <div ng-form="conditionForm" class="search-row" ng-repeat="condition in filter.conditions">
-                    <md-button type="button" class="md-icon-button" ng-click="filter.removeCondition(condition)">删除</md-button>
+                    <md-button type="button" class="md-icon-button" ng-click="filter.removeCondition(condition)">
+                        <md-icon md-svg-icon="../../images/svg/close.svg"></md-icon>
+                    </md-button>
                     <md-select ng-model="condition.selectedConstraint">
                         <md-select-label>{{ condition.selectedConstraint.displayName }}</md-select-label>
                         <md-option ng-value="inert_cons" ng-repeat="inert_cons in filter.inertConstraints() track by inert_cons.name">
@@ -255,7 +257,9 @@ NbFilterDirective = ()->
                     <condition-input-container></condition-input-container>
                     <md-button type="button" class="md-icon-button"
                         ng-show="$last && filter.inertConstraints().length > 0"
-                        ng-click="filter.addNewCondition(filter.inertConstraints()[0])">新增</md-button>
+                        ng-click="filter.addNewCondition(filter.inertConstraints()[0])">
+                        <md-icon md-svg-icon="../../images/svg/plus.svg"></md-icon>
+                    </md-button>
                 </div>
                 <div class="search-footer">
                     <md-button class="md-primary md-raised" type="submit">搜索</md-button>
@@ -922,7 +926,7 @@ nbGridDirective = ($parse)->
             useExternalPagination: true
             # enableSelectAll: true
             selectionRowHeaderWidth: 35
-            rowHeight: 35
+            rowHeight: 50
 
             # paginationTemplate: ''' ''' #分页组件模板， 需要集成 ui-grid-paper
             # totalItems: xxx

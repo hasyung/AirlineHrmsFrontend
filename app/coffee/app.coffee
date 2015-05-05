@@ -82,6 +82,21 @@ mdThemingConf = ($mdThemingProvider) ->
         .accentPalette('light-green')
         .warnPalette('red')
 
+    $mdThemingProvider.theme 'hrms'
+        .primaryPalette 'grey', {
+            'default': 'A100'
+            
+        }
+        .accentPalette 'grey', {
+            'default': 'A100'
+        }
+        .warnPalette 'grey'
+        .backgroundPalette 'grey', {
+            'default': '100'
+            'hue-1': 'A100'
+        }
+
+
 
 
 routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider) ->
