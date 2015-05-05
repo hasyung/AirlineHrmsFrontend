@@ -54,12 +54,39 @@ md-content.search-container {
 
         md-select,
         condition-input-container {
-            width: 230px;
+            max-width: 600px;
+            min-width: 150px;
         }
 
         md-select {
             margin-bottom: 10px;
             margin-top: 8px;
+        }
+
+        condition-input-container {
+            .md-chips {
+                padding-bottom: 3px;
+
+                .md-chip {
+                    margin-top: 5px;
+                }
+
+                .md-chip-input-container {
+                    margin-top: 5px;
+                }
+            }
+        }
+
+        .md-input-container-row {
+            md-input-container {
+                float: left;
+            }
+
+            .divide-text {
+                float: left;
+                line-height: 50px;
+                margin: 0 5px;
+            }
         }
 
         .md-icon-button {
