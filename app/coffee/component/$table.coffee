@@ -61,12 +61,15 @@ class NbFilterCtrl
             </md-input-container>
         '''
         'date-range': '''
-            <md-input-container md-no-float>
-                <input type="text" placeholder="${ displayName }" bs-datepicker container="body" ng-model="${name}.from">
-            </md-input-container>
-            <md-input-container md-no-float>
-                <input type="text" placeholder="${ displayName }" bs-datepicker container="body" ng-model="${name}.to">
-            </md-input-container>
+            <div class="md-input-container-row">
+                <md-input-container md-no-float>
+                    <input type="text" placeholder="${ displayName }" bs-datepicker container="body" ng-model="${name}.from">
+                </md-input-container>
+                <div class="divide-text">到</div>
+                <md-input-container md-no-float>
+                    <input type="text" placeholder="${ displayName }" bs-datepicker container="body" ng-model="${name}.to">
+                </md-input-container>
+            </div>
         '''
         'date': '''
             <md-input-container md-no-float>
