@@ -181,12 +181,31 @@ FlowHandlerDirective = (ngDialog)->
     relationSlips = '''
         <div layout="layout">
             <div flex="flex" class="approval-cell">
-                <span class="cell-title">通道</span>
-                <span class="cell-content">管理</span>
+                <span class="cell-title">转入部门</span>
+                <span class="cell-content">信息技术部-测试组</span>
             </div>
+        </div>
+        <div layout="layout">
             <div flex="flex" class="approval-cell">
-                <span class="cell-title">近6个月绩效</span>
-                <span class="cell-content">优秀 2/良好 2/合格 2/待改进 2/不合格 2</span>
+                <span class="cell-title">转入岗位</span>
+                <span class="cell-content">测试组组长</span>
+            </div>
+        </div>
+        <div layout="layout">
+            <div flex="flex" class="approval-cell">
+                <span class="cell-title">申请理由</span>
+                <span class="cell-content">
+                    几年的工作经历，使我迫切的希望进一步拓宽知识面，
+                    同时也希望有一个直接到一线去工作的机会，所以，
+                    我希望能够对工作岗位进行适当的调整，调往生产部，
+                    给自己一个锻炼的机会，也争取为本单位多做一份贡献。
+                </span>
+            </div>
+        </div>
+        <div layout="layout">
+            <div flex="flex" class="approval-cell">
+                <span class="cell-title">试岗时长</span>
+                <span class="cell-content">3个月</span>
             </div>
         </div>
     '''
@@ -195,7 +214,7 @@ FlowHandlerDirective = (ngDialog)->
         <div class="approval-wapper">
             <md-toolbar md-theme="hrms" class="md-warn">
                 <div class="md-toolbar-tools">
-                    <span>调岗申请单</span>
+                    <span>退休申请单</span>
                 </div>
             </md-toolbar>
             <div class="approval-container">
@@ -205,42 +224,44 @@ FlowHandlerDirective = (ngDialog)->
                             <div class="approval-info-head">
                                 <span class="name" ng-bind="flow.sponsor.name"></span>
                                 <span class="serial-number" ng-bind="flow.sponsor.employeeNo"></span>
-                            </div>
-                            <div class="approval-position"> {{::flow.sponsor.departmentName}}/ {{::flow.sponsor.positionName}}</div>
-                            <div class="approval-relations" ng-bind-html="flow.relationData">
+                                <div class="approval-position"> {{::flow.sponsor.departmentName}}/ {{::flow.sponsor.positionName}}</div>
                             </div>
                         </div>
                     </md-card>
                     <md-card>
-                        <div class="approval-info">
-                            <div class="approval-subheader">调岗信息</div>
-                            <div layout="layout">
-                                <div flex="flex" class="approval-cell">
-                                    <span class="cell-title">转入部门</span>
-                                    <span class="cell-content">信息技术部-测试组</span>
+                        <div class="approval-relation-info">
+                            <div class="approval-subheader">相关信息</div>
+                            <div class="approval-relations">
+                                <div layout="layout">
+                                    <div flex="flex" class="approval-cell">
+                                        <span class="cell-title">性别</span>
+                                        <span class="cell-content">男</span>
+                                    </div>
+                                    <div flex="flex" class="approval-cell">
+                                        <span class="cell-title">年龄</span>
+                                        <span class="cell-content">50</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div layout="layout">
-                                <div flex="flex" class="approval-cell">
-                                    <span class="cell-title">转入岗位</span>
-                                    <span class="cell-content">测试组组长</span>
+                                <div layout="layout">
+                                    <div flex="flex" class="approval-cell">
+                                        <span class="cell-title">通道</span>
+                                        <span class="cell-content">管理</span>
+                                    </div>
+                                    <div flex="flex" class="approval-cell">
+                                        <span class="cell-title">社保缴纳年限</span>
+                                        <span class="cell-content">15年</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div layout="layout">
-                                <div flex="flex" class="approval-cell">
-                                    <span class="cell-title">申请理由</span>
-                                    <span class="cell-content">
-                                        几年的工作经历，使我迫切的希望进一步拓宽知识面，
-                                        同时也希望有一个直接到一线去工作的机会，所以，
-                                        我希望能够对工作岗位进行适当的调整，调往生产部，
-                                        给自己一个锻炼的机会，也争取为本单位多做一份贡献。
-                                    </span>
-                                </div>
-                            </div>
-                            <div layout="layout">
-                                <div flex="flex" class="approval-cell">
-                                    <span class="cell-title">试岗时长</span>
-                                    <span class="cell-content">3个月</span>
+                                <div layout="layout">
+                                    <div flex="flex" class="approval-cell">
+                                        <span class="cell-title">申请理由</span>
+                                        <span class="cell-content">
+                                            几年的工作经历，使我迫切的希望进一步拓宽知识面，
+                                            同时也希望有一个直接到一线去工作的机会，所以，
+                                            我希望能够对工作岗位进行适当的调整，调往生产部，
+                                            给自己一个锻炼的机会，也争取为本单位多做一份贡献。
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -250,20 +271,44 @@ FlowHandlerDirective = (ngDialog)->
                             <div class="approval-subheader">审批信息</div>
                             <div approval="approval" class="approval-progress-container"></div>
                             <div class="approval-msg-cell">
-                                <div class="approval-msg-header">
-                                    <i class="circle"></i>
-                                    <span class="approval-header-title">合规性检查意见</span>
-                                    <span class="approval-header-name">李枝林</span>
-                                    <span class="approval-header-time">2015-04-01</span>
+                                <div class="approval-msg-flag">
+                                    <md-icon class="valid" md-svg-src="../../images/svg/check.svg"></md-icon>
                                 </div>
-                                <div class="approval-msg-content">
-                                    经党委会讨论，批准姜文峰同志转为中共正式党员，
-                                    当年从1989年10月20日算起。经党委会讨论，批
-                                    准姜文峰同志转为中共正式党员，当年从1989年
-                                    10月20日算起。经党委会讨论，批准姜文峰同志转
-                                    为中共正式党员，当年从1989年10月20日算起。经
-                                    党委会讨论，批准姜文峰同志转为中共正式党员，当
-                                    年从1989年10月20日算起。
+                                <div class="approval-msg-container">
+                                    <div class="approval-msg-header">
+                                        合规性检查意见
+                                    </div>
+                                    <div class="approval-msg-content">
+                                        经党委会讨论，批准姜文峰同志转为中共正式党员，
+                                        当年从1989年10月20日算起。经党委会讨论，批
+                                        准姜文峰同志转为中共正式党员，当年从1989年
+                                        10月20日算起。经党委会讨论，批准姜文峰同志转
+                                        为中共正式党员，当年从1989年10月20日算起。经
+                                        党委会讨论，批准姜文峰同志转为中共正式党员，当
+                                        年从1989年10月20日算起。
+                                    </div>
+                                </div>
+                                <div class="approval-msg-decider">
+                                    <span class="approval-decider-name">李志林</span>
+                                    <span class="approval-decider-date">2015-1-1</span>
+                                </div>
+                            </div>
+                            <div class="approval-msg-cell">
+                                <div class="approval-msg-flag">
+                                    <md-icon class="invalid" md-svg-src="../../images/svg/close.svg"></md-icon>
+                                </div>
+                                <div class="approval-msg-container">
+                                    <div class="approval-msg-header">
+                                        合规性检查意见
+                                    </div>
+                                    <div class="approval-msg-content">
+                                        经党委会讨论，批准姜文峰同志转为中共正式党员，
+                                        当年从1989年10月20日算起。
+                                    </div>
+                                </div>
+                                <div class="approval-msg-decider">
+                                    <span class="approval-decider-name">张仲芳</span>
+                                    <span class="approval-decider-date">2015-1-1</span>
                                 </div>
                             </div>
                         </div>
@@ -310,6 +355,7 @@ FlowHandlerDirective = (ngDialog)->
                     plain: true
                     className: 'ngdialog-theme-panel'
                     controller: 'FlowController'
+                    controllerAs: 'dialog'
                     scope: scope
                     locals: scope.flow
                     # showClose: attrs.ngDialogShowClose === 'false' ? false : (attrs.ngDialogShowClose === 'true' ? true : defaults.showClose),
@@ -319,24 +365,6 @@ FlowHandlerDirective = (ngDialog)->
                     # : (attrs.ngDialogCloseByEscape === 'true' ? true : defaults.closeByEscape),
                     # preCloseCallback: attrs.ngDialogPreCloseCallback || defaults.preCloseCallback
                 }
-
-                # opts = angular.extend({scope: scope.$new(), targetEvent: evt}, scope.options)
-
-                # opts = angular.extend(opts, {
-                #         template: template
-                #         # controller: ->
-                #         #     @close = (res) -> $mdDialog.hide(res)
-                #         #     @cancel = (res) -> $mdDialog.cancel(res)
-                #         #     return
-                #         controller: FlowController
-                #         controllerAs: 'dialog'
-                #         bindToController: true
-                #     })
-
-                # angular.forEach ['locals','resolve'], (key) ->
-                #     opts[key] = scope.$eval(attrs[key]) if angular.isDefined(attrs[key])
-
-                # $mdDialog.show opts
         elem.on 'click', openDialog
         scope.$on '$destroy', -> elem.off 'click', openDialog
 
@@ -370,10 +398,10 @@ class FlowController
             opinion: true
         }
 
-        scope.submitFlow = (req, flow) ->
+        scope.submitFlow = (req, flow, dialog) ->
             url = joinUrl(FLOW_HTTP_PREFIX, flow.type, flow.id)
             promise = http.put(url, req)
-            promise.then(scope.closeThisDialog)
+            promise.then(dialog.close())
 
 
 
