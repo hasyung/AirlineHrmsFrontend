@@ -176,7 +176,7 @@ flowRelationDataDirective = ($timeout)->
 
 
 
-FlowHandlerDirective = (ngDialog)->
+FlowHandlerDirective = ($mdDialog)->
 
     relationSlips = '''
         <div layout="layout">
@@ -192,7 +192,7 @@ FlowHandlerDirective = (ngDialog)->
     '''
 
     template = '''
-        <div class="approval-wapper">
+        <md-dialog class="approval-wapper">
             <md-toolbar>
                 <div class="md-toolbar-tools">
                     <span>调岗申请单</span>
@@ -262,34 +262,34 @@ FlowHandlerDirective = (ngDialog)->
                         </div>
                     </div>
                 </div>
-                <div class="approval-opinions">
+                <div class="approval-opinions" ng-init="req = {opinion:'true'}">
                     <div class="approval-subheader">审批意见</div>
-                    <form ng-submit="submitFlow(req, flow);dialog.close();">
+                    <form ng-submit="dialog.submitFlow(req, flow);">
                         <div class="approval-opinions-check">
                             <md-radio-group ng-model="req.opinion">
-                                <md-radio-button ng-value="CHOICE.ACCEPT" class="skyblue">通过</md-radio-button>
-                                <md-radio-button ng-value="CHOICE.REJECT" class="skyblue">驳回</md-radio-button>
+                                <md-radio-button value="true" class="skyblue">通过</md-radio-button>
+                                <md-radio-button value="false" class="skyblue">驳回</md-radio-button>
                             </md-radio-group>
                         </div>
                         <md-input-container>
                             <textarea ng-model="req.desc" placeholder="请输入审批意见" columns="1"></textarea>
                         </md-input-container>
                         <div class="approval-buttons">
-                            <md-button class="md-raised white" type="button" ng-click="closeThisDialog();">取消</md-button>
+                            <md-button class="md-raised white" type="button" ng-click="dialog.close();">取消</md-button>
                             <md-button class="md-raised skyblue" type="submit">提交</md-button>
                         </div>
                     </form>
                 </div>
             </div>
-        </div>
+        </md-dialog>
     '''
 
 
 
     postLink = (scope, elem, attrs, ctrl) ->
 
-        defaults = ngDialog.getDefaults()
-        options = angular.extend {}, defaults, scope.options
+        # defaults = ngDialog.getDefaults()
+        # options = angular.extend {}, defaults, scope.options
 
         offeredExtraForm = (flow) ->
             return template.replace(/#extraFormLayout#/, `flow.$extraForm ? flow.$extraForm : ''`)
@@ -298,36 +298,38 @@ FlowHandlerDirective = (ngDialog)->
             scope.flow = scope.flow.$refresh()
             promise = scope.flow.$asPromise()
             promise.then(offeredExtraForm).then (template)->
-                ngDialog.open {
-                    template: template
-                    plain: true
-                    className: options.className
-                    controller: 'FlowController'
-                    scope: scope
-                    locals: scope.flow
-                    # showClose: attrs.ngDialogShowClose === 'false' ? false : (attrs.ngDialogShowClose === 'true' ? true : defaults.showClose),
-                    # closeByDocument: attrs.ngDialogCloseByDocument === 'false' ? false :
-                    # (attrs.ngDialogCloseByDocument === 'true' ? true : defaults.closeByDocument),
-                    # closeByEscape: attrs.ngDialogCloseByEscape === 'false' ? false
-                    # : (attrs.ngDialogCloseByEscape === 'true' ? true : defaults.closeByEscape),
-                    # preCloseCallback: attrs.ngDialogPreCloseCallback || defaults.preCloseCallback
-                }
+                # ngDialog.open {
+                #     template: template
+                #     plain: true
+                #     className: options.className
+                #     controller: 'FlowController'
+                #     scope: scope
+                #     locals: scope.flow
+                #     # showClose: attrs.ngDialogShowClose === 'false' ? false : (attrs.ngDialogShowClose === 'true' ? true : defaults.showClose),
+                #     # closeByDocument: attrs.ngDialogCloseByDocument === 'false' ? false :
+                #     # (attrs.ngDialogCloseByDocument === 'true' ? true : defaults.closeByDocument),
+                #     # closeByEscape: attrs.ngDialogCloseByEscape === 'false' ? false
+                #     # : (attrs.ngDialogCloseByEscape === 'true' ? true : defaults.closeByEscape),
+                #     # preCloseCallback: attrs.ngDialogPreCloseCallback || defaults.preCloseCallback
+                # }
 
-            # opts = angular.extend({scope: scope.$new(), targetEvent: evt}, options)
+                opts = angular.extend({scope: scope.$new(), targetEvent: evt}, scope.options)
 
-            # opts = angular.extend(opts, {
-            #         controller: ->
-            #             @close = (res) -> $mdDialog.hide(res)
-            #             @cancel = (res) -> $mdDialog.cancel(res)
-            #             return
-            #         controllerAs: 'dialog'
-            #         bindToController: true
-            #     })
+                opts = angular.extend(opts, {
+                        template: template
+                        # controller: ->
+                        #     @close = (res) -> $mdDialog.hide(res)
+                        #     @cancel = (res) -> $mdDialog.cancel(res)
+                        #     return
+                        controller: FlowController
+                        controllerAs: 'dialog'
+                        bindToController: true
+                    })
 
-            # angular.forEach ['locals','resolve'], (key) ->
-            #     opts[key] = scope.$eval(attrs[key]) if angular.isDefined(attrs[key])
+                angular.forEach ['locals','resolve'], (key) ->
+                    opts[key] = scope.$eval(attrs[key]) if angular.isDefined(attrs[key])
 
-            # $mdDialog.show opts
+                $mdDialog.show opts
         elem.on 'click', openDialog
         scope.$on '$destroy', -> elem.off 'click', openDialog
 
@@ -346,30 +348,33 @@ FlowHandlerDirective = (ngDialog)->
 
 class FlowController
 
-    @.$inject = ['$http','$scope']
+    @.$inject = ['$http','$scope', '$mdDialog']
 
-    constructor: (http, scope) ->
+    constructor: (@http, @scope, @mdDialog) ->
 
-        FLOW_HTTP_PREFIX = "/api/workflows"
+        @FLOW_HTTP_PREFIX = "/api/workflows"
 
-        scope.CHOICE = {
-            ACCEPT: true
-            REJECT: false
-        }
+        # @CHOICE = {
+        #     ACCEPT: true
+        #     REJECT: false
+        # }
 
-        scope.req = {
-            opinion: true
-        }
+        # @req = {
+        #     opinion: true
+        # }
 
-        scope.submitFlow = (req, flow) ->
-            url = joinUrl(FLOW_HTTP_PREFIX, flow.type, flow.id)
-            promise = http.put(url, req)
-            promise.then(scope.closeThisDialog)
+    submitFlow: (req, flow) ->
+        req.opinion = JSON.parse req.opinion
+        url = joinUrl(@FLOW_HTTP_PREFIX, flow.type, flow.id)
+        promise = @http.put(url, req)
+        promise.then(@close())
+    close: (res) -> @mdDialog.hide(res)
+    cancel: (res) -> @mdDialog.cancel(res)
 
 
 
-app.controller 'FlowController', FlowController
-app.directive 'flowHandler', ['ngDialog', FlowHandlerDirective]
+# app.controller 'FlowController', FlowController
+app.directive 'flowHandler', ['$mdDialog', FlowHandlerDirective]
 app.directive 'flowRelationData', ['$timeout', flowRelationDataDirective]
 
 
