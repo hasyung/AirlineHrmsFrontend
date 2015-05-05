@@ -44,19 +44,21 @@ class PersonnelCtrl extends nb.Controller
 
 
         @columnDef = [
-            {displayName: '所属部门', name: 'department.name'}
             {
                 displayName: '姓名'
                 field: 'name'
-                pinnedLeft: true
+                # pinnedLeft: true
                 cellTemplate: '''
-                <a class="ui-grid-cell-contents" nb-panel
-                    template-url="partials/personnel/info_basic.html"
-                    locals="{employee: row.entity}">
-                    {{grid.getCellValue(row, col)}}
-                </a>'
+                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
                 '''
             }
+            {displayName: '所属部门', name: 'department.name'}
             {displayName: '员工编号', field: 'employeeNo'}
             {displayName: '岗位', name: 'position.name'}
             {displayName: '分类', name: 'category.displayName'}
@@ -279,10 +281,10 @@ orgMutiPos = ($rootScope)->
 
 app.directive('orgMutiPos',[orgMutiPos])
 
-        
-    
 
-    
+
+
+
 
 
 
