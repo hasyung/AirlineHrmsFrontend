@@ -23,7 +23,8 @@ ul {
 
 .nb-card {
     margin: 10px 20px 0;
-    &:first-child{
+
+    &:first-child {
         margin-top: 20px;
     }
 }
@@ -50,6 +51,10 @@ ul {
             width: 14px;
         }
     }
+}
+
+md-input-container label {
+    top: 0;
 }
 
 .md-subheader {
