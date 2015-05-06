@@ -1,6 +1,8 @@
 .position-items()
     .position-item(layout ng-repeat="posItem in positions"
-        ng-init="itemParams={};"
+        ng-init="itemParams={};\
+            itemParams.orgPos = ctrl.Position.$collection({department_id:posItem.department.id}).$refresh();\
+        "
         )
         div(layout="row" flex)
             div(flex="50")

@@ -385,10 +385,9 @@ class PersonnelSort extends nb.Controller
 
 orgMutiPos = ($rootScope)->
     class PersonnelPositions extends nb.Controller
-        @.$inject = ['$scope', '$rootScope']
-        constructor: (@scope, @rootScope) ->
+        @.$inject = ['$scope', 'Position']
+        constructor: (@scope, @Position) ->
             @scope.positions = []
-            @scope.allOrgs = @rootScope.allOrgs
 
         addPositions: ->
             @scope.positions.push {
