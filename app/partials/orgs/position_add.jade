@@ -1,4 +1,4 @@
-md-dialog(ng-init="newPos = {departmentId: currentOrg.id}; specification = {}" style="width:300px;")
+md-dialog(ng-init="newPos = {departmentId: currentOrg.id}; specification = {}" style="padding: 20px; min-width: 500px;")
 	md-content
 		wizard(on-finish="ctrl.createPos(newPos, specification) ; dialog.close()")
 			form(title="基本信息" wz-step canexit="posForm.$valid" name="posForm" novalidate )

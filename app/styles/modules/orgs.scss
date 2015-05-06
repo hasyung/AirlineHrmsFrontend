@@ -167,26 +167,26 @@
     }
 }
 
-.ui-select-container {
-    margin: 10px 20px 0 0;
-    min-width: 160px;
+// .ui-select-container {
+//     margin: 10px 20px 0 0;
+//     min-width: 160px;
 
-    .ui-select-match {
-        span {
-            width: 100%;
-        }
-    }
+//     .ui-select-match {
+//         span {
+//             width: 100%;
+//         }
+//     }
 
-    input.form-control {
-        border-color: #ccc;
-        border-radius: 2px;
-        border-style: solid;
-        border-width: 1px;
-        font-size: $font-size-sm;
-        height: 33px;
-        padding-left: 10px;
-    }
-}
+//     input.form-control {
+//         border-color: #ccc;
+//         border-radius: 2px;
+//         border-style: solid;
+//         border-width: 1px;
+//         font-size: $font-size-sm;
+//         height: 33px;
+//         padding-left: 10px;
+//     }
+// }
 
 .form-group {
     label {
@@ -225,14 +225,23 @@
 md-dialog.org-transfer {
     .dialog-content {
         padding: 0 0 0 20px;
-        width: 270px;
+        width: 300;
+    }
+
+    md-toolbar {
+        min-height: 50px;
+    }
+
+    .md-toolbar-tools {
+        font-size: $font-size-md;
+        height: 50px;
     }
 
     .md-actions {
         background-color: #f6f8f8;
     }
 }
-
+//时间轴dialog
 md-dialog.org_history {
     .dialog-content {
         width: 470px;
@@ -250,9 +259,53 @@ md-dialog.org_history {
         padding: 0 20px;
     }
 }
-
+//机构树生效dialog
 md-dialog.effect_changes {
+    md-toolbar {
+        min-height: 40px;
+    }
+
+    .md-toolbar-tools {
+        font-size: $font-size-md;
+        height: 40px;
+    }
+
     .dialog-content {
-        width: 270px;
+        width: 300px;
     }
 }
+
+//岗位变更记录 dialog
+md-dialog.position_changes {
+    md-toolbar {
+        min-height: 40px;
+    }
+
+    .md-toolbar-tools {
+        font-size: $font-size-md;
+        height: 40px;
+    }
+
+    .dialog-content {
+        width: 300px;
+    }
+}
+
+//岗位删除记录 dialog
+md-dialog.position_delete {
+    md-toolbar {
+        min-height: 40px;
+    }
+
+    .md-toolbar-tools {
+        font-size: $font-size-md;
+        height: 40px;
+    }
+
+    .dialog-content {
+        width: 300px;
+    }
+}
+
+
+
