@@ -1,30 +1,28 @@
-div()
-    md-subheader.cust-md-subheader 岗位信息
-    div
-        .position-item(layout ng-repeat="posItem in positions"
-            ng-init="itemParams={};"
-            )
-            .form-control-container(layout="row" flex="90")
-                .form-group(flex="60")
-                    label 所属部门
-                    org-search(ng-model="posItem.department" selected-item-change="itemParams.orgPos = org.positions.$fetch();posItem.position = null;")
-                    
-                md-input-container.row-has-value(flex="30")
-                    label 岗位
-                    md-select(ng-model="posItem.position")
-                        md-select-label {{posItem.position.name || '无'}}
-                        md-option(ng-value="pos" ng-repeat="pos in itemParams.orgPos") {{::pos.name}}
-                md-input-container.row-has-value(flex="20")
-                    label 岗位性质
-                    md-select(ng-model="posItem.category")
-                        md-select-label {{posItem.category || '无'}}
-                        md-option(aria-label="primary" value="主职") 主职
-                        md-option(aria-label="part" value="兼职") 兼职
-                        md-option(aria-label="proxy" value="代理") 代理
-            .item-action-container(flex="10" ng-if="editStatus")
-                md-button.md-fab(type="button" ng-click="ctrl.removePosition($index)")
-                    md-icon(md-svg-src="/images/svg/ic_remove_24px.svg" aria-label="删除")
-                md-button.md-fab(type="button" ng-click="ctrl.setHeigher($index)" ng-if="!$first")
-                    md-icon(md-svg-src="/images/svg/ic_vertical_align_top_24px.svg" aria-label="上移")
-                md-button.md-fab(type="button" ng-click="ctrl.addPositions()" ng-if="$first")
-                    md-icon(md-svg-src="/images/svg/ic_add_24px.svg" aria-label="添加岗位")
+.position-items()
+    .position-item(layout ng-repeat="posItem in positions"
+        ng-init="itemParams={};"
+        )
+        div(layout="row" flex)
+            div(flex="50")
+                label 所属部门
+                org-search(ng-model="posItem.department" selected-item-change="itemParams.orgPos = org.positions.$fetch();posItem.position = null;")
+                
+            md-input-container.row-has-value(flex="25")
+                label 岗位
+                md-select(ng-model="posItem.position")
+                    md-select-label {{posItem.position.name || '无'}}
+                    md-option(ng-value="pos" ng-repeat="pos in itemParams.orgPos") {{::pos.name}}
+            md-input-container.row-has-value(flex="25")
+                label 岗位性质
+                md-select(ng-model="posItem.category")
+                    md-select-label {{posItem.category || '无'}}
+                    md-option(aria-label="primary" value="主职") 主职
+                    md-option(aria-label="part" value="兼职") 兼职
+                    md-option(aria-label="proxy" value="代理") 代理
+        .item-action-container(flex="10" ng-if="editStatus")
+            md-button.md-fab(type="button" ng-click="ctrl.removePosition($index)")
+                md-icon(md-svg-src="/images/svg/ic_remove_24px.svg" aria-label="删除")
+            md-button.md-fab(type="button" ng-click="ctrl.setHeigher($index)" ng-if="!$first")
+                md-icon(md-svg-src="/images/svg/ic_vertical_align_top_24px.svg" aria-label="上移")
+            md-button.md-fab(type="button" ng-click="ctrl.addPositions()" ng-if="$first")
+                md-icon(md-svg-src="/images/svg/ic_add_24px.svg" aria-label="添加岗位")
