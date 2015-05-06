@@ -1,55 +1,61 @@
-div.app-content-wrapper(nb-table='ctrl.records' nb-safe-src="ctrl.records" ng-init="ctrl.records = ctrl.Record.$collection().$refresh()")
-        .search-container(nb-search)
-            div(nb-predicate="姓名" predicate-attr="name")
-                input(name="name" placeholder="姓名" ng-model="name")
-            div(nb-predicate="员工编号" predicate-attr="employee_no")
-                input(name="employee_no" placeholder="工号" ng-model="employee_no")
+div.ui-grid-container(ng-init="ctrl.records = ctrl.Record.$collection().$refresh()")
+    md-toolbar
+        .md-toolbar-tools
+            h2 待审核列表
+    div(nb-grid column-defs="ctrl.recordColumnDef" safe-src="ctrl.records")
 
-            div(nb-predicate="创建时间" predicate-attr="created_at")
-                input(ng-model="created_at.from" bs-datepicker)
-                span.gap 至
-                input(ng-model="created_at.to" bs-datepicker)
-        .search-btn-group
-            md-button.md-raised.purple(nb-pipe="ctrl.searchRecord(tableState)") 开始搜索
+//- div.app-content-wrapper(nb-table='ctrl.records' nb-safe-src="ctrl.records" ng-init="ctrl.records = ctrl.Record.$collection().$refresh()")
+//-         .search-container(nb-search)
+//-             div(nb-predicate="姓名" predicate-attr="name")
+//-                 input(name="name" placeholder="姓名" ng-model="name")
+//-             div(nb-predicate="员工编号" predicate-attr="employee_no")
+//-                 input(name="employee_no" placeholder="工号" ng-model="employee_no")
 
-        .table-container
-            h4 人事信息列表
-            table.table.table-striped.custom-table
-                thead
-                    tr
-                        th 员工编码
-                        th 姓名
-                        th 所属部门
-                        th 信息变更模块
-                        th 变更类型
-                        th 变更时间
-                        th 状态
-                        th 审核时间
-                        th 理由
-                tbody(nb-popup-management)
-                    tr(ng-repeat="record in ctrl.records track by $index")
-                        td(ng-bind="record.employeeNo")
-                        td(ng-bind="record.name")
-                        td(ng-bind="record.department.name")
-                        td(ng-if="record.action == '修改'")
-                            a(
-                                href="javascript:void(0);"
-                                nb-dialog
-                                template-url="partials/common/update_change_review.tpl.html"
-                                ng-bind="record.auditableType"
-                                locals="{'change': record}"
-                            )
-                        td(ng-if="record.action == '新增' || record.action == '删除'")
-                            a(
-                                href="javascript:void(0);"
-                                nb-dialog
-                                template-url="partials/common/create_change_review.tpl.html"
-                                ng-bind="record.auditableType"
-                                locals="{'change': record}"
-                            )
-                        td(ng-bind="record.action")
-                        td(ng-bind="record.createdAt | date:'yyyy-MM-dd'")
-                        td(ng-bind="record.statusCd | dictmap:'personnel'")
-                        td(ng-bind="record.checkDate | date:'yyyy-MM-dd'")
-                        td.long-text(ng-bind="record.reason")
-        .custom-pages(nb-pagination="ctrl.records.$metadata" per-page="15")
+//-             div(nb-predicate="创建时间" predicate-attr="created_at")
+//-                 input(ng-model="created_at.from" bs-datepicker)
+//-                 span.gap 至
+//-                 input(ng-model="created_at.to" bs-datepicker)
+//-         .search-btn-group
+//-             md-button.md-raised.purple(nb-pipe="ctrl.searchRecord(tableState)") 开始搜索
+
+//-         .table-container
+//-             h4 人事信息列表
+//-             table.table.table-striped.custom-table
+//-                 thead
+//-                     tr
+//-                         th 员工编码
+//-                         th 姓名
+//-                         th 所属部门
+//-                         th 信息变更模块
+//-                         th 变更类型
+//-                         th 变更时间
+//-                         th 状态
+//-                         th 审核时间
+//-                         th 理由
+//-                 tbody(nb-popup-management)
+//-                     tr(ng-repeat="record in ctrl.records track by $index")
+//-                         td(ng-bind="record.employeeNo")
+//-                         td(ng-bind="record.name")
+//-                         td(ng-bind="record.department.name")
+//-                         td(ng-if="record.action == '修改'")
+//-                             a(
+//-                                 href="javascript:void(0);"
+//-                                 nb-dialog
+//-                                 template-url="partials/common/update_change_review.tpl.html"
+//-                                 ng-bind="record.auditableType"
+//-                                 locals="{'change': record}"
+//-                             )
+//-                         td(ng-if="record.action == '新增' || record.action == '删除'")
+//-                             a(
+//-                                 href="javascript:void(0);"
+//-                                 nb-dialog
+//-                                 template-url="partials/common/create_change_review.tpl.html"
+//-                                 ng-bind="record.auditableType"
+//-                                 locals="{'change': record}"
+//-                             )
+//-                         td(ng-bind="record.action")
+//-                         td(ng-bind="record.createdAt | date:'yyyy-MM-dd'")
+//-                         td(ng-bind="record.statusCd | dictmap:'personnel'")
+//-                         td(ng-bind="record.checkDate | date:'yyyy-MM-dd'")
+//-                         td.long-text(ng-bind="record.reason")
+//-         .custom-pages(nb-pagination="ctrl.records.$metadata" per-page="15")
