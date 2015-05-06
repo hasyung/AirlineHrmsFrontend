@@ -1,8 +1,10 @@
-div.ui-grid-container(ng-init="ctrl.records = ctrl.Record.$collection().$refresh()")
-    md-toolbar
-        .md-toolbar-tools
-            h2 待审核列表
-    div(nb-grid column-defs="ctrl.recordColumnDef" safe-src="ctrl.records")
+.app-content-wrapper(flex style="height: 700px;")
+    //- div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+    div.ui-grid-container(ng-init="ctrl.records = ctrl.Record.$collection().$refresh()")
+        md-toolbar
+            .md-toolbar-tools
+                h2 待审核列表
+        div(nb-grid column-defs="ctrl.recordColumnDef" safe-src="ctrl.records")
 
 //- div.app-content-wrapper(nb-table='ctrl.records' nb-safe-src="ctrl.records" ng-init="ctrl.records = ctrl.Record.$collection().$refresh()")
 //-         .search-container(nb-search)
