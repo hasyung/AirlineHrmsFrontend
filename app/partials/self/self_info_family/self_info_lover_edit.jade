@@ -22,7 +22,7 @@ form(ng-submit="save(wife.$save(),familymembersForm)" name="familymembersForm" n
         div(layout)
             md-input-container(flex)
                 label 出生年月
-                input(type="date" ng-model="wife.birthday")
+                input(bs-datepicker ng-model="wife.birthday")
             md-input-container(flex)
                 label 身份证号
                 input(ng-model="wife.identityNo" type="text" required name="identityNo" minlength="15" maxlength="18")

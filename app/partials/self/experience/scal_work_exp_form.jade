@@ -3,10 +3,10 @@ form(ng-submit="save(work.$save(), infoForm)" name="infoForm")
         div(layout)
             md-input-container(flex)
                 label 开始时间
-                input(type="date" ng-model="work.startDate")
+                input(bs-datepicker ng-model="work.startDate")
             md-input-container(flex)
                 label 结束时间
-                input(type="date" ng-model="work.endDate")
+                input(bs-datepicker ng-model="work.endDate")
         div(layout)
             md-input-container(flex)
                 label 单位名称
