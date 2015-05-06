@@ -1,7 +1,9 @@
 md-dialog.effect_changes
     form(novalidate, name="active_form", ng-submit="ctrl.active(active_form, log) && dialog.close()")
         md-content.sticky-container
-            md-subheader.md-sticky-no-effect 提交川航新的组织架构
+            md-toolbar.md-accent(md-theme="hrms")
+                .md-toolbar-tools
+                    span 提交川航新的组织架构
             .dialog-content
                 fieldset
                     md-input-container
