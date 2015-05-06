@@ -71,7 +71,7 @@ drawOrgChart = (root, options, select_org_id) ->
     active_node = null
 
     container             = options.container
-    nature_type_order     = ['jiguanbumen', 'shengchanbumen', 'fengongsijidi']
+    nature_type_order     = [2,1,3] #workaround use nature id
     nature_type_order.unshift('root') # root not exist nature
     rectHeight            = options.rectHeight || 180
     rectWidth             = options.rectWidth || 36
@@ -86,17 +86,17 @@ drawOrgChart = (root, options, select_org_id) ->
     rectClickHandler      = options.clickHandler
 
     computeLayerMaxLength = (root) ->
-        length_group = _.countBy root.children, (org) -> return org.nature.name
+        length_group = _.countBy root.children, (org) -> return org.nature_id
         return _.max(_.values(length_group))
 
 
     nodesDecorator = (root, tree) ->
         nodes = tree.nodes(root)
         nodes.forEach (d) ->
-            type = if d.nature then d.nature.name else 'root'
+            type = if d.nature_id then d.nature_id else 'root'
             branch = nature_type_order.indexOf(type)
             d.y = branch*(rectHeight + rectVerticalSpacing)
-        grouped_org = _.groupBy root.children, (org) -> return org.nature.name
+        grouped_org = _.groupBy root.children, (org) -> return org.nature_id
         grouped_org['root'] = [root]
 
         nature_type_order.forEach (name, idx) ->
