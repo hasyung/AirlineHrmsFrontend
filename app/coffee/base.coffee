@@ -42,10 +42,10 @@ nb.Controller = Controller
 
 
 class EditableResourceCtrl
-    @.$inject = ['$scope']
-    constructor: (scope) ->
+    @.$inject = ['$scope', '$enum']
+    constructor: (scope, $enum) ->
         scope.editing = false
-
+        scope.$enum = $enum
         scope.edit = (evt) ->
             evt.preventDefault() if evt && evt.preventDefault
             scope.editing = true
