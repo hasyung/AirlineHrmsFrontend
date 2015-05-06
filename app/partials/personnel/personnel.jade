@@ -1,18 +1,23 @@
 .app-content-wrapper(flex style="height: 700px;")
 
     div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
-    div()
-        md-button(
-            nb-panel
-            template-url="partials/personnel/org_pos_per_sort.html"
-            style="margin-right: 10px;"
-        ) 排序
     div.ui-grid-container
         md-toolbar
             .md-toolbar-tools
                 h2 员工人事信息列表
                 div(flex)
-                md-button.md-primary.md-raised 导出
+                md-button.md-primary.md-raised(
+                    nb-panel
+                    template-url="partials/personnel/org_pos_per_sort.html"
+                ) 排序
+                //- md-button.md-primary.md-raised 导出
+                .nb-dropdown.md-primary.md-raised(simple-dropdown, btn-text="导出")
+                    li( role="presentation" ng-hide="ctrl.isHistory")
+                        a(role="menuitem" ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}" ) 导出Excel
+                    li( role="presentation" ng-show="ctrl.isHistory")
+                        a(role="menuitem" ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}" ) 导出Excel
+                    li( role="presentation")
+                        a(role="menuitem" ng-click="ctrl.print()" ) 导出PDF
         div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.employees")
 
 
