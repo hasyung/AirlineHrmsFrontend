@@ -214,11 +214,12 @@ fieldset[disabled] {
         transform: translate3d(0, 25px, 0), scale(1);
     }
 
-    md-input-container label {
-        color: $text-muted;
-    }
-    md-input-container{
+    md-input-container {
         padding-bottom: 9px;
+
+        label {
+            color: $text-muted;
+        }
     }
 
     .md-input {
@@ -254,6 +255,12 @@ fieldset[disabled] {
 
         .md-select-icon {
             visibility: hidden;
+        }
+    }
+
+    org-search {
+        md-autocomplete-wrap button {
+            display: none;
         }
     }
 }
@@ -333,42 +340,47 @@ md-input-container {
     }
 }
 
-.nb-card-container{
-    .nb-card{
+.nb-card-container {
+    .nb-card {
         background-color: #fff;
-        .form-icon{
-            font-size: 16px;
-            margin-right: 10px;
+
+        .form-icon {
             color: rgb(45, 87, 200);
+            font-size: 16px;
+            height: 24px;
+            margin-right: 10px;
             margin-top: -2px;
             width: 24px;
-            height: 24px;
         }
     }
-    md-card{
+
+    md-card {
         box-shadow: none;
     }
-    md-card:last-child{
+
+    md-card:last-child {
         margin-bottom: 10px;
     }
-    fieldset{
-        padding: 0px;
+
+    fieldset {
+        margin: 0;
+        padding: 0;
         padding-bottom: 30px;
-        margin: 0px;
+
         &[disabled] {
             .md-select-label {
+                border-bottom: 1px inset rgba(0, 0, 0, 0);
+                color: rgba(0, 0, 0, .87);
                 padding-left: 90px;
-                border-bottom: 1px inset rgba(0,0,0,0);
-                color: rgba(0,0,0,.87);
             }
 
             .md-input {
+                color: rgba(0, 0, 0, .87);
                 padding-left: 90px;
-                color: rgba(0,0,0,.87);
             }
         }
     }
-    
+
 
 }
 
