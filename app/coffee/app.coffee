@@ -88,10 +88,8 @@ mdThemingConf = ($mdThemingProvider) ->
             'default': 'A100'
 
         }
-        .accentPalette 'grey', {
-            'default': 'A100'
-        }
-        .warnPalette 'grey'
+        .accentPalette 'grey'
+        .warnPalette 'red'
         .backgroundPalette 'grey', {
             'default': '100'
             'hue-1': 'A100'
