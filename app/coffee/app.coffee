@@ -143,6 +143,7 @@ datepickerConf = ($datepickerProvider)->
     angular.extend($datepickerProvider.defaults, {
         dateFormat: 'yyyy-MM-dd'
         autoclose: true
+        container: 'body'
         # dateType: 'string'
     })
 

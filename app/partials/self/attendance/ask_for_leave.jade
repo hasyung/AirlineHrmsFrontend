@@ -8,10 +8,10 @@ md-dialog
                 md-option(value="3") 丧假
         md-input-container
             label 开始时间
-            input(type="date" ng-model="leaveRequest.startDate" bs-datepicker="" container="body")
+            input(bs-datepicker ng-model="leaveRequest.startDate" container="body")
         md-input-container
             label 结束时间
-            input(type="date" ng-model="leaveRequest.endDate" bs-datepicker container="body")
+            input(bs-datepicker ng-model="leaveRequest.endDate" container="body")
         md-input-container
             label message
             textarea(ng-model="leaveRequest.message")

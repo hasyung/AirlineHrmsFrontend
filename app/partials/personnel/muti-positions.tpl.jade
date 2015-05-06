@@ -5,8 +5,8 @@
         div(layout="row" flex)
             div(flex="50")
                 label 所属部门
-                org-search(ng-model="posItem.department" selected-item-change="itemParams.orgPos = org.positions.$fetch();posItem.position = null;")
-                
+                org-search(ng-model="posItem.department" float-label selected-item-change="itemParams.orgPos = org.positions.$fetch();posItem.position = null;")
+
             md-input-container.row-has-value(flex="25")
                 label 岗位
                 md-select(ng-model="posItem.position")
