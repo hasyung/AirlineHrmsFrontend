@@ -19,26 +19,17 @@ form(name="posEditForm" ng-submit="save(currentPos.$save(), posEditForm)" ng-con
             md-input-container(flex)
                 label 所属部门
                 input(disabled ng-model="currentPos.department.name")
-                //- ui-select(
-                //- ng-model="currentPos.department"
-                //- ng-change="params.orgPos = currentPos.department.positions.length? currentPos.department.positions: currentPos.department.positions.$fetch();currentPos.position = null"
-                //- ng-init="params.orgPos = currentPos.department.positions.length? currentPos.department.positions: currentPos.department.positions.$fetch();currentPos.position = null"
-                //- reset-search-input="true"
-                //- style="width: 500px"
-                //- )
-                //-     ui-select-match(placeholder="请输入机构名称") {{ $select.selected.name }}
-                //-     ui-select-choices(repeat="org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
         div(layout)
             md-input-container.row-has-value(flex)
                 label 分类
-                md-select(ng-model="currentPos.category" md-on-open="loadEnum('categories')" ng-disabled="!editing")
-                    md-select-label {{currentPos.category? currentPos.category.displayName : '无'}}
-                    md-option(ng-value="category" ng-repeat="category in enums.categories") {{category.displayName}}
+                md-select(ng-model="currentPos.category" ng-disabled="!editing")
+                    md-select-label {{$enum.parseLabel(currentPos.category, "categories")}}
+                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('categories')") {{item.label}}
             md-input-container.row-has-value(flex)
                 label 通道
-                md-select(ng-model="currentPos.channel" md-on-open="loadEnum('channels')" ng-disabled="!editing")
-                    md-select-label {{currentPos.channel? currentPos.channel.displayName : '无'}}
-                    md-option(ng-value="channel" ng-repeat="channel in enums.channels") {{channel.displayName}}
+                md-select(ng-model="currentPos.channel" ng-disabled="!editing")
+                    md-select-label {{$enum.parseLabel(currentPos.channel, "channels")}}
+                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
         div(layout)
             md-input-container(flex)
                 label 类别
@@ -64,87 +55,4 @@ form(name="posEditForm" ng-submit="save(currentPos.$save(), posEditForm)" ng-con
                 label 岗位性质
                 input(ng-model="currentPos.positionNature.displayName")
 
-        //- .form-btn-group
-        //-     button.btn.btn-default(ng-click="edit()") 编辑
-        //- .form-group
-        //-     label.control-label OA文件编号：
-        //-     .form-content(ng-bind="currentPos.oaFileNo")
-        //- .form-group
-        //-     label.control-label 创建时间：
-        //-     .form-content(ng-bind="currentPos.createdAt | date:'yyyy-MM-dd'")
-        //- .form-group
-        //-     label.control-label 岗位名称：
-        //-     .form-content(ng-bind="currentPos.name")
-        //- .form-group
-        //-     label.control-label 所属部门：
-        //-     .form-content(ng-bind="currentPos.department.name")
-        //- .form-group
-        //-     label.control-label 分类：
-        //-     .form-content(ng-bind="currentPos.category.displayName || '无'")
-        //- .form-group
-        //-     label.control-label 通道：
-        //-     .form-content(ng-bind="currentPos.channel.displayName || '无'")
-        //- .form-group
-        //-     label.control-label 类别：
-        //-     .form-content(ng-bind="currentPos.postType")
-        //- .form-group
-        //-     label.control-label 编制：
-        //-     .form-content(ng-bind="currentPos.budgetedStaffing")
-        //- .form-group
-        //-     label.control-label 在岗人数：
-        //-     .form-content(ng-bind="currentPos.staffing")
-        //- .form-group
-        //-     label.control-label 超编：
-        //-     .form-content {{currentPos.staffing - currentPos.budgetedStaffing < 0 ? '0' : currentPos.staffing - currentPos.budgetedStaffing}}
-
-        //- .form-group
-        //-     label.control-label 职务职级：
-        //-     .form-content 一正
-        //- .form-group
-        //-     label.control-label 工时制度：
-        //-     .form-content(ng-bind="currentPos.schedule.displayName || '无'")
-        //- .form-group
-        //-     label.control-label 岗位性质：
-        //-     .form-content(ng-bind="currentPos.positionNature.displayName || '无'")
-
-//-             div.editing(ng-if="editing")
-//-                 include position_edit_basic
-//- section.personnel-section-wrap(ng-controller="EditableResource")
-//-     section.personnel-info-control.clearfix
-//-         .personnel-info-right.form-split
-//-             div.showing(ng-hide="editing")
-//-                 .form-btn-group
-//-                     button.btn.btn-default(ng-click="edit()") 编辑
-//-                 section.position-desc-area
-//-                     h3 工作职责
-//-                     div(ng-bind-html="currentSpe.duty")
-//-                 section.position-desc-area
-//-                     h3 工作权限
-//-                     .form-group.block
-//-                         label.control-label 人事权限：
-//-                         .form-content {{currentSpe.personnelPermission}}
-//-                     .form-group.block
-//-                         label.control-label 财务权限：
-//-                         .form-content {{currentSpe.financialPermission}}
-//-                     .form-group.block
-//-                         label.control-label 业务权限：
-//-                         .form-content {{currentSpe.businessPermission}}
-//-                 section.position-desc-area
-//-                     h3 工作关系
-//-                     .form-group.block
-//-                         label.control-label 直属上级：
-//-                         .form-content {{currentSpe.superior}}
-//-                     .form-group.block
-//-                         label.control-label 直属下级：
-//-                         .form-content {{currentSpe.underling}}
-//-                     .form-group.block
-//-                         label.control-label 内部联系：
-//-                         .form-content {{currentSpe.internalRelation}}
-//-                     .form-group.block
-//-                         label.control-label 外部联系：
-//-                         .form-content {{currentSpe.externalRelation}}
-//-                 section.position-desc-area
-//-                     h3 任职条件
-//-                     div(ng-bind-html="currentSpe.qualification")
-//-             div.editing(ng-if="editing")
-//-                 include position_edit_desc
+      
