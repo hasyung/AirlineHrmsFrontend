@@ -113,27 +113,34 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
 
             md-subheader.md-primary 岗位信息
             fieldset(disabled)
-                .form-group
-                    label 所属部门
-                    //- md-select(ng-model="currentUser.department")
-                    //-     md-select-label {{currentUser.department.name}}
-                    //-     md-option(ng-value="org" ng-repeat="org in allOrgs track by org.id") {{org.name}}
-                    ui-select(
-                        ng-model="currentUser.department"
-                        ng-change="params.orgPos = currentUser.department.positions.length? currentUser.department.positions: currentUser.department.positions.$fetch();currentUser.position = null"
-                        ng-init="params.orgPos = currentUser.department.positions.length? currentUser.department.positions: currentUser.department.positions.$fetch();"
-                        reset-search-input="true"
-                        style="width: 500px"
-                        disabled
-                        )
-                        ui-select-match(placeholder="请输入机构名称") {{ $select.selected.name }}
-                        ui-select-choices(repeat="org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
+                div(layout ng-repeat="item in currentUser.positions")
+                    md-input-container.row-has-value(flex)
+                        label 所属部门
+                        input(ng-model="item.department.name")
+                    md-input-container(flex)
+                        label 岗位
+                        input(ng-model="item.position.name")
+                //- .form-group
+                //-     label 所属部门
+                //-     //- md-select(ng-model="currentUser.department")
+                //-     //-     md-select-label {{currentUser.department.name}}
+                //-     //-     md-option(ng-value="org" ng-repeat="org in allOrgs track by org.id") {{org.name}}
+                //-     ui-select(
+                //-         ng-model="currentUser.department"
+                //-         ng-change="params.orgPos = currentUser.department.positions.length? currentUser.department.positions: currentUser.department.positions.$fetch();currentUser.position = null"
+                //-         ng-init="params.orgPos = currentUser.department.positions.length? currentUser.department.positions: currentUser.department.positions.$fetch();"
+                //-         reset-search-input="true"
+                //-         style="width: 500px"
+                //-         disabled
+                //-         )
+                //-         ui-select-match(placeholder="请输入机构名称") {{ $select.selected.name }}
+                //-         ui-select-choices(repeat="org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
                 div(layout)
                     md-input-container.row-has-value(flex)
-                        label 岗位
-                        md-select(ng-model="currentUser.position" disabled)
-                            md-select-label {{currentUser.position.name || '无'}}
-                            md-option(ng-value="pos" ng-repeat="pos in params.orgPos") {{pos.name}}
+                        label 用工关系状态
+                        md-select(ng-model="currentUser.employmentStatus" md-on-open="loadEnum('employment_status')" disabled)
+                            md-select-label {{currentUser.employmentStatus? currentUser.employmentStatus.displayName : '无'}}
+                            md-option(ng-value="empStatus" ng-repeat="empStatus in enums.employment_status") {{empStatus.displayName}}
                     md-input-container.row-has-value(flex)
                         label 分类
                         md-select(ng-model="currentUser.category" md-on-open="loadEnum('categories')" disabled)
