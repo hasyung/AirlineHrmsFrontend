@@ -7,7 +7,7 @@ div()
             .form-control-container(layout="row" flex="90")
                 .form-group(flex="60")
                     label 所属部门
-                    org-search(ng-model="posItem.department" selected-item-change="itemParams.orgPos = org.positions.$fetch()")
+                    org-search(ng-model="posItem.department" selected-item-change="itemParams.orgPos = org.positions.$fetch();posItem.position = null;")
                     
                 md-input-container.row-has-value(flex="30")
                     label 岗位
