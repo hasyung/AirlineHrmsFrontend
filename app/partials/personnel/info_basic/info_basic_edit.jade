@@ -20,10 +20,12 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
                 input(ng-model="current.identityNo", name="identityNo" required)
             md-input-container.row-has-value(flex)
                 label 政治面貌
-                md-select(ng-model="current.politicalStatus" md-on-open="loadEnum('political_status')" name="political_status" ng-disabled="!editing")
-                    md-select-label {{current.politicalStatus? current.politicalStatus.displayName : '无'}}
-                    md-option(ng-value="political" ng-repeat="political in enums.political_status") {{political.displayName}}
-        
+                //- md-select(ng-model="current.politicalStatus" md-on-open="loadEnum('political_status')" name="political_status" ng-disabled="!editing")
+                //-     md-select-label {{current.politicalStatus? current.politicalStatus.displayName : '无'}}
+                //-     md-option(ng-value="political" ng-repeat="political in enums.political_status") {{political.displayName}}
+                md-select(ng-model="current.politicalStatus" ng-disabled="!editing")
+                    md-select-label {{$enum.parseLabel(current.politicalStatus, "political_status")}}
+                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('political_status')") {{item.label}}
         div(layout)
             md-input-container(flex)
                 label 毕业院校
