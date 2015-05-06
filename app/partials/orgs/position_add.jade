@@ -7,9 +7,9 @@ md-dialog(ng-init="newPos = {departmentId: currentOrg.id}; specification = {}" s
 					input(type='text', placeholder='岗位名称', ng-model="newPos.name", name="name", required)
 				md-input-container.row-has-value(flex)
 					label 岗位通道
-					md-select(ng-model="newPos.channel", md-on-open="loadEnum('channels')")
-						md-select-label {{newPos.channel.displayName || '无'}}
-						md-option(ng-value="channel" ng-repeat="channel in enums.channels") {{channel.displayName}}
+					md-select(ng-model="newPos.channel")
+						md-select-label {{$enum.parseLabel(newPos.channel, "channels")}}
+						md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
 				md-input-container(flex)
 					label OA文件编号
 					input(type='text', placeholder='填写OA文件编号', name="fileName", ng-model="newPos.oaFileNo", required)
@@ -18,19 +18,19 @@ md-dialog(ng-init="newPos = {departmentId: currentOrg.id}; specification = {}" s
 					input(type='number', placeholder='填写计划编制人数', name="budgetedStaffing", ng-model="newPos.budgetedStaffing", required)
 				md-input-container.row-has-value(flex)
 					label 工时制度
-					md-select(ng-model="newPos.schedule", md-on-open="loadEnum('position_schedules')")
-						md-select-label {{newPos.schedule.displayName || '无'}}
-						md-option(ng-value="schedule" ng-repeat="schedule in enums.position_schedules") {{schedule.displayName}}
+					md-select(ng-model="newPos.schedule")
+						md-select-label {{$enum.parseLabel(newPos.schedule, "position_schedules")}}
+						md-option(ng-value="item.id" ng-repeat="item in $enum.get('position_schedules')") {{item.label}}
 				md-input-container.row-has-value(flex)
 					label 分类
-					md-select(ng-model="newPos.category", md-on-open="loadEnum('categories')")
-						md-select-label {{newPos.category.displayName || '无'}}
-						md-option(ng-value="category" ng-repeat="category in enums.categories") {{category.displayName}}
+					md-select(ng-model="newPos.category")
+						md-select-label {{$enum.parseLabel(newPos.category, "categories")}}
+						md-option(ng-value="item.id" ng-repeat="item in $enum.get('categories')") {{item.label}}
 				md-input-container.row-has-value(flex)
 					label 岗位性质
-					md-select(ng-model="newPos.nature", md-on-open="loadEnum('position_natures')")
-						md-select-label {{newPos.nature.displayName || '无'}}
-						md-option(ng-value="nature" ng-repeat="nature in enums.position_natures") {{nature.displayName}}
+					md-select(ng-model="newPos.nature")
+						md-select-label {{$enum.parseLabel(newPos.nature, "position_natures")}}
+						md-option(ng-value="item.id" ng-repeat="item in $enum.get('position_natures')") {{item.label}}
 
 				md-input-container(flex)
 					label 所在部门
