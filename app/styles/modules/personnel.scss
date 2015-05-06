@@ -40,18 +40,19 @@
                 height: 100%;
                 width: 100%;
             }
-            .edit-icon-container{
+
+            .edit-icon-container {
                 background-color: #f44e4c;
-                width: 24px;
-                height: 24px;
                 border-radius: 12px;
-                position: absolute;
                 color: #fff;
-                font-size: 18px;
-                padding-left: 4px;
-                left: 160px;
-                top: 130px;
                 cursor: pointer;
+                font-size: 18px;
+                height: 24px;
+                left: 160px;
+                padding-left: 4px;
+                position: absolute;
+                top: 130px;
+                width: 24px;
             }
 
         }
@@ -114,56 +115,62 @@
     }
 
 }
+
 .big-avator-area {
+    background-color: #fff;
     border-radius: 50%;
     height: 120px;
-    width: 120px;
     overflow: hidden;
     padding: 5px;
-    background-color: #fff;
+    width: 120px;
 
     img {
         height: 100%;
         width: 100%;
     }
 }
-.personnel-base-info{
+
+.personnel-base-info {
+    background-image: url('/images/personnel/personnel_banner_bg.jpg');
     height: 180px;
-    background-image: url("/images/personnel/personnel_banner_bg.jpg");
     padding: 30px 64px;
 
     .employee-info {
-        padding-top: 15px;
         margin-left: 64px;
+        padding-top: 15px;
 
         .employee-name {
+            color: rgba(0, 0, 0, .87);
             font-size: 32px;
-            color: rgba(0, 0, 0, 0.87);
-            .resume-button{
-                width: 24px;
-                height: 24px;
-                display: inline-block;
-                margin-left: 20px;
+
+            .resume-button {
                 background-color: #e84e40;
-                md-icon{
+                display: inline-block;
+                height: 24px;
+                margin-left: 20px;
+                width: 24px;
+
+                md-icon {
                     color: #fff;
-                    width: 16px;
                     height: 16px;
-                    margin-top: -4px;
                     margin-left: -3px;
+                    margin-top: -4px;
+                    width: 16px;
                 }
-                &:hover{
+
+                &:hover {
                     background-color: #e51c23;
                 }
             }
         }
 
-        .employee-others-info{
-            margin-top: 15px;
-            margin-top: 5px;
+        .employee-others-info {
+            // margin-top: 15px;
+            color: rgba(0, 0, 0, .87);
             font-size: 14px;
-            color: rgba(0,0,0,0.87);
-            div:last-child{
+            margin-top: 5px;
+
+            div:last-child {
                 margin-top: 10px;
             }
         }
@@ -171,11 +178,12 @@
 }
 
 .personnel-content {
+    background-color: #f5f5f5;
+
     &.self-info-content {
         margin: 60px auto;
         width: 840px;
     }
-    background-color: #f5f5f5;
 
     md-toolbar {
         background-color: #f5f5f5;
@@ -422,166 +430,195 @@
         margin-left: 20px;
     }
 }
-.ngdialog.ngdialog-theme-plain.cust-avator-dialog-width{
-    .ngdialog-content{
-        width: 540px;
+
+.ngdialog.ngdialog-theme-plain.cust-avator-dialog-width {
+    .ngdialog-content {
         border-radius: 5px;
         color: #444;
         margin: 50px auto;
         max-width: 100%;
         padding: 1em;
         position: relative;
+        width: 540px;
     }
 }
-.avator-edit-body{
-    .avator-offset{
+
+.avator-edit-body {
+    .avator-offset {
         margin-left: 16px;
-        &.first{
-            margin-left: 0px;
+
+        &.first {
+            margin-left: 0;
         }
     }
-    .src-avator{
+
+    .src-avator {
         width: 360px;
 
-        .avator-box{
-            width: 100%;
+        .avator-box {
             height: 360px;
+            width: 100%;
         }
-        .btn-avator-add{
-            i{
-                margin-right: 7px;
+
+        .btn-avator-add {
+            i {
                 color: #f44e4c;
+                margin-right: 7px;
             }
         }
     }
-    .avator-upload-box{
-        text-align: center;
-        padding-top: 140px;
+
+    .avator-upload-box {
         background-color: #f2f2f5;
-    }
-    .avator-preview{
-        width: 132px;
+        padding-top: 140px;
         text-align: center;
+    }
+
+    .avator-preview {
         background-color: #f2f2f5;
         height: 360px;
-        p{
+        text-align: center;
+        width: 132px;
+
+        p {
             margin-top: 25px;
         }
-        .avator-preview-item{
+
+        .avator-preview-item {
             margin-top: 25px;
-            &.first{
-                margin-top: 0px;
+
+            &.first {
+                margin-top: 0;
             }
         }
-        .big-avator{
-            img{
-                width: 110px;
-                height: 110px;
+
+        .big-avator {
+            img {
                 border-radius: 55px;
+                height: 110px;
+                width: 110px;
             }
 
         }
-        .mid-avator{
-            img{
-                width: 72px;
-                height: 72px;
+
+        .mid-avator {
+            img {
                 border-radius: 36px;
+                height: 72px;
+                width: 72px;
             }
-
         }
-        .sml-avator{
-            img{
-                width: 40px;
-                height: 40px;
+
+        .sml-avator {
+            img {
                 border-radius: 20px;
+                height: 40px;
+                width: 40px;
             }
 
         }
     }
 }
-.avator-footer{
+
+.avator-footer {
     padding-right: 148px;
-    button{
+
+    button {
         margin-left: 16px;
     }
 }
 
 // <<<<<<< HEAD
 //for org/positions/employee search
-.personnel-sort-body{
-
-    .org-sort-container, .pos-sort-container{
+.personnel-sort-body {
+    .org-sort-container,
+    .pos-sort-container {
         padding: 5px;
-        .list-text{
+
+        .list-text {
             height: 40px;
             line-height: 40px;
         }
-        .list-row{
-            outline: none;
+
+        .list-row {
             border-bottom: 1px solid #eee;
+            outline: none;
         }
     }
-    .offset-header-text{
+
+    .offset-header-text {
         padding-left: 0;
-        .md-subheader-content{
+
+        .md-subheader-content {
             border-left: 3px solid rgb(46, 55, 169);
             padding-left: 10px;
         }
     }
-    .cust-content-toolbar{
+
+    .cust-content-toolbar {
         background-color: #f6f8f8;
         font-size: 26px;
-        padding-left: 15px;
-        line-height: 26px;
         height: 28px;
-        i:hover{
+        line-height: 26px;
+        padding-left: 15px;
+
+        i:hover {
             cursor: pointer;
         }
     }
-    .org-sort-content{
+
+    .org-sort-content {
         border: 3px solid #f6f8f8;
-        .open-orgs{
+
+        .open-orgs {
+            font-size: 30px;
             height: 40px;
             line-height: 40px;
-            font-size: 30px;
         }
     }
-    .cust-list-item{
+
+    .cust-list-item {
         font-size: 14px;
-        padding: 5px 10px;
         height: 45px;
         overflow: hidden;
-        &.active{
+        padding: 5px 10px;
+
+        &.active {
             background-color: #eee;
         }
     }
-    .employees-sort{
-        tr{
+
+    .employees-sort {
+        tr {
             outline: none;
-            td{
+
+            td {
                 height: 40px;
                 line-height: 40px;
             }
-            &.active{
-                td{
+
+            &.active {
+                td {
                     background-color: #eee !important;
                 }
             }
         }
     }
-    .icon-container{
-        width: 20px;
+
+    .icon-container {
+        font-size: 20px;
         height: 20px;
         line-height: 20px;
-        font-size: 20px;
         text-align: center;
-        &:hover{
+        width: 20px;
+
+        &:hover {
             background-color: #eee;
         }
     }
 }
-// @media (max-width: 1280px) {
-//     .personnel-content {
+// @media (max-width: 1280px)  {
+//     .personnel-content  {
 //         margin: 60px auto;
 //         width: 680px;
 //     }
