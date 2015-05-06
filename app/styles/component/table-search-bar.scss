@@ -132,6 +132,9 @@ md-content.search-container {
             background-color: #fff;
             border-right: 1px solid rgba(0, 0, 0, .04);
             // border-right: 0;
+            .ui-grid-column-menu-button-last-col {
+                margin-right: 0;
+            }
         }
     }
 
@@ -144,6 +147,15 @@ md-content.search-container {
 
             &.ui-grid-row-header-cell {
                 background-color: #fff !important;
+            }
+
+            &:last-child {
+                border-right: 0;
+
+                &.ui-grid-row-header-cell {
+                    border-bottom: 1px solid #e7e9ea;
+                    border-right: 1px solid #e7e9ea;
+                }
             }
         }
 
