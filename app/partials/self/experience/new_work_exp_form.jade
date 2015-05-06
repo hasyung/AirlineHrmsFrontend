@@ -5,10 +5,10 @@ form(ng-controller="NewResource", ng-submit="create(newExp,newWorkBeforeForm); p
     div(layout)
         md-input-container(flex)
             label 开始时间
-            input(type="date" ng-model="newExp.startDate")
+            input(bs-datepicker ng-model="newExp.startDate")
         md-input-container(flex)
             label 结束时间
-            input(type="date" ng-model="newExp.endDate")
+            input(bs-datepicker ng-model="newExp.endDate")
     div(layout)
         md-input-container(flex)
             label 单位名称

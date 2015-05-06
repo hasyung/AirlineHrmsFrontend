@@ -91,7 +91,7 @@ paths =
 
         #end
         'deps/angular/angular.js'
-        # 'deps/angular-i18n/angular-locale_zh-cn.js'
+        'deps/angular-i18n/angular-locale_zh-cn.js'
         #http://harvesthq.github.io/chosen/
         'deps/simple-module/lib/module.js'
         'deps/simple-uploader/lib/uploader.js'

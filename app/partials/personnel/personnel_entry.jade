@@ -91,7 +91,7 @@
                             md-option(ng-value="jobTitleDegree" ng-repeat="jobTitleDegree in enums.job_title_degrees") {{jobTitleDegree.displayName}}
                     md-input-container(flex)
                         label 参工时间
-                        input(ng-model="newEmp.startWorkDate" type="date")
+                        input(ng-model="newEmp.startWorkDate" bs-datepicker)
                     md-input-container(flex)
                 .form-bottom-group.pull-right()
                     md-button.md-raised.white(type="button" ng-click="panel.close()") 取消
