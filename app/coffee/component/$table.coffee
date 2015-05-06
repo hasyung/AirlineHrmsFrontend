@@ -878,9 +878,7 @@ GridPaginationTemplate = """
 
 
 nbGridDirective = ($parse)->
-    nbGridTemplate =  '''
-        <div ui-grid="gridOptions" ui-grid-selection ui-grid-pagination ui-grid-pinning></div>
-    '''
+
     # defaultOptions = {
     #     enableSorting: false
     #     columnDefs: [
@@ -916,7 +914,9 @@ nbGridDirective = ($parse)->
     # }
 
 
-
+    nbGridTemplate =  '''
+        <div ui-grid="gridOptions" ui-grid-selection ui-grid-pagination ui-grid-pinning></div>
+    '''
     postLink = (scope, elem, attrs) ->
         columnDefs = scope.columnDefs
         safeSrc = scope.safeSrc
@@ -987,7 +987,9 @@ nbGridDirective = ($parse)->
 
 
     return {
-        link: postLink
+        link: {
+            pre: postLink
+        }
         template: nbGridTemplate
         scope: {
             columnDefs: '='
