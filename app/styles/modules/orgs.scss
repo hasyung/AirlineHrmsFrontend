@@ -307,5 +307,21 @@ md-dialog.position_delete {
     }
 }
 
+//查询器保存 dialog
+md-dialog.save_filter {
+    md-toolbar {
+        min-height: 40px;
+    }
+
+    .md-toolbar-tools {
+        font-size: $font-size-md;
+        height: 40px;
+    }
+
+    .dialog-content {
+        min-width: 300px;
+    }
+}
+
 
 
