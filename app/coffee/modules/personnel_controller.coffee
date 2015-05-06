@@ -302,6 +302,7 @@ orgMutiPos = ($rootScope)->
     return {
         scope: {
             positions: "=ngModel"
+            editStatus: "=editing"
         }
         replace: true
         templateUrl: "partials/personnel/muti-positions.tpl.html"

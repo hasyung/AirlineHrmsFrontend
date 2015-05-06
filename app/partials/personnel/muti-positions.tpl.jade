@@ -21,7 +21,7 @@ div()
                         md-option(aria-label="primary" value="主职") 主职
                         md-option(aria-label="part" value="兼职") 兼职
                         md-option(aria-label="proxy" value="代理") 代理
-            .item-action-container(flex="10")
+            .item-action-container(flex="10" ng-if="editStatus")
                 md-button.md-fab(type="button" ng-click="ctrl.removePosition($index)")
                     md-icon(md-svg-src="/images/svg/ic_remove_24px.svg" aria-label="删除")
                 md-button.md-fab(type="button" ng-click="ctrl.setHeigher($index)" ng-if="!$first")
