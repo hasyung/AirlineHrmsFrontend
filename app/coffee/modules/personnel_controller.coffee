@@ -61,9 +61,9 @@ class PersonnelCtrl extends nb.Controller
             {displayName: '所属部门', name: 'department.name'}
             {displayName: '员工编号', name: 'employeeNo'}
             {displayName: '岗位', name: 'position.name'}
-            {displayName: '分类', name: 'category.displayName'}
-            {displayName: '通道', name: 'channel.displayName'}
-            {displayName: '用工性质', name: 'laborRelation.displayName'}
+            {displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
+            {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
+            {displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
             {displayName: '到岗时间', name: 'joinScalDate'}
         ]
         @constraints = [
