@@ -23,7 +23,7 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
                 md-select(ng-model="current.politicalStatus" md-on-open="loadEnum('political_status')" name="political_status" ng-disabled="!editing")
                     md-select-label {{current.politicalStatus? current.politicalStatus.displayName : '无'}}
                     md-option(ng-value="political" ng-repeat="political in enums.political_status") {{political.displayName}}
-        
+
         div(layout)
             md-input-container(flex)
                 label 毕业院校
@@ -53,10 +53,10 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
                 input(type="text", ng-model="current.contact.mobile", name="contact")
             md-input-container(flex)
                 label 参工时间
-                input(ng-model="current.startWorkDate" type="date")
+                input(ng-model="current.startWorkDate" bs-datepicker)
             md-input-container(flex)
                 label 到岗时间
-                input(ng-model="current.joinScalDate" type="date")
+                input(ng-model="current.joinScalDate" bs-datepicker)
 
 
 
