@@ -3,7 +3,7 @@ resources = angular.module('resources')
 
 
 
-nbRestApi = (restmod, RMUtils, $rootScope, $Evt) ->
+nbRestApi = (restmod, RMUtils, $Evt) ->
 
     Utils = RMUtils
 
@@ -16,8 +16,8 @@ nbRestApi = (restmod, RMUtils, $rootScope, $Evt) ->
             'before-fetch-many': (req) ->
                 this.$queryParams = req.params if req.params
 
-            'after-request-error': (res)->
-                $Evt.$send('global:request:error',res)
+            # 'after-request-error': (res)->
+                # $Evt.$send('global:request:error',res)
 
 
 

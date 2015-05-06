@@ -43,8 +43,9 @@ nb.app = App = angular.module 'nb',deps
 
 #初始化在<head> <script> 标签中, 如果不存在， 系统行为待定
 App.constant 'PERMISSIONS', metadata.permissions || []
-App.constant 'USER_META', metadata.employee || {}
+App.constant 'USER_META', metadata.user || {}
 App.constant 'DEPARTMENTS', dep_info.departments || []
+App.constant 'nbConstants', metadata.resources || []
 
 
 appConf = ($provide, ngDialogProvider) ->
@@ -85,7 +86,7 @@ mdThemingConf = ($mdThemingProvider) ->
     $mdThemingProvider.theme 'hrms'
         .primaryPalette 'grey', {
             'default': 'A100'
-            
+
         }
         .accentPalette 'grey', {
             'default': 'A100'
@@ -143,8 +144,8 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
 datepickerConf = ($datepickerProvider)->
     angular.extend($datepickerProvider.defaults, {
         dateFormat: 'yyyy-MM-dd'
-        modelDateFormat: 'yyyy-MM-dd'
-        dateType: 'string'
+        autoclose: true
+        # dateType: 'string'
     })
 
 
@@ -199,6 +200,7 @@ App
             toaster.pop(code.name, "提示", info)
 
         $rootScope.$state = $state
+        $rootScope.$enum  = $enum
 
         $rootScope.allOrgs = Org.$search()
 
@@ -206,8 +208,6 @@ App
         $rootScope.createFlow = (data, flowname) ->
             $http.post("/api/workflows/#{flowname}", data)
 
-        $rootScope.enums = $enum.get()
-        $rootScope.loadEnum = $enum.loadEnum()
 
     ]
 

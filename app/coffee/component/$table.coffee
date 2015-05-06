@@ -61,12 +61,15 @@ class NbFilterCtrl
             </md-input-container>
         '''
         'date-range': '''
-            <md-input-container md-no-float>
-                <input type="text" placeholder="${ displayName }" bs-datepicker container="body" ng-model="${name}.from">
-            </md-input-container>
-            <md-input-container md-no-float>
-                <input type="text" placeholder="${ displayName }" bs-datepicker container="body" ng-model="${name}.to">
-            </md-input-container>
+            <div class="md-input-container-row">
+                <md-input-container md-no-float>
+                    <input type="text" placeholder="${ displayName }" bs-datepicker container="body" ng-model="${name}.from">
+                </md-input-container>
+                <div class="divide-text">到</div>
+                <md-input-container md-no-float>
+                    <input type="text" placeholder="${ displayName }" bs-datepicker container="body" ng-model="${name}.to">
+                </md-input-container>
+            </div>
         '''
         'date': '''
             <md-input-container md-no-float>
@@ -75,7 +78,8 @@ class NbFilterCtrl
         '''
         'select': '''
             <md-select placeholder="${ displayName }" ng-model="${ name }">
-                <md-option value="" ng-repeat="item in $enum.get(${ params.type })" ></md-option>
+                <md-select-label>{{ ${ name } ? $parent.$enum.parseLabel(${name}, '${params.type}') : '无' }}</md-select-label>
+                <md-option ng-value="item.id" ng-repeat="item in $parent.$enum.get('${ params.type }')">{{item.label}}</md-option>
             </md-select>
         '''
         'org-search': '''
@@ -212,9 +216,10 @@ class NbFilterCtrl
 
 
 
-conditionInputContainer = ->
+conditionInputContainer = ($enum) ->
 
     postLink = (scope, elem, attr, ctrl) ->
+        scope.$enum = $enum
 
         ctrl.initialCondition(scope.condition.selectedConstraint, scope, elem, scope.condition.initialValue)
         scope.$watch 'condition.selectedConstraint', (newValue, old) ->
