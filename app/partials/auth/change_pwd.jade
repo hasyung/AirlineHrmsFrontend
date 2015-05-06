@@ -1,7 +1,9 @@
-md-dialog.container(style="width:360px;margin:40px auto;")
+md-dialog(style="width:360px;margin:40px auto;")
     form(novalidate, name="changePwdForm", ng-submit="ctrl.changePwd(user) && dialog.close()")
         md-content.sticky-container
-            md-subheader.md-sticky-no-effect 修改密码
+            md-toolbar.md-accent(md-theme="hrms")
+                .md-toolbar-tools
+                    span 修改密码
             .dialog-content
                 fieldset
                     md-input-container
