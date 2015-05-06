@@ -7,33 +7,33 @@
             md-subheader.md-primary 基本信息
             //- 应该得到请求结果后才判断是否关闭dialog
             form(ng-submit="ctrl.regEmployee(newEmp);panel.close();" name="newEmpForm")
-                div
+                md-content
                     md-input-container(flex)
                         label 姓名
                         input(type="text" placeholder="请输入姓名" ng-model="newEmp.name" required)
                     md-input-container.row-has-value(flex)
                         label 性别
-                        md-select(ng-model="newEmp.gender", md-on-open="loadEnum('genders')")
-                            md-select-label {{newEmp.gender.displayName || '无'}}
-                            md-option(ng-value="gender" ng-repeat="gender in enums.genders") {{gender.displayName}}
+                        md-select(ng-model="newEmp.gender")
+                            md-select-label {{$enum.parseLabel(newEmp.gender, "genders")}}
+                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('genders')") {{item.label}}
                     md-input-container(flex)
                         label 身份证号码
                         input(type="text" placeholder="身份证号" ng-model="newEmp.identityNo" required)
                     md-input-container.row-has-value(flex)
                         label 政治面貌
-                        md-select(ng-model="newEmp.politicalStatus", md-on-open="loadEnum('political_status')")
-                            md-select-label {{newEmp.politicalStatus.displayName || '无'}}
-                            md-option(ng-value="politicalStatus" ng-repeat="politicalStatus in enums.political_status") {{politicalStatus.displayName}}
+                        md-select(ng-model="newEmp.politicalStatus")
+                            md-select-label {{$enum.parseLabel(newEmp.politicalStatus, "political_status")}}
+                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('political_status')") {{item.label}}
                     md-input-container.row-has-value(flex)
                         label 学历
-                        md-select(ng-model="newEmp.educationBackground", md-on-open="loadEnum('education_backgrounds')")
-                            md-select-label {{newEmp.educationBackground.displayName || '无'}}
-                            md-option(ng-value="educationBackground" ng-repeat="educationBackground in enums.education_backgrounds") {{educationBackground.displayName}}
+                        md-select(ng-model="newEmp.educationBackground")
+                            md-select-label {{$enum.parseLabel(newEmp.educationBackground, "education_backgrounds")}}
+                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('education_backgrounds')") {{item.label}}
                     md-input-container.row-has-value(flex)
                         label 学位
-                        md-select(ng-model="newEmp.degree", md-on-open="loadEnum('degrees')")
-                            md-select-label {{newEmp.degree.displayName || '无'}}
-                            md-option(ng-value="degree" ng-repeat="degree in enums.degrees") {{degree.displayName}}
+                        md-select(ng-model="newEmp.degree")
+                            md-select-label {{$enum.parseLabel(newEmp.degree, "degrees")}}
+                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('degrees')") {{item.label}}
                     md-input-container(flex)
                         label 毕业院校
                         input(type="text" placeholder="请输入毕业院校" ng-model="newEmp.school")
@@ -42,53 +42,52 @@
                         input(type="text" placeholder="请输入专业" ng-model="newEmp.major")
                     md-input-container.row-has-value(flex)
                         label 英语等级
-                        md-select(ng-model="newEmp.englishLevel", md-on-open="loadEnum('english_levels')")
-                            md-select-label {{newEmp.englishLevel.displayName || '无'}}
-                            md-option(ng-value="englishLevel" ng-repeat="englishLevel in enums.english_levels") {{englishLevel.displayName}}
+                        md-select(ng-model="newEmp.englishLevel")
+                            md-select-label {{$enum.parseLabel(newEmp.englishLevel, "english_levels")}}
+                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('english_levels')") {{item.label}}
                     md-input-container(flex)
                         label 手机号码
                         input(type="text" placeholder="请输入手机号码" ng-model="newEmp.contact.mobile")
 
                     .form-gourp
                         label 所属部门
-                        ui-select(
-                            ng-model="newEmp.department"
-                            ng-change="params.orgPos = newEmp.department.positions.length? newEmp.department.positions: newEmp.department.positions.$fetch();newEmp.position = null"
-                            reset-search-input="true"
-                            style="width: 500px"
-                            )
-                            ui-select-match(placeholder="请输入机构名称") {{ $select.selected.name }}
-                            ui-select-choices(repeat="org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name}}
+                        org-search(ng-model="newEmp.department" float-label selected-item-change="params.orgPos = org.positions.$fetch();newEmp.position = null;")
                     md-input-container.row-has-value(flex)
                         label 岗位
-                        md-select(ng-model="newEmp.position" required)
-                            md-select-label {{newEmp.position.name || '无'}}
-                            md-option(ng-value="pos" ng-repeat="pos in params.orgPos") {{pos.name}}
+                        md-select(ng-model="newEmp.position")
+                            md-select-label {{newEmp.position.name || "无"}}
+                            md-option(ng-value="item" ng-repeat="item in params.orgPos") {{item.name}}
+
                     md-input-container.row-has-value(flex)
                         label 属地化地点
-                        md-select(ng-model="newEmp.location", md-on-open="loadEnum('locations')")
-                            md-select-label {{newEmp.location.displayName || '无'}}
-                            md-option(ng-value="location" ng-repeat="location in enums.locations") {{location.displayName}}
+                        md-select(ng-model="newEmp.location")
+                            md-select-label {{$enum.parseLabel(newEmp.location, "locations")}}
+                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('locations')") {{item.label}}
+
                     md-input-container.row-has-value(flex)
                         label 用工性质
-                        md-select(ng-model="newEmp.laborRelation", md-on-open="loadEnum('labor_relations')")
-                            md-select-label {{newEmp.laborRelation.displayName || '无'}}
-                            md-option(ng-value="laborRelation" ng-repeat="laborRelation in enums.labor_relations") {{laborRelation.displayName}}
+                        md-select(ng-model="newEmp.laborRelation")
+                            md-select-label {{$enum.parseLabel(newEmp.laborRelation, "labor_relations")}}
+                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('labor_relations')") {{item.label}}
+
                     md-input-container.row-has-value(flex)
                         label 用工关系状态
-                        md-select(ng-model="newEmp.employmentStatus", md-on-open="loadEnum('employment_status')")
-                            md-select-label {{newEmp.employmentStatus.displayName || '无'}}
-                            md-option(ng-value="employmentStatus" ng-repeat="employmentStatus in enums.employment_status") {{employmentStatus.displayName}}
+                        md-select(ng-model="newEmp.employmentStatus")
+                            md-select-label {{$enum.parseLabel(newEmp.employmentStatus, "employment_status")}}
+                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('employment_status')") {{item.label}}
+
                     md-input-container.row-has-value(flex)
                         label 职称
-                        md-select(ng-model="newEmp.jobTitle", md-on-open="loadEnum('job_titles')")
-                            md-select-label {{newEmp.jobTitle? newEmp.jobTitle.displayName : '无'}}
-                            md-option(ng-value="jobTitle" ng-repeat="jobTitle in enums.job_titles") {{jobTitle.displayName}}
+                        md-select(ng-model="newEmp.jobTitle")
+                            md-select-label {{$enum.parseLabel(newEmp.jobTitle, "job_titles")}}
+                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('job_titles')") {{item.label}}
+
                     md-input-container.row-has-value(flex)
                         label 职称级别
-                        md-select(ng-model="newEmp.jobTitleDegree", md-on-open="loadEnum('job_title_degrees')")
-                            md-select-label {{newEmp.jobTitleDegree? newEmp.jobTitleDegree.displayName : '无'}}
-                            md-option(ng-value="jobTitleDegree" ng-repeat="jobTitleDegree in enums.job_title_degrees") {{jobTitleDegree.displayName}}
+                        md-select(ng-model="newEmp.jobTitleDegree")
+                            md-select-label {{$enum.parseLabel(newEmp.jobTitleDegree, "job_title_degrees")}}
+                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('job_title_degrees')") {{item.label}}
+
                     md-input-container(flex)
                         label 参工时间
                         input(ng-model="newEmp.startWorkDate" bs-datepicker)
