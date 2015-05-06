@@ -302,7 +302,7 @@ class ReviewCtrl extends nb.Controller
                         href="javascript:void(0);"
                         nb-dialog
                         template-url="partials/common/{{row.entity.action == '修改'? 'update_change_review.tpl.html': 'create_change_review.tpl.html'}}"
-                        locals="{'change': record}"> {{row.entity.auditableType}}
+                        locals="{'change': row.entity}"> {{row.entity.auditableType}}
                     </a>
                 </div>
                 '''

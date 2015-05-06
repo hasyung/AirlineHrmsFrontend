@@ -124,6 +124,30 @@ class PositionChangesCtrl extends nb.Controller
     @.$inject = ['PositionChange', '$mdDialog']
 
     constructor: (@PositionChange, @mdDialog) ->
+        @columnDef = [
+            {name:"name", displayName:"岗位名称"}
+            {name:"department.name", displayName:"所属部门"}
+            {name:"action", displayName:"操作"}
+            {name:"auditableType", displayName:"信息变更模块"}
+            {
+                displayName: '信息变更模块'
+                field: 'auditableType'
+                # pinnedLeft: true
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                    <a
+                        href="javascript:void(0);"
+                        nb-dialog
+                        template-url="partials/common/{{row.entity.action == '修改'? 'update_change_review.tpl.html': 'create_change_review.tpl.html'}}"
+                        locals="{'change': row.entity}"> {{row.entity.auditableType}}
+                    </a>
+                </div>
+                '''
+            }
+            {name:"createdAt", displayName:"变更时间"}
+            
+        ]
+
 
     searchChanges: (tableState)->
         @changes.$refresh(tableState)
