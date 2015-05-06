@@ -17,7 +17,7 @@ class EnumService
             enums[key] = value
 
         @get= (type) ->
-            throw "resource type #{type} not existed" if !type && !enums[type]
+            throw "resource type #{type} not existed" if !type || !enums[type]
             return enums[type]
 
         @parseLabel= (id, type) ->
