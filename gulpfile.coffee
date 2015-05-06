@@ -101,6 +101,7 @@ paths =
         'deps/angular-restmod/dist/angular-restmod-bundle.js'
         'deps/angular-restmod/dist/styles/ams.js'
         'deps/angular-restmod/dist/plugins/dirty.js'
+        'deps/angular-restmod/dist/plugins/nested-dirty.js'
         'deps/angular-restmod/dist/plugins/preload.js'
         'deps/angular-messages/angular-messages.js'
         'deps/angular-animate/angular-animate.js'
