@@ -4,7 +4,7 @@ resources = angular.module('resources')
 
 Employee = (restmod, RMUtils, $Evt) ->
 
-    Employee = restmod.model('/employees').mix 'nbRestApi', 'DirtyModel', {
+    Employee = restmod.model('/employees').mix 'nbRestApi', 'NestedDirtyModel', {
         # departmentId: {mask: 'R', map: 'department.id'}
         department: {mask: 'CU', belongsTo: 'Org'}
         # dept: {belongsTo: 'Org', key: 'department_id'}

@@ -932,6 +932,7 @@ nbGridDirective = ($parse)->
             # enableSelectAll: true
             selectionRowHeaderWidth: 35
             rowHeight: 50
+            enableColumnMenus: false
 
             # paginationTemplate: ''' ''' #分页组件模板， 需要集成 ui-grid-paper
             # totalItems: xxx

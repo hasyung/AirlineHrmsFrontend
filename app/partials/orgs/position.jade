@@ -31,7 +31,7 @@
                     a(role="menuitem" ng-href="/api/positions/export_specification_pdf?{{ctrl.getExportParams(currentOrg.id)}}" ) 导出所选岗位描述书
     div(nb-table="ctrl.positions" nb-safe-src="ctrl.positions")
         input(type="hidden" nb-pipe="ctrl.search(tableState)")
-        table.table.table-striped.ng-scope.custom-table
+        table.table.table-striped.custom-table
             thead
                 tr
                     th(select-row="" mode="all")
