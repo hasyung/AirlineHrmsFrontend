@@ -19,8 +19,10 @@
     //-                         locals="{'employee': emp}"
     //-                         )
     //-                     td(ng-bind="::emp.startDate")
-    .table-container
-        h4 在职员工信息
+    .ui-grid-container
+        md-toolbar
+            .md-toolbar-tools
+                span 在职员工信息
         div(nb-grid column-defs="panel.workingEmpColumnDef" safe-src="currentEmps")
 .position-manage(ng-if="currentPos.category.key == 'LingDao'" has-permission="positions_formerleaders")
     .table-container
