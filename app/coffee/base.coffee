@@ -73,9 +73,11 @@ class EditableResourceCtrl
             scope.editing = false
 class NewResourceCtrl
 
-    @.$inject = ['$scope']
+    @.$inject = ['$scope', '$enum']
 
-    constructor: (scope) ->
+    constructor: (scope, $enum) ->
+        scope.$enum = $enum
+
         scope.create = (resource, form) ->
             return if form && form.$invalid
             resource.$save() if resource.$save

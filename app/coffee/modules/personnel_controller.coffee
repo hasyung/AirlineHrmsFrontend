@@ -153,18 +153,102 @@ class NewEmpsCtrl extends nb.Controller
         @newEmp = {}
         @loadInitailData()
 
+        @columnDef = [
+            {
+                displayName: '姓名'
+                field: 'name'
+                # pinnedLeft: true
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {displayName: '所属部门', name: 'department.name'}
+            {displayName: '员工编号', name: 'employeeNo'}
+            {displayName: '岗位', name: 'position.name'}
+            {displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
+            {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
+            {displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
+            {displayName: '到岗时间', name: 'joinScalDate'}
+        ]
+
+        @filterOptions = {
+            name: 'personnel_new'
+            constraintDefs: [
+                {
+                    name: 'name'
+                    displayName: '姓名'
+                    type: 'string'
+                    placeholder: '姓名'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                    placeholder: '员工编号'
+                }
+                {
+                    name: 'department_ids'
+                    displayName: '机构'
+                    type: 'org-search'
+                }
+                {
+                    name: 'position_name'
+                    displayName: '岗位名称'
+                    type: 'string'
+                }
+                {
+                    name: 'location_id'
+                    type: 'select'
+                    displayName: '属地'
+                    params: {
+                        type: 'locations'
+                    }
+                }
+                {
+                    name: 'channel_id'
+                    type: 'select'
+                    displayName: '岗位通道'
+                    params: {
+                        type: 'channels'
+                    }
+                }
+                {
+                    name: 'employment_status_id'
+                    type: 'select'
+                    displayName: '用工状态'
+                    params: {
+                        type: 'employment_status'
+                    }
+                }
+                {
+                    name: 'birthday'
+                    type: 'date-range'
+                    displayName: '出生日期'
+                }
+                {
+                    name: 'join_scal_date'
+                    type: 'date-range'
+                    displayName: '入职时间'
+                }
+            ]
+        }
+
+
     loadInitailData: ->
 
         collection_param = {
-            predicate: {
-                join_scal_date: {
-                    from: moment().subtract(1, 'year').format('YYYY-MM-DD')
-                    to: moment().format("YYYY-MM-DD")
-                }
+            join_scal_date: {
+                from: moment().subtract(1, 'year').format('YYYY-MM-DD')
+                to: moment().format("YYYY-MM-DD")
             }
-            sort: {
-                join_scal_date: 'desc'
-            }
+            sort: 'join_scal_date'
+            order: 'desc'
         }
         @employees = @Employee.$collection(collection_param).$fetch()
     regEmployee: (employee)->

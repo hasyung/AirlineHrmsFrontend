@@ -67,14 +67,15 @@ angular.module 'nb.directives'
                         org_ids = newValue.map (org) -> return org.id
                         ngModelCtrl.$setViewValue(org_ids)
 
-            ngModelCtrl.$render = ->
-                if ngModelCtrl.$viewValue && ngModelCtrl.$viewValue.name
-                    # scope.ctrl.org = ngModelCtrl.$viewValue
-                    scope.ctrl.searchText = ngModelCtrl.$viewValue.name
-                    # $timeout(->
-                    #     elem.find('input').val(ngModelCtrl.$viewValue.name)
-                    # , 200)
-                # scope.ctrl.org = if ngModelCtrl.$viewValue then ngModelCtrl.$viewValue
+            if ngModelCtrl
+                ngModelCtrl.$render = ->
+                    if ngModelCtrl.$viewValue && ngModelCtrl.$viewValue.name
+                        # scope.ctrl.org = ngModelCtrl.$viewValue
+                        scope.ctrl.searchText = ngModelCtrl.$viewValue.name
+                        # $timeout(->
+                        #     elem.find('input').val(ngModelCtrl.$viewValue.name)
+                        # , 200)
+                    # scope.ctrl.org = if ngModelCtrl.$viewValue then ngModelCtrl.$viewValue
 
 
         return {

@@ -31,7 +31,7 @@ class PositionCtrl extends nb.Controller
     @.$inject = ['Position', '$scope', 'sweet']
 
     constructor: (@Position, @scope, @sweet) ->
-        @loadInitailData()
+        @loadInitialData()
         @selectedIndex =  1
 
 
@@ -41,8 +41,9 @@ class PositionCtrl extends nb.Controller
                 field: 'name'
                 # pinnedLeft: true
                 cellTemplate: '''
-                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                <div class="ui-grid-cell-contents">
                     <a nb-panel
+                        panel-controller="PositionDetailCtrl"
                         template-url="partials/position/position_detail.html"
                         locals="{position: row.entity}">
                         {{grid.getCellValue(row, col)}}
@@ -53,15 +54,15 @@ class PositionCtrl extends nb.Controller
             {displayName: '所属部门', name: 'department.name'}
             {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
             {
-                displayName: '编制数', 
+                displayName: '编制数'
                 name: 'budgetedStaffing'
                 cellTemplate: '''
-                <div class="ui-grid-cell-contents ng-binding ng-scope">
-                    
+                <div class="ui-grid-cell-contents">
+                    {{row.entity.staffing}}/{{grid.getCellValue(row, col)}}
                 </div>
-                '''                
+                '''
             }
-            {displayName: '工作时间', name: 'schedule.displayName'}
+            {displayName: '工作时间', name: 'scheduleId', cellFilter: "enum:'position_schedules'"}
             {displayName: 'OA文件编号', name: 'oaFileNo'}
         ]
         @constraints = [
@@ -84,12 +85,12 @@ class PositionCtrl extends nb.Controller
                     params: {
                         type: 'channels'
                     }
-                }       
+                }
                 {
                     name: 'created_at'
                     type: 'date-range'
                     displayName: '创建时间'
-                }        
+                }
                 {
                     name: 'department_ids'
                     displayName: '机构'
@@ -117,6 +118,7 @@ class PositionCtrl extends nb.Controller
                 .filter (pos) -> pos.isSelected
                 .map (pos) -> pos.id
                 .join(',')
+
 class PositionChangesCtrl extends nb.Controller
 
     @.$inject = ['PositionChange', '$mdDialog']
@@ -126,7 +128,24 @@ class PositionChangesCtrl extends nb.Controller
     searchChanges: (tableState)->
         @changes.$refresh(tableState)
 
+class PositionDetailCtrl
 
+    @.$inject = ['$scope']
 
+    constructor: (scope) ->
+
+        @workingEmpColumnDef = [
+            {displayName: '员工编号', name: 'employeeNo'}
+            {displayName: '姓名', name: 'name'}
+            {displayName: '到岗时间', name: 'startDate'}
+        ]
+
+        @formerleadersColumnDef = [
+            {displayName: '员工编号', name: 'employeeNo'}
+            {displayName: '姓名', name: 'name'}
+            {displayName: '到岗时间', name: 'startDate'}
+        ]
+
+app.controller 'PositionDetailCtrl', PositionDetailCtrl
 
 app.config(Route)
