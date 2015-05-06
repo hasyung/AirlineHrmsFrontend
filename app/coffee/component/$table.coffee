@@ -19,13 +19,6 @@ app = nb.app
 # type: ['date-range', 'string', 'number', 'date']
 
 
-
-
-
-
-
-
-
 # createFilter(defs) ->
 #     active_constraint = []
 #     inert_constraint = []
@@ -48,20 +41,6 @@ app = nb.app
 
 
 
-#     Object.observe
-
-
-
-
-
-
-
-
-'<div nb-filter="constraintDefs"></div>'
-
-
-
-
 class NbFilterCtrl
 
     #@desc 预编译模板
@@ -76,11 +55,34 @@ class NbFilterCtrl
         return compiled(def)
 
     filter_template_definition =
-        string: '''
+        'string': '''
             <md-input-container md-no-float>
                 <input type="text" placeholder="${ displayName }" ng-model="${ name }">
             </md-input-container>
         '''
+        'date-range': '''
+            <md-input-container md-no-float>
+                <input type="text" placeholder="${ displayName }" bs-datepicker container="body" ng-model="${name}.from">
+            </md-input-container>
+            <md-input-container md-no-float>
+                <input type="text" placeholder="${ displayName }" bs-datepicker container="body" ng-model="${name}.to">
+            </md-input-container>
+        '''
+        'date': '''
+            <md-input-container md-no-float>
+                <input type="text" placeholder="${ displayName }" bs-datepicker container="body" ng-model="${name}">
+            </md-input-container>
+        '''
+        'select': '''
+            <md-select placeholder="${ displayName }" ng-model="${ name }">
+                <md-option value="" ng-repeat="item in $enum.get(${ params.type })" ></md-option>
+            </md-select>
+        '''
+        'org-search': '''
+            <org-search multiple ng-model="${ name }"></org-search>
+        '''
+
+
     @.$inject = ['$scope', '$element', '$attrs', '$parse', '$compile', 'SerializedFilter']
     constructor: (scope, elem, attrs, $parse, @compile, SerializedFilter) ->
         options = scope.nbFilter
@@ -225,8 +227,7 @@ conditionInputContainer = ->
 
 
 
-NbFilterDirective = ->
-
+NbFilterDirective = ()->
 
     template = '''
         <md-content class="search-container">
@@ -925,7 +926,7 @@ nbGridDirective = ($parse)->
             useExternalPagination: true
             # enableSelectAll: true
             selectionRowHeaderWidth: 35
-            rowHeight: 35
+            rowHeight: 50
 
             # paginationTemplate: ''' ''' #分页组件模板， 需要集成 ui-grid-paper
             # totalItems: xxx

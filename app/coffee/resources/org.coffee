@@ -79,18 +79,18 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
         return unflatten(treeData, DEPTH, parent)
 
 
-    computeFullName = (ttl, initalArr = []) ->
-        initalArr.unshift(this.name) && ttl--
+    computeFullName = (parent, ttl, initalArr = []) ->
+        initalArr.unshift(parent.name) && ttl--
 
         if ttl == 0
             initalArr.join(">")
         else
-            if ( this.parentId || this.parent_id ) && this.xdepth > 2
-                parentDep = find DEPARTMENTS, 'id', this.parentId || this.parent_id
+            if ( parent.parentId || parent.parent_id ) && parent.xdepth > 2
+                parentDep = find DEPARTMENTS, 'id', parent.parentId || parent.parent_id
                 if !parentDep
-                    throw new Error("机构数据结构错误 机构#{this.name}：#{this.id} 找不到parent #{this.parentId} 的机构")
+                    throw new Error("机构数据结构错误 机构#{parent.name}：#{parent.id} 找不到parent #{parent.parentId} 的机构")
                 else
-                    return computeFullName.call(parentDep, ttl, initalArr)
+                    return computeFullName(parentDep, ttl, initalArr)
             else
                 return initalArr.join(">")
 
@@ -101,7 +101,7 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
 
         fullName: {
             computed: (val) ->
-                computeFullName.call(this, 3)
+                computeFullName(@, 3)
             mask: "CU"
         }
 

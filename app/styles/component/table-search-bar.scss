@@ -1,133 +1,6 @@
-// .btn-export {
-//     display: inline-block;
-//     margin-left: 20px;
-//     // margin-right: 100px;
-// }
-
-// .search-btn-group {
-//     margin: 10px 0;
-//     padding-left: 56px;
-// }
-
-// .searchbar {
-//     h3 {
-//         background-color: $bg-header;
-//         border: 1px solid #dde5e7;
-//         color: $text-title;
-//         font-size: $font-size-lg;
-//         height: 55px;
-//         line-height: 55px;
-//         padding-left: 40px;
-//         // input {
-//         //     padding: 6px 12px;
-//         // }
-
-//         .md-button {
-//             font-size: $font-size-sm;
-//             line-height: 1.43em;
-//             margin-right: 20px;
-//             margin-top: 10px;
-//             padding: 6px 12px;
-//         }
-
-//         > a {
-//             margin: 10px 10px 0 0;
-//         }
-//     }
-
-//     .search-content {
-//         border-bottom: 1px solid #dde5e7;
-//         border-left: 1px solid #dde5e7;
-//         border-right: 1px solid #dde5e7;
-//         padding: 10px;
-//     }
-
-//     .search-row {
-//         // height: 34px;
-//         margin-bottom: 10px;
-
-//         .search-del,
-//         .search-opt,
-//         .search-type,
-//         .search-plus {
-//             display: inline-block;
-//             margin-right: 10px;
-//         }
-
-//         .search-del {
-//             border: 0;
-//             box-shadow: none;
-
-//             &:hover {
-//                 color: $danger;
-//             }
-//         }
-
-//         .dropdown {
-//             .dropdown-toggle {
-//                 margin-top: -1px;
-//             }
-
-//             .dropdown-toggle:focus {
-//                 border-color: $focus;
-//             }
-
-//             .caret {
-//                 float: right;
-//                 margin-top: 7px;
-//             }
-//         }
-
-//         .search-type {
-//             >div>input {
-//                 border: 1px solid #aaa;
-//                 border-radius: 2px;
-//                 box-shadow: none;
-//                 height: 34px;
-//                 min-width: 190px;
-//                 outline: none;
-//                 padding-left: 8px;
-
-//                 &:focus {
-//                     border-color: $focus;
-//                 }
-//             }
-
-//             .gap {
-//                 margin: 0 10px;
-//             }
-//         }
-
-//         .search-plus {
-//             border-style: dotted;
-
-//             &:hover {
-//                 color: $a-color;
-//             }
-//         }
-
-//         .ui-select-container {
-//             height: 34px;
-//             margin: 0;
-//         }
-
-//         .ui-select-match {
-//             min-width: 160px;
-
-//             .caret {
-//                 margin-top: 0;
-//             }
-
-//             .ui-select-match-item {
-//                 margin: 5px 3px 0;
-//                 padding: 5px;
-//             }
-//         }
-//     }
-// }
 md-content.search-container {
+    margin-bottom: 10px;
     padding: 0 20px;
-    margin-bottom: 20px;
 
     md-toolbar.md-default-theme {
         background-color: #fff;
@@ -192,12 +65,83 @@ md-content.search-container {
         .md-icon-button {
             height: 48px;
             line-height: 48px;
+
+            md-icon {
+                height: 20px;
+                width: 20px;
+            }
         }
     }
 
     .search-footer {
-        margin: 20px 0 20px 10px;
+        margin: 20px 0;
     }
 
 }
+
+.ui-grid-container {
+    background-color: #fff;
+    margin-bottom: 20px;
+    padding: 0 20px 20px;
+
+    md-toolbar.md-default-theme {
+        background-color: #fff;
+        border-bottom: 1px solid #000;
+        color: $text-title;
+
+        .md-toolbar-tools {
+            padding-right: 0;
+        }
+    }
+
+    .ui-grid {
+        border: 0;
+    }
+
+    .ui-grid-header-cell-row {
+        line-height: 50px;
+
+        .ui-grid-header-cell {
+            background-color: #fff;
+            border-right: 1px solid rgba(0, 0, 0, .04);
+            // border-right: 0;
+        }
+    }
+
+    .ui-grid-row {
+        .ui-grid-cell {
+            background-color: #fff;
+            border-bottom: 1px solid #e7e9ea;
+            border-right: 1px solid rgba(0, 0, 0, .04);
+            // border-right: 0;
+
+            &.ui-grid-row-header-cell {
+                background-color: #fff !important;
+            }
+        }
+
+        &.ui-grid-row-selected {
+            .ui-grid-cell {
+                background-color: #ededed !important;
+
+                &.ui-grid-row-header-cell {
+                    color: #337ab7;
+                }
+            }
+        }
+
+        .ui-grid-cell-contents {
+            line-height: 40px;
+        }
+    }
+
+    .ui-grid-pager-panel {
+        border-top: 1px solid #000;
+    }
+
+}
+
+
+
+
 
