@@ -138,7 +138,7 @@ angular.module 'nb.directives'
             transclude: true
             template: '''
             <div class="dropdown", ng-class="{\'open\': isOpen}">
-              <md-button ng-click="dropdown.toggle()" class="skyblue  md-raised dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">
+              <md-button ng-click="dropdown.toggle()" class="md-primary md-raised dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">
                 {{btnText}}
                 <span class="caret"></span>
               </md-button>

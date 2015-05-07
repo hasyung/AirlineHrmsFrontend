@@ -5,7 +5,7 @@ form(name="speEditForm" ng-submit="save(currentSpe.$save(), speEditForm)" ng-con
         md-button.md-raised.white(ng-click="cancel(currentSpe, $event, speEditForm)") 取消
         md-button.md-raised.skyblue(type="submit" ng-disabled="speEditForm.$invalid") 保存
     fieldset(ng-disabled="!editing")
-        .form-gourp
+        .textarea-row
             label 工作职责
             textarea(nb-simditor, toolbar="['bold', 'italic', 'underline', 'ol', 'ul']", placeholder="这里输入内容", ng-model="currentSpe.duty", editing)
         md-input-container
@@ -29,6 +29,6 @@ form(name="speEditForm" ng-submit="save(currentSpe.$save(), speEditForm)" ng-con
         md-input-container
             label 外部联系
             input(type='text', placeholder='请输入外部联系', ng-model="currentSpe.externalRelation")
-        .form-gourp
+        .textarea-row
             label 任职条件
             textarea(nb-simditor, toolbar="['bold', 'italic', 'underline', 'ol', 'ul']", placeholder="这里输入内容", ng-model="currentSpe.qualification", editing)
