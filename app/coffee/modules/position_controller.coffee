@@ -79,6 +79,11 @@ class PositionCtrl extends nb.Controller
                     placeholder: '岗位名称'
                 }
                 {
+                    name: 'staffing_surpass'
+                    displayName: '是否超编'
+                    type: 'boolean'
+                }
+                {
                     name: 'channel_id'
                     type: 'select'
                     displayName: '岗位通道'
@@ -146,12 +151,12 @@ class PositionChangesCtrl extends nb.Controller
                 '''
             }
             {name:"createdAt", displayName:"变更时间"}
-            
+
         ]
         @filterOptions = {
             name: 'position_changes'
             constraintDefs: [
-                
+
                 {
                     name: 'name'
                     displayName: '岗位名称'
