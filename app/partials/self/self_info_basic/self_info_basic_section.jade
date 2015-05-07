@@ -166,12 +166,7 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                         md-select(ng-model="currentUser.laborRelation" md-on-open="loadEnum('labor_relations')" disabled)
                             md-select-label {{currentUser.laborRelation? currentUser.laborRelation.displayName : '无'}}
                             md-option(ng-value="laborRelation" ng-repeat="laborRelation in enums.labor_relations") {{laborRelation.displayName}}
-                div(layout)
-                    md-input-container.row-has-value(flex)
-                        label 用工关系状态
-                        md-select(ng-model="currentUser.employmentStatus" md-on-open="loadEnum('employment_status')" disabled)
-                            md-select-label {{currentUser.employmentStatus? currentUser.employmentStatus.displayName : '无'}}
-                            md-option(ng-value="empStatus" ng-repeat="empStatus in enums.employment_status") {{empStatus.displayName}}
+                
             //- 职称信息先不显示，后端数据没提供
             //- md-subheader.md-primary 职称信息
             //- fieldset(disabled)
