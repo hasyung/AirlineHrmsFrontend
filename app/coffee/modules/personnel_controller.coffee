@@ -262,7 +262,7 @@ class NewEmpsCtrl extends nb.Controller
 
     loadInitailData: ->
 
-        collection_param = {
+        @collection_param = {
             join_scal_date: {
                 from: moment().subtract(1, 'year').format('YYYY-MM-DD')
                 to: moment().format("YYYY-MM-DD")
@@ -270,7 +270,7 @@ class NewEmpsCtrl extends nb.Controller
             sort: 'join_scal_date'
             order: 'desc'
         }
-        @employees = @Employee.$collection(collection_param).$fetch()
+        @employees = @Employee.$collection().$fetch(@collection_param)
     regEmployee: (employee)->
         self = @
         @employees.$build(employee).$save().$then ()->
@@ -282,25 +282,12 @@ class NewEmpsCtrl extends nb.Controller
                 .map (emp) -> emp.id
                 .join(',')
     search: (tableState) ->
-        # tableState = @mergeParams(tableState)
+        tableState = @mergeParams(tableState)
         @employees.$refresh(tableState)
-    # mergeParams: (tableState)->
-    #     params = {
-    #         predicate: {
-    #             join_scal_date: {
-    #                 from: moment().subtract(1, 'year').format('YYYY-MM-DD')
-    #                 to: moment().format("YYYY-MM-DD")
-    #             }
-    #         }
-    #         sort: {
-    #             join_scal_date: 'desc'
-    #         }
-    #     }
-    #     angular.forEach params, (val, key)->
-    #         if angular.isObject(val)
-    #             angular.forEach val, (nestedVal, nestedKey)->
-    #                 tableState[key][nestedKey] = nestedVal
-    #     return tableState
+    mergeParams: (tableState)->
+        angular.forEach @collection_param, (val, key)->
+            tableState[key] = val
+        return tableState
 
 
 class ReviewCtrl extends nb.Controller
