@@ -6,6 +6,8 @@
     .resume-body
         section.resume-section.form-split
             h4 基本情况
+            .resume-avator
+                img(ng-src="{{currentUser.favicon.big}}")
             .form-group
                 label.control-label 姓名：
                 .form-content(ng-bind="resume.name")
