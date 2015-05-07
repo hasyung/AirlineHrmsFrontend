@@ -121,9 +121,10 @@ class PositionCtrl extends nb.Controller
 
 class PositionChangesCtrl extends nb.Controller
 
-    @.$inject = ['PositionChange', '$mdDialog']
+    @.$inject = ['PositionChange']
 
-    constructor: (@PositionChange, @mdDialog) ->
+    constructor: (@PositionChange) ->
+        @changes = @PositionChange.$collection().$refresh()
         @columnDef = [
             {name:"name", displayName:"岗位名称"}
             {name:"department.name", displayName:"所属部门"}
@@ -147,6 +148,27 @@ class PositionChangesCtrl extends nb.Controller
             {name:"createdAt", displayName:"变更时间"}
             
         ]
+        @filterOptions = {
+            name: 'position_changes'
+            constraintDefs: [
+                
+                {
+                    name: 'name'
+                    displayName: '岗位名称'
+                    type: 'string'
+                }
+                {
+                    name: 'department_ids'
+                    displayName: '机构'
+                    type: 'org-search'
+                }
+                {
+                    name: 'created_at'
+                    type: 'date-range'
+                    displayName: '创建时间'
+                }
+            ]
+        }
 
 
     searchChanges: (tableState)->

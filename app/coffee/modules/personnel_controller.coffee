@@ -312,6 +312,34 @@ class ReviewCtrl extends nb.Controller
             {name:"checkDate", displayName:"审核时间"}
             {name:"reason", displayName:"理由"}
         ]
+        @filterOptions = {
+            name: 'personnel_chage_record'
+            constraintDefs: [
+                
+                {
+                    name: 'name'
+                    displayName: '姓名'
+                    type: 'string'
+                    placeholder: '员工姓名'
+                }
+                {
+                    name: 'department_ids'
+                    displayName: '机构'
+                    type: 'org-search'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                    placeholder: '员工编号'
+                }
+                {
+                    name: 'created_at'
+                    type: 'date-range'
+                    displayName: '创建时间'
+                }
+            ]
+        }
 
     loadInitailData: ->
         # @changes = @Change.$collection().$fetch()

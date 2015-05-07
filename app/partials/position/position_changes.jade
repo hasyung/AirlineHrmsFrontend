@@ -1,5 +1,5 @@
-.app-content-wrapper(flex style="height: 700px;" ng-init="ctrl.changes = ctrl.PositionChange.$collection().$refresh()")
-    //- div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+.app-content-wrapper(flex style="height: 700px;")
+    div(nb-filter="ctrl.filterOptions" on-search="ctrl.searchChanges(state)")
     div.ui-grid-container
         md-toolbar
             .md-toolbar-tools
