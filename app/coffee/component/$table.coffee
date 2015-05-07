@@ -914,9 +914,7 @@ nbGridDirective = ($parse)->
     # }
 
 
-    nbGridTemplate =  '''
-        <div ui-grid="gridOptions" ui-grid-selection ui-grid-pagination ui-grid-pinning></div>
-    '''
+
     postLink = (scope, elem, attrs) ->
         columnDefs = scope.columnDefs
         safeSrc = scope.safeSrc
@@ -985,13 +983,23 @@ nbGridDirective = ($parse)->
             )
         # scope.$watch('gridOptions.paginationPageSize') #watch 每页数据
 
-
+    nbGridTemplate =  '''
+        <div ui-grid="gridOptions" #plugins# ui-grid-pagination></div>
+    '''
 
     return {
         link: {
             pre: postLink
         }
-        template: nbGridTemplate
+        template: (elem, attrs) ->
+
+            plugins = ['ui-grid-pinning','ui-grid-selection']
+            applied_plugins = plugins.reduce((res, val) ->
+                camelCased = _.camelCase(val)
+                res.push(val) if angular.isDefined(camelCased)
+                return res
+            ,[])
+            nbGridTemplate.replace("#plugins#",applied_plugins.join(" "))
         scope: {
             columnDefs: '='
             safeSrc: '='
