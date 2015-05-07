@@ -1,9 +1,9 @@
 .personnel-content(ng-controller="NewResource")
-    section.personnel-info-section(ng-init= "params = {}")
-        md-toolbar
+    section.personnel-info-section(md-theme="hrms" ng-init= "params = {}")
+        md-toolbar()
             .md-toolbar-tools
                 span 新员工入职
-        .form-material-section
+        md-content.form-material-section
             md-subheader.md-primary 基本信息
             //- 应该得到请求结果后才判断是否关闭dialog
             form(ng-submit="ctrl.regEmployee(newEmp);panel.close();" name="newEmpForm")
