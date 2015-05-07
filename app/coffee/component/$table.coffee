@@ -996,7 +996,7 @@ nbGridDirective = ($parse)->
             plugins = ['ui-grid-pinning','ui-grid-selection']
             applied_plugins = plugins.reduce((res, val) ->
                 camelCased = _.camelCase(val)
-                res.push(val) if angular.isDefined(camelCased)
+                res.push(val) if angular.isDefined(attrs[camelCased])
                 return res
             ,[])
             nbGridTemplate.replace("#plugins#",applied_plugins.join(" "))
