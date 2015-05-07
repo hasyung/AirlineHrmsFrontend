@@ -33,6 +33,8 @@ Change = (restmod, RMUtils, $Evt) ->
 Record = (restmod, RMUtils, $Evt) ->
 
     Record = restmod.model('/employee_changes/record').mix 'nbRestApi', 'DirtyModel', {
+        checkDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
+        createdAt: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
         $config:
             jsonRoot: 'audits'
 
