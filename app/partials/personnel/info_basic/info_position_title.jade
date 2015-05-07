@@ -9,23 +9,15 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
         div(layout)
             md-input-container.row-has-value(flex)
                 label 职称
-                //- md-select(ng-model="current.jobTitle", md-on-open="loadEnum('job_titles')" ng-disabled="!editing")
-                //-     md-select-label {{current.jobTitle? current.jobTitle.displayName : '无'}}
-                //-     md-option(ng-value="jobTitle" ng-repeat="jobTitle in enums.job_titles") {{jobTitle.displayName}}
-                md-select(ng-model="current.jobTitle" ng-disabled="!editing")
-                    md-select-label {{$enum.parseLabel(current.jobTitle, "job_titles")}}
+                md-select(ng-model="current.jobTitleId" ng-disabled="!editing")
+                    md-select-label {{$enum.parseLabel(current.jobTitleId, "job_titles")}}
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('job_titles')") {{item.label}}
             md-input-container.row-has-value(flex)
                 label 职称级别
-                //- md-select(ng-model="current.jobTitleDegree", md-on-open="loadEnum('job_title_degrees')" ng-disabled="!editing")
-                //-     md-select-label {{current.jobTitleDegree? current.jobTitleDegree.displayName : '无'}}
-                //-     md-option(ng-value="jobTitleDegree" ng-repeat="jobTitleDegree in enums.job_title_degrees") {{jobTitleDegree.displayName}}
-                md-select(ng-model="current.jobTitleDegree" ng-disabled="!editing")
-                    md-select-label {{$enum.parseLabel(current.jobTitleDegree, "job_title_degrees")}}
+                md-select(ng-model="current.jobTitleDegreeId" ng-disabled="!editing")
+                    md-select-label {{$enum.parseLabel(current.jobTitleDegreeId, "job_title_degrees")}}
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('job_title_degrees')") {{item.label}}
             md-input-container.row-has-value(flex)
                 label 技术职务
                 input(ng-model="current.technicalDuty")
-                //- md-select(ng-model="current.jobTitleDegree", md-on-open="loadEnum('job_title_degrees')" ng-disabled="!editing")
-                //-     md-select-label {{current.jobTitleDegree? current.jobTitleDegree.displayName : '无'}}
-                //-     md-option(ng-value="jobTitleDegree" ng-repeat="jobTitleDegree in enums.job_title_degrees") {{jobTitleDegree.displayName}}
+                
