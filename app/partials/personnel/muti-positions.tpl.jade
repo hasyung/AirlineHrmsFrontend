@@ -1,6 +1,8 @@
 .position-items()
     .position-item(layout ng-repeat="posItem in positions"
-        ng-init="itemParams={};"
+        ng-init="itemParams={};\
+            itemParams.orgPos = ctrl.Position.$collection({department_id:posItem.department.id}).$refresh();\
+        "
         )
         div(layout="row" flex)
             div(flex="50")
@@ -9,12 +11,12 @@
 
             md-input-container.row-has-value(flex="25")
                 label 岗位
-                md-select(ng-model="posItem.position")
+                md-select(ng-model="posItem.position" ng-disabled="!editStatus")
                     md-select-label {{posItem.position.name || '无'}}
                     md-option(ng-value="pos" ng-repeat="pos in itemParams.orgPos") {{::pos.name}}
             md-input-container.row-has-value(flex="25")
                 label 岗位性质
-                md-select(ng-model="posItem.category")
+                md-select(ng-model="posItem.category" ng-disabled="!editStatus")
                     md-select-label {{posItem.category || '无'}}
                     md-option(aria-label="primary" value="主职") 主职
                     md-option(aria-label="part" value="兼职") 兼职

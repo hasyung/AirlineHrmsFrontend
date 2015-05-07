@@ -302,7 +302,7 @@ class ReviewCtrl extends nb.Controller
                         href="javascript:void(0);"
                         nb-dialog
                         template-url="partials/common/{{row.entity.action == '修改'? 'update_change_review.tpl.html': 'create_change_review.tpl.html'}}"
-                        locals="{'change': record}"> {{row.entity.auditableType}}
+                        locals="{'change': row.entity}"> {{row.entity.auditableType}}
                     </a>
                 </div>
                 '''
@@ -312,6 +312,34 @@ class ReviewCtrl extends nb.Controller
             {name:"checkDate", displayName:"审核时间"}
             {name:"reason", displayName:"理由"}
         ]
+        @filterOptions = {
+            name: 'personnel_chage_record'
+            constraintDefs: [
+                
+                {
+                    name: 'name'
+                    displayName: '姓名'
+                    type: 'string'
+                    placeholder: '员工姓名'
+                }
+                {
+                    name: 'department_ids'
+                    displayName: '机构'
+                    type: 'org-search'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                    placeholder: '员工编号'
+                }
+                {
+                    name: 'created_at'
+                    type: 'date-range'
+                    displayName: '创建时间'
+                }
+            ]
+        }
 
     loadInitailData: ->
         # @changes = @Change.$collection().$fetch()
@@ -385,10 +413,9 @@ class PersonnelSort extends nb.Controller
 
 orgMutiPos = ($rootScope)->
     class PersonnelPositions extends nb.Controller
-        @.$inject = ['$scope', '$rootScope']
-        constructor: (@scope, @rootScope) ->
+        @.$inject = ['$scope', 'Position']
+        constructor: (@scope, @Position) ->
             @scope.positions = []
-            @scope.allOrgs = @rootScope.allOrgs
 
         addPositions: ->
             @scope.positions.push {
