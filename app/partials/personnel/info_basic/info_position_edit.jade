@@ -45,12 +45,9 @@ form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="Ed
         div(layout)
             md-input-container.row-has-value(flex)
                 label 职务职级
-                //- md-select(ng-model="current.dutyRank" md-on-open="loadEnum('employee_duty_ranks')" ng-disabled="!editing")
-                //-     md-select-label {{current.dutyRank? current.dutyRank.displayName : '无'}}
-                //-     md-option(ng-value="dutyRank" ng-repeat="dutyRank in enums.employee_duty_ranks") {{dutyRank.displayName}}
-                md-select(ng-model="current.dutyRank" ng-disabled="!editing")
-                    md-select-label {{$enum.parseLabel(current.dutyRank, "employee_duty_ranks")}}
-                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('employee_duty_ranks')") {{item.label}}
+                md-select(ng-model="current.dutyRankId" ng-disabled="!editing")
+                    md-select-label {{$enum.parseLabel(current.dutyRankId, "duty_ranks")}}
+                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('duty_ranks')") {{item.label}}
 
             md-input-container.row-has-value(flex)
                 label 用工性质
