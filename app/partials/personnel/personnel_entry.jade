@@ -49,12 +49,11 @@
                         label 手机号码
                         input(type="text" placeholder="请输入手机号码" ng-model="newEmp.contact.mobile")
 
-                    .form-gourp
-                        label 所属部门
-                        org-search(ng-model="newEmp.department" float-label selected-item-change="params.orgPos = org.positions.$fetch();newEmp.position = null;")
+                    //- .form-gourp
+                    org-search(ng-model="newEmp.department" required float-label selected-item-change="params.orgPos = org.positions.$fetch();newEmp.position = null;")
                     md-input-container.row-has-value(flex)
                         label 岗位
-                        md-select(ng-model="newEmp.position")
+                        md-select(ng-model="newEmp.position" required)
                             md-select-label {{newEmp.position.name || "无"}}
                             md-option(ng-value="item" ng-repeat="item in params.orgPos") {{item.name}}
 
