@@ -82,6 +82,12 @@ class NbFilterCtrl
                 <md-option ng-value="item.id" ng-repeat="item in $parent.$enum.get('${ params.type }')">{{item.label}}</md-option>
             </md-select>
         '''
+        'boolean': '''
+            <md-select placeholder="${ displayName }" ng-model="${ name }">
+                <md-option value="true" selected)">是</md-option>
+                <md-option value="false")">否</md-option>
+            </md-select>
+        '''
         'org-search': '''
             <org-search multiple ng-model="${ name }"></org-search>
         '''
