@@ -1,35 +1,75 @@
-.app-content-wrapper.org-pos-list
-    .org-modal-posttop 岗位信息列表
-        .btn-group.pull-right
-            button.btn.btn-default.fa.fa-trash-o.pull-right(
-                has-permission="positions_batch_destroy"
-                title="请选择要删除的岗位"
-                ng-disabled="ctrl.getSelectsIds().length == 0"
-                nb-confirm="ctrl.batchRemove(isConfirm)"
-                nb-title="您确定要删除所选的{{ctrl.getSelectsIds().length}}个岗位吗?"
-                nb-content="删除操作将在你点击确定后执行，岗位删除后将无法恢复。")
-            button.btn.btn-default.fa.fa-plus.pull-right(
-                has-permission="positions_create"
-                title="新增岗位"
-                nb-dialog
-                template-url="partials/orgs/position_add.html"
-            )
-            button.btn.btn-info.pull-right(
-                has-permission="positions_adjust"
-                nb-dialog
-                template-url="partials/position/position_transfer.html"
-                ) 调整机构
+//- <<<<<<< HEAD
+.app-content-wrapper.ui-grid-container
+    md-toolbar
+        .md-toolbar-tools
+            span 岗位信息列表
+            div(flex)
+            span
+                button.btn.btn-default.fa.fa-plus.pull-right(
+                    has-permission="positions_create"
+                    title="新增岗位"
+                    nb-dialog
+                    template-url="partials/orgs/position_add.html"
+                )
+            span
+                md-button.md-raised.md-primary(
+                    has-permission="positions_adjust"
+                    nb-dialog
+                    template-url="partials/position/position_transfer.html"
+                    ) 调整机构
+            span
+                .nb-dropdown.right-align(simple-dropdown, btn-text="导出")
+                    li( role="presentation")
+                        a(role="menuitem" ng-href="/api/positions/export_to_xls?department_id={{currentOrg.id}}" ) 导出全部岗位
+                    li( role="presentation",ng-show="ctrl.getSelectsIds().length != 0")
+                        a(role="menuitem" ng-href="/api/positions/export_to_xls?{{ctrl.getExportParams(currentOrg.id)}}" ) 导出所选岗位
+                    li( role="presentation")
+                        a(role="menuitem" ng-href="/api/positions/export_specification_pdf?department_id={{currentOrg.id}}" ) 导出全部岗位描述书
+                    li( role="presentation",ng-show="ctrl.getSelectsIds().length != 0")
+                        a(role="menuitem" ng-href="/api/positions/export_specification_pdf?{{ctrl.getExportParams(currentOrg.id)}}" ) 导出所选岗位描述书
+            span(style="margin-left: 20px;")
+                button.btn.btn-default.fa.fa-trash-o(
+                    has-permission="positions_batch_destroy"
+                    title="请选择要删除的岗位"
+                    ng-disabled="ctrl.getSelectsIds().length == 0"
+                    nb-confirm="ctrl.batchRemove(isConfirm)"
+                    nb-title="您确定要删除所选的{{ctrl.getSelectsIds().length}}个岗位吗?"
+                    nb-content="删除操作将在你点击确定后执行，岗位删除后将无法恢复。")
+    div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.positions")
+//- =======
+//- .app-content-wrapper.org-pos-list
+//-     .org-modal-posttop 岗位信息列表
+//-         .btn-group.pull-right
+//-             button.btn.btn-default.fa.fa-trash-o.pull-right(
+//-                 has-permission="positions_batch_destroy"
+//-                 title="请选择要删除的岗位"
+//-                 ng-disabled="ctrl.getSelectsIds().length == 0"
+//-                 nb-confirm="ctrl.batchRemove(isConfirm)"
+//-                 nb-title="您确定要删除所选的{{ctrl.getSelectsIds().length}}个岗位吗?"
+//-                 nb-content="删除操作将在你点击确定后执行，岗位删除后将无法恢复。")
+//-             button.btn.btn-default.fa.fa-plus.pull-right(
+//-                 has-permission="positions_create"
+//-                 title="新增岗位"
+//-                 nb-dialog
+//-                 template-url="partials/orgs/position_add.html"
+//-             )
+//-             button.btn.btn-info.pull-right(
+//-                 has-permission="positions_adjust"
+//-                 nb-dialog
+//-                 template-url="partials/position/position_transfer.html"
+//-                 ) 调整机构
 
-            .pull-right.nb-dropdown.right-align(simple-dropdown, btn-text="导出")
-                li( role="presentation")
-                    a(role="menuitem" ng-href="/api/positions/export_to_xls?department_id={{currentOrg.id}}" ) 导出全部岗位
-                li( role="presentation",ng-show="ctrl.getSelectsIds().length != 0")
-                    a(role="menuitem" ng-href="/api/positions/export_to_xls?{{ctrl.getExportParams(currentOrg.id)}}" ) 导出所选岗位
-                li( role="presentation")
-                    a(role="menuitem" ng-href="/api/positions/export_specification_pdf?department_id={{currentOrg.id}}" ) 导出全部岗位描述书
-                li( role="presentation",ng-show="ctrl.getSelectsIds().length != 0")
-                    a(role="menuitem" ng-href="/api/positions/export_specification_pdf?{{ctrl.getExportParams(currentOrg.id)}}" ) 导出所选岗位描述书
-    .ui-grid-container(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.positions")
+//-             .pull-right.nb-dropdown.right-align(simple-dropdown, btn-text="导出")
+//-                 li( role="presentation")
+//-                     a(role="menuitem" ng-href="/api/positions/export_to_xls?department_id={{currentOrg.id}}" ) 导出全部岗位
+//-                 li( role="presentation",ng-show="ctrl.getSelectsIds().length != 0")
+//-                     a(role="menuitem" ng-href="/api/positions/export_to_xls?{{ctrl.getExportParams(currentOrg.id)}}" ) 导出所选岗位
+//-                 li( role="presentation")
+//-                     a(role="menuitem" ng-href="/api/positions/export_specification_pdf?department_id={{currentOrg.id}}" ) 导出全部岗位描述书
+//-                 li( role="presentation",ng-show="ctrl.getSelectsIds().length != 0")
+//-                     a(role="menuitem" ng-href="/api/positions/export_specification_pdf?{{ctrl.getExportParams(currentOrg.id)}}" ) 导出所选岗位描述书
+//-     .ui-grid-container(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.positions")
+//- >>>>>>> bada2bb3677a416ba7152d691d6cdf696b2b48a8
     //- div(nb-table="ctrl.positions" nb-safe-src="ctrl.positions")
     //-     input(type="hidden" nb-pipe="ctrl.search(tableState)")
     //-     table.table.table-striped.custom-table

@@ -63,11 +63,11 @@ class NbFilterCtrl
         'date-range': '''
             <div class="md-input-container-row">
                 <md-input-container md-no-float>
-                    <input type="text" placeholder="${ displayName }" bs-datepicker container="body" ng-model="${name}.from">
+                    <input type="text" placeholder="起始时间" bs-datepicker container="body" ng-model="${name}.from">
                 </md-input-container>
                 <div class="divide-text">到</div>
                 <md-input-container md-no-float>
-                    <input type="text" placeholder="${ displayName }" bs-datepicker container="body" ng-model="${name}.to">
+                    <input type="text" placeholder="结束时间" bs-datepicker container="body" ng-model="${name}.to">
                 </md-input-container>
             </div>
         '''
@@ -80,6 +80,12 @@ class NbFilterCtrl
             <md-select placeholder="${ displayName }" ng-model="${ name }">
                 <md-select-label>{{ ${ name } ? $parent.$enum.parseLabel(${name}, '${params.type}') : '无' }}</md-select-label>
                 <md-option ng-value="item.id" ng-repeat="item in $parent.$enum.get('${ params.type }')">{{item.label}}</md-option>
+            </md-select>
+        '''
+        'boolean': '''
+            <md-select placeholder="${ displayName }" ng-model="${ name }">
+                <md-option value="true" selected)">是</md-option>
+                <md-option value="false")">否</md-option>
             </md-select>
         '''
         'org-search': '''

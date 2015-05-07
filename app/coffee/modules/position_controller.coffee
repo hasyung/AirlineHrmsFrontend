@@ -51,7 +51,12 @@ class PositionCtrl extends nb.Controller
                 </div>
                 '''
             }
-            {displayName: '所属部门', name: 'department.name'}
+            {
+                displayName: '所属部门'
+                name: 'department.name'
+                cellTooltip: (row) ->
+                    return row.entity.department.name
+            }
             {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
             {
                 displayName: '编制数'
@@ -77,6 +82,11 @@ class PositionCtrl extends nb.Controller
                     displayName: '岗位名称'
                     type: 'string'
                     placeholder: '岗位名称'
+                }
+                {
+                    name: 'staffing_surpass'
+                    displayName: '是否超编'
+                    type: 'boolean'
                 }
                 {
                     name: 'channel_id'
@@ -146,12 +156,12 @@ class PositionChangesCtrl extends nb.Controller
                 '''
             }
             {name:"createdAt", displayName:"变更时间"}
-            
+
         ]
         @filterOptions = {
             name: 'position_changes'
             constraintDefs: [
-                
+
                 {
                     name: 'name'
                     displayName: '岗位名称'
