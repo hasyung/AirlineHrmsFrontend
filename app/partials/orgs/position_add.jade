@@ -18,7 +18,7 @@ md-dialog(ng-init="newPos = {departmentId: currentOrg.id}; specification = {}" s
 					input(type='number', placeholder='填写计划编制人数', name="budgetedStaffing", ng-model="newPos.budgetedStaffing", required)
 				md-input-container.row-has-value(flex)
 					label 工时制度
-					md-select(ng-model="newPos.scheduleId")
+					md-select(ng-model="newPos.scheduleId" required)
 						md-select-label {{$enum.parseLabel(newPos.scheduleId, "position_schedules")}}
 						md-option(ng-value="item.id" ng-repeat="item in $enum.get('position_schedules')") {{item.label}}
 				md-input-container.row-has-value(flex)
