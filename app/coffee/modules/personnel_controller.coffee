@@ -58,9 +58,19 @@ class PersonnelCtrl extends nb.Controller
                 </div>
                 '''
             }
-            {displayName: '所属部门', name: 'department.name'}
+            {
+                displayName: '所属部门'
+                name: 'department.name'
+                cellTooltip: (row) ->
+                    return row.entity.department.name
+            }
             {displayName: '员工编号', name: 'employeeNo'}
-            {displayName: '岗位', name: 'position.name'}
+            {
+                displayName: '岗位'
+                name: 'position.name'
+                cellTooltip: (row) ->
+                    return row.entity.position.name
+            }
             {displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
             {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
             {displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
@@ -168,9 +178,19 @@ class NewEmpsCtrl extends nb.Controller
                 </div>
                 '''
             }
-            {displayName: '所属部门', name: 'department.name'}
+            {
+                displayName: '所属部门'
+                name: 'department.name'
+                cellTooltip: (row) ->
+                    return row.entity.department.name
+            }
             {displayName: '员工编号', name: 'employeeNo'}
-            {displayName: '岗位', name: 'position.name'}
+            {
+                displayName: '岗位'
+                name: 'position.name'
+                cellTooltip: (row) ->
+                    return row.entity.position.name
+            }
             {displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
             {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
             {displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
@@ -308,14 +328,14 @@ class ReviewCtrl extends nb.Controller
                 '''
             }
             {name:"createdAt", displayName:"变更时间"}
-            {name:"statusCd", displayName:"状态"}
+            {name:"statusCd", displayName:"状态", cellFilter: "dictmap:'personnel'"}
             {name:"checkDate", displayName:"审核时间"}
             {name:"reason", displayName:"理由"}
         ]
         @filterOptions = {
             name: 'personnel_chage_record'
             constraintDefs: [
-                
+
                 {
                     name: 'name'
                     displayName: '姓名'
