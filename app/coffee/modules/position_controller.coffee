@@ -75,7 +75,7 @@ class PositionCtrl extends nb.Controller
 
         ]
         @filterOptions = {
-            name: 'personnel'
+            name: 'position'
             constraintDefs: [
                 {
                     name: 'name'
