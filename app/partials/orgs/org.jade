@@ -32,7 +32,7 @@ section.org-detail(ng-controller="EditableResource")
                     md-select(ng-model="currentOrg.nature" ng-disabled="!editing")
                         md-select-label {{$enum.parseLabel(currentOrg.nature, "department_natures")}}
                         md-option(ng-value="item.id" ng-repeat="item in $enum.get('department_natures')") {{item.label}}
-                md-input-container
+                md-input-container.row-has-value
                     label 职级
                     md-select(ng-model="currentOrg.grade" disabled)
                         md-select-label {{(currentOrg.grade.id == 1) ? currentOrg.grade.displayName : $enum.parseLabel(currentOrg.grade, "department_grades")}}

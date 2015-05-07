@@ -308,7 +308,7 @@ class ReviewCtrl extends nb.Controller
                 '''
             }
             {name:"createdAt", displayName:"变更时间"}
-            {name:"statusCd", displayName:"状态"}
+            {name:"statusCd", displayName:"状态", cellFilter: "dictmap:'personnel'"}
             {name:"checkDate", displayName:"审核时间"}
             {name:"reason", displayName:"理由"}
         ]
