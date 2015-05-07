@@ -45,6 +45,12 @@ class PersonnelCtrl extends nb.Controller
 
         @columnDef = [
             {
+                displayName: '所属部门'
+                name: 'department.name'
+                cellTooltip: (row) ->
+                    return row.entity.department.name
+            }
+            {
                 displayName: '姓名'
                 field: 'name'
                 # pinnedLeft: true
@@ -58,12 +64,7 @@ class PersonnelCtrl extends nb.Controller
                 </div>
                 '''
             }
-            {
-                displayName: '所属部门'
-                name: 'department.name'
-                cellTooltip: (row) ->
-                    return row.entity.department.name
-            }
+            
             {displayName: '员工编号', name: 'employeeNo'}
             {
                 displayName: '岗位'
@@ -165,6 +166,12 @@ class NewEmpsCtrl extends nb.Controller
 
         @columnDef = [
             {
+                displayName: '所属部门'
+                name: 'department.name'
+                cellTooltip: (row) ->
+                    return row.entity.department.name
+            }
+            {
                 displayName: '姓名'
                 field: 'name'
                 # pinnedLeft: true
@@ -178,12 +185,7 @@ class NewEmpsCtrl extends nb.Controller
                 </div>
                 '''
             }
-            {
-                displayName: '所属部门'
-                name: 'department.name'
-                cellTooltip: (row) ->
-                    return row.entity.department.name
-            }
+            
             {displayName: '员工编号', name: 'employeeNo'}
             {
                 displayName: '岗位'
@@ -295,9 +297,9 @@ class ReviewCtrl extends nb.Controller
     constructor: (@scope, @Change, @Record, @mdDialog) ->
         @loadInitailData()
         @recordColumnDef = [
-            {name:"employeeNo", displayName:"员工编号"}
-            {name:"name", displayName:"姓名"}
             {name:"department.name", displayName:"所属部门"}
+            {name:"name", displayName:"姓名"}
+            {name:"employeeNo", displayName:"员工编号"}
             {name:"auditableType", displayName:"信息变更模块"}
             {
                 displayName: '信息变更模块'
