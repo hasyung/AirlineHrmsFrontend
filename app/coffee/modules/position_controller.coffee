@@ -62,7 +62,7 @@ class PositionCtrl extends nb.Controller
                 displayName: '编制数'
                 name: 'budgetedStaffing'
                 cellTemplate: '''
-                <div class="ui-grid-cell-contents">
+                <div class="ui-grid-cell-contents" ng-class="{'overstaffed': row.entity.overstaffedNum > 0}">
                     {{row.entity.staffing}}/{{grid.getCellValue(row, col)}}
                 </div>
                 '''

@@ -262,7 +262,7 @@ class NewEmpsCtrl extends nb.Controller
 
     loadInitailData: ->
 
-        collection_param = {
+        @collection_param = {
             join_scal_date: {
                 from: moment().subtract(1, 'year').format('YYYY-MM-DD')
                 to: moment().format("YYYY-MM-DD")
@@ -270,7 +270,7 @@ class NewEmpsCtrl extends nb.Controller
             sort: 'join_scal_date'
             order: 'desc'
         }
-        @employees = @Employee.$collection(collection_param).$fetch()
+        @employees = @Employee.$collection().$fetch(@collection_param)
     regEmployee: (employee)->
         self = @
         @employees.$build(employee).$save().$then ()->
@@ -285,21 +285,8 @@ class NewEmpsCtrl extends nb.Controller
         tableState = @mergeParams(tableState)
         @employees.$refresh(tableState)
     mergeParams: (tableState)->
-        params = {
-            predicate: {
-                join_scal_date: {
-                    from: moment().subtract(1, 'year').format('YYYY-MM-DD')
-                    to: moment().format("YYYY-MM-DD")
-                }
-            }
-            sort: {
-                join_scal_date: 'desc'
-            }
-        }
-        angular.forEach params, (val, key)->
-            if angular.isObject(val)
-                angular.forEach val, (nestedVal, nestedKey)->
-                    tableState[key][nestedKey] = nestedVal
+        angular.forEach @collection_param, (val, key)->
+            tableState[key] = val
         return tableState
 
 
@@ -328,7 +315,7 @@ class ReviewCtrl extends nb.Controller
                 '''
             }
             {name:"createdAt", displayName:"变更时间"}
-            {name:"statusCd", displayName:"状态"}
+            {name:"statusCd", displayName:"状态", cellFilter: "dictmap:'personnel'"}
             {name:"checkDate", displayName:"审核时间"}
             {name:"reason", displayName:"理由"}
         ]
