@@ -138,6 +138,8 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
         }
 
     ]
+    #FIX! angular 1.4 feature , datepicker not supported 1.4 now. cause ngAnimate has many break changes in 1.4
+    # $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike'
 
 datepickerConf = ($datepickerProvider)->
     angular.extend($datepickerProvider.defaults, {

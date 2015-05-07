@@ -8,7 +8,7 @@ Position = (restmod, RMUtils, $Evt, Specification) ->
     Position = restmod.model('/positions').mix 'nbRestApi', 'DirtyModel', {
         department: {mask: 'C', belongsTo: 'Org'}
         isSelected: {mask: "CU"}
-        createdAt: {decode: 'nbDate'}
+        createdAt: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
         employees: { hasMany: 'Employee'}
         # 部门领导
         formerleaders: {hasMany: 'Formerleaders'}
@@ -108,6 +108,7 @@ Specification = (restmod, RMUtils, $Evt) ->
 
 PositionChange = (restmod, RMUtils, $Evt) ->
     PositionChange = restmod.model('/position_changes').mix 'nbRestApi', {
+        createdAt: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
         $config:
             jsonRoot: 'audits'
 
