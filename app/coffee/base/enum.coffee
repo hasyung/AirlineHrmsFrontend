@@ -22,7 +22,6 @@ class EnumService
 
         @parseLabel= (id, type) ->
             return '无' if (id == null || angular.isUndefined(id))
-            id = id.id if angular.isObject id
             typedEnums = @get(type)
             res = find(typedEnums, (e) -> e.id == id)
             label = if angular.isObject(res) then res.label else "无"
