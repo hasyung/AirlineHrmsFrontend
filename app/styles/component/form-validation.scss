@@ -368,6 +368,7 @@ md-input-container {
         padding-bottom: 30px;
 
         &[disabled] {
+
             .md-select-label {
                 border-bottom: 1px inset rgba(0, 0, 0, 0);
                 color: rgba(0, 0, 0, .87);
@@ -378,6 +379,8 @@ md-input-container {
                 color: rgba(0, 0, 0, .87);
                 padding-left: 90px;
             }
+
+            
         }
     }
 
@@ -387,5 +390,16 @@ md-input-container {
 
 
 
+
+fieldset[disabled] {
+
+    .textarea-row {
+
+        label {
+            color: rgba(0,0,0,.54);
+            margin: 6px 0;
+        }
+    }
+}
 
 
