@@ -924,7 +924,7 @@ nbGridDirective = ($parse)->
         defaultOptions = {
             # flatEntityAccess: true
             enableSorting: false
-            enableRowSelection: true
+            enableRowSelection: false
             # useExternalSorting: false
             useExternalPagination: true
             # enableSelectAll: true
