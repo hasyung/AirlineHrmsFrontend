@@ -347,6 +347,37 @@ class PositionCtrl extends nb.Controller
         # @scope.$onRootScope 'position:refresh', @.resetData.bind(@)
 
 
+        @columnDef = [
+            {
+                displayName: '岗位名称'
+                field: 'name'
+                # pinnedLeft: true
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-panel
+                        panel-controller="PositionDetailCtrl"
+                        template-url="partials/position/position_detail.html"
+                        locals="{position: row.entity}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
+            {
+                displayName: '编制数'
+                name: 'budgetedStaffing'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    {{row.entity.staffing}}/{{grid.getCellValue(row, col)}}
+                </div>
+                '''
+            }
+            {displayName: '工作时间', name: 'scheduleId', cellFilter: "enum:'position_schedules'"}
+            {displayName: 'OA文件编号', name: 'oaFileNo'}
+        ]
+
+
     getSelectsIds: ()->
         @positions
             .filter (pos) -> return pos.isSelected
