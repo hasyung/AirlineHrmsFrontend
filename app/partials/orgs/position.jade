@@ -4,7 +4,7 @@
         .md-toolbar-tools
             span 岗位信息列表
             div(flex)
-            span(style="margin-right: 10px;")
+            span
                 button.btn.btn-default.fa.fa-plus.pull-right(
                     has-permission="positions_create"
                     title="新增岗位"
@@ -12,12 +12,12 @@
                     template-url="partials/orgs/position_add.html"
                 )
             span
-                button.btn.btn-info(
+                md-button.md-raised.md-primary(
                     has-permission="positions_adjust"
                     nb-dialog
                     template-url="partials/position/position_transfer.html"
                     ) 调整机构
-            span(style="margin-left: 10px;")
+            span
                 .nb-dropdown.right-align(simple-dropdown, btn-text="导出")
                     li( role="presentation")
                         a(role="menuitem" ng-href="/api/positions/export_to_xls?department_id={{currentOrg.id}}" ) 导出全部岗位
@@ -27,7 +27,7 @@
                         a(role="menuitem" ng-href="/api/positions/export_specification_pdf?department_id={{currentOrg.id}}" ) 导出全部岗位描述书
                     li( role="presentation",ng-show="ctrl.getSelectsIds().length != 0")
                         a(role="menuitem" ng-href="/api/positions/export_specification_pdf?{{ctrl.getExportParams(currentOrg.id)}}" ) 导出所选岗位描述书
-            span(style="margin-left: 10px;")
+            span(style="margin-left: 20px;")
                 button.btn.btn-default.fa.fa-trash-o(
                     has-permission="positions_batch_destroy"
                     title="请选择要删除的岗位"
