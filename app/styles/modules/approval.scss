@@ -52,16 +52,19 @@
     padding: 30px 30px 40px;
 
     .approval-subheader {
-        border-bottom: 1px solid #eaeff0;
         color: $text-color;
         padding-bottom: 10px;
+    }
+
+    div[layout]:first-child .approval-cell {
+        border-top: 1px solid #eaeff0;
     }
 }
 
 .approval-cell {
     border-bottom: 1px solid #eaeff0;
     display: flex;
-    margin-right: 5px;
+    margin-right: 10px;
     padding: 19px 0;
 
     .cell-title {

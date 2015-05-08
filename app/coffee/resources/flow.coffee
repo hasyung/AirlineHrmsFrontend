@@ -223,8 +223,10 @@ FlowHandlerDirective = (ngDialog)->
                         <div class="approval-info">
                             <div class="approval-info-head">
                                 <span class="name" ng-bind="flow.sponsor.name"></span>
-                                <span class="serial-number" ng-bind="flow.sponsor.employeeNo"></span>
-                                <div class="approval-position"> {{::flow.sponsor.departmentName}}/ {{::flow.sponsor.positionName}}</div>
+                                <div class="approval-position">
+                                    <span style="margin-right: 10px;" class="serial-number" ng-bind="flow.sponsor.employeeNo"></span>
+                                    {{::flow.sponsor.departmentName}}/ {{::flow.sponsor.positionName}}
+                                </div>
                             </div>
                         </div>
                     </md-card>

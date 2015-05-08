@@ -289,7 +289,7 @@ angular.module 'nb.directives'
                 left: 20
 
             width = 900
-            height = 92
+            height = 120
                 #树的高
             duration = 750
             data = [
@@ -331,11 +331,7 @@ angular.module 'nb.directives'
                 }
                 {
                     'status': 'unreachable'
-                    'des': '超级最终审批'
-                }
-                {
-                    'status': 'unreachable'
-                    'des': '超级最终审批'
+                    'des': '生效'
                 }
             ]
             radius = 9
@@ -347,8 +343,7 @@ angular.module 'nb.directives'
                 .attr('class', 'lw-svg')
                 .attr('width', width)
                 .attr('height', height)
-            #- .append("g")
-            #- .attr("transform", "translate(" + margin.left + "," + margin.top + ")");  //使svg区域与上、左有一定距离
+            # - .attr("transform", "translate(" + margin.left + "," + margin.top + ")");  //使svg区域与上、左有一定距离
             #
             svg.selectAll('line')
                 .data(data).enter()
@@ -366,35 +361,44 @@ angular.module 'nb.directives'
                 .style('stroke-width', '3')
                 .attr('class', 'step-line')
                 .attr('x1', (d, i) ->
-                    single_area_width * (i + .5)
+                    single_area_width * (i + .5) - 20
                 )
-                .attr('y1', single_area_height - radius)
+                .attr 'y1', single_area_height - radius + 10
                 .attr('x2', (d, i) ->
                     if i != 0
-                        single_area_width * (i - .5)
+                        single_area_width * (i - .5) - 20
                     else
-                        single_area_width * (i + .5)
+                        single_area_width * (i + .5) - 20
                 )
-                .attr 'y2', single_area_height - radius
+                .attr 'y2', single_area_height - radius + 10
 
             svg.selectAll('circle')
                 .data(data).enter()
                 .append('circle')
                 .attr('class', 'step-point')
-                .attr('fill', (d) ->
+                .attr('fill', (d, i) ->
                     if d.status == 'done'
                         '#2cc350'
                     else if d.status == 'undo'
-                        '#24afff'
+                        svg.append('circle')
+                            .attr 'cx',
+                                single_area_width * (i + .5) - 20
+                            .attr 'cy',
+                                single_area_height - radius + 10
+                            .attr 'r', 17+radius
+                            .attr 'fill', 'transparent'
+                            .attr 'stroke', 'rgba(0, 0, 0, .12)'
+                            .attr 'stroke-width', '2px'
+                        return '#24afff'
                     else if d.status == 'reject'
                         '#f34e4c'
                     else
                         '#eee'
                 )
                 .attr('cx', (d, i) ->
-                    single_area_width * (i + .5)
+                    single_area_width * (i + .5) - 20
                 )
-                .attr('cy', single_area_height - radius)
+                .attr('cy', single_area_height - radius + 10)
                 .attr('r', (d,i) ->
                     if d.status == 'undo'
                         7+radius
@@ -407,13 +411,18 @@ angular.module 'nb.directives'
                 .append('text')
                 .attr('class', 'step-title')
                 .attr('x', (d, i) ->
-                    single_area_width * (i + .5)
+                    single_area_width * (i + .5) - 30
                 )
                 .attr('y', (d, i) ->
                     if i%2 == 0
-                        single_area_height - radius - 25
+                        if d.status == 'undo'
+                            single_area_height - radius - 35 + 10
+                        else
+                            single_area_height - radius - 25 + 10
                     else
-                        single_area_height + 15 +radius
+                        if d.status == 'undo'
+                            single_area_height + 30 + radius + 10
+                        else single_area_height + 20 + radius + 10
                 )
                 .attr('fill',(d,i) ->
                     if d.status == 'unreachable'
@@ -426,7 +435,12 @@ angular.module 'nb.directives'
                         'rgb(36, 175, 255)'
                 )
                 .attr('text-anchor', 'start')
-                .attr('font-size', '14px').text (d, i) ->
+                .attr 'font-size', (d, i) ->
+                    if d.status == 'undo'
+                        return '16px'
+                    else
+                        return '14px'
+                .text (d, i) ->
                     d.des
 
         return {
