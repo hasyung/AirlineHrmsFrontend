@@ -143,6 +143,11 @@
 .approval-opinions {
     padding: 30px 30px 40px;
 
+    .approval-subheader {
+        color: $text-color;
+        padding-bottom: 10px;
+    }
+
     .approval-opinions-check {
         margin-bottom: 30px;
     }
