@@ -383,7 +383,7 @@ gulp.task "deploy", [
 # 添加 lib 文件后，先执行 gulp copy
 gulp.task "default", [
     "jade-deploy"
-    "less-vendor"
+    # "less-vendor"
     "css-vendor"
     "template"
     "sass-watch"
