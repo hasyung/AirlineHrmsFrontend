@@ -2,24 +2,40 @@
 .nb-nav.md-locked-open {
     min-width: 200px;
     width: 200px;
+
+    md-content {
+        background-color: #3a3f51;
+    }
 }
 
 .nb-menu {
     margin-top: 0;
     padding: 0;
 
-    li {
-        height: 40px;
+    .parent-list-item {
+        &.active {
+            background-color: #262b3c;
+        }
+    }
+
+    .child-list-item {
+        &.active {
+            circle {
+                fill: rgb(244, 67, 54);
+            }
+        }
     }
 
     .md-button {
+        color: #adb2c4;
         font-size: 16px;
-        height: 40px;
-        line-height: 40px;
+        height: 80px;
+        line-height: 80px;
         padding-left: 25px;
         width: 100%;
 
         md-icon {
+            color: #adb2c4;
             height: 22px;
             width: 22px;
         }
@@ -28,8 +44,14 @@
     .menu-toggle-list {
         padding: 0;
 
+        li {
+            height: 50px;
+        }
+
         .md-button {
             font-size: 14px;
+            height: 50px;
+            line-height: 50px;
             padding-left: 35px;
         }
     }
@@ -38,14 +60,19 @@
 
 //顶部工具栏
 .top-menu-bar {
-    height: 49px;
-    min-height: 49px;
+    height: 50px;
+    min-height: 50px;
 
     .md-toolbar-tools {
         padding-left: 0;
 
-        .logo img {
+        .logo {
             height: 50px;
+        }
+
+        .avatar {
+            margin-left: 10px;
+            margin-top: -10px;
         }
     }
 }

@@ -157,6 +157,7 @@ App
     .config ['$mdThemingProvider', mdThemingConf]
     .config ['$stateProvider','$urlRouterProvider','$locationProvider', '$httpProvider', routeConf]
     .run [
+        'menu'
         '$state'
         'i18nService'
         '$location'
@@ -170,8 +171,9 @@ App
         '$enum'
         '$timeout'
         'AuthService'
-    ($state, i18nService, $location, $rootScope, toaster, $http, Org, OrgStore, sweet, User, $enum, $timeout, AuthServ) ->
+    (menu, $state, i18nService, $location, $rootScope, toaster, $http, Org, OrgStore, sweet, User, $enum, $timeout, AuthServ) ->
 
+        $rootScope.menu = menu
         i18nService.setCurrentLang('zh-cn')
         OrgStore.initialize() #初始化OrgStore
         cancelLoading = ->
