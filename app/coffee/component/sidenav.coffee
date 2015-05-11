@@ -384,7 +384,8 @@ menuToggleDirective = (menu) ->
         <div flex layout="row">
           <span>
             <md-icon md-svg-src="/images/svg/ic_star_24px.svg"></md-icon>
-          </span><span>{{ section.name }}</span>
+          </span>
+          <span>{{ section.name }}</span>
           <span flex></span>
           <span ng-class="{'toggled': isOpen()}" class="md-toggle-icon">
             <md-icon md-svg-src="md-toggle-arrow"></md-icon>

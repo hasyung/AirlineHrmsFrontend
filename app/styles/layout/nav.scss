@@ -41,8 +41,36 @@
         }
     }
 
+    .md-button-toggle {
+        .md-toggle-icon {
+            transform: rotate(0deg);
+            -moz-transition: .75s cubic-bezier(.35, 0, .25, 1);
+            -webkit-transition: .75s cubic-bezier(.35, 0, .25, 1);
+            transition: .75s cubic-bezier(.35, 0, .25, 1);
+            -moz-transition-property: transform;
+            -webkit-transition-property: transform;
+            transition-property: transform;
+
+            &.toggled {
+                transform: rotate(180deg);
+            }
+        }
+    }
+
     .menu-toggle-list {
+        max-height: 2000px;
+        overflow: hidden;
         padding: 0;
+        -moz-transition: .75s cubic-bezier(.35, 0, .25, 1);
+        -webkit-transition: .75s cubic-bezier(.35, 0, .25, 1);
+        transition: .75s cubic-bezier(.35, 0, .25, 1);
+        -moz-transition-property: max-height;
+        -webkit-transition-property: max-height;
+        transition-property: max-height;
+
+        &.ng-hide {
+            max-height: 0;
+        }
 
         li {
             height: 50px;
