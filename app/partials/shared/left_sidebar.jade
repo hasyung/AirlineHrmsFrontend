@@ -1,27 +1,35 @@
-md-sidenav.site-sidenav.md-sidenav-left(md-is-locked-open="true")
-  md-content(flex role="navigation")
-    ul.nb-menu
-      li
-        menu-toggle
-          md-button.md-button-toggle(flex)
-            div(flex layout)
-              span
-                md-icon(md-svg-src="md-toggle-arrow")
-              span 员工自助
-              span(flex)
-              span(
-                ng-class="{'toggled' : isOpen()}"
-              )
-                md-icon(md-svg-src="md-toggle-arrow")
-            span.md-visually-hidden
-              Toggle {{isOpen()? 'expanded' : 'collapsed'}}
-          ul.menu-toggle-list
+md-sidenav.nb-nav(md-is-locked-open="true")
+    md-content(flex role="navigation")
+        ul.nb-menu
             li
-              menu-link
-                md-button
-                  span 我的基本信息
-            li
-              menu-link 222
+                menu-toggle
+                    md-button.md-button-toggle(flex)
+                        div(flex layout)
+                            span
+                                md-icon(md-svg-src="../../images/svg/ic_star_24px.svg")
+                            span 员工自助
+                            span(flex)
+                            span
+                                md-icon(md-svg-src="md-toggle-arrow")
+                    ul.menu-toggle-list
+                        li
+                            md-button(href="#")
+                                div(flex layout)
+                                    span
+                                        svg(width="30" height="40")
+                                            path(d="M1 0 L1 20 L21 20 M1 20 L1 40" fill="transparent" stroke="#aaa" stroke-width="1")
+                                            circle(r="4" cx="21" cy="20" fill="#aaa")
+                                    span 我的基本信息
+                                    span(flex)
+                        li
+                            md-button(href="#")
+                                div(flex layout)
+                                    span
+                                        svg(width="30" height="40")
+                                            path(d="M1 0 L1 20 L21 20" fill="transparent" stroke="#aaa" stroke-width="1")
+                                            circle(r="4" cx="21" cy="20" fill="#aaa")
+                                    span 我要调岗
+                                    span(flex)
 
 
   //- .aside-wrap

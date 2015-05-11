@@ -1,10 +1,53 @@
+//左侧边栏
+.nb-nav.md-locked-open {
+    min-width: 200px;
+    width: 200px;
+}
+
 .nb-menu {
+    margin-top: 0;
     padding: 0;
 
-    .md-button {
-        width: 100%;
+    li {
+        height: 40px;
     }
 
+    .md-button {
+        font-size: 16px;
+        height: 40px;
+        line-height: 40px;
+        padding-left: 25px;
+        width: 100%;
+
+        md-icon {
+            height: 22px;
+            width: 22px;
+        }
+    }
+
+    .menu-toggle-list {
+        padding: 0;
+
+        .md-button {
+            font-size: 14px;
+            padding-left: 35px;
+        }
+    }
+
+}
+
+//顶部工具栏
+.top-menu-bar {
+    height: 49px;
+    min-height: 49px;
+
+    .md-toolbar-tools {
+        padding-left: 0;
+
+        .logo img {
+            height: 50px;
+        }
+    }
 }
 
 
