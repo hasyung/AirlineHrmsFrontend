@@ -38,7 +38,6 @@
 
         .serial-number {
             font-size: 16px;
-            margin-left: 10px;
         }
     }
 
@@ -54,10 +53,6 @@
     .approval-subheader {
         color: $text-color;
         padding-bottom: 10px;
-    }
-
-    div[layout]:first-child .approval-cell {
-        border-top: 1px solid #eaeff0;
     }
 }
 
@@ -85,13 +80,17 @@
     }
 
     .approval-progress-container {
-        margin-bottom: 10px;
+        margin: 20px 0;
     }
 
     .approval-msg-cell {
         border-top: 1px dotted #eaeff0;
         padding: 20px 0;
         position: relative;
+
+        &:last-child {
+            padding: 20px 0 0;
+        }
 
         .approval-msg-flag {
             background-color: rgba(0, 0, 0, .1);
@@ -145,7 +144,7 @@
 
     .approval-subheader {
         color: $text-color;
-        padding-bottom: 10px;
+        padding-bottom: 30px;
     }
 
     .approval-opinions-check {
@@ -154,7 +153,11 @@
 
     md-radio-button {
         display: inline-block;
-        margin-right: 60px;
+        margin-right: 100px;
+
+        .md-label {
+            margin-top: -3px;
+        }
     }
 
     .md-container {
@@ -165,14 +168,22 @@
         opacity: 1;
         top: -15px;
     }
+
+    md-input-container {
+        padding-bottom: 0;
+
+        &.md-icon-float label {
+            margin-left: 0;
+        }
+    }
 }
 
 .approval-buttons {
     float: right;
-    // margin: 30px 0 70px;
+    margin-top: 10px;
 
     .md-button {
-        margin-left: 20px;
+        margin-left: 15px;
     }
 }
 

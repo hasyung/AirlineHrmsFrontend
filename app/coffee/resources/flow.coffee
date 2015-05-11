@@ -254,6 +254,13 @@ FlowHandlerDirective = (ngDialog)->
                                         <span class="cell-content">15年</span>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </md-card>
+                    <md-card>
+                        <div class="approval-relation-info">
+                            <div class="approval-subheader">申请信息</div>
+                            <div class="approval-relations">
                                 <div layout="layout">
                                     <div flex="flex" class="approval-cell">
                                         <span class="cell-title">申请理由</span>
@@ -320,8 +327,8 @@ FlowHandlerDirective = (ngDialog)->
                             <div class="approval-subheader">审批意见</div>
                             <div class="approval-opinions-check">
                                 <md-radio-group ng-model="req.opinion">
-                                    <md-radio-button ng-value="CHOICE.ACCEPT" class="skyblue">通过</md-radio-button>
-                                    <md-radio-button ng-value="CHOICE.REJECT" class="skyblue">驳回</md-radio-button>
+                                    <md-radio-button class="md-primary" ng-value="CHOICE.ACCEPT">通过</md-radio-button>
+                                    <md-radio-button class="md-primary" ng-value="CHOICE.REJECT">驳回</md-radio-button>
                                 </md-radio-group>
                             </div>
                             <md-input-container>

@@ -350,13 +350,13 @@ angular.module 'nb.directives'
                 .append('line')
                 .style('stroke', (d, i) ->
                     if d.status == 'done'
-                        '#2cc350'
+                        '#8bc34a'
                     else if d.status == 'undo'
-                        '#24afff'
+                        '#2196f3'
                     else if d.status == 'reject'
                         '#f34e4c'
                     else
-                        '#eee'
+                        '#dedede'
                 )
                 .style('stroke-width', '3')
                 .attr('class', 'step-line')
@@ -378,7 +378,7 @@ angular.module 'nb.directives'
                 .attr('class', 'step-point')
                 .attr('fill', (d, i) ->
                     if d.status == 'done'
-                        '#2cc350'
+                        '#8bc34a'
                     else if d.status == 'undo'
                         svg.append('circle')
                             .attr 'cx',
@@ -389,11 +389,11 @@ angular.module 'nb.directives'
                             .attr 'fill', 'transparent'
                             .attr 'stroke', 'rgba(0, 0, 0, .12)'
                             .attr 'stroke-width', '2px'
-                        return '#24afff'
+                        return '#2196f3'
                     else if d.status == 'reject'
                         '#f34e4c'
                     else
-                        '#eee'
+                        '#dedede'
                 )
                 .attr('cx', (d, i) ->
                     single_area_width * (i + .5) - 20
@@ -416,23 +416,29 @@ angular.module 'nb.directives'
                 .attr('y', (d, i) ->
                     if i%2 == 0
                         if d.status == 'undo'
-                            single_area_height - radius - 35 + 10
+                            single_area_height - radius - 40 + 10
                         else
-                            single_area_height - radius - 25 + 10
+                            single_area_height - radius - 20 + 10
                     else
                         if d.status == 'undo'
-                            single_area_height + 30 + radius + 10
-                        else single_area_height + 20 + radius + 10
+                            single_area_height + 32 + radius + 10
+                        else
+                            single_area_height + 12 + radius + 10
                 )
+                .attr 'stroke-width', (d,i) ->
+                    if d.status == 'undo'
+                        return '2px'
+                    else
+                        return '1px'
                 .attr('fill',(d,i) ->
                     if d.status == 'unreachable'
-                        'rgba(0,0,0,.54)'
+                        'rgba(0,0,0,.26)'
                     else if d.status == 'done'
-                        '#8bc34a'
+                        '#689f38'
                     else if d.status == 'reject'
                         '#e84e40'
                     else if d.status == 'undo'
-                        'rgb(36, 175, 255)'
+                        '#1976d2'
                 )
                 .attr('text-anchor', 'start')
                 .attr 'font-size', (d, i) ->
