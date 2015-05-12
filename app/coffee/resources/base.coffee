@@ -63,7 +63,7 @@ nbRestApi = (restmod, RMUtils, $Evt) ->
         #         copy = this.$scope.$buildRaw(raw)
         #     return copy
         'Model.encodeUrlName': (_name)->
-            _name.replace(/[A-Z]/g, "_$&")
+            _name.replace(/[A-Z]/g, "_$&").toLowerCase()
 
     }
 
