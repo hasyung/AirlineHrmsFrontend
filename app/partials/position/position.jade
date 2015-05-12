@@ -73,15 +73,13 @@
                 div(flex)
                 //- md-button.md-primary.md-raised 导出
                 span
-                    .md-primary.md-raised.nb-dropdown(simple-dropdown, btn-text="导出")
-                        li( role="presentation")
-                            a(role="menuitem" ng-href="/api/positions/export_to_xls" ) 导出全部岗位
-                        li( role="presentation" ng-if="ctrl.getExportParams().length != 0")
-                            a(role="menuitem" ng-href="/api/positions/export_to_xls?position_ids={{ctrl.getExportParams()}}" ) 导出所选岗位
-                        li( role="presentation")
-                            a(role="menuitem" ng-href="/api/positions/export_specification_pdf" ) 导出全部岗位描述书
-                        li( role="presentation" ng-if="ctrl.getExportParams().length != 0")
-                            a(role="menuitem" ng-href="/api/positions/export_specification_pdf?position_ids={{ctrl.getExportParams()}}" ) 导出所选岗位描述书
+                    md-dropmenu
+                        md-drop-label
+                            md-button.md-primary.md-raised 导出
+                        md-drop-option()
+                            md-button(ng-href="/api/positions/export_to_xls") 导出全部岗位
+                        md-drop-option()
+                            md-button(ng-href="/api/positions/export_specification_pdf") 导出全部岗位描述书
         div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.positions")
 
 
