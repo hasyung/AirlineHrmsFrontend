@@ -1,5 +1,13 @@
 tabset(flex)
     tab(heading="待审核")
+        //- .app-content-wrapper(flex style="height: 700px;" ng-init="ctrl.changes = ctrl.Change.$collection().$refresh()")
+
+        //-     div.ui-grid-container
+        //-         md-toolbar
+        //-             .md-toolbar-tools
+        //-                 md-button.md-primary.md-raised 审核
+        //-         div(nb-grid column-defs="ctrl.changesColumnDef" safe-src="ctrl.changes")
+
         .position-manage.app-content-wrapper(ng-init="ctrl.changes = ctrl.Change.$collection().$refresh()")
             div(nb-table='ctrl.changes' nb-safe-src="ctrl.changes")
                 input(type="hidden" nb-pipe="ctrl.search(tableState)")

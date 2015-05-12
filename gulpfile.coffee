@@ -78,25 +78,20 @@ paths =
              # "app/plugins/**/*.coffee"
     ]
     vendorJsLibs: [
-        'deps/lodash/dist/lodash.min.js'
-        'deps/underscore.string/lib/underscore.string.js'
-        'deps/raphael/raphael.js'
+        'deps/lodash/lodash.js'
+        'deps/underscore.string/dist/underscore.string.js'
         'deps/store.js/store.js'
         'deps/moment/min/moment.min.js'
         'deps/jquery/dist/jquery.min.js'
         'deps/jqtree/tree.jquery.js'
-        'compat/vendor/d3.min.js'
+        'deps/d3/d3.js'
+        'deps/print-area/demo/jquery.PrintArea.js'
         #alert
         'deps/sweetalert/lib/sweet-alert.js'
 
-        #组织机构树
-        'compat/vendor/drag-on.js'
-        'compat/vendor/lib-gg-orgchart.js'
-        'deps/canvg/dist/canvg.bundle.js'
-        'deps/jspdf/dist/jspdf.min.js'
         #end
         'deps/angular/angular.js'
-        # 'deps/angular-i18n/angular-locale_zh-cn.js'
+        'deps/angular-i18n/angular-locale_zh-cn.js'
         #http://harvesthq.github.io/chosen/
         'deps/simple-module/lib/module.js'
         'deps/simple-uploader/lib/uploader.js'
@@ -106,6 +101,7 @@ paths =
         'deps/angular-restmod/dist/angular-restmod-bundle.js'
         'deps/angular-restmod/dist/styles/ams.js'
         'deps/angular-restmod/dist/plugins/dirty.js'
+        'deps/angular-restmod/dist/plugins/nested-dirty.js'
         'deps/angular-restmod/dist/plugins/preload.js'
         'deps/angular-messages/angular-messages.js'
         'deps/angular-animate/angular-animate.js'
@@ -126,9 +122,11 @@ paths =
         'deps/jquery-slimscroll/jquery.slimscroll.js'
         'deps/angularjs-toaster/toaster.js'
         'deps/angular-material/angular-material.js'
+        'compat/vendor/ui-grid.js'
         'compat/socket.io.js'
         'compat/pomeloclient.js'
         'compat/communite.js'
+        'compat/vendor/ng-material-dropmenu.js'
         'deps/ng-flow/dist/ng-flow-standalone.js'
         # 'deps/angular-ui-utils/ui-utils.js'
         # 'deps/jasny-bootstrap/dist/js/jasny-bootstrap.js' jasny bootstrap 增强版，提供一些好用组件

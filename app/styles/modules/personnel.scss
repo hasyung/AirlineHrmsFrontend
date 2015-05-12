@@ -31,20 +31,30 @@
 
         .avator-area {
             border-radius: 50%;
-// <<<<<<< HEAD
-//             height: 110px;
-//             margin: 25px auto 5px;
-//             width: 110px;
-//             overflow: hidden;
-
-//             img {
-//                 height: 100%;
-//                 width: 100%;
-//             }
-// =======
             height: 100px;
             margin: 45px auto 30px;
+            overflow: hidden;
             width: 100px;
+
+            img {
+                height: 100%;
+                width: 100%;
+            }
+
+            .edit-icon-container {
+                background-color: #f44e4c;
+                border-radius: 12px;
+                color: #fff;
+                cursor: pointer;
+                font-size: 18px;
+                height: 24px;
+                left: 160px;
+                padding-left: 4px;
+                position: absolute;
+                top: 130px;
+                width: 24px;
+            }
+
         }
 
         h3 {
@@ -59,6 +69,7 @@
             font-size: $font-size-lg;
             text-align: center;
         }
+
     }
 
     .personnel-info-list {
@@ -105,9 +116,74 @@
 
 }
 
+.big-avator-area {
+    background-color: #fff;
+    border-radius: 50%;
+    height: 120px;
+    overflow: hidden;
+    padding: 5px;
+    width: 120px;
+
+    img {
+        height: 100%;
+        width: 100%;
+    }
+}
+
+.personnel-base-info {
+    background-image: url('/images/personnel/personnel_banner_bg.jpg');
+    height: 180px;
+    padding: 30px 64px;
+
+    .employee-info {
+        margin-left: 64px;
+        padding-top: 15px;
+
+        .employee-name {
+            color: rgba(0, 0, 0, .87);
+            font-size: 32px;
+
+            .resume-button {
+                background-color: #e84e40;
+                display: inline-block;
+                height: 24px;
+                margin-left: 20px;
+                width: 24px;
+
+                md-icon {
+                    color: #fff;
+                    height: 16px;
+                    margin-left: -3px;
+                    margin-top: -4px;
+                    width: 16px;
+                }
+
+                &:hover {
+                    background-color: #e51c23;
+                }
+            }
+        }
+
+        .employee-others-info {
+            // margin-top: 15px;
+            color: rgba(0, 0, 0, .87);
+            font-size: 14px;
+            margin-top: 5px;
+
+            div:last-child {
+                margin-top: 10px;
+            }
+        }
+    }
+}
+
 .personnel-content {
-    margin: 60px auto;
-    width: 840px;
+    background-color: #f5f5f5;
+
+    &.self-info-content {
+        margin: 60px auto;
+        width: 840px;
+    }
 
     md-toolbar {
         background-color: #f5f5f5;
@@ -116,17 +192,18 @@
     }
 
     .md-subheader {
-        border-left: 3px solid #f44336;
         color: $text-color !important;
         font-size: $font-size-md;
-        margin: 38px 0 0;
+        margin: 30px 0 0;
         padding: 0;
-        padding-left: 5px;
+
+        .md-subheader-inner {
+            padding: 0;
+        }
     }
 
     &.personnel-control {
-        padding-bottom: 100px;
-
+        // padding-bottom: 100px;
         .personnel-top-header {
             border: 0;
         }
@@ -149,36 +226,36 @@
         //material
         fieldset[disabled] {
             .md-default-theme .md-select-label {
-                padding-left: 100px;
+                padding-left: 90px;
             }
 
             .md-input {
-                padding-left: 100px;
+                padding-left: 90px;
             }
         }
 
         .form-material-section {
-            padding: 0 30px 30px;
+            padding: 0 30px;
             position: relative;
 
-            &:hover {
-                .form-btn-group {
-                    visibility: visible;
-                }
-            }
+            // &:hover {
+            //     .form-btn-group {
+            //         visibility: visible;
+            //     }
+            // }
 
             .form-btn-group {
                 position: absolute;
                 right: 20px;
-                top: 10px;
-                visibility: hidden;
+                top: 0;
 
-                &.alive {
-                    visibility: visible;
-                }
+                // &.alive {
+                //     visibility: visible;
+                // }
 
                 .md-button {
-                    margin-left: 20px;
+                    margin-right: 10px;
+                    margin-top: 20px;
                 }
 
             }
@@ -296,6 +373,7 @@
         }
     }
 
+
 }
 
 .personnel-info-table {
@@ -353,10 +431,207 @@
     }
 }
 
-@media (max-width: 1280px) {
-    .personnel-content {
-        margin: 60px auto;
-        width: 680px;
+.ngdialog.ngdialog-theme-plain.cust-avator-dialog-width {
+    .ngdialog-content {
+        border-radius: 5px;
+        color: #444;
+        margin: 50px auto;
+        max-width: 100%;
+        padding: 1em;
+        position: relative;
+        width: 540px;
+    }
+}
+
+.avator-edit-body {
+    .avator-offset {
+        margin-left: 16px;
+
+        &.first {
+            margin-left: 0;
+        }
+    }
+
+    .src-avator {
+        width: 360px;
+
+        .avator-box {
+            height: 360px;
+            width: 100%;
+        }
+
+        .btn-avator-add {
+            i {
+                color: #f44e4c;
+                margin-right: 7px;
+            }
+        }
+    }
+
+    .avator-upload-box {
+        background-color: #f2f2f5;
+        padding-top: 140px;
+        text-align: center;
+    }
+
+    .avator-preview {
+        background-color: #f2f2f5;
+        height: 360px;
+        text-align: center;
+        width: 132px;
+
+        p {
+            margin-top: 25px;
+        }
+
+        .avator-preview-item {
+            margin-top: 25px;
+
+            &.first {
+                margin-top: 0;
+            }
+        }
+
+        .big-avator {
+            img {
+                border-radius: 55px;
+                height: 110px;
+                width: 110px;
+            }
+
+        }
+
+        .mid-avator {
+            img {
+                border-radius: 36px;
+                height: 72px;
+                width: 72px;
+            }
+        }
+
+        .sml-avator {
+            img {
+                border-radius: 20px;
+                height: 40px;
+                width: 40px;
+            }
+
+        }
+    }
+}
+
+.avator-footer {
+    padding-right: 148px;
+
+    button {
+        margin-left: 16px;
+    }
+}
+
+// <<<<<<< HEAD
+//for org/positions/employee search
+.personnel-sort-body {
+    .org-sort-container,
+    .pos-sort-container {
+        padding: 5px;
+
+        .list-text {
+            height: 40px;
+            line-height: 40px;
+        }
+
+        .list-row {
+            border-bottom: 1px solid #eee;
+            outline: none;
+        }
+    }
+
+    .offset-header-text {
+        padding-left: 0;
+
+        .md-subheader-content {
+            border-left: 3px solid rgb(46, 55, 169);
+            padding-left: 10px;
+        }
+    }
+
+    .cust-content-toolbar {
+        background-color: #f6f8f8;
+        font-size: 26px;
+        height: 28px;
+        line-height: 26px;
+        padding-left: 15px;
+
+        i:hover {
+            cursor: pointer;
+        }
+    }
+
+    .org-sort-content {
+        border: 3px solid #f6f8f8;
+
+        .open-orgs {
+            font-size: 30px;
+            height: 40px;
+            line-height: 40px;
+        }
+    }
+
+    .cust-list-item {
+        font-size: 14px;
+        height: 45px;
+        overflow: hidden;
+        padding: 5px 10px;
+
+        &.active {
+            background-color: #eee;
+        }
+    }
+
+    .employees-sort {
+        tr {
+            outline: none;
+
+            td {
+                height: 40px;
+                line-height: 40px;
+            }
+
+            &.active {
+                td {
+                    background-color: #eee !important;
+                }
+            }
+        }
+    }
+
+    .icon-container {
+        font-size: 20px;
+        height: 20px;
+        line-height: 20px;
+        text-align: center;
+        width: 20px;
+
+        &:hover {
+            background-color: #eee;
+        }
+    }
+}
+// @media (max-width: 1280px)  {
+//     .personnel-content  {
+//         margin: 60px auto;
+//         width: 680px;
+//     }
+// }
+
+.position-items {
+    margin-top: 30px;
+}
+
+.position-item {
+    .item-action-container {
+        padding-left: 10px;
+        padding-top: 20px;
     }
 }
 

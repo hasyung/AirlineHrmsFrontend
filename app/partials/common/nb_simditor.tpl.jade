@@ -1,5 +1,5 @@
 div()
-    div(ng-if="editing == false" ng-bind-html="modelVal")
+    div.text-container(ng-if="editing == false" ng-bind-html="modelVal")
 
     div(ng-if="editing == true || editing == undefined" ng-init="clicked = false")
         div(ng-show="!clicked" ng-bind-html="modelVal" ng-click="clicked = true" style="border: 1px solid #ccc; padding:10px 15px;")

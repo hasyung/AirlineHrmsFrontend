@@ -1,127 +1,186 @@
-.btn-export {
-    display: inline-block;
-    margin-left: 20px;
-    // margin-right: 100px;
-}
+md-content.search-container {
+    margin-bottom: 10px;
+    padding: 0 20px;
 
-.search-btn-group {
-    margin: 10px 0;
-    padding-left: 56px;
-}
-
-.searchbar {
-    h3 {
-        background-color: $bg-header;
-        border: 1px solid #dde5e7;
+    md-toolbar.md-default-theme {
+        background-color: #fff;
+        border-bottom: 1px solid #000;
         color: $text-title;
-        font-size: $font-size-lg;
-        height: 55px;
-        line-height: 55px;
-        padding-left: 40px;
-        // input {
-        //     padding: 6px 12px;
-        // }
 
         .md-button {
-            font-size: $font-size-sm;
-            line-height: 1.43em;
             margin-right: 20px;
-            margin-top: 10px;
-            padding: 6px 12px;
         }
 
-        > a {
-            margin: 10px 10px 0 0;
+        md-select {
+            flex: 0 0 230px;
+            margin-top: 4px;
+
+            .md-select-label {
+                border: 0;
+                border-radius: 3px;
+                box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
+                height: 36px;
+                line-height: 36px;
+
+                span:first-child {
+                    margin-top: 29px;
+                    text-align: center;
+                }
+
+                .md-select-icon:after {
+                    top: 10px;
+                }
+            }
         }
+
     }
 
-    .search-content {
-        border-bottom: 1px solid #dde5e7;
-        border-left: 1px solid #dde5e7;
-        border-right: 1px solid #dde5e7;
-        padding: 10px;
+    h2 {
+        margin: 0;
     }
 
     .search-row {
-        // height: 34px;
-        margin-bottom: 10px;
+        @include clearfix();
 
-        .search-del,
-        .search-opt,
-        .search-type,
-        .search-plus {
-            display: inline-block;
+        >* {
+            float: left;
             margin-right: 10px;
         }
 
-        .search-del {
-            border: 0;
-            box-shadow: none;
-
-            &:hover {
-                color: $danger;
-            }
+        md-input-container {
+            height: 45px;
+            padding-bottom: 0;
         }
 
-        .dropdown {
-            .dropdown-toggle {
-                margin-top: -1px;
-            }
-
-            .dropdown-toggle:focus {
-                border-color: $focus;
-            }
-
-            .caret {
-                float: right;
-                margin-top: 7px;
-            }
+        md-select,
+        condition-input-container {
+            max-width: 600px;
+            min-width: 150px;
         }
 
-        .search-type {
-            >div>input {
-                border: 1px solid #aaa;
-                border-radius: 2px;
-                box-shadow: none;
-                height: 34px;
-                min-width: 190px;
-                outline: none;
-                padding-left: 8px;
+        md-select {
+            margin-bottom: 10px;
+            margin-top: 8px;
+        }
 
-                &:focus {
-                    border-color: $focus;
+        condition-input-container {
+            .md-chips {
+                padding-bottom: 3px;
+
+                .md-chip {
+                    margin-top: 5px;
+                }
+
+                .md-chip-input-container {
+                    margin-top: 9px;
                 }
             }
+        }
 
-            .gap {
-                margin: 0 10px;
+        .md-input-container-row {
+            md-input-container {
+                float: left;
+            }
+
+            .divide-text {
+                float: left;
+                line-height: 50px;
+                margin: 0 5px;
             }
         }
 
-        .search-plus {
-            border-style: dotted;
+        .md-icon-button {
+            height: 48px;
+            line-height: 48px;
 
-            &:hover {
-                color: $a-color;
-            }
-        }
-
-        .ui-select-container {
-            height: 34px;
-            margin: 0;
-        }
-
-        .ui-select-match {
-            min-width: 160px;
-
-            .caret {
-                margin-top: 0;
-            }
-
-            .ui-select-match-item {
-                margin: 5px 3px 0;
-                padding: 5px;
+            md-icon {
+                height: 20px;
+                width: 20px;
             }
         }
     }
+
+    .search-footer {
+        margin: 20px 0;
+    }
+
 }
+
+.ui-grid-container {
+    background-color: #fff;
+    margin-bottom: 20px;
+    padding: 0 20px 20px;
+
+    md-toolbar.md-default-theme {
+        background-color: #fff;
+        border-bottom: 1px solid #000;
+        color: $text-title;
+
+        .md-toolbar-tools {
+            padding-right: 0;
+        }
+    }
+
+    .ui-grid {
+        border: 0;
+    }
+
+    .ui-grid-header-cell-row {
+        line-height: 50px;
+
+        .ui-grid-header-cell {
+            background-color: #fff;
+            border-right: 1px solid rgba(0, 0, 0, .04);
+            // border-right: 0;
+            .ui-grid-column-menu-button-last-col {
+                margin-right: 0;
+            }
+        }
+    }
+
+    .ui-grid-row {
+        .ui-grid-cell {
+            background-color: #fff;
+            border-bottom: 1px solid #e7e9ea;
+            border-right: 1px solid rgba(0, 0, 0, .04);
+            // border-right: 0;
+
+            &.ui-grid-row-header-cell {
+                background-color: #fff !important;
+            }
+
+            &:last-child {
+                border-right: 0;
+
+                &.ui-grid-row-header-cell {
+                    border-bottom: 1px solid #e7e9ea;
+                    border-right: 1px solid #e7e9ea;
+                }
+            }
+        }
+
+        &.ui-grid-row-selected {
+            .ui-grid-cell {
+                background-color: #ededed !important;
+
+                &.ui-grid-row-header-cell {
+                    color: #337ab7;
+                }
+            }
+        }
+
+        .ui-grid-cell-contents {
+            line-height: 40px;
+        }
+    }
+
+    .ui-grid-pager-panel {
+        border-top: 1px solid #000;
+    }
+
+}
+
+
+
+
+

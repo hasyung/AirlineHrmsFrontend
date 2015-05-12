@@ -1,7 +1,9 @@
 
 
 @nb = nb = {}
-metadata = @metadata
+
+metadata = @metadata #用户元数据
+dep_info = @dep_info #机构数据
 
 
 
@@ -12,6 +14,10 @@ deps = [
     'mgcrea.ngStrap.datepicker'
     'ngDialog'
     'ui.select'
+    'ui.grid'
+    'ui.grid.selection'
+    'ui.grid.pinning'
+    'ui.grid.pagination'
     'ngAnimate'
     'ngAria'
     'ui.bootstrap'
@@ -28,6 +34,7 @@ deps = [
     'nb.filters'
     'nb.component'
     'flow'
+    'ngMaterialDropmenu'
     #'nb.controller.site'
 ]
 resources = angular.module('resources',[])
@@ -37,7 +44,9 @@ nb.app = App = angular.module 'nb',deps
 
 #初始化在<head> <script> 标签中, 如果不存在， 系统行为待定
 App.constant 'PERMISSIONS', metadata.permissions || []
-App.constant 'USER_META', metadata.employee || {}
+App.constant 'USER_META', metadata.user || {}
+App.constant 'DEPARTMENTS', dep_info.departments || []
+App.constant 'nbConstants', metadata.resources || []
 
 
 appConf = ($provide, ngDialogProvider) ->
@@ -71,9 +80,23 @@ restConf = (restmodProvider) ->
 
 mdThemingConf = ($mdThemingProvider) ->
     $mdThemingProvider.theme('default')
-        .primaryPalette('indigo')
-        .accentPalette('amber')
-        .warnPalette('deep-orange')
+        .primaryPalette('blue')
+        .accentPalette('light-green')
+        .warnPalette('red')
+
+    $mdThemingProvider.theme 'hrms'
+        .primaryPalette 'grey', {
+            'default': 'A100'
+
+        }
+        .accentPalette 'grey'
+        .warnPalette 'red'
+        .backgroundPalette 'grey', {
+            'default': '100'
+            'hue-1': 'A100'
+        }
+
+
 
 
 routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider) ->
@@ -116,12 +139,15 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
         }
 
     ]
+    #FIX! angular 1.4 feature , datepicker not supported 1.4 now. cause ngAnimate has many break changes in 1.4
+    # $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike'
 
 datepickerConf = ($datepickerProvider)->
     angular.extend($datepickerProvider.defaults, {
         dateFormat: 'yyyy-MM-dd'
-        modelDateFormat: 'yyyy-MM-dd'
-        dateType: 'string'
+        autoclose: true
+        container: 'body'
+        # dateType: 'string'
     })
 
 
@@ -131,9 +157,24 @@ App
     .config ['restmodProvider', restConf]
     .config ['$mdThemingProvider', mdThemingConf]
     .config ['$stateProvider','$urlRouterProvider','$locationProvider', '$httpProvider', routeConf]
-    .run ['$state', '$location','$rootScope', 'toaster', '$http', 'Org', 'sweet', 'User', '$enum', '$timeout', 'AuthService',
-    ($state, $location, $rootScope, toaster, $http, Org, sweet, User, $enum, $timeout, AuthServ) ->
+    .run [
+        '$state'
+        'i18nService'
+        '$location'
+        '$rootScope'
+        'toaster'
+        '$http'
+        'Org'
+        'OrgStore'
+        'sweet'
+        'User'
+        '$enum'
+        '$timeout'
+        'AuthService'
+    ($state, i18nService, $location, $rootScope, toaster, $http, Org, OrgStore, sweet, User, $enum, $timeout, AuthServ) ->
 
+        i18nService.setCurrentLang('zh-cn')
+        OrgStore.initialize() #初始化OrgStore
         cancelLoading = ->
             $timeout(
                 ()-> $rootScope.loading = false
@@ -161,6 +202,7 @@ App
             toaster.pop(code.name, "提示", info)
 
         $rootScope.$state = $state
+        $rootScope.$enum  = $enum
 
         $rootScope.allOrgs = Org.$search()
 
@@ -168,8 +210,6 @@ App
         $rootScope.createFlow = (data, flowname) ->
             $http.post("/api/workflows/#{flowname}", data)
 
-        $rootScope.enums = $enum.get()
-        $rootScope.loadEnum = $enum.loadEnum()
 
     ]
 

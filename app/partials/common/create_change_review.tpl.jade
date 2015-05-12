@@ -1,7 +1,10 @@
-md-dialog()
-    md-subheader 
-        h3 {{::dialog.change.name}}{{::dialog.change.action}}"{{::dialog.change.auditableType}}"
-        md-button.pull-right(ng-click="dialog.close()") 关闭
+md-dialog.position_delete()
+    md-toolbar.md-accent(md-theme="hrms")
+        .md-toolbar-tools
+            span {{::dialog.change.name}}{{::dialog.change.action}}"{{::dialog.change.auditableType}}"
+            div(flex)
+            span
+                md-button.pull-right(ng-click="dialog.close()") 关闭
     md-content
         table.table.table-striped.custom-table.popup-table
             tr

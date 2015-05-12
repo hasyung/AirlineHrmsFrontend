@@ -30,5 +30,10 @@ module
     .filter 'nbDate', ->
 
         (input, opts) ->
-            return new Date(input)
+            if input then new Date(input) else ""
+    .filter 'enum', ['$enum', ($enum) ->
+
+        (input, opts) ->
+            $enum.parseLabel(input, opts)
+    ]
 

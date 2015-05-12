@@ -6,16 +6,17 @@ div(
     md-toolbar
         .md-toolbar-tools
             span 岗位详情
-    .personnel-content.personnel-control
+    .personnel-content
         section.personnel-info-section(ng-init= "current = panel.position; data = {}; data.selectedIndex = 0;")
             tabset(type="pills")
                 tab(heading="基本信息")
-                    section.form-material-section
-                        md-subheader.md-primary 基本信息
-                        include position_basic
-                    section.form-material-section
-                        md-subheader.md-warn 岗位描述
-                        include position_desc
+                    md-content
+                        section.form-material-section
+                            md-subheader.md-primary 基本信息
+                            include position_basic
+                        section.form-material-section
+                            md-subheader.md-warn 岗位描述
+                            include position_desc
 
                 tab(heading="人员明细")
                     include position_employees
@@ -28,7 +29,7 @@ div(
 
                 tab(heading="福利体系")
 
-                tab(heading="培训体系")
+                //- tab(heading="培训体系")
 
             //- md-tabs.md-padding(md-selected="data.selectedIndex")
             //-     md-tab(id="tab1" label="基本信息")

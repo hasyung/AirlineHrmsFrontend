@@ -24,15 +24,16 @@ class Route
 
 class AttendanceCtrl extends nb.Controller
 
-    @.$inject = ['$scope', 'Leave', '$mdDialog']
+    @.$inject = ['$scope', 'Flow::EarlyRetirement', '$mdDialog']
 
     constructor: (@scope, @Leave, @mdDialog) ->
         @loadInitailData()
 
     loadInitailData: ()->
-        @leaves = @Leave.$collection().$fetch()
-    searchLeaves: (tableState)->
-        @leaves.$refresh(tableState)
+        @flows = @Leave.$collection().$fetch()
+
+    # searchLeaves: (tableState)->
+    #     @flows.$refresh(tableState)
 
 class AttendanceDialogCtrl extends nb.Controller
     @.$inject = ['$scope', 'data', '$mdDialog']
@@ -52,7 +53,7 @@ class AttendanceDialogCtrl extends nb.Controller
             self.mdDialog.hide()
 
 
-    
+
 
 app.config(Route)
 app.controller('AttendanceDialogCtrl', AttendanceDialogCtrl)

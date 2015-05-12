@@ -2,10 +2,12 @@
     .resume-header
         h3 个人履历
     .resume-btn-group
-        md-button.md-raised.skyblue(ng-href="/api/employees/export_resume?employee_id={{resume.id}}" style="display: inline-block;") 导出 PDF
+        md-button.md-raised.md-primary(ng-href="/api/employees/export_resume?employee_id={{resume.id}}" style="display: inline-block;") 导出 PDF
     .resume-body
         section.resume-section.form-split
             h4 基本情况
+            .resume-avator
+                img(ng-src="{{currentUser.favicon.big}}")
             .form-group
                 label.control-label 姓名：
                 .form-content(ng-bind="resume.name")

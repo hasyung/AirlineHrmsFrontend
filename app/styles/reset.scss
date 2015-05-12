@@ -1,3 +1,6 @@
+* {
+    outline: 0;
+}
 //重置material design影响标签的样式
 fieldset {
     border: 0;
@@ -21,6 +24,60 @@ ul {
     list-style-type: none;
 }
 
+.nb-card {
+    margin: 10px 20px 0;
+
+    &:first-child {
+        margin-top: 20px;
+    }
+}
+
+.md-button {
+    height: 36px;
+    line-height: 36px;
+    margin: auto;
+    min-height: 0;
+    min-width: 0;
+
+    &.md-fab {
+        border-radius: 14px;
+        height: 28px;
+        line-height: 28px;
+        width: 28px;
+
+        .md-ripple-container {
+            border-radius: 15px;
+        }
+
+        md-icon {
+            height: 14px;
+            width: 14px;
+        }
+    }
+}
+
+md-input-container label {
+    top: 0;
+}
+
+.md-subheader {
+    font-family: $font-family-sans-serif;
+    font-size: 14px;
+    margin: 0;
+
+    .md-subheader-inner {
+        padding: 0;
+    }
+}
+
+md-input-container > md-select {
+    margin-top: 0;
+
+    .md-select-label {
+        padding-bottom: 1px;
+    }
+}
+
 body h3,
 html h3,
 body h4,
@@ -40,7 +97,7 @@ html h4 {
 
 //用于分隔的附加块
 .sep-40 {
-    height: 40px;
+    height: 65px;
 }
 
 //确定的宽度 多用于需要表格单元固定宽度换行
@@ -50,18 +107,6 @@ html h4 {
 
 .kw-120 {
     width: 120px;
-}
-
-//md-subheader的字体 字号
-.md-subheader {
-    font-family: 'SimHei' '微软雅黑' Arial;
-    font-size: 14px;
-}
-
-md-content {
-    // &.md-default-theme {
-    //     background-color: transparent;
-    // }
 }
 
 //超编颜色

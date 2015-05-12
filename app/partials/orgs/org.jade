@@ -29,14 +29,15 @@ section.org-detail(ng-controller="EditableResource")
                     input(ng-model="::currentOrg.serialNumber" disabled)
                 md-input-container.row-has-value
                     label 机构性质
-                    //- nb-dropdown(ng-model="copyOrg.nature" remote-key="department_natures", name="orgAddr", required="true")
-                    md-select(ng-model="currentOrg.nature" md-on-open="loadEnum('department_natures')" ng-disabled="!editing")
-                        md-select-label {{currentOrg.nature ? currentOrg.nature.displayName : '无'}}
-                        md-option(ng-value="nature" ng-repeat="nature in enums.department_natures") {{nature.displayName}}
-                    //- input(ng-model="currentOrg.nature.displayName" name="orgNature")
-                md-input-container
+                    md-select(ng-model="currentOrg.natureId" ng-disabled="!editing")
+                        md-select-label {{$enum.parseLabel(currentOrg.natureId, "department_natures")}}
+                        md-option(ng-value="item.id" ng-repeat="item in $enum.get('department_natures')") {{item.label}}
+                md-input-container.row-has-value
                     label 职级
-                    input(ng-model="::currentOrg.grade.displayName" disabled)
+                    md-select(ng-model="currentOrg.gradeId" disabled)
+                        md-select-label {{(currentOrg.grade.id == 1) ? currentOrg.grade.displayName : $enum.parseLabel(currentOrg.gradeId, "department_grades")}}
+                        md-option(ng-value="item.id" ng-repeat="item in $enum.get('department_grades')") {{item.label}}
+
 
             .form-actions(ng-hide="!editing")
                 md-button.md-raised.white(type="button", ng-click="cancel(currentOrg, $event)") 取消
@@ -51,14 +52,14 @@ section.org-detail(ng-controller="EditableResource")
                     input(ng-model="neworg.name" required name="orgName")
                 md-input-container.row-has-value
                     label 机构性质
-                    md-select(ng-model="neworg.nature" required md-on-open="loadEnum('department_natures')")
-                        md-select-label {{neworg.nature ? neworg.nature.displayName : '无'}}
-                        md-option(ng-value="nature" ng-repeat="nature in enums.department_natures") {{nature.displayName}}
+                    md-select(ng-model="neworg.natureId")
+                        md-select-label {{$enum.parseLabel(neworg.natureId, "department_natures")}}
+                        md-option(ng-value="item.id" ng-repeat="item in $enum.get('department_natures')") {{item.label}}
                 md-input-container.row-has-value
                     label 职级
-                    md-select(ng-model="neworg.grade" required md-on-open="loadEnum('department_grades')")
-                        md-select-label {{neworg.grade ? neworg.grade.displayName : '无'}}
-                        md-option(ng-value="grade" ng-repeat="grade in enums.department_grades") {{grade.displayName}}
+                    md-select(ng-model="neworg.gradeId")
+                        md-select-label {{$enum.parseLabel(neworg.gradeId, "department_grades")}}
+                        md-option(ng-value="item.id" ng-repeat="item in $enum.get('department_grades')") {{item.label}}
                 .form-actions
                     md-button.md-raised.white(type="button" ng-click="orgCtrl.state = 'show'") 取消
                     md-button.skyblue.md-raised(type="submit") 保存
@@ -90,12 +91,14 @@ section(ng-if="currentOrg.status !== 'destroy_inactive'")
                         a(
                             nb-panel
                             template-url="partials/position/position_detail.html"
+                            panel-controller="PositionDetailCtrl"
                             locals="{'position': position}"
                         ) {{position.name}}
                     td.org-post(ng-if="ctrl.isHistory")
                         a(
                             nb-panel
                             template-url="partials/orgs/position_detail_history.html"
+                            panel-controller="PositionDetailCtrl"
                             locals="{'position': position}"
                             ) {{position.name}}
                     td  {{position.budgetedStaffing}}

@@ -7,14 +7,25 @@
                 template-url="partials/self/self_resume.html"
                 locals="{currentUser:currentUser}"
             )
-            .avator-area(
-                nb-dialog="partials/self/self_info_basic/avator_upload.tpl.html"
-                nb-dialog-scope="this"
-                style="cursor: pointer;"
-            )
-                img(ng-src="{{currentUser.favicon}}")
+            .avator-area
+                img(ng-src="{{currentUser.favicon.middle}}")
+                .edit-icon-container(
+                    nb-dialog
+                    template-url="partials/self/self_info_basic/avator_upload.tpl.html"
+                    nb-dialog-scope="this"
+                    nb-dialog-class="ngdialog-theme-plain cust-avator-dialog-width"
+                )
+                    i.fa.fa-edit
             h3(ng-bind="currentUser.$cmStatus.name")
             p(ng-bind="currentUser.employeeNo")
+            //- .avator-area
+            //-     img(ng-src="{{currentUser.favicon.middle}}")
+            //-     .edit-icon-container(
+            //-         nb-dialog="partials/self/self_info_basic/avator_upload.tpl.html"
+            //-         nb-dialog-scope="this"
+            //-         nb-dialog-class="ngdialog-theme-plain cust-avator-dialog-width"
+            //-     )
+            //-         i.fa.fa-edit
             //- input(type="file" nv-file-select="" uploader="uploader")
         .personnel-info-list
             ul
@@ -30,9 +41,9 @@
                 li(ui-sref-active="active")
                     a(ui-sref=".experience")
                         | 工作经历
-                li(ui-sref-active="active")
-                    a(ui-sref=".attendance")
-                        | 我的考勤
+                //- li(ui-sref-active="active")
+                //-     a(ui-sref=".attendance")
+                //-         | 我的考勤
                 li
                     a
                         | 任职记录
@@ -55,7 +66,7 @@
                 //-     a(nb-dialog="partials/")
                 //-         | 个人履历
 
-    .personnel-content()
+    .personnel-content.self-info-content()
         div(ui-view="")
 
         //- include info_basic

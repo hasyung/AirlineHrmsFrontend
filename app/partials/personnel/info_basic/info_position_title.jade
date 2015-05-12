@@ -1,0 +1,23 @@
+form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-controller="EditableResource")
+    .form-btn-group(ng-hide="editing" has-permission="employees_update")
+        md-button.md-fab(ng-click="edit($event)")
+            md-icon(md-svg-src="/images/svg/edit_24px.svg" aria-label="修改")
+    .form-btn-group.alive(ng-show="editing")
+        md-button.md-raised.white(type="button" ng-click="cancel(current,$event, empEditForm)",) 取消
+        md-button.skyblue.md-raised(type="submit") 保存
+    fieldset(ng-disabled="!editing")
+        div(layout)
+            md-input-container.row-has-value(flex)
+                label 职称
+                md-select(ng-model="current.jobTitleId" ng-disabled="!editing")
+                    md-select-label {{$enum.parseLabel(current.jobTitleId, "job_titles")}}
+                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('job_titles')") {{item.label}}
+            md-input-container.row-has-value(flex)
+                label 职称级别
+                md-select(ng-model="current.jobTitleDegreeId" ng-disabled="!editing")
+                    md-select-label {{$enum.parseLabel(current.jobTitleDegreeId, "job_title_degrees")}}
+                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('job_title_degrees')") {{item.label}}
+            md-input-container.row-has-value(flex)
+                label 技术职务
+                input(ng-model="current.technicalDuty")
+                

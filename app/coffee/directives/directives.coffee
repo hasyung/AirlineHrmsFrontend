@@ -145,7 +145,9 @@ angular.module 'nb.directives'
         postLink = (scope, elem, attrs) ->
 
             throw new Error('所有dialog都需要templateUrl') if !angular.isDefined(attrs.templateUrl)
-            options = {}
+            options = {
+                clickOutsideToClose: true
+            }
 
             openDialog = (evt) ->
                 #scope evt 生命周期仅限于本次点击

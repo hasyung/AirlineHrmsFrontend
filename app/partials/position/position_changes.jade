@@ -1,53 +1,71 @@
-.app-content-wrapper(flex nb-table='ctrl.records' nb-safe-src="ctrl.changes" ng-init="ctrl.changes = ctrl.PositionChange.$collection().$refresh()")
-    .search-container(nb-search)
-        div(nb-predicate="岗位名称" predicate-attr="name")
-            input(name="name" placeholder="岗位名称" ng-model="name")
-        div(nb-predicate="机构" predicate-attr="department_ids")
-            ui-select(multiple ng-model="$parent.department_ids" theme="select2" style="width:600px" reset-search-input="true")
-                ui-select-match(placeholder="请输入机构名称") {{ $item.name }}
-                ui-select-choices(repeat="org.id as org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
+.app-content-wrapper(flex style="height: 700px;")
+    div(nb-filter="ctrl.filterOptions" on-search="ctrl.searchChanges(state)")
+    div.ui-grid-container
+        md-toolbar
+            .md-toolbar-tools
+                h2 岗位变更记录列表
+                div(flex)
+                //- span
+                //-     md-button.md-primary.md-raised(
+                //-         nb-panel
+                //-         template-url="partials/personnel/org_pos_per_sort.html"
+                //-     ) 排序
+                //- md-button.md-primary.md-raised 导出
+        div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.changes")
 
-        div(nb-predicate="变更时间" predicate-attr="created_at")
-            input(ng-model="created_at.from" bs-datepicker)
-            span.gap 至
-            input(ng-model="created_at.to" bs-datepicker)
-    .search-btn-group
-        md-button.md-raised.purple(nb-pipe="ctrl.searchChanges(tableState)") 开始搜索
 
-    .table-container
-        h4 岗位变更记录列表
-        table.table.table-striped.custom-table
-            thead
-                tr
-                    th 编号
-                    th 岗位名称
-                    th 所属部门
-                    th 操作
-                    th 信息变更模块
-                    th 变更时间
-            tbody(nb-popup-management)
-                tr(ng-repeat="change in ctrl.changes track by $index")
-                    td(ng-bind="$index + 1")
-                    td(ng-bind="change.name")
-                    td(ng-bind="change.department.name")
-                    td(ng-bind="change.action")
-                    td(ng-if="change.action == '修改'")
-                        a(
-                            href="javascript:void(0);"
-                            nb-dialog
-                            template-url="partials/common/update_change_review.tpl.html"
-                            ng-bind="change.auditableType"
-                            locals="{'change': change}"
-                        )
-                    td(ng-if="change.action == '新增' || change.action == '删除'")
-                        a(
-                            href="javascript:void(0);"
-                            nb-dialog
-                            template-url="partials/common/create_change_review.tpl.html"
-                            ng-bind="change.auditableType"
-                            locals="{'change': change}"
-                        )
 
-                    td(ng-bind="change.createdAt | date:'yyyy-MM-dd'")
 
-    .custom-pages(nb-pagination="ctrl.changes.$metadata")
+//- .app-content-wrapper(flex nb-table='ctrl.records' nb-safe-src="ctrl.changes" ng-init="ctrl.changes = ctrl.PositionChange.$collection().$refresh()")
+//-     .search-container(nb-search)
+//-         div(nb-predicate="岗位名称" predicate-attr="name")
+//-             input(name="name" placeholder="岗位名称" ng-model="name")
+//-         div(nb-predicate="机构" predicate-attr="department_ids")
+//-             ui-select(multiple ng-model="$parent.department_ids" theme="select2" style="width:600px" reset-search-input="true")
+//-                 ui-select-match(placeholder="请输入机构名称") {{ $item.name }}
+//-                 ui-select-choices(repeat="org.id as org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
+
+//-         div(nb-predicate="变更时间" predicate-attr="created_at")
+//-             input(ng-model="created_at.from" bs-datepicker)
+//-             span.gap 至
+//-             input(ng-model="created_at.to" bs-datepicker)
+//-     .search-btn-group
+//-         md-button.md-raised.purple(nb-pipe="ctrl.searchChanges(tableState)") 开始搜索
+
+//-     .table-container
+//-         h4 岗位变更记录列表
+//-         table.table.table-striped.custom-table
+//-             thead
+//-                 tr
+//-                     th 编号
+//-                     th 岗位名称
+//-                     th 所属部门
+//-                     th 操作
+//-                     th 信息变更模块
+//-                     th 变更时间
+//-             tbody(nb-popup-management)
+//-                 tr(ng-repeat="change in ctrl.changes track by $index")
+//-                     td(ng-bind="$index + 1")
+//-                     td(ng-bind="change.name")
+//-                     td(ng-bind="change.department.name")
+//-                     td(ng-bind="change.action")
+//-                     td(ng-if="change.action == '修改'")
+//-                         a(
+//-                             href="javascript:void(0);"
+//-                             nb-dialog
+//-                             template-url="partials/common/update_change_review.tpl.html"
+//-                             ng-bind="change.auditableType"
+//-                             locals="{'change': change}"
+//-                         )
+//-                     td(ng-if="change.action == '新增' || change.action == '删除'")
+//-                         a(
+//-                             href="javascript:void(0);"
+//-                             nb-dialog
+//-                             template-url="partials/common/create_change_review.tpl.html"
+//-                             ng-bind="change.auditableType"
+//-                             locals="{'change': change}"
+//-                         )
+
+//-                     td(ng-bind="change.createdAt | date:'yyyy-MM-dd'")
+
+//-     .custom-pages(nb-pagination="ctrl.changes.$metadata")

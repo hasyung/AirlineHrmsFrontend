@@ -3,8 +3,8 @@ resources = angular.module('resources')
 
 Change = (restmod, RMUtils, $Evt) ->
     Change = restmod.model('/employee_changes/check').mix 'nbRestApi', 'DirtyModel', {
-        checkDate: {decode: 'date', param: 'yyyy年MM月dd日',mask: 'CU'}
-        createdAt: {decode: 'date', param: 'yyyy年MM月dd日',mask: 'CU'}
+        checkDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
+        createdAt: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
         $hooks:
             'after-check': ->
                 $Evt.$send('changes:check:success', "审核提交成功")
@@ -33,6 +33,8 @@ Change = (restmod, RMUtils, $Evt) ->
 Record = (restmod, RMUtils, $Evt) ->
 
     Record = restmod.model('/employee_changes/record').mix 'nbRestApi', 'DirtyModel', {
+        checkDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
+        createdAt: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
         $config:
             jsonRoot: 'audits'
 
