@@ -2,5 +2,11 @@ md-sidenav.nb-nav(md-is-locked-open="true")
     md-content(flex role="navigation")
         ul.nb-menu
             li.parent-list-item(ng-repeat="section in menu.sections")
-                menu-link(ng-if="section.type == 'link'" page="section")
+                md-button.md-button-toggle(flex ng-if="section.type == 'link'")
+                    div(flex layout="row")
+                        span
+                            md-icon(md-svg-src="/images/svg/ic_star_24px.svg")
+                        span {{section.name}}
+                        span(flex)
+
                 menu-toggle(section="section" ng-if="section.type != 'link'")
