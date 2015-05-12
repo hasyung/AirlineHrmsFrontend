@@ -74,8 +74,8 @@ menuFactory = ($rootScope, $state)->
         pages: [
             {
                 name: '岗位列表'
-                state: 'position_list'
-                permission: 'positions_index'
+                state: 'position'
+                permission: ''
             }
             {
                 name: '岗位分布图'
@@ -84,7 +84,7 @@ menuFactory = ($rootScope, $state)->
             }
             {
                 name: '岗位异动记录'
-                state: 'position_changes'
+                state: 'position'
                 permission: ''
             }
 
@@ -98,17 +98,17 @@ menuFactory = ($rootScope, $state)->
         pages: [
             {
                 name: '人事花名册'
-                state: 'personnel_list'
-                permission: 'employees_index'
+                state: 'position'
+                permission: ''
             }
             {
                 name: '新员工列表'
-                state: 'personnel_fresh'
+                state: 'position'
                 permission: ''
             }
             {
                 name: '人事变更信息'
-                state: 'personnel_review'
+                state: 'position'
                 permission: ''
             }
 
@@ -375,7 +375,7 @@ menuLinkDirective = ($compile, $state) ->
         <md-button href="${ url }" class="md-button-toggle" flex>
             <div flex layout="row">
                 <span>
-                    <md-icon class="type-icon" md-svg-src="{{ page.icon_src }}"></md-icon>
+                    <md-icon md-svg-src="/images/svg/ic_star_24px.svg"></md-icon>
                 </span>
                 <span> {{ page.name }}</span>
                 <span flex></span>
@@ -426,7 +426,7 @@ menuToggleDirective = (menu) ->
       <md-button flex="flex" class="md-button-toggle" ng-click="toggle()">
         <div flex layout="row">
           <span>
-            <md-icon class="type-icon" md-svg-src="{{ section.icon_src }}"></md-icon>
+            <md-icon md-svg-src="{{ section.icon_src }}"></md-icon>
           </span>
           <span>{{ section.name }}</span>
           <span flex></span>
