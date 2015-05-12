@@ -205,8 +205,11 @@ class OrgsCtrl extends nb.Controller
         @resetData()
 
     resetData: () ->
+        self = @
         @isHistory = false
-        @orgs.$refresh({'edit_mode': true})
+        @orgs.$refresh({'edit_mode': true}).$then ()->
+            self.treeRootOrg = _.find self.orgs, (org) -> org.xdepth == 1
+            self.currentOrg = self.treeRootOrg
 
     rootTree: () ->
         treeRootOrg = _.find @orgs, (org) -> org.xdepth == 1
