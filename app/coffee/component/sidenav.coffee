@@ -20,7 +20,7 @@ perf_section = name: '绩效管理'
 
 
 
-menuFactory = ->
+menuFactory = ($rootScope, $state)->
     sections = []
 
     sections.push {
@@ -33,28 +33,28 @@ menuFactory = ->
             }
             {
                 name: '优免票'
-                state: 'self.profile'
+                # state: 'self.profile'
             }
             {
                 name: '学历变更申请'
-                state: 'self.profile'
+                # state: 'self.profile'
             }
             {
                 name: '绩效申述'
-                state: 'self.profile'
+                # state: 'self.profile'
             }
 
             {
                 name: '信息变更记录'
-                state: 'self.profile'
+                # state: 'self.profile'
             }
             {
                 name: '公司通讯录'
-                state: 'self.profile'
+                # state: 'self.profile'
             }
             {
                 name: '部门信箱'
-                state: 'self.profile'
+                # state: 'self.profile'
             }
         ]
     }
@@ -327,7 +327,30 @@ menuFactory = ->
 
         isSectionSelected: (section) ->
             return self.openedSection == section
+        selectPage: (section, page) ->
+            self.openedSection = section
+            self.currentPage = page
+        isPageSelected: (page) ->
+            return @.currentPage == page
     }
+
+
+    onLocationChange = () ->
+
+        matchPage = (section, page) ->
+            if page.state && $state.includes(page.state)
+                self.selectPage(section, page)
+
+        sections.forEach (section) ->
+            if section.type == 'link'
+                matchPage(section, section)
+            else if section.pages
+                section.pages.forEach (page) ->
+                    matchPage(section, page)
+
+
+    $rootScope.$on('$stateChangeSuccess', onLocationChange)
+
 
     return self
 
@@ -337,7 +360,7 @@ menuFactory = ->
 menuLinkDirective = ($compile, $state) ->
 
     origin_template = '''
-        <md-button href="${ url }" ng-class="{'active': isSelected()}">
+        <md-button href="${ url }">
           <div flex layout="layout">
             <span>
                 ${ stroke_template }
@@ -347,6 +370,19 @@ menuLinkDirective = ($compile, $state) ->
           </div>
         </md-button>
     '''
+
+    menu_template = '''
+        <md-button href="${ url }" class="md-button-toggle" flex>
+            <div flex layout="row">
+                <span>
+                    <md-icon md-svg-src="/images/svg/ic_star_24px.svg"></md-icon>
+                </span>
+                <span> {{ page.name }}</span>
+                <span flex></span>
+            </div>
+        <md-button>
+    '''
+
 
     stroke_svg = '''
         <svg width="30" height="50">
@@ -362,10 +398,10 @@ menuLinkDirective = ($compile, $state) ->
         </svg>
     '''
 
-    postLink = (scope, elem) ->
+    postLink = (scope, elem, attrs) ->
         page = scope.page
 
-        compiled = _.template(origin_template)
+        compiled = _.template if angular.isDefined(attrs.menu) then menu_template else origin_template
 
         template = compiled {
             url: $state.href(page.state)
@@ -374,9 +410,6 @@ menuLinkDirective = ($compile, $state) ->
 
         transcludeFn = $compile(template)
         transcludeFn scope, (cloned) -> elem.append(cloned)
-
-        scope.isSelected = ->
-            $state.is(scope.page)
 
     return {
         # template: template
@@ -403,7 +436,7 @@ menuToggleDirective = (menu) ->
         </div>
       </md-button>
       <ul ng-show="isOpen()" class="menu-toggle-list">
-        <li class="child-list-item" ng-repeat="page in section.pages">
+        <li ng-class="{'active': isSelected(page)}" class="child-list-item" ng-repeat="page in section.pages">
             <menu-link is-last="$last" page="page"></menu-link>
         </li>
       </ul>
@@ -416,6 +449,9 @@ menuToggleDirective = (menu) ->
 
         scope.isOpen = () ->
             menu.isSectionSelected(scope.section)
+
+        scope.isSelected = (page) ->
+            menu.isPageSelected(page)
 
 
     return {
