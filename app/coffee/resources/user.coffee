@@ -58,7 +58,7 @@ Experience = (restmod, RMUtils, $Evt) ->
 
 FamilyMember = (restmod, RMUtils, $Evt) ->
     FamilyMember = restmod.model().mix 'nbRestApi', {
-        birthday: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
+        birthday: {decode: 'date', param: 'yyyy-MM-dd'}
         $hooks:
             'after-create': ->
                 $Evt.$send('FamilyMember:create:success', "家庭成员创建成功")
