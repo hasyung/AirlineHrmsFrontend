@@ -375,7 +375,7 @@ menuLinkDirective = ($compile, $state) ->
         <md-button href="${ url }" class="md-button-toggle" flex>
             <div flex layout="row">
                 <span>
-                    <md-icon md-svg-src="/images/svg/ic_star_24px.svg"></md-icon>
+                    <md-icon class="type-icon" md-svg-src="{{ page.icon_src }}"></md-icon>
                 </span>
                 <span> {{ page.name }}</span>
                 <span flex></span>
@@ -426,7 +426,7 @@ menuToggleDirective = (menu) ->
       <md-button flex="flex" class="md-button-toggle" ng-click="toggle()">
         <div flex layout="row">
           <span>
-            <md-icon md-svg-src="{{ section.icon_src }}"></md-icon>
+            <md-icon class="type-icon" md-svg-src="{{ section.icon_src }}"></md-icon>
           </span>
           <span>{{ section.name }}</span>
           <span flex></span>
