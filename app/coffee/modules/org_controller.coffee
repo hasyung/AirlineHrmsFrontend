@@ -253,6 +253,7 @@ class OrgsCtrl extends nb.Controller
         if @currentLog
             @orgs.$refresh({version: @currentLog.id}).$then ()->
                 self.isHistory = true
+                self.treeRootOrg = _.find self.orgs, (org) -> org.xdepth == 1
                 self.currentOrg = self.treeRootOrg
     expandLog: (log)->
         # 防止UI中出现多个被选中的item
