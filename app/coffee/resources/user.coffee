@@ -23,7 +23,7 @@ User = (restmod, RMUtils, $Evt) ->
     }
     .single('/me')
 Education = (restmod, RMUtils, $Evt) ->
-    Education = restmod.model().mix 'nbRestApi', {
+    Education = restmod.model().mix 'nbRestApi', 'DirtyModel', {
         admissionDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
         graduationDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
         $hooks: {
@@ -39,7 +39,7 @@ Education = (restmod, RMUtils, $Evt) ->
             jsonRootMany: 'education_experiences'
     }
 Experience = (restmod, RMUtils, $Evt) ->
-    Experience = restmod.model().mix 'nbRestApi', {
+    Experience = restmod.model().mix 'nbRestApi', 'DirtyModel', {
         startDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
         endDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
         $hooks: {
@@ -57,7 +57,7 @@ Experience = (restmod, RMUtils, $Evt) ->
     }
 
 FamilyMember = (restmod, RMUtils, $Evt) ->
-    FamilyMember = restmod.model().mix 'nbRestApi', {
+    FamilyMember = restmod.model().mix 'nbRestApi', 'DirtyModel', {
         birthday: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
         $hooks:
             'after-create': ->
