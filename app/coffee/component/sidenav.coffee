@@ -25,6 +25,7 @@ menuFactory = ->
 
     sections.push {
         name: '员工自助'
+        icon_src: '/images/svg/left-side-svg/left_icon_1.svg'
         pages: [
             {
                 name: '我的基本信息'
@@ -63,11 +64,13 @@ menuFactory = ->
         name: '组织机构'
         type: 'link'
         state: 'org'
+        icon_src: '/images/svg/left-side-svg/left_icon_2.svg'
     }
 
 
     sections.push {
         name: '岗位管理'
+        icon_src: '/images/svg/left-side-svg/left_icon_3.svg'
         pages: [
             {
                 name: '岗位列表'
@@ -91,6 +94,7 @@ menuFactory = ->
 
     sections.push {
         name: '人事信息'
+        icon_src: '/images/svg/left-side-svg/left_icon_4.svg'
         pages: [
             {
                 name: '人事花名册'
@@ -114,6 +118,7 @@ menuFactory = ->
 
     sections.push {
         name: '考勤管理'
+        icon_src: '/images/svg/left-side-svg/left_icon_5.svg'
         pages: [
             {
                 name: '考勤记录'
@@ -137,6 +142,7 @@ menuFactory = ->
 
     sections.push {
         name: '培训管理'
+        icon_src: '/images/svg/left-side-svg/left_icon_6.svg'
         pages: [
             {
                 name: '培训大纲'
@@ -165,6 +171,7 @@ menuFactory = ->
 
     sections.push {
         name: '福利'
+        icon_src: '/images/svg/left-side-svg/left_icon_7.svg'
         pages: [
             {
                 name: '公务餐'
@@ -196,6 +203,7 @@ menuFactory = ->
 
     sections.push {
         name: '薪酬'
+        icon_src: '/images/svg/left-side-svg/left_icon_8.svg'
         pages: [
             {
                 name: '基础公司'
@@ -242,6 +250,7 @@ menuFactory = ->
 
     sections.push {
         name: '劳动关系'
+        icon_src: '/images/svg/left-side-svg/left_icon_9.svg'
         pages: [
             {
                 name: '员工入职'
@@ -289,6 +298,7 @@ menuFactory = ->
 
     sections.push {
         name: '绩效管理'
+        icon_src: '/images/svg/left-side-svg/left_icon_10.svg'
         pages: [
             {
                 name: '绩效设置'
@@ -383,7 +393,7 @@ menuToggleDirective = (menu) ->
       <md-button flex="flex" class="md-button-toggle" ng-click="toggle()">
         <div flex layout="row">
           <span>
-            <md-icon md-svg-src="/images/svg/ic_star_24px.svg"></md-icon>
+            <md-icon md-svg-src="{{ section.icon_src }}"></md-icon>
           </span>
           <span>{{ section.name }}</span>
           <span flex></span>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 17.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="20px" height="20px" viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve">
+<path fill="#FFFFFF" d="M10.051,2.505c-4.831,0-8.747,3.916-8.747,8.747S5.22,20,10.051,20c4.831,0,8.747-3.916,8.747-8.747
+	S14.882,2.505,10.051,2.505z M10.051,19.138c-4.355,0-7.885-3.53-7.885-7.885s3.53-7.885,7.885-7.885
+	c4.355,0,7.885,3.53,7.885,7.885S14.406,19.138,10.051,19.138z"/>
+<g>
+	<circle fill="#FFFFFF" cx="10.125" cy="2.671" r="2.671"/>
+	<circle fill="#FFFFFF" cx="17.329" cy="13.052" r="2.671"/>
+	<circle fill="#FFFFFF" cx="2.671" cy="13.052" r="2.671"/>
+</g>
+<g>
+	<rect x="2.365" y="12.864" fill="#FFFFFF" width="15.999" height="1.057"/>
+	
+		<rect x="5.555" y="0.331" transform="matrix(-0.7071 -0.7071 0.7071 -0.7071 4.495 18.5224)" fill="#FFFFFF" width="1.057" height="15.999"/>
+	
+		<rect x="13.39" y="-0.109" transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 29.34 3.6292)" fill="#FFFFFF" width="1.057" height="15.999"/>
+</g>
+</svg>
