@@ -24,8 +24,8 @@ User = (restmod, RMUtils, $Evt) ->
     .single('/me')
 Education = (restmod, RMUtils, $Evt) ->
     Education = restmod.model().mix 'nbRestApi', 'DirtyModel', {
-        admissionDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
-        graduationDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
+        admissionDate: {decode: 'date', param: 'yyyy-MM-dd'}
+        graduationDate: {decode: 'date', param: 'yyyy-MM-dd'}
         $hooks: {
             'after-create': ->
                 $Evt.$send('education:create:success', "教育经历创建成功")
@@ -40,8 +40,8 @@ Education = (restmod, RMUtils, $Evt) ->
     }
 Experience = (restmod, RMUtils, $Evt) ->
     Experience = restmod.model().mix 'nbRestApi', 'DirtyModel', {
-        startDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
-        endDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
+        startDate: {decode: 'date', param: 'yyyy-MM-dd'}
+        endDate: {decode: 'date', param: 'yyyy-MM-dd'}
         $hooks: {
             'after-create': ->
                 $Evt.$send('work:create:success', "工作经历创建成功")
@@ -58,7 +58,7 @@ Experience = (restmod, RMUtils, $Evt) ->
 
 FamilyMember = (restmod, RMUtils, $Evt) ->
     FamilyMember = restmod.model().mix 'nbRestApi', 'DirtyModel', {
-        birthday: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
+        birthday: {decode: 'date', param: 'yyyy-MM-dd'}
         $hooks:
             'after-create': ->
                 $Evt.$send('FamilyMember:create:success', "家庭成员创建成功")
