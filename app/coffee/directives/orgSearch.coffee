@@ -62,6 +62,10 @@ angular.module 'nb.directives'
             scope.onSelectedItemChange = onSelectedItemChange
 
             if isMultiple && ngModelCtrl
+
+                # ngModelCtrl.$render = ->
+                #     if ngModelCtrl.$viewValue
+                #         scope.ctrl.$orgs = OrgStore.getOrgsByIds(ngModelCtrl.$viewValue)
                 scope.$watchCollection 'ctrl.$orgs', (newValue, old) ->
                     if newValue
                         org_ids = newValue.map (org) -> return org.id
