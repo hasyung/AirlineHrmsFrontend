@@ -364,14 +364,15 @@ nbGridDirective = ($parse)->
         safeSrc = scope.safeSrc
         pageGetter = $parse('safeSrc.$metadata.page')
         itemCountGetter = $parse('safeSrc.$metadata.count')
+        exportApi = angular.isDefined(attrs.exportApi) #gridApi export to appScope
 
         defaultOptions = {
             # flatEntityAccess: true
             enableSorting: false
-            enableRowSelection: false
             # useExternalSorting: false
             useExternalPagination: true
-            # enableSelectAll: true
+            enableRowSelection: true
+            enableSelectAll: true
             selectionRowHeaderWidth: 35
             rowHeight: 50
             enableColumnMenus: false
@@ -383,6 +384,9 @@ nbGridDirective = ($parse)->
             paginationPageSize: 20
 
             onRegisterApi: (gridApi) ->
+
+                #WARN 必须保持grid 生命周期与controller 一致， 暂不支持动态生成表格, 不然会内存泄露
+                gridApi.grid.appScope.$parent.$gridApi = gridApi if exportApi
 
                 gridApi.pagination.on.paginationChanged scope, (newPage, pageSize) ->
                     currentQueryParams = safeSrc.$queryParams || {}
@@ -413,7 +417,6 @@ nbGridDirective = ($parse)->
         }, defaultOptions
 
         scope.gridOptions = options
-
 
         scope.$watch(
             -> itemCountGetter(scope)

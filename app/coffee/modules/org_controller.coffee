@@ -382,10 +382,9 @@ class PositionCtrl extends nb.Controller
         ]
 
 
-    getSelectsIds: ()->
-        @positions
-            .filter (pos) -> return pos.isSelected
-            .map (pos) -> return pos.id
+    getSelectsIds: () ->
+        rows = @scope.$gridApi.selection.getSelectedGridRows()
+        rows.map (row) -> return row.entity.$pk
 
     posTransfer: (selectOrg, isConfirm) -> #将岗位批量划转到另外一个机构下
         return if !isConfirm
