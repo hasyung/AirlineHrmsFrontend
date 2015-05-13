@@ -23,6 +23,9 @@ angular.module 'nb.directives'
         postLink = (scope, elem, attrs, ctrl)->
             ngModelCtrl = ctrl
             if ngModelCtrl
+                attr =  attrs.ngModel
+                initialValue = scope.$parent[attr]
+                scope.ctrl.$enums = $enum.getEnumsByIds(initialValue, attrs['enumKey']) if initialValue
                 scope.$watchCollection 'ctrl.$enums', (newValue, old) ->
                     if newValue
                         enum_ids = newValue.map (item) -> return item.id
@@ -30,6 +33,7 @@ angular.module 'nb.directives'
                 ngModelCtrl.$render = ->
                     if ngModelCtrl.$viewValue && ngModelCtrl.$viewValue.name
                         scope.ctrl.searchText = ngModelCtrl.$viewValue.name
+
 
         return {
             scope: {
