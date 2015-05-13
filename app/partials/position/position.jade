@@ -80,6 +80,8 @@
                             md-button(ng-href="/api/positions/export_to_xls") 导出全部岗位
                         md-drop-option()
                             md-button(ng-href="/api/positions/export_specification_pdf") 导出全部岗位描述书
-        div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.positions")
+                        md-drop-option
+                            md-button(export-url download url-template="/api/positions/export_specification_pdf?position_ids=#ARRSTRING#" get-selected-ids="ctrl.getSelectsIds") 导出所选岗位描述书
+        div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection safe-src="ctrl.positions")
 
 

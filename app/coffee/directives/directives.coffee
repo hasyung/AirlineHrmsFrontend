@@ -11,7 +11,22 @@ angular.module 'nb.directives'
                     elem.toggleClass 'active'
         }
     ]
+    .directive 'exportUrl', [() ->
 
+        postLink = (scope, elem, attrs)->
+
+            elem.on 'click', ()->
+                console.log scope.getSelectedIds()
+                # elem.attr 'href', "http://www.baidu.com"
+
+        return {
+            scope: {
+                getSelectedIds: "&"
+            }
+            link: postLink
+        }
+        
+    ]
 
     .directive 'dragOn', [ '$window', ($window) ->
 
