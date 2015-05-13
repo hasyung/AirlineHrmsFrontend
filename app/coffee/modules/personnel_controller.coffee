@@ -125,7 +125,7 @@ class PersonnelCtrl extends nb.Controller
                 {
                     name: 'channel_ids'
                     type: 'muti-enum-search'
-                    displayName: '岗位通道'
+                    displayName: '通道'
                     params: {
                         type: 'channels'
                     }
