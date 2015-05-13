@@ -20,9 +20,6 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
                 input(ng-model="current.identityNo", name="identityNo" required)
             md-input-container.row-has-value(flex)
                 label 政治面貌
-                //- md-select(ng-model="current.politicalStatus" md-on-open="loadEnum('political_status')" name="political_status" ng-disabled="!editing")
-                //-     md-select-label {{current.politicalStatus? current.politicalStatus.displayName : '无'}}
-                //-     md-option(ng-value="political" ng-repeat="political in enums.political_status") {{political.displayName}}
                 md-select(ng-model="current.politicalStatusId" ng-disabled="!editing")
                     md-select-label {{$enum.parseLabel(current.politicalStatusId, "political_status")}}
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('political_status')") {{item.label}}
@@ -36,25 +33,16 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
         div(layout)
             md-input-container.row-has-value(flex)
                 label 学历
-                //- md-select(ng-model="current.educationBackground", md-on-open="loadEnum('education_backgrounds')" ng-disabled="!editing")
-                //-     md-select-label {{current.educationBackground? current.educationBackground.displayName : '无'}}
-                //-     md-option(ng-value="edu" ng-repeat="edu in enums.education_backgrounds") {{edu.displayName}}
                 md-select(ng-model="current.educationBackgroundId" ng-disabled="!editing")
                     md-select-label {{$enum.parseLabel(current.educationBackgroundId, "education_backgrounds")}}
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('education_backgrounds')") {{item.label}}
             md-input-container.row-has-value(flex)
                 label 学位
-                //- md-select(ng-model="current.degree", md-on-open="loadEnum('degrees')" ng-disabled="!editing")
-                //-     md-select-label {{current.degree? current.degree.displayName: '无'}}
-                //-     md-option(ng-value="degree" ng-repeat="degree in enums.degrees") {{degree.displayName}}
                 md-select(ng-model="current.degreeId" ng-disabled="!editing")
                     md-select-label {{$enum.parseLabel(current.degreeId, "degrees")}}
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('degrees')") {{item.label}}
             md-input-container.row-has-value(flex)
                 label 英语等级
-                //- md-select(ng-model="current.englishLevel", md-on-open="loadEnum('english_levels')" ng-disabled="!editing")
-                //-     md-select-label {{current.englishLevel? current.englishLevel.displayName : '无'}}
-                //-     md-option(ng-value="englishLevel" ng-repeat="englishLevel in enums.english_levels") {{englishLevel.displayName}}
                 md-select(ng-model="current.englishLevelId" ng-disabled="!editing")
                     md-select-label {{$enum.parseLabel(current.englishLevelId, "english_levels")}}
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('english_levels')") {{item.label}}
