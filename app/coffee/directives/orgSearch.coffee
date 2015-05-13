@@ -63,9 +63,12 @@ angular.module 'nb.directives'
 
             if isMultiple && ngModelCtrl
 
-                # ngModelCtrl.$render = ->
-                #     if ngModelCtrl.$viewValue
-                #         scope.ctrl.$orgs = OrgStore.getOrgsByIds(ngModelCtrl.$viewValue)
+                # fix 指令初始化时 ngmodel, viewValue 还未初始化
+                if ngModelCtrl
+                    attr =  attrs.ngModel
+                    initialValue = scope.$parent[attr]
+                    scope.ctrl.$orgs = OrgStore.getOrgsByIds(initialValue) if initialValue
+
                 scope.$watchCollection 'ctrl.$orgs', (newValue, old) ->
                     if newValue
                         org_ids = newValue.map (org) -> return org.id
