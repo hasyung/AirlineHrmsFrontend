@@ -436,10 +436,11 @@ nbGridDirective = ($parse)->
             pre: postLink
         }
         template: (elem, attrs) ->
-
+            PLUGIN_PREFIX = 'ui-'
             plugins = ['ui-grid-pinning','ui-grid-selection']
             applied_plugins = plugins.reduce((res, val) ->
-                camelCased = _.camelCase(val)
+                removedPrefix = val.replace(PLUGIN_PREFIX, '')
+                camelCased = _.camelCase(removedPrefix)
                 res.push(val) if angular.isDefined(attrs[camelCased])
                 return res
             ,[])
