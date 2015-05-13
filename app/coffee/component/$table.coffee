@@ -91,6 +91,12 @@ class NbFilterCtrl
         'org-search': '''
             <org-search multiple ng-model="${ name }"></org-search>
         '''
+        'muti-enum-search': '''
+            <muti-enum-search ng-model="${ name }" enum-key="${params.type}"></muti-enum-search>
+        '''
+        'muti-text-search': '''
+            <md-chips ng-init="${ name } = []" ng-model="${ name }"></md-chips>
+        '''
 
 
     @.$inject = ['$scope', '$element', '$attrs', '$parse', '$compile', 'SerializedFilter']

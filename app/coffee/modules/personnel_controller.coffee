@@ -102,21 +102,29 @@ class PersonnelCtrl extends nb.Controller
                     type: 'org-search'
                 }
                 {
-                    name: 'position_name'
+                    name: 'position_names'
                     displayName: '岗位名称'
-                    type: 'string'
+                    type: 'muti-text-search'
                 }
+                # {
+                #     name: 'location_id'
+                #     type: 'select'
+                #     displayName: '属地'
+                #     params: {
+                #         type: 'locations'
+                #     }
+                # }
                 {
-                    name: 'location_id'
-                    type: 'select'
+                    name: 'location_ids'
+                    type: 'muti-enum-search'
                     displayName: '属地'
                     params: {
                         type: 'locations'
                     }
                 }
                 {
-                    name: 'channel_id'
-                    type: 'select'
+                    name: 'channel_ids'
+                    type: 'muti-enum-search'
                     displayName: '岗位通道'
                     params: {
                         type: 'channels'
