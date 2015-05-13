@@ -74,8 +74,8 @@ menuFactory = ($rootScope, $state)->
         pages: [
             {
                 name: '岗位列表'
-                state: 'position'
-                permission: ''
+                state: 'position_list'
+                permission: 'positions_index'
             }
             {
                 name: '岗位分布图'
@@ -84,7 +84,7 @@ menuFactory = ($rootScope, $state)->
             }
             {
                 name: '岗位异动记录'
-                state: 'position'
+                state: 'position_changes'
                 permission: ''
             }
 
@@ -98,17 +98,17 @@ menuFactory = ($rootScope, $state)->
         pages: [
             {
                 name: '人事花名册'
-                state: 'position'
-                permission: ''
+                state: 'personnel_list'
+                permission: 'employees_index'
             }
             {
                 name: '新员工列表'
-                state: 'position'
+                state: 'personnel_fresh'
                 permission: ''
             }
             {
                 name: '人事变更信息'
-                state: 'position'
+                state: 'personnel_review'
                 permission: ''
             }
 
