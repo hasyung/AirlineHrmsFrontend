@@ -254,7 +254,7 @@ NbFilterDirective = ()->
                     <div flex></div>
                     <md-button class="md-primary md-raised" nb-dialog template-url="partials/component/table/save_filter_dialog.html">保存</md-button>
                     <md-select ng-model="filter.serializedFilter"
-                    ng-change="filter.restoreFilter(filter.serializedFilter.parse())" placeholder="请选择筛选条件">
+                    ng-change="filter.restoreFilter(filter.serializedFilter.parse());search(filter.serializedFilter.parse())" placeholder="请选择筛选条件">
                         <md-option ng-value="f" ng-repeat="f in filter.filters">{{f.name}}</md-option>
                     </md-select>
                 </div>
