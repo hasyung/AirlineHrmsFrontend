@@ -380,8 +380,8 @@ nbGridDirective = ($parse)->
             # paginationTemplate: ''' ''' #分页组件模板， 需要集成 ui-grid-paper
             # totalItems: xxx
             paginationCurrentPage: 1
-            paginationPageSizes: [20, 40, 80]
-            paginationPageSize: 20
+            paginationPageSizes: [20, 40, 60, 80]
+            paginationPageSize: 60
 
             onRegisterApi: (gridApi) ->
 
