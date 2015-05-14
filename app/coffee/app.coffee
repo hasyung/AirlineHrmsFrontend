@@ -11,7 +11,6 @@ deps = [
     # 'ui.router'
     'ct.ui.router.extras'
     'mgo-angular-wizard'
-    'mgcrea.ngStrap.datepicker'
     'ngDialog'
     'ui.select'
     'ui.grid'
@@ -140,21 +139,10 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
         }
 
     ]
-    #FIX! angular 1.4 feature , datepicker not supported 1.4 now. cause ngAnimate has many break changes in 1.4
     # $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike'
-
-datepickerConf = ($datepickerProvider)->
-    angular.extend($datepickerProvider.defaults, {
-        dateFormat: 'yyyy-MM-dd'
-        autoclose: true
-        container: 'body'
-        # dateType: 'string'
-    })
-
 
 App
     .config ['$provide', 'ngDialogProvider', appConf]
-    .config ['$datepickerProvider', datepickerConf]
     .config ['restmodProvider', restConf]
     .config ['$mdThemingProvider', mdThemingConf]
     .config ['$stateProvider','$urlRouterProvider','$locationProvider', '$httpProvider', routeConf]

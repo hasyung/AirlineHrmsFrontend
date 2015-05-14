@@ -42,7 +42,6 @@
     "angular-filter": "~0.5.1",
     "AngularJS-Toaster": "~0.4.9",
     "angular-bootstrap": "~0.12.0",
-    "angular-strap": "~2.2.1",
     "sweetalert": "~0.4.1",
     "ngDialog": "https://github.com/sandwich99/ngDialog.git#e116ff98e5843ab2f98d5206476f967efd4ca7f9",
     "bootstrap-sass": "~3.3.3",
@@ -50,6 +49,7 @@
     "ng-flow": "~2",
     "underscore.string": "~3.0.3",
     "d3": "~3.5.5",
-    "print-area": "~2.4.1"
+    "print-area": "~2.4.1",
+    "bootstrap-datepicker": "~1.4.0"
   }
 }
