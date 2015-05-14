@@ -50,6 +50,7 @@
 
 .ngdialog {
     bottom: 0;
+    font-family: $font-family-sans-serif;
     left: 0;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
@@ -57,7 +58,6 @@
     right: 0;
     top: 0;
     z-index: 70;
-    font-family: $font-family-sans-serif;
 
     //关闭过程中的动画
     &.ngdialog-closing {
@@ -287,6 +287,7 @@
             background: #fff;
             color: $text-color;
             font-family: $font-family-sans-serif;
+            height: 100%;
             min-height: 100%;
             position: absolute;
             right: 0;

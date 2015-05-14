@@ -290,6 +290,17 @@
 }
 
 .notification-center {
+    background-color: rgb(245, 245, 245);
+    height: 100%;
+
+    &:after {
+        background-color: inherit;
+        bottom: 0;
+        position: absolute;
+        top: 0;
+        z-index: -1;
+    }
+
     .md-toolbar-tools span {
         color: #fff;
     }
@@ -302,7 +313,7 @@
     .nt-content {
         padding: 20px;
 
-        md-content {
+        >div {
             margin-bottom: 20px;
         }
     }
@@ -336,156 +347,3 @@
         }
     }
 }
-
-// .navi-root {
-//     min-width: 200px;
-//     width: 200px;
-
-//     //左边主导航颜色 皮肤
-//     &.bg-black {
-//         background-color: #3a3f51;
-
-//         .nav>li>a {
-//             color: #adb2c4;
-
-//             &:hover {
-//                 background-color: #262b3c;
-//                 color: #fff;
-
-//                 >i {
-//                     color: #fff;
-//                 }
-//             }
-//         }
-
-//         .dk {
-//             background-color: #2e3344;
-//         }
-
-//         .text-muted {
-//             color: #8088a4 !important;
-//         }
-
-//         .nav-text-color2 {
-//             color: #51c6ea;
-//         }
-
-//         .nav-text-color3 {
-//             color: #adb2c4;
-//         }
-//     }
-
-//     &.md-locked-open {
-//         min-width: 200px;
-//         width: 200px;
-//     }
-
-//     .navi-root-header {
-//         height: 50px;
-//         min-height: 50px;
-//     }
-// }
-
-// .top-menu-bar {
-//     box-shadow: 1px 1px 10px 1px #aaa;
-//     z-index: 70;
-
-//     .badge {
-//         &.bg-danger {
-//             background-color: #f05050;
-//             color: #fff;
-//         }
-//     }
-
-//     &.md-default-theme {
-//         background-color: #fff;
-//         height: 50px;
-//         min-height: 50px;
-//     }
-
-//     .nav>li>a {
-//         color: #363f44;
-//         font-size: $font-size-md;
-//         height: 50px;
-//     }
-// }
-
-// .nav-sub {
-//     @include transition(all .2s ease-in-out 0s);
-//     height: 0;
-//     margin-left: -20px;
-//     opacity: 0;
-//     overflow: hidden;
-
-//     .active &,
-//     .app-aside-folded li:hover &,
-//     .app-aside-folded li:focus &,
-//     .app-aside-folded li:active & {
-//         height: auto !important;
-//         margin-left: 0;
-//         opacity: 1;
-//         overflow: auto;
-//     }
-// }
-
-// .nav-sub-header {
-//     display: none !important;
-
-//     a {
-//         padding: floor(($app-aside-folded-nav-height - $line-height-computed)/2) 20px;
-//     }
-// }
-
-// .navi {
-//     .nav {
-//         li {
-//             display: block;
-//             position: relative;
-
-//             &.active {
-//                 >a {
-//                     background-color: #262b3c;
-//                     color: #fff;
-//                 }
-//             }
-
-//             li {
-//                 a {
-//                     padding-left: $app-aside-nav-height + 15px;
-//                 }
-//             }
-
-//             a {
-//                 @include transition(background-color .2s ease-in-out 0s);
-//                 display: block;
-//                 font-weight: normal;
-//                 padding: floor(($app-aside-nav-height - $line-height-computed)/2) 20px;
-//                 position: relative;
-//                 text-transform: none;
-
-//                 .badge,
-//                 .label {
-//                     font-size: 11px;
-//                     margin-top: 2px;
-//                     padding: 2px 5px;
-//                 }
-
-//                 > i {
-//                     float: left;
-//                     line-height: $app-aside-nav-height;
-//                     margin: floor(-($app-aside-nav-height - $line-height-computed)/2) -10px;
-//                     margin-right: 5px;
-//                     overflow: hidden;
-//                     position: relative;
-//                     text-align: center;
-//                     width: $app-aside-nav-height;
-
-//                     &:before {
-//                         position: relative;
-//                         z-index: 2;
-//                     }
-//                 }
-//             }
-//         }
-//     }
-// }
