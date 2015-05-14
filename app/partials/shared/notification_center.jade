@@ -1,9 +1,9 @@
-div.notification-center(md-theme="hrms")
+div.notification-center.md-background(md-theme="hrms")
     md-toolbar.md-warn
         .md-toolbar-tools
             span 通知中心
-    md-content.nt-content.md-background
-        md-content
+    md-content.nt-content
+        div
             md-subheader 新消息
             .nt-msg-item
                 .nt-item-desc
@@ -21,7 +21,7 @@ div.notification-center(md-theme="hrms")
                         | 您的退养申请已与2015-05-02在部门领导的审批节点被审批通过！
                 .nt-item-time
                     | 2015-01-01
-        md-content
+        div
             md-subheader 已读消息
             .nt-msg-item
                 .nt-item-desc

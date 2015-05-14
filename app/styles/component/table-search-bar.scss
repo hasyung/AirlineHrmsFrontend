@@ -177,6 +177,7 @@ md-content.search-container {
 
     .ui-grid-pager-panel {
         border-top: 1px solid #000;
+        padding: 0;
 
         .ui-grid-pager-container {
             position: absolute;
@@ -256,6 +257,7 @@ md-content.search-container {
 
         .ui-grid-pager-count-container {
             float: left;
+            margin-top: 0;
 
             span {
                 color: $text-hint;
