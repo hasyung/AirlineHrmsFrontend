@@ -160,11 +160,10 @@ class PersonnelCtrl extends nb.Controller
     search: (tableState) ->
         @employees.$refresh(tableState)
 
-    getExportParams: ->
-        @employees
-                .filter (emp) -> emp.isSelected
-                .map (emp) -> emp.id
-                .join(',')
+    getSelectsIds: () ->
+        rows = @scope.$gridApi.selection.getSelectedGridRows()
+        rows.map (row) -> return row.entity.$pk
+
 
 class NewEmpsCtrl extends nb.Controller
     @.$inject = ['$scope', 'Employee', 'Org']
@@ -286,11 +285,10 @@ class NewEmpsCtrl extends nb.Controller
         @employees.$build(employee).$save().$then ()->
             self.loadInitailData()
 
-    getExportParams: ->
-        @employees
-                .filter (emp) -> emp.isSelected
-                .map (emp) -> emp.id
-                .join(',')
+    getSelectsIds: () ->
+        rows = @scope.$gridApi.selection.getSelectedGridRows()
+        rows.map (row) -> return row.entity.$pk
+
     search: (tableState) ->
         tableState = @mergeParams(tableState)
         @employees.$refresh(tableState)

@@ -11,19 +11,17 @@ angular.module 'nb.directives'
                     elem.toggleClass 'active'
         }
     ]
-    .directive 'download', [() ->
+    .directive 'nbDownload', [() ->
 
         postLink = (scope, elem, attrs)->
 
             elem.on 'click', ()->
-                console.log scope.paramGetter()
-                # elem.attr 'href', "http://www.baidu.com"
+                selectedRows = scope.paramGetter()
+                paramString = selectedRows.join(',')
+                hrefString = attrs['urlPrefix'].replace(/#param#/, paramString)
+                elem.attr('href', hrefString)
 
         return {
-            # replace: true
-            template: (elem, attrs) ->
-                urlPrefix = attrs.urlPrefix
-                return "<md-button href='#{urlPrefix}'>#{elem.text()}</md-button>"
             scope: {
                 paramGetter: "&"
             }
@@ -489,3 +487,4 @@ angular.module 'nb.directives'
         }
 
     ]
+

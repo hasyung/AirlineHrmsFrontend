@@ -1,53 +1,3 @@
-//- .app-content-wrapper(flex)
-//-     div(nb-table='ctrl.employees' nb-safe-src="ctrl.employees")
-//-         .search-container(nb-search)
-//-             div(nb-predicate="姓名" predicate-attr="name")
-//-                 input(name="name" placeholder="姓名" ng-model="name")
-//-             div(nb-predicate="员工编号" predicate-attr="employee_no")
-//-                 input(name="employee_no" placeholder="工号" ng-model="employee_no")
-//-             div(nb-predicate="机构" predicate-attr="department_ids")
-//-                 ui-select(multiple ng-model="$parent.department_ids" theme="select2" style="width:600px" reset-search-input="true")
-//-                     ui-select-match(placeholder="请输入机构名称") {{ $item.name }}
-//-                     ui-select-choices(repeat="org.id as org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
-
-//-             div(nb-predicate="岗位名称" predicate-attr="position_name")
-//-                 input(name="position_name" placeholder="岗位名称" ng-model="position_name")
-
-//-             //- div(nb-predicate="员工分类" predicate-attr="category_id")
-//-             //-     input(name="category_id" placeholder="员工分类" ng-model="category_id")
-
-//-             div(nb-predicate="岗位通道" predicate-attr="channel_id")
-//-                 nb-dropdown( ng-model="channel_id", remote-key="channels", map="$item.id" name="channel_id" required)
-
-//-             div(nb-predicate="属地" predicate-attr="location_id")
-//-                 nb-dropdown( ng-model="location_id", remote-key="locations", map="$item.id" name="location_id" required)
-
-//-             div(nb-predicate="出生日期" predicate-attr="birthday")
-//-                 input(ng-model="birthday.from" bs-datepicker)
-//-                 span.gap 至
-//-                 input(ng-model="birthday.to" bs-datepicker)
-//-             div(nb-predicate="入职时间" predicate-attr="join_scal_date")
-//-                 input(ng-model="join_scal_date.from" bs-datepicker)
-//-                 span.gap 至
-//-                 input(ng-model="join_scal_date.to" bs-datepicker)
-//-         .search-btn-group
-//-             md-button.md-raised.purple(nb-pipe="ctrl.search(tableState)") 开始搜索
-//-             .right-align.btn-export.nb-dropdown.pull-right(simple-dropdown, btn-text="导出")
-//-                 li( role="presentation")
-//-                     a(role="menuitem" ng-href="/api/employees/export_to_xls" ) 导出全部人员明细
-//-                 li( role="presentation" ng-if="ctrl.getExportParams().length != 0")
-//-                     a(role="menuitem" ng-href="/api/employees/export_to_xls?employee_ids={{ ctrl.getExportParams() }}" ) 导出所选人员
-//-                 li( role="presentation")
-//-                     a(role="menuitem" ng-href="/api/employees/export_resume" ) 导出全部人员履历
-//-                 li( role="presentation" ng-if="ctrl.getExportParams().length != 0")
-//-                     a(role="menuitem" ng-href="/api/employees/export_resume?employee_ids={{ ctrl.getExportParams() }}" ) 导出所选人员的履历
-//-             md-button.md-raised.skyblue.pull-right(
-//-                 has-permission="employees_create"
-//-                 nb-panel
-//-                 template-url="partials/personnel/personnel_entry.html"
-//-                 locals="{personnelCtrl: ctrl}"
-//-             ) 新员工入职
-
 .app-content-wrapper(flex style="height: 700px;")
 
     div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
@@ -65,13 +15,29 @@
                     ) 新员工入职
                 //- md-button.md-primary.md-raised 导出
                 span
-                    md-dropmenu
-                        md-drop-label
+                    md-dropmenu(ng-init="selectedRows=[]")
+                        md-drop-label(ng-click="selectedRows = ctrl.getSelectsIds()")
                             md-button.md-primary.md-raised 导出
                         md-drop-option()
-                            md-button(ng-href="/api/employees/export_to_xls") 导出全部岗位
+                            md-button(ng-href="/api/employees/export_to_xls") 导出全部人员
+                        md-drop-option(ng-if="selectedRows.length > 0")
+                            md-button(
+                                nb-download
+                                url-prefix="/api/employees/export_to_xls?employee_ids=#param#"
+                                param-getter="ctrl.getSelectsIds()"
+                                href="javascript:;"
+                                download
+                            ) 导出所选人员
                         md-drop-option()
-                            md-button(ng-href="/api/employees/export_resume") 导出全部岗位描述书
+                            md-button(ng-href="/api/employees/export_resume") 导出全部人员履历
+                        md-drop-option(ng-if="selectedRows.length > 0")
+                            md-button(
+                                nb-download
+                                url-prefix="/api/employees/export_resume?employee_ids=#param#"
+                                param-getter="ctrl.getSelectsIds()"
+                                href="javascript:;"
+                                download
+                            ) 导出全部人员履历
                     //- .nb-dropdown.md-primary.md-raised(simple-dropdown, btn-text="导出")
                     //-     li( role="presentation")
                     //-         a(role="menuitem" ng-href="/api/employees/export_to_xls" ) 导出全部人员明细
@@ -82,7 +48,7 @@
                     //-     li( role="presentation" ng-if="ctrl.getExportParams().length != 0")
                     //-         a(role="menuitem" ng-href="/api/employees/export_resume?employee_ids={{ ctrl.getExportParams() }}" ) 导出所选人员的履历
 
-        div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.employees")
+        div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection safe-src="ctrl.employees")
 
 
 
