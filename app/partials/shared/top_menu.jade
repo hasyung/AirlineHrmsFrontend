@@ -4,8 +4,8 @@ md-toolbar.top-menu-bar.md-warn(md-theme="hrms")
             img(src="../../images/logo.png")
         span(flex)
         span
-            div.top-notification.top-btn-wrap(ng-init="isOpen = false" ng-class="{'open': isOpen}")
-                md-button(ng-click="isOpen = !isOpen")
+            div.top-notification.top-btn-wrap(notification ng-class="{'open': isOpen}")
+                md-button()
                     md-icon(md-svg-icon="/images/svg/bell-outline.svg")
                 .ms-count 10
                 ul.top-dropdown
