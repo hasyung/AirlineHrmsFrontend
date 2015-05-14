@@ -3,33 +3,45 @@ md-toolbar.top-menu-bar.md-warn(md-theme="hrms")
         span.logo
             img(src="../../images/logo.png")
         span(flex)
-        span.dropdown
-            a.dropdown-toggle(href='')
-                i.icon-bell.fa-fw
-                span.visible-xs-inline 提醒
-                span.badge.badge-sm.up.bg-danger.pull-right-xs 1
-            .dropdown-menu.w-xl.animated.fadeInUp
-                .panel.bg-white
-                    .panel-heading.b-light.bg-light
-                        strong
-                            | 你有
-                            span 1
-                            | 项提醒
-                    .list-group
-                        a.media.list-group-item(href='')
-                            span.pull-left.thumb-sm
-                                img.img-circle(src='img/a0.jpg', alt='...')
-                            span.media-body.block.m-b-none
-                                | 新员工入职培训
-                                br
-                                small.text-muted 10 分钟之前
-                    .panel-footer.text-sm
-                        a.pull-right(href='')
-                            i.fa.fa-cog
-                        a(href='#notes', data-toggle='class:show animated fadeInRight') 查看所有提醒
         span
-            ul.nav.navbar-nav(ng-controller="AuthController as ctrl")
-                .right-align.nb-dropdown(user-info-dropdown)
+            div.top-notification.top-btn-wrap(ng-init="isOpen = false" ng-class="{'open': isOpen}")
+                md-button(ng-click="isOpen = !isOpen")
+                    md-icon(md-svg-icon="/images/svg/bell-outline.svg")
+                .ms-count 10
+                ul.top-dropdown
+                    li
+                        a
+                            .dropdown-item
+                                .dd-item-desc
+                                    span 员工退休
+                                    span 2015-5-19
+                                .dd-item-count 10
+                    li
+                        a
+                            .dropdown-item
+                                .dd-item-desc
+                                    span 员工退养
+                                    span 2015-5-19
+                                .dd-item-count 10
+                    li
+                        a
+                            .dropdown-item
+                                .dd-item-desc
+                                    span 合同管理
+                                    span 2015-5-19
+                                .dd-item-count 10
+        span
+            div.top-messages.top-btn-wrap
+                md-button(
+                    nb-panel
+                    template-url="partials/shared/notification_center.html"
+
+                )
+                    md-icon(md-svg-icon="/images/svg/email-outline.svg")
+                .ms-count 10
+        span
+            ul.user-menu(ng-controller="AuthController as ctrl")
+                .nb-dropdown(user-info-dropdown)
                     li()
                         a(nb-dialog template-url="partials/auth/change_pwd.html") 修改密码
                     li()
