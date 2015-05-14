@@ -128,6 +128,7 @@
 .top-menu-bar {
     height: 64px;
     min-height: 64px;
+    z-index: 3;
 
     .md-toolbar-tools {
         padding-left: 0;
@@ -141,6 +142,132 @@
             margin-top: -10px;
         }
     }
+
+    .top-messages {
+        .md-button {
+            margin-left: 0;
+        }
+    }
+
+    .top-notification {
+        .top-dropdown {
+            background-color: #fff;
+            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2);
+            margin: 0;
+            min-height: 0;
+            padding: 0;
+            padding-top: 5px;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            width: 320px;
+
+            .dropdown-item {
+                border-bottom: 1px solid rgba(0, 0, 0, .06);
+                height: 54px;
+                padding: 10px 20px;
+                position: relative;
+                width: 100%;
+
+                .dd-item-desc {
+                    font-size: 14px;
+
+                    span {
+                        display: block;
+
+                        &:last-child {
+                            color: $text-muted;
+                            font-size: 12px;
+                            margin-top: 5px;
+                        }
+                    }
+                }
+
+                .dd-item-count {
+                    background-color: #fbca41;
+                    border-radius: 8px;
+                    color: #fff;
+                    font-size: $font-size-sm;
+                    height: 16px;
+                    position: absolute;
+                    right: 20px;
+                    text-align: center;
+                    top: 19px;
+                    width: 20px;
+                }
+            }
+        }
+    }
+
+    .top-btn-wrap {
+        position: relative;
+
+        .md-button {
+            height: 64px;
+            width: 64px;
+
+            md-icon {
+                color: #fff;
+            }
+        }
+
+        .ms-count {
+            background-color: #fbca41;
+            border-radius: 8px;
+            font-size: $font-size-sm;
+            height: 16px;
+            position: absolute;
+            right: 8px;
+            text-align: center;
+            top: 14px;
+            width: 20px;
+        }
+    }
+
+    .user-menu {
+        height: 64px;
+        margin: 0;
+        margin-left: 10px;
+        margin-right: 20px;
+        padding-left: 0;
+        padding-right: 10px;
+        padding-top: 20px;
+        position: relative;
+
+        .nb-dropdown {
+            .dropdown-toggle {
+                color: #fff;
+
+                .avatar {
+                    img {
+                        border-radius: 20px;
+                    }
+                }
+            }
+
+            .dropdown-menu {
+                background-color: #fff;
+                box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2);
+                color: $text-muted;
+                font-size: 14px;
+                padding: 10px 0;
+                position: absolute;
+                text-align: left;
+                top: 64px;
+                width: 100%;
+
+                li a {
+                    display: block;
+                    padding: 5px 0 5px 10px;
+
+                    &:hover {
+                        background-color: rgba(0, 0, 0, .1);
+                    }
+                }
+            }
+        }
+    }
+
 }
 
 
