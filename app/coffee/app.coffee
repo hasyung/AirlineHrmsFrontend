@@ -15,6 +15,7 @@ deps = [
     'ui.grid.selection'
     'ui.grid.pinning'
     'ui.grid.pagination'
+    'ui.grid.autoResize'
     'ngAnimate'
     'ngAria'
     'ngSanitize'

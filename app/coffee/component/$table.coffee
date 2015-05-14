@@ -440,8 +440,11 @@ nbGridDirective = ($parse)->
             )
         # scope.$watch('gridOptions.paginationPageSize') #watch 每页数据
 
+    #WORKAROUND, issue#27, 当ui-grid-selection 存在时， resize 会存在使table错位的BUG
+    #暂时使用 ui-grid-auto-resize 插件 每250ms定时resize，修复改BUG
+    #如果有性能问题， 再修复
     nbGridTemplate =  '''
-        <div ui-grid="gridOptions" #plugins# ui-grid-pagination></div>
+        <div ui-grid="gridOptions" #plugins# ui-grid-pagination ui-grid-auto-resize></div>
     '''
 
     return {

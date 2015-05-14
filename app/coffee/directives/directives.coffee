@@ -487,7 +487,6 @@ angular.module 'nb.directives'
         }
 
     ]
-<<<<<<< HEAD
     # MOCK angular-strap datepicker directive
     .directive 'bsDatepicker', ->
 
@@ -510,6 +509,3 @@ angular.module 'nb.directives'
             link: postLink
             require: 'ngModel'
         }
-=======
-
->>>>>>> develop
