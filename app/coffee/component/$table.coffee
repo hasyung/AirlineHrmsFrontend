@@ -95,7 +95,11 @@ class NbFilterCtrl
             <muti-enum-search ng-model="${ name }" enum-key="${params.type}"></muti-enum-search>
         '''
         'muti-text-search': '''
-            <md-chips ng-init="${ name } = []" ng-model="${ name }"></md-chips>
+            <md-chips ng-init="${ name } = ${ name }? ${ name }: []" ng-model="${ name }">
+                <md-chip-template>
+                    <span ng-bind="$chip"></span>
+                </md-chip-template>
+            </md-chips>
         '''
 
 
