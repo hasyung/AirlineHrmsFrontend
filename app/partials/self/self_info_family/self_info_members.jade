@@ -66,7 +66,7 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                 md-divider
             md-content.form-material-section.form-table-container(ng-init="vm.other = currentUser.familymembers.$search({relation: 'other'}); newOther = []")
                 md-subheader 父母、兄妹、配偶父母情况
-                table.table
+                table.table.table-hover.table-mc-light-blue.table-bordered
                     thead
                         tr
                             th 姓名
