@@ -2,8 +2,44 @@
     .tl-item {
         .tl-content {
             @include transition(all .5s linear);
+            border: 1px solid rgba(0, 0, 0, .1);
+            border-radius: 4px;
             cursor: pointer;
+            padding: 10px;
+            position: relative;
             width: 400px;
+
+            .arrow {
+                @include transition(all .5s linear);
+                border-color: transparent;
+                border-style: solid;
+                border-width: 9px;
+                display: block;
+                height: 0;
+                position: absolute;
+                width: 0;
+
+                &.left {
+                    border-left-width: 0;
+                    border-right-color: rgba(0, 0, 0, .1);
+                    left: -9px;
+                }
+
+                &:after {
+                    border-color: transparent;
+                    border-left-width: 0;
+                    border-right-color: #fff;
+                    border-style: solid;
+                    border-width: 8px;
+                    bottom: -8px;
+                    content: '';
+                    display: block;
+                    height: 0;
+                    left: -7px;
+                    position: absolute;
+                    width: 0;
+                }
+            }
 
             h1 {
                 color: #000;
@@ -23,16 +59,49 @@
 
             p {
                 font-size: $font-size-base;
-                // border-top: 1px dotted #cee0eb;
                 padding-top: 10px;
             }
-
-            .arrow.left {
-                z-index: 1;            }
         }
 
         .tl-wrap {
-            margin-left: 30px;
+            border-left: 4px solid rgba(0, 0, 0, .1);
+            margin-left: 31px;
+            padding-left: 16px;
+            padding-top: 20px;
+            position: relative;
+
+            .tl-point {
+                background-color: #fff;
+                border-radius: 50%;
+                height: 18px;
+                left: -11px;
+                position: absolute;
+                top: 30px;
+                width: 18px;
+
+                &:after {
+                    background-color: rgba(0, 0, 0, .1);
+                    border-radius: 50%;
+                    content: '';
+                    height: 12px;
+                    left: 3px;
+                    position: absolute;
+                    top: 3px;
+                    width: 12px;
+                }
+
+                &:before {
+                    background-color: #fff;
+                    border-radius: 50%;
+                    content: '';
+                    height: 6px;
+                    left: 6px;
+                    position: absolute;
+                    top: 6px;
+                    width: 6px;
+                    z-index: 2;
+                }
+            }
         }
 
         .bg-info {
@@ -44,24 +113,21 @@
         }
 
         &.active {
-            .tl-wrap {
-                border-color: #31b0d5;
-            }
-
             .tl-content {
-                background-color: #31b0d5;
-                color: #fff;
-
-                h1,
-                h2,
-                span {
-                    color: #fff;
-                }
+                background-color: #daedf8;
+                border: 1px solid rgba(0, 0, 0, .1);
+                border-radius: 4px;
 
             }
 
             .arrow.left:after {
-                border-right-color: #31b0d5;
+                border-right-color: #daedf8;
+            }
+
+            .tl-point {
+                &:after {
+                    background-color: #7266ba;
+                }
             }
         }
     }
@@ -71,7 +137,10 @@
         width: inherit;
 
         .year {
+            border: 1px solid rgba(0, 0, 0, .1);
             border-radius: 25px;
+            color: #23b7e5;
+            display: inline-block;
             padding: 6px 14px;
         }
     }
