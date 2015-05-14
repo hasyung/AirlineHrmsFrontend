@@ -11,21 +11,25 @@ angular.module 'nb.directives'
                     elem.toggleClass 'active'
         }
     ]
-    .directive 'exportUrl', [() ->
+    .directive 'download', [() ->
 
         postLink = (scope, elem, attrs)->
 
             elem.on 'click', ()->
-                console.log scope.getSelectedIds()
+                console.log scope.paramGetter()
                 # elem.attr 'href', "http://www.baidu.com"
 
         return {
+            # replace: true
+            template: (elem, attrs) ->
+                urlPrefix = attrs.urlPrefix
+                return "<md-button href='#{urlPrefix}'>#{elem.text()}</md-button>"
             scope: {
-                getSelectedIds: "&"
+                paramGetter: "&"
             }
             link: postLink
         }
-        
+
     ]
 
     .directive 'dragOn', [ '$window', ($window) ->
