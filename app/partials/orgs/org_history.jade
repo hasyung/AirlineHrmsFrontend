@@ -14,21 +14,20 @@ md-dialog.org_history
             //- ul.timeline(ng-repeat="yearItem in ctrl.changeLogs")
             ul.timeline(ng-repeat="yearLogs in dialog.historyData.changeLogs")
                 li.tl-header
-                    div.btn.btn-info.year {{::yearLogs.changeYear}}
-
-                    span.pull-right 有{{::yearLogs.logs.length || 0}}次变动
+                    div.year {{::yearLogs.changeYear}}
+                    span 有{{::yearLogs.logs.length || 0}}次变动
                 li.tl-item(ng-repeat="log in yearLogs.logs track by $index", ng-click="ctrl.expandLog(log)", ng-class="{'active': log.active}")
                     div.tl-wrap
                         div.tl-content.panel.padder.b-a
-                            span.arrow.left.pull-up
+                            span.arrow.left
                             div
-
                                 h1 {{log.title}}
                                     span.pull-right 依据文件: {{log.oa_file_no}}
                                 h2 {{::log.created_at | date: 'MM月dd日'}} - {{::log.dep_name}}
                                 ul(ng-show="log.active")
                                     li(ng-repeat="step in log.step_desc track by $index")
                                         p {{::step}}
+                        div.tl-point
 
     .md-actions
         md-button(ng-click='dialog.close()') 取 消

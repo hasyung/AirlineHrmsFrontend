@@ -1,12 +1,18 @@
 * {
     outline: 0;
 }
+
+html,
+body {
+    font-family: '微软雅黑';
+}
 //重置material design影响标签的样式
 fieldset {
     border: 0;
 }
 
 a {
+    color: $a-color;
     text-decoration: none;
 
     &:hover {
