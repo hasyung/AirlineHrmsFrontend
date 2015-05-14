@@ -26,6 +26,14 @@ class EnumService
             res = find(typedEnums, (e) -> e.id == id)
             label = if angular.isObject(res) then res.label else "无"
 
+        @getEnumsByIds = (ids, type)->
+            self = @
+            typeEnums = @get(type)
+            reduceEnums = (res, id, $index) ->
+                res.push _.find typeEnums, {id: id}
+                return res
+            ids.reduce(reduceEnums, [])
+
 
 
 

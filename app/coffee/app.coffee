@@ -15,6 +15,7 @@ deps = [
     'ui.grid.selection'
     'ui.grid.pinning'
     'ui.grid.pagination'
+    'ui.grid.autoResize'
     'ngAnimate'
     'ngAria'
     'ngSanitize'
@@ -30,6 +31,7 @@ deps = [
     'nb.filters'
     'nb.component'
     'flow'
+    'ngMaterialDropmenu'
     #'nb.controller.site'
 ]
 resources = angular.module('resources',[])
