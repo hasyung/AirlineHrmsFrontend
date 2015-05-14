@@ -256,6 +256,13 @@ class OrgStore extends nb.Service
     get: ->
         return @orgs
 
+    getOrgsByIds: (ids) ->
+        self = @
+        reduceOrgs = (res, id, $index) ->
+            res.push _.find self.orgs, {id: id}
+            return res
+        ids.reduce(reduceOrgs, [])
+
     queryMatchedOrgs: (text) ->
         @orgs.filter (org) -> s.include(org.fullName, text)
 

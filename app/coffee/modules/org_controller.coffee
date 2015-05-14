@@ -205,8 +205,11 @@ class OrgsCtrl extends nb.Controller
         @resetData()
 
     resetData: () ->
+        self = @
         @isHistory = false
-        @orgs.$refresh({'edit_mode': true})
+        @orgs.$refresh({'edit_mode': true}).$then ()->
+            self.treeRootOrg = _.find self.orgs, (org) -> org.xdepth == 1
+            self.currentOrg = self.treeRootOrg
 
     rootTree: () ->
         treeRootOrg = _.find @orgs, (org) -> org.xdepth == 1
@@ -253,6 +256,7 @@ class OrgsCtrl extends nb.Controller
         if @currentLog
             @orgs.$refresh({version: @currentLog.id}).$then ()->
                 self.isHistory = true
+                self.treeRootOrg = _.find self.orgs, (org) -> org.xdepth == 1
                 self.currentOrg = self.treeRootOrg
     expandLog: (log)->
         # 防止UI中出现多个被选中的item
@@ -378,10 +382,9 @@ class PositionCtrl extends nb.Controller
         ]
 
 
-    getSelectsIds: ()->
-        @positions
-            .filter (pos) -> return pos.isSelected
-            .map (pos) -> return pos.id
+    getSelectsIds: () ->
+        rows = @scope.$gridApi.selection.getSelectedGridRows()
+        rows.map (row) -> return row.entity.$pk
 
     posTransfer: (selectOrg, isConfirm) -> #将岗位批量划转到另外一个机构下
         return if !isConfirm

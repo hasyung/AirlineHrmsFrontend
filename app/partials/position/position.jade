@@ -1,69 +1,3 @@
-//- .app-content-wrapper(flex)
-//-     div(nb-table='ctrl.positions' nb-safe-src="ctrl.positions")
-//-         div.search-container(nb-search="positions-all")
-//-             div(nb-predicate="岗位名称" predicate-attr="name")
-//-                 input(name="name" placeholder="岗位名称" ng-model="name")
-//-             div(nb-predicate="岗位通道" predicate-attr="channel_id")
-//-                 nb-dropdown( ng-model="channel_id", remote-key="channels", map="$item.id" name="channel")
-//-             //- 后端需要字符串的true false
-//-             div(nb-predicate="是否超编" predicate-attr="staffing_surpass")
-//-                 md-select(ng-model="staffing_surpass", ng-init="options=['false', 'true']")
-//-                     md-select-label {{staffing_surpass=='true' ?'是':'否'}}
-//-                     md-option(ng-value="staffing_surpass" ng-repeat="staffing_surpass in options") {{staffing_surpass=='true'?'是':'否'}}
-//-             div(nb-predicate="创建时间" predicate-attr="created_at")
-//-                 input(ng-model="created_at.from" bs-datepicker)
-//-                 span.gap 至
-//-                 input(ng-model="created_at.to" bs-datepicker)
-//-             div(nb-predicate="机构" predicate-attr="department_ids")
-//-                 ui-select(multiple ng-model="$parent.department_ids" theme="select2" style="width:600px" reset-search-input="true")
-//-                     ui-select-match(placeholder="请输入机构名称") {{ $item.name }}
-//-                     ui-select-choices(repeat="org.id as org in allOrgs | filter:$select.search | limitTo: 5") {{ org.name }}
-//-             //- ul(nb-predicate-advanced)
-//-             //-     li(ng-model="has_phone") 有电话
-//-             //-     li(ng-model="has_number") 有工号
-//-         .search-btn-group
-//-             md-button.md-raised.purple(nb-pipe="ctrl.search(tableState)") 开始搜索
-//-             .right-align.btn-export.nb-dropdown.pull-right(simple-dropdown, btn-text="导出")
-//-                 li( role="presentation")
-//-                     a(role="menuitem" ng-href="/api/positions/export_to_xls" ) 导出全部岗位
-//-                 li( role="presentation" ng-if="ctrl.getExportParams().length != 0")
-//-                     a(role="menuitem" ng-href="/api/positions/export_to_xls?position_ids={{ctrl.getExportParams()}}" ) 导出所选岗位
-//-                 li( role="presentation")
-//-                     a(role="menuitem" ng-href="/api/positions/export_specification_pdf" ) 导出全部岗位描述书
-//-                 li( role="presentation" ng-if="ctrl.getExportParams().length != 0")
-//-                     a(role="menuitem" ng-href="/api/positions/export_specification_pdf?position_ids={{ctrl.getExportParams()}}" ) 导出所选岗位描述书
-//-         .table-container
-//-             h4 岗位信息列表
-//-             table.table.table-striped.custom-table
-//-                 thead
-//-                     tr
-//-                         th(select-row="" mode='all')
-//-                         th  岗位名称
-//-                         th  所属机构
-//-                         th  通道
-//-                         th  编制数
-//-                         th  工作时间
-//-                         th  OA文件编号
-//-                 tbody
-//-                     tr(ng-repeat="pos in ctrl.positions track by pos.id")
-//-                         td(select-row="pos" mode="multiple")
-//-                         td.org-post
-//-                             a(
-//-                                 nb-panel
-//-                                 template-url="partials/position/position_detail.html"
-//-                                 locals="{'position': pos}"
-//-                                 ng-bind="pos.name")
-//-                         td(ng-bind="pos.department.name")
-//-                         td(ng-bind="pos.channel.displayName")
-//-                         //- td(ng-class="{'invalid': pos.budgetedStaffing < pos.staffing}") {{pos.staffing}}/{{pos.budgetedStaffing}}
-//-                         td.org-preparation
-//-                           span(ng-class="{'overstaffed': pos.overstaffedNum > 0}") {{pos.staffing}}
-//-                           span /{{pos.budgetedStaffing}}
-//-                         td(ng-bind="pos.schedule.displayName")
-//-                         td(ng-bind="pos.oaFileNo")
-//-         .custom-pages(nb-pagination="ctrl.positions.$metadata")
-
-
 .app-content-wrapper(flex style="height: 700px;")
     div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
     div.ui-grid-container
@@ -71,17 +5,30 @@
             .md-toolbar-tools
                 h2 岗位信息列表
                 div(flex)
-                //- md-button.md-primary.md-raised 导出
                 span
-                    .md-primary.md-raised.nb-dropdown(simple-dropdown, btn-text="导出")
-                        li( role="presentation")
-                            a(role="menuitem" ng-href="/api/positions/export_to_xls" ) 导出全部岗位
-                        li( role="presentation" ng-if="ctrl.getExportParams().length != 0")
-                            a(role="menuitem" ng-href="/api/positions/export_to_xls?position_ids={{ctrl.getExportParams()}}" ) 导出所选岗位
-                        li( role="presentation")
-                            a(role="menuitem" ng-href="/api/positions/export_specification_pdf" ) 导出全部岗位描述书
-                        li( role="presentation" ng-if="ctrl.getExportParams().length != 0")
-                            a(role="menuitem" ng-href="/api/positions/export_specification_pdf?position_ids={{ctrl.getExportParams()}}" ) 导出所选岗位描述书
-        div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.positions")
+                    md-dropmenu(ng-init="selectedRows=[]")
+                        md-drop-label(ng-click="selectedRows = ctrl.getSelectsIds()")
+                            md-button.md-primary.md-raised 导出
+                        md-drop-option()
+                            md-button(ng-href="/api/positions/export_to_xls") 导出全部岗位
+                        md-drop-option(ng-if="selectedRows.length > 0")
+                            md-button(
+                                nb-download
+                                url-prefix="/api/positions/export_to_xls?position_ids=#param#"
+                                param-getter="ctrl.getSelectsIds()"
+                                href="javascript:;"
+                                download
+                            ) 导出所选岗位
+                        md-drop-option()
+                            md-button(ng-href="/api/positions/export_specification_pdf") 导出全部岗位描述书
+                        md-drop-option(ng-if="selectedRows.length > 0")
+                            md-button(
+                                nb-download
+                                url-prefix="/api/positions/export_specification_pdf?position_ids=#param#"
+                                param-getter="ctrl.getSelectsIds()"
+                                href="javascript:;"
+                                download
+                            ) 导出所选岗位描述书
+        div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection safe-src="ctrl.positions")
 
 

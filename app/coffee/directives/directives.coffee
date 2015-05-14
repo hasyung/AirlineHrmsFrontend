@@ -11,7 +11,45 @@ angular.module 'nb.directives'
                     elem.toggleClass 'active'
         }
     ]
+    .directive 'notification', ['$document', ($doc) ->
+        return {
+            restrict: 'A'
+            link: (scope,elem,attr) ->
+                scope.isOpen = false
+                scope.toggle = (e)->
+                    e.stopPropagation()
+                    scope.$apply -> scope.isOpen = !scope.isOpen
 
+                close = -> scope.isOpen = false
+
+                elem.on 'click', scope.toggle
+                $doc.on 'click', close
+
+                scope.$on 'destroy', ()->
+                    elem.off 'click'
+                    $doc.off 'click', close
+
+                
+        }
+    ]
+    .directive 'nbDownload', [() ->
+
+        postLink = (scope, elem, attrs)->
+
+            elem.on 'click', ()->
+                selectedRows = scope.paramGetter()
+                paramString = selectedRows.join(',')
+                hrefString = attrs['urlPrefix'].replace(/#param#/, paramString)
+                elem.attr('href', hrefString)
+
+        return {
+            scope: {
+                paramGetter: "&"
+            }
+            link: postLink
+        }
+
+    ]
 
     .directive 'dragOn', [ '$window', ($window) ->
 
@@ -470,3 +508,25 @@ angular.module 'nb.directives'
         }
 
     ]
+    # MOCK angular-strap datepicker directive
+    .directive 'bsDatepicker', ->
+
+
+        postLink = (scope, elem, attrs, ngModelCtrl) ->
+
+            elem.datepicker(
+                autoclose: true
+                format: 'yyyy-mm-dd'
+
+            ).on 'changeDate', (evt) ->
+                ngModelCtrl.$setViewValue(evt.date)
+
+
+            scope.$on '$destroy', ->
+                elem.datepicker("remove")
+
+
+        return {
+            link: postLink
+            require: 'ngModel'
+        }

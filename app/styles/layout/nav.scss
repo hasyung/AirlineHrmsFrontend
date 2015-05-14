@@ -12,7 +12,24 @@
     margin-top: 0;
     padding: 0;
 
+    .type-icon {
+        margin-right: 10px;
+        margin-top: -4px;
+    }
+
     .parent-list-item {
+        border-left: 2px solid transparent;
+        -moz-transition: .25s cubic-bezier(.35, 0, .25, 1);
+        -webkit-transition: .25s cubic-bezier(.35, 0, .25, 1);
+        transition: .25s cubic-bezier(.35, 0, .25, 1);
+        -moz-transition-delay: .75s;
+        -webkit-transition-delay: .75s;
+        transition-delay: .75s;
+        -moz-transition-property: border-left;
+        -webkit-transition-property: border-left;
+        transition-property: border-left;
+
+
         &.active {
             background-color: #262b3c;
             border-left: 2px solid rgb(239, 83, 80);
@@ -26,7 +43,7 @@
                 }
             }
 
-            >menu-toggle > .md-button,
+            > menu-toggle > .md-button,
             > menu-link >.md-button {
                 color: #fff;
             }
@@ -37,6 +54,11 @@
         &.active {
             circle {
                 fill: rgb(244, 67, 54);
+            }
+
+            > menu-toggle > .md-button,
+            > menu-link >.md-button {
+                color: #fff;
             }
         }
     }
@@ -106,6 +128,7 @@
 .top-menu-bar {
     height: 64px;
     min-height: 64px;
+    z-index: 3;
 
     .md-toolbar-tools {
         padding-left: 0;
@@ -119,8 +142,200 @@
             margin-top: -10px;
         }
     }
+
+    .top-messages {
+        .md-button {
+            margin-left: 0;
+        }
+    }
+
+    .top-notification {
+        &.open {
+            background-color: rgba(255, 255, 255, .2);
+
+            md-icon {
+                color: $text-muted !important;
+            }
+
+            .top-dropdown {
+                display: block;
+            }
+        }
+
+        .top-dropdown {
+            background-color: #fff;
+            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2);
+            display: none;
+            margin: 0;
+            min-height: 0;
+            padding: 0;
+            padding-top: 5px;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            width: 320px;
+
+            .dropdown-item {
+                border-bottom: 1px solid rgba(0, 0, 0, .06);
+                height: 54px;
+                padding: 10px 20px;
+                position: relative;
+                width: 100%;
+
+                &:hover {
+                    background-color: rgba(0, 0, 0, .06);
+                }
+
+                .dd-item-desc {
+                    font-size: 14px;
+
+                    span {
+                        display: block;
+
+                        &:last-child {
+                            color: $text-muted;
+                            font-size: 12px;
+                            margin-top: 5px;
+                        }
+                    }
+                }
+
+                .dd-item-count {
+                    background-color: #fbca41;
+                    border-radius: 8px;
+                    color: #fff;
+                    font-size: $font-size-sm;
+                    height: 16px;
+                    line-height: 16px;
+                    position: absolute;
+                    right: 20px;
+                    text-align: center;
+                    top: 19px;
+                    width: 20px;
+                }
+            }
+        }
+    }
+
+    .top-btn-wrap {
+        position: relative;
+
+        .md-button {
+            height: 64px;
+            margin-left: 0;
+            width: 64px;
+
+            md-icon {
+                color: #fff;
+            }
+        }
+
+        .ms-count {
+            background-color: #fbca41;
+            border-radius: 8px;
+            font-size: $font-size-sm;
+            height: 16px;
+            line-height: 16px;
+            position: absolute;
+            right: 8px;
+            text-align: center;
+            top: 14px;
+            width: 20px;
+        }
+    }
+
+    .user-menu {
+        height: 64px;
+        margin: 0;
+        margin-left: 10px;
+        margin-right: 20px;
+        padding-left: 0;
+        padding-right: 10px;
+        padding-top: 20px;
+        position: relative;
+
+        .nb-dropdown {
+            .dropdown-toggle {
+                color: #fff;
+
+                .avatar {
+                    img {
+                        border-radius: 20px;
+                    }
+                }
+            }
+
+            .dropdown-menu {
+                background-color: #fff;
+                box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2);
+                color: $text-muted;
+                font-size: 14px;
+                padding: 10px 0;
+                position: absolute;
+                text-align: left;
+                top: 64px;
+                width: 100%;
+
+                li a {
+                    display: block;
+                    padding: 5px 0 5px 10px;
+
+                    &:hover {
+                        background-color: rgba(0, 0, 0, .1);
+                    }
+                }
+            }
+        }
+    }
 }
 
+.notification-center {
+    .md-toolbar-tools span {
+        color: #fff;
+    }
+
+    .md-subheader {
+        margin-bottom: 10px;
+        padding-left: 20px;
+    }
+
+    .nt-content {
+        padding: 20px;
+
+        md-content {
+            margin-bottom: 20px;
+        }
+    }
+
+    .nt-msg-item {
+        background-color: #fff;
+        margin-bottom: 2px;
+        padding: 20px;
+        position: relative;
+
+        .nt-item-desc span {
+            display: block;
+
+            &:first-child {
+                font-size: $font-size-md;
+                margin-bottom: 10px;
+            }
+
+            &:last-child {
+                color: $text-muted;
+                font-size: $font-size-sm;
+            }
+        }
+
+        .nt-item-time {
+            color: $text-muted;
+            font-size: 12px;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+        }
+    }
+}
 
 // .navi-root {
 //     min-width: 200px;
