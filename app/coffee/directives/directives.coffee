@@ -487,4 +487,25 @@ angular.module 'nb.directives'
         }
 
     ]
+    # MOCK angular-strap datepicker directive
+    .directive 'bsDatepicker', ->
 
+
+        postLink = (scope, elem, attrs, ngModelCtrl) ->
+
+            elem.datepicker(
+                autoclose: true
+                format: 'yyyy-mm-dd'
+
+            ).on 'changeDate', (evt) ->
+                ngModelCtrl.$setViewValue(evt.date)
+
+
+            scope.$on '$destroy', ->
+                elem.datepicker("remove")
+
+
+        return {
+            link: postLink
+            require: 'ngModel'
+        }

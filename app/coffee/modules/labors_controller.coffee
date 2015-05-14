@@ -11,8 +11,6 @@ class Route
 
     constructor: (stateProvider, urlRouterProvider) ->
 
-        urlRouterProvider.when('/labor-relations', '/labor-relations')
-
         stateProvider
             .state 'labors_transfer', {
                 url: '/labor-relations-transfer'

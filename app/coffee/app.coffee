@@ -8,19 +8,16 @@ dep_info = @dep_info #机构数据
 
 
 deps = [
-    # 'ui.router'
-    'ct.ui.router.extras'
+    'ui.router'
     'mgo-angular-wizard'
-    'mgcrea.ngStrap.datepicker'
     'ngDialog'
-    'ui.select'
     'ui.grid'
     'ui.grid.selection'
     'ui.grid.pinning'
     'ui.grid.pagination'
+    'ui.grid.autoResize'
     'ngAnimate'
     'ngAria'
-    'ui.bootstrap'
     'ngSanitize'
     'ngMessages'
     'ngMaterial'
@@ -90,7 +87,9 @@ mdThemingConf = ($mdThemingProvider) ->
 
         }
         .accentPalette 'grey'
-        .warnPalette 'red'
+        .warnPalette 'red', {
+            'default' : '400'
+        }
         .backgroundPalette 'grey', {
             'default': '100'
             'hue-1': 'A100'
@@ -139,25 +138,15 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
         }
 
     ]
-    #FIX! angular 1.4 feature , datepicker not supported 1.4 now. cause ngAnimate has many break changes in 1.4
     # $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike'
-
-datepickerConf = ($datepickerProvider)->
-    angular.extend($datepickerProvider.defaults, {
-        dateFormat: 'yyyy-MM-dd'
-        autoclose: true
-        container: 'body'
-        # dateType: 'string'
-    })
-
 
 App
     .config ['$provide', 'ngDialogProvider', appConf]
-    .config ['$datepickerProvider', datepickerConf]
     .config ['restmodProvider', restConf]
     .config ['$mdThemingProvider', mdThemingConf]
     .config ['$stateProvider','$urlRouterProvider','$locationProvider', '$httpProvider', routeConf]
     .run [
+        'menu'
         '$state'
         'i18nService'
         '$location'
@@ -171,8 +160,9 @@ App
         '$enum'
         '$timeout'
         'AuthService'
-    ($state, i18nService, $location, $rootScope, toaster, $http, Org, OrgStore, sweet, User, $enum, $timeout, AuthServ) ->
+    (menu, $state, i18nService, $location, $rootScope, toaster, $http, Org, OrgStore, sweet, User, $enum, $timeout, AuthServ) ->
 
+        $rootScope.menu = menu
         i18nService.setCurrentLang('zh-cn')
         OrgStore.initialize() #初始化OrgStore
         cancelLoading = ->

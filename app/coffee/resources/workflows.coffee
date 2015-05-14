@@ -3,7 +3,6 @@ resources = angular.module('resources')
 #流程资源集合，用于批量生成流程资源
 workflows = ['Flow::EarlyRetirement','Flow::AdjustPosition']
 
-
 CustomConfig = {
     'Flow::AdjustPosition': {
         'out_chief_review': '''

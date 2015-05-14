@@ -9,7 +9,6 @@ html
         meta(name="viewport", content="width=device-width, user-scalable=no")
         //- angulr 模板样式
         link(rel="stylesheet", href="/styles/vendor1.css?v=#{v}")
-        link(rel="stylesheet", href="/styles/angulr.css?v=#{v}")
         link(rel="stylesheet", href="/styles/lib.css?v=#{v}")
         link(rel="stylesheet", href="/styles/web.css?v=#{v}")
         link(rel="icon", type="image/png", href="/images/favicon.png")
@@ -17,14 +16,13 @@ html
         script(id="CONFIG_SERVER_CODE").
             !{meta}
     //- body(ng-app="nb" ng-controller="AppController")
-    body(ng-app="nb" layout="row")
-        include partials/shared/left_sidebar
-
+    body(ng-app="nb" layout="column")
+        include partials/shared/top_menu
         toaster-container(toaster-options="{'time-out': 3000, 'close-button':true, 'animation-class': 'toast-top-right'}")
         nb-loading.nb-loading(ng-show="loading")
         //- .org-container.smooth(ui-view)
-        div(layout="column" flex)
-            include partials/shared/top_menu
+        div(layout="row" flex)
+            include partials/shared/left_sidebar
             .butterbar(ui-butterbar)
             md-content.app-content-body.smooth(ui-view flex layout="row")
 

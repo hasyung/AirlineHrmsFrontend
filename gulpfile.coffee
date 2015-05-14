@@ -108,17 +108,13 @@ paths =
         'deps/angular-aria/angular-aria.js'
         'deps/angular-sanitize/angular-sanitize.js'
         'deps/angular-filter/dist/angular-filter.js'
-        'deps/angular-strap/dist/angular-strap.js'
-        'deps/angular-strap/dist/angular-strap.tpl.js'
+        'deps/bootstrap-datepicker/dist/js/bootstrap-datepicker.js'
         'deps/angular-ui-router/release/angular-ui-router.js'
-        'deps/ui-router-extras/release/ct-ui-router-extras.js'
+        # 'deps/ui-router-extras/release/ct-ui-router-extras.js'
         'deps/ngDialog/js/ngDialog.js'
-        # 'compat/vendor/breadcrumb.js'
         'compat/vendor/wizard.js'
-        'compat/vendor/ui-bootstrap-custom-tpls-0.12.0.js'
         # 'deps/ngInfiniteScroll/build/ng-infinite-scroll.js'
         'deps/AngularJS-Toaster/toaster.js'
-        'deps/angular-ui-select/dist/select.js'
         'deps/jquery-slimscroll/jquery.slimscroll.js'
         'deps/angularjs-toaster/toaster.js'
         'deps/angular-material/angular-material.js'
@@ -384,7 +380,7 @@ gulp.task "deploy", [
 # 添加 lib 文件后，先执行 gulp copy
 gulp.task "default", [
     "jade-deploy"
-    "less-vendor"
+    # "less-vendor"
     "css-vendor"
     "template"
     "sass-watch"
