@@ -34,6 +34,8 @@ class PositionCtrl extends nb.Controller
         @loadInitialData()
         @selectedIndex =  1
 
+        # @getSelectsIds = @getSelectsIds.bind(@)
+
 
         @columnDef = [
             {
@@ -112,10 +114,6 @@ class PositionCtrl extends nb.Controller
 
 
 
-
-
-
-
     loadInitialData: ->
         self = @
         @positions = @Position.$collection().$fetch()
@@ -123,11 +121,9 @@ class PositionCtrl extends nb.Controller
     search: (tableState) ->
         @positions.$refresh(tableState)
 
-    getExportParams: () ->
-        @positions
-                .filter (pos) -> pos.isSelected
-                .map (pos) -> pos.id
-                .join(',')
+    getSelectsIds: () ->
+        rows = @scope.$gridApi.selection.getSelectedGridRows()
+        rows.map (row) -> return row.entity.$pk
 
 class PositionChangesCtrl extends nb.Controller
 

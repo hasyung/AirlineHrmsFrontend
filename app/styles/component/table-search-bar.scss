@@ -109,7 +109,8 @@ md-content.search-container {
 .ui-grid-container {
     background-color: #fff;
     margin-bottom: 20px;
-    padding: 0 20px 50px;
+    padding: 0 20px 30px;
+
 
     md-toolbar.md-default-theme {
         background-color: #fff;
@@ -176,13 +177,91 @@ md-content.search-container {
 
     .ui-grid-pager-panel {
         border-top: 1px solid #000;
-        padding: 0;
-
+        
         .ui-grid-pager-container {
             position: absolute;
             right: 0;
-            top: 20px;
+            top: 15px;
+
+            input {
+                border: 0;
+                border-bottom: 1px solid #ddd;
+                height: 24px;
+                text-align: center;
+            }
+
+            button {
+                background-color: #fff;
+                border: 1px solid $text-hint;
+                outline: none;
+
+                &:hover {
+                    background-color: rgb(33, 150, 243);
+
+                    .first-triangle {
+                        border-right-color: #fff;
+
+                        .first-bar {
+                            border-left-color: #fff;
+                        }
+                    }
+
+                    .last-triangle {
+                        border-left-color: #fff;
+
+                        &.next-triangle {
+                            margin-left: 3px;
+                        }
+
+                        .last-bar {
+                            border-left-color: #fff;
+                        }
+                    }
+                }
+
+                .first-triangle {
+                    border-right-color: $text-hint;
+
+                    .first-bar {
+                        border-left-color: $text-hint;
+                    }
+                }
+
+                .last-triangle {
+                    border-left-color: $text-hint;
+
+                    &.next-triangle {
+                        margin-left: 3px;
+                    }
+
+                    .last-bar {
+                        border-left-color: $text-hint;
+                    }
+                }
+            }
+
+            .ui-grid-pager-max-pages-number {
+                line-height: 24px;
+                vertical-align: top;
+            }
+
+            select {
+                background-color: #fff;
+                border: 0;
+                border-bottom: 1px solid #ddd;
+                height: 24px;
+                text-align: center;
+            }
         }
+
+        .ui-grid-pager-count-container {
+            float: left;
+
+            span {
+                color: $text-hint;
+            }
+        }
+    }
 
         .ui-grid-pager-count-container {
             float: left;

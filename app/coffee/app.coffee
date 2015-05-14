@@ -30,6 +30,7 @@ deps = [
     'nb.filters'
     'nb.component'
     'flow'
+    'ngMaterialDropmenu'
     #'nb.controller.site'
 ]
 resources = angular.module('resources',[])

@@ -11,7 +11,24 @@ angular.module 'nb.directives'
                     elem.toggleClass 'active'
         }
     ]
+    .directive 'nbDownload', [() ->
 
+        postLink = (scope, elem, attrs)->
+
+            elem.on 'click', ()->
+                selectedRows = scope.paramGetter()
+                paramString = selectedRows.join(',')
+                hrefString = attrs['urlPrefix'].replace(/#param#/, paramString)
+                elem.attr('href', hrefString)
+
+        return {
+            scope: {
+                paramGetter: "&"
+            }
+            link: postLink
+        }
+
+    ]
 
     .directive 'dragOn', [ '$window', ($window) ->
 
@@ -470,6 +487,7 @@ angular.module 'nb.directives'
         }
 
     ]
+<<<<<<< HEAD
     # MOCK angular-strap datepicker directive
     .directive 'bsDatepicker', ->
 
@@ -492,3 +510,6 @@ angular.module 'nb.directives'
             link: postLink
             require: 'ngModel'
         }
+=======
+
+>>>>>>> develop
