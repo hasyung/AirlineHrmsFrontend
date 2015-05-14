@@ -4,8 +4,8 @@ md-toolbar.top-menu-bar.md-warn(md-theme="hrms")
             img(src="../../images/logo.png")
         span(flex)
         span
-            div.top-notification.top-btn-wrap
-                md-button(ng-click)
+            div.top-notification.top-btn-wrap(ng-init="isOpen = false" ng-class="{'open': isOpen}")
+                md-button(ng-click="isOpen = !isOpen")
                     md-icon(md-svg-icon="/images/svg/bell-outline.svg")
                 .ms-count 10
                 ul.top-dropdown
@@ -33,10 +33,9 @@ md-toolbar.top-menu-bar.md-warn(md-theme="hrms")
         span
             div.top-messages.top-btn-wrap
                 md-button(
-                    ng-panel
-                    template-url="partials/position/position_detail.html"
-                    panel-controller="PositionDetailCtrl"
-                    locals="{'position': position}"
+                    nb-panel
+                    template-url="partials/shared/notification_center.html"
+
                 )
                     md-icon(md-svg-icon="/images/svg/email-outline.svg")
                 .ms-count 10
