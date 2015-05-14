@@ -8,18 +8,15 @@ dep_info = @dep_info #机构数据
 
 
 deps = [
-    # 'ui.router'
-    'ct.ui.router.extras'
+    'ui.router'
     'mgo-angular-wizard'
     'ngDialog'
-    'ui.select'
     'ui.grid'
     'ui.grid.selection'
     'ui.grid.pinning'
     'ui.grid.pagination'
     'ngAnimate'
     'ngAria'
-    'ui.bootstrap'
     'ngSanitize'
     'ngMessages'
     'ngMaterial'
