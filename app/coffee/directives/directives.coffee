@@ -521,6 +521,7 @@ angular.module 'nb.directives'
             elem.datepicker(
                 autoclose: true
                 format: 'yyyy-mm-dd'
+                language: 'zh-cn'
 
             ).on 'changeDate', (evt) ->
                 ngModelCtrl.$setViewValue(evt.date)
