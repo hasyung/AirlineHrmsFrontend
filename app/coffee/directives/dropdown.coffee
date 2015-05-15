@@ -183,7 +183,7 @@ angular.module 'nb.directives'
             template: '''
                 <li class="dropdown", ng-class="{\'open\': isOpen}" ng-click="dropdown.toggle()">
                     <a href="" data-toggle="dropdown" class="dropdown-toggle clear">
-                        <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
+                        <span class="thumb-sm avatar pull-right">
                             <img ng-src="{{dropdown.USER_META.favicon.small}}" alt="..."/><i class="on md b-white bottom"></i>
                         </span>
                         <span ng-bind="dropdown.USER_META.name"></span>
