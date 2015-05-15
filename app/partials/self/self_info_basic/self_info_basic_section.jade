@@ -7,7 +7,7 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                 md-button.md-raised.white(ng-click="edit($event)") 编辑
             span(ng-show="editing")
                 md-button.md-raised.white(ng-click="cancel(currentUser, $event, infoForm)") 取消
-                md-button.md-raised.skyblue(ng-click="submit" style="margin-left: 20px") 保存
+                md-button.md-raised.skyblue(type="submit" style="margin-left: 20px") 保存
     md-content
         section.form-material-section
             md-subheader.md-primary 个人信息
@@ -144,75 +144,11 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                 div(layout)
                     md-input-container.row-has-value(flex)
                         label 属地化地点
-                        md-select(ng-model="currentUser.locationId" disabled)
-                            md-select-label {{$enum.parseLabel(currentUser.locationId, "locations")}}
-                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('locations')") {{item.label}}
+                        input(ng-model="currentUser.location" disabled)
+
 
                     md-input-container.row-has-value(flex)
                         label 用工性质
                         md-select(ng-model="currentUser.laborRelationId" disabled)
                             md-select-label {{$enum.parseLabel(currentUser.laborRelationId, "labor_relations")}}
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('labor_relations')") {{item.label}}
-
-            //- 职称信息先不显示，后端数据没提供
-            //- md-subheader.md-primary 职称信息
-            //- fieldset(disabled)
-            //-     div(layout)
-            //-         md-input-container(flex)
-            //-             label 职称
-            //-             md-select(ng-model="currentUser.gender" md-on-open="loadEnum('genders')" required)
-            //-                 md-select-label {{currentUser.gender ? currentUser.gender.displayName : '无'}}
-            //-                 md-option(ng-value="gender" ng-repeat="gender in enums.genders track by gender.id") {{gender.displayName}}
-            //-         md-input-container.row-has-value(flex)
-            //-             label 职称级别
-            //-             md-select(ng-model="currentUser.gender" md-on-open="loadEnum('genders')" required)
-            //-                 md-select-label {{currentUser.gender ? currentUser.gender.displayName : '无'}}
-            //-                 md-option(ng-value="gender" ng-repeat="gender in enums.genders track by gender.id") {{gender.displayName}}
-            //-     md-input-container
-            //-         label 技术职务
-            //-         input(disabled ng-model="currentUserUser.employeeNo")
-                //- .form-group.block
-                //-     label.control-label 员工编号：
-                //-     .form-content {{currentUser.employeeNo}}
-                //- .form-group
-                //-     label.control-label 姓名：
-                //-     .form-content {{currentUser.name}}
-                //- .form-group
-                //-     label.control-label 性别：
-                //-     .form-content {{currentUser.gender.displayName}}
-                //- .form-group
-                //-     label.control-label 籍贯
-                //-     .form-content {{currentUser.name}}
-                //- .form-group
-                //-     label.control-label 民族
-                //-     .form-content {{currentUser.name}}
-                //- .form-group
-                //-     label.control-label 出生地
-                //-     .form-content {{currentUser.name}}
-                //- .form-group
-                //-     label.control-label 婚姻状况
-                //-     .form-content {{currentUser.name}}
-                //- .form-group.block
-                //-     label.control-label 身份证号：
-                //-     .form-content {{currentUser.identityNo}}
-                //- .form-group
-                //-     label.control-label 政治面貌：
-                //-     .form-content {{currentUser.politicalStatus.displayName}}
-                //- .form-group
-                //-     label.control-label 学历：
-                //-     .form-content {{currentUser.educationBackground.displayName}}
-                //- .form-group
-                //-     label.control-label 学位：
-                //-     .form-content {{currentUser.degree.displayName}}
-                //- .form-group
-                //-     label.control-label 毕业院校：
-                //-     .form-content {{currentUser.school}}
-                //- .form-group
-                //-     label.control-label 专业：
-                //-     .form-content {{currentUser.major}}
-                //- .form-group
-                //-     label.control-label 英语等级：
-                //-     .form-content {{currentUser.englishLevel.displayName}}
-            //- .form-group
-            //-     label.control-label 联系方式：
-            //-     .form-content {{currentUser.contact.mobile}}

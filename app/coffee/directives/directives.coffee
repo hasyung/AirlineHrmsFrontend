@@ -16,17 +16,21 @@ angular.module 'nb.directives'
             restrict: 'A'
             link: (scope,elem,attr) ->
                 scope.isOpen = false
-                scope.toggle = (e)->
+                toggle = (e)->
                     e.stopPropagation()
-                    scope.$apply -> scope.isOpen = !scope.isOpen
+                    if scope.isOpen then close() else open()
+                    
+                open = -> 
+                    scope.$apply -> scope.isOpen = true
+                    $doc.on 'click', close
 
-                close = -> scope.isOpen = false
+                close = -> 
+                    scope.$apply -> scope.isOpen = false
+                    $doc.off 'click', close
 
-                elem.on 'click', scope.toggle
-                $doc.on 'click', close
-
+                elem.on 'click', toggle
                 scope.$on 'destroy', ()->
-                    elem.off 'click'
+                    elem.off 'click', toggle
                     $doc.off 'click', close
 
                 
@@ -517,6 +521,7 @@ angular.module 'nb.directives'
             elem.datepicker(
                 autoclose: true
                 format: 'yyyy-mm-dd'
+                language: 'zh-cn'
 
             ).on 'changeDate', (evt) ->
                 ngModelCtrl.$setViewValue(evt.date)

@@ -122,6 +122,7 @@ paths =
         'compat/socket.io.js'
         'compat/pomeloclient.js'
         'compat/communite.js'
+        'compat/datepicker-local.jquery.js'
         'compat/vendor/ng-material-dropmenu.js'
         'deps/ng-flow/dist/ng-flow-standalone.js'
         # 'deps/angular-ui-utils/ui-utils.js'

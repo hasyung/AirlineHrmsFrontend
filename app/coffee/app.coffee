@@ -41,7 +41,7 @@ nb.app = App = angular.module 'nb',deps
 
 #初始化在<head> <script> 标签中, 如果不存在， 系统行为待定
 App.constant 'PERMISSIONS', metadata.permissions || []
-App.constant 'USER_META', metadata.user || {}
+App.value 'USER_META', metadata.user || {}
 App.constant 'DEPARTMENTS', dep_info.departments || []
 App.constant 'nbConstants', metadata.resources || []
 
