@@ -64,7 +64,7 @@ class PersonnelCtrl extends nb.Controller
                 </div>
                 '''
             }
-            
+
             {displayName: '员工编号', name: 'employeeNo'}
             {
                 displayName: '岗位'
@@ -104,23 +104,12 @@ class PersonnelCtrl extends nb.Controller
                 {
                     name: 'position_names'
                     displayName: '岗位名称'
-                    type: 'muti-text-search'
+                    type: 'string_array'
                 }
-                # {
-                #     name: 'location_id'
-                #     type: 'select'
-                #     displayName: '属地'
-                #     params: {
-                #         type: 'locations'
-                #     }
-                # }
                 {
-                    name: 'location_ids'
-                    type: 'muti-enum-search'
+                    name: 'locations'
+                    type: 'string_array'
                     displayName: '属地'
-                    params: {
-                        type: 'locations'
-                    }
                 }
                 {
                     name: 'channel_ids'
@@ -192,7 +181,7 @@ class NewEmpsCtrl extends nb.Controller
                 </div>
                 '''
             }
-            
+
             {displayName: '员工编号', name: 'employeeNo'}
             {
                 displayName: '岗位'
@@ -232,12 +221,9 @@ class NewEmpsCtrl extends nb.Controller
                     type: 'string'
                 }
                 {
-                    name: 'location_id'
-                    type: 'select'
+                    name: 'locations'
+                    type: 'string_array'
                     displayName: '属地'
-                    params: {
-                        type: 'locations'
-                    }
                 }
                 {
                     name: 'channel_id'

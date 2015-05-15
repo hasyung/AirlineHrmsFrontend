@@ -59,9 +59,7 @@
 
                     md-input-container.row-has-value(flex)
                         label 属地化地点
-                        md-select(ng-model="newEmp.locationId")
-                            md-select-label {{$enum.parseLabel(newEmp.locationId, "locations")}}
-                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('locations')") {{item.label}}
+                        input(ng-model="newEmp.location")
 
                     md-input-container.row-has-value(flex)
                         label 用工性质
