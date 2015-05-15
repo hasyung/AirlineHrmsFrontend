@@ -11,7 +11,10 @@ md-dialog.effect_changes
                         input(type="text" ng-model="log.oa_file_no" placeholder="文件编号",required="true")
                     md-input-container
                         label 文件内容
-                        textarea(type="text" md-maxlength="100" ng-model="log.title" placeholder="文件编号",required="true")
+                        textarea(type="text" md-maxlength="1000" ng-model="log.title"
+                            placeholder="文件编号",required="true"
+                            style="min-height:0px;"
+                            )
             .md-actions
                 md-button(type='button',ng-click="dialog.close()") 取消
-                md-button.md-primary(ng-disabled="active_form.$invalid" type="submit") 确定
+                md-button.md-primary.md-raised(ng-disabled="active_form.$invalid" type="submit") 确定

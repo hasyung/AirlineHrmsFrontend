@@ -53,6 +53,10 @@
                 position: absolute;
                 top: 130px;
                 width: 24px;
+
+                i {
+                    margin-left: 2px;
+                }
             }
 
         }
@@ -484,7 +488,7 @@
         width: 132px;
 
         p {
-            margin-top: 25px;
+            margin-top: 20px;
         }
 
         .avator-preview-item {
@@ -524,7 +528,7 @@
 }
 
 .avator-footer {
-    padding-right: 148px;
+    padding-right: 156px;
 
     button {
         margin-left: 16px;
