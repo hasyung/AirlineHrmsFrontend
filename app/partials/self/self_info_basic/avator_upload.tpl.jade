@@ -1,11 +1,13 @@
 md-dialog(flow-init="{target: '/api/me/upload_favicon', uploadMethod:'PUT', testChunks:false, singleFile:true}"
     flow-file-success="ctrl.updateFavicon();dialog.close();"
 )
-    .modal-header.tl-top-header
-        button.close(type='button', data-dismiss='modal', aria-hidden='true', ng-click="dialog.close()") ×
-        h4.modal-title 头像设置
-    .avator-edit-body(layout)
-        .src-avator.avator-offset.first()
+    md-toolbar.md-accent(md-theme="hrms")
+        .md-toolbar-tools
+            h3 头像设置
+            span(flex)
+            md-button.pull-right.md-primary(ng-click="dialog.close()") 关闭
+    md-content.avator-edit-body(layout style="margin:7px;")
+        .src-avator.avator-offset.first(style="height:360px;")
             .avator-upload-box.avator-box(ng-hide="$flow.files.length")
                 div
                     button.btn.btn-default.btn-avator-add(href="javascript:;" flow-btn flow-attrs="{accept:'image/*'}")
@@ -33,7 +35,7 @@ md-dialog(flow-init="{target: '/api/me/upload_favicon', uploadMethod:'PUT', test
         //-     a.btn(href="javascript:;" ng-show="$flow.files.length" flow-btn flow-attrs="{accept:'image/*'}") 更改图片
         //-     a.btn.btn-danger(href="javascript:;" ng-show="$flow.files.length" ng-click="$flow.cancel()") 删除图片
 
-    .modal-footer.avator-footer.clearfix(style="border:none;")
-        button.btn.btn-info.btn-sm.pull-right(ng-click="$flow.upload()") 确 定
-        button.btn.btn-default.btn-sm.pull-right(ng-click='dialog.close()') 取 消
+    .modal-footer.avator-footer.clearfix(style="border:none;padding-bottom:20px;")
+        md-button.pull-right.md-primary(ng-click="$flow.upload()") 确 定
+        md-button.pull-right(ng-click='dialog.close()') 取 消
 
