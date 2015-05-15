@@ -3,7 +3,6 @@
 
 .form-validator-dialog {
     padding: 20px;
-    width: 100%;
 
     &:after {
         clear: both;
@@ -380,7 +379,7 @@ md-input-container {
                 padding-left: 90px;
             }
 
-            
+
         }
     }
 
@@ -392,18 +391,20 @@ md-input-container {
 fieldset {
 
     .text-label {
-        padding-left: 2px;
-        transform: scale(0.75);
         color: rgba(0, 0, 0, .54);
+        padding-left: 2px;
+        transform: scale(.75);
     }
-    .editable-text{
+
+    .editable-text {
         border-bottom: 1px solid rgba(0, 0, 0, .12);
         padding: 2px 0;
 
-        p{
+        p {
             margin: 0;
         }
     }
+
     &[disabled] {
 
         .textarea-row {
@@ -414,15 +415,16 @@ fieldset {
             label {
                 margin: 6px 0;
             }
-            
+
             .text-container {
                 padding-left: 90px;
             }
+
             .text-label {
-                position: absolute;
                 left: 0;
+                position: absolute;
                 top: -6px;
-                transform: scale(1)
+                transform: scale(1);
             }
         }
     }

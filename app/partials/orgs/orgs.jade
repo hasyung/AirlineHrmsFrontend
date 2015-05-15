@@ -11,7 +11,7 @@ section(layout="row" flex)
                         template-url="partials/orgs/org_history.html"
                         locals="{'historyData': ctrl.initialHistoryData()}"
                         ) 时间轴
-                    md-dropmenu
+                    md-dropmenu.pull-right
                         md-drop-label
                             md-button.md-primary.md-raised 导出
                         md-drop-option(ng-hide="ctrl.isHistory")
@@ -20,6 +20,8 @@ section(layout="row" flex)
                             md-button(ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导出Excel
                         md-drop-option
                             md-button(ng-click="ctrl.print()" ) 导出PDF
+                    md-button.md-primary
+                        md-icon(md-svg-src="/images/svg/home.svg")
                     //- .right-align.nb-dropdown.pull-right(simple-dropdown, btn-text="导出")
                     //-     li( role="presentation" ng-hide="ctrl.isHistory")
                     //-         a(role="menuitem" ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}" ) 导出Excel
@@ -30,7 +32,6 @@ section(layout="row" flex)
                     //- md-button.md-raised.md-primary(has-permission="departments_export_to_xls" ng-show="!ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导 出
                     //- md-button.md-raised.md-primary(has-permission="departments_export_to_xls" ng-show="ctrl.isHistory", download ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导 出
                     md-button.md-raised.md-primary(ng-click="ctrl.resetData()" ng-show="ctrl.isHistory") 返回最新
-
                     //- loading-btn.red(ng-click="ctrl.openHistoryPanel()" btn-loading-type="contract-overlay" btn-text="测试loading")
 
             h1 {{ctrl.treeRootOrg.$cmStatus.name}}组织机构图

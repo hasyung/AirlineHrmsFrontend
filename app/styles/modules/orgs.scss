@@ -317,6 +317,8 @@ md-dialog.position_delete {
 
 //查询器保存 dialog
 md-dialog.save_filter {
+    min-width: 300px;
+
     md-toolbar {
         min-height: 40px;
     }

@@ -1,4 +1,9 @@
 .org-timline {
+    .changes_count {
+        font-size: $font-size-sm;
+        margin-left: 10px;
+    }
+
     .tl-item {
         .tl-content {
             @include transition(all .5s linear);
@@ -69,6 +74,11 @@
             padding-left: 16px;
             padding-top: 20px;
             position: relative;
+
+            h1,
+            h2 {
+                font-weight: normal;
+            }
 
             .tl-point {
                 background-color: #fff;

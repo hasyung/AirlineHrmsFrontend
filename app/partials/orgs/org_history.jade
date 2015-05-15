@@ -15,7 +15,7 @@ md-dialog.org_history
             ul.timeline(ng-repeat="yearLogs in dialog.historyData.changeLogs")
                 li.tl-header
                     div.year {{::yearLogs.changeYear}}
-                    span 有{{::yearLogs.logs.length || 0}}次变动
+                    span.changes_count 有{{::yearLogs.logs.length || 0}}次变动
                 li.tl-item(ng-repeat="log in yearLogs.logs track by $index", ng-click="ctrl.expandLog(log)", ng-class="{'active': log.active}")
                     div.tl-wrap
                         div.tl-content.panel.padder.b-a
