@@ -54,7 +54,7 @@ tabset(flex)
 
                                 td.long-text
                                     a(href="javascript:;", nb-popup-plus, position="left-bottom", offset="0.5") {{change.reason || '请输入'}}
-                                        popup-template.nb-popup.org-default-popup-template.panel.panel-default()
+                                        popup-template.nb-popup.org-default-popup-template(style="padding:8px;border:1px solid #eee;")
                                             .panel-heading.popup-title 请输入理由
                                             .panel-body.popup-body
                                                 textarea(ng-model="change.reason")
