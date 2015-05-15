@@ -8,7 +8,7 @@ form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="Ed
     fieldset(ng-disabled="!editing")
 
         div(org-muti-pos ng-model="current.positions" editing="editing")
-        
+
         md-input-container.row-has-value
             label 岗位备注
             input(ng-model="current.positionRemark")
@@ -46,7 +46,4 @@ form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="Ed
         div(layout)
             md-input-container.row-has-value(flex="33")
                 label 属地化地点
-                md-select(ng-model="current.locationId" ng-disabled="!editing")
-                    md-select-label {{$enum.parseLabel(current.locationId, "locations")}}
-                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('locations')") {{item.label}}
-
+                input(ng-model="current.location")
