@@ -1,5 +1,5 @@
 md-dialog(flow-init="{target: '/api/me/upload_favicon', uploadMethod:'PUT', testChunks:false, singleFile:true}"
-    flow-file-success="currentUser.$refresh() && dialog.close()"
+    flow-file-success="ctrl.updateFavicon();dialog.close();"
 )
     .modal-header.tl-top-header
         button.close(type='button', data-dismiss='modal', aria-hidden='true', ng-click="dialog.close()") ×

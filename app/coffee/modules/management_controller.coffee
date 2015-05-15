@@ -98,6 +98,11 @@ class ProfileCtrl extends nb.Controller
     createEdu: (edu)->
         @scope.currentUser.educationExperiences.createEdu(edu)
         # @scope.currentUser.$update()
+        # 
+    updateFavicon: ()->
+        self = @
+        @scope.currentUser.$refresh().$then ()->
+            angular.extend self.USER_META.favicon, self.scope.currentUser.favicon
 
 class AttendanceCtrl
     @.$inject = ['$scope', 'Leave']
