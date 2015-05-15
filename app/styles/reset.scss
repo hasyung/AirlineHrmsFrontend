@@ -30,6 +30,12 @@ ul {
     list-style-type: none;
 }
 
+thead,
+th,
+thead > th {
+    font-weight: normal;
+}
+
 .nb-card {
     margin: 10px 20px 0;
 
