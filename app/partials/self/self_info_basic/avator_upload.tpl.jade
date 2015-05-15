@@ -6,7 +6,7 @@ md-dialog(flow-init="{target: '/api/me/upload_favicon', uploadMethod:'PUT', test
             h3 头像设置
             span(flex)
             md-button.pull-right.md-primary(ng-click="dialog.close()") 关闭
-    md-content.avator-edit-body(layout style="margin:7px;")
+    md-content.avator-edit-body(layout style="margin:7px;overflow:hidden")
         .src-avator.avator-offset.first(style="height:360px;")
             .avator-upload-box.avator-box(ng-hide="$flow.files.length" style="height:220px;")
                 div
