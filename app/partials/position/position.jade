@@ -10,9 +10,9 @@
                         md-drop-label(ng-click="selectedRows = ctrl.getSelectsIds()")
                             md-button.md-primary.md-raised 导出
                         md-drop-option()
-                            md-button(ng-href="/api/positions/export_to_xls") 导出全部岗位
+                            a(ng-href="/api/positions/export_to_xls") 导出全部岗位
                         md-drop-option(ng-if="selectedRows.length > 0")
-                            md-button(
+                            a(
                                 nb-download
                                 url-prefix="/api/positions/export_to_xls?position_ids=#param#"
                                 param-getter="ctrl.getSelectsIds()"
@@ -20,9 +20,9 @@
                                 download
                             ) 导出所选岗位
                         md-drop-option()
-                            md-button(ng-href="/api/positions/export_specification_pdf") 导出全部岗位描述书
+                            a(ng-href="/api/positions/export_specification_pdf") 导出全部岗位描述书
                         md-drop-option(ng-if="selectedRows.length > 0")
-                            md-button(
+                            a(
                                 nb-download
                                 url-prefix="/api/positions/export_specification_pdf?position_ids=#param#"
                                 param-getter="ctrl.getSelectsIds()"

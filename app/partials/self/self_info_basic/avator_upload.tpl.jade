@@ -6,9 +6,9 @@ md-dialog(flow-init="{target: '/api/me/upload_favicon', uploadMethod:'PUT', test
             h3 头像设置
             span(flex)
             md-button.pull-right.md-primary(ng-click="dialog.close()") 关闭
-    md-content.avator-edit-body(layout style="margin:7px;")
+    md-content.avator-edit-body(layout style="margin:7px;overflow:hidden")
         .src-avator.avator-offset.first(style="height:360px;")
-            .avator-upload-box.avator-box(ng-hide="$flow.files.length")
+            .avator-upload-box.avator-box(ng-hide="$flow.files.length" style="height:220px;")
                 div
                     button.btn.btn-default.btn-avator-add(href="javascript:;" flow-btn flow-attrs="{accept:'image/*'}")
                         i.fa.fa-plus
@@ -36,6 +36,6 @@ md-dialog(flow-init="{target: '/api/me/upload_favicon', uploadMethod:'PUT', test
         //-     a.btn.btn-danger(href="javascript:;" ng-show="$flow.files.length" ng-click="$flow.cancel()") 删除图片
 
     .modal-footer.avator-footer.clearfix(style="border:none;padding-bottom:20px;")
-        md-button.pull-right.md-primary(ng-click="$flow.upload()") 确 定
+        md-button.pull-right.md-primary.md-raised(ng-click="$flow.upload()") 确 定
         md-button.pull-right(ng-click='dialog.close()') 取 消
 

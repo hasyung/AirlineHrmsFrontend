@@ -19,9 +19,9 @@
                         md-drop-label(ng-click="selectedRows = ctrl.getSelectsIds()")
                             md-button.md-primary.md-raised 导出
                         md-drop-option()
-                            md-button(ng-href="/api/employees/export_to_xls") 导出全部人员
+                            a(ng-href="/api/employees/export_to_xls") 导出全部人员
                         md-drop-option(ng-if="selectedRows.length > 0")
-                            md-button(
+                            a(
                                 nb-download
                                 url-prefix="/api/employees/export_to_xls?employee_ids=#param#"
                                 param-getter="ctrl.getSelectsIds()"
@@ -29,24 +29,15 @@
                                 download
                             ) 导出所选人员
                         md-drop-option()
-                            md-button(ng-href="/api/employees/export_resume") 导出全部人员履历
+                            a(ng-href="/api/employees/export_resume") 导出全部人员履历
                         md-drop-option(ng-if="selectedRows.length > 0")
-                            md-button(
+                            a(
                                 nb-download
                                 url-prefix="/api/employees/export_resume?employee_ids=#param#"
                                 param-getter="ctrl.getSelectsIds()"
                                 href="javascript:;"
                                 download
                             ) 导出全部人员履历
-                    //- .nb-dropdown.md-primary.md-raised(simple-dropdown, btn-text="导出")
-                    //-     li( role="presentation")
-                    //-         a(role="menuitem" ng-href="/api/employees/export_to_xls" ) 导出全部人员明细
-                    //-     li( role="presentation" ng-if="ctrl.getExportParams().length != 0")
-                    //-         a(role="menuitem" ng-href="/api/employees/export_to_xls?employee_ids={{ ctrl.getExportParams() }}" ) 导出所选人员
-                    //-     li( role="presentation")
-                    //-         a(role="menuitem" ng-href="/api/employees/export_resume" ) 导出全部人员履历
-                    //-     li( role="presentation" ng-if="ctrl.getExportParams().length != 0")
-                    //-         a(role="menuitem" ng-href="/api/employees/export_resume?employee_ids={{ ctrl.getExportParams() }}" ) 导出所选人员的履历
 
         div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection safe-src="ctrl.employees")
 

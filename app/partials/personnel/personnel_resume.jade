@@ -1,213 +1,285 @@
-.resume-wrap(ng-init="resume = current.resume.$refresh()")
+.resume-wrap(ng-init="resume = current.resume.$refresh()" style="width: 960px;")
     .resume-header
-        h3 个人履历
+        span {{ resume.name }}
+        | 个人履历
     .resume-btn-group
-        md-button.md-raised.md-primary(ng-href="/api/employees/export_resume?employee_id={{resume.id}}" style="display: inline-block;") 导出 PDF
+        md-button.md-primary(ng-href="/api/employees/export_resume?employee_id={{resume.id}}" style="display: inline-block;")
+            md-icon(md-svg-src="/images/svg/ic_open_in_new_24px.svg")
     .resume-body
-        section.resume-section.form-split
-            h4 基本情况
-            .resume-avator
-                img(ng-src="{{currentUser.favicon.big}}")
-            .form-group
-                label.control-label 姓名：
-                .form-content(ng-bind="resume.name")
-            .form-group
-                label.control-label 性别：
-                .form-content(ng-bind="resume.gender.displayName")
-            .form-group.block
-                label.control-label 籍贯：
-                .form-content.auto-height(ng-bind="resume.nativePlace")
-            .form-group
-                label.control-label 民族：
-                .form-content(ng-bind="resume.nation.displayName")
-            .form-group
-                label.control-label 出生地：
-                .form-content(ng-bind="resume.birthPlace")
-            .form-group
-                label.control-label 出生年月：
-                .form-content(ng-bind="resume.birthday  | date:'yyyy-MM-dd'")
-            .form-group
-                label.control-label 身份证号：
-                .form-content(ng-bind="resume.identityNo")
-            .form-group
-                label.control-label 婚姻状况：
-                .form-content(ng-bind="resume.martialStatus.displayName")
-            .form-group
-                label.control-label 学历：
-                .form-content(ng-bind="resume.educationBackground.displayName")
-            .form-group
-                label.control-label 学位：
-                .form-content(ng-bind="resume.degree.displayName")
-            .form-group
-                label.control-label 毕业院校：
-                .form-content(ng-bind="resume.school")
-            .form-group
-                label.control-label 专业：
-                .form-content(ng-bind="resume.major")
-            .form-group
-                label.control-label 英语等级：
-                .form-content(ng-bind="resume.englishLevel.displayName")
-        section.resume-section.form-split
-            h4 个人联系方式
-            .form-group
-                label.control-label 固定电话：
-                .form-content(ng-bind="resume.contact.telephone")
-            .form-group
-                label.control-label 移动电话：
-                .form-content(ng-bind="resume.contact.mobile")
-            .form-group.block
-                label.control-label 家庭住址：
-                .form-content.auto-height(ng-bind="resume.contact.address")
-            .form-group.block
-                label.control-label 通信地址：
-                .form-content(ng-bind="resume.contact.mailingAddress")
-            .form-group
-                label.control-label 邮政编码：
-                .form-content(ng-bind="resume.contact.postcode")
-            .form-group
-                label.control-label 电子邮箱：
-                .form-content(ng-bind="resume.contact.email")
-        section.resume-section.form-split
-            h4 教育经历
-            .form-split(ng-repeat="edu in resume.educationExperiences")
-                .form-group
-                    label.control-label 入学日期：
-                    .form-content(ng-bind="edu.admissionDate  | date:'yyyy-MM-dd'")
-                .form-group
-                    label.control-label 毕业日期：
-                    .form-content(ng-bind="edu.graduationDate | date:'yyyy-MM-dd'")
-                .form-group
-                    label.control-label 毕业院校：
-                    .form-content(ng-bind="edu.school")
-                .form-group
-                    label.control-label 专业：
-                    .form-content(ng-bind="edu.major")
-                .form-group
-                    label.control-label 学历：
-                    .form-content(ng-bind="edu.educationBackground.displayName")
-                .form-group
-                    label.control-label 学位：
-                    .form-content(ng-bind="edu.degree.displayName")
-                .form-group
-                    label.control-label 证明人：
-                    .form-content(ng-bind="edu.witness")
-        section.resume-section.form-split
-            h4 工作后培训经历
-            .form-split
-                .form-group
-                    label.control-label 授课开始日期：
-                    .form-content 2010-05-25
-                .form-group
-                    label.control-label 授课结束日期：
-                    .form-content 2010-10-25
-                .form-group
-                    label.control-label 培训课程：
-                    .form-content HR专业培训
-                .form-group
-                    label.control-label 培训课时：
-                    .form-content 100
-                .form-group
-                    label.control-label 是否全勤：
-                    .form-content 全勤
-                .form-group
-                    label.control-label 考核成绩：
-                    .form-content 90
-                .form-group.block
-                    label.control-label 培训内容：
-                    .form-content.auto-height 提高员工忠诚度，增强员工适应度，提高员工工作效率，提高员工归属感，企业文化与理念，发展目标与愿景，企业规章制度，工作职责与方式。
-        section.resume-section.form-split
-            h4 工作经历：
-            .form-split(ng-repeat="work in resume.workExperiences")
-                .form-group
-                    label.control-label 开始日期：
-                    .form-content(ng-bind="work.startDate | date:'yyyy-MM-dd'")
-                .form-group
-                    label.control-label 结束日期：
-                    .form-content(ng-bind="work.endDate | date:'yyyy-MM-dd'")
-                .form-group
-                    label.control-label 单位名称：
-                    .form-content(ng-bind="work.company")
-                .form-group
-                    label.control-label 任职部门：
-                    .form-content(ng-bind="work.department")
-                .form-group.block
-                    label.control-label 担任职位：
-                    .form-content(ng-bind="work.position")
-                .form-group.block
-                    label.control-label 工作描述：
-                    .form-content.auto-height(ng-bind="work.jobDesc")
-                .form-group
-                    label.control-label 证明人：
-                    .form-content(ng-bind="work.witness")
-        section.resume-section.form-split
-            h4 到川航后任职记录
-            .form-split
-                .form-group
-                    label.control-label 开始日期：
-                    .form-content 2010-03
-                .form-group
-                    label.control-label 结束日期：
-                    .form-content 至今
-                .form-group
-                    label.control-label 担任职务：
-                    .form-content 人事主管
-                .form-group
-                    label.control-label 任职部门：
-                    .form-content 人力资源部
-                .form-group
-                    label.control-label 证明人：
-                    .form-content 段红
-        section.resume-section.form-split
-            h4 家庭主要成员情况
-            div(ng-repeat="lover in resume.familyMembers | filterBy: ['relation']: 'lover' track by $index")
-                h5.form-group.block 配偶
-                .form-group
-                    label.control-label 姓名：
-                    .form-content(ng-bind="lover.name")
-                .form-group
-                    label.control-label 性别：
-                    .form-content(ng-bind="lover.gender")
-                .form-group
-                    label.control-label 籍贯：
-                    .form-content(ng-bind="lover.nativePlace")
-                .form-group
-                    label.control-label 民族：
-                    .form-content(ng-bind="lover.nation")
-                .form-group
-                    label.control-label 出生年月：
-                    .form-content(ng-bind="lover.birthday  | date:'yyyy-MM-dd'")
-                .form-group
-                    label.control-label 文化程度：
-                    .form-content(ng-bind="lover.educationBackground.name")
-                .form-group
-                    label.control-label 政治面貌：
-                    .form-content(ng-bind="lover.politicalStatus")
-                .form-group
-                    label.control-label 工作单位：
-                    .form-content(ng-bind="lover.company")
-                .form-group
-                    label.control-label 职务：
-                    .form-content(ng-bind="lover.position")
-                .form-group
-                    label.control-label 联系方式：
-                    .form-content(ng-bind="lover.mobile")
-            div
-                h5 子女情况
-                ul.nice-table
-                    li.nice-table-row(ng-repeat="children in resume.familyMembers | filterBy: ['relation']: 'children' track by $index")
-                        span.nt-cell.nt-cell-md(ng-bind="children.name")
-                        span.nt-cell.nt-cell-sm(ng-bind="children.relationType")
-                        span.nt-cell.nt-cell-sm(ng-bind="children.gender")
-                        span.nt-cell.nt-cell-md(ng-bind="children.birthday  | date:'yyyy-MM-dd'")
-                        span.nt-cell.nt-cell-lg(ng-bind="children.residenceBooklet")
-                        span.nt-cell.nt-cell-lg(ng-bind="children.company")
-            div
-                h5 父母、兄妹、配偶父母情况
-                ul.nice-table
-                    li.nice-table-row(ng-repeat="other in resume.familyMembers | filterBy: ['relation']: 'other' track by $index")
-                        span.nt-cell.nt-cell-md(ng-bind="other.name")
-                        span.nt-cell.nt-cell-sm(ng-bind="other.relationType")
-                        span.nt-cell.nt-cell-sm(ng-bind="other.gender")
-                        span.nt-cell.nt-cell-md(ng-bind="other.birthday  | date:'yyyy-MM-dd'")
-                        span.nt-cell.nt-cell-lg(ng-bind="other.residenceBooklet")
-                        span.nt-cell.nt-cell-lg(ng-bind="other.company")
+        section.resume-section(layout)
+            .resume-section-left(style="flex: 0 0 150px;")
+                .resume-avator
+                    img(ng-src="{{currentUser.favicon.big}}")
+            .resume-section-right(flex)
+                .resume-row
+                    .resume-item
+                        label.control-label 性别：
+                        .form-content(ng-bind="resume.gender.displayName")
+                    .resume-item
+                        label.control-label 民族：
+                        .form-content(ng-bind="resume.nation.displayName")
+                .resume-row
+                    .resume-item
+                        label.control-label 籍贯：
+                        .form-content(ng-bind="resume.nativePlace")
+                    .resume-item
+                        label.control-label 身份证号：
+                        .form-content(ng-bind="resume.identityNo")
+                .resume-row
+                    .resume-item
+                        label.control-label 出生地点：
+                        .form-content(ng-bind="resume.birthPlace")
+                    .resume-item
+                        label.control-label 出生年月：
+                        .form-content(ng-bind="resume.birthday  | date:'yyyy-MM-dd'")
+                .resume-row
+                    .resume-item
+                        label.control-label 政治面貌：
+                        .form-content(ng-bind="resume.birthPlace")
+                    .resume-item
+                        label.control-label 婚姻状况：
+                        .form-content(ng-bind="resume.martialStatus.displayName")
+                .resume-row
+                    .resume-item
+                        label.control-label 学历：
+                        .form-content(ng-bind="resume.educationBackground.displayName")
+                    .resume-item
+                        label.control-label 学位：
+                        .form-content(ng-bind="resume.degree.displayName")
+                .resume-row
+                    .resume-item
+                        label.control-label 毕业院校：
+                        .form-content(ng-bind="resume.school")
+                    .resume-item
+                        label.control-label 专业：
+                        .form-content(ng-bind="resume.major")
+                .resume-row
+                    .resume-item
+                        label.control-label 英语等级：
+                        .form-content(ng-bind="resume.englishLevel.displayName")
+        section.resume-section(layout)
+            .resume-section-left(style="flex: 0 0 150px;")
+                h4 联系方式
+            .resume-section-right(flex)
+                .resume-row
+                    .resume-item
+                        label.control-label 手机号码：
+                        .form-content(ng-bind="resume.contact.mobile")
+                    .resume-item
+                        label.control-label 电子邮箱：
+                        .form-content(ng-bind="resume.contact.email")
+                .resume-row
+                    .resume-item.block
+                        label.control-label 家庭住址：
+                        .form-content(ng-bind="resume.contact.address")
+                .resume-row
+                    .resume-item
+                        label.control-label 固定电话：
+                        .form-content(ng-bind="resume.contact.telephone")
+                .resume-row
+                    .resume-item.block
+                        label.control-label 通信地址：
+                        .form-content(ng-bind="resume.contact.mailingAddress")
+                .resume-row
+                    .resume-item
+                        label.control-label 邮政编码：
+                        .form-content(ng-bind="resume.contact.postcode")
+
+        section.resume-section(layout)
+            .resume-section-left(style="flex: 0 0 150px;")
+                h4 家庭主要成员情况
+            .resume-section-right(flex ng-repeat="lover in resume.familyMembers | filterBy: ['relation']: 'lover' track by $index")
+                h5.resume-row 配偶
+                .resume-row
+                    .resume-item
+                        label.control-label 姓名：
+                        .form-content(ng-bind="lover.name")
+                    .resume-item
+                        label.control-label 性别：
+                        .form-content(ng-bind="lover.gender")
+                .resume-row
+                    .resume-item
+                        label.control-label 籍贯：
+                        .form-content(ng-bind="lover.nativePlace")
+                    .resume-item
+                        label.control-label 民族：
+                        .form-content(ng-bind="lover.nation")
+                .resume-row
+                    .resume-item
+                        label.control-label 出生年月：
+                        .form-content(ng-bind="lover.birthday  | date:'yyyy-MM-dd'")
+                    .resume-item
+                        label.control-label 文化程度：
+                        .form-content(ng-bind="lover.educationBackground.name")
+                .resume-row
+                    .resume-item
+                        label.control-label 政治面貌：
+                        .form-content(ng-bind="lover.politicalStatus")
+                    .resume-item
+                        label.control-label 工作单位：
+                        .form-content(ng-bind="lover.company")
+                .resume-row
+                    .resume-item
+                        label.control-label 职务：
+                        .form-content(ng-bind="lover.position")
+                    .resume-item
+                        label.control-label 联系方式：
+                        .form-content(ng-bind="lover.mobile")
+                h5.resume-row 子女情况
+                .resume-row
+                    table.table.table-mc-light-blue.table-bordered
+                        thead
+                            tr
+                                th 姓名
+                                th 关系
+                                th 性别
+                                th 出生年月
+                                th 户口所在地
+                                th 学校或工作单位
+                        tbody
+                            tr(ng-repeat="child in resume.familyMembers | filterBy: ['relation']: 'children' track by $index")
+                                td(ng-bind="child.name")
+                                td(ng-bind="child.relationType")
+                                td(ng-bind="child.gender")
+                                td(ng-bind="child.birthday | date:'yyyy-MM-dd'")
+                                td(ng-bind="child.residenceBooklet")
+                                td(ng-bind="child.company")
+
+                h5.resume-row 父母、兄妹、配偶父母情况
+                .resume-row
+                    table.table.table-mc-light-blue.table-bordered
+                        thead
+                            tr
+                                th 姓名
+                                th 关系
+                                th 性别
+                                th 出生年月
+                                th 常住户口所在地
+                                th 学校或工作单位
+                        tbody
+                            tr(ng-repeat="other in resume.familyMembers | filterBy: ['relation']: 'other' track by $index")
+                                td(ng-bind="other.name")
+                                td(ng-bind="other.relationType")
+                                td(ng-bind="other.gender")
+                                td(ng-bind="other.birthday | date:'yyyy-MM-dd'")
+                                td(ng-bind="other.residenceBooklet")
+                                td(ng-bind="other.company")
+
+        section.resume-section(layout)
+            .resume-section-left(style="flex: 0 0 150px;")
+                h4 教育经历
+            .resume-section-right(flex ng-repeat="edu in resume.educationExperiences")
+                .resume-row
+                    .resume-item
+                        label.control-label 入学日期：
+                        .form-content(ng-bind="edu.admissionDate  | date:'yyyy-MM-dd'")
+                    .resume-item
+                        label.control-label 毕业日期：
+                        .form-content(ng-bind="edu.graduationDate | date:'yyyy-MM-dd'")
+                .resume-row
+                    .resume-item
+                        label.control-label 毕业院校：
+                        .form-content(ng-bind="edu.school")
+                    .resume-item
+                        label.control-label 专业：
+                        .form-content(ng-bind="edu.major")
+                .resume-row
+                    .resume-item
+                        label.control-label 学历：
+                        .form-content(ng-bind="edu.educationBackground.displayName")
+                    .resume-item
+                        label.control-label 学位：
+                        .form-content(ng-bind="edu.degree.displayName")
+                .resume-row
+                    .resume-item
+                        label.control-label 证明人：
+                        .form-content(ng-bind="edu.witness")
+        section.resume-section(layout)
+            .resume-section-left(style="flex: 0 0 150px;")
+                h4 工作后培训经历
+            .resume-section-right(flex)
+                .resume-row
+                    .resume-item
+                        label.control-label 授课开始日期：
+                        .form-content 2010-05-25
+                    .resume-item
+                        label.control-label 授课结束日期：
+                        .form-content 2010-10-25
+                .resume-row
+                    .resume-item
+                        label.control-label 培训课程：
+                        .form-content HR专业培训
+                    .resume-item
+                        label.control-label 培训课时：
+                        .form-content 100
+                .resume-row
+                    .resume-item
+                        label.control-label 是否全勤：
+                        .form-content 全勤
+                    .resume-item
+                        label.control-label 考核成绩：
+                        .form-content 90
+                .resume-row
+                    .resume-item
+                        label.control-label 培训内容：
+                        .form-content 提高员工忠诚度，增强员工适应度，提高员工工作效率，提高员工归属感，企业文化与理念，发展目标与愿景，企业规章制度，工作职责与方式。
+        section.resume-section(layout)
+            .resume-section-left(style="flex: 0 0 150px;")
+                h4 工作经历
+            .resume-section-right(flex ng-repeat="work in resume.workExperiences")
+                .resume-row
+                    .resume-item
+                        label.control-label 开始日期：
+                        .form-content(ng-bind="work.startDate | date:'yyyy-MM-dd'")
+                    .resume-item
+                        label.control-label 结束日期：
+                        .form-content(ng-bind="work.endDate | date:'yyyy-MM-dd'")
+                .resume-row
+                    .resume-item
+                        label.control-label 单位名称：
+                        .form-content(ng-bind="work.company")
+                    .resume-item
+                        label.control-label 任职部门：
+                        .form-content(ng-bind="work.department")
+                .resume-row
+                    .resume-item.block
+                        label.control-label 担任职位：
+                        .form-content(ng-bind="work.position")
+                    .resume-item.block
+                        label.control-label 工作描述：
+                        .form-content(ng-bind="work.jobDesc")
+                .resume-row
+                    .resume-item
+                        label.control-label 证明人：
+                        .form-content(ng-bind="work.witness")
+        section.resume-section(layout)
+            .resume-section-left(style="flex: 0 0 150px;")
+                h4 到川航后任职记录
+            .resume-section-right(flex)
+                .resume-row
+                    .resume-item
+                        label.control-label 开始日期：
+                        .form-content 2010-03
+                    .resume-item
+                        label.control-label 结束日期：
+                        .form-content 至今
+                .resume-row
+                    .resume-item
+                        label.control-label 担任职务：
+                        .form-content 人事主管
+                    .resume-item
+                        label.control-label 任职部门：
+                        .form-content 人力资源部
+                .resume-row
+                    .resume-item
+                        label.control-label 证明人：
+                        .form-content 段红
+
+                    //- ul.nice-table
+                    //-     li.nice-table-row(ng-repeat="other in resume.familyMembers | filterBy: ['relation']: 'other' track by $index")
+                    //-         span.nt-cell.nt-cell-md(ng-bind="other.name")
+                    //-         span.nt-cell.nt-cell-sm(ng-bind="other.relationType")
+                    //-         span.nt-cell.nt-cell-sm(ng-bind="other.gender")
+                    //-         span.nt-cell.nt-cell-md(ng-bind="other.birthday  | date:'yyyy-MM-dd'")
+                    //-         span.nt-cell.nt-cell-lg(ng-bind="other.residenceBooklet")
+                    //-         span.nt-cell.nt-cell-lg(ng-bind="other.company")

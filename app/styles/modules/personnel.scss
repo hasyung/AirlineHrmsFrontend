@@ -53,6 +53,10 @@
                 position: absolute;
                 top: 130px;
                 width: 24px;
+
+                i {
+                    margin-left: 2px;
+                }
             }
 
         }
@@ -67,6 +71,7 @@
         p {
             color: #fff;
             font-size: $font-size-lg;
+            margin: 0;
             text-align: center;
         }
 
@@ -74,6 +79,7 @@
 
     .personnel-info-list {
         ul {
+            margin: 0;
             padding: 0;
         }
 
@@ -90,7 +96,7 @@
                 border: 4px solid transparent;
                 color: $text-color;
                 display: block;
-                height: 100%;
+                height: 36px;
                 line-height: 37px;
                 padding-left: 28px;
                 width: 100%;
@@ -235,7 +241,7 @@
         }
 
         .form-material-section {
-            padding: 0 30px;
+            padding: 0 30px 16px;
             position: relative;
 
             // &:hover {
@@ -482,7 +488,7 @@
         width: 132px;
 
         p {
-            margin-top: 25px;
+            margin-top: 20px;
         }
 
         .avator-preview-item {
@@ -522,7 +528,7 @@
 }
 
 .avator-footer {
-    padding-right: 148px;
+    padding-right: 156px;
 
     button {
         margin-left: 16px;
