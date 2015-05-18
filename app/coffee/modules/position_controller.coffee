@@ -91,9 +91,9 @@ class PositionCtrl extends nb.Controller
                     type: 'boolean'
                 }
                 {
-                    name: 'channel_id'
-                    type: 'select'
-                    displayName: '岗位通道'
+                    name: 'channel_ids'
+                    type: 'muti-enum-search'
+                    displayName: '通道'
                     params: {
                         type: 'channels'
                     }
