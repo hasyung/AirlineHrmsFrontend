@@ -35,7 +35,8 @@ md-toolbar.top-menu-bar.md-warn(md-theme="hrms")
                 md-button(
                     nb-panel
                     template-url="partials/shared/notification_center.html"
-
+                    panel-controller="NotificationCtrl"
+                    controller-as="ctrl"
                 )
                     md-icon(md-svg-icon="/images/svg/email-outline.svg")
                 .ms-count 10
