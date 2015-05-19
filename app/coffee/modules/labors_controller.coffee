@@ -12,10 +12,10 @@ class Route
     constructor: (stateProvider, urlRouterProvider) ->
 
         stateProvider
-            .state 'labors_transfer', {
-                url: '/labor-relations-transfer'
-                templateUrl: 'partials/labors/labors_transfer.html'
-                controller: LaborCtrl
+            .state 'contract_management', {
+                url: '/contract-management'
+                templateUrl: 'partials/labors/contract_management.html'
+                controller: ContractCtrl
                 controllerAs: 'ctrl'
             }
 
@@ -29,25 +29,15 @@ class LaborCtrl extends nb.Controller
     search: (tableState)->
         @flows.$refresh(tableState)
 
-class LaborDialogCtrl extends nb.Controller
-    @.$inject = ['$scope', 'data', '$mdDialog']
-    constructor: (@scope, @data, @mdDialog) ->
-        self = @
-        @scope.data = @data
+class ContractCtrl extends nb.Controller
+    @.$inject = ['$scope', 'Contrack']
+    constructor: (@scope, @Contrack) ->
+        # ...
+    
 
-    pass: (leave)->
-        self = @
-        leave.audit.opinion = true
-        leave.$update().$then ()->
-            self.mdDialog.hide()
-    reject: (leave)->
-        self = @
-        leave.audit.opinion = false
-        leave.$update().$then ()->
-            self.mdDialog.hide()
+
 
 
 
 
 app.config(Route)
-app.controller('LaborDialogCtrl', LaborDialogCtrl)

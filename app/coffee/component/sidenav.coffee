@@ -284,7 +284,7 @@ menuFactory = ($rootScope, $state)->
             }
             {
                 name: '合同管理'
-                state: 'position'
+                state: 'contract_management'
                 permission: ''
             }
             {
