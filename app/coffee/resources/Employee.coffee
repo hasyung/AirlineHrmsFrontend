@@ -35,11 +35,7 @@ Employee = (restmod, RMUtils, $Evt) ->
 LeaveEmployees = (restmod, RMUtils, $Evt) ->
 
     LeaveEmployees = restmod.model('/leave_employees').mix 'nbRestApi', {
-        # departmentId: {mask: 'R', map: 'department.id'}
-        department: {mask: 'CU', belongsTo: 'Org'}
-        # dept: {belongsTo: 'Org', key: 'department_id'}
-
-        # joinScalDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
+        
         joinScalDate: {decode: 'date', param: 'yyyy-MM-dd'}
         startWorkDate: {decode: 'date', param: 'yyyy-MM-dd'}
 

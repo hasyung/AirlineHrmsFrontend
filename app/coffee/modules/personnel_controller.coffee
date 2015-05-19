@@ -292,9 +292,9 @@ class LeaveEmployeesCtrl extends nb.Controller
         @columnDef = [
             {
                 displayName: '所属部门'
-                name: 'department.name'
+                name: 'department'
                 cellTooltip: (row) ->
-                    return row.entity.department.name
+                    return row.entity.department
             }
             {
                 displayName: '姓名'
@@ -314,15 +314,15 @@ class LeaveEmployeesCtrl extends nb.Controller
             {displayName: '员工编号', name: 'employeeNo'}
             {
                 displayName: '岗位'
-                name: 'position.name'
+                name: 'position'
                 cellTooltip: (row) ->
-                    return row.entity.position.name
+                    return row.entity.position
             }
-            {displayName: '性别', name: 'categoryId', cellFilter: "enum:'categories'"}
-            {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
-            {displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
-            {displayName: '变动性质', name: 'joinScalDate'}
-            {displayName: '变动时间', name: 'joinScalDate'}
+            {displayName: '性别', name: 'gender'}
+            {displayName: '通道', name: 'channel'}
+            {displayName: '用工性质', name: 'laborRelation'}
+            {displayName: '变动性质', name: 'employmentStatus'}
+            {displayName: '变动时间', name: 'changeDate'}
         ]
 
         @filterOptions = {
@@ -355,6 +355,8 @@ class LeaveEmployeesCtrl extends nb.Controller
 
     loadInitailData: ->
         @leaveEmployees = @LeaveEmployees.$collection().$fetch()
+    search: (tableState) ->
+        @leaveEmployees.$refresh(tableState)
        
 
 class ReviewCtrl extends nb.Controller
