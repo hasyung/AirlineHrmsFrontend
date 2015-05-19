@@ -288,29 +288,6 @@
         padding: 0 5px;
     }
 
-    .personnel-info-table {
-        border: 0;
-
-        thead > tr > th {
-            background-color: #fafbfc;
-            font-size: $font-size-md;
-            padding: 8px 15px;
-        }
-
-        tbody > tr > td {
-            font-size: $font-size-md;
-            padding: 8px 15px;
-        }
-
-        tbody > tr:nth-child(odd) > td {
-            background-color: #fff;
-        }
-
-        tbody > tr:nth-child(even) > td {
-            background-color: #fafbfc;
-        }
-    }
-
     .personnel-top-header {
         background-color: #f2f3f8;
         border: 1px solid #c3c3c3;
@@ -389,38 +366,24 @@
 
 }
 
-.personnel-info-table {
-    padding: 20px;
-
-    h4 {
-        margin: 10px 0;
+.table .control-td {
+    button {
+        background-color: transparent;
+        border: 0;
+        color: $text-muted;
     }
+}
 
-    .custom-table {
-        margin-bottom: 20px;
-        width: 100%;
+.add {
+    button {
+        background-color: transparent;
+        border: 1px solid $text-hint;
+        border-radius: 4px;
+        color: $text-muted;
+        padding: 5px 10px;
 
-        .control-td .btn {
-            background: transparent;
-            border: 0;
-            box-shadow: none;
-            color: $danger;
-            font-size: $font-size-lg;
-            outline: none;
-            visibility: hidden;
-        }
-
-        tr:hover .control-td .btn {
-            visibility: visible;
-        }
-    }
-
-    .btn-group {
-        margin-bottom: 20px;
-        margin-left: 190px;
-
-        .btn {
-            margin-left: 100px;
+        &:hover {
+            background-color: rgba(0, 0, 0, .06);
         }
     }
 }
