@@ -8,6 +8,8 @@
                 md-button.md-primary.md-raised(
                 ) 代请假
                 md-button.md-primary.md-raised(
+                    nb-dialog
+                    template-url="/partials/attendance/attendance_new.html"
                 ) 新增考勤
                 
         div(nb-grid column-defs="ctrl.recordColumnDef" safe-src="ctrl.contracts")
