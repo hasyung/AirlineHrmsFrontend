@@ -1,15 +1,15 @@
 .self-info-content {
     background: url('../../../images/personnel/info-bg_03.jpg') no-repeat;
-    background-position: 270px 0;
-    background-size: 100% 270px;
+    background-position: 240px 0;
+    background-size: 100% 240px;
     height: 100%;
 }
 
 .personnel-menu {
     background-color: #fff;
-    flex: 0 270px 0;
+    flex: 0 240px 0;
     position: relative;
-    width: 270px;
+    width: 240px;
 
     .resume-icon {
         background: url('../../../images/personnel/resume-icon.png') no-repeat;
@@ -18,23 +18,23 @@
         height: 40px;
         position: absolute;
         right: 15px;
-        top: 250px;
+        top: 220px;
         width: 40px;
     }
 
     .avator {
         background-image: url('../../../images/personnel/avator-bg.jpg');
         background-size: cover;
-        height: 270px;
+        height: 240px;
         overflow: hidden;
-        width: 270px;
+        width: 240px;
 
         .avator-area {
             border-radius: 50%;
-            height: 100px;
-            margin: 45px auto 30px;
+            height: 110px;
+            margin: 30px auto 10px;
             overflow: hidden;
-            width: 100px;
+            width: 110px;
 
             img {
                 height: 100%;
@@ -48,14 +48,15 @@
                 cursor: pointer;
                 font-size: 18px;
                 height: 24px;
-                left: 160px;
-                padding-left: 4px;
+                left: 145px;
                 position: absolute;
-                top: 130px;
+                top: 116px;
                 width: 24px;
 
                 i {
-                    margin-left: 2px;
+                    height: 16px;
+                    margin-left: 4px;
+                    width: 16px;
                 }
             }
 
@@ -90,7 +91,7 @@
             font-size: $font-size-sm;
             height: 45px;
             line-height: 45px;
-            padding-left: 2px;
+            padding-left: 1px;
 
             a {
                 border: 4px solid transparent;
@@ -189,6 +190,12 @@
     &.self-info-content {
         margin: 60px auto;
         width: 840px;
+
+        .md-subheader {
+            border-left: 3px solid rgb(239, 83, 80);
+            height: 18px;
+            padding-left: 5px;
+        }
     }
 
     md-toolbar {
@@ -281,29 +288,6 @@
         padding: 0 5px;
     }
 
-    .personnel-info-table {
-        border: 0;
-
-        thead > tr > th {
-            background-color: #fafbfc;
-            font-size: $font-size-md;
-            padding: 8px 15px;
-        }
-
-        tbody > tr > td {
-            font-size: $font-size-md;
-            padding: 8px 15px;
-        }
-
-        tbody > tr:nth-child(odd) > td {
-            background-color: #fff;
-        }
-
-        tbody > tr:nth-child(even) > td {
-            background-color: #fafbfc;
-        }
-    }
-
     .personnel-top-header {
         background-color: #f2f3f8;
         border: 1px solid #c3c3c3;
@@ -382,38 +366,24 @@
 
 }
 
-.personnel-info-table {
-    padding: 20px;
-
-    h4 {
-        margin: 10px 0;
+.table .control-td {
+    button {
+        background-color: transparent;
+        border: 0;
+        color: $text-muted;
     }
+}
 
-    .custom-table {
-        margin-bottom: 20px;
-        width: 100%;
+.add {
+    button {
+        background-color: transparent;
+        border: 1px solid $text-hint;
+        border-radius: 4px;
+        color: $text-muted;
+        padding: 5px 10px;
 
-        .control-td .btn {
-            background: transparent;
-            border: 0;
-            box-shadow: none;
-            color: $danger;
-            font-size: $font-size-lg;
-            outline: none;
-            visibility: hidden;
-        }
-
-        tr:hover .control-td .btn {
-            visibility: visible;
-        }
-    }
-
-    .btn-group {
-        margin-bottom: 20px;
-        margin-left: 190px;
-
-        .btn {
-            margin-left: 100px;
+        &:hover {
+            background-color: rgba(0, 0, 0, .06);
         }
     }
 }
@@ -624,12 +594,14 @@
         }
     }
 }
-// @media (max-width: 1280px)  {
-//     .personnel-content  {
-//         margin: 60px auto;
-//         width: 680px;
-//     }
-// }
+
+@media (max-width: 1280px){
+    .personnel-content.self-info-content {
+        background-color: #000;
+        flex: 1;
+        margin: 60px 30px;
+    }
+}
 
 .position-items {
     margin-top: 30px;
