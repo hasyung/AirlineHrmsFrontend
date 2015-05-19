@@ -7,6 +7,11 @@ section(layout="row" flex)
                 .top-btn-group
                     //- 暂时使用的入口
                     md-button.md-raised.md-primary(
+                        nb-dialog
+                        template-url="partials/orgs/org_history.html"
+                        locals="{'historyData': ctrl.initialHistoryData()}"
+                        ) 新增考勤记录
+                    md-button.md-raised.md-primary(
                         nb-panel
                         template-url="partials/labors/labors_contract.html"
                         ) 新建合同
