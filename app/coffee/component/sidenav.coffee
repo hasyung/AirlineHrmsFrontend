@@ -122,7 +122,7 @@ menuFactory = ($rootScope, $state)->
         pages: [
             {
                 name: '考勤记录'
-                state: 'position'
+                state: 'attendance'
                 permission: ''
             }
             {

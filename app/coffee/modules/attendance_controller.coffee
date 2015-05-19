@@ -12,8 +12,6 @@ class Route
 
     constructor: (stateProvider, urlRouterProvider) ->
 
-        urlRouterProvider.when('/self-service', '/self-service/profile')
-
         stateProvider
             .state 'attendance', {
                 url: '/attendance'
@@ -28,6 +26,30 @@ class AttendanceCtrl extends nb.Controller
 
     constructor: (@scope, @Leave, @mdDialog) ->
         @loadInitailData()
+
+        @recordFilterOptions = {
+            name: 'attendanceRecord'
+            constraintDefs: [
+                {
+                    name: 'name'
+                    displayName: '姓名'
+                    type: 'string'
+                    placeholder: '姓名'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                    placeholder: '员工编号'
+                }
+                {
+                    name: 'department_ids'
+                    displayName: '机构'
+                    type: 'org-search'
+                }
+                
+            ]
+        }
 
     loadInitailData: ()->
         @flows = @Leave.$collection().$fetch()
