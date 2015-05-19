@@ -1,5 +1,5 @@
-.app-content-wrapper(flex style="height: 700px;")
-    div(nb-filter="ctrl.recordFilterOptions" on-search="ctrl.search(state)")
+.app-content-wrapper(flex style="height: 700px;" ng-controller="AttendanceRecordCtrl as ctrl")
+    div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
     div.ui-grid-container
         md-toolbar
             .md-toolbar-tools
@@ -12,5 +12,5 @@
                     template-url="/partials/attendance/attendance_new.html"
                 ) 新增考勤
                 
-        div(nb-grid column-defs="ctrl.recordColumnDef" safe-src="ctrl.contracts")
+        div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.attendances")
 
