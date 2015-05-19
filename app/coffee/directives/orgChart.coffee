@@ -172,7 +172,7 @@ drawOrgChart = (root, options, select_org_id) ->
                 .style("font-size", "12px")
                 .attr "x", (d) -> d.x + rectWidth/2
                 .attr "y", (d) -> d.y + rectHeight/2
-                .text (d) -> d.name
+                .text (d) -> d.name.replace(/（/gm, '︵').replace(/）/gm, '︶')
 
         svg.attr("width",rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + 40)
             .attr("height",(rectHeight + rectVerticalSpacing)*4)
@@ -290,7 +290,7 @@ drawTreeChart = (root, options, select_org_id) ->
                 .style("font-size", "12px")
                 .attr "x", (d) -> d.x
                 .attr "y", (d) -> d.y + rectHeight/2
-                .text (d) -> d.name
+                .text (d) -> d.name.replace(/（/gm, '︵').replace(/）/gm, '︶')
 
         # // compute canvas h w
         drawPath()
