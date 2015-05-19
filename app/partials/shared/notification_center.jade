@@ -1,41 +1,76 @@
-div.notification-center.md-background(md-theme="hrms")
+div.notification-center.md-background(md-theme="hrms"
+    infinite-scroll="ctrl.loadMoreRows()"
+    infinite-scroll-distance="9000"
+    )
     md-toolbar.md-warn
         .md-toolbar-tools
             span 通知中心
     md-content.nt-content
         div
-            md-subheader 新消息
-            .nt-msg-item
+            //- md-subheader 新消息
+            .nt-msg-item(ng-repeat="item in ctrl.notifications")
                 .nt-item-desc
-                    span
-                        | 员工退养
-                    span
-                        | 您的退养申请已与2015-05-02在部门领导的审批节点被审批通过！
-                .nt-item-time
-                    | 2015-01-01
-            .nt-msg-item
-                .nt-item-desc
-                    span
-                        | 员工退养
-                    span
-                        | 您的退养申请已与2015-05-02在部门领导的审批节点被审批通过！
-                .nt-item-time
-                    | 2015-01-01
-        div
-            md-subheader 已读消息
-            .nt-msg-item
-                .nt-item-desc
-                    span
-                        | 员工退养
-                    span
-                        | 您的退养申请已与2015-05-02在部门领导的审批节点被审批通过！
-                .nt-item-time
-                    | 2015-01-01
-            .nt-msg-item
-                .nt-item-desc
-                    span
-                        | 员工退养
-                    span
-                        | 您的退养申请已与2015-05-02在部门领导的审批节点被审批通过！
-                .nt-item-time
-                    | 2015-01-01
+                    span(ng-bind="item.category")
+                    span(ng-bind="item.body")
+                .nt-item-time(ng-bind="item.updatedAt")
+                    
+            //- .nt-msg-item
+            //-     .nt-item-desc
+            //-         span
+            //-             a(href="#") 员工退养
+            //-         span
+            //-             | 您的退养申请已与2015-05-02在部门领导的审批节点被审批通过！
+            //-     .nt-item-time
+            //-         | 2015-01-01
+        //- div
+        //-     md-subheader 已读消息
+        //-     .nt-msg-item
+        //-         .nt-item-desc
+        //-             span
+        //-                 a(href="#") 员工退养
+        //-             span
+        //-                 | 您的退养申请已与2015-05-02在部门领导的审批节点被审批通过！
+        //-         .nt-item-time
+        //-             | 2015-01-01
+        //-     .nt-msg-item
+        //-         .nt-item-desc
+        //-             span
+        //-                 a(href="#") 员工退养
+        //-             span
+        //-                 | 您的退养申请已与2015-05-02在部门领导的审批节点被审批通过！
+        //-         .nt-item-time
+        //-             | 2015-01-01
+//- =======
+//-                     span
+//-                         | 员工退养
+//-                     span
+//-                         | 您的退养申请已与2015-05-02在部门领导的审批节点被审批通过！
+//-                 .nt-item-time
+//-                     | 2015-01-01
+//-             .nt-msg-item
+//-                 .nt-item-desc
+//-                     span
+//-                         | 员工退养
+//-                     span
+//-                         | 您的退养申请已与2015-05-02在部门领导的审批节点被审批通过！
+//-                 .nt-item-time
+//-                     | 2015-01-01
+//-         div
+//-             md-subheader 已读消息
+//-             .nt-msg-item
+//-                 .nt-item-desc
+//-                     span
+//-                         | 员工退养
+//-                     span
+//-                         | 您的退养申请已与2015-05-02在部门领导的审批节点被审批通过！
+//-                 .nt-item-time
+//-                     | 2015-01-01
+//-             .nt-msg-item
+//-                 .nt-item-desc
+//-                     span
+//-                         | 员工退养
+//-                     span
+//-                         | 您的退养申请已与2015-05-02在部门领导的审批节点被审批通过！
+//-                 .nt-item-time
+//-                     | 2015-01-01
+//- >>>>>>> e8690ee2702bd261bbf07d24901113a6c543acf4

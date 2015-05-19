@@ -32,6 +32,7 @@ deps = [
     'nb.component'
     'flow'
     'ngMaterialDropmenu'
+    'infinite-scroll'
     #'nb.controller.site'
 ]
 resources = angular.module('resources',[])

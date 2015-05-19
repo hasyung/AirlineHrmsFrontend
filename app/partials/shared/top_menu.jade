@@ -31,10 +31,11 @@ md-toolbar.top-menu-bar.md-warn(md-theme="hrms")
                                     span 2015-5-19
                                 .dd-item-count 10
         span
-            div.top-messages.top-btn-wrap
+            div.top-messages.top-btn-wrap(ng-controller="NotificationCtrl as ctrl")
                 md-button(
                     nb-panel
                     template-url="partials/shared/notification_center.html"
+                    pre-close-callback="markToReaded"
                 )
                     md-icon(md-svg-icon="/images/svg/email-outline.svg")
                 .ms-count {{ notify.msg_unread_count }}
