@@ -5,6 +5,11 @@ section(layout="row" flex)
                 .org-chart-search(flex)
                     org-search(selected-item-change="ctrl.selectOrgChart(org)")
                 .top-btn-group
+                    //- 暂时使用的入口
+                    md-button.md-raised.md-primary(
+                        nb-dialog
+                        template-url="partials/attendance/attendance_new.html"
+                        ) 新增考勤记录
                     md-button.md-raised.md-primary(
                         nb-dialog
                         template-url="partials/orgs/org_history.html"

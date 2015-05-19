@@ -1,0 +1,27 @@
+md-dialog.attendance_new
+    md-content
+        md-toolbar.md-accent(md-theme="hrms")
+                .md-toolbar-tools
+                    span 新增考勤记录
+        .dialog-content(layout layout-align="center")
+            form(flex)
+                fieldset
+                    div(layout)
+                        md-input-container(flex)
+                            label 姓名
+                            input(ng-model="current.name" name="name" required)
+                    div(layout)
+                        md-input-container.row-has-value(flex)
+                            label 考勤类型
+                            md-select(ng-model="current.politicalStatusId" ng-disabled="!editing")
+                                md-select-label {{$enum.parseLabel(current.politicalStatusId, "political_status")}}
+                                md-option(ng-value="item.id" ng-repeat="item in $enum.get('political_status')") {{item.label}}
+                    div(layout)
+                        md-input-container(flex)
+                            label 记录日期
+                            input(bs-datepicker ng-model="newExp.admissionDate")
+
+
+    .md-actions
+        md-button(ng-click='dialog.close()') 取 消
+        md-button.md-primary.md-raised(ng-click="ctrl.backToPast() ; dialog.close()" ng-disabled="!ctrl.currentLog") 确 定
