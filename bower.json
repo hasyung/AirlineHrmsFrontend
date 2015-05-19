@@ -46,6 +46,6 @@
     "d3": "~3.5.5",
     "print-area": "~2.4.1",
     "bootstrap-datepicker": "~1.4.0",
-    "ngInfiniteScroll": "~1.0.0"
+    "ngInfiniteScroll": "~1.2.0"
   }
 }

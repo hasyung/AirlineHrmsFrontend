@@ -60,14 +60,13 @@ class NotificationCtrl
             toaster.pop('success', msg.category, msg.body)
             scope.$apply -> ctrl.msg_unread_count = msg_unread_count
 
-
-
-
-
-
         # WebsocketClient.addListener 'workflow_step_action', ->
 
         @notifications = []
+
+
+    initialNotification: ->
+        @Notification.$collection().$fetch()
 
 
 

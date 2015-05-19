@@ -8,6 +8,7 @@ mod.directive('infiniteScroll', [
     return {
       link: function(scope, elem, attrs) {
         var checkWhenEnabled, handler, scrollDistance, scrollEnabled;
+        var scrollContainer;
         $window = angular.element($window);
         scrollDistance = 0;
         if (attrs.infiniteScrollDistance != null) {
@@ -28,10 +29,10 @@ mod.directive('infiniteScroll', [
         }
         handler = function() {
           var elementBottom, remaining, shouldScroll, windowBottom;
-          windowBottom = $window.height() + $window.scrollTop();
+          windowBottom = scrollContainer.height() + scrollContainer.scrollTop();
           elementBottom = elem.offset().top + elem.height();
           remaining = elementBottom - windowBottom;
-          shouldScroll = remaining <= $window.height() * scrollDistance;
+          shouldScroll = remaining <= scrollContainer.height() * scrollDistance;
           if (shouldScroll && scrollEnabled) {
             if ($rootScope.$$phase) {
               return scope.$eval(attrs.infiniteScroll);
@@ -42,7 +43,6 @@ mod.directive('infiniteScroll', [
             return checkWhenEnabled = true;
           }
         };
-        var scrollContainer;
         scrollContainer = elem.closest('.ngdialog');
         if(!scrollContainer){
           scrollContainer = $window
