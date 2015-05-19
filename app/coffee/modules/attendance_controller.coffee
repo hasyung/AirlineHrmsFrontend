@@ -27,7 +27,19 @@ class AttendanceCtrl extends nb.Controller
     constructor: (@scope, @Leave, @mdDialog) ->
         @loadInitailData()
 
-        @recordFilterOptions = {
+        
+
+    loadInitailData: ()->
+        @flows = @Leave.$collection().$fetch()
+
+    # searchLeaves: (tableState)->
+    #     @flows.$refresh(tableState)
+
+class AttendanceRecordCtrl extends nb.Controller
+    @.$inject = ['$scope', 'Attendance']
+    constructor: (@scope, @Attendance) ->
+        @loadInitailData()
+        @filterOptions = {
             name: 'attendanceRecord'
             constraintDefs: [
                 {
@@ -51,31 +63,51 @@ class AttendanceCtrl extends nb.Controller
             ]
         }
 
+        @columnDef = [
+            {displayName: '员工编号', name: 'employeeNo'}
+            {
+                displayName: '姓名'
+                field: 'employeeName'
+                # pinnedLeft: true
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+            }
+
+            {
+                displayName: '岗位'
+                name: 'positionName'
+                cellTooltip: (row) ->
+                    return row.entity.positionName
+            }
+            {displayName: '分类', name: 'applyType'}
+            {displayName: '通道', name: 'changeFlag'}
+            {displayName: '用工性质', name: 'startDate', cellFilter: "enum:'channels'"}
+            {displayName: '到岗时间', name: 'endDate'}
+        ]
+
+
     loadInitailData: ()->
-        @flows = @Leave.$collection().$fetch()
+        @attendances = @Attendance.$collection().$fetch()
 
-    # searchLeaves: (tableState)->
-    #     @flows.$refresh(tableState)
+        
 
-class AttendanceDialogCtrl extends nb.Controller
-    @.$inject = ['$scope', 'data', '$mdDialog']
-    constructor: (@scope, @data, @mdDialog) ->
-        self = @
-        @scope.data = @data
-
-    pass: (leave)->
-        self = @
-        leave.audit.opinion = true
-        leave.$update().$then ()->
-            self.mdDialog.hide()
-    reject: (leave)->
-        self = @
-        leave.audit.opinion = false
-        leave.$update().$then ()->
-            self.mdDialog.hide()
+    
 
 
 
 
 app.config(Route)
-app.controller('AttendanceDialogCtrl', AttendanceDialogCtrl)
+app.controller('AttendanceRecordCtrl', AttendanceRecordCtrl)
