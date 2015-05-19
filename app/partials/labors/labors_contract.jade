@@ -1,0 +1,64 @@
+div(ng-init= "current = panel.employee; current.$refresh();" style="height: 100%; background-color: #f5f5f5;")
+    md-toolbar.md-warn(md-theme="hrms")
+        .md-toolbar-tools
+            span 新建合同
+
+    .personnel-content.personnel-control
+        section.personnel-info-section
+            md-content.nb-card-container(layout="column" md-theme="hrms")
+                form()
+                    md-card.form-material-section.nb-card
+                        md-subheader.md-background.md-hue-1
+                            md-icon.form-icon(md-svg-src="/images/svg/personnel_24.svg" alt="基本信息")
+                            | 合同信息
+
+                        fieldset()
+                            div(layout)
+                                md-input-container(flex)
+                                    label 姓名
+                                    input(ng-model="current.name" name="name" required)
+                                md-input-container(flex)
+                                    label 员工编号
+                                    input(ng-model="current.employeeNo" required)
+
+                            div(layout)
+                                md-input-container.row-has-value(flex)
+                                    label 部门
+                                    input(ng-model="current.identityNo", name="identityNo" disabled required)
+                                md-input-container.row-has-value(flex)
+                                    label 岗位
+                                    input(ng-model="current.identityNo", name="identityNo" disabled required)
+
+                            div(layout)
+                                md-input-container.row-has-value(flex)
+                                    label 用工性质
+                                    md-select(ng-model="current.politicalStatusId")
+                                        md-select-label {{$enum.parseLabel(current.politicalStatusId, "political_status")}}
+                                        md-option(ng-value="item.id" ng-repeat="item in $enum.get('political_status')") {{item.label}}
+                                md-input-container.row-has-value(flex)
+                                    label 变更标志
+                                    md-select(ng-model="current.politicalStatusId")
+                                        md-select-label {{$enum.parseLabel(current.politicalStatusId, "political_status")}}
+                                        md-option(ng-value="item.id" ng-repeat="item in $enum.get('political_status')") {{item.label}}
+                            div(layout)
+                                md-input-container(flex)
+                                    label 开始日期
+                                    input(bs-datepicker ng-model="newExp.admissionDate")
+                                md-input-container(flex)
+                                    label 合同时长/年
+                                    input(type="type", ng-model="current.contact.mobile", name="contact")
+
+                            div(layout)
+                                md-input-container(flex)
+                                    label 合同备注
+                                    input(type="type", ng-model="current.contact.mobile", name="contact")
+                    .form-bottom-group(layout style="margin-top: 20px;")
+                        span(flex)
+                        md-button.md-raised 取消
+                        md-button.md-primary.md-raised 提交
+
+
+
+
+
+
