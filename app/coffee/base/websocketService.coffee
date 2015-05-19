@@ -6,60 +6,95 @@ nb = @.nb
 
 app = nb.app
 
+RID = "com.cdavatar.sichuan_airline_hrms#public"
+SUBSCRIBE_EVENT = "connector.entryHandler.enter"
+SEND_MSG_EVENT = "message.messageHandler.send"
+
+CONNECTION_CONFIG = {
+    host: "192.168.6.99"
+    port: "9927"
+    log: true
+}
+
+MESSAGE_KEYS = ['user_message', 'workflow_step_action']
+
+
 class WebsocketService extends nb.Service
 
-    constructor: (@window, @rootScope) ->
-        @pomelo = @window.pomelo
-        @listeners = []
+
+    processMessage = (service, data) ->
+
+        if data.message_key
+
+            handler = service._events[data.message_key]
+
+            if angular.isFunction(handler)
+                handler(data.content)
+            else if angular.isArray(handler)
+                listeners = handler.slice()
+                handle(data.content) for handle in listeners
 
 
-    startupConnection: ()->
+
+
+    constructor: (@pomelo, @rootScope, @toaster, UNIQ_KEY) ->
+        @._events = {}
+        @setupConnection(UNIQ_KEY)
+
+
+    setupConnection: (uniq_key)->
         self = @
-        parms = {
-            host: "192.168.6.16"
-            port: "9927"
-            log: true
+        toaster = @toaster
+
+        intial_params = {
+            username: "web_#{uniq_key}"
+            rid: RID
         }
+
         #绑定监听事件
         callBack = (data)->
             if data.code == 'failed'
-                console.log "#FF0000   DUPLICATE_ERROR"
-        sender = ()->
-            cEvent = "connector.entryHandler.enter"
-            data = {username: self.rootScope.currentUser.employeeNo, rid: 'com.avatar.airline_hrms#uniq_key_here'}
-            console.log data
-            console.log self.rootScope.currentUser
-            self.pomelo.request(cEvent,data, callBack)
-        @pomelo.init parms, sender
+                toaster.pop 'error', '错误', '推送服务初始化失败'
+                console.debug '推送服务初始化失败', data
+            self.pomelo.on 'Message', (data) -> processMessage(self, data)
+
+
+        initialize = () -> self.pomelo.request(SUBSCRIBE_EVENT, intial_params, callBack)
+
+        @pomelo.init CONNECTION_CONFIG, initialize
 
 
 
-    sendMessage: (data)->
-        cEvent = "message.messageHandler.send"
+    send: (data, callback = angular.noop)->
+        @pomelo.request SEND_MSG_EVENT, data, callback
 
-        @pomelo.request cEvent, data, (data)->
-            console.log data
-
-
-    stopCurrentConnect: ()->
+    disconnect: ()->
         @pomelo.disconnect()
 
-    addListener: (listener)->
-        @pomelo.on listener.name, listener.hander
+    addListener: (type, callback)->
 
-    removeListener: (listener)->
-        @pomelo.removeListener listener.name, listener.hander
-        
+        if !angular.isFunction(callback)
+            throw new Error("addListener only takes instances of Function")
 
+        if !@._events[type]
+            @._events[type] = callback
+        else if angular.isArray(@._events[type])
+            @._events[type].push(callback)
+        else
+            this._events[type] = [@._events[type], callback]
 
-    
+    removeListener: (name)-> #TODO @de
+        # @pomelo.removeListener name
+
 
 class WebsocketProvider
 
-    $get: ($window, $rootScope) ->
-        service = new WebsocketService($window, $rootScope)
+    $get: ($window, $rootScope, toaster, meta) ->
+        UNIQ_KEY = meta.employee_no
+        pomelo = $window.pomelo || throw 'pomelo not defined'
+        service = new WebsocketService(pomelo, $rootScope, toaster, UNIQ_KEY)
         return service
 
-    @.prototype.$get.$inject = ['$window', '$rootScope']
+    @.prototype.$get.$inject = ['$window', '$rootScope', 'toaster',  'USER_META']
 
 app.provider("WebsocketClient", WebsocketProvider)

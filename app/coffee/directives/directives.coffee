@@ -11,31 +11,6 @@ angular.module 'nb.directives'
                     elem.toggleClass 'active'
         }
     ]
-    .directive 'notification', ['$document', ($doc) ->
-        return {
-            restrict: 'A'
-            link: (scope,elem,attr) ->
-                scope.isOpen = false
-                toggle = (e)->
-                    e.stopPropagation()
-                    if scope.isOpen then close() else open()
-                    
-                open = -> 
-                    scope.$apply -> scope.isOpen = true
-                    $doc.on 'click', close
-
-                close = -> 
-                    scope.$apply -> scope.isOpen = false
-                    $doc.off 'click', close
-
-                elem.on 'click', toggle
-                scope.$on 'destroy', ()->
-                    elem.off 'click', toggle
-                    $doc.off 'click', close
-
-                
-        }
-    ]
     .directive 'nbDownload', [() ->
 
         postLink = (scope, elem, attrs)->
