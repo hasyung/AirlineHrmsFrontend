@@ -48,14 +48,6 @@ menuFactory = ($rootScope, $state)->
                 name: '信息变更记录'
                 # state: 'self.profile'
             }
-            {
-                name: '公司通讯录'
-                # state: 'self.profile'
-            }
-            {
-                name: '部门信箱'
-                # state: 'self.profile'
-            }
         ]
     }
 
@@ -145,17 +137,7 @@ menuFactory = ($rootScope, $state)->
         icon_src: '/images/svg/left-side-svg/left_icon_6.svg'
         pages: [
             {
-                name: '培训大纲'
-                state: 'position'
-                permission: ''
-            }
-            {
                 name: '培训记录'
-                state: 'position'
-                permission: ''
-            }
-            {
-                name: '教员管理'
                 state: 'position'
                 permission: ''
             }
@@ -252,11 +234,6 @@ menuFactory = ($rootScope, $state)->
         name: '劳动关系'
         icon_src: '/images/svg/left-side-svg/left_icon_9.svg'
         pages: [
-            {
-                name: '员工入职'
-                state: 'position'
-                permission: ''
-            }
             {
                 name: '员工转正'
                 state: 'position'

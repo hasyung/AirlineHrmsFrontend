@@ -1,3 +1,6 @@
+
+app = @nb.app
+
 angular.module 'nb.directives'
     .directive 'nbNotification', ['$document', 'WebsocketClient', ($doc, WebsocketClient)->
         postLink = (scope, elem, attr, ctrl)->
@@ -7,30 +10,6 @@ angular.module 'nb.directives'
                     ctrl.isShow = false
                 return
 
-
-            WebsocketClient.startupConnection()
-            
-            WebsocketClient.addListener {
-                name:"Message",
-                hander:(data)->
-                    scope.$apply ()->
-                        ctrl.notifications.push data
-                    console.log data
-            }
-            WebsocketClient.addListener {
-                name:"RemoveMessage",
-                hander:(data)->
-                    console.log data
-            }
-
-            elem.on 'click', (e)->
-                e.stopPropagation()
-
-            $doc.on 'click', closeNotePan
-
-            scope.$on '$destroy', ()->
-                $doc.off 'click', closeNotePan
-                elem.off 'click'
 
         return {
             restrict: 'A'
@@ -43,19 +22,56 @@ angular.module 'nb.directives'
         }
     ]
 
+    .directive 'notification', ['$document', ($doc) ->
+        return {
+            restrict: 'A'
+            link: (scope,elem,attr) ->
+                scope.isOpen = false
+                toggle = (e)->
+                    e.stopPropagation()
+                    if scope.isOpen then close() else open()
+
+                open = ->
+                    scope.$apply -> scope.isOpen = true
+                    $doc.on 'click', close
+
+                close = ->
+                    scope.$apply -> scope.isOpen = false
+                    $doc.off 'click', close
+
+                elem.on 'click', toggle
+                scope.$on 'destroy', ()->
+                    elem.off 'click', toggle
+                    $doc.off 'click', close
+
+
+        }
+    ]
+
 class NotificationCtrl
-    @.$inject = ['$scope', '$window', '$rootScope', 'Notification']
-    constructor: (@scope, @window, @rootScope, @Notification) ->
-        @isShow = false
-        @pomelo = @window.pomelo
+    @.$inject = ['$scope', 'WebsocketClient', '$rootScope', 'Notification', 'toaster']
+    constructor: (scope, WebsocketClient, @rootScope, @Notification, toaster) ->
+
+        ctrl = @
+
+        WebsocketClient.addListener 'user_message', (data) ->
+            msg = data.latest_message
+            msg_unread_count = data.total_unread_count
+            toaster.pop('success', msg.category, msg.body)
+            scope.$apply -> ctrl.msg_unread_count = msg_unread_count
+
+
+
+
+
+
+        # WebsocketClient.addListener 'workflow_step_action', ->
+
         @notifications = []
-        @loadInitailData()
 
-    loadInitailData: ()->
-        @notifications = @Notification.$collection({status:'unread'}).$fetch()
-    toggleClick: ()->
-        @isShow = !@isShow
 
-            
+
+app.controller "notificationCtrl", NotificationCtrl
+
 
 

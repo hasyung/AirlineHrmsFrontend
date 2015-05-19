@@ -29,6 +29,10 @@
         -webkit-transition-property: border-left;
         transition-property: border-left;
 
+        //解决 组织机构列表项 的高度不正确bug
+        &:nth-child(2) {
+            height: 70px;
+        }
 
         &.active {
             background-color: #262b3c;
@@ -132,6 +136,7 @@
 
     .md-toolbar-tools {
         padding-left: 0;
+        padding-right: 0;
 
         .logo {
             height: 50px;
@@ -257,7 +262,6 @@
         margin-left: 10px;
         margin-right: 20px;
         padding-left: 0;
-        padding-right: 10px;
         padding-top: 20px;
         position: relative;
 
@@ -335,6 +339,7 @@
             display: block;
 
             &:first-child {
+                color: $a-color;
                 font-size: $font-size-md;
                 margin-bottom: 10px;
             }

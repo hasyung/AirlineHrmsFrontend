@@ -17,11 +17,28 @@
         position: absolute;
         right: 20px;
         top: 20px;
+
+        .md-icon-button {
+            border-radius: 14px;
+            height: 28px;
+            line-height: 28px;
+            width: 28px;
+
+            md-icon {
+                height: 18px;
+                vertical-align: middle;
+                width: 18px;
+            }
+        }
     }
 
     .resume-section {
         border-bottom: 1px solid rgba(0, 0, 0, .12);
         padding: 30px 0;
+
+        &.last {
+            padding-bottom: 0;
+        }
 
         &:last-child {
             border-bottom: 0;
@@ -32,20 +49,25 @@
 
             h4 {
                 font-size: 16px;
+                font-weight: normal;
             }
         }
 
-        .resume-section-right {
-            margin-left: 40px;
-        }
-
         h5.resume-row {
+            font-weight: normal;
             margin: 0;
+            margin-bottom: 10px;
         }
 
         .resume-row {
             display: flex;
             flex: 1;
+
+            &:last-child {
+                .resume-item {
+                    height: auto;
+                }
+            }
 
             td,
             th {
@@ -57,6 +79,10 @@
             display: flex;
             flex: 1;
             height: 36px;
+
+            &.auto-height {
+                height: auto;
+            }
         }
 
         .control-label {
@@ -71,7 +97,30 @@
         }
     }
 
+    .table {
+        border-top: 1px solid rgba(0, 0, 0, .12);
 
+        &.last {
+            margin-bottom: 0;
+        }
+
+        thead th {
+            border-bottom: 1px solid rgba(0, 0, 0, .06);
+            border-right: 1px solid rgba(0, 0, 0, .03);
+
+            &:last-child {
+                border-right: 0;
+            }
+        }
+
+        tbody td {
+            border-right: 1px solid rgba(0, 0, 0, .03);
+
+            &:last-child {
+                border-right: 0;
+            }
+        }
+    }
 }
 
 .nice-table {
