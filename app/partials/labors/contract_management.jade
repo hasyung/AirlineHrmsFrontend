@@ -7,12 +7,14 @@ tabset(flex)
                     .md-toolbar-tools
                         h2 合同列表
                         div(flex)
-                            md-button.md-primary.md-raised(
-                            ) 发起离职
-                            md-button.md-primary.md-raised(
-                            ) 发起续签
-                            md-button.md-primary.md-raised(
-                            ) 新建合同
+                        md-button.md-primary.md-raised(
+                        ) 发起离职
+                        md-button.md-primary.md-raised(
+                        ) 发起续签
+                        md-button.md-primary.md-raised(
+                            nb-panel
+                            template-url="/partials/labors/labors_contract.html"
+                        ) 新建合同
                 div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.contracts")
 
 
