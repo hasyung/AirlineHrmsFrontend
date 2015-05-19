@@ -145,7 +145,7 @@ angular.module 'nb.directives'
         }
     ]
     #facade ngDialog
-    .directive 'nbPanel',['ngDialog', (ngDialog) ->
+    .directive 'nbPanel',['ngDialog', '$parse', (ngDialog, $parse) ->
 
         getCustomConfig = (attrs) ->
             configAttrs = _.pick(attrs, (val, key) -> return /^panel/.test(key))
@@ -162,6 +162,8 @@ angular.module 'nb.directives'
                 controllerAs: attrs.controllerAs || 'panel'
                 bindToController: true
                 className: 'ngdialog-theme-panel'
+                preCloseCallback: attrs.preCloseCallback || angular.noop
+
             }
 
             elem.on 'click', (e) ->

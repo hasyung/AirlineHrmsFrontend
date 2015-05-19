@@ -1,4 +1,7 @@
-div.notification-center.md-background(md-theme="hrms")
+div.notification-center.md-background(md-theme="hrms"
+    infinite-scroll="ctrl.loadMoreRows()"
+    infinite-scroll-distance="9000"
+    )
     md-toolbar.md-warn
         .md-toolbar-tools
             span 通知中心

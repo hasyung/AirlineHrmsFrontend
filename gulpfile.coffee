@@ -113,7 +113,7 @@ paths =
         # 'deps/ui-router-extras/release/ct-ui-router-extras.js'
         'deps/ngDialog/js/ngDialog.js'
         'compat/vendor/wizard.js'
-        'deps/ngInfiniteScroll/build/ng-infinite-scroll.js'
+        # 'deps/ngInfiniteScroll/build/ng-infinite-scroll.js'
         'deps/AngularJS-Toaster/toaster.js'
         'deps/jquery-slimscroll/jquery.slimscroll.js'
         'deps/angularjs-toaster/toaster.js'
@@ -124,6 +124,7 @@ paths =
         'compat/communite.js'
         'compat/datepicker-local.jquery.js'
         'compat/vendor/ng-material-dropmenu.js'
+        'compat/vendor/ng-infinite-scroll.js'
         'deps/ng-flow/dist/ng-flow-standalone.js'
         # 'deps/angular-ui-utils/ui-utils.js'
         # 'deps/jasny-bootstrap/dist/js/jasny-bootstrap.js' jasny bootstrap 增强版，提供一些好用组件
