@@ -13,7 +13,7 @@ md-dialog.attendance_new
                     div(layout)
                         md-input-container.row-has-value(flex)
                             label 考勤类型
-                            md-select(ng-model="current.politicalStatusId" ng-disabled="!editing")
+                            md-select(ng-model="current.politicalStatusId")
                                 md-select-label {{$enum.parseLabel(current.politicalStatusId, "political_status")}}
                                 md-option(ng-value="item.id" ng-repeat="item in $enum.get('political_status')") {{item.label}}
                     div(layout)
@@ -24,4 +24,4 @@ md-dialog.attendance_new
 
     .md-actions
         md-button(ng-click='dialog.close()') 取 消
-        md-button.md-primary.md-raised(ng-click="ctrl.backToPast() ; dialog.close()" ng-disabled="!ctrl.currentLog") 确 定
+        md-button.md-primary(ng-click="ctrl.backToPast() ; dialog.close()") 确 定
