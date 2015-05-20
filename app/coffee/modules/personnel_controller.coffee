@@ -329,9 +329,9 @@ class LeaveEmployeesCtrl extends nb.Controller
             name: 'personnelLeave'
             constraintDefs: [
                 {
-                    name: 'department_ids'
+                    name: 'department'
                     displayName: '机构'
-                    type: 'org-search'
+                    type: 'string'
                 }
                 {
                     name: 'position_name'

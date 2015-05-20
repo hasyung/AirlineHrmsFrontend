@@ -1,15 +1,16 @@
-md-dialog.attendance_new(ng-init="attendance = {};")
+md-dialog.attendance_new(ng-init="attendance = {};current = dialog.current;attendance.employeeId = current.id;")
     md-content
-        md-toolbar.md-accent(md-theme="hrms")
+        form(flex ng-submit="ctrl.Attendance.$build(attendance).$save();dialog.close();")
+            md-toolbar.md-accent(md-theme="hrms")
                 .md-toolbar-tools
                     span 新增考勤记录
-        .dialog-content(layout layout-align="center")
-            form(flex ng-submit="ctrl.attendances.$build(attendance).$save();dialog.close();")
-                fieldset
+            .dialog-content(layout layout-align="center")
+                
+                fieldset(flex)
                     div(layout)
                         md-input-container(flex)
-                            label 员工编号
-                            input(ng-model="attendance.employeeId" name="employeeId" required)
+                            label 员工姓名
+                            input(ng-model="current.name" name="name" required disabled)
                     div(layout)
                         md-input-container.row-has-value(flex)
                             label 考勤类型
@@ -23,6 +24,6 @@ md-dialog.attendance_new(ng-init="attendance = {};")
                             label 记录日期
                             input(bs-datepicker ng-model="attendance.recordDate" required)
 
-                .md-actions
-                    md-button(type="button" ng-click='dialog.close()') 取 消
-                    md-button.md-primary.md-raised(type="submit") 确 定
+            .md-actions
+                md-button(type="button" ng-click='dialog.close()') 取 消
+                md-button.md-primary.md-raised(type="submit") 确 定

@@ -8,9 +8,11 @@
                 md-button.md-primary.md-raised(
                 ) 代请假
                 md-button.md-primary.md-raised(
+                    ng-disabled="!ctrl.getSelected()"
                     nb-dialog
                     template-url="/partials/attendance/attendance_new.html"
+                    locals="{current:ctrl.getSelected()}"
                 ) 新增考勤
                 
-        div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.attendances")
+        div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection safe-src="ctrl.employees")
 

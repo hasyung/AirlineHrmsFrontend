@@ -36,8 +36,8 @@ class AttendanceCtrl extends nb.Controller
     #     @flows.$refresh(tableState)
 
 class AttendanceRecordCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Attendance']
-    constructor: (@scope, @Attendance) ->
+    @.$inject = ['$scope', 'Attendance', 'Employee']
+    constructor: (@scope, @Attendance, @Employee) ->
         @loadInitailData()
         @filterOptions = {
             name: 'attendanceRecord'
@@ -67,7 +67,7 @@ class AttendanceRecordCtrl extends nb.Controller
             {displayName: '员工编号', name: 'employeeNo'}
             {
                 displayName: '姓名'
-                field: 'employeeName'
+                field: 'name'
                 # pinnedLeft: true
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents ng-binding ng-scope">
@@ -81,29 +81,33 @@ class AttendanceRecordCtrl extends nb.Controller
             }
             {
                 displayName: '所属部门'
-                name: 'departmentName'
+                name: 'department.name'
                 cellTooltip: (row) ->
-                    return row.entity.departmentName
+                    return row.entity.department.name
             }
 
             {
                 displayName: '岗位'
-                name: 'positionName'
+                name: 'position.name'
                 cellTooltip: (row) ->
-                    return row.entity.positionName
+                    return row.entity.position.name
             }
-            {displayName: '分类', name: 'applyType'}
-            {displayName: '通道', name: 'changeFlag'}
-            {displayName: '用工性质', name: 'startDate', cellFilter: "enum:'channels'"}
-            {displayName: '到岗时间', name: 'endDate'}
+            {displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
+            {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
+            {displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
+            {displayName: '到岗时间', name: 'joinScalDate'}
         ]
 
 
     loadInitailData: ()->
-        @attendances = @Attendance.$collection().$fetch()
+        @employees = @Employee.$collection().$fetch()
     
     search: (tableState)->
-        @attendances.$refresh(tableState)
+        @employees.$refresh(tableState)
+
+    getSelected: () ->
+        rows = @scope.$gridApi.selection.getSelectedGridRows()
+        selected = if rows.length >= 1 then rows[0].entity else null
 
         
 
