@@ -126,6 +126,7 @@ fieldset[disabled] {
     }
 
     .md-input {
+        font-family: $font-family-sans-serif;
         padding-left: 70px;
     }
 
@@ -135,7 +136,7 @@ fieldset[disabled] {
         background-position: 0 28px;
         background-repeat: repeat-x;
         background-size: 3px 1px;
-        height: 26px !important;
+        height: 30px !important;
 
         .md-select-label {
             border: 0;

@@ -47,8 +47,13 @@ md-content.search-container {
         }
 
         md-input-container {
-            height: 45px;
+            height: 35px;
             padding-bottom: 0;
+
+            .md-input {
+                font-size: $font-size-sm;
+                padding-top: 12px;
+            }
         }
 
         md-select,
@@ -67,11 +72,12 @@ md-content.search-container {
                 padding-bottom: 3px;
 
                 .md-chip {
-                    margin-top: 5px;
+                    margin-top: 0;
                 }
 
                 .md-chip-input-container {
-                    margin-top: 9px;
+                    font-size: $font-size-md;
+                    height: 25px;
                 }
             }
         }
