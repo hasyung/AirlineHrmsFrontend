@@ -101,6 +101,9 @@ class AttendanceRecordCtrl extends nb.Controller
 
     loadInitailData: ()->
         @attendances = @Attendance.$collection().$fetch()
+    
+    search: (tableState)->
+        @attendances.$refresh(tableState)
 
         
 
