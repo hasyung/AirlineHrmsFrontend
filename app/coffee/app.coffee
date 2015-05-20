@@ -69,6 +69,7 @@ appConf = ($provide, ngDialogProvider) ->
         appendTo: false
     }
 
+    $provide.value('THROTTLE_MILLISECONDS', 1000) #infinit scroll throttle milliseconds
 
 
 restConf = (restmodProvider) ->
