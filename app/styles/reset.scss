@@ -76,6 +76,22 @@ md-input-container label {
     top: 0;
 }
 
+md-toolbar {
+    &.md-hrms-theme {
+        &.md-accent {
+            span:first-child {
+                color: $text-color;
+            }
+        }
+
+        &.md-warn {
+            span:first-child {
+                color: #fff;
+            }
+        }
+    }
+}
+
 .md-subheader {
     font-family: $font-family-sans-serif;
     font-size: 14px;
@@ -91,12 +107,6 @@ md-input-container > md-select {
 
     .md-select-label {
         padding-bottom: 1px;
-    }
-}
-
-md-toolbar.md-hrms-theme span {
-    &:first-child {
-        color: #fff;
     }
 }
 
