@@ -37,10 +37,9 @@ class ContractCtrl extends nb.Controller
             name: 'contract'
             constraintDefs: [
                 {
-                    name: 'name'
+                    name: 'employee_name'
                     displayName: '姓名'
                     type: 'string'
-                    placeholder: '姓名'
                 }
                 {
                     name: 'employee_no'
@@ -52,6 +51,21 @@ class ContractCtrl extends nb.Controller
                     name: 'department_ids'
                     displayName: '机构'
                     type: 'org-search'
+                }
+                {
+                    name: 'end_date'
+                    displayName: '合同到期时间'
+                    type: 'date-range'
+                }
+                {
+                    name: 'apply_type'
+                    displayName: '用工性质'
+                    type: 'string'
+                }
+                {
+                    name: 'notes'
+                    displayName: '是否有备注'
+                    type: 'boolean'
                 }
                 
             ]
