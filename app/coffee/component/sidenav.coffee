@@ -114,7 +114,7 @@ menuFactory = ($rootScope, $state)->
         pages: [
             {
                 name: '考勤记录'
-                state: 'position'
+                state: 'attendance'
                 permission: ''
             }
             {
@@ -261,7 +261,7 @@ menuFactory = ($rootScope, $state)->
             }
             {
                 name: '合同管理'
-                state: 'position'
+                state: 'contract_management'
                 permission: ''
             }
             {
