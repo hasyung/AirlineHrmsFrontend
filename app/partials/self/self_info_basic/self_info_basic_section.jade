@@ -134,8 +134,8 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                 div(layout)
                     md-input-container.row-has-value(flex)
                         label 通道
-                        md-select(ng-model="currentUser.channel" disabled)
-                            md-select-label {{$enum.parseLabel(currentUser.categoryId, "channels")}}
+                        md-select(ng-model="currentUser.channelId" disabled)
+                            md-select-label {{$enum.parseLabel(currentUser.channelId, "channels")}}
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
 
                     md-input-container(flex)
