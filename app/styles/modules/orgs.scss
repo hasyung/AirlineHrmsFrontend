@@ -251,12 +251,9 @@ md-dialog.org-transfer {
 }
 //时间轴dialog
 md-dialog.org_history {
-    .dialog-content {
-        width: 470px;
-    }
 
     .md-actions {
-        background-color: #f6f8f8;
+        border-top: 1px solid rgba(0, 0, 0, .12)        
     }
 
     md-input-container {
@@ -265,6 +262,10 @@ md-dialog.org_history {
 
     .org-timline {
         padding: 0 20px;
+
+        .timeline {
+            padding-left: 0;
+        }
     }
 }
 //机构树生效dialog

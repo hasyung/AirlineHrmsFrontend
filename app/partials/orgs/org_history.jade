@@ -11,7 +11,6 @@ md-dialog.org_history
                     min-date="{{dialog.historyData.minDate}}" max-date="today" ng-model="selectedDate"
                     ng-change="ctrl.pickLog(selectedDate, dialog.historyData.changeLogs)")
         div.wrapper.org-timline(ng-init="activeLog = {}")
-            //- ul.timeline(ng-repeat="yearItem in ctrl.changeLogs")
             ul.timeline(ng-repeat="yearLogs in dialog.historyData.changeLogs")
                 li.tl-header
                     div.year {{::yearLogs.changeYear}}
@@ -31,4 +30,4 @@ md-dialog.org_history
 
     .md-actions
         md-button(ng-click='dialog.close()') 取 消
-        md-button.md-primary(ng-click="ctrl.backToPast() ; dialog.close()" ng-disabled="!ctrl.currentLog") 确 定
+        md-button.md-primary.md-raised(ng-click="ctrl.backToPast() ; dialog.close()" ng-disabled="!ctrl.currentLog") 确 定
