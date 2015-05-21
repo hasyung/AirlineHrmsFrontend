@@ -1,20 +1,88 @@
-md-dialog
-    form(ng-submit="ctrl.submitForm(leaveRequest)")
-        md-input-container
-            label 请假类别
-            md-select(ng-model="leaveRequest.type")
-                md-option(value="1") 病假
-                md-option(value="2") 事假
-                md-option(value="3") 丧假
-        md-input-container
-            label 开始时间
-            input(bs-datepicker ng-model="leaveRequest.startDate" container="body")
-        md-input-container
-            label 结束时间
-            input(bs-datepicker ng-model="leaveRequest.endDate" container="body")
-        md-input-container
-            label message
-            textarea(ng-model="leaveRequest.message")
-        .form-actions
-            md-button(type="submit") 提交
-            md-button(type="button" ng-click="dialog.close()") 取消
+div.ask_for_leave.md-background(md-theme="hrms")
+    md-toolbar.md-warn(md-theme="hrms")
+        .md-toolbar-tools
+            span 请假单填写
+    .personnel-content.personnel-control
+        section.personnel-info-section
+            md-content.nb-card-container(layout="column" md-theme="hrms")
+                form
+                    md-card.form-material-section.nb-card
+                        md-subheader.md-background.md-hue-1
+                        .ask-info-head
+                            div.name 姜文峰
+                            div.ask-info-plus
+                                span.serial-num 008863
+                                span.position 人力资源部 / 人事调配室副主任
+                        .ask-relations
+                            div.ask-info-row(layout)
+                                .ask-info-cell(flex)
+                                    .ask-cell-title 性别
+                                    .ask-cell-content 男
+                                .ask-info-cell(flex)
+                                    .ask-cell-title 婚姻状况
+                                    .ask-cell-content 已婚
+                            div.ask-info-row(layout)
+                                .ask-info-cell(flex)
+                                    .ask-cell-title 年龄
+                                    .ask-cell-content 30
+                                .ask-info-cell(flex)
+                                        .ask-cell-title 川航工作年限
+                                        .ask-cell-content 15年
+                            div.ask-info-row(layout)
+                                .ask-info-cell(flex)
+                                    .ask-cell-title 假别
+                                    .ask-cell-content 年假（2014年年假剩余天数3天，2015年年假剩余天数5天）
+
+                    md-card.form-material-section.nb-card(style="padding-bottom: 14px;")
+                        md-subheader.md-background.md-hue-1 申请信息
+                        fieldset
+                            div(layout)
+                                md-input-container(flex)
+                                    label 开始日期
+                                    input(ng-model="current.name" name="name" required)
+                                md-input-container(flex)
+                                    label 结束日期
+                                    input(ng-model="current.employeeNo")
+                            div(layout)
+                                md-input-container(flex)
+                                    label 天数
+                                    input(ng-model="current.name" name="name" required)
+                            div(layout)
+                                md-input-container(flex)
+                                    label 申请理由
+                                    textarea
+
+                    md-card.form-material-section.nb-card
+                        md-subheader.md-background.md-hue-1 提交上级
+                        div.ui-grid-container
+                            div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection safe-src="ctrl.employees")
+
+
+                    .form-bottom-group(layout)
+                        span(flex)
+                        md-button.md-raised.white(type="button" ng-click="panel.close()") 取消
+                        md-button.md-primary.md-raised(type="submit") 保存
+
+
+
+
+    //- md-dialog
+    //-     form(ng-submit="ctrl.submitForm(leaveRequest)")
+    //-         md-input-container
+    //-             label 请假类别
+    //-             md-select(ng-model="leaveRequest.type")
+    //-                 md-option(value="1") 病假
+    //-                 md-option(value="2") 事假
+    //-                 md-option(value="3") 丧假
+    //-         md-input-container
+    //-             label 开始时间
+    //-             input(bs-datepicker ng-model="leaveRequest.startDate" container="body")
+    //-         md-input-container
+    //-             label 结束时间
+    //-             input(bs-datepicker ng-model="leaveRequest.endDate" container="body")
+    //-         md-input-container
+    //-             label message
+    //-             textarea(ng-model="leaveRequest.message")
+    //-         .form-actions
+    //-             md-button(type="submit") 提交
+    //-             md-button(type="button" ng-click="dialog.close()") 取消
