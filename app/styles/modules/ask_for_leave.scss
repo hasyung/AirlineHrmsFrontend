@@ -8,56 +8,7 @@
         fieldset {
             padding-bottom: 0;
 
-            //文字编辑状态和平时状态都不上浮的样式
-            label:not(.md-no-float),
-            .md-placeholder {
-                -webkit-transform: translate3d(0, 25px, 0) scale(1);
-                transform: translate3d(0, 25px, 0), scale(1);
-            }
 
-            md-input-container {
-                padding-bottom: 19px;
-
-                label {
-                    color: $text-muted;
-                }
-
-                &.md-input-focused,
-                &.row-has-value,
-                &.md-input-has-value {
-                    label {
-                        -webkit-transform: translate3d(0, 25px, 0) scale(1);
-                        transform: translate3d(0, 25px, 0) scale(1);
-                    }
-                }
-
-            }
-
-            .md-input {
-                height: 35px;
-                padding-left: 110px;
-                padding-top: 2px;
-            }
-
-            .md-default-theme .md-input {
-                color: $text-color;
-            }
-
-            //md-select
-            md-select {
-                height: 25px !important;
-            }
-
-            .md-default-theme .md-select-label {
-                color: $text-color;
-                padding-left: 110px;
-
-            }
-
-            .md-actions {
-                border-top: 1px solid rgba(0, 0, 0, .12);
-                padding-right: 20px;
-            }
         }
     }
 
@@ -102,12 +53,39 @@
 
         .ask-cell-title {
             color: $text-muted;
-            width: 120px;
+            width: 90px;
         }
 
         .ask-cell-content {
             flex: 1;
         }
+    }
+}
+
+.without-edit {
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
+    display: flex;
+    flex: 1;
+    margin: 0 2px;
+    padding: 2px 0;
+    position: relative;
+
+    .without-edit-title {
+        color: $text-muted;
+        font-size: $font-size-sm;
+        padding-left: 3px;
+        width: 90px;
+    }
+
+    .without-edit-content {
+        flex: 1;
+    }
+
+    .progress-wrapper {
+        left: 70px;
+        position: absolute;
+        top: -12px;
+        transform: scale(.4);
     }
 }
 

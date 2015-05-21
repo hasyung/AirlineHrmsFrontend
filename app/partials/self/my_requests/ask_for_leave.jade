@@ -44,18 +44,21 @@ div.ask_for_leave.md-background(md-theme="hrms")
                                     label 结束日期
                                     input(bs-datepicker ng-model="wife.birthday" required)
                             div(layout)
-                                md-input-container(flex)
-                                    label 天数
-                                    input(ng-model="current.name" name="name" required)
+                                .without-edit
+                                    div.progress-wrapper
+                                        md-progress-circular(md-mode="indeterminate")
+                                    div.without-edit-title 天数
+                                    div.without-edit-content 6
+
                             div(layout)
                                 md-input-container(flex)
                                     label 申请理由
-                                    textarea(placeholder="请输入申请理由")
+                                    textarea(ng-model="aaa" columns="1" md-maxlength="150")
 
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1 提交上级
-                        div.ui-grid-container
-                            div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection safe-src="ctrl.employees")
+                        //- div.ui-grid-container
+                        //-     div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection safe-src="ctrl.employees")
 
 
                     .form-bottom-group(layout)
