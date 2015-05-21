@@ -33,7 +33,7 @@ menuFactory = ($rootScope, $state)->
             }
             {
                 name: '我的申请'
-                state: 'iwill'
+                state: 'my_requests'
             }
             {
                 name: '优免票'
