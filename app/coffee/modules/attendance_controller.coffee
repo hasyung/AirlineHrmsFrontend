@@ -15,8 +15,8 @@ class Route
         urlRouterProvider.when('/self-service', '/self-service/profile')
 
         stateProvider
-            .state 'attendance', {
-                url: '/attendance'
+            .state 'iwill', {
+                url: '/iwill'
                 templateUrl: 'partials/attendance/attendance.html'
                 controller: AttendanceCtrl
                 controllerAs: 'ctrl'

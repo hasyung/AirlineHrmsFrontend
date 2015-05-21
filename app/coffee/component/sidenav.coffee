@@ -32,6 +32,10 @@ menuFactory = ($rootScope, $state)->
                 state: 'self.profile'
             }
             {
+                name: '我的申请'
+                state: 'iwill'
+            }
+            {
                 name: '优免票'
                 # state: 'self.profile'
             }
