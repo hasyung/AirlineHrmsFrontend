@@ -83,7 +83,64 @@ class NewResourceCtrl
             resource.$save() if resource.$save
 
 
+class NewFlowCtrl
+    @.$inject = ['$scope', '$http']
+
+    constructor: (scope, $http) ->
+        ctrl = @
+
+        scope.initialFlow = (type) ->
+            ctrl.flow_type = type
+
+            return {}
+
+
+        scope.createFlow = (data) ->
+            data.vacation_days = 5
+            data.employee_id = 11821
+            $http.post("/api/workflows/#{ctrl.flow_type}", data)
+
+
+class NewMyRequestCtrl extends NewFlowCtrl
+
+    @.$inject = ['$scope', '$http', '$timeout']
+
+    constructor: (scope, $http, $timeout) ->
+        super(scope, $http) # 手动注入父类实例化参数
+        ctrl = @
+
+        scope.requset = {}
+        scope.calculating = false
+
+        enableCalculating = ->
+            scope.calculating = true
+        disableCalculating = ->
+            scope.calculating = false
+
+        # 计算请假天数
+        scope.calculateTotalDays = (data) ->
+            #validation data
+            if !_.isEmpty(data.start_date) && !_.isEmpty(data.end_date)
+                request_data = {
+                    # vacation_type: ctrl.flow_type
+                    start_date:  new Date(data.start_date)
+                    end_date: new Date(data.end_date)
+                }
+                enableCalculating()
+
+                $http({
+                    method: 'GET'
+                    url: '/api/vacations/calc_days'
+                    data: request_data
+                }).success (data) ->
+                    $timeout disableCalculating, 2000
+                    scope.vacation_days = data.vacation_days
+
+
+
 
 
 app.controller('EditableResource', EditableResourceCtrl)
 app.controller('NewResource', NewResourceCtrl)
+app.controller('NewFlowCtrl', NewFlowCtrl)
+app.controller('NewMyRequestCtrl', NewMyRequestCtrl)

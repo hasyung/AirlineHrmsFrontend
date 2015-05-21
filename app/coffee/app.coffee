@@ -199,10 +199,6 @@ App
         $rootScope.allOrgs = Org.$search()
 
 
-        $rootScope.createFlow = (data, flowname) ->
-            $http.post("/api/workflows/#{flowname}", data)
-
-
     ]
 
 
