@@ -12,5 +12,5 @@
                     locals="{current:ctrl.getSelected()}"
                 ) 修改
                 
-        div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection safe-src="ctrl.attendances")
+        div(nb-grid column-defs="ctrl.columnDef" multi-select="false" export-api grid-selection safe-src="ctrl.attendances")
 
