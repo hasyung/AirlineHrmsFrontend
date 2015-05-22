@@ -251,7 +251,7 @@ menuFactory = ($rootScope, $state)->
             }
             {
                 name: '员工退养'
-                state: 'position'
+                state: 'labors_early_retirement'
                 permission: ''
             }
             {
