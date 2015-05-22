@@ -18,12 +18,18 @@ class Route
                 controller: ContractCtrl
                 controllerAs: 'ctrl'
             }
+            .state 'labors_early_retirement', {
+                url: '/labor-eary-retirement'
+                templateUrl: 'partials/labors/labors_early_retirement.html'
+                controller: EarlyRetirementCtrl
+                controllerAs: 'ctrl'
+            }
 
 class LaborCtrl extends nb.Controller
 
     @.$inject = ['$scope', '$mdDialog', 'Flow::AdjustPosition']
 
-    constructor: (@scope, @mdDialog, flow) ->
+    constructor: (@scope, @mdDialog, @flow) ->
         @flows  = flow.$collection().$fetch()
 
     search: (tableState)->
@@ -67,7 +73,7 @@ class ContractCtrl extends nb.Controller
                     displayName: '是否有备注'
                     type: 'boolean'
                 }
-                
+
             ]
         }
 
@@ -140,7 +146,7 @@ class ContractCtrl extends nb.Controller
                     displayName: '机构'
                     type: 'org-search'
                 }
-                
+
             ]
         }
 
@@ -200,8 +206,39 @@ class ContractCtrl extends nb.Controller
     search: (tableState) ->
         @contracts.$refresh(tableState)
 
-    
 
+
+
+class EarlyRetirementCtrl extends nb.Controller
+
+    @.$inject = ['$scope', 'Flow::EarlyRetirement']
+
+    constructor: (@scope, @EarlyRetirement) ->
+        @loadInitailData()
+        @columnDef = [
+            {displayName: '所属部门', name: 'sponsor.departmentName'}
+            {displayName: '姓名', field: 'sponsor.name'}
+            {displayName: '状态', field: 'workflowState'}
+            {displayName: '创建时间', field: 'createdAt'}
+            {
+                displayName: '审批'
+                name: '审批'
+                cellTemplate: '''
+                <a class="ui-grid-cell-contents"
+                    flow-handler="row.entity"
+                    flows="grid.options.data"
+                    ">
+                    审批
+                </a>'
+                '''
+            }
+        ]
+
+    loadInitailData: ()->
+        @flows = @EarlyRetirement.$collection().$fetch()
+
+    refreshFlows: ()->
+        @flows.$refresh()
 
 
 

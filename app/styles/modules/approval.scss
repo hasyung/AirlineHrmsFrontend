@@ -1,53 +1,70 @@
 .approval-wapper {
     md-toolbar {
         .md-toolbar-tools {
-            font-size: $font-size-h3;
+            color: #fff;
+            font-size: $font-size-lg;
         }
     }
 }
 
 .approval-container {
-    padding: 0 40px;
+    background-color: rgb(245, 245, 245);
+    overflow-y: scroll;
+    padding: 20px;
+
+    md-card {
+        border-radius: 0;
+        box-shadow: none;
+        margin: 0;
+        margin-bottom: 10px;
+    }
 
     .approval-subheader {
         color: #468fce;
-        font-size: $font-size-h3;
-        padding: 30px 0;
+        font-size: $font-size-md;
     }
 }
 
 .approval-info {
+    padding: 40px 30px;
+
     .approval-info-head {
         color: $text-color;
-        margin-bottom: 20px;
 
         .name {
-            font-size: 24px;
-            line-height: 24px;
+            font-size: 32px;
+            line-height: 32px;
         }
 
         .serial-number {
             font-size: 16px;
-            margin-left: 10px;
         }
     }
 
     .approval-position {
-        border-bottom: 1px dotted #eaeff0;
-        margin-bottom: 30px;
-        padding-bottom: 20px;
+        font-size: 14px;
+        margin-top: 15px;
+    }
+}
+
+.approval-relation-info {
+    padding: 30px 30px 40px;
+
+    .approval-subheader {
+        color: $text-color;
+        padding-bottom: 10px;
     }
 }
 
 .approval-cell {
-    border-bottom: 1px dotted #eaeff0;
+    border-bottom: 1px solid #eaeff0;
     display: flex;
-    margin-bottom: 30px;
-    padding-bottom: 20px;
+    margin-right: 10px;
+    padding: 19px 0;
 
     .cell-title {
         color: $text-muted;
-        width: 120px;
+        width: 100px;
     }
 
     .cell-content {
@@ -56,58 +73,91 @@
 }
 
 .approval-msg {
+    padding: 30px 30px 40px;
+
+    .approval-subheader {
+        color: $text-color;
+    }
+
     .approval-progress-container {
-        margin-bottom: 30px;
+        margin: 20px 0;
     }
 
     .approval-msg-cell {
-        border-bottom: 1px dotted #eaeff0;
-        padding-bottom: 20px;
-    }
+        border-top: 1px dotted #eaeff0;
+        padding: 20px 0;
+        position: relative;
 
-    .approval-msg-header {
-        margin-bottom: 20px;
-    }
+        &:last-child {
+            padding: 20px 0 0;
+        }
 
-    .circle {
-        background-color: $success;
-        border-radius: 50%;
-        display: inline-block;
-        height: 10px;
-        margin-right: 10px;
-        width: 10px;
-    }
+        .approval-msg-flag {
+            background-color: rgba(0, 0, 0, .1);
+            border-radius: 50%;
+            height: 40px;
+            left: 5px;
+            position: absolute;
+            top: 24px;
+            width: 40px;
 
-    .approval-header-title {
-        color: $text-color;
-        font-size: $font-size-h3;
-        margin-right: 30px;
-    }
+            md-icon {
+                height: 28px;
+                margin-left: 6px;
+                margin-top: 6px;
+                width: 28px;
 
-    .approval-header-name {
-        color: $text-muted;
-        font-size: $font-size-md;
-        margin-right: 10px;
-    }
+                &.valid {
+                    color: #8bc34a;
+                }
 
-    .approval-header-time {
-        color: $text-muted;
-        font-size: $font-size-md;
-    }
+                &.invalid {
+                    color: #e84e40;
+                }
+            }
+        }
 
-    .approval-msg-content {
-        padding-left: 20px;
+        .approval-msg-container {
+            padding-left: 60px;
+
+            .approval-msg-header {
+                font-size: $font-size-md;
+                margin-bottom: 10px;
+            }
+        }
+
+        .approval-msg-decider {
+            color: $text-muted;
+            position: absolute;
+            right: 0;
+            top: 20px;
+
+            .approval-decider-date {
+                margin-left: 10px;
+            }
+        }
     }
 }
 
 .approval-opinions {
+    padding: 30px 30px 40px;
+
+    .approval-subheader {
+        color: $text-color;
+        padding-bottom: 30px;
+    }
+
     .approval-opinions-check {
         margin-bottom: 30px;
     }
 
     md-radio-button {
         display: inline-block;
-        margin-right: 60px;
+        margin-right: 100px;
+
+        .md-label {
+            margin-top: -3px;
+        }
     }
 
     .md-container {
@@ -118,14 +168,22 @@
         opacity: 1;
         top: -15px;
     }
+
+    md-input-container {
+        padding-bottom: 0;
+
+        &.md-icon-float label {
+            margin-left: 0;
+        }
+    }
 }
 
 .approval-buttons {
     float: right;
-    margin: 30px 0 70px;
+    margin-top: 10px;
 
     .md-button {
-        margin-left: 20px;
+        margin-left: 15px;
     }
 }
 
