@@ -24,11 +24,11 @@ section(layout="row" flex)
                         md-icon(md-svg-src="/images/svg/home.svg")
                     md-button.md-raised.md-primary(ng-click="ctrl.resetData()" ng-show="ctrl.isHistory") 返回最新
 
-                    md-button(
-                        flow-handler="ctrl.currentOrg"
-                    flows="ctrl.currentOrg"
-                    options="{className:'ngdialog-theme-panel'}"
-                        ) 请假
+                    //- md-button(
+                    //-     flow-handler="ctrl.currentOrg"
+                    //- flows="ctrl.currentOrg"
+                    //- options="{className:'ngdialog-theme-panel'}"
+                    //-     ) 请假
 
             h1 {{ctrl.treeRootOrg.$cmStatus.name}}组织机构图
             h2(ng-show="ctrl.isHistory")
