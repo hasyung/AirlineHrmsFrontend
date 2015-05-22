@@ -246,9 +246,10 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
 
 
 class OrgStore extends nb.Service
-    @.$inject = ['Org']
 
-    constructor: (@Org) ->
+    @.$inject = ['Org', 'DEPARTMENTS', 'USER_META']
+
+    constructor: (@Org, @DEPARTMENTS, @USER_META) ->
 
     initialize: () ->
         @orgs = @Org.$collection().$fetch()
@@ -266,6 +267,23 @@ class OrgStore extends nb.Service
     queryMatchedOrgs: (text) ->
         @orgs.filter (org) -> s.include(org.fullName, text)
 
+    getPrimaryOrgId: (id) ->
+        currentOrg = _.find(@DEPARTMENTS, {id: @USER_META.department.id})
+        serialNumber = currentOrg.serial_number
+
+        if serialNumber
+            if serialNumber.length == 6
+                return currentOrg.id
+            else if serialNumber.length > 6
+                primaryOrgSerialNumber = serialNumber.slice(0, 6)
+                primaryOrg = _.find(@DEPARTMENTS, {serial_number: primaryOrgSerialNumber})
+                return primaryOrg.id
+            else
+                throw "can not find org id : #{id} primary org "
+
+
+
+
 
 
 
@@ -275,4 +293,4 @@ class OrgStore extends nb.Service
 
 
 resources.factory 'Org',['restmod', 'RMUtils', '$nbEvent', 'DEPARTMENTS', Org]
-resources.service 'OrgStore',['Org', OrgStore]
+resources.service 'OrgStore', OrgStore
