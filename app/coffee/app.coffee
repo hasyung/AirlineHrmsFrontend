@@ -140,7 +140,8 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
         }
 
     ]
-    # $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike'
+
+    $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike'
 
 App
     .config ['$provide', 'ngDialogProvider', appConf]
