@@ -105,13 +105,13 @@ class ProfileCtrl extends nb.Controller
             angular.extend self.USER_META.favicon, self.scope.currentUser.favicon
 
 class AttendanceCtrl
-    @.$inject = ['$scope', 'Leave']
-    constructor: (@scope, @Leave) ->
+    @.$inject = ['$scope', 'Flow::EarlyRetirement']
+    constructor: (@scope, @EarlyRetirement) ->
 
     requestLeave: () ->
 
     submitForm: (requestData) ->
-        @Leave.$create({day:3, desc:"因为某事需求请假三天",flowType: "Flow::SickLeave"})
+        @EarlyRetirement.$create({day:3, desc:"因为某事需求请假三天",flowType: "Flow::SickLeave"})
 
 
 app.config(Route)

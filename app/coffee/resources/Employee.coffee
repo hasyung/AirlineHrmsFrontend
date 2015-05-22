@@ -31,6 +31,17 @@ Employee = (restmod, RMUtils, $Evt) ->
 
 
     }
+
+LeaveEmployees = (restmod, RMUtils, $Evt) ->
+
+    LeaveEmployees = restmod.model('/leave_employees').mix 'nbRestApi', {
+        
+        joinScalDate: {decode: 'date', param: 'yyyy-MM-dd'}
+        startWorkDate: {decode: 'date', param: 'yyyy-MM-dd'}
+
+        startDate: {decode: 'date', param: 'yyyy-MM-dd'}
+
+    }
 Formerleaders = (restmod, RMUtils, $Evt) ->
     Leader = restmod.model('/formerleaders').mix 'nbRestApi', {
         $config:
@@ -49,3 +60,4 @@ Formerleaders = (restmod, RMUtils, $Evt) ->
 
 resources.factory 'Employee',['restmod', 'RMUtils', '$nbEvent', Employee]
 resources.factory 'Formerleaders',['restmod', 'RMUtils', '$nbEvent', Formerleaders]
+resources.factory 'LeaveEmployees',['restmod', 'RMUtils', '$nbEvent', LeaveEmployees]

@@ -1,12 +1,12 @@
-div(ng-init= "current = panel.employee; current.$refresh();" style="height: 100%; background-color: #f5f5f5;")
+div(style="height: 100%; background-color: #f5f5f5;")
     md-toolbar.md-warn(md-theme="hrms")
         .md-toolbar-tools
             span 新建合同
 
-    .personnel-content.personnel-control
+    .personnel-content.personnel-control(ng-init="contract = {}; params={};")
         section.personnel-info-section
             md-content.nb-card-container(layout="column" md-theme="hrms")
-                form()
+                form(ng-submit="ctrl.contracts.$build(contract).$save();panel.close();ctrl.contracts.$refresh();")
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1
                             md-icon.form-icon(md-svg-src="/images/svg/personnel_24.svg" alt="基本信息")
@@ -16,46 +16,50 @@ div(ng-init= "current = panel.employee; current.$refresh();" style="height: 100%
                             div(layout)
                                 md-input-container(flex)
                                     label 姓名
-                                    input(ng-model="current.name" name="name" required)
+                                    input(ng-model="contract.employeeName" name="name" required)
                                 md-input-container(flex)
                                     label 员工编号
-                                    input(ng-model="current.employeeNo" required)
+                                    input(ng-model="contract.employeeNo" required)
 
                             div(layout)
-                                md-input-container.row-has-value(flex)
-                                    label 部门
-                                    input(ng-model="current.identityNo", name="identityNo" disabled required)
+                                org-search(flex="50" required ng-model="contract.department" float-label placeholder="部门" 
+                                    selected-item-change="params.orgPos = org.positions.$fetch();contract.positionName = null;")
                                 md-input-container.row-has-value(flex)
                                     label 岗位
-                                    input(ng-model="current.identityNo", name="identityNo" disabled required)
+                                    md-select(ng-model="contract.positionName" required)
+                                        md-select-label {{contract.positionName || '无'}}
+                                        md-option(ng-value="pos.name" ng-repeat="pos in params.orgPos") {{::pos.name}}
 
                             div(layout)
                                 md-input-container.row-has-value(flex)
                                     label 用工性质
-                                    md-select(ng-model="current.politicalStatusId")
-                                        md-select-label {{$enum.parseLabel(current.politicalStatusId, "political_status")}}
-                                        md-option(ng-value="item.id" ng-repeat="item in $enum.get('political_status')") {{item.label}}
+                                    md-select(ng-model="contract.applyType" required)
+                                        md-select-label {{contract.applyType}}
+                                        md-option(value="合同") 合同
+                                        md-option(value="合同制") 合同制
                                 md-input-container.row-has-value(flex)
                                     label 变更标志
-                                    md-select(ng-model="current.politicalStatusId")
-                                        md-select-label {{$enum.parseLabel(current.politicalStatusId, "political_status")}}
-                                        md-option(ng-value="item.id" ng-repeat="item in $enum.get('political_status')") {{item.label}}
+                                    md-select(ng-model="contract.changeFlag")
+                                        md-select-label {{contract.changeFlag}}
+                                        md-option(value="新签") 新签
+                                        md-option(value="续签") 续签
+                                        md-option(value="转制") 转制
                             div(layout)
                                 md-input-container(flex)
                                     label 开始日期
-                                    input(bs-datepicker ng-model="newExp.admissionDate")
+                                    input(bs-datepicker ng-model="contract.startDate")
                                 md-input-container(flex)
                                     label 合同时长/年
-                                    input(type="type", ng-model="current.contact.mobile", name="contact")
+                                    input(type="type", ng-model="contract.dueTime", name="dueTime")
 
                             div(layout)
                                 md-input-container(flex)
                                     label 合同备注
-                                    input(type="type", ng-model="current.contact.mobile", name="contact")
+                                    input(type="type", ng-model="contract.notes" name="notes")
                     .form-bottom-group(layout style="margin-top: 20px;")
                         span(flex)
-                        md-button.md-raised 取消
-                        md-button.md-primary.md-raised 提交
+                        md-button.md-raised(type="button" ng-click="panel.close();") 取消
+                        md-button.md-primary.md-raised(type="submit") 提交
 
 
 

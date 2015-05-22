@@ -375,7 +375,7 @@ nbGridDirective = ($parse)->
         pageGetter = $parse('safeSrc.$metadata.page')
         itemCountGetter = $parse('safeSrc.$metadata.count')
         exportApi = angular.isDefined(attrs.exportApi) #gridApi export to appScope
-
+        multiSelect = if attrs.multiSelect then scope.$eval(attrs.multiSelect) else true
         defaultOptions = {
             # flatEntityAccess: true
             enableSorting: false
@@ -386,6 +386,7 @@ nbGridDirective = ($parse)->
             selectionRowHeaderWidth: 35
             rowHeight: 50
             enableColumnMenus: false
+            multiSelect: multiSelect
 
             # paginationTemplate: ''' ''' #分页组件模板， 需要集成 ui-grid-paper
             # totalItems: xxx
@@ -420,6 +421,8 @@ nbGridDirective = ($parse)->
             ]
 
         }
+
+        console.log defaultOptions
 
         options = angular.extend {
             columnDefs: columnDefs

@@ -27,7 +27,6 @@ Notification = (restmod, RMUtils, $Evt) ->
                         anchor_id = this[this.length - 1]['$pk']
                         this.$fetch({anchor_id: anchor_id})
 
-
     }
 
 
