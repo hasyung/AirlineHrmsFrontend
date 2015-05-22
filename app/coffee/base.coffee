@@ -118,21 +118,22 @@ class NewMyRequestCtrl extends NewFlowCtrl
             scope.calculating = false
 
         # 计算请假天数
-        scope.calculateTotalDays = (data) ->
+        scope.calculateTotalDays = (data, vacation_type) ->
             #validation data
-            if !_.isEmpty(data.start_date) && !_.isEmpty(data.end_date)
+            if _.isDate(data.start_time) && _.isDate(data.end_time)
                 request_data = {
-                    # vacation_type: ctrl.flow_type
-                    start_date:  new Date(data.start_date)
-                    end_date: new Date(data.end_date)
+                    vacation_type: vacation_type
+                    start_time:  data.start_time
+                    end_time: data.end_time
                 }
                 enableCalculating()
 
-                $http({
-                    method: 'GET'
-                    url: '/api/vacations/calc_days'
-                    data: request_data
-                }).success (data) ->
+                $http.get(
+                    '/api/vacations/calc_days'
+                    {
+                        params: request_data
+                    }
+                ).success (data) ->
                     $timeout disableCalculating, 2000
                     scope.vacation_days = data.vacation_days
 

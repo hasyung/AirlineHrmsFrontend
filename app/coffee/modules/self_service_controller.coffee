@@ -18,42 +18,54 @@ class Route
             .state 'my_requests', {
                 url: '/self/my_requests'
                 templateUrl: 'partials/self/my_requests/index.html'
-                # controller: AttendanceCtrl
+                controller: MyRequestCtrl
                 controllerAs: 'ctrl'
             }
 
-class AttendanceCtrl extends nb.Controller
+class MyRequestCtrl extends nb.Controller
 
-    @.$inject = ['$scope', 'Flow::EarlyRetirement', '$mdDialog']
+    @.$inject = ['$scope', 'Employee', 'OrgStore']
 
-    constructor: (@scope, @Leave, @mdDialog) ->
-        @loadInitailData()
+    constructor: ($scope, @Employee, @OrgStore) ->
 
-    loadInitailData: ()->
-        @flows = @Leave.$collection().$fetch()
+        @reviewers = @loadReviewer()
 
-    # searchLeaves: (tableState)->
-    #     @flows.$refresh(tableState)
+    loadReviewer: () ->
+        @Employee.$search({category_ids: [1,2], department_ids: [@OrgStore.getPrimaryOrgId()]})
 
-class AttendanceDialogCtrl extends nb.Controller
-    @.$inject = ['$scope', 'data', '$mdDialog']
-    constructor: (@scope, @data, @mdDialog) ->
-        self = @
-        @scope.data = @data
 
-    pass: (leave)->
-        self = @
-        leave.audit.opinion = true
-        leave.$update().$then ()->
-            self.mdDialog.hide()
-    reject: (leave)->
-        self = @
-        leave.audit.opinion = false
-        leave.$update().$then ()->
-            self.mdDialog.hide()
+# class AttendanceCtrl extends nb.Controller
+
+#     @.$inject = ['$scope', 'Flow::EarlyRetirement', '$mdDialog']
+
+#     constructor: (@scope, @Leave, @mdDialog) ->
+#         @loadInitailData()
+
+#     loadInitailData: ()->
+#         @flows = @Leave.$collection().$fetch()
+
+#     # searchLeaves: (tableState)->
+#     #     @flows.$refresh(tableState)
+
+# class AttendanceDialogCtrl extends nb.Controller
+#     @.$inject = ['$scope', 'data', '$mdDialog']
+#     constructor: (@scope, @data, @mdDialog) ->
+#         self = @
+#         @scope.data = @data
+
+#     pass: (leave)->
+#         self = @
+#         leave.audit.opinion = true
+#         leave.$update().$then ()->
+#             self.mdDialog.hide()
+#     reject: (leave)->
+#         self = @
+#         leave.audit.opinion = false
+#         leave.$update().$then ()->
+#             self.mdDialog.hide()
 
 
 
 
 app.config(Route)
-app.controller('AttendanceDialogCtrl', AttendanceDialogCtrl)
+# app.controller('AttendanceDialogCtrl', AttendanceDialogCtrl)

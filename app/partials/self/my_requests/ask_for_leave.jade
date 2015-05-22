@@ -40,10 +40,10 @@ div.ask_for_leave.md-background(md-theme="hrms")
                             div(layout)
                                 md-input-container(flex)
                                     label 开始日期
-                                    input(ng-model="request.start_date" ng-change="calculateTotalDays(request)" name="start_date" bs-datepicker required)
+                                    input(ng-model="request.start_time" ng-change="calculateTotalDays(request, '年假')" name="start_time" bs-datepicker required)
                                 md-input-container(flex)
                                     label 结束日期
-                                    input(ng-model="request.end_date" ng-change="calculateTotalDays(request)" name="end_date" required bs-datepicker)
+                                    input(ng-model="request.end_time" ng-change="calculateTotalDays(request, '年假')" name="end_time" required bs-datepicker)
                             div(layout)
                                 .without-edit
                                     div.progress-wrapper(ng-if="calculating")
@@ -58,6 +58,10 @@ div.ask_for_leave.md-background(md-theme="hrms")
 
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1 提交上级
+                        md-radio-group(ng-model="request.reviewer_id")
+                            md-radio-button(
+                                ng-repeat="reviewer in ::ctrl.reviewers track by reviewer.id"
+                                ng-value="reviewer.id") {{ reviewer.name }}
                         //- div.ui-grid-container
                         //-     div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection safe-src="ctrl.employees")
 
