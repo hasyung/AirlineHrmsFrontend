@@ -1,6 +1,6 @@
 form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="EditableResource" ng-init="params = {}")
     .form-btn-group(ng-hide="editing" has-permission="employees_update")
-        md-button.md-fab(ng-click="edit($event)")
+        md-button.md-fab.md-primary(ng-click="edit($event)")
             md-icon(md-svg-src="/images/svg/edit_24px.svg" aria-label="修改")
     .form-btn-group.alive(ng-show="editing")
         md-button.md-raised(ng-click="cancel(current, $event, positionEditForm)") 取消
@@ -8,7 +8,7 @@ form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="Ed
     fieldset(ng-disabled="!editing")
 
         div(org-muti-pos ng-model="current.positions" editing="editing")
-        
+
         md-input-container.row-has-value
             label 岗位备注
             input(ng-model="current.positionRemark")

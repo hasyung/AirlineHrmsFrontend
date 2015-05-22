@@ -51,6 +51,9 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
               //-   a(ui-sref='self_position')
               //-     span 我要调岗
               li
+                a(ui-sref='self.attendance')
+                  span 我要
+              li
                 a(ui-sref='self_position')
                   span 优免票
               li
@@ -233,7 +236,7 @@ md-sidenav.navi-root.bg-black(md-is-locked-open="true")
                 a()
                   span 员工退休
               li
-                a()
+                a(ui-sref="labors_early_retirement")
                   span 员工退养
               li
                 a()
