@@ -21,21 +21,21 @@
     padding: 40px 30px;
 
     .approval-info-head {
-        color: $text-color;
+        margin-bottom: 30px;
 
         .name {
             font-size: 32px;
-            line-height: 32px;
+            margin-bottom: 15px;
         }
 
-        .serial-number {
-            font-size: 16px;
-        }
-    }
+        .approval-info-plus {
+            font-size: $font-size-sm;
 
-    .approval-position {
-        font-size: 14px;
-        margin-top: 15px;
+            .serial-num {
+                margin-right: 10px;
+            }
+
+        }
     }
 }
 
@@ -137,5 +137,71 @@
         margin-left: 15px;
     }
 }
+
+.accessory-header.md-subheader {
+    font-size: $font-size-sm;
+    margin-bottom: 10px;
+}
+
+.accessory-container {
+    @include clearfix();
+
+    .accessory-cell {
+        background-color: rgba(0, 0, 0, .06);
+        border-left: 2px solid #7cb342;
+        float: left;
+        font-size: $font-size-sm;
+        height: 50px;
+        margin-left: 20px;
+        padding: 5px 10px;
+        position: relative;
+        width: 200px;
+
+        &:first-child {
+            margin-left: 0;
+        }
+
+        .accessory-name {
+            color: #7cb342;
+            margin-bottom: 2px;
+        }
+
+        .accessory-switch {
+            position: absolute;
+            right: -5px;
+            top: 0;
+
+            .md-icon-button {
+                md-icon {
+                    height: 18px;
+                    width: 18px;
+                }
+            }
+        }
+    }
+}
+
+.accessory-btn-group {
+    margin-top: 10px;
+
+    .md-icon-button {
+        margin: 0;
+    }
+}
+
+.superior-header.md-subheader {
+    margin-bottom: 30px;
+}
+
+.superior-container {
+    md-radio-button {
+        float: left;
+        margin-bottom: 10px;
+        width: 286px;
+    }
+}
+
+
+
 
 

@@ -67,6 +67,7 @@
     display: flex;
     flex: 1;
     margin: 0 2px;
+    min-height: 43px;
     padding: 2px 0;
     position: relative;
 
@@ -86,6 +87,15 @@
         position: absolute;
         top: -12px;
         transform: scale(.4);
+    }
+}
+
+.accessory-btn-group {
+    margin-top: 10px;
+
+    .tip {
+        color: $text-muted;
+        margin-left: 10px;
     }
 }
 
