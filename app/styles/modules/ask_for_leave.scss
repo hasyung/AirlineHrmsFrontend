@@ -93,8 +93,9 @@
 .accessory-btn-group {
     margin-top: 10px;
 
-    .md-icon-button {
-        margin: 0;
+    .tip {
+        color: $text-muted;
+        margin-left: 10px;
     }
 }
 
