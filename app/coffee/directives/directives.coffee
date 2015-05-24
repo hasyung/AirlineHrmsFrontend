@@ -573,7 +573,7 @@ angular.module 'nb.directives'
         template = '''
         <div>
             <div class="accessory-container">
-                <div ng-repeat="file in files track by $index"  class="accessory-cell">
+                <div ng-repeat="file in files track by $index"  class="accessory-cell" nb-gallery img-obj="file">
                     <div class="accessory-name" ng-bind="file.name"></div>
                     <div class="accessory-size" ng-bind="file.size | byteFmt:2"></div>
                     <div class="accessory-switch">
