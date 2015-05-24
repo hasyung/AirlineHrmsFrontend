@@ -55,6 +55,40 @@ div.ask_for_leave.md-background(md-theme="hrms")
                                 md-input-container(flex)
                                     label 申请理由
                                     textarea(ng-model="request.reason" columns="1" md-maxlength="150")
+                            md-subheader.accessory-header.md-background.md-hue-1 附件
+                            .accessory-container
+                                .accessory-cell
+                                    .accessory-name
+                                        | 附件1.jpg
+                                    .accessory-size
+                                        | 500kb
+                                    .accessory-switch
+                                        md-button.md-icon-button
+                                            md-icon.md-warn(md-svg-src="/images/svg/close.svg")
+                                .accessory-cell
+                                    .accessory-name
+                                        | 附件1.jpg
+                                    .accessory-size
+                                        | 500kb
+                                    .accessory-switch
+                                        md-button.md-icon-button
+                                            md-icon.md-warn(md-svg-src="/images/svg/close.svg")
+                                .accessory-cell
+                                    .accessory-name
+                                        | 附件1.jpg
+                                    .accessory-size
+                                        | 500kb
+                                    .accessory-switch
+                                        md-button.md-icon-button
+                                            md-icon.md-warn(md-svg-src="/images/svg/close.svg")
+                                .accessory-cell
+                                    .accessory-name
+                                        | 附件1.jpg
+                                    .accessory-size
+                                        | 500kb
+                                    .accessory-switch
+                                        md-button.md-icon-button
+                                            md-icon.md-warn(md-svg-src="/images/svg/close.svg")
 
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1 提交上级
@@ -62,9 +96,6 @@ div.ask_for_leave.md-background(md-theme="hrms")
                             md-radio-button(
                                 ng-repeat="reviewer in ::ctrl.reviewers track by reviewer.id"
                                 ng-value="reviewer.id") {{ reviewer.name }}
-                        //- div.ui-grid-container
-                        //-     div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection safe-src="ctrl.employees")
-
 
                     .form-bottom-group(layout)
                         span(flex)

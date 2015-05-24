@@ -138,4 +138,47 @@
     }
 }
 
+.accessory-header.md-subheader {
+    font-size: $font-size-sm;
+    margin-bottom: 10px;
+}
+
+.accessory-container {
+    .accessory-cell {
+        background-color: rgba(0, 0, 0, .06);
+        border-left: 2px solid #7cb342;
+        float: left;
+        font-size: $font-size-sm;
+        height: 50px;
+        margin-left: 20px;
+        padding: 5px 10px;
+        position: relative;
+        width: 200px;
+
+        &:first-child {
+            margin-left: 0;
+        }
+
+        .accessory-name {
+            color: #7cb342;
+            margin-bottom: 2px;
+        }
+
+        .accessory-switch {
+            position: absolute;
+            right: -5px;
+            top: 0;
+
+            .md-icon-button {
+                md-icon {
+                    height: 18px;
+                    width: 18px;
+                }
+            }
+        }
+    }
+
+
+}
+
 
