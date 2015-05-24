@@ -21,21 +21,21 @@
     padding: 40px 30px;
 
     .approval-info-head {
-        color: $text-color;
+        margin-bottom: 30px;
 
         .name {
             font-size: 32px;
-            line-height: 32px;
+            margin-bottom: 15px;
         }
 
-        .serial-number {
-            font-size: 16px;
-        }
-    }
+        .approval-info-plus {
+            font-size: $font-size-sm;
 
-    .approval-position {
-        font-size: 14px;
-        margin-top: 15px;
+            .serial-num {
+                margin-right: 10px;
+            }
+
+        }
     }
 }
 
@@ -144,6 +144,8 @@
 }
 
 .accessory-container {
+    @include clearfix();
+
     .accessory-cell {
         background-color: rgba(0, 0, 0, .06);
         border-left: 2px solid #7cb342;
@@ -176,6 +178,14 @@
                 }
             }
         }
+    }
+}
+
+.accessory-btn-group {
+    margin-top: 10px;
+
+    .md-icon-button {
+        margin: 0;
     }
 }
 
