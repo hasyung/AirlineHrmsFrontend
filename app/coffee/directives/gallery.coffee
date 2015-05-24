@@ -81,7 +81,7 @@ angular.module 'nb.directives'
                 <div class="modal-container">
                     <div>
                       <div class="main-img-container">
-                        <img ng-src="{{currentImg.url}}" class="main-img"/>
+                        <img ng-src="{{currentImg.default}}" class="main-img"/>
                         <div ng-click="ctrl.nextImg()" class="next-img nb-modal-touchable"></div>
                         <div ng-click="ctrl.prevImg()" class="prev-img nb-modal-touchable"></div>
                       </div>
@@ -91,20 +91,20 @@ angular.module 'nb.directives'
                             ng-class="{'active': currentImg == img}"
                             class="img-list-item">
                             <a href="javascript:;">
-                                <img ng-src="{{img.url}}"/>
+                                <img ng-src="{{img.default}}"/>
                             </a>
                         </div>
                       </div>
                     </div>
-                  <div class="img-info-bar nb-modal-touchable"><span ng-bind="currentImg.url.split('/').pop()" class="img-name"> </span>
+                  <div class="img-info-bar nb-modal-touchable"><span ng-bind="currentImg.default.split('/').pop()" class="img-name"> </span>
                     <div class="gallery-control">
                         <span class="download-file">
-                            <a ng-href="{{currentImg.url}}" target="_blank" download="{{currentImg.url.split('/').pop()}}" title="下载">
+                            <a ng-href="{{currentImg.default}}" target="_blank" download="{{currentImg.default.split('/').pop()}}" title="下载">
                                 <i class="fa fa-download"></i>
                             </a>
                         </span>
                         <span class="view-file">
-                            <a ng-href="{{currentImg.url}}" target="_blank" title="查看">
+                            <a ng-href="{{currentImg.default}}" target="_blank" title="查看">
                                 <i class="fa fa-external-link"></i>
                             </a>
                         </span>
@@ -117,18 +117,18 @@ angular.module 'nb.directives'
                 <div class="modal-container">
                     <div>
                       <div class="main-img-container">
-                        <img ng-src="{{currentImg.url}}" class="main-img"/>
+                        <img ng-src="{{currentImg.default}}" class="main-img"/>
                       </div>
                     </div>
-                  <div class="img-info-bar nb-modal-touchable single"><span ng-bind="currentImg.url.split('/').pop()" class="img-name"> </span>
+                  <div class="img-info-bar nb-modal-touchable single"><span ng-bind="currentImg.default.split('/').pop()" class="img-name"> </span>
                     <div class="gallery-control">
                         <span class="download-file">
-                            <a ng-href="{{currentImg.url}}" target="_blank" download="{{currentImg.url.split('/').pop()}}" title="下载">
+                            <a ng-href="{{currentImg.default}}" target="_blank" download="{{currentImg.default.split('/').pop()}}" title="下载">
                                 <i class="fa fa-download"></i>
                             </a>
                         </span>
                         <span class="view-file">
-                            <a ng-href="{{currentImg.url}}" target="_blank" title="查看">
+                            <a ng-href="{{currentImg.default}}" target="_blank" title="查看">
                                 <i class="fa fa-external-link"></i>
                             </a>
                         </span>
@@ -146,7 +146,7 @@ angular.module 'nb.directives'
 
             getImgSize = (imgObj)->
                 img = new Image()
-                img.src = imgObj.url
+                img.src = imgObj.default
                 {
                     width: img.naturalWidth
                     height: img.naturalHeight
