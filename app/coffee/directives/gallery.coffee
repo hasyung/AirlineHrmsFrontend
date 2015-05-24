@@ -1,10 +1,26 @@
 angular.module 'nb.directives'
     .directive 'nbAnnexsBox', [()->
         template = '''
-        <div class="annex-container">
-            <div ng-repeat="annex in annexs"  class="pull-left annex-item">
-                <div ng-if="ctrl.isImgObj(annex)" template-url="/partials/common/gallery.tpl.html" nb-gallery img-obj="annex" style="width:100px;height:60px;border:1px solid #000;"></div>
-                <div ng-if="!ctrl.isImgObj(annex)" style="width:100px;height:60px;border:1px solid #000;"></div>
+        <div class="accessory-container">
+            <div ng-repeat="annex in annexs"  class="accessory-cell">
+                <div ng-if="ctrl.isImgObj(annex)" nb-gallery img-obj="annex">
+                    <div class="accessory-name">附件1.jpg</div>
+                    <div class="accessory-size">500kb</div>
+                    <div class="accessory-switch">
+                        <md-button class="md-icon-button">
+                            <md-icon md-svg-src="/images/svg/close.svg" class="md-warn"></md-icon>
+                        </md-button>
+                    </div>
+                </div>
+                <div ng-if="!ctrl.isImgObj(annex)">
+                    <div class="accessory-name">附件1.jpg</div>
+                    <div class="accessory-size">500kb</div>
+                    <div class="accessory-switch">
+                        <md-button class="md-icon-button">
+                            <md-icon md-svg-src="/images/svg/close.svg" class="md-warn"></md-icon>
+                        </md-button>
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -14,7 +30,7 @@ angular.module 'nb.directives'
             @.$inject = ['$scope']
             imgRex = /jpg|jpeg|png|gif/
             constructor: (@scope)->
-                
+
             getImgs: ()->
                 imgs = []
                 angular.forEach @scope.annexs, (item)->
@@ -41,7 +57,7 @@ angular.module 'nb.directives'
     ]
 
     .directive 'nbGallery', ['$q', '$compile', '$document', '$templateCache', '$http', ($q, $compile, $document, $templateCache, $http)->
-        
+
 
         class GalleryCtrl
             @.$inject = ['$scope']
@@ -70,7 +86,10 @@ angular.module 'nb.directives'
                         <div ng-click="ctrl.prevImg()" class="prev-img nb-modal-touchable"></div>
                       </div>
                       <div class="img-list nb-modal-touchable">
-                        <div ng-repeat="img in imgs" ng-click="ctrl.setSelectedImg(img)" ng-class="{'active': currentImg == img}" class="img-list-item">
+                        <div ng-repeat="img in imgs"
+                            ng-click="ctrl.setSelectedImg(img)"
+                            ng-class="{'active': currentImg == img}"
+                            class="img-list-item">
                             <a href="javascript:;">
                                 <img ng-src="{{img.url}}"/>
                             </a>
@@ -78,7 +97,18 @@ angular.module 'nb.directives'
                       </div>
                     </div>
                   <div class="img-info-bar nb-modal-touchable"><span ng-bind="currentImg.url.split('/').pop()" class="img-name"> </span>
-                    <div class="gallery-control"><span class="download-file"><a ng-href="{{currentImg.url}}" target="_blank" download="{{currentImg.url.split('/').pop()}}" title="下载"><i class="fa fa-download"></i></a></span><span class="view-file"><a ng-href="{{currentImg.url}}" target="_blank" title="查看"><i class="fa fa-external-link"></i></a></span></div>
+                    <div class="gallery-control">
+                        <span class="download-file">
+                            <a ng-href="{{currentImg.url}}" target="_blank" download="{{currentImg.url.split('/').pop()}}" title="下载">
+                                <i class="fa fa-download"></i>
+                            </a>
+                        </span>
+                        <span class="view-file">
+                            <a ng-href="{{currentImg.url}}" target="_blank" title="查看">
+                                <i class="fa fa-external-link"></i>
+                            </a>
+                        </span>
+                    </div>
                   </div>
                 </div>
             '''
@@ -91,7 +121,18 @@ angular.module 'nb.directives'
                       </div>
                     </div>
                   <div class="img-info-bar nb-modal-touchable single"><span ng-bind="currentImg.url.split('/').pop()" class="img-name"> </span>
-                    <div class="gallery-control"><span class="download-file"><a ng-href="{{currentImg.url}}" target="_blank" download="{{currentImg.url.split('/').pop()}}" title="下载"><i class="fa fa-download"></i></a></span><span class="view-file"><a ng-href="{{currentImg.url}}" target="_blank" title="查看"><i class="fa fa-external-link"></i></a></span></div>
+                    <div class="gallery-control">
+                        <span class="download-file">
+                            <a ng-href="{{currentImg.url}}" target="_blank" download="{{currentImg.url.split('/').pop()}}" title="下载">
+                                <i class="fa fa-download"></i>
+                            </a>
+                        </span>
+                        <span class="view-file">
+                            <a ng-href="{{currentImg.url}}" target="_blank" title="查看">
+                                <i class="fa fa-external-link"></i>
+                            </a>
+                        </span>
+                    </div>
                   </div>
                 </div>
             '''
@@ -162,7 +203,7 @@ angular.module 'nb.directives'
                 targetEle = angular.element(e.target)
                 if targetEle.closest(".nb-modal-touchable").length == 0
                     destroyGallery()
-                e.stopPropagation() 
+                e.stopPropagation()
 
 
 
@@ -171,8 +212,8 @@ angular.module 'nb.directives'
             , (newVal)->
                 if newVal
                     scope.gallery.on 'click', addGalleryListener
-                else 
-                    scope.gallery.off 'click' if scope.gallery  
+                else
+                    scope.gallery.off 'click' if scope.gallery
 
             scope.$watch ()->
                 scope.currentImg
@@ -181,7 +222,7 @@ angular.module 'nb.directives'
                 imgSize = getImgSize(newVal)
                 boxSize = getImgBoxSize()
                 setImgSize(imgSize, boxSize)
-                
+
 
             elem.on 'click', (e)->
                 e.stopPropagation()
@@ -192,7 +233,7 @@ angular.module 'nb.directives'
 
             scope.$on 'destroy', ()->
                 $doc.off 'keydown', setCurrentImg
-                elem.off 'click'                 
+                elem.off 'click'
 
         return {
             restrict: 'A'

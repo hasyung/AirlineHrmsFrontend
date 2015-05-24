@@ -91,11 +91,12 @@ div.ask_for_leave.md-background(md-theme="hrms")
                                             md-icon.md-warn(md-svg-src="/images/svg/close.svg")
 
                     md-card.form-material-section.nb-card
-                        md-subheader.md-background.md-hue-1 提交上级
-                        md-radio-group(ng-model="request.reviewer_id")
-                            md-radio-button(
-                                ng-repeat="reviewer in ::ctrl.reviewers track by reviewer.id"
-                                ng-value="reviewer.id") {{ reviewer.name }}
+                        md-subheader.superior-header.md-background.md-hue-1 提交上级
+                        .superior-container
+                            md-radio-group(ng-model="request.reviewer_id" md-theme="default")
+                                md-radio-button.md-primary(
+                                    ng-repeat="reviewer in ::ctrl.reviewers track by reviewer.id"
+                                    ng-value="reviewer.id") {{ reviewer.name }}
 
                     .form-bottom-group(layout)
                         span(flex)
