@@ -56,7 +56,7 @@ div.ask_for_leave.md-background(md-theme="hrms")
                                     label 申请理由
                                     textarea(ng-model="request.reason" columns="1" md-maxlength="150")
                             md-subheader.accessory-header.md-background.md-hue-1 附件
-                            div(nb-file-upload flow-type="Flow::AnnualLeave" ng-model="request.test")
+                            div(nb-file-upload flow-type="Flow::AnnualLeave" ng-model="request.attachment_ids")
                             //- .accessory-container
                             //-     .accessory-cell
                             //-         .accessory-name
