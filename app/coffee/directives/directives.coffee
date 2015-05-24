@@ -554,3 +554,20 @@ angular.module 'nb.directives'
             link: postLink
             require: 'ngModel'
         }
+
+    .directive 'nbFileUpload', ->
+        template = '''
+
+        '''
+
+        postLink = (scope, elem, attrs, ngModelCtrl) ->
+
+            
+
+
+        return {
+            scope: {
+                files: '=ngModel'
+            }
+            link: postLink
+        }
