@@ -1,6 +1,6 @@
 
 
-
+app = @nb.app
 
 class AttendanceRecordCtrl extends nb.Controller
     @.$inject = ['$scope', 'Attendance', 'Employee']

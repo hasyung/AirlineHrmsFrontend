@@ -244,6 +244,10 @@ menuFactory = ($rootScope, $state)->
                 permission: ''
             }
             {
+                name: '员工考勤'
+                state: ''
+            }
+            {
                 name: '员工调动'
                 state: 'position'
                 permission: ''
