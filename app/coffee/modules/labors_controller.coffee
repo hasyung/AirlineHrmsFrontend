@@ -14,26 +14,64 @@ class Route
         stateProvider
             .state 'contract_management', {
                 url: '/contract-management'
-                templateUrl: 'partials/labors/contract_management.html'
+                templateUrl: 'partials/labors/contract/index.html'
                 controller: ContractCtrl
                 controllerAs: 'ctrl'
             }
-            .state 'labors_early_retirement', {
-                url: '/labor-eary-retirement'
-                templateUrl: 'partials/labors/labors_early_retirement.html'
-                controller: EarlyRetirementCtrl
+            .state 'labors_attendance', {
+                url: '/labors_attendance'
+                templateUrl: 'partials/labors/attendance/index.html'
+                controller: AttendanceCtrl
                 controllerAs: 'ctrl'
             }
 
-class LaborCtrl extends nb.Controller
 
-    @.$inject = ['$scope', '$mdDialog', 'Flow::AdjustPosition']
+class AttendanceCtrl extends nb.Controller
 
-    constructor: (@scope, @mdDialog, @flow) ->
-        @flows  = flow.$collection().$fetch()
+    @.$inject = ['GridHelper', 'Leave']
 
-    search: (tableState)->
-        @flows.$refresh(tableState)
+    constructor: (helper, @Leave) ->
+
+        @recordsFilterOptions = {
+            name: 'attendance_records'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '姓名'
+                    type: 'string'
+                }
+            ]
+        }
+
+
+        def = [
+            {
+                name: 'type'
+                displayName: '假别'
+            }
+            {
+                name: 'vacationDays'
+                displayName: '时长'
+            }
+            {
+                name: 'workflowState'
+                displayName: '状态'
+            }
+            {
+                name: 'createdAt'
+                displayName: '发起时间'
+            }
+            {
+                name: 'type'
+                displayName: '详细'
+            }
+
+        ]
+
+        @columnDef = helper.buildFlowDefault(def)
+
+        @leaveFlows = @Leave.$collection().$fetch()
+
 
 class ContractCtrl extends nb.Controller
     @.$inject = ['$scope', 'Contract']
@@ -205,42 +243,6 @@ class ContractCtrl extends nb.Controller
 
     search: (tableState) ->
         @contracts.$refresh(tableState)
-
-
-
-
-class EarlyRetirementCtrl extends nb.Controller
-
-    @.$inject = ['$scope', 'Flow::EarlyRetirement']
-
-    constructor: (@scope, @EarlyRetirement) ->
-        @loadInitailData()
-        @columnDef = [
-            {displayName: '所属部门', name: 'sponsor.departmentName'}
-            {displayName: '姓名', field: 'sponsor.name'}
-            {displayName: '状态', field: 'workflowState'}
-            {displayName: '创建时间', field: 'createdAt'}
-            {
-                displayName: '审批'
-                name: '审批'
-                cellTemplate: '''
-                <a class="ui-grid-cell-contents"
-                    flow-handler="row.entity"
-                    flows="grid.options.data"
-                    ">
-                    审批
-                </a>'
-                '''
-            }
-        ]
-
-    loadInitailData: ()->
-        @flows = @EarlyRetirement.$collection().$fetch()
-
-    refreshFlows: ()->
-        @flows.$refresh()
-
-
 
 
 

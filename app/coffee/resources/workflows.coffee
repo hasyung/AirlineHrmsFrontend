@@ -23,10 +23,6 @@ CustomConfig = {
 angular.forEach workflows, (item)->
 
 
-    # resources = (restmod, RMUtils, $Evt) ->
-    #     resource.call(this, restmod, RMUtils, item)
-
-
     resource = (restmod, RMUtils, $Evt) ->
         resource = restmod.model("/workflows/#{item}").mix 'nbRestApi','Workflow', {
             $config:
@@ -35,6 +31,32 @@ angular.forEach workflows, (item)->
 
         }
     resources.factory item, ['restmod', 'RMUtils', resource]
+
+
+
+resources.factory 'Leave', (restmod, $injector) ->
+
+    restmod.model("/workflows/leave").mix 'nbRestApi', 'Workflow', {
+        $config:
+            jsonRootMany: 'workflows'
+            jsonRootSingle: 'workflow'
+
+
+        $extend:
+            Collection:
+                hehe: ->
+
+
+
+
+
+    }
+
+
+
+
+
+
 
 
 

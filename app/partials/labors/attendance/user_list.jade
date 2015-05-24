@@ -1,0 +1,17 @@
+.app-content-wrapper(flex)
+
+    //- div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+    div.ui-grid-container
+        md-toolbar
+            .md-toolbar-tools
+                h2 员工人事信息列表
+                div(flex)
+                md-button.md-primary.md-raised(
+                    nb-panel
+                    template-url="partials/personnel/org_pos_per_sort.html"
+                ) 代请假
+                md-button.md-primary.md-raised(
+                    nb-panel
+                    template-url="partials/personnel/org_pos_per_sort.html"
+                ) 新增考勤
+        div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection safe-src="ctrl.employees")

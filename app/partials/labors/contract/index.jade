@@ -13,12 +13,12 @@ tabset(flex)
                         ) 发起续签
                         md-button.md-primary.md-raised(
                             nb-panel
-                            template-url="/partials/labors/labors_contract.html"
+                            template-url="/partials/labors/contract/new.html"
                         ) 新建合同
                 div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.contracts")
 
 
     tab(heading="历史记录")
-        include contract_histroy
+        include histroy
 
     tab(heading="待处理")
