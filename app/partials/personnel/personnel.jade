@@ -1,37 +1,42 @@
-.app-content-wrapper(flex style="height: 700px;")
+tabset(flex)
+    tab(heading="员工花名册")
+        .app-content-wrapper(flex style="height: 700px;")
 
-    div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
-    div.ui-grid-container
-        md-toolbar
-            .md-toolbar-tools
-                h2 员工人事信息列表
-                div(flex)
-                md-button.md-primary.md-raised(
-                    nb-panel
-                    template-url="partials/personnel/org_pos_per_sort.html"
-                ) 排序
-                md-dropmenu(ng-init="selectedRows=[]")
-                    md-drop-label(ng-click="selectedRows = ctrl.getSelectsIds()")
-                        md-button.md-primary.md-raised 导出
-                    md-drop-option()
-                        a(flex ng-href="/api/employees/export_to_xls") 导出全部人员
-                    md-drop-option(ng-if="selectedRows.length > 0")
-                        a(
-                            nb-download
-                            url-prefix="/api/employees/export_to_xls?employee_ids=#param#"
-                            param-getter="ctrl.getSelectsIds()"
-                            href="javascript:;"
-                            download
-                        ) 导出所选人员
-                    md-drop-option()
-                        a(ng-href="/api/employees/export_resume") 导出全部人员履历
-                    md-drop-option(ng-if="selectedRows.length > 0")
-                        a(
-                            nb-download
-                            url-prefix="/api/employees/export_resume?employee_ids=#param#"
-                            param-getter="ctrl.getSelectsIds()"
-                            href="javascript:;"
-                            download
-                        ) 导出全部人员履历
-        div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection safe-src="ctrl.employees")
+            div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+            div.ui-grid-container
+                md-toolbar
+                    .md-toolbar-tools
+                        h2 员工人事信息列表
+                        div(flex)
+                        md-button.md-primary.md-raised(
+                            nb-panel
+                            template-url="partials/personnel/org_pos_per_sort.html"
+                        ) 排序
+                        md-dropmenu(ng-init="selectedRows=[]")
+                            md-drop-label(ng-click="selectedRows = ctrl.getSelectsIds()")
+                                md-button.md-primary.md-raised 导出
+                            md-drop-option()
+                                a(flex ng-href="/api/employees/export_to_xls") 导出全部人员
+                            md-drop-option(ng-if="selectedRows.length > 0")
+                                a(
+                                    nb-download
+                                    url-prefix="/api/employees/export_to_xls?employee_ids=#param#"
+                                    param-getter="ctrl.getSelectsIds()"
+                                    href="javascript:;"
+                                    download
+                                ) 导出所选人员
+                            md-drop-option()
+                                a(ng-href="/api/employees/export_resume") 导出全部人员履历
+                            md-drop-option(ng-if="selectedRows.length > 0")
+                                a(
+                                    nb-download
+                                    url-prefix="/api/employees/export_resume?employee_ids=#param#"
+                                    param-getter="ctrl.getSelectsIds()"
+                                    href="javascript:;"
+                                    download
+                                ) 导出全部人员履历
+                div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection safe-src="ctrl.employees")
+
+    tab(heading="离职人员花名册")
+        include personnel_leave
 

@@ -236,7 +236,7 @@
             height: 40px;
         }
 
-        //material
+        // material
         fieldset[disabled] {
             .md-default-theme .md-select-label {
                 padding-left: 90px;
@@ -251,35 +251,16 @@
             padding: 0 30px 16px;
             position: relative;
 
-            // &:hover {
-            //     .form-btn-group {
-            //         visibility: visible;
-            //     }
-            // }
-
             .form-btn-group {
                 position: absolute;
                 right: 20px;
-                top: 0;
-
-                // &.alive {
-                //     visibility: visible;
-                // }
+                top: -36px;
 
                 .md-button {
                     margin-right: 10px;
                     margin-top: 20px;
                 }
 
-            }
-
-            .ui-select-container {
-                .ui-select-match {
-                    >span {
-                        width: 100%;
-                    }
-
-                }
             }
         }
     }
@@ -307,10 +288,6 @@
     }
 
     .personnel-content-body {
-// <<<<<<< HEAD
-//         background-color: #fff;
-// =======
-        // border: 1px solid #c3c3c3;
         border-top: 0;
         width: 100%;
     }
@@ -475,7 +452,6 @@
                 height: 110px;
                 width: 110px;
             }
-
         }
 
         .mid-avator {
@@ -508,6 +484,7 @@
 // <<<<<<< HEAD
 //for org/positions/employee search
 .personnel-sort-body {
+
     .org-sort-container,
     .pos-sort-container {
         padding: 5px;

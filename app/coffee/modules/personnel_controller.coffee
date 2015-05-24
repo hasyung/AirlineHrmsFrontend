@@ -284,6 +284,81 @@ class NewEmpsCtrl extends nb.Controller
         return tableState
 
 
+class LeaveEmployeesCtrl extends nb.Controller
+    @.$inject = ['$scope', 'LeaveEmployees']
+    constructor: (@scope, @LeaveEmployees) ->
+        @loadInitailData()
+
+        @columnDef = [
+            {
+                displayName: '所属部门'
+                name: 'department'
+                cellTooltip: (row) ->
+                    return row.entity.department
+            }
+            {
+                displayName: '姓名'
+                field: 'name'
+                # pinnedLeft: true
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+
+            {displayName: '员工编号', name: 'employeeNo'}
+            {
+                displayName: '岗位'
+                name: 'position'
+                cellTooltip: (row) ->
+                    return row.entity.position
+            }
+            {displayName: '性别', name: 'gender'}
+            {displayName: '通道', name: 'channel'}
+            {displayName: '用工性质', name: 'laborRelation'}
+            {displayName: '变动性质', name: 'employmentStatus'}
+            {displayName: '变动时间', name: 'changeDate'}
+        ]
+
+        @filterOptions = {
+            name: 'personnelLeave'
+            constraintDefs: [
+                {
+                    name: 'department'
+                    displayName: '机构'
+                    type: 'string'
+                }
+                {
+                    name: 'position_name'
+                    displayName: '岗位名称'
+                    type: 'string'
+                }
+                {
+                    name: 'employment_status'
+                    type: 'string'
+                    displayName: '变动性质'
+                }
+                {
+                    name: 'change_date'
+                    type: 'date-range'
+                    displayName: '变动时间'
+                }
+                
+            ]
+        }
+
+
+    loadInitailData: ->
+        @leaveEmployees = @LeaveEmployees.$collection().$fetch()
+    search: (tableState) ->
+        @leaveEmployees.$refresh(tableState)
+       
+
 class ReviewCtrl extends nb.Controller
     @.$inject = ['$scope', 'Change', 'Record', '$mdDialog']
     constructor: (@scope, @Change, @Record, @mdDialog) ->
@@ -460,3 +535,4 @@ app.directive('orgMutiPos',[orgMutiPos])
 
 app.config(Route)
 app.controller('PersonnelSort', PersonnelSort)
+app.controller('LeaveEmployeesCtrl', LeaveEmployeesCtrl)

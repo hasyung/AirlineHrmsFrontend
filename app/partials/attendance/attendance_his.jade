@@ -1,4 +1,4 @@
-.app-content-wrapper(flex style="height: 700px;" ng-controller="AttendanceRecordCtrl as ctrl")
+.app-content-wrapper(flex style="height: 700px;" ng-controller="AttendanceHisCtrl as ctrl")
     div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
     div.ui-grid-container
         md-toolbar
@@ -6,13 +6,11 @@
                 h2 员工考勤列表
                 div(flex)
                 md-button.md-primary.md-raised(
-                ) 代请假
-                md-button.md-primary.md-raised(
                     ng-disabled="!ctrl.getSelected()"
                     nb-dialog
-                    template-url="/partials/attendance/attendance_new.html"
+                    template-url="/partials/attendance/attendance_edit.html"
                     locals="{current:ctrl.getSelected()}"
-                ) 新增考勤
+                ) 修改
                 
-        div(nb-grid column-defs="ctrl.columnDef" multi-select="false" export-api grid-selection safe-src="ctrl.employees")
+        div(nb-grid column-defs="ctrl.columnDef" multi-select="false" export-api grid-selection safe-src="ctrl.attendances")
 

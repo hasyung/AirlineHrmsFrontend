@@ -310,7 +310,7 @@ angular.module 'nb.directives'
                 left: 20
 
             width = 900
-            height = 92
+            height = 120
                 #树的高
             duration = 750
             data = [
@@ -352,81 +352,123 @@ angular.module 'nb.directives'
                 }
                 {
                     'status': 'unreachable'
-                    'des': '超级最终审批'
-                }
-                {
-                    'status': 'unreachable'
-                    'des': '超级最终审批'
+                    'des': '生效'
                 }
             ]
-            radius = 6
+            radius = 9
             single_area_width = width / data.length
             single_area_height = 2 * radius + 40
 
-            svg = d3.select(elem[0]).append('svg')
-            .attr('class', 'lw-svg')
+            svg = d3.select(elem[0])
+                .append('svg')
+                .attr('class', 'lw-svg')
                 .attr('width', width)
                 .attr('height', height)
-            #- .append("g")
-            #- .attr("transform", "translate(" + margin.left + "," + margin.top + ")");  //使svg区域与上、左有一定距离
+            # - .attr("transform", "translate(" + margin.left + "," + margin.top + ")");  //使svg区域与上、左有一定距离
             #
-            svg.selectAll('line').data(data).enter().append('line').style('stroke', (d, i) ->
-              if d.status == 'done'
-                '#2cc350'
-              else if d.status == 'undo'
-                '#24afff'
-              else if d.status == 'reject'
-                '#f34e4c'
-              else
-                '#eee'
-            ).style('stroke-width', '3').attr('class', 'step-line').attr('x1', (d, i) ->
-              single_area_width * (i + .5)
-            ).attr('y1', single_area_height - radius).attr('x2', (d, i) ->
-              if i != 0
-                single_area_width * (i - .5)
-              else
-                single_area_width * (i + .5)
-            ).attr 'y2', single_area_height - radius
+            svg.selectAll('line')
+                .data(data).enter()
+                .append('line')
+                .style('stroke', (d, i) ->
+                    if d.status == 'done'
+                        '#8bc34a'
+                    else if d.status == 'undo'
+                        '#2196f3'
+                    else if d.status == 'reject'
+                        '#f34e4c'
+                    else
+                        '#dedede'
+                )
+                .style('stroke-width', '3')
+                .attr('class', 'step-line')
+                .attr('x1', (d, i) ->
+                    single_area_width * (i + .5) - 20
+                )
+                .attr 'y1', single_area_height - radius + 10
+                .attr('x2', (d, i) ->
+                    if i != 0
+                        single_area_width * (i - .5) - 20
+                    else
+                        single_area_width * (i + .5) - 20
+                )
+                .attr 'y2', single_area_height - radius + 10
 
-            svg.selectAll('circle').data(data).enter().append('circle').attr('class', 'step-point').attr('fill', (d) ->
-              if d.status == 'done'
-                '#2cc350'
-              else if d.status == 'undo'
-                '#24afff'
-              else if d.status == 'reject'
-                '#f34e4c'
-              else
-                '#eee'
-            ).attr('cx', (d, i) ->
-              single_area_width * (i + .5)
-            ).attr('cy', single_area_height - radius)
-            .attr('r', (d,i) ->
-                if d.status == 'undo'
-                    2*radius
-                else
-                    radius
-            )
+            svg.selectAll('circle')
+                .data(data).enter()
+                .append('circle')
+                .attr('class', 'step-point')
+                .attr('fill', (d, i) ->
+                    if d.status == 'done'
+                        '#8bc34a'
+                    else if d.status == 'undo'
+                        svg.append('circle')
+                            .attr 'cx',
+                                single_area_width * (i + .5) - 20
+                            .attr 'cy',
+                                single_area_height - radius + 10
+                            .attr 'r', 17+radius
+                            .attr 'fill', 'transparent'
+                            .attr 'stroke', 'rgba(0, 0, 0, .12)'
+                            .attr 'stroke-width', '2px'
+                        return '#2196f3'
+                    else if d.status == 'reject'
+                        '#f34e4c'
+                    else
+                        '#dedede'
+                )
+                .attr('cx', (d, i) ->
+                    single_area_width * (i + .5) - 20
+                )
+                .attr('cy', single_area_height - radius + 10)
+                .attr('r', (d,i) ->
+                    if d.status == 'undo'
+                        7+radius
+                    else
+                        radius
+                )
 
-            svg.selectAll('text').data(data).enter().append('text')
-            .attr('class', 'step-title')
-            .attr('x', (d, i) ->
-              single_area_width * (i + .5)
-            )
-            .attr('y', (d, i) ->
-                if i%2 == 0
-                    single_area_height - radius - 20
-                else
-                    single_area_height + 20 +radius
-            )
-            .attr('fill',(d,i) ->
-                if d.status == 'unreachable'
-                    'rgba(0,0,0,.54)'
-                else
-                    'rgba(0,0,0,.87)'
-            )
-            .attr('text-anchor', 'middle')
-            .attr('font-size', '12px').text (d, i) ->
-              d.des
+            svg.selectAll('text').data(data)
+                .enter()
+                .append('text')
+                .attr('class', 'step-title')
+                .attr('x', (d, i) ->
+                    single_area_width * (i + .5) - 30
+                )
+                .attr('y', (d, i) ->
+                    if i%2 == 0
+                        if d.status == 'undo'
+                            single_area_height - radius - 40 + 10
+                        else
+                            single_area_height - radius - 20 + 10
+                    else
+                        if d.status == 'undo'
+                            single_area_height + 32 + radius + 10
+                        else
+                            single_area_height + 12 + radius + 10
+                )
+                .attr 'stroke-width', (d,i) ->
+                    if d.status == 'undo'
+                        return '2px'
+                    else
+                        return '1px'
+                .attr('fill',(d,i) ->
+                    if d.status == 'unreachable'
+                        'rgba(0,0,0,.26)'
+                    else if d.status == 'done'
+                        '#689f38'
+                    else if d.status == 'reject'
+                        '#e84e40'
+                    else if d.status == 'undo'
+                        '#1976d2'
+                )
+                .attr('text-anchor', 'start')
+                .attr 'font-size', (d, i) ->
+                    if d.status == 'undo'
+                        return '16px'
+                    else
+                        return '14px'
+                .text (d, i) ->
+                    d.des
 
         return {
             link: postLink

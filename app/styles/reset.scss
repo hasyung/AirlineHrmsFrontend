@@ -5,6 +5,7 @@
 html,
 body {
     font-family: $font-family-sans-serif;
+    font-size: $font-size-sm;
 }
 //重置material design影响标签的样式
 fieldset {
@@ -49,6 +50,7 @@ md-sidenav {
 }
 
 .md-button {
+    font-size: 15px;
     height: 36px;
     line-height: 36px;
     margin: auto;
@@ -134,7 +136,7 @@ html h4 {
 
 //用于分隔的附加块
 .sep-40 {
-    height: 65px;
+    height: 40px;
 }
 
 //确定的宽度 多用于需要表格单元固定宽度换行

@@ -1,0 +1,8 @@
+.app-content-wrapper(flex style="height: 700px;" ng-controller="LeaveEmployeesCtrl as ctrl")
+
+    div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+    div.ui-grid-container
+        md-toolbar
+            .md-toolbar-tools
+                h2 离职人员花名册
+        div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.leaveEmployees")

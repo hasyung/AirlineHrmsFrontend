@@ -76,6 +76,7 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
             parent = _.find treeData, (child) -> child.parent_id == undefined or child.parent_id == 0 #根节点
         else
             parent = _.find treeData, (child) -> parent.id == child.id
+        parent.staff = [{name: '公司领导'}, {name: '公司高层管理干部'}]
         return unflatten(treeData, DEPTH, parent)
 
 

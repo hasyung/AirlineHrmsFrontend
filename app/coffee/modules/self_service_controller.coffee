@@ -12,8 +12,6 @@ class Route
 
     constructor: (stateProvider, urlRouterProvider) ->
 
-        urlRouterProvider.when('/self-service', '/self-service/profile')
-
         stateProvider
             .state 'self', {
                 url: '/self-service'
