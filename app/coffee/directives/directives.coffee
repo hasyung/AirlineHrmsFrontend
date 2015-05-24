@@ -571,18 +571,56 @@ angular.module 'nb.directives'
 
     .directive 'nbFileUpload', [()->
         template = '''
-
+        <div class="accessory-container">
+            <div ng-repeat="file in files track by $index"  class="accessory-cell">
+                <div class="accessory-name">附件1.jpg</div>
+                <div class="accessory-size">500kb</div>
+                <div class="accessory-switch">
+                    <md-button class="md-icon-button">
+                        <md-icon md-svg-src="/images/svg/close.svg" class="md-warn"></md-icon>
+                    </md-button>
+                </div>
+            </div>
+            <div flow-init="{target: '/api/workflows/##FLOW_TYPE##/attachments', testChunks:false, uploadMethod:'POST', singleFile:false}"
+                flow-files-submitted="$flow.upload()"
+                flow-file-success="ctrl.addFile($message);">
+                <md-button flow-btn type="button">添加文件</md-button>
+            </div>
+        </div>
         '''
+
+        class FileUploadCtrl
+            @.$inject = ['$scope']
+
+            constructor: (@scope)->
+
+            addFile: (fileObj)->
+                fileObj = JSON.parse(fileObj)
+                file = fileObj.attachment
+                @scope.files = [] if !@scope.files
+                @scope.files.push file
+
+
 
         postLink = (scope, elem, attrs, ngModelCtrl) ->
 
-            
+            scope.$watch 'files', (newVal)->
+                fileIds = _.map newVal, 'id'
+                ngModelCtrl.$setViewValue(fileIds)
+
+
 
         return {
             scope: {
-                files: '=ngModel'
+                type: '@flowType'
             }
-            template: template
+            template: (elem, attrs)->
+                new Error("flow type is needed in workflows") if attrs['flowType']
+                template.replace /##FLOW_TYPE##/, attrs['flowType']
+            replace: true
             link: postLink
+            require: 'ngModel'
+            controller: FileUploadCtrl
+            controllerAs: 'ctrl'
         }
     ]
