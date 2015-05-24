@@ -12,8 +12,6 @@ class Route
 
     constructor: (stateProvider, urlRouterProvider) ->
 
-        urlRouterProvider.when('/self-service', '/self-service/profile')
-
         stateProvider
             .state 'self', {
                 url: '/self-service'
@@ -51,11 +49,11 @@ class Route
                 controllerAs: 'ctrl'
                 templateUrl: 'partials/self/self_resume.html'
             }
-            .state 'self.attendance', {
-                url: '/attendance'
-                controller: AttendanceCtrl
+            .state 'my_requests', {
+                url: '/self/my_requests'
+                templateUrl: 'partials/self/my_requests/index.html'
+                controller: MyRequestCtrl
                 controllerAs: 'ctrl'
-                templateUrl: 'partials/self/self_attendance.html'
             }
             .state 'self_position', {
                 url: '/self-service-position'
@@ -98,20 +96,25 @@ class ProfileCtrl extends nb.Controller
     createEdu: (edu)->
         @scope.currentUser.educationExperiences.createEdu(edu)
         # @scope.currentUser.$update()
-        # 
+        #
     updateFavicon: ()->
         self = @
         @scope.currentUser.$refresh().$then ()->
             angular.extend self.USER_META.favicon, self.scope.currentUser.favicon
 
-class AttendanceCtrl
-    @.$inject = ['$scope', 'Flow::EarlyRetirement']
-    constructor: (@scope, @EarlyRetirement) ->
 
-    requestLeave: () ->
 
-    submitForm: (requestData) ->
-        @EarlyRetirement.$create({day:3, desc:"因为某事需求请假三天",flowType: "Flow::SickLeave"})
+class MyRequestCtrl extends nb.Controller
+
+    @.$inject = ['$scope', 'Employee', 'OrgStore']
+
+    constructor: ($scope, @Employee, @OrgStore) ->
+
+        @reviewers = @loadReviewer()
+
+    loadReviewer: () ->
+        @Employee.$search({category_ids: [1,2], department_ids: [@OrgStore.getPrimaryOrgId()]})
+
 
 
 app.config(Route)

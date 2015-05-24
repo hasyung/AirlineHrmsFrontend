@@ -1,0 +1,98 @@
+.ask_for_leave {
+    background-color: rgb(245, 245, 245);
+    height: 100%;
+
+    .nb-card.form-material-section {
+        padding: 0 30px 40px;
+
+        fieldset {
+            padding-bottom: 0;
+
+
+        }
+    }
+
+    .ask-info-head {
+        margin-bottom: 30px;
+
+        .name {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .ask-info-plus {
+            font-size: $font-size-sm;
+
+            .serial-num {
+                margin-right: 10px;
+            }
+
+        }
+    }
+
+    .form-bottom-group {
+        margin-top: 20px;
+    }
+
+}
+
+.ask-relations {
+    .ask-info-row:first-child {
+        .ask-info-cell {
+            border-top: 1px dotted #eaeff0;
+        }
+    }
+
+    .ask-info-cell {
+        border-bottom: 1px dotted #eaeff0;
+        display: flex;
+        font-size: $font-size-sm;
+        height: 60px;
+        line-height: 59px;
+        margin-right: 10px;
+
+        .ask-cell-title {
+            color: $text-muted;
+            width: 90px;
+        }
+
+        .ask-cell-content {
+            flex: 1;
+        }
+    }
+}
+
+.without-edit {
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
+    display: flex;
+    flex: 1;
+    margin: 0 2px;
+    min-height: 43px;
+    padding: 2px 0;
+    position: relative;
+
+    .without-edit-title {
+        color: $text-muted;
+        font-size: $font-size-sm;
+        padding-left: 3px;
+        width: 90px;
+    }
+
+    .without-edit-content {
+        flex: 1;
+    }
+
+    .progress-wrapper {
+        left: 70px;
+        position: absolute;
+        top: -12px;
+        transform: scale(.4);
+    }
+}
+
+
+
+
+
+
+

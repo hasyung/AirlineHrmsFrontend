@@ -431,6 +431,10 @@ nbGridDirective = ($parse)->
 
         scope.gridOptions = options
 
+
+        scope.getTableHeight = () ->
+            return height: (scope.gridOptions.data.length * options.rowHeight + 80) + "px"
+
         scope.$watch(
             -> itemCountGetter(scope)
             ,
@@ -447,7 +451,7 @@ nbGridDirective = ($parse)->
     #暂时使用 ui-grid-auto-resize 插件 每250ms定时resize，修复改BUG
     #如果有性能问题， 再修复
     nbGridTemplate =  '''
-        <div ui-grid="gridOptions" #plugins# ui-grid-pagination ui-grid-auto-resize></div>
+        <div ui-grid="gridOptions" #plugins# ui-grid-pagination ui-grid-auto-resize ng-style="getTableHeight()"></div>
     '''
 
     return {

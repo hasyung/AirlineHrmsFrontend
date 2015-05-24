@@ -32,6 +32,10 @@ menuFactory = ($rootScope, $state)->
                 state: 'self.profile'
             }
             {
+                name: '我的申请'
+                state: 'my_requests'
+            }
+            {
                 name: '优免票'
                 # state: 'self.profile'
             }
@@ -238,6 +242,10 @@ menuFactory = ($rootScope, $state)->
                 name: '员工转正'
                 state: 'position'
                 permission: ''
+            }
+            {
+                name: '员工考勤'
+                state: ''
             }
             {
                 name: '员工调动'

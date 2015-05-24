@@ -139,7 +139,8 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
         }
 
     ]
-    # $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike'
+
+    $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike'
 
 App
     .config ['$provide', 'ngDialogProvider', appConf]
@@ -196,10 +197,6 @@ App
         $rootScope.$enum  = $enum
 
         $rootScope.allOrgs = Org.$search()
-
-
-        $rootScope.createFlow = (data, flowname) ->
-            $http.post("/api/workflows/#{flowname}", data)
 
 
     ]

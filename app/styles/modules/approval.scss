@@ -1,12 +1,3 @@
-.approval-wapper {
-    md-toolbar {
-        .md-toolbar-tools {
-            color: #fff;
-            font-size: $font-size-lg;
-        }
-    }
-}
-
 .approval-container {
     background-color: rgb(245, 245, 245);
     overflow-y: scroll;
@@ -22,6 +13,7 @@
     .approval-subheader {
         color: #468fce;
         font-size: $font-size-md;
+        margin-bottom: 30px;
     }
 }
 
@@ -52,7 +44,16 @@
 
     .approval-subheader {
         color: $text-color;
-        padding-bottom: 10px;
+    }
+
+    .approval-relations {
+        >div {
+            &:first-child {
+                .approval-cell {
+                    padding-top: 0;
+                }
+            }
+        }
     }
 }
 
@@ -60,7 +61,7 @@
     border-bottom: 1px solid #eaeff0;
     display: flex;
     margin-right: 10px;
-    padding: 19px 0;
+    padding: 30px 0 10px;
 
     .cell-title {
         color: $text-muted;
@@ -69,6 +70,10 @@
 
     .cell-content {
         flex: 1;
+    }
+
+    .cell-plus {
+        width: 120px;
     }
 }
 
@@ -79,49 +84,29 @@
         color: $text-color;
     }
 
-    .approval-progress-container {
-        margin: 20px 0;
+    .approval-cell-container {
+        .approval-msg-cell:first-child {
+            padding-top: 0;
+        }
     }
 
     .approval-msg-cell {
-        border-top: 1px dotted #eaeff0;
+        border-bottom: 1px solid rgba(0, 0, 0, .12);
         padding: 20px 0;
         position: relative;
 
-        &:last-child {
-            padding: 20px 0 0;
-        }
-
-        .approval-msg-flag {
-            background-color: rgba(0, 0, 0, .1);
-            border-radius: 50%;
-            height: 40px;
-            left: 5px;
-            position: absolute;
-            top: 24px;
-            width: 40px;
-
-            md-icon {
-                height: 28px;
-                margin-left: 6px;
-                margin-top: 6px;
-                width: 28px;
-
-                &.valid {
-                    color: #8bc34a;
-                }
-
-                &.invalid {
-                    color: #e84e40;
-                }
-            }
-        }
-
         .approval-msg-container {
-            padding-left: 60px;
-
             .approval-msg-header {
                 font-size: $font-size-md;
+                margin-bottom: 5px;
+
+                span:first-child {
+                    margin-right: 30px;
+                }
+            }
+
+            .approval-msg-result {
+                font-size: $font-size-sm;
                 margin-bottom: 10px;
             }
         }
@@ -140,42 +125,8 @@
 }
 
 .approval-opinions {
-    padding: 30px 30px 40px;
+    margin-top: 20px;
 
-    .approval-subheader {
-        color: $text-color;
-        padding-bottom: 30px;
-    }
-
-    .approval-opinions-check {
-        margin-bottom: 30px;
-    }
-
-    md-radio-button {
-        display: inline-block;
-        margin-right: 100px;
-
-        .md-label {
-            margin-top: -3px;
-        }
-    }
-
-    .md-container {
-        top: 2px;
-    }
-
-    .md-placeholder {
-        opacity: 1;
-        top: -15px;
-    }
-
-    md-input-container {
-        padding-bottom: 0;
-
-        &.md-icon-float label {
-            margin-left: 0;
-        }
-    }
 }
 
 .approval-buttons {
@@ -186,5 +137,61 @@
         margin-left: 15px;
     }
 }
+
+.accessory-header.md-subheader {
+    font-size: $font-size-sm;
+    margin-bottom: 10px;
+}
+
+.accessory-container {
+    .accessory-cell {
+        background-color: rgba(0, 0, 0, .06);
+        border-left: 2px solid #7cb342;
+        float: left;
+        font-size: $font-size-sm;
+        height: 50px;
+        margin-left: 20px;
+        padding: 5px 10px;
+        position: relative;
+        width: 200px;
+
+        &:first-child {
+            margin-left: 0;
+        }
+
+        .accessory-name {
+            color: #7cb342;
+            margin-bottom: 2px;
+        }
+
+        .accessory-switch {
+            position: absolute;
+            right: -5px;
+            top: 0;
+
+            .md-icon-button {
+                md-icon {
+                    height: 18px;
+                    width: 18px;
+                }
+            }
+        }
+    }
+}
+
+.superior-header.md-subheader {
+    margin-bottom: 30px;
+}
+
+.superior-container {
+    md-radio-button {
+        float: left;
+        margin-bottom: 10px;
+        width: 286px;
+    }
+}
+
+
+
 
 

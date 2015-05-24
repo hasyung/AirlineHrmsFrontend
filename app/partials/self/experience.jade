@@ -9,13 +9,13 @@ section.personnel-info-section(ng-init="experiences = currentUser.workExperience
                         md-button.md-raised.skyblue(ng-hide="param.newExp" ng-click="param.newExp= experiences.$build({category:'before'})") 新增
 
             md-content(ng-if="param.newExp && param.newExp.category == 'before'" ng-init="newExp = param.newExp")
+                .sep-40
                 section.form-material-section
-                    .sep-40
                     include experience/new_work_exp_form
 
             md-content
+                .sep-40
                 section.form-material-section(ng-controller="EditableResource", ng-repeat="work in experiences | filterBy: ['category']:'before'")
-                    .sep-40
                     include experience/exit_work_exp_form
         .personnel-section-wrap()
             md-toolbar
@@ -23,8 +23,8 @@ section.personnel-info-section(ng-init="experiences = currentUser.workExperience
                     span 工作经历（入司后）
                     span(flex)
             md-content
+                .sep-40
                 section.form-material-section(ng-controller="EditableResource", ng-repeat="work in experiences | filterBy: ['category']:'after'")
-                    .sep-40
                     include experience/scal_work_exp_form
 
 //- section.personnel-info-section(ng-init="experiences = currentUser.workExperiences.$fetch();param= {}")

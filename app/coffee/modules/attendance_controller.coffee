@@ -1,36 +1,6 @@
 
-nb = @.nb
-app = nb.app
-extend = angular.extend
-resetForm = nb.resetForm
-Modal = nb.Modal
 
-
-
-class Route
-    @.$inject = ['$stateProvider', '$urlRouterProvider']
-
-    constructor: (stateProvider, urlRouterProvider) ->
-
-        stateProvider
-            .state 'attendance', {
-                url: '/attendance'
-                templateUrl: 'partials/attendance/attendance.html'
-                controller: AttendanceCtrl
-                controllerAs: 'ctrl'
-            }
-
-class AttendanceCtrl extends nb.Controller
-
-    @.$inject = ['$scope']
-
-    constructor: (@scope) ->
-        @loadInitailData()
-
-        
-
-    loadInitailData: ()->
-
+app = @nb.app
 
 class AttendanceRecordCtrl extends nb.Controller
     @.$inject = ['$scope', 'Attendance', 'Employee']
@@ -56,7 +26,7 @@ class AttendanceRecordCtrl extends nb.Controller
                     displayName: '机构'
                     type: 'org-search'
                 }
-                
+
             ]
         }
 
@@ -98,7 +68,7 @@ class AttendanceRecordCtrl extends nb.Controller
 
     loadInitailData: ()->
         @employees = @Employee.$collection().$fetch()
-    
+
     search: (tableState)->
         @employees.$refresh(tableState)
 
@@ -108,8 +78,8 @@ class AttendanceRecordCtrl extends nb.Controller
 
 class AttendanceHisCtrl extends nb.Controller
     @.$inject = ['$scope', 'Attendance']
-    constructor: (@scope, @Attendance) -> 
-        @loadInitailData()   
+    constructor: (@scope, @Attendance) ->
+        @loadInitailData()
         @filterOptions = {
             name: 'attendanceHis'
             constraintDefs: [
@@ -135,7 +105,7 @@ class AttendanceHisCtrl extends nb.Controller
                     displayName: '记录时间'
                     type: 'date-range'
                 }
-                
+
             ]
         }
 
@@ -176,7 +146,7 @@ class AttendanceHisCtrl extends nb.Controller
 
     loadInitailData: ()->
         @attendances = @Attendance.$collection().$fetch()
-    
+
     search: (tableState)->
         @attendances.$refresh(tableState)
     getSelected: () ->
@@ -189,8 +159,5 @@ class AttendanceHisCtrl extends nb.Controller
             self.attendances.$refresh()
 
 
-
-
-app.config(Route)
 app.controller('AttendanceRecordCtrl', AttendanceRecordCtrl)
 app.controller('AttendanceHisCtrl', AttendanceHisCtrl)

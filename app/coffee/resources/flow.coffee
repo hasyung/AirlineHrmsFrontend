@@ -214,7 +214,7 @@ FlowHandlerDirective = (ngDialog)->
         <div class="approval-wapper">
             <md-toolbar md-theme="hrms" class="md-warn">
                 <div class="md-toolbar-tools">
-                    <span>退休申请单</span>
+                    <span>请假申请单</span>
                 </div>
             </md-toolbar>
             <div class="approval-container">
@@ -228,39 +228,31 @@ FlowHandlerDirective = (ngDialog)->
                                     {{::flow.sponsor.departmentName}}/ {{::flow.sponsor.positionName}}
                                 </div>
                             </div>
-                        </div>
-                    </md-card>
-                    <md-card>
-                        <div class="approval-relation-info">
-                            <div class="approval-subheader">相关信息</div>
-                            <div class="approval-relations">
-                                <div layout="layout">
-                                    <div flex="flex" class="approval-cell">
-                                        <span class="cell-title">性别</span>
-                                        <span class="cell-content">男</span>
-                                    </div>
-                                    <div flex="flex" class="approval-cell">
-                                        <span class="cell-title">年龄</span>
-                                        <span class="cell-content">50</span>
-                                    </div>
-                                </div>
-                                <div layout="layout">
-                                    <div flex="flex" class="approval-cell">
-                                        <span class="cell-title">通道</span>
-                                        <span class="cell-content">管理</span>
-                                    </div>
-                                    <div flex="flex" class="approval-cell">
-                                        <span class="cell-title">社保缴纳年限</span>
-                                        <span class="cell-content">15年</span>
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
                     </md-card>
                     <md-card>
                         <div class="approval-relation-info">
                             <div class="approval-subheader">申请信息</div>
                             <div class="approval-relations">
+                                <div layout="layout">
+                                    <div flex="flex" class="approval-cell">
+                                        <span class="cell-title">开始日期</span>
+                                        <span class="cell-content">2015-06-01</span>
+                                        <span class="cell-plus">09:00</span>
+                                    </div>
+                                    <div flex="flex" class="approval-cell">
+                                        <span class="cell-title">结束日期</span>
+                                        <span class="cell-content">2015-06-04</span>
+                                        <span class="cell-plus">17:00</span>
+                                    </div>
+                                </div>
+                                <div layout="layout">
+                                    <div flex="flex" class="approval-cell">
+                                        <span class="cell-title">天数</span>
+                                        <span class="cell-content">3天</span>
+                                    </div>
+                                </div>
                                 <div layout="layout">
                                     <div flex="flex" class="approval-cell">
                                         <span class="cell-title">申请理由</span>
@@ -277,68 +269,61 @@ FlowHandlerDirective = (ngDialog)->
                     </md-card>
                     <md-card>
                         <div class="approval-msg">
-                            <div class="approval-subheader">审批信息</div>
-                            <div approval="approval" class="approval-progress-container"></div>
-                            <div class="approval-msg-cell">
-                                <div class="approval-msg-flag">
-                                    <md-icon class="valid" md-svg-src="../../images/svg/check.svg"></md-icon>
-                                </div>
-                                <div class="approval-msg-container">
-                                    <div class="approval-msg-header">
-                                        合规性检查意见
+                            <div class="approval-subheader">意见</div>
+                            <div class="approval-cell-container">
+                                <div class="approval-msg-cell">
+                                    <div class="approval-msg-container">
+                                        <div class="approval-msg-header">
+                                            <span>李志林</span>
+                                            <span>人力资源部-福利管理室主管</span>
+                                        </div>
+                                        <div class="approval-msg-result">同意执行</div>
+                                        <div class="approval-msg-content">
+                                            经党委会讨论，批准姜文峰同志转为中共正式党员，
+                                            当年从1989年10月20日算起。经党委会讨论，批
+                                            准姜文峰同志转为中共正式党员，当年从1989年
+                                            10月20日算起。经党委会讨论，批准姜文峰同志转
+                                            为中共正式党员，当年从1989年10月20日算起。经
+                                            党委会讨论，批准姜文峰同志转为中共正式党员，当
+                                            年从1989年10月20日算起。
+                                        </div>
                                     </div>
-                                    <div class="approval-msg-content">
-                                        经党委会讨论，批准姜文峰同志转为中共正式党员，
-                                        当年从1989年10月20日算起。经党委会讨论，批
-                                        准姜文峰同志转为中共正式党员，当年从1989年
-                                        10月20日算起。经党委会讨论，批准姜文峰同志转
-                                        为中共正式党员，当年从1989年10月20日算起。经
-                                        党委会讨论，批准姜文峰同志转为中共正式党员，当
-                                        年从1989年10月20日算起。
+                                    <div class="approval-msg-decider">
+                                        <span class="approval-decider-date">2015-1-1</span>
                                     </div>
                                 </div>
-                                <div class="approval-msg-decider">
-                                    <span class="approval-decider-name">李志林</span>
-                                    <span class="approval-decider-date">2015-1-1</span>
+                                <div class="approval-msg-cell">
+                                    <div class="approval-msg-container">
+                                        <div class="approval-msg-header">
+                                            <span>李志林</span>
+                                            <span>人力资源部-福利管理室主管</span>
+                                        </div>
+                                        <div class="approval-msg-result">同意执行</div>
+                                        <div class="approval-msg-content">
+                                            经党委会讨论，批准姜文峰同志转为中共正式党员，
+                                            当年从1989年10月20日算起。
+                                        </div>
+                                    </div>
+                                    <div class="approval-msg-decider">
+                                        <span class="approval-decider-date">2015-1-1</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="approval-msg-cell">
-                                <div class="approval-msg-flag">
-                                    <md-icon class="invalid" md-svg-src="../../images/svg/close.svg"></md-icon>
+                            <div class="approval-opinions">
+                                <div layout>
+                                    <md-input-container flex>
+                                        <label>审批意见</label>
+                                        <textarea ng-model="sdfs" columns="1" md-maxlength="150"></textarea>
+                                    </md-input-container>
                                 </div>
-                                <div class="approval-msg-container">
-                                    <div class="approval-msg-header">
-                                        合规性检查意见
-                                    </div>
-                                    <div class="approval-msg-content">
-                                        经党委会讨论，批准姜文峰同志转为中共正式党员，
-                                        当年从1989年10月20日算起。
-                                    </div>
-                                </div>
-                                <div class="approval-msg-decider">
-                                    <span class="approval-decider-name">张仲芳</span>
-                                    <span class="approval-decider-date">2015-1-1</span>
-                                </div>
+                                <md-button class="md-raised md-primary" type="submit">保存意见</md-button>
                             </div>
-                        </div>
-                    </md-card>
-                    <md-card>
-                        <div class="approval-opinions">
-                            <div class="approval-subheader">审批意见</div>
-                            <div class="approval-opinions-check">
-                                <md-radio-group ng-model="req.opinion">
-                                    <md-radio-button class="md-primary" ng-value="CHOICE.ACCEPT">通过</md-radio-button>
-                                    <md-radio-button class="md-primary" ng-value="CHOICE.REJECT">驳回</md-radio-button>
-                                </md-radio-group>
-                            </div>
-                            <md-input-container>
-                                <textarea ng-model="req.desc" placeholder="请输入审批意见" columns="1"></textarea>
-                            </md-input-container>
                         </div>
                     </md-card>
                     <div class="approval-buttons">
-                        <md-button class="md-raised white" type="button" ng-click="closeThisDialog()">取消</md-button>
-                        <md-button class="md-raised skyblue" type="submit">提交</md-button>
+                        <md-button class="md-raised md-warn" type="submit">通过</md-button>
+                        <md-button class="md-raised md-warn" type="button" ng-click="closeThisDialog()">驳回</md-button>
+                        <md-button class="md-raised md-primary" type="submit">移交</md-button>
                     </div>
                 </form>
             </div>

@@ -532,7 +532,7 @@ angular.module 'nb.directives'
 
     ]
     # MOCK angular-strap datepicker directive
-    .directive 'bsDatepicker', ->
+    .directive 'bsDatepicker', ['$parse', ->
 
 
         postLink = (scope, elem, attrs, ngModelCtrl) ->
@@ -542,8 +542,21 @@ angular.module 'nb.directives'
                 format: 'yyyy-mm-dd'
                 language: 'zh-cn'
 
-            ).on 'changeDate', (evt) ->
-                ngModelCtrl.$setViewValue(evt.date)
+            )
+            # .on 'changeDate', (evt) ->
+            #     ngModelCtrl.$setViewValue(evt.date)
+
+            ngModelCtrl.$parsers.unshift (viewValue) ->
+                #only allowed yyyy-mm-dd format
+                if(!viewValue || !/^\d{4}-\d{2}-\d{2}$/.test(viewValue))
+                    ngModelCtrl.$setValidity('date', true)
+                    return
+
+                return new Date(viewValue)
+
+            ngModelCtrl.$formatters.push (modelValue) ->
+
+                moment(modelValue).format('yyyy-mm-dd') if modelValue
 
 
             scope.$on '$destroy', ->
@@ -554,8 +567,9 @@ angular.module 'nb.directives'
             link: postLink
             require: 'ngModel'
         }
+    ]
 
-    .directive 'nbFileUpload', ->
+    .directive 'nbFileUpload', [()->
         template = '''
 
         '''
@@ -564,10 +578,11 @@ angular.module 'nb.directives'
 
             
 
-
         return {
             scope: {
                 files: '=ngModel'
             }
+            template: template
             link: postLink
         }
+    ]

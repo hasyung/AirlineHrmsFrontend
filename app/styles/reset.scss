@@ -5,6 +5,7 @@
 html,
 body {
     font-family: $font-family-sans-serif;
+    font-size: $font-size-sm;
 }
 //重置material design影响标签的样式
 fieldset {
@@ -93,6 +94,7 @@ md-toolbar {
     }
 }
 
+
 .md-subheader {
     font-family: $font-family-sans-serif;
     font-size: 14px;
@@ -109,6 +111,10 @@ md-input-container > md-select {
     .md-select-label {
         padding-bottom: 1px;
     }
+}
+//重置ui-grid视口的滚动样式，设置为不滚动 !!!这不是一个好办法!!!
+.ui-grid-viewport {
+    overflow: hidden !important;
 }
 
 body h3,
@@ -130,7 +136,7 @@ html h4 {
 
 //用于分隔的附加块
 .sep-40 {
-    height: 65px;
+    height: 40px;
 }
 
 //确定的宽度 多用于需要表格单元固定宽度换行
