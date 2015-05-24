@@ -222,13 +222,40 @@ FlowHandlerDirective = (ngDialog)->
                     <md-card>
                         <div class="approval-info">
                             <div class="approval-info-head">
-                                <span class="name" ng-bind="flow.sponsor.name"></span>
-                                <div class="approval-position">
-                                    <span style="margin-right: 10px;" class="serial-number" ng-bind="flow.sponsor.employeeNo"></span>
-                                    {{::flow.sponsor.departmentName}}/ {{::flow.sponsor.positionName}}
+                                <div class="name"> 姜文峰 </div>
+                                <div class="approval-info-plus">
+                                    <span class="serial-num"> 008863 </span>
+                                    <span class="position"> 人力资源部 / 人事调配室副主任 </span>
                                 </div>
                             </div>
-
+                            <div class="ask-relations">
+                                <div class="ask-info-row" layout>
+                                    <div class="ask-info-cell" flex>
+                                        <div class="ask-cell-title"> 性别 </div>
+                                        <div class="ask-cell-content"> 男 </div>
+                                    </div>
+                                    <div class="ask-info-cell" flex>
+                                        <div class="ask-cell-title"> 婚姻状况 </div>
+                                        <div class="ask-cell-content"> 已婚 </div>
+                                    </div>
+                                </div>
+                                <div class="ask-info-row" layout>
+                                    <div class="ask-info-cell" flex>
+                                        <div class="ask-cell-title"> 年龄 </div>
+                                        <div class="ask-cell-content"> 30 </div>
+                                    </div>
+                                    <div class="ask-info-cell" flex>
+                                        <div class="ask-cell-title"> 川航工作年限 </div>
+                                        <div class="ask-cell-content"> 15年 </div>
+                                    </div>
+                                </div>
+                                <div class="ask-info-row" layout>
+                                    <div class="ask-info-cell" flex>
+                                        <div class="ask-cell-title"> 假别 </div>
+                                        <div class="ask-cell-content"> 年假（2014年年假剩余天数3天，2015年年假剩余天数5天） </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </md-card>
                     <md-card>

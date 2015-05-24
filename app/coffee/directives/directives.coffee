@@ -571,20 +571,24 @@ angular.module 'nb.directives'
 
     .directive 'nbFileUpload', [()->
         template = '''
-        <div class="accessory-container">
-            <div ng-repeat="file in files track by $index"  class="accessory-cell">
-                <div class="accessory-name">附件1.jpg</div>
-                <div class="accessory-size">500kb</div>
-                <div class="accessory-switch">
-                    <md-button class="md-icon-button">
-                        <md-icon md-svg-src="/images/svg/close.svg" class="md-warn"></md-icon>
-                    </md-button>
+        <div>
+            <div class="accessory-container">
+                <div ng-repeat="file in files track by $index"  class="accessory-cell">
+                    <div class="accessory-name" ng-bind="file.name"></div>
+                    <div class="accessory-size" ng-bind="file.size | byteFmt:2"></div>
+                    <div class="accessory-switch">
+                        <md-button type="button" class="md-icon-button" ng-click="ctrl.removeFile($index)">
+                            <md-icon md-svg-src="/images/svg/close.svg" class="md-warn"></md-icon>
+                        </md-button>
+                    </div>
                 </div>
             </div>
-            <div flow-init="{target: '/api/workflows/##FLOW_TYPE##/attachments', testChunks:false, uploadMethod:'POST', singleFile:false}"
+            <div class="accessory-btn-group"
+                flow-init="{target: '/api/workflows/##FLOW_TYPE##/attachments', testChunks:false, uploadMethod:'POST', singleFile:false}"
                 flow-files-submitted="$flow.upload()"
                 flow-file-success="ctrl.addFile($message);">
-                <md-button flow-btn type="button">添加文件</md-button>
+                <md-button class="md-primary md-raised" flow-btn type="button">添加文件</md-button>
+                <span class="tip"> 请上传医院为您开具的病假证明照片</span>
             </div>
         </div>
         '''
@@ -599,6 +603,9 @@ angular.module 'nb.directives'
                 file = fileObj.attachment
                 @scope.files = [] if !@scope.files
                 @scope.files.push file
+
+            removeFile: (index)->
+                @scope.files.splice(index, 1)
 
 
 
