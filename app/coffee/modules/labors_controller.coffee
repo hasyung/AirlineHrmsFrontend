@@ -21,7 +21,71 @@ class Route
             .state 'labors_attendance', {
                 url: '/labors_attendance'
                 templateUrl: 'partials/labors/attendance/index.html'
+                controller: AttendanceCtrl
+                controllerAs: 'ctrl'
             }
+
+class AttendanceCtrl extends nb.Controller
+
+    @.$inject = ['GridHelper', 'Leave', '$scope', '$injector']
+
+    constructor: (helper, @Leave, scope, injector) ->
+
+        scope.realFlow = (entity) ->
+            t = entity.type
+            m = injector.get(t)
+            return m.$find(entity.$pk)
+
+
+
+
+        @recordsFilterOptions = {
+            name: 'attendance_records'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '姓名'
+                    type: 'string'
+                }
+            ]
+        }
+
+
+        def = [
+            {
+                name: 'typeCn'
+                displayName: '假别'
+            }
+            {
+                name: 'vacationDays'
+                displayName: '时长'
+            }
+            {
+                name: 'workflowState'
+                displayName: '状态'
+            }
+            {
+                name: 'createdAt'
+                displayName: '发起时间'
+            }
+            {
+                name: 'type'
+                displayName: '详细'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents" ng-init="realFlow = grid.appScope.$parent.realFlow(row.entity)">
+                    <a flow-handler="realFlow">
+                        查看
+                    </a>
+                </div>
+                '''
+            }
+
+        ]
+
+        @recodsColumnDef = helper.buildFlowDefault(def)
+
+        @leaveFlows = @Leave.$collection().$fetch()
+
 
 
 class AttendanceRecordCtrl extends nb.Controller
