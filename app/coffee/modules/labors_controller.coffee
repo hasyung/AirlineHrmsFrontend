@@ -94,7 +94,7 @@ class AttendanceRecordCtrl extends nb.Controller
     @.$inject = ['$scope', 'Attendance', 'Employee']
     constructor: (@scope, @Attendance, @Employee) ->
         @loadInitailData()
-        @filterOptions = filterBuildUtils('personnel')
+        @filterOptions = filterBuildUtils('attendanceRecord')
             .col 'name',                 '姓名',    'string',           '姓名'
             .col 'employee_no',          '员工编号', 'string'
             .col 'department_ids',       '机构',    'org-search'
