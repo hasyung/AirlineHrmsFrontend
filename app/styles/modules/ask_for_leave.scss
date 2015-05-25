@@ -1,4 +1,4 @@
-.ask_for_leave {
+.workflow {
     background-color: rgb(245, 245, 245);
     height: 100%;
 
@@ -12,7 +12,7 @@
         }
     }
 
-    .ask-info-head {
+    .flow-info-head {
         margin-bottom: 30px;
 
         .name {
@@ -20,7 +20,7 @@
             margin-bottom: 15px;
         }
 
-        .ask-info-plus {
+        .flow-info-plus {
             font-size: $font-size-sm;
 
             .serial-num {
@@ -36,14 +36,14 @@
 
 }
 
-.ask-relations {
-    .ask-info-row:first-child {
-        .ask-info-cell {
+.flow-relations {
+    .flow-info-row:first-child {
+        .flow-info-cell {
             border-top: 1px dotted #eaeff0;
         }
     }
 
-    .ask-info-cell {
+    .flow-info-cell {
         border-bottom: 1px dotted #eaeff0;
         display: flex;
         font-size: $font-size-sm;
@@ -51,12 +51,12 @@
         line-height: 59px;
         margin-right: 10px;
 
-        .ask-cell-title {
+        .flow-cell-title {
             color: $text-muted;
             width: 90px;
         }
 
-        .ask-cell-content {
+        .flow-cell-content {
             flex: 1;
         }
     }
