@@ -7,8 +7,23 @@
 
         fieldset {
             padding-bottom: 0;
+        }
 
+        .dis-toggle {
+            flex: 0 0 180px;
 
+            md-checkbox {
+                margin-top: 0;
+            }
+        }
+
+        .dis-check {
+            flex: 1;
+
+            md-radio-button {
+                float: left;
+                margin-top: 3px;
+            }
         }
     }
 
@@ -66,7 +81,7 @@
     border-bottom: 1px solid rgba(0, 0, 0, .12);
     display: flex;
     flex: 1;
-    margin: 0 2px;
+    margin: 0 2px 26px 0;
     min-height: 43px;
     padding: 2px 0;
     position: relative;
