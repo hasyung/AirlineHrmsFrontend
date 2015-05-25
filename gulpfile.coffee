@@ -82,6 +82,7 @@ paths =
         'deps/underscore.string/dist/underscore.string.js'
         'deps/store.js/store.js'
         'deps/moment/min/moment.min.js'
+        'deps/moment/locale/zh-cn.js'
         'deps/jquery/dist/jquery.min.js'
         'deps/jqtree/tree.jquery.js'
         'deps/d3/d3.js'
