@@ -1,0 +1,30 @@
+md-dialog.attendance_new(ng-init="current = dialog.current;")
+    md-content
+        form(flex ng-submit="current.$update();dialog.close();")
+            md-toolbar.md-accent(md-theme="hrms")
+                .md-toolbar-tools
+                    span 新增考勤记录
+            .dialog-content(layout layout-align="center")
+                
+                fieldset(flex)
+                    div(layout)
+                        md-input-container(flex)
+                            label 员工姓名
+                            input(ng-model="current.user.name" name="name" required disabled)
+                    div(layout)
+                        md-input-container.row-has-value(flex)
+                            label 考勤类型
+                            md-select(ng-model="current.recordType" required)
+                                md-select-label {{current.recordType}}
+                                md-option(value="迟到") 迟到
+                                md-option(value="早退") 早退
+                                md-option(value="旷工") 旷工
+                    div(layout)
+                        md-input-container(flex)
+                            label 记录日期
+                            input(ng-model="current.recordDate" required disabled)
+
+            .md-actions
+                md-button(type="button" ng-click="ctrl.markToDeleted(current);dialog.close();") 删 除
+                md-button(type="button" ng-click='dialog.close()') 取 消
+                md-button.md-primary.md-raised(type="submit") 确 定
