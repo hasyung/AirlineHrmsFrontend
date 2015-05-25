@@ -41,8 +41,8 @@ div.ask_for_leave.md-background(md-theme="hrms")
                                     label 逝者关系
                                     md-select(ng-model="current.recordType" required)
                                         md-select-label {{current.recordType||'无'}}
-                                        md-option(value="4个月以下") 父子
-                                        md-option(value="4个月以上") 母子
+                                        md-option(value="父子") 父子
+                                        md-option(value="母子") 母子
                             //- input(ng-model="request.vacation_type" ng-value="'年假'" type="hidden")
                             div(layout)
                                 md-input-container(flex)
@@ -51,6 +51,14 @@ div.ask_for_leave.md-background(md-theme="hrms")
                                 md-input-container(flex)
                                     label 结束日期
                                     input(ng-model="request.end_time" ng-change="calculateTotalDays(request, '年假')" name="end_time" required bs-datepicker)
+                            div(layout)
+                                div.dis-toggle
+                                    md-checkbox.md-primary 附带路程假
+                                        span(ng-if="exists(item, selected)") selected
+                                div.dis-check
+                                    md-radio-group(ng-model="ghj")
+                                        md-radio-button.md-primary(value="省内") 省内
+                                        md-radio-button.md-primary(value="省外") 省外
                             div(layout)
                                 .without-edit
                                     div.progress-wrapper(ng-if="calculating")
