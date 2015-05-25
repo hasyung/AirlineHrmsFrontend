@@ -56,7 +56,7 @@ angular.module 'nb.directives'
         }
     ]
 
-    .directive 'nbGallery', ['$q', '$compile', '$document', '$templateCache', '$http', ($q, $compile, $document, $templateCache, $http)->
+    .directive 'nbGallery', ['$q', '$compile', '$document', '$timeout', '$http', ($q, $compile, $document, $timeout, $http)->
 
 
         class GalleryCtrl
@@ -117,7 +117,7 @@ angular.module 'nb.directives'
                 <div class="modal-container">
                     <div>
                       <div class="main-img-container">
-                        <img ng-src="{{currentImg.default}}" class="main-img"/>
+                        <img ng-src="{{currentImg.default}}" class="main-img" style="display:none;"/>
                       </div>
                     </div>
                   <div class="img-info-bar nb-modal-touchable single"><span ng-bind="currentImg.default.split('/').pop()" class="img-name"> </span>
@@ -144,13 +144,18 @@ angular.module 'nb.directives'
             scope.isMuti = if scope.imgs.length > 1 then true else false
 
 
-            getImgSize = (imgObj)->
+            adjustImgSize = (imgObj, boxSize, callback)->
                 img = new Image()
+                img.onload = ()->
+                    imgSize = {
+                        width: img.naturalWidth
+                        height: img.naturalHeight
+                    }
+                    callback(imgSize, boxSize)
                 img.src = imgObj.default
-                {
-                    width: img.naturalWidth
-                    height: img.naturalHeight
-                }
+
+                
+                
 
             getImgBoxSize = ()->
                 # 多图片预览，图片盒子的大小
@@ -166,10 +171,10 @@ angular.module 'nb.directives'
                 imgBox = scope.gallery.find(".main-img-container")
                 imgBox.css "width", "#{imgBoxSize.width}px"
                 imgBox.css "height", "#{imgBoxSize.height}px"
+                adjustImgSize(scope.currentImg, imgBoxSize, setImgSize)
                 $body.append(scope.gallery)
 
             setImgSize = (imgSize, boxSize)->
-                return if imgSize.width == 0
                 imgW2H = imgSize.width/imgSize.height
                 boxW2H = boxSize.width/boxSize.height
                 imgDom = scope.gallery.find(".main-img")
@@ -181,6 +186,7 @@ angular.module 'nb.directives'
                     imgWidth = if boxSize.width > imgSize.width then imgSize.width else boxSize.width
                     imgDom.css 'width', "#{boxSize.width}px"
                     imgDom.css 'height', ""
+                imgDom.css 'display', 'inline-block'
 
             showGallery = ()->
                 bindBody template
@@ -220,17 +226,15 @@ angular.module 'nb.directives'
                 scope.currentImg
             , (newVal)->
                 return if !scope.modalShow
-                imgSize = getImgSize(newVal)
                 boxSize = getImgBoxSize()
-                setImgSize(imgSize, boxSize)
+                adjustImgSize(newVal, boxSize, setImgSize)
 
 
             elem.on 'click', (e)->
                 e.stopPropagation()
                 showGallery()
-                imgSize = getImgSize(scope.currentImg)
-                boxSize = getImgBoxSize()
-                setImgSize(imgSize, boxSize)
+                
+                
 
             if scope.imgs && scope.imgs.length > 1
                 $doc.on 'keydown', setCurrentImg
