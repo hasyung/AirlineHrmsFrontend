@@ -18,6 +18,28 @@ resetForm = (forms...) ->
         form.$setUntouched()
     return
 
+filterBuildUtils = (filterName)->
+    filtersObj = {}
+    filtersObj.name = filterName
+    filtersObj.constraintDefs = []
+
+    this.col = (name, displayName, type, placeholder, params)->
+        temp = {
+            name: name
+            type: type
+            displayName: displayName
+            placeholder: placeholder
+            params: params
+        }
+        filtersObj.constraintDefs.push temp
+        return this
+
+    this.end = ()-> filtersObj
+
+    return this
+
+
+
 
 
 
@@ -27,3 +49,4 @@ nb = @.nb
 
 nb.mixOf = mixOf
 nb.resetForm = resetForm
+nb.filterBuildUtils = filterBuildUtils
