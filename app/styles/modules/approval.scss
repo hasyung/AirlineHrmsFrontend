@@ -201,6 +201,68 @@
     }
 }
 
+//审批流程 移交 弹出层的样式
+.hand_over {
+    .hd-manner {
+        @include clearfix();
+        border-bottom: 1px solid rgba(0, 0, 0, .12);
+        margin: 0 20px;
+        padding: 20px 0;
+
+        md-radio-button {
+            float: left;
+            margin-right: 50px;
+        }
+    }
+
+    .hd-unit-wrapper {
+        .hd-choosing,
+        .hd-choosed {
+            height: 300px;
+            margin: 10px 0;
+            overflow: scroll;
+        }
+
+        md-radio-button {
+            padding: 5px;
+        }
+
+        .title {
+            color: $text-muted;
+            font-weight: bolder;
+            padding: 0 20px;
+        }
+
+        .content {
+            padding: 0 15px;
+        }
+
+        .hd-choosing {
+            border-right: 1px solid rgba(0, 0, 0, .12);
+        }
+
+        .hd-choosed {
+            .title {
+                padding-bottom: 5px;
+            }
+
+            .content {
+                padding: 0 20px;
+
+                div {
+                    padding: 5px 0;
+                }
+            }
+        }
+    }
+
+
+
+    .md-actions {
+        border-top: 1px solid rgba(0, 0, 0, .12);
+    }
+}
+
 
 
 

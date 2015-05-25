@@ -316,8 +316,6 @@ md-dialog.position_delete {
 md-dialog.save_filter {
     min-width: 300px;
 
-    .form-va
-
     md-toolbar {
         min-height: 40px;
     }
@@ -330,6 +328,10 @@ md-dialog.save_filter {
     .dialog-content {
         min-width: 300px;
     }
+}
+
+md-dialog.hand_over {
+    min-width: 550px;
 }
 
 

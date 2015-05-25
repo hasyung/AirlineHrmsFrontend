@@ -254,7 +254,7 @@
             .form-btn-group {
                 position: absolute;
                 right: 20px;
-                top: -36px;
+                top: 0;
 
                 .md-button {
                     margin-right: 10px;
@@ -590,6 +590,15 @@
         padding-top: 20px;
     }
 }
+
+.popup-body {
+
+    .reason-input {
+        width: 250px;
+    }
+
+}
+
 
 
 

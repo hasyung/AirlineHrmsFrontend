@@ -5,6 +5,7 @@ md-dialog.attendance_new(ng-init="current = dialog.current;")
                 .md-toolbar-tools
                     span 新增考勤记录
             .dialog-content(layout layout-align="center")
+                
                 fieldset(flex)
                     div(layout)
                         md-input-container(flex)
@@ -21,7 +22,7 @@ md-dialog.attendance_new(ng-init="current = dialog.current;")
                     div(layout)
                         md-input-container(flex)
                             label 记录日期
-                            input(bs-datepicker ng-model="current.recordDate" required disabled)
+                            input(ng-model="current.recordDate" required disabled)
 
             .md-actions
                 md-button(type="button" ng-click="ctrl.markToDeleted(current);dialog.close();") 删 除
