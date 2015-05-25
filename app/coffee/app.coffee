@@ -36,11 +36,15 @@ deps = [
 resources = angular.module('resources',[])
 
 nb.app = App = angular.module 'nb',deps
+
+
+moment.locale('zh-cn')
 # nb.models = models = angular.module 'models', []
 
 #初始化在<head> <script> 标签中, 如果不存在， 系统行为待定
 App.constant 'PERMISSIONS', metadata.permissions || []
 App.value 'USER_META', metadata.user || {}
+App.constant 'VACATIONS', metadata.vacation_summary || {}
 App.constant 'DEPARTMENTS', dep_info.departments || []
 App.constant 'nbConstants', metadata.resources || []
 

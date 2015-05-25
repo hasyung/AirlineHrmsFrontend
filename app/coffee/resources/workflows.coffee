@@ -25,6 +25,10 @@ angular.forEach workflows, (item)->
 
     resource = (restmod, RMUtils, $Evt) ->
         resource = restmod.model("/workflows/#{item}").mix 'nbRestApi','Workflow', {
+
+            flowNodes: {hasMany: "FlowReply"}
+
+
             $config:
                 jsonRootMany: 'workflows'
                 jsonRootSingle: 'workflow'
@@ -35,7 +39,7 @@ angular.forEach workflows, (item)->
 
 
 resources.factory 'FlowReply', (restmod) ->
-    restmod.model()
+    restmod.model().mix 'nbRestApi'
 
 
 
@@ -46,15 +50,6 @@ resources.factory 'Leave', (restmod, $injector) ->
         $config:
             jsonRootMany: 'workflows'
             jsonRootSingle: 'workflow'
-
-
-        $extend:
-            Collection:
-                hehe: ->
-
-
-
-
 
     }
 

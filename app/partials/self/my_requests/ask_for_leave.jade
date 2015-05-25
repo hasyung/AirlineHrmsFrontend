@@ -1,4 +1,4 @@
-div.ask_for_leave.md-background(md-theme="hrms")
+div.workflow.md-background(md-theme="hrms")
     md-toolbar.md-warn(md-theme="hrms")
         .md-toolbar-tools
             span 请假单填写
@@ -8,30 +8,28 @@ div.ask_for_leave.md-background(md-theme="hrms")
                 form(ng-controller="NewMyRequestCtrl" ng-submit="createFlow(request)" ng-init="request = initialFlow('Flow::AnnualLeave')")
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1
-                        .ask-info-head
-                            div.name 姜文峰
-                            div.ask-info-plus
-                                span.serial-num 008863
-                                span.position 人力资源部 / 人事调配室副主任
-                        .ask-relations(flow-relation-data ng-model="request.relation_data")
-                            div.ask-info-row(layout)
-                                .ask-info-cell(flex)
-                                    .ask-cell-title 性别
-                                    .ask-cell-content 男
-                                .ask-info-cell(flex)
-                                    .ask-cell-title 婚姻状况
-                                    .ask-cell-content 已婚
-                            div.ask-info-row(layout)
-                                .ask-info-cell(flex)
-                                    .ask-cell-title 年龄
-                                    .ask-cell-content 30
-                                .ask-info-cell(flex)
-                                        .ask-cell-title 川航工作年限
-                                        .ask-cell-content 15年
-                            div.ask-info-row(layout)
-                                .ask-info-cell(flex)
-                                    .ask-cell-title 假别
-                                    .ask-cell-content 年假（2014年年假剩余天数3天，2015年年假剩余天数5天）
+                        flow-user-info
+                        .flow-relations(flow-relation-data ng-model="request.relation_data")
+                            div.flow-info-row(layout)
+                                .flow-info-cell(flex)
+                                    .flow-cell-title 性别
+                                    .flow-cell-content {{$enum.parseLabel(meta.gender_id, "genders")}}
+                                .flow-info-cell(flex)
+                                    .flow-cell-title 婚姻状况
+                                    .flow-cell-content 已婚
+                            div.flow-info-row(layout)
+                                .flow-info-cell(flex)
+                                    .flow-cell-title 年龄
+                                    .flow-cell-content {{meta.birthday | diffDate:'year'}} 岁
+                                .flow-info-cell(flex)
+                                        .flow-cell-title 川航工作年限
+                                        .flow-cell-content {{ meta.join_scal_date | fromNow}}
+                            div.flow-info-row(layout)
+                                .flow-info-cell(flex)
+                                    .flow-cell-title 假别
+                                    .flow-cell-content 年假 (
+                                        span(ng-repeat="(key, value) in vacations.year_days.year") {{key}} 年年假剩余天数 {{value}} 天 {{$last ? '' : '，' }}
+                                        span )
 
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1 申请信息
@@ -110,7 +108,7 @@ div.ask_for_leave.md-background(md-theme="hrms")
                             md-radio-group(ng-model="request.reviewer_id" md-theme="default")
                                 md-radio-button.md-primary(
                                     ng-repeat="reviewer in ::ctrl.reviewers track by reviewer.id"
-                                    ng-value="reviewer.id") {{ reviewer.name }}
+                                    ng-value="reviewer.id") {{ reviewer.name }} ( {{reviewer.department.name}} / {{reviewer.position.name}} )
 
                     .form-bottom-group(layout)
                         span(flex)

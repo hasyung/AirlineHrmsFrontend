@@ -568,6 +568,25 @@ angular.module 'nb.directives'
             require: 'ngModel'
         }
     ]
+    .directive 'flowUserInfo', (USER_META) ->
+
+        origin_tmpl = '''
+            <div class="flow-info-head">
+                <div class="name">${ name }</div>
+                <div class="flow-info-plus">
+                    <span class="serial-num">{{ employee_no }}</span>
+                    <span class="position">${ department.name } / ${ position.name }</span>
+                </div>
+            </div>
+        '''
+
+        template = _.template(origin_tmpl)(USER_META)
+
+        return {
+            replace: true
+            template: template
+        }
+
 
     .directive 'nbFileUpload', [()->
         template = '''
@@ -621,16 +640,11 @@ angular.module 'nb.directives'
             isImage: (file)->
                 /^image\/jpg|jpeg|gif|png/.test(file.type)
 
-
-
-
         postLink = (scope, elem, attrs, ngModelCtrl) ->
 
             scope.$watch 'files', (newVal)->
                 fileIds = _.map newVal, 'id'
                 ngModelCtrl.$setViewValue(fileIds)
-
-
 
         return {
             scope: {

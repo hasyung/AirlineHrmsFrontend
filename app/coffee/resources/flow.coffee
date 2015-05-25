@@ -161,7 +161,7 @@ flowRelationDataDirective = ($timeout)->
 
     postLink = (scope, elem, attrs, ctrl) ->
         getRelationDataHTML = () ->
-            ctrl.$modelValue =  elem.html()
+            ctrl.$setViewValue(elem.html())
 
         $timeout getRelationDataHTML, 3000
 
@@ -174,38 +174,6 @@ flowRelationDataDirective = ($timeout)->
 
 
 FlowHandlerDirective = (ngDialog)->
-
-    relationSlips = '''
-        <div layout="layout">
-            <div flex="flex" class="approval-cell">
-                <span class="cell-title">转入部门</span>
-                <span class="cell-content">信息技术部-测试组</span>
-            </div>
-        </div>
-        <div layout="layout">
-            <div flex="flex" class="approval-cell">
-                <span class="cell-title">转入岗位</span>
-                <span class="cell-content">测试组组长</span>
-            </div>
-        </div>
-        <div layout="layout">
-            <div flex="flex" class="approval-cell">
-                <span class="cell-title">申请理由</span>
-                <span class="cell-content">
-                    几年的工作经历，使我迫切的希望进一步拓宽知识面，
-                    同时也希望有一个直接到一线去工作的机会，所以，
-                    我希望能够对工作岗位进行适当的调整，调往生产部，
-                    给自己一个锻炼的机会，也争取为本单位多做一份贡献。
-                </span>
-            </div>
-        </div>
-        <div layout="layout">
-            <div flex="flex" class="approval-cell">
-                <span class="cell-title">试岗时长</span>
-                <span class="cell-content">3个月</span>
-            </div>
-        </div>
-    '''
 
     template = '''
         <div class="approval-wapper">
@@ -285,11 +253,11 @@ FlowHandlerDirective = (ngDialog)->
                             </div>
                         </div>
                         <div class="approval-opinions">
-                            <form>
+                            <form name="flowReplyForm" ng-submit="reply(userReply)">
                                 <div layout>
                                     <md-input-container flex>
                                         <label>审批意见</label>
-                                        <textarea ng-model="sdfs" columns="1" md-maxlength="150"></textarea>
+                                        <textarea ng-model="userReply" required columns="1" md-maxlength="150"></textarea>
                                     </md-input-container>
                                 </div>
                                 <md-button class="md-raised md-primary" type="submit">保存意见</md-button>
@@ -364,6 +332,9 @@ class FlowController
     constructor: (http, scope) ->
         FLOW_HTTP_PREFIX = "/api/workflows"
 
+        scope.reply = ""
+
+
         scope.CHOICE = {
             ACCEPT: true
             REJECT: false
@@ -372,6 +343,9 @@ class FlowController
         scope.req = {
             opinion: true
         }
+
+        scope.reply = (userReply) ->
+            scope.flow.flowNodes.$create(userReply)
 
         scope.submitFlow = (req, flow, dialog) ->
             url = joinUrl(FLOW_HTTP_PREFIX, flow.type, flow.id)

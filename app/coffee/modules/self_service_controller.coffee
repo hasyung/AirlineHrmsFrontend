@@ -106,9 +106,12 @@ class ProfileCtrl extends nb.Controller
 
 class MyRequestCtrl extends nb.Controller
 
-    @.$inject = ['$scope', 'Employee', 'OrgStore']
+    @.$inject = ['$scope', 'Employee', 'OrgStore', 'USER_META', 'VACATIONS']
 
-    constructor: ($scope, @Employee, @OrgStore) ->
+    constructor: ($scope, @Employee, @OrgStore, meta, vacations) ->
+
+        $scope.meta = meta
+        $scope.vacations = vacations
 
         @reviewers = @loadReviewer()
 
