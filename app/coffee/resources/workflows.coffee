@@ -34,6 +34,12 @@ angular.forEach workflows, (item)->
 
 
 
+resources.factory 'FlowReply', (restmod) ->
+    restmod.model()
+
+
+
+
 resources.factory 'Leave', (restmod, $injector) ->
 
     restmod.model("/workflows/leave").mix 'nbRestApi', 'Workflow', {

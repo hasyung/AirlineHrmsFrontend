@@ -28,9 +28,17 @@ class Route
 
 class AttendanceCtrl extends nb.Controller
 
-    @.$inject = ['GridHelper', 'Leave']
+    @.$inject = ['GridHelper', 'Leave', '$scope', '$injector']
 
-    constructor: (helper, @Leave) ->
+    constructor: (helper, @Leave, scope, injector) ->
+
+        scope.realFlow = (entity) ->
+            t = entity.type
+            m = injector.get(t)
+            return m.$find(entity.$pk)
+
+
+
 
         @recordsFilterOptions = {
             name: 'attendance_records'
@@ -46,7 +54,7 @@ class AttendanceCtrl extends nb.Controller
 
         def = [
             {
-                name: 'type'
+                name: 'typeCn'
                 displayName: '假别'
             }
             {
@@ -64,11 +72,18 @@ class AttendanceCtrl extends nb.Controller
             {
                 name: 'type'
                 displayName: '详细'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents" ng-init="realFlow = grid.appScope.$parent.realFlow(row.entity)">
+                    <a flow-handler="realFlow">
+                        查看
+                    </a>
+                </div>
+                '''
             }
 
         ]
 
-        @columnDef = helper.buildFlowDefault(def)
+        @recodsColumnDef = helper.buildFlowDefault(def)
 
         @leaveFlows = @Leave.$collection().$fetch()
 
@@ -122,7 +137,7 @@ class ContractCtrl extends nb.Controller
                 field: 'employeeName'
                 # pinnedLeft: true
                 cellTemplate: '''
-                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                <div class="ui-grid-cell-contents">
                     <a nb-panel
                         template-url="partials/personnel/info_basic.html"
                         locals="{employee: row.entity}">
