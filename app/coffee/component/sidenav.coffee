@@ -245,7 +245,7 @@ menuFactory = ($rootScope, $state)->
             }
             {
                 name: '员工考勤'
-                state: ''
+                state: 'labors_attendance'
             }
             {
                 name: '员工调动'

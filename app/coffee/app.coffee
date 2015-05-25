@@ -5,8 +5,6 @@
 metadata = @metadata #用户元数据
 dep_info = @dep_info #机构数据
 
-
-
 deps = [
     'ui.router'
     'mgo-angular-wizard'
