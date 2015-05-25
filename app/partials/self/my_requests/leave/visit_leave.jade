@@ -31,14 +31,14 @@ div.ask_for_leave.md-background(md-theme="hrms")
                             div.ask-info-row(layout)
                                 .ask-info-cell(flex)
                                     .ask-cell-title 假别
-                                    .ask-cell-content 丧假
+                                    .ask-cell-content 探亲假
 
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1 申请信息
                         fieldset
                             div(layout)
                                 md-input-container.row-has-value(flex)
-                                    label 逝者关系
+                                    label 探亲对象
                                     md-select(ng-model="current.recordType" required)
                                         md-select-label {{current.recordType||'无'}}
                                         md-option(value="父子") 父子
