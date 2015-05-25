@@ -31,7 +31,7 @@ div.ask_for_leave.md-background(md-theme="hrms")
                             div.ask-info-row(layout)
                                 .ask-info-cell(flex)
                                     .ask-cell-title 假别
-                                    .ask-cell-content 年假（2014年年假剩余天数3天，2015年年假剩余天数5天）
+                                    .ask-cell-content 病假
 
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1 申请信息
@@ -41,9 +41,23 @@ div.ask_for_leave.md-background(md-theme="hrms")
                                 md-input-container(flex)
                                     label 开始日期
                                     input(ng-model="request.start_time" ng-change="calculateTotalDays(request, '年假')" name="start_time" bs-datepicker required)
+                                md-input-container.row-has-value(style="flex: 0 0 150px;")
+                                    label 详细时间
+                                    md-select(ng-model="current.recordType" required)
+                                        md-select-label {{current.recordType||'无'}}
+                                        md-option(value="9:00") 9:00
+                                        md-option(value="13:00") 13:00
+                                        md-option(value="17:00") 17:00
                                 md-input-container(flex)
                                     label 结束日期
                                     input(ng-model="request.end_time" ng-change="calculateTotalDays(request, '年假')" name="end_time" required bs-datepicker)
+                                md-input-container.row-has-value(style="flex: 0 0 150px;")
+                                    label 详细时间
+                                    md-select(ng-model="current.recordType" required)
+                                        md-select-label {{current.recordType||'无'}}
+                                        md-option(value="9:00") 9:00
+                                        md-option(value="13:00") 13:00
+                                        md-option(value="17:00") 17:00
                             div(layout)
                                 .without-edit
                                     div.progress-wrapper(ng-if="calculating")
@@ -54,7 +68,7 @@ div.ask_for_leave.md-background(md-theme="hrms")
                             div(layout)
                                 md-input-container(flex)
                                     label 申请理由
-                                    textarea(ng-model="request.reason" columns="1" md-maxlength="150")
+                                    textarea(ng-model="request.reason" columns="1" md-maxlength="2000")
                             md-subheader.accessory-header.md-background.md-hue-1 附件
                             div(nb-file-upload flow-type="Flow::AnnualLeave" ng-model="request.attachment_ids")
                             //- .accessory-container
@@ -66,43 +80,6 @@ div.ask_for_leave.md-background(md-theme="hrms")
                             //-         .accessory-switch
                             //-             md-button.md-icon-button
                             //-                 md-icon.md-warn(md-svg-src="/images/svg/close.svg")
-                            //-     .accessory-cell
-                            //-         .accessory-name
-                            //-             | 附件1.jpg
-                            //-         .accessory-size
-                            //-             | 500kb
-                            //-         .accessory-switch
-                            //-             md-button.md-icon-button
-                            //-                 md-icon.md-warn(md-svg-src="/images/svg/close.svg")
-                            //-     .accessory-cell
-                            //-         .accessory-name
-                            //-             | 附件1.jpg
-                            //-         .accessory-size
-                            //-             | 500kb
-                            //-         .accessory-switch
-                            //-             md-button.md-icon-button
-                            //-                 md-icon.md-warn(md-svg-src="/images/svg/close.svg")
-                            //-     .accessory-cell
-                            //-         .accessory-name
-                            //-             | 附件1.jpg
-                            //-         .accessory-size
-                            //-             | 500kb
-                            //-         .accessory-switch
-                            //-             md-button.md-icon-button
-                            //-                 md-icon.md-warn(md-svg-src="/images/svg/close.svg")
-                            //- .accessory-container
-                            //-     .accessory-cell
-                            //-         .accessory-name
-                            //-             | 附件1.jpg
-                            //-         .accessory-size
-                            //-             | 500kb
-                            //-         .accessory-switch
-                            //-             md-button.md-icon-button
-                            //-                 md-icon.md-warn(md-svg-src="/images/svg/close.svg")
-
-                            //- .accessory-btn-group
-                            //-     md-button.md-primary.md-raised 添加附件
-                            //-     span.tip 请上传医院为您开具的病假证明照片
 
                     md-card.form-material-section.nb-card
                         md-subheader.superior-header.md-background.md-hue-1 提交上级
@@ -117,26 +94,3 @@ div.ask_for_leave.md-background(md-theme="hrms")
                         md-button.md-raised.white(type="button" ng-click="panel.close()") 取消
                         md-button.md-primary.md-raised(type="submit") 提交上级
 
-
-
-
-    //- md-dialog
-    //-     form(ng-submit="ctrl.submitForm(leaveRequest)")
-    //-         md-input-container
-    //-             label 请假类别
-    //-             md-select(ng-model="leaveRequest.type")
-    //-                 md-option(value="1") 病假
-    //-                 md-option(value="2") 事假
-    //-                 md-option(value="3") 丧假
-    //-         md-input-container
-    //-             label 开始时间
-    //-             input(bs-datepicker ng-model="leaveRequest.startDate" container="body")
-    //-         md-input-container
-    //-             label 结束时间
-    //-             input(bs-datepicker ng-model="leaveRequest.endDate" container="body")
-    //-         md-input-container
-    //-             label message
-    //-             textarea(ng-model="leaveRequest.message")
-    //-         .form-actions
-    //-             md-button(type="submit") 提交
-    //-             md-button(type="button" ng-click="dialog.close()") 取消

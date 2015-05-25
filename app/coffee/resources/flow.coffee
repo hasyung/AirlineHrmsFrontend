@@ -350,7 +350,15 @@ FlowHandlerDirective = (ngDialog)->
                     <div class="approval-buttons">
                         <md-button class="md-raised md-warn" type="submit">通过</md-button>
                         <md-button class="md-raised md-warn" type="button" ng-click="closeThisDialog()">驳回</md-button>
-                        <md-button class="md-raised md-primary" type="submit">移交</md-button>
+                        <md-button
+                            class="md-raised md-primary"
+                            type="button"
+                            nb-dialog
+                            template-url="/partials/component/workflow/hand_over.html"
+
+                            >
+                            移交
+                        </md-button>
                     </div>
                 </form>
             </div>
