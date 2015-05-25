@@ -573,13 +573,24 @@ angular.module 'nb.directives'
         template = '''
         <div>
             <div class="accessory-container">
-                <div ng-repeat="file in files track by $index"  class="accessory-cell" nb-gallery img-obj="file">
-                    <div class="accessory-name" ng-bind="file.name"></div>
-                    <div class="accessory-size" ng-bind="file.size | byteFmt:2"></div>
-                    <div class="accessory-switch">
-                        <md-button type="button" class="md-icon-button" ng-click="ctrl.removeFile($index)">
-                            <md-icon md-svg-src="/images/svg/close.svg" class="md-warn"></md-icon>
-                        </md-button>
+                <div ng-repeat="file in files track by $index"  class="accessory-cell">
+                    <div ng-if="ctrl.isImage(file)" nb-gallery img-obj="file">
+                        <div class="accessory-name" ng-bind="file.name"></div>
+                        <div class="accessory-size" ng-bind="file.size | byteFmt:2"></div>
+                        <div class="accessory-switch">
+                            <md-button type="button" class="md-icon-button" ng-click="ctrl.removeFile($index)">
+                                <md-icon md-svg-src="/images/svg/close.svg" class="md-warn"></md-icon>
+                            </md-button>
+                        </div>
+                    </div>
+                    <div ng-if="!ctrl.isImage(file)">
+                        <div class="accessory-name" ng-bind="file.name"></div>
+                        <div class="accessory-size" ng-bind="file.size | byteFmt:2"></div>
+                        <div class="accessory-switch">
+                            <md-button type="button" class="md-icon-button" ng-click="ctrl.removeFile($index)">
+                                <md-icon md-svg-src="/images/svg/close.svg" class="md-warn"></md-icon>
+                            </md-button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -606,6 +617,10 @@ angular.module 'nb.directives'
 
             removeFile: (index)->
                 @scope.files.splice(index, 1)
+
+            isImage: (file)->
+                /^image\/jpg|jpeg|gif|png/.test(file.type)
+
 
 
 

@@ -169,6 +169,7 @@ angular.module 'nb.directives'
                 $body.append(scope.gallery)
 
             setImgSize = (imgSize, boxSize)->
+                return if imgSize.width == 0
                 imgW2H = imgSize.width/imgSize.height
                 boxW2H = boxSize.width/boxSize.height
                 imgDom = scope.gallery.find(".main-img")
@@ -227,6 +228,9 @@ angular.module 'nb.directives'
             elem.on 'click', (e)->
                 e.stopPropagation()
                 showGallery()
+                imgSize = getImgSize(scope.currentImg)
+                boxSize = getImgBoxSize()
+                setImgSize(imgSize, boxSize)
 
             if scope.imgs && scope.imgs.length > 1
                 $doc.on 'keydown', setCurrentImg
