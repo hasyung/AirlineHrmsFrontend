@@ -161,6 +161,20 @@
     }
 }
 
+//我要请假 主列表样式
+.leave-list {
+    md-toolbar {
+        background-color: #fff;
+        color: $text-color;
+
+        md-icon svg {
+            * {
+                fill: $text-muted;
+            }
+        }
+    }
+}
+
 
 
 
