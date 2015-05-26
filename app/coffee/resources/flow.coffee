@@ -360,12 +360,14 @@ class FlowController
 
             return params
 
-        scope.transfer = (params, flow, dialog)->
+        scope.transfer = (params, flow, dialog, parentDialog)->
             params = parseParams params
             url = joinUrl(FLOW_HTTP_PREFIX, flow.type, flow.id)
             promise = http.put(url, params)
             promise.then ()->
+                scope.flowSet.$refresh()
                 dialog.close()
+                parentDialog.close()
 
         scope.toggleSelect = (org, list)->
             index = list.indexOf org
