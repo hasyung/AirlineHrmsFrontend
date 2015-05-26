@@ -2,6 +2,7 @@
 nb = @.nb
 app = nb.app
 extend = angular.extend
+filterBuildUtils = nb.filterBuildUtils
 Modal = nb.Modal
 
 
@@ -93,29 +94,11 @@ class AttendanceRecordCtrl extends nb.Controller
     @.$inject = ['$scope', 'Attendance', 'Employee']
     constructor: (@scope, @Attendance, @Employee) ->
         @loadInitailData()
-        @filterOptions = {
-            name: 'attendanceRecord'
-            constraintDefs: [
-                {
-                    name: 'name'
-                    displayName: '姓名'
-                    type: 'string'
-                    placeholder: '姓名'
-                }
-                {
-                    name: 'employee_no'
-                    displayName: '员工编号'
-                    type: 'string'
-                    placeholder: '员工编号'
-                }
-                {
-                    name: 'department_ids'
-                    displayName: '机构'
-                    type: 'org-search'
-                }
-
-            ]
-        }
+        @filterOptions = filterBuildUtils('attendanceRecord')
+            .col 'name',                 '姓名',    'string',           '姓名'
+            .col 'employee_no',          '员工编号', 'string'
+            .col 'department_ids',       '机构',    'org-search'
+            .end()
 
         @columnDef = [
             {displayName: '员工编号', name: 'employeeNo'}

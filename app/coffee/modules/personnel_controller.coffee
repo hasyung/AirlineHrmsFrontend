@@ -3,6 +3,7 @@ nb = @.nb
 app = nb.app
 extend = angular.extend
 resetForm = nb.resetForm
+filterBuildUtils = nb.filterBuildUtils
 Modal = nb.Modal
 
 
@@ -81,67 +82,17 @@ class PersonnelCtrl extends nb.Controller
 
 
         ]
-        @filterOptions = {
-            name: 'personnel'
-            constraintDefs: [
-                {
-                    name: 'name'
-                    displayName: '姓名'
-                    type: 'string'
-                    placeholder: '姓名'
-                }
-                {
-                    name: 'employee_no'
-                    displayName: '员工编号'
-                    type: 'string'
-                    placeholder: '员工编号'
-                }
-                {
-                    name: 'department_ids'
-                    displayName: '机构'
-                    type: 'org-search'
-                }
-                {
-                    name: 'position_names'
-                    displayName: '岗位名称'
-                    type: 'string_array'
-                }
-                {
-                    name: 'locations'
-                    type: 'string_array'
-                    displayName: '属地'
-                }
-                {
-                    name: 'channel_ids'
-                    type: 'muti-enum-search'
-                    displayName: '通道'
-                    params: {
-                        type: 'channels'
-                    }
-                }
-                {
-                    name: 'employment_status_id'
-                    type: 'select'
-                    displayName: '用工状态'
-                    params: {
-                        type: 'employment_status'
-                    }
-                }
-                {
-                    name: 'birthday'
-                    type: 'date-range'
-                    displayName: '出生日期'
-                }
-                {
-                    name: 'join_scal_date'
-                    type: 'date-range'
-                    displayName: '入职时间'
-                }
-            ]
-        }
-
-
-
+        @filterOptions = filterBuildUtils('personnel')
+            .col 'name',                 '姓名',    'string',           '姓名'
+            .col 'employee_no',          '员工编号', 'string'
+            .col 'department_ids',       '机构',    'org-search'
+            .col 'position_names',       '岗位名称', 'string_array'
+            .col 'locations',            '属地',    'string_array'
+            .col 'channel_ids',          '通道',    'muti-enum-search', '',    {type: 'channels'}
+            .col 'employment_status_id', '用工状态', 'select',           '',    {type: 'employment_status'}
+            .col 'birthday',             '出生日期', 'date-range'
+            .col 'join_scal_date',       '入职时间', 'date-range'
+            .end()
 
     loadInitailData: ->
         @employees = @Employee.$collection().$fetch()
