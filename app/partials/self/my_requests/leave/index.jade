@@ -1,14 +1,29 @@
-.leave-list(flex)
+.flow-list(flex)
     md-toolbar
         .md-toolbar-tools
             span
                 md-button.md-icon-button(ui-sref="^")
-                    md-icon(md-svg-src="/images/svg/left-side-svg/left_icon_13.svg")
+                    md-icon(md-svg-src="/images/svg/arrow-left.svg")
             span 我要请假
-            span
-                md-dropmenu()
-                    md-drop-label()
-                        md-button.md-primary.md-raised 请假
-                    md-drop-option(nb-panel template-url="partials/self/my_requests/leave/yearly_leave.html" ) 年假
-                    md-drop-option() 事假
+    .flow-list-body
+        .flow-list-content.ui-grid-container
+            .flow-list-tip
+                | 点击请假申请，可发起请假流程。列表中选择未生效的申请，可撤销请假申请。
+                | 你2014年年假剩余3天，2015年年假剩余5天。
+            md-toolbar
+                .md-toolbar-tools
+                    span 请假列表
+                    span(flex)
+                    span
+                        md-button.md-primary.md-raised() 年假抵扣
+                    span
+                        md-button.md-primary.md-raised() 撤销请假
+                    span
+                        md-dropmenu()
+                            md-drop-label()
+                                md-button.md-primary.md-raised 请假
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/yearly_leave.html" ) 年假
+                            md-drop-option() 事假
 
+
+            div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection safe-src="ctrl.employees")
