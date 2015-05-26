@@ -218,13 +218,13 @@ drawOrgChart = (root, options, select_org_id) ->
                         return "node chart-box-transfer_inactive"
                     else
                         return "node"
-                .style("cursor", "not-allowed")
+                .style("cursor", "pointer")
                 .attr 'id', (d) -> "org_#{d.id}"
-                # .on 'click', (d,i) ->   #To Do:
-                #     active_node.classed("active",false)
-                #     d3.select(this).classed("active",true)
-                #     active_node = d3.select(this)
-                #     rectClickHandler(target: d.id)
+                .on 'click', (d,i) ->   #To Do:
+                    active_node.classed("active",false)
+                    d3.select(this).classed("active",true)
+                    active_node = d3.select(this)
+                    rectClickHandler(target: d.id)
 
 
             nodeEnter.append("rect")
