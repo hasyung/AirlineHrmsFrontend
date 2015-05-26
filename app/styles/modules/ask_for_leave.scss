@@ -161,6 +161,29 @@
     }
 }
 
+//我要请假 主列表样式
+.flow-list {
+    md-toolbar {
+        background-color: #fff;
+        color: $text-color;
+
+        md-icon svg {
+            * {
+                fill: $text-muted;
+            }
+        }
+    }
+}
+
+.flow-list-body {
+    padding: 20px;
+
+    .flow-list-tip {
+        height: 70px;
+        line-height: 70px;
+    }
+}
+
 
 
 
