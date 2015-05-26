@@ -258,6 +258,9 @@ class OrgStore extends nb.Service
     get: ->
         return @orgs
 
+    getPrimaryOrgs: ->
+        return @DEPARTMENTS.filter (o) -> o.xdepth == 2
+
     getOrgsByIds: (ids) ->
         self = @
         reduceOrgs = (res, id, $index) ->
