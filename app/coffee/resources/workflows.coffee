@@ -39,7 +39,11 @@ angular.forEach workflows, (item)->
 
 
 resources.factory 'FlowReply', (restmod) ->
-    restmod.model().mix 'nbRestApi'
+    restmod.model().mix 'nbRestApi', {
+        $config:
+            jsonRootSingle: 'flow_node'
+
+    }
 
 
 

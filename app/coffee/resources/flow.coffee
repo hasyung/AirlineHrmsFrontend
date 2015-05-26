@@ -4,7 +4,7 @@
 
 extend = angular.extend
 app    = @nb.app
-
+resetForm = nb.resetForm
 # collection
 # fetch
 # search
@@ -214,46 +214,23 @@ FlowHandlerDirective = (ngDialog)->
                     <div class="approval-msg">
                         <div class="approval-subheader">意见</div>
                         <div class="approval-cell-container">
-                            <div class="approval-msg-cell">
+                            <div class="approval-msg-cell" ng-repeat="msg in flow.flowNodes track by msg.id">
                                 <div class="approval-msg-container">
                                     <div class="approval-msg-header">
-                                        <span>李志林</span>
-                                        <span>人力资源部-福利管理室主管</span>
+                                        <span>{{msg.reviewerName}}</span>
+                                        <span>{{msg.reviewerDepartment}}-{{msg.reviewerPosition}}</span>
                                     </div>
-                                    <div class="approval-msg-result">同意执行</div>
-                                    <div class="approval-msg-content">
-                                        经党委会讨论，批准姜文峰同志转为中共正式党员，
-                                        当年从1989年10月20日算起。经党委会讨论，批
-                                        准姜文峰同志转为中共正式党员，当年从1989年
-                                        10月20日算起。经党委会讨论，批准姜文峰同志转
-                                        为中共正式党员，当年从1989年10月20日算起。经
-                                        党委会讨论，批准姜文峰同志转为中共正式党员，当
-                                        年从1989年10月20日算起。
+                                    <div class="approval-msg-content" >
+                                        {{msg.body}}
                                     </div>
                                 </div>
                                 <div class="approval-msg-decider">
-                                    <span class="approval-decider-date">2015-1-1</span>
-                                </div>
-                            </div>
-                            <div class="approval-msg-cell">
-                                <div class="approval-msg-container">
-                                    <div class="approval-msg-header">
-                                        <span>李志林</span>
-                                        <span>人力资源部-福利管理室主管</span>
-                                    </div>
-                                    <div class="approval-msg-result">同意执行</div>
-                                    <div class="approval-msg-content">
-                                        经党委会讨论，批准姜文峰同志转为中共正式党员，
-                                        当年从1989年10月20日算起。
-                                    </div>
-                                </div>
-                                <div class="approval-msg-decider">
-                                    <span class="approval-decider-date">2015-1-1</span>
+                                    <span class="approval-decider-date">{{msg.createdAt | date: 'yyyy-MM-dd' }}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="approval-opinions">
-                            <form name="flowReplyForm" ng-submit="reply(userReply)">
+                            <form name="flowReplyForm" ng-submit="reply(userReply, flowReplyForm)">
                                 <div layout>
                                     <md-input-container flex>
                                         <label>审批意见</label>
@@ -268,7 +245,7 @@ FlowHandlerDirective = (ngDialog)->
                 <div class="approval-buttons">
                     <md-button class="md-raised md-warn">通过</md-button>
                     <md-button class="md-raised md-warn" type="button">驳回</md-button>
-                    <md-button class="md-raised md-primary" nb-dialog template-url="">移交</md-button>
+                    <md-button class="md-raised md-primary" nb-dialog template-url="partials/component/workflow/hand_over.html">移交</md-button>
                 </div>
             </div>
         </div>
@@ -327,12 +304,12 @@ FlowHandlerDirective = (ngDialog)->
 
 class FlowController
 
-    @.$inject = ['$http','$scope']
+    @.$inject = ['$http','$scope', 'USER_META']
 
-    constructor: (http, scope) ->
+    constructor: (http, scope, meta) ->
         FLOW_HTTP_PREFIX = "/api/workflows"
 
-        scope.reply = ""
+        scope.userReply = ""
 
 
         scope.CHOICE = {
@@ -344,8 +321,17 @@ class FlowController
             opinion: true
         }
 
-        scope.reply = (userReply) ->
-            scope.flow.flowNodes.$create(userReply)
+        scope.reply = (userReply, form) ->
+            try
+                last_msg = _.last(scope.flow.flowNodes)
+                if last_msg && last_msg.reviewerId == meta.id
+                    last_msg.$update({body: userReply})
+                else
+                    scope.flow.flowNodes.$create({body: userReply})
+            finally
+                scope.userReply = ""
+                resetForm(form)
+
 
         scope.submitFlow = (req, flow, dialog) ->
             url = joinUrl(FLOW_HTTP_PREFIX, flow.type, flow.id)
