@@ -38,7 +38,7 @@ md-toolbar.top-menu-bar.md-warn(md-theme="hrms")
                     pre-close-callback="markToReaded"
                 )
                     md-icon(md-svg-icon="/images/svg/email-outline.svg")
-                .ms-count(ng-if="notify.msg_unread_count") {{ notify.msg_unread_count }}
+                .ms-count(ng-if="notify.msg_unread_count" ng-bind="notify.msg_unread_count")
         span
             ul.user-menu(ng-controller="AuthController as ctrl")
                 .nb-dropdown(user-info-dropdown)
