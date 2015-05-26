@@ -1,5 +1,5 @@
 md-dialog.hand_over(ng-init="params = {type:'departments'};")
-    form(ng-submit="transfer(params, dialog.flow, dialog)")
+    form(ng-submit="transfer(params, dialog.flow, dialog, $parent.dialog)")
         md-content.sticky-container
             md-toolbar.md-accent(md-theme="hrms")
                 .md-toolbar-tools
