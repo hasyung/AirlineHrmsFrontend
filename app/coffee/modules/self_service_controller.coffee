@@ -6,7 +6,6 @@ resetForm = nb.resetForm
 Modal = nb.Modal
 
 
-
 class Route
     @.$inject = ['$stateProvider', '$urlRouterProvider']
 
@@ -52,8 +51,15 @@ class Route
             .state 'my_requests', {
                 url: '/self/my_requests'
                 templateUrl: 'partials/self/my_requests/index.html'
-                controller: MyRequestCtrl
-                controllerAs: 'ctrl'
+            }
+            .state 'my_requests.leave', {
+                url: '/leave'
+                views: {
+                    '@': {
+                        templateUrl: 'partials/self/my_requests/leave/index.html'
+                        controller: MyRequestCtrl
+                    }
+                }
             }
             .state 'self_position', {
                 url: '/self-service-position'

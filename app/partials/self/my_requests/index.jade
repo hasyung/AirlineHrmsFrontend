@@ -1,5 +1,36 @@
-md-button(nb-panel template-url="partials/self/my_requests/ask_for_leave.html") 我要请假
-md-button(nb-dialog template-url="partials/self/my_requests/leave_revocation.html") 我要撤销假
-md-button(nb-dialog template-url="partials/self/my_requests/offset_leave.html") 我要冲抵
-md-button(nb-dialog template-url="partials/self/my_requests/check_in.html") 我要销假
-md-button(nb-dialog template-url="partials/self/my_requests/adjust_position.html") 我要调岗
+.my-requests(flex)
+    .classify.md-whiteframe-z1
+        .classify-header
+            | 考勤
+        .classify-wrapper
+            .classify-cell
+                md-button.md-fab.md-primary(ui-sref=".leave")
+                    md-icon(md-svg-src="/images/svg/left-side-svg/left_icon_12.svg")
+                .desc 我要请假
+            .classify-cell
+                md-button.md-fab.md-primary
+                    md-icon(md-svg-src="/images/svg/left-side-svg/left_icon_13.svg")
+                .desc 我要请假
+    .classify.md-whiteframe-z1
+        .classify-header
+            | 考勤
+        .classify-wrapper
+            .classify-cell
+                md-button.md-fab.md-primary
+                    md-icon(md-svg-src="/images/svg/left-side-svg/left_icon_12.svg")
+                .desc 我要请假
+            .classify-cell
+                md-button.md-fab.md-primary
+                    md-icon(md-svg-src="/images/svg/left-side-svg/left_icon_13.svg")
+                .desc 我要请假
+
+
+
+
+
+
+//- md-button(nb-panel template-url="partials/self/my_requests/ask_for_leave.html") 我要请假
+//- md-button(nb-dialog template-url="partials/self/my_requests/leave_revocation.html") 我要撤销假
+//- md-button(nb-dialog template-url="partials/self/my_requests/offset_leave.html") 我要冲抵
+//- md-button(nb-dialog template-url="partials/self/my_requests/check_in.html") 我要销假
+//- md-button(nb-dialog template-url="partials/self/my_requests/adjust_position.html") 我要调岗
