@@ -73,10 +73,13 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
     treeful = (treeData, DEPTH, parent) ->
 
         if not parent?
-            parent = _.find treeData, (child) -> child.parent_id == undefined or child.parent_id == 0 #根节点
+            parent = _.find treeData, (child) ->
+                child.parent_id == undefined or child.parent_id == 0 #根节点
         else
-            parent = _.find treeData, (child) -> parent.id == child.id
-        parent.staff = [{name: '公司领导'}, {name: '公司高层管理干部'}]
+            parent = _.find treeData, (child) ->
+                parent.id == child.id
+        staff_org = _.remove treeData, (child) -> child.is_stick == true
+        parent.staff = staff_org.sort (a, b) -> a.sort_no - b.sort_no
         return unflatten(treeData, DEPTH, parent)
 
 
