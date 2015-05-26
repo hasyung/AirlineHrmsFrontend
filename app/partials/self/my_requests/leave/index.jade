@@ -6,8 +6,9 @@
                     md-icon(md-svg-src="/images/svg/left-side-svg/left_icon_13.svg")
             span 我要请假
             span
-                md-button.md-primary.md-raised(
-
-                    )
-
+                md-dropmenu()
+                    md-drop-label()
+                        md-button.md-primary.md-raised 请假
+                    md-drop-option(nb-panel template-url="partials/self/my_requests/leave/yearly_leave.html" ) 年假
+                    md-drop-option() 事假
 

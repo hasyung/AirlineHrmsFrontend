@@ -58,6 +58,7 @@ class Route
                     '@': {
                         templateUrl: 'partials/self/my_requests/leave/index.html'
                         controller: MyRequestCtrl
+                        controllerAs: 'ctrl'
                     }
                 }
             }
