@@ -114,6 +114,52 @@
     }
 }
 
+//我的申请主页面的样式
+
+.my-requests {
+    color: $text-color;
+    padding: 20px;
+}
+
+.classify {
+    background-color: #fff;
+    margin-bottom: 10px;
+    padding: 30px;
+
+    .classify-header {
+        font-size: $font-size-md;
+        margin-bottom: 25px;
+    }
+
+    .classify-wrapper {
+        @include clearfix();
+
+        .classify-cell {
+            float: left;
+            padding: 0 50px;
+
+            .desc {
+                text-align: center;
+            }
+        }
+
+        .md-fab {
+            height: 70px;
+            line-height: 70px;
+            margin-bottom: 5px;
+            width: 70px;
+
+            md-icon {
+                height: 40px;
+                width: 40px;
+
+                * {
+                    fill: #fff;
+                }
+            }
+        }
+    }
+}
 
 
 
