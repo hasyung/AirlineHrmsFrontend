@@ -230,7 +230,7 @@ FlowHandlerDirective = (ngDialog)->
                             </div>
                         </div>
                         <div class="approval-opinions">
-                            <form name="flowReplyForm" ng-submit="reply(userReply, flowReplyForm)">
+                            <form name="flowReplyForm" ng-submit="reply(userReply, flowReplyForm);">
                                 <div layout>
                                     <md-input-container flex>
                                         <label>审批意见</label>
@@ -243,9 +243,13 @@ FlowHandlerDirective = (ngDialog)->
                     </div>
                 </md-card>
                 <div class="approval-buttons">
-                    <md-button class="md-raised md-warn">通过</md-button>
-                    <md-button class="md-raised md-warn" type="button">驳回</md-button>
-                    <md-button class="md-raised md-primary" nb-dialog template-url="partials/component/workflow/hand_over.html">移交</md-button>
+                    <md-button class="md-raised md-warn" ng-click="submitFlow({opinion: true}, flow, dialog)" type="button">通过</md-button>
+                    <md-button class="md-raised md-warn" ng-click="submitFlow({opinion: false}, flow, dialog)" type="button">驳回</md-button>
+                    <md-button class="md-raised md-primary"
+                        nb-dialog
+                        template-url="partials/component/workflow/hand_over.html"
+                        locals="{flow:flow}"
+                        >移交</md-button>
                 </div>
             </div>
         </div>
@@ -304,10 +308,16 @@ FlowHandlerDirective = (ngDialog)->
 
 class FlowController
 
-    @.$inject = ['$http','$scope', 'USER_META']
+    @.$inject = ['$http','$scope', 'USER_META', 'OrgStore', 'Employee']
 
-    constructor: (http, scope, meta) ->
+    constructor: (http, scope, meta, OrgStore, Employee) ->
         FLOW_HTTP_PREFIX = "/api/workflows"
+
+        scope.selectedOrgs = []
+        #加载分类为领导和干部的人员
+        scope.reviewers = Employee.$search({category_ids: [1,2], department_ids: [OrgStore.getPrimaryOrgId()]})
+
+        scope.reviewOrgs = OrgStore.getPrimaryOrgs()
 
         scope.userReply = ""
 
@@ -339,6 +349,32 @@ class FlowController
             promise.then ()->
                 scope.flowSet.$refresh()
                 dialog.close()
+
+        parseParams = (params)->
+            if params.type == "departments"
+                orgIds = _.map scope.selectedOrgs, 'id'
+                params.department_ids = orgIds
+                params.reviewer_id = undefined
+            else if params.type == "reviewer"
+                params.department_ids = undefined
+
+            return params
+
+        scope.transfer = (params, flow, dialog)->
+            params = parseParams params
+            url = joinUrl(FLOW_HTTP_PREFIX, flow.type, flow.id)
+            promise = http.put(url, params)
+            promise.then ()->
+                dialog.close()
+
+        scope.toggleSelect = (org, list)->
+            index = list.indexOf org
+            if index > -1 then list.splice(index, 1) else list.push org 
+
+
+
+        
+
 
 
 

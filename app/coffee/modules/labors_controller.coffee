@@ -74,7 +74,7 @@ class AttendanceCtrl extends nb.Controller
                 displayName: '详细'
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents" ng-init="realFlow = grid.appScope.$parent.realFlow(row.entity)">
-                    <a flow-handler="realFlow">
+                    <a flow-handler="realFlow" flows="grid.options.data">
                         查看
                     </a>
                 </div>
