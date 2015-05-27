@@ -1,4 +1,4 @@
-.flow-list(flex)
+.flow-list(flex ng-init="leaves = ctrl.MyLeave.$collection().$fetch();")
     md-toolbar
         .md-toolbar-tools
             span
@@ -17,7 +17,12 @@
                     span
                         md-button.md-primary.md-raised() 年假抵扣
                     span
-                        md-button.md-primary.md-raised() 撤销请假
+                        md-button.md-primary.md-raised(
+                            ng-disabled="!(ctrl.getSelected() && ctrl.getSelected().workflowState !== '已生效')"
+                            nb-confirm="ctrl.revert(isConfirm, ctrl.getSelected())"
+                            nb-title="你是否要撤销所选请假操作?"
+                            nb-content="当你点击确定时，您所申请的假期将被撤销！"
+                        ) 撤销请假
                     span
                         md-dropmenu()
                             md-drop-label()
@@ -26,4 +31,4 @@
                             md-drop-option() 事假
 
 
-            div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection safe-src="ctrl.employees")
+            div(nb-grid column-defs="ctrl.leaveCol" multi-select="false" export-api grid-selection safe-src="leaves")
