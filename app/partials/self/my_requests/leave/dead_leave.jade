@@ -6,79 +6,23 @@ block vars
     - var formType = 1
     - var need_attachment = true
 
-block relation_data
-    div.flow-info-row(layout)
-        .flow-info-cell(flex)
-            .flow-cell-title 性别
-            .flow-cell-content 男
-        .flow-info-cell(flex)
-            .flow-cell-title 婚姻状况
-            .flow-cell-content 已婚
-    div.flow-info-row(layout)
-        .flow-info-cell(flex)
-            .flow-cell-title 年龄
-            .flow-cell-content 30
-        .flow-info-cell(flex)
-                .flow-cell-title 川航工作年限
-                .flow-cell-content 15年
-    div.flow-info-row(layout)
-        .flow-info-cell(flex)
-            .flow-cell-title 假别
-            .flow-cell-content 丧假
-
 
 block additional_form
     div(layout)
         md-input-container.row-has-value(flex)
             label 逝者关系
-            md-select(ng-model="current.recordType" required)
-                md-select-label {{current.recordType||'无'}}
-                md-option(value="父子") 父子
-                md-option(value="母子") 母子
+            md-select(ng-model="request.relation" required)
+                md-select-label {{request.relation||'无'}}
+                md-option(value="父母") 父母
+                md-option(value="子女") 子女
+                md-option(value="兄弟姐妹") 兄弟姐妹
+                md-option(value="配偶") 配偶
+                md-option(value="岳父母") 岳父母
+
     div(layout)
         div.dis-toggle
-            md-checkbox.md-primary 附带路程假
-                span(ng-if="exists(item, selected)") selected
+            md-checkbox.md-primary(ng-model="additional") 附带路程假
         div.dis-check
-            md-radio-group(ng-model="ghj")
-                md-radio-button.md-primary(value="省内") 省内
-                md-radio-button.md-primary(value="省外") 省外
-
-//- block form
-//-     div(layout)
-//-         md-input-container.row-has-value(flex)
-//-             label 逝者关系
-//-             md-select(ng-model="current.recordType" required)
-//-                 md-select-label {{current.recordType||'无'}}
-//-                 md-option(value="父子") 父子
-//-                 md-option(value="母子") 母子
-//-     div(layout)
-//-         md-input-container(flex)
-//-             label 开始日期
-//-             input(ng-model="request.start_time" ng-change="calculateTotalDays(request, '年假')" name="start_time" bs-datepicker required)
-//-         md-input-container(flex)
-//-             label 结束日期
-//-             input(ng-model="request.end_time" ng-change="calculateTotalDays(request, '年假')" name="end_time" required bs-datepicker)
-//-     div(layout)
-//-         div.dis-toggle
-//-             md-checkbox.md-primary 附带路程假
-//-                 span(ng-if="exists(item, selected)") selected
-//-         div.dis-check
-//-             md-radio-group(ng-model="ghj")
-//-                 md-radio-button.md-primary(value="省内") 省内
-//-                 md-radio-button.md-primary(value="省外") 省外
-//-     div(layout)
-//-         .without-edit
-//-             div.progress-wrapper(ng-if="calculating")
-//-                 md-progress-circular(md-mode="indeterminate")
-//-             div(ng-if="!calculating")
-//-                 div.without-edit-title 天数
-//-                 div.without-edit-content {{ vacation_days }} 天
-//-     div(layout)
-//-         md-input-container(flex)
-//-             label 申请理由
-//-             textarea(ng-model="request.reason" columns="1" md-maxlength="2000")
-//-     md-subheader.accessory-header.md-background.md-hue-1 附件
-//-     div(nb-file-upload flow-type="#{flowType}" ng-model="request.attachment_ids")
-
-
+            md-radio-group(ng-model="request.journey")
+                md-radio-button.md-primary(value="省内" ng-disabled="additional") 省内
+                md-radio-button.md-primary(value="省外" ng-disabled="additional") 省外
