@@ -27,9 +27,24 @@
                         md-dropmenu()
                             md-drop-label()
                                 md-button.md-primary.md-raised 请假
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/sick_leave.html" ) 派驻人员休假
                             md-drop-option(nb-panel template-url="partials/self/my_requests/leave/yearly_leave.html" ) 年假
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/sick_leave.html" ) 丧假
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/sick_leave.html" ) 探亲假
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/sick_leave.html" ) 婚假
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/sick_leave.html" ) 产假
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/sick_leave.html" ) 产假(母乳喂养)
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/sick_leave.html" ) 产假(剖腹产、难产)
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/sick_leave.html" ) 产假(晚育)
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/sick_leave.html" ) 产假(多胞胎)
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/sick_leave.html" ) 产假(流产)
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/sick_leave.html" ) 事假
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/sick_leave.html" ) 产前孕期检查假
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/sick_leave.html" ) 生育护理假
                             md-drop-option(nb-panel template-url="partials/self/my_requests/leave/sick_leave.html" ) 病假
-                            md-drop-option() 事假
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/sick_leave.html" ) 病假(工伤待定)
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/sick_leave.html" ) 病假(怀孕待产)
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/sick_leave.html" ) 女工假
 
 
             div(nb-grid column-defs="ctrl.leaveCol" multi-select="false" export-api grid-selection safe-src="leaves")
