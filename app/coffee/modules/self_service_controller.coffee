@@ -159,6 +159,9 @@ class MyRequestCtrl extends nb.Controller
         if isConfirm
             leave.revert()
 
+    charge: (leave, params)->
+        leave.charge(params)
+
     loadReviewer: () ->
         @Employee.$search({category_ids: [1,2], department_ids: [@OrgStore.getPrimaryOrgId()]})
 
