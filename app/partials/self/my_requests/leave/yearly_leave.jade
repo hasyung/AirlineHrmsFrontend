@@ -9,8 +9,8 @@ block vars
 block relation_data
     div.flow-info-row(layout)
         .flow-info-cell(flex)
-                .flow-cell-title 川航工作年限
-                .flow-cell-content {{ meta.join_scal_date | fromNow}}
+            .flow-cell-title 川航工作年限
+            .flow-cell-content {{ meta.join_scal_date | fromNow}}
     div.flow-info-row(layout)
         .flow-info-cell(flex)
             .flow-cell-title 假别
@@ -20,7 +20,6 @@ block relation_data
 
 
 block form
-
     div(layout)
         md-input-container(flex)
             label 开始日期
