@@ -1,0 +1,19 @@
+//- 假别冲抵
+md-dialog
+    md-content
+        form(flex ng-submit="current.$update();dialog.close();")
+            md-toolbar.md-accent(md-theme="hrms")
+                .md-toolbar-tools
+                    span 年假抵扣
+            .dialog-content(layout layout-align="center")
+                
+                fieldset(flex)
+                    div(layout)
+                        md-input-container(flex)
+                            label 抵扣天数
+                            input(ng-model="current.user.name" name="name")
+
+            .md-actions
+                md-button(type="button" ng-click="ctrl.markToDeleted(current);dialog.close();") 删 除
+                md-button(type="button" ng-click='dialog.close()') 取 消
+                md-button.md-primary.md-raised(type="submit") 确 定
