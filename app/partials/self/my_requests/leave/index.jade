@@ -15,7 +15,15 @@
                     span 请假列表
                     span(flex)
                     span
-                        md-button.md-primary.md-raised() 年假抵扣
+                        md-button.md-primary.md-raised(
+                            ng-disabled="!(ctrl.getSelected() &&\
+                                (ctrl.getSelected().type == 'Flow::PersonalLeave' || ctrl.getSelected().type == 'Flow::SickLeave')\
+                                && ctrl.getSelected().workflowState == '已生效')"
+                            nb-dialog
+                            template-url="/partials/self/my_requests/leave/charge.html"
+                            locals="{leave:ctrl.getSelected()}"
+                            title="只有病假和事假才可以抵扣"
+                        ) 年假抵扣
                     span
                         md-button.md-primary.md-raised(
                             ng-disabled="!(ctrl.getSelected() && ctrl.getSelected().workflowState !== '已生效')"
