@@ -48,7 +48,8 @@ div.workflow.md-background(md-theme="hrms")
                                                 label 申请理由
                                                 textarea(ng-model="request.reason" columns="1" md-maxlength="150")
                                         md-subheader.accessory-header.md-background.md-hue-1 附件
-                                        div(nb-file-upload flow-type="#{flowType}" ng-model="request.attachment_ids")
+                                        if need_attachment
+                                            div(nb-file-upload flow-type="#{flowType}" ng-model="request.attachment_ids")
                                     when 2
                                         div(layout)
                                             md-input-container(flex)
@@ -80,7 +81,9 @@ div.workflow.md-background(md-theme="hrms")
                                                 label 申请理由
                                                 textarea(ng-model="request.reason" columns="1" md-maxlength="2000")
                                         md-subheader.accessory-header.md-background.md-hue-1 附件
-                                        div(nb-file-upload flow-type="#{flowType}" ng-model="request.attachment_ids")
+                                        if need_attachment
+                                            div(nb-file-upload flow-type="#{flowType}" ng-model="request.attachment_ids")
+
 
 
 

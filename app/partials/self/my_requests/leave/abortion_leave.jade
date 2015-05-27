@@ -1,17 +1,7 @@
 extends leave_layout
 
 block vars
-    - var flowType = 'Flow::MiscarriageLeave'
-    - var flowName = '产假(流产)'
+    - var flowType = 'Flow::MaternityLeave'
+    - var flowName = '产假'
     - var formType = 1
     - var need_attachment = true
-
-
-block additional_form
-    div(layout)
-        md-input-container.row-has-value(flex)
-            label 怀孕时段
-            md-select(ng-model="request.during_pregnancy" required)
-                md-select-label {{request.during_pregnancy||'无'}}
-                md-option(value="4个月以下") 4个月以下
-                md-option(value="4个月以上") 4个月以上
