@@ -35,12 +35,18 @@ module
     .filter 'fromNow', ->
 
         (input, opts) ->
-
             if input
                 try
                     return moment(input).fromNow(true)
                 catch e
                     ""
+    .filter 'mdate', ->
+
+        (input, format = "YYYY-mm-DD") ->
+            if input
+                return input.format(format)
+
+
     .filter 'diffDate', ->
         (input, opts) ->
 

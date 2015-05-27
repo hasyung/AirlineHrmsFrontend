@@ -552,11 +552,10 @@ angular.module 'nb.directives'
                     ngModelCtrl.$setValidity('date', true)
                     return
 
-                return new Date(viewValue)
+                return moment(viewValue)
 
             ngModelCtrl.$formatters.push (modelValue) ->
-
-                moment(modelValue).format('yyyy-mm-dd') if modelValue
+                return modelValue.format('YYYY-MM-DD') if modelValue
 
 
             scope.$on '$destroy', ->
