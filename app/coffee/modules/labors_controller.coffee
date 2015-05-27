@@ -68,6 +68,7 @@ class AttendanceCtrl extends nb.Controller
             {
                 name: 'createdAt'
                 displayName: '发起时间'
+                cellFilter: "date:'yyyy-MM-dd'"
             }
             {
                 name: 'type'
