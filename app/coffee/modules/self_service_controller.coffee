@@ -114,9 +114,13 @@ class ProfileCtrl extends nb.Controller
 
 class MyRequestCtrl extends nb.Controller
 
-    @.$inject = ['$scope', 'Employee', 'OrgStore', 'USER_META', 'VACATIONS', 'MyLeave']
+    @.$inject = ['$scope', 'Employee', 'OrgStore', 'USER_META', 'VACATIONS', 'MyLeave', '$injector']
 
-    constructor: (@scope, @Employee, @OrgStore, meta, vacations, @MyLeave) ->
+    constructor: (@scope, @Employee, @OrgStore, meta, vacations, @MyLeave, injector) ->
+        scope.realFlow = (entity) ->
+            t = entity.type
+            m = injector.get(t)
+            return m.$find(entity.$pk)
 
         @scope.meta = meta
         @scope.vacations = vacations
@@ -137,11 +141,9 @@ class MyRequestCtrl extends nb.Controller
                 field: 'action'
                 displayName:"查看",
                 cellTemplate: '''
-                <div class="ui-grid-cell-contents">
-                    <a nb-panel
-                        template-url="partials/personnel/info_basic.html"
-                    >
-                        详细
+                <div class="ui-grid-cell-contents" ng-init="realFlow = grid.appScope.$parent.realFlow(row.entity)">
+                    <a flow-handler="realFlow" flows="grid.options.data" flow-view="true">
+                        查看
                     </a>
                 </div>
                 '''
