@@ -249,12 +249,12 @@ menuFactory = ($rootScope, $state)->
             }
             {
                 name: '员工调动'
-                state: 'position'
+                state: 'labors_ajust_position'
                 permission: ''
             }
             {
                 name: '员工退休'
-                state: 'position'
+                state: 'labors_retirement'
                 permission: ''
             }
             {
@@ -264,7 +264,17 @@ menuFactory = ($rootScope, $state)->
             }
             {
                 name: '员工辞退'
-                state: 'position'
+                state: 'labors_dismiss'
+                permission: ''
+            }
+            {
+                name: '员工处分'
+                state: 'labors_punishment'
+                permission: ''
+            }
+            {
+                name: '合同续签'
+                state: 'labors_renew_contract'
                 permission: ''
             }
             {

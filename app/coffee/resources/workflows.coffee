@@ -1,7 +1,9 @@
 resources = angular.module('resources')
 
 #流程资源集合，用于批量生成流程资源
-workflows = ['Flow::EarlyRetirement','Flow::AdjustPosition', 'Flow::AnnualLeave', 'Flow::SickLeave']
+workflows = ['Flow::EarlyRetirement','Flow::AdjustPosition', 'Flow::AnnualLeave', 'Flow::SickLeave',
+            'Flow::Retirement'
+]
 
 CustomConfig = {
     'Flow::AdjustPosition': {

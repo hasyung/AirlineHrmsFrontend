@@ -25,6 +25,58 @@ class Route
                 controller: AttendanceCtrl
                 controllerAs: 'ctrl'
             }
+            .state 'labors_ajust_position', {
+                url: '/labors_ajust_position'
+                templateUrl: 'partials/labors/ajust_position/index.html'
+                controller: LaborsCtrl
+                controllerAs: 'ctrl'
+            }
+            .state 'labors_dismiss', {
+                url: '/labors_dismiss'
+                templateUrl: 'partials/labors/dismiss/index.html'
+                controller: LaborsCtrl
+                controllerAs: 'ctrl'
+            }
+            .state 'labors_early_retirement', {
+                url: '/labors_early_retirement'
+                templateUrl: 'partials/labors/early_retirement/index.html'
+                controller: LaborsCtrl
+                controllerAs: 'ctrl'
+            }
+            .state 'labors_punishment', {
+                url: '/labors_punishment'
+                templateUrl: 'partials/labors/punishment/index.html'
+                controller: LaborsCtrl
+                controllerAs: 'ctrl'
+            }
+            .state 'labors_renew_contract', {
+                url: '/labors_renew_contract'
+                templateUrl: 'partials/labors/renew_contract/index.html'
+                controller: LaborsCtrl
+                controllerAs: 'ctrl'
+            }
+            .state 'labors_retirement', {
+                url: '/labors_retirement'
+                templateUrl: 'partials/labors/retirement/index.html'
+                controller: LaborsCtrl
+                controllerAs: 'ctrl'
+            }
+
+
+
+class LaborsCtrl extends nb.Controller
+
+    @.$inject = ['$scope', '$http', 'Flow::Retirement']
+
+    constructor: (@scope, @http, @Retirement)->
+
+    retirement: (users)->
+        params = users.map (user)->
+            {id: user.id, relation_data:user.relation_data}
+
+        @http.post("/api/workflows/Flow::Retirement/batch_create", {receptors:params})
+
+
 
 class AttendanceCtrl extends nb.Controller
 
@@ -406,8 +458,128 @@ class ContractCtrl extends nb.Controller
         @contracts.$refresh(tableState)
 
 
+class UserListCtrl extends nb.Controller
+    @.$inject = ["$scope", "Employee"]
+
+    constructor: (scope, @Employee)->
+        scope.employees = @Employee.$collection().$fetch()
+
+        scope.filterOptions = filterBuildUtils('laborsRetirement')
+            .col 'name',                 '姓名',    'string',           '姓名'
+            .col 'employee_no',          '员工编号', 'string'
+            .col 'department_ids',       '机构',    'org-search'
+            .col 'position_names',       '岗位名称', 'string_array'
+            .col 'locations',            '属地',    'string_array'
+            .col 'channel_ids',          '通道',    'muti-enum-search', '',    {type: 'channels'}
+            .col 'employment_status_id', '用工状态', 'select',           '',    {type: 'employment_status'}
+            .col 'birthday',             '出生日期', 'date-range'
+            .col 'join_scal_date',       '入职时间', 'date-range'
+            .end()
+
+        scope.columnDef = [
+            {
+                displayName: '所属部门'
+                name: 'department.name'
+                cellTooltip: (row) ->
+                    return row.entity.department.name
+            }
+            {
+                displayName: '姓名'
+                field: 'name'
+                # pinnedLeft: true
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+
+            {displayName: '员工编号', name: 'employeeNo'}
+            {
+                displayName: '岗位'
+                name: 'position.name'
+                cellTooltip: (row) ->
+                    return row.entity.position.name
+            }
+            {displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
+            {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
+            {displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
+            {displayName: '到岗时间', name: 'joinScalDate'}
+        ]
+
+        scope.getSelected = () ->
+            rows = scope.$gridApi.selection.getSelectedGridRows()
+            selected = if rows.length >= 1 then rows[0].entity else null
+
+        scope.getSelecteds = ()->
+            rows = scope.$gridApi.selection.getSelectedGridRows()
+            rows = rows.map (row)-> row.entity
+
+        scope.search = (tableState)->
+            scope.employees.$refresh(tableState)
+
+class RetirementCtrl extends nb.Controller
+    @.$inject = ['GridHelper', 'Flow::Retirement', '$scope', '$injector']
+
+    constructor: (helper, @Retirement, scope, injector) ->
+
+        @filterOptions = {
+            name: 'retirementCheck'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '姓名'
+                    type: 'string'
+                }
+            ]
+        }
+
+
+        def = [
+            {
+                name: 'typeCn'
+                displayName: '通道'
+            }
+            {
+                name: 'workflowState'
+                displayName: '状态'
+            }
+            {
+                name: 'createdAt'
+                displayName: '出生日期'
+                cellFilter: "date:'yyyy-MM-dd'"
+            }
+            {
+                name: 'createdAt'
+                displayName: '申请发起时间'
+                cellFilter: "date:'yyyy-MM-dd'"
+            }
+            {
+                name: 'type'
+                displayName: '详细'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a flow-handler="row.entity" flows="grid.options.data">
+                        查看
+                    </a>
+                </div>
+                '''
+            }
+
+        ]
+
+        @columnDef = helper.buildFlowDefault(def)
+
+        @retirements = @Retirement.$collection().$fetch()
+
 
 app.config(Route)
 app.controller('AttendanceRecordCtrl', AttendanceRecordCtrl)
 app.controller('AttendanceHisCtrl', AttendanceHisCtrl)
+app.controller('UserListCtrl', UserListCtrl)
+app.controller('RetirementCtrl', RetirementCtrl)
 
