@@ -84,9 +84,9 @@ class NewResourceCtrl
 
 
 class NewFlowCtrl
-    @.$inject = ['$scope', '$http']
+    @.$inject = ['$scope', '$http', 'USER_META']
 
-    constructor: (scope, $http) ->
+    constructor: (scope, $http, meta) ->
         ctrl = @
 
         scope.initialFlow = (type) ->
@@ -94,19 +94,19 @@ class NewFlowCtrl
 
             return {}
 
-
         scope.createFlow = (data) ->
-            data.vacation_days = 5
-            data.employee_id = 11821
-            $http.post("/api/workflows/#{ctrl.flow_type}", data)
+            data.vacation_days = scope.vacation_days
+            data.employee_id = meta.id
+            $http.post("/api/workflows/#{ctrl.flow_type}", data).success () ->
+                scope.panel.close() if scope.panel
 
 
 class NewMyRequestCtrl extends NewFlowCtrl
 
-    @.$inject = ['$scope', '$http', '$timeout']
+    @.$inject = ['$scope', '$http', '$timeout', 'USER_META']
 
-    constructor: (scope, $http, $timeout) ->
-        super(scope, $http) # 手动注入父类实例化参数
+    constructor: (scope, $http, $timeout, meta) ->
+        super(scope, $http, meta) # 手动注入父类实例化参数
         ctrl = @
 
         scope.request = {}

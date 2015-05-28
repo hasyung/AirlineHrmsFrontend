@@ -1,0 +1,15 @@
+.app-content-wrapper(flex ng-controller="UserListCtrl")
+    div(nb-filter="filterOptions" on-search="search(state)")
+    div.ui-grid-container
+        md-toolbar
+            .md-toolbar-tools
+                h2 员工花名册
+                div(flex)
+                md-button.md-primary.md-raised(
+                    ng-disabled="!getSelected()"
+                    nb-dialog
+                    template-url="/partials/labors/retirement/new_retirement.html"
+                    locals="{users:getSelecteds()}"
+                ) 人员退休
+                
+        div(nb-grid column-defs="columnDef" export-api grid-selection safe-src="employees")

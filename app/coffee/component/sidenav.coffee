@@ -112,28 +112,28 @@ menuFactory = ($rootScope, $state)->
     }
 
 
-    sections.push {
-        name: '考勤管理'
-        icon_src: '/images/svg/left-side-svg/left_icon_5.svg'
-        pages: [
-            {
-                name: '考勤记录'
-                state: 'attendance'
-                permission: ''
-            }
-            {
-                name: '假别设置'
-                state: 'position'
-                permission: ''
-            }
-            {
-                name: '请假管理'
-                state: 'position'
-                permission: ''
-            }
+    # sections.push {
+    #     name: '考勤管理'
+    #     icon_src: '/images/svg/left-side-svg/left_icon_5.svg'
+    #     pages: [
+    #         {
+    #             name: '考勤记录'
+    #             state: 'attendance'
+    #             permission: ''
+    #         }
+    #         {
+    #             name: '假别设置'
+    #             state: 'position'
+    #             permission: ''
+    #         }
+    #         {
+    #             name: '请假管理'
+    #             state: 'position'
+    #             permission: ''
+    #         }
 
-        ]
-    }
+    #     ]
+    # }
 
 
     sections.push {
@@ -249,12 +249,12 @@ menuFactory = ($rootScope, $state)->
             }
             {
                 name: '员工调动'
-                state: 'position'
+                state: 'labors_ajust_position'
                 permission: ''
             }
             {
                 name: '员工退休'
-                state: 'position'
+                state: 'labors_retirement'
                 permission: ''
             }
             {
@@ -264,7 +264,17 @@ menuFactory = ($rootScope, $state)->
             }
             {
                 name: '员工辞退'
-                state: 'position'
+                state: 'labors_dismiss'
+                permission: ''
+            }
+            {
+                name: '员工处分'
+                state: 'labors_punishment'
+                permission: ''
+            }
+            {
+                name: '合同续签'
+                state: 'labors_renew_contract'
                 permission: ''
             }
             {
