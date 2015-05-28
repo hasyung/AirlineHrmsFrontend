@@ -1,0 +1,33 @@
+extends labors_layout
+
+block vars
+    - var flowType = "Flow::Resignation"
+    - var flowTitle = "辞职申请单"
+
+block relation_data
+    div.flow-info-row(layout)
+        .flow-info-cell(flex)
+            .flow-cell-title 入职时间
+            .flow-cell-content 2000-01-01
+
+block form
+    div(layout)
+        md-input-container(flex)
+            label 拟离职时间
+            input(ng-model="request.start_time" ng-change="calculateTotalDays(request, '年假')" name="start_time" bs-datepicker required)
+    //- div(layout)
+    //-     md-input-container(flex)
+    //-         label 转入通道
+    //-         input(ng-model="" disabled)
+    //-     md-input-container(flex)
+    //-         label 在编情况
+    //-         input(ng-model="" disabled)
+    div(layout)
+        md-input-container(flex)
+            label 离职原因
+            textarea(ng-model="request.reason" columns="1" md-maxlength="2000")
+    md-subheader.accessory-header.md-background.md-hue-1 附件
+    div(nb-file-upload flow-type="#{flowType}" ng-model="request.attachment_ids")
+
+
+
