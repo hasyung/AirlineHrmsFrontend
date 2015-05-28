@@ -617,7 +617,7 @@ angular.module 'nb.directives'
                 flow-files-submitted="$flow.upload()"
                 flow-file-success="ctrl.addFile($message);">
                 <md-button class="md-primary md-raised" flow-btn type="button">添加文件</md-button>
-                <span class="tip"> 请上传医院为您开具的病假证明照片</span>
+                <span class="tip"> {{tips}}</span>
             </div>
         </div>
         '''
@@ -648,6 +648,7 @@ angular.module 'nb.directives'
         return {
             scope: {
                 type: '@flowType'
+                tips: '@tips'
             }
             template: (elem, attrs)->
                 new Error("flow type is needed in workflows") if attrs['flowType']
