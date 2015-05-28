@@ -576,6 +576,11 @@ class RetirementCtrl extends nb.Controller
 
         @retirements = @Retirement.$collection().$fetch()
 
+    search: (tableState)->
+        @retirements.$refresh(tableState)
+
+        
+
 
 app.config(Route)
 app.controller('AttendanceRecordCtrl', AttendanceRecordCtrl)
