@@ -9,7 +9,9 @@
         .flow-list-content.ui-grid-container
             .flow-list-tip
                 | 点击请假申请，可发起请假流程。列表中选择未生效的申请，可撤销请假申请。
-                | 你2014年年假剩余3天，2015年年假剩余5天。
+                | 你
+                span(ng-repeat="(key, value) in vacations.year_days.year") {{key}} 年年假剩余天数 {{value}} 天 {{$last ? '。' : '，' }}
+
             md-toolbar
                 .md-toolbar-tools
                     span 请假列表
