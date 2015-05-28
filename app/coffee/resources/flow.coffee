@@ -210,7 +210,7 @@ FlowHandlerDirective = (ngDialog)->
                         </div>
                     </div>
                 </md-card>
-                <md-card>
+                <md-card ng-if="!flowView">
                     <div class="approval-msg">
                         <div class="approval-subheader">意见</div>
                         <div class="approval-cell-container">
@@ -242,7 +242,7 @@ FlowHandlerDirective = (ngDialog)->
                         </div>
                     </div>
                 </md-card>
-                <div class="approval-buttons">
+                <div class="approval-buttons" ng-if="!flowView">
                     <md-button class="md-raised md-warn" ng-click="submitFlow({opinion: true}, flow, dialog)" type="button">通过</md-button>
                     <md-button class="md-raised md-warn" ng-click="submitFlow({opinion: false}, flow, dialog)" type="button">驳回</md-button>
                     <md-button class="md-raised md-primary"
@@ -250,6 +250,9 @@ FlowHandlerDirective = (ngDialog)->
                         template-url="partials/component/workflow/hand_over.html"
                         locals="{flow:flow}"
                         >移交</md-button>
+                </div>
+                <div class="approval-buttons" ng-if="flowView">
+                    <md-button class="md-raised md-warn" ng-click="dialog.close()" type="button">关闭</md-button>
                 </div>
             </div>
         </div>
@@ -261,6 +264,8 @@ FlowHandlerDirective = (ngDialog)->
 
         defaults = ngDialog.getDefaults()
         options = angular.extend {}, defaults, scope.options
+
+        scope.flowView = if attrs.flowView then scope.$eval(attrs.flowView) else false
 
         offeredExtra = (flow) ->
             return template

@@ -3,6 +3,7 @@ nb = @.nb
 app = nb.app
 extend = angular.extend
 resetForm = nb.resetForm
+filterBuildUtils = nb.filterBuildUtils
 Modal = nb.Modal
 
 
@@ -92,8 +93,6 @@ class ProfileCtrl extends nb.Controller
 
     loadInitailData: ->
         @scope.currentUser = @User.$fetch()
-        # @scope.currentUser.educationExperiences.$refresh()
-        # @scope.currentUser.workExperiences.$fetch()
 
     # 员工自助中员工编辑自己的信息
     updateInfo: ->
@@ -113,14 +112,53 @@ class ProfileCtrl extends nb.Controller
 
 class MyRequestCtrl extends nb.Controller
 
-    @.$inject = ['$scope', 'Employee', 'OrgStore', 'USER_META', 'VACATIONS']
+    @.$inject = ['$scope', 'Employee', 'OrgStore', 'USER_META', 'VACATIONS', 'MyLeave', '$injector']
 
-    constructor: ($scope, @Employee, @OrgStore, meta, vacations) ->
+    constructor: (@scope, @Employee, @OrgStore, meta, vacations, @MyLeave, injector) ->
+        @scope.realFlow = (entity) ->
+            t = entity.type
+            m = injector.get(t)
+            return m.$find(entity.$pk)
 
-        $scope.meta = meta
-        $scope.vacations = vacations
+        @scope.meta = meta
+        @scope.vacations = vacations
 
         @reviewers = @loadReviewer()
+
+        @leaveCol = [
+            {name:"receptor.employeeNo", displayName:"员工编号"}
+            {name:"receptor.name", displayName:"姓名"}
+            {name:"receptor.departmentName", displayName:"所属部门"}
+            {name:"receptor.positionName", displayName:"岗位"}
+
+            {name:"typeCn", displayName:"假别"}
+            {name:"vacationDays", displayName:"时长"}
+            {name:"workflowState", displayName:"状态"}
+            {name:"createdAt", displayName:"发起时间", cellFilter: "date:'yyyy-MM-dd'"}
+            {
+                field: 'action'
+                displayName:"查看",
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents" ng-init="realFlow = grid.appScope.$parent.realFlow(row.entity)">
+                    <a flow-handler="realFlow" flows="grid.options.data" flow-view="true">
+                        查看
+                    </a>
+                </div>
+                '''
+
+            }
+        ]
+
+    getSelected: () ->
+        rows = @scope.$gridApi.selection.getSelectedGridRows()
+        selected = if rows.length >= 1 then rows[0].entity else null
+
+    revert: (isConfirm, leave)->
+        if isConfirm
+            leave.revert()
+
+    charge: (leave, params)->
+        leave.charge(params)
 
     loadReviewer: () ->
         @Employee.$search({category_ids: [1,2], department_ids: [@OrgStore.getPrimaryOrgId()]})
