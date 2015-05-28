@@ -32,10 +32,10 @@ div.workflow.md-background(md-theme="hrms")
                                         div(layout)
                                             md-input-container(flex)
                                                 label 开始日期
-                                                input(ng-model="request.start_time" ng-change="calculateTotalDays(request, '年假')" name="start_time" bs-datepicker required)
+                                                input(ng-model="request.start_time" ng-change="calculateTotalDays(request, '#{flowName}')" name="start_time" bs-datepicker required)
                                             md-input-container(flex)
                                                 label 结束日期
-                                                input(ng-model="request.end_time" ng-change="calculateTotalDays(request, '年假')" name="end_time" required bs-datepicker)
+                                                input(ng-model="request.end_time" ng-change="calculateTotalDays(request, '#{flowName}')" name="end_time" required bs-datepicker)
                                         div(layout)
                                             .without-edit
                                                 div.progress-wrapper(ng-if="calculating")
