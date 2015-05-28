@@ -1,8 +1,8 @@
 extends ../labors_layout
 
 block vars
-    - var flowType = "Flow::Retirement"
-    - var flowTitle = "退休申请单"
+    - var flowType = "Flow::Punishment"
+    - var flowTitle = "员工辞退申请单"
 
 block relation_data
     div.flow-info-row(layout)
@@ -10,20 +10,17 @@ block relation_data
             .flow-cell-title 通道
             .flow-cell-content 管理
         .flow-info-cell(flex)
-            .flow-cell-title 性别
-            .flow-cell-content 男
+            .flow-cell-title 用工性质
+            .flow-cell-content 合同工
     div.flow-info-row(layout)
         .flow-info-cell(flex)
-            .flow-cell-title 社保缴费年限
-            .flow-cell-content 15年
-        .flow-info-cell(flex)
-            .flow-cell-title 年龄
-            .flow-cell-content 50
+            .flow-cell-title 入职时间
+            .flow-cell-content 2000-01-01
 
 block form
     div(layout)
         md-input-container(flex)
-            label 退休原因
+            label 辞退原因
             textarea(ng-model="request.reason" columns="1" md-maxlength="2000")
 
 

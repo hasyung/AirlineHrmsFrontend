@@ -1,0 +1,55 @@
+extends labors_layout
+
+block vars
+    - var flowType = "Flow::AdjustPosition"
+    - var flowTitle = "调岗申请单"
+
+block relation_data
+    div.flow-info-row(layout)
+        .flow-info-cell(flex)
+            .flow-cell-title 通道
+            .flow-cell-content 管理
+        .flow-info-cell(flex)
+            .flow-cell-title 学历
+            .flow-cell-content 本科
+    div.flow-info-row(layout)
+        .flow-info-cell(flex)
+            .flow-cell-title 学位
+            .flow-cell-content 学士
+        .flow-info-cell(flex)
+                .flow-cell-title 英语等级
+                .flow-cell-content 大学英语4级
+    div.flow-info-row(layout)
+        .flow-info-cell(flex)
+            .flow-cell-title 当前岗位年限
+            .flow-cell-content 5年
+        .flow-info-cell(flex)
+            .flow-cell-title 近6各月绩效
+            .flow-cell-content 4次优秀/2次良好
+
+block form
+    div(layout ng-init="params = {}; params.orgPos = [];")
+        div(flex)
+            org-search(ng-model="request.department" float-label placeholder="所属部门" selected-item-change="params.orgPos = org.position.$fetch()")
+        md-input-container.row-has-value(flex)
+                label 岗位
+                md-select(ng-model="posItem.position")
+                    md-select-label {{posItem.position.name || '无'}}
+                    md-option(ng-value="pos" ng-repeat="pos in itemParams.orgPos") {{::pos.name}}
+    div(layout)
+        md-input-container(flex)
+            label 转入通道
+            input(ng-model="" disabled)
+        md-input-container(flex)
+            label 在编情况
+            input(ng-model="" disabled)
+
+    div(layout)
+        md-input-container(flex)
+            label 申请理由
+            textarea(ng-model="request.reason" columns="1" md-maxlength="2000")
+    md-subheader.accessory-header.md-background.md-hue-1 附件
+    div(nb-file-upload flow-type="#{flowType}" ng-model="request.attachment_ids")
+
+
+

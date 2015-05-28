@@ -1,0 +1,36 @@
+extends labors_layout
+
+block vars
+    - var flowType = "Flow::EarlyRetirement"
+    - var flowTitle= "退养申请单"
+
+block relation_data
+    div.flow-info-row(layout)
+        .flow-info-cell(flex)
+            .flow-cell-title 通道
+            .flow-cell-content 管理
+        .flow-info-cell(flex)
+            .flow-cell-title 性别
+            .flow-cell-content 男
+    div.flow-info-row(layout)
+        .flow-info-cell(flex)
+            .flow-cell-title 年龄
+            .flow-cell-content 50
+        .flow-info-cell(flex)
+                .flow-cell-title 工作年限
+                .flow-cell-content 25年
+    div.flow-info-row(layout)
+        .flow-info-cell(flex)
+            .flow-cell-title 到岗时间
+            .flow-cell-content 2000-01-01
+        .flow-info-cell(flex)
+            .flow-cell-title 本企业工作年限
+            .flow-cell-content 18年
+
+block form
+    div(layout)
+        md-input-container(flex)
+            label 申请理由
+            textarea(ng-model="request.reason" columns="1" md-maxlength="2000")
+    md-subheader.accessory-header.md-background.md-hue-1 附件
+    div(nb-file-upload flow-type="#{flowType}" ng-model="request.attachment_ids")
