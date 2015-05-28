@@ -93,8 +93,6 @@ class ProfileCtrl extends nb.Controller
 
     loadInitailData: ->
         @scope.currentUser = @User.$fetch()
-        # @scope.currentUser.educationExperiences.$refresh()
-        # @scope.currentUser.workExperiences.$fetch()
 
     # 员工自助中员工编辑自己的信息
     updateInfo: ->
@@ -117,7 +115,7 @@ class MyRequestCtrl extends nb.Controller
     @.$inject = ['$scope', 'Employee', 'OrgStore', 'USER_META', 'VACATIONS', 'MyLeave', '$injector']
 
     constructor: (@scope, @Employee, @OrgStore, meta, vacations, @MyLeave, injector) ->
-        scope.realFlow = (entity) ->
+        @scope.realFlow = (entity) ->
             t = entity.type
             m = injector.get(t)
             return m.$find(entity.$pk)
@@ -132,7 +130,7 @@ class MyRequestCtrl extends nb.Controller
             {name:"receptor.name", displayName:"姓名"}
             {name:"receptor.departmentName", displayName:"所属部门"}
             {name:"receptor.positionName", displayName:"岗位"}
-            
+
             {name:"typeCn", displayName:"假别"}
             {name:"vacationDays", displayName:"时长"}
             {name:"workflowState", displayName:"状态"}
