@@ -45,7 +45,6 @@ form(name="posEditForm" ng-submit="save(currentPos.$save(), posEditForm)" ng-con
                 label 超编
                 input(ng-model="currentPos.overstaffedNum" disabled)
         div(layout)
-            
             md-input-container.row-has-value(flex)
                 label 工时制度
                 //- input(ng-model="currentPos.schedule.displayName")
@@ -59,4 +58,3 @@ form(name="posEditForm" ng-submit="save(currentPos.$save(), posEditForm)" ng-con
                     md-select-label {{$enum.parseLabel(currentPos.positionNatureId, "position_natures")}}
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('position_natures')") {{item.label}}
 
-      
