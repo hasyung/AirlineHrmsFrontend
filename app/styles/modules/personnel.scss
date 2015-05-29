@@ -595,6 +595,10 @@
     .item-action-container {
         padding-left: 10px;
         padding-top: 20px;
+
+        .md-button:first-child {
+            margin-right: 10px;
+        }
     }
 }
 

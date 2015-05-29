@@ -3,8 +3,10 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
         md-button.md-fab.md-primary(ng-click="edit($event)")
             md-icon(md-svg-src="/images/svg/edit_24px.svg" aria-label="修改")
     .form-btn-group.alive(ng-show="editing")
-        md-button.md-raised.white(type="button" ng-click="cancel(current,$event, empEditForm)",) 取消
-        md-button.skyblue.md-raised(type="submit") 保存
+        md-button.md-fab.white(type="button" ng-click="cancel(current,$event, empEditForm)")
+            md-icon(md-svg-src="/images/svg/close.svg" aria-label="取消")
+        md-button.md-primary.md-fab(type="submit")
+            md-icon(md-svg-src="/images/svg/check.svg" aria-label="保存")
     fieldset(ng-disabled="!editing")
         div(layout)
             md-input-container.row-has-value(flex)
@@ -20,4 +22,4 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
             md-input-container.row-has-value(flex)
                 label 技术职务
                 input(ng-model="current.technicalDuty")
-                
+
