@@ -27,7 +27,7 @@ class Route
             }
             .state 'labors_ajust_position', {
                 url: '/labors_ajust_position'
-                templateUrl: 'partials/labors/ajust_position/index.html'
+                templateUrl: 'partials/labors/adjust_position/index.html'
                 controller: LaborsCtrl
                 controllerAs: 'ctrl'
             }
