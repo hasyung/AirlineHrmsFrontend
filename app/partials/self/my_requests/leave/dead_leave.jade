@@ -24,5 +24,5 @@ block additional_form
             md-checkbox.md-primary(ng-model="additional") 附带路程假
         div.dis-check
             md-radio-group(ng-model="request.journey")
-                md-radio-button.md-primary(value="省内" ng-disabled="additional") 省内
-                md-radio-button.md-primary(value="省外" ng-disabled="additional") 省外
+                md-radio-button.md-primary(value="省内" ng-disabled="!additional") 省内
+                md-radio-button.md-primary(value="省外" ng-disabled="!additional") 省外
