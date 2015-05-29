@@ -359,7 +359,7 @@ class ContractCtrl extends nb.Controller
             }
             {displayName: '用工性质', name: 'applyType'}
             {displayName: '变更标志', name: 'changeFlag'}
-            {displayName: '合同开始时间', name: 'startDate', cellFilter: "enum:'channels'"}
+            {displayName: '合同开始时间', name: 'startDate'}
             {displayName: '合同结束时间', name: 'endDate'}
             {displayName: '备注', name: 'notes'}
             {
