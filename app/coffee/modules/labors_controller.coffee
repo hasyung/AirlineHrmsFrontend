@@ -101,8 +101,10 @@ class Route
             .state 'labors_dismiss', {
                 url: '/labors_dismiss'
                 templateUrl: 'partials/labors/dismiss/index.html'
-                controller: LaborsCtrl
-                controllerAs: 'ctrl'
+                controller: 'SbFlowHandlerCtrl as ctrl'
+                resolve: {
+                    'FlowName': -> 'Flow::Dismiss'
+                }
             }
             .state 'labors_early_retirement', {
                 url: '/labors_early_retirement'
