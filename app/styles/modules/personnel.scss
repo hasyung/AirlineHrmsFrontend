@@ -256,6 +256,10 @@
                 right: 20px;
                 top: 0;
 
+                &.sep-top {
+                    top: -56px;
+                }
+
                 .md-button {
                     margin-right: 10px;
                     margin-top: 20px;
