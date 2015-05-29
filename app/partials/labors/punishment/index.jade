@@ -1,7 +1,14 @@
-tabset(flex)
-    tab(heading="处分发起")
-        include user_list
-    tab(heading="待处理")
-        include check
-    tab(heading="历史记录")
-        include history
+extends ../sb_flow_layout/index_layout
+
+block heading
+    - var user_list = '处分发起'
+    - var flowName = "员工处分"
+
+
+block actions
+    md-button.md-primary.md-raised(
+        ng-disabled="!getSelected()"
+        nb-dialog
+        template-url="/partials/labors/retirement/new_retirement.html"
+        locals="{users:getSelecteds()}"
+    ) 人员处分
