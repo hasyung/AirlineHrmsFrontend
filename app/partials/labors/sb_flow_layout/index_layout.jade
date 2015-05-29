@@ -1,0 +1,10 @@
+block heading
+
+tabset(flex)
+    if user_list
+        tab(heading="#{user_list}")
+            include user_list_layout
+    tab(heading="待处理")
+        include check_list_layout
+    tab(heading="历史记录")
+        include history

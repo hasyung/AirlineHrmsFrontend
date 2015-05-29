@@ -246,8 +246,8 @@ drawOrgChart = (root, options, select_org_id) ->
                 .text (d) -> d.name.replace(/（/gm, '︵').replace(/）/gm, '︶')
 
         svg.attr("width",rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + 40)
-            .attr("height",(rectHeight + rectVerticalSpacing)*4)
-        tree.size([rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + 40,(rectHeight + rectVerticalSpacing)*3+40])
+            .attr("height",(rectHeight + rectVerticalSpacing)*4 + staff_nodes.length*(rectWidth + rectHorizontalSpacing))
+        tree.size([rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + staff_nodes.length*(rectWidth + rectHorizontalSpacing) + 40,(rectHeight + rectVerticalSpacing)*3+40])
 
         drawPath()
         drawStaffPath()

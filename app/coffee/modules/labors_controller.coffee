@@ -6,11 +6,78 @@ filterBuildUtils = nb.filterBuildUtils
 Modal = nb.Modal
 
 
+userListFilterOptions = filterBuildUtils('laborsRetirement')
+    .col 'name',                 '姓名',    'string',           '姓名'
+    .col 'employee_no',          '员工编号', 'string'
+    .col 'department_ids',       '机构',    'org-search'
+    .col 'position_names',       '岗位名称', 'string_array'
+    .col 'locations',            '属地',    'string_array'
+    .col 'channel_ids',          '通道',    'muti-enum-search', '',    {type: 'channels'}
+    .col 'employment_status_id', '用工状态', 'select',           '',    {type: 'employment_status'}
+    .col 'birthday',             '出生日期', 'date-range'
+    .col 'join_scal_date',       '入职时间', 'date-range'
+    .end()
+
+USER_LIST_TABLE_DEFS = [
+    {displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
+    {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
+    {displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
+    {displayName: '到岗时间', name: 'joinScalDate'}
+]
+
+
+FLOW_HANDLE_TABLE_DEFS =  [
+    {
+        name: 'receptor.channelId'
+        displayName: '通道'
+        cellFilter: "enum:'channels'"
+    }
+    {
+        name: 'workflowState'
+        displayName: '状态'
+    }
+    {
+        name: 'createdAt'
+        displayName: '出生日期'
+        cellFilter: "date:'yyyy-MM-dd'"
+    }
+    {
+        name: 'createdAt'
+        displayName: '申请发起时间'
+        cellFilter: "date:'yyyy-MM-dd'"
+    }
+    {
+        name: 'type'
+        displayName: '详细'
+        cellTemplate: '''
+        <div class="ui-grid-cell-contents">
+            <a flow-handler="row.entity" flows="grid.options.data">
+                查看
+            </a>
+        </div>
+        '''
+    }
+
+]
+
+HANDLER_AND_HISTORY_FILTER_OPTIONS = {
+    constraintDefs: [
+        {
+            name: 'employee_name'
+            displayName: '姓名'
+            type: 'string'
+        }
+    ]
+}
+
+
+
+
 
 class Route
-    @.$inject = ['$stateProvider', '$urlRouterProvider']
+    @.$inject = ['$stateProvider', '$urlRouterProvider', '$injector']
 
-    constructor: (stateProvider, urlRouterProvider) ->
+    constructor: (stateProvider, urlRouterProvider, injector) ->
 
         stateProvider
             .state 'contract_management', {
@@ -40,8 +107,10 @@ class Route
             .state 'labors_early_retirement', {
                 url: '/labors_early_retirement'
                 templateUrl: 'partials/labors/early_retirement/index.html'
-                controller: LaborsCtrl
-                controllerAs: 'ctrl'
+                controller: 'SbFlowHandlerCtrl as ctrl'
+                resolve: {
+                    'FlowName': -> 'Flow::EarlyRetirement'
+                }
             }
             .state 'labors_punishment', {
                 url: '/labors_punishment'
@@ -538,39 +607,7 @@ class RetirementCtrl extends nb.Controller
             ]
         }
 
-
-        def = [
-            {
-                name: 'typeCn'
-                displayName: '通道'
-            }
-            {
-                name: 'workflowState'
-                displayName: '状态'
-            }
-            {
-                name: 'createdAt'
-                displayName: '出生日期'
-                cellFilter: "date:'yyyy-MM-dd'"
-            }
-            {
-                name: 'createdAt'
-                displayName: '申请发起时间'
-                cellFilter: "date:'yyyy-MM-dd'"
-            }
-            {
-                name: 'type'
-                displayName: '详细'
-                cellTemplate: '''
-                <div class="ui-grid-cell-contents">
-                    <a flow-handler="row.entity" flows="grid.options.data">
-                        查看
-                    </a>
-                </div>
-                '''
-            }
-
-        ]
+        def = _.cloneDeep(flow_handle_table_defs)
 
         @columnDef = helper.buildFlowDefault(def)
 
@@ -579,7 +616,63 @@ class RetirementCtrl extends nb.Controller
     search: (tableState)->
         @retirements.$refresh(tableState)
 
-        
+
+
+
+class SbFlowHandlerCtrl
+
+    @.$inject = ['GridHelper', 'FlowName', '$scope', 'Employee', '$injector']
+
+    constructor: (@helper, FlowName, scope, @Employee, $injector) ->
+
+        scope.ctrl = @
+        @Flow = $injector.get(FlowName)
+
+
+        @userListName = "#{FlowName}_USER_LIST"
+        @checkListName = "#{FlowName}_CHECK_LIST"
+        @historyListName = "#{FlowName}_HISTORY_LIST"
+
+        @columnDef = null
+        @tableData = null
+        @filterOptions = null
+
+    userList: ->
+        filterOptions = _.cloneDeep(userListFilterOptions)
+        filterOptions.name = @userListName
+        @filterOptions = filterOptions
+        def = _.cloneDeep(USER_LIST_TABLE_DEFS)
+        @columnDef = helper.buildFlowDefault(def)
+        @tableData = @Employee.$collection().$fetch()
+
+    checkList: ->
+        @columnDef = @helper.buildFlowDefault(FLOW_HANDLE_TABLE_DEFS)
+        filterOptions = _.cloneDeep(HANDLER_AND_HISTORY_FILTER_OPTIONS)
+        filterOptions.name = @checkListName
+        @filterOptions = filterOptions
+        @tableData = @Flow.$collection().$fetch()
+
+    historyList: ->
+        @columnDef = @helper.buildFlowDefault(FLOW_HANDLE_TABLE_DEFS)
+        filterOptions = _.cloneDeep(HANDLER_AND_HISTORY_FILTER_OPTIONS)
+        filterOptions.name = @historyListName
+        @filterOptions = filterOptions
+        @tableData = @Flow.records()
+
+    search: (tableState)->
+        @tableData.$refresh(tableState)
+
+class EarlyRetirementCtrl extends SbFlowHandlerCtrl
+
+    @.$inject = ['GridHelper', 'Flow::EarlyRetirement', '$scope', 'Employee']
+
+    constructor: (helper, Flow, scope, Employee) ->
+        @userListName = 'EarlyRetirementUserList'
+        @checkListName = 'EarlyRetirementCheckList'
+        @historyListName = 'EarlyRetirementHistoryList'
+        super(helper, Flow, scope, Employee)
+
+
 
 
 app.config(Route)
@@ -587,4 +680,5 @@ app.controller('AttendanceRecordCtrl', AttendanceRecordCtrl)
 app.controller('AttendanceHisCtrl', AttendanceHisCtrl)
 app.controller('UserListCtrl', UserListCtrl)
 app.controller('RetirementCtrl', RetirementCtrl)
+app.controller('SbFlowHandlerCtrl', SbFlowHandlerCtrl)
 
