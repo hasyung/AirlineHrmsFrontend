@@ -19,6 +19,34 @@ userListFilterOptions = filterBuildUtils('laborsRetirement')
     .end()
 
 USER_LIST_TABLE_DEFS = [
+    {displayName: '员工编号', name: 'employeeNo'}
+    {
+        displayName: '姓名'
+        field: 'name'
+        # pinnedLeft: true
+        cellTemplate: '''
+        <div class="ui-grid-cell-contents ng-binding ng-scope">
+            <a nb-panel
+                template-url="partials/personnel/info_basic.html"
+                locals="{employee: row.entity}">
+                {{grid.getCellValue(row, col)}}
+            </a>
+        </div>
+        '''
+    }
+    {
+        displayName: '所属部门'
+        name: 'department.name'
+        cellTooltip: (row) ->
+            return row.entity.department.name
+    }
+
+    {
+        displayName: '岗位'
+        name: 'position.name'
+        cellTooltip: (row) ->
+            return row.entity.position.name
+    }
     {displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
     {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
     {displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
@@ -109,7 +137,7 @@ class Route
             .state 'labors_early_retirement', {
                 url: '/labors_early_retirement'
                 templateUrl: 'partials/labors/early_retirement/index.html'
-                controller: 'SbFlowHandlerCtrl as ctrl'
+                controller: SbFlowHandlerCtrl
                 resolve: {
                     'FlowName': -> 'Flow::EarlyRetirement'
                 }
@@ -117,8 +145,10 @@ class Route
             .state 'labors_punishment', {
                 url: '/labors_punishment'
                 templateUrl: 'partials/labors/punishment/index.html'
-                controller: LaborsCtrl
-                controllerAs: 'ctrl'
+                controller: SbFlowHandlerCtrl
+                resolve: {
+                    'FlowName': -> 'Flow::Punishment'
+                }
             }
             .state 'labors_renew_contract', {
                 url: '/labors_renew_contract'
@@ -623,9 +653,9 @@ class RetirementCtrl extends nb.Controller
 
 class SbFlowHandlerCtrl
 
-    @.$inject = ['GridHelper', 'FlowName', '$scope', 'Employee', '$injector']
+    @.$inject = ['GridHelper', 'FlowName', '$scope', 'Employee', '$injector', 'OrgStore']
 
-    constructor: (@helper, FlowName, scope, @Employee, $injector) ->
+    constructor: (@helper, FlowName, scope, @Employee, $injector, OrgStore) ->
 
         scope.ctrl = @
         @Flow = $injector.get(FlowName)
@@ -639,12 +669,13 @@ class SbFlowHandlerCtrl
         @tableData = null
         @filterOptions = null
 
+        @reviewers =  @Employee.$search({category_ids: [1,2], department_ids: [OrgStore.getPrimaryOrgId()]})
+
     userList: ->
         filterOptions = _.cloneDeep(userListFilterOptions)
         filterOptions.name = @userListName
         @filterOptions = filterOptions
-        def = _.cloneDeep(USER_LIST_TABLE_DEFS)
-        @columnDef = helper.buildFlowDefault(def)
+        @columnDef = _.cloneDeep(USER_LIST_TABLE_DEFS)
         @tableData = @Employee.$collection().$fetch()
 
     checkList: ->
@@ -660,6 +691,9 @@ class SbFlowHandlerCtrl
         filterOptions.name = @historyListName
         @filterOptions = filterOptions
         @tableData = @Flow.records()
+
+    getSelected: ->
+
 
     search: (tableState)->
         @tableData.$refresh(tableState)
