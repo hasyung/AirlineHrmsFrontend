@@ -123,8 +123,10 @@ class Route
             .state 'labors_ajust_position', {
                 url: '/labors_ajust_position'
                 templateUrl: 'partials/labors/adjust_position/index.html'
-                controller: LaborsCtrl
-                controllerAs: 'ctrl'
+                controller: SbFlowHandlerCtrl
+                resolve: {
+                    'FlowName': -> 'Flow::AdjustPosition'
+                }
             }
             .state 'labors_dismiss', {
                 url: '/labors_dismiss'
@@ -653,9 +655,9 @@ class SbFlowHandlerCtrl
 
     @.$inject = ['GridHelper', 'FlowName', '$scope', 'Employee', '$injector', 'OrgStore']
 
-    constructor: (@helper, FlowName, scope, @Employee, $injector, OrgStore) ->
+    constructor: (@helper, FlowName, @scope, @Employee, $injector, OrgStore) ->
 
-        scope.ctrl = @
+        @scope.ctrl = @
         @Flow = $injector.get(FlowName)
 
 
@@ -691,7 +693,8 @@ class SbFlowHandlerCtrl
         @tableData = @Flow.records()
 
     getSelected: ->
-
+        rows = @scope.$gridApi.selection.getSelectedGridRows()
+        selected = if rows.length >= 1 then rows[0].entity else null
 
     search: (tableState)->
         @tableData.$refresh(tableState)
