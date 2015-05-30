@@ -67,13 +67,12 @@ class Route
                 url: '/resignation'
                 views: {
                     '@': {
-                        templateUrl: ''
+                        templateUrl: 'partials/self/my_requests/resignation/index.html'
                         controller: 'SbFlowHandlerCtrl'
                         resolve: {
                             'FlowName': -> 'Flow::Resignation'
                             'ColumnDef': (GridHelper) ->
                                 return GridHelper.buildDefault()
-
                         }
                     }
                 }
@@ -82,7 +81,7 @@ class Route
                 url: '/renew_contract'
                 views: {
                     '@': {
-                        templateUrl: ''
+                        templateUrl: 'partials/self/my_requests/renew_contract/index.html'
                         controller: 'SbFlowHandlerCtrl'
                         resolve: {
                             'FlowName': -> 'RenewContract'

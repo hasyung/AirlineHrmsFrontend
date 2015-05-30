@@ -55,15 +55,15 @@ angular.forEach workflows, (item)->
 
             flowNodes: {hasMany: "FlowReply"}
 
-
             $config:
                 jsonRootMany: 'workflows'
                 jsonRootSingle: 'workflow'
             $extend:
                 Scope:
                     records: ->
-                        this.$url()
                         restmod.model("/workflows/#{item}/record").$collection().$fetch()
+                    myRequests: ->
+                        restmod.model("/me/workflows/#{item}").$collection.$fetch()
 
         }
     resources.factory item, ['restmod', 'RMUtils', resource]

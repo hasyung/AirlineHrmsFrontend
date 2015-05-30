@@ -663,7 +663,7 @@ class SbFlowHandlerCtrl
 
     @.$inject = ['GridHelper', 'FlowName', '$scope', 'Employee', '$injector', 'OrgStore', 'ColumnDef']
 
-    constructor: (@helper, FlowName, @scope, @Employee, $injector, OrgStore, @recordsColDefs) ->
+    constructor: (@helper, FlowName, @scope, @Employee, $injector, OrgStore, @userRequestsColDef) ->
 
         @scope.ctrl = @
         @Flow = $injector.get(FlowName)
@@ -700,7 +700,9 @@ class SbFlowHandlerCtrl
         @filterOptions = filterOptions
         @tableData = @Flow.records()
 
-    myRecords: ->
+    myRequests: ->
+        @columnDef = userRequestsColDef
+        @tableData = @Flow.myRequests()
 
 
     getSelected: ->
