@@ -131,8 +131,10 @@ class Route
             .state 'labors_dismiss', {
                 url: '/labors_dismiss'
                 templateUrl: 'partials/labors/dismiss/index.html'
-                controller: LaborsCtrl
-                controllerAs: 'ctrl'
+                controller: SbFlowHandlerCtrl
+                resolve: {
+                    'FlowName': -> 'Flow::Dismiss'
+                }
             }
             .state 'labors_early_retirement', {
                 url: '/labors_early_retirement'
@@ -153,8 +155,10 @@ class Route
             .state 'labors_renew_contract', {
                 url: '/labors_renew_contract'
                 templateUrl: 'partials/labors/renew_contract/index.html'
-                controller: LaborsCtrl
-                controllerAs: 'ctrl'
+                controller: SbFlowHandlerCtrl
+                resolve: {
+                    'FlowName': -> 'Flow::RenewContract'
+                }
             }
             .state 'labors_retirement', {
                 url: '/labors_retirement'
