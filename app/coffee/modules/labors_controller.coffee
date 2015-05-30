@@ -657,9 +657,9 @@ class RetirementCtrl extends nb.Controller
 
 class SbFlowHandlerCtrl
 
-    @.$inject = ['GridHelper', 'FlowName', '$scope', 'Employee', '$injector', 'OrgStore']
+    @.$inject = ['GridHelper', 'FlowName', '$scope', 'Employee', '$injector', 'OrgStore', 'ColumnDef']
 
-    constructor: (@helper, FlowName, @scope, @Employee, $injector, OrgStore) ->
+    constructor: (@helper, FlowName, @scope, @Employee, $injector, OrgStore, @recordsColDefs) ->
 
         @scope.ctrl = @
         @Flow = $injector.get(FlowName)
@@ -695,6 +695,9 @@ class SbFlowHandlerCtrl
         filterOptions.name = @historyListName
         @filterOptions = filterOptions
         @tableData = @Flow.records()
+
+    myRecords: ->
+
 
     getSelected: ->
         rows = @scope.$gridApi.selection.getSelectedGridRows()

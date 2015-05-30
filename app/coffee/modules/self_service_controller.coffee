@@ -63,6 +63,36 @@ class Route
                     }
                 }
             }
+            .state 'my_requests.resignation', {
+                url: '/resignation'
+                views: {
+                    '@': {
+                        templateUrl: ''
+                        controller: 'SbFlowHandlerCtrl'
+                        resolve: {
+                            'FlowName': -> 'Flow::Resignation'
+                            'ColumnDef': (GridHelper) ->
+                                return GridHelper.buildDefault()
+
+                        }
+                    }
+                }
+            }
+            .state 'my_requests.renew_contract', {
+                url: '/renew_contract'
+                views: {
+                    '@': {
+                        templateUrl: ''
+                        controller: 'SbFlowHandlerCtrl'
+                        resolve: {
+                            'FlowName': -> 'RenewContract'
+                            'ColumnDef': -> (GridHelper) ->
+                                return GridHelper.buildDefault()
+                        }
+
+                    }
+                }
+            }
             .state 'my_requests.adjust_position', {
                 url: '/adjust-position'
                 views: {
@@ -72,7 +102,7 @@ class Route
                         controllerAs: 'ctrl'
                     }
                 }
-                
+
             }
 
 # class SelfCtrl extends nb.Controller

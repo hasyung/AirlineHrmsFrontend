@@ -42,6 +42,7 @@ app.factory 'GridHelper', ->
         defaultColClone.concat columnDef
 
     return {
+        buildDefault: buildDefaultGridOptions
         buildFlowDefault: buildDefaultGridOptions
     }
 
