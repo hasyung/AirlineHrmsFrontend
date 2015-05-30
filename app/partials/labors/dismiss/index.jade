@@ -6,10 +6,10 @@ block heading
     - var flowName = "员工辞退"
     - var multi = false
 
-block actions
+block user_list_actions
     md-button.md-primary.md-raised(
-        ng-disabled="!getSelected()"
+        ng-disabled="!ctrl.getSelected()"
         nb-panel
-        template-url="/partials/labors/dismiss/dismiss.html"
-        locals="{users:getSelecteds()}"
+        template-url="/partials/labors/dismiss/rfc.html"
+        locals="{users: ctrl.getSelected()}"
         ) 人员辞退

@@ -18,6 +18,6 @@ block vars
                     block tools
 
             if girdSelection
-                div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection multi-select= multiSelect? 'true': 'false'  safe-src="ctrl.tableData")
+                div(nb-grid column-defs="ctrl.columnDef" on-register-api="ctrl.exportGridApi(gridApi)" grid-selection multi-select= multiSelect? 'true': 'false'  safe-src="ctrl.tableData")
             else
-                div(nb-grid column-defs="ctrl.columnDef" export-api multi-select= multiSelect? 'true': 'false'  safe-src="ctrl.tableData")
+                div(nb-grid column-defs="ctrl.columnDef"  safe-src="ctrl.tableData")

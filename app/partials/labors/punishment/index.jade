@@ -5,10 +5,10 @@ block heading
     - var flowName = "员工处分"
 
 
-block actions
+block user_list_actions
     md-button.md-primary.md-raised(
-        ng-disabled="!getSelected()"
+        ng-disabled="!ctrl.getSelected()"
         nb-panel
-        template-url="/partials/labors/retirement/new_retirement.html"
-        locals="{users:getSelecteds()}"
+        template-url="/partials/labors/punishment/rfc.html"
+        locals="{users: ctrl.getSelected()}"
     ) 人员处分
