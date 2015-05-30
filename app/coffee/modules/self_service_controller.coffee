@@ -63,9 +63,16 @@ class Route
                     }
                 }
             }
-            .state 'self_position', {
-                url: '/self-service-position'
-                templateUrl: 'partials/self/transfer_position.html'
+            .state 'my_requests.adjust_position', {
+                url: '/adjust-position'
+                views: {
+                    '@': {
+                        templateUrl: 'partials/self/my_requests/labors/adjust_list.html'
+                        controller: MyRequestCtrl
+                        controllerAs: 'ctrl'
+                    }
+                }
+                
             }
 
 # class SelfCtrl extends nb.Controller
@@ -162,6 +169,7 @@ class MyRequestCtrl extends nb.Controller
 
     loadReviewer: () ->
         @Employee.$search({category_ids: [1,2], department_ids: [@OrgStore.getPrimaryOrgId()]})
+
 
 
 

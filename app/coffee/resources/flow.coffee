@@ -179,7 +179,7 @@ FlowHandlerDirective = (ngDialog)->
         <div class="approval-wapper">
             <md-toolbar md-theme="hrms" class="md-warn">
                 <div class="md-toolbar-tools">
-                    <span>请假申请单</span>
+                    <span>{{flow.name}}申请单</span>
                 </div>
             </md-toolbar>
             <div class="approval-container">
