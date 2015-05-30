@@ -1,9 +1,0 @@
-.app-content-wrapper(flex ng-controller="RetirementCtrl as ctrl")
-    div(nb-filter="ctrl.filterOptions" on-search="search(state)")
-    div.ui-grid-container
-        md-toolbar
-            .md-toolbar-tools
-                h2 退休申请单历史列表
-                
-                
-        div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection safe-src="ctrl.retirements")
