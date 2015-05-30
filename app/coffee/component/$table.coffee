@@ -397,7 +397,11 @@ nbGridDirective = ($parse)->
             onRegisterApi: (gridApi) ->
 
                 #WARN 必须保持grid 生命周期与controller 一致， 暂不支持动态生成表格, 不然会内存泄露
+                # DEPRECATED
                 gridApi.grid.appScope.$parent.$gridApi = gridApi if exportApi
+
+                #recommended  alpha
+                scope.onRegisterApi({gridApi: gridApi})
 
                 gridApi.pagination.on.paginationChanged scope, (newPage, pageSize) ->
                     currentQueryParams = safeSrc.$queryParams || {}
@@ -421,8 +425,6 @@ nbGridDirective = ($parse)->
             ]
 
         }
-
-        console.log defaultOptions
 
         options = angular.extend {
             columnDefs: columnDefs
@@ -471,6 +473,7 @@ nbGridDirective = ($parse)->
         scope: {
             columnDefs: '='
             safeSrc: '='
+            onRegisterApi: '&'
         }
     }
 

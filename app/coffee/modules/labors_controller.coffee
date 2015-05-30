@@ -175,9 +175,9 @@ class Route
 
 class LaborsCtrl extends nb.Controller
 
-    @.$inject = ['$scope', '$http', 'Flow::Retirement']
+    @.$inject = ['$scope', '$http']
 
-    constructor: (@scope, @http, @Retirement)->
+    constructor: (@scope, @http)->
 
     retirement: (users)->
         params = users.map (user)->
@@ -706,25 +706,18 @@ class SbFlowHandlerCtrl
 
 
     getSelected: -> # selected entity || arr
-        rows = @scope.$gridApi.selection.getSelectedGridRows()
+        rows = @gridApi.selection.getSelectedGridRows()
         selected = if rows.length >= 1 then rows[0].entity else null
 
     getSelectedEntities: ->
-        rows = @scope.$gridApi.selection.getSelectedGridRows()
-        row.map (row) -> row.entity
+        rows = @gridApi.selection.getSelectedGridRows()
+        rows.map (row) -> row.entity
+
+    exportGridApi: (gridApi) ->
+        @gridApi = gridApi
 
     search: (tableState)->
         @tableData.$refresh(tableState)
-
-class EarlyRetirementCtrl extends SbFlowHandlerCtrl
-
-    @.$inject = ['GridHelper', 'Flow::EarlyRetirement', '$scope', 'Employee']
-
-    constructor: (helper, Flow, scope, Employee) ->
-        @userListName = 'EarlyRetirementUserList'
-        @checkListName = 'EarlyRetirementCheckList'
-        @historyListName = 'EarlyRetirementHistoryList'
-        super(helper, Flow, scope, Employee)
 
 
 
@@ -733,6 +726,7 @@ app.config(Route)
 app.controller('AttendanceRecordCtrl', AttendanceRecordCtrl)
 app.controller('AttendanceHisCtrl', AttendanceHisCtrl)
 app.controller('UserListCtrl', UserListCtrl)
+app.controller('LaborsCtrl', LaborsCtrl)
 app.controller('RetirementCtrl', RetirementCtrl)
 app.controller('SbFlowHandlerCtrl', SbFlowHandlerCtrl)
 app.constant('ColumnDef', [])

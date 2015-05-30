@@ -1,13 +1,13 @@
 md-dialog
-    md-content(ng-init="users = dialog.users")
-        form(flex ng-submit="ctrl.retirement(users);dialog.close();")
+    md-content(ng-controller="LaborsCtrl as labor" ng-init="users = dialog.users")
+        form(flex ng-submit="labor.retirement(users);dialog.close();")
             md-toolbar.md-accent(md-theme="hrms")
                 .md-toolbar-tools
                     span 发起退休流程
 
             .dialog-content 您将对所选的{{users.length}}人发起退休流程，请确认。
             .dialog-content(layout layout-align="center" ng-hide="true")
-                
+
                 md-card.form-material-section.nb-card(ng-repeat="user in users")
                     md-subheader.md-background.md-hue-1
                     .flow-relations(flow-relation-data ng-model="user.relation_data")

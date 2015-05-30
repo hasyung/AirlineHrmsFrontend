@@ -5,6 +5,6 @@
             .md-toolbar-tools
                 h2 员工花名册
                 div(flex)
-                block actions
+                block user_list_actions
 
-        div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection multi-select= multiSelect? 'true': 'false'  safe-src="ctrl.tableData")
+        div(nb-grid column-defs="ctrl.columnDef" on-register-api="ctrl.exportGridApi(gridApi)"  grid-selection multi-select= multiSelect? 'true': 'false'  safe-src="ctrl.tableData")
