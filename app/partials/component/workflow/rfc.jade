@@ -7,7 +7,7 @@ md-dialog.workflow.md-background(md-theme="hrms")
     .personnel-content.personnel-control
         section.personnel-info-section
             md-content.nb-card-container(layout="column" md-theme="hrms")
-                form(ng-controller="NewMyRequestCtrl" ng-submit="createFlow(request)" ng-init="request = initialFlow(#{flowType})")
+                form(ng-controller="NewMyRequestCtrl" ng-submit="createFlow(request)" ng-init="request = initialFlow('#{flowType}')")
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1
                         flow-user-info
