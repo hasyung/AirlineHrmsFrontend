@@ -705,9 +705,13 @@ class SbFlowHandlerCtrl
         @tableData = @Flow.myRequests()
 
 
-    getSelected: ->
+    getSelected: -> # selected entity || arr
         rows = @scope.$gridApi.selection.getSelectedGridRows()
         selected = if rows.length >= 1 then rows[0].entity else null
+
+    getSelectedEntities: ->
+        rows = @scope.$gridApi.selection.getSelectedGridRows()
+        row.map (row) -> row.entity
 
     search: (tableState)->
         @tableData.$refresh(tableState)
@@ -731,4 +735,5 @@ app.controller('AttendanceHisCtrl', AttendanceHisCtrl)
 app.controller('UserListCtrl', UserListCtrl)
 app.controller('RetirementCtrl', RetirementCtrl)
 app.controller('SbFlowHandlerCtrl', SbFlowHandlerCtrl)
+app.constant('ColumnDef', [])
 
