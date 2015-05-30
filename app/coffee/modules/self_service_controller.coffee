@@ -84,11 +84,24 @@ class Route
                         templateUrl: 'partials/self/my_requests/renew_contract/index.html'
                         controller: 'SbFlowHandlerCtrl'
                         resolve: {
-                            'FlowName': -> 'RenewContract'
+                            'FlowName': -> 'Flow::RenewContract'
                             'ColumnDef': -> (GridHelper) ->
                                 return GridHelper.buildDefault()
                         }
-
+                    }
+                }
+            }
+            .state 'my_requests.erarly_retirement', {
+                url: '/erarly_retirement'
+                views: {
+                    '@': {
+                        templateUrl: 'partials/self/my_requests/erarly_retirement/index.html'
+                        controller: 'SbFlowHandlerCtrl'
+                        resolve: {
+                            'FlowName': -> 'Flow::EarlyRetirement'
+                            'ColumnDef': -> (GridHelper) ->
+                                return GridHelper.buildDefault()
+                        }
                     }
                 }
             }
