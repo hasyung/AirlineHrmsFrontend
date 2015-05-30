@@ -175,9 +175,9 @@ class Route
 
 class LaborsCtrl extends nb.Controller
 
-    @.$inject = ['$scope', '$http', 'Flow::Retirement']
+    @.$inject = ['$scope', '$http']
 
-    constructor: (@scope, @http, @Retirement)->
+    constructor: (@scope, @http)->
 
     retirement: (users)->
         params = users.map (user)->
@@ -711,7 +711,7 @@ class SbFlowHandlerCtrl
 
     getSelectedEntities: ->
         rows = @gridApi.selection.getSelectedGridRows()
-        row.map (row) -> row.entity
+        rows.map (row) -> row.entity
 
     exportGridApi: (gridApi) ->
         @gridApi = gridApi
@@ -726,6 +726,7 @@ app.config(Route)
 app.controller('AttendanceRecordCtrl', AttendanceRecordCtrl)
 app.controller('AttendanceHisCtrl', AttendanceHisCtrl)
 app.controller('UserListCtrl', UserListCtrl)
+app.controller('LaborsCtrl', LaborsCtrl)
 app.controller('RetirementCtrl', RetirementCtrl)
 app.controller('SbFlowHandlerCtrl', SbFlowHandlerCtrl)
 app.constant('ColumnDef', [])
