@@ -624,7 +624,7 @@ class UserListCtrl extends nb.Controller
             rows = scope.$gridApi.selection.getSelectedGridRows()
             selected = if rows.length >= 1 then rows[0].entity else null
 
-        scope.getSelecteds = ()->
+        scope.getSelectedEntities = ()->
             rows = scope.$gridApi.selection.getSelectedGridRows()
             rows = rows.map (row)-> row.entity
 
