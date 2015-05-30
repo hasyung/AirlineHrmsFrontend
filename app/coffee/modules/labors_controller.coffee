@@ -701,7 +701,7 @@ class SbFlowHandlerCtrl
         @tableData = @Flow.records()
 
     myRequests: ->
-        @columnDef = userRequestsColDef
+        @columnDef = @userRequestsColDef
         @tableData = @Flow.myRequests()
 
 

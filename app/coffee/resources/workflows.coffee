@@ -63,7 +63,7 @@ angular.forEach workflows, (item)->
                     records: ->
                         restmod.model("/workflows/#{item}/record").$collection().$fetch()
                     myRequests: ->
-                        restmod.model("/me/workflows/#{item}").$collection.$fetch()
+                        restmod.model("/me/workflows/#{item}").$collection().$fetch()
 
         }
     resources.factory item, ['restmod', 'RMUtils', resource]

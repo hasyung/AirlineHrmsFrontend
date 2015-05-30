@@ -1,6 +1,6 @@
 block vars
 
-.flow-list(flex ng-init="leaves = ctrl.MyLeave.$collection().$fetch();")
+.flow-list(flex ng-init="ctrl.myRequests()")
     md-toolbar
         .md-toolbar-tools
             span
@@ -17,7 +17,12 @@ block vars
 
                     block tools
 
-            if girdSelection
-                div(nb-grid column-defs="ctrl.columnDef" on-register-api="ctrl.exportGridApi(gridApi)" grid-selection multi-select= multiSelect? 'true': 'false'  safe-src="ctrl.tableData")
+            if gridSelection
+                div(
+                    nb-grid column-defs="ctrl.columnDef"
+                    on-register-api="ctrl.exportGridApi(gridApi)"
+                    grid-selection
+                    multi-select= multiSelect? 'true': 'false'
+                    safe-src="ctrl.tableData")
             else
                 div(nb-grid column-defs="ctrl.columnDef"  safe-src="ctrl.tableData")

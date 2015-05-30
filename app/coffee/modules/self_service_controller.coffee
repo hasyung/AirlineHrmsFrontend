@@ -85,7 +85,7 @@ class Route
                         controller: 'SbFlowHandlerCtrl'
                         resolve: {
                             'FlowName': -> 'Flow::RenewContract'
-                            'ColumnDef': -> (GridHelper) ->
+                            'ColumnDef': (GridHelper) ->
                                 return GridHelper.buildDefault()
                         }
                     }
