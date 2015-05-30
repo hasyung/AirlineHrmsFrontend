@@ -1,0 +1,23 @@
+block vars
+
+.flow-list(flex ng-init="leaves = ctrl.MyLeave.$collection().$fetch();")
+    md-toolbar
+        .md-toolbar-tools
+            span
+                md-button.md-icon-button(ui-sref="^")
+                    md-icon(md-svg-src="/images/svg/arrow-left.svg")
+            span #{requestTitle}
+
+    .flow-list-body
+        .flow-list-content.ui-grid-container
+            .flow-list-tip #{requestTip}
+
+            md-toolbar
+                .md-toolbar-tools
+
+                    block tools
+
+            if girdSelection
+                div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection multi-select= multiSelect? 'true': 'false'  safe-src="ctrl.tableData")
+            else
+                div(nb-grid column-defs="ctrl.columnDef" export-api multi-select= multiSelect? 'true': 'false'  safe-src="ctrl.tableData")
