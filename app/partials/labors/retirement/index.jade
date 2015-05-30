@@ -3,12 +3,12 @@ extends ../../component/workflow/index
 block heading
     - var user_list = '退休发起'
     - var flowName = "员工退休"
-
+    - var multiSelect = true
 
 block actions
     md-button.md-primary.md-raised(
-        ng-disabled="!getSelected()"
+        ng-disabled="!ctrl.getSelectedEntities().length"
         nb-panel
         template-url="/partials/labors/retirement/new_retirement.html"
-        locals="{users:getSelecteds()}"
+        locals="{users: ctrl.getSelectedEntities()}"
     ) 人员退休

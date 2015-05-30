@@ -706,25 +706,18 @@ class SbFlowHandlerCtrl
 
 
     getSelected: -> # selected entity || arr
-        rows = @scope.$gridApi.selection.getSelectedGridRows()
+        rows = @gridApi.selection.getSelectedGridRows()
         selected = if rows.length >= 1 then rows[0].entity else null
 
     getSelectedEntities: ->
-        rows = @scope.$gridApi.selection.getSelectedGridRows()
+        rows = @gridApi.selection.getSelectedGridRows()
         row.map (row) -> row.entity
+
+    exportGridApi: (gridApi) ->
+        @gridApi = gridApi
 
     search: (tableState)->
         @tableData.$refresh(tableState)
-
-class EarlyRetirementCtrl extends SbFlowHandlerCtrl
-
-    @.$inject = ['GridHelper', 'Flow::EarlyRetirement', '$scope', 'Employee']
-
-    constructor: (helper, Flow, scope, Employee) ->
-        @userListName = 'EarlyRetirementUserList'
-        @checkListName = 'EarlyRetirementCheckList'
-        @historyListName = 'EarlyRetirementHistoryList'
-        super(helper, Flow, scope, Employee)
 
 
 
