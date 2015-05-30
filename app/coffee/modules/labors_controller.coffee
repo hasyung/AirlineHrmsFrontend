@@ -111,8 +111,10 @@ class Route
             .state 'contract_management', {
                 url: '/contract-management'
                 templateUrl: 'partials/labors/contract/index.html'
-                controller: ContractCtrl
-                controllerAs: 'ctrl'
+                controller: SbFlowHandlerCtrl
+                resolve: {
+                    'FlowName': -> 'Flow::RenewContract'
+                }
             }
             .state 'labors_attendance', {
                 url: '/labors_attendance'
@@ -163,8 +165,10 @@ class Route
             .state 'labors_retirement', {
                 url: '/labors_retirement'
                 templateUrl: 'partials/labors/retirement/index.html'
-                controller: LaborsCtrl
-                controllerAs: 'ctrl'
+                controller: SbFlowHandlerCtrl
+                resolve: {
+                    'FlowName': -> 'Flow::Retirement'
+                }
             }
 
 

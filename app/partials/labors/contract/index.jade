@@ -1,24 +1,57 @@
-tabset(flex)
-    tab(heading="合同列表")
-        .app-content-wrapper(flex style="height: 700px;")
-            div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
-            div.ui-grid-container
-                md-toolbar
-                    .md-toolbar-tools
-                        h2 合同列表
-                        div(flex)
-                        md-button.md-primary.md-raised(
-                        ) 发起离职
-                        md-button.md-primary.md-raised(
-                        ) 发起续签
-                        md-button.md-primary.md-raised(
-                            nb-panel
-                            template-url="/partials/labors/contract/new.html"
-                        ) 新建合同
-                div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.contracts")
+extends ../sb_flow_layout/index
+
+block heading
+    - var user_list = '合同列表'
+    - var flowName = "合同管理"
 
 
-    tab(heading="历史记录")
-        include histroy
+block actions
+    md-button.md-primary.md-raised(
+        ng-disabled="!getSelected()"
+        nb-panel
+        template-url="/partials/labors/contract/new.html"
+        locals="{users:getSelecteds()}"
+    ) 发起离职
 
-    tab(heading="待处理")
+    md-button.md-primary.md-raised(
+        ng-disabled="!getSelected()"
+        nb-dialog
+        template-url="/partials/labors/contract/renew.html"
+        locals="{users:getSelecteds()}"
+    ) 发起续签
+
+    md-button.md-primary.md-raised(
+        ng-disabled="!getSelected()"
+        nb-panel
+        template-url="/partials/labors/contract/new.html"
+        locals="{users:getSelecteds()}"
+    ) 新建合同
+
+
+
+
+
+//- tabset(flex)
+//-     tab(heading="合同列表")
+//-         .app-content-wrapper(flex style="height: 700px;")
+//-             div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+//-             div.ui-grid-container
+//-                 md-toolbar
+//-                     .md-toolbar-tools
+//-                         h2 合同列表
+//-                         div(flex)
+//-                         md-button.md-primary.md-raised(
+//-                         ) 发起离职
+//-                         md-button.md-primary.md-raised(
+//-                         ) 发起续签
+//-                         md-button.md-primary.md-raised(
+//-                             nb-panel
+//-                             template-url="/partials/labors/contract/new.html"
+//-                         ) 新建合同
+//-                 div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.contracts")
+
+
+//-     tab(heading="历史记录")
+//-         include histroy
+
+//-     tab(heading="待处理")

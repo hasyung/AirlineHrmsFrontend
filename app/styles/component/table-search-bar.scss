@@ -263,6 +263,7 @@ md-content.search-container {
         .ui-grid-pager-count-container {
             float: left;
             margin-top: 0;
+            min-height: 19px;
 
             span {
                 color: $text-hint;

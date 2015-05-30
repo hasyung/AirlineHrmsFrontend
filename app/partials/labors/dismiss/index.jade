@@ -1,4 +1,4 @@
-extends ../sb_flow_layout/index_layout
+extends ../sb_flow_layout/index
 
 block heading
 
@@ -9,7 +9,7 @@ block heading
 block actions
     md-button.md-primary.md-raised(
         ng-disabled="!getSelected()"
-        nb-dialog
+        nb-panel
         template-url="/partials/labors/dismiss/dismiss.html"
         locals="{users:getSelecteds()}"
         ) 人员辞退
