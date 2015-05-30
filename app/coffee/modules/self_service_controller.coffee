@@ -109,7 +109,7 @@ class Route
                 url: '/adjust-position'
                 views: {
                     '@': {
-                        templateUrl: 'partials/self/my_requests/labors/adjust_list.html'
+                        templateUrl: 'partials/self/my_requests/adjust_position/index.html'
                         controller: MyRequestCtrl
                         controllerAs: 'ctrl'
                     }
