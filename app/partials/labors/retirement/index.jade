@@ -1,7 +1,14 @@
-tabset(flex)
-    tab(heading="退休发起")
-        include user_list
-    tab(heading="待处理")
-        include check_list
-    tab(heading="历史记录")
-        include history
+extends ../sb_flow_layout/index
+
+block heading
+    - var user_list = '退休发起'
+    - var flowName = "员工退休"
+
+
+block actions
+    md-button.md-primary.md-raised(
+        ng-disabled="!getSelected()"
+        nb-panel
+        template-url="/partials/labors/retirement/new_retirement.html"
+        locals="{users:getSelecteds()}"
+    ) 人员退休

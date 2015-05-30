@@ -1,0 +1,27 @@
+extends ../labors_layout
+
+block vars
+    - var flowType = "Flow::Dismiss"
+    - var flowTitle = "员工辞退申请单"
+
+block relation_data
+    div.flow-info-row(layout)
+        .flow-info-cell(flex)
+            .flow-cell-title 通道
+            .flow-cell-content 管理
+        .flow-info-cell(flex)
+            .flow-cell-title 用工性质
+            .flow-cell-content 合同工
+    div.flow-info-row(layout)
+        .flow-info-cell(flex)
+            .flow-cell-title 入职时间
+            .flow-cell-content 2000-01-01
+
+block form
+    div(layout)
+        md-input-container(flex)
+            label 辞退原因
+            textarea(ng-model="request.reason" columns="1" md-maxlength="2000")
+
+
+
