@@ -5,7 +5,7 @@ form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="Ed
     .form-btn-group.alive(ng-show="editing")
         md-button.md-raised.md-fab(ng-click="cancel(current, $event, positionEditForm)")
             md-icon(md-svg-src="/images/svg/close.svg" aria-label="取消")
-        md-button.md-raised.md-fab(type="submit" ng-disabled="positionEditForm.$invalid")
+        md-button.md-raised.md-fab.md-primary(type="submit" ng-disabled="positionEditForm.$invalid")
             md-icon(md-svg-src="/images/svg/check.svg" aria-label="保存")
     fieldset(ng-disabled="!editing")
 
