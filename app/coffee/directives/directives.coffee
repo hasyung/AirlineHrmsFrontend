@@ -571,19 +571,24 @@ angular.module 'nb.directives'
 
         origin_tmpl = '''
             <div class="flow-info-head">
-                <div class="name">${ name }</div>
+                <div class="name" ng-bind="receptor.name"></div>
                 <div class="flow-info-plus">
-                    <span class="serial-num">{{ employee_no }}</span>
-                    <span class="position">${ department.name } / ${ position.name }</span>
+                    <span class="serial-num" ng-bind="receptor.employeeNo"></span>
+                    <span class="position">{{ receptor.department.name }} / {{ receptor.position.name }}</span>
                 </div>
             </div>
         '''
 
-        template = _.template(origin_tmpl)(USER_META)
+        # template = _.template(origin_tmpl)(USER_META)
 
         return {
+            scope: {
+                receptor: "=?"
+            }
+            link: (scope, elem, attrs)->
+                scope.$apply ()-> scope.receptor = USER_META if !scope.receptor
             replace: true
-            template: template
+            template: origin_tmpl
         }
 
 
