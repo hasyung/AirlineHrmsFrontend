@@ -39,11 +39,13 @@ app.factory 'GridHelper', ->
 
     buildDefaultGridOptions = (columnDef) ->
         defaultColClone = _.cloneDeep(defaultCol)
-        defaultColClone.concat columnDef if columnDef
-        return defaultColClone
+        newCols = if columnDef then defaultColClone.concat columnDef else defaultColClone
+        return newCols
+
 
     return {
         buildDefault: buildDefaultGridOptions
         buildFlowDefault: buildDefaultGridOptions
+        buildCustomCol: buildDefaultGridOptions
     }
 
