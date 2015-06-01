@@ -94,9 +94,9 @@ class NewFlowCtrl
 
             return {}
 
-        scope.createFlow = (data) ->
+        scope.createFlow = (data, receptor) ->
             data.vacation_days = scope.vacation_days
-            data.employee_id = meta.id
+            data.employee_id = if receptor then receptor.id else meta.id
             $http.post("/api/workflows/#{ctrl.flow_type}", data).success () ->
                 scope.panel.close() if scope.panel
 

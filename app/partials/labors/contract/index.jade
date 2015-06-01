@@ -1,8 +1,32 @@
 extends ../../component/workflow/index
 
 block heading
-    - var user_list = '合同列表'
+    - var user_list = false
     - var flowName = "合同管理"
+    - var cust_page = "合同列表"
+
+block cust_page
+    .app-content-wrapper(flex style="height: 700px;" ng-controller="ContractCtrl as ctrl")
+        div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+        div.ui-grid-container
+            md-toolbar
+                .md-toolbar-tools
+                    h2 合同列表
+                    div(flex)
+                    md-button.md-primary.md-raised(
+                    ) 发起离职
+                    md-button.md-primary.md-raised(
+                        nb-dialog
+                        template-url="/partials/labors/contract/renew.html"
+                        locals="{contract:ctrl.getSelected()}"
+                    ) 发起续签
+                    md-button.md-primary.md-raised(
+                        nb-panel
+                        template-url="/partials/labors/contract/new.html"
+                    ) 新建合同
+            div(nb-grid multi-select="false" export-api grid-selection column-defs="ctrl.columnDef" safe-src="ctrl.contracts")
+
+
 
 
 block user_list_actions
@@ -21,10 +45,8 @@ block user_list_actions
     ) 发起续签
 
     md-button.md-primary.md-raised(
-        ng-disabled="!getSelected()"
         nb-panel
         template-url="/partials/labors/contract/new.html"
-        locals="{users:getSelecteds()}"
     ) 新建合同
 
 
@@ -33,7 +55,7 @@ block user_list_actions
 
 //- tabset(flex)
 //-     tab(heading="合同列表")
-//-         .app-content-wrapper(flex style="height: 700px;")
+//-         .app-content-wrapper(flex style="height: 700px;" ng-controller="ContractCtrl as ctrl")
 //-             div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
 //-             div.ui-grid-container
 //-                 md-toolbar
@@ -43,15 +65,17 @@ block user_list_actions
 //-                         md-button.md-primary.md-raised(
 //-                         ) 发起离职
 //-                         md-button.md-primary.md-raised(
+//-                             nb-dialog
+//-                             template-url="/partials/labors/contract/renew.html"
+//-                             locals="{contract:ctrl.getSelected()}"
 //-                         ) 发起续签
 //-                         md-button.md-primary.md-raised(
 //-                             nb-panel
 //-                             template-url="/partials/labors/contract/new.html"
 //-                         ) 新建合同
-//-                 div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.contracts")
+//-                 div(nb-grid multi-select="false" export-api grid-selection column-defs="ctrl.columnDef" safe-src="ctrl.contracts")
 
 
 //-     tab(heading="历史记录")
-//-         include histroy
+        
 
-//-     tab(heading="待处理")
