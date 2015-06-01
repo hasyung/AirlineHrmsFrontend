@@ -186,10 +186,10 @@ FlowHandlerDirective = (ngDialog)->
                 <md-card>
                     <div class="approval-info">
                         <div class="approval-info-head">
-                            <div class="name"> 姜文峰 </div>
+                            <div class="name" ng-bind="flow.receptor.name"></div>
                             <div class="approval-info-plus">
-                                <span class="serial-num"> 008863 </span>
-                                <span class="position"> 人力资源部 / 人事调配室副主任 </span>
+                                <span class="serial-num" flow.receptor.employeeNo> 008863 </span>
+                                <span class="position"> {{::flow.receptor.departmentName}} / {{::flow.receptor.positionName}} </span>
                             </div>
                         </div>
                         <div class="ask-relations">

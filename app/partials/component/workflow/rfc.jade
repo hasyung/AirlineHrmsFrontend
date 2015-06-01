@@ -10,7 +10,7 @@ block vars
                 form(ng-controller="NewMyRequestCtrl" ng-submit="#{paramsChange};createFlow(request)" ng-init="request = initialFlow('#{flowType}')")
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1
-                        flow-user-info
+                        flow-user-info(receptor="panel.receptor")
                         .flow-relations(flow-relation-data ng-model="request.relation_data")
 
                             block relation_data
