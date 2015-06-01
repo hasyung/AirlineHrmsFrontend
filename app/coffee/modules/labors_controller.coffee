@@ -663,15 +663,15 @@ class SbFlowHandlerCtrl
 
     @.$inject = ['GridHelper', 'FlowName', '$scope', 'Employee', '$injector', 'OrgStore', 'ColumnDef']
 
-    constructor: (@helper, FlowName, @scope, @Employee, $injector, OrgStore, @userRequestsColDef) ->
+    constructor: (@helper, @FlowName, @scope, @Employee, $injector, OrgStore, @userRequestsColDef) ->
 
         @scope.ctrl = @
-        @Flow = $injector.get(FlowName)
+        @Flow = $injector.get(@FlowName)
 
 
-        @userListName = "#{FlowName}_USER_LIST"
-        @checkListName = "#{FlowName}_CHECK_LIST"
-        @historyListName = "#{FlowName}_HISTORY_LIST"
+        @userListName = "#{@FlowName}_USER_LIST"
+        @checkListName = "#{@FlowName}_CHECK_LIST"
+        @historyListName = "#{@FlowName}_HISTORY_LIST"
 
         @columnDef = null
         @tableData = null
@@ -684,7 +684,7 @@ class SbFlowHandlerCtrl
         filterOptions.name = @userListName
         @filterOptions = filterOptions
         @columnDef = _.cloneDeep(USER_LIST_TABLE_DEFS)
-        @tableData = @Employee.$collection().$fetch()
+        @tableData = @Employee.$collection().$fetch({filter_types: [@FlowName]})
 
     checkList: ->
         @columnDef = @helper.buildFlowDefault(FLOW_HANDLE_TABLE_DEFS)
