@@ -74,11 +74,6 @@ menuFactory = ($rootScope, $state)->
                 permission: 'positions_index'
             }
             {
-                name: '岗位分布图'
-                state: 'position'
-                permission: ''
-            }
-            {
                 name: '岗位异动记录'
                 state: 'position_changes'
                 permission: ''
@@ -239,11 +234,6 @@ menuFactory = ($rootScope, $state)->
         icon_src: '/images/svg/left-side-svg/left_icon_9.svg'
         pages: [
             {
-                name: '员工转正'
-                state: 'position'
-                permission: ''
-            }
-            {
                 name: '员工考勤'
                 state: 'labors_attendance'
             }
@@ -283,10 +273,16 @@ menuFactory = ($rootScope, $state)->
                 permission: ''
             }
             {
-                name: '档案管理'
-                state: 'position'
+                name: '员工离职'
+                state: 'labors_leave_job'
                 permission: ''
             }
+            {
+                name: '员工辞职'
+                state: 'labors_resignation'
+                permission: ''
+            }
+            
 
         ]
     }

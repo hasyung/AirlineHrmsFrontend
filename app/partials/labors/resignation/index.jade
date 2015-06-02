@@ -1,0 +1,14 @@
+extends ../../component/workflow/index
+
+block heading
+    - var user_list = '辞职发起'
+    - var flowName = "员工辞职"
+    - var multiSelect = false
+
+block user_list_actions
+    md-button.md-primary.md-raised(
+        ng-disabled="!ctrl.getSelected()"
+        nb-panel
+        template-url="/partials/labors/resignation/resignation.html"
+        locals="{receptor: ctrl.getSelected()}"
+    ) 代理发起辞职

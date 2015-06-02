@@ -1,0 +1,76 @@
+.self_performance {
+    &.performance-content {
+        padding: 10px 0 20px;
+    }
+
+    .performance-content {
+        padding: 40px 30px;
+    }
+
+    .item-action {
+        .md-button {
+            border-bottom: 1px solid rgba(158, 158, 158, .2);
+            border-radius: 0;
+            font-size: 14px;
+            font-weight: bold;
+            height: 50px;
+            padding-left: 10px;
+            width: 100%;
+
+            &:first-child {
+                border-top: 1px solid rgba(158, 158, 158, .2);
+            }
+
+            .md-toggle-icon {
+                @include transition(transform .25s ease-in-out);
+                transform: rotate(0deg);
+
+                &.toggled {
+                    transform: rotate(180deg);
+                }
+            }
+        }
+    }
+
+    .form-table-container {
+        .table {
+            margin-bottom: 0;
+        }
+
+        th {
+            border: 0;
+            font-weight: bold;
+            padding: 15px 7px;
+        }
+
+        td {
+            border-top: 1px solid rgba(0, 0, 0, .06);
+            padding: 15px 7px;
+        }
+    }
+}
+
+.performance-result {
+    .md-subheader {
+        margin-bottom: 20px;
+    }
+
+    md-radio-group {
+        margin-bottom: 20px;
+    }
+
+    md-radio-button {
+        float: left;
+        margin: 0;
+        margin-right: 120px;
+
+    }
+}
+
+
+
+
+
+
+
+

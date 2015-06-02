@@ -9,28 +9,28 @@ block relation_data
     div.flow-info-row(layout)
         .flow-info-cell(flex)
             .flow-cell-title 通道
-            .flow-cell-content 管理
+            .flow-cell-content {{receptor.channelId | enum: 'channels'}}
         .flow-info-cell(flex)
             .flow-cell-title 学历
-            .flow-cell-content 本科
+            .flow-cell-content {{receptor.educationBackgroundId | enum: 'education_backgrounds'}}
     div.flow-info-row(layout)
         .flow-info-cell(flex)
             .flow-cell-title 学位
-            .flow-cell-content 学士
+            .flow-cell-content {{receptor.degreeId | enum: 'degrees'}}
         .flow-info-cell(flex)
                 .flow-cell-title 英语等级
-                .flow-cell-content 大学英语4级
+                .flow-cell-content {{receptor.englishLevelId | enum: 'english_levels'}}
     div.flow-info-row(layout)
         .flow-info-cell(flex)
             .flow-cell-title 当前岗位年限
-            .flow-cell-content 5年
+            .flow-cell-content {{receptor.masterPositionYears}}
         .flow-info-cell(flex)
             .flow-cell-title 近6各月绩效
-            .flow-cell-content 4次优秀/2次良好
+            .flow-cell-content {{receptor.sixPerformances}}
 
 block form
     div(ng-init="params = {}; params.orgPos = [];")
-        div(layout )
+        div(layout)
             div(flex)
                 org-search(ng-model="params.org" float-label placeholder="所属部门" selected-item-change="params.orgPos = org.positions.$fetch();")
             md-input-container.row-has-value(flex)

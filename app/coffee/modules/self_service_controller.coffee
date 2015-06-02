@@ -43,6 +43,12 @@ class Route
                 controllerAs: 'ctrl'
                 templateUrl: 'partials/self/experience.html'
             }
+            .state 'self.performance', {
+                url: '/performance'
+                controller: ProfileCtrl
+                controllerAs: 'ctrl'
+                templateUrl: 'partials/self/performance/performance.html'
+            }
             .state 'self.resume', {
                 url: '/resume'
                 controller: ProfileCtrl
