@@ -90,7 +90,8 @@
         color: $text-muted;
         font-size: $font-size-sm;
         padding-left: 3px;
-        transform: translate3d(-15px, -2px, 0) scale(.7);
+        transform: translate3d(0, 2px, 0) scale(.7);
+        transform-origin: left top;
         width: 90px;
     }
 
