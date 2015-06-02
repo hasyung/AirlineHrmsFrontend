@@ -1,0 +1,27 @@
+extends ../../../component/workflow/my_requests
+
+block vars
+    - var requestTitle = '我要辞职'
+    - var requestTip = '点击辞职申请，可发起辞职流程。列表中选择未生效的申请，可撤销辞职申请'
+    - var gridSelection = true
+
+block tools
+    span 辞职列表
+    span(flex)
+    span
+        md-button.md-primary.md-raised(
+            nb-panel
+            template-url="/partials/self/my_requests/resignation/resignation.html"
+            locals="{users:ctrl.getSelected()}"
+        ) 发起辞职
+    span
+        md-button.md-primary.md-raised(
+            ng-disabled="!(ctrl.getSelected() && ctrl.getSelected().workflowState !== '已生效')"
+            nb-confirm="ctrl.revert(isConfirm, ctrl.getSelected())"
+            nb-title="你是否要撤销所选辞职操作?"
+            nb-content="当你点击确定时，您所申请的辞职将被撤销！"
+        ) 撤销辞职
+
+
+
+

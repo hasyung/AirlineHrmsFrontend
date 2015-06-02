@@ -1,0 +1,10 @@
+.app-content-wrapper(flex ng-init="ctrl.checkList()")
+    div(nb-filter="ctrl.filterOptions" on-search="search(state)")
+    div.ui-grid-container
+        md-toolbar
+            .md-toolbar-tools
+                h2 #{flowName}待审核列表
+                div(flex)
+                block check_list_actions
+
+        div(nb-grid column-defs="ctrl.columnDef" on-register-api="ctrl.exportGridApi(gridApi)" grid-selection safe-src="ctrl.tableData")

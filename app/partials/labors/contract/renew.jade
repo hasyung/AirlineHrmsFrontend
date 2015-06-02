@@ -1,0 +1,60 @@
+//- extends ../../component/workflow/rfc
+
+//- block vars
+//-     - var flowType = "Flow::RenewContract"
+//-     - var flowTitle = "合同期满综合考核意见表"
+//-     //- - var paramsChange = "request. = request.position.id; request.position = undefined;"
+
+//- block relation_data
+//-     div.flow-info-row(layout)
+//-         .flow-info-cell(flex)
+//-             .flow-cell-title 通道
+//-             .flow-cell-content 管理
+//-         .flow-info-cell(flex)
+//-             .flow-cell-title 用工性质
+//-             .flow-cell-content 合同工
+//-     div.flow-info-row(layout)
+//-         .flow-info-cell(flex)
+//-             .flow-cell-title 入职时间
+//-             .flow-cell-content 2000-01-01
+
+//- block form
+//-     div(layout)
+//-         md-input-container(flex)
+//-             label 开始日期
+//-             input(ng-model="request.start_date" name="aaa" bs-datepicker required)
+//-     div(layout)
+//-         md-input-container(flex)
+//-             label 时长
+//-             input(type="number" ng-model="request.duration")
+//-     div 时间为空或者0，即为无固定期限合同
+
+
+
+
+
+
+md-dialog.attendance_new(ng-init="contract = dialog.contract; request= {}")
+    md-content
+        form(flex ng-submit="ctrl.renewContract(request, contract);dialog.close();")
+            md-toolbar.md-accent(md-theme="hrms")
+                .md-toolbar-tools
+                    span 员工{{::contract.employeeName}}的合同续签
+            .dialog-content(layout layout-align="center")
+                fieldset(flex)
+                    div(ng-if="contract.employeeId == 0")
+                        span 该员工不能发起续签申请
+                    div(layout)
+                        md-input-container(flex)
+                            label 开始日期
+                            input(ng-model="request.start_date" name="aaa" bs-datepicker required)
+                    div(layout)
+                        md-input-container.row-has-value(flex)
+                            label 时长
+                            input(type="number" ng-model="request.duration")
+                    div 时间为空或者0，即为无固定期限合同
+
+            .md-actions
+                md-button(type="button" ng-click='dialog.close()') 取 消
+                md-button.md-primary.md-raised(type="submit") 确 定
+

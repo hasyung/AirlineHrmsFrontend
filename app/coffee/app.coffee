@@ -5,8 +5,6 @@
 metadata = @metadata #用户元数据
 dep_info = @dep_info #机构数据
 
-
-
 deps = [
     'ui.router'
     'mgo-angular-wizard'
@@ -32,18 +30,24 @@ deps = [
     'nb.component'
     'flow'
     'ngMaterialDropmenu'
+    'infinite-scroll'
     #'nb.controller.site'
 ]
 resources = angular.module('resources',[])
 
 nb.app = App = angular.module 'nb',deps
+
+
+moment.locale('zh-cn')
 # nb.models = models = angular.module 'models', []
 
 #初始化在<head> <script> 标签中, 如果不存在， 系统行为待定
 App.constant 'PERMISSIONS', metadata.permissions || []
 App.value 'USER_META', metadata.user || {}
+App.constant 'VACATIONS', metadata.vacation_summary || {}
 App.constant 'DEPARTMENTS', dep_info.departments || []
 App.constant 'nbConstants', metadata.resources || []
+App.constant 'PUSH_SERVER_CONFIG', metadata.push_server || {host: "192.168.6.99", port: 9927}
 
 
 appConf = ($provide, ngDialogProvider) ->
@@ -68,6 +72,7 @@ appConf = ($provide, ngDialogProvider) ->
         appendTo: false
     }
 
+    $provide.value('THROTTLE_MILLISECONDS', 1000) #infinit scroll throttle milliseconds
 
 
 restConf = (restmodProvider) ->
@@ -84,7 +89,6 @@ mdThemingConf = ($mdThemingProvider) ->
     $mdThemingProvider.theme 'hrms'
         .primaryPalette 'blue', {
             'default': '500'
-
         }
         .accentPalette 'grey'
         .warnPalette 'red', {
@@ -138,7 +142,8 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
         }
 
     ]
-    # $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike'
+
+    $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike'
 
 App
     .config ['$provide', 'ngDialogProvider', appConf]
@@ -195,10 +200,6 @@ App
         $rootScope.$enum  = $enum
 
         $rootScope.allOrgs = Org.$search()
-
-
-        $rootScope.createFlow = (data, flowname) ->
-            $http.post("/api/workflows/#{flowname}", data)
 
 
     ]

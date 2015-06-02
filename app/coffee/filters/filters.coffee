@@ -31,6 +31,34 @@ module
 
         (input, opts) ->
             if input then new Date(input) else ""
+
+    .filter 'fromNow', ->
+
+        (input, opts) ->
+            if input
+                try
+                    return moment(input).fromNow(true)
+                catch e
+                    ""
+    .filter 'mdate', ->
+
+        (input, format = "YYYY-mm-DD") ->
+            if input
+                return input.format(format)
+
+
+    .filter 'diffDate', ->
+        (input, opts) ->
+
+            if input
+                try
+                    return moment().diff(moment(input), opts)
+                catch e
+                    return ''
+                    # ...
+
+
+
     .filter 'enum', ['$enum', ($enum) ->
 
         (input, opts) ->

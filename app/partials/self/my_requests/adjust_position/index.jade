@@ -1,0 +1,15 @@
+extends ../../../component/workflow/my_requests
+
+block vars
+    - var requestTitle = '我要调岗'
+    - var requestTip = '点击我要调岗，可发起调岗流程。列表中选择未生效的申请，可撤销退养申请'
+    - var girdSelection = true
+
+block tools
+    span 调岗列表
+    span(flex)
+    span
+        md-button.md-primary.md-raised(
+            nb-panel
+            template-url="/partials/self/my_requests/adjust_position/adjust_position.html"
+        ) 我要调岗

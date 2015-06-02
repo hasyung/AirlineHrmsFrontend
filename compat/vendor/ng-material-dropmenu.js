@@ -40,6 +40,14 @@ function colorToRgbaArray(clr) {
   return [parseInt(red, 16), parseInt(grn, 16), parseInt(blu, 16)];
 }
 
+/**
+ * @ngdoc module
+ * @name ngMaterialDropmenu
+ * @description
+ *
+ * # ngMaterialDropmenu
+ *
+ */
 
 angular.module('ngMaterialDropmenu', [
   'material.core',
@@ -215,7 +223,7 @@ function DropmenuDirective($mdDropmenu, $mdUtil, $mdTheming, $mdAria, $interpola
   };
 
   function compile(element, attr) {
-    // The user is allowed to provide a label for the select as md-drop-label child
+    // The user is allowed to provide a label for the dropmenu as md-drop-label child
     var labelEl = element.find('md-drop-label').remove();
     // If not provided, we automatically make one
     if (!labelEl.length) {
@@ -234,8 +242,8 @@ function DropmenuDirective($mdDropmenu, $mdUtil, $mdTheming, $mdAria, $interpola
 
     // There's got to be an md-content inside. If there's not one, let's add it.
     if (!element.find('md-content').length) {
-      element.append( 
-        angular.element('<md-content>').append(element.contents()) 
+      element.append(
+        angular.element('<md-content>').append(element.contents())
       );
     }
 
@@ -425,7 +433,7 @@ function DropmenuDirective($mdDropmenu, $mdUtil, $mdTheming, $mdAria, $interpola
         selectContainer = $compile(selectContainer)(selectScope);
         // selectMenuCtrl = selectContainer.find('md-drop-menu')
         //                  .controller('mdDropMenu');
-                         
+
       }
 
       function handleKeypress(e) {
@@ -451,11 +459,13 @@ function DropmenuDirective($mdDropmenu, $mdUtil, $mdTheming, $mdAria, $interpola
 //         }
       }
 
-      function openSelect() {
+      function openSelect(e) {
         scope.$evalAsync(function() {
-          var loading;
+          var loading, autoFocus;
           isOpen = true;
           loading = attr.mdOnOpen ? scope.$eval(attr.mdOnOpen) || true : false
+          autoFocus = angular.isDefined(attr.disabledAutoFocus) ? false : true
+
           $mdDropmenu.show({
             scope: selectScope,
             preserveScope: true,
@@ -464,10 +474,13 @@ function DropmenuDirective($mdDropmenu, $mdUtil, $mdTheming, $mdAria, $interpola
             target: element[0],
             hasBackdrop: true,
             loadingAsync: loading,
+            autoFocus: autoFocus,
           }).then(function(selectedText) {
             isOpen = false;
           });
         });
+        // prevnet page scroll to top while use a href="#"
+        e.preventDefault();
       }
     };
   }
@@ -734,7 +747,7 @@ function DropMenuDirective($parse, $mdUtil, $mdTheming) {
 
 DropMenuDirective.$inject = ["$parse", "$mdUtil", "$mdTheming"];
 
-function DropOptionDirective($mdInkRipple, $mdUtil) {
+function DropOptionDirective($mdButtonInkRipple, $mdUtil) {
 
   OptionController.$inject = ["$element"];
   return {
@@ -748,7 +761,7 @@ function DropOptionDirective($mdInkRipple, $mdUtil) {
 
   function compile(element, attr) {
     // Manual transclusion to avoid the extra inner <span> that ng-transclude generates
-    element.append( 
+    element.append(
       angular.element('<div class="md-text">').append(element.contents())
     );
     element.attr('tabindex', attr.tabindex || '0');
@@ -783,7 +796,7 @@ function DropOptionDirective($mdInkRipple, $mdUtil) {
 //       });
 //     });
 
-    $mdInkRipple.attachButtonBehavior(scope, element);
+    $mdButtonInkRipple.attach(scope, element);
     configureAria();
 
     // function setOptionValue(newValue, oldValue) {
@@ -827,7 +840,7 @@ function DropOptionDirective($mdInkRipple, $mdUtil) {
   }
 
 }
-DropOptionDirective.$inject = ["$mdInkRipple", "$mdUtil"];
+DropOptionDirective.$inject = ["$mdButtonInkRipple", "$mdUtil"];
 
 function OptgroupDirective() {
   return {
@@ -875,7 +888,7 @@ function DropProvider($$interimElementProvider) {
       }
       angular.extend(opts, {
         isRemoved: false,
-        target: angular.element(opts.target), 
+        target: angular.element(opts.target),
         //make sure it's not a naked dom node
 
         parent: angular.element(opts.parent),
@@ -904,6 +917,24 @@ function DropProvider($$interimElementProvider) {
 
       var optionNodes = opts.selectEl[0]
                         .getElementsByTagName('md-drop-option');
+
+      // create fake option for auto focus disabled
+      if(!opts.autoFocus && optionNodes.length > 0 && !optionNodes[0].getAttribute("fake")){
+        var fakeOption = document.createElement("md-drop-option");
+        var parentE = optionNodes[0].parentElement;
+        // fakeOption.style.visibility = "hidden";
+        fakeOption.style.height = "1px";
+        fakeOption.style.width = "0";
+        fakeOption.style.maxHeight = "1px";
+        fakeOption.style.maxWidth = "0";
+        fakeOption.style.opacity = "0";
+        fakeOption.setAttribute("tabindex", "0");
+        fakeOption.setAttribute("fake", true);
+        parentE.insertBefore(fakeOption, optionNodes[0]);
+        optionNodes = opts.selectEl[0].getElementsByTagName('md-drop-option');
+      }
+
+
       // console.log(opts.selectEl[0], optionNodes);
       if (opts.loadingAsync && opts.loadingAsync.then) {
         opts.loadingAsync.then(function() {
@@ -921,7 +952,7 @@ function DropProvider($$interimElementProvider) {
         scope.$$loadingAsyncDone = true;
       }
 
-      if (opts.disableParentScroll 
+      if (opts.disableParentScroll
       && !$mdUtil.getClosest(opts.target, 'MD-DIALOG')) {
         opts.restoreScroll = $mdUtil.disableScrollAround(opts.target);
       } else {
@@ -999,7 +1030,6 @@ function DropProvider($$interimElementProvider) {
             //   }
           }
         });
-
 
         function focusOption(direction) {
           var optionsArray = nodesToArray(optionNodes);
@@ -1130,7 +1160,7 @@ function DropProvider($$interimElementProvider) {
         centeredRect.paddingLeft = parseInt(centeredStyle.paddingLeft, 10) || 0;
         centeredRect.paddingRight = parseInt(centeredStyle.paddingRight, 10) || 0;
       }
-      
+
       var focusedNode = centeredNode;
       // console.log(focusedNode);
       if ((focusedNode.tagName || '').toUpperCase() === 'MD-DROP-OPTGROUP') {
@@ -1186,7 +1216,6 @@ function DropProvider($$interimElementProvider) {
         Math.min(targetRect.width / selectMenuRect.width, 1.0) + ',' +
         Math.min(targetRect.height / selectMenuRect.height, 1.0) +
       ')';
-
 
       $$rAF(function() {
         element.addClass('md-active');

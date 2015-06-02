@@ -1,4 +1,4 @@
-.resume-wrap(ng-init="resume = current.resume.$refresh()" style="width: 960px;")
+.resume-wrap(ng-init="resume = current.resume.$refresh()" style="max-width: 960px;")
     .resume-header
         span {{ resume.name }}
         | 个人履历
@@ -35,10 +35,10 @@
                 .resume-row
                     .resume-item
                         label.control-label 政治面貌
-                        .form-content(ng-bind="resume.birthPlace")
+                        .form-content() 党员
                     .resume-item
                         label.control-label 婚姻状况
-                        .form-content(ng-bind="resume.martialStatus.displayName")
+                        .form-content(ng-bind="resume.maritalStatus.displayName")
                 .resume-row
                     .resume-item
                         label.control-label 学历
@@ -200,10 +200,10 @@
             .resume-section-right(flex)
                 .resume-row
                     .resume-item
-                        label.control-label 授课开始日期
+                        label.control-label 开始日期
                         .form-content 2010-05-25
                     .resume-item
-                        label.control-label 授课结束日期
+                        label.control-label 结束日期
                         .form-content 2010-10-25
                 .resume-row
                     .resume-item

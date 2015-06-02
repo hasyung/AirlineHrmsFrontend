@@ -34,7 +34,7 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                             td(ng-bind="child.residenceBooklet")
                             td(ng-bind="child.company")
                             td.control-td
-                                button.btn.btn-default.fa.fa-times(ng-click="child.$destroy()")
+                                button.fa.fa-times(ng-click="child.$destroy()")
                 form.add-member(ng-repeat="nc in newChildren" ng-init="nc.relation='children';")
                     div(layout)
                         md-input-container(flex)
@@ -61,7 +61,7 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                         md-button.md-raised.skyblue(ng-click="vm.children.$create(nc);newChildren.splice($index, 1)") 提交
 
                 .add(ng-hide="newChildren.length")
-                    button.btn.btn-default.fa.fa-plus(ng-click="newChildren.push({})")
+                    button.fa.fa-plus(ng-click="newChildren.push({})")
 
                 md-divider
             md-content.form-material-section.form-table-container(ng-init="vm.other = currentUser.familymembers.$search({relation: 'other'}); newOther = []")
@@ -85,7 +85,7 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                             td(ng-bind="omg.residenceBooklet")
                             td(ng-bind="omg.company")
                             td.control-td
-                                button.btn.btn-default.fa.fa-times(ng-click="omg.$destroy()")
+                                button.fa.fa-times(ng-click="omg.$destroy()")
                 form.add-member(ng-repeat="no in newOther" ng-init="no.relation='other';")
                     div(layout)
                         md-input-container(flex)
@@ -112,5 +112,5 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                         md-button.md-raised.skyblue(ng-click="vm.other.$create(no);newOther.splice($index, 1)") 提交
 
                 .add(ng-hide="newOther.length")
-                    button.btn.btn-default.fa.fa-plus(ng-click="newOther.push({})")
+                    button.fa.fa-plus(ng-click="newOther.push({})")
 

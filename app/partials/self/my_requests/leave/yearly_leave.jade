@@ -1,0 +1,44 @@
+
+extends leave_layout
+
+
+block vars
+    - var flowType = "Flow::AnnualLeave"
+    - var formType = 1
+
+
+block relation_data
+    div.flow-info-row(layout)
+        .flow-info-cell(flex)
+            .flow-cell-title 川航工作年限
+            .flow-cell-content {{ meta.join_scal_date | fromNow}}
+    div.flow-info-row(layout)
+        .flow-info-cell(flex)
+            .flow-cell-title 假别
+            .flow-cell-content 年假 (
+                span(ng-repeat="(key, value) in vacations.year_days.year") {{key}} 年年假剩余天数 {{value}} 天 {{$last ? '' : '，' }}
+                span )
+
+
+block form
+    div(layout)
+        md-input-container(flex)
+            label 开始日期
+            input(ng-model="request.start_time" ng-change="calculateTotalDays(request, '年假')" name="start_time" bs-datepicker required)
+        md-input-container(flex)
+            label 结束日期
+            input(ng-model="request.end_time" ng-change="calculateTotalDays(request, '年假')" name="end_time" required bs-datepicker)
+    div(layout)
+        .without-edit
+            div.progress-wrapper(ng-if="calculating")
+                md-progress-circular(md-mode="indeterminate")
+            div(ng-if="!calculating")
+                div.without-edit-title 天数
+                div.without-edit-content {{ vacation_days }} 天
+    div(layout)
+        md-input-container(flex)
+            label 申请理由
+            textarea(ng-model="request.reason" columns="1" md-maxlength="150")
+    md-subheader.accessory-header.md-background.md-hue-1 附件
+    div(nb-file-upload flow-type="#{flowType}" ng-model="request.attachment_ids")
+

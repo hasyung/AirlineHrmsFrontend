@@ -28,7 +28,7 @@
     "angular-ui-router": "~0.2.13",
     "jquery": "~2.1.1",
     "store.js": "~1.3.17",
-    "moment": "~2.7.0",
+    "moment": "~2.10.0",
     "simditor": "~2.1.5",
     "jquery-slimscroll": "~1.3.1",
     "ui-router-extras": "~0.0.11",
@@ -40,11 +40,12 @@
     "AngularJS-Toaster": "~0.4.9",
     "sweetalert": "~0.4.1",
     "ngDialog": "https://github.com/sandwich99/ngDialog.git#e116ff98e5843ab2f98d5206476f967efd4ca7f9",
-    "angular-material": "0.9.0",
+    "angular-material": "0.9.7",
     "ng-flow": "~2",
     "underscore.string": "~3.0.3",
     "d3": "~3.5.5",
     "print-area": "~2.4.1",
-    "bootstrap-datepicker": "~1.4.0"
+    "bootstrap-datepicker": "~1.4.0",
+    "ngInfiniteScroll": "~1.2.0"
   }
 }

@@ -20,10 +20,9 @@ md-content.search-container {
                 border-radius: 3px;
                 box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
                 height: 36px;
-                line-height: 36px;
 
                 span:first-child {
-                    margin-top: 24px;
+                    line-height: 36px;
                     text-align: center;
                 }
 
@@ -48,8 +47,13 @@ md-content.search-container {
         }
 
         md-input-container {
-            height: 45px;
+            height: 35px;
             padding-bottom: 0;
+
+            .md-input {
+                font-size: $font-size-sm;
+                padding-top: 12px;
+            }
         }
 
         md-select,
@@ -68,11 +72,12 @@ md-content.search-container {
                 padding-bottom: 3px;
 
                 .md-chip {
-                    margin-top: 5px;
+                    margin-top: 0;
                 }
 
                 .md-chip-input-container {
-                    margin-top: 9px;
+                    font-size: $font-size-md;
+                    height: 25px;
                 }
             }
         }
@@ -258,6 +263,7 @@ md-content.search-container {
         .ui-grid-pager-count-container {
             float: left;
             margin-top: 0;
+            min-height: 19px;
 
             span {
                 color: $text-hint;

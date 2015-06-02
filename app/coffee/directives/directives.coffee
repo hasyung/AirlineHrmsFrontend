@@ -11,31 +11,6 @@ angular.module 'nb.directives'
                     elem.toggleClass 'active'
         }
     ]
-    .directive 'notification', ['$document', ($doc) ->
-        return {
-            restrict: 'A'
-            link: (scope,elem,attr) ->
-                scope.isOpen = false
-                toggle = (e)->
-                    e.stopPropagation()
-                    if scope.isOpen then close() else open()
-                    
-                open = -> 
-                    scope.$apply -> scope.isOpen = true
-                    $doc.on 'click', close
-
-                close = -> 
-                    scope.$apply -> scope.isOpen = false
-                    $doc.off 'click', close
-
-                elem.on 'click', toggle
-                scope.$on 'destroy', ()->
-                    elem.off 'click', toggle
-                    $doc.off 'click', close
-
-                
-        }
-    ]
     .directive 'nbDownload', [() ->
 
         postLink = (scope, elem, attrs)->
@@ -145,7 +120,7 @@ angular.module 'nb.directives'
         }
     ]
     #facade ngDialog
-    .directive 'nbPanel',['ngDialog', (ngDialog) ->
+    .directive 'nbPanel',['ngDialog', '$parse', (ngDialog, $parse) ->
 
         getCustomConfig = (attrs) ->
             configAttrs = _.pick(attrs, (val, key) -> return /^panel/.test(key))
@@ -162,6 +137,8 @@ angular.module 'nb.directives'
                 controllerAs: attrs.controllerAs || 'panel'
                 bindToController: true
                 className: 'ngdialog-theme-panel'
+                preCloseCallback: attrs.preCloseCallback || angular.noop
+
             }
 
             elem.on 'click', (e) ->
@@ -333,7 +310,7 @@ angular.module 'nb.directives'
                 left: 20
 
             width = 900
-            height = 92
+            height = 120
                 #树的高
             duration = 750
             data = [
@@ -375,81 +352,123 @@ angular.module 'nb.directives'
                 }
                 {
                     'status': 'unreachable'
-                    'des': '超级最终审批'
-                }
-                {
-                    'status': 'unreachable'
-                    'des': '超级最终审批'
+                    'des': '生效'
                 }
             ]
-            radius = 6
+            radius = 9
             single_area_width = width / data.length
             single_area_height = 2 * radius + 40
 
-            svg = d3.select(elem[0]).append('svg')
-            .attr('class', 'lw-svg')
+            svg = d3.select(elem[0])
+                .append('svg')
+                .attr('class', 'lw-svg')
                 .attr('width', width)
                 .attr('height', height)
-            #- .append("g")
-            #- .attr("transform", "translate(" + margin.left + "," + margin.top + ")");  //使svg区域与上、左有一定距离
+            # - .attr("transform", "translate(" + margin.left + "," + margin.top + ")");  //使svg区域与上、左有一定距离
             #
-            svg.selectAll('line').data(data).enter().append('line').style('stroke', (d, i) ->
-              if d.status == 'done'
-                '#2cc350'
-              else if d.status == 'undo'
-                '#24afff'
-              else if d.status == 'reject'
-                '#f34e4c'
-              else
-                '#eee'
-            ).style('stroke-width', '3').attr('class', 'step-line').attr('x1', (d, i) ->
-              single_area_width * (i + .5)
-            ).attr('y1', single_area_height - radius).attr('x2', (d, i) ->
-              if i != 0
-                single_area_width * (i - .5)
-              else
-                single_area_width * (i + .5)
-            ).attr 'y2', single_area_height - radius
+            svg.selectAll('line')
+                .data(data).enter()
+                .append('line')
+                .style('stroke', (d, i) ->
+                    if d.status == 'done'
+                        '#8bc34a'
+                    else if d.status == 'undo'
+                        '#2196f3'
+                    else if d.status == 'reject'
+                        '#f34e4c'
+                    else
+                        '#dedede'
+                )
+                .style('stroke-width', '3')
+                .attr('class', 'step-line')
+                .attr('x1', (d, i) ->
+                    single_area_width * (i + .5) - 20
+                )
+                .attr 'y1', single_area_height - radius + 10
+                .attr('x2', (d, i) ->
+                    if i != 0
+                        single_area_width * (i - .5) - 20
+                    else
+                        single_area_width * (i + .5) - 20
+                )
+                .attr 'y2', single_area_height - radius + 10
 
-            svg.selectAll('circle').data(data).enter().append('circle').attr('class', 'step-point').attr('fill', (d) ->
-              if d.status == 'done'
-                '#2cc350'
-              else if d.status == 'undo'
-                '#24afff'
-              else if d.status == 'reject'
-                '#f34e4c'
-              else
-                '#eee'
-            ).attr('cx', (d, i) ->
-              single_area_width * (i + .5)
-            ).attr('cy', single_area_height - radius)
-            .attr('r', (d,i) ->
-                if d.status == 'undo'
-                    2*radius
-                else
-                    radius
-            )
+            svg.selectAll('circle')
+                .data(data).enter()
+                .append('circle')
+                .attr('class', 'step-point')
+                .attr('fill', (d, i) ->
+                    if d.status == 'done'
+                        '#8bc34a'
+                    else if d.status == 'undo'
+                        svg.append('circle')
+                            .attr 'cx',
+                                single_area_width * (i + .5) - 20
+                            .attr 'cy',
+                                single_area_height - radius + 10
+                            .attr 'r', 17+radius
+                            .attr 'fill', 'transparent'
+                            .attr 'stroke', 'rgba(0, 0, 0, .12)'
+                            .attr 'stroke-width', '2px'
+                        return '#2196f3'
+                    else if d.status == 'reject'
+                        '#f34e4c'
+                    else
+                        '#dedede'
+                )
+                .attr('cx', (d, i) ->
+                    single_area_width * (i + .5) - 20
+                )
+                .attr('cy', single_area_height - radius + 10)
+                .attr('r', (d,i) ->
+                    if d.status == 'undo'
+                        7+radius
+                    else
+                        radius
+                )
 
-            svg.selectAll('text').data(data).enter().append('text')
-            .attr('class', 'step-title')
-            .attr('x', (d, i) ->
-              single_area_width * (i + .5)
-            )
-            .attr('y', (d, i) ->
-                if i%2 == 0
-                    single_area_height - radius - 20
-                else
-                    single_area_height + 20 +radius
-            )
-            .attr('fill',(d,i) ->
-                if d.status == 'unreachable'
-                    'rgba(0,0,0,.54)'
-                else
-                    'rgba(0,0,0,.87)'
-            )
-            .attr('text-anchor', 'middle')
-            .attr('font-size', '12px').text (d, i) ->
-              d.des
+            svg.selectAll('text').data(data)
+                .enter()
+                .append('text')
+                .attr('class', 'step-title')
+                .attr('x', (d, i) ->
+                    single_area_width * (i + .5) - 30
+                )
+                .attr('y', (d, i) ->
+                    if i%2 == 0
+                        if d.status == 'undo'
+                            single_area_height - radius - 40 + 10
+                        else
+                            single_area_height - radius - 20 + 10
+                    else
+                        if d.status == 'undo'
+                            single_area_height + 32 + radius + 10
+                        else
+                            single_area_height + 12 + radius + 10
+                )
+                .attr 'stroke-width', (d,i) ->
+                    if d.status == 'undo'
+                        return '2px'
+                    else
+                        return '1px'
+                .attr('fill',(d,i) ->
+                    if d.status == 'unreachable'
+                        'rgba(0,0,0,.26)'
+                    else if d.status == 'done'
+                        '#689f38'
+                    else if d.status == 'reject'
+                        '#e84e40'
+                    else if d.status == 'undo'
+                        '#1976d2'
+                )
+                .attr('text-anchor', 'start')
+                .attr 'font-size', (d, i) ->
+                    if d.status == 'undo'
+                        return '16px'
+                    else
+                        return '14px'
+                .text (d, i) ->
+                    d.des
 
         return {
             link: postLink
@@ -513,7 +532,7 @@ angular.module 'nb.directives'
 
     ]
     # MOCK angular-strap datepicker directive
-    .directive 'bsDatepicker', ->
+    .directive 'bsDatepicker', ['$parse', ->
 
 
         postLink = (scope, elem, attrs, ngModelCtrl) ->
@@ -523,8 +542,20 @@ angular.module 'nb.directives'
                 format: 'yyyy-mm-dd'
                 language: 'zh-cn'
 
-            ).on 'changeDate', (evt) ->
-                ngModelCtrl.$setViewValue(evt.date)
+            )
+            # .on 'changeDate', (evt) ->
+            #     ngModelCtrl.$setViewValue(evt.date)
+
+            ngModelCtrl.$parsers.unshift (viewValue) ->
+                #only allowed yyyy-mm-dd format
+                if(!viewValue || !/^\d{4}-\d{2}-\d{2}$/.test(viewValue))
+                    ngModelCtrl.$setValidity('date', true)
+                    return
+
+                return moment(viewValue)
+
+            ngModelCtrl.$formatters.push (modelValue) ->
+                return modelValue.format('YYYY-MM-DD') if modelValue
 
 
             scope.$on '$destroy', ->
@@ -535,3 +566,102 @@ angular.module 'nb.directives'
             link: postLink
             require: 'ngModel'
         }
+    ]
+    .directive 'flowUserInfo', (USER_META) ->
+
+        origin_tmpl = '''
+            <div class="flow-info-head">
+                <div class="name" ng-bind="receptor.name"></div>
+                <div class="flow-info-plus">
+                    <span class="serial-num" ng-bind="receptor.employeeNo"></span>
+                    <span class="position">{{ receptor.department.name }} / {{ receptor.position.name }}</span>
+                </div>
+            </div>
+        '''
+
+        # template = _.template(origin_tmpl)(USER_META)
+
+        return {
+            scope: {
+                receptor: "=?"
+            }
+            link: (scope, elem, attrs)->
+                scope.$apply ()-> scope.receptor = USER_META if !scope.receptor
+            replace: true
+            template: origin_tmpl
+        }
+
+
+    .directive 'nbFileUpload', [()->
+        template = '''
+        <div>
+            <div class="accessory-container">
+                <div ng-repeat="file in files track by $index"  class="accessory-cell">
+                    <div ng-if="ctrl.isImage(file)" nb-gallery img-obj="file">
+                        <div class="accessory-name" ng-bind="file.name"></div>
+                        <div class="accessory-size" ng-bind="file.size | byteFmt:2"></div>
+                        <div class="accessory-switch">
+                            <md-button type="button" class="md-icon-button" ng-click="ctrl.removeFile($index)">
+                                <md-icon md-svg-src="/images/svg/close.svg" class="md-warn"></md-icon>
+                            </md-button>
+                        </div>
+                    </div>
+                    <div ng-if="!ctrl.isImage(file)">
+                        <div class="accessory-name" ng-bind="file.name"></div>
+                        <div class="accessory-size" ng-bind="file.size | byteFmt:2"></div>
+                        <div class="accessory-switch">
+                            <md-button type="button" class="md-icon-button" ng-click="ctrl.removeFile($index)">
+                                <md-icon md-svg-src="/images/svg/close.svg" class="md-warn"></md-icon>
+                            </md-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accessory-btn-group"
+                flow-init="{target: '/api/workflows/##FLOW_TYPE##/attachments', testChunks:false, uploadMethod:'POST', singleFile:false}"
+                flow-files-submitted="$flow.upload()"
+                flow-file-success="ctrl.addFile($message);">
+                <md-button class="md-primary md-raised" flow-btn type="button">添加文件</md-button>
+                <span class="tip"> {{tips}}</span>
+            </div>
+        </div>
+        '''
+
+        class FileUploadCtrl
+            @.$inject = ['$scope']
+
+            constructor: (@scope)->
+
+            addFile: (fileObj)->
+                fileObj = JSON.parse(fileObj)
+                file = fileObj.attachment
+                @scope.files = [] if !@scope.files
+                @scope.files.push file
+
+            removeFile: (index)->
+                @scope.files.splice(index, 1)
+
+            isImage: (file)->
+                /^image\/jpg|jpeg|gif|png/.test(file.type)
+
+        postLink = (scope, elem, attrs, ngModelCtrl) ->
+
+            scope.$watch 'files', (newVal)->
+                fileIds = _.map newVal, 'id'
+                ngModelCtrl.$setViewValue(fileIds)
+
+        return {
+            scope: {
+                type: '@flowType'
+                tips: '@tips'
+            }
+            template: (elem, attrs)->
+                new Error("flow type is needed in workflows") if attrs['flowType']
+                template.replace /##FLOW_TYPE##/, attrs['flowType']
+            replace: true
+            link: postLink
+            require: 'ngModel'
+            controller: FileUploadCtrl
+            controllerAs: 'ctrl'
+        }
+    ]

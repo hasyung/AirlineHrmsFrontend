@@ -1,0 +1,23 @@
+extends ../../component/workflow/rfc
+
+block vars
+    - var flowType = "Flow::Punishment"
+    - var flowTitle = "处分申请单"
+
+block relation_data
+    div.flow-info-row(layout)
+        .flow-info-cell(flex)
+            .flow-cell-title 通道
+            .flow-cell-content {{receptor.channelId | enum: 'channels'}}
+        .flow-info-cell(flex)
+            .flow-cell-title 用工性质
+            .flow-cell-content {{receptor.laborRelationId | enum: 'labor_relations'}}
+
+block form
+    div(layout)
+        md-input-container(flex)
+            label 处分理由
+            textarea(ng-model="request.reason" columns="1" md-maxlength="2000")
+
+
+

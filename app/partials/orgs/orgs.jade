@@ -5,6 +5,7 @@ section(layout="row" flex)
                 .org-chart-search(flex)
                     org-search(selected-item-change="ctrl.selectOrgChart(org)")
                 .top-btn-group
+                    //- 暂时使用的入口
                     md-button.md-raised.md-primary(
                         nb-dialog
                         template-url="partials/orgs/org_history.html"
@@ -19,9 +20,15 @@ section(layout="row" flex)
                             md-button(ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导出Excel
                         md-drop-option
                             md-button(ng-click="ctrl.print()" ) 导出PDF
-                    md-button.md-primary(ng-show="ctrl.currentOrg.xdepth != 1" ng-click="ctrl.backToSCAL()")
+                    md-button.md-primary(ng-show="ctrl.treeRootOrg.xdepth != 1" ng-click="ctrl.backToSCAL()")
                         md-icon(md-svg-src="/images/svg/home.svg")
                     md-button.md-raised.md-primary(ng-click="ctrl.resetData()" ng-show="ctrl.isHistory") 返回最新
+
+                    //- md-button(
+                    //-     flow-handler="ctrl.currentOrg"
+                    //-     flows="ctrl.currentOrg"
+                    //-     options="{className:'ngdialog-theme-panel'}"
+                    //-     ) 请假
 
             h1 {{ctrl.treeRootOrg.$cmStatus.name}}组织机构图
             h2(ng-show="ctrl.isHistory")

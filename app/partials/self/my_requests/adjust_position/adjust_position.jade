@@ -1,0 +1,59 @@
+extends ../../../component/workflow/rfc
+
+block vars
+    - var flowType = "Flow::AdjustPosition"
+    - var flowTitle = "调岗申请单"
+    - var paramsChange = "request.to_position_id = request.position.id; request.position = undefined;"
+
+block relation_data
+    div.flow-info-row(layout)
+        .flow-info-cell(flex)
+            .flow-cell-title 通道
+            .flow-cell-content {{receptor.channelId | enum: 'channels'}}
+        .flow-info-cell(flex)
+            .flow-cell-title 学历
+            .flow-cell-content {{receptor.educationBackgroundId | enum: 'education_backgrounds'}}
+    div.flow-info-row(layout)
+        .flow-info-cell(flex)
+            .flow-cell-title 学位
+            .flow-cell-content {{receptor.degreeId | enum: 'degrees'}}
+        .flow-info-cell(flex)
+                .flow-cell-title 英语等级
+                .flow-cell-content {{receptor.englishLevelId | enum: 'english_levels'}}
+    div.flow-info-row(layout)
+        .flow-info-cell(flex)
+            .flow-cell-title 当前岗位年限
+            .flow-cell-content {{receptor.masterPositionYears}}
+        .flow-info-cell(flex)
+            .flow-cell-title 近6各月绩效
+            .flow-cell-content {{receptor.sixPerformances}}
+
+block form
+    div(ng-init="params = {}; params.orgPos = [];")
+        div(layout)
+            div(flex)
+                org-search(ng-model="params.org" float-label placeholder="所属部门" selected-item-change="params.orgPos = org.positions.$fetch();")
+            md-input-container.row-has-value(flex)
+                label 岗位
+                md-select(ng-model="request.position")
+                    md-select-label {{request.position.name || '无'}}
+                    md-option(ng-value="pos" ng-repeat="pos in params.orgPos") {{::pos.name}}
+        div(layout)
+            md-input-container.row-has-value(flex)
+                label 转入通道
+                md-select(ng-model="request.position.channelId" disabled)
+                    md-select-label {{$enum.parseLabel(request.position.channelId, "channels")}}
+                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
+            md-input-container(flex)
+                label 在编情况
+                input(ng-model="request.position.budgeted_staffing" disabled)
+
+        div(layout)
+            md-input-container(flex)
+                label 申请理由
+                textarea(ng-model="request.reason" columns="1" md-maxlength="2000")
+        md-subheader.accessory-header.md-background.md-hue-1 附件
+        div(nb-file-upload flow-type="#{flowType}" ng-model="request.attachment_ids")
+
+
+

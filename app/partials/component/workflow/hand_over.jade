@@ -1,0 +1,35 @@
+md-dialog.hand_over(ng-init="params = {type:'departments'};")
+    form(ng-submit="transfer(params, dialog.flow, dialog, $parent.dialog)")
+        md-content.sticky-container
+            md-toolbar.md-accent(md-theme="hrms")
+                .md-toolbar-tools
+                    span 移交
+            .dialog-content(md-theme="default")
+                .hd-manner
+                    md-radio-group(ng-model="params.type")
+                        md-radio-button.md-primary(value="departments") 移交部门
+                        md-radio-button.md-primary(value="reviewer") 移交个人
+                .hd-unit-wrapper(layout ng-if="params.type == 'departments'")
+                    .hd-choosing(flex)
+                        .title 部门列表
+                        .content
+                            md-checkbox.md-primary(ng-repeat="org in reviewOrgs" ng-click="toggleSelect(org, selectedOrgs)") {{org.name}}
+                                span(ng-if="exists(item, selected)") selected
+                    div.hd-choosed(flex)
+                        .title 已选择的部门
+                        .content
+                            div(ng-repeat="org in selectedOrgs track by $index") {{org.name}}
+                .hd-unit-wrapper(ng-if="params.type == 'reviewer'")
+                    .hd-choosing
+                        .title 领导列表
+                        .content
+                            md-radio-group(ng-model="params.reviewer_id")
+                                md-radio-button.md-primary(ng-value="reviewer.id" ng-repeat="reviewer in reviewers") {{ reviewer.name }} ( {{reviewer.department.name}} / {{reviewer.position.name}} )
+                                md-radio-button.md-primary(value="002087") 方志军（部门领导 - 副总经理）
+
+
+
+
+        .md-actions
+            md-button.md-raised.white(type='button',ng-click='dialog.cancel()') 取消
+            md-button.md-primary.md-raised(type='submit' ng-disabled="trans_form.$invalid") 确定

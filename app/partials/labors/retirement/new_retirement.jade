@@ -1,0 +1,29 @@
+md-dialog
+    md-content(ng-init="users = dialog.users")
+        form(flex ng-submit="ctrl.retirement(users);dialog.close();")
+            md-toolbar.md-accent(md-theme="hrms")
+                .md-toolbar-tools
+                    span 发起退休流程
+
+            .dialog-content(style="padding:30px 40px;") 您将对所选的{{users.length}}人发起退休流程，请确认。
+            .dialog-content(layout layout-align="center" ng-hide="true")
+
+                md-card.form-material-section.nb-card(ng-repeat="user in users" ng-init="emp = ctrl.Employee.$find(user.id)")
+                    md-subheader.md-background.md-hue-1
+                    .flow-relations(flow-relation-data ng-model="user.relation_data")
+                        div.flow-info-row(layout)
+                            .flow-info-cell(flex)
+                                .flow-cell-title 通道
+                                .flow-cell-content {{emp.channelId | enum: 'channels'}}
+                            .flow-info-cell(flex)
+                                .flow-cell-title 性别
+                                .flow-cell-content {{emp.genderId | enum: 'genders'}}
+                        div.flow-info-row(layout)
+                            .flow-info-cell(flex)
+                                .flow-cell-title 年龄
+                                .flow-cell-content {{emp.age}}
+
+
+            .md-actions
+                md-button(type="button" ng-click='dialog.close()') 取 消
+                md-button.md-primary.md-raised(type="submit") 确 定

@@ -1,0 +1,60 @@
+.flow-list(flex ng-init="leaves = ctrl.MyLeave.$collection().$fetch();")
+    md-toolbar
+        .md-toolbar-tools
+            span
+                md-button.md-icon-button(ui-sref="^")
+                    md-icon(md-svg-src="/images/svg/arrow-left.svg")
+            span 我要请假
+    .flow-list-body
+        .flow-list-content.ui-grid-container
+            .flow-list-tip
+                | 点击请假申请，可发起请假流程。列表中选择未生效的申请，可撤销请假申请。
+                | 你
+                span(ng-repeat="(key, value) in vacations.year_days.year") {{key}} 年年假剩余天数 {{value}} 天 {{$last ? '。' : '，' }}
+
+            md-toolbar
+                .md-toolbar-tools
+                    span 请假列表
+                    span(flex)
+                    span
+                        md-button.md-primary.md-raised(
+                            ng-disabled="!(ctrl.getSelected() &&\
+                                (ctrl.getSelected().type == 'Flow::PersonalLeave' || ctrl.getSelected().type == 'Flow::SickLeave')\
+                                && ctrl.getSelected().workflowState == '已生效')"
+                            nb-dialog
+                            template-url="/partials/self/my_requests/leave/charge.html"
+                            locals="{leave:ctrl.getSelected()}"
+                            title="只有病假和事假才可以抵扣"
+                        ) 年假抵扣
+                    span
+                        md-button.md-primary.md-raised(
+                            ng-disabled="!(ctrl.getSelected() && ctrl.getSelected().workflowState !== '已生效')"
+                            nb-confirm="ctrl.revert(isConfirm, ctrl.getSelected())"
+                            nb-title="你是否要撤销所选请假操作?"
+                            nb-content="当你点击确定时，您所申请的假期将被撤销！"
+                        ) 撤销请假
+                    span
+                        md-dropmenu()
+                            md-drop-label()
+                                md-button.md-primary.md-raised 请假
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/presence_leave.html" ) 派驻人员休假
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/yearly_leave.html" ) 年假
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/dead_leave.html" ) 丧假
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/visit_leave.html" ) 探亲假
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/wedding_leave.html" ) 婚假
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/abortion_leave.html" ) 产假
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/abortion_leave1.html" ) 产假(母乳喂养)
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/abortion_leave2.html" ) 产假(剖腹产、难产)
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/abortion_leave3.html" ) 产假(晚育)
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/abortion_leave4.html" ) 产假(多胞胎)
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/abortion_leave5.html" ) 产假(流产)
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/matter_leave.html" ) 事假
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/produce_before.html" ) 产前孕期检查假
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/nurse_leave.html" ) 生育护理假
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/sick_leave.html" ) 病假
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/sick_leave1.html" ) 病假(工伤待定)
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/sick_leave2.html" ) 病假(怀孕待产)
+                            md-drop-option(nb-panel template-url="partials/self/my_requests/leave/female_leave.html" ) 女工假
+
+
+            div(nb-grid column-defs="ctrl.leaveCol" multi-select="false" export-api grid-selection safe-src="leaves")

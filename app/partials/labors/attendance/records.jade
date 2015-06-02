@@ -1,0 +1,12 @@
+.app-content-wrapper(flex)
+
+    div(nb-filter="ctrl.recordsFilterOptions" on-search="ctrl.search(state)")
+    div.ui-grid-container
+        md-toolbar
+            .md-toolbar-tools
+                h2 员工人事信息列表
+                div(flex)
+                md-button.md-primary.md-raised(
+                ) 销假
+
+        div(nb-grid column-defs="ctrl.recodsColumnDef" export-api grid-selection safe-src="ctrl.leaveFlows")

@@ -122,24 +122,24 @@ function report_request(params) {
     });
 }
 
-// $(document).ready(function(){
-//     pomelo.on('Message', function(data){
-//         console.log(data);
-//         // add_log("#0000FF", JSON.stringify(data, null, '\t'));
-//     });
+$(document).ready(function(){
+    pomelo.on('Message', function(data){
+        console.log(data);
+        // add_log("#0000FF", JSON.stringify(data, null, '\t'));
+    });
 
-//     pomelo.on('Geo', function(data){
-//         console.log(data);
-//         // add_log("#0000FF", "收到上报通知:  " + JSON.stringify(data, null, '\t'));
-//     });
+    pomelo.on('Geo', function(data){
+        console.log(data);
+        // add_log("#0000FF", "收到上报通知:  " + JSON.stringify(data, null, '\t'));
+    });
 
-//     pomelo.on('Leave', function(data){
-//         console.log(data);
-//         // add_log("#FF00CC", "收到发来消息:  " + data.username + " leave");
-//     });
+    pomelo.on('Leave', function(data){
+        console.log(data);
+        // add_log("#FF00CC", "收到发来消息:  " + data.username + " leave");
+    });
 
-//     enter();
-// });
+    enter();
+});
 
 function scrollTop(psconsole){
     psconsole.scrollTop(

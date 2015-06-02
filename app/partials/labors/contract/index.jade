@@ -1,0 +1,85 @@
+extends ../../component/workflow/index
+
+block heading
+    - var user_list = false
+    - var flowName = "合同管理"
+    - var cust_page = "合同列表"
+
+block cust_page
+    .app-content-wrapper(flex style="height: 700px;" ng-controller="ContractCtrl as ctrl")
+        div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+        div.ui-grid-container
+            md-toolbar
+                .md-toolbar-tools
+                    h2 合同列表
+                    div(flex)
+                    md-button.md-primary.md-raised(
+                        ng-disabled="!ctrl.getSelected()"
+                        nb-confirm="ctrl.leaveJob(ctrl.getSelected(), isConfirm)"
+                        nb-title="离职流程发起"
+                        nb-content="你确定对{{ctrl.getSelected().employeeName}}发起离职通知单流程，请确认。"
+                    ) 发起离职
+                    md-button.md-primary.md-raised(
+                        nb-dialog
+                        template-url="/partials/labors/contract/renew.html"
+                        locals="{contract:ctrl.getSelected()}"
+                    ) 发起续签
+                    md-button.md-primary.md-raised(
+                        nb-panel
+                        template-url="/partials/labors/contract/new.html"
+                    ) 新建合同
+            div(nb-grid multi-select="false" export-api grid-selection column-defs="ctrl.columnDef" safe-src="ctrl.contracts")
+
+
+
+
+block user_list_actions
+    md-button.md-primary.md-raised(
+        ng-disabled="!getSelected()"
+        nb-panel
+        template-url="/partials/labors/contract/new.html"
+        locals="{users:getSelecteds()}"
+    ) 发起离职
+
+    md-button.md-primary.md-raised(
+        ng-disabled="!getSelected()"
+        nb-dialog
+        template-url="/partials/labors/contract/renew.html"
+        locals="{users:getSelecteds()}"
+    ) 发起续签
+
+    md-button.md-primary.md-raised(
+        nb-panel
+        template-url="/partials/labors/contract/new.html"
+    ) 新建合同
+
+
+
+
+
+//- tabset(flex)
+//-     tab(heading="合同列表")
+//-         .app-content-wrapper(flex style="height: 700px;" ng-controller="ContractCtrl as ctrl")
+//-             div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+//-             div.ui-grid-container
+//-                 md-toolbar
+//-                     .md-toolbar-tools
+//-                         h2 合同列表
+//-                         div(flex)
+//-                         md-button.md-primary.md-raised(
+//-                         ) 发起离职
+//-                         md-button.md-primary.md-raised(
+//-                             nb-dialog
+//-                             template-url="/partials/labors/contract/renew.html"
+//-                             locals="{contract:ctrl.getSelected()}"
+//-                         ) 发起续签
+//-                         md-button.md-primary.md-raised(
+//-                             nb-panel
+//-                             template-url="/partials/labors/contract/new.html"
+//-                         ) 新建合同
+//-                 div(nb-grid multi-select="false" export-api grid-selection column-defs="ctrl.columnDef" safe-src="ctrl.contracts")
+
+
+//-     tab(heading="历史记录")
+        
+

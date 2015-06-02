@@ -258,6 +258,7 @@ NbFilterDirective = ()->
                     <div flex></div>
                     <md-button class="md-primary md-raised" nb-dialog template-url="partials/component/table/save_filter_dialog.html">保存</md-button>
                     <md-select ng-model="filter.serializedFilter"
+                    ng-if="filter.filters.length"
                     ng-change="filter.restoreFilter(filter.serializedFilter.parse());search(filter.serializedFilter.parse())" placeholder="请选择筛选条件">
                         <md-option ng-value="f" ng-repeat="f in filter.filters">{{f.name}}</md-option>
                     </md-select>
@@ -375,7 +376,7 @@ nbGridDirective = ($parse)->
         pageGetter = $parse('safeSrc.$metadata.page')
         itemCountGetter = $parse('safeSrc.$metadata.count')
         exportApi = angular.isDefined(attrs.exportApi) #gridApi export to appScope
-
+        multiSelect = if attrs.multiSelect then scope.$eval(attrs.multiSelect) else true
         defaultOptions = {
             # flatEntityAccess: true
             enableSorting: false
@@ -386,6 +387,7 @@ nbGridDirective = ($parse)->
             selectionRowHeaderWidth: 35
             rowHeight: 50
             enableColumnMenus: false
+            multiSelect: multiSelect
 
             # paginationTemplate: ''' ''' #分页组件模板， 需要集成 ui-grid-paper
             # totalItems: xxx
@@ -396,7 +398,11 @@ nbGridDirective = ($parse)->
             onRegisterApi: (gridApi) ->
 
                 #WARN 必须保持grid 生命周期与controller 一致， 暂不支持动态生成表格, 不然会内存泄露
+                # DEPRECATED
                 gridApi.grid.appScope.$parent.$gridApi = gridApi if exportApi
+
+                #recommended  alpha
+                scope.onRegisterApi({gridApi: gridApi})
 
                 gridApi.pagination.on.paginationChanged scope, (newPage, pageSize) ->
                     currentQueryParams = safeSrc.$queryParams || {}
@@ -428,6 +434,10 @@ nbGridDirective = ($parse)->
 
         scope.gridOptions = options
 
+
+        scope.getTableHeight = () ->
+            return height: (scope.gridOptions.data.length * options.rowHeight + 80) + "px"
+
         scope.$watch(
             -> itemCountGetter(scope)
             ,
@@ -444,7 +454,7 @@ nbGridDirective = ($parse)->
     #暂时使用 ui-grid-auto-resize 插件 每250ms定时resize，修复改BUG
     #如果有性能问题， 再修复
     nbGridTemplate =  '''
-        <div ui-grid="gridOptions" #plugins# ui-grid-pagination ui-grid-auto-resize></div>
+        <div ui-grid="gridOptions" #plugins# ui-grid-pagination ui-grid-auto-resize ng-style="getTableHeight()"></div>
     '''
 
     return {
@@ -464,6 +474,7 @@ nbGridDirective = ($parse)->
         scope: {
             columnDefs: '='
             safeSrc: '='
+            onRegisterApi: '&'
         }
     }
 

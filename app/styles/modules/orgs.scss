@@ -71,11 +71,6 @@
         margin: 0 auto;
         transform-origin: 0% 0%;
 
-        text,
-        rect {
-            cursor: pointer;
-        }
-
         .node {
             rect {
                 fill: #dfe5e7;
@@ -253,7 +248,7 @@ md-dialog.org-transfer {
 md-dialog.org_history {
 
     .md-actions {
-        border-top: 1px solid rgba(0, 0, 0, .12)        
+        border-top: 1px solid rgba(0, 0, 0, .12);
     }
 
     md-input-container {
@@ -320,8 +315,6 @@ md-dialog.position_delete {
 md-dialog.save_filter {
     min-width: 300px;
 
-    .form-va
-
     md-toolbar {
         min-height: 40px;
     }
@@ -333,7 +326,12 @@ md-dialog.save_filter {
 
     .dialog-content {
         min-width: 300px;
+        padding: 0 20px 20px;
     }
+}
+
+md-dialog.hand_over {
+    min-width: 550px;
 }
 
 

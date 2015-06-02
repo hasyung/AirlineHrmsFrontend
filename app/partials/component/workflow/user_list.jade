@@ -1,0 +1,10 @@
+.app-content-wrapper(flex ng-init="ctrl.userList()")
+    div(nb-filter="ctrl.filterOptions" on-search="search(state)")
+    div.ui-grid-container
+        md-toolbar
+            .md-toolbar-tools
+                h2 员工花名册
+                div(flex)
+                block user_list_actions
+
+        div(nb-grid column-defs="ctrl.columnDef" on-register-api="ctrl.exportGridApi(gridApi)"  grid-selection multi-select= multiSelect? 'true': 'false'  safe-src="ctrl.tableData")

@@ -4,10 +4,10 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
             span 基本信息
             span(flex)
             span(ng-hide="editing")
-                md-button.md-raised.white(ng-click="edit($event)") 编辑
+                md-button.md-raised.md-primary(ng-click="edit($event)") 编辑
             span(ng-show="editing")
                 md-button.md-raised.white(ng-click="cancel(currentUser, $event, infoForm)") 取消
-                md-button.md-raised.skyblue(type="submit" style="margin-left: 20px") 保存
+                md-button.md-raised.md-primary(type="submit" style="margin-left: 20px") 保存
     md-content
         section.form-material-section
             md-subheader.md-primary 个人信息
@@ -98,6 +98,7 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                     md-input-container(flex)
                         label 家庭住址
                         input(ng-model="currentUser.contact.address" name="address")
+                div(layout)
                     md-input-container(flex)
                         label 通信地址
                         input(ng-model="currentUser.contact.mailingAddress" name="mailingAddress")

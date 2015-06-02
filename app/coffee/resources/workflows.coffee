@@ -1,7 +1,36 @@
 resources = angular.module('resources')
 
 #流程资源集合，用于批量生成流程资源
-workflows = ['Flow::EarlyRetirement','Flow::AdjustPosition']
+
+workflows = [
+    "Flow::AccreditLeave"
+    "Flow::AnnualLeave"
+    "Flow::FuneralLeave"
+    "Flow::HomeLeave"
+    "Flow::MarriageLeave"
+    "Flow::MaternityLeave"
+    "Flow::MaternityLeaveBreastFeeding"
+    "Flow::MaternityLeaveDystocia"
+    "Flow::MaternityLeaveLateBirth"
+    "Flow::MaternityLeaveMultipleBirth"
+    "Flow::MiscarriageLeave"
+    "Flow::PersonalLeave"
+    "Flow::PrenatalCheckLeave"
+    "Flow::RearNurseLeave"
+    "Flow::SickLeave"
+    "Flow::SickLeaveInjury"
+    "Flow::SickLeaveNulliparous"
+    "Flow::WomenLeave"
+    "Flow::Retirement"
+    "Flow::EarlyRetirement"
+    "Flow::Resignation"
+    "Flow::Punishment"
+    "Flow::Dismiss"
+    "Flow::RenewContract"
+    "Flow::AdjustPosition"
+    "Flow::EmployeeLeaveJob"
+    "Flow::Resignation"
+]
 
 CustomConfig = {
     'Flow::AdjustPosition': {
@@ -23,18 +52,50 @@ CustomConfig = {
 angular.forEach workflows, (item)->
 
 
-    # resources = (restmod, RMUtils, $Evt) ->
-    #     resource.call(this, restmod, RMUtils, item)
-
-
     resource = (restmod, RMUtils, $Evt) ->
         resource = restmod.model("/workflows/#{item}").mix 'nbRestApi','Workflow', {
+
+            flowNodes: {hasMany: "FlowReply"}
+
             $config:
                 jsonRootMany: 'workflows'
                 jsonRootSingle: 'workflow'
+            $extend:
+                Scope:
+                    records: ->
+                        restmod.model("/workflows/#{item}/record").$collection().$fetch()
+                    myRequests: ->
+                        restmod.model("/me/workflows/#{item}").$collection().$fetch()
 
         }
     resources.factory item, ['restmod', 'RMUtils', resource]
+
+
+
+resources.factory 'FlowReply', (restmod) ->
+    restmod.model().mix 'nbRestApi', {
+        $config:
+            jsonRootSingle: 'flow_node'
+
+    }
+
+
+
+
+resources.factory 'Leave', (restmod, $injector) ->
+
+    restmod.model("/workflows/leave").mix 'nbRestApi', 'Workflow', {
+        $config:
+            jsonRootMany: 'workflows'
+            jsonRootSingle: 'workflow'
+
+    }
+
+
+
+
+
+
 
 
 

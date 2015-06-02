@@ -1,0 +1,101 @@
+block vars
+
+div.workflow.md-background(md-theme="hrms")
+    md-toolbar.md-warn(md-theme="hrms")
+        .md-toolbar-tools
+            span 请假单填写
+    .personnel-content.personnel-control
+        section.personnel-info-section
+            md-content.nb-card-container(layout="column" md-theme="hrms")
+                form(ng-controller="NewMyRequestCtrl" ng-submit="createFlow(request)" ng-init="request = initialFlow('#{flowType}')")
+                    md-card.form-material-section.nb-card
+                        md-subheader.md-background.md-hue-1
+                        flow-user-info
+                        .flow-relations(flow-relation-data ng-model="request.relation_data")
+
+                            block relation_data
+                                div.flow-info-row(layout)
+                                    .flow-info-cell(flex)
+                                        .flow-cell-title 假别
+                                        .flow-cell-content #{flowName}
+
+
+                    md-card.form-material-section.nb-card
+                        md-subheader.md-background.md-hue-1 申请信息
+                        fieldset
+                            block form
+                                case formType
+                                    when 1
+                                        block additional_form
+
+
+                                        div(layout)
+                                            md-input-container(flex)
+                                                label 开始日期
+                                                input(ng-model="request.start_time" ng-change="calculateTotalDays(request, '#{flowName}')" name="start_time" bs-datepicker required)
+                                            md-input-container(flex)
+                                                label 结束日期
+                                                input(ng-model="request.end_time" ng-change="calculateTotalDays(request, '#{flowName}')" name="end_time" required bs-datepicker)
+                                        div(layout)
+                                            .without-edit
+                                                div.progress-wrapper(ng-if="calculating")
+                                                    md-progress-circular(md-mode="indeterminate")
+                                                div(ng-if="!calculating")
+                                                    div.without-edit-title 天数
+                                                    div.without-edit-content {{ vacation_days }} 天
+                                        div(layout)
+                                            md-input-container(flex)
+                                                label 申请理由
+                                                textarea(ng-model="request.reason" columns="1" md-maxlength="150")
+                                        md-subheader.accessory-header.md-background.md-hue-1 附件
+                                        if need_attachment
+                                            div(nb-file-upload flow-type="#{flowType}" ng-model="request.attachment_ids")
+                                    when 2
+                                        div(layout)
+                                            md-input-container(flex)
+                                                label 开始日期
+                                                input(ng-model="request.start_time" ng-change="calculateTotalDays(request, '#{flowName}')" name="start_time" bs-datepicker required)
+                                            md-input-container.row-has-value(style="flex: 0 0 150px;")
+                                                label 详细时间
+                                                md-select(ng-model="request.start_time" ng-change="calculateTotalDays(request, '#{flowName}')" md-on-open="loadStartTime()" ng-disabled="!request.start_time" required)
+                                                    md-select-label {{request.start_time | mdate: 'H:mm' ||'无'}}
+                                                    md-option(ng-value="time" ng-repeat="time in start_times" ) {{time | mdate: 'H:mm'}}
+                                        div(layout)
+                                            md-input-container(flex)
+                                                label 结束日期
+                                                input(ng-model="request.end_time" ng-change="calculateTotalDays(request, '#{flowName}')" name="end_time" required bs-datepicker)
+                                            md-input-container.row-has-value(style="flex: 0 0 150px;")
+                                                label 详细时间
+                                                md-select(ng-model="request.end_time" ng-change="calculateTotalDays(request, '#{flowName}')" md-on-open="loadEndTime()" ng-disabled="!request.end_time" required)
+                                                    md-select-label {{request.end_time | mdate: 'H:mm' ||'无'}}
+                                                    md-option(ng-value="time" ng-repeat="time in end_times" ) {{time | mdate: 'H:mm'}}
+                                        div(layout)
+                                            .without-edit
+                                                div.progress-wrapper(ng-if="calculating")
+                                                    md-progress-circular(md-mode="indeterminate")
+                                                div(ng-if="!calculating")
+                                                    div.without-edit-title 天数
+                                                    div.without-edit-content {{ vacation_days }} 天
+                                        div(layout)
+                                            md-input-container(flex)
+                                                label 申请理由
+                                                textarea(ng-model="request.reason" columns="1" md-maxlength="2000")
+                                        md-subheader.accessory-header.md-background.md-hue-1 附件
+                                        if need_attachment
+                                            div(nb-file-upload flow-type="#{flowType}" ng-model="request.attachment_ids")
+
+
+
+
+                    md-card.form-material-section.nb-card
+                        md-subheader.superior-header.md-background.md-hue-1 提交上级
+                        .superior-container
+                            md-radio-group(ng-model="request.reviewer_id" md-theme="default")
+                                md-radio-button.md-primary(
+                                    ng-repeat="reviewer in ::ctrl.reviewers track by reviewer.id"
+                                    ng-value="reviewer.id") {{ reviewer.name }} ( {{reviewer.department.name}} / {{reviewer.position.name}} )
+
+                    .form-bottom-group(layout)
+                        span(flex)
+                        md-button.md-raised.white(type="button" ng-click="panel.close()") 取消
+                        md-button.md-primary.md-raised(type="submit") 提交上级

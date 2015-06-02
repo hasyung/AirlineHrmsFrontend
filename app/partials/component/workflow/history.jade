@@ -1,0 +1,8 @@
+.app-content-wrapper(flex ng-init="ctrl.historyList()")
+    div(nb-filter="ctrl.filterOptions" on-search="search(state)")
+    div.ui-grid-container
+        md-toolbar
+            .md-toolbar-tools
+                h2 #{flowName}历史列表
+
+        div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.tableData")

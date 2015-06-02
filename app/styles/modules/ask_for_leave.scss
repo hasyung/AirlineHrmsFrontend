@@ -1,0 +1,191 @@
+.workflow {
+    background-color: rgb(245, 245, 245);
+    height: 100%;
+
+    .nb-card.form-material-section {
+        padding: 0 30px 40px;
+
+        fieldset {
+            padding-bottom: 0;
+        }
+
+        .dis-toggle {
+            flex: 0 0 180px;
+
+            md-checkbox {
+                margin-top: 0;
+            }
+        }
+
+        .dis-check {
+            flex: 1;
+
+            md-radio-button {
+                float: left;
+                margin-top: 3px;
+            }
+        }
+    }
+
+    .flow-info-head {
+        margin-bottom: 30px;
+
+        .name {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .flow-info-plus {
+            font-size: $font-size-sm;
+
+            .serial-num {
+                margin-right: 10px;
+            }
+
+        }
+    }
+
+    .form-bottom-group {
+        margin-top: 20px;
+    }
+
+}
+
+.flow-relations {
+    .flow-info-row:first-child {
+        .flow-info-cell {
+            border-top: 1px dotted #eaeff0;
+        }
+    }
+
+    .flow-info-cell {
+        border-bottom: 1px dotted #eaeff0;
+        display: flex;
+        font-size: $font-size-sm;
+        height: 60px;
+        line-height: 59px;
+        margin-right: 10px;
+
+        .flow-cell-title {
+            color: $text-muted;
+            width: 90px;
+        }
+
+        .flow-cell-content {
+            flex: 1;
+        }
+    }
+}
+
+.without-edit {
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
+    display: flex;
+    flex: 1;
+    margin: 0 2px 26px 0;
+    min-height: 43px;
+    padding: 2px 0;
+    position: relative;
+
+    .without-edit-title {
+        color: $text-muted;
+        font-size: $font-size-sm;
+        padding-left: 3px;
+        width: 90px;
+    }
+
+    .without-edit-content {
+        flex: 1;
+    }
+
+    .progress-wrapper {
+        left: 0;
+        position: absolute;
+        top: 0;
+        transform: scale(.5);
+    }
+}
+
+.accessory-btn-group {
+    margin-top: 10px;
+
+    .tip {
+        color: $text-muted;
+        margin-left: 10px;
+    }
+}
+
+//我的申请主页面的样式
+
+.my-requests {
+    color: $text-color;
+    padding: 20px;
+}
+
+.classify {
+    background-color: #fff;
+    margin-bottom: 10px;
+    padding: 30px;
+
+    .classify-header {
+        font-size: $font-size-md;
+        margin-bottom: 25px;
+    }
+
+    .classify-wrapper {
+        @include clearfix();
+
+        .classify-cell {
+            float: left;
+            padding: 0 50px;
+
+            .desc {
+                text-align: center;
+            }
+        }
+
+        .md-fab {
+            height: 70px;
+            line-height: 70px;
+            margin-bottom: 5px;
+            width: 70px;
+
+            md-icon {
+                height: 40px;
+                width: 40px;
+
+                * {
+                    fill: #fff;
+                }
+            }
+        }
+    }
+}
+
+//我要请假 主列表样式
+.flow-list {
+    md-toolbar {
+        background-color: #fff;
+        color: $text-color;
+
+        md-icon svg {
+            * {
+                fill: $text-muted;
+            }
+        }
+    }
+}
+
+.flow-list-body {
+    padding: 20px;
+
+    .flow-list-tip {
+        height: 70px;
+        line-height: 70px;
+    }
+}
+
+
+
+
+
+
