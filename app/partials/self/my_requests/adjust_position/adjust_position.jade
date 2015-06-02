@@ -30,7 +30,7 @@ block relation_data
 
 block form
     div(ng-init="params = {}; params.orgPos = [];")
-        div(layout )
+        div(layout)
             div(flex)
                 org-search(ng-model="params.org" float-label placeholder="所属部门" selected-item-change="params.orgPos = org.positions.$fetch();")
             md-input-container.row-has-value(flex)

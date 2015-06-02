@@ -6,8 +6,6 @@ resetForm = nb.resetForm
 filterBuildUtils = nb.filterBuildUtils
 Modal = nb.Modal
 
-
-
 class Route
     @.$inject = ['$stateProvider']
 
@@ -299,7 +297,7 @@ class LeaveEmployeesCtrl extends nb.Controller
                     type: 'date-range'
                     displayName: '变动时间'
                 }
-                
+
             ]
         }
 
@@ -308,7 +306,7 @@ class LeaveEmployeesCtrl extends nb.Controller
         @leaveEmployees = @LeaveEmployees.$collection().$fetch()
     search: (tableState) ->
         @leaveEmployees.$refresh(tableState)
-       
+
 
 class ReviewCtrl extends nb.Controller
     @.$inject = ['$scope', 'Change', 'Record', '$mdDialog']

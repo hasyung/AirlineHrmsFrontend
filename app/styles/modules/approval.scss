@@ -152,18 +152,19 @@
         float: left;
         font-size: $font-size-sm;
         height: 50px;
-        margin-left: 20px;
+        margin-bottom: 10px;
+        margin-right: 20px;
         padding: 5px 10px;
         position: relative;
-        width: 200px;
-
-        &:first-child {
-            margin-left: 0;
-        }
+        width: 410px;
 
         .accessory-name {
             color: #7cb342;
             margin-bottom: 2px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 330px;
         }
 
         .accessory-switch {
