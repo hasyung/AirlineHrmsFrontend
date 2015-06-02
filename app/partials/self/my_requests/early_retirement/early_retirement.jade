@@ -8,10 +8,10 @@ block relation_data
     div.flow-info-row(layout)
         .flow-info-cell(flex)
             .flow-cell-title 通道
-            .flow-cell-content 管理
+            .flow-cell-content {{receptor.channelId | enum: 'channels'}}
         .flow-info-cell(flex)
                 .flow-cell-title 性别
-                .flow-cell-content 男
+                .flow-cell-content {{receptor.genderId | enum: 'genders'}}
     div.flow-info-row(layout)
         .flow-info-cell(flex)
             .flow-cell-title 年龄
@@ -22,7 +22,7 @@ block relation_data
     div.flow-info-row(layout)
         .flow-info-cell(flex)
             .flow-cell-title 到岗时间
-            .flow-cell-content 2000-01-01
+            .flow-cell-content {{receptor.startWorkDate}}
         .flow-info-cell(flex)
                 .flow-cell-title 本企业工作年限
                 .flow-cell-content 18年

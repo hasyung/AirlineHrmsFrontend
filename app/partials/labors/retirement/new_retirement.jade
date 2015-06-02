@@ -8,16 +8,16 @@ md-dialog
             .dialog-content(style="padding:30px 40px;") 您将对所选的{{users.length}}人发起退休流程，请确认。
             .dialog-content(layout layout-align="center" ng-hide="true")
 
-                md-card.form-material-section.nb-card(ng-repeat="user in users")
+                md-card.form-material-section.nb-card(ng-repeat="user in users" ng-init="emp = ctrl.Employee.$find(user.id)")
                     md-subheader.md-background.md-hue-1
                     .flow-relations(flow-relation-data ng-model="user.relation_data")
                         div.flow-info-row(layout)
                             .flow-info-cell(flex)
                                 .flow-cell-title 通道
-                                .flow-cell-content 管理
+                                .flow-cell-content {{emp.channelId | enum: 'channels'}}
                             .flow-info-cell(flex)
                                 .flow-cell-title 性别
-                                .flow-cell-content 男
+                                .flow-cell-content {{emp.genderId | enum: 'genders'}}
                         div.flow-info-row(layout)
                             .flow-info-cell(flex)
                                 .flow-cell-title 社保缴费年限

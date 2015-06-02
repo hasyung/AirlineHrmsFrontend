@@ -14,6 +14,10 @@ block cust_page
                     h2 合同列表
                     div(flex)
                     md-button.md-primary.md-raised(
+                        ng-disabled="!ctrl.getSelected()"
+                        nb-confirm="ctrl.leaveJob(ctrl.getSelected(), isConfirm)"
+                        nb-title="离职流程发起"
+                        nb-content="你确定对{{ctrl.getSelected().employeeName}}发起离职通知单流程，请确认。"
                     ) 发起离职
                     md-button.md-primary.md-raised(
                         nb-dialog

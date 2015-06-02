@@ -28,6 +28,7 @@ workflows = [
     "Flow::Dismiss"
     "Flow::RenewContract"
     "Flow::AdjustPosition"
+    "Flow::EmployeeLeaveJob"
 ]
 
 CustomConfig = {

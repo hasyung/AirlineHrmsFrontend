@@ -170,6 +170,14 @@ class Route
                     'FlowName': -> 'Flow::Retirement'
                 }
             }
+            .state 'labors_leave_job', {
+                url: '/labors_leave_job'
+                templateUrl: 'partials/labors/leave_job/index.html'
+                controller: SbFlowHandlerCtrl
+                resolve: {
+                    'FlowName': -> 'Flow::EmployeeLeaveJob'
+                }
+            }
 
 
 class AttendanceCtrl extends nb.Controller
@@ -561,6 +569,12 @@ class ContractCtrl extends nb.Controller
         request.reviewer_id = contract.employeeId
 
         @http.post("/api/workflows/Flow::RenewContract", request)
+
+    leaveJob: (contract, isConfirm)->
+        return if !isConfirm
+        request = {}
+        request.receptor_id = contract.employeeId
+        @http.post("/api/workflows/Flow::EmployeeLeaveJob", request)
 
     loadEmployee: (params, contract)->
         self = @
