@@ -277,6 +277,11 @@ menuFactory = ($rootScope, $state)->
                 state: 'labors_leave_job'
                 permission: ''
             }
+            {
+                name: '员工辞职'
+                state: 'labors_resignation'
+                permission: ''
+            }
             
 
         ]

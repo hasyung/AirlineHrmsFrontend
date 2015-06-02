@@ -178,6 +178,14 @@ class Route
                     'FlowName': -> 'Flow::EmployeeLeaveJob'
                 }
             }
+            .state 'labors_resignation', {
+                url: '/labors_resignation'
+                templateUrl: 'partials/labors/resignation/index.html'
+                controller: SbFlowHandlerCtrl
+                resolve: {
+                    'FlowName': -> 'Flow::Resignation'
+                }
+            }
 
 
 class AttendanceCtrl extends nb.Controller
