@@ -1,8 +1,4 @@
 .self_performance {
-    &.performance-content {
-        padding: 10px 0 20px;
-    }
-
     .performance-content {
         padding: 40px 30px;
     }
@@ -13,8 +9,8 @@
             border-radius: 0;
             font-size: 14px;
             font-weight: bold;
-            height: 50px;
-            padding-left: 10px;
+            height: 70px;
+            padding: 0 20px 0 40px;
             width: 100%;
 
             &:first-child {
@@ -22,7 +18,7 @@
             }
 
             .md-toggle-icon {
-                @include transition(transform .25s ease-in-out);
+                @include transition(transform .5s ease-in-out);
                 transform: rotate(0deg);
 
                 &.toggled {
@@ -33,6 +29,14 @@
     }
 
     .form-table-container {
+        @include transition(max-height .75s ease-in-out);
+        max-height: 0;
+        overflow: hidden;
+
+        &.open {
+            max-height: 2000px;
+        }
+
         .table {
             margin-bottom: 0;
         }
@@ -67,6 +71,17 @@
     }
 }
 
+.form-material-section.nb-card.no-padding {
+    padding: 0;
+
+    .form-table-container {
+        padding: 0 30px;
+
+        .table {
+            margin-bottom: 30px;
+        }
+    }
+}
 
 
 
