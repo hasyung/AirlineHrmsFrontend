@@ -69,7 +69,8 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
 
         return parent
 
-
+    #将数组类型的机构数据转换成树形数据
+    #
     treeful = (treeData, DEPTH, parent) ->
 
         if not parent?
@@ -215,8 +216,8 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
                 jqTreeful: () ->
                     allOrgs = @$wrap()
                     treeData = transform(allOrgs, {'name': 'label'}) # for jqTree
-                    treeData = treeful(treeData, Infinity)
-
+                    parent = _.find treeData, (child) -> child.parent_id == undefined or child.parent_id == 0 #根节点
+                    treeData = unflatten(treeData, Infinity, parent)
                     return [treeData]
             Record:
 
