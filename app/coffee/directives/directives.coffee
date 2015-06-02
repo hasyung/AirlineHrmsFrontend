@@ -646,9 +646,12 @@ angular.module 'nb.directives'
 
         postLink = (scope, elem, attrs, ngModelCtrl) ->
 
-            scope.$watch 'files', (newVal)->
+            scope.$watch "files", (newVal)->
                 fileIds = _.map newVal, 'id'
                 ngModelCtrl.$setViewValue(fileIds)
+            , true
+
+            return
 
         return {
             scope: {
