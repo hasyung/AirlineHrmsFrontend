@@ -1,15 +1,50 @@
-md-card.form-material-section.nb-card
+md-card.form-material-section.nb-card.no-padding(ng-class="{'active': show}")
     .performance-content.self_performance
             .performance-list-item.open
                 .item-action
-                    md-button(ng-click="toggle()")
+                    md-button(ng-click="show=!show")
                         div(layout)
                             span 2015年绩效
                             span(flex)
-                            span.md-toggle-icon(ng-class="toggled")
+                            span.md-toggle-icon(ng-class="{'toggled': show}")
                                 md-icon(md-svg-src="md-toggle-arrow")
                 .form-table-container(
-                    ng-init="vm.children = currentUser.familymembers.$search({relation: 'children'}); newChildren = []"
+                    ng-class="{'open': show}"
+                    )
+                    table.table.table-mc-light-blue.table-bordered
+                        thead
+                            tr
+                                th 考核时段
+                                th 绩效
+                                th 附件
+                        tbody
+                            tr
+                                td
+                                    | 2015-5
+                                td
+                                    | 良好
+                                td
+                                    a 查看
+                            tr
+                                td
+                                    | 2015-4
+                                td
+                                    | 良好
+                                td
+                                    a 查看
+
+md-card.form-material-section.nb-card.no-padding(ng-class="{'active': show}")
+    .performance-content.self_performance
+            .performance-list-item.open
+                .item-action
+                    md-button(ng-click="show=!show")
+                        div(layout)
+                            span 2015年绩效
+                            span(flex)
+                            span.md-toggle-icon(ng-class="{'toggled': show}")
+                                md-icon(md-svg-src="md-toggle-arrow")
+                .form-table-container(
+                    ng-class="{'open': show}"
                     )
                     table.table.table-mc-light-blue.table-bordered
                         thead
