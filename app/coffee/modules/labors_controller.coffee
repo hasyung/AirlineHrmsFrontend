@@ -396,8 +396,8 @@ class AttendanceHisCtrl extends nb.Controller
 
 
 class ContractCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Contract']
-    constructor: (@scope, @Contract) ->
+    @.$inject = ['$scope', 'Contract', '$http', 'Employee']
+    constructor: (@scope, @Contract, @http, @Employee) ->
         @loadInitailData()
         @filterOptions = {
             name: 'contract'
@@ -566,6 +566,23 @@ class ContractCtrl extends nb.Controller
     search: (tableState) ->
         @contracts.$refresh(tableState)
 
+    getSelected: () ->
+        rows = @scope.$gridApi.selection.getSelectedGridRows()
+        selected = if rows.length >= 1 then rows[0].entity else null
+
+    renewContract: (request, contract)->
+        return if contract && contract.employeeId == 0
+        request.employee_id = contract.employeeId
+        request.reviewer_id = contract.employeeId
+
+        @http.post("/api/workflows/Flow::RenewContract", request)
+
+    loadEmployee: (params, contract)->
+        self = @
+        @Employee.$collection().$refresh(params).$then (employees)->
+            matched = _.find employees, params
+            if matched then self.loadEmp = matched;contract.employeeId = matched.id else self.loadEmp = params
+
 
 class UserListCtrl extends nb.Controller
     @.$inject = ["$scope", "Employee"]
@@ -727,6 +744,7 @@ app.controller('AttendanceRecordCtrl', AttendanceRecordCtrl)
 app.controller('AttendanceHisCtrl', AttendanceHisCtrl)
 app.controller('UserListCtrl', UserListCtrl)
 app.controller('LaborsCtrl', LaborsCtrl)
+app.controller('ContractCtrl', ContractCtrl)
 app.controller('RetirementCtrl', RetirementCtrl)
 app.controller('SbFlowHandlerCtrl', SbFlowHandlerCtrl)
 app.constant('ColumnDef', [])

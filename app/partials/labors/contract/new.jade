@@ -3,7 +3,7 @@ div(style="height: 100%; background-color: #f5f5f5;")
         .md-toolbar-tools
             span 新建合同
 
-    .personnel-content.personnel-control(ng-init="contract = {}; params={};")
+    .personnel-content.personnel-control(ng-init="contract = {}; ctrl.loadEmp = {}")
         section.personnel-info-section
             md-content.nb-card-container(layout="column" md-theme="hrms")
                 form(ng-submit="ctrl.contracts.$build(contract).$save();panel.close();ctrl.contracts.$refresh();")
@@ -13,22 +13,29 @@ div(style="height: 100%; background-color: #f5f5f5;")
                             | 合同信息
 
                         fieldset()
+                            div(style="display:none;")
+                                input(ng-model="contract.employeeId")
                             div(layout)
                                 md-input-container(flex)
                                     label 姓名
-                                    input(ng-model="contract.employeeName" name="name" required)
+                                    input(ng-model="ctrl.loadEmp.name" name="name" required
+                                        ng-model-options="{debounce: {'default': 500, 'blur':0}}"
+                                        ng-change="ctrl.loadEmployee({name:ctrl.loadEmp.name}, contract);"
+                                        )
                                 md-input-container(flex)
                                     label 员工编号
-                                    input(ng-model="contract.employeeNo" required)
+                                    input(ng-model="ctrl.loadEmp.employeeNo" required
+                                        ng-model-options="{debounce: {'default': 500, 'blur':0}}"
+                                        ng-change="ctrl.loadEmployee({employeeNo:ctrl.loadEmp.employeeNo}, contract);"
+                                        )
 
                             div(layout)
-                                org-search(flex="50" required ng-model="contract.department" float-label placeholder="部门" 
-                                    selected-item-change="params.orgPos = org.positions.$fetch();contract.positionName = null;")
+                                md-input-container.row-has-value(flex)
+                                    label 部门
+                                    input(ng-model="ctrl.loadEmp.department.name" disabled)
                                 md-input-container.row-has-value(flex)
                                     label 岗位
-                                    md-select(ng-model="contract.positionName" required)
-                                        md-select-label {{contract.positionName || '无'}}
-                                        md-option(ng-value="pos.name" ng-repeat="pos in params.orgPos") {{::pos.name}}
+                                    input(ng-model="ctrl.loadEmp.position.name" disabled)
 
                             div(layout)
                                 md-input-container.row-has-value(flex)
