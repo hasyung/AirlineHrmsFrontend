@@ -47,6 +47,7 @@ App.value 'USER_META', metadata.user || {}
 App.constant 'VACATIONS', metadata.vacation_summary || {}
 App.constant 'DEPARTMENTS', dep_info.departments || []
 App.constant 'nbConstants', metadata.resources || []
+App.constant 'PUSH_SERVER_CONFIG', metadata.push_server || {host: "192.168.6.99", port: 9927}
 
 
 appConf = ($provide, ngDialogProvider) ->
