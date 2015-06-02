@@ -8,14 +8,14 @@ block relation_data
     div.flow-info-row(layout)
         .flow-info-cell(flex)
             .flow-cell-title 通道
-            .flow-cell-content 管理
+            .flow-cell-content {{receptor.channelId | enum: 'channels'}}
         .flow-info-cell(flex)
             .flow-cell-title 用工性质
-            .flow-cell-content 合同工
+            .flow-cell-content {{receptor.laborRelationId | enum: 'labor_relations'}}
     div.flow-info-row(layout)
         .flow-info-cell(flex)
             .flow-cell-title 入职时间
-            .flow-cell-content 2000-01-01
+            .flow-cell-content {{receptor.joinScalDate | date:'yyyy-MM-dd'}}
 
 block form
     div(layout)

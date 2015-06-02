@@ -20,11 +20,8 @@ md-dialog
                                 .flow-cell-content {{emp.genderId | enum: 'genders'}}
                         div.flow-info-row(layout)
                             .flow-info-cell(flex)
-                                .flow-cell-title 社保缴费年限
-                                .flow-cell-content 15年
-                            .flow-info-cell(flex)
                                 .flow-cell-title 年龄
-                                .flow-cell-content 50
+                                .flow-cell-content {{emp.age}}
 
 
             .md-actions
