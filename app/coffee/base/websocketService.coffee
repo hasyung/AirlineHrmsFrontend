@@ -37,12 +37,12 @@ class WebsocketService extends nb.Service
 
 
 
-    constructor: (@pomelo, @rootScope, @toaster, UNIQ_KEY) ->
+    constructor: (@pomelo, @rootScope, @toaster, UNIQ_KEY, PUSH_SERVER_CONFIG) ->
         @._events = {}
-        @setupConnection(UNIQ_KEY)
+        @setupConnection(UNIQ_KEY, PUSH_SERVER_CONFIG)
 
 
-    setupConnection: (uniq_key)->
+    setupConnection: (uniq_key, PUSH_SERVER_CONFIG)->
         self = @
         toaster = @toaster
 
@@ -58,12 +58,8 @@ class WebsocketService extends nb.Service
                 console.debug '推送服务初始化失败', data
             self.pomelo.on 'Message', (data) -> processMessage(self, data)
 
-
         initialize = () -> self.pomelo.request(SUBSCRIBE_EVENT, intial_params, callBack)
-
-        @pomelo.init CONNECTION_CONFIG, initialize
-
-
+        @pomelo.init PUSH_SERVER_CONFIG, initialize
 
     send: (data, callback = angular.noop)->
         @pomelo.request SEND_MSG_EVENT, data, callback
@@ -89,12 +85,12 @@ class WebsocketService extends nb.Service
 
 class WebsocketProvider
 
-    $get: ($window, $rootScope, toaster, meta) ->
+    $get: ($window, $rootScope, toaster, meta, PUSH_SERVER_CONFIG) ->
         UNIQ_KEY = meta.employee_no
         pomelo = $window.pomelo || throw 'pomelo not defined'
-        service = new WebsocketService(pomelo, $rootScope, toaster, UNIQ_KEY)
+        service = new WebsocketService(pomelo, $rootScope, toaster, UNIQ_KEY, PUSH_SERVER_CONFIG)
         return service
 
-    @.prototype.$get.$inject = ['$window', '$rootScope', 'toaster',  'USER_META']
+    @.prototype.$get.$inject = ['$window', '$rootScope', 'toaster',  'USER_META', 'PUSH_SERVER_CONFIG']
 
 app.provider("WebsocketClient", WebsocketProvider)

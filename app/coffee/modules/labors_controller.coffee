@@ -170,21 +170,22 @@ class Route
                     'FlowName': -> 'Flow::Retirement'
                 }
             }
-
-
-
-class LaborsCtrl extends nb.Controller
-
-    @.$inject = ['$scope', '$http']
-
-    constructor: (@scope, @http)->
-
-    retirement: (users)->
-        params = users.map (user)->
-            {id: user.id, relation_data:user.relation_data}
-
-        @http.post("/api/workflows/Flow::Retirement/batch_create", {receptors:params})
-
+            .state 'labors_leave_job', {
+                url: '/labors_leave_job'
+                templateUrl: 'partials/labors/leave_job/index.html'
+                controller: SbFlowHandlerCtrl
+                resolve: {
+                    'FlowName': -> 'Flow::EmployeeLeaveJob'
+                }
+            }
+            .state 'labors_resignation', {
+                url: '/labors_resignation'
+                templateUrl: 'partials/labors/resignation/index.html'
+                controller: SbFlowHandlerCtrl
+                resolve: {
+                    'FlowName': -> 'Flow::Resignation'
+                }
+            }
 
 
 class AttendanceCtrl extends nb.Controller
@@ -577,6 +578,12 @@ class ContractCtrl extends nb.Controller
 
         @http.post("/api/workflows/Flow::RenewContract", request)
 
+    leaveJob: (contract, isConfirm)->
+        return if !isConfirm
+        request = {}
+        request.receptor_id = contract.employeeId
+        @http.post("/api/workflows/Flow::EmployeeLeaveJob", request)
+
     loadEmployee: (params, contract)->
         self = @
         @Employee.$collection().$refresh(params).$then (employees)->
@@ -678,9 +685,9 @@ class RetirementCtrl extends nb.Controller
 
 class SbFlowHandlerCtrl
 
-    @.$inject = ['GridHelper', 'FlowName', '$scope', 'Employee', '$injector', 'OrgStore', 'ColumnDef']
+    @.$inject = ['GridHelper', 'FlowName', '$scope', 'Employee', '$injector', 'OrgStore', 'ColumnDef', '$http']
 
-    constructor: (@helper, @FlowName, @scope, @Employee, $injector, OrgStore, @userRequestsColDef) ->
+    constructor: (@helper, @FlowName, @scope, @Employee, $injector, OrgStore, @userRequestsColDef, @http) ->
 
         @scope.ctrl = @
         @Flow = $injector.get(@FlowName)
@@ -736,6 +743,12 @@ class SbFlowHandlerCtrl
     search: (tableState)->
         @tableData.$refresh(tableState)
 
+    retirement: (users)->
+        params = users.map (user)->
+            {id: user.id, relation_data:user.relation_data}
+
+        @http.post("/api/workflows/Flow::Retirement/batch_create", {receptors:params})
+
 
 
 
@@ -743,7 +756,6 @@ app.config(Route)
 app.controller('AttendanceRecordCtrl', AttendanceRecordCtrl)
 app.controller('AttendanceHisCtrl', AttendanceHisCtrl)
 app.controller('UserListCtrl', UserListCtrl)
-app.controller('LaborsCtrl', LaborsCtrl)
 app.controller('ContractCtrl', ContractCtrl)
 app.controller('RetirementCtrl', RetirementCtrl)
 app.controller('SbFlowHandlerCtrl', SbFlowHandlerCtrl)

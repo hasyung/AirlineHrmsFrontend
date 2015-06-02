@@ -11,7 +11,7 @@ block vars
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1
                         flow-user-info(receptor="panel.receptor")
-                        .flow-relations(flow-relation-data ng-model="request.relation_data")
+                        .flow-relations(flow-relation-data ng-model="request.relation_data" ng-init="receptor = ctrl.Employee.$find(panel.receptor.id);")
 
                             block relation_data
 

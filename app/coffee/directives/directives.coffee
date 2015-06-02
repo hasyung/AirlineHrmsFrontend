@@ -555,7 +555,7 @@ angular.module 'nb.directives'
                 return moment(viewValue)
 
             ngModelCtrl.$formatters.push (modelValue) ->
-                return modelValue.format('YYYY-MM-DD') if modelValue
+                return moment(modelValue).format('YYYY-MM-DD') if modelValue
 
 
             scope.$on '$destroy', ->
@@ -646,9 +646,12 @@ angular.module 'nb.directives'
 
         postLink = (scope, elem, attrs, ngModelCtrl) ->
 
-            scope.$watch 'files', (newVal)->
+            scope.$watch "files", (newVal)->
                 fileIds = _.map newVal, 'id'
                 ngModelCtrl.$setViewValue(fileIds)
+            , true
+
+            return
 
         return {
             scope: {
