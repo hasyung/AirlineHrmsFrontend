@@ -101,8 +101,11 @@ class PersonnelCtrl extends nb.Controller
         @employees.$refresh(tableState)
 
     getSelectsIds: () ->
-        rows = @scope.$gridApi.selection.getSelectedGridRows()
+        rows = @gridApi.selection.getSelectedGridRows()
         rows.map (row) -> return row.entity.$pk
+
+    exportGridApi: (gridApi) ->
+        @gridApi = gridApi
 
 
 class NewEmpsCtrl extends nb.Controller
