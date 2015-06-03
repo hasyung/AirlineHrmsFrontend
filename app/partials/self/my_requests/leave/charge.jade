@@ -1,7 +1,7 @@
 //- 假别冲抵
 md-dialog
     md-content(ng-init="params={};")
-        form(flex ng-submit="ctrl.charge(dialog.leave, params);dialog.close();")
+        form(flex ng-submit="ctrl.charge(dialog.leave, params, dialog.leaves);dialog.close();")
             md-toolbar.md-accent(md-theme="hrms")
                 .md-toolbar-tools
                     span 年假抵扣
@@ -11,7 +11,7 @@ md-dialog
                     div(layout)
                         md-input-container(flex)
                             label 抵扣天数
-                            input(ng-model="params.days" name="name" type="number" min="1" ng-pattern="[1-9]\d*")
+                            input(ng-model="params.days" name="name" type="number" min="1" ng-pattern="/[1-9]\d*/")
 
             .md-actions
                 md-button(type="button" ng-click='dialog.close()') 取 消

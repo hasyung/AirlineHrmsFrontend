@@ -17,6 +17,7 @@ block relation_data
         .flow-info-cell(flex)
             .flow-cell-title 假别
             .flow-cell-content 年假 (
+                
                 span(ng-repeat="(key, value) in vacations.year_days.year") {{key}} 年年假剩余天数 {{value}} 天 {{$last ? '' : '，' }}
                 span )
 

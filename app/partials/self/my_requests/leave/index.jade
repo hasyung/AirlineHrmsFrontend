@@ -23,7 +23,7 @@
                                 && ctrl.getSelected().workflowState == '已生效')"
                             nb-dialog
                             template-url="/partials/self/my_requests/leave/charge.html"
-                            locals="{leave:ctrl.getSelected()}"
+                            locals="{leave:ctrl.getSelected(), leaves: leaves}"
                             title="只有病假和事假才可以抵扣"
                         ) 年假抵扣
                     span
