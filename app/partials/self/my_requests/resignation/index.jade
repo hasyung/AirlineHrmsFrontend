@@ -12,7 +12,7 @@ block tools
         md-button.md-primary.md-raised(
             nb-panel
             template-url="/partials/self/my_requests/resignation/resignation.html"
-            locals="{users:ctrl.getSelected()}"
+            locals="{list: ctrl.tableData}"
         ) 发起辞职
     span
         md-button.md-primary.md-raised(

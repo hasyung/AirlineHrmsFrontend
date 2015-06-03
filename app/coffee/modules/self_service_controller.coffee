@@ -78,7 +78,24 @@ class Route
                         resolve: {
                             'FlowName': -> 'Flow::Resignation'
                             'ColumnDef': (GridHelper) ->
-                                return GridHelper.buildDefault()
+                                return GridHelper.buildDefault([
+                                    {displayName: '通道', name: 'receptor.channel'}
+                                    {displayName: '用工性质', name: 'receptor.laborRelation'}
+                                    {displayName: '状态', name: 'workflowState'}
+                                    {displayName: '离职发起', name: 'leaveJobFlowState', cellFilter: "date:'yyyy-MM-dd'"}
+                                    {displayName: '发起时间', name: 'createdAt', cellFilter: "date:'yyyy-MM-dd'"}
+                                    {
+                                        name: 'type'
+                                        displayName: '详细'
+                                        cellTemplate: '''
+                                        <div class="ui-grid-cell-contents">
+                                            <a flow-handler="row.entity" flow-view="true" flows="grid.options.data">
+                                                查看
+                                            </a>
+                                        </div>
+                                        '''
+                                    }
+                                ])
                         }
                     }
                 }
@@ -92,7 +109,23 @@ class Route
                         resolve: {
                             'FlowName': -> 'Flow::RenewContract'
                             'ColumnDef': (GridHelper) ->
-                                return GridHelper.buildDefault()
+                                return GridHelper.buildDefault([
+                                    {displayName: '状态', name: 'workflowState'}
+                                    {displayName: '变更标志', name: 'signState'}
+                                    {displayName: '开始时间', name: 'startDate', cellFilter: "date:'yyyy-MM-dd'"}
+                                    {displayName: '结束时间', name: 'endDate', cellFilter: "date:'yyyy-MM-dd'"}
+                                    {
+                                        name: 'type'
+                                        displayName: '详细'
+                                        cellTemplate: '''
+                                        <div class="ui-grid-cell-contents">
+                                            <a flow-handler="row.entity" flow-view="true" flows="grid.options.data">
+                                                查看
+                                            </a>
+                                        </div>
+                                        '''
+                                    }
+                                ])
                         }
                     }
                 }
@@ -101,12 +134,29 @@ class Route
                 url: '/erarly_retirement'
                 views: {
                     '@': {
-                        templateUrl: 'partials/self/my_requests/erarly_retirement/index.html'
+                        templateUrl: 'partials/self/my_requests/early_retirement/index.html'
                         controller: 'SbFlowHandlerCtrl'
                         resolve: {
                             'FlowName': -> 'Flow::EarlyRetirement'
-                            'ColumnDef': -> (GridHelper) ->
-                                return GridHelper.buildDefault()
+                            'ColumnDef': (GridHelper) ->
+                                return GridHelper.buildDefault([
+                                    {displayName: '性别', name: 'receptor.gender'}
+                                    {displayName: '通道', name: 'receptor.channel'}
+                                    {displayName: '状态', name: 'workflowState'}
+                                    {displayName: '出生日期', name: 'receptor.birthday', cellFilter: "date:'yyyy-MM-dd'"}
+                                    {displayName: '申请发起时间', name: 'createdAt', cellFilter: "date:'yyyy-MM-dd'"}
+                                    {
+                                        name: 'type'
+                                        displayName: '详细'
+                                        cellTemplate: '''
+                                        <div class="ui-grid-cell-contents">
+                                            <a flow-handler="row.entity" flow-view="true" flows="grid.options.data">
+                                                查看
+                                            </a>
+                                        </div>
+                                        '''
+                                    }
+                                ])
                         }
                     }
                 }
@@ -116,8 +166,28 @@ class Route
                 views: {
                     '@': {
                         templateUrl: 'partials/self/my_requests/adjust_position/index.html'
-                        controller: MyRequestCtrl
-                        controllerAs: 'ctrl'
+                        controller: 'SbFlowHandlerCtrl'
+                        resolve: {
+                            'FlowName': -> 'Flow::AdjustPosition'
+                            'ColumnDef': (GridHelper) ->
+                                return GridHelper.buildDefault([
+                                    {displayName: '转入部门', name: 'toDepartmentName'}
+                                    {displayName: '转入岗位', name: 'toPositionName'}
+                                    {displayName: '状态', name: 'workflowState'}
+                                    {displayName: '申请发起时间', name: 'createdAt', cellFilter: "date:'yyyy-MM-dd'"}
+                                    {
+                                        name: 'type'
+                                        displayName: '详细'
+                                        cellTemplate: '''
+                                        <div class="ui-grid-cell-contents">
+                                            <a flow-handler="row.entity" flow-view="true" flows="grid.options.data">
+                                                查看
+                                            </a>
+                                        </div>
+                                        '''
+                                    }
+                                ])
+                        }
                     }
                 }
 
@@ -218,6 +288,9 @@ class MyRequestCtrl extends nb.Controller
 
     loadReviewer: () ->
         @Employee.$search({category_ids: [1,2], department_ids: [@OrgStore.getPrimaryOrgId()]})
+
+    myRequests: (FlowName) ->
+
 
 
 

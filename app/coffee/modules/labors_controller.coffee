@@ -757,6 +757,9 @@ class SbFlowHandlerCtrl
         request.receptor_id = employeeId
         @http.post("/api/workflows/Flow::EmployeeLeaveJob", request)
 
+    refreshTableDate: ()->
+        @tableData.$refresh({filter_types: [@FlowName]})
+
 
 
 
