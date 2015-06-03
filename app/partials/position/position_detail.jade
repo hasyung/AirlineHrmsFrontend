@@ -1,9 +1,9 @@
-div(
+div.panel-bg-gray.position-detail(
     ng-init="currentPos = panel.position;\
     currentEmps = currentPos.employees.$refresh();\
     hisLeaders = currentPos.formerleaders.$refresh();\
     currentSpe = currentPos.specification.$refresh();")
-    md-toolbar
+    md-toolbar.md-warn(md-theme="hrms")
         .md-toolbar-tools
             span 岗位详情
     .personnel-content

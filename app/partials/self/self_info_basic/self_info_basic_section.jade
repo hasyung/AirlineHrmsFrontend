@@ -31,7 +31,7 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                         md-select(ng-model="currentUser.nationId" ng-disabled="!editing")
                             md-select-label {{$enum.parseLabel(currentUser.nationId, "nations")}}
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('nations')") {{item.label}}
-                    md-input-container(flex)
+                    md-input-container.mix-height(flex)
                         label 籍贯
                         input(ng-model="currentUser.nativePlace" name="nativePlace" required)
                 div(layout)
@@ -76,7 +76,7 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                         md-select(ng-model="currentUser.englishLevelId" disabled)
                             md-select-label {{$enum.parseLabel(currentUser.englishLevelId, "english_levels")}}
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('english_levels')") {{item.label}}
-                    md-input-container(flex)
+                    md-input-container.mix-height(flex)
                         label 到岗时间
                         input(ng-model="currentUser.joinScalDate" name="joinScalDate" disabled)
                 md-input-container.row-has-value(flex)
@@ -139,11 +139,11 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                             md-select-label {{$enum.parseLabel(currentUser.channelId, "channels")}}
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
 
-                    md-input-container(flex)
+                    md-input-container.mix-height(flex)
                         label 类别
                         input(ng-model="currentUser.position.postType")
                 div(layout)
-                    md-input-container.row-has-value(flex)
+                    md-input-container.mix-height.row-has-value(flex)
                         label 属地化地点
                         input(ng-model="currentUser.location" disabled)
 
