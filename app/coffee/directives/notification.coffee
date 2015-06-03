@@ -49,10 +49,26 @@ angular.module 'nb.directives'
     ]
 
 class NotificationCtrl
-    @.$inject = ['$scope', 'WebsocketClient', '$rootScope', 'Notification', 'toaster']
-    constructor: (scope, WebsocketClient, @rootScope, @Notification, toaster) ->
+    @.$inject = ['$scope', '$state', 'WebsocketClient', '$rootScope', 'Notification', 'toaster', 'USER_MESSAGE']
+    constructor: (scope, @state, WebsocketClient, @rootScope, @Notification, toaster, initializedMessage) ->
+
+        computeTotalUnreadCount = (res, value) ->
+            return res + value.count || value.count || 0
 
         ctrl = @
+
+        ctrl.msg_unread_count = initializedMessage.user_message.unread_count || 0
+        initWorkflows = initializedMessage.workflows || []
+
+        ctrl.workflows = workflows = initWorkflows.reduce(
+            (res, value) ->
+                res[value.type] = value
+                return res
+            {}
+            )
+
+        #计算流程总数
+        ctrl.workflow_count = initWorkflows.reduce(computeTotalUnreadCount, 0)
 
         WebsocketClient.addListener 'user_message', (data) ->
             msg = data.latest_message
@@ -60,10 +76,15 @@ class NotificationCtrl
             toaster.pop('success', msg.category, msg.body)
             scope.$apply -> ctrl.msg_unread_count = msg_unread_count
 
-        # WebsocketClient.addListener 'workflow_step_action', ->
+        WebsocketClient.addListener 'workflow', (data) ->
+            scope.$apply ->
+                workflows[data.type] = data
+                ctrl.workflow_count = _.reduce(workflows, computeTotalUnreadCount, 0)
 
         @notifications = []
 
+    redirectTo: (state) ->
+        @state.go(state)
 
     initialNotification: ->
         @Notification.$collection().$fetch()

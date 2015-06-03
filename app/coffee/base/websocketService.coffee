@@ -32,14 +32,12 @@ class WebsocketService extends nb.Service
                 listeners = handler.slice()
                 handle(data.content) for handle in listeners
         else
-            throw TypeError("数据结构 缺少 data message_key 标识", data)
-
-
+            # 捕获到错误socket.io 会自动中断websocket 链接 #need investigation
+            # throw TypeError("数据结构 缺少 data message_key 标识")
 
     constructor: (@pomelo, @rootScope, @toaster, UNIQ_KEY, PUSH_SERVER_CONFIG) ->
         @._events = {}
         @setupConnection(UNIQ_KEY, PUSH_SERVER_CONFIG)
-
 
     setupConnection: (uniq_key, PUSH_SERVER_CONFIG)->
         self = @
