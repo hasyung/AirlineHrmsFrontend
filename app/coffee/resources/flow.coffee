@@ -176,7 +176,7 @@ flowRelationDataDirective = ($timeout)->
 FlowHandlerDirective = (ngDialog)->
 
     template = '''
-        <div class="approval-wapper">
+        <div class="approval-wapper panel-bg-gray">
             <md-toolbar md-theme="hrms" class="md-warn">
                 <div class="md-toolbar-tools">
                     <span>{{flow.name}}申请单</span>
@@ -377,11 +377,11 @@ class FlowController
 
         scope.toggleSelect = (org, list)->
             index = list.indexOf org
-            if index > -1 then list.splice(index, 1) else list.push org 
+            if index > -1 then list.splice(index, 1) else list.push org
 
 
 
-        
+
 
 
 
