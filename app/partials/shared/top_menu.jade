@@ -7,29 +7,16 @@ md-toolbar.top-menu-bar.md-warn(md-theme="hrms")
             div.top-notification.top-btn-wrap(notification ng-class="{'open': isOpen}")
                 md-button()
                     md-icon(md-svg-icon="/images/svg/bell-outline.svg")
-                //- .ms-count 0 暂无流程推送
+                .ms-count(ng-if="notify.workflow_count" ng-bind="notify.workflow_count")
                 ul.top-dropdown
-                    li
-                        a
+                    li(ng-repeat="(type, flow) in notify.workflows")
+                        a(ng-click="notify.redirectTo(flow.route_state)")
                             .dropdown-item
                                 .dd-item-desc
-                                    span 员工退休
-                                    span 2015-5-19
-                                .dd-item-count 10
-                    li
-                        a
-                            .dropdown-item
-                                .dd-item-desc
-                                    span 员工退养
-                                    span 2015-5-19
-                                .dd-item-count 10
-                    li
-                        a
-                            .dropdown-item
-                                .dd-item-desc
-                                    span 合同管理
-                                    span 2015-5-19
-                                .dd-item-count 10
+                                    span {{flow.name}}
+                                    span {{flow.oldest_at}}
+                                .dd-item-count {{flow.count}}
+
         span
             div.top-messages.top-btn-wrap()
                 md-button(

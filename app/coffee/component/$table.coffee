@@ -377,13 +377,15 @@ nbGridDirective = ($parse)->
         itemCountGetter = $parse('safeSrc.$metadata.count')
         exportApi = angular.isDefined(attrs.exportApi) #gridApi export to appScope
         multiSelect = if attrs.multiSelect then scope.$eval(attrs.multiSelect) else true
+        enableRowSelection = angular.isDefined(attrs.gridSelection)
+
         defaultOptions = {
             # flatEntityAccess: true
             enableSorting: false
             # useExternalSorting: false
             useExternalPagination: true
-            enableRowSelection: true
-            enableSelectAll: true
+            enableRowSelection: enableRowSelection
+            enableSelectAll: multiSelect
             selectionRowHeaderWidth: 35
             rowHeight: 50
             enableColumnMenus: false
@@ -411,7 +413,6 @@ nbGridDirective = ($parse)->
                         per_page: pageSize
                     }
                     safeSrc.$refresh(queryParams)
-
 
             excludeProperties: [
                 '$$dsp'
