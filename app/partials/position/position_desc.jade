@@ -1,9 +1,9 @@
 form(name="speEditForm" ng-submit="save(currentSpe.$save(), speEditForm)" ng-controller="EditableResource" ng-init="params = {}")
-    .form-btn-group(ng-hide="editing" has-permission="positions_update")
-        md-button.skyblue.md-raised(ng-click="edit($event)") 编辑
-    .form-btn-group.alive(ng-show="editing")
+    .form-btn-group(ng-hide="editing" has-permission="positions_update" style="top: -36px;")
+        md-button.md-primary.md-raised(ng-click="edit($event)") 编辑
+    .form-btn-group.alive(ng-show="editing" style="top: -36px;")
         md-button.md-raised.white(ng-click="cancel(currentSpe, $event, speEditForm)") 取消
-        md-button.md-raised.skyblue(type="submit" ng-disabled="speEditForm.$invalid") 保存
+        md-button.md-raised.md-primary(type="submit" ng-disabled="speEditForm.$invalid") 保存
     fieldset(ng-disabled="!editing")
         .textarea-row()
             label.text-label 工作职责

@@ -159,3 +159,9 @@ md-drop-option {
         color: rgba(0, 0, 0, .87);
     }
 }
+
+//所有背景颜色灰色的panel需要加此class在最上层的div上
+.panel-bg-gray {
+    background-color: rgb(245, 245, 245);
+    height: 100%;
+}
