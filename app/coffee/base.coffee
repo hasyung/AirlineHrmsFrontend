@@ -98,7 +98,10 @@ class NewFlowCtrl
             data.vacation_days = scope.vacation_days
             data.receptor_id = if receptor then receptor.id else meta.id
             $http.post("/api/workflows/#{ctrl.flow_type}", data).success () ->
-                scope.panel.close() if scope.panel
+                if scope.panel
+                    scope.panel.close()
+                    if scope.panel.$$collection #WORKAROUND 临时代码， 因为流程与列表数据展现不一致
+                        scope.panel.$$collection.$refresh()
 
 
 class NewMyRequestCtrl extends NewFlowCtrl
