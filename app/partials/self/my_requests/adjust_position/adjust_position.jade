@@ -48,11 +48,10 @@ block form
             //-     label 在编情况
             //-     input(ng-model="request.position.staffing" disabled)
                 //- span {{request.position.staffing}}/{{budgetedStaffing}}
-
-            div(flex layout)
-                .approval-cell(flex)
-                    span.cell-title 在编情况
-                    span.cell-content {{request.position.staffing}}/{{budgetedStaffing || 0}}
+            .without-edit(flex)
+                div
+                    div.without-edit-title 在编情况
+                    div.without-edit-content(style="margin-top: 8px;") {{request.position.staffing}}/{{budgetedStaffing || 0}}
 
         div(layout)
             md-input-container(flex)
