@@ -3,10 +3,10 @@ angular.module 'nb.directives'
         template = '''
         <div class="accessory-container">
             <div ng-repeat="annex in annexs"  class="accessory-cell">
-                <div ng-if="ctrl.isImgObj(annex)" nb-gallery img-obj="annex">
+                <div ng-if="ctrl.isImgObj(annex)" nb-gallery img-obj="annex" style="cursor: pointer;">
                     <div class="accessory-name">附件1.jpg</div>
                     <div class="accessory-size">500kb</div>
-                    <div class="accessory-switch">
+                    <div class="accessory-switch" style="display:none;">
                         <md-button class="md-icon-button">
                             <md-icon md-svg-src="/images/svg/close.svg" class="md-warn"></md-icon>
                         </md-button>
