@@ -192,7 +192,7 @@ FlowHandlerDirective = (ngDialog)->
                                 <span class="position"> {{::flow.receptor.departmentName}} / {{::flow.receptor.positionName}} </span>
                             </div>
                         </div>
-                        <div class="ask-relations">
+                        <div class="flow-relations">
                             #flowRelationData#
                         </div>
                     </div>
