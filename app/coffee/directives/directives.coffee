@@ -137,9 +137,9 @@ angular.module 'nb.directives'
                 controllerAs: attrs.controllerAs || 'panel'
                 bindToController: true
                 className: 'ngdialog-theme-panel'
-                preCloseCallback: attrs.preCloseCallback || angular.noop
-
             }
+
+            preClose = attrs.preClose
 
             elem.on 'click', (e) ->
                 e.preventDefault()
@@ -148,7 +148,9 @@ angular.module 'nb.directives'
 
                 opts['locals'] = scope.$eval(attrs.locals) || {}
                 angular.extend(opts, options)
-                ngDialog.open opts
+                promise =  ngDialog.open(opts).closePromise
+                promise.then () ->
+                   scope.$eval(preClose) if angular.isDefined(preClose)
 
             scope.$on '$destroy', -> elem.off('click')
 

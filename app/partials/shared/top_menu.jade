@@ -22,7 +22,7 @@ md-toolbar.top-menu-bar.md-warn(md-theme="hrms")
                 md-button(
                     nb-panel
                     template-url="partials/shared/notification_center.html"
-                    pre-close-callback="markToReaded"
+                    pre-close="notify.markToReaded()"
                 )
                     md-icon(md-svg-icon="/images/svg/email-outline.svg")
                 .ms-count(ng-if="notify.msg_unread_count" ng-bind="notify.msg_unread_count")
