@@ -1,5 +1,5 @@
 .app-content-wrapper(flex ng-init="ctrl.historyList()")
-    div(nb-filter="ctrl.filterOptions" on-search="search(state)")
+    div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
     div.ui-grid-container
         md-toolbar
             .md-toolbar-tools
