@@ -13,7 +13,7 @@ md-content.search-container {
 
         md-select {
             flex: 0 0 230px;
-            margin-top: 4px;
+            margin-top: -10px;
 
             .md-select-label {
                 border: 0;
@@ -23,11 +23,12 @@ md-content.search-container {
 
                 span:first-child {
                     line-height: 36px;
+                    margin-top: -5px;
                     text-align: center;
                 }
 
                 .md-select-icon:after {
-                    top: 10px;
+                    top: 5px;
                 }
             }
         }
