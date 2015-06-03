@@ -144,8 +144,8 @@ class NewMyRequestCtrl extends NewFlowCtrl
             if moment.isMoment(data.start_time) && moment.isMoment(data.end_time)
                 request_data = {
                     vacation_type: vacation_type
-                    start_time:  data.start_time.toString()
-                    end_time: data.end_time.toString()
+                    start_time:  data.start_time.toISOString()
+                    end_time: data.end_time.toISOString()
                 }
                 enableCalculating()
 
