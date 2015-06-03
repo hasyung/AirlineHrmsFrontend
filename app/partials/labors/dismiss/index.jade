@@ -5,6 +5,7 @@ block heading
     - var user_list = '辞退发起'
     - var flowName = "员工辞退"
     - var multi = false
+    - var hisMultiSelect = false
 
 block user_list_actions
     md-button.md-primary.md-raised(
@@ -13,3 +14,11 @@ block user_list_actions
         template-url="/partials/labors/dismiss/rfc.html"
         locals="{receptor: ctrl.getSelected()}"
         ) 人员辞退
+
+block history_list_actions
+    md-button.md-primary.md-raised(
+        ng-disabled="!ctrl.getSelected()"
+        nb-confirm="ctrl.leaveJob(ctrl.getSelected().receptor.id, isConfirm, '辞退员工')"
+        nb-title="离职流程发起"
+        nb-content="你确定对{{ctrl.getSelected().receptor.name}}发起离职通知单流程，请确认。"
+    ) 发起离职
