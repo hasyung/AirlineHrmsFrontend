@@ -63,9 +63,17 @@ angular.forEach workflows, (item)->
             $extend:
                 Scope:
                     records: ->
-                        restmod.model("/workflows/#{item}/record").mix({$config:{jsonRoot:'workflows'}}).$collection().$fetch()
+                        restmod.model("/workflows/#{item}/record").mix(
+                            $config:
+                                jsonRootMany:'workflows'
+                                jsonRootSingle: 'workflow'
+                        ).$collection().$fetch()
                     myRequests: ->
-                        restmod.model("/me/workflows/#{item}").mix({$config:{jsonRoot:'workflows'}}).$collection().$fetch()
+                        restmod.model("/me/workflows/#{item}").mix(
+                            $config:
+                                jsonRootMany:'workflows'
+                                jsonRootSingle: 'workflow'
+                            ).$collection().$fetch()
 
         }
     resources.factory item, ['restmod', 'RMUtils', resource]
