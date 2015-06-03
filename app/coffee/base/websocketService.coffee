@@ -25,15 +25,14 @@ class WebsocketService extends nb.Service
     processMessage = (service, data) ->
 
         if data.message_key
-
             handler = service._events[data.message_key]
-
             if angular.isFunction(handler)
                 handler(data.content)
             else if angular.isArray(handler)
                 listeners = handler.slice()
                 handle(data.content) for handle in listeners
-
+        else
+            throw TypeError("数据结构 缺少 data message_key 标识", data)
 
 
 
@@ -86,7 +85,7 @@ class WebsocketService extends nb.Service
 class WebsocketProvider
 
     $get: ($window, $rootScope, toaster, meta, PUSH_SERVER_CONFIG) ->
-        UNIQ_KEY = meta.employee_no
+        UNIQ_KEY = meta.employee_no #用用户员工号标识唯一主键
         pomelo = $window.pomelo || throw 'pomelo not defined'
         service = new WebsocketService(pomelo, $rootScope, toaster, UNIQ_KEY, PUSH_SERVER_CONFIG)
         return service
