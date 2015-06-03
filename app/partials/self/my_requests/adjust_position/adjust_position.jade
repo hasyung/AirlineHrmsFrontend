@@ -44,9 +44,15 @@ block form
                 md-select(ng-model="request.position.channelId" disabled)
                     md-select-label {{$enum.parseLabel(request.position.channelId, "channels")}}
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
-            md-input-container(flex)
-                label 在编情况
-                input(ng-model="request.position.budgeted_staffing" disabled)
+            //- md-input-container(flex)
+            //-     label 在编情况
+            //-     input(ng-model="request.position.staffing" disabled)
+                //- span {{request.position.staffing}}/{{budgetedStaffing}}
+
+            div(flex layout)
+                .approval-cell(flex)
+                    span.cell-title 在编情况
+                    span.cell-content {{request.position.staffing}}/{{budgetedStaffing || 0}}
 
         div(layout)
             md-input-container(flex)
