@@ -442,12 +442,12 @@ nbGridDirective = ($parse)->
         scope.$watch(
             -> itemCountGetter(scope)
             ,
-            (newValue) -> options.totalItems =  newValue if newValue
+            (newValue) -> options.totalItems =  newValue if angular.isNumber(newValue)
             )
         scope.$watch(
             -> pageGetter(scope)
             ,
-            (newValue) -> options.paginationCurrentPage =  newValue if newValue
+            (newValue) -> options.paginationCurrentPage =  newValue if angular.isNumber(newValue)
             )
         # scope.$watch('gridOptions.paginationPageSize') #watch 每页数据
 

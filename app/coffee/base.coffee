@@ -100,6 +100,10 @@ class NewFlowCtrl
             $http.post("/api/workflows/#{ctrl.flow_type}", data).success () ->
                 scope.panel.close() if scope.panel
                 list.$refresh()
+                if scope.panel
+                    scope.panel.close()
+                    if scope.panel.$$collection #WORKAROUND 临时代码， 因为流程与列表数据展现不一致
+                        scope.panel.$$collection.$refresh()
 
 
 class NewMyRequestCtrl extends NewFlowCtrl
@@ -142,8 +146,8 @@ class NewMyRequestCtrl extends NewFlowCtrl
             if moment.isMoment(data.start_time) && moment.isMoment(data.end_time)
                 request_data = {
                     vacation_type: vacation_type
-                    start_time:  data.start_time.toString()
-                    end_time: data.end_time.toString()
+                    start_time:  data.start_time.toISOString()
+                    end_time: data.end_time.toISOString()
                 }
                 enableCalculating()
 
