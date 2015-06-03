@@ -266,19 +266,15 @@ FlowHandlerDirective = (ngDialog)->
         defaults = ngDialog.getDefaults()
         options = angular.extend {}, defaults, scope.options
 
-        scope.flowView = if attrs.flowView then scope.$eval(attrs.flowView) else false
+        scope.flowView = angular.isDefined(attrs.flowView)
 
         offeredExtra = (flow) ->
             return template
                     .replace(/#flowRelationData#/, `flow.relationData? flow.relationData : ''`)
                     .replace(/#extraFormLayout#/, `flow.$extraForm ? flow.$extraForm : ''`)
 
-
-
-
         openDialog = (evt)->
-            scope.flow = scope.flow.$refresh()
-            promise = scope.flow.$asPromise()
+            promise = scope.flow.$refresh().$asPromise()
             promise.then(offeredExtra).then (template)->
                 ngDialog.open {
                     template: template
@@ -353,7 +349,7 @@ class FlowController
             url = joinUrl(FLOW_HTTP_PREFIX, flow.type, flow.id)
             promise = http.put(url, req)
             promise.then ()->
-                scope.flowSet.$refresh()
+                scope.flowSet.$refresh() angular.isDefined(attrs.flowSet)
                 dialog.close()
 
         parseParams = (params)->
@@ -371,17 +367,17 @@ class FlowController
             url = joinUrl(FLOW_HTTP_PREFIX, flow.type, flow.id)
             promise = http.put(url, params)
             promise.then ()->
-                scope.flowSet.$refresh()
+                scope.flowSet.$refresh() angular.isDefined(attrs.flowSet)
                 dialog.close()
                 parentDialog.close()
 
         scope.toggleSelect = (org, list)->
             index = list.indexOf org
-            if index > -1 then list.splice(index, 1) else list.push org 
+            if index > -1 then list.splice(index, 1) else list.push org
 
 
 
-        
+
 
 
 
