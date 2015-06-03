@@ -192,7 +192,7 @@ FlowHandlerDirective = (ngDialog)->
                                 <span class="position"> {{::flow.receptor.departmentName}} / {{::flow.receptor.positionName}} </span>
                             </div>
                         </div>
-                        <div class="ask-relations">
+                        <div class="flow-relations">
                             #flowRelationData#
                         </div>
                     </div>
@@ -207,6 +207,7 @@ FlowHandlerDirective = (ngDialog)->
                                     <span class="cell-content">{{entity.value}}</span>
                                 </div>
                             </div>
+                            <div style="margin-top:30px;" nb-annexs-box annexs="flow.attachments" ng-if="flow.attachments && flow.attachments.length >=1"></div>
                         </div>
                     </div>
                 </md-card>

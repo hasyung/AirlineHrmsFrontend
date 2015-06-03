@@ -116,6 +116,10 @@ fieldset[disabled] {
     md-input-container {
         padding-bottom: 9px;
 
+        &.mix-height {
+            height: 59px;
+        }
+
         label {
             color: $text-muted;
         }
@@ -172,7 +176,18 @@ fieldset[disabled] {
 }
 
 md-input-container {
+    font-family: $font-family-sans-serif;
     font-size: $font-size-base;
+    margin-right: 10px;
+
+    &.mix-height {
+        height: 76px;
+
+        input {
+            line-height: 36px;
+        }
+    }
+
 
     &.row-has-value {
         label:not(.md-no-float) {
