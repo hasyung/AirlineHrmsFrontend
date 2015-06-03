@@ -575,7 +575,7 @@ angular.module 'nb.directives'
             <div class="flow-info-head">
                 <div class="name" ng-bind="receptor.name"></div>
                 <div class="flow-info-plus">
-                    <span class="serial-num" ng-bind="receptor.employeeNo"></span>
+                    <span class="serial-num" ng-bind="receptor.employeeNo || receptor.employee_no"></span>
                     <span class="position">{{ receptor.department.name }} / {{ receptor.position.name }}</span>
                 </div>
             </div>
