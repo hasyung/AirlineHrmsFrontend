@@ -4,5 +4,7 @@
         md-toolbar
             .md-toolbar-tools
                 h2 #{flowName}历史列表
+                div(flex)
+                block history_list_actions
 
-        div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.tableData")
+        div(nb-grid column-defs="ctrl.columnDef" on-register-api="ctrl.exportGridApi(gridApi)"  grid-selection multi-select= hisMultiSelect? 'true': 'false' safe-src="ctrl.tableData")

@@ -578,9 +578,10 @@ class ContractCtrl extends nb.Controller
 
         @http.post("/api/workflows/Flow::RenewContract", request)
 
-    leaveJob: (contract, isConfirm)->
+    leaveJob: (contract, isConfirm, reason)->
         return if !isConfirm
         request = {}
+        request.reason = reason
         request.receptor_id = contract.employeeId
         @http.post("/api/workflows/Flow::EmployeeLeaveJob", request)
 
@@ -748,6 +749,13 @@ class SbFlowHandlerCtrl
             {id: user.id, relation_data:user.relation_data}
 
         @http.post("/api/workflows/Flow::Retirement/batch_create", {receptors:params})
+
+    leaveJob: (employeeId, isConfirm, reason)->
+        return if !isConfirm
+        request = {}
+        request.reason = reason
+        request.receptor_id = employeeId
+        @http.post("/api/workflows/Flow::EmployeeLeaveJob", request)
 
 
 
