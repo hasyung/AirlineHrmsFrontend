@@ -9,7 +9,7 @@ md-toolbar.top-menu-bar.md-warn(md-theme="hrms")
                     md-icon(md-svg-icon="/images/svg/bell-outline.svg")
                 .ms-count(ng-if="notify.workflow_count" ng-bind="notify.workflow_count")
                 ul.top-dropdown
-                    li(ng-repeat="(type, flow) in notify.workflows")
+                    li(ng-repeat="(type, flow) in notify.workflows" ng-show="flow.count > 0")
                         a(ng-click="notify.redirectTo(flow.route_state)")
                             .dropdown-item
                                 .dd-item-desc
