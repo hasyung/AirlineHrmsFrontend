@@ -349,7 +349,7 @@ class FlowController
             url = joinUrl(FLOW_HTTP_PREFIX, flow.type, flow.id)
             promise = http.put(url, req)
             promise.then ()->
-                scope.flowSet.$refresh() angular.isDefined(attrs.flowSet)
+                scope.flowSet.$refresh() if angular.isDefined(scope.flowSet)
                 dialog.close()
 
         parseParams = (params)->
@@ -367,7 +367,7 @@ class FlowController
             url = joinUrl(FLOW_HTTP_PREFIX, flow.type, flow.id)
             promise = http.put(url, params)
             promise.then ()->
-                scope.flowSet.$refresh() angular.isDefined(attrs.flowSet)
+                scope.flowSet.$refresh() if angular.isDefined(scope.flowSet)
                 dialog.close()
                 parentDialog.close()
 
