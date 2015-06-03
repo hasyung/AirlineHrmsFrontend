@@ -186,7 +186,7 @@ class MyRequestCtrl extends nb.Controller
             {name:"receptor.departmentName", displayName:"所属部门"}
             {name:"receptor.positionName", displayName:"岗位"}
 
-            {name:"typeCn", displayName:"假别"}
+            {name:"name", displayName:"假别"}
             {name:"vacationDays", displayName:"时长"}
             {name:"workflowState", displayName:"状态"}
             {name:"createdAt", displayName:"发起时间", cellFilter: "date:'yyyy-MM-dd'"}
