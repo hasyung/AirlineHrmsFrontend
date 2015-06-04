@@ -606,11 +606,18 @@ class ContractCtrl extends nb.Controller
         selected = if rows.length >= 1 then rows[0].entity else null
 
     renewContract: (request, contract)->
+        self = @
         return if contract && contract.employeeId == 0
-        request.employee_id = contract.employeeId
+        request.receptor_id = contract.employeeId
         request.reviewer_id = contract.employeeId
 
-        @http.post("/api/workflows/Flow::RenewContract", request)
+        @http.post("/api/workflows/Flow::RenewContract", request).then ()->
+            self.contracts.$refresh()
+
+    newContract: (contract)->
+        self = @
+        @contracts.$build(contract).$save().$then ()->
+            self.contracts.$refresh()
 
     leaveJob: (contract, isConfirm, reason)->
         return if !isConfirm
