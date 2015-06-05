@@ -554,7 +554,7 @@ angular.module 'nb.directives'
                     ngModelCtrl.$setValidity('date', true)
                     return
 
-                return moment(viewValue)
+                return moment(viewValue).format()
 
             ngModelCtrl.$formatters.push (modelValue) ->
                 return moment(modelValue).format('YYYY-MM-DD') if modelValue

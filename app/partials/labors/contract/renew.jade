@@ -34,7 +34,7 @@
 
 
 
-md-dialog.attendance_new(ng-init="contract = dialog.contract; request= {}")
+md-dialog.attendance_new(ng-init="contract = dialog.contract; request= {}; receptor = ctrl.Employee.$find(contract.employeeId);")
     md-content
         form(flex ng-submit="ctrl.renewContract(request, contract);dialog.close();")
             md-toolbar.md-accent(md-theme="hrms")
@@ -53,6 +53,22 @@ md-dialog.attendance_new(ng-init="contract = dialog.contract; request= {}")
                             label 时长
                             input(type="number" ng-model="request.duration")
                     div 时间为空或者0，即为无固定期限合同
+
+            .flow-relations(flow-relation-data ng-model="request.relation_data" style="display:none;")
+                div.flow-info-row(layout)
+                    .flow-info-cell(flex)
+                        .flow-cell-title 用工性质
+                        .flow-cell-content {{receptor.laborRelationId | enum: 'labor_relations'}}
+                    .flow-info-cell(flex)
+                        .flow-cell-title 通道
+                        .flow-cell-content {{receptor.channelId | enum: 'channels'}}
+                div.flow-info-row(layout)
+                    .flow-info-cell(flex)
+                        .flow-cell-title 近12个月绩效
+                        .flow-cell-content {{receptor.twelvePerformances}}
+                    .flow-info-cell(flex)
+                        .flow-cell-title 最近年度绩效
+                        .flow-cell-content {{receptor.yearPerformance}}
 
             .md-actions
                 md-button(type="button" ng-click='dialog.close()') 取 消
