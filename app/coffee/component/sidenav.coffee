@@ -292,18 +292,18 @@ menuFactory = ($rootScope, $state)->
         icon_src: '/images/svg/left-side-svg/left_icon_10.svg'
         pages: [
             {
-                name: '绩效设置'
-                state: 'position'
-                permission: ''
-            }
-            {
                 name: '绩效记录'
-                state: 'position'
+                state: 'performance_record'
                 permission: ''
             }
             {
-                name: '绩效申诉管理'
-                state: 'position'
+                name: '绩效申诉'
+                state: 'performance_alleges'
+                permission: ''
+            }
+            {
+                name: '绩效设置'
+                state: 'performance_setting'
                 permission: ''
             }
         ]
