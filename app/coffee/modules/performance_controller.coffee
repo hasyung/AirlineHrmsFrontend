@@ -6,29 +6,22 @@ filterBuildUtils = nb.filterBuildUtils
 Modal = nb.Modal
 
 
-userListFilterOptions = filterBuildUtils('laborsRetirement')
-    .col 'name',                 '姓名',    'string',           '姓名'
-    .col 'employee_no',          '员工编号', 'string'
-    .col 'department_ids',       '机构',    'org-search'
-    .col 'position_names',       '岗位名称', 'string_array'
-    .col 'locations',            '属地',    'string_array'
-    .col 'channel_ids',          '通道',    'muti-enum-search', '',    {type: 'channels'}
-    .col 'employment_status_id', '用工状态', 'select',           '',    {type: 'employment_status'}
-    .col 'birthday',             '出生日期', 'date-range'
-    .col 'join_scal_date',       '入职时间', 'date-range'
-    .end()
+getBaseFilterOptions = (fliterName)->
+    filterBuildUtils(fliterName)
+        .col 'name',                 '姓名',    'string',           '姓名'
+        .col 'employee_no',          '员工编号', 'string'
+        .col 'department_ids',       '机构',    'org-search'
+        .end()
 
-USER_LIST_TABLE_DEFS = [
+BASE_TABLE_DEFS = [
     {displayName: '员工编号', name: 'employeeNo'}
     {
         displayName: '姓名'
-        field: 'name'
+        field: 'employeeName'
         # pinnedLeft: true
         cellTemplate: '''
         <div class="ui-grid-cell-contents ng-binding ng-scope">
-            <a nb-panel
-                template-url="partials/personnel/info_basic.html"
-                locals="{employee: row.entity}">
+            <a>
                 {{grid.getCellValue(row, col)}}
             </a>
         </div>
@@ -36,21 +29,18 @@ USER_LIST_TABLE_DEFS = [
     }
     {
         displayName: '所属部门'
-        name: 'department.name'
+        name: 'departmentName'
         cellTooltip: (row) ->
-            return row.entity.department.name
+            return row.entity.departmentName
     }
 
     {
         displayName: '岗位'
-        name: 'position.name'
+        name: 'positionName'
         cellTooltip: (row) ->
-            return row.entity.position.name
+            return row.entity.positionName
     }
-    {displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
-    {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
-    {displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
-    {displayName: '到岗时间', name: 'joinScalDate'}
+    {displayName: '通道', name: 'channel'}
 ]
 
 
@@ -64,6 +54,8 @@ class Route
             .state 'performance_record', {
                 url: '/performance_record'
                 templateUrl: 'partials/performance/record/index.html'
+                controller: PerformanceRecord
+                controllerAs: 'ctrl'
                 
             }
             .state 'performance_alleges', {
@@ -74,6 +66,19 @@ class Route
                 url: '/performance_setting'
                 templateUrl: 'partials/performance/setting/index.html'
             }
+
+class PerformanceRecord extends nb.Controller
+    @.$inject = ['$scope', 'Performance']
+
+    constructor: (@scope, @Performance)->
+        @filterOptions = getBaseFilterOptions('performance_record')
+
+        @columnDef = _.cloneDeep BASE_TABLE_DEFS
+
+        @performances = @Performance.$collection().$fetch()
+
+    search: (tableState)->
+        @performances.$refresh(tableState)
 
 
 app.config(Route)
