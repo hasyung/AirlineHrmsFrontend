@@ -25,6 +25,9 @@ class Controller extends Base
         # @initialize()
 
 
+    exportGridApi: (gridApi) ->
+        @gridApi = gridApi
+
     onInitialDataError: (xhr) ->
         if xhr
             if xhr.status == 404
