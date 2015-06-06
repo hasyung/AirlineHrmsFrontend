@@ -2,7 +2,7 @@ div.notification-center.md-background(md-theme="hrms")
     md-toolbar.md-warn
         .md-toolbar-tools
             span 通知中心
-    md-content.nt-content(ng-init="notifications = notify.initialNotification()")
+    md-content.nt-content(ng-init="notifications = notify.notifications.$refresh()")
         div(
             infinite-scroll-container="'.ngdialog'"
             infinite-scroll="notifications.loadMore()"

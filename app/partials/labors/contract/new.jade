@@ -6,7 +6,7 @@ div(style="height: 100%; background-color: #f5f5f5;")
     .personnel-content.personnel-control(ng-init="contract = {}; ctrl.loadEmp = {}")
         section.personnel-info-section
             md-content.nb-card-container(layout="column" md-theme="hrms")
-                form(ng-submit="ctrl.contracts.$build(contract).$save();panel.close();ctrl.contracts.$refresh();")
+                form(ng-submit="ctrl.newContract(contract);panel.close();")
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1
                             md-icon.form-icon(md-svg-src="/images/svg/personnel_24.svg" alt="基本信息")

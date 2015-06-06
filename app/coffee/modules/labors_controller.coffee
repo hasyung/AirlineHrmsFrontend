@@ -88,6 +88,40 @@ FLOW_HANDLE_TABLE_DEFS =  [
 
 ]
 
+FLOW_HISTORY_TABLE_DEFS =  [
+    {
+        name: 'receptor.channelId'
+        displayName: '通道'
+        cellFilter: "enum:'channels'"
+    }
+    {
+        name: 'workflowState'
+        displayName: '状态'
+    }
+    {
+        name: 'createdAt'
+        displayName: '出生日期'
+        cellFilter: "date:'yyyy-MM-dd'"
+    }
+    {
+        name: 'createdAt'
+        displayName: '申请发起时间'
+        cellFilter: "date:'yyyy-MM-dd'"
+    }
+    {
+        name: 'type'
+        displayName: '详细'
+        cellTemplate: '''
+        <div class="ui-grid-cell-contents">
+            <a flow-handler="row.entity" flow-view="true">
+                查看
+            </a>
+        </div>
+        '''
+    }
+
+]
+
 HANDLER_AND_HISTORY_FILTER_OPTIONS = {
     constraintDefs: [
         {
@@ -572,11 +606,18 @@ class ContractCtrl extends nb.Controller
         selected = if rows.length >= 1 then rows[0].entity else null
 
     renewContract: (request, contract)->
+        self = @
         return if contract && contract.employeeId == 0
-        request.employee_id = contract.employeeId
+        request.receptor_id = contract.employeeId
         request.reviewer_id = contract.employeeId
 
-        @http.post("/api/workflows/Flow::RenewContract", request)
+        @http.post("/api/workflows/Flow::RenewContract", request).then ()->
+            self.contracts.$refresh()
+
+    newContract: (contract)->
+        self = @
+        @contracts.$build(contract).$save().$then ()->
+            self.contracts.$refresh()
 
     leaveJob: (contract, isConfirm, reason)->
         return if !isConfirm
@@ -719,7 +760,7 @@ class SbFlowHandlerCtrl
         @tableData = @Flow.$collection().$fetch()
 
     historyList: ->
-        @columnDef = @helper.buildFlowDefault(FLOW_HANDLE_TABLE_DEFS)
+        @columnDef = @helper.buildFlowDefault(FLOW_HISTORY_TABLE_DEFS)
         filterOptions = _.cloneDeep(HANDLER_AND_HISTORY_FILTER_OPTIONS)
         filterOptions.name = @historyListName
         @filterOptions = filterOptions

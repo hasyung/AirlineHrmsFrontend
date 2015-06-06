@@ -89,7 +89,7 @@ class Route
                                         displayName: '详细'
                                         cellTemplate: '''
                                         <div class="ui-grid-cell-contents">
-                                            <a flow-handler="row.entity" flow-view="true" flows="grid.options.data">
+                                            <a flow-handler="row.entity" flow-view="true">
                                                 查看
                                             </a>
                                         </div>
@@ -119,7 +119,7 @@ class Route
                                         displayName: '详细'
                                         cellTemplate: '''
                                         <div class="ui-grid-cell-contents">
-                                            <a flow-handler="row.entity" flow-view="true" flows="grid.options.data">
+                                            <a flow-handler="row.entity" flow-view="true">
                                                 查看
                                             </a>
                                         </div>
@@ -150,7 +150,7 @@ class Route
                                         displayName: '详细'
                                         cellTemplate: '''
                                         <div class="ui-grid-cell-contents">
-                                            <a flow-handler="row.entity" flow-view="true" flows="grid.options.data">
+                                            <a flow-handler="row.entity" flow-view="true">
                                                 查看
                                             </a>
                                         </div>
@@ -180,7 +180,7 @@ class Route
                                         displayName: '详细'
                                         cellTemplate: '''
                                         <div class="ui-grid-cell-contents">
-                                            <a flow-handler="row.entity" flow-view="true" flows="grid.options.data">
+                                            <a flow-handler="row.entity" flow-view>
                                                 查看
                                             </a>
                                         </div>
@@ -265,7 +265,7 @@ class MyRequestCtrl extends nb.Controller
                 displayName:"查看",
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents" ng-init="realFlow = grid.appScope.$parent.realFlow(row.entity)">
-                    <a flow-handler="realFlow" flows="grid.options.data" flow-view="true">
+                    <a flow-handler="realFlow" flow-view="true">
                         查看
                     </a>
                 </div>

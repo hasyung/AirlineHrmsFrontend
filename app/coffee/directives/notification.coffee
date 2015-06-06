@@ -50,7 +50,7 @@ angular.module 'nb.directives'
 
 class NotificationCtrl
     @.$inject = ['$scope', '$state', 'WebsocketClient', '$rootScope', 'Notification', 'toaster', 'USER_MESSAGE']
-    constructor: (scope, @state, WebsocketClient, @rootScope, @Notification, toaster, initializedMessage) ->
+    constructor: (scope, @state, WebsocketClient, @rootScope, Notification, toaster, initializedMessage) ->
 
         computeTotalUnreadCount = (res, value) ->
             return res + value.count || value.count || 0
@@ -81,15 +81,14 @@ class NotificationCtrl
                 workflows[data.type] = data
                 ctrl.workflow_count = _.reduce(workflows, computeTotalUnreadCount, 0)
 
-        @notifications = []
+        @notifications = Notification.$collection().$fetch()
 
     redirectTo: (state) ->
         @state.go(state)
 
-    initialNotification: ->
-        @Notification.$collection().$fetch()
-
-
+    markToReaded: ->
+        @notifications.markToReaded()
+        @msg_unread_count = 0
 
 app.controller "notificationCtrl", NotificationCtrl
 
