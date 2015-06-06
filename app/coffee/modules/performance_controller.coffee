@@ -18,7 +18,6 @@ BASE_TABLE_DEFS = [
     {
         displayName: '姓名'
         field: 'employeeName'
-        # pinnedLeft: true
         cellTemplate: '''
         <div class="ui-grid-cell-contents ng-binding ng-scope">
             <a>
@@ -73,12 +72,30 @@ class PerformanceRecord extends nb.Controller
     constructor: (@scope, @Performance)->
         @filterOptions = getBaseFilterOptions('performance_record')
 
-        @columnDef = _.cloneDeep BASE_TABLE_DEFS
+        @columnDef = BASE_TABLE_DEFS.concat [
+            {displayName: '考核时段', name: 'assessTime'}
+            {displayName: '绩效', name: 'result'}
+            {displayName: '排序', name: 'sortNo'}
+            {
+                displayName: '附件',
+                field: '查看',
+                cellTemplate: '''
+                    <div class="ui-grid-cell-contents ng-binding ng-scope">
+                        <a> 查看
+                        </a>
+                    </div>
+                '''
+            }
+        ]
 
         @performances = @Performance.$collection().$fetch()
 
     search: (tableState)->
         @performances.$refresh(tableState)
+
+    getSelected: () ->
+        rows = @scope.$gridApi.selection.getSelectedGridRows()
+        selected = if rows.length >= 1 then rows[0].entity else null
 
 
 app.config(Route)

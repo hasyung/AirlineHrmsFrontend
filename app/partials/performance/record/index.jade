@@ -6,12 +6,25 @@
                 h2 绩效记录
                 div(flex)
                 md-button.md-primary.md-raised(
-                    
+                    href="/api/performances/temp_export"
                 ) 导出模板
+
+                md-dropmenu()
+                    md-drop-label
+                        md-button.md-primary.md-raised() 上传绩效
+                    md-drop-option()
+                        a(
+                            nb-dialog
+                            template-url="/partials/performance/record/add.html"
+                            
+                        ) 员工月度绩效
+                    md-drop-option()
+                        a(
+                            
+                        ) 员工年度绩效
+
                 md-button.md-primary.md-raised(
-                    
-                ) 上传绩效
-                md-button.md-primary.md-raised(
-                    
+                    nb-dialog
+                    template-url="/partials/performance/record/add_attachment.html"
                 ) 上传文档
         div(nb-grid multi-select="false" export-api grid-selection column-defs="ctrl.columnDef" safe-src="ctrl.performances")
