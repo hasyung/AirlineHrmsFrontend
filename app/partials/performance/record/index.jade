@@ -16,11 +16,14 @@
                         a(
                             nb-dialog
                             template-url="/partials/performance/record/add.html"
+                            locals="{performanceType:'month'}"
                             
                         ) 员工月度绩效
                     md-drop-option()
                         a(
-                            
+                            nb-dialog
+                            template-url="/partials/performance/record/add.html"
+                            locals="{performanceType:'year'}"
                         ) 员工年度绩效
 
                 md-button.md-primary.md-raised(

@@ -20,4 +20,4 @@ block form
             label 辞退原因
             textarea(ng-model="request.reason" columns="1" md-maxlength="2000")
 
-    div(nb-file-upload flow-type="#{flowType}" ng-model="request.attachment_ids")
+    div(flow-file-upload flow-type="#{flowType}" ng-model="request.attachment_ids")

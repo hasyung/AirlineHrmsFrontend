@@ -72,9 +72,9 @@ class Route
             }
 
 class PerformanceRecord extends nb.Controller
-    @.$inject = ['$scope', 'Performance']
+    @.$inject = ['$scope', 'Performance', '$http']
 
-    constructor: (@scope, @Performance)->
+    constructor: (@scope, @Performance, @http)->
         @filterOptions = getBaseFilterOptions('performance_record')
 
         @columnDef = BASE_TABLE_DEFS.concat [
@@ -101,6 +101,22 @@ class PerformanceRecord extends nb.Controller
     getSelected: () ->
         rows = @scope.$gridApi.selection.getSelectedGridRows()
         selected = if rows.length >= 1 then rows[0].entity else null
+
+    getDateOptions: (type)->
+        date = new Date()
+        year = date.getFullYear()
+        month = date.getMonth()
+
+        return [year-1, year] if type == "year"
+
+        formatOption = (year, month)->
+            temp = []
+            temp.push("#{year}-#{item}") for item in [1..month]
+            return temp
+        dateOptions = [].concat formatOption(year-1, 12), formatOption(year, month+1)
+    uploadPerformance: (request)->
+        request.assess_time = request.assessTime + '-1'
+        @http.post("/api/performances/import_performances", request)
 
 class PerformanceSetting extends nb.Controller
     @.$inject = ['$scope', 'PerformanceTemp']

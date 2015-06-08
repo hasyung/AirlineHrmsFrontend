@@ -1,20 +1,23 @@
-md-dialog.attendance_new
+md-dialog.attendance_new(ng-init="request = {};")
     md-content
-        form
+        form(ng-submit="ctrl.uploadPerformance(request)")
             md-toolbar.md-accent(md-theme="hrms")
                 .md-toolbar-tools
                     span 员工绩效导入
-            .dialog-content(layout layout-align="center")
-                fieldset(flex)
-                    div(layout)
-                        md-input-container(flex)
-                            label 开始日期
-                            input(ng-model="request.start_date" name="aaa" bs-datepicker required)
-                    div(layout)
-                        md-input-container.row-has-value(flex)
-                            label 时长
-                            input(type="number" ng-model="request.duration")
-                    div 时间为空或者0，即为无固定期限合同
+            .dialog-content()   
+                div(layout ng-if="dialog.performanceType == 'month'" ng-init="request.category = 'month'")
+                    md-input-container(flex)
+                        label 考核时段
+                        md-select(ng-model="request.assess_time")
+                            md-select-label {{request.assessTime}}
+                            md-option(ng-value="item" ng-repeat="item in ctrl.getDateOptions() track by $index") {{item}}
+                div(layout ng-if="dialog.performanceType == 'year'" ng-init="request.category = 'year'")
+                    md-input-container(flex)
+                        label 考核时段
+                        md-select(ng-model="request.assess_time")
+                            md-select-label {{request.assessTime}}
+                            md-option(ng-value="item" ng-repeat="item in ctrl.getDateOptions('year') track by $index") {{item}}
+                div(nb-file-upload ng-model="request.file_id")
 
             .md-actions
                 md-button(type="button" ng-click='dialog.close()') 取 消

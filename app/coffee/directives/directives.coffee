@@ -594,7 +594,7 @@ angular.module 'nb.directives'
         }
 
 
-    .directive 'nbFileUpload', [()->
+    .directive 'flowFileUpload', [()->
         template = '''
         <div>
             <div class="accessory-container">
@@ -663,6 +663,81 @@ angular.module 'nb.directives'
             template: (elem, attrs)->
                 new Error("flow type is needed in workflows") if attrs['flowType']
                 template.replace /##FLOW_TYPE##/, attrs['flowType']
+            replace: true
+            link: postLink
+            require: 'ngModel'
+            controller: FileUploadCtrl
+            controllerAs: 'ctrl'
+        }
+    ]
+
+    .directive 'nbFileUpload', [()->
+        template = '''
+        <div>
+            <div class="accessory-container">
+                <div ng-repeat="file in files track by $index"  class="accessory-cell">
+                    <div ng-if="ctrl.isImage(file)" nb-gallery img-obj="file">
+                        <div class="accessory-name" ng-bind="file.name"></div>
+                        <div class="accessory-size" ng-bind="file.size | byteFmt:2"></div>
+                        <div class="accessory-switch">
+                            <md-button type="button" class="md-icon-button" ng-click="ctrl.removeFile($index)">
+                                <md-icon md-svg-src="/images/svg/close.svg" class="md-warn"></md-icon>
+                            </md-button>
+                        </div>
+                    </div>
+                    <div ng-if="!ctrl.isImage(file)">
+                        <div class="accessory-name" ng-bind="file.name"></div>
+                        <div class="accessory-size" ng-bind="file.size | byteFmt:2"></div>
+                        <div class="accessory-switch">
+                            <md-button type="button" class="md-icon-button" ng-click="ctrl.removeFile($index)">
+                                <md-icon md-svg-src="/images/svg/close.svg" class="md-warn"></md-icon>
+                            </md-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accessory-btn-group"
+                flow-init="{target: '/api/attachments/upload_xls', testChunks:false, uploadMethod:'POST', singleFile:false}"
+                flow-files-submitted="$flow.upload()"
+                flow-file-success="ctrl.addFile($message);">
+                <md-button class="md-primary md-raised" flow-btn type="button">添加文件</md-button>
+                <span class="tip"> {{tips}}</span>
+            </div>
+            
+        </div>
+        '''
+
+        class FileUploadCtrl
+            @.$inject = ['$scope']
+
+            constructor: (@scope)->
+
+            addFile: (fileObj)->
+                file = JSON.parse(fileObj)
+                @scope.files = [] if !@scope.files
+                @scope.files.push file
+
+            removeFile: (index)->
+                @scope.files.splice(index, 1)
+
+            isImage: (file)->
+                /^image\/jpg|jpeg|gif|png/.test(file.type)
+
+        postLink = (scope, elem, attrs, ngModelCtrl) ->
+
+            scope.$watch "files", (newVal)->
+                fileIds = _.map newVal, 'id'
+                result = if fileIds.length == 1 then fileIds[0] else fileIds
+                ngModelCtrl.$setViewValue(result)
+            , true
+
+            return
+
+        return {
+            scope: {
+                tips: '@tips'
+            }
+            template: template
             replace: true
             link: postLink
             require: 'ngModel'
