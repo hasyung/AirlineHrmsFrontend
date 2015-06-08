@@ -18,7 +18,6 @@ BASE_TABLE_DEFS = [
     {
         displayName: '姓名'
         field: 'employeeName'
-        # pinnedLeft: true
         cellTemplate: '''
         <div class="ui-grid-cell-contents ng-binding ng-scope">
             <a>
@@ -61,10 +60,15 @@ class Route
             .state 'performance_alleges', {
                 url: '/performance_alleges'
                 templateUrl: 'partials/performance/allege/index.html'
+                controller: PerformanceAllege
+                controllerAs: 'ctrl'
+
             }
             .state 'performance_setting', {
                 url: '/performance_setting'
                 templateUrl: 'partials/performance/setting/index.html'
+                controller: PerformanceSetting
+                controllerAs: 'ctrl'
             }
 
 class PerformanceRecord extends nb.Controller
@@ -73,12 +77,100 @@ class PerformanceRecord extends nb.Controller
     constructor: (@scope, @Performance)->
         @filterOptions = getBaseFilterOptions('performance_record')
 
-        @columnDef = _.cloneDeep BASE_TABLE_DEFS
+        @columnDef = BASE_TABLE_DEFS.concat [
+            {displayName: '考核时段', name: 'assessTime'}
+            {displayName: '绩效', name: 'result'}
+            {displayName: '排序', name: 'sortNo'}
+            {
+                displayName: '附件',
+                field: '查看',
+                cellTemplate: '''
+                    <div class="ui-grid-cell-contents ng-binding ng-scope">
+                        <a> 查看
+                        </a>
+                    </div>
+                '''
+            }
+        ]
 
         @performances = @Performance.$collection().$fetch()
 
     search: (tableState)->
         @performances.$refresh(tableState)
+
+    getSelected: () ->
+        rows = @scope.$gridApi.selection.getSelectedGridRows()
+        selected = if rows.length >= 1 then rows[0].entity else null
+
+class PerformanceSetting extends nb.Controller
+    @.$inject = ['$scope', 'PerformanceTemp']
+
+    constructor: (@scope, @PerformanceTemp)->
+        @filterOptions = getBaseFilterOptions('performance_setting')
+
+        @columnDef = [
+            {displayName: '员工编号', name: 'employeeNo'}
+            {displayName: '姓名', name: 'name'}
+            {
+                displayName: '所属部门'
+                name: 'department.name'
+                cellTooltip: (row) ->
+                    return row.entity.department.name
+            }
+            {
+                displayName: '岗位'
+                name: 'position.name'
+                cellTooltip: (row) ->
+                    return row.entity.position.name
+            }
+            {displayName: '通道', name: 'channelId', cellFilter: "enum: 'channels'"}
+            {displayName: '职务职级', name: 'dutyRankId', cellFilter: "enum: 'duty_ranks'"}
+            {displayName: '到岗时间', name: 'joinScalDate'}
+            {displayName: '月度分配基数', name: 'monthDistributeBase'}
+            {displayName: '考核人员分类', name: 'pcategory'}
+        ]
+
+        @performanceTemps = @PerformanceTemp.$collection().$fetch()
+
+    search: (tableState)->
+        @performanceTemps.$refresh(tableState)
+
+    getSelected: () ->
+        rows = @scope.$gridApi.selection.getSelectedGridRows()
+        selected = if rows.length >= 1 then rows[0].entity else null
+
+class PerformanceAllege extends nb.Controller
+    @.$inject = ['$scope', 'Allege']
+
+    constructor: (@scope, @Allege)->
+        @filterOptions = getBaseFilterOptions('performance_allege')
+
+        @columnDef = BASE_TABLE_DEFS.concat [
+            {displayName: '考核时段', name: 'assessTime'}
+            {displayName: '绩效', name: 'result'}
+            {displayName: '申述时间', name: 'createdAt'}
+            {displayName: '申述结果', name: 'outcome'}
+            {
+                displayName: '处理',
+                field: '查看',
+                cellTemplate: '''
+                    <div class="ui-grid-cell-contents ng-binding ng-scope">
+                        <a> 查看
+                        </a>
+                    </div>
+                '''
+            }
+        ]
+
+        @alleges = @Allege.$collection().$fetch()
+
+    search: (tableState)->
+        @alleges.$refresh(tableState)
+
+    getSelected: () ->
+        rows = @scope.$gridApi.selection.getSelectedGridRows()
+        selected = if rows.length >= 1 then rows[0].entity else null
+
 
 
 app.config(Route)
