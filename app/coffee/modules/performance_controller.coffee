@@ -55,7 +55,7 @@ class Route
                 templateUrl: 'partials/performance/record/index.html'
                 controller: PerformanceRecord
                 controllerAs: 'ctrl'
-                
+
             }
             .state 'performance_alleges', {
                 url: '/performance_alleges'
@@ -103,34 +103,80 @@ class PerformanceRecord extends nb.Controller
         selected = if rows.length >= 1 then rows[0].entity else null
 
 class PerformanceSetting extends nb.Controller
-    @.$inject = ['$scope', 'PerformanceTemp']
+    @.$inject = ['$scope', 'PerformanceTemp', '$http', '$q']
 
-    constructor: (@scope, @PerformanceTemp)->
+    constructor: (@scope, @PerformanceTemp, @http, @q)->
         @filterOptions = getBaseFilterOptions('performance_setting')
 
         @columnDef = [
-            {displayName: '员工编号', name: 'employeeNo'}
-            {displayName: '姓名', name: 'name'}
+            {displayName: '员工编号', name: 'employeeNo', enableCellEdit: false}
+            {displayName: '姓名', name: 'name', enableCellEdit: false}
             {
                 displayName: '所属部门'
                 name: 'department.name'
+                enableCellEdit: false
                 cellTooltip: (row) ->
                     return row.entity.department.name
             }
             {
                 displayName: '岗位'
                 name: 'position.name'
+                enableCellEdit: false
                 cellTooltip: (row) ->
                     return row.entity.position.name
             }
-            {displayName: '通道', name: 'channelId', cellFilter: "enum: 'channels'"}
-            {displayName: '职务职级', name: 'dutyRankId', cellFilter: "enum: 'duty_ranks'"}
-            {displayName: '到岗时间', name: 'joinScalDate'}
-            {displayName: '月度分配基数', name: 'monthDistributeBase'}
-            {displayName: '考核人员分类', name: 'pcategory'}
+            {displayName: '通道', name: 'channelId', cellFilter: "enum: 'channels'" , enableCellEdit: false}
+            {displayName: '职务职级', name: 'dutyRankId', cellFilter: "enum: 'duty_ranks'", enableCellEdit: false}
+            {displayName: '到岗时间', name: 'joinScalDate', enableCellEdit: false}
+            {
+                displayName: '月度分配基数'
+                name: 'monthDistributeBase'
+                type: 'number'
+            }
+            {
+                displayName: '考核人员分类'
+                name: 'pcategory'
+                editableCellTemplate: 'ui-grid/dropdownEditor'
+                editDropdownValueLabel: 'value'
+                editDropdownIdLabel: 'key'
+                editDropdownOptionsArray: [
+                    {key: '员工', value: '员工'}
+                    {key: '基层干部', value: '基层干部'}
+                    {key: '中层干部', value: '中层干部'}
+                    {key: '主官', value: '主官'}
+                ]
+            }
+
         ]
 
         @performanceTemps = @PerformanceTemp.$collection().$fetch()
+
+    initialize: (gridApi) ->
+        saveRow = (rowEntity) ->
+            dfd = @q.defer()
+
+            gridApi.rowEdit.setSavePromise(rowEntity, dfd.promise)
+
+            @http({
+                method: 'POST'
+                url: '/api/performances/update_temp'
+                data: {
+                    id: rowEntity.id
+                    month_distribute_base: rowEntity.monthDistributeBase
+                    pcategory: rowEntity.pcategory
+                }
+            })
+            .success () ->
+                dfd.resolve()
+            .error () ->
+                dfd.reject()
+                rowEntity.$restore()
+
+        # edit.on.afterCellEdit($scope,function(rowEntity, colDef, newValue, oldValue)
+        # gridApi.edit.on.afterCellEdit @scope, (rowEntity, colDef, newValue, oldValue) ->
+
+        gridApi.rowEdit.on.saveRow(@scope, saveRow.bind(@))
+
 
     search: (tableState)->
         @performanceTemps.$refresh(tableState)

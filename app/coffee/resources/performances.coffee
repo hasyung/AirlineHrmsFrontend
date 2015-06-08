@@ -4,7 +4,7 @@ resources = angular.module('resources')
 Performance = (restmod, RMUtils, $Evt) ->
 
     Performance = restmod.model('/performances').mix 'nbRestApi', {
-        
+
     }
 
 Allege = (restmod, RMUtils, $Evt)->
@@ -15,7 +15,7 @@ Allege = (restmod, RMUtils, $Evt)->
 
 PerformanceTemp = (restmod, RMUtils, $Evt)->
 
-    PerformanceTemp = restmod.model('/performances/temp').mix 'nbRestApi', {
+    PerformanceTemp = restmod.model('/performances/temp').mix 'nbRestApi', 'DirtyModel', {
 
     }
 

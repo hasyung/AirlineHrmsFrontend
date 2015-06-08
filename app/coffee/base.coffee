@@ -24,7 +24,7 @@ class Controller extends Base
     constructor: () ->
         # @initialize()
 
-
+    # 在grid register api 时， 将 gridApi 共享到controller中
     exportGridApi: (gridApi) ->
         @gridApi = gridApi
 
