@@ -464,7 +464,14 @@ nbGridDirective = ($parse)->
         }
         template: (elem, attrs) ->
             PLUGIN_PREFIX = 'ui-'
-            plugins = ['ui-grid-pinning','ui-grid-selection']
+
+            plugins = [
+                'ui-grid-pinning'
+                'ui-grid-selection'
+                'ui-grid-edit'
+                'ui-grid-row-edit'
+                'ui-grid-cellNav'
+            ]
             applied_plugins = plugins.reduce((res, val) ->
                 removedPrefix = val.replace(PLUGIN_PREFIX, '')
                 camelCased = _.camelCase(removedPrefix)
