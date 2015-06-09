@@ -77,8 +77,14 @@ Resume = (restmod, RMUtils, $Evt) ->
             jsonRoot: 'employee'
     }
 
+UserPerformance = (restmod, RMUtils, $Evt)->
+    # url 就是这样子 T T
+    UserPerformance = restmod.model('/me/me/performances').mix 'nbRestApi', { 
+
+    }
 resources.factory 'User',['restmod', 'RMUtils', '$nbEvent', User]
 resources.factory 'Education',['restmod', 'RMUtils', '$nbEvent', Education]
 resources.factory 'Experience',['restmod', 'RMUtils', '$nbEvent', Experience]
 resources.factory 'FamilyMember',['restmod', 'RMUtils', '$nbEvent', FamilyMember]
 resources.factory 'Resume',['restmod', 'RMUtils', '$nbEvent', Resume]
+resources.factory 'UserPerformance',['restmod', 'RMUtils', '$nbEvent', UserPerformance]

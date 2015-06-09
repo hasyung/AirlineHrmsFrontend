@@ -29,5 +29,6 @@
                 md-button.md-primary.md-raised(
                     nb-dialog
                     template-url="/partials/performance/record/add_attachment.html"
+                    locals="{performance: ctrl.getSelected()}"
                 ) 上传文档
         div(nb-grid multi-select="false" export-api grid-selection column-defs="ctrl.columnDef" safe-src="ctrl.performances")

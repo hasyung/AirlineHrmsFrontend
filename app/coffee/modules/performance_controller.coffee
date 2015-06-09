@@ -72,9 +72,9 @@ class Route
             }
 
 class PerformanceRecord extends nb.Controller
-    @.$inject = ['$scope', 'Performance', '$http']
+    @.$inject = ['$scope', 'Performance', '$http', 'USER_META']
 
-    constructor: (@scope, @Performance, @http)->
+    constructor: (@scope, @Performance, @http, @USER_META)->
         @filterOptions = getBaseFilterOptions('performance_record')
 
         @columnDef = BASE_TABLE_DEFS.concat [
@@ -86,7 +86,7 @@ class PerformanceRecord extends nb.Controller
                 field: '查看',
                 cellTemplate: '''
                     <div class="ui-grid-cell-contents ng-binding ng-scope">
-                        <a> 查看
+                        <a ng-if="row.entity.attachmentStatus"> 查看
                         </a>
                     </div>
                 '''
@@ -123,6 +123,12 @@ class PerformanceRecord extends nb.Controller
             self.scope.resRecord = response.messages
             params.status = "finish"
         .error ()->
+
+
+    uploadAttachments: (collection, $messages)->
+        file = JSON.parse($messages)
+        collection.$create({id: file.id})
+
 
 
 class PerformanceSetting extends nb.Controller

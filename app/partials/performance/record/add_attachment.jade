@@ -1,13 +1,25 @@
-md-dialog.attendance_new
+md-dialog.sample-dialog(ng-init="performance = dialog.performance;attachments = performance.attachments.$fetch();")
     md-content
         form
             md-toolbar.md-accent(md-theme="hrms")
                 .md-toolbar-tools
                     span 附件列表
-            .dialog-content(layout layout-align="center")
-                
+            .dialog-content.show-text()
+                .accessory-container
+                    .accessory-cell(ng-repeat="attachment in attachments")
+                        .accessory-name(ng-bind="attachment.name")
+                        .accessory-size(ng-bind="attachment.size | byteFmt:2")
+                        .accessory-switch
+                            md-button.md-icon-button(type="button" ng-click="attachment.$destroy()" ng-if="ctrl.USER_META.id == attachment.employeeId")
+                                md-icon.md-warn(md-svg-src="/images/svg/close.svg")
+                .accessory-btn-group(
+                    flow-init="{target: '/api/attachments/upload_file', testChunks:false, uploadMethod:'POST', singleFile:true}"
+                    flow-files-submitted="$flow.upload()"
+                    flow-file-success="ctrl.uploadAttachments(attachments, $message)")
+                    md-button.md-primary.md-raised(flow-btn type="button") 文件上传
+                    .tip
+
 
             .md-actions
-                md-button(type="button" ) 上传附件
                 md-button.md-primary.md-raised(type="submit" ng-click='dialog.close()') 关 闭
 
