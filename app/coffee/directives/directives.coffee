@@ -700,7 +700,9 @@ angular.module 'nb.directives'
                 flow-init="{target: '/api/attachments/upload_xls', testChunks:false, uploadMethod:'POST', singleFile:true}"
                 flow-files-submitted="$flow.upload()"
                 flow-file-success="ctrl.addFile($message);">
-                <md-button class="md-primary md-raised" flow-btn type="button">添加文件</md-button>
+                <md-button
+                    ng-if="$flow.files.length < fileSize"
+                    class="md-primary md-raised" flow-btn type="button">添加文件</md-button>
                 <span class="tip"> {{tips}}</span>
             </div>
             
@@ -711,6 +713,7 @@ angular.module 'nb.directives'
             @.$inject = ['$scope']
 
             constructor: (@scope)->
+                @scope.fileSize = Number.MAX_VALUE
 
             addFile: (fileObj)->
                 file = JSON.parse(fileObj)
@@ -724,6 +727,10 @@ angular.module 'nb.directives'
                 /^image\/jpg|jpeg|gif|png/.test(file.type)
 
         postLink = (scope, elem, attrs, ngModelCtrl) ->
+
+            if attrs.singleFile
+                scope.fileSize = 1
+
             scope.$watch "files", (newVal)->
                 fileIds = _.map newVal, 'id'
                 result = if fileIds.length == 1 then fileIds[0] else fileIds
