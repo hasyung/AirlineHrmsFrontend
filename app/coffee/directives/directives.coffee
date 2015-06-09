@@ -680,16 +680,16 @@ angular.module 'nb.directives'
                         <div class="accessory-name" ng-bind="file.name"></div>
                         <div class="accessory-size" ng-bind="file.size | byteFmt:2"></div>
                         <div class="accessory-switch">
-                            <md-button type="button" class="md-icon-button" ng-click="ctrl.removeFile($index)">
+                            <md-button type="button" class="md-icon-button" ng-click="ctrl.removeFile($flow, $index)">
                                 <md-icon md-svg-src="/images/svg/close.svg" class="md-warn"></md-icon>
                             </md-button>
                         </div>
                     </div>
                     <div ng-if="!ctrl.isImage(file)">
-                        <div class="accessory-name" ng-bind="file.name"></div>
-                        <div class="accessory-size" ng-bind="file.size | byteFmt:2"></div>
+                        <div class="accessory-name" ng-bind="file.file_name"></div>
+                        <div class="accessory-size" ng-bind="file.file_size | byteFmt:2"></div>
                         <div class="accessory-switch">
-                            <md-button type="button" class="md-icon-button" ng-click="ctrl.removeFile($index)">
+                            <md-button type="button" class="md-icon-button" ng-click="ctrl.removeFile($flow, $index)">
                                 <md-icon md-svg-src="/images/svg/close.svg" class="md-warn"></md-icon>
                             </md-button>
                         </div>
@@ -697,7 +697,7 @@ angular.module 'nb.directives'
                 </div>
             </div>
             <div class="accessory-btn-group"
-                flow-init="{target: '/api/attachments/upload_xls', testChunks:false, uploadMethod:'POST', singleFile:false}"
+                flow-init="{target: '/api/attachments/upload_xls', testChunks:false, uploadMethod:'POST', singleFile:true}"
                 flow-files-submitted="$flow.upload()"
                 flow-file-success="ctrl.addFile($message);">
                 <md-button class="md-primary md-raised" flow-btn type="button">添加文件</md-button>
@@ -717,14 +717,13 @@ angular.module 'nb.directives'
                 @scope.files = [] if !@scope.files
                 @scope.files.push file
 
-            removeFile: (index)->
-                @scope.files.splice(index, 1)
+            removeFile: (flow, index)->
+                file = @scope.files.splice(index, 1)
 
             isImage: (file)->
                 /^image\/jpg|jpeg|gif|png/.test(file.type)
 
         postLink = (scope, elem, attrs, ngModelCtrl) ->
-
             scope.$watch "files", (newVal)->
                 fileIds = _.map newVal, 'id'
                 result = if fileIds.length == 1 then fileIds[0] else fileIds

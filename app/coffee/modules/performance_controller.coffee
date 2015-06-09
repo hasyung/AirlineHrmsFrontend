@@ -114,9 +114,16 @@ class PerformanceRecord extends nb.Controller
             temp.push("#{year}-#{item}") for item in [1..month]
             return temp
         dateOptions = [].concat formatOption(year-1, 12), formatOption(year, month+1)
-    uploadPerformance: (request)->
-        request.assess_time = request.assessTime + '-1'
-        @http.post("/api/performances/import_performances", request)
+    uploadPerformance: (request, params)->
+        self = @
+        # 年度的时候assessTime is int 
+        request.assess_time = moment(new Date(new String(request.assessTime))).format "YYYY-MM-DD"
+        params.status = "uploading"
+        @http.post("/api/performances/import_performances", request).success (response)->
+            self.scope.resRecord = response.messages
+            params.status = "finish"
+        .error ()->
+
 
 class PerformanceSetting extends nb.Controller
     @.$inject = ['$scope', 'PerformanceTemp']
