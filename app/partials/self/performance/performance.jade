@@ -1,4 +1,4 @@
-section.self_performance
+section.self_performance(ng-init="ctrl.loadPerformance()")
     .personnel-content-body
         .personnel-section-wrap()
             md-toolbar
@@ -24,31 +24,21 @@ section.self_performance
                                     th 附件
                                     th 申述
                             tbody
-                                tr
-                                    td
-                                        | 2015-5
-                                    td
-                                        | 良好
+                                tr(ng-repeat="performance in ctrl.performances")
+                                    td(ng-bind="performance.assessTime")
+                                    td(ng-bind="performance.result")
                                     td
                                         a(
                                             nb-panel
                                             template-url="partials/personnel/performance/rfc.html"
-                                            locals="{currentUser:current}"
+                                            locals="{performance:performance}"
                                             ) 查看
                                     td.control-td
                                         a(
                                             nb-dialog
                                             template-url="partials/self/performance/represent.html"
-                                            locals="{currentUser:current}"
+                                            locals="{performance:performance}"
                                             ) 绩效申述
-                                tr
-                                    td
-                                        | 2015-4
-                                    td
-                                        | 良好
-                                    td
-                                        a 查看
-                                    td.control-td
                 .performance-list-item
                     .item-action
                         md-button(ng-click="show = !show")

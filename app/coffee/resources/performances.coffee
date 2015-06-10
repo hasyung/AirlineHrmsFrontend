@@ -5,7 +5,7 @@ Performance = (restmod, RMUtils, $Evt) ->
 
     Performance = restmod.model('/performances').mix 'nbRestApi', {
 
-        attachments: { hasMany: 'Attachment'}
+        attachments: { hasMany: 'Attachment'}  
     }
 
 Attachment = (restmod, RMUtils, $Evt)->

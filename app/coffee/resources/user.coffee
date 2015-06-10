@@ -78,8 +78,23 @@ Resume = (restmod, RMUtils, $Evt) ->
     }
 
 UserPerformance = (restmod, RMUtils, $Evt)->
-    # url 就是这样子 T T
-    UserPerformance = restmod.model('/me/me/performances').mix 'nbRestApi', { 
+    UserPerformance = restmod.model('/me/performances').mix 'nbRestApi', { 
+        $hooks:
+            'allege-create': ->
+                $Evt.$send('allege:create:success',"绩效申述成功")
+
+        $extend:
+            Record:
+                allege: (data)->
+                    request = {
+                        method: 'POST',
+                        url: "/api/performances/#{this.id}/alleges",
+                        data: data
+                    }
+                    onSuccess = (res)->
+                        self.$dispatch 'allege-create', res
+
+                    this.$send(request, onSuccess)
 
     }
 resources.factory 'User',['restmod', 'RMUtils', '$nbEvent', User]
