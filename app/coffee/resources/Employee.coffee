@@ -18,6 +18,8 @@ Employee = (restmod, RMUtils, $Evt) ->
         isSelected: {mask: "CU"}
         resume: { hasOne: 'Resume', mask: 'CU'}
 
+        performances: {hasMany: 'Performance', mask: 'CU'}
+
         $hooks: {
             'after-create': ->
                 $Evt.$send('employee:create:success', "新员工创建成功")

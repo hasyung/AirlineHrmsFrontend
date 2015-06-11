@@ -1,0 +1,32 @@
+md-dialog.sample-dialog(ng-init="request = {};params = {status:'init'}")
+    md-content
+        form(ng-submit="ctrl.uploadPerformance(request, params)")
+            md-toolbar.md-accent(md-theme="hrms")
+                .md-toolbar-tools
+                    span 员工绩效导入
+            .dialog-content(ng-if="params.status == 'init'")   
+                div(layout ng-if="dialog.performanceType == 'month'" ng-init="request.category = 'month'")
+                    md-input-container(flex)
+                        label 考核时段
+                        md-select(ng-model="request.assessTime")
+                            md-select-label {{request.assessTime}}
+                            md-option(ng-value="item" ng-repeat="item in ctrl.getDateOptions() track by $index") {{item}}
+                div(layout ng-if="dialog.performanceType == 'year'" ng-init="request.category = 'year'")
+                    md-input-container(flex)
+                        label 考核时段
+                        md-select(ng-model="request.assessTime")
+                            md-select-label {{request.assessTime}}
+                            md-option(ng-value="item" ng-repeat="item in ctrl.getDateOptions('year') track by $index") {{item}}
+                div(nb-file-upload ng-model="request.file_id" single-file)
+            .dialog-content.loading(ng-if="params.status == 'uploading'" layout-align="center") 
+                 md-progress-circular.md-hue-2(md-mode="indeterminate")
+            .dialog-content.show-text(ng-if="params.status == 'finish'")
+                .row 解析xls成功，一共{{total || 0}}条数据
+                .row 导入记录树：
+                .row 总计：总计导入{{::resRecord.success_count}}条,错误数据{{::resRecord.fail_count}}条。
+
+            .md-actions
+                md-button(type="button" ng-click='dialog.close()' ng-if="params.status == 'init'") 取 消
+                md-button.md-primary.md-raised(type="submit" ng-if="params.status == 'init'") 确 定
+                md-button.md-primary.md-raised(type="button" ng-if="params.status == 'finish'" ng-click="dialog.close();") 关 闭
+
