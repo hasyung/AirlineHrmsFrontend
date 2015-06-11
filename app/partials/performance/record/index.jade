@@ -28,6 +28,7 @@
 
                 md-button.md-primary.md-raised(
                     nb-dialog
+                    ng-disabled="!ctrl.getSelected"
                     template-url="/partials/performance/record/add_attachment.html"
                     locals="{performance: ctrl.getSelected()}"
                 ) 上传文档
