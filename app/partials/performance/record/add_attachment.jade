@@ -7,8 +7,8 @@ md-dialog.sample-dialog(ng-init="performance = dialog.performance;attachments = 
             .dialog-content.show-text()
                 .accessory-container
                     .accessory-cell(ng-repeat="attachment in attachments")
-                        .accessory-name(ng-bind="attachment.name")
-                        .accessory-size(ng-bind="attachment.size | byteFmt:2")
+                        .accessory-name() {{attachment.name}}
+                        .accessory-size() {{attachment.size | byteFmt:2}}
                         .accessory-switch
                             md-button.md-icon-button(type="button" ng-click="attachment.$destroy()" ng-if="ctrl.USER_META.id == attachment.employeeId")
                                 md-icon.md-warn(md-svg-src="/images/svg/close.svg")

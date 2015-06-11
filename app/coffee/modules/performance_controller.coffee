@@ -127,7 +127,7 @@ class PerformanceRecord extends nb.Controller
 
     uploadAttachments: (collection, $messages)->
         file = JSON.parse($messages)
-        collection.$create({id: file.id})
+        collection.$create(file)
 
 
 
