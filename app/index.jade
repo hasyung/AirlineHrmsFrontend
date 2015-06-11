@@ -13,9 +13,9 @@ html
         link(rel="stylesheet", href="/styles/web.css?v=#{v}")
         link(rel="icon", type="image/png", href="/images/favicon.png")
 
+        //- 服务器端配置 metadata
         script(id="CONFIG_SERVER_CODE").
             !{meta}
-    //- body(ng-app="nb" ng-controller="AppController")
     body(ng-app="nb" layout="column")
         include partials/shared/top_menu
         toaster-container(toaster-options="{'time-out': 3000, 'close-button':true, 'animation-class': 'toast-top-right'}")
