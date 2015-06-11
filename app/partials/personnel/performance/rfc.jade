@@ -1,30 +1,30 @@
-.workflow.md-background(md-theme="hrms")
+.workflow.md-background(md-theme="hrms" ng-init="currentUser = panel.user; performance = panel.performance;")
     md-toolbar.md-warn(md-theme="hrms")
         .md-toolbar-tools
             span 绩效申述
     .personnel-content.personnel-control
         section.personnel-info-section
             md-content.nb-card-container(layout="column" md-theme="hrms")
-                form(ng-controller="NewMyRequestCtrl" ng-submit="#{paramsChange};createFlow(request)" ng-init="request = initialFlow('')")
+                form()
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1
-                        flow-user-info(receptor="panel.receptor")
+                        flow-user-info(receptor="currentUser")
                         .flow-relations(flow-relation-data ng-model="request.relation_data")
 
                             div.flow-info-row(layout)
                                 .flow-info-cell(flex)
                                     .flow-cell-title 通道
-                                    .flow-cell-content 管理
+                                    .flow-cell-content {{::currentUser.channel_id | enum: 'channels'}}
                                 .flow-info-cell(flex)
                                     .flow-cell-title 用工性质
-                                    .flow-cell-content 合同工
+                                    .flow-cell-content {{::currentUser.labor_relation_id | enum: 'labor_relations'}}
                             div.flow-info-row(layout)
                                 .flow-info-cell(flex)
                                     .flow-cell-title 考核时段
-                                    .flow-cell-content 2015-01
+                                    .flow-cell-content {{::performance.assessTime | date: 'yyyy-MM'}}
                                 .flow-info-cell(flex)
                                     .flow-cell-title 绩效
-                                    .flow-cell-content 不合格
+                                    .flow-cell-content {{::performance.result}}
 
                         md-subheader.accessory-header.md-background.md-hue-1 附件
                         .accessory-container
@@ -53,7 +53,7 @@
                                     md-button.md-icon-button
                                         md-icon.md-warn(md-svg-src="/images/svg/close.svg")
 
-                        div(nb-file-upload flow-type="#{flowType}" ng-model="request.attachment_ids")
+                        div(flow-file-upload flow-type="#{flowType}" ng-model="request.attachment_ids")
 
                     md-card.form-material-section.nb-card.performance-result
                         md-subheader.md-background.md-hue-1 处理结果

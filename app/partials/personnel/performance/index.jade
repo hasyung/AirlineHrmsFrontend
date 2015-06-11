@@ -1,69 +1,35 @@
-md-card.form-material-section.nb-card.no-padding(ng-class="{'active': show}")
-    .performance-content.self_performance
-            .performance-list-item.open
-                .item-action
-                    md-button(ng-click="show=!show")
-                        div(layout)
-                            span 2015年绩效
-                            span(flex)
-                            span.md-toggle-icon(ng-class="{'toggled': show}")
-                                md-icon(md-svg-src="md-toggle-arrow")
-                .form-table-container(
-                    ng-class="{'open': show}"
-                    )
-                    table.table.table-mc-light-blue.table-bordered
-                        thead
-                            tr
-                                th 考核时段
-                                th 绩效
-                                th 附件
-                        tbody
-                            tr
-                                td
-                                    | 2015-5
-                                td
-                                    | 良好
-                                td
-                                    a 查看
-                            tr
-                                td
-                                    | 2015-4
-                                td
-                                    | 良好
-                                td
-                                    a 查看
-
-md-card.form-material-section.nb-card.no-padding(ng-class="{'active': show}")
-    .performance-content.self_performance
-            .performance-list-item.open
-                .item-action
-                    md-button(ng-click="show=!show")
-                        div(layout)
-                            span 2015年绩效
-                            span(flex)
-                            span.md-toggle-icon(ng-class="{'toggled': show}")
-                                md-icon(md-svg-src="md-toggle-arrow")
-                .form-table-container(
-                    ng-class="{'open': show}"
-                    )
-                    table.table.table-mc-light-blue.table-bordered
-                        thead
-                            tr
-                                th 考核时段
-                                th 绩效
-                                th 附件
-                        tbody
-                            tr
-                                td
-                                    | 2015-5
-                                td
-                                    | 良好
-                                td
-                                    a 查看
-                            tr
-                                td
-                                    | 2015-4
-                                td
-                                    | 良好
-                                td
-                                    a 查看
+div(ng-controller="EmployeePerformanceCtrl as ctrl")
+    div(ng-init="current = panel.employee;ctrl.loadData(current);")
+        md-card.form-material-section.nb-card.no-padding(ng-class="{'active': show}"
+            ng-repeat="group in ctrl.performances | toArray: true| big2small"
+        )
+            .performance-content.self_performance
+                    .performance-list-item.open
+                        .item-action
+                            md-button(ng-click="show=!show")
+                                div(layout)
+                                    span {{group.$key}}年绩效
+                                    span(flex)
+                                    span.md-toggle-icon(ng-class="{'toggled': show}")
+                                        md-icon(md-svg-src="md-toggle-arrow")
+                        .form-table-container(
+                            ng-class="{'open': show}"
+                            )
+                            table.table.table-mc-light-blue.table-bordered
+                                thead
+                                    tr
+                                        th 考核时段
+                                        th 绩效
+                                        th 附件
+                                tbody
+                                    tr(ng-repeat="performance in group track by $index")
+                                        td(ng-bind="performance.assessTime")
+                                            td(ng-bind="performance.result")
+                                            td
+                                                a(
+                                                    ng-if="performance.attachmentStatus"
+                                                    nb-dialog
+                                                    template-url="partials/self/performance/attachments.html"
+                                                    locals="{performance:performance}"
+                                                    ) 查看
+       

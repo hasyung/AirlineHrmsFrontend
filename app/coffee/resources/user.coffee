@@ -77,8 +77,30 @@ Resume = (restmod, RMUtils, $Evt) ->
             jsonRoot: 'employee'
     }
 
+UserPerformance = (restmod, RMUtils, $Evt)->
+    UserPerformance = restmod.model('/me/performances').mix 'nbRestApi', { 
+        $hooks:
+            'allege-create': ->
+                $Evt.$send('allege:create:success',"绩效申述成功")
+
+        $extend:
+            Record:
+                allege: (data)->
+                    self = @
+                    request = {
+                        method: 'POST',
+                        url: "/api/performances/#{this.id}/alleges",
+                        data: data
+                    }
+                    onSuccess = (res)->
+                        self.$dispatch 'allege-create', res
+
+                    this.$send(request, onSuccess)
+
+    }
 resources.factory 'User',['restmod', 'RMUtils', '$nbEvent', User]
 resources.factory 'Education',['restmod', 'RMUtils', '$nbEvent', Education]
 resources.factory 'Experience',['restmod', 'RMUtils', '$nbEvent', Experience]
 resources.factory 'FamilyMember',['restmod', 'RMUtils', '$nbEvent', FamilyMember]
 resources.factory 'Resume',['restmod', 'RMUtils', '$nbEvent', Resume]
+resources.factory 'UserPerformance',['restmod', 'RMUtils', '$nbEvent', UserPerformance]

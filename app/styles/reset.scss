@@ -165,3 +165,76 @@ md-drop-option {
     background-color: rgb(245, 245, 245);
     height: 100%;
 }
+
+.sample-dialog {
+    width: 550px;
+
+    .dialog-content {
+        padding: 0 60px;
+    }
+
+    label:not(.md-no-float),
+    .md-placeholder {
+        -webkit-transform: translate3d(0, 25px, 0) scale(1);
+        transform: translate3d(0, 25px, 0), scale(1);
+    }
+
+    md-input-container {
+        padding-bottom: 19px;
+
+        label {
+            color: $text-muted;
+        }
+
+        &.md-input-focused,
+        &.row-has-value,
+        &.md-input-has-value {
+            label {
+                -webkit-transform: translate3d(0, 25px, 0) scale(1);
+                transform: translate3d(0, 25px, 0) scale(1);
+            }
+        }
+
+    }
+
+    .md-input {
+        padding-left: 110px;
+        padding-top: 2px;
+    }
+
+    .md-default-theme .md-input {
+        color: $text-color;
+    }
+
+    //md-select
+    md-select {
+        height: 25px !important;
+    }
+
+    .md-default-theme .md-select-label {
+        color: $text-color;
+        padding-left: 110px;
+
+    }
+
+    .md-actions {
+        border-top: 1px solid rgba(0, 0, 0, .12);
+        padding-right: 20px;
+    }
+
+    .show-text {
+        
+        padding: 25px 60px;
+
+        .row {
+            margin-top: 7px;
+        }
+    }
+
+    .loading {
+
+        text-align: center;
+        padding: 30px 60px;
+    }
+}
+

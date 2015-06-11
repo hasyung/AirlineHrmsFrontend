@@ -1,1 +1,35 @@
-h1 绩效记录
+.app-content-wrapper(flex)
+    div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+    div.ui-grid-container
+        md-toolbar
+            .md-toolbar-tools
+                h2 绩效记录
+                div(flex)
+                md-button.md-primary.md-raised(
+                    href="/api/performances/temp_export"
+                ) 导出模板
+
+                md-dropmenu()
+                    md-drop-label
+                        md-button.md-primary.md-raised() 上传绩效
+                    md-drop-option()
+                        a(
+                            nb-dialog
+                            template-url="/partials/performance/record/add.html"
+                            locals="{performanceType:'month'}"
+                            
+                        ) 员工月度绩效
+                    md-drop-option()
+                        a(
+                            nb-dialog
+                            template-url="/partials/performance/record/add.html"
+                            locals="{performanceType:'year'}"
+                        ) 员工年度绩效
+
+                md-button.md-primary.md-raised(
+                    nb-dialog
+                    ng-disabled="!ctrl.getSelected"
+                    template-url="/partials/performance/record/add_attachment.html"
+                    locals="{performance: ctrl.getSelected()}"
+                ) 上传文档
+        div(nb-grid multi-select="false" export-api grid-selection column-defs="ctrl.columnDef" safe-src="ctrl.performances")
