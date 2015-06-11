@@ -3,12 +3,12 @@ md-dialog(style="min-width: 500px;" ng-init="performance = dialog.performance; r
         .md-toolbar-tools
             span 绩效申述
     md-content
-        form(ng-submit="ctrl.allege(performance, request);")
+        form(ng-submit="ctrl.allege(performance, request);dialog.close();")
             div(style="padding: 0 20px; margin-bottom: 40px;")
                 md-input-container(flex style="padding-bottom: 19px;")
                     label 申述理由
                     textarea(ng-model="request.reason" md-maxlength="2000")
 
             .md-actions(style="border-top: 1px solid rgba(0, 0, 0, .12); padding: 0 20px;")
-                md-button.white.md-raised.pull-right(type="cancel" ng-click="dialog.close()") 取 消
+                md-button.white.md-raised.pull-right(type="button" ng-click="dialog.close()") 取 消
                 md-button.md-primary.md-raised.pull-right(type="submit" ng-disabled="posForm.$invalid") 提 交

@@ -86,6 +86,7 @@ UserPerformance = (restmod, RMUtils, $Evt)->
         $extend:
             Record:
                 allege: (data)->
+                    self = @
                     request = {
                         method: 'POST',
                         url: "/api/performances/#{this.id}/alleges",

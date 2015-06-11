@@ -209,10 +209,10 @@ class Route
 
 class ProfileCtrl extends nb.Controller
 
-    @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope', 'User', 'USER_META', 'UserPerformance', '$http']
+    @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope', 'User', 'USER_META', 'UserPerformance', 'Performance', '$filter']
 
 
-    constructor: (@scope, @sweet, @Employee, @rootScope, @User, @USER_META, @UserPerformance, @http) ->
+    constructor: (@scope, @sweet, @Employee, @rootScope, @User, @USER_META, @UserPerformance, @Performance, @filter) ->
         @loadInitailData()
         @status = 'show'
 
@@ -234,7 +234,9 @@ class ProfileCtrl extends nb.Controller
             angular.extend self.USER_META.favicon, self.scope.currentUser.favicon
 
     loadPerformance: ()->
-        @performances = @UserPerformance.$collection().$fetch()
+        self = @
+        @UserPerformance.$collection().$fetch().$then (performances)->
+            self.performances = _.groupBy performances, (item)-> item.assessYear
 
     allege: (performance, request)->
         performance.allege(request)

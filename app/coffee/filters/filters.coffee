@@ -65,3 +65,10 @@ module
             $enum.parseLabel(input, opts)
     ]
 
+    .filter 'big2small', [()->
+
+        (input) ->
+            _.sortBy input, (item)->
+                this.sin item.$key
+            ,Math
+    ]

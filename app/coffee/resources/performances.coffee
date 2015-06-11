@@ -18,6 +18,7 @@ Attachment = (restmod, RMUtils, $Evt)->
 Allege = (restmod, RMUtils, $Evt)->
 
     Allege = restmod.model('/alleges').mix 'nbRestApi', {
+        attachments: { hasMany: 'Attachment'}
 
     }
 

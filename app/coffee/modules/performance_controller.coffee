@@ -215,9 +215,9 @@ class PerformanceSetting extends nb.Controller
         selected = if rows.length >= 1 then rows[0].entity else null
 
 class PerformanceAllege extends nb.Controller
-    @.$inject = ['$scope', 'Allege']
+    @.$inject = ['$scope', 'Allege', 'Performance', 'Employee']
 
-    constructor: (@scope, @Allege)->
+    constructor: (@scope, @Allege, @Performance, @Employee)->
         @filterOptions = getBaseFilterOptions('performance_allege')
 
         @columnDef = BASE_TABLE_DEFS.concat [
@@ -229,8 +229,12 @@ class PerformanceAllege extends nb.Controller
                 displayName: '处理',
                 field: '查看',
                 cellTemplate: '''
-                    <div class="ui-grid-cell-contents ng-binding ng-scope">
-                        <a> 查看
+                    <div class="ui-grid-cell-contents ng-binding ng-scope" ng-init="outerScope = grid.appScope.$parent">
+                        <a
+                            nb-panel
+                            template-url="/partials/performance/allege/allege.html"
+                            locals="{allege: row.entity, Performance: outerScope.ctrl.Performance, Employee:outerScope.ctrl.Employee, outerScope: outerScope}"
+                        > 查看
                         </a>
                     </div>
                 '''
@@ -245,6 +249,8 @@ class PerformanceAllege extends nb.Controller
     getSelected: () ->
         rows = @scope.$gridApi.selection.getSelectedGridRows()
         selected = if rows.length >= 1 then rows[0].entity else null
+
+    parseJSON: (json)-> JSON.parse json
 
 
 
