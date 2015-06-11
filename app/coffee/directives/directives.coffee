@@ -84,12 +84,8 @@ angular.module 'nb.directives'
     ]
     .directive 'nbLoading', ['$rootScope', (rootScope) ->
 
-        postLink = (scope, elem, attrs) ->
-
-
         return {
             templateUrl: 'partials/component/loading.html'
-            link: postLink
         }
 
     ]
