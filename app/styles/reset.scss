@@ -165,3 +165,13 @@ md-drop-option {
     background-color: rgb(245, 245, 245);
     height: 100%;
 }
+
+//单行 超出容器的文字 省略号
+.single-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+

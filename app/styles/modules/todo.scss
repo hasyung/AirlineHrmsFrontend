@@ -1,0 +1,153 @@
+.todo-container {
+    background: #000 url('/images/wow_bg.jpg') no-repeat center center;
+    padding: 50px 0;
+    width: 100%;
+}
+
+.todo-list {
+    overflow: scroll;
+    position: relative;
+    transition: margin .3s linear;
+}
+
+@for $i from 1 through 9 {
+    .todo-list-item:nth-child(#{$i}) {
+        animation: slideLeft 1.5s #{.1*$i}s cubic-bezier(.27, .38, .64, 1.6) forwards;
+        transform: translateX(110%);
+    }
+}
+
+@keyframes slideLeft {
+    0%, 15% {
+        transform: translateX(110%) skewX(-45deg);
+    }
+
+    85%, 90% {
+        transform: translateX(0) skewX(-45deg);
+    }
+
+    100% {
+        transform: translateX(0) skewX(0);
+    }
+}
+
+.todo-list-item {
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    height: 100px;
+    margin-right: 40px;
+    opacity: .7;
+    overflow: hidden;
+    padding: 5px 20px 5px 0;
+    transition: height .3s linear;
+
+    &:first-child {
+        border-top: 1px solid #ddd;
+    }
+
+    &:hover {
+        height: 140px;
+        opacity: 1;
+
+        .item-left {
+            .time {
+                font-size: 38px;
+            }
+        }
+
+        .item-right {
+            background-color: rgba(239, 83, 80, .6);
+
+            .content .reviewers {
+                height: auto;
+                opacity: 1;
+            }
+        }
+    }
+
+    .item-left {
+        height: 100%;
+        width: 220px;
+
+        .date {
+            color: #fff;
+            font-size: 18px;
+        }
+
+        .time {
+            color: #fff;
+            font-size: 30px;
+            font-weight: bold;
+        }
+    }
+
+    .item-right {
+        background-color: rgba(0, 0, 0, .4);
+        margin-left: 20px;
+        position: relative;
+
+        .item-msg {
+            @include clearfix();
+        }
+
+        .avatar {
+            background-color: #000;
+            border-radius: 20px;
+            float: left;
+            height: 40px;
+            margin: 10px 20px 0;
+            width: 40px;
+        }
+
+        .content {
+            overflow: hidden;
+
+            h3 {
+                color: #fff;
+                font-size: $font-size-sm;
+                font-weight: normal;
+                margin-top: 20px;
+            }
+
+            p {
+                color: #fff;
+                font-size: $font-size-md;
+                margin: 10px 20px 15px 0;
+            }
+
+            .reviewers {
+                @include clearfix();
+                height: 0;
+                opacity: 0;
+                overflow: hidden;
+                transition: height .3s .1s linear, opacity .3s .1s linear;
+
+                div {
+                    background-color: #000;
+                    border-radius: 10px;
+                    float: left;
+                    height: 20px;
+                    margin-right: 5px;
+                    width: 20px;
+                }
+            }
+
+            .tip {
+                color: #fff;
+                font-size: 14px;
+                position: absolute;
+                right: 20px;
+                top: 20px;
+            }
+        }
+
+    }
+}
+
+.todo-notice {
+    background-color: rgba(0, 0, 0, .4);
+    margin-right: 40px;
+    width: 420px;
+}
+
+

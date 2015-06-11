@@ -63,6 +63,13 @@ menuFactory = ($rootScope, $state)->
         icon_src: '/images/svg/left-side-svg/left_icon_2.svg'
     }
 
+    # sections.push {
+    #     name: 'TODOList'
+    #     type: 'link'
+    #     state: 'TODO'
+    #     icon_src: '/images/svg/left-side-svg/left_icon_2.svg'
+    # }
+
 
     sections.push {
         name: '岗位管理'
@@ -282,7 +289,7 @@ menuFactory = ($rootScope, $state)->
                 state: 'labors_resignation'
                 permission: ''
             }
-            
+
 
         ]
     }
