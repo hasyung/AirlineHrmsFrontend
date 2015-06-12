@@ -146,11 +146,11 @@ class NewMyRequestCtrl extends NewFlowCtrl
         # 计算请假天数
         scope.calculateTotalDays = (data, vacation_type) ->
             #validation data
-            if moment.isMoment(data.start_time) && moment.isMoment(data.end_time)
+            if data.start_time && data.end_time
                 request_data = {
                     vacation_type: vacation_type
-                    start_time:  data.start_time.toISOString()
-                    end_time: data.end_time.toISOString()
+                    start_time: moment(data.start_time).format()
+                    end_time: moment(data.end_time).format()
                 }
                 enableCalculating()
 
