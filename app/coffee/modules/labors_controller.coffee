@@ -250,7 +250,7 @@ class AttendanceCtrl extends nb.Controller
 
         def = [
             {
-                name: 'typeCn'
+                name: 'name'
                 displayName: '假别'
             }
             {
