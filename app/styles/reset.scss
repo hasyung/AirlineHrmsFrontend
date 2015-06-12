@@ -166,6 +166,13 @@ md-drop-option {
     height: 100%;
 }
 
+//单行 超出容器的文字 省略号
+.single-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .sample-dialog {
     width: 550px;
 
@@ -223,7 +230,7 @@ md-drop-option {
     }
 
     .show-text {
-        
+
         padding: 25px 60px;
 
         .row {
@@ -232,9 +239,8 @@ md-drop-option {
     }
 
     .loading {
-
-        text-align: center;
         padding: 30px 60px;
+        text-align: center;
     }
 }
 
