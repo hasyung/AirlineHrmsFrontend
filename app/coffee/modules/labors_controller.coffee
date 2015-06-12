@@ -792,6 +792,7 @@ class SbFlowHandlerCtrl
 
         @http.post("/api/workflows/Flow::Retirement/batch_create", {receptors:params}).then ()->
             self.Evt.$send "retirement:create:success", "退休发起成功"
+            self.tableData.$refresh()
 
     leaveJob: (employeeId, isConfirm, reason)->
         return if !isConfirm
