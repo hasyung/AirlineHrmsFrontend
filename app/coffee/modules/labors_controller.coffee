@@ -727,9 +727,9 @@ class RetirementCtrl extends nb.Controller
 
 class SbFlowHandlerCtrl
 
-    @.$inject = ['GridHelper', 'FlowName', '$scope', 'Employee', '$injector', 'OrgStore', 'ColumnDef', '$http']
+    @.$inject = ['GridHelper', 'FlowName', '$scope', 'Employee', '$injector', 'OrgStore', 'ColumnDef', '$http', '$nbEvent']
 
-    constructor: (@helper, @FlowName, @scope, @Employee, $injector, OrgStore, @userRequestsColDef, @http) ->
+    constructor: (@helper, @FlowName, @scope, @Employee, $injector, OrgStore, @userRequestsColDef, @http, @Evt) ->
 
         @scope.ctrl = @
         @Flow = $injector.get(@FlowName)
@@ -786,10 +786,12 @@ class SbFlowHandlerCtrl
         @tableData.$refresh(tableState)
 
     retirement: (users)->
+        self = @
         params = users.map (user)->
             {id: user.id, relation_data:user.relation_data}
 
-        @http.post("/api/workflows/Flow::Retirement/batch_create", {receptors:params})
+        @http.post("/api/workflows/Flow::Retirement/batch_create", {receptors:params}).then ()->
+            self.Evt.$send "retirement:create:success", "退休发起成功"
 
     leaveJob: (employeeId, isConfirm, reason)->
         return if !isConfirm
