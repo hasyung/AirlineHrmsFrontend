@@ -162,8 +162,8 @@ menuFactory = ($rootScope, $state)->
         icon_src: '/images/svg/left-side-svg/left_icon_7.svg'
         pages: [
             {
-                name: '公务餐'
-                state: 'position'
+                name: '福利设置'
+                state: '.welfares'
                 permission: ''
             }
             {
