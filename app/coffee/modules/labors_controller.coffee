@@ -136,6 +136,8 @@ ATTENDANCE_BASE_TABLE_DEFS = [
     {
         name: 'name'
         displayName: '假别'
+        cellTooltip: (row) ->
+            return row.entity.name
     }
     {
         name: 'vacationDays'
@@ -245,9 +247,9 @@ class Route
 
 class AttendanceCtrl extends nb.Controller
 
-    @.$inject = ['GridHelper', 'Leave', '$scope', '$injector']
+    @.$inject = ['GridHelper', 'Leave', '$scope', '$injector', '$http']
 
-    constructor: (helper, @Leave, scope, injector) ->
+    constructor: (helper, @Leave, scope, injector, @http) ->
 
         scope.realFlow = (entity) ->
             t = entity.type
@@ -317,6 +319,23 @@ class AttendanceCtrl extends nb.Controller
 
     search: (tableState)->
         @records.$refresh(tableState)
+
+    getSelected: -> # selected entity || arr
+        rows = @gridApi.selection.getSelectedGridRows()
+        selected = if rows.length >= 1 then rows[0].entity else null
+
+    getSelectedEntities: ->
+        rows = @gridApi.selection.getSelectedGridRows()
+        rows.map (row) -> row.entity
+
+    exportGridApi: (gridApi) ->
+        @gridApi = gridApi
+
+    transferToOccupationInjury: (record)->
+        self = @
+        url = "/api/workflows/#{record.type}/#{record.id}/transfer_to_occupation_injury"
+        @http.put(url).then ()->
+            self.records.$refresh()
 
 
 
