@@ -1,4 +1,4 @@
-.app-content-wrapper(flex)
+.app-content-wrapper(flex ng-init="ctrl.loadRecords()")
 
     div(nb-filter="ctrl.recordsFilterOptions" on-search="ctrl.search(state)")
     div.ui-grid-container
@@ -7,6 +7,10 @@
                 h2 员工人事信息列表
                 div(flex)
                 md-button.md-primary.md-raised(
+                ) 假别修正
+                md-button.md-primary.md-raised(
+                ) 工伤假
+                md-button.md-primary.md-raised(
                 ) 销假
 
-        div(nb-grid column-defs="ctrl.recodsColumnDef" export-api grid-selection safe-src="ctrl.leaveFlows")
+        div(nb-grid column-defs="ctrl.recodsColumnDef" export-api grid-selection safe-src="ctrl.records")

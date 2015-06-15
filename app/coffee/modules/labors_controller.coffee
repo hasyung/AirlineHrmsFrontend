@@ -132,6 +132,27 @@ HANDLER_AND_HISTORY_FILTER_OPTIONS = {
     ]
 }
 
+ATTENDANCE_BASE_TABLE_DEFS = [
+    {
+        name: 'name'
+        displayName: '假别'
+    }
+    {
+        name: 'vacationDays'
+        displayName: '时长'
+    }
+    {
+        name: 'workflowState'
+        displayName: '状态'
+    }
+    {
+        name: 'createdAt'
+        displayName: '发起时间'
+        cellFilter: "date:'yyyy-MM-dd'"
+    }
+
+]
+
 
 
 
@@ -236,8 +257,8 @@ class AttendanceCtrl extends nb.Controller
 
 
 
-        @recordsFilterOptions = {
-            name: 'attendance_records'
+        @checksFilterOptions = {
+            name: 'attendance_check_list'
             constraintDefs: [
                 {
                     name: 'employee_name'
@@ -246,26 +267,17 @@ class AttendanceCtrl extends nb.Controller
                 }
             ]
         }
-
-
-        def = [
-            {
-                name: 'name'
-                displayName: '假别'
-            }
-            {
-                name: 'vacationDays'
-                displayName: '时长'
-            }
-            {
-                name: 'workflowState'
-                displayName: '状态'
-            }
-            {
-                name: 'createdAt'
-                displayName: '发起时间'
-                cellFilter: "date:'yyyy-MM-dd'"
-            }
+        @recordsFilterOptions = {
+            name: 'attendance_records_list'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '姓名'
+                    type: 'string'
+                }
+            ]
+        }
+        checkBaseDef = ATTENDANCE_BASE_TABLE_DEFS.concat [
             {
                 name: 'type'
                 displayName: '详细'
@@ -277,12 +289,35 @@ class AttendanceCtrl extends nb.Controller
                 </div>
                 '''
             }
-
         ]
 
-        @recodsColumnDef = helper.buildFlowDefault(def)
+        recordsBaseDef = ATTENDANCE_BASE_TABLE_DEFS.concat [
+            {
+                name: 'type'
+                displayName: '详细'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents" ng-init="realFlow = grid.appScope.$parent.realFlow(row.entity)">
+                    <a flow-handler="realFlow" flow-view="true">
+                        查看
+                    </a>
+                </div>
+                '''
+            }
+        ]
+
+
+        @checksColumnDef = helper.buildFlowDefault(checkBaseDef)
+        @recodsColumnDef = helper.buildFlowDefault(recordsBaseDef)
 
         @leaveFlows = @Leave.$collection().$fetch()
+
+
+    loadRecords: ()->
+        @records = @Leave.records()
+
+    search: (tableState)->
+        @records.$refresh(tableState)
+
 
 
 
