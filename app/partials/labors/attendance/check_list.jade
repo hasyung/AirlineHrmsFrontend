@@ -1,4 +1,4 @@
-.app-content-wrapper(flex)
+.app-content-wrapper(flex ng-init="ctrl.loadCheckList()")
 
     div(nb-filter="ctrl.checksFilterOptions" on-search="ctrl.search(state)")
     div.ui-grid-container
@@ -9,4 +9,4 @@
                 md-button.md-primary.md-raised(
                 ) 销假
 
-        div(nb-grid column-defs="ctrl.checksColumnDef" export-api grid-selection safe-src="ctrl.leaveFlows")
+        div(nb-grid column-defs="ctrl.checksColumnDef" export-api grid-selection safe-src="ctrl.tableData")

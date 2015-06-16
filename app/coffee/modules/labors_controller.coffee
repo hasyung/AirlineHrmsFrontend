@@ -311,14 +311,16 @@ class AttendanceCtrl extends nb.Controller
         @checksColumnDef = helper.buildFlowDefault(checkBaseDef)
         @recodsColumnDef = helper.buildFlowDefault(recordsBaseDef)
 
-        @leaveFlows = @Leave.$collection().$fetch()
+        
 
+    loadCheckList: ()->
+        @tableData = @Leave.$collection().$fetch()
 
     loadRecords: ()->
-        @records = @Leave.records()
+        @tableData = @Leave.records()
 
     search: (tableState)->
-        @records.$refresh(tableState)
+        @tableData.$refresh(tableState)
 
     getSelected: -> # selected entity || arr
         rows = @gridApi.selection.getSelectedGridRows()
@@ -335,15 +337,15 @@ class AttendanceCtrl extends nb.Controller
         self = @
         url = "/api/workflows/#{record.type}/#{record.id}/transfer_to_occupation_injury"
         @http.put(url).then ()->
-            self.records.$refresh()
+            self.tableData.$refresh()
 
 
 
 
 class AttendanceRecordCtrl extends nb.Controller
 
-    @.$inject = ['$scope', 'Attendance', 'Employee']
-    constructor: (@scope, @Attendance, @Employee) ->
+    @.$inject = ['$scope', 'Attendance', 'Employee', 'GridHelper']
+    constructor: (@scope, @Attendance, @Employee, GridHelper) ->
         @loadInitailData()
         @filterOptions = filterBuildUtils('attendanceRecord')
             .col 'name',                 '姓名',    'string',           '姓名'
@@ -351,35 +353,7 @@ class AttendanceRecordCtrl extends nb.Controller
             .col 'department_ids',       '机构',    'org-search'
             .end()
 
-        @columnDef = [
-            {displayName: '员工编号', name: 'employeeNo'}
-            {
-                displayName: '姓名'
-                field: 'name'
-                # pinnedLeft: true
-                cellTemplate: '''
-                <div class="ui-grid-cell-contents ng-binding ng-scope">
-                    <a nb-panel
-                        template-url="partials/personnel/info_basic.html"
-                        locals="{employee: row.entity}">
-                        {{grid.getCellValue(row, col)}}
-                    </a>
-                </div>
-                '''
-            }
-            {
-                displayName: '所属部门'
-                name: 'department.name'
-                cellTooltip: (row) ->
-                    return row.entity.department.name
-            }
-
-            {
-                displayName: '岗位'
-                name: 'position.name'
-                cellTooltip: (row) ->
-                    return row.entity.position.name
-            }
+        @columnDef = GridHelper.buildUserDefault [
             {displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
             {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
             {displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
@@ -401,34 +375,12 @@ class AttendanceHisCtrl extends nb.Controller
     @.$inject = ['$scope', 'Attendance']
     constructor: (@scope, @Attendance) ->
         @loadInitailData()
-        @filterOptions = {
-            name: 'attendanceHis'
-            constraintDefs: [
-                {
-                    name: 'employee_name'
-                    displayName: '姓名'
-                    type: 'string'
-                    placeholder: '姓名'
-                }
-                {
-                    name: 'employee_no'
-                    displayName: '员工编号'
-                    type: 'string'
-                    placeholder: '员工编号'
-                }
-                {
-                    name: 'department_ids'
-                    displayName: '机构'
-                    type: 'org-search'
-                }
-                {
-                    name: 'created_at'
-                    displayName: '记录时间'
-                    type: 'date-range'
-                }
-
-            ]
-        }
+        @filterOptions = filterBuildUtils('attendanceHis')
+            .col 'employee_name',        '姓名',      'string',           '姓名'
+            .col 'employee_no',          '员工编号',   'string'
+            .col 'department_ids',       '机构',      'org-search'
+            .col 'created_at',           '记录时间',   'date-range'
+            .end()
 
         @columnDef = [
             {displayName: '员工编号', name: 'user.employeeNo'}
@@ -448,9 +400,9 @@ class AttendanceHisCtrl extends nb.Controller
             }
             {
                 displayName: '所属部门'
-                name: 'user.departmentName'
+                name: 'user.department.name'
                 cellTooltip: (row) ->
-                    return row.entity.user.departmentName
+                    return row.entity.user.department.name
             }
 
             {
@@ -488,43 +440,14 @@ class ContractCtrl extends nb.Controller
     @.$inject = ['$scope', 'Contract', '$http', 'Employee']
     constructor: (@scope, @Contract, @http, @Employee) ->
         @loadInitailData()
-        @filterOptions = {
-            name: 'contract'
-            constraintDefs: [
-                {
-                    name: 'employee_name'
-                    displayName: '姓名'
-                    type: 'string'
-                }
-                {
-                    name: 'employee_no'
-                    displayName: '员工编号'
-                    type: 'string'
-                    placeholder: '员工编号'
-                }
-                {
-                    name: 'department_ids'
-                    displayName: '机构'
-                    type: 'org-search'
-                }
-                {
-                    name: 'end_date'
-                    displayName: '合同到期时间'
-                    type: 'date-range'
-                }
-                {
-                    name: 'apply_type'
-                    displayName: '用工性质'
-                    type: 'string'
-                }
-                {
-                    name: 'notes'
-                    displayName: '是否有备注'
-                    type: 'boolean'
-                }
-
-            ]
-        }
+        @filterOptions = filterBuildUtils('contract')
+            .col 'employee_name',        '姓名',        'string',           '姓名'
+            .col 'employee_no',          '员工编号',     'string'
+            .col 'department_ids',       '机构',        'org-search'
+            .col 'end_date',             '合同到期时间',  'date-range'
+            .col 'apply_type',           '用工性质',     'string'
+            .col 'notes',                '是否有备注',   'boolean'
+            .end()
 
         @columnDef = [
             {displayName: '员工编号', name: 'employeeNo'}
@@ -575,29 +498,12 @@ class ContractCtrl extends nb.Controller
             }
         ]
 
-        @hisFilterOptions = {
-            name: 'contractHis'
-            constraintDefs: [
-                {
-                    name: 'name'
-                    displayName: '姓名'
-                    type: 'string'
-                    placeholder: '姓名'
-                }
-                {
-                    name: 'employee_no'
-                    displayName: '员工编号'
-                    type: 'string'
-                    placeholder: '员工编号'
-                }
-                {
-                    name: 'department_ids'
-                    displayName: '机构'
-                    type: 'org-search'
-                }
+        @hisFilterOptions = filterBuildUtils('contractHis')
+            .col 'name',                 '姓名',        'string',           '姓名'
+            .col 'employee_no',          '员工编号',     'string'
+            .col 'department_ids',       '机构',        'org-search'
+            .end()
 
-            ]
-        }
 
         @hisColumnDef = [
             {displayName: '员工编号', name: 'employeeNo'}
