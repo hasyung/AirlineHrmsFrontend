@@ -247,9 +247,9 @@ class Route
 
 class AttendanceCtrl extends nb.Controller
 
-    @.$inject = ['GridHelper', 'Leave', '$scope', '$injector', '$http']
+    @.$inject = ['GridHelper', 'Leave', '$scope', '$injector', '$http', 'AttendanceSummary']
 
-    constructor: (helper, @Leave, scope, injector, @http) ->
+    constructor: (helper, @Leave, scope, injector, @http, @AttendanceSummary) ->
 
         scope.realFlow = (entity) ->
             t = entity.type
@@ -318,6 +318,9 @@ class AttendanceCtrl extends nb.Controller
 
     loadRecords: ()->
         @tableData = @Leave.records()
+
+    loadSummaries: ()->
+        @tableData = @AttendanceSummary.$collection().$fetch()
 
     search: (tableState)->
         @tableData.$refresh(tableState)
