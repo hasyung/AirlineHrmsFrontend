@@ -1,0 +1,191 @@
+
+
+
+//font
+.text {
+    color: $text-color;
+}
+
+.muted {
+    color: $text-muted;
+}
+
+.hint {
+    color: $text-hint;
+}
+
+//font-size
+
+.f0 {
+    font-size: 0;
+}
+
+.f12 {
+    font-size: 12px;
+}
+
+.f14 {
+    font-size: 14px;
+}
+
+.f16 {
+    font-size: 16px;
+}
+
+.f20 {
+    font-size: 20px;
+}
+
+
+//display
+.db {
+    display: block;
+}
+
+.di {
+    display: inline;
+}
+
+.dib {
+    display: inline-block;
+}
+
+
+.m0 {
+    margin: 0;
+}
+
+//margin
+.m10 {
+    margin: 10px;
+}
+
+.m20 {
+    margin: 20px;
+}
+
+.ml10 {
+    margin-left: 10px;
+}
+
+.ml20 {
+    margin-left: 20px;
+}
+
+.mr10 {
+    margin-right: 10px;
+}
+
+.mr20 {
+    margin-right: 20px;
+}
+
+.mt10 {
+    margin-top: 10px;
+}
+
+.mt20 {
+    margin-top: 20px;
+}
+
+.mt30 {
+    margin-top: 30px;
+}
+
+.mb7 {
+    margin-bottom: 7px;
+}
+
+.mb10 {
+    margin-bottom: 10px;
+}
+
+.mb20 {
+    margin-bottom: 20px;
+}
+
+.mb30 {
+    margin-bottom: 30px;
+}
+
+.mb-1 {
+    margin-bottom: -1px;
+}
+
+.mb-2 {
+    margin-bottom: -2px;
+}
+
+.mb-3 {
+    margin-bottom: -3px;
+}
+
+
+//padding
+
+.p0 {
+    padding: 0;
+}
+
+.p2 {
+    padding: 2px;
+}
+
+
+.p20 {
+    padding: 20px;
+}
+
+.pt2 {
+    padding-top: 2px;
+}
+
+.pt30 {
+    padding-top: 30px;
+}
+
+.pl20 {
+    padding-left: 20px;
+}
+
+.pr20 {
+    padding-right: 20px;
+}
+
+.pb2 {
+    padding-bottom: 2px;
+}
+
+.pb30 {
+    padding-bottom: 30px;
+}
+
+
+//background
+
+.bg-white {
+    background-color: #fff;
+}
+
+
+
+//border
+
+.bd-divider {
+    border: 1px solid rgba(0, 0, 0, .12);
+}
+
+.bdb-divider {
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
+}
+
+
+// line-height
+
+.lh34 {
+    line-height: 34px;
+}
+
+
+
+

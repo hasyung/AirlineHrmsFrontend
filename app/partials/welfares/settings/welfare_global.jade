@@ -1,0 +1,106 @@
+.app-content-wrapper(flex)
+    div.pl20.pr20.pt30.pb30.bg-white
+        div(layout)
+            div(layout)
+                label.dib.bdb-divider.mb7 缴纳地区
+                md-select(ng-model="dsjoi")
+            span(flex)
+            md-button.md-raised.md-primary.m0 保存
+    md-content.p20
+        md-divider
+        div.inline-input-container.mt30.mb30.pl10
+            span.mr20 养老保险基数范围
+            md-input-container(md-no-float).mr10.dib
+                input(placeholder="下限")
+            span.ml10.mr10 至
+            md-input-container(md-no-float).mr10.dib
+                input(placeholder="上限")
+        div.inline-input-container.mt30.mb30.pl10
+            span.mr20 其他保险基数范围
+            md-input-container(md-no-float).mr10.dib
+                input(placeholder="下限")
+            span.ml10.mr10 至
+            md-input-container(md-no-float).mr10.dib
+                input(placeholder="上限")
+            span.muted.f12 (不设置其他保险基数则选用养老保险基数计算)
+        md-divider
+
+        table.tablexx.table-default
+            thead
+                tr
+                    th 保险名称
+                    th 计算方式
+                    th 公司部分
+                    th 个人部分
+            tbody
+                tr
+                    td 养老保险
+                    td
+                        md-switch(ng-model="abc" ).m0 按比例/按金额
+                    td
+                        md-input-container.p2
+                            input(type="number" min="0" max="1" step="0.01")
+                    td
+                        md-input-container.p2
+
+                tr
+                    td 医疗保险
+                    td
+                        md-switch(ng-model="abc").m0 按比例/按金额
+                    td
+                        md-input-container.p2
+                            input(type="number" required step="0.01")
+                    td
+                        md-input-container.p2
+                            input(type="number" required step="1")
+
+                tr
+                    td 工伤保险
+                    td
+                        md-switch(ng-model="abc").m0 按比例/按金额
+                    td
+                        md-input-container.p2
+                            input(type="number" required step="0.01")
+                    td
+                        md-input-container.p2
+
+                tr
+                    td 失业保险
+                    td
+                        md-switch(ng-model="abc").m0 按比例/按金额
+                    td
+                        md-input-container.p2
+                            input(type="number" required step="0.01")
+                    td
+                        md-input-container.p2
+                tr
+                    td 大病保险
+                    td
+                        md-switch(ng-model="abc").m0 按比例/按金额
+                    td
+                        md-input-container.p2
+                            input(type="number" required step="0.01")
+                    td
+                        md-input-container.p2
+                tr
+                    td 生育保险
+                    td
+                        md-switch(ng-model="abc").m0 按比例/按金额
+                    td
+                        md-input-container.p2
+                            input(type="number" required step="0.01")
+                    td
+                        md-input-container.p2
+
+
+
+
+
+
+
+
+
+
+
+
+
