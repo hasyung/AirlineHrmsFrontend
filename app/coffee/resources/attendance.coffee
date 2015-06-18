@@ -14,4 +14,10 @@ Attendance = (restmod, RMUtils, $Evt) ->
 
     }
 
+AttendanceSummary = (restmod, RMUtils, $Evt) ->
+    AttendanceSummary = restmod.model('/attendance_summaries').mix 'nbRestApi', {
+        
+    }
+
 resources.factory 'Attendance',['restmod', 'RMUtils', '$nbEvent', Attendance]
+resources.factory 'AttendanceSummary',['restmod', 'RMUtils', '$nbEvent', AttendanceSummary]
