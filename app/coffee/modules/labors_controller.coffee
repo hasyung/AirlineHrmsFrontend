@@ -155,6 +155,42 @@ ATTENDANCE_BASE_TABLE_DEFS = [
 
 ]
 
+ATTENDANCE_SUMMERY_DEFS= [
+    {width:150, displayName: '所属部门', name: 'departmentName'}
+    {width:100, displayName: '员工编号', name: 'employeeNo'}
+    {width:100, displayName: '姓名', name: 'employeeName'}
+    {width:100, displayName: '用工性质', name: 'laborRelation'}
+    {width:100, displayName: '<带薪假>', name: 'paidLeave'}
+
+    {width:100, displayName: '年假', name: 'annualLeave'}
+    {width:100, displayName: '婚丧假', name: 'marriageFuneralLeave'}
+    {width:100, displayName: '产前检查假', name: 'prenatalCheckLeave'}
+    {width:100, displayName: '计生假', name: 'familyPlanningLeave'}
+    {width:100, displayName: '哺乳假', name: 'lactationLeave'}
+    {width:100, displayName: '女工假', name: 'womenLeave'}
+    {width:100, displayName: '产假', name: 'maternityLeave'}
+    {width:100, displayName: '生育护理假', name: 'rearNurseLeave'}
+    {width:100, displayName: '工伤假', name: 'injuryLeave'}
+    {width:100, displayName: '疗养假', name: 'recuperateLeave'}
+    {width:100, displayName: '派驻休假', name: 'accreditLeave'}
+
+
+    {width:100, displayName: '病假', name: 'sickLeave'}
+    {width:100, displayName: '病假（工伤待定）', name: 'sickLeaveInjury'}
+    {width:100, displayName: '病假（怀孕待产）', name: 'sickLeaveNulliparous'}
+    {width:100, displayName: '事假', name: 'personalLeave'}
+    {width:100, displayName: '探亲假', name: 'homeLeave'}
+    {width:100, displayName: '培训', name: 'cultivate'}
+    {width:100, displayName: '出差', name: 'evection'}
+    {width:100, displayName: '旷工', name: 'absenteeism'}
+    {width:100, displayName: '迟到早退', name: 'lateOrLeave'}
+    {width:100, displayName: '空勤停飞', name: 'ground'}
+    {width:100, displayName: '空勤地面工作', name: 'surfaceWork'}
+    {width:100, displayName: '驻站天数', name: 'stationDays'}
+    {width:100, displayName: '驻站地点', name: 'stationPlace'}
+    {width:100, displayName: '备注', name: 'remark'}
+]
+
 
 
 
@@ -251,6 +287,8 @@ class AttendanceCtrl extends nb.Controller
 
     constructor: (helper, @Leave, scope, injector, @http, @AttendanceSummary) ->
 
+        @initDate()
+
         scope.realFlow = (entity) ->
             t = entity.type
             m = injector.get(t)
@@ -312,7 +350,23 @@ class AttendanceCtrl extends nb.Controller
         @recodsColumnDef = helper.buildFlowDefault(recordsBaseDef)
 
         
+    getYears: ()->
+        [2014, 2015]
 
+    getMonths: ()->
+        [1...13]
+
+    exeSearch: (departmentId)->
+        date = moment(new Date("#{this.year}-#{this.month}")).format()
+        params = {summary_date: date}
+        params.department_id = departmentId if departmentId
+        @search(params)
+
+
+    initDate: ()->
+        date = new Date()
+        @year = date.getFullYear()
+        @month = date.getMonth() + 1
     loadCheckList: ()->
         @tableData = @Leave.$collection().$fetch()
 
@@ -321,6 +375,11 @@ class AttendanceCtrl extends nb.Controller
 
     loadSummaries: ()->
         @tableData = @AttendanceSummary.$collection().$fetch()
+
+    loadSummariesList: ()->
+        @summaryListCol = ATTENDANCE_SUMMERY_DEFS
+
+        @tableData = @AttendanceSummary.records({summary_date: moment().format()})
 
     search: (tableState)->
         @tableData.$refresh(tableState)

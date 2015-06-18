@@ -1,0 +1,26 @@
+.app-content-wrapper(flex ng-init="ctrl.loadSummariesList()")
+
+    
+    div.ui-grid-container
+        md-toolbar
+            .md-toolbar-tools
+                h2 考勤汇总表
+                div.grid-toolbar-row.year-and-month-container(flex layout)
+                    label.row-text 月度：
+                    .year-and-month(layout)
+                        md-select.year(ng-model="ctrl.year" flex ng-change="ctrl.exeSearch()")
+                            md-select-label {{ctrl.year}}
+                            md-option(value="2014") 2014
+
+                        md-select.month(ng-model="ctrl.month" flex ng-change="ctrl.exeSearch()")
+                            md-select-label {{ctrl.month}}
+                            md-option(ng-value="item" ng-repeat="item in ctrl.getMonths()" ng-bind="item") 
+
+                    span.row-text.last {{ctrl.tableData.$metadata.status}}
+                md-button.md-primary.md-raised(
+                ) 汇总确认
+                md-button.md-primary.md-raised(
+                ) 审核
+                md-button.md-primary.md-raised(
+                ) 导出
+        div(nb-grid column-defs="ctrl.summaryListCol" export-api grid-pinning safe-src="ctrl.tableData")

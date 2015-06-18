@@ -244,3 +244,28 @@ md-drop-option {
     }
 }
 
+.grid-toolbar-row {
+
+    padding: 5px 0 0 30px;
+}
+
+.year-and-month-container {
+
+    .row-text {
+        display: inline-block;
+        font-size: 14px;
+        padding-top: 8px;
+
+        &.last{
+            margin-left: 20px;
+        }
+    }    
+
+    .year-and-month {
+        
+        width: 200px;
+
+    }
+}
+
+

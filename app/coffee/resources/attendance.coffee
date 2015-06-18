@@ -16,7 +16,13 @@ Attendance = (restmod, RMUtils, $Evt) ->
 
 AttendanceSummary = (restmod, RMUtils, $Evt) ->
     AttendanceSummary = restmod.model('/attendance_summaries').mix 'nbRestApi', {
-        
+        $extend:
+                Scope:
+                    records: (params)->
+                        restmod.model("/attendance_summaries/check_list").mix(
+                            $config:
+                                jsonRoot:'attendance_summaries'
+                        ).$collection().$fetch(params)
     }
 
 resources.factory 'Attendance',['restmod', 'RMUtils', '$nbEvent', Attendance]
