@@ -105,6 +105,52 @@ md-select {
     }
 }
 
+
+fieldset {
+
+    .text-label {
+        color: rgba(0, 0, 0, .54);
+        padding-left: 2px;
+        transform: scale(.75);
+    }
+
+    .editable-text {
+        border-bottom: 1px solid rgba(0, 0, 0, .12);
+        padding: 2px 0;
+
+        p {
+            margin: 0;
+        }
+    }
+
+    &[disabled] {
+
+        .textarea-row {
+            border-bottom: 1px dotted rgba(0, 0, 0, .1);
+            padding-bottom: 2px;
+            position: relative;
+
+            label {
+                margin: 6px 0;
+            }
+
+            .text-container {
+                padding-left: 90px;
+            }
+
+            .text-label {
+                left: 0;
+                position: absolute;
+                top: -6px;
+                transform: scale(1);
+            }
+        }
+    }
+
+}
+
+
+
 //展示状态下各个组件的样式
 fieldset[disabled] {
     label:not(.md-no-float),
@@ -155,7 +201,7 @@ fieldset[disabled] {
         padding-left: 70px;
 
     }
-
+    // 模拟 input 处于有值得情况
     .row-has-value {
         label:not(.md-no-float) {
             // line-height: 18px;
@@ -167,7 +213,7 @@ fieldset[disabled] {
             visibility: hidden;
         }
     }
-
+    //#workaround  hack , 不知道原因。 6月15日， 下次 material 升级时移除
     org-search {
         md-autocomplete-wrap button {
             display: none;
@@ -201,31 +247,6 @@ md-input-container {
         }
     }
 }
-
-// .form-material-section {
-//     overflow: hidden;
-
-//     .ui-select-container {
-//         margin: 10px 20px 0 0;
-//         min-width: 160px;
-
-//         .ui-select-match {
-//             span {
-//                 width: 100%;
-//             }
-//         }
-
-//         input.form-control {
-//             border-color: #ccc;
-//             border-radius: 2px;
-//             border-style: solid;
-//             border-width: 1px;
-//             font-size: $font-size-sm;
-//             height: 33px;
-//             padding-left: 10px;
-//         }
-//     }
-// }
 
 
 .form-group {
@@ -315,49 +336,42 @@ md-input-container {
 }
 
 
+// input container
 
-fieldset {
+.inline-input-container {
 
-    .text-label {
-        color: rgba(0, 0, 0, .54);
-        padding-left: 2px;
-        transform: scale(.75);
+    input {
+        -webkit-appearance: none;
+        background: none;
+        border-width: 0 0 1px;
+        line-height: 26px;
+        padding: 2px 2px 1px;
+
+        // &:hover {
+        //     border-bottom: 2px solid ;
+        // }
     }
 
-    .editable-text {
-        border-bottom: 1px solid rgba(0, 0, 0, .12);
-        padding: 2px 0;
+    // .divide-text {
 
-        p {
-            margin: 0;
-        }
-    }
-
-    &[disabled] {
-
-        .textarea-row {
-            border-bottom: 1px dotted rgba(0, 0, 0, .1);
-            padding-bottom: 2px;
-            position: relative;
-
-            label {
-                margin: 6px 0;
-            }
-
-            .text-container {
-                padding-left: 90px;
-            }
-
-            .text-label {
-                left: 0;
-                position: absolute;
-                top: -6px;
-                transform: scale(1);
-            }
-        }
-    }
-
+    // }
 }
 
+
+// include
+
+// background:
+
+// border
+
+// color
+
+// font
+
+// height:
+// margin:
+// padding:
+// position:
+// width:
 
 

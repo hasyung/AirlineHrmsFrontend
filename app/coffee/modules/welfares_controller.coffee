@@ -14,7 +14,7 @@ class Route
         stateProvider
             .state 'welfares', {
                 url: '/welfares'
-                templateUrl: 'partials/TODO/TODO.html'
+                templateUrl: 'partials/welfares/settings.html'
             }
 
 app.config(Route)

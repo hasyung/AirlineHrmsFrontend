@@ -4,17 +4,19 @@
 @import 'variables';
 @import 'mixin/mixin';
 @import 'reset';
+@import 'atomic';
 // @import 'component/loading-btn.scss';
 //layout
 @import 'layout/nav';
 // @import 'layout/layout';
 //components
 @import 'component/dialog';
-@import 'component/form-validation';
+@import 'component/form';
 @import 'component/loading';
 @import 'component/panel';
 @import 'component/timline';
 @import 'component/button';
+@import 'component/table';
 // @import 'modules/position_detail';
 // @import 'modules/position_add';
 @import 'component/table-search-bar';
