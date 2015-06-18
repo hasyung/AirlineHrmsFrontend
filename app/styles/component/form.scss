@@ -343,13 +343,13 @@ md-input-container {
     input {
         -webkit-appearance: none;
         background: none;
-        border-width: 0 0 1px 0;
+        border-width: 0 0 1px;
         line-height: 26px;
         padding: 2px 2px 1px;
 
-        &:hover {
-            border-bottom: 2px
-        }
+        // &:hover {
+        //     border-bottom: 2px solid ;
+        // }
     }
 
     // .divide-text {
