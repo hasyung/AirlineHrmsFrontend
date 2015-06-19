@@ -351,10 +351,10 @@ class AttendanceCtrl extends nb.Controller
 
         
     getYears: ()->
-        [2014, 2015]
+        [2015..new Date().getFullYear()]
 
     getMonths: ()->
-        [1...13]
+        [1..12]
 
     exeSearch: (departmentId)->
         date = moment(new Date("#{this.year}-#{this.month}")).format()

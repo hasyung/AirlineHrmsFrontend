@@ -269,4 +269,41 @@ md-drop-option {
     }
 }
 
+.summary-org-menu {
+    font-size: 14px;
+
+    .org-item {
+        display: inline-block;
+        border-radius: 10px;
+        padding: 5px 10px;
+        margin: 5px;
+
+        background-color: #aaa;
+        color: #000;
+
+        cursor: pointer;
+
+
+        &.active {
+            background-color: rgb(33,150,243);
+            color: #fff;
+
+        }
+
+        &.green {
+            background-color: rgb(33,150,243);
+            color: #fff;
+
+        }
+
+        &.yellow {
+            background-color: rgb(229,184,17);
+            color: #fff;
+
+        }
+
+
+    }
+}
+
 
