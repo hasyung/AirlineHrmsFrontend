@@ -40,7 +40,7 @@
                     ng-href="/api/attendance_summaries/export_xls?summary_date={{ctrl.getDate()}}"
                     download
                 ) 导出
-        md-toolbar
+        md-toolbar(has-permission="attendance_summaries_hr_leader_check")
             .summary-org-menu
                 span.org-item(
                     ng-repeat="item in ctrl.tableData.$metadata.attendance_summary_status"
