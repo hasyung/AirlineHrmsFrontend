@@ -374,12 +374,35 @@ class AttendanceCtrl extends nb.Controller
         @tableData = @Leave.records()
 
     loadSummaries: ()->
+        @summaryCols = ATTENDANCE_SUMMERY_DEFS
         @tableData = @AttendanceSummary.$collection().$fetch()
 
     loadSummariesList: ()->
         @summaryListCol = ATTENDANCE_SUMMERY_DEFS
 
         @tableData = @AttendanceSummary.records({summary_date: moment().format()})
+
+    getDate: ()->
+        date = moment(new Date("#{this.year}-#{this.month}")).format()
+
+    departmentHrConfirm: ()->
+        self = @
+        params = {summary_date: @getDate()}
+        @http.put('/api/attendance_summaries/department_hr_confirm', params).then ()->
+            self.tableData.$refresh()
+
+    departmentLeaderCheck: ()->
+        self = @
+        params = {summary_date: @getDate()}
+        @http.put('/api/attendance_summaries/department_leader_check', params).then ()->
+            self.tableData.$refresh()
+
+    hrLeaderCheck: ()->
+        self = @        
+        params = {summary_date: @getDate()}
+        @http.put('/api/attendance_summaries/hr_leader_check', params).then ()->
+            self.tableData.$refresh()
+
 
     search: (tableState)->
         @tableData.$refresh(tableState)

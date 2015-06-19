@@ -18,10 +18,27 @@
 
                     span.row-text.last {{ctrl.tableData.$metadata.status}}
                 md-button.md-primary.md-raised(
+                    has-permission="attendance_summaries_department_hr_confirm"
+                    nb-confirm="ctrl.departmentHrConfirm()"
+                    nb-title="考勤汇总确认"
+                    nb-content="确认本部门{{ctrl.year}}-{{ctrl.month}}考勤已完成统计，进入后续审批。"
                 ) 汇总确认
                 md-button.md-primary.md-raised(
+                    has-permission="attendance_summaries_department_leader_check"
+                    nb-confirm="ctrl.departmentLeaderCheck()"
+                    nb-title="考勤汇总审核"
+                    nb-content="确认本部门{{ctrl.year}}-{{ctrl.month}}考勤汇总通过审核，提交至人力资源部门。"
                 ) 审核
                 md-button.md-primary.md-raised(
+                    has-permission="attendance_summaries_hr_leader_check"
+                    nb-confirm="ctrl.hrLeaderCheck()"
+                    nb-title="考勤汇总审核"
+                    nb-content="确认对该部门{{ctrl.year}}-{{ctrl.month}}考勤汇总通过审核。"
+                ) 审核
+                md-button.md-primary.md-raised(
+                    has-permission="attendance_summaries_department_hr_confirm"
+                    ng-href="/api/attendance_summaries/export_xls?summary_date={{ctrl.getDate()}}"
+                    download
                 ) 导出
         md-toolbar
             .summary-org-menu
