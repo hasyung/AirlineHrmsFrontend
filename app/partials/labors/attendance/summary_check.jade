@@ -36,7 +36,6 @@
                     nb-content="确认对该部门{{ctrl.year}}-{{ctrl.month}}考勤汇总通过审核。"
                 ) 审核
                 md-button.md-primary.md-raised(
-                    has-permission="attendance_summaries_department_hr_confirm"
                     ng-href="/api/attendance_summaries/export_xls?summary_date={{ctrl.getDate()}}"
                     download
                 ) 导出
