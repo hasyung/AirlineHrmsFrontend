@@ -17,6 +17,7 @@ deps = [
     'ui.grid.edit'
     'ui.grid.rowEdit'
     'ui.grid.cellNav'
+    'ui.grid.pinning'
     'ngAnimate'
     'ngAria'
     'ngSanitize'
