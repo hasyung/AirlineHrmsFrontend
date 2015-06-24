@@ -69,7 +69,7 @@
 // backgroud-color
 @each $color, $value in ('white': #fff) {
 
-    .bg-#{color} {
+    .bg-#{$color} {
         background-color: $value;
     }
 }
