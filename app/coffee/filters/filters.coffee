@@ -34,10 +34,10 @@ module
 
     .filter 'fromNow', ->
 
-        (input, opts) ->
+        (input, opts = true) ->
             if input
                 try
-                    return moment(input).fromNow(true)
+                    return moment(input).fromNow(opts)
                 catch e
                     ""
     .filter 'mdate', ->

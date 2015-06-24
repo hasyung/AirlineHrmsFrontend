@@ -8,13 +8,36 @@
 
 .todo-list {
     position: relative;
-    transition: margin .3s linear;
 }
 
 @for $i from 1 through 9 {
     .todo-list-item:nth-child(#{$i}) {
-        animation: slideLeft 1.5s #{.1*$i}s cubic-bezier(.27, .38, .64, 1.6) forwards;
-        transform: translateX(110%);
+        animation: slideTop 1.5s #{.1*$i}s cubic-bezier(.27, .38, .64, 1.6) forwards;
+        opacity: 0;
+        transform: translateY(200px);
+    }
+
+    .todo-aside>div:nth-child(#{$i}) {
+        animation: slideTop .75s #{.1*$i}s linear forwards;
+        opacity: 0;
+        transform: translateY(200px);
+    }
+}
+
+@keyframes slideTop {
+    0%, 15% {
+        opacity: 0;
+        transform: translateY(200px);
+    }
+
+    85%, 90% {
+        opacity: .9;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
@@ -98,6 +121,7 @@
             float: left;
             height: 40px;
             margin: 10px 20px 0;
+            overflow: hidden;
             width: 40px;
         }
 
@@ -138,6 +162,7 @@
                     float: left;
                     height: 20px;
                     margin-right: 5px;
+                    overflow: hidden;
                     width: 20px;
                 }
             }
@@ -239,6 +264,10 @@
 
 //柱形图表的样式
 .c-chart {
+    .c-item {
+        cursor: pointer;
+    }
+
     .c-name {
         fill: #fff;
     }

@@ -352,7 +352,7 @@ angular.module 'nb.directives'
             }
 
             yScale = d3.scale.linear()
-                .domain([0, 15])
+                .domain([0, 10])
                 .range([0, options.height - options.bottom])
 
             svg = d3.select(elem[0])
@@ -365,6 +365,29 @@ angular.module 'nb.directives'
             node = nodes.enter().append("g").attr("class","c-item")
 
             nodes.exit().remove()
+
+            node.on 'mouseover', (d, i)->
+                    d3.select(this).select("g.c-desc")
+                        .transition()
+                        .duration(300)
+                        .attr("fill-opacity", 1)
+
+                    d3.select(this).select("rect.c-column")
+                        .transition()
+                        .duration(300)
+                        .attr("fill-opacity", .7)
+
+            node.on 'mouseout', (d, i)->
+                    d3.select(this).select("g.c-desc")
+                        .transition()
+                        .duration(300)
+                        .attr("fill-opacity", 0)
+
+                    d3.select(this).select("rect.c-column")
+                        .transition()
+                        .duration(300)
+                        .attr("fill-opacity", 1)
+
 
             node.append("rect")
                 .attr("class","c-column")
@@ -379,7 +402,14 @@ angular.module 'nb.directives'
                         return options.height - options.bottom - yScale(d.count)
                     )
                 .attr("fill", (d,i) ->
-
+                        switch d.name
+                            when "带薪假" then "#77a340"
+                            when "探亲假" then  "#77a340"
+                            when "事假" then "#2d8ddb"
+                            when "病假" then "#2d8ddb"
+                            when "旷工" then "#dd5140"
+                            when "迟到" then "#ddb509"
+                            when "早退" then "#ddb509"
                     )
 
             node.append("text")
@@ -394,7 +424,34 @@ angular.module 'nb.directives'
                     )
                 .text( (d,i)-> d.name)
 
+            node.append("g")
+                .attr("fill-opacity", 0)
+                .attr("class","c-desc")
 
+            node.select("g.c-desc")
+                .append("rect")
+                    .attr("width", 40)
+                    .attr("height", 30)
+                    .attr("x", (d,i) ->
+                            return (i+1)*(520-210)/8 + 30*i
+                        )
+                    .attr("y", (d,i) ->
+                            return options.height - options.bottom - yScale(d.count) - 40
+                        )
+                    .attr("fill", "rgba(255, 255, 255, .4)")
+
+            node.select("g.c-desc")
+                .append("text")
+                .attr("font-size","14px")
+                .attr("text-anchor","middle")
+                .attr("fill","#fff")
+                .attr("x", (d,i) ->
+                            return (i+1)*(520-210)/8 + 30*i + 20
+                        )
+                    .attr("y", (d,i) ->
+                            return options.height - options.bottom - yScale(d.count) - 40 + 20
+                        )
+                .text( (d,i)-> d.count + "天")
 
 
 

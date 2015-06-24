@@ -1,177 +1,24 @@
 .todo-container(layout)
     .todo-list(flex)
-        .todo-list-item(layout)
+        .todo-list-item(layout flow-handler="todo" flows="todoCtrl.todos" ng-repeat="todo in todoCtrl.todos track by todo.id")
             .item-left(layout="column" layout-align="center end")
-                .date 2014-9-15
-                .time 13:12
+                .date {{todo.updatedAt | date:'yyyy-MM-dd'}}
+                .time {{todo.updatedAt | date:'HH:ss'}}
             .item-right(flex)
                 .item-msg
                     .avatar
-                        .image
+                        img(ng-src="{{todo.sponsor.favicon}}")
                     .content
                         h3
-                            span 黄晓亮
+                            span {{::todo.sponsor.name}}
                             | 发起于
-                            span 一个月以前
-                        p.single-ellipsis 员工黄晓亮申请解除劳动合同，辞职流程已发起，等待您的审批，请处理
+                            span(ng-bind="::todo.createdAt | fromNow: false")
+                        p.single-ellipsis {{::todo.desc}}
                         .reviewers
                             div
                             div
                             div
-                        .tip 员工辞职
-        .todo-list-item(layout)
-            .item-left(layout="column" layout-align="center end")
-                .date 2014-9-15
-                .time 13:12
-            .item-right(flex)
-                .item-msg
-                    .avatar
-                        .image
-                    .content
-                        h3
-                            span 黄晓亮
-                            | 发起于
-                            span 一个月以前
-                        p.single-ellipsis 员工黄晓亮申请解除劳动合同，辞职流程已发起，等待您的审批，请处理
-                        .reviewers
-                            div
-                            div
-                            div
-                        .tip 员工辞职
-        .todo-list-item(layout)
-            .item-left(layout="column" layout-align="center end")
-                .date 2014-9-15
-                .time 13:12
-            .item-right(flex)
-                .item-msg
-                    .avatar
-                        .image
-                    .content
-                        h3
-                            span 黄晓亮
-                            | 发起于
-                            span 一个月以前
-                        p.single-ellipsis 员工黄晓亮申请解除劳动合同，辞职流程已发起，等待您的审批，请处理
-                        .reviewers
-                            div
-                            div
-                            div
-                        .tip 员工辞职
-        .todo-list-item(layout)
-            .item-left(layout="column" layout-align="center end")
-                .date 2014-9-15
-                .time 13:12
-            .item-right(flex)
-                .item-msg
-                    .avatar
-                        .image
-                    .content
-                        h3
-                            span 黄晓亮
-                            | 发起于
-                            span 一个月以前
-                        p.single-ellipsis 员工黄晓亮申请解除劳动合同，辞职流程已发起，等待您的审批，请处理
-                        .reviewers
-                            div
-                            div
-                            div
-                        .tip 员工辞职
-        .todo-list-item(layout)
-            .item-left(layout="column" layout-align="center end")
-                .date 2014-9-15
-                .time 13:12
-            .item-right(flex)
-                .item-msg
-                    .avatar
-                        .image
-                    .content
-                        h3
-                            span 黄晓亮
-                            | 发起于
-                            span 一个月以前
-                        p.single-ellipsis 员工黄晓亮申请解除劳动合同，辞职流程已发起，等待您的审批，请处理
-                        .reviewers
-                            div
-                            div
-                            div
-                        .tip 员工辞职
-        .todo-list-item(layout)
-            .item-left(layout="column" layout-align="center end")
-                .date 2014-9-15
-                .time 13:12
-            .item-right(flex)
-                .item-msg
-                    .avatar
-                        .image
-                    .content
-                        h3
-                            span 黄晓亮
-                            | 发起于
-                            span 一个月以前
-                        p.single-ellipsis 员工黄晓亮申请解除劳动合同，辞职流程已发起，等待您的审批，请处理
-                        .reviewers
-                            div
-                            div
-                            div
-                        .tip 员工辞职
-        .todo-list-item(layout)
-            .item-left(layout="column" layout-align="center end")
-                .date 2014-9-15
-                .time 13:12
-            .item-right(flex)
-                .item-msg
-                    .avatar
-                        .image
-                    .content
-                        h3
-                            span 黄晓亮
-                            | 发起于
-                            span 一个月以前
-                        p.single-ellipsis 员工黄晓亮申请解除劳动合同，辞职流程已发起，等待您的审批，请处理
-                        .reviewers
-                            div
-                            div
-                            div
-                        .tip 员工辞职
-
-        .todo-list-item(layout)
-            .item-left(layout="column" layout-align="center end")
-                .date 2014-9-15
-                .time 13:12
-            .item-right(flex)
-                .item-msg
-                    .avatar
-                        .image
-                    .content
-                        h3
-                            span 黄晓亮
-                            | 发起于
-                            span 一个月以前
-                        p.single-ellipsis 员工黄晓亮申请解除劳动合同，辞职流程已发起，等待您的审批，请处理
-                        .reviewers
-                            div
-                            div
-                            div
-                        .tip 员工辞职
-        .todo-list-item(layout)
-            .item-left(layout="column" layout-align="center end")
-                .date 2014-9-15
-                .time 13:12
-            .item-right(flex)
-                .item-msg
-                    .avatar
-                        .image
-                    .content
-                        h3
-                            span 黄晓亮
-                            | 发起于
-                            span 一个月以前
-                        p.single-ellipsis 员工黄晓亮申请解除劳动合同，辞职流程已发起，等待您的审批，请处理
-                        .reviewers
-                            div
-                            div
-                            div
-                        .tip 员工辞职
+                        .tip {{::todo.name}}
 
     .todo-aside
         .post-board
