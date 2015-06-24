@@ -302,16 +302,107 @@ angular.module 'nb.directives'
             replace: true
         }
     ]
-    .directive 'todoList', [ () ->
+    # .directive 'todoList', [ () ->
+
+    #     postLink = (scope, elem, attrs) ->
+    #         console.log("111");
+    #     return {
+    #         restrict: "A"
+    #         link: postLink
+    #     }
+    # ]
+    .directive 'columnChart', [ () ->
 
         postLink = (scope, elem, attrs) ->
-            children = elem.find '.todo-list-item'
+            data = [
+                {
+                    name: "带薪假",
+                    count: 3
+                },
+                {
+                    name: "探亲假",
+                    count: 6
+                },
+                {
+                    name: "事假",
+                    count: 3,
+                },
+                {
+                    name: "病假",
+                    count: 4
+                },
+                {
+                    name: "旷工",
+                    count: 2
+                },
+                {
+                    name: "迟到",
+                    count: 7
+                },
+                {
+                    name: "早退",
+                    count: 4
+                }
+            ]
+
+            options = {
+                "width": 520,
+                "height": 250,
+                "bottom": 50
+            }
+
+            yScale = d3.scale.linear()
+                .domain([0, 15])
+                .range([0, options.height - options.bottom])
+
+            svg = d3.select(elem[0])
+                .append("svg")
+                    .attr("class","c-chart")
+                    .attr("width", options.width)
+                    .attr("height", options.height)
+
+            nodes = svg.selectAll("g.c-item").data(data)
+            node = nodes.enter().append("g").attr("class","c-item")
+
+            nodes.exit().remove()
+
+            node.append("rect")
+                .attr("class","c-column")
+                .attr("width", 30)
+                .attr("height", (d, i) ->
+                        return yScale(d.count)
+                    )
+                .attr("x", (d,i) ->
+                        return (i+1)*(520-210)/8 + 30*i
+                    )
+                .attr("y", (d,i) ->
+                        return options.height - options.bottom - yScale(d.count)
+                    )
+                .attr("fill", (d,i) ->
+
+                    )
+
+            node.append("text")
+                .attr("class","c-name")
+                .attr("font-size","10px")
+                .attr("text-anchor","middle")
+                .attr("x", (d,i) ->
+                        return (i+1)*(520-210)/8 + 30*(i + .5)
+                    )
+                .attr("y", (d,i) ->
+                        return options.height - options.bottom + 20
+                    )
+                .text( (d,i)-> d.name)
+
+
+
+
+
 
         return {
-            restrict: "A"
+            restrict: "EA"
             link: postLink
         }
-
     ]
 
 
@@ -541,7 +632,7 @@ angular.module 'nb.directives'
                     class="md-primary md-raised" flow-btn type="button">添加文件</md-button>
                 <span class="tip"> {{tips}}</span>
             </div>
-            
+
         </div>
         '''
 
