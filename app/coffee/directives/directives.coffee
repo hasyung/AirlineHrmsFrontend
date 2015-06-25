@@ -453,9 +453,6 @@ angular.module 'nb.directives'
                         )
                 .text( (d,i)-> d.count + "天")
 
-
-
-
         return {
             restrict: "EA"
             link: postLink
