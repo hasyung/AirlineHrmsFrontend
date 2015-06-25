@@ -349,7 +349,7 @@ class AttendanceCtrl extends nb.Controller
         @checksColumnDef = helper.buildFlowDefault(checkBaseDef)
         @recodsColumnDef = helper.buildFlowDefault(recordsBaseDef)
 
-        
+
     getYears: ()->
         [2015..new Date().getFullYear()]
 
@@ -398,7 +398,7 @@ class AttendanceCtrl extends nb.Controller
             self.tableData.$refresh()
 
     hrLeaderCheck: ()->
-        self = @        
+        self = @
         params = {summary_date: @getDate()}
         @http.put('/api/attendance_summaries/hr_leader_check', params).then ()->
             self.tableData.$refresh()
@@ -788,7 +788,7 @@ class SbFlowHandlerCtrl
         @tableData = null
         @filterOptions = null
 
-        @reviewers =  @Employee.$search({category_ids: [1,2], department_ids: [OrgStore.getPrimaryOrgId()]})
+        @reviewers =  @Employee.leaders()
 
     userList: ->
         filterOptions = _.cloneDeep(userListFilterOptions)

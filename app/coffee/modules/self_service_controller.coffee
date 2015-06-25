@@ -295,7 +295,7 @@ class MyRequestCtrl extends nb.Controller
             leaves.$refresh()
 
     loadReviewer: () ->
-        @Employee.$search({category_ids: [1,2], department_ids: [@OrgStore.getPrimaryOrgId()]})
+        @Employee.leaders()
 
     myRequests: (FlowName) ->
 
