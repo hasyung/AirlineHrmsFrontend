@@ -30,22 +30,7 @@ angular.module 'nb.directives'
 
     ]
 
-    .directive 'dragOn', [ '$window', ($window) ->
 
-
-        postLink = (scope, elem, attrs)->
-
-            return if not jQuery.fn.dragOn
-            $window.dragOnElem = elem.dragOn()
-            scope.$on 'destroy', () ->
-                elem.trigger 'DragOn.remove'
-
-        return {
-            link: postLink
-        }
-
-
-    ]
     .directive 'loadingBtn', ['$timeout', ($timeout) ->
 
 
@@ -71,8 +56,6 @@ angular.module 'nb.directives'
             scope.$on '$destroy', () ->
                 elem.off 'click'
 
-
-
         return {
             templateUrl: 'partials/component/loading-btn/btn.html'
             scope: true
@@ -84,12 +67,8 @@ angular.module 'nb.directives'
     ]
     .directive 'nbLoading', ['$rootScope', (rootScope) ->
 
-        postLink = (scope, elem, attrs) ->
-
-
         return {
             templateUrl: 'partials/component/loading.html'
-            link: postLink
         }
 
     ]
@@ -110,15 +89,7 @@ angular.module 'nb.directives'
         }
 
     ]
-    .directive 'nbResponsiveHeight', ['$window', ($window)->
-        postLink = (scope, elem, attrs) ->
-            height =  $window.innerHeight - elem.position().top
-            elem.css('height': "#{height}px")
 
-        return {
-            link: postLink
-        }
-    ]
     #facade ngDialog
     .directive 'nbPanel',['ngDialog', '$parse', (ngDialog, $parse) ->
 
@@ -247,23 +218,7 @@ angular.module 'nb.directives'
                 'onComplete': '&nbConfirm'
             }
         }
-
-
-
     ]
-    .directive 'scrollCenter', ->
-        postLink = (scope, elem, attrs) ->
-
-            scrollCenter = ->
-                width = elem.width()
-                svgWidth = elem.find('svg').width()
-                elem.scrollLeft( (svgWidth - width ) / 2 )
-
-            elem.on 'resize',scrollCenter
-
-            scope.$on '$destroy', ->
-                elem.off 'resize', scrollCenter
-
     .directive 'radioBox', [()->
         postLink = (scope, elem, attrs, ctrl) ->
             scope.selected = null

@@ -28,7 +28,6 @@ deps = [
     'angular.filter'
     'resources'
     'nb.directives'
-    'toaster'
     'ngCookies'
     'nb.filters'
     'nb.component'
