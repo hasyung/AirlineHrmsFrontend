@@ -27,6 +27,11 @@ Employee = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('employee:update:success', "员工信息更新成功")
         }
         $extend:
+
+            Scope:
+                leaders: () ->
+                    restmod.model('/employees/simple_index').mix($config: jsonRoot: 'employees').$search()
+
             Collection:
                 search: (tableState) ->
                     this.$refresh(tableState)
@@ -37,7 +42,7 @@ Employee = (restmod, RMUtils, $Evt) ->
 LeaveEmployees = (restmod, RMUtils, $Evt) ->
 
     LeaveEmployees = restmod.model('/leave_employees').mix 'nbRestApi', {
-        
+
         joinScalDate: {decode: 'date', param: 'yyyy-MM-dd'}
         startWorkDate: {decode: 'date', param: 'yyyy-MM-dd'}
 

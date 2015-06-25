@@ -435,10 +435,6 @@ nbGridDirective = ($parse)->
 
         scope.gridOptions = options
 
-
-        scope.getTableHeight = () ->
-            return height: (scope.gridOptions.data.length * options.rowHeight + 80) + "px"
-
         scope.$watch(
             -> itemCountGetter(scope)
             ,

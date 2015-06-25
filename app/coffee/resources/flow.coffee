@@ -317,7 +317,7 @@ class FlowController
 
         scope.selectedOrgs = []
         #加载分类为领导和干部的人员
-        scope.reviewers = Employee.$search({category_ids: [1,2], department_ids: [OrgStore.getPrimaryOrgId()]})
+        scope.reviewers = Employee.leaders()
 
         scope.reviewOrgs = OrgStore.getPrimaryOrgs()
 
