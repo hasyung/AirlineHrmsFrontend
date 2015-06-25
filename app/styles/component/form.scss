@@ -335,8 +335,21 @@ md-input-container {
 
 }
 
+.has-placeholder {
+    &:focus {
+        +.input-placeholder {
+            display: block;
+        }
+    }
+}
 
-// input container
+.input-placeholder {
+    color: $text-hint;
+    display: none;
+    position: absolute;
+    right: 10px;
+    top: 26px;
+}
 
 .inline-input-container {
 
@@ -346,32 +359,8 @@ md-input-container {
         border-width: 0 0 1px;
         line-height: 26px;
         padding: 2px 2px 1px;
-
-        // &:hover {
-        //     border-bottom: 2px solid ;
-        // }
     }
-
-    // .divide-text {
-
-    // }
 }
 
-
-// include
-
-// background:
-
-// border
-
-// color
-
-// font
-
-// height:
-// margin:
-// padding:
-// position:
-// width:
 
 

@@ -30,7 +30,7 @@
         transition-property: border-left;
 
         //解决 组织机构列表项 的高度不正确bug
-        &:nth-child(2) {
+        &:nth-child(1) {
             height: 70px;
         }
 

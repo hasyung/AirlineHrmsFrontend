@@ -24,6 +24,14 @@ menuFactory = ($rootScope, $state)->
     sections = []
 
     sections.push {
+        name: '待办事项'
+        type: 'link'
+        state: 'TODO'
+        icon_src: '/images/svg/left-side-svg/left_icon_2.svg'
+    }
+
+
+    sections.push {
         name: '员工自助'
         icon_src: '/images/svg/left-side-svg/left_icon_1.svg'
         pages: [
@@ -60,13 +68,6 @@ menuFactory = ($rootScope, $state)->
         name: '组织机构'
         type: 'link'
         state: 'org'
-        icon_src: '/images/svg/left-side-svg/left_icon_2.svg'
-    }
-
-    sections.push {
-        name: 'TODOList'
-        type: 'link'
-        state: 'TODO'
         icon_src: '/images/svg/left-side-svg/left_icon_2.svg'
     }
 
