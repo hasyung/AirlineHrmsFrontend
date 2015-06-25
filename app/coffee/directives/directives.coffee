@@ -346,7 +346,7 @@ angular.module 'nb.directives'
             ]
 
             options = {
-                "width": 520,
+                "width": 420,
                 "height": 250,
                 "bottom": 50
             }
@@ -396,7 +396,7 @@ angular.module 'nb.directives'
                         return yScale(d.count)
                     )
                 .attr("x", (d,i) ->
-                        return (i+1)*(520-210)/8 + 30*i
+                        return (i+1)*(options.width-210)/8 + 30*i
                     )
                 .attr("y", (d,i) ->
                         return options.height - options.bottom - yScale(d.count)
@@ -433,7 +433,7 @@ angular.module 'nb.directives'
                     .attr("width", 40)
                     .attr("height", 30)
                     .attr("x", (d,i) ->
-                            return (i+1)*(520-210)/8 + 30*i
+                            return (i+1)*(options.width-210)/8 + 30*i
                         )
                     .attr("y", (d,i) ->
                             return options.height - options.bottom - yScale(d.count) - 40
@@ -446,7 +446,7 @@ angular.module 'nb.directives'
                 .attr("text-anchor","middle")
                 .attr("fill","#fff")
                 .attr("x", (d,i) ->
-                            return (i+1)*(520-210)/8 + 30*i + 20
+                            return (i+1)*(options.width-210)/8 + 30*i + 20
                         )
                     .attr("y", (d,i) ->
                             return options.height - options.bottom - yScale(d.count) - 40 + 20

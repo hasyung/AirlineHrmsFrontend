@@ -69,16 +69,13 @@
 .todo-list-item {
     cursor: pointer;
     display: flex;
-    height: 100px;
+    height: 140px;
     margin-right: 40px;
     opacity: .7;
     overflow: hidden;
     padding-bottom: 5px;
-    -webkit-transition: height .3s linear;
-    transition: height .3s linear;
 
     &:hover {
-        height: 140px;
         opacity: 1;
 
         .item-left {
@@ -104,7 +101,7 @@
 
     .item-left {
         height: 100%;
-        width: 220px;
+        width: 170px;
 
         .date {
             color: #fff;
@@ -194,7 +191,7 @@
 
 .todo-aside {
     margin-right: 40px;
-    width: 520px;
+    width: 420px;
 
     .custom-toolbar {
         background-color: rgba(0, 0, 0, .3);
@@ -288,6 +285,17 @@
 
     .c-name {
         fill: #fff;
+    }
+}
+
+@media (max-width: 1280px) {
+    .todo-container {
+        flex-direction: column;
+    }
+
+    .todo-aside {
+        align-self: center;
+        margin-top: 20px;
     }
 }
 
