@@ -280,9 +280,9 @@ angular.module 'nb.directives'
 
                 if $sidebar.hasClass 'js-hide' then x = 0 else x = -200
 
-                $sidebar.animate {
+                $sidebar.stop(true,false).animate {
                     marginLeft: x + 'px'
-                }, 1000
+                }, 1000, false
 
                 return
 
