@@ -1,7 +1,4 @@
 .self-info-content {
-    background: url('../../../images/personnel/info-bg_03.jpg') no-repeat;
-    background-position: 240px 0;
-    background-size: 100% 240px;
     height: 100%;
 }
 
@@ -91,21 +88,21 @@
             font-size: $font-size-sm;
             height: 45px;
             line-height: 45px;
-            padding-left: 1px;
+            // padding-left: 1px;
 
             a {
-                border: 4px solid transparent;
+                // border: 4px solid transparent;
                 color: $text-color;
                 display: block;
-                height: 36px;
-                line-height: 37px;
+                height: 45px;
+                line-height: 45px;
                 padding-left: 28px;
                 width: 100%;
             }
 
             &:hover {
                 a {
-                    border-left: 4px solid #f44336;
+                    // border-left: 4px solid #f44336;
                     color: #f44336;
                 }
 
@@ -113,7 +110,7 @@
 
             &.active {
                 a {
-                    border-left: 4px solid #f44336;
+                    // border-left: 4px solid #f44336;
                     color: #f44336;
                     font-size: $font-size-md;
                 }
@@ -257,7 +254,7 @@
                 top: 0;
 
                 &.sep-top {
-                    top: -56px;
+                    top: -15px;
                 }
 
                 .md-button {

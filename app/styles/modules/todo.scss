@@ -296,7 +296,17 @@
     .todo-aside {
         align-self: center;
         margin-top: 20px;
+
+        >div {
+            -webkit-animation: none;
+            animation: none;
+            opacity: 1;
+            -webkit-transform: translateY(0);
+            transform: translateY(0);
+        }
     }
+
+
 }
 
 

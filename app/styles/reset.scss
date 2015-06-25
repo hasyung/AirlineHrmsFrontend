@@ -140,6 +140,10 @@ html h4 {
     height: 50px;
 }
 
+.pt-16 {
+    padding-top: 16px;
+}
+
 //确定的宽度 多用于需要表格单元固定宽度换行
 .kw-50 {
     width: 80px;
@@ -257,13 +261,13 @@ md-drop-option {
         font-size: 14px;
         padding-top: 8px;
 
-        &.last{
+        &.last {
             margin-left: 20px;
         }
-    }    
+    }
 
     .year-and-month {
-        
+
         width: 200px;
 
     }
@@ -273,32 +277,29 @@ md-drop-option {
     font-size: 14px;
 
     .org-item {
-        display: inline-block;
-        border-radius: 10px;
-        padding: 5px 10px;
-        margin: 5px;
-
         background-color: #aaa;
+        border-radius: 10px;
         color: #000;
-
         cursor: pointer;
+        display: inline-block;
+        margin: 5px;
+        padding: 5px 10px;
 
 
 
         &.green {
-            background-color: rgb(107,167,51);
+            background-color: rgb(107, 167, 51);
             color: #fff;
-
         }
 
         &.yellow {
-            background-color: rgb(229,184,17);
+            background-color: rgb(229, 184, 17);
             color: #fff;
 
         }
 
         &.active {
-            background-color: rgb(33,150,243);
+            background-color: rgb(33, 150, 243);
             color: #fff;
 
         }

@@ -34,6 +34,10 @@
             height: 70px;
         }
 
+        &:nth-child(3) {
+            height: 70px;
+        }
+
         &.active {
             background-color: #262b3c;
             border-left: 2px solid rgb(239, 83, 80);
