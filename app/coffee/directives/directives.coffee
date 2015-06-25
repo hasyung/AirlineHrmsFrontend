@@ -302,15 +302,43 @@ angular.module 'nb.directives'
             replace: true
         }
     ]
-    # .directive 'todoList', [ () ->
 
-    #     postLink = (scope, elem, attrs) ->
-    #         console.log("111");
-    #     return {
-    #         restrict: "A"
-    #         link: postLink
-    #     }
-    # ]
+    .directive 'toggleSidebar', [ () ->
+
+        ###*
+         * [description] 切换左侧菜单
+        ###
+
+        template = '''
+            <div class="top-btn-wrap">
+                <md-button class="md-icon-button" ng-click="toggle()">
+                    <md-icon md-svg-icon="/images/svg/menu.svg"></md-icon>
+                </md-button>
+            </div>
+        '''
+
+        postLink = (scope, elem, attrs) ->
+
+            scope.toggle = ->
+                $sidebar = $('#leftSidebar')
+                $sidebar.toggleClass('js-hide')
+
+                if $sidebar.hasClass 'js-hide' then x = 0 else x = -200
+
+                $sidebar.animate {
+                    marginLeft: x + 'px'
+                }, 1000
+
+                return
+
+
+        return {
+            template: template
+            link: postLink
+            scope: true
+        }
+    ]
+
     .directive 'columnChart', [ () ->
 
         postLink = (scope, elem, attrs) ->
