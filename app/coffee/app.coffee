@@ -122,7 +122,7 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
 
 
     #default route
-    $urlRouterProvider.otherwise('/')
+    $urlRouterProvider.otherwise('/todo')
     $stateProvider
         .state 'home', {
             url: '/'
