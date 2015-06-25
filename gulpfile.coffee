@@ -22,6 +22,9 @@ scsslint        = require("gulp-scss-lint")
 newer           = require("gulp-newer")
 cache           = require("gulp-cached")
 jadeInheritance = require('gulp-jade-inheritance')
+autoprefixer    = require("gulp-autoprefixer")
+
+
 
 fs              = require("fs")
 request         = require("request")
@@ -205,6 +208,7 @@ gulp.task "css-lint-app", ["sass-watch"],  ->
 gulp.task "styles-watch", ["sass-watch", "css-vendor", "css-lint-app"], ->
     gulp.src(paths.distStyles)
         .pipe(concat("main.css"))
+        .pipe(autoprefixer())
         .pipe(gulp.dest(paths.distStylesPath))
 
 gulp.task "styles-deploy", ["sass-deploy", "css-vendor"], ->
