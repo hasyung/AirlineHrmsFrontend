@@ -364,6 +364,12 @@ angular.module 'nb.directives'
             nodes = svg.selectAll("g.c-item").data(data)
             node = nodes.enter().append("g").attr("class","c-item")
 
+            node.append("rect").attr("class","c-column")
+            node.append("text").attr("class","c-name")
+            node.append("g").attr("class","c-desc")
+            node.select("g.c-desc").append("rect")
+            node.select("g.c-desc").append("text")
+
             nodes.exit().remove()
 
             node.on 'mouseover', (d, i)->
@@ -389,8 +395,7 @@ angular.module 'nb.directives'
                         .attr("fill-opacity", 1)
 
 
-            node.append("rect")
-                .attr("class","c-column")
+            nodes.select("rect.c-column")
                 .attr("width", 30)
                 .attr("height", (d, i) ->
                         return yScale(d.count)
@@ -412,36 +417,32 @@ angular.module 'nb.directives'
                             when "早退" then "#ddb509"
                     )
 
-            node.append("text")
-                .attr("class","c-name")
+            nodes.select("text.c-name")
                 .attr("font-size","10px")
                 .attr("text-anchor","middle")
                 .attr("x", (d,i) ->
-                        return (i+1)*(520-210)/8 + 30*(i + .5)
+                        return (i+1)*(options.width-210)/8 + 30*(i + .5)
                     )
                 .attr("y", (d,i) ->
                         return options.height - options.bottom + 20
                     )
                 .text( (d,i)-> d.name)
 
-            node.append("g")
+            nodes.select("g.c-desc")
                 .attr("fill-opacity", 0)
-                .attr("class","c-desc")
 
-            node.select("g.c-desc")
-                .append("rect")
-                    .attr("width", 40)
-                    .attr("height", 30)
-                    .attr("x", (d,i) ->
-                            return (i+1)*(options.width-210)/8 + 30*i
-                        )
-                    .attr("y", (d,i) ->
-                            return options.height - options.bottom - yScale(d.count) - 40
-                        )
-                    .attr("fill", "rgba(255, 255, 255, .4)")
+            nodes.select("g.c-desc").select("rect")
+                .attr("width", 40)
+                .attr("height", 30)
+                .attr("x", (d,i) ->
+                        return (i+1)*(options.width-210)/8 + 30*i
+                    )
+                .attr("y", (d,i) ->
+                        return options.height - options.bottom - yScale(d.count) - 40
+                    )
+                .attr("fill", "rgba(255, 255, 255, .4)")
 
-            node.select("g.c-desc")
-                .append("text")
+            node.select("g.c-desc").select("text")
                 .attr("font-size","14px")
                 .attr("text-anchor","middle")
                 .attr("fill","#fff")
