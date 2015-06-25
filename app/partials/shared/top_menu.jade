@@ -2,6 +2,11 @@ md-toolbar.top-menu-bar.md-warn(md-theme="hrms")
     .md-toolbar-tools(ng-controller="notificationCtrl as notify" )
         span.logo
             img(src="../../images/logo.png")
+        span
+            div.top-btn-wrap
+                md-button.md-icon-button
+                    md-icon(md-svg-icon="/images/svg/menu.svg")
+
         span(flex)
         span
             div.top-notification.top-btn-wrap(notification ng-class="{'open': isOpen}")

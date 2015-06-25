@@ -1,5 +1,6 @@
 .todo-container {
     background: #000 url('/images/wow_bg.jpg') no-repeat fixed;
+    -webkit-background-size: 100% 100%;
     background-size: 100% 100%;
     height: 100%;
     padding: 50px 0;
@@ -12,15 +13,39 @@
 
 @for $i from 1 through 9 {
     .todo-list-item:nth-child(#{$i}) {
+        -webkit-animation: slideTop 1.5s #{.1*$i}s cubic-bezier(.27, .38, .64, 1.6) forwards;
         animation: slideTop 1.5s #{.1*$i}s cubic-bezier(.27, .38, .64, 1.6) forwards;
         opacity: 0;
+        -webkit-transform: translateY(200px);
         transform: translateY(200px);
     }
 
     .todo-aside>div:nth-child(#{$i}) {
+        -webkit-animation: slideTop .75s #{.1*$i}s linear forwards;
         animation: slideTop .75s #{.1*$i}s linear forwards;
         opacity: 0;
+        -webkit-transform: translateY(200px);
         transform: translateY(200px);
+    }
+}
+
+@-webkit-keyframes slideTop {
+    0%, 15% {
+        opacity: 0;
+        -webkit-transform: translateY(200px);
+        transform: translateY(200px);
+    }
+
+    85%, 90% {
+        opacity: .9;
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 1;
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
     }
 }
 
@@ -41,32 +66,16 @@
     }
 }
 
-@keyframes slideLeft {
-    0%, 15% {
-        transform: translateX(110%) skewX(-45deg);
-    }
-
-    85%, 90% {
-        transform: translateX(0) skewX(-45deg);
-    }
-
-    100% {
-        transform: translateX(0) skewX(0);
-    }
-}
-
 .todo-list-item {
     cursor: pointer;
     display: flex;
-    height: 100px;
+    height: 140px;
     margin-right: 40px;
     opacity: .7;
     overflow: hidden;
     padding-bottom: 5px;
-    transition: height .3s linear;
 
     &:hover {
-        height: 140px;
         opacity: 1;
 
         .item-left {
@@ -92,7 +101,7 @@
 
     .item-left {
         height: 100%;
-        width: 220px;
+        width: 170px;
 
         .date {
             color: #fff;
@@ -154,6 +163,7 @@
                 height: 0;
                 opacity: 0;
                 overflow: hidden;
+                -webkit-transition: height .3s .1s linear, opacity .3s .1s linear;
                 transition: height .3s .1s linear, opacity .3s .1s linear;
 
                 div {
@@ -181,13 +191,15 @@
 
 .todo-aside {
     margin-right: 40px;
-    width: 520px;
+    width: 420px;
 
     .custom-toolbar {
         background-color: rgba(0, 0, 0, .3);
         border-bottom: 2px solid rgba(255, 255, 255, .3);
         color: #fff;
+        display: -webkit-flex;
         display: flex;
+        -webkit-flex-direction: column;
         flex-direction: column;
         font-size: $font-size-md;
         height: 56px;
@@ -196,8 +208,11 @@
 
         .toolbar-tools {
             align-items: center;
+            display: -webkit-flex;
             display: flex;
+            -webkit-flex: 1;
             flex: 1;
+            -webkit-flex-direction: row;
             flex-direction: row;
             height: 59px;
             padding-left: 20px;
@@ -270,6 +285,17 @@
 
     .c-name {
         fill: #fff;
+    }
+}
+
+@media (max-width: 1280px) {
+    .todo-container {
+        flex-direction: column;
+    }
+
+    .todo-aside {
+        align-self: center;
+        margin-top: 20px;
     }
 }
 
