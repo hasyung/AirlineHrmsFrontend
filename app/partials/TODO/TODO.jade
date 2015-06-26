@@ -15,9 +15,9 @@
                             span(ng-bind="::todo.createdAt | fromNow: false")
                         p.single-ellipsis {{::todo.desc}}
                         .reviewers
-                            div
-                            div
-                            div
+                            div(ng-repeat="viewerFavicon in ::todo.viewerFavicons")
+                                img(ng-src="{{::viewerFavicon}}")
+
                         .tip {{::todo.name}}
 
     .todo-aside
