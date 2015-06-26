@@ -92,6 +92,8 @@ class NewFlowCtrl
     constructor: (scope, $http, meta) ->
         ctrl = @
 
+        Moment = moment().constructor
+
         scope.initialFlow = (type) ->
             ctrl.flow_type = type
 
@@ -100,6 +102,13 @@ class NewFlowCtrl
         scope.createFlow = (data, receptor, list) ->
             data.vacation_days = scope.vacation_days
             data.receptor_id = if receptor then receptor.id else meta.id
+
+            #临时处理， moment() 默认的tostring 不符合前后端约定
+            #暂时没有找到好的方法
+            for own key, value of data
+                if value instanceof Moment
+                    data[key] = value.format()
+
             $http.post("/api/workflows/#{ctrl.flow_type}", data).success () ->
                 scope.panel.close() if scope.panel
                 list.$refresh()
