@@ -132,6 +132,65 @@ HANDLER_AND_HISTORY_FILTER_OPTIONS = {
     ]
 }
 
+ATTENDANCE_BASE_TABLE_DEFS = [
+    {
+        name: 'name'
+        displayName: '假别'
+        cellTooltip: (row) ->
+            return row.entity.name
+    }
+    {
+        name: 'vacationDays'
+        displayName: '时长'
+    }
+    {
+        name: 'workflowState'
+        displayName: '状态'
+    }
+    {
+        name: 'createdAt'
+        displayName: '发起时间'
+        cellFilter: "date:'yyyy-MM-dd'"
+    }
+
+]
+
+ATTENDANCE_SUMMERY_DEFS= [
+    {width:150, displayName: '所属部门', name: 'departmentName'}
+    {width:100, displayName: '员工编号', name: 'employeeNo'}
+    {width:100, displayName: '姓名', name: 'employeeName'}
+    {width:100, displayName: '用工性质', name: 'laborRelation'}
+    {width:100, displayName: '<带薪假>', name: 'paidLeave'}
+
+    {width:100, displayName: '年假', name: 'annualLeave'}
+    {width:100, displayName: '婚丧假', name: 'marriageFuneralLeave'}
+    {width:100, displayName: '产前检查假', name: 'prenatalCheckLeave'}
+    {width:100, displayName: '计生假', name: 'familyPlanningLeave'}
+    {width:100, displayName: '哺乳假', name: 'lactationLeave'}
+    {width:100, displayName: '女工假', name: 'womenLeave'}
+    {width:100, displayName: '产假', name: 'maternityLeave'}
+    {width:100, displayName: '生育护理假', name: 'rearNurseLeave'}
+    {width:100, displayName: '工伤假', name: 'injuryLeave'}
+    {width:100, displayName: '疗养假', name: 'recuperateLeave'}
+    {width:100, displayName: '派驻休假', name: 'accreditLeave'}
+
+
+    {width:100, displayName: '病假', name: 'sickLeave'}
+    {width:100, displayName: '病假（工伤待定）', name: 'sickLeaveInjury'}
+    {width:100, displayName: '病假（怀孕待产）', name: 'sickLeaveNulliparous'}
+    {width:100, displayName: '事假', name: 'personalLeave'}
+    {width:100, displayName: '探亲假', name: 'homeLeave'}
+    {width:100, displayName: '培训', name: 'cultivate'}
+    {width:100, displayName: '出差', name: 'evection'}
+    {width:100, displayName: '旷工', name: 'absenteeism'}
+    {width:100, displayName: '迟到早退', name: 'lateOrLeave'}
+    {width:100, displayName: '空勤停飞', name: 'ground'}
+    {width:100, displayName: '空勤地面工作', name: 'surfaceWork'}
+    {width:100, displayName: '驻站天数', name: 'stationDays'}
+    {width:100, displayName: '驻站地点', name: 'stationPlace'}
+    {width:100, displayName: '备注', name: 'remark'}
+]
+
 
 
 
@@ -224,9 +283,11 @@ class Route
 
 class AttendanceCtrl extends nb.Controller
 
-    @.$inject = ['GridHelper', 'Leave', '$scope', '$injector']
+    @.$inject = ['GridHelper', 'Leave', '$scope', '$injector', '$http', 'AttendanceSummary']
 
-    constructor: (helper, @Leave, scope, injector) ->
+    constructor: (helper, @Leave, scope, injector, @http, @AttendanceSummary) ->
+
+        @initDate()
 
         scope.realFlow = (entity) ->
             t = entity.type
@@ -236,8 +297,8 @@ class AttendanceCtrl extends nb.Controller
 
 
 
-        @recordsFilterOptions = {
-            name: 'attendance_records'
+        @checksFilterOptions = {
+            name: 'attendance_check_list'
             constraintDefs: [
                 {
                     name: 'employee_name'
@@ -246,26 +307,17 @@ class AttendanceCtrl extends nb.Controller
                 }
             ]
         }
-
-
-        def = [
-            {
-                name: 'typeCn'
-                displayName: '假别'
-            }
-            {
-                name: 'vacationDays'
-                displayName: '时长'
-            }
-            {
-                name: 'workflowState'
-                displayName: '状态'
-            }
-            {
-                name: 'createdAt'
-                displayName: '发起时间'
-                cellFilter: "date:'yyyy-MM-dd'"
-            }
+        @recordsFilterOptions = {
+            name: 'attendance_records_list'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '姓名'
+                    type: 'string'
+                }
+            ]
+        }
+        checkBaseDef = ATTENDANCE_BASE_TABLE_DEFS.concat [
             {
                 name: 'type'
                 displayName: '详细'
@@ -277,19 +329,108 @@ class AttendanceCtrl extends nb.Controller
                 </div>
                 '''
             }
-
         ]
 
-        @recodsColumnDef = helper.buildFlowDefault(def)
+        recordsBaseDef = ATTENDANCE_BASE_TABLE_DEFS.concat [
+            {
+                name: 'type'
+                displayName: '详细'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents" ng-init="realFlow = grid.appScope.$parent.realFlow(row.entity)">
+                    <a flow-handler="realFlow" flow-view="true">
+                        查看
+                    </a>
+                </div>
+                '''
+            }
+        ]
 
-        @leaveFlows = @Leave.$collection().$fetch()
+
+        @checksColumnDef = helper.buildFlowDefault(checkBaseDef)
+        @recodsColumnDef = helper.buildFlowDefault(recordsBaseDef)
+
+
+    getYears: ()->
+        [2015..new Date().getFullYear()]
+
+    getMonths: ()->
+        [1..12]
+
+    exeSearch: (departmentId)->
+        date = moment(new Date("#{this.year}-#{this.month}")).format()
+        params = {summary_date: date}
+        params.department_id = departmentId if departmentId
+        @search(params)
+
+
+    initDate: ()->
+        date = new Date()
+        @year = date.getFullYear()
+        @month = date.getMonth() + 1
+    loadCheckList: ()->
+        @tableData = @Leave.$collection().$fetch()
+
+    loadRecords: ()->
+        @tableData = @Leave.records()
+
+    loadSummaries: ()->
+        @summaryCols = ATTENDANCE_SUMMERY_DEFS
+        @tableData = @AttendanceSummary.$collection().$fetch()
+
+    loadSummariesList: ()->
+        @summaryListCol = ATTENDANCE_SUMMERY_DEFS
+
+        @tableData = @AttendanceSummary.records({summary_date: moment().format()})
+
+    getDate: ()->
+        date = moment(new Date("#{this.year}-#{this.month}")).format()
+
+    departmentHrConfirm: ()->
+        self = @
+        params = {summary_date: @getDate()}
+        @http.put('/api/attendance_summaries/department_hr_confirm', params).then ()->
+            self.tableData.$refresh()
+
+    departmentLeaderCheck: ()->
+        self = @
+        params = {summary_date: @getDate()}
+        @http.put('/api/attendance_summaries/department_leader_check', params).then ()->
+            self.tableData.$refresh()
+
+    hrLeaderCheck: ()->
+        self = @
+        params = {summary_date: @getDate()}
+        @http.put('/api/attendance_summaries/hr_leader_check', params).then ()->
+            self.tableData.$refresh()
+
+
+    search: (tableState)->
+        @tableData.$refresh(tableState)
+
+    getSelected: -> # selected entity || arr
+        rows = @gridApi.selection.getSelectedGridRows()
+        selected = if rows.length >= 1 then rows[0].entity else null
+
+    getSelectedEntities: ->
+        rows = @gridApi.selection.getSelectedGridRows()
+        rows.map (row) -> row.entity
+
+    exportGridApi: (gridApi) ->
+        @gridApi = gridApi
+
+    transferToOccupationInjury: (record)->
+        self = @
+        url = "/api/workflows/#{record.type}/#{record.id}/transfer_to_occupation_injury"
+        @http.put(url).then ()->
+            self.tableData.$refresh()
+
 
 
 
 class AttendanceRecordCtrl extends nb.Controller
 
-    @.$inject = ['$scope', 'Attendance', 'Employee']
-    constructor: (@scope, @Attendance, @Employee) ->
+    @.$inject = ['$scope', 'Attendance', 'Employee', 'GridHelper']
+    constructor: (@scope, @Attendance, @Employee, GridHelper) ->
         @loadInitailData()
         @filterOptions = filterBuildUtils('attendanceRecord')
             .col 'name',                 '姓名',    'string',           '姓名'
@@ -297,35 +438,7 @@ class AttendanceRecordCtrl extends nb.Controller
             .col 'department_ids',       '机构',    'org-search'
             .end()
 
-        @columnDef = [
-            {displayName: '员工编号', name: 'employeeNo'}
-            {
-                displayName: '姓名'
-                field: 'name'
-                # pinnedLeft: true
-                cellTemplate: '''
-                <div class="ui-grid-cell-contents ng-binding ng-scope">
-                    <a nb-panel
-                        template-url="partials/personnel/info_basic.html"
-                        locals="{employee: row.entity}">
-                        {{grid.getCellValue(row, col)}}
-                    </a>
-                </div>
-                '''
-            }
-            {
-                displayName: '所属部门'
-                name: 'department.name'
-                cellTooltip: (row) ->
-                    return row.entity.department.name
-            }
-
-            {
-                displayName: '岗位'
-                name: 'position.name'
-                cellTooltip: (row) ->
-                    return row.entity.position.name
-            }
+        @columnDef = GridHelper.buildUserDefault [
             {displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
             {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
             {displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
@@ -347,34 +460,12 @@ class AttendanceHisCtrl extends nb.Controller
     @.$inject = ['$scope', 'Attendance']
     constructor: (@scope, @Attendance) ->
         @loadInitailData()
-        @filterOptions = {
-            name: 'attendanceHis'
-            constraintDefs: [
-                {
-                    name: 'employee_name'
-                    displayName: '姓名'
-                    type: 'string'
-                    placeholder: '姓名'
-                }
-                {
-                    name: 'employee_no'
-                    displayName: '员工编号'
-                    type: 'string'
-                    placeholder: '员工编号'
-                }
-                {
-                    name: 'department_ids'
-                    displayName: '机构'
-                    type: 'org-search'
-                }
-                {
-                    name: 'created_at'
-                    displayName: '记录时间'
-                    type: 'date-range'
-                }
-
-            ]
-        }
+        @filterOptions = filterBuildUtils('attendanceHis')
+            .col 'employee_name',        '姓名',      'string',           '姓名'
+            .col 'employee_no',          '员工编号',   'string'
+            .col 'department_ids',       '机构',      'org-search'
+            .col 'created_at',           '记录时间',   'date-range'
+            .end()
 
         @columnDef = [
             {displayName: '员工编号', name: 'user.employeeNo'}
@@ -394,9 +485,9 @@ class AttendanceHisCtrl extends nb.Controller
             }
             {
                 displayName: '所属部门'
-                name: 'user.departmentName'
+                name: 'user.department.name'
                 cellTooltip: (row) ->
-                    return row.entity.user.departmentName
+                    return row.entity.user.department.name
             }
 
             {
@@ -434,43 +525,14 @@ class ContractCtrl extends nb.Controller
     @.$inject = ['$scope', 'Contract', '$http', 'Employee']
     constructor: (@scope, @Contract, @http, @Employee) ->
         @loadInitailData()
-        @filterOptions = {
-            name: 'contract'
-            constraintDefs: [
-                {
-                    name: 'employee_name'
-                    displayName: '姓名'
-                    type: 'string'
-                }
-                {
-                    name: 'employee_no'
-                    displayName: '员工编号'
-                    type: 'string'
-                    placeholder: '员工编号'
-                }
-                {
-                    name: 'department_ids'
-                    displayName: '机构'
-                    type: 'org-search'
-                }
-                {
-                    name: 'end_date'
-                    displayName: '合同到期时间'
-                    type: 'date-range'
-                }
-                {
-                    name: 'apply_type'
-                    displayName: '用工性质'
-                    type: 'string'
-                }
-                {
-                    name: 'notes'
-                    displayName: '是否有备注'
-                    type: 'boolean'
-                }
-
-            ]
-        }
+        @filterOptions = filterBuildUtils('contract')
+            .col 'employee_name',        '姓名',        'string',           '姓名'
+            .col 'employee_no',          '员工编号',     'string'
+            .col 'department_ids',       '机构',        'org-search'
+            .col 'end_date',             '合同到期时间',  'date-range'
+            .col 'apply_type',           '用工性质',     'string'
+            .col 'notes',                '是否有备注',   'boolean'
+            .end()
 
         @columnDef = [
             {displayName: '员工编号', name: 'employeeNo'}
@@ -521,29 +583,12 @@ class ContractCtrl extends nb.Controller
             }
         ]
 
-        @hisFilterOptions = {
-            name: 'contractHis'
-            constraintDefs: [
-                {
-                    name: 'name'
-                    displayName: '姓名'
-                    type: 'string'
-                    placeholder: '姓名'
-                }
-                {
-                    name: 'employee_no'
-                    displayName: '员工编号'
-                    type: 'string'
-                    placeholder: '员工编号'
-                }
-                {
-                    name: 'department_ids'
-                    displayName: '机构'
-                    type: 'org-search'
-                }
+        @hisFilterOptions = filterBuildUtils('contractHis')
+            .col 'name',                 '姓名',        'string',           '姓名'
+            .col 'employee_no',          '员工编号',     'string'
+            .col 'department_ids',       '机构',        'org-search'
+            .end()
 
-            ]
-        }
 
         @hisColumnDef = [
             {displayName: '员工编号', name: 'employeeNo'}
@@ -606,11 +651,18 @@ class ContractCtrl extends nb.Controller
         selected = if rows.length >= 1 then rows[0].entity else null
 
     renewContract: (request, contract)->
+        self = @
         return if contract && contract.employeeId == 0
-        request.employee_id = contract.employeeId
+        request.receptor_id = contract.employeeId
         request.reviewer_id = contract.employeeId
 
-        @http.post("/api/workflows/Flow::RenewContract", request)
+        @http.post("/api/workflows/Flow::RenewContract", request).then ()->
+            self.contracts.$refresh()
+
+    newContract: (contract)->
+        self = @
+        @contracts.$build(contract).$save().$then ()->
+            self.contracts.$refresh()
 
     leaveJob: (contract, isConfirm, reason)->
         return if !isConfirm
@@ -720,9 +772,9 @@ class RetirementCtrl extends nb.Controller
 
 class SbFlowHandlerCtrl
 
-    @.$inject = ['GridHelper', 'FlowName', '$scope', 'Employee', '$injector', 'OrgStore', 'ColumnDef', '$http']
+    @.$inject = ['GridHelper', 'FlowName', '$scope', 'Employee', '$injector', 'OrgStore', 'ColumnDef', '$http', '$nbEvent']
 
-    constructor: (@helper, @FlowName, @scope, @Employee, $injector, OrgStore, @userRequestsColDef, @http) ->
+    constructor: (@helper, @FlowName, @scope, @Employee, $injector, OrgStore, @userRequestsColDef, @http, @Evt) ->
 
         @scope.ctrl = @
         @Flow = $injector.get(@FlowName)
@@ -736,7 +788,7 @@ class SbFlowHandlerCtrl
         @tableData = null
         @filterOptions = null
 
-        @reviewers =  @Employee.$search({category_ids: [1,2], department_ids: [OrgStore.getPrimaryOrgId()]})
+        @reviewers =  @Employee.leaders()
 
     userList: ->
         filterOptions = _.cloneDeep(userListFilterOptions)
@@ -779,10 +831,13 @@ class SbFlowHandlerCtrl
         @tableData.$refresh(tableState)
 
     retirement: (users)->
+        self = @
         params = users.map (user)->
             {id: user.id, relation_data:user.relation_data}
 
-        @http.post("/api/workflows/Flow::Retirement/batch_create", {receptors:params})
+        @http.post("/api/workflows/Flow::Retirement/batch_create", {receptors:params}).then ()->
+            self.Evt.$send "retirement:create:success", "退休发起成功"
+            self.tableData.$refresh()
 
     leaveJob: (employeeId, isConfirm, reason)->
         return if !isConfirm

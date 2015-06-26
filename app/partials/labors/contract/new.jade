@@ -6,7 +6,7 @@ div(style="height: 100%; background-color: #f5f5f5;")
     .personnel-content.personnel-control(ng-init="contract = {}; ctrl.loadEmp = {}")
         section.personnel-info-section
             md-content.nb-card-container(layout="column" md-theme="hrms")
-                form(ng-submit="ctrl.contracts.$build(contract).$save();panel.close();ctrl.contracts.$refresh();")
+                form(ng-submit="ctrl.newContract(contract);panel.close();")
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1
                             md-icon.form-icon(md-svg-src="/images/svg/personnel_24.svg" alt="基本信息")
@@ -55,14 +55,20 @@ div(style="height: 100%; background-color: #f5f5f5;")
                                 md-input-container(flex)
                                     label 开始日期
                                     input(bs-datepicker ng-model="contract.startDate")
-                                md-input-container(flex)
+                                md-input-container(flex md-no-float)
                                     label 合同时长/年
-                                    input(type="type", ng-model="contract.dueTime", name="dueTime")
+                                    input.has-placeholder(
+                                        type="text"
+                                        ng-model="contract.dueTime"
+                                        name="dueTime"
+                                        )
+                                    div.input-placeholder 不填合同时长为无固定期限合同
+
 
                             div(layout)
                                 md-input-container(flex)
                                     label 合同备注
-                                    input(type="type", ng-model="contract.notes" name="notes")
+                                    input(type="type" ng-model="contract.notes" name="notes")
                     .form-bottom-group(layout style="margin-top: 20px;")
                         span(flex)
                         md-button.md-raised(type="button" ng-click="panel.close();") 取消

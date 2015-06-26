@@ -15,6 +15,11 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
             md-input-container(flex)
                 label 员工编号
                 input(disabled ng-model="current.employeeNo")
+            md-input-container.row-has-value(flex)
+                label 性别
+                md-select(ng-model="current.genderId" ng-disabled="!editing")
+                    md-select-label {{$enum.parseLabel(current.genderId, "genders")}}
+                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('genders')") {{item.label}}
 
         div(layout)
             md-input-container(flex)

@@ -120,48 +120,110 @@
 
 .my-requests {
     color: $text-color;
-    padding: 20px;
-}
 
-.classify {
-    background-color: #fff;
-    margin-bottom: 10px;
-    padding: 30px;
-
-    .classify-header {
+    .my-requests-header {
+        background-color: #fff;
         font-size: $font-size-md;
-        margin-bottom: 25px;
+        height: 55px;
+        line-height: 55px;
+        padding-left: 20px;
+        width: 100%;
     }
 
-    .classify-wrapper {
+    .my-cell-cotainer {
         @include clearfix();
+        padding: 20px 0 20px 20px;
+    }
 
-        .classify-cell {
-            float: left;
-            padding: 0 50px;
+    .my-requests-cell {
+        background-color: #fff;
+        border-radius: 2px;
+        box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .14), 0 2px 2px 0 rgba(0, 0, 0, .098), 0 1px 5px 0 rgba(0, 0, 0, .084);
+        box-sizing: border-box;
+        float: left;
+        height: 195px;
+        margin-bottom: 20px;
+        margin-right: 20px;
+        text-align: center;
+        width: 270px;
 
-            .desc {
-                text-align: center;
-            }
-        }
+        &:hover {
+            // border: 2px solid #f1685c;
 
-        .md-fab {
-            height: 70px;
-            line-height: 70px;
-            margin-bottom: 5px;
-            width: 70px;
-
-            md-icon {
-                height: 40px;
-                width: 40px;
-
-                * {
-                    fill: #fff;
-                }
+            .md-fab.md-button {
+                background-color: #fcfcfc;
+                // margin-top: 23px;
+                transform: scale(1.2);
+                transition: transform .25s linear;
             }
         }
     }
+
+    .md-fab.md-button {
+        background-color: #fcfcfc;
+        border: 1px solid #e84f41;
+        border-radius: 50%;
+        box-shadow: none;
+        height: 96px;
+        line-height: 92px;
+        margin: 25px auto 30px;
+        width: 96px;
+
+        md-icon {
+            height: 66px;
+            width: 66px;
+
+            * {
+                fill: #f1685c;
+            }
+        }
+    }
+
+    .desc {
+        color: $text-color;
+    }
+
 }
+
+// .classify {
+//     background-color: #fff;
+//     margin-bottom: 10px;
+//     padding: 30px;
+
+//     .classify-header {
+//         font-size: $font-size-md;
+//         margin-bottom: 25px;
+//     }
+
+//     .classify-wrapper {
+//         @include clearfix();
+
+//         .classify-cell {
+//             float: left;
+//             padding: 0 50px;
+
+//             .desc {
+//                 text-align: center;
+//             }
+//         }
+
+//         .md-fab {
+//             height: 70px;
+//             line-height: 70px;
+//             margin-bottom: 5px;
+//             width: 70px;
+
+//             md-icon {
+//                 height: 40px;
+//                 width: 40px;
+
+//                 * {
+//                     fill: #fff;
+//                 }
+//             }
+//         }
+//     }
+// }
 
 //我要请假 主列表样式
 .flow-list {

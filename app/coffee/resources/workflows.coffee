@@ -97,9 +97,27 @@ resources.factory 'Leave', (restmod, $injector) ->
             jsonRootMany: 'workflows'
             jsonRootSingle: 'workflow'
 
+        $extend:
+            Scope:
+                records: ->
+                    restmod.model("/workflows/leave/record").mix(
+                        $config:
+                            jsonRootMany:'workflows'
+                            jsonRootSingle: 'workflow'
+                    ).$collection().$fetch()
+
     }
 
+resources.factory 'Todo', (restmod, $injector) ->
 
+    restmod.model("/me/todos").mix 'nbRestApi', {
+
+        flowNodes: {hasMany: "FlowReply"}
+
+        $config:
+            jsonRootMany: 'workflows'
+            jsonRootSingle: 'workflow'
+    }
 
 
 

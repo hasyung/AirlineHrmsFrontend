@@ -18,6 +18,8 @@ Employee = (restmod, RMUtils, $Evt) ->
         isSelected: {mask: "CU"}
         resume: { hasOne: 'Resume', mask: 'CU'}
 
+        performances: {hasMany: 'Performance', mask: 'CU'}
+
         $hooks: {
             'after-create': ->
                 $Evt.$send('employee:create:success', "新员工创建成功")
@@ -25,6 +27,11 @@ Employee = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('employee:update:success', "员工信息更新成功")
         }
         $extend:
+
+            Scope:
+                leaders: () ->
+                    restmod.model('/employees/simple_index').mix($config: jsonRoot: 'employees').$search()
+
             Collection:
                 search: (tableState) ->
                     this.$refresh(tableState)
@@ -35,7 +42,7 @@ Employee = (restmod, RMUtils, $Evt) ->
 LeaveEmployees = (restmod, RMUtils, $Evt) ->
 
     LeaveEmployees = restmod.model('/leave_employees').mix 'nbRestApi', {
-        
+
         joinScalDate: {decode: 'date', param: 'yyyy-MM-dd'}
         startWorkDate: {decode: 'date', param: 'yyyy-MM-dd'}
 

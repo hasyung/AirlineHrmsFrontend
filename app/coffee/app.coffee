@@ -14,6 +14,10 @@ deps = [
     'ui.grid.pinning'
     'ui.grid.pagination'
     'ui.grid.autoResize'
+    'ui.grid.edit'
+    'ui.grid.rowEdit'
+    'ui.grid.cellNav'
+    'ui.grid.pinning'
     'ngAnimate'
     'ngAria'
     'ngSanitize'
@@ -24,7 +28,6 @@ deps = [
     'angular.filter'
     'resources'
     'nb.directives'
-    'toaster'
     'ngCookies'
     'nb.filters'
     'nb.component'
@@ -119,7 +122,7 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
 
 
     #default route
-    $urlRouterProvider.otherwise('/')
+    $urlRouterProvider.otherwise('/todo')
     $stateProvider
         .state 'home', {
             url: '/'

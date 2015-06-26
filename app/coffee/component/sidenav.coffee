@@ -24,6 +24,14 @@ menuFactory = ($rootScope, $state)->
     sections = []
 
     sections.push {
+        name: '待办事项'
+        type: 'link'
+        state: 'TODO'
+        icon_src: '/images/svg/left-side-svg/left_icon_2.svg'
+    }
+
+
+    sections.push {
         name: '员工自助'
         icon_src: '/images/svg/left-side-svg/left_icon_1.svg'
         pages: [
@@ -39,19 +47,14 @@ menuFactory = ($rootScope, $state)->
                 name: '优免票'
                 # state: 'self.profile'
             }
-            {
-                name: '学历变更申请'
-                # state: 'self.profile'
-            }
-            {
-                name: '绩效申述'
-                # state: 'self.profile'
-            }
-
-            {
-                name: '信息变更记录'
-                # state: 'self.profile'
-            }
+            # {
+            #     name: '学历变更申请'
+            #     # state: 'self.profile'
+            # }
+            # {
+            #     name: '信息变更记录'
+            #     # state: 'self.profile'
+            # }
         ]
     }
 
@@ -155,8 +158,8 @@ menuFactory = ($rootScope, $state)->
         icon_src: '/images/svg/left-side-svg/left_icon_7.svg'
         pages: [
             {
-                name: '公务餐'
-                state: 'position'
+                name: '福利设置'
+                state: '.welfares'
                 permission: ''
             }
             {
@@ -282,7 +285,7 @@ menuFactory = ($rootScope, $state)->
                 state: 'labors_resignation'
                 permission: ''
             }
-            
+
 
         ]
     }
@@ -292,18 +295,18 @@ menuFactory = ($rootScope, $state)->
         icon_src: '/images/svg/left-side-svg/left_icon_10.svg'
         pages: [
             {
-                name: '绩效设置'
-                state: 'position'
-                permission: ''
-            }
-            {
                 name: '绩效记录'
-                state: 'position'
+                state: 'performance_record'
                 permission: ''
             }
             {
-                name: '绩效申诉管理'
-                state: 'position'
+                name: '绩效申诉'
+                state: 'performance_alleges'
+                permission: ''
+            }
+            {
+                name: '绩效设置'
+                state: 'performance_setting'
                 permission: ''
             }
         ]
@@ -377,15 +380,15 @@ menuLinkDirective = ($compile, $state) ->
 
     stroke_svg = '''
         <svg width="30" height="50">
-            <path d="M1 0 L1 25 L21 25 M1 25 L1 50" fill="transparent" stroke="#aaa" stroke-width="1"></path>
-            <circle r="4" cx="21" cy="25" fill="#aaa"></circle>
+            <path d="M1 0 L1 25 L21 25 M1 25 L1 50" fill="transparent" stroke="#fff" stroke-width="1"></path>
+            <circle r="4" cx="21" cy="25" fill="#fff"></circle>
         </svg>
     '''
 
     last_stroke_svg = '''
         <svg width="30" height="40">
-            <path d="M1 0 L1 25 L21 25" fill="transparent" stroke="#aaa" stroke-width="1"></path>
-            <circle r="4" cx="21" cy="25" fill="#aaa"></circle>
+            <path d="M1 0 L1 25 L21 25" fill="transparent" stroke="#fff" stroke-width="1"></path>
+            <circle r="4" cx="21" cy="25" fill="#fff"></circle>
         </svg>
     '''
 

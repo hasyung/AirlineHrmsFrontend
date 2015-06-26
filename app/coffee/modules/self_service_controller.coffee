@@ -69,6 +69,7 @@ class Route
                     }
                 }
             }
+            # 辞职
             .state 'my_requests.resignation', {
                 url: '/resignation'
                 views: {
@@ -209,10 +210,10 @@ class Route
 
 class ProfileCtrl extends nb.Controller
 
-    @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope', 'User', 'USER_META']
+    @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope', 'User', 'USER_META', 'UserPerformance', 'Performance', '$filter']
 
 
-    constructor: (@scope, @sweet, @Employee, @rootScope, @User, @USER_META) ->
+    constructor: (@scope, @sweet, @Employee, @rootScope, @User, @USER_META, @UserPerformance, @Performance, @filter) ->
         @loadInitailData()
         @status = 'show'
 
@@ -232,6 +233,14 @@ class ProfileCtrl extends nb.Controller
         self = @
         @scope.currentUser.$refresh().$then ()->
             angular.extend self.USER_META.favicon, self.scope.currentUser.favicon
+
+    loadPerformance: ()->
+        self = @
+        @UserPerformance.$collection().$fetch().$then (performances)->
+            self.performances = _.groupBy performances, (item)-> item.assessYear
+
+    allege: (performance, request)->
+        performance.allege(request)
 
 
 
@@ -287,7 +296,7 @@ class MyRequestCtrl extends nb.Controller
             leaves.$refresh()
 
     loadReviewer: () ->
-        @Employee.$search({category_ids: [1,2], department_ids: [@OrgStore.getPrimaryOrgId()]})
+        @Employee.leaders()
 
     myRequests: (FlowName) ->
 

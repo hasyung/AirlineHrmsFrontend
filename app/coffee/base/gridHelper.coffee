@@ -3,7 +3,7 @@
 app = @nb.app
 
 
-defaultCol =    [
+defaultFlowCol =    [
         {displayName: '员工编号', name: 'receptor.employeeNo'}
         {
             displayName: '姓名'
@@ -34,18 +34,54 @@ defaultCol =    [
         }
     ]
 
+defaultUserCol = [
+    {displayName: '员工编号', name: 'employeeNo'}
+    {
+        displayName: '姓名'
+        field: 'name'
+        # pinnedLeft: true
+        cellTemplate: '''
+        <div class="ui-grid-cell-contents ng-binding ng-scope">
+            <a nb-panel
+                template-url="partials/personnel/info_basic.html"
+                locals="{employee: row.entity}">
+                {{grid.getCellValue(row, col)}}
+            </a>
+        </div>
+        '''
+    }
+    {
+        displayName: '所属部门'
+        name: 'department.name'
+        cellTooltip: (row) ->
+            return row.entity.department.name
+    }
+
+    {
+        displayName: '岗位'
+        name: 'position.name'
+        cellTooltip: (row) ->
+            return row.entity.position.name
+    }
+]
+
 
 app.factory 'GridHelper', ->
 
-    buildDefaultGridOptions = (columnDef) ->
-        defaultColClone = _.cloneDeep(defaultCol)
+    buildDefaultFlowGridOptions = (columnDef) ->
+        defaultColClone = _.cloneDeep(defaultFlowCol)
+        newCols = if columnDef then defaultColClone.concat columnDef else defaultColClone
+        return newCols
+
+    buildUserGridOptions = (columnDef)->
+        defaultColClone = _.cloneDeep(defaultUserCol)
         newCols = if columnDef then defaultColClone.concat columnDef else defaultColClone
         return newCols
 
 
     return {
-        buildDefault: buildDefaultGridOptions
-        buildFlowDefault: buildDefaultGridOptions
-        buildCustomCol: buildDefaultGridOptions
+        buildDefault: buildDefaultFlowGridOptions
+        buildFlowDefault: buildDefaultFlowGridOptions
+        buildUserDefault: buildUserGridOptions
     }
 

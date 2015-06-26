@@ -1,0 +1,14 @@
+md-dialog(style="min-width: 500px;" ng-init="performance = dialog.performance; attachments = ctrl.Performance.$new(performance.id).attachments.$fetch();")
+    md-toolbar.md-accent(md-theme="hrms")
+        .md-toolbar-tools
+            span 绩效附件
+    md-content
+        form(ng-submit="ctrl.allege(performance, request);")
+            div(style="padding: 30px 60px;")
+                .accessory-container()
+                    .accessory-cell(ng-repeat="attachment in attachments")
+                        .accessory-name(ng-bind="attachment.name")
+                        .accessory-size(ng-bind="attachment.size | byteFmt:2")
+
+            .md-actions(style="border-top: 1px solid rgba(0, 0, 0, .12); padding: 0 20px;")
+                md-button.md-primary.md-raised.pull-right(type="button" ng-click="dialog.close();") 关 闭

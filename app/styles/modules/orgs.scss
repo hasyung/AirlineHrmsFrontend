@@ -1,8 +1,3 @@
-.app-content-body.md-default-theme {
-    background-color: #f0f3f4;
-}
-// 机构 左侧部门菜单结束
-
 // 机构树整体及容器部分
 .org-chart-history {
     background-color: #dfe7e9;
@@ -13,6 +8,7 @@
 }
 
 .org-chart-top {
+    min-height: 100px;
     padding-top: 20px;
     position: relative;
     text-align: center;

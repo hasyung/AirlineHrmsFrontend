@@ -34,16 +34,16 @@ module
 
     .filter 'fromNow', ->
 
-        (input, opts) ->
+        (input, opts = true) ->
             if input
                 try
-                    return moment(input).fromNow(true)
+                    return moment(input).fromNow(opts)
                 catch e
                     ""
     .filter 'mdate', ->
 
         (input, format = "YYYY-mm-DD") ->
-            if input
+            if input && input.format
                 return input.format(format)
 
 
@@ -65,3 +65,10 @@ module
             $enum.parseLabel(input, opts)
     ]
 
+    .filter 'big2small', [()->
+
+        (input) ->
+            _.sortBy input, (item)->
+                this.sin item.$key
+            ,Math
+    ]

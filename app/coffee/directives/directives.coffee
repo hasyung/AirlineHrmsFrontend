@@ -30,22 +30,7 @@ angular.module 'nb.directives'
 
     ]
 
-    .directive 'dragOn', [ '$window', ($window) ->
 
-
-        postLink = (scope, elem, attrs)->
-
-            return if not jQuery.fn.dragOn
-            $window.dragOnElem = elem.dragOn()
-            scope.$on 'destroy', () ->
-                elem.trigger 'DragOn.remove'
-
-        return {
-            link: postLink
-        }
-
-
-    ]
     .directive 'loadingBtn', ['$timeout', ($timeout) ->
 
 
@@ -71,8 +56,6 @@ angular.module 'nb.directives'
             scope.$on '$destroy', () ->
                 elem.off 'click'
 
-
-
         return {
             templateUrl: 'partials/component/loading-btn/btn.html'
             scope: true
@@ -84,12 +67,8 @@ angular.module 'nb.directives'
     ]
     .directive 'nbLoading', ['$rootScope', (rootScope) ->
 
-        postLink = (scope, elem, attrs) ->
-
-
         return {
             templateUrl: 'partials/component/loading.html'
-            link: postLink
         }
 
     ]
@@ -110,15 +89,7 @@ angular.module 'nb.directives'
         }
 
     ]
-    .directive 'nbResponsiveHeight', ['$window', ($window)->
-        postLink = (scope, elem, attrs) ->
-            height =  $window.innerHeight - elem.position().top
-            elem.css('height': "#{height}px")
 
-        return {
-            link: postLink
-        }
-    ]
     #facade ngDialog
     .directive 'nbPanel',['ngDialog', '$parse', (ngDialog, $parse) ->
 
@@ -247,23 +218,7 @@ angular.module 'nb.directives'
                 'onComplete': '&nbConfirm'
             }
         }
-
-
-
     ]
-    .directive 'scrollCenter', ->
-        postLink = (scope, elem, attrs) ->
-
-            scrollCenter = ->
-                width = elem.width()
-                svgWidth = elem.find('svg').width()
-                elem.scrollLeft( (svgWidth - width ) / 2 )
-
-            elem.on 'resize',scrollCenter
-
-            scope.$on '$destroy', ->
-                elem.off 'resize', scrollCenter
-
     .directive 'radioBox', [()->
         postLink = (scope, elem, attrs, ctrl) ->
             scope.selected = null
@@ -302,180 +257,190 @@ angular.module 'nb.directives'
             replace: true
         }
     ]
-    .directive 'approval', [ () ->
+
+    .directive 'toggleSidebar', [ () ->
+
+        ###*
+         * [description] 切换左侧菜单
+        ###
+
+        template = '''
+            <div class="top-btn-wrap">
+                <md-button class="md-icon-button" ng-click="toggle()">
+                    <md-icon md-svg-icon="/images/svg/menu.svg"></md-icon>
+                </md-button>
+            </div>
+        '''
 
         postLink = (scope, elem, attrs) ->
-            padding =
-                top: 20
-                right: 20
-                bottom: 20
-                left: 20
 
-            width = 900
-            height = 120
-                #树的高
-            duration = 750
-            data = [
-                {
-                    'status': 'done'
-                    'des': '请假单'
-                }
-                {
-                    'status': 'done'
-                    'des': '领导审批'
-                }
-                {
-                    'status': 'undo'
-                    'des': '上级领导审批'
-                }
-                {
-                    'status': 'unreachable'
-                    'des': '最终审批'
-                }
-                {
-                    'status': 'unreachable'
-                    'des': '超级最终审批'
-                }
-                {
-                    'status': 'unreachable'
-                    'des': '超级最终审批'
-                }
-                {
-                    'status': 'unreachable'
-                    'des': '超级最终审批'
-                }
-                {
-                    'status': 'unreachable'
-                    'des': '超级最终审批'
-                }
-                {
-                    'status': 'unreachable'
-                    'des': '超级最终审批'
-                }
-                {
-                    'status': 'unreachable'
-                    'des': '生效'
-                }
-            ]
-            radius = 9
-            single_area_width = width / data.length
-            single_area_height = 2 * radius + 40
+            scope.toggle = ->
+                $sidebar = $('#leftSidebar')
+                $sidebar.toggleClass('js-hide')
 
-            svg = d3.select(elem[0])
-                .append('svg')
-                .attr('class', 'lw-svg')
-                .attr('width', width)
-                .attr('height', height)
-            # - .attr("transform", "translate(" + margin.left + "," + margin.top + ")");  //使svg区域与上、左有一定距离
-            #
-            svg.selectAll('line')
-                .data(data).enter()
-                .append('line')
-                .style('stroke', (d, i) ->
-                    if d.status == 'done'
-                        '#8bc34a'
-                    else if d.status == 'undo'
-                        '#2196f3'
-                    else if d.status == 'reject'
-                        '#f34e4c'
-                    else
-                        '#dedede'
-                )
-                .style('stroke-width', '3')
-                .attr('class', 'step-line')
-                .attr('x1', (d, i) ->
-                    single_area_width * (i + .5) - 20
-                )
-                .attr 'y1', single_area_height - radius + 10
-                .attr('x2', (d, i) ->
-                    if i != 0
-                        single_area_width * (i - .5) - 20
-                    else
-                        single_area_width * (i + .5) - 20
-                )
-                .attr 'y2', single_area_height - radius + 10
+                if $sidebar.hasClass 'js-hide' then x = 0 else x = -200
 
-            svg.selectAll('circle')
-                .data(data).enter()
-                .append('circle')
-                .attr('class', 'step-point')
-                .attr('fill', (d, i) ->
-                    if d.status == 'done'
-                        '#8bc34a'
-                    else if d.status == 'undo'
-                        svg.append('circle')
-                            .attr 'cx',
-                                single_area_width * (i + .5) - 20
-                            .attr 'cy',
-                                single_area_height - radius + 10
-                            .attr 'r', 17+radius
-                            .attr 'fill', 'transparent'
-                            .attr 'stroke', 'rgba(0, 0, 0, .12)'
-                            .attr 'stroke-width', '2px'
-                        return '#2196f3'
-                    else if d.status == 'reject'
-                        '#f34e4c'
-                    else
-                        '#dedede'
-                )
-                .attr('cx', (d, i) ->
-                    single_area_width * (i + .5) - 20
-                )
-                .attr('cy', single_area_height - radius + 10)
-                .attr('r', (d,i) ->
-                    if d.status == 'undo'
-                        7+radius
-                    else
-                        radius
-                )
+                $sidebar.stop(true,false).animate {
+                    marginLeft: x + 'px'
+                }, 1000, false
 
-            svg.selectAll('text').data(data)
-                .enter()
-                .append('text')
-                .attr('class', 'step-title')
-                .attr('x', (d, i) ->
-                    single_area_width * (i + .5) - 30
-                )
-                .attr('y', (d, i) ->
-                    if i%2 == 0
-                        if d.status == 'undo'
-                            single_area_height - radius - 40 + 10
-                        else
-                            single_area_height - radius - 20 + 10
-                    else
-                        if d.status == 'undo'
-                            single_area_height + 32 + radius + 10
-                        else
-                            single_area_height + 12 + radius + 10
-                )
-                .attr 'stroke-width', (d,i) ->
-                    if d.status == 'undo'
-                        return '2px'
-                    else
-                        return '1px'
-                .attr('fill',(d,i) ->
-                    if d.status == 'unreachable'
-                        'rgba(0,0,0,.26)'
-                    else if d.status == 'done'
-                        '#689f38'
-                    else if d.status == 'reject'
-                        '#e84e40'
-                    else if d.status == 'undo'
-                        '#1976d2'
-                )
-                .attr('text-anchor', 'start')
-                .attr 'font-size', (d, i) ->
-                    if d.status == 'undo'
-                        return '16px'
-                    else
-                        return '14px'
-                .text (d, i) ->
-                    d.des
+                return
+
 
         return {
+            template: template
+            link: postLink
+            scope: true
+        }
+    ]
+
+    .directive 'columnChart', [ () ->
+
+        postLink = (scope, elem, attrs) ->
+            data = [
+                {
+                    name: "带薪假",
+                    count: 3
+                },
+                {
+                    name: "探亲假",
+                    count: 6
+                },
+                {
+                    name: "事假",
+                    count: 3,
+                },
+                {
+                    name: "病假",
+                    count: 4
+                },
+                {
+                    name: "旷工",
+                    count: 2
+                },
+                {
+                    name: "迟到",
+                    count: 7
+                },
+                {
+                    name: "早退",
+                    count: 4
+                }
+            ]
+
+            options = {
+                "width": 420,
+                "height": 250,
+                "bottom": 50
+            }
+
+            yScale = d3.scale.linear()
+                .domain([0, 10])
+                .range([0, options.height - options.bottom])
+
+            svg = d3.select(elem[0])
+                .append("svg")
+                    .attr("class","c-chart")
+                    .attr("width", options.width)
+                    .attr("height", options.height)
+
+            nodes = svg.selectAll("g.c-item").data(data)
+            node = nodes.enter().append("g").attr("class","c-item")
+
+            node.append("rect").attr("class","c-column")
+            node.append("text").attr("class","c-name")
+            node.append("g").attr("class","c-desc")
+            node.select("g.c-desc").append("rect")
+            node.select("g.c-desc").append("text")
+
+            nodes.exit().remove()
+
+            node.on 'mouseover', (d, i)->
+                    d3.select(this).select("g.c-desc")
+                        .transition()
+                        .duration(300)
+                        .attr("fill-opacity", 1)
+
+                    d3.select(this).select("rect.c-column")
+                        .transition()
+                        .duration(300)
+                        .attr("fill-opacity", .7)
+
+            node.on 'mouseout', (d, i)->
+                    d3.select(this).select("g.c-desc")
+                        .transition()
+                        .duration(300)
+                        .attr("fill-opacity", 0)
+
+                    d3.select(this).select("rect.c-column")
+                        .transition()
+                        .duration(300)
+                        .attr("fill-opacity", 1)
+
+
+            nodes.select("rect.c-column")
+                .attr("width", 30)
+                .attr("height", (d, i) ->
+                        return yScale(d.count)
+                    )
+                .attr("x", (d,i) ->
+                        return (i+1)*(options.width-210)/8 + 30*i
+                    )
+                .attr("y", (d,i) ->
+                        return options.height - options.bottom - yScale(d.count)
+                    )
+                .attr("fill", (d,i) ->
+                        switch d.name
+                            when "带薪假" then "#77a340"
+                            when "探亲假" then  "#77a340"
+                            when "事假" then "#2d8ddb"
+                            when "病假" then "#2d8ddb"
+                            when "旷工" then "#dd5140"
+                            when "迟到" then "#ddb509"
+                            when "早退" then "#ddb509"
+                    )
+
+            nodes.select("text.c-name")
+                .attr("font-size","10px")
+                .attr("text-anchor","middle")
+                .attr("x", (d,i) ->
+                        return (i+1)*(options.width-210)/8 + 30*(i + .5)
+                    )
+                .attr("y", (d,i) ->
+                        return options.height - options.bottom + 20
+                    )
+                .text( (d,i)-> d.name)
+
+            nodes.select("g.c-desc")
+                .attr("fill-opacity", 0)
+
+            nodes.select("g.c-desc").select("rect")
+                .attr("width", 40)
+                .attr("height", 30)
+                .attr("x", (d,i) ->
+                        return (i+1)*(options.width-210)/8 + 30*i
+                    )
+                .attr("y", (d,i) ->
+                        return options.height - options.bottom - yScale(d.count) - 40
+                    )
+                .attr("fill", "rgba(255, 255, 255, .4)")
+
+            node.select("g.c-desc").select("text")
+                .attr("font-size","14px")
+                .attr("text-anchor","middle")
+                .attr("fill","#fff")
+                .attr("x", (d,i) ->
+                            return (i+1)*(options.width-210)/8 + 30*i + 20
+                        )
+                    .attr("y", (d,i) ->
+                            return options.height - options.bottom - yScale(d.count) - 40 + 20
+                        )
+                .text( (d,i)-> d.count + "天")
+
+        return {
+            restrict: "EA"
             link: postLink
         }
-
     ]
 
 
@@ -539,12 +504,12 @@ angular.module 'nb.directives'
 
         postLink = (scope, elem, attrs, ngModelCtrl) ->
 
-            elem.datepicker(
-                autoclose: true
-                format: 'yyyy-mm-dd'
-                language: 'zh-cn'
+            config = autoclose: true, format: 'yyyy-mm-dd', language: 'zh-cn'
 
-            )
+            if attrs.endDate == 'today'
+                config['endDate'] = moment().endOf('day').toDate()
+
+            elem.datepicker(config)
             # .on 'changeDate', (evt) ->
             #     ngModelCtrl.$setViewValue(evt.date)
 
@@ -554,7 +519,7 @@ angular.module 'nb.directives'
                     ngModelCtrl.$setValidity('date', true)
                     return
 
-                return moment(viewValue)
+                return moment(viewValue).format()
 
             ngModelCtrl.$formatters.push (modelValue) ->
                 return moment(modelValue).format('YYYY-MM-DD') if modelValue
@@ -594,7 +559,7 @@ angular.module 'nb.directives'
         }
 
 
-    .directive 'nbFileUpload', [()->
+    .directive 'flowFileUpload', [()->
         template = '''
         <div>
             <div class="accessory-container">
@@ -663,6 +628,87 @@ angular.module 'nb.directives'
             template: (elem, attrs)->
                 new Error("flow type is needed in workflows") if attrs['flowType']
                 template.replace /##FLOW_TYPE##/, attrs['flowType']
+            replace: true
+            link: postLink
+            require: 'ngModel'
+            controller: FileUploadCtrl
+            controllerAs: 'ctrl'
+        }
+    ]
+
+    .directive 'nbFileUpload', [()->
+        template = '''
+        <div>
+            <div class="accessory-container">
+                <div ng-repeat="file in files track by $index"  class="accessory-cell">
+                    <div ng-if="ctrl.isImage(file)" nb-gallery img-obj="file">
+                        <div class="accessory-name" ng-bind="file.name"></div>
+                        <div class="accessory-size" ng-bind="file.size | byteFmt:2"></div>
+                        <div class="accessory-switch">
+                            <md-button type="button" class="md-icon-button" ng-click="ctrl.removeFile($flow, $index)">
+                                <md-icon md-svg-src="/images/svg/close.svg" class="md-warn"></md-icon>
+                            </md-button>
+                        </div>
+                    </div>
+                    <div ng-if="!ctrl.isImage(file)">
+                        <div class="accessory-name" ng-bind="file.file_name"></div>
+                        <div class="accessory-size" ng-bind="file.file_size | byteFmt:2"></div>
+                        <div class="accessory-switch">
+                            <md-button type="button" class="md-icon-button" ng-click="ctrl.removeFile($flow, $index)">
+                                <md-icon md-svg-src="/images/svg/close.svg" class="md-warn"></md-icon>
+                            </md-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accessory-btn-group"
+                flow-init="{target: '/api/attachments/upload_xls', testChunks:false, uploadMethod:'POST', singleFile:true}"
+                flow-files-submitted="$flow.upload()"
+                flow-file-success="ctrl.addFile($message);">
+                <md-button
+                    ng-if="$flow.files.length < fileSize"
+                    class="md-primary md-raised" flow-btn type="button">添加文件</md-button>
+                <span class="tip"> {{tips}}</span>
+            </div>
+
+        </div>
+        '''
+
+        class FileUploadCtrl
+            @.$inject = ['$scope']
+
+            constructor: (@scope)->
+                @scope.fileSize = Number.MAX_VALUE
+
+            addFile: (fileObj)->
+                file = JSON.parse(fileObj)
+                @scope.files = [] if !@scope.files
+                @scope.files.push file
+
+            removeFile: (flow, index)->
+                file = @scope.files.splice(index, 1)
+
+            isImage: (file)->
+                /^image\/jpg|jpeg|gif|png/.test(file.type)
+
+        postLink = (scope, elem, attrs, ngModelCtrl) ->
+
+            if attrs.singleFile
+                scope.fileSize = 1
+
+            scope.$watch "files", (newVal)->
+                fileIds = _.map newVal, 'id'
+                result = if fileIds.length == 1 then fileIds[0] else fileIds
+                ngModelCtrl.$setViewValue(result)
+            , true
+
+            return
+
+        return {
+            scope: {
+                tips: '@tips'
+            }
+            template: template
             replace: true
             link: postLink
             require: 'ngModel'

@@ -390,6 +390,18 @@ class ReviewCtrl extends nb.Controller
             params.push temp
         @changes.checkChanges(params)
 
+
+class EmployeePerformanceCtrl extends nb.Controller
+    @.$inject = ['$scope', 'Employee', 'Performance']
+
+    constructor: (@scope, @Employee, @Performance)->
+
+    loadData: (employee)->
+        self = @
+        employee.performances.$fetch().$then (performances)->
+            self.performances = _.groupBy performances, (item)-> item.assessYear
+
+
 class PersonnelSort extends nb.Controller
     @.$inject = ['$scope', 'Org', 'Position', 'Employee', '$http']
     constructor: (@scope, @Org, @Position, @Employee, @http) ->
@@ -488,3 +500,4 @@ app.directive('orgMutiPos',[orgMutiPos])
 app.config(Route)
 app.controller('PersonnelSort', PersonnelSort)
 app.controller('LeaveEmployeesCtrl', LeaveEmployeesCtrl)
+app.controller('EmployeePerformanceCtrl', EmployeePerformanceCtrl)

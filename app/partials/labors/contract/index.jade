@@ -21,6 +21,7 @@ block cust_page
                     ) 发起离职
                     md-button.md-primary.md-raised(
                         nb-dialog
+                        ng-disabled="!ctrl.getSelected()"
                         template-url="/partials/labors/contract/renew.html"
                         locals="{contract:ctrl.getSelected()}"
                     ) 发起续签

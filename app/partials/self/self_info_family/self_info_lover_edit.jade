@@ -5,6 +5,7 @@ form(ng-submit="save(wife.$save(),familymembersForm)" name="familymembersForm" n
         md-button.md-raised.white(ng-click="cancel(wife, $event, familymembersForm)") 取消
         md-button.md-primary.md-raised(type="submit") 保存
     fieldset(ng-disabled="!editing")
+        input(type="hidden" ng-model="wife.relationType" ng-init="wife.relationType = '配偶'")
         div(layout)
             md-input-container(flex)
                 label 姓名

@@ -24,6 +24,9 @@ class Controller extends Base
     constructor: () ->
         # @initialize()
 
+    # 在grid register api 时， 将 gridApi 共享到controller中
+    exportGridApi: (gridApi) ->
+        @gridApi = gridApi
 
     onInitialDataError: (xhr) ->
         if xhr
@@ -89,6 +92,8 @@ class NewFlowCtrl
     constructor: (scope, $http, meta) ->
         ctrl = @
 
+        Moment = moment().constructor
+
         scope.initialFlow = (type) ->
             ctrl.flow_type = type
 
@@ -97,6 +102,13 @@ class NewFlowCtrl
         scope.createFlow = (data, receptor, list) ->
             data.vacation_days = scope.vacation_days
             data.receptor_id = if receptor then receptor.id else meta.id
+
+            #临时处理， moment() 默认的tostring 不符合前后端约定
+            #暂时没有找到好的方法
+            for own key, value of data
+                if value instanceof Moment
+                    data[key] = value.format()
+
             $http.post("/api/workflows/#{ctrl.flow_type}", data).success () ->
                 scope.panel.close() if scope.panel
                 list.$refresh()
@@ -143,11 +155,11 @@ class NewMyRequestCtrl extends NewFlowCtrl
         # 计算请假天数
         scope.calculateTotalDays = (data, vacation_type) ->
             #validation data
-            if moment.isMoment(data.start_time) && moment.isMoment(data.end_time)
+            if data.start_time && data.end_time
                 request_data = {
                     vacation_type: vacation_type
-                    start_time:  data.start_time.toISOString()
-                    end_time: data.end_time.toISOString()
+                    start_time: moment(data.start_time).format()
+                    end_time: moment(data.end_time).format()
                 }
                 enableCalculating()
 
