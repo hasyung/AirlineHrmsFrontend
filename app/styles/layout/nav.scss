@@ -4,6 +4,19 @@
     min-width: 200px;
     width: 200px;
 
+    &:after {
+        background: rgba(54, 54, 64, .7);
+        bottom: 0;
+        content: '';
+        display: block;
+        -webkit-filter: blur(20px);
+        filter: blur(20px);
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: -1;
+    }
+
     md-content {
         background: rgba(54, 54, 64, .7);
     }

@@ -27,7 +27,7 @@ menuFactory = ($rootScope, $state)->
         name: '待办事项'
         type: 'link'
         state: 'TODO'
-        icon_src: '/images/svg/left-side-svg/left_icon_2.svg'
+        icon_src: '/images/svg/left-side-svg/left_icon_22.svg'
     }
 
 
