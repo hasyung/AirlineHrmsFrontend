@@ -3,7 +3,7 @@
         .todo-list-item(layout flow-handler="todo" flows="todoCtrl.todos" ng-repeat="todo in todoCtrl.todos track by todo.id")
             .item-left(layout="column" layout-align="center end")
                 .date {{todo.updatedAt | date:'yyyy-MM-dd'}}
-                .time {{todo.updatedAt | date:'HH:ss'}}
+                .time {{todo.updatedAt | date:'HH:mm'}}
             .item-right(flex)
                 .item-msg
                     .avatar
