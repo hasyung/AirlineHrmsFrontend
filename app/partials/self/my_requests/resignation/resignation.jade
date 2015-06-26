@@ -1,0 +1,21 @@
+extends ../../../component/workflow/rfc
+
+block vars
+    - var flowType = "Flow::Resignation"
+    - var flowTitle = "员工辞职申请单"
+
+block relation_data
+    div.flow-info-row(layout)
+        .flow-info-cell(flex)
+            .flow-cell-title 入职时间
+            .flow-cell-content {{receptor.joinScalDate}}
+
+block form
+    div(layout)
+        md-input-container(flex)
+            label 拟离职时间
+            input(ng-model="request.leave_date" bs-datepicker)
+    div(layout)
+        md-input-container(flex)
+            label 辞退原因
+            textarea(ng-model="request.reason" columns="1" md-maxlength="2000")

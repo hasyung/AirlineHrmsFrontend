@@ -31,9 +31,44 @@ module
 
         (input, opts) ->
             if input then new Date(input) else ""
+
+    .filter 'fromNow', ->
+
+        (input, opts = true) ->
+            if input
+                try
+                    return moment(input).fromNow(opts)
+                catch e
+                    ""
+    .filter 'mdate', ->
+
+        (input, format = "YYYY-mm-DD") ->
+            if input && input.format
+                return input.format(format)
+
+
+    .filter 'diffDate', ->
+        (input, opts) ->
+
+            if input
+                try
+                    return moment().diff(moment(input), opts)
+                catch e
+                    return ''
+                    # ...
+
+
+
     .filter 'enum', ['$enum', ($enum) ->
 
         (input, opts) ->
             $enum.parseLabel(input, opts)
     ]
 
+    .filter 'big2small', [()->
+
+        (input) ->
+            _.sortBy input, (item)->
+                this.sin item.$key
+            ,Math
+    ]

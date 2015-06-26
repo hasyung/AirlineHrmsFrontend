@@ -258,6 +258,7 @@ NbFilterDirective = ()->
                     <div flex></div>
                     <md-button class="md-primary md-raised" nb-dialog template-url="partials/component/table/save_filter_dialog.html">保存</md-button>
                     <md-select ng-model="filter.serializedFilter"
+                    ng-if="filter.filters.length"
                     ng-change="filter.restoreFilter(filter.serializedFilter.parse());search(filter.serializedFilter.parse())" placeholder="请选择筛选条件">
                         <md-option ng-value="f" ng-repeat="f in filter.filters">{{f.name}}</md-option>
                     </md-select>
@@ -375,17 +376,20 @@ nbGridDirective = ($parse)->
         pageGetter = $parse('safeSrc.$metadata.page')
         itemCountGetter = $parse('safeSrc.$metadata.count')
         exportApi = angular.isDefined(attrs.exportApi) #gridApi export to appScope
+        multiSelect = if attrs.multiSelect then scope.$eval(attrs.multiSelect) else true
+        enableRowSelection = angular.isDefined(attrs.gridSelection)
 
         defaultOptions = {
             # flatEntityAccess: true
             enableSorting: false
             # useExternalSorting: false
             useExternalPagination: true
-            enableRowSelection: true
-            enableSelectAll: true
+            enableRowSelection: enableRowSelection
+            enableSelectAll: multiSelect
             selectionRowHeaderWidth: 35
             rowHeight: 50
             enableColumnMenus: false
+            multiSelect: multiSelect
 
             # paginationTemplate: ''' ''' #分页组件模板， 需要集成 ui-grid-paper
             # totalItems: xxx
@@ -396,7 +400,11 @@ nbGridDirective = ($parse)->
             onRegisterApi: (gridApi) ->
 
                 #WARN 必须保持grid 生命周期与controller 一致， 暂不支持动态生成表格, 不然会内存泄露
+                # DEPRECATED
                 gridApi.grid.appScope.$parent.$gridApi = gridApi if exportApi
+
+                #recommended  alpha
+                scope.onRegisterApi({gridApi: gridApi})
 
                 gridApi.pagination.on.paginationChanged scope, (newPage, pageSize) ->
                     currentQueryParams = safeSrc.$queryParams || {}
@@ -405,7 +413,6 @@ nbGridDirective = ($parse)->
                         per_page: pageSize
                     }
                     safeSrc.$refresh(queryParams)
-
 
             excludeProperties: [
                 '$$dsp'
@@ -431,12 +438,12 @@ nbGridDirective = ($parse)->
         scope.$watch(
             -> itemCountGetter(scope)
             ,
-            (newValue) -> options.totalItems =  newValue if newValue
+            (newValue) -> options.totalItems =  newValue if angular.isNumber(newValue)
             )
         scope.$watch(
             -> pageGetter(scope)
             ,
-            (newValue) -> options.paginationCurrentPage =  newValue if newValue
+            (newValue) -> options.paginationCurrentPage =  newValue if angular.isNumber(newValue)
             )
         # scope.$watch('gridOptions.paginationPageSize') #watch 每页数据
 
@@ -453,7 +460,14 @@ nbGridDirective = ($parse)->
         }
         template: (elem, attrs) ->
             PLUGIN_PREFIX = 'ui-'
-            plugins = ['ui-grid-pinning','ui-grid-selection']
+
+            plugins = [
+                'ui-grid-pinning'
+                'ui-grid-selection'
+                'ui-grid-edit'
+                'ui-grid-row-edit'
+                'ui-grid-cellNav'
+            ]
             applied_plugins = plugins.reduce((res, val) ->
                 removedPrefix = val.replace(PLUGIN_PREFIX, '')
                 camelCased = _.camelCase(removedPrefix)
@@ -464,6 +478,7 @@ nbGridDirective = ($parse)->
         scope: {
             columnDefs: '='
             safeSrc: '='
+            onRegisterApi: '&'
         }
     }
 

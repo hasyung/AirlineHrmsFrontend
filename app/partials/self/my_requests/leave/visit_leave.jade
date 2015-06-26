@@ -1,0 +1,24 @@
+extends leave_layout
+
+block vars
+    - var flowType = 'Flow::HomeLeave'
+    - var flowName = '探亲假'
+    - var formType = 1
+    - var need_attachment = true
+
+
+block additional_form
+    div(layout)
+        md-input-container.row-has-value(flex)
+            label 探视目标
+            md-select(ng-model="request.relation" required)
+                md-select-label {{request.relation||'无'}}
+                md-option(value="父母") 父母
+                md-option(value="配偶") 配偶
+    div(layout)
+        div.dis-toggle
+            md-checkbox.md-primary(ng-model="additional") 附带路程假
+        div.dis-check
+            md-radio-group(ng-model="request.journey")
+                md-radio-button.md-primary(value="省内" ng-disabled="!additional") 省内
+                md-radio-button.md-primary(value="省外" ng-disabled="!additional") 省外

@@ -1,5 +1,5 @@
-div(ng-init= "current = panel.employee; current.$refresh();")
-    md-toolbar(md-theme="hrms")
+div.panel-bg-gray(ng-init= "current = panel.employee; current.$refresh();")
+    md-toolbar(md-theme="red")
         .md-toolbar-tools
             span 人事信息
     .personnel-base-info(layout)
@@ -47,6 +47,8 @@ div(ng-init= "current = panel.employee; current.$refresh();")
                 tab(heading="考勤信息")
 
                 tab(heading="绩效考核")
+                    md-content.nb-card-container(flex layout="column" md-theme="hrms")
+                        include performance/index
 
                 tab(heading="档案信息")
 

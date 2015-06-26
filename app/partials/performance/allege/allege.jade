@@ -1,0 +1,98 @@
+.workflow.md-background(md-theme="hrms" 
+    ng-init="allege = panel.allege; request = {};\
+        outerScope = panel.outerScope;\
+        allege.$refresh();\
+        Performance = panel.Performance;\
+        Employee = panel.Employee;\
+        performanceAttachs = Performance.$new(allege.performanceId).attachments.$fetch();\
+        receptor = Employee.$find(allege.employeeId);\
+        targetUrl = '/api/alleges/' + allege.id +'/attachments';\
+    "
+)
+    md-toolbar.md-warn(md-theme="hrms")
+        .md-toolbar-tools
+            span 绩效申述
+    .personnel-content.personnel-control
+        section.personnel-info-section
+            md-content.nb-card-container(layout="column" md-theme="hrms")
+                form(ng-submit="allege.$update(request)")
+                    md-card.form-material-section.nb-card
+                        md-subheader.md-background.md-hue-1
+                        flow-user-info(receptor="receptor")
+                        .flow-relations
+                            div.flow-info-row(layout)
+                                .flow-info-cell(flex)
+                                    .flow-cell-title 通道
+                                    .flow-cell-content {{receptor.channelId | enum: 'channels'}}
+                                .flow-info-cell(flex)
+                                    .flow-cell-title 用工性质
+                                    .flow-cell-content {{receptor.laborRelationId | enum: 'labor_relations'}}
+                            div.flow-info-row(layout)
+                                .flow-info-cell(flex)
+                                    .flow-cell-title 考核时段
+                                    .flow-cell-content {{::allege.assessTime | date: 'yyyy-MM'}}
+                                .flow-info-cell(flex)
+                                    .flow-cell-title 绩效
+                                    .flow-cell-content {{::allege.result}}
+
+                        md-subheader.accessory-header.md-background.md-hue-1 附件
+                        .accessory-container
+                            .accessory-cell(ng-repeat="attachment in performanceAttachs")
+                                .accessory-name(ng-bind="attachment.name")
+                                .accessory-size(ng-bind="attachment.size | byteFmt:2")
+
+                    md-card.form-material-section.nb-card
+                        md-subheader.md-background.md-hue-1 申述理由
+                        fieldset
+                            div(layout)
+                                md-input-container(flex)
+                                    label 申述理由
+                                    textarea(ng-model="allege.reason" columns="1" md-maxlength="2000" disabled)
+
+                    md-card.form-material-section.nb-card
+                        md-subheader.md-background.md-hue-1(style="margin-bottom: 20px;") 处理附件
+                        .accessory-container
+                            .accessory-cell(ng-repeat="attachment in allege.allegeAttachments")
+                                .accessory-name(ng-bind="attachment.name")
+                                .accessory-size(ng-bind="attachment.size | byteFmt:2")
+                                .accessory-switch
+                                    md-button.md-icon-button(ng-click="allege.attachments.$new(attachment.id).$destroy()")
+                                        md-icon.md-warn(md-svg-src="/images/svg/close.svg")
+
+                        .accessory-btn-group(
+                            flow-init="{target: targetUrl, testChunks:false, uploadMethod:'POST', singleFile:true}"
+                            flow-files-submitted="$flow.upload()"
+                            flow-file-success="allege.allegeAttachments.push(outerScope.ctrl.parseJSON($message).allege_attachment)"
+                        )
+                            md-button.md-primary.md-raised( flow-btn type="button") 添加文件
+                            .tip
+
+                    md-card.form-material-section.nb-card.performance-result
+                        md-subheader.md-background.md-hue-1 处理结果
+                        md-radio-group(ng-model="request.outcome")
+                            md-radio-button.md-primary(value="通过") 通过
+                            md-radio-button.md-primary(value="驳回") 驳回
+                        fieldset
+                            div(layout)
+                                md-input-container.row-has-value(flex)
+                                    label 绩效调整为
+                                    md-select(ng-model="request.result" required)
+                                        md-select-label {{request.result}}
+                                        md-option(value="合格") 合格
+                                        md-option(value="不合格") 不合格
+                                        md-option(value="良好") 良好
+                                div(flex)
+
+                    .form-bottom-group(layout)
+                        span(flex)
+                        md-button.md-raised.white(type="button" ng-click="panel.close()") 取消
+                        md-button.md-primary.md-raised(type="submit") 确定
+
+
+
+
+
+
+
+
+

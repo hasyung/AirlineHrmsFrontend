@@ -1,0 +1,14 @@
+extends leave_layout
+
+block vars
+    - var flowType = "Flow::MarriageLeave"
+    - var flowName = '婚假'
+    - var formType = 1
+    - var need_attachment = true
+
+
+block additional_form
+    div(layout)
+        md-input-container(flex)
+            label 结婚日期
+            input(ng-model="request.marriage_time" name="marriage_time" bs-datepicker required)

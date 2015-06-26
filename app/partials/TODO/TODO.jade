@@ -1,0 +1,62 @@
+.todo-container(layout)
+    .todo-list(flex)
+        .todo-list-item(layout flow-handler="todo" flows="todoCtrl.todos" ng-repeat="todo in todoCtrl.todos track by todo.id")
+            .item-left(layout="column" layout-align="center end")
+                .date {{todo.updatedAt | date:'yyyy-MM-dd'}}
+                .time {{todo.updatedAt | date:'HH:mm'}}
+            .item-right(flex)
+                .item-msg
+                    .avatar
+                        img(ng-src="{{todo.sponsor.favicon}}")
+                    .content
+                        h3
+                            span {{::todo.sponsor.name}}
+                            | 发起于
+                            span(ng-bind="::todo.createdAt | fromNow: false")
+                        p.single-ellipsis {{::todo.desc}}
+                        .reviewers
+                            div(ng-repeat="viewerFavicon in ::todo.viewerFavicons")
+                                img(ng-src="{{::viewerFavicon}}")
+
+                        .tip {{::todo.name}}
+
+    .todo-aside
+        .post-board
+            tabset
+                tab(heading="新闻公告")
+                    .post-item.notice
+                        h4 关于武汉天河机场提前四十分钟停止办理乘机手续的重要通知
+                        .date 2015年6月15日
+                        p 自2015年7月1日起，武汉天河机场所有出港航班将提前40分钟停止办理乘机手续，请乘坐武汉天河机场航班的旅客务必尽早抵达机场，办理乘机手续，以免误机。
+                tab(heading="通讯录")
+                    .post-item.notice
+                        h4 关于武汉天河机场提前四十分钟停止办理乘机手续的重要通知123
+                        .date 2015年6月15日
+                        p 自2015年7月1日起，武汉天河机场所有出港航班将提前40分钟停止办理乘机手续，请乘坐武汉天河机场航班的旅客务必尽早抵达机场，办理乘机手续，以免误机。
+
+        .personal-attence
+            .custom-toolbar
+                .toolbar-tools
+                    span 个人考勤
+                    span(flex)
+                    span
+                        md-button.md-icon-button
+                            md-icon(md-svg-src="/images/svg/menu.svg")
+            .content(column-chart)
+
+        //- .hr-attence
+        //-     .custom-toolbar
+        //-         .toolbar-tools
+        //-             span 人力资源部考勤
+        //-             span(flex)
+        //-             span
+        //-                 md-button.md-icon-button
+        //-                     md-icon(md-svg-src="/images/svg/menu.svg")
+        //-     .content
+
+
+
+
+
+
+

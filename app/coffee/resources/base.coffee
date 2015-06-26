@@ -13,16 +13,16 @@ nbRestApi = (restmod, RMUtils, $Evt) ->
         updated_at: { decode: 'date', param: 'yyyy年mm月dd日',mask: 'CU' } #不 send CURD 操作时
 
         $hooks:
-            'before-request': (_options) ->
-                return if !_options.params || !angular.isObject(_options.params)
-                _params = _options.params
-                params = {}
-                angular.forEach _params, (value, key) ->
-                    if angular.isArray(value)
-                        params[key+"[]"] = value
-                    else
-                        params[key] = value
-                _options.params = params
+            # 'before-request': (_options) ->
+            #     return if !_options.params || !angular.isObject(_options.params)
+            #     _params = _options.params
+            #     params = {}
+            #     angular.forEach _params, (value, key) ->
+            #         if angular.isArray(value)
+            #             params[key+"[]"] = value
+            #         else
+            #             params[key] = value
+            #     _options.params = params
 
 
             'before-fetch-many': (req) ->

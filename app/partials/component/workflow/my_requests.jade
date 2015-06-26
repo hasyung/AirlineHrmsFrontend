@@ -1,0 +1,28 @@
+block vars
+
+.flow-list(flex ng-init="ctrl.myRequests()")
+    md-toolbar
+        .md-toolbar-tools
+            span
+                md-button.md-icon-button(ui-sref="^")
+                    md-icon(md-svg-src="/images/svg/arrow-left.svg")
+            span #{requestTitle}
+
+    .flow-list-body
+        .flow-list-content.ui-grid-container
+            .flow-list-tip #{requestTip}
+
+            md-toolbar
+                .md-toolbar-tools
+
+                    block tools
+
+            if gridSelection
+                div(
+                    nb-grid column-defs="ctrl.columnDef"
+                    on-register-api="ctrl.exportGridApi(gridApi)"
+                    grid-selection
+                    multi-select= multiSelect? 'true': 'false'
+                    safe-src="ctrl.tableData")
+            else
+                div(nb-grid column-defs="ctrl.columnDef"  safe-src="ctrl.tableData")

@@ -1,44 +1,34 @@
 md-toolbar.top-menu-bar.md-warn(md-theme="hrms")
-    .md-toolbar-tools
+    .md-toolbar-tools(ng-controller="notificationCtrl as notify" )
         span.logo
             img(src="../../images/logo.png")
+        span
+            toggle-sidebar
+
         span(flex)
         span
             div.top-notification.top-btn-wrap(notification ng-class="{'open': isOpen}")
                 md-button()
                     md-icon(md-svg-icon="/images/svg/bell-outline.svg")
-                .ms-count 10
+                .ms-count(ng-if="notify.workflow_count" ng-bind="notify.workflow_count")
                 ul.top-dropdown
-                    li
-                        a
+                    li(ng-repeat="(type, flow) in notify.workflows" ng-show="flow.count > 0")
+                        a(ng-click="notify.redirectTo(flow.route_state)")
                             .dropdown-item
                                 .dd-item-desc
-                                    span 员工退休
-                                    span 2015-5-19
-                                .dd-item-count 10
-                    li
-                        a
-                            .dropdown-item
-                                .dd-item-desc
-                                    span 员工退养
-                                    span 2015-5-19
-                                .dd-item-count 10
-                    li
-                        a
-                            .dropdown-item
-                                .dd-item-desc
-                                    span 合同管理
-                                    span 2015-5-19
-                                .dd-item-count 10
+                                    span {{flow.name}}
+                                    span {{flow.oldest_at}}
+                                .dd-item-count {{flow.count}}
+
         span
-            div.top-messages.top-btn-wrap
+            div.top-messages.top-btn-wrap()
                 md-button(
                     nb-panel
                     template-url="partials/shared/notification_center.html"
-
+                    pre-close="notify.markToReaded()"
                 )
                     md-icon(md-svg-icon="/images/svg/email-outline.svg")
-                .ms-count 10
+                .ms-count(ng-if="notify.msg_unread_count" ng-bind="notify.msg_unread_count")
         span
             ul.user-menu(ng-controller="AuthController as ctrl")
                 .nb-dropdown(user-info-dropdown)
@@ -46,3 +36,4 @@ md-toolbar.top-menu-bar.md-warn(md-theme="hrms")
                         a(nb-dialog template-url="partials/auth/change_pwd.html") 修改密码
                     li()
                         a(ng-click="logout()") 退出
+

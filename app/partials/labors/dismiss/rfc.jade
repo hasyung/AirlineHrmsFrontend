@@ -1,0 +1,27 @@
+extends ../../component/workflow/rfc
+
+block vars
+    - var flowType = "Flow::Dismiss"
+    - var flowTitle = "员工辞退申请单"
+
+block relation_data
+    div.flow-info-row(layout)
+        .flow-info-cell(flex)
+            .flow-cell-title 通道
+            .flow-cell-content {{receptor.channelId | enum: 'channels'}}
+        .flow-info-cell(flex)
+            .flow-cell-title 用工性质
+            .flow-cell-content {{receptor.laborRelationId | enum: 'labor_relations'}}
+    div.flow-info-row(layout)
+        .flow-info-cell(flex)
+            .flow-cell-title 入职时间
+            .flow-cell-content {{receptor.joinScalDate | date:'yyyy-MM-dd'}}
+
+block form
+    div(layout)
+        md-input-container(flex)
+            label 辞退原因
+            textarea(ng-model="request.reason" columns="1" md-maxlength="2000")
+
+
+

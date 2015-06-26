@@ -1,0 +1,366 @@
+// form-split 样式 履历，岗位信息，人事信息处在使用
+.form-split {
+    @include clearfix();
+    font-size: 14px;
+    position: relative;
+
+    &:hover {
+        .form-btn-group {
+            visibility: visible;
+        }
+    }
+
+    .form-btn-group {
+        position: absolute;
+        right: 0;
+        top: 10px;
+        visibility: hidden;
+
+        &.alive {
+            visibility: visible;
+        }
+
+        .btn {
+            margin-left: 20px;
+        }
+
+    }
+
+    .form-group {
+        display: flex;
+        float: left;
+        width: 50%;
+
+        &.block {
+            width: 100%;
+        }
+
+        .control-label {
+            color: $text-muted;
+            flex: none;
+            text-align: right;
+            width: 120px;
+        }
+
+        .form-content,
+        .form-control {
+            flex: 1;
+        }
+    }
+}
+
+//弹性盒子布局的material表单样式
+// input编辑状态
+.md-input {
+    padding-left: 0;
+    transition: padding-left cubic-bezier(.25, .8, .25, 1) .25s;
+}
+
+.md-button {
+    min-width: 80px;
+}
+
+//md-toolbar
+.md-toolbar-tools {
+    .md-button {
+        margin-left: 20px;
+    }
+}
+
+//md-select
+md-select {
+    background: none;
+    border-radius: 0;
+    border-width: 0 0 1px;
+    display: block;
+    -ms-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    -ms-flex-order: 2;
+    -ms-flex-preferred-size: 26px;
+    height: 30px;
+    line-height: 26px;
+    -webkit-order: 2;
+    order: 2;
+    padding: 2px;
+
+    .md-select-label {
+        font-size: $font-size-base;
+        padding-bottom: 0 !important;
+        padding-top: 0;
+        transition: padding-left cubic-bezier(.25, .8, .25, 1) .25s;
+
+        span {
+            height: inherit;
+            line-height: 26px;
+        }
+    }
+
+}
+
+// bugfix: 解决下拉框中双滚动条的bug
+.md-select-menu-container {
+    md-select-menu {
+        overflow-y: auto;
+    }
+}
+
+
+fieldset {
+
+    .text-label {
+        color: rgba(0, 0, 0, .54);
+        padding-left: 2px;
+        transform: scale(.75);
+    }
+
+    .editable-text {
+        border-bottom: 1px solid rgba(0, 0, 0, .12);
+        padding: 2px 0;
+
+        p {
+            margin: 0;
+        }
+    }
+
+    &[disabled] {
+
+        .textarea-row {
+            border-bottom: 1px dotted rgba(0, 0, 0, .1);
+            padding-bottom: 2px;
+            position: relative;
+
+            label {
+                margin: 6px 0;
+            }
+
+            .text-container {
+                padding-left: 90px;
+            }
+
+            .text-label {
+                left: 0;
+                position: absolute;
+                top: -6px;
+                transform: scale(1);
+            }
+        }
+    }
+
+}
+
+
+
+//展示状态下各个组件的样式
+fieldset[disabled] {
+    label:not(.md-no-float),
+    .md-placeholder {
+        -webkit-transform: translate3d(0, 25px, 0) scale(1);
+        transform: translate3d(0, 25px, 0), scale(1);
+    }
+
+    md-input-container {
+        padding-bottom: 9px;
+
+        &.mix-height {
+            height: 59px;
+        }
+
+        label {
+            color: $text-muted;
+        }
+    }
+
+    .md-default-theme .md-input {
+        color: $text-color;
+    }
+
+    .md-input {
+        font-family: $font-family-sans-serif;
+        padding-left: 70px;
+    }
+
+    //md-select
+    md-select {
+        @include background-image(linear-gradient(to right, rgba(0, 0, 0, .12) 0, rgba(0, 0, 0, .12) 33%, transparent 0));
+        background-position: 0 28px;
+        background-repeat: repeat-x;
+        background-size: 3px 1px;
+        height: 30px !important;
+
+        .md-select-label {
+            border: 0;
+            padding-bottom: 0 !important;
+        }
+
+    }
+
+    .md-default-theme .md-select-label {
+        border-bottom-color: transparent;
+        color: $text-color;
+        padding-left: 70px;
+
+    }
+    // 模拟 input 处于有值得情况
+    .row-has-value {
+        label:not(.md-no-float) {
+            // line-height: 18px;
+            -webkit-transform: translate3d(0, 25px, 0) scale(1);
+            transform: translate3d(0, 25px, 0), scale(1);
+        }
+
+        .md-select-icon {
+            visibility: hidden;
+        }
+    }
+    //#workaround  hack , 不知道原因。 6月15日， 下次 material 升级时移除
+    org-search {
+        md-autocomplete-wrap button {
+            display: none;
+        }
+    }
+}
+
+md-input-container {
+    font-family: $font-family-sans-serif;
+    font-size: $font-size-base;
+    margin-right: 10px;
+
+    &.mix-height {
+        height: 76px;
+
+        input {
+            line-height: 36px;
+        }
+    }
+
+
+    &.row-has-value {
+        label:not(.md-no-float) {
+            color: $text-muted;
+            -webkit-transform: translate3d(0, 4px, 0) scale(.75);
+            transform: translate3d(0, 4px, 0), scale(.75);
+        }
+
+        .md-select-icon {
+            visibility: visible;
+        }
+    }
+}
+
+
+.form-group {
+    label {
+        color: $text-muted;
+    }
+}
+
+.form-table-container {
+    th {
+        color: $text-muted;
+    }
+
+    td {
+        color: $text-color;
+    }
+
+    .control-td {
+        .btn {
+            border: 0;
+            box-shadow: none;
+            padding: 2px 8px;
+        }
+    }
+
+    .add-member {
+        @include clearfix();
+        padding: 0 80px;
+    }
+
+    .add {
+        margin-bottom: 20px;
+    }
+}
+
+.nb-card-container {
+    .nb-card {
+        background-color: #fff;
+
+        .item-action {
+            .md-button {
+                border-top: 0 !important;
+            }
+        }
+
+        .form-icon {
+            color: rgb(45, 87, 200);
+            font-size: 16px;
+            height: 24px;
+            margin-right: 10px;
+            margin-top: -2px;
+            width: 24px;
+        }
+    }
+
+    md-card {
+        box-shadow: none;
+    }
+
+    md-card:last-child {
+        margin-bottom: 10px;
+    }
+
+    fieldset {
+        margin: 0;
+        padding: 0;
+        padding-bottom: 30px;
+
+        &[disabled] {
+
+            .md-select-label {
+                border-bottom: 1px inset rgba(0, 0, 0, 0);
+                color: rgba(0, 0, 0, .87);
+                padding-left: 90px;
+            }
+
+            .md-input {
+                color: rgba(0, 0, 0, .87);
+                padding-left: 90px;
+            }
+
+
+        }
+    }
+
+
+}
+
+.has-placeholder {
+    &:focus {
+        +.input-placeholder {
+            display: block;
+        }
+    }
+}
+
+.input-placeholder {
+    color: #e84e40;
+    display: none;
+    position: absolute;
+    right: 10px;
+    top: 26px;
+}
+
+.inline-input-container {
+
+    input {
+        -webkit-appearance: none;
+        background: none;
+        border-width: 0 0 1px;
+        line-height: 26px;
+        padding: 2px 2px 1px;
+    }
+}
+
+
+

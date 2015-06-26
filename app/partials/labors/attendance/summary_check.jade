@@ -1,0 +1,52 @@
+.app-content-wrapper(flex ng-init="ctrl.loadSummariesList()")
+
+    
+    div.ui-grid-container
+        md-toolbar
+            .md-toolbar-tools
+                h2 考勤汇总表
+                div.grid-toolbar-row.year-and-month-container(flex layout)
+                    label.row-text 月度：
+                    .year-and-month(layout)
+                        md-select.year(ng-model="ctrl.year" flex ng-change="ctrl.exeSearch()")
+                            md-select-label {{ctrl.year}}
+                            md-option(ng-value="item" ng-repeat="item in ctrl.getYears()" ng-bind="item")
+
+                        md-select.month(ng-model="ctrl.month" flex ng-change="ctrl.exeSearch()")
+                            md-select-label {{ctrl.month}}
+                            md-option(ng-value="item" ng-repeat="item in ctrl.getMonths()" ng-bind="item") 
+
+                    span.row-text.last {{ctrl.tableData.$metadata.status}}
+                md-button.md-primary.md-raised(
+                    has-permission="attendance_summaries_department_hr_confirm"
+                    nb-confirm="ctrl.departmentHrConfirm()"
+                    nb-title="考勤汇总确认"
+                    nb-content="确认本部门{{ctrl.year}}-{{ctrl.month}}考勤已完成统计，进入后续审批。"
+                ) 汇总确认
+                md-button.md-primary.md-raised(
+                    has-permission="attendance_summaries_department_leader_check"
+                    nb-confirm="ctrl.departmentLeaderCheck()"
+                    nb-title="考勤汇总审核"
+                    nb-content="确认本部门{{ctrl.year}}-{{ctrl.month}}考勤汇总通过审核，提交至人力资源部门。"
+                ) 审核
+                md-button.md-primary.md-raised(
+                    has-permission="attendance_summaries_hr_leader_check"
+                    nb-confirm="ctrl.hrLeaderCheck()"
+                    nb-title="考勤汇总审核"
+                    nb-content="确认对该部门{{ctrl.year}}-{{ctrl.month}}考勤汇总通过审核。"
+                ) 审核
+                md-button.md-primary.md-raised(
+                    ng-href="/api/attendance_summaries/export_xls?summary_date={{ctrl.getDate()}}"
+                    download
+                ) 导出
+        md-toolbar(has-permission="attendance_summaries_hr_leader_check")
+            .summary-org-menu
+                span.org-item(
+                    ng-repeat="item in ctrl.tableData.$metadata.attendance_summary_status"
+                    ng-bind="item.department_name"
+                    ng-class="{'green': item.hr_department_leader_checked,\
+                    'yellow': (!item.hr_department_leader_checked) && item.department_leader_checked && item.department_hr_checked, \
+                    'active': item.department_id == ctrl.tableData.$metadata.department_id}"
+                    ng-click="ctrl.exeSearch(item.department_id)"
+                )
+        div(nb-grid column-defs="ctrl.summaryListCol" export-api grid-pinning safe-src="ctrl.tableData")

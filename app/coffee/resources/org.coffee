@@ -69,13 +69,18 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
 
         return parent
 
-
+    #将数组类型的机构数据转换成树形数据
+    #
     treeful = (treeData, DEPTH, parent) ->
 
         if not parent?
-            parent = _.find treeData, (child) -> child.parent_id == undefined or child.parent_id == 0 #根节点
+            parent = _.find treeData, (child) ->
+                child.parent_id == undefined or child.parent_id == 0 #根节点
         else
-            parent = _.find treeData, (child) -> parent.id == child.id
+            parent = _.find treeData, (child) ->
+                parent.id == child.id
+        staff_org = _.remove treeData, (child) -> child.is_stick == true
+        parent.staff = staff_org.sort (a, b) -> a.sort_no - b.sort_no
         return unflatten(treeData, DEPTH, parent)
 
 
@@ -211,8 +216,8 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
                 jqTreeful: () ->
                     allOrgs = @$wrap()
                     treeData = transform(allOrgs, {'name': 'label'}) # for jqTree
-                    treeData = treeful(treeData, Infinity)
-
+                    parent = _.find treeData, (child) -> child.parent_id == undefined or child.parent_id == 0 #根节点
+                    treeData = unflatten(treeData, Infinity, parent)
                     return [treeData]
             Record:
 
@@ -246,15 +251,19 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
 
 
 class OrgStore extends nb.Service
-    @.$inject = ['Org']
 
-    constructor: (@Org) ->
+    @.$inject = ['Org', 'DEPARTMENTS', 'USER_META']
+
+    constructor: (@Org, @DEPARTMENTS, @USER_META) ->
 
     initialize: () ->
         @orgs = @Org.$collection().$fetch()
 
     get: ->
         return @orgs
+
+    getPrimaryOrgs: ->
+        return @DEPARTMENTS.filter (o) -> o.xdepth == 2
 
     getOrgsByIds: (ids) ->
         self = @
@@ -266,6 +275,23 @@ class OrgStore extends nb.Service
     queryMatchedOrgs: (text) ->
         @orgs.filter (org) -> s.include(org.fullName, text)
 
+    getPrimaryOrgId: (id) ->
+        currentOrg = _.find(@DEPARTMENTS, {id: @USER_META.department.id})
+        serialNumber = currentOrg.serial_number
+
+        if serialNumber
+            if serialNumber.length == 6
+                return currentOrg.id
+            else if serialNumber.length > 6
+                primaryOrgSerialNumber = serialNumber.slice(0, 6)
+                primaryOrg = _.find(@DEPARTMENTS, {serial_number: primaryOrgSerialNumber})
+                return primaryOrg.id
+            else
+                throw "can not find org id : #{id} primary org "
+
+
+
+
 
 
 
@@ -275,4 +301,4 @@ class OrgStore extends nb.Service
 
 
 resources.factory 'Org',['restmod', 'RMUtils', '$nbEvent', 'DEPARTMENTS', Org]
-resources.service 'OrgStore',['Org', OrgStore]
+resources.service 'OrgStore', OrgStore

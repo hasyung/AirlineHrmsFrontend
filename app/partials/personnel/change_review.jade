@@ -13,7 +13,7 @@ tabset(flex)
                 input(type="hidden" nb-pipe="ctrl.search(tableState)")
                 .table-container
                     h4 待审核列表
-                        md-button.skyblue.md-raised.pull-right(ng-click="ctrl.checkChanges()") 审核
+                        md-button.md-primary.md-raised.pull-right(ng-click="ctrl.checkChanges()" ng-disabled="!(ctrl.changes && ctrl.changes.length > 0 )") 审核
                     table.table.table-striped.custom-table
                         thead
                             tr
@@ -55,8 +55,10 @@ tabset(flex)
                                 td.long-text
                                     a(href="javascript:;", nb-popup-plus, position="left-bottom", offset="0.5") {{change.reason || '请输入'}}
                                         popup-template.nb-popup.org-default-popup-template(style="padding:8px;border:1px solid #eee;")
-                                            .panel-heading.popup-title 请输入理由
+                                            //- .panel-heading.popup-title 请输入理由
                                             .panel-body.popup-body
-                                                textarea(ng-model="change.reason")
+                                                md-input-container
+                                                    label 请输入理由
+                                                    textarea.reason-input(ng-model="change.reason" style="resize:none;")
     tab(heading="变更记录")
         include personnel_changes_record

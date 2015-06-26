@@ -24,6 +24,14 @@ menuFactory = ($rootScope, $state)->
     sections = []
 
     sections.push {
+        name: '待办事项'
+        type: 'link'
+        state: 'TODO'
+        icon_src: '/images/svg/left-side-svg/left_icon_2.svg'
+    }
+
+
+    sections.push {
         name: '员工自助'
         icon_src: '/images/svg/left-side-svg/left_icon_1.svg'
         pages: [
@@ -32,30 +40,21 @@ menuFactory = ($rootScope, $state)->
                 state: 'self.profile'
             }
             {
+                name: '我的申请'
+                state: 'my_requests'
+            }
+            {
                 name: '优免票'
                 # state: 'self.profile'
             }
-            {
-                name: '学历变更申请'
-                # state: 'self.profile'
-            }
-            {
-                name: '绩效申述'
-                # state: 'self.profile'
-            }
-
-            {
-                name: '信息变更记录'
-                # state: 'self.profile'
-            }
-            {
-                name: '公司通讯录'
-                # state: 'self.profile'
-            }
-            {
-                name: '部门信箱'
-                # state: 'self.profile'
-            }
+            # {
+            #     name: '学历变更申请'
+            #     # state: 'self.profile'
+            # }
+            # {
+            #     name: '信息变更记录'
+            #     # state: 'self.profile'
+            # }
         ]
     }
 
@@ -76,11 +75,6 @@ menuFactory = ($rootScope, $state)->
                 name: '岗位列表'
                 state: 'position_list'
                 permission: 'positions_index'
-            }
-            {
-                name: '岗位分布图'
-                state: 'position'
-                permission: ''
             }
             {
                 name: '岗位异动记录'
@@ -116,28 +110,28 @@ menuFactory = ($rootScope, $state)->
     }
 
 
-    sections.push {
-        name: '考勤管理'
-        icon_src: '/images/svg/left-side-svg/left_icon_5.svg'
-        pages: [
-            {
-                name: '考勤记录'
-                state: 'position'
-                permission: ''
-            }
-            {
-                name: '假别设置'
-                state: 'position'
-                permission: ''
-            }
-            {
-                name: '请假管理'
-                state: 'position'
-                permission: ''
-            }
+    # sections.push {
+    #     name: '考勤管理'
+    #     icon_src: '/images/svg/left-side-svg/left_icon_5.svg'
+    #     pages: [
+    #         {
+    #             name: '考勤记录'
+    #             state: 'attendance'
+    #             permission: ''
+    #         }
+    #         {
+    #             name: '假别设置'
+    #             state: 'position'
+    #             permission: ''
+    #         }
+    #         {
+    #             name: '请假管理'
+    #             state: 'position'
+    #             permission: ''
+    #         }
 
-        ]
-    }
+    #     ]
+    # }
 
 
     sections.push {
@@ -145,17 +139,7 @@ menuFactory = ($rootScope, $state)->
         icon_src: '/images/svg/left-side-svg/left_icon_6.svg'
         pages: [
             {
-                name: '培训大纲'
-                state: 'position'
-                permission: ''
-            }
-            {
                 name: '培训记录'
-                state: 'position'
-                permission: ''
-            }
-            {
-                name: '教员管理'
                 state: 'position'
                 permission: ''
             }
@@ -174,8 +158,8 @@ menuFactory = ($rootScope, $state)->
         icon_src: '/images/svg/left-side-svg/left_icon_7.svg'
         pages: [
             {
-                name: '公务餐'
-                state: 'position'
+                name: '福利设置'
+                state: '.welfares'
                 permission: ''
             }
             {
@@ -253,45 +237,55 @@ menuFactory = ($rootScope, $state)->
         icon_src: '/images/svg/left-side-svg/left_icon_9.svg'
         pages: [
             {
-                name: '员工入职'
-                state: 'position'
-                permission: ''
-            }
-            {
-                name: '员工转正'
-                state: 'position'
-                permission: ''
+                name: '员工考勤'
+                state: 'labors_attendance'
             }
             {
                 name: '员工调动'
-                state: 'position'
+                state: 'labors_ajust_position'
                 permission: ''
             }
             {
                 name: '员工退休'
-                state: 'position'
+                state: 'labors_retirement'
                 permission: ''
             }
             {
                 name: '员工退养'
-                state: 'position'
+                state: 'labors_early_retirement'
                 permission: ''
             }
             {
                 name: '员工辞退'
-                state: 'position'
+                state: 'labors_dismiss'
+                permission: ''
+            }
+            {
+                name: '员工处分'
+                state: 'labors_punishment'
+                permission: ''
+            }
+            {
+                name: '合同续签'
+                state: 'labors_renew_contract'
                 permission: ''
             }
             {
                 name: '合同管理'
-                state: 'position'
+                state: 'contract_management'
                 permission: ''
             }
             {
-                name: '档案管理'
-                state: 'position'
+                name: '员工离职'
+                state: 'labors_leave_job'
                 permission: ''
             }
+            {
+                name: '员工辞职'
+                state: 'labors_resignation'
+                permission: ''
+            }
+
 
         ]
     }
@@ -301,18 +295,18 @@ menuFactory = ($rootScope, $state)->
         icon_src: '/images/svg/left-side-svg/left_icon_10.svg'
         pages: [
             {
-                name: '绩效设置'
-                state: 'position'
-                permission: ''
-            }
-            {
                 name: '绩效记录'
-                state: 'position'
+                state: 'performance_record'
                 permission: ''
             }
             {
-                name: '绩效申诉管理'
-                state: 'position'
+                name: '绩效申诉'
+                state: 'performance_alleges'
+                permission: ''
+            }
+            {
+                name: '绩效设置'
+                state: 'performance_setting'
                 permission: ''
             }
         ]
@@ -386,15 +380,15 @@ menuLinkDirective = ($compile, $state) ->
 
     stroke_svg = '''
         <svg width="30" height="50">
-            <path d="M1 0 L1 25 L21 25 M1 25 L1 50" fill="transparent" stroke="#aaa" stroke-width="1"></path>
-            <circle r="4" cx="21" cy="25" fill="#aaa"></circle>
+            <path d="M1 0 L1 25 L21 25 M1 25 L1 50" fill="transparent" stroke="#fff" stroke-width="1"></path>
+            <circle r="4" cx="21" cy="25" fill="#fff"></circle>
         </svg>
     '''
 
     last_stroke_svg = '''
         <svg width="30" height="40">
-            <path d="M1 0 L1 25 L21 25" fill="transparent" stroke="#aaa" stroke-width="1"></path>
-            <circle r="4" cx="21" cy="25" fill="#aaa"></circle>
+            <path d="M1 0 L1 25 L21 25" fill="transparent" stroke="#fff" stroke-width="1"></path>
+            <circle r="4" cx="21" cy="25" fill="#fff"></circle>
         </svg>
     '''
 

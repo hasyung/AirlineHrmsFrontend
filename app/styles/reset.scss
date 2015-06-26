@@ -1,10 +1,12 @@
-* {
-    outline: 0;
+
+:focus {
+    outline: none;
 }
 
 html,
 body {
     font-family: $font-family-sans-serif;
+    font-size: $font-size-sm;
 }
 //重置material design影响标签的样式
 fieldset {
@@ -49,6 +51,7 @@ md-sidenav {
 }
 
 .md-button {
+    font-size: 15px;
     height: 36px;
     line-height: 36px;
     margin: auto;
@@ -76,6 +79,23 @@ md-input-container label {
     top: 0;
 }
 
+md-toolbar {
+    &.md-hrms-theme {
+        &.md-accent {
+            span:first-child {
+                color: $text-color;
+            }
+        }
+
+        &.md-warn {
+            span:first-child {
+                color: #fff;
+            }
+        }
+    }
+}
+
+
 .md-subheader {
     font-family: $font-family-sans-serif;
     font-size: 14px;
@@ -93,6 +113,10 @@ md-input-container > md-select {
         padding-bottom: 1px;
     }
 }
+//重置ui-grid视口的滚动样式，设置为不滚动 !!!这不是一个好办法!!!
+// .ui-grid-viewport {
+//     overflow: hidden !important;
+// }
 
 body h3,
 html h3,
@@ -101,10 +125,10 @@ html h4 {
     margin: 0;
 }
 //重置bootstrap中 btn-default-focus样式
-.btn-default-focus {
-    box-shadow: none;
-    outline: none;
-}
+// .btn-default-focus {
+//     box-shadow: none;
+//     outline: none;
+// }
 
 //重置 图标按钮的字体颜色
 .fa.btn {
@@ -113,7 +137,11 @@ html h4 {
 
 //用于分隔的附加块
 .sep-40 {
-    height: 65px;
+    height: 50px;
+}
+
+.pt-16 {
+    padding-top: 16px;
 }
 
 //确定的宽度 多用于需要表格单元固定宽度换行
@@ -136,3 +164,148 @@ md-drop-option {
         color: rgba(0, 0, 0, .87);
     }
 }
+
+//所有背景颜色灰色的panel需要加此class在最上层的div上
+.panel-bg-gray {
+    background-color: rgb(245, 245, 245);
+    height: 100%;
+}
+
+//单行 超出容器的文字 省略号
+.single-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sample-dialog {
+    width: 550px;
+
+    .dialog-content {
+        padding: 0 60px;
+    }
+
+    label:not(.md-no-float),
+    .md-placeholder {
+        -webkit-transform: translate3d(0, 25px, 0) scale(1);
+        transform: translate3d(0, 25px, 0), scale(1);
+    }
+
+    md-input-container {
+        padding-bottom: 19px;
+
+        label {
+            color: $text-muted;
+        }
+
+        &.md-input-focused,
+        &.row-has-value,
+        &.md-input-has-value {
+            label {
+                -webkit-transform: translate3d(0, 25px, 0) scale(1);
+                transform: translate3d(0, 25px, 0) scale(1);
+            }
+        }
+
+    }
+
+    .md-input {
+        padding-left: 110px;
+        padding-top: 2px;
+    }
+
+    .md-default-theme .md-input {
+        color: $text-color;
+    }
+
+    //md-select
+    md-select {
+        height: 25px !important;
+    }
+
+    .md-default-theme .md-select-label {
+        color: $text-color;
+        padding-left: 110px;
+
+    }
+
+    .md-actions {
+        border-top: 1px solid rgba(0, 0, 0, .12);
+        padding-right: 20px;
+    }
+
+    .show-text {
+
+        padding: 25px 60px;
+
+        .row {
+            margin-top: 7px;
+        }
+    }
+
+    .loading {
+        padding: 30px 60px;
+        text-align: center;
+    }
+}
+
+.grid-toolbar-row {
+
+    padding: 5px 0 0 30px;
+}
+
+.year-and-month-container {
+
+    .row-text {
+        display: inline-block;
+        font-size: 14px;
+        padding-top: 8px;
+
+        &.last {
+            margin-left: 20px;
+        }
+    }
+
+    .year-and-month {
+
+        width: 200px;
+
+    }
+}
+
+.summary-org-menu {
+    font-size: 14px;
+
+    .org-item {
+        background-color: #aaa;
+        border-radius: 10px;
+        color: #000;
+        cursor: pointer;
+        display: inline-block;
+        margin: 5px;
+        padding: 5px 10px;
+
+
+
+        &.green {
+            background-color: rgb(107, 167, 51);
+            color: #fff;
+        }
+
+        &.yellow {
+            background-color: rgb(229, 184, 17);
+            color: #fff;
+
+        }
+
+        &.active {
+            background-color: rgb(33, 150, 243);
+            color: #fff;
+
+        }
+
+
+    }
+}
+
+

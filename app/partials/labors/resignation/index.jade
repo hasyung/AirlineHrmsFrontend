@@ -1,0 +1,34 @@
+extends ../../component/workflow/index
+
+block heading
+    - var user_list = '辞职发起'
+    - var flowName = "员工辞职"
+    - var multiSelect = false
+    - var hisMultiSelect = false
+
+block user_list_actions
+    md-button.md-primary.md-raised(
+        ng-disabled="!ctrl.getSelected()"
+        nb-panel
+        template-url="/partials/labors/resignation/resignation.html"
+        locals="{receptor: ctrl.getSelected()}"
+    ) 代理发起辞职
+
+block history_list_actions
+    
+    md-dropmenu(ng-disabled="!ctrl.getSelected()")
+        md-drop-label
+            md-button.md-primary.md-raised(ng-disabled="!ctrl.getSelected()") 发起离职
+        md-drop-option()
+            a(
+                nb-confirm="ctrl.leaveJob(ctrl.getSelected().receptor.id, isConfirm, '员工辞职')"
+                nb-title="离职流程发起"
+                nb-content="你确定对{{ctrl.getSelected().receptor.name}}发起离职通知单流程，请确认。"
+            ) 员工辞职
+        md-drop-option()
+            a(
+                nb-confirm="ctrl.leaveJob(ctrl.getSelected().receptor.id, isConfirm, '工作调动')"
+                nb-title="离职流程发起"
+                nb-content="你确定对{{ctrl.getSelected().receptor.name}}发起离职通知单流程，请确认。"
+            ) 工作调动
+            

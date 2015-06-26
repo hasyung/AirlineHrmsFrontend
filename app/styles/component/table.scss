@@ -1,0 +1,48 @@
+
+
+
+.tablexx {
+    background: #fff;
+    border-collapse: collapse;
+    height: 100%;
+    width: 100%;
+
+    thead,
+    tbody,
+    tfoot {
+        > tr {
+            transition: all .3s ease;
+
+            > th,
+            > td {
+                //borderd
+                border: 0;
+                // border-bottom: 1px solid #e0e0e0;
+
+                text-align: left;
+                // vertical-align: top;
+                transition: all .3 ease;
+
+            }
+
+            >th {
+                border-bottom: 1px solid rgba(0, 0, 0, .12);
+                color: $text-muted;
+                font-size: 14px;
+                font-weight: 400;
+                // vertical-align: bottom;
+            }
+
+
+        }
+    }
+
+    &.table-default {
+        th,
+        td {
+            height: 50px;
+        }
+    }
+
+
+}

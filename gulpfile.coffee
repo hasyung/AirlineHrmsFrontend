@@ -22,6 +22,9 @@ scsslint        = require("gulp-scss-lint")
 newer           = require("gulp-newer")
 cache           = require("gulp-cached")
 jadeInheritance = require('gulp-jade-inheritance')
+autoprefixer    = require("gulp-autoprefixer")
+
+
 
 fs              = require("fs")
 request         = require("request")
@@ -82,6 +85,7 @@ paths =
         'deps/underscore.string/dist/underscore.string.js'
         'deps/store.js/store.js'
         'deps/moment/min/moment.min.js'
+        'deps/moment/locale/zh-cn.js'
         'deps/jquery/dist/jquery.min.js'
         'deps/jqtree/tree.jquery.js'
         'deps/d3/d3.js'
@@ -113,7 +117,7 @@ paths =
         # 'deps/ui-router-extras/release/ct-ui-router-extras.js'
         'deps/ngDialog/js/ngDialog.js'
         'compat/vendor/wizard.js'
-        # 'deps/ngInfiniteScroll/build/ng-infinite-scroll.js'
+        'deps/ngInfiniteScroll/build/ng-infinite-scroll.js'
         'deps/AngularJS-Toaster/toaster.js'
         'deps/jquery-slimscroll/jquery.slimscroll.js'
         'deps/angularjs-toaster/toaster.js'
@@ -121,7 +125,6 @@ paths =
         'compat/vendor/ui-grid.js'
         'compat/socket.io.js'
         'compat/pomeloclient.js'
-        'compat/communite.js'
         'compat/datepicker-local.jquery.js'
         'compat/vendor/ng-material-dropmenu.js'
         'deps/ng-flow/dist/ng-flow-standalone.js'
@@ -205,6 +208,7 @@ gulp.task "css-lint-app", ["sass-watch"],  ->
 gulp.task "styles-watch", ["sass-watch", "css-vendor", "css-lint-app"], ->
     gulp.src(paths.distStyles)
         .pipe(concat("main.css"))
+        .pipe(autoprefixer())
         .pipe(gulp.dest(paths.distStylesPath))
 
 gulp.task "styles-deploy", ["sass-deploy", "css-vendor"], ->

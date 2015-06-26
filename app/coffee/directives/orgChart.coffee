@@ -69,6 +69,7 @@ render = (root, options, select_org_id) ->
 # fengongsijidi
 drawOrgChart = (root, options, select_org_id) ->
     active_node = null
+    staff_nodes = null
 
     container             = options.container
     nature_type_order     = [2,1,3] #workaround use nature id
@@ -92,10 +93,15 @@ drawOrgChart = (root, options, select_org_id) ->
 
     nodesDecorator = (root, tree) ->
         nodes = tree.nodes(root)
+        staffLength = root.staff.length
+        console.log staffLength
         nodes.forEach (d) ->
             type = if d.nature_id then d.nature_id else 'root'
             branch = nature_type_order.indexOf(type)
-            d.y = branch*(rectHeight + rectVerticalSpacing)
+            if branch == 0
+                d.y = branch*(rectHeight + rectVerticalSpacing)
+            else
+                d.y = branch*(rectHeight + rectVerticalSpacing) + staffLength*(rectWidth + rectHorizontalSpacing) - rectHorizontalSpacing
         grouped_org = _.groupBy root.children, (org) -> return org.nature_id
         grouped_org['root'] = [root]
 
@@ -110,7 +116,14 @@ drawOrgChart = (root, options, select_org_id) ->
 
         return nodes
 
-    draw = (svg, tree, nodes, layerMaxLength, root) ->
+    staffNodesDecorator = (root, tree) ->
+        nodes = root.staff
+        nodes.forEach (d, i) ->
+            d.x = (rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + 40)/2 +100
+            d.y = rectHeight + (rectVerticalSpacing/2 - rectWidth/2) + i*(rectWidth + rectHorizontalSpacing)
+        return nodes
+
+    draw = (svg, tree, nodes, layerMaxLength, root, staff_nodes) ->
 
         drawPath = ->
             svg.selectAll("path.link")
@@ -124,6 +137,21 @@ drawOrgChart = (root, options, select_org_id) ->
                      L#{root.x + rectWidth/2} #{d.y - rectVerticalSpacing/2}
                      L#{d.x + rectWidth/2} #{d.y - rectVerticalSpacing/2}
                      L#{d.x + rectWidth/2} #{d.y}
+                    """
+                .attr("stroke", linkColor)
+                .attr("stroke-width", linkWidth)
+                .attr("fill", "transparent")
+
+        drawStaffPath = ->
+            svg.selectAll("path.link-staff")
+                .data(staff_nodes)
+                .enter()
+                .append("path")
+                .attr("class","link")
+                .attr "d", (d, i) ->
+                    """
+                     M#{root.x + rectWidth/2} #{d.y + rectWidth/2}
+                     L#{d.x} #{d.y + rectWidth/2}
                     """
                 .attr("stroke", linkColor)
                 .attr("stroke-width", linkWidth)
@@ -172,14 +200,59 @@ drawOrgChart = (root, options, select_org_id) ->
                 .style("font-size", "12px")
                 .attr "x", (d) -> d.x + rectWidth/2
                 .attr "y", (d) -> d.y + rectHeight/2
-                .text (d) -> d.name
+                .text (d) -> d.name.replace(/（/gm, '︵').replace(/）/gm, '︶')
+
+        drawStaffRect = ->
+            nodeEnter = svg.selectAll("g.node-staff")
+                .data(staff_nodes)
+                .enter()
+                .append("g")
+                .attr "class", (d) ->
+                    if d.status == 'create_inactive'
+                        return "node chart-box-create_inactive"
+                    else if d.status == 'update_inactive'
+                        return "node chart-box-update_inactive"
+                    else if d.status == 'destroy_inactive'
+                        return "node chart-box-destroy_inactive"
+                    else if d.status == 'transfer_inactive'
+                        return "node chart-box-transfer_inactive"
+                    else
+                        return "node"
+                .style("cursor", "pointer")
+                .attr 'id', (d) -> "org_#{d.id}"
+                .on 'click', (d,i) ->   #To Do:
+                    active_node.classed("active",false)
+                    d3.select(this).classed("active",true)
+                    active_node = d3.select(this)
+                    rectClickHandler(target: d.id)
+
+
+            nodeEnter.append("rect")
+                .attr("width", rectHeight)
+                .attr("height", rectWidth)
+                .attr("rx", rectBorderRadius)
+                .attr("ry", rectBorderRadius)
+                .attr("stroke", linkColor)
+                .attr("stroke-width", borderWidth)
+                .attr "x", (d,i) -> d.x
+                .attr "y", (d) -> d.y
+
+            nodeEnter.append("text")
+                .attr("class", "orgchart-text")
+                .attr("text-anchor", "middle")
+                .style("font-size", "12px")
+                .attr "x", (d) -> d.x + rectHeight/2 - 2
+                .attr "y", (d) -> d.y + rectWidth/2 + 4
+                .text (d) -> d.name.replace(/（/gm, '︵').replace(/）/gm, '︶')
 
         svg.attr("width",rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + 40)
-            .attr("height",(rectHeight + rectVerticalSpacing)*4)
-        tree.size([rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + 40,(rectHeight + rectVerticalSpacing)*3+40])
+            .attr("height",(rectHeight + rectVerticalSpacing)*4 + staff_nodes.length*(rectWidth + rectHorizontalSpacing))
+        tree.size([rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + staff_nodes.length*(rectWidth + rectHorizontalSpacing) + 40,(rectHeight + rectVerticalSpacing)*3+40])
 
         drawPath()
+        drawStaffPath()
         drawRect()
+        drawStaffRect()
         active_node = svg.select("#org_#{select_org_id}")
         active_node.classed 'active',true
 
@@ -189,7 +262,8 @@ drawOrgChart = (root, options, select_org_id) ->
     tree = d3.layout.tree()
     svg = d3.select(container).append('svg')
     nodes = nodesDecorator(root, tree)
-    draw(svg, tree, nodes, layerMaxLength, root)
+    staff_nodes = staffNodesDecorator(root, tree)
+    draw(svg, tree, nodes, layerMaxLength, root, staff_nodes)
 
 
 
@@ -290,7 +364,7 @@ drawTreeChart = (root, options, select_org_id) ->
                 .style("font-size", "12px")
                 .attr "x", (d) -> d.x
                 .attr "y", (d) -> d.y + rectHeight/2
-                .text (d) -> d.name
+                .text (d) -> d.name.replace(/（/gm, '︵').replace(/）/gm, '︶')
 
         # // compute canvas h w
         drawPath()

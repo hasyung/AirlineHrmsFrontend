@@ -99,7 +99,10 @@
                                 md-select(ng-model="newEmp.jobTitleDegreeId")
                                     md-select-label {{$enum.parseLabel(newEmp.jobTitleDegreeId, "job_title_degrees")}}
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('job_title_degrees')") {{item.label}}
-
+                        div(layout)
+                            md-input-container(flex)
+                                label 到岗时间
+                                input(ng-model="newEmp.joinScalDate" bs-datepicker)
                             md-input-container(flex)
                                 label 参工时间
                                 input(ng-model="newEmp.startWorkDate" bs-datepicker)

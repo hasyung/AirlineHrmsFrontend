@@ -1,132 +1,270 @@
-.approval-wapper {
-    md-toolbar {
-        .md-toolbar-tools {
-            font-size: $font-size-h3;
-        }
-    }
-}
-
 .approval-container {
-    padding: 0 40px;
+    background-color: rgb(245, 245, 245);
+    overflow-y: scroll;
+    padding: 20px;
+
+    md-card {
+        border-radius: 0;
+        box-shadow: none;
+        margin: 0;
+        margin-bottom: 10px;
+    }
 
     .approval-subheader {
         color: #468fce;
-        font-size: $font-size-h3;
-        padding: 30px 0;
+        font-size: $font-size-md;
+        margin-bottom: 30px;
     }
 }
 
 .approval-info {
+    padding: 40px 30px;
+
     .approval-info-head {
-        color: $text-color;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
 
         .name {
-            font-size: 24px;
-            line-height: 24px;
+            font-size: 32px;
+            margin-bottom: 15px;
         }
 
-        .serial-number {
-            font-size: 16px;
-            margin-left: 10px;
+        .approval-info-plus {
+            font-size: $font-size-sm;
+
+            .serial-num {
+                margin-right: 10px;
+            }
+
         }
     }
+}
 
-    .approval-position {
-        border-bottom: 1px dotted #eaeff0;
-        margin-bottom: 30px;
-        padding-bottom: 20px;
+.approval-relation-info {
+    padding: 30px 30px 40px;
+
+    .approval-subheader {
+        color: $text-color;
+    }
+
+    .approval-relations {
+        >div {
+            &:first-child {
+                .approval-cell {
+                    padding-top: 0;
+                }
+            }
+        }
     }
 }
 
 .approval-cell {
-    border-bottom: 1px dotted #eaeff0;
+    border-bottom: 1px solid #eaeff0;
     display: flex;
-    margin-bottom: 30px;
-    padding-bottom: 20px;
+    margin-right: 10px;
+    padding: 30px 0 10px;
 
     .cell-title {
         color: $text-muted;
-        width: 120px;
+        width: 100px;
     }
 
     .cell-content {
         flex: 1;
     }
+
+    .cell-plus {
+        width: 120px;
+    }
 }
 
 .approval-msg {
-    .approval-progress-container {
-        margin-bottom: 30px;
+    padding: 30px 30px 40px;
+
+    .approval-subheader {
+        color: $text-color;
+    }
+
+    .approval-cell-container {
+        .approval-msg-cell:first-child {
+            padding-top: 0;
+        }
     }
 
     .approval-msg-cell {
-        border-bottom: 1px dotted #eaeff0;
-        padding-bottom: 20px;
-    }
+        border-bottom: 1px solid rgba(0, 0, 0, .12);
+        padding: 20px 0;
+        position: relative;
 
-    .approval-msg-header {
-        margin-bottom: 20px;
-    }
+        .approval-msg-container {
+            .approval-msg-header {
+                font-size: $font-size-md;
+                margin-bottom: 5px;
 
-    .circle {
-        background-color: $success;
-        border-radius: 50%;
-        display: inline-block;
-        height: 10px;
-        margin-right: 10px;
-        width: 10px;
-    }
+                span:first-child {
+                    margin-right: 30px;
+                }
+            }
 
-    .approval-header-title {
-        color: $text-color;
-        font-size: $font-size-h3;
-        margin-right: 30px;
-    }
+            .approval-msg-result {
+                font-size: $font-size-sm;
+                margin-bottom: 10px;
+            }
+        }
 
-    .approval-header-name {
-        color: $text-muted;
-        font-size: $font-size-md;
-        margin-right: 10px;
-    }
+        .approval-msg-decider {
+            color: $text-muted;
+            position: absolute;
+            right: 0;
+            top: 20px;
 
-    .approval-header-time {
-        color: $text-muted;
-        font-size: $font-size-md;
-    }
-
-    .approval-msg-content {
-        padding-left: 20px;
+            .approval-decider-date {
+                margin-left: 10px;
+            }
+        }
     }
 }
 
 .approval-opinions {
-    .approval-opinions-check {
-        margin-bottom: 30px;
-    }
+    margin-top: 20px;
 
-    md-radio-button {
-        display: inline-block;
-        margin-right: 60px;
-    }
-
-    .md-container {
-        top: 2px;
-    }
-
-    .md-placeholder {
-        opacity: 1;
-        top: -15px;
-    }
 }
 
 .approval-buttons {
     float: right;
-    margin: 30px 0 70px;
+    margin-top: 10px;
 
     .md-button {
-        margin-left: 20px;
+        margin-left: 15px;
     }
 }
+
+.accessory-header.md-subheader {
+    font-size: $font-size-sm;
+    margin-bottom: 10px;
+}
+
+.accessory-container {
+    @include clearfix();
+
+    .accessory-cell {
+        background-color: rgba(0, 0, 0, .06);
+        border-left: 2px solid #7cb342;
+        float: left;
+        font-size: $font-size-sm;
+        height: 50px;
+        margin-bottom: 10px;
+        margin-right: 20px;
+        padding: 5px 10px;
+        position: relative;
+        width: 410px;
+
+        .accessory-name {
+            color: #7cb342;
+            margin-bottom: 2px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 330px;
+        }
+
+        .accessory-switch {
+            position: absolute;
+            right: -5px;
+            top: 0;
+
+            .md-icon-button {
+                md-icon {
+                    height: 18px;
+                    width: 18px;
+                }
+            }
+        }
+    }
+}
+
+.accessory-btn-group {
+    margin-top: 10px;
+
+    .md-icon-button {
+        margin: 0;
+    }
+}
+
+.superior-header.md-subheader {
+    margin-bottom: 30px;
+}
+
+.superior-container {
+    md-radio-button {
+        float: left;
+        margin-bottom: 10px;
+        width: 286px;
+    }
+}
+
+//审批流程 移交 弹出层的样式
+.hand_over {
+    .hd-manner {
+        @include clearfix();
+        border-bottom: 1px solid rgba(0, 0, 0, .12);
+        margin: 0 20px;
+        padding: 20px 0;
+
+        md-radio-button {
+            float: left;
+            margin-right: 50px;
+        }
+    }
+
+    .hd-unit-wrapper {
+        .hd-choosing,
+        .hd-choosed {
+            height: 300px;
+            margin: 10px 0;
+            overflow: scroll;
+        }
+
+        md-radio-button {
+            padding: 5px;
+        }
+
+        .title {
+            color: $text-muted;
+            font-weight: bolder;
+            padding: 0 20px;
+        }
+
+        .content {
+            padding: 0 15px;
+        }
+
+        .hd-choosing {
+            border-right: 1px solid rgba(0, 0, 0, .12);
+        }
+
+        .hd-choosed {
+            .title {
+                padding-bottom: 5px;
+            }
+
+            .content {
+                padding: 0 20px;
+
+                div {
+                    padding: 5px 0;
+                }
+            }
+        }
+    }
+
+
+
+    .md-actions {
+        border-top: 1px solid rgba(0, 0, 0, .12);
+    }
+}
+
+
+
 
 

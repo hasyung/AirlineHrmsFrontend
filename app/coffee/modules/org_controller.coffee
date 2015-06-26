@@ -5,61 +5,6 @@ extend = angular.extend
 resetForm = nb.resetForm
 Modal = nb.Modal
 
-#机构组织架构图
-# orgChart = () ->
-#     link = (scope, $el, attrs) ->
-#         #
-#         #raphael paper
-#         paper = null
-#         active_rect = null
-
-#         click_handler = (evt, elem) ->
-#             # elem.setAttribute("class", 'active')
-#             rect = elem[0]
-#             if active_rect != null
-#                 active_rect.classList.remove('active')
-#             rect.classList = _.uniq rect.classList.add 'active'
-#             active_rect = rect
-#             params = arguments
-#             scope.$apply ->
-#                 scope.ctrl.onItemClick.apply(scope.ctrl,params)
-
-
-#         oc_options_2 = {
-#             data_id           : 90943,                    # identifies the ID of the "data" JSON object that is paired with these options
-#             container         : $el[0],     # name of the DIV where the chart will be drawn
-#             box_color         : '#dfe5e7',               # fill color of boxes
-#             box_color_hover   : '#cad4d7',               # fill color of boxes when mouse is over them
-#             box_border_color  : '#c4cfd3',               # stroke color of boxes
-#             box_html_template : null,                 # id of element with template; don't use if you are using the box_click_handler
-#             line_color        : '#c4cfd3',               # color of connectors
-#             title_color       : '#000',               # color of titles
-#             subtitle_color    : '#707',               # color of subtitles
-#             max_text_width    : 1,                   # max width (in chars) of each line of text ('0' for no limit)
-#             text_font         : 'Courier',            # font family to use (should be monospaced)
-#             use_images        : false,                # use images within boxes?
-#             box_click_handler : click_handler,        # handler (function) called on click on boxes (set to null if no handler)
-#             use_zoom_print    : false,                # wheter to use zoom and print or not (only one graph per web page can do so)
-#             debug             : false                 # set to true if you want to debug the library
-#         }
-
-#         scope.$watch attrs.orgChartData, (newval ,old) ->
-#             if typeof newval == 'undefined'
-#                 return
-#             if paper?
-#                 active_rect = null
-#                 paper.remove()
-#             data = {id:90943, title: '', root: newval}
-#             paper =ggOrgChart.render(oc_options_2, data)
-#             active_rect = $el.find('rect').last()[0] #默认选择顶级节点
-#             active_rect.classList.add 'active'
-#             $el.trigger('resize') # 触发滚动居中
-#         return
-
-#     return {
-#         restrict: 'A'
-#         link: link
-#     }
 
 #机构选择树
 orgTree = (Org, $parse) ->
@@ -102,20 +47,35 @@ orgTree = (Org, $parse) ->
     }
 
 
-# app.directive('orgChart',[orgChart])
 app.directive('nbOrgTree',['Org', '$parse', orgTree])
 
 
 
-# workaround 写法很奇怪, 编译出的 js 很 OK
+###*
+ * workaround 写法很奇怪, 编译出的 js 很 OK
+ * 在单页面应用中， 路由的过程很复杂， 总体来说最核心的是
+ * 准备数据
+ * 准备模板
+ * 实例化控制器，link 模板
+ * 切换URL状态， 将页面渲染交给框架
+ *
+ * 其中数据、模板准备必须在切换URL之前， 不然会引起页面频繁reflow， 凭白损失性能，用户体验也很差
+ *
+ * 但是数据和业务紧密相关， 天然不能简单的分离为 route 和 controller
+ * so, 将它们放在一起是符合逻辑的， 是合理的
+ *
+ * 更进一步的， 将天然不能分离的东西，仿造后端架构 route controller ，框架提供这样的抽象
+ * 那么框架设计本身就不合理， 因为前后端环境不一样， 应另行处理
+ *
+ * ##PS： 果不其然， angular2 中将概念进一步简化， 将路由放在业务中
+ *
+###
 class Route
     @.$inject = ['$stateProvider']
 
     constructor: (stateProvider) ->
 
         orgs = (Org)-> Org.$collection().$fetch(edit_mode: true).$asPromise()
-
-
 
         stateProvider
             .state 'org', {
