@@ -47,19 +47,14 @@ menuFactory = ($rootScope, $state)->
                 name: '优免票'
                 # state: 'self.profile'
             }
-            {
-                name: '学历变更申请'
-                # state: 'self.profile'
-            }
-            {
-                name: '绩效申述'
-                # state: 'self.profile'
-            }
-
-            {
-                name: '信息变更记录'
-                # state: 'self.profile'
-            }
+            # {
+            #     name: '学历变更申请'
+            #     # state: 'self.profile'
+            # }
+            # {
+            #     name: '信息变更记录'
+            #     # state: 'self.profile'
+            # }
         ]
     }
 
