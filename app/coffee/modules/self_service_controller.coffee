@@ -69,6 +69,7 @@ class Route
                     }
                 }
             }
+            # 辞职
             .state 'my_requests.resignation', {
                 url: '/resignation'
                 views: {
