@@ -1,14 +1,16 @@
 //左侧边栏
 .nb-nav.md-locked-open {
+    background-color: transparent;
     min-width: 200px;
     width: 200px;
 
     md-content {
-        background-color: #3a3f51;
+        background-color: rgba(0, 0, 0, .3);
     }
 }
 
 .nb-menu {
+    background-color: transparent;
     margin-top: 0;
     padding: 0;
 
@@ -18,7 +20,7 @@
     }
 
     .parent-list-item {
-        border-left: 2px solid transparent;
+        // border-left: 2px solid transparent;
         -moz-transition: .25s cubic-bezier(.35, 0, .25, 1);
         -webkit-transition: .25s cubic-bezier(.35, 0, .25, 1);
         transition: .25s cubic-bezier(.35, 0, .25, 1);
@@ -28,6 +30,19 @@
         -moz-transition-property: border-left;
         -webkit-transition-property: border-left;
         transition-property: border-left;
+
+        > menu-toggle > .md-button,
+        > menu-link >.md-button {
+            color: #fff;
+        }
+
+        .type-icon {
+            svg {
+                * {
+                    fill: #fff;
+                }
+            }
+        }
 
         //解决 组织机构列表项 的高度不正确bug
         &:nth-child(1) {
@@ -39,8 +54,7 @@
         }
 
         &.active {
-            background-color: #262b3c;
-            border-left: 2px solid rgb(239, 83, 80);
+            // border-left: 2px solid rgb(239, 83, 80);
             transition: none;
 
             .type-icon {
@@ -53,26 +67,33 @@
 
             > menu-toggle > .md-button,
             > menu-link >.md-button {
+                background-color: rgba(0, 0, 0, .5);
                 color: #fff;
             }
         }
     }
 
     .child-list-item {
+        > menu-toggle > .md-button,
+        > menu-link >.md-button {
+            color: #fff;
+        }
+
         &.active {
             circle {
-                fill: rgb(244, 67, 54);
+                fill: rgb(255, 255, 255);
             }
 
             > menu-toggle > .md-button,
             > menu-link >.md-button {
+                background-color: rgba(0, 0, 0, .3);
                 color: #fff;
             }
         }
     }
 
     .md-button {
-        color: #adb2c4;
+        color: #fff;
         font-size: 16px;
         height: 70px;
         line-height: 70px;
@@ -81,7 +102,7 @@
         width: 100%;
 
         md-icon {
-            color: #adb2c4;
+            color: #fff;
             height: 22px;
             width: 22px;
         }

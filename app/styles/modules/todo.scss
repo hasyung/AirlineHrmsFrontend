@@ -69,18 +69,20 @@
 .todo-list-item {
     cursor: pointer;
     display: flex;
-    height: 140px;
+    height: 100px;
     margin-right: 40px;
     opacity: .7;
     overflow: hidden;
     padding-bottom: 5px;
+    transition: height .3s linear;
 
     &:hover {
+        height: 140px;
         opacity: 1;
 
         .item-left {
-            .time {
-                font-size: 38px;
+            .date {
+                font-size: 28px;
             }
         }
 
@@ -101,7 +103,7 @@
 
     .item-left {
         height: 100%;
-        width: 170px;
+        width: 370px;
 
         .date {
             color: #fff;
