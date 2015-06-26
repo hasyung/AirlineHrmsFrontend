@@ -74,7 +74,7 @@
     opacity: .7;
     overflow: hidden;
     padding-bottom: 5px;
-    transition: height .3s linear;
+    transition: height .5s linear;
 
     &:hover {
         height: 140px;
@@ -87,7 +87,7 @@
         }
 
         .item-right {
-            background-color: #e84e40;
+            background-color: rgba(0, 0, 0, .3);
 
             .content h3,
             .content .tip {
@@ -103,11 +103,12 @@
 
     .item-left {
         height: 100%;
-        width: 370px;
+        width: 170px;
 
         .date {
             color: #fff;
             font-size: 18px;
+            transition: font-size .5s linear;
         }
 
         .time {
@@ -118,7 +119,7 @@
     }
 
     .item-right {
-        background-color: rgba(0, 0, 0, .4);
+        background-color: rgba(0, 0, 0, .2);
         margin-left: 20px;
         position: relative;
 
@@ -131,7 +132,7 @@
             border-radius: 20px;
             float: left;
             height: 40px;
-            margin: 10px 20px 0;
+            margin: 27px 20px 0;
             overflow: hidden;
             width: 40px;
 
@@ -145,7 +146,7 @@
             overflow: hidden;
 
             h3 {
-                color: #d64a3e;
+                color: #fff;
                 font-size: $font-size-sm;
                 font-weight: normal;
                 margin-top: 20px;
@@ -190,7 +191,7 @@
             }
 
             .tip {
-                color: #d64a3e;
+                color: #fff;
                 font-size: 14px;
                 position: absolute;
                 right: 20px;
@@ -244,6 +245,8 @@
         padding-left: 0;
 
         .nb-nav-item {
+            border-bottom-color: #fff;
+
             a {
                 color: #fff;
                 height: 56px;
@@ -257,14 +260,14 @@
 
         &.notice {
             h4 {
-                color: #e84e40;
+                color: #fff;
                 font-size: $font-size-md;
                 padding: 35px 20px 0;
                 text-align: center;
             }
 
             .date {
-                color: #a09ca1;
+                color: #fff;
                 font-size: 12px;
                 margin-top: 5px;
                 text-align: center;

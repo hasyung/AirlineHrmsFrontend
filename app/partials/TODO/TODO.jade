@@ -11,7 +11,7 @@
                     .content
                         h3
                             span {{::todo.sponsor.name}}
-                            | 发起于
+                            //- | 发起于
                             span(ng-bind="::todo.createdAt | fromNow: false")
                         p.single-ellipsis {{::todo.desc}}
                         .reviewers
