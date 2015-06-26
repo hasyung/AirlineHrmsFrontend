@@ -211,7 +211,7 @@ FlowHandlerDirective = (ngDialog)->
                         </div>
                     </div>
                 </md-card>
-                <md-card ng-if="!flowView">
+                <md-card>
                     <div class="approval-msg">
                         <div class="approval-subheader">意见</div>
                         <div class="approval-cell-container">
@@ -230,7 +230,7 @@ FlowHandlerDirective = (ngDialog)->
                                 </div>
                             </div>
                         </div>
-                        <div class="approval-opinions">
+                        <div class="approval-opinions" ng-if="!flowView">
                             <form name="flowReplyForm" ng-submit="reply(userReply, flowReplyForm);">
                                 <div layout>
                                     <md-input-container flex>
