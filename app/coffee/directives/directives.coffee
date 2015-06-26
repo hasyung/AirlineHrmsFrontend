@@ -258,7 +258,7 @@ angular.module 'nb.directives'
         }
     ]
 
-    .directive 'toggleSidebar', [ () ->
+    .directive 'toggleSidebar', ['$timeout', ($timeout) ->
 
         ###*
          * [description] 切换左侧菜单
@@ -276,15 +276,19 @@ angular.module 'nb.directives'
 
             scope.toggle = ->
                 $sidebar = $('#leftSidebar')
-                $sidebar.toggleClass('js-hide')
 
                 if $sidebar.hasClass 'js-hide' then x = 0 else x = -200
 
+                $sidebar.toggleClass('js-hide')
                 $sidebar.stop(true,false).animate {
                     marginLeft: x + 'px'
                 }, 1000, false
 
+
                 return
+
+            $timeout(scope.toggle, 3000)
+
 
 
         return {
