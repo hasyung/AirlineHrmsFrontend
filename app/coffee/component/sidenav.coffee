@@ -380,15 +380,15 @@ menuLinkDirective = ($compile, $state) ->
 
     stroke_svg = '''
         <svg width="30" height="50">
-            <path d="M1 0 L1 25 L21 25 M1 25 L1 50" fill="transparent" stroke="#aaa" stroke-width="1"></path>
-            <circle r="4" cx="21" cy="25" fill="#aaa"></circle>
+            <path d="M1 0 L1 25 L21 25 M1 25 L1 50" fill="transparent" stroke="#fff" stroke-width="1"></path>
+            <circle r="4" cx="21" cy="25" fill="#fff"></circle>
         </svg>
     '''
 
     last_stroke_svg = '''
         <svg width="30" height="40">
-            <path d="M1 0 L1 25 L21 25" fill="transparent" stroke="#aaa" stroke-width="1"></path>
-            <circle r="4" cx="21" cy="25" fill="#aaa"></circle>
+            <path d="M1 0 L1 25 L21 25" fill="transparent" stroke="#fff" stroke-width="1"></path>
+            <circle r="4" cx="21" cy="25" fill="#fff"></circle>
         </svg>
     '''
 
