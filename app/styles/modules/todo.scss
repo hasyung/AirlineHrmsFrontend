@@ -125,13 +125,18 @@
         }
 
         .avatar {
-            background-color: #000;
+            background-color: #fff;
             border-radius: 20px;
             float: left;
             height: 40px;
             margin: 10px 20px 0;
             overflow: hidden;
             width: 40px;
+
+            img {
+                height: 100%;
+                width: 100%;
+            }
         }
 
         .content {
@@ -167,13 +172,18 @@
                 transition: height .3s .1s linear, opacity .3s .1s linear;
 
                 div {
-                    background-color: #000;
+                    background-color: #fff;
                     border-radius: 10px;
                     float: left;
                     height: 20px;
                     margin-right: 5px;
                     overflow: hidden;
                     width: 20px;
+
+                    img {
+                        height: 100%;
+                        width: 100%;
+                    }
                 }
             }
 
