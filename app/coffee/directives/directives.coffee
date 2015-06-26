@@ -504,12 +504,12 @@ angular.module 'nb.directives'
 
         postLink = (scope, elem, attrs, ngModelCtrl) ->
 
-            elem.datepicker(
-                autoclose: true
-                format: 'yyyy-mm-dd'
-                language: 'zh-cn'
+            config = autoclose: true, format: 'yyyy-mm-dd', language: 'zh-cn'
 
-            )
+            if attrs.endDate == 'today'
+                config['endDate'] = moment().endOf('day').toDate()
+
+            elem.datepicker(config)
             # .on 'changeDate', (evt) ->
             #     ngModelCtrl.$setViewValue(evt.date)
 
