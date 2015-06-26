@@ -43,7 +43,7 @@ module
     .filter 'mdate', ->
 
         (input, format = "YYYY-mm-DD") ->
-            if input
+            if input && input.format
                 return input.format(format)
 
 
