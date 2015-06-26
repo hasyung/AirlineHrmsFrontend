@@ -188,7 +188,7 @@ FlowHandlerDirective = (ngDialog)->
                         <div class="approval-info-head">
                             <div class="name" ng-bind="flow.receptor.name"></div>
                             <div class="approval-info-plus">
-                                <span class="serial-num" flow.receptor.employeeNo> 008863 </span>
+                                <span class="serial-num" ng-bind="flow.receptor.employeeNo"> </span>
                                 <span class="position"> {{::flow.receptor.departmentName}} / {{::flow.receptor.positionName}} </span>
                             </div>
                         </div>
