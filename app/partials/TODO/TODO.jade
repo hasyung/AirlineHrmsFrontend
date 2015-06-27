@@ -10,8 +10,6 @@
                         img(ng-src="{{todo.receptor.favicon}}")
                     .content
                         h3
-                            span {{::todo.receptor.name}}
-                            //- | 发起于
                             span(ng-bind="::todo.createdAt | fromNow: false")
                         p.single-ellipsis {{::todo.desc}}
                         .reviewers

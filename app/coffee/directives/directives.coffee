@@ -258,45 +258,45 @@ angular.module 'nb.directives'
         }
     ]
 
-    .directive 'toggleSidebar', ['$timeout', ($timeout) ->
+    # .directive 'toggleSidebar', ['$timeout', ($timeout) ->
 
-        ###*
-         * [description] 切换左侧菜单
-        ###
+    #     ###*
+    #      * [description] 切换左侧菜单
+    #     ###
 
-        template = '''
-            <div class="top-btn-wrap">
-                <md-button class="md-icon-button" ng-click="toggle()">
-                    <md-icon md-svg-icon="/images/svg/menu.svg"></md-icon>
-                </md-button>
-            </div>
-        '''
+    #     template = '''
+    #         <div class="top-btn-wrap">
+    #             <md-button class="md-icon-button" ng-click="toggle()">
+    #                 <md-icon md-svg-icon="/images/svg/menu.svg"></md-icon>
+    #             </md-button>
+    #         </div>
+    #     '''
 
-        postLink = (scope, elem, attrs) ->
+    #     postLink = (scope, elem, attrs) ->
 
-            scope.toggle = ->
-                $sidebar = $('#leftSidebar')
+    #         scope.toggle = ->
+    #             $sidebar = $('#leftSidebar')
 
-                if $sidebar.hasClass 'js-hide' then x = 0 else x = -200
+    #             if $sidebar.hasClass 'js-hide' then x = 0 else x = -200
 
-                $sidebar.toggleClass('js-hide')
-                $sidebar.stop(true,false).animate {
-                    marginLeft: x + 'px'
-                }, 1000, false
-
-
-                return
-
-            $timeout(scope.toggle, 3000)
+    #             $sidebar.toggleClass('js-hide')
+    #             $sidebar.stop(true,false).animate {
+    #                 transform: "translate3d(" + x + 'px, 0, 0)'
+    #             }, 1000, false
 
 
+    #             return
 
-        return {
-            template: template
-            link: postLink
-            scope: true
-        }
-    ]
+    #         $timeout(scope.toggle, 3000)
+
+
+
+    #     return {
+    #         template: template
+    #         link: postLink
+    #         scope: true
+    #     }
+    # ]
 
     .directive 'columnChart', [ () ->
 
