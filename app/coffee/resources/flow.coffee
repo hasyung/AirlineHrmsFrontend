@@ -226,7 +226,7 @@ FlowHandlerDirective = (ngDialog)->
                                     </div>
                                 </div>
                                 <div class="approval-msg-decider">
-                                    <span class="approval-decider-date">{{msg.createdAt | date: 'yyyy-MM-dd' }}</span>
+                                    <span class="approval-decider-date">{{msg.createdAt | date: 'yyyy-MM-dd HH:mm' }}</span>
                                 </div>
                             </div>
                         </div>
