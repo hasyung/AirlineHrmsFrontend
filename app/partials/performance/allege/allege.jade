@@ -1,4 +1,4 @@
-.workflow.md-background(md-theme="hrms" 
+.workflow.md-background(md-theme="hrms"
     ng-init="allege = panel.allege; request = {};\
         outerScope = panel.outerScope;\
         allege.$refresh();\
@@ -15,7 +15,7 @@
     .personnel-content.personnel-control
         section.personnel-info-section
             md-content.nb-card-container(layout="column" md-theme="hrms")
-                form(ng-submit="allege.$update(request)")
+                form(ng-submit="allege.$update(request); panel.close();")
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1
                         flow-user-info(receptor="receptor")
