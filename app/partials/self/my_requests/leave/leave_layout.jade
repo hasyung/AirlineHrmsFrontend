@@ -7,7 +7,7 @@ div.workflow.md-background(md-theme="hrms")
     .personnel-content.personnel-control
         section.personnel-info-section
             md-content.nb-card-container(layout="column" md-theme="hrms")
-                form(ng-controller="NewMyRequestCtrl" ng-submit="createFlow(request);" ng-init="request = initialFlow('#{flowType}')")
+                form(ng-controller="NewMyRequestCtrl" ng-submit="createFlow(request);" name="leave_form" ng-init="request = initialFlow('#{flowType}')")
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1
                         flow-user-info
@@ -84,7 +84,7 @@ div.workflow.md-background(md-theme="hrms")
                                         div(layout)
                                             md-input-container(flex)
                                                 label 申请理由
-                                                textarea(ng-model="request.reason" columns="1" md-maxlength="2000")
+                                                textarea(ng-model="request.reason" required columns="1" md-maxlength="2000")
                                         if need_attachment
                                             md-subheader.accessory-header.md-background.md-hue-1 附件
                                             div(flow-file-upload flow-type="#{flowType}" ng-model="request.attachment_ids")
@@ -103,4 +103,4 @@ div.workflow.md-background(md-theme="hrms")
                     .form-bottom-group(layout)
                         span(flex)
                         md-button.md-raised.white(type="button" ng-click="panel.close()") 取消
-                        md-button.md-primary.md-raised(type="submit") 提交上级
+                        md-button.md-primary.md-raised(type="submit" ng-disabled="leave_form.$invalid") 提交上级
