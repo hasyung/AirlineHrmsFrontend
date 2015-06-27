@@ -258,45 +258,34 @@ angular.module 'nb.directives'
         }
     ]
 
-    # .directive 'toggleSidebar', ['$timeout', ($timeout) ->
+    .directive 'toggleSidebar', ['$timeout', ($timeout) ->
 
-    #     ###*
-    #      * [description] 切换左侧菜单
-    #     ###
+        ###*
+         * [description] 切换左侧菜单
+        ###
+        postLink = (scope, elem, attrs) ->
 
-    #     template = '''
-    #         <div class="top-btn-wrap">
-    #             <md-button class="md-icon-button" ng-click="toggle()">
-    #                 <md-icon md-svg-icon="/images/svg/menu.svg"></md-icon>
-    #             </md-button>
-    #         </div>
-    #     '''
+            $sidebar = $('#leftSidebar')
 
-    #     postLink = (scope, elem, attrs) ->
+            $sidebar.css {
+                marginLeft: '190px'
+            }
 
-    #         scope.toggle = ->
-    #             $sidebar = $('#leftSidebar')
+            $timeout(()->
 
-    #             if $sidebar.hasClass 'js-hide' then x = 0 else x = -200
+                $sidebar.animate {
+                    marginLeft: 0
+                }, 1000
 
-    #             $sidebar.toggleClass('js-hide')
-    #             $sidebar.stop(true,false).animate {
-    #                 transform: "translate3d(" + x + 'px, 0, 0)'
-    #             }, 1000, false
-
-
-    #             return
-
-    #         $timeout(scope.toggle, 3000)
+            , 4000)
 
 
 
-    #     return {
-    #         template: template
-    #         link: postLink
-    #         scope: true
-    #     }
-    # ]
+        return {
+            link: postLink
+            scope: true
+        }
+    ]
 
     .directive 'columnChart', [ () ->
 
