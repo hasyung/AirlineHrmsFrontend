@@ -258,37 +258,43 @@ angular.module 'nb.directives'
         }
     ]
 
-    .directive 'toggleSidebar', [ () ->
+    .directive 'toggleSidebar', ['$timeout', ($timeout) ->
 
         ###*
          * [description] 切换左侧菜单
         ###
-
-        template = '''
-            <div class="top-btn-wrap">
-                <md-button class="md-icon-button" ng-click="toggle()">
-                    <md-icon md-svg-icon="/images/svg/menu.svg"></md-icon>
-                </md-button>
-            </div>
-        '''
-
         postLink = (scope, elem, attrs) ->
 
-            scope.toggle = ->
-                $sidebar = $('#leftSidebar')
-                $sidebar.toggleClass('js-hide')
+            $sidebar = $('#leftSidebar')
 
-                if $sidebar.hasClass 'js-hide' then x = 0 else x = -200
+            $sidebar.css {
+                position: 'fixed',
+                top: '64px',
+                zIndex: 9999,
+                marginLeft: '0'
+            }
 
+            $sidebar.on 'mouseenter', ()->
+                $sidebar.stop(true, false).animate {
+                    marginLeft: 0
+                }, 1000
+
+            $sidebar.on 'mouseleave', ()->
                 $sidebar.stop(true,false).animate {
-                    marginLeft: x + 'px'
-                }, 1000, false
+                    marginLeft: '-190px'
+                }, 1000
 
-                return
+            $timeout(()->
+
+                $sidebar.animate {
+                    marginLeft: '-190px'
+                }, 1000
+
+            , 3000)
+
 
 
         return {
-            template: template
             link: postLink
             scope: true
         }

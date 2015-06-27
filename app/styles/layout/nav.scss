@@ -1,11 +1,11 @@
 //左侧边栏
 .nb-nav.md-locked-open {
-    background-color: transparent;
+    background: transparent url('/images/leftside_bg.png') no-repeat;
     min-width: 200px;
     width: 200px;
 
     md-content {
-        background-color: rgba(0, 0, 0, .3);
+        background: transparent;
     }
 }
 
@@ -20,7 +20,6 @@
     }
 
     .parent-list-item {
-        // border-left: 2px solid transparent;
         -moz-transition: .25s cubic-bezier(.35, 0, .25, 1);
         -webkit-transition: .25s cubic-bezier(.35, 0, .25, 1);
         transition: .25s cubic-bezier(.35, 0, .25, 1);
@@ -54,7 +53,6 @@
         }
 
         &.active {
-            // border-left: 2px solid rgb(239, 83, 80);
             transition: none;
 
             .type-icon {
@@ -67,7 +65,7 @@
 
             > menu-toggle > .md-button,
             > menu-link >.md-button {
-                background-color: rgba(0, 0, 0, .5);
+                background-color: rgba(0, 0, 0, .08);
                 color: #fff;
             }
         }
@@ -86,7 +84,7 @@
 
             > menu-toggle > .md-button,
             > menu-link >.md-button {
-                background-color: rgba(0, 0, 0, .3);
+                background-color: rgba(0, 0, 0, .08);
                 color: #fff;
             }
         }

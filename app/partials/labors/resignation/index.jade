@@ -15,10 +15,10 @@ block user_list_actions
     ) 代理发起辞职
 
 block history_list_actions
-    
+
     md-dropmenu(ng-disabled="!ctrl.getSelected()")
         md-drop-label
-            md-button.md-primary.md-raised(ng-disabled="!ctrl.getSelected()") 发起离职
+            md-button.md-primary.md-raised(ng-disabled="!ctrl.getSelected()") 发起离职通知
         md-drop-option()
             a(
                 nb-confirm="ctrl.leaveJob(ctrl.getSelected().receptor.id, isConfirm, '员工辞职')"
@@ -31,4 +31,4 @@ block history_list_actions
                 nb-title="离职流程发起"
                 nb-content="你确定对{{ctrl.getSelected().receptor.name}}发起离职通知单流程，请确认。"
             ) 工作调动
-            
+
