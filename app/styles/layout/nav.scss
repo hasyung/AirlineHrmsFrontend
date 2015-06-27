@@ -2,13 +2,7 @@
 .nb-nav.md-locked-open {
     background: transparent url('/images/leftside_bg.png') no-repeat;
     min-width: 200px;
-    transform: translate3d(-190px, 0, 0) !important;
-    transition: transform .5s ease-in;
     width: 200px;
-
-    &:hover {
-        transform: translate3d(0, 0, 0) !important;
-    }
 
     md-content {
         background: transparent;

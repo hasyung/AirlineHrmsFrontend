@@ -268,16 +268,29 @@ angular.module 'nb.directives'
             $sidebar = $('#leftSidebar')
 
             $sidebar.css {
-                marginLeft: '190px'
+                position: 'fixed',
+                top: '64px',
+                zIndex: 9999,
+                marginLeft: '0'
             }
+
+            $sidebar.on 'mouseenter', ()->
+                $sidebar.stop(true, false).animate {
+                    marginLeft: 0
+                }, 1000
+
+            $sidebar.on 'mouseleave', ()->
+                $sidebar.stop(true,false).animate {
+                    marginLeft: '-190px'
+                }, 1000
 
             $timeout(()->
 
                 $sidebar.animate {
-                    marginLeft: 0
+                    marginLeft: '-190px'
                 }, 1000
 
-            , 4000)
+            , 3000)
 
 
 
