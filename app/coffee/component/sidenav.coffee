@@ -265,11 +265,11 @@ menuFactory = ($rootScope, $state)->
                 state: 'labors_punishment'
                 permission: ''
             }
-            {
-                name: '合同续签'
-                state: 'labors_renew_contract'
-                permission: ''
-            }
+            # {
+            #     name: '合同续签'
+            #     state: 'labors_renew_contract'
+            #     permission: ''
+            # }
             {
                 name: '合同管理'
                 state: 'contract_management'

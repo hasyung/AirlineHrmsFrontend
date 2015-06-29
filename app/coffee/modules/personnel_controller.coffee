@@ -90,6 +90,7 @@ class PersonnelCtrl extends nb.Controller
             .col 'employment_status_id', '用工状态', 'select',           '',    {type: 'employment_status'}
             .col 'birthday',             '出生日期', 'date-range'
             .col 'join_scal_date',       '入职时间', 'date-range'
+            .col 'labor_relation_id',          '用工性质', 'select',           '', {type: 'labor_relations'}
             .end()
 
     loadInitailData: ->

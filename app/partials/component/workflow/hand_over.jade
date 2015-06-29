@@ -25,7 +25,6 @@ md-dialog.hand_over(ng-init="params = {type:'departments'};")
                         .content
                             md-radio-group(ng-model="params.reviewer_id")
                                 md-radio-button.md-primary(ng-value="reviewer.id" ng-repeat="reviewer in reviewers") {{ reviewer.name }} ( {{reviewer.department.name}} / {{reviewer.position.name}} )
-                                md-radio-button.md-primary(value="002087") 方志军（部门领导 - 副总经理）
 
 
 
