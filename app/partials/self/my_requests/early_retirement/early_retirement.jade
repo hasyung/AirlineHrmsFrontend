@@ -25,7 +25,7 @@ block relation_data
             .flow-cell-content {{receptor.joinScalDate}}
         .flow-info-cell(flex)
                 .flow-cell-title 川航工作年限
-                .flow-cell-content {{receptor.scalWorkingYears}}
+                .flow-cell-content {{receptor.joinScalDate | fromNow}}
 
 block form
     div(layout)
