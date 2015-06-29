@@ -1,7 +1,5 @@
 // 机构树整体及容器部分
 .org-chart-history {
-    background-color: #dfe7e9;
-
     h2 {
         visibility: visible;
     }
@@ -13,9 +11,14 @@
     position: relative;
     text-align: center;
 
+    &.org-chart-history {
+        min-height: 140px;
+    }
+
     h1 {
         font-size: 24px;
         font-weight: normal;
+        margin-bottom: 10px;
     }
 
     h2 {
