@@ -25,7 +25,7 @@ USER_LIST_TABLE_DEFS = [
         field: 'name'
         # pinnedLeft: true
         cellTemplate: '''
-        <div class="ui-grid-cell-contents ng-binding ng-scope">
+        <div class="ui-grid-cell-contents">
             <a nb-panel
                 template-url="partials/personnel/info_basic.html"
                 locals="{employee: row.entity}">
@@ -474,7 +474,7 @@ class AttendanceHisCtrl extends nb.Controller
                 field: 'user.name'
                 # pinnedLeft: true
                 cellTemplate: '''
-                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                <div class="ui-grid-cell-contents">
                     <a nb-panel
                         template-url="partials/personnel/info_basic.html"
                         locals="{employee: row.entity.user}">
@@ -572,10 +572,10 @@ class ContractCtrl extends nb.Controller
                 displayName: '详细',
                 field: '详细',
                 cellTemplate: '''
-                    <div class="ui-grid-cell-contents ng-binding ng-scope">
+                    <div class="ui-grid-cell-contents">
                         <a nb-panel
                             template-url="partials/personnel/info_basic.html"
-                            locals="{employee: row.entity}"> 详细
+                            locals="{employee: row.entity.owner.$fetch()}"> 详细
                         </a>
                     </div>
                 '''
@@ -597,7 +597,7 @@ class ContractCtrl extends nb.Controller
                 field: 'employeeName'
                 # pinnedLeft: true
                 cellTemplate: '''
-                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                <div class="ui-grid-cell-contents">
                     <a nb-panel
                         template-url="partials/personnel/info_basic.html"
                         locals="{employee: row.entity}">
@@ -627,7 +627,7 @@ class ContractCtrl extends nb.Controller
                 displayName: '详细',
                 field: '详细',
                 cellTemplate: '''
-                    <div class="ui-grid-cell-contents ng-binding ng-scope">
+                    <div class="ui-grid-cell-contents">
                         <a nb-panel
                             template-url="partials/personnel/info_basic.html"
                             locals="{employee: row.entity}"> 详细
@@ -670,6 +670,7 @@ class ContractCtrl extends nb.Controller
         request.reason = reason
         request.receptor_id = contract.employeeId
         @http.post("/api/workflows/Flow::EmployeeLeaveJob", request)
+        return
 
     loadEmployee: (params, contract)->
         self = @
@@ -708,7 +709,7 @@ class UserListCtrl extends nb.Controller
                 field: 'name'
                 # pinnedLeft: true
                 cellTemplate: '''
-                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                <div class="ui-grid-cell-contents">
                     <a nb-panel
                         template-url="partials/personnel/info_basic.html"
                         locals="{employee: row.entity}">
@@ -845,6 +846,8 @@ class SbFlowHandlerCtrl
         request.reason = reason
         request.receptor_id = employeeId
         @http.post("/api/workflows/Flow::EmployeeLeaveJob", request)
+
+        return
 
     refreshTableDate: ()->
         @tableData.$refresh({filter_types: [@FlowName]})

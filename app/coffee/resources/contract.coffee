@@ -5,7 +5,7 @@ Contract = (restmod, RMUtils, $Evt) ->
     Contract = restmod.model('/contracts').mix 'nbRestApi', 'DirtyModel', {
         startDate: {decode: 'date', param: 'yyyy-MM-dd'}
         endDate: {decode: 'date', param: 'yyyy-MM-dd'}
-
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
         $hooks:
             'after-create': ->
                 $Evt.$send('contract:create:success', "合同创建成功")
