@@ -670,6 +670,7 @@ class ContractCtrl extends nb.Controller
         request.reason = reason
         request.receptor_id = contract.employeeId
         @http.post("/api/workflows/Flow::EmployeeLeaveJob", request)
+        return
 
     loadEmployee: (params, contract)->
         self = @
@@ -845,6 +846,8 @@ class SbFlowHandlerCtrl
         request.reason = reason
         request.receptor_id = employeeId
         @http.post("/api/workflows/Flow::EmployeeLeaveJob", request)
+
+        return
 
     refreshTableDate: ()->
         @tableData.$refresh({filter_types: [@FlowName]})
