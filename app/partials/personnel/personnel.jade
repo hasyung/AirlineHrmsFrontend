@@ -25,8 +25,6 @@ tabset(flex)
                                     href="javascript:;"
                                     download
                                 ) 导出所选人员
-                            md-drop-option()
-                                a(ng-href="/api/employees/export_resume") 导出全部人员履历
                             md-drop-option(ng-if="selectedRows.length > 0")
                                 a(
                                     nb-download
