@@ -528,7 +528,7 @@ class ContractCtrl extends nb.Controller
         @filterOptions = filterBuildUtils('contract')
             .col 'employee_name',        '姓名',        'string',           '姓名'
             .col 'employee_no',          '员工编号',     'string'
-            .col 'department_ids',       '机构',        'org-search'
+            .col 'department_name',       '机构',        'string'
             .col 'end_date',             '合同到期时间',  'date-range'
             .col 'apply_type',           '用工性质',     'string'
             .col 'notes',                '是否有备注',   'boolean'
