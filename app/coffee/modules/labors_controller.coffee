@@ -385,23 +385,26 @@ class AttendanceCtrl extends nb.Controller
     getDate: ()->
         date = moment(new Date("#{this.year}-#{this.month}")).format()
 
-    departmentHrConfirm: ()->
+    departmentHrConfirm: (isConfirm)->
         self = @
-        params = {summary_date: @getDate()}
-        @http.put('/api/attendance_summaries/department_hr_confirm', params).then ()->
-            self.tableData.$refresh()
+        if isConfirm
+            params = {summary_date: @getDate()}
+            @http.put('/api/attendance_summaries/department_hr_confirm', params).then ()->
+                self.tableData.$refresh()
 
-    departmentLeaderCheck: ()->
-        self = @
-        params = {summary_date: @getDate()}
-        @http.put('/api/attendance_summaries/department_leader_check', params).then ()->
-            self.tableData.$refresh()
+    departmentLeaderCheck: (isConfirm)->
+        if isConfirm
+            self = @
+            params = {summary_date: @getDate()}
+            @http.put('/api/attendance_summaries/department_leader_check', params).then ()->
+                self.tableData.$refresh()
 
-    hrLeaderCheck: ()->
-        self = @
-        params = {summary_date: @getDate()}
-        @http.put('/api/attendance_summaries/hr_leader_check', params).then ()->
-            self.tableData.$refresh()
+    hrLeaderCheck: (isConfirm)->
+        if isConfirm
+            self = @
+            params = {summary_date: @getDate()}
+            @http.put('/api/attendance_summaries/hr_leader_check', params).then ()->
+                self.tableData.$refresh()
 
 
     search: (tableState)->
