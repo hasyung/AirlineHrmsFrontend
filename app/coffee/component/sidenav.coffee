@@ -30,42 +30,12 @@ menuFactory = ($rootScope, $state)->
         icon_src: '/images/svg/left-side-svg/left_icon_22.svg'
     }
 
-
-    sections.push {
-        name: '员工自助'
-        icon_src: '/images/svg/left-side-svg/left_icon_1.svg'
-        pages: [
-            {
-                name: '我的基本信息'
-                state: 'self.profile'
-            }
-            {
-                name: '我的申请'
-                state: 'my_requests'
-            }
-            {
-                name: '优免票'
-                # state: 'self.profile'
-            }
-            # {
-            #     name: '学历变更申请'
-            #     # state: 'self.profile'
-            # }
-            # {
-            #     name: '信息变更记录'
-            #     # state: 'self.profile'
-            # }
-        ]
-    }
-
-
     sections.push {
         name: '组织机构'
         type: 'link'
         state: 'org'
         icon_src: '/images/svg/left-side-svg/left_icon_2.svg'
     }
-
 
     sections.push {
         name: '岗位管理'
@@ -74,16 +44,17 @@ menuFactory = ($rootScope, $state)->
             {
                 name: '岗位列表'
                 state: 'position_list'
-                permission: 'positions_index'
+                permission: 'position_index'
             }
             {
                 name: '岗位异动记录'
                 state: 'position_changes'
-                permission: ''
+                permission: 'position_change_index'
             }
 
         ]
     }
+
 
 
     sections.push {
@@ -108,31 +79,6 @@ menuFactory = ($rootScope, $state)->
 
         ]
     }
-
-
-    # sections.push {
-    #     name: '考勤管理'
-    #     icon_src: '/images/svg/left-side-svg/left_icon_5.svg'
-    #     pages: [
-    #         {
-    #             name: '考勤记录'
-    #             state: 'attendance'
-    #             permission: ''
-    #         }
-    #         {
-    #             name: '假别设置'
-    #             state: 'position'
-    #             permission: ''
-    #         }
-    #         {
-    #             name: '请假管理'
-    #             state: 'position'
-    #             permission: ''
-    #         }
-
-    #     ]
-    # }
-
 
     sections.push {
         name: '培训管理'
@@ -265,11 +211,11 @@ menuFactory = ($rootScope, $state)->
                 state: 'labors_punishment'
                 permission: ''
             }
-            {
-                name: '合同续签'
-                state: 'labors_renew_contract'
-                permission: ''
-            }
+            # {
+            #     name: '合同续签'
+            #     state: 'labors_renew_contract'
+            #     permission: ''
+            # }
             {
                 name: '合同管理'
                 state: 'contract_management'

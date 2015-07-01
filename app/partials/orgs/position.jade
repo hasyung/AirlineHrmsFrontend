@@ -1,52 +1,56 @@
-.app-content-wrapper.ui-grid-container
-    md-toolbar
-        md-content.md-toolbar-tools
-            span 岗位信息列表
-            div(flex)
-            span
-                md-button.md-primary.md-raised(
-                    has-permission="positions_create"
-                    title="新增岗位"
-                    nb-dialog
-                    template-url="partials/orgs/position_add.html"
-                ) 新增岗位
-            span
-                md-button.md-raised.md-primary(
-                    has-permission="positions_adjust"
-                    nb-dialog
-                    template-url="partials/position/position_transfer.html"
-                    ) 调整机构
-            span
-                md-dropmenu(ng-init="selectedRows=[]")
-                    md-drop-label(ng-click="selectedRows = ctrl.getSelectsIds()")
-                        md-button.md-primary.md-raised 导出
-                    md-drop-option()
-                        a(ng-href="/api/positions/export_to_xls?department_id={{currentOrg.id}}") 导出全部岗位
-                    md-drop-option(ng-if="selectedRows.length > 0")
-                        a(
-                            nb-download
-                            url-prefix="/api/positions/export_to_xls?position_ids=#param#"
-                            param-getter="ctrl.getSelectsIds()"
-                            href="javascript:;"
-                            download
-                        ) 导出所选岗位
-                    md-drop-option()
-                        a(ng-href="/api/positions/export_specification_pdf?department_id={{currentOrg.id}}") 导出全部岗位描述书
-                    md-drop-option(ng-if="selectedRows.length > 0")
-                        a(
-                            nb-download
-                            url-prefix="/api/positions/export_specification_pdf?position_ids=#param#"
-                            param-getter="ctrl.getSelectsIds()"
-                            href="javascript:;"
-                            download
-                        ) 导出所选岗位描述书
-            span
-                md-button.md-warn.md-raised(
-                    has-permission="positions_batch_destroy"
-                    title="请选择要删除的岗位"
-                    ng-disabled="ctrl.getSelectsIds().length == 0"
-                    nb-confirm="ctrl.batchRemove(isConfirm)"
-                    nb-title="您确定要删除所选的{{ctrl.getSelectsIds().length}}个岗位吗?"
-                    nb-content="删除操作将在你点击确定后执行，岗位删除后将无法恢复。") 删除岗位
+.position-info-list
+    md-toolbar.md-warn(md-theme="hrms")
+        md-content.md-toolbar-tools(style="background-color: transparent;")
+            span 岗位信息
+    .ui-grid-container
+        md-toolbar
+            md-content.md-toolbar-tools
+                span 岗位信息列表
+                div(flex)
+                span
+                    md-button.md-primary.md-raised(
+                        has-permission="positions_create"
+                        title="新增岗位"
+                        nb-dialog
+                        template-url="partials/orgs/position_add.html"
+                    ) 新增岗位
+                span
+                    md-button.md-raised.md-primary(
+                        has-permission="positions_adjust"
+                        nb-dialog
+                        template-url="partials/position/position_transfer.html"
+                        ) 调整机构
+                span
+                    md-dropmenu(ng-init="selectedRows=[]")
+                        md-drop-label(ng-click="selectedRows = ctrl.getSelectsIds()")
+                            md-button.md-primary.md-raised 导出
+                        md-drop-option()
+                            a(ng-href="/api/positions/export_to_xls?department_id={{currentOrg.id}}") 导出全部岗位
+                        md-drop-option(ng-if="selectedRows.length > 0")
+                            a(
+                                nb-download
+                                url-prefix="/api/positions/export_to_xls?position_ids=#param#"
+                                param-getter="ctrl.getSelectsIds()"
+                                href="javascript:;"
+                                download
+                            ) 导出所选岗位
+                        md-drop-option()
+                            a(ng-href="/api/positions/export_specification_pdf?department_id={{currentOrg.id}}") 导出全部岗位描述书
+                        md-drop-option(ng-if="selectedRows.length > 0")
+                            a(
+                                nb-download
+                                url-prefix="/api/positions/export_specification_pdf?position_ids=#param#"
+                                param-getter="ctrl.getSelectsIds()"
+                                href="javascript:;"
+                                download
+                            ) 导出所选岗位描述书
+                span
+                    md-button.md-warn.md-raised(
+                        has-permission="positions_batch_destroy"
+                        title="请选择要删除的岗位"
+                        ng-disabled="ctrl.getSelectsIds().length == 0"
+                        nb-confirm="ctrl.batchRemove(isConfirm)"
+                        nb-title="您确定要删除所选的{{ctrl.getSelectsIds().length}}个岗位吗?"
+                        nb-content="删除操作将在你点击确定后执行，岗位删除后将无法恢复。") 删除岗位
 
-    div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection safe-src="ctrl.positions")
+        div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection safe-src="ctrl.positions")

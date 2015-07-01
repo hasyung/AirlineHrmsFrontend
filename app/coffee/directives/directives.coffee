@@ -335,7 +335,7 @@ angular.module 'nb.directives'
             ]
 
             options = {
-                "width": 420,
+                "width": 520,
                 "height": 250,
                 "bottom": 50
             }
