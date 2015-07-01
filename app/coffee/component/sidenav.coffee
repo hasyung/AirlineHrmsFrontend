@@ -30,42 +30,12 @@ menuFactory = ($rootScope, $state)->
         icon_src: '/images/svg/left-side-svg/left_icon_22.svg'
     }
 
-
-    sections.push {
-        name: '员工自助'
-        icon_src: '/images/svg/left-side-svg/left_icon_1.svg'
-        pages: [
-            {
-                name: '我的基本信息'
-                state: 'self.profile'
-            }
-            {
-                name: '我的申请'
-                state: 'my_requests'
-            }
-            {
-                name: '优免票'
-                # state: 'self.profile'
-            }
-            # {
-            #     name: '学历变更申请'
-            #     # state: 'self.profile'
-            # }
-            # {
-            #     name: '信息变更记录'
-            #     # state: 'self.profile'
-            # }
-        ]
-    }
-
-
     sections.push {
         name: '组织机构'
         type: 'link'
         state: 'org'
         icon_src: '/images/svg/left-side-svg/left_icon_2.svg'
     }
-
 
     sections.push {
         name: '岗位管理'
@@ -84,6 +54,7 @@ menuFactory = ($rootScope, $state)->
 
         ]
     }
+
 
 
     sections.push {

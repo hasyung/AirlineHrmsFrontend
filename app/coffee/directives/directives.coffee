@@ -274,23 +274,23 @@ angular.module 'nb.directives'
                 marginLeft: '0'
             }
 
-            $sidebar.on 'mouseenter', ()->
-                $sidebar.stop(true, false).animate {
-                    marginLeft: 0
-                }, 1000
+            # $sidebar.on 'mouseenter', ()->
+            #     $sidebar.stop(true, false).animate {
+            #         marginLeft: 0
+            #     }, 1000
 
-            $sidebar.on 'mouseleave', ()->
-                $sidebar.stop(true,false).animate {
-                    marginLeft: '-190px'
-                }, 1000
+            # $sidebar.on 'mouseleave', ()->
+            #     $sidebar.stop(true,false).animate {
+            #         marginLeft: '-190px'
+            #     }, 1000
 
-            $timeout(()->
+            # $timeout(()->
 
-                $sidebar.animate {
-                    marginLeft: '-190px'
-                }, 1000
+            #     $sidebar.animate {
+            #         marginLeft: '-190px'
+            #     }, 1000
 
-            , 3000)
+            # , 3000)
 
 
 
@@ -335,7 +335,7 @@ angular.module 'nb.directives'
             ]
 
             options = {
-                "width": 420,
+                "width": 520,
                 "height": 250,
                 "bottom": 50
             }
