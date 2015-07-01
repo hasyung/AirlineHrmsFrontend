@@ -37,7 +37,6 @@ menuFactory = ($rootScope, $state)->
         icon_src: '/images/svg/left-side-svg/left_icon_2.svg'
     }
 
-
     sections.push {
         name: '岗位管理'
         icon_src: '/images/svg/left-side-svg/left_icon_3.svg'
@@ -55,6 +54,7 @@ menuFactory = ($rootScope, $state)->
 
         ]
     }
+
 
 
     sections.push {
