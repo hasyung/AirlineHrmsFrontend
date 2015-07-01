@@ -44,12 +44,12 @@ menuFactory = ($rootScope, $state)->
             {
                 name: '岗位列表'
                 state: 'position_list'
-                permission: 'positions_index'
+                permission: 'position_index'
             }
             {
                 name: '岗位异动记录'
                 state: 'position_changes'
-                permission: ''
+                permission: 'position_change_index'
             }
 
         ]
@@ -79,31 +79,6 @@ menuFactory = ($rootScope, $state)->
 
         ]
     }
-
-
-    # sections.push {
-    #     name: '考勤管理'
-    #     icon_src: '/images/svg/left-side-svg/left_icon_5.svg'
-    #     pages: [
-    #         {
-    #             name: '考勤记录'
-    #             state: 'attendance'
-    #             permission: ''
-    #         }
-    #         {
-    #             name: '假别设置'
-    #             state: 'position'
-    #             permission: ''
-    #         }
-    #         {
-    #             name: '请假管理'
-    #             state: 'position'
-    #             permission: ''
-    #         }
-
-    #     ]
-    # }
-
 
     sections.push {
         name: '培训管理'
