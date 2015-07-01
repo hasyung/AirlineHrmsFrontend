@@ -1,6 +1,6 @@
 .app-content-wrapper(flex ng-init="ctrl.loadSummariesList()")
 
-    
+
     div.ui-grid-container
         md-toolbar
             .md-toolbar-tools
@@ -14,24 +14,24 @@
 
                         md-select.month(ng-model="ctrl.month" flex ng-change="ctrl.exeSearch()")
                             md-select-label {{ctrl.month}}
-                            md-option(ng-value="item" ng-repeat="item in ctrl.getMonths()" ng-bind="item") 
+                            md-option(ng-value="item" ng-repeat="item in ctrl.getMonths()" ng-bind="item")
 
                     span.row-text.last {{ctrl.tableData.$metadata.status}}
                 md-button.md-primary.md-raised(
                     has-permission="attendance_summaries_department_hr_confirm"
-                    nb-confirm="ctrl.departmentHrConfirm()"
+                    nb-confirm="ctrl.departmentHrConfirm(isConfirm)"
                     nb-title="考勤汇总确认"
                     nb-content="确认本部门{{ctrl.year}}-{{ctrl.month}}考勤已完成统计，进入后续审批。"
                 ) 汇总确认
                 md-button.md-primary.md-raised(
                     has-permission="attendance_summaries_department_leader_check"
-                    nb-confirm="ctrl.departmentLeaderCheck()"
+                    nb-confirm="ctrl.departmentLeaderCheck(isConfirm)"
                     nb-title="考勤汇总审核"
                     nb-content="确认本部门{{ctrl.year}}-{{ctrl.month}}考勤汇总通过审核，提交至人力资源部门。"
                 ) 审核
                 md-button.md-primary.md-raised(
                     has-permission="attendance_summaries_hr_leader_check"
-                    nb-confirm="ctrl.hrLeaderCheck()"
+                    nb-confirm="ctrl.hrLeaderCheck(isConfirm)"
                     nb-title="考勤汇总审核"
                     nb-content="确认对该部门{{ctrl.year}}-{{ctrl.month}}考勤汇总通过审核。"
                 ) 审核
