@@ -1,0 +1,40 @@
+md-dialog
+    fieldset(disabled)
+        div(layout)
+            md-input-container
+                label 姓名
+                input(ng-model="::employeeName")
+            md-input-container
+                label 员工编号
+                input(ng-model="")
+        div(layout)
+            md-input-container
+                label 部门
+                input(ng-model="::employeeName")
+            md-input-container
+                label 岗位
+                input(ng-model="")
+        div(layout)
+            md-input-container
+                label 用工性质
+                input(ng-model="::employeeName")
+            md-input-container
+                label 变更标志
+                input(ng-model="")
+        div(layout)
+            md-input-container
+                label 开始日期
+                input(ng-model="::employeeName")
+            md-input-container
+                label 结束日期
+                input(ng-model="")
+        div(layout)
+            md-input-container
+                label 合同时长
+                input(ng-model="::employeeName")
+        div(layout)
+            md-input-container
+                label 合同备注
+                input(ng-model="")
+    .md-actions
+        md-button(ng-click="dialog.close()") 关闭
