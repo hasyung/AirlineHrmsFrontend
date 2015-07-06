@@ -116,68 +116,6 @@
     }
 }
 
-//我的申请主页面的样式
-
-.my-requests {
-    color: $text-color;
-    height: auto !important;
-
-    .my-cell-cotainer {
-        @include clearfix();
-        margin: 0 auto;
-        padding: 20px 0;
-        width: 500px;
-    }
-
-    .my-requests-cell {
-        box-sizing: content-box;
-        float: left;
-        height: 100px;
-        margin-bottom: 20px;
-        padding: 0 10px;
-        text-align: center;
-        width: 80px;
-
-        &:hover {
-            .md-fab.md-button {
-                background-color: rgba(255, 255, 255, .54);
-
-                md-icon {
-                    * {
-                        fill: rgba(232, 78, 64, .87);
-                    }
-                }
-            }
-        }
-    }
-
-    .md-fab.md-button {
-        background-color: rgba(0, 0, 0, .26);
-        border-radius: 50%;
-        box-shadow: none;
-        height: 70px;
-        line-height: 70px;
-        margin: 0 auto 15px;
-        width: 70px;
-
-        md-icon {
-            height: 50px;
-            margin-top: -3px;
-            width: 50px;
-
-            * {
-                fill: rgba(255, 255, 255, .54);
-            }
-        }
-    }
-
-    .desc {
-        color: rgba(255, 255, 255, .54);
-        font-size: 12px;
-    }
-
-}
-
 //我要请假 主列表样式
 .flow-list {
     md-toolbar {
