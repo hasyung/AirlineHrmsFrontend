@@ -573,7 +573,7 @@ class ContractCtrl extends nb.Controller
                 field: '详细',
                 cellTemplate: '''
                     <div class="ui-grid-cell-contents">
-                        <a nb-dialog
+                        <a nb-panel
                             template-url="partials/labors/contract/detail.dialog.html"
                             locals="{contract: row.entity.$refresh()}"> 详细
                         </a>
