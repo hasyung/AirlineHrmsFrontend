@@ -1,10 +1,21 @@
 form(ng-submit="save(work.$save(), infoForm)" name="infoForm")
-    .form-btn-group.sep-top(ng-hide="editing")
-        md-button.md-raised.red(ng-click="work.$destroy()" type="button") 删除
-        md-button.md-primary.md-raised(ng-click="edit($event)") 编辑
-    .form-btn-group.sep-top.alive(ng-show="editing")
-        md-button.md-raised.white(ng-click="cancel(work,$event, empEditForm)") 取消
-        md-button.md-primary.md-raised(type="submit") 保存
+    .btngroup--single(ng-hide="editing")
+        span(flex)
+        span
+            .btngroup__btn(ng-click="edit($event)")
+                .btn__icon.btn__icon--edit
+        span
+            .btngroup__btn(ng-click="work.$destroy()" type="button")
+                .btn__icon.btn__icon--del
+
+    .btngroup--single(ng-show="editing")
+        span(flex)
+        span
+            .btngroup__btn(ng-click="cancel(work,$event, empEditForm)")
+                .btn__icon.btn__icon--close
+        span
+            .btngroup__btn(type="submit")
+                .btn__icon.btn__icon--edit
     fieldset(ng-disabled="!editing")
         div(layout)
             md-input-container(flex)
@@ -27,7 +38,6 @@ form(ng-submit="save(work.$save(), infoForm)" name="infoForm")
             md-input-container.row-has-value(flex)
                 label 工作描述
                 input(ng-model="work.jobDesc" name="jobDesc" required)
-        md-input-container
-            label 证明人
-            input(ng-model="work.witness" name="witness" required)
-md-divider(ng-show="!$last")
+        //- md-input-container
+        //-     label 证明人
+        //-     input(ng-model="work.witness" name="witness" required)

@@ -1,8 +1,8 @@
 
 form(ng-controller="NewResource", ng-submit="create(newExp,newEduBeforeForm); param.newExp = null" name="newEduBeforeForm")
-    .form-btn-group.sep-top.alive
-        md-button.md-raised.white(ng-click="param.newExp = null") 取消
-        md-button.md-primary.md-raised(type="submit") 保存
+    //- .form-btn-group.sep-top.alive
+    //-     md-button.md-raised.white(ng-click="param.newExp = null") 取消
+    //-     md-button.md-primary.md-raised(type="submit") 保存
     div(layout)
         md-input-container(flex)
             label 入学时间
@@ -34,6 +34,10 @@ form(ng-controller="NewResource", ng-submit="create(newExp,newEduBeforeForm); pa
             //- md-select(ng-model="newExp.degree" md-on-open="loadEnum('degrees')")
             //-     md-select-label {{newExp.degree.displayName || '无'}}
             //-     md-option(ng-value="degree" ng-repeat="degree in enums.degrees") {{degree.displayName}}
-    md-input-container
-        label 证明人
-        input(ng-model="newExp.witness" name="witness" required)
+
+    .form-bottom-group(layout)
+        span(flex)
+        md-button.md-raised.white(ng-click="param.newExp = null") 取消
+        md-button.md-primary.md-raised(type="submit") 保存
+
+

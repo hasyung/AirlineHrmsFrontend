@@ -152,7 +152,7 @@
 
 //员工个人信息 组件 subheader
 .subheader--center {
-    background: #fff url('/images/personnel/divider.png') repeat-x;
+    background: url('/images/personnel/divider.png') repeat-x;
     background-position: 0 50%;
     display: flex;
     justify-content: center;
@@ -176,6 +176,55 @@
     display: flex;
     height: 40px;
     padding: 20px 30px 0 0;
+}
+
+.btngroup--single {
+    display: flex;
+    padding-top: 10px;
+
+    .btngroup__btn {
+        cursor: pointer;
+        height: 32px;
+        margin-left: 20px;
+        width: 32px;
+    }
+
+    .btn__icon {
+        height: 100%;
+        width: 100%;
+    }
+
+    .btn__icon--edit {
+        background: url('/images/personnel/edit.svg');
+
+        &:hover {
+            background: url('/images/personnel/edit_h.svg');
+        }
+    }
+
+    .btn__icon--del {
+        background: url('/images/personnel/del.svg');
+
+        &:hover {
+            background: url('/images/personnel/del_h.svg');
+        }
+    }
+
+    .btn__icon--save {
+        background: url('/images/personnel/save.svg');
+
+        &:hover {
+            background: url('/images/personnel/save_h.svg');
+        }
+    }
+
+    .btn__icon--close {
+        background: url('/images/personnel/close.svg');
+
+        &:hover {
+            background: url('/images/personnel/close_h.svg');
+        }
+    }
 }
 
 
@@ -358,16 +407,17 @@
     }
 
     .personnel-section-wrap {
+        background-color: #fff;
         box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
         margin-bottom: 30px;
 
-        &:nth-child(odd) {
-            background-color: #fff;
-        }
+        // &:nth-child(odd) {
+        //     background-color: #fff;
+        // }
 
-        &:nth-child(even) {
-            background-color: #fafbfd;
-        }
+        // &:nth-child(even) {
+        //     background-color: #fafbfd;
+        // }
     }
 
 

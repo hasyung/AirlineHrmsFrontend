@@ -1,10 +1,21 @@
 form(ng-submit="save(education.$save(), eduForm)" name="eduForm")
-    .form-btn-group.sep-top(ng-hide="editing")
-        md-button.md-raised.red(type="button" ng-click="education.$destroy()") 删除
-        md-button.md-primary.md-raised(ng-click="edit($event)") 编辑
-    .form-btn-group.sep-top.alive(ng-show="editing")
-        md-button.md-raised.white(ng-click="cancel(current,$event, eduForm)",) 取消
-        md-button.md-primary.md-raised(type="submit") 保存
+    .btngroup--single(ng-hide="editing")
+        span(flex)
+        span
+            .btngroup__btn(ng-click="edit($event)")
+                .btn__icon.btn__icon--edit
+        span
+            .btngroup__btn(type="button" ng-click="education.$destroy()")
+                .btn__icon.btn__icon--del
+
+    .btngroup--single(ng-show="editing")
+        span(flex)
+        span
+            .btngroup__btn(ng-click="cancel(current,$event, eduForm)")
+                .btn__icon.btn__icon--close
+        span
+            .btngroup__btn(type="submit")
+                .btn__icon.btn__icon--save
     fieldset(ng-disabled="!editing")
         div(layout)
             md-input-container(flex)
@@ -37,6 +48,10 @@ form(ng-submit="save(education.$save(), eduForm)" name="eduForm")
                 md-select(ng-model="education.degree" ng-disabled="!editing")
                     md-select-label {{$enum.parseLabel(education.degree, "degrees")}}
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('degrees')") {{item.label}}
-        md-input-container
-            label 证明人
-            input(ng-model="education.witness" name="witness" required)
+        //- md-input-container
+        //-     label 证明人
+        //-     input(ng-model="education.witness" name="witness" required)
+
+
+
+
