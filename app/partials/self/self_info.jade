@@ -1,7 +1,7 @@
-.self-info-content(layout="row" flex)
-    .personnel-menu.md-whiteframe-z1
+.self-info-container
+    .self-info-hd.md-whiteframe-z1
         .avator
-            a.resume-icon.md-whiteframe-z1(
+            a.resume-icon(
                 href="javascript:;"
                 nb-dialog
                 template-url="partials/self/self_resume.html"
@@ -15,18 +15,10 @@
                     nb-dialog-scope="this"
                     nb-dialog-class="ngdialog-theme-plain cust-avator-dialog-width"
                 )
-                    i.fa.fa-edit
             h3(ng-bind="currentUser.$cmStatus.name")
             p(ng-bind="currentUser.employeeNo")
-            //- .avator-area
-            //-     img(ng-src="{{currentUser.favicon.middle}}")
-            //-     .edit-icon-container(
-            //-         nb-dialog="partials/self/self_info_basic/avator_upload.tpl.html"
-            //-         nb-dialog-scope="this"
-            //-         nb-dialog-class="ngdialog-theme-plain cust-avator-dialog-width"
-            //-     )
-            //-         i.fa.fa-edit
-            //- input(type="file" nv-file-select="" uploader="uploader")
+
+    .self-info-bd.md-whiteframe-z1(layout)
         .personnel-info-list
             ul
                 li(ui-sref-active="active")
@@ -62,12 +54,9 @@
                 li
                     a
                         | 档案信息
-                //- li(ui-sref-active="active")
-                //-     a(nb-dialog="partials/")
-                //-         | 个人履历
 
-    .personnel-content.self-info-content()
-        div(ui-view="")
+        .personnel-content(flex)
+            div(ui-view="")
 
         //- include info_basic
         //- include info_detail

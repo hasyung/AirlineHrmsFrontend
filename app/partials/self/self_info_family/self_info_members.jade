@@ -1,20 +1,19 @@
 section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$search({relation: 'lover'})")
     .personnel-content-body
-        .personnel-section-wrap()
-            md-toolbar
-                h2.md-toolbar-tools
-                    span 家庭成员
+        .personnel-section-wrap
             md-content
-                section.form-material-section(ng-if="vm.lovers.length != 0" ng-repeat="wife in vm.lovers")
+                section.form-material-section(ng-if="vm.lovers.length != 0" ng-repeat="wife in vm.lovers" style="padding-bottom: 0;")
+                    include self_info_lover_edit
+                section.form-material-section(ng-if="vm.lovers.length == 0" ng-init="wife = vm.lovers.$new(); wife.relation='lover';" style="padding-bottom: 0;")
                     md-subheader 配偶
                     include self_info_lover_edit
-                    md-divider
-                section.form-material-section(ng-if="vm.lovers.length == 0" ng-init="wife = vm.lovers.$new(); wife.relation='lover';")
-                    md-subheader 配偶
-                    include self_info_lover_edit
-                    md-divider
             md-content.form-material-section.form-table-container(ng-init="vm.children = currentUser.familymembers.$search({relation: 'children'}); newChildren = []")
-                md-subheader 子女情况
+                .sep-40
+                .subheader--center
+                    .subheader__content
+                        span.subheader__icon
+                            img(src="/images/personnel/subh-icon.png", alt="icon--plane")
+                        span 子女情况
                 table.table.table-hover.table-mc-light-blue.table-bordered
                     thead
                         tr
@@ -65,7 +64,12 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
 
                 md-divider
             md-content.form-material-section.form-table-container(ng-init="vm.other = currentUser.familymembers.$search({relation: 'other'}); newOther = []")
-                md-subheader 父母、兄妹、配偶父母情况
+                .sep-40
+                .subheader--center
+                    .subheader__content
+                        span.subheader__icon
+                            img(src="/images/personnel/subh-icon.png", alt="icon--plane")
+                        span 父母、兄妹、配偶父母情况
                 table.table.table-hover.table-mc-light-blue.table-bordered
                     thead
                         tr

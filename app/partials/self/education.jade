@@ -1,28 +1,36 @@
 section.personnel-info-section(ng-init="educations = currentUser.educationExperiences.$refresh();param= {}")
     .personnel-content-body
-        .personnel-section-wrap()
-            md-toolbar
-                .md-toolbar-tools
-                    span 教育经历（入司前）
-                    span(flex)
-                    span
-                        md-button.md-raised.md-primary(ng-hide="param.newExp" ng-click="param.newExp= educations.$build({category:'before'})") 新增
-            md-content.pt-16(ng-if="param.newExp && param.newExp.category == 'before'" ng-init="newExp = param.newExp")
+        .personnel-section-wrap
+            .btngroup--top--right
+                span(flex)
+                span
+                    md-button.md-raised.md-primary(ng-hide="param.newExp" ng-click="param.newExp= educations.$build({category:'before'})") 新增
+            md-content(ng-if="param.newExp && param.newExp.category == 'before'" ng-init="newExp = param.newExp")
+                .subheader--center.subheader--margin30
+                    .subheader__content
+                        span.subheader__icon
+                            img(src="/images/personnel/subh-icon.png", alt="icon--plane")
+                        span 新增教育经历(入司前)
                 section.form-material-section
                     .sep-40
                     include edu/new_edu_exp_form
 
-            md-content.pt-16
+            md-content
+                .subheader--center.subheader--margin30
+                    .subheader__content
+                        span.subheader__icon
+                            img(src="/images/personnel/subh-icon.png", alt="icon--plane")
+                        span 入司前
                 section.form-material-section(ng-controller="EditableResource", ng-repeat="education in educations | filterBy: ['category']:'before'")
                     .sep-40
                     include edu/exist_edu_exp_form
-                    md-divider(ng-show="!$last")
 
         .personnel-section-wrap()
-            md-toolbar
-                .md-toolbar-tools
-                    span 教育经历（入司后）
-                    span(flex)
+            .subheader--center
+                .subheader__content
+                    span.subheader__icon
+                        img(src="/images/personnel/subh-icon.png", alt="icon--plane")
+                    span 入司后
             md-content.pt-16
                 section.form-material-section(ng-controller="EditableResource", ng-repeat="education in educations | filterBy: ['category']:'after'")
                     .sep-40

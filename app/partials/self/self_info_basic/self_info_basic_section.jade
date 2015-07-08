@@ -1,16 +1,21 @@
 form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), infoForm)" name="infoForm")
-    md-toolbar
-        .md-toolbar-tools
-            span 基本信息
-            span(flex)
-            span(ng-hide="editing")
-                md-button.md-raised.md-primary(ng-click="edit($event)") 编辑
-            span(ng-show="editing")
-                md-button.md-raised.white(ng-click="cancel(currentUser, $event, infoForm)") 取消
-                md-button.md-raised.md-primary(type="submit" style="margin-left: 20px") 保存
+    //- 顶部按钮组 右上
+    .btngroup--top--right
+        span(flex)
+        span(ng-hide="editing")
+            md-button.md-raised.md-primary(ng-click="edit($event)") 编辑
+        span(ng-show="editing")
+            md-button.md-raised.white(ng-click="cancel(currentUser, $event, infoForm)") 取消
+            md-button.md-raised.md-primary(type="submit" style="margin-left: 20px") 保存
     md-content
         section.form-material-section
-            md-subheader.md-primary 个人信息
+            //- TODO: 可抽出，写成angular指令
+            .subheader--center
+                .subheader__content
+                    span.subheader__icon
+                        img(src="/images/personnel/subh-icon.png", alt="icon--plane")
+                    span 个人信息
+
             fieldset(ng-disabled="!editing")
                 div(layout)
                     md-input-container(flex)
@@ -83,9 +88,12 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                     label 参工时间
                     input(ng-model="currentUser.startWorkDate" name="startWorkDate" disabled)
 
-            md-divider
-
-            md-subheader.md-primary 联系方式
+            .sep-40
+            .subheader--center
+                .subheader__content
+                    span.subheader__icon
+                        img(src="/images/personnel/subh-icon.png", alt="icon--plane")
+                    span 联系方式
             fieldset(ng-disabled="!editing")
                 div(layout)
                     md-input-container(flex)
@@ -110,9 +118,12 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                         label 电子邮箱
                         input(ng-model="currentUser.contact.email" name="email")
 
-            md-divider
-
-            md-subheader.md-primary 岗位信息
+            .sep-40
+            .subheader--center
+                .subheader__content
+                    span.subheader__icon
+                        img(src="/images/personnel/subh-icon.png", alt="icon--plane")
+                    span 岗位信息
             fieldset(disabled)
                 div(layout ng-repeat="item in currentUser.positions")
                     md-input-container.row-has-value(flex)
