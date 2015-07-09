@@ -150,6 +150,20 @@
     }
 }
 
+.anth-attr {
+    background: url('/images/personnel/auditing.png');
+    bottom: 15px;
+    display: none;
+    height: 18px;
+    position: absolute;
+    right: 10px;
+    width: 66px;
+
+    &.auditing {
+        display: block;
+    }
+}
+
 //员工个人信息 组件 subheader
 .subheader--center {
     background: url('/images/personnel/divider.png') repeat-x;
@@ -210,19 +224,19 @@
         }
     }
 
-    .btn__icon--save {
-        background: url('/images/personnel/save.svg');
+    .btn__icon--finish {
+        background: url('/images/personnel/finish.svg');
 
         &:hover {
-            background: url('/images/personnel/save_h.svg');
+            background: url('/images/personnel/finish.svg');
         }
     }
 
-    .btn__icon--close {
-        background: url('/images/personnel/close.svg');
+    .btn__icon--cancel {
+        background: url('/images/personnel/cancel.svg');
 
         &:hover {
-            background: url('/images/personnel/close_h.svg');
+            background: url('/images/personnel/cancel_h.svg');
         }
     }
 }

@@ -12,10 +12,10 @@ form(ng-submit="save(work.$save(), infoForm)" name="infoForm")
         span(flex)
         span
             .btngroup__btn(ng-click="cancel(work,$event, empEditForm)")
-                .btn__icon.btn__icon--close
+                .btn__icon.btn__icon--cancel
         span
             .btngroup__btn(type="submit")
-                .btn__icon.btn__icon--edit
+                .btn__icon.btn__icon--finish
     fieldset(ng-disabled="!editing")
         div(layout)
             md-input-container(flex)
