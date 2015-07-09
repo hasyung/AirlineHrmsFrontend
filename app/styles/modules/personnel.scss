@@ -91,6 +91,10 @@
             float: left;
         }
 
+        .table {
+            margin-top: 20px;
+        }
+
         .personnel-info-list {
             background-color: #eee;
 
@@ -123,7 +127,6 @@
 
                 &:hover {
                     a {
-                        border-left: 4px solid #f44336;
                         color: #f44336;
                     }
 
@@ -197,10 +200,16 @@
     padding-top: 10px;
 
     .btngroup__btn {
+        border-radius: 50%;
         cursor: pointer;
         height: 32px;
         margin-left: 20px;
         width: 32px;
+    }
+
+    button.btngroup__btn {
+        border: 0;
+        padding: 0;
     }
 
     .btn__icon {

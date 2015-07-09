@@ -14,7 +14,7 @@ form(ng-submit="save(education.$save(), eduForm)" name="eduForm")
             .btngroup__btn(ng-click="cancel(current,$event, eduForm)")
                 .btn__icon.btn__icon--cancel
         span
-            .btngroup__btn(type="submit")
+            button.btngroup__btn(type="submit")
                 .btn__icon.btn__icon--finish
     fieldset(ng-disabled="!editing")
         div(layout)

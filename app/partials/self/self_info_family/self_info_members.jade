@@ -7,7 +7,10 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                 section.form-material-section(ng-if="vm.lovers.length == 0" ng-init="wife = vm.lovers.$new(); wife.relation='lover';" style="padding-bottom: 0;")
                     include self_info_lover_edit
             md-content.form-material-section.form-table-container(ng-init="vm.children = currentUser.familymembers.$search({relation: 'children'}); newChildren = []")
-                .sep-40
+                .btngroup--top--right(style="padding-right: 0;")
+                    span(flex)
+                    span(ng-hide="editing")
+                        md-button.md-raised.md-primary(ng-click="newChildren.push({})") 新增
                 .subheader--center
                     .subheader__content
                         span.subheader__icon
@@ -58,12 +61,14 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                         md-button.md-raised.white(ng-click="newChildren.splice($index, 1)") 取消
                         md-button.md-raised.md-primary(ng-click="vm.children.$create(nc);newChildren.splice($index, 1)") 提交
 
-                .add(ng-hide="newChildren.length")
-                    button.fa.fa-plus(ng-click="newChildren.push({})")
+                //- .add(ng-hide="newChildren.length")
+                //-     button.fa.fa-plus(ng-click="newChildren.push({})")
 
-                md-divider
             md-content.form-material-section.form-table-container(ng-init="vm.other = currentUser.familymembers.$search({relation: 'other'}); newOther = []")
-                .sep-40
+                .btngroup--top--right(style="padding-right: 0;")
+                    span(flex)
+                    span(ng-hide="editing")
+                        md-button.md-raised.md-primary(ng-click="newOther.push({})") 新增
                 .subheader--center
                     .subheader__content
                         span.subheader__icon
@@ -114,6 +119,6 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                         md-button.md-raised.white(ng-click="newOther.splice($index, 1)") 取消
                         md-button.md-raised.md-primary(ng-click="vm.other.$create(no);newOther.splice($index, 1)") 提交
 
-                .add(ng-hide="newOther.length")
-                    button.fa.fa-plus(ng-click="newOther.push({})")
+                //- .add(ng-hide="newOther.length")
+                //-     button.fa.fa-plus(ng-click="newOther.push({})")
 
