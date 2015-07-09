@@ -5,7 +5,6 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                 section.form-material-section(ng-if="vm.lovers.length != 0" ng-repeat="wife in vm.lovers" style="padding-bottom: 0;")
                     include self_info_lover_edit
                 section.form-material-section(ng-if="vm.lovers.length == 0" ng-init="wife = vm.lovers.$new(); wife.relation='lover';" style="padding-bottom: 0;")
-                    md-subheader 配偶
                     include self_info_lover_edit
             md-content.form-material-section.form-table-container(ng-init="vm.children = currentUser.familymembers.$search({relation: 'children'}); newChildren = []")
                 .sep-40
@@ -57,7 +56,7 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                         input(ng-model="nc.company" columns="1")
                     .form-actions
                         md-button.md-raised.white(ng-click="newChildren.splice($index, 1)") 取消
-                        md-button.md-raised.skyblue(ng-click="vm.children.$create(nc);newChildren.splice($index, 1)") 提交
+                        md-button.md-raised.md-primary(ng-click="vm.children.$create(nc);newChildren.splice($index, 1)") 提交
 
                 .add(ng-hide="newChildren.length")
                     button.fa.fa-plus(ng-click="newChildren.push({})")
@@ -113,7 +112,7 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                         input(ng-model="no.company")
                     .form-actions()
                         md-button.md-raised.white(ng-click="newOther.splice($index, 1)") 取消
-                        md-button.md-raised.skyblue(ng-click="vm.other.$create(no);newOther.splice($index, 1)") 提交
+                        md-button.md-raised.md-primary(ng-click="vm.other.$create(no);newOther.splice($index, 1)") 提交
 
                 .add(ng-hide="newOther.length")
                     button.fa.fa-plus(ng-click="newOther.push({})")
