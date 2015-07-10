@@ -33,6 +33,7 @@ section.personnel-info-section(ng-init="experiences = currentUser.workExperience
                 section.form-material-section(ng-controller="EditableResource", ng-repeat="work in experiences | filterBy: ['category']:'after'")
                     .sep-40
                     include experience/scal_work_exp_form
+                .sep-40
 
 //- section.personnel-info-section(ng-init="experiences = currentUser.workExperiences.$fetch();param= {}")
 //-     .personnel-top-header.clearfix

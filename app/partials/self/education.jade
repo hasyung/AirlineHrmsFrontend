@@ -32,3 +32,4 @@ section.personnel-info-section(ng-init="educations = currentUser.educationExperi
                 section.form-material-section(ng-controller="EditableResource", ng-repeat="education in educations | filterBy: ['category']:'after'")
                     .sep-40
                     include edu/scal_edu_exp_form
+                .sep-40
