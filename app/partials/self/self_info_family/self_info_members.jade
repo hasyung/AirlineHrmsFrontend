@@ -1,20 +1,21 @@
 section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$search({relation: 'lover'})")
     .personnel-content-body
-        .personnel-section-wrap()
-            md-toolbar
-                h2.md-toolbar-tools
-                    span 家庭成员
+        .personnel-section-wrap
             md-content
-                section.form-material-section(ng-if="vm.lovers.length != 0" ng-repeat="wife in vm.lovers")
-                    md-subheader 配偶
+                section.form-material-section(ng-if="vm.lovers.length != 0" ng-repeat="wife in vm.lovers" style="padding-bottom: 0;")
                     include self_info_lover_edit
-                    md-divider
-                section.form-material-section(ng-if="vm.lovers.length == 0" ng-init="wife = vm.lovers.$new(); wife.relation='lover';")
-                    md-subheader 配偶
+                section.form-material-section(ng-if="vm.lovers.length == 0" ng-init="wife = vm.lovers.$new(); wife.relation='lover';" style="padding-bottom: 0;")
                     include self_info_lover_edit
-                    md-divider
             md-content.form-material-section.form-table-container(ng-init="vm.children = currentUser.familymembers.$search({relation: 'children'}); newChildren = []")
-                md-subheader 子女情况
+                .btngroup--top--right(style="padding-right: 0;")
+                    span(flex)
+                    span(ng-hide="editing")
+                        md-button.md-raised.md-primary(ng-click="newChildren.push({})") 新增
+                .subheader--center
+                    .subheader__content
+                        span.subheader__icon
+                            img(src="/images/personnel/subh-icon.png", alt="icon--plane")
+                        span 子女情况
                 table.table.table-hover.table-mc-light-blue.table-bordered
                     thead
                         tr
@@ -58,14 +59,21 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                         input(ng-model="nc.company" columns="1")
                     .form-actions
                         md-button.md-raised.white(ng-click="newChildren.splice($index, 1)") 取消
-                        md-button.md-raised.skyblue(ng-click="vm.children.$create(nc);newChildren.splice($index, 1)") 提交
+                        md-button.md-raised.md-primary(ng-click="vm.children.$create(nc);newChildren.splice($index, 1)") 提交
 
-                .add(ng-hide="newChildren.length")
-                    button.fa.fa-plus(ng-click="newChildren.push({})")
+                //- .add(ng-hide="newChildren.length")
+                //-     button.fa.fa-plus(ng-click="newChildren.push({})")
 
-                md-divider
             md-content.form-material-section.form-table-container(ng-init="vm.other = currentUser.familymembers.$search({relation: 'other'}); newOther = []")
-                md-subheader 父母、兄妹、配偶父母情况
+                .btngroup--top--right(style="padding-right: 0;")
+                    span(flex)
+                    span(ng-hide="editing")
+                        md-button.md-raised.md-primary(ng-click="newOther.push({})") 新增
+                .subheader--center
+                    .subheader__content
+                        span.subheader__icon
+                            img(src="/images/personnel/subh-icon.png", alt="icon--plane")
+                        span 父母、兄妹、配偶父母情况
                 table.table.table-hover.table-mc-light-blue.table-bordered
                     thead
                         tr
@@ -109,8 +117,8 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                         input(ng-model="no.company")
                     .form-actions()
                         md-button.md-raised.white(ng-click="newOther.splice($index, 1)") 取消
-                        md-button.md-raised.skyblue(ng-click="vm.other.$create(no);newOther.splice($index, 1)") 提交
+                        md-button.md-raised.md-primary(ng-click="vm.other.$create(no);newOther.splice($index, 1)") 提交
 
-                .add(ng-hide="newOther.length")
-                    button.fa.fa-plus(ng-click="newOther.push({})")
+                //- .add(ng-hide="newOther.length")
+                //-     button.fa.fa-plus(ng-click="newOther.push({})")
 

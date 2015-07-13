@@ -21,7 +21,6 @@ form(ng-submit="save(work.$save(), infoForm)" name="infoForm")
             md-input-container.row-has-value(flex)
                 label 工作描述
                 input(ng-model="work.jobDesc" name="jobDesc" required)
-        md-input-container
-            label 证明人
-            input(ng-model="work.witness" name="witness" required)
-md-divider(ng-show="!$last")
+        //- md-input-container
+        //-     label 证明人
+        //-     input(ng-model="work.witness" name="witness" required)

@@ -1,9 +1,6 @@
 section.self_performance(ng-init="ctrl.loadPerformance()")
     .personnel-content-body
-        .personnel-section-wrap()
-            md-toolbar
-                .md-toolbar-tools
-                    span 绩效考核
+        .personnel-section-wrap
             md-content.performance-content
                 .performance-list-item(ng-repeat="group in ctrl.performances | toArray: true| big2small")
                     .item-action
