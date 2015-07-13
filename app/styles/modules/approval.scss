@@ -257,6 +257,42 @@
         }
     }
 
+    .hd__searchbar {
+        border: 1px solid #eee;
+        border-radius: 4px;
+        font-size: $font-size-md;
+        height: 40px;
+        margin: 0 20px;
+        padding-left: 10px;
+        width: 500px;
+    }
+
+    .hd__item {
+        padding: 5px 0;
+        position: relative;
+
+        &:hover {
+            background-color: #eee;
+
+            .hd__ctrl {
+                display: block;
+            }
+        }
+
+        .hd__ctrl {
+            display: none;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            z-index: 2;
+
+            .hd__ctrl__btn {
+                height: 24px;
+                width: 24px;
+            }
+        }
+    }
+
 
 
     .md-actions {
