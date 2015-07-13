@@ -219,9 +219,8 @@
     .hd-unit-wrapper {
         .hd-choosing,
         .hd-choosed {
-            height: 300px;
             margin: 10px 0;
-            overflow: scroll;
+            // overflow: scroll;
         }
 
         md-radio-button {
@@ -262,9 +261,14 @@
         border-radius: 4px;
         font-size: $font-size-md;
         height: 40px;
-        margin: 0 20px;
+        margin: 10px 20px 0;
         padding-left: 10px;
-        width: 500px;
+        width: 490px;
+
+        +.content {
+            height: 40%;
+            overflow-y: scroll;
+        }
     }
 
     .hd__item {

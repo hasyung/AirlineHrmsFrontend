@@ -1,9 +1,9 @@
 md-dialog.hand_over(ng-init="params = {type:'departments'};")
+    md-toolbar.md-accent(md-theme="hrms")
+        .md-toolbar-tools
+            span 移交
     form(ng-submit="transfer(params, dialog.flow, dialog, $parent.dialog)")
         md-content.sticky-container
-            md-toolbar.md-accent(md-theme="hrms")
-                .md-toolbar-tools
-                    span 移交
             .dialog-content(md-theme="default")
                 .hd-manner
                     md-radio-group(ng-model="params.type")
@@ -31,15 +31,14 @@ md-dialog.hand_over(ng-init="params = {type:'departments'};")
                                         a.hd__ctrl__btn(href="#")
                                             img(src="/images/svg/close.svg")
                 .hd-unit-wrapper(ng-if="params.type == 'search_reviewer'")
-                    .hd-choosing
-                        input.hd__searchbar(type="text" placeholder="请输入要查找的姓名")
-                        .content
-                            md-radio-group(ng-model="params.reviewer_id")
-                                .hd__item(ng-repeat="reviewer in reviewers")
-                                    md-radio-button.md-primary(ng-value="reviewer.id") {{ reviewer.name }} ( {{reviewer.department.name}} / {{reviewer.position.name}} )
-                                    .hd__ctrl
-                                        a.hd__ctrl__btn(href="#")
-                                            img(src="/images/svg/plus.svg")
+                    input.hd__searchbar(type="text" placeholder="请输入要查找的姓名")
+                    .content
+                        md-radio-group(ng-model="params.reviewer_id")
+                            .hd__item(ng-repeat="reviewer in reviewers")
+                                md-radio-button.md-primary(ng-value="reviewer.id") {{ reviewer.name }} ( {{reviewer.department.name}} / {{reviewer.position.name}} )
+                                .hd__ctrl
+                                    a.hd__ctrl__btn(href="#")
+                                        img(src="/images/svg/plus.svg")
 
 
 
