@@ -52,6 +52,10 @@ form(ng-submit="save(wife.$save(),familymembersForm)" name="familymembersForm" n
             md-input-container(flex)
                 label 职业
                 input(ng-model="wife.position")
-        md-input-container
-            label 联系方式
-            input(ng-model="wife.mobile" type="tel")
+        div(layout)
+            md-input-container(flex)
+                label 联系方式
+                input(ng-model="wife.mobile" type="tel")
+            div(flex)
+
+

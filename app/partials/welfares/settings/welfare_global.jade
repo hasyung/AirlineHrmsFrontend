@@ -1,12 +1,13 @@
 .app-content-wrapper(flex ng-controller="welfareCtrl as wel")
-    div.pl20.pr20.pt30.pb30.bg-white
-        div(layout)
-            div(layout)
-                label.dib.bdb-divider.mb7 缴纳地区
+    md-toolbar.toolbar--welfare
+        .md-toolbar-tools
+            span(layout)
+                label 缴纳地区
                 md-select(ng-model="currentSettingLocation" ng-change="" placeholder="请选择地点")
                     md-option(ng-value="opt" ng-repeat="opt in locations track by $index") {{opt}}
             span(flex)
-            md-button.md-raised.md-primary.m0(ng-click="saveConfig(setting)") 保存
+            span
+                md-button.md-raised.md-primary(ng-click="saveConfig(setting)") 保存
     md-content.pl20.pr20(ng-show="!!currentSettingLocation")
         md-divider
         div.inline-input-container.mt30.mb30.pl10
@@ -37,7 +38,7 @@
                 tr
                     td 养老保险
                     td
-                        md-switch(ng-model="setting.pension.is_ration" ).m0 {{ setting.pension.is_ration ? '按金额(RMB)' : '按比例(%)' }}
+                        md-switch.md-primary(ng-model="setting.pension.is_ration" ).m0 {{ setting.pension.is_ration ? '按金额(RMB)' : '按比例(%)' }}
                     td
                         md-input-container.p2(ng-show="setting.pension.is_ration")
                             input(type="number" ng-model="setting.pension.company_money" min="0" step="1" )
@@ -52,7 +53,7 @@
                 tr
                     td 医疗保险
                     td
-                        md-switch(ng-model="setting.treatment.is_ration").m0 {{ setting.treatment.is_ration ? '按金额(RMB)' : '按比例(%)' }}
+                        md-switch.md-primary(ng-model="setting.treatment.is_ration").m0 {{ setting.treatment.is_ration ? '按金额(RMB)' : '按比例(%)' }}
                     td
                         md-input-container.p2(ng-show="setting.treatment.is_ration")
                             input(type="number" ng-model="setting.treatment.company_money" min="0" step="1" )
@@ -67,7 +68,7 @@
                 tr
                     td 工伤保险
                     td
-                        md-switch(ng-model="setting.injury.is_ration" ).m0 {{ setting.injury.is_ration ? '按金额(RMB)' : '按比例(%)' }}
+                        md-switch.md-primary(ng-model="setting.injury.is_ration" ).m0 {{ setting.injury.is_ration ? '按金额(RMB)' : '按比例(%)' }}
                     td
                         md-input-container.p2(ng-show="setting.injury.is_ration")
                             input(type="number" ng-model="setting.injury.company_money" min="0" step="1" )
@@ -82,7 +83,7 @@
                 tr
                     td 失业保险
                     td
-                        md-switch(ng-model="setting.unemploy.is_ration" ).m0 {{ setting.unemploy.is_ration ? '按金额(RMB)' : '按比例(%)' }}
+                        md-switch.md-primary(ng-model="setting.unemploy.is_ration" ).m0 {{ setting.unemploy.is_ration ? '按金额(RMB)' : '按比例(%)' }}
                     td
                         md-input-container.p2(ng-show="setting.unemploy.is_ration")
                             input(type="number" ng-model="setting.unemploy.company_money" min="0" step="1" )
@@ -96,7 +97,7 @@
                 tr
                     td 大病保险
                     td
-                        md-switch(ng-model="setting.illness.is_ration" ).m0 {{ setting.illness.is_ration ? '按金额(RMB)' : '按比例(%)' }}
+                        md-switch.md-primary(ng-model="setting.illness.is_ration" ).m0 {{ setting.illness.is_ration ? '按金额(RMB)' : '按比例(%)' }}
                     td
                         md-input-container.p2(ng-show="setting.illness.is_ration")
                             input(type="number" ng-model="setting.illness.company_money" min="0" step="1" )
@@ -110,7 +111,7 @@
                 tr
                     td 生育保险
                     td
-                        md-switch(ng-model="setting.fertility.is_ration" ).m0 {{ setting.fertility.is_ration ? '按金额(RMB)' : '按比例(%)' }}
+                        md-switch.md-primary(ng-model="setting.fertility.is_ration" ).m0 {{ setting.fertility.is_ration ? '按金额(RMB)' : '按比例(%)' }}
                     td
                         md-input-container.p2(ng-show="setting.fertility.is_ration")
                             input(type="number" ng-model="setting.fertility.company_money" min="0" step="1" )

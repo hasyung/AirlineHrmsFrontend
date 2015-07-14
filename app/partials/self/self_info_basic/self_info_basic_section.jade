@@ -36,57 +36,58 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                         md-select(ng-model="currentUser.nationId" ng-disabled="!editing")
                             md-select-label {{$enum.parseLabel(currentUser.nationId, "nations")}}
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('nations')") {{item.label}}
+                div(layout)
                     md-input-container.mix-height(flex)
                         label 籍贯
                         input(ng-model="currentUser.nativePlace" name="nativePlace" required)
-                div(layout)
                     md-input-container(flex)
                         label 出生地
                         input(ng-model="currentUser.birthPlace" name="birthPlace" required)
+                div(layout)
                     md-input-container(flex)
                         label 身份证号
                         input(ng-model="currentUser.identityNo" name="identityNo" required)
-                div(layout)
                     md-input-container.row-has-value(flex)
                         label 婚姻状况
                         md-select(ng-model="currentUser.maritalStatusId" ng-disabled="!editing")
                             md-select-label {{$enum.parseLabel(currentUser.maritalStatusId, "marital_status")}}
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('marital_status')") {{item.label}}
+                div(layout)
                     md-input-container.row-has-value(flex)
                         label 政治面貌
                         md-select(ng-model="currentUser.politicalStatusId" ng-disabled="!editing")
                             md-select-label {{$enum.parseLabel(currentUser.politicalStatusId, "political_status")}}
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('political_status')") {{item.label}}
-                div(layout)
                     md-input-container.row-has-value(flex)
                         label 学历
                         md-select(ng-model="currentUser.educationBackgroundId" disabled)
                             md-select-label {{$enum.parseLabel(currentUser.educationBackgroundId, "education_backgrounds")}}
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('education_backgrounds')") {{item.label}}
+                div(layout disabled)
                     md-input-container.row-has-value(flex)
                         label 学位
                         md-select(ng-model="currentUser.degreeId" disabled)
                             md-select-label {{$enum.parseLabel(currentUser.degreeId, "degrees")}}
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('degrees')") {{item.label}}
-                div(layout disabled)
                     md-input-container(flex)
                         label 毕业院校
                         input(ng-model="currentUser.school" name="school" disabled)
+                div(layout disabled)
                     md-input-container(flex)
                         label 专业
-                        input(ng-model="currentUser.major" name="major" disabled)
-                div(layout disabled)
+                        input.single-ellipsis(ng-model="currentUser.major" name="major" disabled title="{{currentUser.major}}")
                     md-input-container(flex).row-has-value
                         label 英语等级
                         md-select(ng-model="currentUser.englishLevelId" disabled)
                             md-select-label {{$enum.parseLabel(currentUser.englishLevelId, "english_levels")}}
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('english_levels')") {{item.label}}
+                div(layout disabled)
                     md-input-container.mix-height(flex)
                         label 到岗时间
                         input(ng-model="currentUser.joinScalDate" name="joinScalDate" disabled)
-                md-input-container.row-has-value(flex)
-                    label 参工时间
-                    input(ng-model="currentUser.startWorkDate" name="startWorkDate" disabled)
+                    md-input-container.row-has-value(flex)
+                        label 参工时间
+                        input(ng-model="currentUser.startWorkDate" name="startWorkDate" disabled)
 
             .sep-40
             .subheader--center
@@ -104,19 +105,19 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                         input(ng-model="currentUser.contact.mobile" name="mobile")
                 div(layout)
                     md-input-container(flex)
+                        label 邮政编码
+                        input(ng-model="currentUser.contact.postcode" name="postcode")
+                    md-input-container(flex)
+                        label 电子邮箱
+                        input(ng-model="currentUser.contact.email" name="email")
+                div(layout)
+                    md-input-container(flex)
                         label 家庭住址
                         input(ng-model="currentUser.contact.address" name="address")
                 div(layout)
                     md-input-container(flex)
                         label 通信地址
                         input(ng-model="currentUser.contact.mailingAddress" name="mailingAddress")
-                div(layout)
-                    md-input-container(flex)
-                        label 邮政编码
-                        input(ng-model="currentUser.contact.postcode" name="postcode")
-                    md-input-container(flex)
-                        label 电子邮箱
-                        input(ng-model="currentUser.contact.email" name="email")
 
             .sep-40
             .subheader--center
@@ -157,8 +158,6 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                     md-input-container.mix-height.row-has-value(flex)
                         label 属地化地点
                         input(ng-model="currentUser.location" disabled)
-
-
                     md-input-container.row-has-value(flex)
                         label 用工性质
                         md-select(ng-model="currentUser.laborRelationId" disabled)
