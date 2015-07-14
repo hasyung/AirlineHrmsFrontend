@@ -173,6 +173,7 @@
     background-position: 0 50%;
     display: flex;
     justify-content: center;
+    position: relative;
 
     &.subheader--margin30 {
         margin: 0 30px;
@@ -185,6 +186,31 @@
 
         .subheader__icon {
             margin-right: 10px;
+        }
+    }
+
+    .subheader__btns {
+        background-color: #fff;
+        padding-left: 20px;
+        position: absolute;
+        right: 0;
+
+        button {
+            background-color: rgb(33, 150, 243);
+            border: 0;
+            border-radius: 4px;
+            height: 24px;
+            padding: 0;
+            width: 24px;
+
+            md-icon {
+                color: #fff;
+                transition: transform .25s linear;
+
+                &.toggled {
+                    transform: rotate(180deg) translate3d(0, 0, 0);
+                }
+            }
         }
     }
 }

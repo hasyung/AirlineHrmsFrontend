@@ -3,13 +3,22 @@ section.self_performance(ng-init="ctrl.loadPerformance()")
         .personnel-section-wrap
             md-content.performance-content
                 .performance-list-item(ng-repeat="group in ctrl.performances | toArray: true| big2small")
-                    .item-action
-                        md-button(ng-click="show = !show")
-                            div(layout)
-                                span {{group.$key}}年绩效
-                                span(flex)
-                                span.md-toggle-icon(ng-class="{'toggled': show}")
-                                    md-icon(md-svg-src="md-toggle-arrow")
+                    //- .item-action
+                    //-     md-button(ng-click="show = !show")
+                    //-         div(layout)
+                    //-             span {{group.$key}}年绩效
+                    //-             span(flex)
+                    //-             span.md-toggle-icon(ng-class="{'toggled': show}")
+                    //-                 md-icon(md-svg-src="md-toggle-arrow")
+                    .subheader--center
+                        .subheader__content
+                            span.subheader__icon
+                                img(src="/images/personnel/subh-icon.png", alt="icon--plane")
+                            span {{group.$key}}年绩效
+                        .subheader__btns(ng-click="show = !show")
+                            button
+                                md-icon(md-svg-src="md-toggle-arrow" ng-class="{'toggled': show}")
+
                     .form-table-container(
                         ng-class="{'open': show}"
                         )
@@ -38,54 +47,3 @@ section.self_performance(ng-init="ctrl.loadPerformance()")
                                             template-url="partials/self/performance/represent.html"
                                             locals="{performance:performance}"
                                             ) 绩效申述
-                //- .performance-list-item
-                //-     .item-action
-                //-         md-button(ng-click="show = !show")
-                //-             div(layout)
-                //-                 span 2015年绩效
-                //-                 span(flex)
-                //-                 span.md-toggle-icon(ng-class="{'toggled': show}")
-                //-                     md-icon(md-svg-src="md-toggle-arrow")
-                //-     .form-table-container(
-                //-         ng-class="{'open': show}"
-                //-         )
-                //-         table.table.table-mc-light-blue.table-bordered
-                //-             thead
-                //-                 tr
-                //-                     th 考核时段
-                //-                     th 绩效
-                //-                     th 附件
-                //-                     th 申述
-                //-             tbody
-                //-                 tr
-                //-                     td
-                //-                         | 2015-5
-                //-                     td
-                //-                         | 良好
-                //-                     td
-                //-                         a(
-                //-                             nb-panel
-                //-                             template-url="partials/personnel/performance/rfc.html"
-                //-                             locals="{currentUser:current}"
-                //-                             ) 查看
-                //-                     td.control-td
-                //-                         a(
-                //-                             nb-dialog
-                //-                             template-url="partials/self/performance/represent.html"
-                //-                             locals="{currentUser:current}"
-                //-                             ) 绩效申述
-                //-                 tr
-                //-                     td
-                //-                         | 2015-4
-                //-                     td
-                //-                         | 良好
-                //-                     td
-                //-                         a 查看
-                //-                     td.control-td
-
-
-
-
-
-
-
