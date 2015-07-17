@@ -305,7 +305,7 @@ menuLinkDirective = ($compile, $state) ->
             <span>
                 ${ stroke_template }
             </span>
-            <span>{{ page.name }}</span>
+            <span>{{ ::page.name }}</span>
             <span flex></span>
           </div>
         </md-button>
@@ -317,7 +317,7 @@ menuLinkDirective = ($compile, $state) ->
                 <span>
                     <md-icon class="type-icon" md-svg-src="{{ page.icon_src }}"></md-icon>
                 </span>
-                <span> {{ page.name }}</span>
+                <span> {{ ::page.name }}</span>
                 <span flex></span>
             </div>
         <md-button>
@@ -376,7 +376,7 @@ menuToggleDirective = (menu) ->
         </div>
       </md-button>
       <ul ng-show="isOpen()" class="menu-toggle-list">
-        <li ng-class="{'active': isSelected(page)}" class="child-list-item" ng-repeat="page in section.pages">
+        <li ng-class="{'active': isSelected(page)}" class="child-list-item" ng-repeat="page in ::section.pages track by $index">
             <menu-link is-last="$last" page="page"></menu-link>
         </li>
       </ul>

@@ -1,7 +1,7 @@
 md-sidenav.nb-nav(md-is-locked-open="true" id="leftSidebar")
     md-content(flex role="navigation")
         ul.nb-menu
-            li.parent-list-item(ng-repeat="section in menu.sections" ng-class="{'active': section == menu.openedSection}")
+            li.parent-list-item(ng-repeat="section in ::menu.sections" ng-class="{'active': section == menu.openedSection}")
                 //- md-button.md-button-toggle(flex ui-sref="section.state" ng-if="section.type == 'link'")
                 //-     div(flex layout="row")
                 //-         span
