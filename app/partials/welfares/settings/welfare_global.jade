@@ -10,118 +10,199 @@
                 md-button.md-raised.md-primary(ng-click="saveConfig(setting)") 保存
     md-content.pl20.pr20(ng-show="!!currentSettingLocation")
         md-divider
-        div.inline-input-container.mt30.mb30.pl10
-            span.mr20 养老保险基数范围
-            md-input-container(md-no-float).mr10.dib
-                input(placeholder="下限" ng-model="setting.pension_insure.upper_limit" type="number" step="0.01")
-            span.ml10.mr10 至
-            md-input-container(md-no-float).mr10.dib
-                input(placeholder="上限" ng-model="setting.pension_insure.lower_limit" type="number" step="0.01")
-        div.inline-input-container.mt30.mb30.pl10
-            span.mr20 其他保险基数范围
-            md-input-container(md-no-float).mr10.dib
-                input(placeholder="下限" ng-model="setting.other_insure.upper_limit" type="number" step="0.01")
-            span.ml10.mr10 至
-            md-input-container(md-no-float).mr10.dib
-                input(placeholder="上限" ng-model="setting.other_insure.lower_limit" type="number" step="0.01")
-            span.muted.f12 (不设置其他保险基数则选用养老保险基数计算)
+        .children-float-row.mt40.mb20
+            label.mr40 个人基数计算方式
+            md-radio-group(ng-model="setting.is_annual")
+                md-radio-button.md-primary(value="departments") 年度变化
+                md-radio-button.md-primary(value="reviewer") 月度随薪酬变化
+        //- div.inline-input-container.mt30.mb30.pl10
+        //-     span.mr20 养老保险基数范围
+        //-     md-input-container(md-no-float).mr10.dib
+        //-         input(placeholder="下限" ng-model="setting.pension_insure.upper_limit" type="number" step="0.01")
+        //-     span.ml10.mr10 至
+        //-     md-input-container(md-no-float).mr10.dib
+        //-         input(placeholder="上限" ng-model="setting.pension_insure.lower_limit" type="number" step="0.01")
+        //- div.inline-input-container.mt30.mb30.pl10
+        //-     span.mr20 其他保险基数范围
+        //-     md-input-container(md-no-float).mr10.dib
+        //-         input(placeholder="下限" ng-model="setting.other_insure.upper_limit" type="number" step="0.01")
+        //-     span.ml10.mr10 至
+        //-     md-input-container(md-no-float).mr10.dib
+        //-         input(placeholder="上限" ng-model="setting.other_insure.lower_limit" type="number" step="0.01")
+        //-     span.muted.f12 (不设置其他保险基数则选用养老保险基数计算)
         md-divider
 
-        table.tablexx.table-default
+        table.tablexx.table-default.table-bordered
             thead
                 tr
-                    th 保险名称
-                    th 计算方式
-                    th 公司部分
-                    th 个人部分
+                    th.sm 保险名称
+                    th.lg
+                        span.min 基数范围（下限）
+                        span.to 至
+                        span.max 基数范围（上限）
+                    th.sm 计算方式
+                    th.sm 公司部分
+                    th.sm 个人部分
             tbody
                 tr
                     td 养老保险
                     td
+                        span.min
+                            input(type="number" ng-model="setting.pension.lower_limit")
+                            |RMB
+                        span.to —
+                        span.max
+                            input(type="number" ng-model="setting.pension.upper_limit")
+                            |RMB
+                    td
                         md-switch.md-primary(ng-model="setting.pension.is_ration" ).m0 {{ setting.pension.is_ration ? '按金额(RMB)' : '按比例(%)' }}
                     td
-                        md-input-container.p2(ng-show="setting.pension.is_ration")
+                        span.p2(ng-show="setting.pension.is_ration")
                             input(type="number" ng-model="setting.pension.company_money" min="0" step="1" )
-                        md-input-container.p2(ng-hide="setting.pension.is_ration")
+                            |RMB
+                        span.p2(ng-hide="setting.pension.is_ration")
                             input(type="number" ng-model="setting.pension.company_percent" min="0" max="1" step="0.01")
+                            |%
                     td
-                        md-input-container.p2(ng-show="setting.pension.is_ration")
+                        span.p2(ng-show="setting.pension.is_ration")
                             input(type="number" ng-model="setting.pension.personage_money" min="0" step="1" )
-                        md-input-container.p2(ng-hide="setting.pension.is_ration")
+                            |RMB
+                        span.p2(ng-hide="setting.pension.is_ration")
                             input(type="number" ng-model="setting.pension.personage_percent" min="0" max="1" step="0.01")
+                            |%
 
                 tr
                     td 医疗保险
                     td
+                        span.min
+                            input(type="number" ng-model="setting.treatment.lower_limit")
+                            |RMB
+                        span.to —
+                        span.max
+                            input(type="number" ng-model="setting.treatment.upper_limit")
+                            |RMB
+                    td
                         md-switch.md-primary(ng-model="setting.treatment.is_ration").m0 {{ setting.treatment.is_ration ? '按金额(RMB)' : '按比例(%)' }}
                     td
-                        md-input-container.p2(ng-show="setting.treatment.is_ration")
+                        span.p2(ng-show="setting.treatment.is_ration")
                             input(type="number" ng-model="setting.treatment.company_money" min="0" step="1" )
-                        md-input-container.p2(ng-hide="setting.treatment.is_ration")
+                            |RMB
+                        span.p2(ng-hide="setting.treatment.is_ration")
                             input(type="number" ng-model="setting.treatment.company_percent" min="0" max="1" step="0.01")
+                            |%
                     td
-                        md-input-container.p2(ng-show="setting.treatment.is_ration")
+                        span.p2(ng-show="setting.treatment.is_ration")
                             input(type="number" ng-model="setting.treatment.personage_money" min="0" step="1" )
-                        md-input-container.p2(ng-hide="setting.treatment.is_ration")
+                            |RMB
+                        span.p2(ng-hide="setting.treatment.is_ration")
                             input(type="number" ng-model="setting.treatment.personage_percent" min="0" max="1" step="0.01")
+                            |%
 
                 tr
                     td 工伤保险
                     td
+                        span.min
+                            input(type="number" ng-model="setting.injury.lower_limit")
+                            |RMB
+                        span.to —
+                        span.max
+                            input(type="number" ng-model="setting.injury.upper_limit")
+                            |RMB
+                    td
                         md-switch.md-primary(ng-model="setting.injury.is_ration" ).m0 {{ setting.injury.is_ration ? '按金额(RMB)' : '按比例(%)' }}
                     td
-                        md-input-container.p2(ng-show="setting.injury.is_ration")
+                        span.p2(ng-show="setting.injury.is_ration")
                             input(type="number" ng-model="setting.injury.company_money" min="0" step="1" )
-                        md-input-container.p2(ng-hide="setting.injury.is_ration")
+                            |RMB
+                        span.p2(ng-hide="setting.injury.is_ration")
                             input(type="number" ng-model="setting.injury.company_percent" min="0" max="1" step="0.01")
+                            |%
                     td
-                        md-input-container.p2(ng-show="setting.injury.is_ration")
+                        span.p2(ng-show="setting.injury.is_ration")
                             input(type="number" ng-model="setting.injury.personage_money" min="0" step="1" )
-                        md-input-container.p2(ng-hide="setting.injury.is_ration")
+                            |RMB
+                        span.p2(ng-hide="setting.injury.is_ration")
                             input(type="number" ng-model="setting.injury.personage_percent" min="0" max="1" step="0.01")
+                            |%
 
                 tr
                     td 失业保险
                     td
+                        span.min
+                            input(type="number" ng-model="setting.unemploy.lower_limit")
+                            |RMB
+                        span.to —
+                        span.max
+                            input(type="number" ng-model="setting.unemploy.upper_limit")
+                            |RMB
+                    td
                         md-switch.md-primary(ng-model="setting.unemploy.is_ration" ).m0 {{ setting.unemploy.is_ration ? '按金额(RMB)' : '按比例(%)' }}
                     td
-                        md-input-container.p2(ng-show="setting.unemploy.is_ration")
+                        span.p2(ng-show="setting.unemploy.is_ration")
                             input(type="number" ng-model="setting.unemploy.company_money" min="0" step="1" )
-                        md-input-container.p2(ng-hide="setting.unemploy.is_ration")
+                            |RMB
+                        span.p2(ng-hide="setting.unemploy.is_ration")
                             input(type="number" ng-model="setting.unemploy.company_percent" min="0" max="1" step="0.01")
+                            |%
                     td
-                        md-input-container.p2(ng-show="setting.unemploy.is_ration")
+                        span.p2(ng-show="setting.unemploy.is_ration")
                             input(type="number" ng-model="setting.unemploy.personage_money" min="0" step="1" )
-                        md-input-container.p2(ng-hide="setting.unemploy.is_ration")
+                            |RMB
+                        span.p2(ng-hide="setting.unemploy.is_ration")
                             input(type="number" ng-model="setting.unemploy.personage_percent" min="0" max="1" step="0.01")
+                            |%
                 tr
                     td 大病保险
                     td
+                        span.min
+                            input(type="number" ng-model="setting.illness.lower_limit")
+                            |RMB
+                        span.to —
+                        span.max
+                            input(type="number" ng-model="setting.illness.upper_limit")
+                            |RMB
+                    td
                         md-switch.md-primary(ng-model="setting.illness.is_ration" ).m0 {{ setting.illness.is_ration ? '按金额(RMB)' : '按比例(%)' }}
                     td
-                        md-input-container.p2(ng-show="setting.illness.is_ration")
+                        span.p2(ng-show="setting.illness.is_ration")
                             input(type="number" ng-model="setting.illness.company_money" min="0" step="1" )
-                        md-input-container.p2(ng-hide="setting.illness.is_ration")
+                            |RMB
+                        span.p2(ng-hide="setting.illness.is_ration")
                             input(type="number" ng-model="setting.illness.company_percent" min="0" max="1" step="0.01")
+                            |%
                     td
-                        md-input-container.p2(ng-show="setting.illness.is_ration")
+                        span.p2(ng-show="setting.illness.is_ration")
                             input(type="number" ng-model="setting.illness.personage_money" min="0" step="1" )
-                        md-input-container.p2(ng-hide="setting.illness.is_ration")
+                            |RMB
+                        span.p2(ng-hide="setting.illness.is_ration")
                             input(type="number" ng-model="setting.illness.personage_percent" min="0" max="1" step="0.01")
+                            |%
                 tr
                     td 生育保险
                     td
+                        span.min
+                            input(type="number" ng-model="setting.fertility.lower_limit")
+                            |RMB
+                        span.to —
+                        span.max
+                            input(type="number" ng-model="setting.fertility.upper_limit")
+                            |RMB
+                    td
                         md-switch.md-primary(ng-model="setting.fertility.is_ration" ).m0 {{ setting.fertility.is_ration ? '按金额(RMB)' : '按比例(%)' }}
                     td
-                        md-input-container.p2(ng-show="setting.fertility.is_ration")
+                        span.p2(ng-show="setting.fertility.is_ration")
                             input(type="number" ng-model="setting.fertility.company_money" min="0" step="1" )
-                        md-input-container.p2(ng-hide="setting.fertility.is_ration")
+                            |RMB
+                        span.p2(ng-hide="setting.fertility.is_ration")
                             input(type="number" ng-model="setting.fertility.company_percent" min="0" max="1" step="0.01")
+                            |%
                     td
-                        md-input-container.p2(ng-show="setting.fertility.is_ration")
+                        span.p2(ng-show="setting.fertility.is_ration")
                             input(type="number" ng-model="setting.fertility.personage_money" min="0" step="1" )
-                        md-input-container.p2(ng-hide="setting.fertility.is_ration")
+                            |RMB
+                        span.p2(ng-hide="setting.fertility.is_ration")
                             input(type="number" ng-model="setting.fertility.personage_percent" min="0" max="1" step="0.01")
+                            |%
 
 
 

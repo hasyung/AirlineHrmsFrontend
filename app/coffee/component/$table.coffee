@@ -482,8 +482,21 @@ nbGridDirective = ($parse)->
         }
     }
 
+BolleanTableCell = ->
+
+    template = '''
+        <div class="ui-grid-cell-contents">
+            <span ng-class="{'success':grid.getCellValue(row, col), 'error': !grid.getCellValue(row, col) }"></span>
+        </div>
+    '''
+    return {
+        template: template
+        replace: true
+    }
+
 
 app.directive 'nbGrid', nbGridDirective
+app.directive 'booleanTableCell', BolleanTableCell
 app.directive 'nbFilter', NbFilterDirective
 app.directive 'conditionInputContainer', conditionInputContainer
 

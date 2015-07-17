@@ -1,0 +1,39 @@
+.children-float-row {
+    @include clearfix();
+
+    label {
+        color: $text-muted;
+        float: left;
+        margin-top: 2px;
+    }
+
+    md-radio-group {
+        float: left;
+    }
+
+    md-radio-button {
+        float: left;
+        margin-right: 30px;
+    }
+}
+
+.tablexx {
+    input {
+        border: 1px solid #ccc;
+        border-radius: 2px;
+        height: 29px;
+        margin-right: 5px;
+        text-align: center;
+        width: 70px;
+    }
+
+    .min {
+        margin-right: 20px;
+    }
+
+    .to {
+        color: $text-muted;
+        margin-right: 20px;
+    }
+
+}
