@@ -110,12 +110,12 @@ menuFactory = ($rootScope, $state)->
             }
             {
                 name: '社保'
-                state: 'position'
+                state: '.welfares_socials'
                 permission: ''
             }
             {
                 name: '企业年金'
-                state: 'position'
+                state: '.welfares_annuities'
                 permission: ''
             }
             {

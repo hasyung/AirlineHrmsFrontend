@@ -3,13 +3,6 @@ section.self_performance(ng-init="ctrl.loadPerformance()")
         .personnel-section-wrap
             md-content.performance-content
                 .performance-list-item(ng-repeat="group in ctrl.performances | toArray: true| big2small")
-                    //- .item-action
-                    //-     md-button(ng-click="show = !show")
-                    //-         div(layout)
-                    //-             span {{group.$key}}年绩效
-                    //-             span(flex)
-                    //-             span.md-toggle-icon(ng-class="{'toggled': show}")
-                    //-                 md-icon(md-svg-src="md-toggle-arrow")
                     .subheader--center
                         .subheader__content
                             span.subheader__icon

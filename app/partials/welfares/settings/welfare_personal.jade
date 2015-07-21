@@ -1,0 +1,16 @@
+.app-content-wrapper(flex ng-controller="welfarePersonalCtrl as welP")
+    div(nb-filter="welP.filterOptions" on-search="welP.search(state)")
+    div.ui-grid-container
+        md-toolbar
+            .md-toolbar-tools
+                h2 社保个人设置
+                div(flex)
+                span
+                    md-button.md-primary.md-raised() 删除
+                span
+                    md-button.md-primary.md-raised(
+                            nb-dialog
+                            template-url="partials/welfares/settings/welfare_personal_new.html"
+                        ) 新增
+
+        div(nb-grid column-defs="welP.columnDef" grid-selection safe-src="welP.configurations")
