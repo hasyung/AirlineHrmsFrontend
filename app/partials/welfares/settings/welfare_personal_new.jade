@@ -1,5 +1,5 @@
 md-dialog.welfare_personal_new(ng-controller="NewResource" ng-init= "params = {}")
-    form
+    form()
         md-toolbar.md-accent(md-theme="hrms")
                 .md-toolbar-tools
                     span 新建社保
@@ -79,4 +79,4 @@ md-dialog.welfare_personal_new(ng-controller="NewResource" ng-init= "params = {}
 
         .md-actions
             md-button(ng-click='dialog.close()') 取 消
-            md-button.md-primary.md-raised(ng-click="submit() ; dialog.close()") 确 定
+            md-button.md-primary.md-raised(ng-click="submit; dialog.close()") 确 定
