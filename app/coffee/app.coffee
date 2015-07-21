@@ -32,6 +32,7 @@ deps = [
     'nb.filters'
     'nb.component'
     'flow'
+    # 第三方material menu, 建议用官方 menu 替代， 建议在7月底或者8月初 0.10 正式版后更新 material
     'ngMaterialDropmenu'
     'infinite-scroll'
     #'nb.controller.site'
