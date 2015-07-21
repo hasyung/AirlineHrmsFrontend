@@ -1,4 +1,4 @@
-md-dialog.welfare_personal_new
+md-dialog.welfare_personal_new(ng-controller="EditableResource")
     form(ng-init= "current = dialog.setups.$refresh();" ng-submit="save(current.$save(), socialPersonal)" name="socialPersonal")
         md-toolbar.md-accent(md-theme="hrms")
                 .md-toolbar-tools
@@ -12,15 +12,15 @@ md-dialog.welfare_personal_new
                         div(layout)
                             md-input-container(flex)
                                 label 姓名
-                                input(type="text" ng-model="current.employeeName")
+                                input(type="text" ng-model="::current.employeeName" disabled)
                             md-input-container(flex)
                                 label 员工编号
-                                input(type="text" ng-model="current.employeeNo")
+                                input(type="text" ng-model="::current.employeeNo" disabled)
 
                         div(layout)
                             md-input-container(flex)
                                 label 所在部门
-                                input(type="text" ng-model="current.departmentName")
+                                input(type="text" ng-model="::current.departmentName" disabled)
                             //- md-input-container(flex)
                             //-     label 工作属地
                             //-     input(type="text" ng-model="")
@@ -28,7 +28,7 @@ md-dialog.welfare_personal_new
                         div(layout)
                             md-input-container.row-has-value(flex)
                                 label 用工性质
-                                md-select(ng-model="current.laborRelationId")
+                                md-select(ng-model="::current.laborRelationId" disabled)
                                     md-select-label {{$enum.parseLabel(current.laborRelationId, "labor_relations")}}
                                     md-option(value="合同") 合同
                                     md-option(value="合同制") 合同制
@@ -41,7 +41,7 @@ md-dialog.welfare_personal_new
                         div(layout)
                             md-input-container(flex)
                                 label 身份证
-                                input(type="text" ng-model="current.identityNo")
+                                input(type="text" ng-model="::current.identityNo" disabled)
                             md-input-container(flex)
                                 label 社保编号
                                 input(type="text" ng-model="current.socialAccount")
@@ -78,5 +78,5 @@ md-dialog.welfare_personal_new
 
 
         .md-actions
-            md-button(ng-click='dialog.close()') 取 消
-            md-button.md-primary.md-raised(ng-click="submit() ; dialog.close()") 确 定
+            md-button(ng-click="dialog.close()") 取 消
+            md-button.md-primary.md-raised(ng-click="submit; dialog.close()") 确 定

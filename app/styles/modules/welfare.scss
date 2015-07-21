@@ -37,3 +37,35 @@
     }
 
 }
+
+.valid-mark {
+    background: url('/images/svg/check-green.svg') no-repeat;
+    background-size: 100%;
+    display: block;
+    height: 36px;
+    width: 36px;
+}
+
+.invalid-mark {
+    background: url('/images/svg/close-red.svg') no-repeat;
+    background-size: 100%;
+    display: block;
+    height: 36px;
+    width: 36px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

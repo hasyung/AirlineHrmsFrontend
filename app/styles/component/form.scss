@@ -84,7 +84,7 @@ md-select {
     order: 2;
     padding: 2px;
 
-    .md-select-label {
+    .md-select-value {
         font-size: $font-size-base;
         padding-bottom: 0 !important;
         padding-top: 0;
@@ -188,14 +188,14 @@ fieldset[disabled] {
         background-size: 3px 1px;
         height: 30px !important;
 
-        .md-select-label {
+        .md-select-value {
             border: 0;
             padding-bottom: 0 !important;
         }
 
     }
 
-    .md-default-theme .md-select-label {
+    .md-default-theme .md-select-value {
         border-bottom-color: transparent;
         color: $text-color;
         padding-left: 70px;
@@ -317,7 +317,7 @@ md-input-container {
 
         &[disabled] {
 
-            .md-select-label {
+            .md-select-value {
                 border-bottom: 1px inset rgba(0, 0, 0, 0);
                 color: rgba(0, 0, 0, .87);
                 padding-left: 90px;

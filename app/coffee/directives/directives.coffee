@@ -91,7 +91,7 @@ angular.module 'nb.directives'
 
     ]
     # dialog
-    .directive 'nbDialog',['$mdDialog', ($mdDialog) ->
+    .directive 'nbDialog',['$mdDialog', '$enum', ($mdDialog, $enum) ->
 
         postLink = (scope, elem, attrs) ->
 
@@ -101,8 +101,10 @@ angular.module 'nb.directives'
             }
 
             openDialog = (evt) ->
+                newScope = scope.$new()
+                newScope.$enum = $enum
                 #scope evt 生命周期仅限于本次点击
-                opts = angular.extend({scope: scope.$new(), targetEvent: evt}, options)
+                opts = angular.extend({scope: newScope, targetEvent: evt}, options)
 
                 opts = angular.extend(opts, {
                         controller: ->
