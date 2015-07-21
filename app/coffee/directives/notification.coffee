@@ -2,25 +2,6 @@
 app = @nb.app
 
 angular.module 'nb.directives'
-    .directive 'nbNotification', ['$document', 'WebsocketClient', ($doc, WebsocketClient)->
-        postLink = (scope, elem, attr, ctrl)->
-            closeNotePan = (e)->
-                e.stopPropagation()
-                scope.$apply ()->
-                    ctrl.isShow = false
-                return
-
-
-        return {
-            restrict: 'A'
-            templateUrl: 'partials/common/notification.tpl.html'
-            replace: true
-            controller: NotificationCtrl
-            controllerAs: 'ctrl'
-            link: postLink
-
-        }
-    ]
 
     .directive 'notification', ['$document', ($doc) ->
         return {

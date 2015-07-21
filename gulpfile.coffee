@@ -71,14 +71,6 @@ paths =
              "app/coffee/filters/*.coffee"
              "app/coffee/modules/*.coffee"
              "app/coffee/resources/*.coffee"
-             # "app/coffee/modules/controllerMixins.coffee"
-             # "app/coffee/modules/*.coffee"
-             # "app/coffee/modules/common/*.coffee"
-             # "app/coffee/modules/tasks/*.coffee"
-             # "app/coffee/modules/admin/*.coffee"
-             # "app/coffee/modules/resources/*.coffee"
-             # "app/coffee/modules/user-settings/*.coffee"
-             # "app/plugins/**/*.coffee"
     ]
     vendorJsLibs: [
         'deps/lodash/lodash.js'
