@@ -11,6 +11,10 @@ socialPersonSetups = (restmod, RMUtils, $Evt) ->
         # startDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
         # endDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
 
+        $hooks: {
+            'after-destroy': ->
+                $Evt.$send('socialPersonSetups:destroy:success',"删除成功")
+        }
 
         $extend:
             Collection:
@@ -41,6 +45,8 @@ socialChanges = (restmod, RMUtils, $Evt) ->
         $config:
             jsonRootSingle: 'social_change_info'
             jsonRootMany: 'social_change_infos'
+
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
 
         # startDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}
         # endDate: {decode: 'date', param: 'yyyy-MM-dd',mask: 'CU'}

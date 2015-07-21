@@ -68,7 +68,7 @@ class WelfareController
 
 
 
-class WelfarePersonalController
+class WelfarePersonalController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'socialPersonSetups']
 
     constructor: ($http, $scope, $Evt, @socialPersonSetups) ->
@@ -136,11 +136,11 @@ class WelfarePersonalController
             {displayName: '年度养老基数', name: 'pensionCardinality'}
             {displayName: '年度其他基数', name: 'otherCardinality'}
             {displayName: '养老', name: 'pension', cellTemplate: '<boolean-table-cell></boolean-table-cell>'}
-            {displayName: '医疗', name: 'treatment'}
-            {displayName: '失业', name: 'unemploy'}
-            {displayName: '工伤', name: 'injury'}
-            {displayName: '大病', name: 'illness'}
-            {displayName: '生育', name: 'fertility'}
+            {displayName: '医疗', name: 'treatment', cellTemplate: '<boolean-table-cell></boolean-table-cell>'}
+            {displayName: '失业', name: 'unemploy', cellTemplate: '<boolean-table-cell></boolean-table-cell>'}
+            {displayName: '工伤', name: 'injury', cellTemplate: '<boolean-table-cell></boolean-table-cell>'}
+            {displayName: '大病', name: 'illness', cellTemplate: '<boolean-table-cell></boolean-table-cell>'}
+            {displayName: '生育', name: 'fertility', cellTemplate: '<boolean-table-cell></boolean-table-cell>'}
             {
                 displayName: '编辑'
                 field: 'name'
@@ -168,6 +168,13 @@ class WelfarePersonalController
     getSelectsIds: () ->
         rows = @gridApi.selection.getSelectedGridRows()
         rows.map (row) -> return row.entity.$pk
+
+    getSelected: () ->
+        rows = @gridApi.selection.getSelectedGridRows()
+
+    delete: (isConfirm)->
+        if isConfirm
+            @getSelected().forEach (record) -> record.entity.$destroy()
 
 
 class SocialComputeController
@@ -229,7 +236,7 @@ class SocialChangesController
                 <div class="ui-grid-cell-contents ng-binding ng-scope">
                     <a nb-panel
                         template-url="partials/personnel/info_basic.html"
-                        locals="{employee: row.entity}">
+                        locals="{employee: row.entity.owner}">
                         {{grid.getCellValue(row, col)}}
                     </a>
                 </div>

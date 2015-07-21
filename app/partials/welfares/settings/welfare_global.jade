@@ -12,9 +12,9 @@
         md-divider
         .children-float-row.mt40.mb20
             label.mr40 个人基数计算方式
-            md-radio-group(ng-model="setting.is_annual")
-                md-radio-button.md-primary(value="departments") 年度变化
-                md-radio-button.md-primary(value="reviewer") 月度随薪酬变化
+            md-radio-group
+                md-radio-button.md-primary(value="departments" ng-model="setting.is_annual") 年度变化
+                md-radio-button.md-primary(value="reviewer" ng-model="setting.is_annual") 月度随薪酬变化
         //- div.inline-input-container.mt30.mb30.pl10
         //-     span.mr20 养老保险基数范围
         //-     md-input-container(md-no-float).mr10.dib

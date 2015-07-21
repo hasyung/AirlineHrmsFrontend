@@ -486,7 +486,7 @@ BolleanTableCell = ->
 
     template = '''
         <div class="ui-grid-cell-contents">
-            <span ng-class="{'success':grid.getCellValue(row, col), 'error': !grid.getCellValue(row, col) }"></span>
+            <span ng-class="{'valid-mark':grid.getCellValue(row, col), 'invalid-mark': !grid.getCellValue(row, col) }"></span>
         </div>
     '''
     return {
