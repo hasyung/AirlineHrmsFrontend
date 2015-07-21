@@ -1,14 +1,15 @@
 md-dialog.hand_over(ng-init="params = {type:'departments'};")
+    md-toolbar.md-accent(md-theme="hrms")
+        .md-toolbar-tools
+            span 移交
     form(ng-submit="transfer(params, dialog.flow, dialog, $parent.dialog)")
         md-content.sticky-container
-            md-toolbar.md-accent(md-theme="hrms")
-                .md-toolbar-tools
-                    span 移交
             .dialog-content(md-theme="default")
                 .hd-manner
                     md-radio-group(ng-model="params.type")
                         md-radio-button.md-primary(value="departments") 移交部门
                         md-radio-button.md-primary(value="reviewer") 移交个人
+                        md-radio-button.md-primary(value="search_reviewer") 搜索个人
                 .hd-unit-wrapper(layout ng-if="params.type == 'departments'")
                     .hd-choosing(flex)
                         .title 部门列表
@@ -24,8 +25,20 @@ md-dialog.hand_over(ng-init="params = {type:'departments'};")
                         .title 领导列表
                         .content
                             md-radio-group(ng-model="params.reviewer_id")
-                                md-radio-button.md-primary(ng-value="reviewer.id" ng-repeat="reviewer in reviewers") {{ reviewer.name }} ( {{reviewer.department.name}} / {{reviewer.position.name}} )
-
+                                .hd__item(ng-repeat="reviewer in reviewers")
+                                    md-radio-button.md-primary(ng-value="reviewer.id") {{ reviewer.name }} ( {{reviewer.department.name}} / {{reviewer.position.name}} )
+                                    .hd__ctrl
+                                        a.hd__ctrl__btn(href="#")
+                                            img(src="/images/svg/close.svg")
+                .hd-unit-wrapper(ng-if="params.type == 'search_reviewer'")
+                    input.hd__searchbar(type="text" placeholder="请输入要查找的姓名")
+                    .content
+                        md-radio-group(ng-model="params.reviewer_id")
+                            .hd__item(ng-repeat="reviewer in reviewers")
+                                md-radio-button.md-primary(ng-value="reviewer.id") {{ reviewer.name }} ( {{reviewer.department.name}} / {{reviewer.position.name}} )
+                                .hd__ctrl
+                                    a.hd__ctrl__btn(href="#")
+                                        img(src="/images/svg/plus.svg")
 
 
 

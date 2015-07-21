@@ -1,6 +1,3 @@
-
-
-
 .tablexx {
     background: #fff;
     border-collapse: collapse;
@@ -11,17 +8,23 @@
     tbody,
     tfoot {
         > tr {
-            transition: all .3s ease;
-
             > th,
             > td {
                 //borderd
                 border: 0;
-                // border-bottom: 1px solid #e0e0e0;
+                border-bottom: 1px solid #e0e0e0;
 
                 text-align: left;
                 // vertical-align: top;
                 transition: all .3 ease;
+
+                &.sm {
+                    width: 18%;
+                }
+
+                &.lg {
+                    width: 28%;
+                }
 
             }
 

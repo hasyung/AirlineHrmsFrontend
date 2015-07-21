@@ -577,8 +577,8 @@ class ContractCtrl extends nb.Controller
                 cellTemplate: '''
                     <div class="ui-grid-cell-contents">
                         <a nb-panel
-                            template-url="partials/personnel/info_basic.html"
-                            locals="{employee: row.entity.owner.$fetch()}"> 详细
+                            template-url="partials/labors/contract/detail.dialog.html"
+                            locals="{contract: row.entity.$refresh()}"> 详细
                         </a>
                     </div>
                 '''

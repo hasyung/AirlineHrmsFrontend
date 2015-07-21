@@ -1,0 +1,82 @@
+md-dialog.welfare_personal_new(ng-controller="NewResource" ng-init= "params = {}")
+    form()
+        md-toolbar.md-accent(md-theme="hrms")
+                .md-toolbar-tools
+                    span 新建社保
+        md-content.sticky-container
+            .dialog-content(layout layout-align="center")
+                section.form-material-section(flex)
+                    fieldset
+                        div(style="display:none;")
+                            input(ng-model="contract.employeeId")
+                        div(layout)
+                            md-input-container(flex)
+                                label 姓名
+                                input()
+                            md-input-container(flex)
+                                label 员工编号
+                                input()
+
+                        div(layout)
+                            md-input-container(flex)
+                                label 所在部门
+                                input()
+                            md-input-container(flex)
+                                label 工作属地
+                                input()
+
+                        div(layout)
+                            md-input-container.row-has-value(flex)
+                                label 用工性质
+                                md-select(ng-model="contract.applyType" required)
+                                    md-select-label {{contract.applyType}}
+                                    md-option(value="合同") 合同
+                                    md-option(value="合同制") 合同制
+                            md-input-container.row-has-value(flex)
+                                label 社保属地
+                                md-select(ng-model="aaa" required)
+                                    md-select-label {{}}
+                                    md-option(value="成都") 成都
+                                    md-option(value="重庆") 重庆
+                        div(layout)
+                            md-input-container(flex)
+                                label 身份证
+                                input()
+                            md-input-container(flex md-no-float)
+                                label 社保编号
+                                input()
+
+                        div(layout)
+                            md-input-container(flex)
+                                label 年度养老保险
+                                input()
+                            md-input-container(flex)
+                                label 年度其他保险
+                                input()
+
+                        div(layout)
+                            md-input-container(flex)
+                                label 社保临时基数
+                                input(type="type" ng-model="contract.notes" name="notes")
+
+                        div.checkbox-row
+                            label 险种选择
+                            ul
+                                li
+                                    md-checkbox.md-primary 养老
+                                li
+                                    md-checkbox.md-primary 医疗
+                                li
+                                    md-checkbox.md-primary 失业
+                                li
+                                    md-checkbox.md-primary 工伤
+                                li
+                                    md-checkbox.md-primary 大病
+                                li
+                                    md-checkbox.md-primary 生育
+
+
+
+        .md-actions
+            md-button(ng-click='dialog.close()') 取 消
+            md-button.md-primary.md-raised(ng-click="submit; dialog.close()") 确 定

@@ -2,45 +2,7 @@
 nb = @nb
 app = nb.app
 
-
-# [{
-#     displayName: '姓名'
-#     name: 'name'
-#     placeholder: '姓名'
-#     type: 'string'
-# }]
-
-# preCompile = ->
-
-
-
-# string_template =
-
-# type: ['date-range', 'string', 'number', 'date']
-
-
-# createFilter(defs) ->
-#     active_constraint = []
-#     inert_constraint = []
-
-#     getter = $parse(opt.name)
-
-#     Elem = $compile(template)(scope.$new())
-
-#     destroyBefore = ->
-#         scope.$destroy()
-#         elem.remove()
-#         elem = null
-
-
-#     defs.forEach (def, idx) ->
-#         constraint = {}
-#         propertyGetter = $parse(val.name)
-#         template = preCompileTemplate(def)
-
-
-
-
+# 过滤器
 class NbFilterCtrl
 
     #@desc 预编译模板
@@ -482,8 +444,21 @@ nbGridDirective = ($parse)->
         }
     }
 
+BolleanTableCell = ->
+
+    template = '''
+        <div class="ui-grid-cell-contents">
+            <span ng-class="{'valid-mark':grid.getCellValue(row, col), 'invalid-mark': !grid.getCellValue(row, col) }"></span>
+        </div>
+    '''
+    return {
+        template: template
+        replace: true
+    }
+
 
 app.directive 'nbGrid', nbGridDirective
+app.directive 'booleanTableCell', BolleanTableCell
 app.directive 'nbFilter', NbFilterDirective
 app.directive 'conditionInputContainer', conditionInputContainer
 

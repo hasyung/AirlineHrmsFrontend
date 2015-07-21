@@ -25,6 +25,6 @@ form(ng-submit="save(education.$save(), eduForm)" name="eduForm")
                 md-select(ng-model="education.degree")
                     md-select-label {{$enum.parseLabel(education.degree, "degrees")}}
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('degrees')") {{item.label}}
-        md-input-container
-            label 证明人
-            input(ng-model="education.witness" name="witness" required)
+        //- md-input-container
+        //-     label 证明人
+        //-     input(ng-model="education.witness" name="witness" required)

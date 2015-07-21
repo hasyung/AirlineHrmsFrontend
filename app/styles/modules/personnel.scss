@@ -1,124 +1,283 @@
-.self-info-content {
-    height: 100%;
-}
+.self-info-container {
+    margin: 40px auto;
+    width: 960px;
 
-.personnel-menu {
-    background-color: #fff;
-    flex: 0 240px 0;
-    position: relative;
-    width: 240px;
+    .self-info-hd {
+        background: url('/images/personnel/head-bg.jpg');
+        background-size: 100% 100%;
+        margin-bottom: 20px;
+        position: relative;
 
-    .resume-icon {
-        background: url('../../../images/personnel/resume-icon.png') no-repeat;
-        border-radius: 50%;
-        display: block;
-        height: 40px;
-        position: absolute;
-        right: 15px;
-        top: 220px;
-        width: 40px;
-    }
-
-    .avator {
-        background-image: url('../../../images/personnel/avator-bg.jpg');
-        background-size: cover;
-        height: 240px;
-        overflow: hidden;
-        width: 240px;
-
-        .avator-area {
-            border-radius: 50%;
-            height: 110px;
-            margin: 30px auto 10px;
-            overflow: hidden;
-            width: 110px;
-
-            img {
-                height: 100%;
-                width: 100%;
-            }
-
-            .edit-icon-container {
-                background-color: #f44e4c;
-                border-radius: 12px;
-                color: #fff;
-                cursor: pointer;
-                font-size: 18px;
-                height: 24px;
-                left: 145px;
-                position: absolute;
-                top: 116px;
-                width: 24px;
-
-                i {
-                    height: 16px;
-                    margin-left: 4px;
-                    width: 16px;
-                }
-            }
-
-        }
-
-        h3 {
-            color: #fff;
-            font-size: 34px;
-            font-weight: normal;
-            text-align: center;
-        }
-
-        p {
-            color: #fff;
-            font-size: $font-size-lg;
-            margin: 0;
-            text-align: center;
-        }
-
-    }
-
-    .personnel-info-list {
-        ul {
-            margin: 0;
-            padding: 0;
-        }
-
-        li {
-            border-bottom: 1px solid #e5e5e5;
-            color: $text-muted;
-            cursor: pointer;
-            font-size: $font-size-sm;
-            height: 45px;
-            line-height: 45px;
-            // padding-left: 1px;
-
-            a {
-                // border: 4px solid transparent;
-                color: $text-color;
-                display: block;
-                height: 45px;
-                line-height: 45px;
-                padding-left: 28px;
-                width: 100%;
-            }
+        .resume-icon {
+            background: url('/images/personnel/resume.png');
+            background-size: 100% 100%;
+            border-radius: 13px;
+            display: block;
+            height: 26px;
+            left: 535px;
+            position: absolute;
+            top: 116px;
+            width: 40px;
 
             &:hover {
-                a {
-                    // border-left: 4px solid #f44336;
-                    color: #f44336;
+                background: url('/images/personnel/resume_h.png');
+                background-size: 100% 100%;
+            }
+        }
+
+        .avator {
+            height: 240px;
+            margin: 0 auto;
+            overflow: hidden;
+            width: 240px;
+
+            .avator-area {
+                border-radius: 50%;
+                height: 110px;
+                margin: 30px auto 10px;
+                overflow: hidden;
+                width: 110px;
+
+                img {
+                    height: 100%;
+                    width: 100%;
+                }
+
+                .edit-icon-container {
+                    background: url('/images/personnel/edit_avatar.png');
+                    background-size: 100%;
+                    border-radius: 12px;
+                    color: #fff;
+                    cursor: pointer;
+                    font-size: 18px;
+                    height: 26px;
+                    left: 500px;
+                    position: absolute;
+                    top: 116px;
+                    width: 26px;
+
+                    &:hover {
+                        background: url('/images/personnel/edit_avatar_h.png');
+                        background-size: 100%;
+                    }
                 }
 
             }
 
-            &.active {
-                a {
-                    // border-left: 4px solid #f44336;
-                    color: #f44336;
-                    font-size: $font-size-md;
-                }
+            h3 {
+                color: #333;
+                font-size: 34px;
+                font-weight: normal;
+                text-align: center;
+            }
+
+            p {
+                color: #666;
+                font-size: $font-size-lg;
+                margin: 0;
+                text-align: center;
             }
         }
     }
 
+    .self-info-bd {
+        background-color: #fff;
+        float: left;
+        margin-bottom: 40px;
+        position: relative;
+        width: 100%;
+
+        >div {
+            float: left;
+        }
+
+        .table {
+            margin-top: 20px;
+        }
+
+        .personnel-info-list {
+            background-color: #eee;
+
+            ul {
+                background-color: #f7f7f7;
+                margin: 0;
+                padding: 0;
+                width: 220px;
+            }
+
+            li {
+                border-bottom: 1px solid #e5e5e5;
+                color: $text-muted;
+                cursor: pointer;
+                font-size: $font-size-sm;
+                height: 45px;
+                line-height: 45px;
+
+                a {
+                    border-left: 4px solid #e2e2e2;
+                    border-right: 1px solid #e5e5e5;
+                    box-sizing: border-box;
+                    color: $text-hint;
+                    display: block;
+                    height: 45px;
+                    line-height: 45px;
+                    padding-left: 28px;
+                    width: 100%;
+                }
+
+                &:hover {
+                    a {
+                        color: #f44336;
+                    }
+
+                }
+
+                &.active {
+                    a {
+                        background-color: #fff;
+                        border-left: 4px solid #f44336;
+                        border-right-color: #fff;
+                        color: #f44336;
+                        font-size: $font-size-md;
+                    }
+                }
+            }
+        }
+
+        .personnel-content {
+            .personnel-section-wrap {
+                box-shadow: none;
+                margin-bottom: 0;
+            }
+        }
+    }
 }
+
+.anth-attr {
+    background: url('/images/personnel/auditing.png');
+    bottom: 15px;
+    display: none;
+    height: 18px;
+    position: absolute;
+    right: 10px;
+    width: 66px;
+
+    &.auditing {
+        display: block;
+    }
+}
+
+//员工个人信息 组件 subheader
+.subheader--center {
+    background: url('/images/personnel/divider.png') repeat-x;
+    background-position: 0 50%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+
+    &.subheader--margin30 {
+        margin: 0 30px;
+    }
+
+    .subheader__content {
+        background-color: #fff;
+        font-size: $font-size-md;
+        padding: 0 20px;
+
+        .subheader__icon {
+            margin-right: 10px;
+        }
+    }
+
+    .subheader__btns {
+        background-color: #fff;
+        padding-left: 20px;
+        position: absolute;
+        right: 0;
+
+        button {
+            background-color: rgb(33, 150, 243);
+            border: 0;
+            border-radius: 4px;
+            height: 24px;
+            padding: 0;
+            width: 24px;
+
+            md-icon {
+                color: #fff;
+                transition: transform .25s linear;
+
+                &.toggled {
+                    transform: rotate(180deg) translate3d(0, 0, 0);
+                }
+            }
+        }
+    }
+}
+//个人信息按钮组 位于subheader右上
+.btngroup--top--right {
+    display: flex;
+    height: 40px;
+    padding: 20px 30px 0 0;
+}
+
+.btngroup--single {
+    display: flex;
+    padding-top: 10px;
+
+    .btngroup__btn {
+        border-radius: 50%;
+        cursor: pointer;
+        height: 32px;
+        margin-left: 20px;
+        width: 32px;
+    }
+
+    button.btngroup__btn {
+        border: 0;
+        padding: 0;
+    }
+
+    .btn__icon {
+        height: 100%;
+        width: 100%;
+    }
+
+    .btn__icon--edit {
+        background: url('/images/personnel/edit.svg');
+
+        &:hover {
+            background: url('/images/personnel/edit_h.svg');
+        }
+    }
+
+    .btn__icon--del {
+        background: url('/images/personnel/del.svg');
+
+        &:hover {
+            background: url('/images/personnel/del_h.svg');
+        }
+    }
+
+    .btn__icon--finish {
+        background: url('/images/personnel/finish.svg');
+
+        &:hover {
+            background: url('/images/personnel/finish.svg');
+        }
+    }
+
+    .btn__icon--cancel {
+        background: url('/images/personnel/cancel.svg');
+
+        &:hover {
+            background: url('/images/personnel/cancel_h.svg');
+        }
+    }
+}
+
+
+
 
 .big-avator-area {
     background-color: #fff;
@@ -182,10 +341,9 @@
 }
 
 .personnel-content {
-    background-color: #f5f5f5;
+    background-color: #fff;
 
     &.self-info-content {
-        margin: 60px auto;
         width: 840px;
 
         .md-subheader {
@@ -235,7 +393,7 @@
 
         // material
         fieldset[disabled] {
-            .md-default-theme .md-select-label {
+            .md-default-theme .md-select-value {
                 padding-left: 90px;
             }
 
@@ -298,16 +456,17 @@
     }
 
     .personnel-section-wrap {
+        background-color: #fff;
         box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
         margin-bottom: 30px;
 
-        &:nth-child(odd) {
-            background-color: #fff;
-        }
+        // &:nth-child(odd) {
+        //     background-color: #fff;
+        // }
 
-        &:nth-child(even) {
-            background-color: #fafbfd;
-        }
+        // &:nth-child(even) {
+        //     background-color: #fafbfd;
+        // }
     }
 
 

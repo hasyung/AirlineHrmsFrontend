@@ -250,18 +250,6 @@ class OrgsCtrl extends nb.Controller
         $svg.css("transform", "scale(1)")
 
 
-    #     options = {
-    #         container: 'org_chart',
-    #         pdf_canvas: 'org_chart_print_canvas'
-    #         pdf_filename: '机构组织架构图.pdf'
-    #         oc_zdp_width_internal: $('svg').width(),
-    #         oc_zdp_height_internal: $('svg').height()
-    #     }
-
-    #     ggOrgChart.print(options)
-
-
-
 
 
 class OrgCtrl extends nb.Controller

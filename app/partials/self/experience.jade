@@ -1,31 +1,39 @@
 section.personnel-info-section(ng-init="experiences = currentUser.workExperiences.$refresh();param= {}")
     .personnel-content-body
         .personnel-section-wrap()
-            md-toolbar
-                .md-toolbar-tools
-                    span 工作经历（入司前）
-                    span(flex)
-                    span
-                        md-button.md-raised.md-primary(ng-hide="param.newExp" ng-click="param.newExp= experiences.$build({category:'before'})") 新增
+            .btngroup--top--right(ng-hide="param.newExp")
+                span(flex)
+                span
+                    md-button.md-raised.md-primary(ng-click="param.newExp= experiences.$build({category:'before'})") 新增
 
-            md-content.pt-16(ng-if="param.newExp && param.newExp.category == 'before'" ng-init="newExp = param.newExp")
+            md-content.pt-30(ng-if="param.newExp && param.newExp.category == 'before'" ng-init="newExp = param.newExp")
+                .subheader--center.subheader--margin30
+                    .subheader__content
+                        span.subheader__icon
+                            img(src="/images/personnel/subh-icon.png", alt="icon--plane")
+                        span 新增工作经历(入司前)
                 section.form-material-section
-                    .sep-40
                     include experience/new_work_exp_form
 
-            md-content.pt-16
+            md-content
+                .subheader--center.subheader--margin30
+                    .subheader__content
+                        span.subheader__icon
+                            img(src="/images/personnel/subh-icon.png", alt="icon--plane")
+                        span 入司前
                 section.form-material-section(ng-controller="EditableResource", ng-repeat="work in experiences | filterBy: ['category']:'before'")
-                    .sep-40
                     include experience/exit_work_exp_form
-        .personnel-section-wrap()
-            md-toolbar
-                .md-toolbar-tools
-                    span 工作经历（入司后）
-                    span(flex)
-            md-content.pt-16
+        .personnel-section-wrap
+            md-content
+                .subheader--center.subheader--margin30
+                    .subheader__content
+                        span.subheader__icon
+                            img(src="/images/personnel/subh-icon.png", alt="icon--plane")
+                        span 入司后
                 section.form-material-section(ng-controller="EditableResource", ng-repeat="work in experiences | filterBy: ['category']:'after'")
                     .sep-40
                     include experience/scal_work_exp_form
+                .sep-40
 
 //- section.personnel-info-section(ng-init="experiences = currentUser.workExperiences.$fetch();param= {}")
 //-     .personnel-top-header.clearfix
