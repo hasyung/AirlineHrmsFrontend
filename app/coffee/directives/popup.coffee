@@ -7,9 +7,7 @@ angular.module 'nb.directives'
                 elem.parent().parent().after templateBlock
 
         return {
-            # controller: PopupTransclude
             restrict: 'AE'
-            # require: '^popupTemplate'
             link: postLink
         }
 
@@ -89,7 +87,7 @@ angular.module 'nb.directives'
                 #end
                 $doc.on 'click', hideHandle
                 scope.isShown = true
-            
+
 
             hide = ()->
                 tipElement.hide()
@@ -101,7 +99,7 @@ angular.module 'nb.directives'
                     left: element.position().left,
                     top: element.position().top
                 }
-            
+
             calcPosition = (element) ->
                 elemWidth = element.outerWidth()
                 elemHeight = element.outerHeight()
@@ -139,14 +137,14 @@ angular.module 'nb.directives'
                 e.stopPropagation()
                 hide()
                 # hide() 返回false，将阻止submit按钮的提交事件的触发
-                return 
+                return
 
 
             # 加载时隐藏提示框
             hide()
-            
+
             # $doc.on 'click', hideHandle
-                
+
             elem.on 'click', (e)->
                 e.stopPropagation()
                 toggle()
@@ -219,7 +217,7 @@ angular.module 'nb.directives'
                 #end
                 scope.isShown = true
                 $doc.on 'click', hideHandle
-            
+
 
             hide = ()->
                 tipElement.hide()
@@ -255,7 +253,7 @@ angular.module 'nb.directives'
                         }
                         pArrow = {
                             top: tipHeight * options.offset,
-                            left: - options.arrowBorder 
+                            left: - options.arrowBorder
                         }
                     when 'left-top'
                         pTip = {
@@ -273,7 +271,7 @@ angular.module 'nb.directives'
                         }
                         pArrow = {
                             top: tipHeight * (1 - options.offset),
-                            left: - options.arrowBorder 
+                            left: - options.arrowBorder
                         }
                     when 'top-right'
                         pTip = {
@@ -311,7 +309,7 @@ angular.module 'nb.directives'
                             top: -options.arrowBorder + options.border,
                             left: tipWidth * options.offset
                         }
-                    
+
                     else
                         throw Error "only left-top,left-bottom,right-bottom,right-top,top-left,top-right,bottom-left,bottom-right is accepted."
                 return {pTip: pTip, pArrow: pArrow}
@@ -320,13 +318,13 @@ angular.module 'nb.directives'
                 e.stopPropagation()
                 hide()
                 # hide() 返回false，将阻止submit按钮的提交事件的触发
-                return 
+                return
 
             # 加载时隐藏提示框
             hide()
-            
+
             # $doc.on 'click', hideHandle
-                
+
             elem.on 'click', (e)->
                 e.stopPropagation()
                 toggle()

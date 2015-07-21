@@ -91,8 +91,8 @@ angular.module 'nb.directives'
                     editor = new Simditor opts
                     editor.on 'valuechanged', onValueChanged
                     editor.setValue(ctrl.$modelValue)
-                    
-                    
+
+
                     return editor
                 # if attrs.editable == "false"
                 #     editor.body.attr("contenteditable", false)
@@ -114,6 +114,6 @@ angular.module 'nb.directives'
 
                 scope.$on '$destroy', () ->
                     editor.destroy() if editor
-            
+
         }
     ]
