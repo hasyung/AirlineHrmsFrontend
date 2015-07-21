@@ -194,18 +194,6 @@ class Route
 
             }
 
-# class SelfCtrl extends nb.Controller
-
-#     @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope']
-
-
-#     constructor: (@scope, @sweet, @Employee, @rootScope) ->
-#         @scope.currentUser = @rootScope.currentUser
-#         @loadInitailData()
-
-#     loadInitailData: ->
-
-
 
 
 class ProfileCtrl extends nb.Controller

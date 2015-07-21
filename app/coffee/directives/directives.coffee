@@ -1,16 +1,6 @@
 
 angular.module 'nb.directives'
-    # 左侧导航收起和展开
-    .directive 'navToggleActive', [() ->
-        return {
-            scope: {}
-            restrict: 'A'
-            link: (scope,elem,attr) ->
-                elem.on 'click', '.auto', (event) ->
-                    event.preventDefault()
-                    elem.toggleClass 'active'
-        }
-    ]
+    # 下载
     .directive 'nbDownload', [() ->
 
         postLink = (scope, elem, attrs)->
@@ -30,41 +20,7 @@ angular.module 'nb.directives'
 
     ]
 
-
-    .directive 'loadingBtn', ['$timeout', ($timeout) ->
-
-
-        postLink = (scope, elem, attrs, $ctrl, $transcludeFn) ->
-
-            scope.clz  = attrs.class
-            scope.loadingType = attrs.btnLoadingType || 'slide-up'
-            scope.dataLoading = false
-            scope.content = attrs.btnText
-
-            disableDataLoading = ->
-                scope.$apply ()->
-                    scope.dataLoading = false
-
-            elem.on 'click', () ->
-                scope.$apply ()->
-                    scope.dataLoading = true
-
-            scope.$on 'data:loaded', () ->
-                scope.$apply ()->
-                    scope.dataLoading = false
-
-            scope.$on '$destroy', () ->
-                elem.off 'click'
-
-        return {
-            templateUrl: 'partials/component/loading-btn/btn.html'
-            scope: true
-            link: postLink
-            # transclude: true
-
-        }
-
-    ]
+    # 切面切换的 loading 动画
     .directive 'nbLoading', ['$rootScope', (rootScope) ->
 
         return {
@@ -72,6 +28,7 @@ angular.module 'nb.directives'
         }
 
     ]
+    # 页面切换的动画， 2015.7.21 现在没用， 可以考虑之后使用
     .directive 'nbButterbar', ['$rootScope', '$anchorScroll', (rootScope, anchorScroll) ->
 
         postLink = (scope, elem, attrs) ->
@@ -91,6 +48,7 @@ angular.module 'nb.directives'
     ]
 
     #facade ngDialog
+    # 右侧滑出栏
     .directive 'nbPanel',['ngDialog', '$parse', (ngDialog, $parse) ->
 
         getCustomConfig = (attrs) ->
@@ -132,6 +90,7 @@ angular.module 'nb.directives'
 
 
     ]
+    # dialog
     .directive 'nbDialog',['$mdDialog', ($mdDialog) ->
 
         postLink = (scope, elem, attrs) ->
@@ -180,7 +139,7 @@ angular.module 'nb.directives'
     ]
 
 
-
+    # confirm
     .directive 'nbConfirm', ['$mdDialog', ($mdDialog) ->
 
         postLink = (scope, elem, attrs) ->
@@ -219,6 +178,7 @@ angular.module 'nb.directives'
             }
         }
     ]
+    # 小松写的， 在变更记录中使用。 可以考虑重构时删除
     .directive 'radioBox', [()->
         postLink = (scope, elem, attrs, ctrl) ->
             scope.selected = null
@@ -257,49 +217,7 @@ angular.module 'nb.directives'
             replace: true
         }
     ]
-
-    .directive 'toggleSidebar', ['$timeout', ($timeout) ->
-
-        ###*
-         * [description] 切换左侧菜单
-        ###
-        postLink = (scope, elem, attrs) ->
-
-            $sidebar = $('#leftSidebar')
-
-            $sidebar.css {
-                position: 'fixed',
-                top: '64px',
-                zIndex: 9999,
-                marginLeft: '0'
-            }
-
-            $sidebar.on 'mouseenter', ()->
-                $sidebar.stop(true, false).animate {
-                    marginLeft: 0
-                }, 1000
-
-            $sidebar.on 'mouseleave', ()->
-                $sidebar.stop(true,false).animate {
-                    marginLeft: '-190px'
-                }, 1000
-
-            $timeout(()->
-
-                $sidebar.animate {
-                    marginLeft: '-190px'
-                }, 1000
-
-            , 3000)
-
-
-
-        return {
-            link: postLink
-            scope: true
-        }
-    ]
-
+    # 流程分支节点图， 现在已废弃， 花了较多精力， 暂时保留
     .directive 'columnChart', [ () ->
 
         postLink = (scope, elem, attrs) ->
@@ -471,27 +389,6 @@ angular.module 'nb.directives'
                     clone[clone.length++] = document.createComment(" end hasPermission: #{attrs.hasPermission}")
                     $animate.enter(clone, elem.parent(), elem)
 
-            # scope.$watch attrs.permission, (value) ->
-            #     if value
-            #         if !childScope
-            #             $transclude (clone, newScope) ->
-            #                 childScope = newScope
-            #                 clone[clone.length++] = document.createComment("end permission #{attrs.permission}")
-            #                 block = {clone: clone}
-
-            #                 $animate.enter(clone, $element.parent, $element)
-
-            #     else
-            #         if previousElements
-            #             previousElements.remove()
-            #             previousElements = null
-            #         if childScope
-            #             childScope.$destroy()
-            #             childScope = null
-            #         if block
-            #             previousElements = getBlockNodes(block.clone)
-            #             $animate.leave(previousElements).then -> previousElements = null
-            #             block = null
 
         return {
             multiElement: true
