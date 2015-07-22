@@ -7,7 +7,7 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
             md-icon(md-svg-src="/images/svg/close.svg" aria-label="取消")
         md-button.md-primary.md-fab(type="submit")
             md-icon(md-svg-src="/images/svg/check.svg" aria-label="保存")
-    fieldset(ng-disabled="!editing")
+    fieldset(ng-disabled="!editing" md-theme="default")
         div(layout)
             md-input-container.row-has-value(flex)
                 label 职称

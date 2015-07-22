@@ -7,7 +7,7 @@ form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="Ed
             md-icon(md-svg-src="/images/svg/close.svg" aria-label="取消")
         md-button.md-raised.md-fab.md-primary(type="submit" ng-disabled="positionEditForm.$invalid")
             md-icon(md-svg-src="/images/svg/check.svg" aria-label="保存")
-    fieldset(ng-disabled="!editing")
+    fieldset(ng-disabled="!editing" md-theme="default")
 
         div(org-muti-pos ng-model="current.positions" editing="editing")
 

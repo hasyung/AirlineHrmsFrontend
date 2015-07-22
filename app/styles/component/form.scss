@@ -149,7 +149,10 @@ fieldset {
 
 }
 
-
+label:not(.md-no-float),
+.md-placeholder {
+    opacity: 1;
+}
 
 //展示状态下各个组件的样式
 fieldset[disabled] {
