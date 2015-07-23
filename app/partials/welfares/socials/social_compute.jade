@@ -21,19 +21,21 @@
                     template-url="partials/welfares/socials/compute.html"
                     ) 计算
             span
-                md-dropmenu(ng-init="selectedRows=[]")
-                    md-drop-label(ng-click="selectedRows = ctrl.getSelectsIds()")
-                        md-button.md-primary.md-raised 导出
-                    md-drop-option()
-                        a(flex ng-href="/api/employees/export_to_xls") 导出全部人员
-                    md-drop-option(ng-if="selectedRows.length > 0")
-                        a(
-                            nb-download
-                            url-prefix="/api/employees/export_to_xls?employee_ids=#param#"
-                            param-getter="ctrl.getSelectsIds()"
-                            href="javascript:;"
-                            download
-                        ) 导出所选人员
+                md-menu(ng-init="selectedRows=[]")
+                    md-button.md-primary.md-raised(
+                        ng-click="selectedRows = ctrl.getSelectsIds(); $mdOpenMenu($event)"
+                        ) 导出
+                    md-menu-content
+                        md-menu-item()
+                            a.md-button(flex ng-href="/api/employees/export_to_xls") 导出全部人员
+                        md-menu-item(ng-if="selectedRows.length > 0")
+                            a.md-button(
+                                nb-download
+                                url-prefix="/api/employees/export_to_xls?employee_ids=#param#"
+                                param-getter="ctrl.getSelectsIds()"
+                                href="javascript:;"
+                                download
+                            ) 导出所选人员
 
     div.ui-grid-container.mt5
         md-toolbar
