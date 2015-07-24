@@ -106,6 +106,18 @@ md-toolbar {
     }
 }
 
+.md-menu {
+    padding: 0;
+}
+//解决md-menu组件中选项过多造成的每个item高度不足
+md-menu-item {
+    min-height: 48px;
+
+    .md-button {
+        line-height: 48px;
+    }
+}
+
 md-input-container > md-select {
     margin-top: 0;
 
