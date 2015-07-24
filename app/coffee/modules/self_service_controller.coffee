@@ -195,11 +195,9 @@ class Route
             }
 
 
-
 class ProfileCtrl extends nb.Controller
 
     @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope', 'User', 'USER_META', 'UserPerformance', 'Performance', '$filter']
-
 
     constructor: (@scope, @sweet, @Employee, @rootScope, @User, @USER_META, @UserPerformance, @Performance, @filter) ->
         @loadInitailData()
@@ -211,12 +209,14 @@ class ProfileCtrl extends nb.Controller
     # 员工自助中员工编辑自己的信息
     updateInfo: ->
         @scope.currentUser.$update()
+
     updateEdu: (edu)->
         edu.$save()
+
     createEdu: (edu)->
         @scope.currentUser.educationExperiences.createEdu(edu)
         # @scope.currentUser.$update()
-        #
+
     updateFavicon: ()->
         self = @
         @scope.currentUser.$refresh().$then ()->
@@ -229,7 +229,6 @@ class ProfileCtrl extends nb.Controller
 
     allege: (performance, request)->
         performance.allege(request)
-
 
 
 class MyRequestCtrl extends nb.Controller
@@ -287,9 +286,6 @@ class MyRequestCtrl extends nb.Controller
         @Employee.leaders()
 
     myRequests: (FlowName) ->
-
-
-
 
 
 app.config(Route)

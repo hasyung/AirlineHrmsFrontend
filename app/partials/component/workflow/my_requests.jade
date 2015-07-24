@@ -14,7 +14,6 @@ block vars
 
             md-toolbar
                 .md-toolbar-tools
-
                     block tools
 
             if gridSelection
@@ -22,7 +21,7 @@ block vars
                     nb-grid column-defs="ctrl.columnDef"
                     on-register-api="ctrl.exportGridApi(gridApi)"
                     grid-selection
-                    multi-select= multiSelect? 'true': 'false'
+                    multi-select=multiSelect? 'true': 'false'
                     safe-src="ctrl.tableData")
             else
                 div(nb-grid column-defs="ctrl.columnDef"  safe-src="ctrl.tableData")

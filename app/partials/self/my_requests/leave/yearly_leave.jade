@@ -1,12 +1,9 @@
-
 extends leave_layout
-
 
 block vars
     - var flowType = "Flow::AnnualLeave"
     - var formType = 1
     - var flowName = '年假'
-
 
 block relation_data
     div.flow-info-row(layout)
@@ -17,7 +14,7 @@ block relation_data
         .flow-info-cell(flex)
             .flow-cell-title 假别
             .flow-cell-content 年假 (
-                
+
                 span(ng-repeat="(key, value) in vacations.year_days.year") {{key}} 年年假剩余天数 {{value}} 天 {{$last ? '' : '，' }}
                 span )
 
@@ -43,4 +40,3 @@ block relation_data
 //-             textarea(ng-model="request.reason" columns="1" md-maxlength="150")
 //-     md-subheader.accessory-header.md-background.md-hue-1 附件
 //-     div(flow-file-upload flow-type="#{flowType}" ng-model="request.attachment_ids")
-

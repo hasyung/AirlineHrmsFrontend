@@ -1,11 +1,8 @@
-
 nb = @.nb
 app = nb.app
 extend = angular.extend
 resetForm = nb.resetForm
 Modal = nb.Modal
-
-
 
 class Route
     @.$inject = ['$stateProvider']
@@ -28,7 +25,6 @@ class Route
             }
 
 app.config(Route)
-
 
 
 class WelfareController
@@ -63,9 +59,8 @@ class WelfareController
 
             $http.put('/api/welfares/socials', {
                 socials: configs
-            }).success ->
+            }).success ()->
                 $Evt.$send('wselfate:save:success', '社保配置保存成功')
-
 
 
 class WelfarePersonalController extends nb.Controller
@@ -203,6 +198,22 @@ class SocialComputeController
         rows.map (row) -> return row.entity.$pk
 
 
+class SocialHistoryController
+    @.$inject = ['$scope', '$nbEvent']
+
+    constructor: ($scope, $Evt) ->
+
+        @columnDef = [
+            {displayName: '员工编号', name: 'employeeNo'}
+        ]
+
+        @filterOptions = {
+            name: 'SocialHistory'
+            constraintDefs: [
+            ]
+        }
+
+
 class SocialChangesController
     @.$inject = ['$http', '$scope', '$nbEvent', 'socialChanges']
 
@@ -281,8 +292,5 @@ app.controller 'welfareCtrl', WelfareController
 app.controller 'welfarePersonalCtrl', WelfarePersonalController
 
 app.controller 'socialComputeCtrl', SocialComputeController
+app.controller 'socialHistoryCtrl', SocialHistoryController
 app.controller 'socialChangesCtrl', SocialChangesController
-
-
-
-

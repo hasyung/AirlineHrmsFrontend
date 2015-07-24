@@ -1,23 +1,18 @@
-
 # 左侧菜单栏
-
-
 nb = @nb
 app = nb.app
 
 
-self_section = name: '员工自助'
-org_section = name: '组织机构', type: 'link'
-position_section = name: '岗位管理'
-personnel_section = name: '人事信息'
-kaoqin_section = name: '考勤管理'
-train_section = name: '培训管理'
-benefit_section = name: '福利'
-salary_section = name: '薪酬'
-labor_section = name: '劳动关系'
-perf_section = name: '绩效管理'
-
-
+self_section        = name: '员工自助'
+org_section         = name: '组织机构', type: 'link'
+position_section    = name: '岗位管理'
+personnel_section   = name: '人事信息'
+kaoqin_section      = name: '考勤管理'
+train_section       = name: '培训管理'
+benefit_section     = name: '福利'
+salary_section      = name: '薪酬'
+labor_section       = name: '劳动关系'
+perf_section        = name: '绩效管理'
 
 
 menuFactory = ($rootScope, $state)->
@@ -54,8 +49,6 @@ menuFactory = ($rootScope, $state)->
 
         ]
     }
-
-
 
     sections.push {
         name: '人事信息'
@@ -98,7 +91,6 @@ menuFactory = ($rootScope, $state)->
         ]
     }
 
-
     sections.push {
         name: '福利'
         icon_src: '/images/svg/left-side-svg/left_icon_7.svg'
@@ -119,13 +111,8 @@ menuFactory = ($rootScope, $state)->
                 permission: ''
             }
             {
-                name: '住房公积金'
-                state: 'position'
-                permission: ''
-            }
-            {
-                name: '劳保制服'
-                state: 'position'
+                name: '工作餐'
+                state: '.welfares_dinnerfee'
                 permission: ''
             }
         ]
@@ -136,8 +123,13 @@ menuFactory = ($rootScope, $state)->
         icon_src: '/images/svg/left-side-svg/left_icon_8.svg'
         pages: [
             {
-                name: '基础公司'
-                state: 'position'
+                name: '薪资设置'
+                state: 'salary'
+                permission: ''
+            }
+            {
+                name: '基础工资'
+                state: 'salary_basic'
                 permission: ''
             }
             {
@@ -211,11 +203,6 @@ menuFactory = ($rootScope, $state)->
                 state: 'labors_punishment'
                 permission: ''
             }
-            # {
-            #     name: '合同续签'
-            #     state: 'labors_renew_contract'
-            #     permission: ''
-            # }
             {
                 name: '合同管理'
                 state: 'contract_management'
@@ -231,8 +218,6 @@ menuFactory = ($rootScope, $state)->
                 state: 'labors_resignation'
                 permission: ''
             }
-
-
         ]
     }
 
@@ -260,23 +245,25 @@ menuFactory = ($rootScope, $state)->
 
     self = {
         sections: sections
+
         selectSection: (section) ->
             self.openedSection = section
+
         toggleSelectSection: (section) ->
             self.openedSection = if self.openedSection == section then null else section
 
         isSectionSelected: (section) ->
             return self.openedSection == section
+
         selectPage: (section, page) ->
             self.openedSection = section
             self.currentPage = page
+
         isPageSelected: (page) ->
             return @.currentPage == page
     }
 
-
     onLocationChange = () ->
-
         matchPage = (section, page) ->
             if page.state && $state.includes(page.state)
                 self.selectPage(section, page)
@@ -290,11 +277,7 @@ menuFactory = ($rootScope, $state)->
 
 
     $rootScope.$on('$stateChangeSuccess', onLocationChange)
-
-
     return self
-
-
 
 
 menuLinkDirective = ($compile, $state) ->
@@ -322,7 +305,6 @@ menuLinkDirective = ($compile, $state) ->
             </div>
         <md-button>
     '''
-
 
     stroke_svg = '''
         <svg width="30" height="50">
@@ -352,7 +334,6 @@ menuLinkDirective = ($compile, $state) ->
         transcludeFn scope, (cloned) -> elem.append(cloned)
 
     return {
-        # template: template
         scope: {
             page: '='
             isLast: '&'
@@ -392,7 +373,6 @@ menuToggleDirective = (menu) ->
 
         scope.isSelected = (page) ->
             menu.isPageSelected(page)
-
 
     return {
         template: template
