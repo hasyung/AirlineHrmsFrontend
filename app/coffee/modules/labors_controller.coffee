@@ -1,4 +1,3 @@
-
 nb = @.nb
 app = nb.app
 extend = angular.extend
@@ -17,6 +16,7 @@ userListFilterOptions = filterBuildUtils('laborsRetirement')
     .col 'birthday',             '出生日期', 'date-range'
     .col 'join_scal_date',       '入职时间', 'date-range'
     .end()
+
 
 USER_LIST_TABLE_DEFS = [
     {displayName: '员工编号', name: 'employeeNo'}
@@ -88,6 +88,7 @@ FLOW_HANDLE_TABLE_DEFS =  [
 
 ]
 
+
 FLOW_HISTORY_TABLE_DEFS =  [
     {
         name: 'receptor.channelId'
@@ -119,8 +120,8 @@ FLOW_HISTORY_TABLE_DEFS =  [
         </div>
         '''
     }
-
 ]
+
 
 HANDLER_AND_HISTORY_FILTER_OPTIONS = {
     constraintDefs: [
@@ -131,6 +132,7 @@ HANDLER_AND_HISTORY_FILTER_OPTIONS = {
         }
     ]
 }
+
 
 ATTENDANCE_BASE_TABLE_DEFS = [
     {
@@ -155,6 +157,7 @@ ATTENDANCE_BASE_TABLE_DEFS = [
 
 ]
 
+
 ATTENDANCE_SUMMERY_DEFS= [
     {width:150, displayName: '所属部门', name: 'departmentName'}
     {width:100, displayName: '员工编号', name: 'employeeNo'}
@@ -174,7 +177,6 @@ ATTENDANCE_SUMMERY_DEFS= [
     {width:100, displayName: '疗养假', name: 'recuperateLeave'}
     {width:100, displayName: '派驻休假', name: 'accreditLeave'}
 
-
     {width:100, displayName: '病假', name: 'sickLeave'}
     {width:100, displayName: '病假（工伤待定）', name: 'sickLeaveInjury'}
     {width:100, displayName: '病假（怀孕待产）', name: 'sickLeaveNulliparous'}
@@ -190,9 +192,6 @@ ATTENDANCE_SUMMERY_DEFS= [
     {width:100, displayName: '驻站地点', name: 'stationPlace'}
     {width:100, displayName: '备注', name: 'remark'}
 ]
-
-
-
 
 
 class Route
@@ -294,9 +293,6 @@ class AttendanceCtrl extends nb.Controller
             m = injector.get(t)
             return m.$find(entity.$pk)
 
-
-
-
         @checksFilterOptions = {
             name: 'attendance_check_list'
             constraintDefs: [
@@ -307,6 +303,7 @@ class AttendanceCtrl extends nb.Controller
                 }
             ]
         }
+
         @recordsFilterOptions = {
             name: 'attendance_records_list'
             constraintDefs: [
@@ -317,6 +314,7 @@ class AttendanceCtrl extends nb.Controller
                 }
             ]
         }
+
         checkBaseDef = ATTENDANCE_BASE_TABLE_DEFS.concat [
             {
                 name: 'type'
@@ -345,10 +343,8 @@ class AttendanceCtrl extends nb.Controller
             }
         ]
 
-
         @checksColumnDef = helper.buildFlowDefault(checkBaseDef)
         @recodsColumnDef = helper.buildFlowDefault(recordsBaseDef)
-
 
     getYears: ()->
         [2015..new Date().getFullYear()]
@@ -362,11 +358,11 @@ class AttendanceCtrl extends nb.Controller
         params.department_id = departmentId if departmentId
         @search(params)
 
-
     initDate: ()->
         date = new Date()
         @year = date.getFullYear()
         @month = date.getMonth() + 1
+
     loadCheckList: ()->
         @tableData = @Leave.$collection().$fetch()
 
@@ -403,7 +399,6 @@ class AttendanceCtrl extends nb.Controller
         @http.put('/api/attendance_summaries/hr_leader_check', params).then ()->
             self.tableData.$refresh()
 
-
     search: (tableState)->
         @tableData.$refresh(tableState)
 
@@ -425,11 +420,10 @@ class AttendanceCtrl extends nb.Controller
             self.tableData.$refresh()
 
 
-
-
 class AttendanceRecordCtrl extends nb.Controller
 
     @.$inject = ['$scope', 'Attendance', 'Employee', 'GridHelper']
+
     constructor: (@scope, @Attendance, @Employee, GridHelper) ->
         @loadInitailData()
         @filterOptions = filterBuildUtils('attendanceRecord')
@@ -445,7 +439,6 @@ class AttendanceRecordCtrl extends nb.Controller
             {displayName: '到岗时间', name: 'joinScalDate'}
         ]
 
-
     loadInitailData: ()->
         @employees = @Employee.$collection().$fetch()
 
@@ -456,8 +449,11 @@ class AttendanceRecordCtrl extends nb.Controller
         rows = @scope.$gridApi.selection.getSelectedGridRows()
         selected = if rows.length >= 1 then rows[0].entity else null
 
+
 class AttendanceHisCtrl extends nb.Controller
+
     @.$inject = ['$scope', 'Attendance']
+
     constructor: (@scope, @Attendance) ->
         @loadInitailData()
         @filterOptions = filterBuildUtils('attendanceHis')
@@ -517,13 +513,11 @@ class AttendanceHisCtrl extends nb.Controller
             self.attendances.$refresh()
 
 
-
-
-
-
 class ContractCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Contract', '$http', 'Employee']
-    constructor: (@scope, @Contract, @http, @Employee) ->
+
+    @.$inject = ['$scope', 'Contract', '$http', 'Employee', '$nbEvent']
+
+    constructor: (@scope, @Contract, @http, @Employee, @Evt) ->
         @loadInitailData()
         @filterOptions = filterBuildUtils('contract')
             .col 'employee_name',        '姓名',        'string',           '姓名'
@@ -639,7 +633,6 @@ class ContractCtrl extends nb.Controller
         ]
 
 
-
     loadInitailData: ->
         @contracts = @Contract.$collection().$fetch()
 
@@ -666,11 +659,15 @@ class ContractCtrl extends nb.Controller
 
     leaveJob: (contract, isConfirm, reason)->
         return if !isConfirm
-        request = {}
-        request.reason = reason
-        request.receptor_id = contract.employeeId
-        @http.post("/api/workflows/Flow::EmployeeLeaveJob", request)
-        return
+
+        self = @
+
+        params = {}
+        params.reason = reason
+        params.receptor_id = contract.employeeId
+
+        @http.post("/api/workflows/Flow::EmployeeLeaveJob", params).success (data, status)->
+            self.Evt.$send "employee_leavejob:create:success", "离职单发起成功"
 
     loadEmployee: (params, contract)->
         self = @
@@ -743,6 +740,7 @@ class UserListCtrl extends nb.Controller
         scope.search = (tableState)->
             scope.employees.$refresh(tableState)
 
+
 class RetirementCtrl extends nb.Controller
     @.$inject = ['GridHelper', 'Flow::Retirement', '$scope', '$injector']
 
@@ -760,15 +758,11 @@ class RetirementCtrl extends nb.Controller
         }
 
         def = _.cloneDeep(flow_handle_table_defs)
-
         @columnDef = helper.buildFlowDefault(def)
-
         @retirements = @Retirement.$collection().$fetch()
 
     search: (tableState)->
         @retirements.$refresh(tableState)
-
-
 
 
 class SbFlowHandlerCtrl
@@ -779,7 +773,6 @@ class SbFlowHandlerCtrl
 
         @scope.ctrl = @
         @Flow = $injector.get(@FlowName)
-
 
         @userListName = "#{@FlowName}_USER_LIST"
         @checkListName = "#{@FlowName}_CHECK_LIST"
@@ -816,7 +809,6 @@ class SbFlowHandlerCtrl
         @columnDef = @userRequestsColDef
         @tableData = @Flow.myRequests()
 
-
     getSelected: -> # selected entity || arr
         rows = @gridApi.selection.getSelectedGridRows()
         selected = if rows.length >= 1 then rows[0].entity else null
@@ -834,25 +826,26 @@ class SbFlowHandlerCtrl
     retirement: (users)->
         self = @
         params = users.map (user)->
-            {id: user.id, relation_data:user.relation_data}
+            {id: user.id, relation_data: user.relation_data}
 
-        @http.post("/api/workflows/Flow::Retirement/batch_create", {receptors:params}).then ()->
+        @http.post("/api/workflows/Flow::Retirement/batch_create", {receptors: params}).success (data, status)->
             self.Evt.$send "retirement:create:success", "退休发起成功"
             self.tableData.$refresh()
 
     leaveJob: (employeeId, isConfirm, reason)->
         return if !isConfirm
-        request = {}
-        request.reason = reason
-        request.receptor_id = employeeId
-        @http.post("/api/workflows/Flow::EmployeeLeaveJob", request)
 
-        return
+        self = @
+
+        params = {}
+        params.reason = reason
+        params.receptor_id = employeeId
+
+        @http.post("/api/workflows/Flow::EmployeeLeaveJob", params).success (data, status)->
+            self.Evt.$send "employee_leavejob:create:success", "离职单发起成功"
 
     refreshTableDate: ()->
         @tableData.$refresh({filter_types: [@FlowName]})
-
-
 
 
 app.config(Route)

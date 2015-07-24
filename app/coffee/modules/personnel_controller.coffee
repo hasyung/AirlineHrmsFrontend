@@ -76,10 +76,10 @@ class PersonnelCtrl extends nb.Controller
             {displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
             {displayName: '到岗时间', name: 'joinScalDate'}
         ]
+
         @constraints = [
-
-
         ]
+
         @filterOptions = filterBuildUtils('personnel')
             .col 'name',                 '姓名',    'string',           '姓名'
             .col 'employee_no',          '员工编号', 'string'
@@ -90,7 +90,7 @@ class PersonnelCtrl extends nb.Controller
             .col 'employment_status_id', '用工状态', 'select',           '',    {type: 'employment_status'}
             .col 'birthday',             '出生日期', 'date-range'
             .col 'join_scal_date',       '入职时间', 'date-range'
-            .col 'labor_relation_id',          '用工性质', 'select',           '', {type: 'labor_relations'}
+            .col 'labor_relation_id',    '用工性质', 'select',           '', {type: 'labor_relations'}
             .end()
 
     loadInitailData: ->
@@ -179,9 +179,9 @@ class NewEmpsCtrl extends nb.Controller
                     displayName: '属地'
                 }
                 {
-                    name: 'channel_id'
-                    type: 'select'
-                    displayName: '岗位通道'
+                    name: 'channel_ids'
+                    type: 'muti-enum-search'
+                    displayName: '通道'
                     params: {
                         type: 'channels'
                     }
@@ -203,6 +203,14 @@ class NewEmpsCtrl extends nb.Controller
                     name: 'join_scal_date'
                     type: 'date-range'
                     displayName: '入职时间'
+                }
+                {
+                    name: 'labor_relation_id'
+                    type: 'select'
+                    displayName: '用工性质'
+                    params: {
+                        type: 'labor_relations'
+                    }
                 }
             ]
         }
@@ -231,6 +239,7 @@ class NewEmpsCtrl extends nb.Controller
     search: (tableState) ->
         tableState = @mergeParams(tableState)
         @employees.$refresh(tableState)
+
     mergeParams: (tableState)->
         angular.forEach @collection_param, (val, key)->
             tableState[key] = val
@@ -281,6 +290,11 @@ class LeaveEmployeesCtrl extends nb.Controller
         @filterOptions = {
             name: 'personnelLeave'
             constraintDefs: [
+                {
+                    name: 'name'
+                    displayName: '姓名'
+                    type: 'string'
+                }
                 {
                     name: 'department'
                     displayName: '机构'

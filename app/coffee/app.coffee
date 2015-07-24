@@ -105,8 +105,6 @@ mdThemingConf = ($mdThemingProvider) ->
         }
 
 
-
-
 routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider) ->
     $locationProvider.html5Mode(false)
 
@@ -150,11 +148,16 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
 
     $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike'
 
+secConf = ($sceDelegateProvider) ->
+    $sceDelegateProvider.resourceUrlWhitelist(['self'])
+
+
 App
     .config ['$provide', 'ngDialogProvider', appConf]
     .config ['restmodProvider', restConf]
     .config ['$mdThemingProvider', mdThemingConf]
     .config ['$stateProvider','$urlRouterProvider','$locationProvider', '$httpProvider', routeConf]
+    .config ['$sceDelegateProvider', secConf]
     .run [
         'menu'
         '$state'
