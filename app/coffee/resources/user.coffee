@@ -17,6 +17,7 @@ User = (restmod, RMUtils, $Evt) ->
         educationExperiences: { hasMany: 'Education'}
         workExperiences: { hasMany: 'Experience'}
         resume: { hasOne: 'Resume', mask: 'CU'}
+        contact: { hasOne: 'Contact', mask: 'CU'}
         $config:
             jsonRoot: 'employee'
         familymembers: {hasMany: 'FamilyMember'}
@@ -72,13 +73,19 @@ FamilyMember = (restmod, RMUtils, $Evt) ->
             jsonRootMany: 'family_members'
     }
 Resume = (restmod, RMUtils, $Evt) ->
-    Resume = restmod.model().mix 'nbRestApi', {
+    Resume = restmod.model().mix 'nbRestApi', 'DirtyModel', {
+        $config:
+            jsonRoot: 'employee'
+    }
+
+Contact = (restmod, RMUtils, $Evt) ->
+    Contact = restmod.model().mix 'nbRestApi', 'DirtyModel', {
         $config:
             jsonRoot: 'employee'
     }
 
 UserPerformance = (restmod, RMUtils, $Evt)->
-    UserPerformance = restmod.model('/me/performances').mix 'nbRestApi', { 
+    UserPerformance = restmod.model('/me/performances').mix 'nbRestApi', {
         $hooks:
             'allege-create': ->
                 $Evt.$send('allege:create:success',"绩效申述成功")
@@ -103,4 +110,5 @@ resources.factory 'Education',['restmod', 'RMUtils', '$nbEvent', Education]
 resources.factory 'Experience',['restmod', 'RMUtils', '$nbEvent', Experience]
 resources.factory 'FamilyMember',['restmod', 'RMUtils', '$nbEvent', FamilyMember]
 resources.factory 'Resume',['restmod', 'RMUtils', '$nbEvent', Resume]
+resources.factory 'Contact',['restmod', 'RMUtils', '$nbEvent', Contact]
 resources.factory 'UserPerformance',['restmod', 'RMUtils', '$nbEvent', UserPerformance]

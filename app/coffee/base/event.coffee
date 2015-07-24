@@ -1,15 +1,9 @@
-
-
-
-
 nb = @.nb
-
 app = nb.app
 
 class EventsService extends nb.Service
 
     forEach  = angular.forEach
-
 
     constructor: (@rootScope, @q) ->
 

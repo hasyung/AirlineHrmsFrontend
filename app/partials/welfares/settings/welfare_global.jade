@@ -48,11 +48,11 @@
                     td 养老保险
                     td
                         span.min
-                            input(type="number" ng-model="setting.pension.lower_limit")
+                            input(type="number" min="1" max="100000" step="1" ng-model="setting.pension.lower_limit")
                             |RMB
                         span.to —
                         span.max
-                            input(type="number" ng-model="setting.pension.upper_limit")
+                            input(type="number" min="1" max="100000" ng-model="setting.pension.upper_limit")
                             |RMB
                     td
                         md-switch.md-primary(ng-model="setting.pension.is_ration" ).m0 {{ setting.pension.is_ration ? '按金额(RMB)' : '按比例(%)' }}

@@ -39,9 +39,16 @@ class Controller extends Base
 
         return @q.reject(xhr)
 
+class FilterController extends Controller
+
+    onConditionInValid: ($Evt, invalid) ->
+        $Evt.$send('search:condition:error', {message: invalid.join(",")})
+
+
 nb.Base = Base
 nb.Service= Service
 nb.Controller = Controller
+nb.FilterController = FilterController
 
 
 class EditableResourceCtrl
@@ -67,13 +74,15 @@ class EditableResourceCtrl
 
             else scope.editing =false
 
-
-
-        scope.cancel = (resource, evt, form) ->
+        scope.cancel = (resource, evt, form, attach_models = []) ->
             evt.preventDefault() if evt
             resource.$restore() if resource && resource.$restore
+            angular.forEach attach_models, (model) ->
+                model.$restore() if model && model.$restore
             form.$setPristine() if form && form.$setPristine
             scope.editing = false
+
+
 class NewResourceCtrl
 
     @.$inject = ['$scope', '$enum']

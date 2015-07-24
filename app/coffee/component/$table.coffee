@@ -3,7 +3,7 @@ nb = @nb
 app = nb.app
 
 # 过滤器
-class NbFilterCtrl
+class NbFilterCtrl extends nb.FilterController
 
     #@desc 预编译模板
     #@param constraint definition
@@ -39,8 +39,8 @@ class NbFilterCtrl
             </md-input-container>
         '''
         'select': '''
+            <label>{{ ${ name } ? $parent.$enum.parseLabel(${name}, '${params.type}') : '无' }}</label>
             <md-select placeholder="${ displayName }" ng-model="${ name }">
-                <md-select-label>{{ ${ name } ? $parent.$enum.parseLabel(${name}, '${params.type}') : '无' }}</md-select-label>
                 <md-option ng-value="item.id" ng-repeat="item in $parent.$enum.get('${ params.type }')">{{item.label}}</md-option>
             </md-select>
         '''
@@ -66,6 +66,7 @@ class NbFilterCtrl
 
 
     @.$inject = ['$scope', '$element', '$attrs', '$parse', '$compile', 'SerializedFilter']
+
     constructor: (scope, elem, attrs, $parse, @compile, SerializedFilter) ->
         options = scope.nbFilter
         @conditionCode = options.name
@@ -76,6 +77,7 @@ class NbFilterCtrl
         constraints = defs.reduce((res, val, index) ->
             propertyGetter = $parse(val.name)
             template = preCompileTemplate(val)
+
             constraint = {
                 propertyGetter: propertyGetter
                 template: template
@@ -83,6 +85,7 @@ class NbFilterCtrl
                 active: false
                 name: val.name
             }
+
             Object.defineProperties constraint, {
                 destroy: {
                     enumerable: false
@@ -116,7 +119,6 @@ class NbFilterCtrl
         @constraints = constraints
         @conditions = []
 
-
     initialize: ->
         first = @constraints[0]
         first.startup()
@@ -124,6 +126,7 @@ class NbFilterCtrl
 
     inertConstraints: ->
         @constraints.filter (cons) -> cons.active == false
+
     activeConstraints: ->
         @constraints.filter (cons) -> cons.active == true
 
@@ -145,6 +148,7 @@ class NbFilterCtrl
         }
         condition.initialValue = initialValue if initialValue
         @conditions.push(condition)
+
     initialCondition: (currentConstraint, parentScope, parentElem, initialValue) ->
         scope = parentScope.$new()
         scope[currentConstraint.name] = initialValue if initialValue
@@ -168,7 +172,6 @@ class NbFilterCtrl
         @initialCondition(newValue, parentScope, parentElem)
 
     saveFilter: (filterName) ->
-
         request_data = {
             name: filterName
             code: @conditionCode
@@ -176,6 +179,7 @@ class NbFilterCtrl
         }
 
         promise = @filters.$create(request_data)
+
     restoreFilter: (queryParams) ->
         @.$clearAllCondition()
         self = @
@@ -183,15 +187,9 @@ class NbFilterCtrl
             initialValue = queryParams[constraint.name]
             self.addNewCondition(constraint, initialValue) if initialValue
 
-
-
     $clearAllCondition: () ->
         @activeConstraints().forEach (cstris) -> cstris.destroy()
         @conditions.splice(0, @conditions.length)
-
-
-
-
 
 
 conditionInputContainer = ($enum) ->
@@ -201,6 +199,9 @@ conditionInputContainer = ($enum) ->
 
         ctrl.initialCondition(scope.condition.selectedConstraint, scope, elem, scope.condition.initialValue)
         scope.$watch 'condition.selectedConstraint', (newValue, old) ->
+            #FIX 因为material没有发布正式版本，不太清楚md-select的dom是否还会修改
+            #暂时HACK了md-select内部的dom节点
+            elem.prev().children().first().html(scope.condition.selectedConstraint.displayName)
             ctrl.switchCondition(newValue, old, scope, elem) if newValue != old && !newValue.block
 
     return {
@@ -209,9 +210,7 @@ conditionInputContainer = ($enum) ->
     }
 
 
-
-NbFilterDirective = ()->
-
+NbFilterDirective = ["$nbEvent", "$enum", ($Evt, $enum)->
     template = '''
         <md-content class="search-container">
             <md-toolbar>
@@ -233,7 +232,6 @@ NbFilterDirective = ()->
                         <md-icon md-svg-icon="../../images/svg/close.svg"></md-icon>
                     </md-button>
                     <md-select ng-model="condition.selectedConstraint">
-                        <md-select-label>{{ condition.selectedConstraint.displayName }}</md-select-label>
                         <md-option ng-value="inert_cons" ng-repeat="inert_cons in filter.inertConstraints() track by inert_cons.name">
                             {{inert_cons.displayName}}
                         </md-option>
@@ -256,10 +254,21 @@ NbFilterDirective = ()->
 
         ctrl.initialize()
 
-
         scope.search = (queryParams)->
-            scope.onSearch({state: queryParams})
+            invalid = []
 
+            angular.forEach queryParams, (item, key) ->
+                if item["from"] && item["to"]
+                    if new Date(item["to"]) < new Date(item["from"])
+                        condition_valid = false
+                        condition = _.find scope.filter.conditions, (item) ->
+                            item.selectedConstraint.name == key
+                        invalid.push condition.selectedConstraint["displayName"] + "的结束时间必须大于开始时间"
+
+            if invalid.length > 0
+                scope.filter.onConditionInValid($Evt, invalid) if scope.filter.onConditionInValid
+            else
+                scope.onSearch({state: queryParams})
 
     return {
         scope: {
@@ -270,67 +279,20 @@ NbFilterDirective = ()->
         template: template
         controller: NbFilterCtrl
         controllerAs: 'filter'
-    }
+    }]
 
 
 GridPaginationTemplate = """
-
-
         <div ui-grid="gridOptions"></div>
-
-
     """
 
-
 '''
-
     <div nb-grid column-def="columnsDefs">
-
     </div>
-
 '''
-
-
-
 
 
 nbGridDirective = ($parse)->
-
-    # defaultOptions = {
-    #     enableSorting: false
-    #     columnDefs: [
-    #         {
-    #             field: 'name'
-    #             minWidth: 200
-    #             width: 150 || '30%'
-    #             enableColumnResizing: false
-    #             cellFilter: 'mapGender '
-    #             cellTooltip: (row, col) ->
-    #                 return "Name: #{row.entity.name} Company: #{row.entity.company}"
-    #                 return "FullOrgName:#{row.entity.fullName}" # 可行否？
-
-    #         }
-    #     ]
-    #     data: data
-    #     useExternalPagination: true
-    #     useExternalSorting: false
-    #     # paginationTemplate: ''' ''' #分页组件模板， 需要集成 ui-grid-paper
-    #     # totalItems: xxx
-    #     # paginationCurrentPage: xxx
-    #     # paginationPageSizes: [25, 50, 75]
-    #     # paginationPageSize: 25
-
-    #     onRegisterApi: (gridApi) ->
-
-    #         gridApi.core.on.paginationChanged $scope, (newPage, pageSize) ->
-
-    #         gridApi.core.on.filterChanged $scope, () ->
-    #             grid = this.grid
-    #             if grid.columns[1].filters[0].term == 'maile'
-    #                 $http.get('/xxx/data').then -> scope.gridOptions.data = data
-    # }
-
-
 
     postLink = (scope, elem, attrs) ->
         columnDefs = scope.columnDefs
@@ -352,9 +314,6 @@ nbGridDirective = ($parse)->
             rowHeight: 50
             enableColumnMenus: false
             multiSelect: multiSelect
-
-            # paginationTemplate: ''' ''' #分页组件模板， 需要集成 ui-grid-paper
-            # totalItems: xxx
             paginationCurrentPage: 1
             paginationPageSizes: [20, 40, 60, 80]
             paginationPageSize: 60
