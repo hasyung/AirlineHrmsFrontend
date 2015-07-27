@@ -31,10 +31,10 @@ class SalaryController
 
 
 class SalaryBasicController
-
     @.$inject = ['$http', '$scope', '$nbEvent', '$sce']
 
     constructor: ($http, $scope, $Evt, $sce) ->
+
 
 app.controller 'salaryCtrl', SalaryController
 app.controller 'salaryBasicCtrl', SalaryBasicController
