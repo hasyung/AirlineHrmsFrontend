@@ -1,7 +1,3 @@
-
-
-
-
 app = @nb.app
 
 enums = {}

@@ -2,7 +2,6 @@
 nb = @nb
 app = nb.app
 
-
 self_section        = name: '员工自助'
 org_section         = name: '组织机构', type: 'link'
 position_section    = name: '岗位管理'
@@ -275,13 +274,11 @@ menuFactory = ($rootScope, $state)->
                 section.pages.forEach (page) ->
                     matchPage(section, page)
 
-
     $rootScope.$on('$stateChangeSuccess', onLocationChange)
     return self
 
 
 menuLinkDirective = ($compile, $state) ->
-
     origin_template = '''
         <md-button href="${ url }">
           <div flex layout="layout">
@@ -341,8 +338,8 @@ menuLinkDirective = ($compile, $state) ->
         link: postLink
     }
 
-menuToggleDirective = (menu) ->
 
+menuToggleDirective = (menu) ->
     template = '''
       <md-button flex="flex" class="md-button-toggle" ng-click="toggle()">
         <div flex layout="row">
@@ -364,7 +361,6 @@ menuToggleDirective = (menu) ->
     '''
 
     postLink = (scope, elem) ->
-
         scope.toggle = () ->
             menu.toggleSelectSection(scope.section)
 

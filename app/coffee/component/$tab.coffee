@@ -1,10 +1,5 @@
 # ui-boostrap tabs inspired
-
-
-
 com = angular.module('nb.component')
-
-
 
 class TabsetCtrl
     @.$inject = ['$scope']
@@ -23,6 +18,7 @@ class TabsetCtrl
                 tab.onDeselect()
         selectedTab.active = true
         selectedTab.onSelect()
+
     addTab: (tab) ->
         @tabs.push(tab)
 
@@ -45,7 +41,6 @@ tabsetDirective = ->
         scope.vertical = if angular.isDefined(attrs.vertical) then scope.$parent.$eval(attrs.vertical) else false
         scope.justified = if angular.isDefined(attrs.justified) then scope.$parent.$eval(attrs.justified) else false
 
-
     return {
         restrict: 'EA'
         transclude: true
@@ -58,7 +53,6 @@ tabsetDirective = ->
 
 
 tabDirective = ($parse) ->
-
     return {
         require: '^tabset'
         restrict: 'EA'
@@ -73,7 +67,6 @@ tabDirective = ($parse) ->
         }
         controller: ->
         compile: (elem, attrs, transclude) ->
-
             postlink = (scope, elem, attrs, tabsetCtrl) ->
                 scope.$watch 'active', (active) ->
                     tabsetCtrl.select(scope) if active
@@ -94,13 +87,10 @@ tabDirective = ($parse) ->
                 scope.$transcludeFn = transclude
 
             return postlink
-
-
     }
 
 
 tabHeadingTranscludeDirective = ->
-
     postlink = (scope, elem, attrs, tabCtrl) ->
         scope.$watch 'headingElement', (heading) ->
             elem.html('').append(heading) if heading
@@ -111,8 +101,8 @@ tabHeadingTranscludeDirective = ->
         link: postlink
     }
 
-tabContentTranscludeDirective = ->
 
+tabContentTranscludeDirective = ->
     isTabHeading = (node) ->
         return node.tagName && (
             node.hasAttribute('tab-heading') ||
@@ -137,11 +127,3 @@ com.directive 'tabset', tabsetDirective
 com.directive 'tab', ['$parse', tabDirective]
 com.directive 'tabHeadingTransclude', tabHeadingTranscludeDirective
 com.directive 'tabContentTransclude', tabContentTranscludeDirective
-
-
-
-
-
-
-
-

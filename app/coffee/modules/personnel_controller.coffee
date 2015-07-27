@@ -1,10 +1,7 @@
-
 nb = @.nb
 app = nb.app
-extend = angular.extend
-resetForm = nb.resetForm
 filterBuildUtils = nb.filterBuildUtils
-Modal = nb.Modal
+
 
 class Route
     @.$inject = ['$stateProvider']
@@ -16,7 +13,6 @@ class Route
                 templateUrl: 'partials/personnel/personnel.html'
                 controller: PersonnelCtrl
                 controllerAs: 'ctrl'
-
             }
             .state 'personnel_fresh',{
                 url: '/personnel/fresh-list'
@@ -29,18 +25,15 @@ class Route
                 templateUrl: 'partials/personnel/change_review.html'
                 controller: ReviewCtrl
                 controllerAs: 'ctrl'
-
             }
 
+
 class PersonnelCtrl extends nb.Controller
-
     @.$inject = ['$scope', 'sweet', 'Employee']
-
 
     constructor: (@scope, @sweet, @Employee) ->
         @loadInitailData()
-        @selectedIndex =  1
-
+        @selectedIndex = 1
 
         @columnDef = [
             {
@@ -52,7 +45,6 @@ class PersonnelCtrl extends nb.Controller
             {
                 displayName: '姓名'
                 field: 'name'
-                # pinnedLeft: true
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents ng-binding ng-scope">
                     <a nb-panel
@@ -63,7 +55,6 @@ class PersonnelCtrl extends nb.Controller
                 </div>
                 '''
             }
-
             {displayName: '员工编号', name: 'employeeNo'}
             {
                 displayName: '岗位'
@@ -78,6 +69,7 @@ class PersonnelCtrl extends nb.Controller
         ]
 
         @constraints = [
+
         ]
 
         @filterOptions = filterBuildUtils('personnel')
@@ -109,6 +101,7 @@ class PersonnelCtrl extends nb.Controller
 
 class NewEmpsCtrl extends nb.Controller
     @.$inject = ['$scope', 'Employee', 'Org']
+
     constructor: (@scope, @Employee, @Org) ->
         @newEmp = {}
         @loadInitailData()
@@ -123,7 +116,6 @@ class NewEmpsCtrl extends nb.Controller
             {
                 displayName: '姓名'
                 field: 'name'
-                # pinnedLeft: true
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents ng-binding ng-scope">
                     <a nb-panel
@@ -134,7 +126,6 @@ class NewEmpsCtrl extends nb.Controller
                 </div>
                 '''
             }
-
             {displayName: '员工编号', name: 'employeeNo'}
             {
                 displayName: '岗位'
@@ -215,17 +206,17 @@ class NewEmpsCtrl extends nb.Controller
             ]
         }
 
-
     loadInitailData: ->
-
         @collection_param = {
             join_scal_date: {
                 from: moment().subtract(1, 'year').format('YYYY-MM-DD')
                 to: moment().format("YYYY-MM-DD")
             }
+
             sort: 'join_scal_date'
             order: 'desc'
         }
+
         @employees = @Employee.$collection().$fetch(@collection_param)
     regEmployee: (employee)->
         self = @
@@ -243,11 +234,13 @@ class NewEmpsCtrl extends nb.Controller
     mergeParams: (tableState)->
         angular.forEach @collection_param, (val, key)->
             tableState[key] = val
+
         return tableState
 
 
 class LeaveEmployeesCtrl extends nb.Controller
     @.$inject = ['$scope', 'LeaveEmployees']
+
     constructor: (@scope, @LeaveEmployees) ->
         @loadInitailData()
 
@@ -261,7 +254,6 @@ class LeaveEmployeesCtrl extends nb.Controller
             {
                 displayName: '姓名'
                 field: 'name'
-                # pinnedLeft: true
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents ng-binding ng-scope">
                     <a nb-panel
@@ -272,7 +264,6 @@ class LeaveEmployeesCtrl extends nb.Controller
                 </div>
                 '''
             }
-
             {displayName: '员工编号', name: 'employeeNo'}
             {
                 displayName: '岗位'
@@ -315,19 +306,20 @@ class LeaveEmployeesCtrl extends nb.Controller
                     type: 'date-range'
                     displayName: '变动时间'
                 }
-
             ]
         }
 
 
     loadInitailData: ->
         @leaveEmployees = @LeaveEmployees.$collection().$fetch()
+
     search: (tableState) ->
         @leaveEmployees.$refresh(tableState)
 
 
 class ReviewCtrl extends nb.Controller
     @.$inject = ['$scope', 'Change', 'Record', '$mdDialog']
+
     constructor: (@scope, @Change, @Record, @mdDialog) ->
         @loadInitailData()
         @recordColumnDef = [
@@ -338,7 +330,6 @@ class ReviewCtrl extends nb.Controller
             {
                 displayName: '信息变更模块'
                 field: 'auditableType'
-                # pinnedLeft: true
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents ng-binding ng-scope">
                     <a
@@ -355,10 +346,10 @@ class ReviewCtrl extends nb.Controller
             {name:"checkDate", displayName:"审核时间"}
             {name:"reason", displayName:"理由"}
         ]
+
         @filterOptions = {
             name: 'personnel_chage_record'
             constraintDefs: [
-
                 {
                     name: 'name'
                     displayName: '姓名'
@@ -387,8 +378,10 @@ class ReviewCtrl extends nb.Controller
     loadInitailData: ->
         # @changes = @Change.$collection().$fetch()
         @records = @Record.$collection().$fetch()
+
     searchRecord: (tableState)->
         @records.$refresh(tableState)
+
     checkChanges: ()->
         params = []
         # '无需审核': 0
@@ -397,6 +390,7 @@ class ReviewCtrl extends nb.Controller
         # '不通过': 3
         checked = _.filter @changes, (item)->
             return item if item.statusCd != "1"
+
         _.forEach checked, (item)->
             temp = {}
             temp.id = item.id
@@ -419,6 +413,7 @@ class EmployeePerformanceCtrl extends nb.Controller
 
 class PersonnelSort extends nb.Controller
     @.$inject = ['$scope', 'Org', 'Position', 'Employee', '$http']
+
     constructor: (@scope, @Org, @Position, @Employee, @http) ->
         @orgLinks = []
         @loadInitailData()
@@ -437,25 +432,31 @@ class PersonnelSort extends nb.Controller
     showChildsOrg: (org)->
         @orgLinks.push(org)
         @currentOrgs = org
+
     setHeigher: (collection, index, category)->
         return if index == 0 || (!category)
+
         params = {
             category:category
             current_id: collection[index].id
             target_id:collection[index-1].id
         }
+
         promise = @changeOrder params
         promise.then ()->
             temp = collection[index]
             collection[index] = collection[index-1]
             collection[index-1] = temp
+
     setLower: (collection, index, category)->
         return if index >= collection.length-1 || (!category)
+
         params = {
             category:category
             current_id: collection[index].id
             target_id:collection[index+1].id
         }
+
         promise = @changeOrder params
         promise.then ()->
             temp = collection[index]
@@ -463,12 +464,13 @@ class PersonnelSort extends nb.Controller
             collection[index+1] = temp
 
     changeOrder: (params)->
-        promise = @http.get '/api/sort', {params:params}
+        promise = @http.get '/api/sort', {params: params}
         # promise.then onSuccess
 
 orgMutiPos = ($rootScope)->
     class PersonnelPositions extends nb.Controller
         @.$inject = ['$scope', 'Position']
+
         constructor: (@scope, @Position) ->
             @scope.positions = []
 
@@ -477,6 +479,7 @@ orgMutiPos = ($rootScope)->
                 position_id: ""
                 category: ""
             }
+
         removePosition: (index)->
             @scope.positions.splice index, 1
 
@@ -486,15 +489,14 @@ orgMutiPos = ($rootScope)->
             @scope.positions[index] = @scope.positions[index-1]
             @scope.positions[index-1] = temp
 
-
     postLink = (elem, attrs, ctrl)->
-
 
     return {
         scope: {
             positions: "=ngModel"
             editStatus: "=editing"
         }
+
         replace: true
         templateUrl: "partials/personnel/muti-positions.tpl.html"
         require: 'ngModel'
@@ -503,16 +505,11 @@ orgMutiPos = ($rootScope)->
         controllerAs: "ctrl"
     }
 
+
 app.directive('orgMutiPos',[orgMutiPos])
 
-
-
-
-
-
-
-
 app.config(Route)
+
 app.controller('PersonnelSort', PersonnelSort)
 app.controller('LeaveEmployeesCtrl', LeaveEmployeesCtrl)
 app.controller('EmployeePerformanceCtrl', EmployeePerformanceCtrl)

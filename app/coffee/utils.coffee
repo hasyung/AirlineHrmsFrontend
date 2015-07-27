@@ -1,8 +1,3 @@
-
-
-
-
-
 mixOf = (base, mixins...) ->
     class Mixed extends base
 
@@ -18,6 +13,7 @@ resetForm = (forms...) ->
         form.$setUntouched()
     return
 
+
 filterBuildUtils = (filterName)->
     filtersObj = {}
     filtersObj.name = filterName
@@ -31,18 +27,13 @@ filterBuildUtils = (filterName)->
             placeholder: placeholder
             params: params
         }
+
         filtersObj.constraintDefs.push temp
         return this
 
     this.end = ()-> filtersObj
 
     return this
-
-
-
-
-
-
 
 
 nb = @.nb

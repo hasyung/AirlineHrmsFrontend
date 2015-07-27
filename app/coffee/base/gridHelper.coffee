@@ -1,5 +1,3 @@
-
-
 # 表格的工具类， 将重复的表格列抽取出来
 
 app = @nb.app
@@ -10,7 +8,6 @@ defaultFlowCol =    [
         {
             displayName: '姓名'
             field: 'receptor.name'
-            # pinnedLeft: true
             cellTemplate: '''
             <div class="ui-grid-cell-contents ng-binding ng-scope">
                 <a nb-panel
@@ -27,7 +24,6 @@ defaultFlowCol =    [
             cellTooltip: (row) ->
                 return row.entity.departmentName
         }
-
         {
             displayName: '岗位'
             name: 'receptor.positionName'
@@ -36,12 +32,12 @@ defaultFlowCol =    [
         }
     ]
 
+
 defaultUserCol = [
     {displayName: '员工编号', name: 'employeeNo'}
     {
         displayName: '姓名'
         field: 'name'
-        # pinnedLeft: true
         cellTemplate: '''
         <div class="ui-grid-cell-contents ng-binding ng-scope">
             <a nb-panel
@@ -58,7 +54,6 @@ defaultUserCol = [
         cellTooltip: (row) ->
             return row.entity.department.name
     }
-
     {
         displayName: '岗位'
         name: 'position.name'
@@ -69,7 +64,6 @@ defaultUserCol = [
 
 
 app.factory 'GridHelper', ->
-
     buildDefaultFlowGridOptions = (columnDef) ->
         defaultColClone = _.cloneDeep(defaultFlowCol)
         newCols = if columnDef then defaultColClone.concat columnDef else defaultColClone
@@ -80,10 +74,8 @@ app.factory 'GridHelper', ->
         newCols = if columnDef then defaultColClone.concat columnDef else defaultColClone
         return newCols
 
-
     return {
         buildDefault: buildDefaultFlowGridOptions
         buildFlowDefault: buildDefaultFlowGridOptions
         buildUserDefault: buildUserGridOptions
     }
-

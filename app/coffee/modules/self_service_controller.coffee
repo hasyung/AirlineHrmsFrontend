@@ -1,17 +1,11 @@
-
 nb = @.nb
 app = nb.app
-extend = angular.extend
-resetForm = nb.resetForm
-filterBuildUtils = nb.filterBuildUtils
-Modal = nb.Modal
 
 
 class Route
     @.$inject = ['$stateProvider', '$urlRouterProvider']
 
     constructor: (stateProvider, urlRouterProvider) ->
-
         stateProvider
             .state 'self', {
                 url: '/self-service'
@@ -69,7 +63,6 @@ class Route
                     }
                 }
             }
-            # 辞职
             .state 'my_requests.resignation', {
                 url: '/resignation'
                 views: {
@@ -191,12 +184,10 @@ class Route
                         }
                     }
                 }
-
             }
 
 
 class ProfileCtrl extends nb.Controller
-
     @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope', 'User', 'USER_META', 'UserPerformance', 'Performance', '$filter']
 
     constructor: (@scope, @sweet, @Employee, @rootScope, @User, @USER_META, @UserPerformance, @Performance, @filter) ->
@@ -232,7 +223,6 @@ class ProfileCtrl extends nb.Controller
 
 
 class MyRequestCtrl extends nb.Controller
-
     @.$inject = ['$scope', 'Employee', 'OrgStore', 'USER_META', 'VACATIONS', 'MyLeave', '$injector']
 
     constructor: (@scope, @Employee, @OrgStore, meta, vacations, @MyLeave, injector) ->
@@ -266,7 +256,6 @@ class MyRequestCtrl extends nb.Controller
                     </a>
                 </div>
                 '''
-
             }
         ]
 

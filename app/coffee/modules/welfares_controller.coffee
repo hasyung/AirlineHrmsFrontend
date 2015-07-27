@@ -1,8 +1,6 @@
+# 福利
 nb = @.nb
 app = nb.app
-extend = angular.extend
-resetForm = nb.resetForm
-Modal = nb.Modal
 
 class Route
     @.$inject = ['$stateProvider']
@@ -13,12 +11,10 @@ class Route
                 url: '/welfares'
                 templateUrl: 'partials/welfares/settings.html'
             }
-
             .state 'welfares_socials', {
                 url: '/welfares/socials'
                 templateUrl: 'partials/welfares/socials.html'
             }
-
             .state 'welfares_annuities', {
                 url: '/welfares/annuities'
                 templateUrl: 'partials/welfares/annuities.html'
@@ -28,11 +24,9 @@ app.config(Route)
 
 
 class WelfareController
-
     @.$inject = ['$http', '$scope', '$nbEvent']
 
     constructor: ($http, $scope, $Evt) ->
-
         $scope.currentSettingLocation = null
         #当前配置项
         $scope.setting = null
@@ -67,7 +61,6 @@ class WelfarePersonalController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'socialPersonSetups']
 
     constructor: ($http, $scope, $Evt, @socialPersonSetups) ->
-
         @configurations = @loadInitailData()
 
         @filterOptions = {
@@ -93,7 +86,6 @@ class WelfarePersonalController extends nb.Controller
                     type: 'string'
                     displayName: '社保属地'
                 }
-
             ]
         }
 
@@ -102,7 +94,6 @@ class WelfarePersonalController extends nb.Controller
             {
                 displayName: '姓名'
                 field: 'employeeName'
-                # pinnedLeft: true
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents">
                     <a nb-panel
@@ -119,7 +110,6 @@ class WelfarePersonalController extends nb.Controller
                 cellTooltip: (row) ->
                     return row.entity.departmentName
             }
-
             {
                 displayName: '岗位'
                 name: 'positionName'
@@ -150,6 +140,7 @@ class WelfarePersonalController extends nb.Controller
                 '''
             }
         ]
+
         @constraints = [
 
         ]
@@ -242,7 +233,6 @@ class SocialChangesController
             {
                 displayName: '姓名'
                 field: 'employeeName'
-                # pinnedLeft: true
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents ng-binding ng-scope">
                     <a nb-panel
@@ -272,6 +262,7 @@ class SocialChangesController
             }
 
         ]
+
         @constraints = [
 
         ]
@@ -287,10 +278,8 @@ class SocialChangesController
         rows.map (row) -> return row.entity.$pk
 
 
-
 app.controller 'welfareCtrl', WelfareController
 app.controller 'welfarePersonalCtrl', WelfarePersonalController
-
 app.controller 'socialComputeCtrl', SocialComputeController
 app.controller 'socialHistoryCtrl', SocialHistoryController
 app.controller 'socialChangesCtrl', SocialChangesController

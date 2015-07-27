@@ -1,6 +1,5 @@
 angular.module 'nb.directives'
     .directive 'nbPopupTransclude', [ () ->
-
         postLink = (scope, elem, attrs, $ctrl, $transcludeFn) ->
             $transcludeFn (clone) ->
                 templateBlock = clone.filter('popup-template')
@@ -10,74 +9,75 @@ angular.module 'nb.directives'
             restrict: 'AE'
             link: postLink
         }
-
     ]
 
     .directive 'nbPopupEmbedTransclude', [ ()->
-
         class EmbedTransclude
             constructor: () ->
+
         postLink = (scope, elem, attrs, $ctrl, $transcludeFn) ->
             $transcludeFn (clone) ->
                 elem.replaceWith( clone.not('popup-template'))
-
 
         return {
             restrict: 'EA'
             # require: '^nbPopup'
             link: postLink
         }
-
     ]
-    .directive 'nbPopupPlusEmbedTransclude', [ ()->
 
+    .directive 'nbPopupPlusEmbedTransclude', [ ()->
         class EmbedTransclude
             constructor: () ->
+
         postLink = (scope, elem, attrs, $ctrl, $transcludeFn) ->
             $transcludeFn (clone) ->
                 elem.replaceWith( clone.not('popup-template'))
-
 
         return {
             restrict: 'EA'
             # require: '^nbPopupPlus'
             link: postLink
         }
-
     ]
+
     .directive 'nbPopup', ['$window', ($window) ->
-
         class PopupController
-
             @.$inject = ['$scope', '$element', '$transclude']
 
             constructor: (@$scope, $elem, $transcludeFn) ->
 
         postLink = (scope, elem, attrs, $ctrl, $transcludeFn) ->
-
             $doc = angular.element $window.document
             scope.isShown = false
             tipElement = elem.next()
             tipElement.append '<span class="arrow"></span>'
+
             tipElement.css {
                 'z-index': '1040',
                 'background-color': '#fff',
                 position: 'absolute'
             }
+
             options = {scope: scope}
             options.position = "left"
+
             # popup提示框和按钮之间的距离
             options.space = 12
+
             angular.forEach ['position', 'space'], (key)->
                 if angular.isDefined attrs[key]
                     options[key] = attrs[key]
 
             # css中向三角形添加样式需要知道模板的定位
             tipElement.addClass options.position
+
             toggle = ()->
                 if scope.isShown then hide() else show()
+
             show = ()->
                 tipElement.show()
+
                 # 重新定位，解决按钮位置被挤出后popover位置错乱的BUG
                 position = calcPosition elem
                 tipElement.css {
@@ -85,9 +85,9 @@ angular.module 'nb.directives'
                     left: position.left + 'px',
                 }
                 #end
+
                 $doc.on 'click', hideHandle
                 scope.isShown = true
-
 
             hide = ()->
                 tipElement.hide()
@@ -139,7 +139,6 @@ angular.module 'nb.directives'
                 # hide() 返回false，将阻止submit按钮的提交事件的触发
                 return
 
-
             # 加载时隐藏提示框
             hide()
 
@@ -160,12 +159,10 @@ angular.module 'nb.directives'
             templateUrl: 'partials/common/popup.html'
             link: postLink
         }
-
     ]
 
     .directive 'nbPopupPlus', ['$window', ($window) ->
         class PopupPlusController
-
             @.$inject = ['$scope', '$element', '$transclude']
 
             constructor: (@scope, $elem, $transcludeFn) ->
@@ -174,17 +171,18 @@ angular.module 'nb.directives'
                 @scope.isShown = false
 
         postLink = (scope, elem, attrs, $ctrl) ->
-
             $doc = angular.element $window.document
             scope.isShown = false
             tipElement = elem.next()
             tipElement.append '<span class="arrow"></span>'
             arrow = tipElement.find(".arrow")
+
             tipElement.css {
                 'z-index': '1040',
                 'background-color': '#fff',
                 position: 'absolute';
             }
+
             options = {scope: scope}
             # options.position = "left-bottom"
             options.offset = 0.5
@@ -193,31 +191,38 @@ angular.module 'nb.directives'
             #popup的边框
             options.border = 1
             options.arrowBorder = 11
+
             angular.forEach ['position', 'space', 'offset'], (key)->
                 if angular.isDefined attrs[key]
                     options[key] = attrs[key]
 
             tipElement.addClass options.position.split("-")[0]
+
             toggle = ()->
                 if scope.isShown then hide() else show()
+
             show = ()->
                 if $ctrl
                     $ctrl.showPopup(tipElement)
+
                 tipElement.show()
+
                 # 重新定位，解决按钮位置被挤出后popover位置错乱的BUG
                 position = calcPosition elem
+
                 tipElement.css {
                     top: position.pTip.top + 'px',
                     left: position.pTip.left + 'px',
                 }
+
                 arrow.css {
                     top: position.pArrow.top + 'px',
                     left: position.pArrow.left + 'px'
                 }
                 #end
+
                 scope.isShown = true
                 $doc.on 'click', hideHandle
-
 
             hide = ()->
                 tipElement.hide()
@@ -333,10 +338,12 @@ angular.module 'nb.directives'
                 e.stopPropagation()
 
             closeEles = tipElement.find('[popup-close]')
+
             closeEles.on 'click', (e) ->
                 e.stopPropagation()
                 hide()
                 return
+
             scope.$watch 'isShown', (newVal)->
                 hide() if !newVal
 
@@ -356,12 +363,14 @@ angular.module 'nb.directives'
         }
 
     ]
-    .directive 'nbPopupManagement', [ () ->
 
+    .directive 'nbPopupManagement', [ () ->
         class ManmageCtrl
             @.$inject = ['$scope']
+
             constructor: (@scope) ->
                 @showEle = null
+
             showPopup: (popup) ->
                 @showEle.hide() if @showEle
                 @showEle = popup
@@ -370,5 +379,4 @@ angular.module 'nb.directives'
             restrict: 'AE'
             controller: ManmageCtrl
         }
-
     ]

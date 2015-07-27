@@ -1,21 +1,13 @@
-
 nb = @.nb
 app = nb.app
 
-
-
 class AuthService extends nb.Service
-
     @.$inject = ['$cookies', '$rootScope', 'PERMISSIONS']
 
     ARRAY_LIKE = /^\[[\W,\w]*\]$/ # test array like string
 
     constructor: (@cookies, @rootScope, @permissions) ->
-    #
-    # DESC： 判断用户是否存在某权限
-    #
-    # string | array
-    #
+
     has: (permission) ->
         permit = false
         permission = permission.trim()
@@ -32,15 +24,14 @@ class AuthService extends nb.Service
 
         return permit
 
-    #TIPS: 目前无权限 系统行为和用户执行退出操作一致。可能会更改
+    # 目前无权限，系统行为和用户执行退出操作一致
     logout: () ->
         location = window.location
-        delete @cookies.token # angular 1.4 break change @cookies.remove("token")
+        @cookies.remove("token")
         location.replace("#{location.origin}/sessions/new/")
 
 
 class AuthController extends nb.Controller
-
     @.$inject = ["$scope", "AuthService", "$http", "$nbEvent"]
 
     constructor: (scope, AuthService, @http, @Evt) ->
@@ -48,6 +39,7 @@ class AuthController extends nb.Controller
 
     changePwd: (user)->
         self = @
+
         if user.new_password != user.password_confirm
             self.Evt.$send 'password:confirm:error', "两次输入新密码不一致"
             return
@@ -59,29 +51,25 @@ class AuthController extends nb.Controller
                 console.log "error"
 
 
-
 class LoginController extends nb.Controller
-
-
     @.$inject = ['$http', '$state', '$rootScope', 'User', 'Org', 'AuthService']
-
 
     constructor: (@http, @state, @rootScope, @User, @Org, @Auth)->
 
     login: (user) ->
         rootScope = @rootScope
+
         onSuccess = ->
             @Auth.setupCurrentUser()
-            #TODO: consider initial enums resource to service
             @rootScope.allOrgs = @Org.$search()
             @state.go "home"
 
-        # user.employee_no = user.employee_no + ""
         @http.post('/api/sign_in', {user: user})
             .success onSuccess.bind(@)
 
     changePwd: (user)->
         self = @
+
         if user.new_password != user.password_confirm
             self.Evt.$send 'password:confirm:error', "两次输入新密码不一致"
             return
@@ -91,26 +79,22 @@ class LoginController extends nb.Controller
                 self.Evt.$send 'password:update:success', '密码修改成功，请重新登录'
                 self.rootScope.logout()
                 self.state.go "login"
+
     logout: ()->
         @Auth.logout();
 
 
-
 class SigupController extends nb.Controller
-
-
     @.$inject = ['$http','$stateParams', '$state', '$scope']
-
 
     constructor: (@http, @params, @state, @scope)->
         @scope.currentUser = null #当前用户
-
 
     loadInitialData: () -> #初始化数据
 
     sigup: (user) ->
         self = @
-        # user.employee_no = user.employee_no + ""
+
         self.http.post('/api/sign_in', {user: user})
             .success (data) ->
                 console.log data
