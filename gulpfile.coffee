@@ -33,12 +33,12 @@ proxy           = require('./compat/proxy-middleware')
 debugMode       = true
 
 
-LOCAL_TEST_SERVER = "http://192.168.6.99:9001"
+DEVELOPMENT_TEST_SERVER = "http://192.168.6.99:9001"
 RELEASE_TEST_SERVER = "http://114.215.142.122:9001"
 
 
 if argv.localhost
-    PROXY_SERVER_ADDR = LOCAL_SERVER
+    PROXY_SERVER_ADDR = DEVELOPMENT_TEST_SERVER
 else if argv.remote
     PROXY_SERVER_ADDR =  RELEASE_TEST_SERVER
 else if argv.addr
