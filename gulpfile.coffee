@@ -37,12 +37,12 @@ DEVELOPMENT_TEST_SERVER = "http://192.168.6.99:9001"
 RELEASE_TEST_SERVER = "http://114.215.142.122:9001"
 
 
-if argv.localhost
-    PROXY_SERVER_ADDR = DEVELOPMENT_TEST_SERVER
+if argv.addr
+    PROXY_SERVER_ADDR = "http://#{argv.addr}"
 else if argv.remote
     PROXY_SERVER_ADDR =  RELEASE_TEST_SERVER
-else if argv.addr
-    PROXY_SERVER_ADDR = "http://#{argv.addr}"
+else
+    PROXY_SERVER_ADDR = DEVELOPMENT_TEST_SERVER
 
 
 paths =
