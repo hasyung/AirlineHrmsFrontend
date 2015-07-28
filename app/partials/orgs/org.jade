@@ -30,12 +30,10 @@ section.org-detail(ng-controller="EditableResource")
                 md-input-container.row-has-value
                     label 机构性质
                     md-select(ng-model="currentOrg.natureId" ng-disabled="!editing")
-                        md-select-label {{$enum.parseLabel(currentOrg.natureId, "department_natures")}}
                         md-option(ng-value="item.id" ng-repeat="item in $enum.get('department_natures')") {{item.label}}
                 md-input-container.row-has-value
                     label 职级
                     md-select(ng-model="currentOrg.gradeId" disabled)
-                        md-select-label {{(currentOrg.grade.id == 1) ? currentOrg.grade.displayName : $enum.parseLabel(currentOrg.gradeId, "department_grades")}}
                         md-option(ng-value="item.id" ng-repeat="item in $enum.get('department_grades')") {{item.label}}
 
 
@@ -53,12 +51,10 @@ section.org-detail(ng-controller="EditableResource")
                 md-input-container.row-has-value
                     label 机构性质
                     md-select(ng-model="neworg.natureId")
-                        md-select-label {{$enum.parseLabel(neworg.natureId, "department_natures")}}
                         md-option(ng-value="item.id" ng-repeat="item in $enum.get('department_natures')") {{item.label}}
                 md-input-container.row-has-value
                     label 职级
                     md-select(ng-model="neworg.gradeId")
-                        md-select-label {{$enum.parseLabel(neworg.gradeId, "department_grades")}}
                         md-option(ng-value="item.id" ng-repeat="item in $enum.get('department_grades')") {{item.label}}
                 .form-actions
                     md-button.md-raised.white(type="button" ng-click="orgCtrl.state = 'show'") 取消

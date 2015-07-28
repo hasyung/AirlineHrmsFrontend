@@ -12,7 +12,6 @@ block additional_form
         md-input-container.row-has-value(flex)
             label 逝者关系
             md-select(ng-model="request.relation" required)
-                md-select-label {{request.relation||'无'}}
                 md-option(value="父母") 父母
                 md-option(value="子女") 子女
                 md-option(value="兄弟姐妹") 兄弟姐妹

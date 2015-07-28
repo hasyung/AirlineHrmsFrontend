@@ -12,12 +12,10 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
             md-input-container.row-has-value(flex)
                 label 职称
                 md-select(ng-model="current.jobTitleId" ng-disabled="!editing")
-                    md-select-label {{$enum.parseLabel(current.jobTitleId, "job_titles")}}
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('job_titles')") {{item.label}}
             md-input-container.row-has-value(flex)
                 label 职称级别
                 md-select(ng-model="current.jobTitleDegreeId" ng-disabled="!editing")
-                    md-select-label {{$enum.parseLabel(current.jobTitleDegreeId, "job_title_degrees")}}
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('job_title_degrees')") {{item.label}}
             md-input-container.row-has-value(flex)
                 label 技术职务

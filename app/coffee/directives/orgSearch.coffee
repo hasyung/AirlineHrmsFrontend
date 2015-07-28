@@ -1,3 +1,6 @@
+
+
+
 singleTemplate =  '''
         <md-autocomplete
             md-items="org in ctrl.queryMatched(ctrl.searchText)"
@@ -9,10 +12,9 @@ singleTemplate =  '''
             #placeholder#
             md-no-cache="true"
             ><span md-highlight-text="ctrl.searchText">{{org.fullName}}</span></md-autocomplete>
+
     '''
             # md-min-length=""
-
-
 multipleTemplate = '''
     <md-chips ng-model="ctrl.$orgs" >
         <md-autocomplete md-item-text="org.fullName"
@@ -34,15 +36,19 @@ multipleTemplate = '''
 
 angular.module 'nb.directives'
     .directive 'orgSearch', ['OrgStore', '$timeout', (OrgStore, $timeout) ->
+
         template = (elem, attrs) ->
+
             if angular.isDefined attrs.multiple
                 return multipleTemplate
             else
                 placeholder = attrs.placeholder || '机构'
+                # comipled = _.template(singleTemplate)
                 placeholder_str = if angular.isDefined(attrs.floatLabel) then "md-floating-label='#{placeholder}'" else "placeholder='#{placeholder}'"
 
                 tmpl = singleTemplate.replace("#placeholder#", placeholder_str)
                 return tmpl
+
 
         postLink = (scope, elem, attrs, ctrl) ->
             isMultiple = true if angular.isDefined(attrs.multiple)
@@ -56,6 +62,7 @@ angular.module 'nb.directives'
             scope.onSelectedItemChange = onSelectedItemChange
 
             if isMultiple && ngModelCtrl
+
                 # fix 指令初始化时 ngmodel, viewValue 还未初始化
                 if ngModelCtrl
                     attr =  attrs.ngModel
@@ -77,6 +84,7 @@ angular.module 'nb.directives'
                         # , 200)
                     # scope.ctrl.org = if ngModelCtrl.$viewValue then ngModelCtrl.$viewValue
 
+
         return {
             require: '?ngModel'
             scope: {
@@ -88,7 +96,6 @@ angular.module 'nb.directives'
             controllerAs: 'ctrl'
         }
     ]
-
 
 class OrgSearchCtrl
     @.$inject = ['$scope', 'OrgStore', '$attrs']

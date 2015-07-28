@@ -36,13 +36,11 @@ block form
             md-input-container.row-has-value(flex)
                 label 岗位
                 md-select(ng-model="request.position")
-                    md-select-label {{request.position.name || '无'}}
                     md-option(ng-value="pos" ng-repeat="pos in params.orgPos") {{::pos.name}}
         div(layout)
             md-input-container.row-has-value(flex)
                 label 转入通道
                 md-select(ng-model="request.position.channelId" disabled)
-                    md-select-label {{$enum.parseLabel(request.position.channelId, "channels")}}
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
             //- md-input-container(flex)
             //-     label 在编情况
