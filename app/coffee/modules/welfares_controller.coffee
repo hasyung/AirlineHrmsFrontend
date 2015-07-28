@@ -45,7 +45,7 @@ class WelfareController
         #保存社保配置信息
         $scope.saveConfig = (setting)->
             configs = $scope.configurations
-            console.error configs
+
             current_setting_index = _.findIndex configs, (config) ->
                 config.location == $scope.currentSettingLocation
 

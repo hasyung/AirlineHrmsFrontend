@@ -45,7 +45,6 @@ menuFactory = ($rootScope, $state)->
                 state: 'position_changes'
                 permission: 'position_change_index'
             }
-
         ]
     }
 
@@ -68,27 +67,25 @@ menuFactory = ($rootScope, $state)->
                 state: 'personnel_review'
                 permission: ''
             }
-
         ]
     }
 
-    sections.push {
-        name: '培训管理'
-        icon_src: '/images/svg/left-side-svg/left_icon_6.svg'
-        pages: [
-            {
-                name: '培训记录'
-                state: 'position'
-                permission: ''
-            }
-            {
-                name: '学历变更管理'
-                state: 'position'
-                permission: ''
-            }
-
-        ]
-    }
+    #sections.push {
+    #    name: '培训管理'
+    #    icon_src: '/images/svg/left-side-svg/left_icon_6.svg'
+    #    pages: [
+    #        {
+    #            name: '培训记录'
+    #            state: 'position'
+    #            permission: ''
+    #        }
+    #        {
+    #            name: '学历变更管理'
+    #            state: 'position'
+    #            permission: ''
+    #        }
+    #    ]
+    #}
 
     sections.push {
         name: '福利'
