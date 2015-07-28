@@ -39,7 +39,6 @@ class NbFilterCtrl extends nb.FilterController
             </md-input-container>
         '''
         'select': '''
-            <label>{{ ${ name } ? $parent.$enum.parseLabel(${name}, '${params.type}') : '无' }}</label>
             <md-select placeholder="${ displayName }" ng-model="${ name }">
                 <md-option ng-value="item.id" ng-repeat="item in $parent.$enum.get('${ params.type }')">{{item.label}}</md-option>
             </md-select>
