@@ -56,7 +56,6 @@ div.workflow.md-background(md-theme="hrms")
                                             md-input-container.row-has-value(style="flex: 0 0 150px;")
                                                 label 详细时间
                                                 md-select(ng-model="request.start_time" ng-change="calculateTotalDays(request, '#{flowName}')" md-on-open="loadStartTime()" ng-disabled="!request.start_time" required)
-                                                    md-select-label {{request.start_time | mdate: 'H:mm' ||'无'}}
                                                     md-option(ng-value="time" ng-repeat="time in start_times" ) {{time | mdate: 'H:mm'}}
                                         div(layout)
                                             md-input-container(flex)
@@ -70,7 +69,6 @@ div.workflow.md-background(md-theme="hrms")
                                                     md-on-open="loadEndTime()"
                                                     ng-disabled="!request.end_time"
                                                     required)
-                                                    md-select-label {{request.end_time | mdate: 'H:mm' ||'无'}}
                                                     md-option(ng-value="time" ng-repeat="time in end_times" ) {{time | mdate: 'H:mm'}}
                                         div(layout)
                                             .without-edit

@@ -41,13 +41,11 @@ div(style="height: 100%; background-color: #f5f5f5;")
                                 md-input-container.row-has-value(flex)
                                     label 用工性质
                                     md-select(ng-model="contract.applyType" required)
-                                        md-select-label {{contract.applyType}}
                                         md-option(value="合同") 合同
                                         md-option(value="合同制") 合同制
                                 md-input-container.row-has-value(flex)
                                     label 变更标志
                                     md-select(ng-model="contract.changeFlag")
-                                        md-select-label {{contract.changeFlag}}
                                         md-option(value="新签") 新签
                                         md-option(value="续签") 续签
                                         md-option(value="转制") 转制

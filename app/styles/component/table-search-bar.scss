@@ -47,13 +47,16 @@ md-content.search-container {
             margin-right: 10px;
         }
 
+        >md-select .md-select-value {
+            color: $text-color;
+        }
+
         md-input-container {
             height: 35px;
             padding-bottom: 0;
 
             .md-input {
                 font-size: $font-size-sm;
-                padding-top: 12px;
             }
         }
 

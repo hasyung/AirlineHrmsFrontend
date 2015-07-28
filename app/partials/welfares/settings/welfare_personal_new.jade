@@ -29,13 +29,11 @@ md-dialog.welfare_personal_new(ng-controller="NewResource" ng-init= "params = {}
                             md-input-container.row-has-value(flex)
                                 label 用工性质
                                 md-select(ng-model="contract.applyType" required)
-                                    md-select-label {{contract.applyType}}
                                     md-option(value="合同") 合同
                                     md-option(value="合同制") 合同制
                             md-input-container.row-has-value(flex)
                                 label 社保属地
                                 md-select(ng-model="aaa" required)
-                                    md-select-label {{}}
                                     md-option(value="成都") 成都
                                     md-option(value="重庆") 重庆
                         div(layout)

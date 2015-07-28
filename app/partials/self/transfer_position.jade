@@ -4,7 +4,7 @@
             md-toolbar
                 .md-toolbar-tools
                     span 调岗申请
-            
+
             md-content
                 section
                     fieldset(disabled)
@@ -49,22 +49,18 @@
                         md-input-container.row-has-value(flex)
                             label 转入机构
                             md-select(ng-model="current.gender" md-on-open="loadEnum('genders')" required)
-                                md-select-label {{current.gender ? current.gender.displayName : '无'}}
                                 md-option(ng-value="gender" ng-repeat="gender in enums.genders track by gender.id") {{gender.displayName}}
                         md-input-container.row-has-value(flex)
                             label 转入岗位
                             md-select(ng-model="current.gender" md-on-open="loadEnum('genders')" required)
-                                md-select-label {{current.gender ? current.gender.displayName : '无'}}
                                 md-option(ng-value="gender" ng-repeat="gender in enums.genders track by gender.id") {{gender.displayName}}
                         md-input-container.row-has-value(flex)
                             label 转入岗位通道
                             md-select(ng-model="current.gender" md-on-open="loadEnum('genders')" required)
-                                md-select-label {{current.gender ? current.gender.displayName : '无'}}
                                 md-option(ng-value="gender" ng-repeat="gender in enums.genders track by gender.id") {{gender.displayName}}
                         md-input-container.row-has-value(flex)
                             label 试岗时长
                             md-select(ng-model="current.gender" md-on-open="loadEnum('genders')" required)
-                                md-select-label {{current.gender ? current.gender.displayName : '无'}}
                                 md-option(ng-value="gender" ng-repeat="gender in enums.genders track by gender.id") {{gender.displayName}}
                         md-input-container
                             label 申请理由
@@ -75,4 +71,3 @@
                             md-button.md-raised.white(ng-click="param.infoData = null") 取消
                             md-button.skyblue.md-raised(type="submit") 提交
 
-                        

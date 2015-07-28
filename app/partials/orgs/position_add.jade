@@ -12,7 +12,7 @@ md-dialog(ng-init="newPos = {departmentId: currentOrg.id}; specification = {}" s
 					md-input-container.row-has-value(flex style="padding-bottom: 15px;")
 						label 岗位通道
 						md-select(ng-model="newPos.channelId")
-							md-select-label {{$enum.parseLabel(newPos.channelId, "channels")}}
+							//- md-select-label {{$enum.parseLabel(newPos.channelId, "channels")}}
 							md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
 					md-input-container(flex style="padding-bottom: 19px;")
 						label OA文件编号
@@ -23,17 +23,17 @@ md-dialog(ng-init="newPos = {departmentId: currentOrg.id}; specification = {}" s
 					md-input-container.row-has-value(flex  style="padding-bottom: 15px;")
 						label 工时制度
 						md-select(ng-model="newPos.scheduleId" required)
-							md-select-label {{$enum.parseLabel(newPos.scheduleId, "position_schedules")}}
+							//- md-select-label {{$enum.parseLabel(newPos.scheduleId, "position_schedules")}}
 							md-option(ng-value="item.id" ng-repeat="item in $enum.get('position_schedules')") {{item.label}}
 					md-input-container.row-has-value(flex  style="padding-bottom: 15px;")
 						label 分类
 						md-select(ng-model="newPos.categoryId")
-							md-select-label {{$enum.parseLabel(newPos.categoryId, "categories")}}
+							//- md-select-label {{$enum.parseLabel(newPos.categoryId, "categories")}}
 							md-option(ng-value="item.id" ng-repeat="item in $enum.get('categories')") {{item.label}}
 					md-input-container.row-has-value(flex  style="padding-bottom: 15px;")
 						label 岗位性质
 						md-select(ng-model="newPos.natureId")
-							md-select-label {{$enum.parseLabel(newPos.natureId, "position_natures")}}
+							//- md-select-label {{$enum.parseLabel(newPos.natureId, "position_natures")}}
 							md-option(ng-value="item.id" ng-repeat="item in $enum.get('position_natures')") {{item.label}}
 
 					md-input-container(flex  style="padding-bottom: 19px;")

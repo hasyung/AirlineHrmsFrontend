@@ -18,12 +18,10 @@ form(ng-submit="save(education.$save(), eduForm)" name="eduForm")
             md-input-container.row-has-value(flex)
                 label 学历
                 md-select(ng-model="education.educationBackground")
-                    md-select-label {{$enum.parseLabel(education.educationBackground, "education_backgrounds")}}
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('education_backgrounds')") {{item.label}}
             md-input-container.row-has-value(flex)
                 label 学位
                 md-select(ng-model="education.degree")
-                    md-select-label {{$enum.parseLabel(education.degree, "degrees")}}
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('degrees')") {{item.label}}
         //- md-input-container
         //-     label 证明人

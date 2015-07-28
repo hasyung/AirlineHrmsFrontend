@@ -14,7 +14,6 @@ md-dialog.attendance_new(ng-init="current = dialog.current;")
                         md-input-container.row-has-value(flex)
                             label 考勤类型
                             md-select(ng-model="current.recordType" required)
-                                md-select-label {{current.recordType}}
                                 md-option(value="迟到") 迟到
                                 md-option(value="早退") 早退
                                 md-option(value="旷工") 旷工
