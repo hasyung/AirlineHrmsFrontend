@@ -60,6 +60,6 @@ socialChanges = (restmod, RMUtils, $Evt) ->
     }
 
 
-resources.factory 'socialPersonSetups',['restmod', 'RMUtils', '$nbEvent', socialPersonSetups]
-resources.factory 'socialRecords',['restmod', 'RMUtils', '$nbEvent', socialRecords]
-resources.factory 'socialChanges',['restmod', 'RMUtils', '$nbEvent', socialChanges]
+resources.factory 'SocialPersonSetups', ['restmod', 'RMUtils', '$nbEvent', socialPersonSetups]
+resources.factory 'SocialRecords', ['restmod', 'RMUtils', '$nbEvent', socialRecords]
+resources.factory 'SocialChanges', ['restmod', 'RMUtils', '$nbEvent', socialChanges]

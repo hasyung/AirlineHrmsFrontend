@@ -1,6 +1,7 @@
 resources = angular.module('resources')
 find = _.find
 
+
 Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
     Constants = {
         NODE_INDEX: 3 # serial_number 生成策略是parent_node.serial_number+node_index，node_index由3位构成，值为创建该node时，其parent_node.children_count
@@ -286,15 +287,5 @@ class OrgStore extends nb.Service
                 throw "can not find org id : #{id} primary org "
 
 
-
-
-
-
-
-
-
-
-
-
-resources.factory 'Org',['restmod', 'RMUtils', '$nbEvent', 'DEPARTMENTS', Org]
+resources.factory 'Org', ['restmod', 'RMUtils', '$nbEvent', 'DEPARTMENTS', Org]
 resources.service 'OrgStore', OrgStore

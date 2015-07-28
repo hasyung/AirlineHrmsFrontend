@@ -31,9 +31,6 @@ block cust_page
                     ) 新建合同
             div(nb-grid multi-select="false" export-api grid-selection column-defs="ctrl.columnDef" safe-src="ctrl.contracts")
 
-
-
-
 block user_list_actions
     md-button.md-primary.md-raised(
         ng-disabled="!getSelected()"
@@ -53,34 +50,3 @@ block user_list_actions
         nb-panel
         template-url="/partials/labors/contract/new.html"
     ) 新建合同
-
-
-
-
-
-//- tabset(flex)
-//-     tab(heading="合同列表")
-//-         .app-content-wrapper(flex style="height: 700px;" ng-controller="ContractCtrl as ctrl")
-//-             div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
-//-             div.ui-grid-container
-//-                 md-toolbar
-//-                     .md-toolbar-tools
-//-                         h2 合同列表
-//-                         div(flex)
-//-                         md-button.md-primary.md-raised(
-//-                         ) 发起离职
-//-                         md-button.md-primary.md-raised(
-//-                             nb-dialog
-//-                             template-url="/partials/labors/contract/renew.html"
-//-                             locals="{contract:ctrl.getSelected()}"
-//-                         ) 发起续签
-//-                         md-button.md-primary.md-raised(
-//-                             nb-panel
-//-                             template-url="/partials/labors/contract/new.html"
-//-                         ) 新建合同
-//-                 div(nb-grid multi-select="false" export-api grid-selection column-defs="ctrl.columnDef" safe-src="ctrl.contracts")
-
-
-//-     tab(heading="历史记录")
-        
-

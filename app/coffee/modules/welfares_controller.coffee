@@ -58,7 +58,7 @@ class WelfareController
 
 
 class WelfarePersonalController extends nb.Controller
-    @.$inject = ['$http', '$scope', '$nbEvent', 'socialPersonSetups']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'SocialPersonSetups']
 
     constructor: ($http, $scope, $Evt, @socialPersonSetups) ->
         @configurations = @loadInitailData()
@@ -164,7 +164,7 @@ class WelfarePersonalController extends nb.Controller
 
 
 class SocialComputeController
-    @.$inject = ['$http', '$scope', '$nbEvent', 'socialRecords']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'SocialRecords']
 
     constructor: ($http, $scope, $Evt, @socialRecords) ->
 
@@ -174,6 +174,7 @@ class SocialComputeController
             {displayName: '员工编号', name: 'employeeNo'}
 
         ]
+
         @constraints = [
 
         ]
@@ -206,7 +207,7 @@ class SocialHistoryController
 
 
 class SocialChangesController
-    @.$inject = ['$http', '$scope', '$nbEvent', 'socialChanges']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'SocialChanges']
 
     constructor: ($http, $scope, $Evt, @socialChanges) ->
 
@@ -249,7 +250,6 @@ class SocialChangesController
             {
                 displayName: '处理'
                 field: 'deal'
-                # pinnedLeft: true
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents ng-binding ng-scope">
                     <a nb-panel
@@ -260,7 +260,6 @@ class SocialChangesController
                 </div>
                 '''
             }
-
         ]
 
         @constraints = [
