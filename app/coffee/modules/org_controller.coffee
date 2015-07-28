@@ -288,8 +288,7 @@ class PositionCtrl extends nb.Controller
         selectedPosIds = @getSelectsIds()
 
         if selectedPosIds.length > 0 && selectOrg
-            @positions
-                .$adjust({department_id: selectOrg.id, position_ids: selectedPosIds })
+            @positions.$adjust({department_id: selectOrg.id, position_ids: selectedPosIds})
         else
             # 通知被划转岗位和目标机构必选
             @Evt.$send "position:transfer:error", "被划转岗位和目标机构必选"

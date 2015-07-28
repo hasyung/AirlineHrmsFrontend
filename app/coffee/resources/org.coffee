@@ -1,5 +1,4 @@
 resources = angular.module('resources')
-find = _.find
 
 
 Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
@@ -86,7 +85,7 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
             initalArr.join(">")
         else
             if ( parent.parentId || parent.parent_id ) && parent.xdepth > 2
-                parentDep = find DEPARTMENTS, 'id', parent.parentId || parent.parent_id
+                parentDep = _.find DEPARTMENTS, 'id', parent.parentId || parent.parent_id
                 if !parentDep
                     throw new Error("机构数据结构错误 机构#{parent.name}：#{parent.id} 找不到parent #{parent.parentId} 的机构")
                 else

@@ -161,7 +161,6 @@ class FlowController
 
         scope.userReply = ""
 
-
         scope.CHOICE = {
             ACCEPT: true
             REJECT: false
@@ -205,6 +204,7 @@ class FlowController
             params = parseParams params
             url = joinUrl(FLOW_HTTP_PREFIX, flow.type, flow.id)
             promise = http.put(url, params)
+
             promise.then ()->
                 scope.flowSet.$refresh() if angular.isDefined(scope.flowSet)
                 dialog.close()
