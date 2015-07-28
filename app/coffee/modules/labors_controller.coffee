@@ -1,9 +1,7 @@
+# 劳动关系
 nb = @.nb
 app = nb.app
-extend = angular.extend
 filterBuildUtils = nb.filterBuildUtils
-Modal = nb.Modal
-
 
 userListFilterOptions = filterBuildUtils('laborsRetirement')
     .col 'name',                 '姓名',    'string',           '姓名'
@@ -23,7 +21,6 @@ USER_LIST_TABLE_DEFS = [
     {
         displayName: '姓名'
         field: 'name'
-        # pinnedLeft: true
         cellTemplate: '''
         <div class="ui-grid-cell-contents">
             <a nb-panel
@@ -40,7 +37,6 @@ USER_LIST_TABLE_DEFS = [
         cellTooltip: (row) ->
             return row.entity.department.name
     }
-
     {
         displayName: '岗位'
         name: 'position.name'
@@ -85,7 +81,6 @@ FLOW_HANDLE_TABLE_DEFS =  [
         </div>
         '''
     }
-
 ]
 
 
@@ -176,7 +171,6 @@ ATTENDANCE_SUMMERY_DEFS= [
     {width:100, displayName: '工伤假', name: 'injuryLeave'}
     {width:100, displayName: '疗养假', name: 'recuperateLeave'}
     {width:100, displayName: '派驻休假', name: 'accreditLeave'}
-
     {width:100, displayName: '病假', name: 'sickLeave'}
     {width:100, displayName: '病假（工伤待定）', name: 'sickLeaveInjury'}
     {width:100, displayName: '病假（怀孕待产）', name: 'sickLeaveNulliparous'}
@@ -198,7 +192,6 @@ class Route
     @.$inject = ['$stateProvider', '$urlRouterProvider', '$injector']
 
     constructor: (stateProvider, urlRouterProvider, injector) ->
-
         stateProvider
             .state 'contract_management', {
                 url: '/contract-management'
@@ -281,11 +274,9 @@ class Route
 
 
 class AttendanceCtrl extends nb.Controller
-
     @.$inject = ['GridHelper', 'Leave', '$scope', '$injector', '$http', 'AttendanceSummary']
 
     constructor: (helper, @Leave, scope, injector, @http, @AttendanceSummary) ->
-
         @initDate()
 
         scope.realFlow = (entity) ->
@@ -384,18 +375,21 @@ class AttendanceCtrl extends nb.Controller
     departmentHrConfirm: ()->
         self = @
         params = {summary_date: @getDate()}
+
         @http.put('/api/attendance_summaries/department_hr_confirm', params).then ()->
             self.tableData.$refresh()
 
     departmentLeaderCheck: ()->
         self = @
         params = {summary_date: @getDate()}
+
         @http.put('/api/attendance_summaries/department_leader_check', params).then ()->
             self.tableData.$refresh()
 
     hrLeaderCheck: ()->
         self = @
         params = {summary_date: @getDate()}
+
         @http.put('/api/attendance_summaries/hr_leader_check', params).then ()->
             self.tableData.$refresh()
 
@@ -421,11 +415,11 @@ class AttendanceCtrl extends nb.Controller
 
 
 class AttendanceRecordCtrl extends nb.Controller
-
     @.$inject = ['$scope', 'Attendance', 'Employee', 'GridHelper']
 
     constructor: (@scope, @Attendance, @Employee, GridHelper) ->
         @loadInitailData()
+
         @filterOptions = filterBuildUtils('attendanceRecord')
             .col 'name',                 '姓名',    'string',           '姓名'
             .col 'employee_no',          '员工编号', 'string'
@@ -451,11 +445,11 @@ class AttendanceRecordCtrl extends nb.Controller
 
 
 class AttendanceHisCtrl extends nb.Controller
-
     @.$inject = ['$scope', 'Attendance']
 
     constructor: (@scope, @Attendance) ->
         @loadInitailData()
+
         @filterOptions = filterBuildUtils('attendanceHis')
             .col 'employee_name',        '姓名',      'string',           '姓名'
             .col 'employee_no',          '员工编号',   'string'
@@ -503,6 +497,7 @@ class AttendanceHisCtrl extends nb.Controller
 
     search: (tableState)->
         @attendances.$refresh(tableState)
+
     getSelected: () ->
         rows = @scope.$gridApi.selection.getSelectedGridRows()
         selected = if rows.length >= 1 then rows[0].entity else null
@@ -514,7 +509,6 @@ class AttendanceHisCtrl extends nb.Controller
 
 
 class ContractCtrl extends nb.Controller
-
     @.$inject = ['$scope', 'Contract', '$http', 'Employee', '$nbEvent']
 
     constructor: (@scope, @Contract, @http, @Employee, @Evt) ->
@@ -550,7 +544,6 @@ class ContractCtrl extends nb.Controller
                 cellTooltip: (row) ->
                     return row.entity.departmentName
             }
-
             {
                 displayName: '岗位'
                 name: 'positionName'
@@ -573,7 +566,6 @@ class ContractCtrl extends nb.Controller
                         </a>
                     </div>
                 '''
-
             }
         ]
 
@@ -583,13 +575,11 @@ class ContractCtrl extends nb.Controller
             .col 'department_ids',       '机构',        'org-search'
             .end()
 
-
         @hisColumnDef = [
             {displayName: '员工编号', name: 'employeeNo'}
             {
                 displayName: '姓名'
                 field: 'employeeName'
-                # pinnedLeft: true
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents">
                     <a nb-panel
@@ -628,7 +618,6 @@ class ContractCtrl extends nb.Controller
                         </a>
                     </div>
                 '''
-
             }
         ]
 
@@ -646,6 +635,7 @@ class ContractCtrl extends nb.Controller
     renewContract: (request, contract)->
         self = @
         return if contract && contract.employeeId == 0
+
         request.receptor_id = contract.employeeId
         request.reviewer_id = contract.employeeId
 
@@ -671,6 +661,7 @@ class ContractCtrl extends nb.Controller
 
     loadEmployee: (params, contract)->
         self = @
+
         @Employee.$collection().$refresh(params).$then (employees)->
             matched = _.find employees, params
             if matched then self.loadEmp = matched;contract.employeeId = matched.id else self.loadEmp = params
@@ -715,7 +706,6 @@ class UserListCtrl extends nb.Controller
                 </div>
                 '''
             }
-
             {displayName: '员工编号', name: 'employeeNo'}
             {
                 displayName: '岗位'
@@ -745,7 +735,6 @@ class RetirementCtrl extends nb.Controller
     @.$inject = ['GridHelper', 'Flow::Retirement', '$scope', '$injector']
 
     constructor: (helper, @Retirement, scope, injector) ->
-
         @filterOptions = {
             name: 'retirementCheck'
             constraintDefs: [
@@ -766,11 +755,9 @@ class RetirementCtrl extends nb.Controller
 
 
 class SbFlowHandlerCtrl
-
     @.$inject = ['GridHelper', 'FlowName', '$scope', 'Employee', '$injector', 'OrgStore', 'ColumnDef', '$http', '$nbEvent']
 
     constructor: (@helper, @FlowName, @scope, @Employee, $injector, OrgStore, @userRequestsColDef, @http, @Evt) ->
-
         @scope.ctrl = @
         @Flow = $injector.get(@FlowName)
 
@@ -856,4 +843,3 @@ app.controller('ContractCtrl', ContractCtrl)
 app.controller('RetirementCtrl', RetirementCtrl)
 app.controller('SbFlowHandlerCtrl', SbFlowHandlerCtrl)
 app.constant('ColumnDef', [])
-

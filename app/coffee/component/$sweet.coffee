@@ -1,16 +1,12 @@
-# angular warpper for sweetalert
-
-
 nb = @nb
 app = nb.app
 
-al = @swal # sweet alert ref
 
-extend = @angular.extend
+# sweet alert ref
+al = @swal
 
 
 class Alert
-
     constructor: (@q, @timeout) ->
 
     success: (title, message) ->
@@ -34,7 +30,6 @@ class Alert
             200)
 
     confirm: (title, message,  confirmButtonText = '确定', cancelButtonText = '取消') ->
-
         deferred = @q.defer()
 
         options = {
@@ -58,10 +53,6 @@ class Alert
         return deferred.promise
 
 
-
-
 app.factory 'sweet',['$q', '$timeout', ($q, $timeout) ->
-
     return new Alert($q, $timeout)
-
 ]

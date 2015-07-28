@@ -25,28 +25,24 @@ jadeInheritance = require('gulp-jade-inheritance')
 autoprefixer    = require("gulp-autoprefixer")
 
 
-
 fs              = require("fs")
 request         = require("request")
-
-
 proxy           = require('./compat/proxy-middleware')
+
 
 debugMode       = true
 
+
 LOCAL_TEST_SERVER = "http://192.168.6.99:9001"
-REMOTE_TEST_SERVER = "http://114.215.142.122:9002"
-LOCAL_SERVER = "http://localhost:3000"
+RELEASE_TEST_SERVER = "http://114.215.142.122:9001"
 
 
 if argv.localhost
     PROXY_SERVER_ADDR = LOCAL_SERVER
 else if argv.remote
-    PROXY_SERVER_ADDR =  REMOTE_TEST_SERVER
+    PROXY_SERVER_ADDR =  RELEASE_TEST_SERVER
 else if argv.addr
     PROXY_SERVER_ADDR = "http://#{argv.addr}"
-else
-    PROXY_SERVER_ADDR = LOCAL_TEST_SERVER
 
 
 paths =
@@ -348,6 +344,7 @@ gulp.task "express", ['copy'],  ->
 
     libs = generate_scripts()
 
+
 # Rerun the task when a file changes
 gulp.task "watch", ['jade-deploy'],  ->
     livereload.listen()
@@ -372,6 +369,7 @@ gulp.task "deploy", [
     "jslibs-watch"
     # "styles-deploy"
 ]
+
 
 # bugfix: copy 异步 template 同步 ,后者依赖前者
 # 添加 lib 文件后，先执行 gulp copy

@@ -1,10 +1,7 @@
-
 angular.module 'nb.directives'
     # 下载
     .directive 'nbDownload', [() ->
-
         postLink = (scope, elem, attrs)->
-
             elem.on 'click', ()->
                 selectedRows = scope.paramGetter()
                 paramString = selectedRows.join(',')
@@ -17,46 +14,22 @@ angular.module 'nb.directives'
             }
             link: postLink
         }
-
     ]
 
-    # 切面切换的 loading 动画
+    # 页面切换的 loading 动画
     .directive 'nbLoading', ['$rootScope', (rootScope) ->
-
         return {
             templateUrl: 'partials/component/loading.html'
         }
-
-    ]
-    # 页面切换的动画， 2015.7.21 现在没用， 可以考虑之后使用
-    .directive 'nbButterbar', ['$rootScope', '$anchorScroll', (rootScope, anchorScroll) ->
-
-        postLink = (scope, elem, attrs) ->
-            elem.addClass 'butterbar hide'
-            rootScope.$on '$stateChangeStart', (evt) ->
-                anchorScroll()
-                elem.removeClass('hide').addClass('active')
-            rootScope.$on '$stateChangeSuccess', (evt) ->
-                evt.targetScope.$watch '$viewContentLoaded', ->
-                    elem.addClass('hide').removeClass('active')
-
-        return {
-            template: '<span class="bar"></span>'
-            link: postLink
-        }
-
     ]
 
-    #facade ngDialog
     # 右侧滑出栏
     .directive 'nbPanel',['ngDialog', '$parse', (ngDialog, $parse) ->
-
         getCustomConfig = (attrs) ->
             configAttrs = _.pick(attrs, (val, key) -> return /^panel/.test(key))
             customConfig = _.transform configAttrs, (res, val, key) ->
                 attr = key.slice(5) #remove prefix 'panel'
                 cusKey = _.camelCase(attr)
-
 
         postLink = (scope, elem, attrs) ->
             options = {
@@ -87,14 +60,11 @@ angular.module 'nb.directives'
             restrict: 'A'
             link: postLink
         }
-
-
     ]
-    # dialog
+
+    # 独立模态对话框
     .directive 'nbDialog',['$mdDialog', '$enum', ($mdDialog, $enum) ->
-
         postLink = (scope, elem, attrs) ->
-
             throw new Error('所有dialog都需要templateUrl') if !angular.isDefined(attrs.templateUrl)
             options = {
                 clickOutsideToClose: true
@@ -124,7 +94,6 @@ angular.module 'nb.directives'
             angular.forEach ['templateUrl', 'template'], (key) ->
                 options[key] = attrs[key] if angular.isDefined(attrs[key])
 
-
             falseValueRegExp = /^(false|0|)$/
             angular.forEach ['clickOutsideToClose', 'focusOnOpen', 'bindToController'], (key) ->
                 options[key] = !falseValueRegExp.test(attrs[key]) if angular.isDefined(attrs[key])
@@ -137,15 +106,11 @@ angular.module 'nb.directives'
             restrict: 'A'
             link: postLink
         }
-
     ]
-
 
     # confirm
     .directive 'nbConfirm', ['$mdDialog', ($mdDialog) ->
-
         postLink = (scope, elem, attrs) ->
-
             attrs.$observe 'nbTitle', (newValue) ->
                 scope.title = newValue || '提示'
 
@@ -163,7 +128,6 @@ angular.module 'nb.directives'
             callback = (isConfirm) ->
                 return -> scope.onComplete(isConfirm: isConfirm)
 
-
             elem.on 'click', (evt) ->
                 confirm = performConfirm(evt)
                 promise = $mdDialog.show(confirm)
@@ -172,7 +136,6 @@ angular.module 'nb.directives'
 
             scope.$on 'destroy', -> elem.off 'click'
 
-
         return {
             link: postLink
             scope: {
@@ -180,7 +143,8 @@ angular.module 'nb.directives'
             }
         }
     ]
-    # 小松写的， 在变更记录中使用。 可以考虑重构时删除
+
+    # 在变更记录中使用
     .directive 'radioBox', [()->
         postLink = (scope, elem, attrs, ctrl) ->
             scope.selected = null
@@ -194,6 +158,7 @@ angular.module 'nb.directives'
                     scope.fail = false
                 if !(scope.pass || scope.fail)
                     scope.selected = "1"
+
             scope.$watch 'fail', (newVal)->
                 if newVal
                     scope.selected = "3"
@@ -219,9 +184,9 @@ angular.module 'nb.directives'
             replace: true
         }
     ]
-    # 流程分支节点图， 现在已废弃， 花了较多精力， 暂时保留
-    .directive 'columnChart', [ () ->
 
+    # 流程分支节点图，现在已废弃，花了较多精力，暂时保留
+    .directive 'columnChart', [ () ->
         postLink = (scope, elem, attrs) ->
             data = [
                 {
@@ -303,7 +268,6 @@ angular.module 'nb.directives'
                         .duration(300)
                         .attr("fill-opacity", 1)
 
-
             nodes.select("rect.c-column")
                 .attr("width", 30)
                 .attr("height", (d, i) ->
@@ -369,28 +333,19 @@ angular.module 'nb.directives'
         }
     ]
 
-
-    #
     # permission 支持单一权限与组合权限
-    #
     # 90%情况 单一权限能满足需求
-    #
     # 基于性能考虑与实际业务， 不支持动态权限
     # 所有权限使用较高优先级指令优先check, 如果不满足需求
-    #
-    #  usage:
-    #
     # <div has-permission="department_index"></div>
     # <div has-permission="['department_index','department_active']"></div>
 
     .directive 'hasPermission', ['AuthService', '$animate', (AuthService, $animate) ->
-
         postLink = (scope, elem, attrs, ctrl, $transclude) ->
             if AuthService.has(attrs.hasPermission)
                 $transclude (clone, newScope) ->
                     clone[clone.length++] = document.createComment(" end hasPermission: #{attrs.hasPermission}")
                     $animate.enter(clone, elem.parent(), elem)
-
 
         return {
             multiElement: true
@@ -403,12 +358,10 @@ angular.module 'nb.directives'
         }
 
     ]
+
     # MOCK angular-strap datepicker directive
     .directive 'bsDatepicker', ['$parse', ->
-
-
         postLink = (scope, elem, attrs, ngModelCtrl) ->
-
             config = autoclose: true, format: 'yyyy-mm-dd', language: 'zh-cn'
 
             if attrs.endDate == 'today'
@@ -429,18 +382,16 @@ angular.module 'nb.directives'
             ngModelCtrl.$formatters.push (modelValue) ->
                 return moment(modelValue).format('YYYY-MM-DD') if modelValue
 
-
             scope.$on '$destroy', ->
                 elem.datepicker("remove")
-
 
         return {
             link: postLink
             require: 'ngModel'
         }
     ]
-    .directive 'flowUserInfo', (USER_META) ->
 
+    .directive 'flowUserInfo', (USER_META) ->
         origin_tmpl = '''
             <div class="flow-info-head">
                 <div class="name" ng-bind="receptor.name"></div>
@@ -451,8 +402,6 @@ angular.module 'nb.directives'
             </div>
         '''
 
-        # template = _.template(origin_tmpl)(USER_META)
-
         return {
             scope: {
                 receptor: "=?"
@@ -462,7 +411,6 @@ angular.module 'nb.directives'
             replace: true
             template: origin_tmpl
         }
-
 
     .directive 'flowFileUpload', [()->
         template = '''
@@ -597,7 +545,6 @@ angular.module 'nb.directives'
                 /^image\/jpg|jpeg|gif|png/.test(file.type)
 
         postLink = (scope, elem, attrs, ngModelCtrl) ->
-
             if attrs.singleFile
                 scope.fileSize = 1
 

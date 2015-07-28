@@ -11,11 +11,12 @@ angular.module 'nb.directives'
         railVisible: false
         disableFadeOut: true
     }
-    .directive 'slimscroll', ['slimscrollConfig',(slimscrollConfig) ->
 
+    .directive 'slimscroll', ['slimscrollConfig', (slimscrollConfig) ->
         return {
             restrict: 'A'
             replace: true
+
             link: (scope,elem,attr) ->
                 opts = {}
 
@@ -31,5 +32,4 @@ angular.module 'nb.directives'
                         destroy: true
                     }
         }
-
     ]

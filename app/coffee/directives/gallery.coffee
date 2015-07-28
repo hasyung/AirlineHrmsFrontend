@@ -40,9 +40,6 @@ angular.module 'nb.directives'
             isImgObj: (obj)->
                 return imgRex.test(obj.type)
 
-
-
-
         return {
             restrict: 'A'
             replace: true
@@ -52,23 +49,23 @@ angular.module 'nb.directives'
             }
             controller: AnnexCtrl
             controllerAs: "ctrl"
-
         }
     ]
 
     .directive 'nbGallery', ['$q', '$compile', '$document', '$timeout', '$http', ($q, $compile, $document, $timeout, $http)->
-
-
         class GalleryCtrl
             @.$inject = ['$scope']
+
             constructor: (@scope)->
                 @scope.modalShow = false
+
             setSelectedImg: (img)->
                 @scope.currentImg = img
 
             nextImg: ()->
                 index = _.findIndex @scope.imgs, @scope.currentImg
                 @scope.currentImg = if @scope.imgs[index + 1] then @scope.imgs[index + 1] else @scope.currentImg
+
             prevImg: ()->
                 index = _.findIndex @scope.imgs, @scope.currentImg
                 @scope.currentImg = if @scope.imgs[index - 1] then @scope.imgs[index - 1] else @scope.currentImg
@@ -143,19 +140,17 @@ angular.module 'nb.directives'
             scope.imgs = annexCtrl.getImgs() if annexCtrl
             scope.isMuti = if scope.imgs.length > 1 then true else false
 
-
             adjustImgSize = (imgObj, boxSize, callback)->
                 img = new Image()
+
                 img.onload = ()->
                     imgSize = {
                         width: img.naturalWidth
                         height: img.naturalHeight
                     }
                     callback(imgSize, boxSize)
-                img.src = imgObj.default
 
-                
-                
+                img.src = imgObj.default
 
             getImgBoxSize = ()->
                 # 多图片预览，图片盒子的大小
@@ -178,6 +173,7 @@ angular.module 'nb.directives'
                 imgW2H = imgSize.width/imgSize.height
                 boxW2H = boxSize.width/boxSize.height
                 imgDom = scope.gallery.find(".main-img")
+
                 if boxW2H >= imgW2H
                     imgHeight = if boxSize.height > imgSize.height then imgSize.height else boxSize.height
                     imgDom.css 'height', "#{imgHeight}px"
@@ -186,12 +182,14 @@ angular.module 'nb.directives'
                     imgWidth = if boxSize.width > imgSize.width then imgSize.width else boxSize.width
                     imgDom.css 'width', "#{boxSize.width}px"
                     imgDom.css 'height', ""
+
                 imgDom.css 'display', 'inline-block'
 
             showGallery = ()->
                 bindBody template
                 scope.$apply ()->
                     scope.modalShow = true
+
             setCurrentImg = (e)->
                 #下一张
                 #向下和向右
@@ -202,17 +200,17 @@ angular.module 'nb.directives'
                 else if e.keyCode == 38 || e.keyCode == 37
                     scope.$apply ()->
                         galleryCtrl.prevImg()
+
             destroyGallery = ()->
                 scope.gallery.remove() if scope.gallery
                 scope.$apply ()->
                     scope.modalShow = false
+
             addGalleryListener = (e)->
                 targetEle = angular.element(e.target)
                 if targetEle.closest(".nb-modal-touchable").length == 0
                     destroyGallery()
                 e.stopPropagation()
-
-
 
             scope.$watch ()->
                 scope.modalShow
@@ -229,12 +227,9 @@ angular.module 'nb.directives'
                 boxSize = getImgBoxSize()
                 adjustImgSize(newVal, boxSize, setImgSize)
 
-
             elem.on 'click', (e)->
                 e.stopPropagation()
                 showGallery()
-                
-                
 
             if scope.imgs && scope.imgs.length > 1
                 $doc.on 'keydown', setCurrentImg
@@ -252,6 +247,5 @@ angular.module 'nb.directives'
             link: postLink
             controller: GalleryCtrl
             controllerAs: "ctrl"
-
         }
     ]

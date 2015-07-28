@@ -1,9 +1,10 @@
-
-
 @nb = nb = {}
 
-metadata = @metadata #用户元数据
-dep_info = @dep_info #机构数据
+# 用户元数据
+metadata = @metadata
+
+# 组织机构数据
+dep_info = @dep_info
 
 deps = [
     'ui.router'
@@ -24,7 +25,7 @@ deps = [
     'ngMessages'
     'ngMaterial'
     'toaster'
-    'restmod'    #rest api
+    'restmod'
     'angular.filter'
     'resources'
     'nb.directives'
@@ -32,18 +33,17 @@ deps = [
     'nb.filters'
     'nb.component'
     'flow'
-    # 第三方material menu, 建议用官方 menu 替代， 建议在7月底或者8月初 0.10 正式版后更新 material
-    'ngMaterialDropmenu'
     'infinite-scroll'
-    #'nb.controller.site'
 ]
-resources = angular.module('resources',[])
-
-nb.app = App = angular.module 'nb',deps
 
 
+resources = angular.module('resources', [])
+nb.app = App = angular.module 'nb', deps
+
+
+# 日期解析和格式化
 moment.locale('zh-cn')
-# nb.models = models = angular.module 'models', []
+
 
 #初始化在<head> <script> 标签中, 如果不存在， 系统行为待定
 App.constant 'PERMISSIONS', metadata.permissions || []
@@ -56,7 +56,7 @@ App.constant 'USER_MESSAGE', metadata.messages || {}
 
 
 appConf = ($provide, ngDialogProvider) ->
-    # 事件广播 始终锁定在 rootScope 上 ， 提高性能
+    # 事件广播始终锁定在 rootScope 上， 提高性能
     $provide.decorator '$rootScope', ['$delegate', ($delegate) ->
 
         Object.defineProperty $delegate.constructor.prototype, '$onRootScope', {
@@ -85,6 +85,7 @@ restConf = (restmodProvider) ->
         $config:
             urlPrefix: 'api'
 
+
 mdThemingConf = ($mdThemingProvider) ->
     $mdThemingProvider.theme('default')
         .primaryPalette('blue')
@@ -105,23 +106,10 @@ mdThemingConf = ($mdThemingProvider) ->
         }
 
 
-routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider) ->
+routeConf = ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) ->
     $locationProvider.html5Mode(false)
-
-    # $stateProvider.decorator 'views', (state, parent) ->
-    #     result = {}
-    #     views = parent(state)
-
-    #     angular.forEach views, (config, name) ->
-    #         autoName = "#{state.name}.#{name}".replace('.','/')
-    #         config.templateUrl = config.templateUrl || "/partials/#{autoName}.html"
-    #         result[name] = config
-
-    #     return result
-
-
-    #default route
     $urlRouterProvider.otherwise('/todo')
+
     $stateProvider
         .state 'home', {
             url: '/'
@@ -133,8 +121,10 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
             'responseError': (response) ->
                 if response.status == 401
                     AuthServ.logout()
+
                 if response.status == 403
-                    sweet.error('操作失败',response.data.message || JSON.stringify(response.data))
+                    sweet.error('操作失败', response.data.message || JSON.stringify(response.data))
+
                 if response.status == 400
                     toaster.pop('error', '参数错误', response.data.message || JSON.stringify(response.data) || response)
 
@@ -143,10 +133,10 @@ routeConf = ($stateProvider,$urlRouterProvider,$locationProvider, $httpProvider)
 
                 return $q.reject(response)
         }
-
     ]
 
     $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike'
+
 
 secConf = ($sceDelegateProvider) ->
     $sceDelegateProvider.resourceUrlWhitelist(['self'])
@@ -174,19 +164,19 @@ App
         '$timeout'
         'AuthService'
     (menu, $state, i18nService, $location, $rootScope, toaster, $http, Org, OrgStore, sweet, User, $enum, $timeout, AuthServ) ->
-
         $rootScope.menu = menu
+
         i18nService.setCurrentLang('zh-cn')
-        OrgStore.initialize() #初始化OrgStore
+        OrgStore.initialize() # 初始化OrgStore
+
         cancelLoading = ->
             $timeout(
                 ()-> $rootScope.loading = false
                 100
             )
+
         startLoading = ->
             $rootScope.loading = true
-
-        # for $state.includes in view
 
         $rootScope.$on '$stateChangeStart', (evt, _to , _toParam, _from, _fromParam) ->
             startLoading()
@@ -208,8 +198,4 @@ App
         $rootScope.$enum  = $enum
 
         $rootScope.allOrgs = Org.$search()
-
-
     ]
-
-

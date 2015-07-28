@@ -6,7 +6,6 @@ class Base
 class Service extends Base
 
 class Controller extends Base
-
     constructor: () ->
         # @initialize()
 
@@ -26,7 +25,6 @@ class Controller extends Base
         return @q.reject(xhr)
 
 class FilterController extends Controller
-
     onConditionInValid: ($Evt, invalid) ->
         $Evt.$send('search:condition:error', {message: invalid.join(",")})
 
@@ -38,7 +36,6 @@ nb.FilterController = FilterController
 
 
 class EditableResourceCtrl
-
     @.$inject = ['$scope', '$enum']
 
     constructor: (scope, $enum) ->
@@ -73,7 +70,6 @@ class EditableResourceCtrl
 
 
 class NewResourceCtrl
-
     @.$inject = ['$scope', '$enum']
 
     constructor: (scope, $enum) ->
@@ -117,7 +113,6 @@ class NewFlowCtrl
 
 
 class NewMyRequestCtrl extends NewFlowCtrl
-
     @.$inject = ['$scope', '$http', '$timeout', 'USER_META', '$nbEvent']
 
     constructor: (scope, $http, $timeout, meta, @Evt) ->
@@ -150,7 +145,6 @@ class NewMyRequestCtrl extends NewFlowCtrl
                 startOfDay.clone().add(13, 'hours')
                 startOfDay.clone().add(17, 'hours')
             ]
-
 
         # 计算请假天数
         scope.calculateTotalDays = (data, vacation_type) ->

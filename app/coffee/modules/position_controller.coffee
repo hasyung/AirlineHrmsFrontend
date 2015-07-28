@@ -1,10 +1,5 @@
-
 nb = @.nb
 app = nb.app
-extend = angular.extend
-resetForm = nb.resetForm
-Modal = nb.Modal
-
 
 
 class Route
@@ -26,22 +21,18 @@ class Route
 
             }
 
-class PositionCtrl extends nb.Controller
 
+class PositionCtrl extends nb.Controller
     @.$inject = ['Position', '$scope', 'sweet']
 
     constructor: (@Position, @scope, @sweet) ->
         @loadInitialData()
         @selectedIndex =  1
 
-        # @getSelectsIds = @getSelectsIds.bind(@)
-
-
         @columnDef = [
             {
                 displayName: '岗位名称'
                 field: 'name'
-                # pinnedLeft: true
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents">
                     <a nb-panel
@@ -72,10 +63,11 @@ class PositionCtrl extends nb.Controller
             {displayName: '工作时间', name: 'scheduleId', cellFilter: "enum:'position_schedules'"}
             {displayName: 'OA文件编号', name: 'oaFileNo'}
         ]
+
         @constraints = [
 
-
         ]
+
         @filterOptions = {
             name: 'position'
             constraintDefs: [
@@ -111,9 +103,6 @@ class PositionCtrl extends nb.Controller
             ]
         }
 
-
-
-
     loadInitialData: ->
         self = @
         @positions = @Position.$collection().$fetch()
@@ -125,8 +114,8 @@ class PositionCtrl extends nb.Controller
         rows = @scope.$gridApi.selection.getSelectedGridRows()
         rows.map (row) -> return row.entity.$pk
 
-class PositionChangesCtrl extends nb.Controller
 
+class PositionChangesCtrl extends nb.Controller
     @.$inject = ['PositionChange']
 
     constructor: (@PositionChange) ->
@@ -139,7 +128,6 @@ class PositionChangesCtrl extends nb.Controller
             {
                 displayName: '信息变更模块'
                 field: 'auditableType'
-                # pinnedLeft: true
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents ng-binding ng-scope">
                     <a
@@ -152,12 +140,11 @@ class PositionChangesCtrl extends nb.Controller
                 '''
             }
             {name:"createdAt", displayName:"变更时间"}
-
         ]
+
         @filterOptions = {
             name: 'position_changes'
             constraintDefs: [
-
                 {
                     name: 'name'
                     displayName: '岗位名称'
@@ -176,16 +163,14 @@ class PositionChangesCtrl extends nb.Controller
             ]
         }
 
-
     searchChanges: (tableState)->
         @changes.$refresh(tableState)
 
-class PositionDetailCtrl
 
+class PositionDetailCtrl
     @.$inject = ['$scope']
 
     constructor: (scope) ->
-
         @workingEmpColumnDef = [
             {displayName: '员工编号', name: 'employeeNo'}
             {displayName: '姓名', name: 'name'}
@@ -199,5 +184,4 @@ class PositionDetailCtrl
         ]
 
 app.controller 'PositionDetailCtrl', PositionDetailCtrl
-
 app.config(Route)

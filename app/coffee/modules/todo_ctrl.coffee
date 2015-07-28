@@ -1,11 +1,5 @@
-
 nb = @.nb
 app = nb.app
-extend = angular.extend
-resetForm = nb.resetForm
-Modal = nb.Modal
-
-
 
 class Route
     @.$inject = ['$stateProvider']
@@ -19,12 +13,11 @@ class Route
                 controllerAs: 'todoCtrl'
             }
 
-class TodoCtrl
 
+class TodoCtrl
     @.$inject = ['Todo']
 
     constructor: (Todo) ->
-
         @todos = Todo.$collection().$fetch()
 
 

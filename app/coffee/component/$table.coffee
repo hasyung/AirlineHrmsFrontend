@@ -1,10 +1,8 @@
-
 nb = @nb
 app = nb.app
 
 # 过滤器
 class NbFilterCtrl extends nb.FilterController
-
     #@desc 预编译模板
     #@param constraint definition
     preCompileTemplate = (def)->
@@ -62,7 +60,6 @@ class NbFilterCtrl extends nb.FilterController
                 </md-chip-template>
             </md-chips>
         '''
-
 
     @.$inject = ['$scope', '$element', '$attrs', '$parse', '$compile', 'SerializedFilter']
 
@@ -130,9 +127,8 @@ class NbFilterCtrl extends nb.FilterController
         @constraints.filter (cons) -> cons.active == true
 
     removeCondition: (condition) ->
-
         return if @conditions.length == 1
-        #先销毁constraint, 因为缓存了element , scope
+        #先销毁constraint, 因为缓存了element, scope
         constraint = condition.selectedConstraint
         constraint.destroy()
 
@@ -192,7 +188,6 @@ class NbFilterCtrl extends nb.FilterController
 
 
 conditionInputContainer = ($enum) ->
-
     postLink = (scope, elem, attr, ctrl) ->
         scope.$enum = $enum
 
@@ -250,7 +245,6 @@ NbFilterDirective = ["$nbEvent", "$enum", ($Evt, $enum)->
     '''
 
     postLink = (scope, elem, attr, ctrl) ->
-
         ctrl.initialize()
 
         scope.search = (queryParams)->
@@ -274,6 +268,7 @@ NbFilterDirective = ["$nbEvent", "$enum", ($Evt, $enum)->
             nbFilter: '='
             onSearch: '&'
         }
+
         link: postLink
         template: template
         controller: NbFilterCtrl
@@ -292,7 +287,6 @@ GridPaginationTemplate = """
 
 
 nbGridDirective = ($parse)->
-
     postLink = (scope, elem, attrs) ->
         columnDefs = scope.columnDefs
         safeSrc = scope.safeSrc
@@ -318,7 +312,6 @@ nbGridDirective = ($parse)->
             paginationPageSize: 60
 
             onRegisterApi: (gridApi) ->
-
                 #WARN 必须保持grid 生命周期与controller 一致， 暂不支持动态生成表格, 不然会内存泄露
                 # DEPRECATED
                 gridApi.grid.appScope.$parent.$gridApi = gridApi if exportApi
@@ -345,7 +338,6 @@ nbGridDirective = ($parse)->
                 '$scope'
                 '$queryParams'
             ]
-
         }
 
         options = angular.extend {
@@ -360,6 +352,7 @@ nbGridDirective = ($parse)->
             ,
             (newValue) -> options.totalItems =  newValue if angular.isNumber(newValue)
             )
+
         scope.$watch(
             -> pageGetter(scope)
             ,
@@ -378,6 +371,7 @@ nbGridDirective = ($parse)->
         link: {
             pre: postLink
         }
+
         template: (elem, attrs) ->
             PLUGIN_PREFIX = 'ui-'
 
@@ -388,6 +382,7 @@ nbGridDirective = ($parse)->
                 'ui-grid-row-edit'
                 'ui-grid-cellNav'
             ]
+
             applied_plugins = plugins.reduce((res, val) ->
                 removedPrefix = val.replace(PLUGIN_PREFIX, '')
                 camelCased = _.camelCase(removedPrefix)
@@ -395,6 +390,7 @@ nbGridDirective = ($parse)->
                 return res
             ,[])
             nbGridTemplate.replace("#plugins#",applied_plugins.join(" "))
+
         scope: {
             columnDefs: '='
             safeSrc: '='
@@ -402,8 +398,8 @@ nbGridDirective = ($parse)->
         }
     }
 
-BolleanTableCell = ->
 
+BooleanTableCell = ->
     template = '''
         <div class="ui-grid-cell-contents">
             <span ng-class="{'valid-mark':grid.getCellValue(row, col), 'invalid-mark': !grid.getCellValue(row, col) }"></span>
@@ -416,9 +412,6 @@ BolleanTableCell = ->
 
 
 app.directive 'nbGrid', nbGridDirective
-app.directive 'booleanTableCell', BolleanTableCell
+app.directive 'booleanTableCell', BooleanTableCell
 app.directive 'nbFilter', NbFilterDirective
 app.directive 'conditionInputContainer', conditionInputContainer
-
-
-
