@@ -2,27 +2,15 @@
 nb = @nb
 app = nb.app
 
-self_section        = name: '员工自助'
-org_section         = name: '组织机构', type: 'link'
-position_section    = name: '岗位管理'
-personnel_section   = name: '人事信息'
-kaoqin_section      = name: '考勤管理'
-train_section       = name: '培训管理'
-benefit_section     = name: '福利'
-salary_section      = name: '薪酬'
-labor_section       = name: '劳动关系'
-perf_section        = name: '绩效管理'
-
-
 menuFactory = ($rootScope, $state)->
     sections = []
 
-    sections.push {
-        name: '待办事项'
-        type: 'link'
-        state: 'TODO'
-        icon_src: '/images/svg/left-side-svg/left_icon_22.svg'
-    }
+    #sections.push {
+    #    name: '待办事项'
+    #    type: 'link'
+    #    state: 'TODO'
+    #    icon_src: '/images/svg/left-side-svg/left_icon_22.svg'
+    #}
 
     sections.push {
         name: '组织机构'
@@ -272,6 +260,7 @@ menuFactory = ($rootScope, $state)->
                     matchPage(section, page)
 
     $rootScope.$on('$stateChangeSuccess', onLocationChange)
+
     return self
 
 
@@ -325,13 +314,15 @@ menuLinkDirective = ($compile, $state) ->
         }
 
         transcludeFn = $compile(template)
-        transcludeFn scope, (cloned) -> elem.append(cloned)
+        transcludeFn scope, (cloned) ->
+            elem.append(cloned)
 
     return {
         scope: {
             page: '='
             isLast: '&'
         }
+
         link: postLink
     }
 
@@ -350,6 +341,7 @@ menuToggleDirective = (menu) ->
           </span>
         </div>
       </md-button>
+
       <ul ng-show="isOpen()" class="menu-toggle-list">
         <li ng-class="{'active': isSelected(page)}" class="child-list-item" ng-repeat="page in ::section.pages track by $index">
             <menu-link is-last="$last" page="page"></menu-link>
@@ -379,4 +371,3 @@ menuToggleDirective = (menu) ->
 app.factory 'menu', menuFactory
 app.directive 'menuLink', ['$compile', '$state', menuLinkDirective]
 app.directive 'menuToggle', ['menu', menuToggleDirective]
-

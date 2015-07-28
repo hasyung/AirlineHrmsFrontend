@@ -3,15 +3,14 @@ resources = angular.module('resources')
 
 Employee = (restmod, RMUtils, $Evt) ->
     Employee = restmod.model('/employees').mix 'nbRestApi', 'NestedDirtyModel', {
-        department: {mask: 'CU', belongsTo: 'Org'}
+        department: {belongsTo: 'Org', mask: 'CU'}
 
         joinScalDate: {decode: 'date', param: 'yyyy-MM-dd'}
         startWorkDate: {decode: 'date', param: 'yyyy-MM-dd'}
         startDate: {decode: 'date', param: 'yyyy-MM-dd', mask: 'CU'}
-
         isSelected: {mask: "CU"}
-        resume: {hasOne: 'Resume', mask: 'CU'}
 
+        resume: {hasOne: 'Resume', mask: 'CU'}
         performances: {hasMany: 'Performance', mask: 'CU'}
 
         $hooks: {
