@@ -57,11 +57,14 @@ class WelfareController
                 $Evt.$send('wselfate:save:success', '社保配置保存成功')
 
 
+# 社保
+
+
 class WelfarePersonalController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'SocialPersonSetups']
 
     constructor: ($http, $scope, $Evt, @socialPersonSetups) ->
-        @configurations = @loadInitailData()
+        @configurations = @loadInitialData()
 
         @filterOptions = {
             name: 'welfarePersonal'
@@ -145,7 +148,7 @@ class WelfarePersonalController extends nb.Controller
 
         ]
 
-    loadInitailData: ->
+    loadInitialData: ->
         @socialPersonSetups = @socialPersonSetups.$collection().$fetch()
 
     search: (tableState) ->
@@ -158,7 +161,7 @@ class WelfarePersonalController extends nb.Controller
     getSelected: () ->
         rows = @gridApi.selection.getSelectedGridRows()
 
-    delete: (isConfirm)->
+    delete: (isConfirm) ->
         if isConfirm
             @getSelected().forEach (record) -> record.entity.$destroy()
 
@@ -167,8 +170,7 @@ class SocialComputeController
     @.$inject = ['$http', '$scope', '$nbEvent', 'SocialRecords']
 
     constructor: ($http, $scope, $Evt, @socialRecords) ->
-
-        @configurations = @loadInitailData()
+        @socialRecords = @loadInitialData()
 
         @columnDef = [
             {displayName: '员工编号', name: 'employeeNo'}
@@ -205,15 +207,35 @@ class SocialComputeController
 
         ]
 
-    loadInitailData: ->
+    $getYears: ()->
+        [2015..new Date().getFullYear()]
+
+    $currentCalcTime: ()->
+        @currentYear + "-" + @currentMonth
+
+    $getMonths: ()->
+        months = [1..new Date().getMonth() + 1]
+        months = _.map months, (item) -> item = "0" + item if item < 10
+
+    loadInitialData: ()->
+        @year_list = @$getYears()
+        @month_list = @$getMonths()
+
+        @currentYear = _.last(@year_list)
+        @currentMonth = _.last(@month_list)
+
         @socialRecords = @socialRecords.$collection().$fetch()
 
-    search: (tableState) ->
+    search: (tableState)->
         @socialRecords.$refresh(tableState)
 
-    getSelectsIds: () ->
+    getSelectsIds: ()->
         rows = @gridApi.selection.getSelectedGridRows()
         rows.map (row) -> return row.entity.$pk
+
+    exeCalc: ()->
+        calc_month = @$currentCalcTime()
+        @search({month: calc_month})
 
 
 class SocialHistoryController
@@ -221,7 +243,7 @@ class SocialHistoryController
 
     constructor: ($http, $scope, $Evt, @socialRecords) ->
 
-        @configurations = @loadInitailData()
+        @configurations = @loadInitialData()
 
         @filterOptions = {
             name: 'welfarePersonal'
@@ -276,7 +298,7 @@ class SocialHistoryController
 
         ]
 
-    loadInitailData: ->
+    loadInitialData: ->
         @socialRecords = @socialRecords.$collection().$fetch()
 
     search: (tableState) ->
@@ -287,14 +309,11 @@ class SocialHistoryController
         rows.map (row) -> return row.entity.$pk
 
 
-
-
 class SocialChangesController
     @.$inject = ['$http', '$scope', '$nbEvent', 'SocialChanges']
 
     constructor: ($http, $scope, $Evt, @socialChanges) ->
-
-        @configurations = @loadInitailData()
+        @configurations = @loadInitialData()
 
         @filterOptions = {
             name: 'welfarePersonal'
@@ -349,7 +368,7 @@ class SocialChangesController
 
         ]
 
-    loadInitailData: ->
+    loadInitialData: ->
         @socialChanges = @socialChanges.$collection().$fetch()
 
     search: (tableState) ->
@@ -365,3 +384,36 @@ app.controller 'welfarePersonalCtrl', WelfarePersonalController
 app.controller 'socialComputeCtrl', SocialComputeController
 app.controller 'socialHistoryCtrl', SocialHistoryController
 app.controller 'socialChangesCtrl', SocialChangesController
+
+
+# 年金
+
+
+class AnnuityPersonalController
+    @.$inject = ['$http', '$scope', '$nbEvent']
+
+    constructor: ($http, $scope, $Evt) ->
+
+
+class AnnuityComputeController
+    @.$inject = ['$http', '$scope', '$nbEvent', 'SocialRecords']
+
+    constructor: ($http, $scope, $Evt, @socialRecords) ->
+
+
+class AnnuityHistoryController
+    @.$inject = ['$http', '$scope', '$nbEvent']
+
+    constructor: ($http, $scope, $Evt) ->
+
+
+class AnnuityChangesController
+    @.$inject = ['$http', '$scope', '$nbEvent']
+
+    constructor: ($http, $scope, $Evt) ->
+
+
+app.controller 'annuityPersonalCtrl', AnnuityPersonalController
+app.controller 'annuityComputeCtrl', AnnuityComputeController
+app.controller 'annuityHistoryCtrl', AnnuityHistoryController
+app.controller 'annuityChangesCtrl', AnnuityChangesController
