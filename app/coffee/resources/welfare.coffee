@@ -1,7 +1,7 @@
 resources = angular.module('resources')
 
 
-socialPersonSetups = (restmod, RMUtils, $Evt) ->
+SocialPersonSetup = (restmod, RMUtils, $Evt) ->
     socialPersonSetups = restmod.model('/social_person_setups').mix 'nbRestApi', {
         $config:
             jsonRootSingle: 'social_person_setup'
@@ -21,9 +21,8 @@ socialPersonSetups = (restmod, RMUtils, $Evt) ->
     }
 
 
-# 社保计算
-# 历史记录
-socialRecords = (restmod, RMUtils, $Evt) ->
+# 社保记录
+SocialRecord = (restmod, RMUtils, $Evt) ->
     socialRecords = restmod.model('/social_records').mix 'nbRestApi', {
         $config:
             jsonRootSingle: 'social_record'
@@ -34,18 +33,18 @@ socialRecords = (restmod, RMUtils, $Evt) ->
         $extend:
             Scope:
                 # 计算(根据年月)
-                compute_records: (params)->
+                compute: (params)->
                     restmod.model('/social_records/compute').mix(
                         $config:
                             jsonRoot: 'social_records'
-                    ).$collection(params).$fetch()
+                    ).$search(params);
             Collection:
                 search: (tableState) ->
                     this.$refresh(tableState)
     }
 
 
-socialChanges = (restmod, RMUtils, $Evt) ->
+SocialChange = (restmod, RMUtils, $Evt) ->
     socialChanges = restmod.model('/social_change_infos').mix 'nbRestApi', {
         $config:
             jsonRootSingle: 'social_change_info'
@@ -74,13 +73,9 @@ Annuitity = (restmod, RMUtils, $Evt) ->
 
 
 #社保
-resources.factory 'SocialPersonSetups', ['restmod', 'RMUtils', '$nbEvent', socialPersonSetups]
-resources.factory 'SocialRecords', ['restmod', 'RMUtils', '$nbEvent', socialRecords]
-resources.factory 'SocialChanges', ['restmod', 'RMUtils', '$nbEvent', socialChanges]
+resources.factory 'SocialPersonSetup', ['restmod', 'RMUtils', '$nbEvent', SocialPersonSetup]
+resources.factory 'SocialRecord', ['restmod', 'RMUtils', '$nbEvent', SocialRecord]
+resources.factory 'SocialChange', ['restmod', 'RMUtils', '$nbEvent', SocialChange]
+
 #年金
 resources.factory 'Annuitity', ['restmod', 'RMUtils', '$nbEvent', Annuitity]
-
-
-
-
-
