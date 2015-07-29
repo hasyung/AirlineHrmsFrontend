@@ -59,7 +59,30 @@ socialChanges = (restmod, RMUtils, $Evt) ->
                     this.$refresh(tableState)
     }
 
+#年金
+Annuitity = (restmod, RMUtils, $Evt) ->
+    annuities = restmod.model('/annuities').mix 'nbRestApi', {
+        $config:
+            jsonRootSingle: 'annuitie'
+            jsonRootMany: 'annuities'
 
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+        $extend:
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+    }
+
+
+#社保
 resources.factory 'SocialPersonSetups', ['restmod', 'RMUtils', '$nbEvent', socialPersonSetups]
 resources.factory 'SocialRecords', ['restmod', 'RMUtils', '$nbEvent', socialRecords]
 resources.factory 'SocialChanges', ['restmod', 'RMUtils', '$nbEvent', socialChanges]
+#年金
+resources.factory 'Annuitity', ['restmod', 'RMUtils', '$nbEvent', Annuitity]
+
+
+
+
+
