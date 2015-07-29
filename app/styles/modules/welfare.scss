@@ -54,6 +54,23 @@
     width: 36px;
 }
 
+.checkbox-row {
+    @include clearfix();
+
+    label {
+        float: left;
+        margin-top: 25px;
+    }
+
+    ul {
+        float: left;
+    }
+
+    li {
+        float: left;
+    }
+}
+
 
 
 

@@ -325,23 +325,6 @@ md-dialog.hand_over {
 md-dialog.welfare_personal_new {
     min-width: 600px;
 
-    .checkbox-row {
-        @include clearfix();
-
-        label {
-            float: left;
-            margin-top: 25px;
-        }
-
-        ul {
-            float: left;
-        }
-
-        li {
-            float: left;
-        }
-    }
-
     .md-actions {
         border-top: 1px solid rgba(0, 0, 0, .12);
     }
@@ -359,6 +342,15 @@ md-dialog.performance_upload {
             margin-top: 27px;
         }
     }
+
+    .md-actions {
+        border-top: 1px solid rgba(0, 0, 0, .12);
+    }
+}
+
+//社保变动信息dialog
+md-dialog.socialChangeInfo {
+    min-width: 600px;
 
     .md-actions {
         border-top: 1px solid rgba(0, 0, 0, .12);
