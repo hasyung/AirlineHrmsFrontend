@@ -227,15 +227,17 @@ class SocialComputeController extends nb.Controller
         @currentYear + "-" + @currentMonth
 
     loadRecords: ()->
-        @socialRecords.$search({month: @currentCalcTime()})
+        @socialRecords.$refresh({month: @currentCalcTime()})
 
     # 强制计算
     exeCalc: ()->
         @calcing = true
-        self = @
+        self = this
 
-        @socialRecords = @SocialRecord.compute({month: @currentCalcTime()}).$asPromise().then ()->
+        @socialRecords = @SocialRecord.compute({month: @currentCalcTime()}).$asPromise().then (data)->
             self.calcing = false
+            erorr_msg = data.$response.data.messages
+            self.Evt.$send("social:calc:error", erorr_msg) if erorr_msg
 
     parseJSON: (data) ->
         angular.fromJson(data)

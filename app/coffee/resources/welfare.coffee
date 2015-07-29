@@ -38,6 +38,7 @@ SocialRecord = (restmod, RMUtils, $Evt) ->
                         $config:
                             jsonRoot: 'social_records'
                     ).$search(params);
+
             Collection:
                 search: (tableState) ->
                     this.$refresh(tableState)
