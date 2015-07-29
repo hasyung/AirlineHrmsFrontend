@@ -57,6 +57,9 @@ class WelfareController
                 $Evt.$send('wselfate:save:success', '社保配置保存成功')
 
 
+# 社保
+
+
 class WelfarePersonalController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'SocialPersonSetups']
 
@@ -287,13 +290,10 @@ class SocialHistoryController
         rows.map (row) -> return row.entity.$pk
 
 
-
-
 class SocialChangesController
     @.$inject = ['$http', '$scope', '$nbEvent', 'SocialChanges']
 
     constructor: ($http, $scope, $Evt, @socialChanges) ->
-
         @configurations = @loadInitailData()
 
         @filterOptions = {
@@ -365,3 +365,36 @@ app.controller 'welfarePersonalCtrl', WelfarePersonalController
 app.controller 'socialComputeCtrl', SocialComputeController
 app.controller 'socialHistoryCtrl', SocialHistoryController
 app.controller 'socialChangesCtrl', SocialChangesController
+
+
+# 年金
+
+
+class AnnuityPersonalController
+    @.$inject = ['$http', '$scope', '$nbEvent']
+
+    constructor: ($http, $scope, $Evt) ->
+
+
+class AnnuityComputeController
+    @.$inject = ['$http', '$scope', '$nbEvent', 'SocialRecords']
+
+    constructor: ($http, $scope, $Evt, @socialRecords) ->
+
+
+class AnnuityHistoryController
+    @.$inject = ['$http', '$scope', '$nbEvent']
+
+    constructor: ($http, $scope, $Evt) ->
+
+
+class AnnuityChangesController
+    @.$inject = ['$http', '$scope', '$nbEvent']
+
+    constructor: ($http, $scope, $Evt) ->
+
+
+app.controller 'annuityPersonalCtrl', AnnuityPersonalController
+app.controller 'annuityComputeCtrl', AnnuityComputeController
+app.controller 'annuityHistoryCtrl', AnnuityHistoryController
+app.controller 'annuityChangesCtrl', AnnuityChangesController
