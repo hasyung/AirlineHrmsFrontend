@@ -1,2 +1,10 @@
 .app-content-wrapper(flex ng-controller="socialHistoryCtrl as ctrl")
-  h3 社保历史记录查看 的接口没有。
+
+    div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+
+    div.ui-grid-container.mt5
+        md-toolbar
+            .md-toolbar-tools
+                h2 社保个人设置
+
+        div(nb-grid column-defs="ctrl.columnDef" grid-selection safe-src="ctrl.configurations")

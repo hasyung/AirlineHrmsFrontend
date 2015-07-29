@@ -172,6 +172,32 @@ class SocialComputeController
 
         @columnDef = [
             {displayName: '员工编号', name: 'employeeNo'}
+            {
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+            }
+            {displayName: '社保属地', name: 'socialLocation'}
+            {displayName: '社保编号', name: 'socialAccount'}
+            {displayName: '年度养老基数', name: 'pensionCardinality'}
+            {displayName: '年度其他基数', name: 'otherCardinality'}
+            {displayName: '个人合计', name: 'personageTotal'}
+            {displayName: '单位合计', name: 'companyTotal'}
+            {displayName: '总合计', name: 'total'}
 
         ]
 
@@ -191,19 +217,76 @@ class SocialComputeController
 
 
 class SocialHistoryController
-    @.$inject = ['$scope', '$nbEvent']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'SocialRecords']
 
-    constructor: ($scope, $Evt) ->
+    constructor: ($http, $scope, $Evt, @socialRecords) ->
+
+        @configurations = @loadInitailData()
+
+        @filterOptions = {
+            name: 'welfarePersonal'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '员工姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+                {
+                    name: 'month'
+                    displayName: '缴费月度'
+                    type: 'date-range'
+                }
+            ]
+        }
 
         @columnDef = [
             {displayName: '员工编号', name: 'employeeNo'}
+            {
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+            }
+            {displayName: '社保属地', name: 'socialLocation'}
+            {displayName: '缴费月度', name: 'month'}
+            {displayName: '社保编号', name: 'socialAccount'}
+            {displayName: '年度养老基数', name: 'pensionCardinality'}
+            {displayName: '年度其他基数', name: 'otherCardinality'}
+            {displayName: '个人合计', name: 'personageTotal'}
+            {displayName: '单位合计', name: 'companyTotal'}
+            {displayName: '总合计', name: 'total'}
+
         ]
 
-        @filterOptions = {
-            name: 'SocialHistory'
-            constraintDefs: [
-            ]
-        }
+    loadInitailData: ->
+        @socialRecords = @socialRecords.$collection().$fetch()
+
+    search: (tableState) ->
+        @socialRecords.$refresh(tableState)
+
+    getSelectsIds: () ->
+        rows = @gridApi.selection.getSelectedGridRows()
+        rows.map (row) -> return row.entity.$pk
+
+
 
 
 class SocialChangesController
@@ -252,10 +335,10 @@ class SocialChangesController
                 field: 'deal'
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents ng-binding ng-scope">
-                    <a nb-panel
-                        template-url="partials/personnel/info_basic.html"
-                        locals="{employee: row.entity}">
-                        处理
+                    <a nb-dialog
+                        template-url="partials/welfares/socials/change_info.html"
+                        locals="{changeInfos: row.entity}">
+                        查看
                     </a>
                 </div>
                 '''

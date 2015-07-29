@@ -1,0 +1,10 @@
+md-dialog.performance_upload(ng-controller="EditableResource" ng-init="current = dialog.changeInfos.$refresh();")
+    md-toolbar.md-accent(md-theme="hrms")
+            .md-toolbar-tools
+                span 变动信息
+    md-content.sticky-container
+
+
+        .md-actions.mt30
+            md-button(ng-click='dialog.close()') 取 消
+            md-button.md-primary.md-raised(ng-click="submit() ; dialog.close()") 计 算
