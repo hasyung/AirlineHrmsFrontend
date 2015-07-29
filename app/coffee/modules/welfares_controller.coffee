@@ -60,7 +60,7 @@ class WelfareController
 # 社保
 
 
-class WelfarePersonalController extends nb.Controller
+class WelfarePersonalController
     @.$inject = ['$http', '$scope', '$nbEvent', 'SocialPersonSetups']
 
     constructor: ($http, $scope, $Evt, @socialPersonSetups) ->
@@ -166,7 +166,7 @@ class WelfarePersonalController extends nb.Controller
             @getSelected().forEach (record) -> record.entity.$destroy()
 
 
-class SocialComputeController
+class SocialComputeController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'SocialRecords']
 
     constructor: (@http, $scope, @Evt, @socialRecords) ->
@@ -207,19 +207,6 @@ class SocialComputeController
 
         ]
 
-        $scope.upload_salary_start = false
-        $scope.upload_salary_finish = false
-
-    $getYears: ()->
-        [2015..new Date().getFullYear()]
-
-    $currentCalcTime: ()->
-        @currentYear + "-" + @currentMonth
-
-    $getMonths: ()->
-        months = [1..new Date().getMonth() + 1]
-        months = _.map months, (item) -> item = "0" + item if item < 10
-
     loadInitialData: ()->
         @upload_xls_id = 0
         @upload_result = ""
@@ -236,12 +223,11 @@ class SocialComputeController
     search: (tableState)->
         @socialRecords.$refresh(tableState)
 
-    getSelectsIds: ()->
-        rows = @gridApi.selection.getSelectedGridRows()
-        rows.map (row) -> return row.entity.$pk
+    currentCalcTime: ()->
+        @currentYear + "-" + @currentMonth
 
     exeCalc: ()->
-        calc_month = @$currentCalcTime()
+        calc_month = @currentCalcTime()
         @search({month: calc_month})
 
     parseJSON: (data) ->
@@ -249,18 +235,20 @@ class SocialComputeController
 
     upload_salary: ()->
         self = @
-        calc_month = @$currentCalcTime()
+        calc_month = @currentCalcTime()
         params = {attachment_id: @upload_xls_id, month: calc_month}
 
         @http.post("/api/social_records/import", params).success (data, status) ->
-            self.Evt.$send 'upload:salary_import:success', '月度' + calc_month + '薪酬数据导入成功'
+            if data.error_count > 0
+                self.Evt.$send 'upload:salary_import:error', '月度' + calc_month + '薪酬数据有' + data.error_count + '条导入失败'
+            else
+                self.Evt.$send 'upload:salary_import:success', '月度' + calc_month + '薪酬数据导入成功'
 
 
 class SocialHistoryController
     @.$inject = ['$http', '$scope', '$nbEvent', 'SocialRecords']
 
     constructor: ($http, $scope, $Evt, @socialRecords) ->
-
         @configurations = @loadInitialData()
 
         @filterOptions = {

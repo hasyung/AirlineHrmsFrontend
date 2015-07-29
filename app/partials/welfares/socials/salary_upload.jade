@@ -26,5 +26,5 @@ md-dialog.performance_upload
                 div.ml30.mb30 {{ctrl.upload_result}}
 
         .md-actions
-            md-button(ng-click='dialog.close()' ng-disabled="upload_salary_start && !upload_salary_finish") 取 消
-            md-button.md-primary.md-raised(ng-click="dialog.close();ctrl.upload_salary()" ng-disabled="upload_salary_start && !upload_salary_finish") 确 定
+            md-button(ng-click='dialog.close()') 取 消
+            md-button.md-primary.md-raised(ng-click="dialog.close();ctrl.upload_salary()") 确 定
