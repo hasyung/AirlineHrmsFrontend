@@ -66,8 +66,6 @@ Annuitity = (restmod, RMUtils, $Evt) ->
             jsonRootSingle: 'annuitie'
             jsonRootMany: 'annuities'
 
-        owner: {belongsTo: 'Employee', key: 'employee_id'}
-
         $extend:
             Collection:
                 search: (tableState) ->

@@ -217,7 +217,7 @@ class PerformanceAllege extends nb.Controller
         @columnDef = BASE_TABLE_DEFS.concat [
             {displayName: '考核时段', name: 'assessTime'}
             {displayName: '绩效', name: 'result'}
-            {displayName: '申述时间', name: 'createdAt'}
+            {displayName: '申述时间', name: 'createdAt',cellFilter: "date:'yyyy-MM-dd'"}
             {displayName: '申述结果', name: 'outcome'}
             {
                 displayName: '处理',
