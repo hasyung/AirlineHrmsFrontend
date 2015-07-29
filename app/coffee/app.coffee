@@ -108,7 +108,7 @@ mdThemingConf = ($mdThemingProvider) ->
 
 routeConf = ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) ->
     $locationProvider.html5Mode(false)
-    $urlRouterProvider.otherwise('/todo')
+    $urlRouterProvider.otherwise('/orgs')
 
     $stateProvider
         .state 'home', {
