@@ -1,10 +1,95 @@
-md-dialog.performance_upload(ng-controller="EditableResource" ng-init="current = dialog.changeInfos.$refresh();")
+md-dialog.socialChangeInfo(
+    ng-controller="EditableResource"
+    ng-init="current = dialog.changeInfos.$refresh();"
+    )
     md-toolbar.md-accent(md-theme="hrms")
             .md-toolbar-tools
-                span 变动信息
-    md-content.sticky-container
+                span 变动信息-{{current.category}}
+    form(
+        ng-submit="save(current.$save(), changeContract)"
+        name="changeContract"
+        ng-if="current.category == '合同新签'"
+        )
+        md-content.sticky-container
+            include changeInfo/contract
+        .md-actions
+            md-button.md-primary.md-raised(ng-click="dialog.close()") 不做处理
+            md-button.md-primary.md-raised(ng-click="submit; dialog.close()") 处理完毕
+            md-button(ng-click="dialog.close()") 关 闭
+
+    form(
+        ng-submit="save(current.$save(), changeSalary)"
+        name="changeSalary"
+        ng-if="current.category == '停薪调'"
+        )
+        md-content.sticky-container
+            include changeInfo/salary
+        .md-actions
+            md-button.md-primary.md-raised(ng-click="dialog.close()") 不做处理
+            md-button.md-primary.md-raised(ng-click="submit; dialog.close()") 停交社保
+            md-button(ng-click="dialog.close()") 关闭
+
+    form(
+        ng-submit="save(current.$save(), changePassage)"
+        name="changePassage"
+        ng-if="current.category == '公务员通道'"
+        )
+        md-content.sticky-container
+            include changeInfo/passage
+        .md-actions
+            md-button.md-primary.md-raised(ng-click="dialog.close()") 不做处理
+            md-button.md-primary.md-raised(ng-click="submit; dialog.close()") 处理完毕
+            md-button(ng-click="dialog.close()") 关闭
+
+    form(
+        ng-submit="save(current.$save(), changeIdentity)"
+        name="changeIdentity"
+        ng-if="current.category == '身份证变动'"
+        )
+        md-content.sticky-container
+            include changeInfo/identity
+        .md-actions
+            md-button.md-primary.md-raised(ng-click="dialog.close()") 不做处理
+            md-button.md-primary.md-raised(ng-click="submit; dialog.close()") 处理完毕
+            md-button(ng-click="dialog.close()") 关闭
+
+    form(
+        ng-submit="save(current.$save(), changeDependency)"
+        name="changeDependency"
+        ng-if="current.category == '属地变化'"
+        )
+        md-content.sticky-container
+            include changeInfo/dependency
+        .md-actions
+            md-button.md-primary.md-raised(ng-click="dialog.close()") 不做处理
+            md-button.md-primary.md-raised(ng-click="submit; dialog.close()") 处理完毕
+            md-button(ng-click="dialog.close()") 关闭
+
+    form(
+        ng-submit="save(current.$save(), changeSalaryStop)"
+        name="changeSalaryStop"
+        ng-if="current.category == '停薪调停止'"
+        )
+        md-content.sticky-container
+            include changeInfo/salary_stop
+        .md-actions
+            md-button.md-primary.md-raised(ng-click="dialog.close()") 不做处理
+            md-button.md-primary.md-raised(ng-click="submit; dialog.close()") 恢复社保
+            md-button(ng-click="dialog.close()") 关闭
 
 
-        .md-actions.mt30
-            md-button(ng-click='dialog.close()') 取 消
-            md-button.md-primary.md-raised(ng-click="submit() ; dialog.close()") 计 算
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
