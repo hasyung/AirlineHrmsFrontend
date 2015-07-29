@@ -31,6 +31,21 @@ class NbFilterCtrl extends nb.FilterController
                 </md-input-container>
             </div>
         '''
+        'month-range': '''
+            <div cla<div class="md-input-container-row">
+                <md-input-container md-no-float>
+                    <md-select placeholder="${ displayName }" ng-model="${ name }.from">
+                        <md-option ng-value="item" ng-repeat="item in $parent.month_list">{{item}}</md-option>
+                    </md-select>
+                </md-input-container>
+                <div class="divide-text">到</div>
+                <md-input-container md-no-float>
+                    <md-select placeholder="${ displayName }" ng-model="${ name }.to">
+                        <md-option ng-value="item" ng-repeat="item in $parent.month_list">{{item}}</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+        '''
         'date': '''
             <md-input-container md-no-float>
                 <input type="text" placeholder="${ displayName }" bs-datepicker container="body" ng-model="${name}">
@@ -138,15 +153,18 @@ class NbFilterCtrl extends nb.FilterController
     addNewCondition: (constraint, initialValue) ->
         return if !constraint
         constraint.startup()
+
         condition = {
             selectedConstraint: constraint
         }
+
         condition.initialValue = initialValue if initialValue
         @conditions.push(condition)
 
     initialCondition: (currentConstraint, parentScope, parentElem, initialValue) ->
         scope = parentScope.$new()
         scope[currentConstraint.name] = initialValue if initialValue
+
         $el = @compile(currentConstraint.template) scope, (cloned, scope) ->
             parentElem.append(cloned)
 
@@ -190,6 +208,16 @@ class NbFilterCtrl extends nb.FilterController
 conditionInputContainer = ($enum) ->
     postLink = (scope, elem, attr, ctrl) ->
         scope.$enum = $enum
+
+        month_list = []
+        date = new Date()
+        angular.forEach [2015..date.getFullYear()], (year) ->
+            months = [1..12]
+            months = [1..date.getMonth() + 1] if year = date.getFullYear()
+            angular.forEach months, (month)->
+                month = "0" + month if month < 10
+                month_list.push(year + "-" + month)
+        scope.month_list = month_list
 
         ctrl.initialCondition(scope.condition.selectedConstraint, scope, elem, scope.condition.initialValue)
         scope.$watch 'condition.selectedConstraint', (newValue, old) ->

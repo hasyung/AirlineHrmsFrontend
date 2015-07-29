@@ -3,10 +3,10 @@
         .md-toolbar-tools
             span(layout)
                 label 月度
-                md-select(ng-model="ctrl.currentYear" ng-change="ctrl.exeCalc()" placeholder="请选择年份")
+                md-select(ng-model="ctrl.currentYear" ng-change="ctrl.loadRecords()" placeholder="请选择年份")
                     md-option(ng-value="item" ng-repeat="item in ctrl.year_list track by $index" ng-bind="item")
                 label(flex-order="2") 年
-                md-select(ng-model="ctrl.currentMonth" ng-change="ctrl.exeCalc()" placeholder="请选择月份")
+                md-select(ng-model="ctrl.currentMonth" ng-change="ctrl.loadRecords()" placeholder="请选择月份")
                     md-option(ng-value="item" ng-repeat="item in ctrl.month_list track by $index" ng-bind="item")
                 label(flex-order="3") 月
             span(flex)
@@ -18,12 +18,13 @@
             span
                 md-button.md-raised.md-primary(
                     ng-click="ctrl.exeCalc()"
+                    ng-disabled="ctrl.calcing"
                     ) 计算
             span
                 md-menu(ng-init="selectedRows=[]")
                     md-button.md-primary.md-raised(
                         ng-click="$mdOpenMenu($event)"
-                        ng-disabled="ctrl.socialRecords.length==0"
+                        ng-disabled="ctrl.calcing || ctrl.socialRecords.length==0"
                         ) 导出
                     md-menu-content
                         md-menu-item()

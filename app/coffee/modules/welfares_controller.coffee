@@ -61,9 +61,9 @@ class WelfareController
 
 
 class WelfarePersonalController
-    @.$inject = ['$http', '$scope', '$nbEvent', 'SocialPersonSetups']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'SocialPersonSetup']
 
-    constructor: ($http, $scope, $Evt, @socialPersonSetups) ->
+    constructor: ($http, $scope, $Evt, @SocialPersonSetup) ->
         @configurations = @loadInitialData()
 
         @filterOptions = {
@@ -149,7 +149,7 @@ class WelfarePersonalController
         ]
 
     loadInitialData: ->
-        @socialPersonSetups = @socialPersonSetups.$collection().$fetch()
+        @socialPersonSetups = @SocialPersonSetup.$collection().$fetch()
 
     search: (tableState) ->
         @socialPersonSetups.$refresh(tableState)
@@ -167,9 +167,9 @@ class WelfarePersonalController
 
 
 class SocialComputeController extends nb.Controller
-    @.$inject = ['$http', '$scope', '$nbEvent', 'SocialRecords']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'SocialRecord']
 
-    constructor: (@http, $scope, @Evt, @socialRecords) ->
+    constructor: (@http, $scope, @Evt, @SocialRecord) ->
         @socialRecords = @loadInitialData()
 
         @columnDef = [
@@ -217,8 +217,8 @@ class SocialComputeController extends nb.Controller
         @currentYear = _.last(@year_list)
         @currentMonth = _.last(@month_list)
 
-        @socialRecords = @socialRecords.$collection().$fetch()
-        @exeCalc()
+        @calcing = false
+        @socialRecords = @SocialRecord.$collection().$search({month: @currentCalcTime()})
 
     search: (tableState)->
         @socialRecords.$refresh(tableState)
@@ -226,9 +226,16 @@ class SocialComputeController extends nb.Controller
     currentCalcTime: ()->
         @currentYear + "-" + @currentMonth
 
+    loadRecords: ()->
+        @socialRecords.$search({month: @currentCalcTime()})
+
+    # 强制计算
     exeCalc: ()->
-        calc_month = @currentCalcTime()
-        @search({month: calc_month})
+        @calcing = true
+        self = @
+
+        @socialRecords = @SocialRecord.compute({month: @currentCalcTime()}).$asPromise().then ()->
+            self.calcing = false
 
     parseJSON: (data) ->
         angular.fromJson(data)
@@ -246,13 +253,13 @@ class SocialComputeController extends nb.Controller
 
 
 class SocialHistoryController
-    @.$inject = ['$http', '$scope', '$nbEvent', 'SocialRecords']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'SocialRecord']
 
-    constructor: ($http, $scope, $Evt, @socialRecords) ->
-        @configurations = @loadInitialData()
+    constructor: ($http, @scope, $Evt, @socialRecord) ->
+        @socialRecords = @loadInitialData()
 
         @filterOptions = {
-            name: 'welfarePersonal'
+            name: 'socialHistory'
             constraintDefs: [
                 {
                     name: 'employee_name'
@@ -265,9 +272,9 @@ class SocialHistoryController
                     type: 'string'
                 }
                 {
-                    name: 'month'
+                    name: 'calc_month'
                     displayName: '缴费月度'
-                    type: 'date-range'
+                    type: 'month-range'
                 }
             ]
         }
@@ -301,11 +308,10 @@ class SocialHistoryController
             {displayName: '个人合计', name: 'personageTotal'}
             {displayName: '单位合计', name: 'companyTotal'}
             {displayName: '总合计', name: 'total'}
-
         ]
 
     loadInitialData: ->
-        @socialRecords = @socialRecords.$collection().$fetch()
+        @socialRecords = @socialRecord.$collection().$fetch()
 
     search: (tableState) ->
         @socialRecords.$refresh(tableState)
@@ -316,13 +322,13 @@ class SocialHistoryController
 
 
 class SocialChangesController
-    @.$inject = ['$http', '$scope', '$nbEvent', 'SocialChanges']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'SocialChange']
 
-    constructor: ($http, $scope, $Evt, @socialChanges) ->
-        @configurations = @loadInitialData()
+    constructor: ($http, $scope, $Evt, @SocialChange) ->
+        @socialChanges = @loadInitialData()
 
         @filterOptions = {
-            name: 'welfarePersonal'
+            name: 'socialChanges'
             constraintDefs: [
                 {
                     name: 'employee_name'
@@ -375,7 +381,7 @@ class SocialChangesController
         ]
 
     loadInitialData: ->
-        @socialChanges = @socialChanges.$collection().$fetch()
+        @socialChanges = @SocialChange.$collection().$fetch()
 
     search: (tableState) ->
         @socialChanges.$refresh(tableState)
