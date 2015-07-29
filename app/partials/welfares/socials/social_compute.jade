@@ -13,12 +13,11 @@
             span
                 md-button.md-raised.md-primary(
                     nb-dialog
-                    template-url="partials/welfares/socials/performance_upload.html"
+                    template-url="partials/welfares/socials/salary_upload.html"
                     ) 上传薪酬
             span
                 md-button.md-raised.md-primary(
-                    nb-dialog
-                    template-url="partials/welfares/socials/compute.html"
+                    ng-click="ctrl.exeCalc()"
                     ) 计算
             span
                 md-menu(ng-init="selectedRows=[]")

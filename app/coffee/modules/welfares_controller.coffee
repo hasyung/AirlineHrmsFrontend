@@ -169,7 +169,7 @@ class WelfarePersonalController extends nb.Controller
 class SocialComputeController
     @.$inject = ['$http', '$scope', '$nbEvent', 'SocialRecords']
 
-    constructor: ($http, $scope, $Evt, @socialRecords) ->
+    constructor: (@http, $scope, @Evt, @socialRecords) ->
         @socialRecords = @loadInitialData()
 
         @columnDef = [
@@ -207,6 +207,9 @@ class SocialComputeController
 
         ]
 
+        $scope.upload_salary_start = false
+        $scope.upload_salary_finish = false
+
     $getYears: ()->
         [2015..new Date().getFullYear()]
 
@@ -218,6 +221,9 @@ class SocialComputeController
         months = _.map months, (item) -> item = "0" + item if item < 10
 
     loadInitialData: ()->
+        @upload_xls_id = 0
+        @upload_result = ""
+
         @year_list = @$getYears()
         @month_list = @$getMonths()
 
@@ -225,6 +231,7 @@ class SocialComputeController
         @currentMonth = _.last(@month_list)
 
         @socialRecords = @socialRecords.$collection().$fetch()
+        @exeCalc()
 
     search: (tableState)->
         @socialRecords.$refresh(tableState)
@@ -236,6 +243,17 @@ class SocialComputeController
     exeCalc: ()->
         calc_month = @$currentCalcTime()
         @search({month: calc_month})
+
+    parseJSON: (data) ->
+        angular.fromJson(data)
+
+    upload_salary: ()->
+        self = @
+        calc_month = @$currentCalcTime()
+        params = {attachment_id: @upload_xls_id, month: calc_month}
+
+        @http.post("/api/social_records/import", params).success (data, status) ->
+            self.Evt.$send 'upload:salary_import:success', '月度' + calc_month + '薪酬数据导入成功'
 
 
 class SocialHistoryController
