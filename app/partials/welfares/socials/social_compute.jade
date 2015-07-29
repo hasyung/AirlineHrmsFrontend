@@ -13,35 +13,43 @@
             span
                 md-button.md-raised.md-primary(
                     nb-dialog
-                    template-url="partials/welfares/socials/performance_upload.html"
+                    template-url="partials/welfares/socials/salary_upload.html"
                     ) 上传薪酬
             span
                 md-button.md-raised.md-primary(
-                    nb-dialog
-                    template-url="partials/welfares/socials/compute.html"
+                    ng-click="ctrl.exeCalc()"
                     ) 计算
             span
                 md-menu(ng-init="selectedRows=[]")
                     md-button.md-primary.md-raised(
-                        ng-click="selectedRows = ctrl.getSelectsIds(); $mdOpenMenu($event)"
+                        ng-click="$mdOpenMenu($event)"
+                        ng-disabled="ctrl.socialRecords.length==0"
                         ) 导出
                     md-menu-content
                         md-menu-item()
-                            a.md-button(flex ng-href="/api/employees/export_to_xls") 导出全部人员
-                        md-menu-item(ng-if="selectedRows.length > 0")
-                            a.md-button(
-                                nb-download
-                                url-prefix="/api/employees/export_to_xls?employee_ids=#param#"
-                                param-getter="ctrl.getSelectsIds()"
-                                href="javascript:;"
+                            a.md-button(flex
                                 download
-                            ) 导出所选人员
+                                ng-href="/api/social_records/export_declare?month={{ctrl.currentCalcTime()}}"
+                                href="javascript:;"
+                                ) 申报表
+                        md-menu-item()
+                            a.md-button(
+                                download
+                                ng-href="/api/employees/export_record?month={{ctrl.currentCalcTime()}}"
+                                href="javascript:;"
+                            ) 成都社保明细
+                        md-menu-item()
+                            a.md-button(
+                                download
+                                ng-href="/api/employees/export_withhold?month={{ctrl.currentCalcTime()}}"
+                                href="javascript:;"
+                            ) 代扣表
 
     div.ui-grid-container.mt5
         md-toolbar
             .md-toolbar-tools
                 h2 当期社保
 
-        div(nb-grid column-defs="ctrl.columnDef" grid-selection safe-src="ctrl.socialRecords")
+        div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.socialRecords")
 
 

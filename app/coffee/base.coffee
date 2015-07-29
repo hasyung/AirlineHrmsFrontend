@@ -24,6 +24,15 @@ class Controller extends Base
 
         return @q.reject(xhr)
 
+    $getYears: ()->
+        [2015..new Date().getFullYear()]
+
+    $getMonths: ()->
+        months = [1..new Date().getMonth() + 1]
+        months = _.map months, (item) ->
+            item = "0" + item if item < 10
+
+
 class FilterController extends Controller
     onConditionInValid: ($Evt, invalid) ->
         $Evt.$send('search:condition:error', {message: invalid.join(",")})

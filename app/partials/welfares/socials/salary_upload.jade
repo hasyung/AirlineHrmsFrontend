@@ -1,0 +1,30 @@
+md-dialog.performance_upload
+    md-toolbar.md-accent(md-theme="hrms"
+        ng-init="targetUrl='/api/attachments/upload_xls';ctrl.upload_result='';")
+            .md-toolbar-tools
+                span 上传薪酬
+    md-content.sticky-container
+        .dialog-content(layout layout-align="center")
+            section.form-material-section(flex)
+                .upload-date(layout)
+                    label 选择月份
+                    md-select(ng-model="ctrl.currentYear" ng-change="" placeholder="请选择年份")
+                        md-option(ng-value="item" ng-repeat="item in ctrl.year_list track by $index" ng-bind="item")
+                    label(flex-order="2") 年
+                    md-select(ng-model="ctrl.currentMonth" ng-change="" placeholder="请选择月份")
+                        md-option(ng-value="item" ng-repeat="item in ctrl.month_list track by $index" ng-bind="item")
+                    label(flex-order="3") 月
+
+                .accessory-btn-group.ml30.mr30.mb20(
+                    flow-init="{target: targetUrl, testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                    flow-files-submitted="upload_salary_start=true;$flow.upload();"
+                    flow-file-success="ctrl.upload_xls_id=ctrl.parseJSON($message).id;ctrl.upload_result='上传成功，点确定开始解析数据.'"
+                )
+                    md-button.md-primary.md-raised(flow-btn type="button") 添加文件
+                    .tip
+
+                div.ml30.mb30 {{ctrl.upload_result}}
+
+        .md-actions
+            md-button(ng-click='dialog.close()') 取 消
+            md-button.md-primary.md-raised(ng-click="dialog.close();ctrl.upload_salary()") 确 定
