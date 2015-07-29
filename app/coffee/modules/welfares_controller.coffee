@@ -436,16 +436,7 @@ class AnnuityPersonalController extends nb.Controller
             {displayName: '员工编号', name: 'employeeNo'}
             {
                 displayName: '姓名'
-                field: 'employeeName'
-                cellTemplate: '''
-                <div class="ui-grid-cell-contents">
-                    <a nb-panel
-                        template-url="partials/personnel/info_basic.html"
-                        locals="{employee: row.entity.owner}">
-                        {{grid.getCellValue(row, col)}}
-                    </a>
-                </div>
-                '''
+                name: 'name'
             }
             {
                 displayName: '所属部门'
@@ -456,20 +447,10 @@ class AnnuityPersonalController extends nb.Controller
             {displayName: '身份证号', name: 'identityNo'}
             {displayName: '手机号', name: 'mobile'}
             {displayName: '本年基数', name: 'annuityCardinality'}
-            {displayName: '缴费状态', name: 'annuityStatus'}
-            # {
-            #     displayName: '编辑'
-            #     field: 'name'
-            #     cellTemplate: '''
-            #     <div class="ui-grid-cell-contents">
-            #         <a nb-dialog
-            #             template-url="partials/welfares/settings/welfare_personal_edit.html"
-            #             locals="{setups: row.entity}">
-            #             编辑
-            #         </a>
-            #     </div>
-            #     '''
-            # }
+            {
+                displayName: '缴费状态'
+                name: 'annuityStatus'
+            }
         ]
 
         @constraints = [
@@ -488,6 +469,7 @@ class AnnuityPersonalController extends nb.Controller
 
     getSelected: () ->
         rows = @gridApi.selection.getSelectedGridRows()
+
 
 
 class AnnuityComputeController
