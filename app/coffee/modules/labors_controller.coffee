@@ -418,7 +418,7 @@ class AttendanceRecordCtrl extends nb.Controller
     @.$inject = ['$scope', 'Attendance', 'Employee', 'GridHelper']
 
     constructor: (@scope, @Attendance, @Employee, GridHelper) ->
-        @loadInitailData()
+        @loadInitialData()
 
         @filterOptions = filterBuildUtils('attendanceRecord')
             .col 'name',                 '姓名',    'string',           '姓名'
@@ -433,7 +433,7 @@ class AttendanceRecordCtrl extends nb.Controller
             {displayName: '到岗时间', name: 'joinScalDate'}
         ]
 
-    loadInitailData: ()->
+    loadInitialData: ()->
         @employees = @Employee.$collection().$fetch()
 
     search: (tableState)->
@@ -448,7 +448,7 @@ class AttendanceHisCtrl extends nb.Controller
     @.$inject = ['$scope', 'Attendance']
 
     constructor: (@scope, @Attendance) ->
-        @loadInitailData()
+        @loadInitialData()
 
         @filterOptions = filterBuildUtils('attendanceHis')
             .col 'employee_name',        '姓名',      'string',           '姓名'
@@ -492,7 +492,7 @@ class AttendanceHisCtrl extends nb.Controller
             {displayName: '记录时间', name: 'recordDate'}
         ]
 
-    loadInitailData: ()->
+    loadInitialData: ()->
         @attendances = @Attendance.$collection().$fetch()
 
     search: (tableState)->
@@ -512,7 +512,7 @@ class ContractCtrl extends nb.Controller
     @.$inject = ['$scope', 'Contract', '$http', 'Employee', '$nbEvent']
 
     constructor: (@scope, @Contract, @http, @Employee, @Evt) ->
-        @loadInitailData()
+        @loadInitialData()
         @filterOptions = filterBuildUtils('contract')
             .col 'employee_name',        '姓名',        'string',           '姓名'
             .col 'employee_no',          '员工编号',     'string'
@@ -622,7 +622,7 @@ class ContractCtrl extends nb.Controller
         ]
 
 
-    loadInitailData: ->
+    loadInitialData: ->
         @contracts = @Contract.$collection().$fetch()
 
     search: (tableState) ->

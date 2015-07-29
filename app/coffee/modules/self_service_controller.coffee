@@ -191,10 +191,10 @@ class ProfileCtrl extends nb.Controller
     @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope', 'User', 'USER_META', 'UserPerformance', 'Performance', '$filter']
 
     constructor: (@scope, @sweet, @Employee, @rootScope, @User, @USER_META, @UserPerformance, @Performance, @filter) ->
-        @loadInitailData()
+        @loadInitialData()
         @status = 'show'
 
-    loadInitailData: ->
+    loadInitialData: ->
         @scope.currentUser = @User.$fetch()
 
     # 员工自助中员工编辑自己的信息

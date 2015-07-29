@@ -4,7 +4,7 @@ class AttendanceRecordCtrl extends nb.Controller
     @.$inject = ['$scope', 'Attendance', 'Employee']
 
     constructor: (@scope, @Attendance, @Employee) ->
-        @loadInitailData()
+        @loadInitialData()
 
         @filterOptions = {
             name: 'attendanceRecord'
@@ -62,7 +62,7 @@ class AttendanceRecordCtrl extends nb.Controller
             {displayName: '到岗时间', name: 'joinScalDate'}
         ]
 
-    loadInitailData: ()->
+    loadInitialData: ()->
         @employees = @Employee.$collection().$fetch()
 
     search: (tableState)->
@@ -77,7 +77,7 @@ class AttendanceHisCtrl extends nb.Controller
     @.$inject = ['$scope', 'Attendance']
 
     constructor: (@scope, @Attendance) ->
-        @loadInitailData()
+        @loadInitialData()
 
         @filterOptions = {
             name: 'attendanceHis'
@@ -141,7 +141,7 @@ class AttendanceHisCtrl extends nb.Controller
             {displayName: '记录时间', name: 'recordDate'}
         ]
 
-    loadInitailData: ()->
+    loadInitialData: ()->
         @attendances = @Attendance.$collection().$fetch()
 
     search: (tableState)->

@@ -32,7 +32,7 @@ class PersonnelCtrl extends nb.Controller
     @.$inject = ['$scope', 'sweet', 'Employee']
 
     constructor: (@scope, @sweet, @Employee) ->
-        @loadInitailData()
+        @loadInitialData()
         @selectedIndex = 1
 
         @columnDef = [
@@ -85,7 +85,7 @@ class PersonnelCtrl extends nb.Controller
             .col 'labor_relation_id',    '用工性质', 'select',           '', {type: 'labor_relations'}
             .end()
 
-    loadInitailData: ->
+    loadInitialData: ->
         @employees = @Employee.$collection().$fetch()
 
     search: (tableState) ->
@@ -104,7 +104,7 @@ class NewEmpsCtrl extends nb.Controller
 
     constructor: (@scope, @Employee, @Org) ->
         @newEmp = {}
-        @loadInitailData()
+        @loadInitialData()
 
         @columnDef = [
             {
@@ -206,7 +206,7 @@ class NewEmpsCtrl extends nb.Controller
             ]
         }
 
-    loadInitailData: ->
+    loadInitialData: ->
         @collection_param = {
             join_scal_date: {
                 from: moment().subtract(1, 'year').format('YYYY-MM-DD')
@@ -221,7 +221,7 @@ class NewEmpsCtrl extends nb.Controller
     regEmployee: (employee)->
         self = @
         @employees.$build(employee).$save().$then ()->
-            self.loadInitailData()
+            self.loadInitialData()
 
     getSelectsIds: () ->
         rows = @scope.$gridApi.selection.getSelectedGridRows()
@@ -242,7 +242,7 @@ class LeaveEmployeesCtrl extends nb.Controller
     @.$inject = ['$scope', 'LeaveEmployees']
 
     constructor: (@scope, @LeaveEmployees) ->
-        @loadInitailData()
+        @loadInitialData()
 
         @columnDef = [
             {
@@ -310,7 +310,7 @@ class LeaveEmployeesCtrl extends nb.Controller
         }
 
 
-    loadInitailData: ->
+    loadInitialData: ->
         @leaveEmployees = @LeaveEmployees.$collection().$fetch()
 
     search: (tableState) ->
@@ -321,7 +321,7 @@ class ReviewCtrl extends nb.Controller
     @.$inject = ['$scope', 'Change', 'Record', '$mdDialog']
 
     constructor: (@scope, @Change, @Record, @mdDialog) ->
-        @loadInitailData()
+        @loadInitialData()
         @recordColumnDef = [
             {name:"department.name", displayName:"所属部门"}
             {name:"name", displayName:"姓名"}
@@ -375,7 +375,7 @@ class ReviewCtrl extends nb.Controller
             ]
         }
 
-    loadInitailData: ->
+    loadInitialData: ->
         # @changes = @Change.$collection().$fetch()
         @records = @Record.$collection().$fetch()
 
@@ -416,9 +416,9 @@ class PersonnelSort extends nb.Controller
 
     constructor: (@scope, @Org, @Position, @Employee, @http) ->
         @orgLinks = []
-        @loadInitailData()
+        @loadInitialData()
 
-    loadInitailData: ->
+    loadInitialData: ->
         self = @
         @currentOrgs = @Org.$search().$then (data)->
             self.currentOrgs = data.jqTreeful()[0]
