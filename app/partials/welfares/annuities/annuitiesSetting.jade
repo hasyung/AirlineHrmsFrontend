@@ -1,0 +1,16 @@
+.app-content-wrapper(flex ng-controller="annuityPersonalCtrl as ctrl")
+
+    div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+
+    div.ui-grid-container.mt5
+        md-toolbar
+            .md-toolbar-tools
+                h2 年金人员列表
+                span(flex)
+                md-button.md-primary.md-raised 年度基数计算
+
+                md-button.md-primary.md-raised 个人基数计算
+
+                md-button.md-primary.md-raised 导出人员列表
+
+        div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection safe-src="ctrl.configurations")

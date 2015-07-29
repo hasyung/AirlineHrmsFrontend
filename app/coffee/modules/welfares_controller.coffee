@@ -399,12 +399,93 @@ app.controller 'socialChangesCtrl', SocialChangesController
 
 
 # 年金
+class AnnuityPersonalController extends nb.Controller
+    @.$inject = ['$http', '$scope', '$nbEvent', 'Annuitity']
 
+    constructor: ($http, $scope, $Evt, @Annuitity) ->
 
-class AnnuityPersonalController
-    @.$inject = ['$http', '$scope', '$nbEvent']
+        @configurations = @loadInitialData()
 
-    constructor: ($http, $scope, $Evt) ->
+        @filterOptions = {
+            name: 'annuities'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+                {
+                    name: 'annuityStatus'
+                    displayName: '缴费状态'
+                    type: 'select'
+                    params: {
+                        type: 'annuity_status'
+                    }
+                }
+            ]
+        }
+
+        @columnDef = [
+            {displayName: '员工编号', name: 'employeeNo'}
+            {
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {
+                displayName: '所属部门'
+                name: 'department.name'
+                cellTooltip: (row) ->
+                    return row.entity.department.name
+            }
+            {displayName: '身份证号', name: 'identityNo'}
+            {displayName: '手机号', name: 'mobile'}
+            {displayName: '本年基数', name: 'annuityCardinality'}
+            {displayName: '缴费状态', name: 'annuityStatus'}
+            # {
+            #     displayName: '编辑'
+            #     field: 'name'
+            #     cellTemplate: '''
+            #     <div class="ui-grid-cell-contents">
+            #         <a nb-dialog
+            #             template-url="partials/welfares/settings/welfare_personal_edit.html"
+            #             locals="{setups: row.entity}">
+            #             编辑
+            #         </a>
+            #     </div>
+            #     '''
+            # }
+        ]
+
+        @constraints = [
+
+        ]
+
+    loadInitialData: ->
+        @Annuitity = @Annuitity.$collection().$fetch()
+
+    search: (tableState) ->
+        @Annuitity.$refresh(tableState)
+
+    getSelectsIds: () ->
+        rows = @gridApi.selection.getSelectedGridRows()
+        rows.map (row) -> return row.entity.$pk
+
+    getSelected: () ->
+        rows = @gridApi.selection.getSelectedGridRows()
 
 
 class AnnuityComputeController
