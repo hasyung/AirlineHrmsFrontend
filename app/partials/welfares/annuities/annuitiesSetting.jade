@@ -13,4 +13,12 @@
 
                 md-button.md-primary.md-raised 导出人员列表
 
-        div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection safe-src="ctrl.configurations")
+        div(
+            nb-grid
+            column-defs="ctrl.columnDef"
+            on-register-api="ctrl.exportGridApi(gridApi)"
+            export-api
+            grid-selection
+            multi-select="false"
+            safe-src="ctrl.configurations"
+            )

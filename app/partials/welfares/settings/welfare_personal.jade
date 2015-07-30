@@ -18,8 +18,11 @@
                             template-url="partials/welfares/settings/welfare_personal_new.html"
                         ) 新增
 
-        div(nb-grid column-defs="welP.columnDef"
+        div(
+            nb-grid
+            column-defs="welP.columnDef"
             on-register-api="welP.exportGridApi(gridApi)"
             grid-selection
             multi-select="false"
-            safe-src="welP.configurations")
+            safe-src="welP.configurations"
+            )
