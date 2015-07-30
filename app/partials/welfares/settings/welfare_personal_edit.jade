@@ -28,9 +28,7 @@ md-dialog.welfare_personal_new(ng-controller="EditableResource")
                         div(layout)
                             md-input-container.row-has-value(flex)
                                 label 用工性质
-                                md-select(ng-model="::current.laborRelationId" disabled)
-                                    md-option(value="合同") 合同
-                                    md-option(value="合同制") 合同制
+                                input(type="text" ng-model="::current.laborRelationName" disabled)
                             md-input-container.row-has-value(flex)
                                 label 社保属地
                                 md-select(ng-model="current.socialLocation")
@@ -74,7 +72,6 @@ md-dialog.welfare_personal_new(ng-controller="EditableResource")
                                     md-checkbox.md-primary(ng-model="current.fertility") 生育
 
 
-
         .md-actions
-            md-button(ng-click="dialog.close()") 取 消
-            md-button.md-primary.md-raised(ng-click="submit; dialog.close()") 确 定
+            md-button(ng-click="cancel(current, $event, socialPersonal);dialog.close()") 取 消
+            md-button.md-primary.md-raised(ng-click="submit();dialog.close()") 确 定

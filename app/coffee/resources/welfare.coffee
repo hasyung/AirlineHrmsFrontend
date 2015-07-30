@@ -2,7 +2,7 @@ resources = angular.module('resources')
 
 
 SocialPersonSetup = (restmod, RMUtils, $Evt) ->
-    socialPersonSetups = restmod.model('/social_person_setups').mix 'nbRestApi', {
+    socialPersonSetups = restmod.model('/social_person_setups').mix 'nbRestApi', 'DirtyModel', {
         $config:
             jsonRootSingle: 'social_person_setup'
             jsonRootMany: 'social_person_setups'
@@ -52,6 +52,9 @@ SocialChange = (restmod, RMUtils, $Evt) ->
             jsonRootMany: 'social_change_infos'
 
         owner: {belongsTo: 'Employee', key: 'employee_id'}
+        processed: {mask: "CU"}
+
+        socialSetup: {belongsTo: 'SocialPersonSetup', key: 'social_person_setup_id'}
 
         $extend:
             Collection:

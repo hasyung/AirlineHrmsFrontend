@@ -3,6 +3,7 @@
         fieldset(flex)
             div(style="display:none;")
                 input(type="text" ng-model="current.employeeId")
+
             div(layout)
                 md-input-container(flex)
                     label 姓名
@@ -17,17 +18,16 @@
                     input(type="text" ng-model="::current.departmentName" disabled)
                 md-input-container(flex)
                     label 工作属地
-                    input(type="text" ng-model="aaa" disabled)
+                    input(type="text" ng-model="::current.location" disabled)
 
             div(layout)
                 md-input-container.row-has-value(flex)
                     label 用工性质
-                    md-select(ng-model="::current.laborRelationId" disabled)
-                        md-option(value="合同") 合同
-                        md-option(value="合同制") 合同制
+                    input(type="text" ng-model="::current.laborRelationName" disabled)
                 md-input-container.row-has-value(flex)
                     label 原身份证
                     input(type="text" ng-model="::current.identityNoWas" disabled)
+
             div(layout)
                 md-input-container(flex)
                     label 现身份证
