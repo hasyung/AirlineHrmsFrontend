@@ -1,5 +1,5 @@
-.app-content-wrapper(flex ng-controller="welfarePersonalCtrl as welP")
-    div(nb-filter="welP.filterOptions" on-search="welP.search(state)")
+.app-content-wrapper(flex ng-controller="welfarePersonalCtrl as ctrl")
+    div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
     div.ui-grid-container
         md-toolbar
             .md-toolbar-tools
@@ -7,8 +7,8 @@
                 div(flex)
                 span
                     md-button.md-primary.md-raised(
-                        ng-disabled="welP.getSelected().length == 0"
-                        nb-confirm="welP.delete(isConfirm)"
+                        ng-disabled="ctrl.getSelected().length == 0"
+                        nb-confirm="ctrl.delete(isConfirm)"
                         nb-title="你是否要删除所选社保个人设置?"
                         nb-content="当你点击确定时，所选社保个人设置将被删除且无法恢复！"
                         ) 删除
@@ -18,8 +18,12 @@
                             template-url="partials/welfares/settings/welfare_personal_new.html"
                         ) 新增
 
-        div(nb-grid column-defs="welP.columnDef"
-            on-register-api="welP.exportGridApi(gridApi)"
+        div(
+            nb-grid
+            column-defs="ctrl.columnDef"
+            on-register-api="ctrl.exportGridApi(gridApi)"
+            export-api
             grid-selection
             multi-select="false"
-            safe-src="welP.configurations")
+            safe-src="ctrl.configurations"
+            )
