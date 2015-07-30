@@ -3,7 +3,7 @@ md-dialog.socialChangeInfo(
         ng-init="current = dialog.changeInfo.$refresh();\
                  user = current.owner.$fetch();\
                  setup_record = current.socialSetup.$refresh();\
-                 setup = setup_record || current.socialSetup.$build({});"
+                 setup = setup_record || current.socialSetup.$build({socialAccount: 'asdasdasd'});"
     )
     md-toolbar.md-accent(md-theme="hrms")
             .md-toolbar-tools
@@ -16,8 +16,8 @@ md-dialog.socialChangeInfo(
         md-content.sticky-container
             include changeInfo/contract
         .md-actions
-            md-button.md-primary.md-raised(ng-click="current.processed=true;current.state='不做处理';submit();dialog.close()") 不做处理
-            md-button.md-primary.md-raised(ng-click="current.processed=true;current.state='处理完毕';setup.$save();submit();dialog.close()") 处理完毕
+            md-button.md-primary.md-raised(ng-click="current.state='不做处理';submit();dialog.close()") 不做处理
+            md-button.md-primary.md-raised(ng-click="current.state='处理完毕';setup.$save();submit();dialog.close()") 处理完毕
             md-button(ng-click="setup.$restore();cancel(current, $event, changeContract);dialog.close()") 关 闭
 
     form(
@@ -28,9 +28,9 @@ md-dialog.socialChangeInfo(
         md-content.sticky-container
             include changeInfo/salary
         .md-actions
-            md-button.md-primary.md-raised(ng-click="current.processed=true;current.state='不做处理';submit();dialog.close()") 不做处理
-            md-button.md-primary.md-raised(ng-click="current.processed=true;current.state='停交社保';submit();dialog.close()") 停交社保
-            md-button(ng-click="$parent.hello();cancel(current, $event, changeSalary);dialog.close()") 关闭
+            md-button.md-primary.md-raised(ng-click="current.state='不做处理';submit();dialog.close()") 不做处理
+            md-button.md-primary.md-raised(ng-click="current.state='停交社保';submit();dialog.close()") 停交社保
+            md-button(ng-click="cancel(current, $event, changeSalary);dialog.close()") 关闭
 
     form(
         ng-submit="save(current.$save(), changePassage)"
@@ -40,8 +40,8 @@ md-dialog.socialChangeInfo(
         md-content.sticky-container
             include changeInfo/passage
         .md-actions
-            md-button.md-primary.md-raised(ng-click="current.processed=true;current.state='不做处理';submit();dialog.close()") 不做处理
-            md-button.md-primary.md-raised(ng-click="current.processed=true;current.state='处理完毕';setup.$save();submit(); dialog.close()") 处理完毕
+            md-button.md-primary.md-raised(ng-click="current.state='不做处理';submit();dialog.close()") 不做处理
+            md-button.md-primary.md-raised(ng-click="current.state='处理完毕';setup.$save();submit(); dialog.close()") 处理完毕
             md-button(ng-click="setup.$restore();cancel(current, $event, changePassage);dialog.close()") 关闭
 
     form(
@@ -52,8 +52,8 @@ md-dialog.socialChangeInfo(
         md-content.sticky-container
             include changeInfo/identity
         .md-actions
-            md-button.md-primary.md-raised(ng-click="current.processed=true;current.state='不做处理';submit();dialog.close()") 不做处理
-            md-button.md-primary.md-raised(ng-click="current.processed=true;current.state='处理完毕';submit();dialog.close()") 处理完毕
+            md-button.md-primary.md-raised(ng-click="current.state='不做处理';submit();dialog.close()") 不做处理
+            md-button.md-primary.md-raised(ng-click="current.state='处理完毕';submit();dialog.close()") 处理完毕
             md-button(ng-click="cancel(current, $event, changeIdentity);dialog.close()") 关闭
 
     form(
@@ -64,8 +64,8 @@ md-dialog.socialChangeInfo(
         md-content.sticky-container
             include changeInfo/dependency
         .md-actions
-            md-button.md-primary.md-raised(ng-click="current.processed=true;current.state='不做处理';submit();dialog.close()") 不做处理
-            md-button.md-primary.md-raised(ng-click="current.processed=true;current.state='处理完毕';setup.$save();submit();dialog.close()") 处理完毕
+            md-button.md-primary.md-raised(ng-click="current.state='不做处理';submit();dialog.close()") 不做处理
+            md-button.md-primary.md-raised(ng-click="current.state='处理完毕';setup.$save();submit();dialog.close()") 处理完毕
             md-button(ng-click="setup.$restore();cancel(current, $event, changeDependency);dialog.close()") 关闭
 
     form(
@@ -76,6 +76,6 @@ md-dialog.socialChangeInfo(
         md-content.sticky-container
             include changeInfo/salary_stop
         .md-actions
-            md-button.md-primary.md-raised(ng-click="current.processed=true;current.state='不做处理';submit();dialog.close()") 不做处理
-            md-button.md-primary.md-raised(ng-click="current.processed=true;current.state='恢复社保';submit();dialog.close()") 恢复社保
+            md-button.md-primary.md-raised(ng-click="current.state='不做处理';submit();dialog.close()") 不做处理
+            md-button.md-primary.md-raised(ng-click="current.state='恢复社保';submit();dialog.close()") 恢复社保
             md-button(ng-click="cancel(current, $event, changeSalaryStop);dialog.close();") 关闭

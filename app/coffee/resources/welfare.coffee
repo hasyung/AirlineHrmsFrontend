@@ -52,7 +52,6 @@ SocialChange = (restmod, RMUtils, $Evt) ->
             jsonRootMany: 'social_change_infos'
 
         owner: {belongsTo: 'Employee', key: 'employee_id'}
-        processed: {mask: "CU"}
 
         socialSetup: {belongsTo: 'SocialPersonSetup', key: 'social_person_setup_id'}
 
@@ -60,6 +59,9 @@ SocialChange = (restmod, RMUtils, $Evt) ->
             Collection:
                 search: (tableState) ->
                     this.$refresh(tableState)
+            Record:
+                is_processed: ()->
+                    this.state != "未处理"
     }
 
 #年金

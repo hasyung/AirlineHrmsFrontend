@@ -369,12 +369,12 @@ class SocialChangesController
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents ng-binding ng-scope">
                     <a nb-dialog
-                       ng-if="!row.entity.processed"
+                       ng-hide="row.entity.is_processed()"
                         template-url="partials/welfares/socials/change_info.html"
                         locals="{changeInfo: row.entity}">
                         查看
                     </a>
-                    <span ng-if="row.entity.processed">
+                    <span ng-show="row.entity.is_processed()">
                         已处理
                     </span>
                 </div>
