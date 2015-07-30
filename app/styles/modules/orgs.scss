@@ -357,5 +357,13 @@ md-dialog.socialChangeInfo {
     }
 }
 
+md-dialog.personal_number {
+    min-width: 600px;
+
+    .md-actions {
+        border-top: 1px solid rgba(0, 0, 0, .12);
+    }
+}
+
 
 

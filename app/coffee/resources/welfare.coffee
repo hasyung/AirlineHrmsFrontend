@@ -60,7 +60,7 @@ SocialChange = (restmod, RMUtils, $Evt) ->
     }
 
 #年金
-Annuitity = (restmod, RMUtils, $Evt) ->
+Annuity = (restmod, RMUtils, $Evt) ->
     annuities = restmod.model('/annuities').mix 'nbRestApi', {
         $config:
             jsonRootSingle: 'annuitie'
@@ -72,6 +72,29 @@ Annuitity = (restmod, RMUtils, $Evt) ->
                     this.$refresh(tableState)
     }
 
+AnnuityRecord = (restmod, RMUtils, $Evt) ->
+    annuityRecords = restmod.model('/annuities/list_annuity').mix 'nbRestApi',{
+        $config:
+            jsonRootSingle: 'annuityRecord'
+            jsonRootMany: 'annuityRecords'
+
+        $extend:
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+    }
+
+AnnuityChange = (restmod, RMUtils, $Evt) ->
+    annuityChanges = restmod.model('/annuity_apply').mix 'nbRestApi', {
+        $config:
+            jsonRootSingle: 'annuityChange'
+            jsonRootMany: 'annuityChanges'
+
+        $extend:
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+    }
 
 #社保
 resources.factory 'SocialPersonSetup', ['restmod', 'RMUtils', '$nbEvent', SocialPersonSetup]
@@ -79,4 +102,6 @@ resources.factory 'SocialRecord', ['restmod', 'RMUtils', '$nbEvent', SocialRecor
 resources.factory 'SocialChange', ['restmod', 'RMUtils', '$nbEvent', SocialChange]
 
 #年金
-resources.factory 'Annuitity', ['restmod', 'RMUtils', '$nbEvent', Annuitity]
+resources.factory 'Annuity', ['restmod', 'RMUtils', '$nbEvent', Annuity]
+resources.factory 'AnnuityRecord', ['restmod', 'RMUtils', '$nbEvent', AnnuityRecord]
+resources.factory 'AnnuityChange', ['restmod', 'RMUtils', '$nbEvent', AnnuityChange]

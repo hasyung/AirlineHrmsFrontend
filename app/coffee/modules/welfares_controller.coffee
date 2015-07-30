@@ -402,9 +402,9 @@ app.controller 'socialChangesCtrl', SocialChangesController
 
 # 年金
 class AnnuityPersonalController extends nb.Controller
-    @.$inject = ['$http', '$scope', '$nbEvent', 'Annuitity']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'Annuity']
 
-    constructor: ($http, $scope, $Evt, @Annuitity) ->
+    constructor: ($http, $scope, $Evt, @Annuity) ->
 
         @configurations = @loadInitialData()
 
@@ -458,10 +458,10 @@ class AnnuityPersonalController extends nb.Controller
         ]
 
     loadInitialData: ->
-        @Annuitity = @Annuitity.$collection().$fetch()
+        @annuities = @Annuity.$collection().$fetch()
 
     search: (tableState) ->
-        @Annuitity.$refresh(tableState)
+        @Annuity.$refresh(tableState)
 
     getSelectsIds: () ->
         rows = @gridApi.selection.getSelectedGridRows()
@@ -472,22 +472,175 @@ class AnnuityPersonalController extends nb.Controller
 
 
 
-class AnnuityComputeController
-    @.$inject = ['$http', '$scope', '$nbEvent', 'SocialRecords']
+class AnnuityComputeController extends nb.Controller
+    @.$inject = ['$http', '$scope', '$nbEvent', 'AnnuityRecord']
 
-    constructor: ($http, $scope, $Evt, @socialRecords) ->
+    constructor: ($http, $scope, $Evt, @AnnuityRecord) ->
+        @configurations = @loadInitialData()
+
+        @columnDef = [
+            {displayName: '员工编号', name: 'employeeNo'}
+            {
+                displayName: '姓名'
+                name: 'employeeName'
+            }
+            {
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.department.name
+            }
+            {displayName: '身份证号', name: 'identityNo'}
+            {displayName: '手机号', name: 'mobile'}
+            {displayName: '本年基数', name: 'annuityCardinality'}
+            {displayName: '个人缴费', name: 'personalPayment'}
+            {displayName: '公司缴费', name: 'companyPayment'}
+            {displayName: '备注', name: 'note'}
+        ]
+
+        @constraints = [
+
+        ]
+
+    loadInitialData: ->
+        @upload_xls_id = 0
+        @upload_result = ""
+
+        @year_list = @$getYears()
+        @month_list = @$getMonths()
+
+        @currentYear = _.last(@year_list)
+        @currentMonth = _.last(@month_list)
+
+        @annuityRecords = @AnnuityRecord.$collection().$fetch()
+
+    search: (tableState) ->
+        @annuityRecords.$refresh(tableState)
+
+    currentCalcTime: ()->
+        @currentYear + "-" + @currentMonth
+
+    loadRecords: ()->
+        @annuityRecords.$refresh({date: @currentCalcTime()})
 
 
 class AnnuityHistoryController
-    @.$inject = ['$http', '$scope', '$nbEvent']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'AnnuityRecord']
 
-    constructor: ($http, $scope, $Evt) ->
+    constructor: ($http, $scope, $Evt, @AnnuityRecord) ->
+        @configurations = @loadInitialData()
+
+        @filterOptions = {
+            name: 'welfarePersonal'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '员工姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+                {
+                    name: 'month'
+                    displayName: '缴费月度'
+                    type: 'date-range'
+                }
+            ]
+        }
+
+        @columnDef = [
+            {displayName: '员工编号', name: 'employeeNo'}
+            {
+                displayName: '姓名'
+                name: 'employeeName'
+            }
+            {
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.department.name
+            }
+            {displayName: '身份证号', name: 'identityNo'}
+            {displayName: '手机号', name: 'mobile'}
+            {displayName: '本年基数', name: 'annuityCardinality'}
+            {displayName: '个人缴费', name: 'personalPayment'}
+            {displayName: '公司缴费', name: 'companyPayment'}
+            {displayName: '备注', name: 'note'}
+        ]
+
+        @constraints = [
+
+        ]
+
+    loadInitialData: ->
+        @annuityRecords = @AnnuityRecord.$collection().$fetch()
+
+    search: (tableState) ->
+        @annuityRecords.$refresh(tableState)
 
 
 class AnnuityChangesController
-    @.$inject = ['$http', '$scope', '$nbEvent']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'AnnuityChange']
 
-    constructor: ($http, $scope, $Evt) ->
+    constructor: ($http, $scope, $Evt, @AnnuityChange) ->
+        @configurations = @loadInitialData()
+
+        @filterOptions = {
+            name: 'annuityChanges'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+            ]
+        }
+
+        @columnDef = [
+            {displayName: '员工编号', name: 'employeeNo'}
+            {
+                displayName: '姓名'
+                name: 'name'
+            }
+            {
+                displayName: '所属部门'
+                name: 'department.name'
+                cellTooltip: (row) ->
+                    return row.entity.department.name
+            }
+            {displayName: '信息发生时间', name: 'identityNo'}
+            {displayName: '信息种类', name: 'mobile'}
+            {
+                displayName: '处理'
+                field: 'deal'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                    md-radio-group(ng-model="row.entity.handleStatus")
+                        md-radio-button.md-primary(value="true") 加入
+                        md-radio-button.md-primary(value="false") 退出
+                </div>
+                '''
+            }
+        ]
+
+        @constraints = [
+
+        ]
+
+
+    loadInitialData: ->
+        @annuityChanges = @AnnuityChange.$collection().$fetch()
+
+    search: (tableState) ->
+        @annuityChanges.$refresh(tableState)
 
 
 app.controller 'annuityPersonalCtrl', AnnuityPersonalController
