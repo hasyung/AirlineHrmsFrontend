@@ -10,6 +10,7 @@
                 md-button.md-primary.md-raised 年度基数计算
 
                 md-button.md-primary.md-raised(
+                    ng-disabled="ctrl.getSelected().length == 0"
                     nb-dialog
                     template-url="partials/welfares/annuities/personal_number.html"
                     ) 个人基数计算
