@@ -75,8 +75,14 @@ md-sidenav {
     }
 }
 
-md-input-container label {
-    top: 0;
+md-input-container {
+    label {
+        top: 0;
+    }
+
+    .md-input {
+        margin-top: 0;
+    }
 }
 
 md-toolbar {

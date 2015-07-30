@@ -21,23 +21,23 @@ md-dialog.welfare_personal_new(ng-controller="EditableResource")
                             md-input-container(flex)
                                 label 所在部门
                                 input(type="text" ng-model="::current.departmentName" disabled)
-                            //- md-input-container(flex)
-                            //-     label 工作属地
-                            //-     input(type="text" ng-model="")
+                            md-input-container(flex)
+                                label 工作属地
+                                input(type="text" ng-model="::current.location" disabled)
 
                         div(layout)
                             md-input-container.row-has-value(flex)
-                                label 用工性质
-                                input(type="text" ng-model="::current.laborRelationName" disabled)
+                                label 通道
+                                input(type="text" ng-model="::current.channelId" disabled)
+                            md-input-container(flex)
+                                label 身份证
+                                input(type="text" ng-model="::current.identityNo" disabled)
+                        div(layout)
                             md-input-container.row-has-value(flex)
                                 label 社保属地
                                 md-select(ng-model="current.socialLocation")
                                     md-option(value="成都") 成都
                                     md-option(value="重庆") 重庆
-                        div(layout)
-                            md-input-container(flex)
-                                label 身份证
-                                input(type="text" ng-model="::current.identityNo" disabled)
                             md-input-container(flex)
                                 label 社保编号
                                 input(type="text" ng-model="current.socialAccount")

@@ -35,7 +35,7 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                         md-select(ng-model="currentUser.nationId" ng-disabled="!editing")
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('nations')") {{item.label}}
                 div(layout)
-                    md-input-container.mix-height(flex)
+                    md-input-container(flex)
                         label 籍贯
                         input(ng-model="currentUser.nativePlace" name="nativePlace" required)
                     md-input-container(flex)
@@ -75,7 +75,7 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                         md-select(ng-model="currentUser.englishLevelId" disabled)
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('english_levels')") {{item.label}}
                 div(layout disabled)
-                    md-input-container.mix-height(flex)
+                    md-input-container(flex)
                         label 到岗时间
                         input(ng-model="currentUser.joinScalDate" name="joinScalDate" disabled)
                     md-input-container.row-has-value(flex)
@@ -141,11 +141,11 @@ form(ng-controller="EditableResource", ng-submit="save(currentUser.$save(), info
                         md-select(ng-model="currentUser.channelId" disabled)
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
 
-                    md-input-container.mix-height(flex)
+                    md-input-container(flex)
                         label 类别
                         input(ng-model="currentUser.position.postType")
                 div(layout)
-                    md-input-container.mix-height.row-has-value(flex)
+                    md-input-container.row-has-value(flex)
                         label 属地化地点
                         input(ng-model="currentUser.location" disabled)
                     md-input-container.row-has-value(flex)
