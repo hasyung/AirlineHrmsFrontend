@@ -61,9 +61,9 @@ class WelfareController
 
 
 class WelfarePersonalController extends nb.Controller
-    @.$inject = ['$http', '$scope', '$nbEvent', 'SocialPersonSetup']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'SocialPersonSetup']
 
-    constructor: ($http, $scope, $Evt, @SocialPersonSetup) ->
+    constructor: ($http, $scope, $Evt, @Employee, @SocialPersonSetup) ->
         @configurations = @loadInitialData()
 
         @filterOptions = {
@@ -161,9 +161,21 @@ class WelfarePersonalController extends nb.Controller
     getSelected: () ->
         rows = @gridApi.selection.getSelectedGridRows()
 
+    newPersonalSetup: (newSetup)->
+        self = @
+        @socialPersonSetups.$build(newSetup).$save().$then ()->
+            self.socialPersonSetups.$refresh()
+
     delete: (isConfirm) ->
         if isConfirm
             @getSelected().forEach (record) -> record.entity.$destroy()
+
+    loadEmployee: (params, newSetup)->
+        self = @
+
+        @Employee.$collection().$refresh(params).$then (employees)->
+            matched = _.find employees, params
+            if matched then self.loadEmp = matched;newSetup.employeeId = matched.id else self.loadEmp = params
 
 
 class SocialComputeController extends nb.Controller
