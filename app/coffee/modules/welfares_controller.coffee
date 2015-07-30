@@ -60,10 +60,10 @@ class WelfareController
 # 社保
 
 
-class WelfarePersonalController
-    @.$inject = ['$http', '$scope', '$nbEvent', 'SocialPersonSetups']
+class WelfarePersonalController extends nb.Controller
+    @.$inject = ['$http', '$scope', '$nbEvent', 'SocialPersonSetup']
 
-    constructor: ($http, $scope, $Evt, @socialPersonSetups) ->
+    constructor: ($http, $scope, $Evt, @SocialPersonSetup) ->
         @configurations = @loadInitialData()
 
         @filterOptions = {
@@ -149,7 +149,7 @@ class WelfarePersonalController
         ]
 
     loadInitialData: ->
-        @socialPersonSetups = @socialPersonSetups.$collection().$fetch()
+        @socialPersonSetups = @SocialPersonSetup.$collection().$fetch()
 
     search: (tableState) ->
         @socialPersonSetups.$refresh(tableState)
@@ -167,9 +167,9 @@ class WelfarePersonalController
 
 
 class SocialComputeController extends nb.Controller
-    @.$inject = ['$http', '$scope', '$nbEvent', 'SocialRecords']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'SocialRecord']
 
-    constructor: (@http, $scope, @Evt, @socialRecords) ->
+    constructor: (@http, $scope, @Evt, @SocialRecord) ->
         @socialRecords = @loadInitialData()
 
         @columnDef = [
@@ -217,8 +217,7 @@ class SocialComputeController extends nb.Controller
         @currentYear = _.last(@year_list)
         @currentMonth = _.last(@month_list)
 
-        @socialRecords = @socialRecords.$collection().$fetch()
-        @exeCalc()
+        @socialRecords = @SocialRecord.$collection().$fetch()
 
     search: (tableState)->
         @socialRecords.$refresh(tableState)
@@ -255,9 +254,9 @@ class SocialComputeController extends nb.Controller
 
 
 class SocialHistoryController
-    @.$inject = ['$http', '$scope', '$nbEvent', 'SocialRecords']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'SocialRecord']
 
-    constructor: ($http, $scope, $Evt, @socialRecords) ->
+    constructor: ($http, $scope, $Evt, @SocialRecord) ->
         @configurations = @loadInitialData()
 
         @filterOptions = {
@@ -314,7 +313,7 @@ class SocialHistoryController
         ]
 
     loadInitialData: ->
-        @socialRecords = @socialRecords.$collection().$fetch()
+        @socialRecords = @SocialRecord.$collection().$fetch()
 
     search: (tableState) ->
         @socialRecords.$refresh(tableState)
@@ -325,9 +324,9 @@ class SocialHistoryController
 
 
 class SocialChangesController
-    @.$inject = ['$http', '$scope', '$nbEvent', 'SocialChanges']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'SocialChange']
 
-    constructor: ($http, $scope, $Evt, @socialChanges) ->
+    constructor: ($http, $scope, $Evt, @SocialChange) ->
         @configurations = @loadInitialData()
 
         @filterOptions = {
@@ -384,7 +383,7 @@ class SocialChangesController
         ]
 
     loadInitialData: ->
-        @socialChanges = @socialChanges.$collection().$fetch()
+        @socialChanges = @SocialChange.$collection().$fetch()
 
     search: (tableState) ->
         @socialChanges.$refresh(tableState)
