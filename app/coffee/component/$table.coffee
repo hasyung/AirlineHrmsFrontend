@@ -279,7 +279,7 @@ NbFilterDirective = ["$nbEvent", "$enum", ($Evt, $enum)->
             invalid = []
 
             angular.forEach queryParams, (item, key) ->
-                if item["from"] && item["to"]
+                if item && item["from"] && item["to"]
                     if new Date(item["to"]) < new Date(item["from"])
                         condition_valid = false
                         condition = _.find scope.filter.conditions, (item) ->
