@@ -353,6 +353,7 @@ nbGridDirective = ($parse)->
                         page: newPage
                         per_page: pageSize
                     }
+
                     safeSrc.$refresh(queryParams)
 
             excludeProperties: [
@@ -417,6 +418,7 @@ nbGridDirective = ($parse)->
                 res.push(val) if angular.isDefined(attrs[camelCased])
                 return res
             ,[])
+
             nbGridTemplate.replace("#plugins#",applied_plugins.join(" "))
 
         scope: {

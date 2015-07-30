@@ -370,7 +370,7 @@ class SocialChangesController
                 <div class="ui-grid-cell-contents ng-binding ng-scope">
                     <a nb-dialog
                         template-url="partials/welfares/socials/change_info.html"
-                        locals="{changeInfos: row.entity}">
+                        locals="{changeInfo: row.entity}">
                         查看
                     </a>
                 </div>
@@ -388,9 +388,8 @@ class SocialChangesController
     search: (tableState) ->
         @socialChanges.$refresh(tableState)
 
-    getSelectsIds: () ->
-        rows = @gridApi.selection.getSelectedGridRows()
-        rows.map (row) -> return row.entity.$pk
+    hello: ()->
+        alert "test"
 
 
 app.controller 'welfareCtrl', WelfareController

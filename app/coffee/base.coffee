@@ -45,9 +45,9 @@ nb.FilterController = FilterController
 
 
 class EditableResourceCtrl
-    @.$inject = ['$scope', '$enum']
+    @.$inject = ['$scope', '$enum', '$nbEvent']
 
-    constructor: (scope, $enum) ->
+    constructor: (scope, $enum, $Evt) ->
         scope.editing = false
         scope.$enum = $enum
 
@@ -60,9 +60,14 @@ class EditableResourceCtrl
 
             if promise
                 if promise.then
-                    promise.then () -> scope.editing = false
+                    promise.then (data) ->
+                        scope.editing = false
+                        console.error "EditableResourceCtrl:scope.save", data
                 else if promise.$then
-                    promise.$then () -> scope.editing =false
+                    promise.$then (data) ->
+                        scope.editing = false
+                        msg = data.$response.data.messages
+                        $Evt.$send('model:save:success', msg)
 
                 else
                     throw new Error('promise 参数错误')
@@ -72,9 +77,11 @@ class EditableResourceCtrl
         scope.cancel = (resource, evt, form, attach_models = []) ->
             evt.preventDefault() if evt
             resource.$restore() if resource && resource.$restore
+
             angular.forEach attach_models, (model) ->
                 model.$restore() if model && model.$restore
             form.$setPristine() if form && form.$setPristine
+
             scope.editing = false
 
 
