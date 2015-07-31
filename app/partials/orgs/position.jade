@@ -16,6 +16,7 @@
                     ) 新增岗位
                 span
                     md-button.md-raised.md-primary(
+                        ng-disabled="ctrl.getSelectsIds().length == 0"
                         has-permission="positions_adjust"
                         nb-dialog
                         template-url="partials/position/position_transfer.html"
