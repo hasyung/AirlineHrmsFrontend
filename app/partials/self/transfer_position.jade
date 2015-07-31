@@ -45,7 +45,7 @@
                                 input(ng-model="current.name" name="name")
                 md-divider
                 section.form-material-section
-                    form(ng-controller="NewResource", ng-submit="create(param.infoData, infoForm); param.infoData = null" name="infoForm")
+                    form(ng-controller="NewResourceCtrl", ng-submit="create(param.infoData, infoForm); param.infoData = null" name="infoForm")
                         md-input-container.row-has-value(flex)
                             label 转入机构
                             md-select(ng-model="current.gender" md-on-open="loadEnum('genders')" required)

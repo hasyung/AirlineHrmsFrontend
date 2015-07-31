@@ -38,12 +38,6 @@ class FilterController extends Controller
         $Evt.$send('search:condition:error', {message: invalid.join(",")})
 
 
-nb.Base = Base
-nb.Service = Service
-nb.Controller = Controller
-nb.FilterController = FilterController
-
-
 class EditableResourceCtrl
     @.$inject = ['$scope', '$enum', '$nbEvent']
 
@@ -82,6 +76,13 @@ class EditableResourceCtrl
             form.$setPristine() if form && form.$setPristine
 
             scope.editing = false
+
+
+nb.Base = Base
+nb.Service = Service
+nb.Controller = Controller
+nb.FilterController = FilterController
+nb.EditableResourceCtrl = EditableResourceCtrl
 
 
 class NewResourceCtrl
@@ -185,7 +186,7 @@ class NewMyRequestCtrl extends NewFlowCtrl
                     scope.vacation_days = data.vacation_days
 
 
-app.controller('EditableResource', EditableResourceCtrl)
-app.controller('NewResource', NewResourceCtrl)
+app.controller('EditableResourceCtrl', EditableResourceCtrl)
+app.controller('NewResourceCtrl', NewResourceCtrl)
 app.controller('NewFlowCtrl', NewFlowCtrl)
 app.controller('NewMyRequestCtrl', NewMyRequestCtrl)

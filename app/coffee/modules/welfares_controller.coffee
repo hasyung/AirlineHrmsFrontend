@@ -381,12 +381,12 @@ class SocialChangesController
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents ng-binding ng-scope">
                     <a nb-dialog
-                       ng-if="!row.entity.processed"
+                       ng-hide="row.entity.is_processed()"
                         template-url="partials/welfares/socials/change_info.html"
                         locals="{changeInfo: row.entity}">
                         查看
                     </a>
-                    <span ng-if="row.entity.processed">
+                    <span ng-show="row.entity.is_processed()">
                         已处理
                     </span>
                 </div>
@@ -404,8 +404,19 @@ class SocialChangesController
     search: (tableState) ->
         @socialChanges.$refresh(tableState)
 
-    hello: ()->
-        alert "test"
+
+class SocialChangeProcessController extends nb.EditableResourceCtrl
+    @.$inject = ['$http', '$scope', '$enum', '$nbEvent', 'SocialPersonSetup']
+
+    constructor: ($http, $scope, $enum, $Evt, @SocialPersonSetup) ->
+        super($scope, $enum, $Evt)
+
+        @find_or_build_setup = (change)->
+            return change.socialSetup.$fetch() if change.socialSetup
+            change.socialSetup = @SocialPersonSetup.$build({
+                employeeId: change.owner.$pk
+                socialAccount: '000000'
+            })
 
 
 app.controller 'welfareCtrl', WelfareController
@@ -413,6 +424,7 @@ app.controller 'welfarePersonalCtrl', WelfarePersonalController
 app.controller 'socialComputeCtrl', SocialComputeController
 app.controller 'socialHistoryCtrl', SocialHistoryController
 app.controller 'socialChangesCtrl', SocialChangesController
+app.controller 'socialChangesProcessCtrl', SocialChangeProcessController
 
 
 # 年金
