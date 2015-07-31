@@ -427,7 +427,7 @@ class AnnuityPersonalController extends nb.Controller
             name: 'annuities'
             constraintDefs: [
                 {
-                    name: 'employee_name'
+                    name: 'name'
                     displayName: '姓名'
                     type: 'string'
                 }
@@ -476,7 +476,7 @@ class AnnuityPersonalController extends nb.Controller
         @annuities = @Annuity.$collection().$fetch()
 
     search: (tableState) ->
-        @Annuity.$refresh(tableState)
+        @annuities.$refresh(tableState)
 
     getSelectsIds: () ->
         rows = @gridApi.selection.getSelectedGridRows()
@@ -503,7 +503,7 @@ class AnnuityComputeController extends nb.Controller
                 displayName: '所属部门'
                 name: 'departmentName'
                 cellTooltip: (row) ->
-                    return row.entity.department.name
+                    return row.entity.departmentName
             }
             {displayName: '身份证号', name: 'identityNo'}
             {displayName: '手机号', name: 'mobile'}
@@ -518,8 +518,8 @@ class AnnuityComputeController extends nb.Controller
         ]
 
     loadInitialData: ->
-        @upload_xls_id = 0
-        @upload_result = ""
+        # @upload_xls_id = 0
+        # @upload_result = ""
 
         @year_list = @$getYears()
         @month_list = @$getMonths()
