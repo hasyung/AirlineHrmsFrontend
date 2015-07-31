@@ -1,4 +1,4 @@
-form(name="speEditForm" ng-submit="save(currentSpe.$save(), speEditForm)" ng-controller="EditableResource" ng-init="params = {}")
+form(name="speEditForm" ng-submit="save(currentSpe.$save(), speEditForm)" ng-controller="EditableResourceCtrl" ng-init="params = {}")
     .form-btn-group(ng-hide="editing" has-permission="positions_update" style="top: -36px;")
         md-button.md-primary.md-raised(ng-click="edit($event)") 编辑
     .form-btn-group.alive(ng-show="editing" style="top: -36px;")

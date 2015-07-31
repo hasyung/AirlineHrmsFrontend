@@ -1,13 +1,12 @@
 md-dialog.socialChangeInfo(
-        ng-controller="EditableResource"
-        ng-init="current = dialog.changeInfo.$refresh();\
+        ng-controller="socialChangesProcessCtrl as process_ctrl"
+        ng-init="current = dialog.changeInfo;\
                  user = current.owner.$fetch();\
-                 setup_record = current.socialSetup.$refresh();\
-                 setup = setup_record || current.socialSetup.$build({socialAccount: '社保编号'});"
+                 setup = process_ctrl.find_or_build_setup(current)"
     )
     md-toolbar.md-accent(md-theme="hrms")
             .md-toolbar-tools
-                span {{socialPersonSetup.employeeName}}变动信息-{{current.category}}
+                span 变动信息-{{current.category}}
     form(
         ng-submit="save(current.$save(), changeContract)"
         name="changeContract"
@@ -35,13 +34,13 @@ md-dialog.socialChangeInfo(
     form(
         ng-submit="save(current.$save(), changePassage)"
         name="changePassage"
-        ng-if="current.category == '公务员通道'"
+        ng-if="current.category == '公务员'"
         )
         md-content.sticky-container
             include changeInfo/passage
         .md-actions
             md-button.md-primary.md-raised(ng-click="current.state='不做处理';submit();dialog.close()") 不做处理
-            md-button.md-primary.md-raised(ng-click="current.state='处理完毕';setup.$save();submit(); dialog.close()") 处理完毕
+            md-button.md-primary.md-raised(ng-click="current.state='处理完毕';setup.$save();submit();dialog.close()") 处理完毕
             md-button(ng-click="setup.$restore();cancel(current, $event, changePassage);dialog.close()") 关闭
 
     form(

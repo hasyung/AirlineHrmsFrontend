@@ -404,8 +404,19 @@ class SocialChangesController
     search: (tableState) ->
         @socialChanges.$refresh(tableState)
 
-    hello: ()->
-        alert "test"
+
+class SocialChangeProcessController extends nb.EditableResourceCtrl
+    @.$inject = ['$http', '$scope', '$enum', '$nbEvent', 'SocialPersonSetup']
+
+    constructor: ($http, $scope, $enum, $Evt, @SocialPersonSetup) ->
+        super($scope, $enum, $Evt)
+
+        @find_or_build_setup = (change)->
+            return change.socialSetup.$fetch() if change.socialSetup
+            change.socialSetup = @SocialPersonSetup.$build({
+                employeeId: change.owner.$pk
+                socialAccount: '000000'
+            })
 
 
 app.controller 'welfareCtrl', WelfareController
@@ -413,6 +424,7 @@ app.controller 'welfarePersonalCtrl', WelfarePersonalController
 app.controller 'socialComputeCtrl', SocialComputeController
 app.controller 'socialHistoryCtrl', SocialHistoryController
 app.controller 'socialChangesCtrl', SocialChangesController
+app.controller 'socialChangesProcessCtrl', SocialChangeProcessController
 
 
 # 年金

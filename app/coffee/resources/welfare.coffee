@@ -2,7 +2,7 @@ resources = angular.module('resources')
 
 
 SocialPersonSetup = (restmod, RMUtils, $Evt) ->
-    socialPersonSetups = restmod.model('/social_person_setups').mix 'nbRestApi', 'DirtyModel', {
+    restmod.model('/social_person_setups').mix 'nbRestApi', 'DirtyModel', {
         $config:
             jsonRootSingle: 'social_person_setup'
             jsonRootMany: 'social_person_setups'
@@ -23,7 +23,7 @@ SocialPersonSetup = (restmod, RMUtils, $Evt) ->
 
 # 社保记录
 SocialRecord = (restmod, RMUtils, $Evt) ->
-    socialRecords = restmod.model('/social_records').mix 'nbRestApi', {
+    restmod.model('/social_records').mix 'nbRestApi', {
         $config:
             jsonRootSingle: 'social_record'
             jsonRootMany: 'social_records'
@@ -46,7 +46,7 @@ SocialRecord = (restmod, RMUtils, $Evt) ->
 
 
 SocialChange = (restmod, RMUtils, $Evt) ->
-    socialChanges = restmod.model('/social_change_infos').mix 'nbRestApi', {
+    restmod.model('/social_change_infos').mix 'nbRestApi', {
         $config:
             jsonRootSingle: 'social_change_info'
             jsonRootMany: 'social_change_infos'
@@ -66,7 +66,7 @@ SocialChange = (restmod, RMUtils, $Evt) ->
 
 #年金
 Annuity = (restmod, RMUtils, $Evt) ->
-    annuities = restmod.model('/annuities').mix 'nbRestApi', {
+    restmod.model('/annuities').mix 'nbRestApi', {
         $config:
             jsonRootSingle: 'annuitie'
             jsonRootMany: 'annuities'
@@ -78,7 +78,7 @@ Annuity = (restmod, RMUtils, $Evt) ->
     }
 
 AnnuityRecord = (restmod, RMUtils, $Evt) ->
-    annuityRecords = restmod.model('/annuities/list_annuity').mix 'nbRestApi',{
+    restmod.model('/annuities/list_annuity').mix 'nbRestApi',{
         $config:
             jsonRootSingle: 'annuityRecord'
             jsonRootMany: 'annuityRecords'
@@ -90,7 +90,7 @@ AnnuityRecord = (restmod, RMUtils, $Evt) ->
     }
 
 AnnuityChange = (restmod, RMUtils, $Evt) ->
-    annuityChanges = restmod.model('/annuity_apply').mix 'nbRestApi', {
+    restmod.model('/annuity_apply').mix 'nbRestApi', {
         $config:
             jsonRootSingle: 'annuityChange'
             jsonRootMany: 'annuityChanges'

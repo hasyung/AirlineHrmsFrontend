@@ -21,7 +21,7 @@ section.personnel-info-section(ng-init="experiences = currentUser.workExperience
                         span.subheader__icon
                             img(src="/images/personnel/subh-icon.png", alt="icon--plane")
                         span 入司前
-                section.form-material-section(ng-controller="EditableResource", ng-repeat="work in experiences | filterBy: ['category']:'before'")
+                section.form-material-section(ng-controller="EditableResourceCtrl", ng-repeat="work in experiences | filterBy: ['category']:'before'")
                     include experience/exit_work_exp_form
         .personnel-section-wrap
             md-content
@@ -30,7 +30,7 @@ section.personnel-info-section(ng-init="experiences = currentUser.workExperience
                         span.subheader__icon
                             img(src="/images/personnel/subh-icon.png", alt="icon--plane")
                         span 入司后
-                section.form-material-section(ng-controller="EditableResource", ng-repeat="work in experiences | filterBy: ['category']:'after'")
+                section.form-material-section(ng-controller="EditableResourceCtrl", ng-repeat="work in experiences | filterBy: ['category']:'after'")
                     .sep-40
                     include experience/scal_work_exp_form
                 .sep-40
@@ -67,7 +67,7 @@ section.personnel-info-section(ng-init="experiences = currentUser.workExperience
 //-                     .form-group.block
 //-                         label.control-label 证明人：
 //-                         input.form-control(ng-model="param.newExp.witness")
-//-         .personnel-section-wrap(ng-controller="EditableResource", ng-repeat="work in experiences | filterBy: ['category']:'before'")
+//-         .personnel-section-wrap(ng-controller="EditableResourceCtrl", ng-repeat="work in experiences | filterBy: ['category']:'before'")
 //-             section.personnel-info-control.clearfix(ng-hide="editing")
 //-                 .personnel-info-right.form-split
 //-                     .form-btn-group

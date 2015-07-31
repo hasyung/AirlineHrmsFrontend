@@ -1,4 +1,4 @@
-form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="EditableResource" ng-init="params = {}")
+form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="EditableResourceCtrl" ng-init="params = {}")
     .form-btn-group(ng-hide="editing" has-permission="employees_update")
         md-button.md-fab.md-primary(ng-click="edit($event)")
             md-icon(md-svg-src="/images/svg/edit_24px.svg" aria-label="修改")
