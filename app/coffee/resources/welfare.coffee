@@ -12,6 +12,8 @@ SocialPersonSetup = (restmod, RMUtils, $Evt) ->
         $hooks: {
             'after-destroy': ->
                 $Evt.$send('socialPersonSetups:destroy:success',"删除成功")
+            'after-save': ->
+                $Evt.$send('socialPersonSetups:save:success',"新增成功")
         }
 
         $extend:
@@ -68,7 +70,7 @@ SocialChange = (restmod, RMUtils, $Evt) ->
 Annuity = (restmod, RMUtils, $Evt) ->
     restmod.model('/annuities').mix 'nbRestApi', {
         $config:
-            jsonRootSingle: 'annuitie'
+            jsonRootSingle: 'annuity'
             jsonRootMany: 'annuities'
 
         $extend:
@@ -80,8 +82,8 @@ Annuity = (restmod, RMUtils, $Evt) ->
 AnnuityRecord = (restmod, RMUtils, $Evt) ->
     restmod.model('/annuities/list_annuity').mix 'nbRestApi',{
         $config:
-            jsonRootSingle: 'annuityRecord'
-            jsonRootMany: 'annuityRecords'
+            jsonRootSingle: 'annuity'
+            jsonRootMany: 'annuities'
 
         $extend:
             Collection:
@@ -92,8 +94,8 @@ AnnuityRecord = (restmod, RMUtils, $Evt) ->
 AnnuityChange = (restmod, RMUtils, $Evt) ->
     restmod.model('/annuity_apply').mix 'nbRestApi', {
         $config:
-            jsonRootSingle: 'annuityChange'
-            jsonRootMany: 'annuityChanges'
+            jsonRootSingle: 'annuity_apply'
+            jsonRootMany: 'annuity_applies'
 
         $extend:
             Collection:
