@@ -1,12 +1,13 @@
 md-dialog.personal_number(
-    ng-init="current = dialog.annuities.$refresh();"
+    ng-init="employee = ctrl.getSelected();\
+             ctrl.loadBasicComputeRecords(employee.id)"
     )
     md-toolbar.md-accent(md-theme="hrms")
             .md-toolbar-tools
                 span 个人基数计算
     md-content.sticky-container
         .info-header
-            span.name 田静然
+            span.name {{::employee.name}}
             span.no 001345
         .info-body
             ul

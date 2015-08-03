@@ -553,7 +553,20 @@ class AnnuityPersonalController extends nb.Controller
 
     getSelected: () ->
         rows = @scope.$gridApi.selection.getSelectedGridRows()
+        @selected = if rows.length >= 1 then rows[0].entity else null
 
+    loadBasicComputeRecords: (employee_id)->
+        self = @
+        console.error employee_id
+
+        @http({
+            method: 'GET'
+            url: '/api/annuities/show_cardinality?employee_id=' +  employee_id
+        })
+        .success (data) ->
+            json_data = angular.fromJson(data)
+            self.basicComputeRecords = json_data.social_records
+            self.averageCompute = json_data.meta.annuity_cardinality
 
 
 class AnnuityComputeController extends nb.Controller
