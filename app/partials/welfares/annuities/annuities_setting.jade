@@ -7,7 +7,10 @@
             .md-toolbar-tools
                 h2 年金人员列表
                 span(flex)
-                md-button.md-primary.md-raised 年度基数计算
+                md-button.md-primary.md-raised(
+                    ng-disabled = "ctrl.start_compute_basic"
+                    ng-click="ctrl.computeBasicRecords()"
+                    ) 年度基数计算
 
                 md-button.md-primary.md-raised(
                     ng-disabled="!ctrl.getSelected()"
@@ -15,7 +18,11 @@
                     template-url="partials/welfares/annuities/personal_number.html"
                     ) 个人基数计算
 
-                md-button.md-primary.md-raised 导出人员列表
+                md-button.md-primary.md-raised(
+                    ng-href="/api/annuities/export_to_xls"
+                    download
+                    href="javascript:;"
+                    ) 导出人员列表
 
         div(
             nb-grid

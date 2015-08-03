@@ -491,7 +491,8 @@ class AnnuityPersonalController extends nb.Controller
             {
                 displayName: '本年基数'
                 name: 'annuityCardinality'
-                enableCellEdit: false
+                enableCellEdit: true
+                type: 'number'
             }
             {
                 displayName: '缴费状态'
@@ -527,6 +528,7 @@ class AnnuityPersonalController extends nb.Controller
                 data: {
                     id: rowEntity.id
                     annuity_status: rowEntity.annuityStatus
+                    annuity_cardinality: rowEntity.annuityCardinality
                 }
             })
             .success (data) ->
@@ -542,6 +544,7 @@ class AnnuityPersonalController extends nb.Controller
         gridApi.rowEdit.on.saveRow(@scope, saveRow.bind(@))
 
     loadInitialData: ->
+        @start_compute_basic = false
         @annuities = @Annuity.$collection().$fetch()
 
     search: (tableState) ->
@@ -557,7 +560,6 @@ class AnnuityPersonalController extends nb.Controller
 
     loadBasicComputeRecords: (employee_id)->
         self = @
-        console.error employee_id
 
         @http({
             method: 'GET'
@@ -567,6 +569,19 @@ class AnnuityPersonalController extends nb.Controller
             json_data = angular.fromJson(data)
             self.basicComputeRecords = json_data.social_records
             self.averageCompute = json_data.meta.annuity_cardinality
+
+    computeBasicRecords: ()->
+        @start_compute_basic = true
+        self = @
+
+        @http({
+            method: 'GET'
+            url: '/api/annuities/cal_year_annuity_cardinality'
+        })
+        .success (data) ->
+            self.start_compute_basic = false
+            json_data = angular.fromJson(data)
+            self.Evt.$send('year_annuity_cardinality:compute:success', data.messages || "计算结束")
 
 
 class AnnuityComputeController extends nb.Controller
