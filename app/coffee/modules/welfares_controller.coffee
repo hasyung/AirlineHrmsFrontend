@@ -437,7 +437,7 @@ app.controller 'socialChangesProcessCtrl', SocialChangeProcessController
 class AnnuityPersonalController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'Annuity', '$q']
 
-    constructor: ($http, $scope, $Evt, @Annuity, @q) ->
+    constructor: (@http, @scope, @Evt, @Annuity, @q) ->
         @annuities = @loadInitialData()
 
         @filterOptions = {
@@ -512,6 +512,8 @@ class AnnuityPersonalController extends nb.Controller
         ]
 
     initialize: (gridApi) ->
+        self = @
+
         saveRow = (rowEntity) ->
             dfd = @q.defer()
 
@@ -527,8 +529,9 @@ class AnnuityPersonalController extends nb.Controller
                     annuity_status: rowEntity.annuityStatus
                 }
             })
-            .success () ->
+            .success (data) ->
                 dfd.resolve()
+                self.Evt.$send('annuity_status:update:success', data.messages)
             .error () ->
                 dfd.reject()
                 rowEntity.$restore()
@@ -545,11 +548,11 @@ class AnnuityPersonalController extends nb.Controller
         @annuities.$refresh(tableState)
 
     getSelectsIds: () ->
-        rows = @gridApi.selection.getSelectedGridRows()
+        rows = @scope.$gridApi.selection.getSelectedGridRows()
         rows.map (row) -> return row.entity.$pk
 
     getSelected: () ->
-        rows = @gridApi.selection.getSelectedGridRows()
+        rows = @scope.$gridApi.selection.getSelectedGridRows()
 
 
 
