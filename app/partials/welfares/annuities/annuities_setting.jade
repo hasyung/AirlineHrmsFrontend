@@ -20,9 +20,11 @@
         div(
             nb-grid
             column-defs="ctrl.columnDef"
-            on-register-api="ctrl.exportGridApi(gridApi)"
             export-api
             grid-selection
+            grid-edit
+            grid-row-edit
+            grid-cellNav
             multi-select="false"
-            safe-src="ctrl.configurations"
-            )
+            on-register-api="ctrl.initialize(gridApi)"
+            safe-src="ctrl.annuities")

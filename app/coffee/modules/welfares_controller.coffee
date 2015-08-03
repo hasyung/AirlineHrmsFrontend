@@ -435,11 +435,10 @@ app.controller 'socialChangesProcessCtrl', SocialChangeProcessController
 
 # 年金
 class AnnuityPersonalController extends nb.Controller
-    @.$inject = ['$http', '$scope', '$nbEvent', 'Annuity']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'Annuity', '$q']
 
-    constructor: ($http, $scope, $Evt, @Annuity) ->
-
-        @configurations = @loadInitialData()
+    constructor: ($http, $scope, $Evt, @Annuity, @q) ->
+        @annuities = @loadInitialData()
 
         @filterOptions = {
             name: 'annuities'
@@ -470,25 +469,74 @@ class AnnuityPersonalController extends nb.Controller
             {
                 displayName: '姓名'
                 name: 'name'
+                enableCellEdit: false
             }
             {
                 displayName: '所属部门'
                 name: 'department.name'
+                enableCellEdit: false
                 cellTooltip: (row) ->
                     return row.entity.department.name
             }
-            {displayName: '身份证号', name: 'identityNo'}
-            {displayName: '手机号', name: 'mobile'}
-            {displayName: '本年基数', name: 'annuityCardinality'}
+            {
+                displayName: '身份证号'
+                name: 'identityNo'
+                enableCellEdit: false
+            }
+            {
+                displayName: '手机号'
+                name: 'mobile'
+                enableCellEdit: false
+            }
+            {
+                displayName: '本年基数'
+                name: 'annuityCardinality'
+                enableCellEdit: false
+            }
             {
                 displayName: '缴费状态'
                 name: 'annuityStatus'
+                editableCellTemplate: 'ui-grid/dropdownEditor'
+                headerCellClass: 'editable_cell_header'
+                editDropdownValueLabel: 'value'
+                editDropdownIdLabel: 'key'
+                editDropdownOptionsArray: [
+                    {key: '在缴', value: '在缴'}
+                    {key: '退出', value: '退出'}
+                ]
             }
         ]
 
         @constraints = [
 
         ]
+
+    initialize: (gridApi) ->
+        saveRow = (rowEntity) ->
+            dfd = @q.defer()
+
+            gridApi.rowEdit.setSavePromise(rowEntity, dfd.promise)
+
+            console.error rowEntity.annuityStatus
+
+            @http({
+                method: 'PUT'
+                url: '/api/annuities/' + rowEntity.id
+                data: {
+                    id: rowEntity.id
+                    annuity_status: rowEntity.annuityStatus
+                }
+            })
+            .success () ->
+                dfd.resolve()
+            .error () ->
+                dfd.reject()
+                rowEntity.$restore()
+
+        # edit.on.afterCellEdit($scope,function(rowEntity, colDef, newValue, oldValue)
+        # gridApi.edit.on.afterCellEdit @scope, (rowEntity, colDef, newValue, oldValue) ->
+
+        gridApi.rowEdit.on.saveRow(@scope, saveRow.bind(@))
 
     loadInitialData: ->
         @annuities = @Annuity.$collection().$fetch()
