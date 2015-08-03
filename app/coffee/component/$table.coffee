@@ -56,6 +56,12 @@ class NbFilterCtrl extends nb.FilterController
                 <md-option ng-value="item.id" ng-repeat="item in $parent.$enum.get('${ params.type }')">{{item.label}}</md-option>
             </md-select>
         '''
+        'annuity_status_select': '''
+            <md-select placeholder="${ displayName }" ng-model="${ name }">
+                <md-option ng-value="true" placeholder="缴费状态">在缴</md-option>
+                <md-option ng-value="false" placeholder="缴费状态">退出</md-option>
+            </md-select>
+        '''
         'boolean': '''
             <md-select placeholder="${ displayName }" ng-model="${ name }">
                 <md-option value="true" selected)">是</md-option>

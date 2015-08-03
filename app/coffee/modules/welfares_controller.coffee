@@ -454,9 +454,9 @@ class AnnuityPersonalController extends nb.Controller
                     type: 'string'
                 }
                 {
-                    name: 'annuityStatus'
+                    name: 'annuity_status'
                     displayName: '缴费状态'
-                    type: 'select'
+                    type: 'annuity_status_select'
                     params: {
                         type: 'annuity_status'
                     }
@@ -615,9 +615,6 @@ class AnnuityComputeController extends nb.Controller
         ]
 
     loadInitialData: ->
-        # @upload_xls_id = 0
-        # @upload_result = ""
-
         @year_list = @$getYears()
         @month_list = @$getMonths()
 
