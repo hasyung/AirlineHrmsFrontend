@@ -146,6 +146,10 @@ md-content.search-container {
             .ui-grid-column-menu-button-last-col {
                 margin-right: 0;
             }
+
+            &.editable_cell_header {
+                color: rgb(33, 150, 243);
+            }
         }
     }
 
@@ -182,6 +186,11 @@ md-content.search-container {
 
         .ui-grid-cell-contents {
             line-height: 40px;
+
+            +div {
+                font-size: $font-size-md;
+                margin-top: 10px;
+            }
         }
     }
 
