@@ -163,7 +163,8 @@ class WelfarePersonalController extends nb.Controller
 
     newPersonalSetup: (newSetup)->
         self = @
-        @socialPersonSetups.$build(newSetup).$save().$then ()->
+        newSetup = @socialPersonSetups.$build(newSetup)
+        newSetup.$save().$then ()->
             self.socialPersonSetups.$refresh()
 
     delete: (isConfirm) ->
@@ -175,7 +176,12 @@ class WelfarePersonalController extends nb.Controller
 
         @Employee.$collection().$refresh(params).$then (employees)->
             matched = _.find employees, params
-            if matched then self.loadEmp = matched;newSetup.employeeId = matched.id else self.loadEmp = params
+
+            if matched
+                self.loadEmp = matched
+                newSetup.owner = matched
+            else
+                self.loadEmp = params
 
 
 class SocialComputeController extends nb.Controller
