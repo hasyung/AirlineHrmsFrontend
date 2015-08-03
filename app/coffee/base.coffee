@@ -51,21 +51,25 @@ class EditableResourceCtrl
 
         scope.save = (promise, form) ->
             return if form && form.$invalid
+            self = @
 
             if promise
                 if promise.then
                     promise.then (data) ->
                         scope.editing = false
-                        console.error "EditableResourceCtrl:scope.save", data
+                        self.response_data = data
                 else if promise.$then
                     promise.$then (data) ->
                         scope.editing = false
-                        msg = data.$response.data.messages
-                        $Evt.$send('model:save:success', msg)
+                        self.response_data = data
                 else
                     throw new Error('promise 参数错误')
 
-            else scope.editing =false
+                if self.response_data
+                    msg = self.response_data.messages
+                    $Evt.$send('model:save:success', msg || "保存成功")
+            else
+                scope.editing = false
 
         scope.cancel = (resource, evt, form, attach_models = []) ->
             evt.preventDefault() if evt
@@ -93,7 +97,11 @@ class NewResourceCtrl
 
         scope.create = (resource, form) ->
             return if form && form.$invalid
-            resource.$save() if resource.$save
+
+            if resource.$save
+                resource.$save().$asPromise().then (data)->
+                    msg = data.$response.data.messages
+                    $Evt.$send('model:save:success', msg || "创建成功")
 
 
 class NewFlowCtrl

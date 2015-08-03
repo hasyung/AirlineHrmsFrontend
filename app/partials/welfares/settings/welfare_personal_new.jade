@@ -1,6 +1,5 @@
 md-dialog.welfare_personal_new(
-    ng-controller="NewResourceCtrl"
-    ng-init= "newSetup = {}; ctrl.loadEmp = {}"
+    ng-init= "newSetup = {socialLocation: '成都'}; ctrl.loadEmp = {}"
     )
     form(ng-submit="ctrl.newPersonalSetup(newSetup);dialog.close();" name="newPersonalSetupForm")
         md-toolbar.md-accent(md-theme="hrms")
@@ -37,7 +36,7 @@ md-dialog.welfare_personal_new(
                         div(layout)
                             md-input-container(flex)
                                 label 通道
-                                input(type="text" ng-model="ctrl.loadEmp.channelId" disabled)
+                                input(type="text" ng-model="$enum.parseLabel(ctrl.loadEmp.channelId, 'channels')" disabled)
                             md-input-container(flex)
                                 label 身份证
                                 input(type="text" ng-model="ctrl.loadEmp.identityNo" disabled)
@@ -55,15 +54,15 @@ md-dialog.welfare_personal_new(
                         div(layout)
                             md-input-container(flex)
                                 label 年度养老保险
-                                input(type="text" ng-model="newSetup.pensionCardinality")
+                                input(type="number" min="0" max="100000" step="1" ng-model="newSetup.pensionCardinality")
                             md-input-container(flex)
                                 label 年度其他保险
-                                input(type="text" ng-model="newSetup.otherCardinality")
+                                input(type="number" min="0" max="100000" step="1" ng-model="newSetup.otherCardinality")
 
                         div(layout)
                             md-input-container(flex)
                                 label 社保临时基数
-                                input(type="type" ng-model="newSetup.tempCardinality")
+                                input(type="number" min="0" max="100000" step="1" ng-model="newSetup.tempCardinality")
 
                         div.checkbox-row
                             label 险种选择

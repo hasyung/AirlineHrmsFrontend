@@ -45,15 +45,15 @@
             div(layout)
                 md-input-container(flex)
                     label 年度养老保险
-                    input(type="text" ng-model="setup.pensionCardinality")
+                    input(type="number" min="0" max="100000" step="1" ng-model="setup.pensionCardinality")
                 md-input-container(flex)
                     label 年度其他保险
-                    input(type="text" ng-model="setup.otherCardinality")
+                    input(type="number" min="0" max="100000" step="1" ng-model="setup.otherCardinality")
 
             div(layout)
                 md-input-container(flex)
                     label 社保临时基数
-                    input(type="type" ng-model="setup.tempCardinality" name="notes")
+                    input(type="number" min="0" max="100000" step="1" ng-model="setup.tempCardinality" name="notes")
 
             div.checkbox-row
                 label 险种选择
