@@ -435,9 +435,9 @@ app.controller 'socialChangesProcessCtrl', SocialChangeProcessController
 
 # 年金
 class AnnuityPersonalController extends nb.Controller
-    @.$inject = ['$http', '$scope', '$nbEvent', 'Annuity', '$q']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'AnnuitySetup', '$q']
 
-    constructor: (@http, @scope, @Evt, @Annuity, @q) ->
+    constructor: (@http, @scope, @Evt, @AnnuitySetup, @q) ->
         @annuities = @loadInitialData()
 
         @filterOptions = {
@@ -545,7 +545,7 @@ class AnnuityPersonalController extends nb.Controller
 
     loadInitialData: ->
         @start_compute_basic = false
-        @annuities = @Annuity.$collection().$fetch()
+        @annuities = @AnnuitySetup.$collection().$fetch()
 
     search: (tableState) ->
         @annuities.$refresh(tableState)
@@ -588,13 +588,22 @@ class AnnuityComputeController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'AnnuityRecord']
 
     constructor: ($http, $scope, $Evt, @AnnuityRecord) ->
-        @configurations = @loadInitialData()
+        @annuityRecords = @loadInitialData()
 
         @columnDef = [
             {displayName: '员工编号', name: 'employeeNo'}
             {
                 displayName: '姓名'
                 name: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
             }
             {
                 displayName: '所属部门'
@@ -631,6 +640,16 @@ class AnnuityComputeController extends nb.Controller
 
     loadRecords: ()->
         @annuityRecords.$refresh({date: @currentCalcTime()})
+
+    exeCalc: ()->
+        @calcing = true
+        self = @
+
+        @annuityRecords = @AnnuityRecord.compute({date: @currentCalcTime()}).$asPromise().then (data)->
+            self.calcing = false
+            console.error self.calcing
+            erorr_msg = data.$response.data.messages
+            self.Evt.$send("annuity:calc:error", erorr_msg) if erorr_msg
 
 
 class AnnuityHistoryController
