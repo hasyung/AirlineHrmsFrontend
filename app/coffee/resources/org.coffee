@@ -64,7 +64,6 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
         return parent
 
     #将数组类型的机构数据转换成树形数据
-    #
     treeful = (treeData, DEPTH, parent) ->
 
         if not parent?
@@ -73,6 +72,7 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
         else
             parent = _.find treeData, (child) ->
                 parent.id == child.id
+
         staff_org = _.remove treeData, (child) -> child.is_stick == true
         parent.staff = staff_org.sort (a, b) -> a.sort_no - b.sort_no
         return unflatten(treeData, DEPTH, parent)
@@ -86,8 +86,9 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
         else
             if ( parent.parentId || parent.parent_id ) && parent.xdepth > 2
                 parentDep = _.find DEPARTMENTS, 'id', parent.parentId || parent.parent_id
+
                 if !parentDep
-                    throw new Error("机构数据结构错误 机构#{parent.name}：#{parent.id} 找不到parent #{parent.parentId} 的机构")
+                    throw new Error("机构 #{parent.name}:#{parent.id}，找不到父级 #{parent.parentId}")
                 else
                     return computeFullName(parentDep, ttl, initalArr)
             else
@@ -95,7 +96,6 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
 
 
     Org = restmod.model('/departments').mix 'nbRestApi', 'DirtyModel', {
-
         positions: { hasMany: 'Position'}
 
         fullName: {
@@ -207,6 +207,7 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
                         data: treeData
                         isModified: isModified
                     }
+
                 jqTreeful: () ->
                     allOrgs = @$wrap()
                     treeData = transform(allOrgs, {'name': 'label'}) # for jqTree
@@ -231,6 +232,7 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
                         @.$dispatch 'after-transfer'
 
                     url = this.$url()
+
                     request = {
                         url: "#{url}/transfer"
                         method: 'POST'
@@ -238,14 +240,12 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
                             to_department_id: to_dep_id
                         }
                     }
+
                     @.$send request, onSuccess
-
-
     }
 
 
 class OrgStore extends nb.Service
-
     @.$inject = ['Org', 'DEPARTMENTS', 'USER_META']
 
     constructor: (@Org, @DEPARTMENTS, @USER_META) ->
