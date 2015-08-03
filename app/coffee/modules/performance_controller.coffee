@@ -157,11 +157,13 @@ class PerformanceSetting extends nb.Controller
             {
                 displayName: '月度分配基数'
                 name: 'monthDistributeBase'
+                headerCellClass: 'editable_cell_header'
                 type: 'number'
             }
             {
                 displayName: '考核人员分类'
                 name: 'pcategory'
+                headerCellClass: 'editable_cell_header'
                 editableCellTemplate: 'ui-grid/dropdownEditor'
                 editDropdownValueLabel: 'value'
                 editDropdownIdLabel: 'key'
