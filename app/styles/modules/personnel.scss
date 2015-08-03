@@ -702,10 +702,13 @@
         height: 48px;
         line-height: 48px;
         margin: 0 10px;
+        position: relative;
 
         .fa {
             cursor: pointer;
-            margin-left: 210px;
+            position: absolute;
+            right: 10px;
+            top: 15px;
 
             &:before {
                 font-size: 18px;
