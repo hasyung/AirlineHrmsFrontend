@@ -664,7 +664,12 @@ class ContractCtrl extends nb.Controller
 
         @Employee.$collection().$refresh(params).$then (employees)->
             matched = _.find employees, params
-            if matched then self.loadEmp = matched;contract.employeeId = matched.id else self.loadEmp = params
+
+            if matched
+                self.loadEmp = matched
+                contract.owner = matched
+            else
+                self.loadEmp = params
 
 
 class UserListCtrl extends nb.Controller
