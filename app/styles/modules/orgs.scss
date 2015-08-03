@@ -356,9 +356,59 @@ md-dialog.socialChangeInfo {
         border-top: 1px solid rgba(0, 0, 0, .12);
     }
 }
-
+//年金 个人基数计算dialog
 md-dialog.personal_number {
-    min-width: 600px;
+    font-size: $font-size-md;
+    min-width: 700px;
+
+    .info-header {
+        height: 76px;
+        line-height: 76px;
+        text-align: center;
+
+        .name {
+            color: $a-color;
+            margin-right: 20px;
+        }
+    }
+
+    .info-footer {
+        height: 76px;
+        line-height: 76px;
+        padding-left: 50px;
+    }
+
+    ul {
+        @include clearfix();
+        border-bottom: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        margin: 0 auto;
+        padding: 0;
+        width: 600px;
+    }
+
+    .tcell {
+        float: left;
+        width: 150px;
+    }
+
+    .theader {
+        background-color: rgb(245, 245, 245);
+        border-left: 1px solid #ddd;
+        border-top: 1px solid #ddd;
+        color: $text-muted;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+    }
+
+    .tbody {
+        border-left: 1px solid #ddd;
+        border-top: 1px solid #ddd;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+    }
 
     .md-actions {
         border-top: 1px solid rgba(0, 0, 0, .12);
