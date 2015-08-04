@@ -689,7 +689,7 @@ class AnnuityHistoryController
                 displayName: '所属部门'
                 name: 'departmentName'
                 cellTooltip: (row) ->
-                    return row.entity.department.name
+                    return row.entity.departmentName
             }
             {displayName: '身份证号', name: 'identityNo'}
             {displayName: '手机号', name: 'mobile'}
@@ -736,24 +736,25 @@ class AnnuityChangesController
             {displayName: '员工编号', name: 'employeeNo'}
             {
                 displayName: '姓名'
-                name: 'name'
+                name: 'employeeName'
             }
             {
                 displayName: '所属部门'
-                name: 'department.name'
+                name: 'departmentName'
                 cellTooltip: (row) ->
-                    return row.entity.department.name
+                    return row.entity.departmentName
             }
-            {displayName: '信息发生时间', name: 'identityNo'}
-            {displayName: '信息种类', name: 'mobile'}
+            {displayName: '信息发生时间', name: 'createdAt', cellFilter: "date: 'yyyy-MM-dd'"}
+            {displayName: '信息种类', name: 'applyCategory'}
             {
                 displayName: '处理'
                 field: 'deal'
                 cellTemplate: '''
-                <div class="ui-grid-cell-contents ng-binding ng-scope">
-                    md-radio-group(ng-model="row.entity.handleStatus")
-                        md-radio-button.md-primary(value="true") 加入
-                        md-radio-button.md-primary(value="false") 退出
+                <div class="ui-grid-cell-contents">
+                    <md-radio-group ng-model="row.entity.handleStatus">
+                        <md-radio-button class="md-primary" value="true">加入</md-radio-button>
+                        <md-radio-button class="md-primary" value="false">退出</md-radio-button>
+                    </md-radio-group>
                 </div>
                 '''
             }

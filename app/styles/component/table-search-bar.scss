@@ -191,6 +191,14 @@ md-content.search-container {
                 font-size: $font-size-md;
                 margin-top: 10px;
             }
+
+            md-radio-button {
+                float: left;
+
+                &:first-child {
+                    margin: 0 20px 0 5px;
+                }
+            }
         }
     }
 
