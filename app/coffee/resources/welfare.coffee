@@ -61,17 +61,21 @@ SocialChange = (restmod, RMUtils, $Evt) ->
             Collection:
                 search: (tableState) ->
                     this.$refresh(tableState)
+
             Record:
                 is_processed: ()->
                     this.state != "未处理"
     }
 
-#年金
-Annuity = (restmod, RMUtils, $Evt) ->
+
+#年金个人设置
+AnnuitySetup = (restmod, RMUtils, $Evt) ->
     restmod.model('/annuities').mix 'nbRestApi', {
         $config:
             jsonRootSingle: 'annuity'
             jsonRootMany: 'annuities'
+
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
 
         $extend:
             Collection:
@@ -79,6 +83,8 @@ Annuity = (restmod, RMUtils, $Evt) ->
                     this.$refresh(tableState)
     }
 
+
+# 记录
 AnnuityRecord = (restmod, RMUtils, $Evt) ->
     restmod.model('/annuities/list_annuity').mix 'nbRestApi',{
         $config:
@@ -86,10 +92,19 @@ AnnuityRecord = (restmod, RMUtils, $Evt) ->
             jsonRootMany: 'annuities'
 
         $extend:
+            Scope:
+                # 计算(根据年月)
+                compute: (params)->
+                    restmod.model('/annuities/cal_annuity').mix(
+                        $config:
+                            jsonRoot: 'annuities'
+                    ).$search(params);
+
             Collection:
                 search: (tableState) ->
                     this.$refresh(tableState)
     }
+
 
 AnnuityChange = (restmod, RMUtils, $Evt) ->
     restmod.model('/annuity_apply').mix 'nbRestApi', {
@@ -101,6 +116,10 @@ AnnuityChange = (restmod, RMUtils, $Evt) ->
             Collection:
                 search: (tableState) ->
                     this.$refresh(tableState)
+
+            Record:
+                is_processed: ()->
+                    this.state != "未处理"
     }
 
 #社保
@@ -109,6 +128,6 @@ resources.factory 'SocialRecord', ['restmod', 'RMUtils', '$nbEvent', SocialRecor
 resources.factory 'SocialChange', ['restmod', 'RMUtils', '$nbEvent', SocialChange]
 
 #年金
-resources.factory 'Annuity', ['restmod', 'RMUtils', '$nbEvent', Annuity]
+resources.factory 'AnnuitySetup', ['restmod', 'RMUtils', '$nbEvent', AnnuitySetup]
 resources.factory 'AnnuityRecord', ['restmod', 'RMUtils', '$nbEvent', AnnuityRecord]
 resources.factory 'AnnuityChange', ['restmod', 'RMUtils', '$nbEvent', AnnuityChange]

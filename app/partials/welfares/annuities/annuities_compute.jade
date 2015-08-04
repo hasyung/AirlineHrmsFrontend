@@ -11,15 +11,22 @@
                 label(flex-order="3") 月
             span(flex)
             span
-                md-button.md-raised.md-primary(aria-label) 计算
+                md-button.md-raised.md-primary(
+                    ng-click="ctrl.exeCalc()"
+                    ng-disabled="ctrl.calcing"
+                    ) 计算
             span
-                md-button.md-primary.md-raised(aria-label) 导出
+                md-button.md-primary.md-raised(
+                    download
+                    ng-href="/api/annuities/export_annuity_to_xls?date={{ctrl.currentCalcTime()}}"
+                    href="javascript:"
+                    ) 导出
 
     div.ui-grid-container.mt5
         md-toolbar
             .md-toolbar-tools
                 h2 当期年金
 
-        div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.configurations")
+        div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.annuityRecords")
 
 
