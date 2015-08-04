@@ -6,7 +6,7 @@ form(name="speEditForm" ng-submit="save(currentSpe.$save(), speEditForm)" ng-con
         md-button.md-raised.md-primary(type="submit" ng-disabled="speEditForm.$invalid") 保存
     fieldset(ng-disabled="!editing")
         .textarea-row()
-            label.text-label 工作职责
+            label.label 工作职责
             textarea(flex nb-simditor, toolbar="['bold', 'italic', 'underline', 'ol', 'ul']", placeholder="这里输入内容", ng-model="currentSpe.duty", editing)
         md-input-container
             label 人事权限

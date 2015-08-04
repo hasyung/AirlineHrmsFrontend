@@ -318,9 +318,9 @@ class LeaveEmployeesCtrl extends nb.Controller
 
 
 class ReviewCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Change', 'Record', '$mdDialog']
+    @.$inject = ['$scope', 'Change', 'Record', '$mdDialog', 'toaster']
 
-    constructor: (@scope, @Change, @Record, @mdDialog) ->
+    constructor: (@scope, @Change, @Record, @mdDialog, @toaster) ->
         @loadInitialData()
         @recordColumnDef = [
             {name:"department.name", displayName:"所属部门"}
@@ -382,11 +382,14 @@ class ReviewCtrl extends nb.Controller
         @records.$refresh(tableState)
 
     checkChanges: ()->
+        self = @
+
         params = []
         # '无需审核': 0
         # '待审核': 1
         # '通过': 2
         # '不通过': 3
+
         checked = _.filter @changes, (item)->
             return item if item.statusCd != "1"
 
@@ -396,7 +399,11 @@ class ReviewCtrl extends nb.Controller
             temp.status_cd = item.statusCd
             temp.reason = item.reason
             params.push temp
-        @changes.checkChanges(params)
+
+        if params.length > 0
+            @changes.checkChanges(params)
+        else
+            self.toaster.pop('error', '提示','请勾选要处理的审核记录')
 
 
 class EmployeePerformanceCtrl extends nb.Controller
