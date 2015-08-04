@@ -6,13 +6,13 @@ div(style="height: 100%; background-color: #f5f5f5;")
     .personnel-content.personnel-control(ng-init="contract = {}; ctrl.loadEmp = {}")
         section.personnel-info-section
             md-content.nb-card-container(layout="column" md-theme="hrms")
-                form(ng-submit="ctrl.newContract(contract);panel.close();")
+                form(ng-submit="ctrl.newContract(contract);panel.close();" name="newContractForm")
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1
                             md-icon.form-icon(md-svg-src="/images/svg/personnel_24.svg" alt="基本信息")
                             | 合同信息
 
-                        fieldset()
+                        fieldset(md-theme="default")
                             div(style="display:none;")
                                 input(ng-model="contract.employeeId")
                             div(layout)
@@ -45,34 +45,42 @@ div(style="height: 100%; background-color: #f5f5f5;")
                                         md-option(value="合同制") 合同制
                                 md-input-container.row-has-value(flex)
                                     label 变更标志
-                                    md-select(ng-model="contract.changeFlag")
+                                    md-select(ng-model="contract.changeFlag" required)
                                         md-option(value="新签") 新签
                                         md-option(value="续签") 续签
                                         md-option(value="转制") 转制
                             div(layout)
                                 md-input-container(flex)
                                     label 开始日期
-                                    input(bs-datepicker ng-model="contract.startDate")
+                                    input(bs-datepicker ng-model="contract.startDate" required)
                                 md-input-container(flex)
                                     label 结束日期
-                                    input(bs-datepicker ng-model="contract.startDate")
+                                    input.has-placeholder(
+                                        bs-datepicker
+                                        ng-model="contract.endDate"
+                                        name="endDate"
+                                        )
+                                    div.input-placeholder 无固定期限合同请勿填写此项
+
                             div(layout)
                                 md-input-container(flex md-no-float)
                                     label 合同时长/年
-                                    input.has-placeholder(
+                                    input(
                                         type="text"
                                         ng-model="contract.dueTime"
                                         name="dueTime"
+                                        ng-disabled="!newContractForm.endDate.$modelValue"
+                                        ng-required="newContractForm.endDate.$modelValue"
                                         )
-                                    div.input-placeholder 不填合同时长为无固定期限合同
-
+                                    div(ng-messages="newContractForm.dueTime.$error")
+                                        div(ng-message="required") 结束日期、合同时长需同时填写
 
                             div(layout)
                                 md-input-container(flex)
                                     label 合同备注
-                                    input(type="text" ng-model="contract.notes" name="notes")
+                                    input(type="text" ng-model="contract.notes")
 
                     .form-bottom-group(layout style="margin-top: 20px;")
                         span(flex)
                         md-button.md-raised(type="button" ng-click="panel.close();") 取消
-                        md-button.md-primary.md-raised(type="submit") 提交
+                        md-button.md-primary.md-raised(type="submit" ng-disabled="newContractForm.$invalid") 提交
