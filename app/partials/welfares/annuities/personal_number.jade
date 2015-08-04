@@ -8,36 +8,17 @@ md-dialog.personal_number(
     md-content.sticky-container
         .info-header
             span.name {{::employee.name}}
-            span.no 001345
+            span.no {{::employee.employeeNo}}
         .info-body
             ul
-                li.tcell
-                    .theader 2014-01
-                    .tbody 10000元
-                li.tcell
-                    .theader 2014-01
-                    .tbody 10000元
-                li.tcell
-                    .theader 2014-01
-                    .tbody 10000元
-                li.tcell
-                    .theader 2014-01
-                    .tbody 10000元
-                li.tcell
-                    .theader 2014-01
-                    .tbody 10000元
-                li.tcell
-                    .theader 2014-01
-                    .tbody 10000元
-                li.tcell
-                    .theader 2014-01
-                    .tbody 10000元
-                li.tcell
-                    .theader 2014-01
-                    .tbody 10000元
+                li.tcell(ng-repeat="record in ctrl.basicComputeRecords")
+                    .theader(ng-bind="record.month")
+                    .tbody(ng-bind="record.pension_cardinality")
+
         .info-footer
             span 月度平均：
-            span 10000元
+            span(ng-bind="ctrl.averageCompute")
+            span 元
 
     .md-actions
         md-button(ng-click="dialog.close()") 关 闭

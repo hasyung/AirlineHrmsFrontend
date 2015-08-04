@@ -380,22 +380,41 @@ md-dialog.personal_number {
 
     ul {
         @include clearfix();
-        border-bottom: 1px solid #ddd;
-        border-right: 1px solid #ddd;
         margin: 0 auto;
         padding: 0;
         width: 600px;
+
+        .tcell:nth-child(4n+1) {
+            margin-left: 0;
+        }
+
+        .tcell:nth-child(1) {
+            margin-top: 0;
+        }
+
+        .tcell:nth-child(2) {
+            margin-top: 0;
+        }
+
+        .tcell:nth-child(3) {
+            margin-top: 0;
+        }
+
+        .tcell:nth-child(4) {
+            margin-top: 0;
+        }
     }
 
     .tcell {
         float: left;
+        margin-left: -1px;
+        margin-top: -1px;
         width: 150px;
     }
 
     .theader {
         background-color: rgb(245, 245, 245);
-        border-left: 1px solid #ddd;
-        border-top: 1px solid #ddd;
+        border: 1px solid #ddd;
         color: $text-muted;
         height: 50px;
         line-height: 50px;
@@ -403,8 +422,8 @@ md-dialog.personal_number {
     }
 
     .tbody {
-        border-left: 1px solid #ddd;
-        border-top: 1px solid #ddd;
+        border: 1px solid #ddd;
+        border-top: 0;
         height: 50px;
         line-height: 50px;
         text-align: center;
