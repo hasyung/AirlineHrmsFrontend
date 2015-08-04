@@ -27,6 +27,7 @@ form(ng-controller="EditableResourceCtrl", ng-submit="save(currentUser.$save(), 
                         input(disabled ng-model="currentUser.employeeNo")
                 div(layout)
                     md-input-container.row-has-value(flex)
+                        div.anth-attr(title="该属性需要审核" ng-hide="editing" ng-class="{auditing: currentUser.$metadata.audited_changes.gender_id}")
                         label 性别
                         md-select(ng-model="currentUser.genderId" ng-disabled="!editing")
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('genders')") {{item.label}}
@@ -43,6 +44,7 @@ form(ng-controller="EditableResourceCtrl", ng-submit="save(currentUser.$save(), 
                         input(ng-model="currentUser.birthPlace" name="birthPlace" required)
                 div(layout)
                     md-input-container(flex)
+                        div.anth-attr(title="该属性需要审核" ng-hide="editing" ng-class="{auditing: currentUser.$metadata.audited_changes.identity_no}")
                         label 身份证号
                         input(ng-model="currentUser.identityNo" name="identityNo" required)
                     md-input-container.row-has-value(flex)
