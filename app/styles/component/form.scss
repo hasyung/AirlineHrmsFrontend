@@ -341,17 +341,16 @@ md-input-container {
 .has-placeholder {
     &:focus {
         +.input-placeholder {
-            display: block;
+            display: none;
         }
     }
 }
 
 .input-placeholder {
     color: #e84e40;
-    display: none;
     position: absolute;
-    right: 10px;
-    top: 26px;
+    right: 5px;
+    top: 28px;
 }
 
 .inline-input-container {
