@@ -326,7 +326,6 @@ class ReviewCtrl extends nb.Controller
             {name:"department.name", displayName:"所属部门"}
             {name:"name", displayName:"姓名"}
             {name:"employeeNo", displayName:"员工编号"}
-            {name:"auditableType", displayName:"信息变更模块"}
             {
                 displayName: '信息变更模块'
                 field: 'auditableType'
@@ -370,7 +369,7 @@ class ReviewCtrl extends nb.Controller
                 {
                     name: 'created_at'
                     type: 'date-range'
-                    displayName: '创建时间'
+                    displayName: '变更时间'
                 }
             ]
         }

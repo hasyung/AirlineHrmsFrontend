@@ -124,7 +124,6 @@ class PositionChangesCtrl extends nb.Controller
             {name:"name", displayName:"岗位名称"}
             {name:"department.name", displayName:"所属部门"}
             {name:"action", displayName:"操作"}
-            {name:"auditableType", displayName:"信息变更模块"}
             {
                 displayName: '信息变更模块'
                 field: 'auditableType'
@@ -158,7 +157,7 @@ class PositionChangesCtrl extends nb.Controller
                 {
                     name: 'created_at'
                     type: 'date-range'
-                    displayName: '创建时间'
+                    displayName: '变更时间'
                 }
             ]
         }
