@@ -682,8 +682,8 @@ class UserListCtrl extends nb.Controller
             .col 'name',                 '姓名',    'string',           '姓名'
             .col 'employee_no',          '员工编号', 'string'
             .col 'department_ids',       '机构',    'org-search'
-            .col 'position_names',       '岗位名称', 'string_array'
-            .col 'locations',            '属地',    'string_array'
+            .col 'position_name',        '岗位名称', 'string'
+            .col 'location',             '属地',    'string'
             .col 'channel_ids',          '通道',    'muti-enum-search', '',    {type: 'channels'}
             .col 'employment_status_id', '用工状态', 'select',           '',    {type: 'employment_status'}
             .col 'birthday',             '出生日期', 'date-range'
