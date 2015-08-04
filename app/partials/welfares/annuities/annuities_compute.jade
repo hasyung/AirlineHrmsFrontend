@@ -20,6 +20,7 @@
                     download
                     ng-href="/api/annuities/export_annuity_to_xls?date={{ctrl.currentCalcTime()}}"
                     href="javascript:"
+                    ng-disabled="ctrl.calcing || ctrl.socialRecords.length==0"
                     ) 导出
 
     div.ui-grid-container.mt5
