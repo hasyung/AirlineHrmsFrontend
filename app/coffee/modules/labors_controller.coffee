@@ -629,7 +629,7 @@ class ContractCtrl extends nb.Controller
         @contracts.$refresh(tableState)
 
     getSelected: () ->
-        rows = @scope.$gridApi.selection.getSelectedGridRows()
+        rows = @gridApi.selection.getSelectedGridRows()
         selected = if rows.length >= 1 then rows[0].entity else null
 
     renewContract: (request, contract)->

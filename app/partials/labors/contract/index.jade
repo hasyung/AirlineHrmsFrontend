@@ -17,7 +17,7 @@ block cust_page
                         ng-disabled="!ctrl.getSelected()"
                         nb-confirm="ctrl.leaveJob(ctrl.getSelected(), isConfirm, '劳动关系终止')"
                         nb-title="离职流程发起"
-                        nb-content="你确定对{{ctrl.getSelected().employeeName}}发起离职通知单流程，请确认。"
+                        nb-content="你确定对该员工发起离职通知单流程，请确认。"
                     ) 发起离职
                     md-button.md-primary.md-raised(
                         nb-dialog
@@ -29,7 +29,14 @@ block cust_page
                         nb-panel
                         template-url="/partials/labors/contract/new.html"
                     ) 新建合同
-            div(nb-grid multi-select="false" export-api grid-selection column-defs="ctrl.columnDef" safe-src="ctrl.contracts")
+            div(
+                nb-grid
+                multi-select="false"
+                export-api
+                on-register-api="ctrl.exportGridApi(gridApi)"
+                grid-selection column-defs="ctrl.columnDef"
+                safe-src="ctrl.contracts"
+            )
 
 block user_list_actions
     md-button.md-primary.md-raised(
