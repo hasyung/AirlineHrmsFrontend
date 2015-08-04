@@ -108,6 +108,7 @@ class OrgsCtrl extends nb.Controller
 
     onItemClick: (evt) -> #机构树 点击事件处理 重构？
         orgId = evt.target
+        @currentOrg.$restore() if @currentOrg
         @currentOrg = _.find(@orgs, {id: orgId})
 
     revert: (isConfirm) ->
