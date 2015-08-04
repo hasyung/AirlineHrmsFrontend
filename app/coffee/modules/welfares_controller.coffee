@@ -291,9 +291,9 @@ class SocialHistoryController
                     type: 'string'
                 }
                 {
-                    name: 'month'
+                    name: 'calc_month'
                     displayName: '缴费月度'
-                    type: 'date-range'
+                    type: 'month-range'
                 }
             ]
         }
@@ -520,8 +520,6 @@ class AnnuityPersonalController extends nb.Controller
 
             gridApi.rowEdit.setSavePromise(rowEntity, dfd.promise)
 
-            console.error rowEntity.annuityStatus
-
             @http({
                 method: 'PUT'
                 url: '/api/annuities/' + rowEntity.id
@@ -630,7 +628,7 @@ class AnnuityComputeController extends nb.Controller
         @currentYear = _.last(@year_list)
         @currentMonth = _.last(@month_list)
 
-        @annuityRecords = @AnnuityRecord.$collection().$fetch()
+        @annuityRecords = @AnnuityRecord.$collection().$fetch({date: @currentCalcTime()})
 
     search: (tableState) ->
         @annuityRecords.$refresh(tableState)
@@ -645,11 +643,11 @@ class AnnuityComputeController extends nb.Controller
         @calcing = true
         self = @
 
-        @annuityRecords = @AnnuityRecord.compute({date: @currentCalcTime()}).$asPromise().then (data)->
+        @AnnuityRecord.compute({date: @currentCalcTime()}).$asPromise().then (data)->
             self.calcing = false
-            console.error self.calcing
             erorr_msg = data.$response.data.messages
             self.Evt.$send("annuity:calc:error", erorr_msg) if erorr_msg
+            self.loadRecords()
 
 
 class AnnuityHistoryController
@@ -674,7 +672,7 @@ class AnnuityHistoryController
                 {
                     name: 'month'
                     displayName: '缴费月度'
-                    type: 'date-range'
+                    type: 'month-range'
                 }
             ]
         }
@@ -711,10 +709,10 @@ class AnnuityHistoryController
 
 
 class AnnuityChangesController
-    @.$inject = ['$http', '$scope', '$nbEvent', 'AnnuityChange']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'AnnuityChange', '$q']
 
-    constructor: ($http, $scope, $Evt, @AnnuityChange) ->
-        @configurations = @loadInitialData()
+    constructor: (@http, @scope, @Evt, @AnnuityChange, @q) ->
+        @annuityChanges = @loadInitialData()
 
         @filterOptions = {
             name: 'annuityChanges'
@@ -737,26 +735,38 @@ class AnnuityChangesController
             {
                 displayName: '姓名'
                 name: 'employeeName'
+                enableCellEdit: false
             }
             {
                 displayName: '所属部门'
                 name: 'departmentName'
+                enableCellEdit: false
                 cellTooltip: (row) ->
                     return row.entity.departmentName
             }
-            {displayName: '信息发生时间', name: 'createdAt', cellFilter: "date: 'yyyy-MM-dd'"}
-            {displayName: '信息种类', name: 'applyCategory'}
             {
-                displayName: '处理'
-                field: 'deal'
-                cellTemplate: '''
-                <div class="ui-grid-cell-contents">
-                    <md-radio-group ng-model="row.entity.handleStatus">
-                        <md-radio-button class="md-primary" value="true">加入</md-radio-button>
-                        <md-radio-button class="md-primary" value="false">退出</md-radio-button>
-                    </md-radio-group>
-                </div>
-                '''
+                displayName: '信息发生时间',
+                name: 'createdAt'
+                enableCellEdit: false
+                cellFilter: "date: 'yyyy-MM-dd'"
+            }
+            {
+                displayName: '信息种类'
+                name: 'applyCategory'
+                enableCellEdit: false
+            }
+            {
+                displayName: '缴费状态'
+                field: 'handleStatus'
+                editableCellTemplate: 'ui-grid/dropdownEditor'
+                headerCellClass: 'editable_cell_header'
+                editDropdownValueLabel: 'value'
+                editDropdownIdLabel: 'key'
+                editDropdownOptionsArray: [
+                    {key: '未处理', value: '未处理'}
+                    {key: '加入', value: '加入'}
+                    {key: '退出', value: '退出'}
+                ]
             }
         ]
 
@@ -764,6 +774,31 @@ class AnnuityChangesController
 
         ]
 
+    initialize: (gridApi) ->
+        self = @
+
+        saveRow = (rowEntity) ->
+            dfd = @q.defer()
+
+            gridApi.rowEdit.setSavePromise(rowEntity, dfd.promise)
+
+            if rowEntity.handleStatus != "未处理"
+                @http({
+                    method: 'GET'
+                    url: '/api/annuity_apply/handle_apply?id=' + rowEntity.id + "&handle_status=" + rowEntity.handleStatus
+                })
+                .success (data) ->
+                    dfd.resolve()
+                    self.Evt.$send('annuity_change:update:success', data.messages)
+                .error () ->
+                    dfd.reject()
+                    rowEntity.$restore()
+
+        # edit.on.afterCellEdit($scope,function(rowEntity, colDef, newValue, oldValue)
+        # gridApi.edit.on.afterCellEdit @scope, (rowEntity, colDef, newValue, oldValue) ->
+
+        gridApi.rowEdit.on.saveRow(@scope, saveRow.bind(@))
+        @scope.gridApi = gridApi
 
     loadInitialData: ->
         @annuityChanges = @AnnuityChange.$collection().$fetch()
