@@ -102,57 +102,11 @@ menuFactory = ($rootScope, $state)->
         ]
     }
 
-    sections.push {
-        name: '薪酬'
-        icon_src: '/images/svg/left-side-svg/left_icon_8.svg'
-        pages: [
-            {
-                name: '薪资设置'
-                state: 'salary'
-                permission: ''
-            }
-            {
-                name: '基础工资'
-                state: 'salary_basic'
-                permission: ''
-            }
-            {
-                name: '飞行员小时费'
-                state: 'position'
-                permission: ''
-            }
-            {
-                name: '空勤驻站补贴'
-                state: 'position'
-                permission: ''
-            }
-            {
-                name: '交通费'
-                state: 'position'
-                permission: ''
-            }
-            {
-                name: '实习费'
-                state: 'position'
-                permission: ''
-            }
-            {
-                name: '事件奖励'
-                state: 'position'
-                permission: ''
-            }
-            {
-                name: '津补贴'
-                state: 'position'
-                permission: ''
-            }
-            {
-                name: '劳务费'
-                state: 'position'
-                permission: ''
-            }
-        ]
-    }
+    #sections.push {
+    #    name: '薪酬'
+    #    icon_src: '/images/svg/left-side-svg/left_icon_8.svg'
+    #    pages: [
+    #}
 
     sections.push {
         name: '劳动关系'
