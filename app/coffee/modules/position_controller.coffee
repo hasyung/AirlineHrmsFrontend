@@ -21,6 +21,8 @@ class Route
 
             }
 
+app.config(Route)
+
 
 class PositionCtrl extends nb.Controller
     @.$inject = ['Position', '$scope', 'sweet']
@@ -183,4 +185,3 @@ class PositionDetailCtrl
         ]
 
 app.controller 'PositionDetailCtrl', PositionDetailCtrl
-app.config(Route)

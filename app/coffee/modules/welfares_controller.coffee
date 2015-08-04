@@ -757,7 +757,7 @@ class AnnuityChangesController
             }
             {
                 displayName: '缴费状态'
-                field: 'handleStatus'
+                field: 'status'
                 editableCellTemplate: 'ui-grid/dropdownEditor'
                 headerCellClass: 'editable_cell_header'
                 editDropdownValueLabel: 'value'
@@ -785,11 +785,11 @@ class AnnuityChangesController
             if rowEntity.handleStatus != "未处理"
                 @http({
                     method: 'GET'
-                    url: '/api/annuity_apply/handle_apply?id=' + rowEntity.id + "&handle_status=" + rowEntity.handleStatus
+                    url: '/api/annuity_apply/handle_apply?id=' + rowEntity.id + "&handle_status=" + rowEntity.status
                 })
                 .success (data) ->
                     dfd.resolve()
-                    self.Evt.$send('annuity_change:update:success', data.messages)
+                    self.Evt.$send('annuity_change:update:success', data.messages || "处理成功")
                 .error () ->
                     dfd.reject()
                     rowEntity.$restore()

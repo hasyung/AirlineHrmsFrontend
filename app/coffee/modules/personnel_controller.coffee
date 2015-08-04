@@ -27,6 +27,8 @@ class Route
                 controllerAs: 'ctrl'
             }
 
+app.config(Route)
+
 
 class PersonnelCtrl extends nb.Controller
     @.$inject = ['$scope', 'sweet', 'Employee']
@@ -73,16 +75,15 @@ class PersonnelCtrl extends nb.Controller
         ]
 
         @filterOptions = filterBuildUtils('personnel')
-            .col 'name',                 '姓名',    'string',           '姓名'
+            .col 'name',                 '姓名',     'string'
             .col 'employee_no',          '员工编号', 'string'
-            .col 'department_ids',       '机构',    'org-search'
-            .col 'position_names',       '岗位名称', 'string_array'
-            .col 'locations',            '属地',    'string_array'
-            .col 'channel_ids',          '通道',    'muti-enum-search', '',    {type: 'channels'}
+            .col 'department_ids',       '机构',     'org-search'
+            .col 'position_name',        '岗位名称', 'string'
+            .col 'location',             '属地',     'string'
+            .col 'channel_ids',          '通道',     'muti-enum-search', '',    {type: 'channels'}
             .col 'employment_status_id', '用工状态', 'select',           '',    {type: 'employment_status'}
             .col 'birthday',             '出生日期', 'date-range'
             .col 'join_scal_date',       '入职时间', 'date-range'
-            .col 'labor_relation_id',    '用工性质', 'select',           '', {type: 'labor_relations'}
             .end()
 
     loadInitialData: ->
@@ -218,6 +219,7 @@ class NewEmpsCtrl extends nb.Controller
         }
 
         @employees = @Employee.$collection().$fetch(@collection_param)
+
     regEmployee: (employee)->
         self = @
         @employees.$build(employee).$save().$then ()->
@@ -318,10 +320,11 @@ class LeaveEmployeesCtrl extends nb.Controller
 
 
 class ReviewCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Change', 'Record', '$mdDialog']
+    @.$inject = ['$scope', 'Change', 'Record', '$mdDialog', 'toaster']
 
-    constructor: (@scope, @Change, @Record, @mdDialog) ->
+    constructor: (@scope, @Change, @Record, @mdDialog, @toaster) ->
         @loadInitialData()
+
         @recordColumnDef = [
             {name:"department.name", displayName:"所属部门"}
             {name:"name", displayName:"姓名"}
@@ -375,18 +378,20 @@ class ReviewCtrl extends nb.Controller
         }
 
     loadInitialData: ->
-        # @changes = @Change.$collection().$fetch()
         @records = @Record.$collection().$fetch()
 
     searchRecord: (tableState)->
         @records.$refresh(tableState)
 
     checkChanges: ()->
+        self = @
+
         params = []
         # '无需审核': 0
         # '待审核': 1
         # '通过': 2
         # '不通过': 3
+
         checked = _.filter @changes, (item)->
             return item if item.statusCd != "1"
 
@@ -396,7 +401,12 @@ class ReviewCtrl extends nb.Controller
             temp.status_cd = item.statusCd
             temp.reason = item.reason
             params.push temp
-        @changes.checkChanges(params)
+
+        if params.length > 0
+            @changes.checkChanges(params)
+            @changes = self.Change.$collection().$refresh()
+        else
+            self.toaster.pop('error', '提示','请勾选要处理的审核记录')
 
 
 class EmployeePerformanceCtrl extends nb.Controller
@@ -507,7 +517,6 @@ orgMutiPos = ($rootScope)->
 
 app.directive('orgMutiPos',[orgMutiPos])
 
-app.config(Route)
 
 app.controller('PersonnelSort', PersonnelSort)
 app.controller('LeaveEmployeesCtrl', LeaveEmployeesCtrl)
