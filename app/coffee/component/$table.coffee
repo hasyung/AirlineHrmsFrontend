@@ -5,13 +5,16 @@ app = nb.app
 class NbFilterCtrl extends nb.FilterController
     #@desc 预编译模板
     #@param constraint definition
+
     preCompileTemplate = (def)->
         type = def.type || 'string'
+
         if !filter_template_definition[type]
             throw "filter template type: #{type} is not implemented"
         else
             template = filter_template_definition[type]
         compiled = _.template(template)
+
         return compiled(def)
 
     filter_template_definition =
@@ -342,11 +345,11 @@ nbGridDirective = ($parse)->
             enableColumnMenus: false
             multiSelect: multiSelect
             paginationCurrentPage: 1
-            paginationPageSizes: [20, 40, 60, 80]
+            paginationPageSizes: [20, 40, 60, 80, 100]
             paginationPageSize: 60
 
             onRegisterApi: (gridApi) ->
-                #WARN 必须保持grid 生命周期与controller 一致， 暂不支持动态生成表格, 不然会内存泄露
+                #WARN 必须保持 grid 生命周期与 controller 一致，暂不支持动态生成表格, 不然会内存泄露
                 # DEPRECATED
                 gridApi.grid.appScope.$parent.$gridApi = gridApi if exportApi
 
@@ -355,6 +358,7 @@ nbGridDirective = ($parse)->
 
                 gridApi.pagination.on.paginationChanged scope, (newPage, pageSize) ->
                     currentQueryParams = safeSrc.$queryParams || {}
+
                     queryParams = angular.extend {}, currentQueryParams, {
                         page: newPage
                         per_page: pageSize

@@ -24,11 +24,12 @@ angular.module 'nb.directives'
         pasteImage: false
     }
 
-    .directive 'simditor', ['$timeout','simditorConfig',($timeout,defaultConfig) ->
+    .directive 'simditor', ['$timeout', 'simditorConfig', ($timeout, defaultConfig) ->
         return {
             restrict: 'A'
             replace: true
             require: 'ngModel'
+
             scope: {
                 textVal: '=ngModel'
                 toolbar: '='
@@ -75,8 +76,8 @@ angular.module 'nb.directives'
             link: (scope,elem,attrs,ctrl) ->
                 customOpt = {}
                 editor = null
-                createEditor = ()->
 
+                createEditor = ()->
                     textarea = elem.find("textarea")
                     customOpt.toolbar = scope.toolbar if scope.toolbar
                     opts = angular.extend {},defaultConfig, customOpt,{textarea: textarea}
