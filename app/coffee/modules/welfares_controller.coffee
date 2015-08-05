@@ -57,9 +57,6 @@ class WelfareController
                 $Evt.$send('wselfate:save:success', '社保配置保存成功')
 
 
-# 社保
-
-
 class WelfarePersonalController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'SocialPersonSetup']
 
@@ -434,7 +431,6 @@ app.controller 'socialChangesCtrl', SocialChangesController
 app.controller 'socialChangesProcessCtrl', SocialChangeProcessController
 
 
-# 年金
 class AnnuityPersonalController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'AnnuitySetup', '$q']
 
@@ -469,8 +465,17 @@ class AnnuityPersonalController extends nb.Controller
             {displayName: '员工编号', name: 'employeeNo'}
             {
                 displayName: '姓名'
-                name: 'name'
+                field: 'name'
                 enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
             }
             {
                 displayName: '所属部门'
