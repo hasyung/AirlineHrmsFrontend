@@ -109,6 +109,8 @@ class OrgsCtrl extends nb.Controller
 
     onItemClick: (evt) -> #机构树 点击事件处理 重构？
         orgId = evt.target
+
+        # 放弃当前修改
         @currentOrg.$restore() if @currentOrg
         @currentOrg = _.find(@orgs, {id: orgId})
 
@@ -214,17 +216,31 @@ class OrgsCtrl extends nb.Controller
 
 
 class OrgCtrl extends nb.Controller
-    @.$inject = ['Org', '$stateParams', '$scope', '$rootScope', '$nbEvent', 'Position', 'sweet']
+    @.$inject = ['Org', '$stateParams', '$scope', '$rootScope', '$nbEvent', 'Position', 'sweet', '$enum']
 
-    constructor: (@Org, @params, @scope, @rootScope, @Evt, @Position , @sweet) ->
+    constructor: (@Org, @params, @scope, @rootScope, @Evt, @Position , @sweet, @enum) ->
         @state = 'show' # show editing newsub
+        @dep_grade_array = @enum.get('department_grades')
+
         self = @
 
         @scope.$parent.$watch 'ctrl.currentOrg', (newval)->
             self.orgLink(newval)
 
+        @scope.$watch 'orgCtrl.state', (newval)->
+            # 过滤机构的职级
+            self.dep_grade_array = _.filter self.enum.get('department_grades'), (item)->
+                #不是新增子机构
+                current_grade_id = self.scope.currentOrg.gradeId
+
+                if newval == 'show'
+                    return item.id >= current_grade_id
+                else
+                    return item.id > current_grade_id
+
     orgLink: (org)->
         @scope.currentOrg = org
+
         queryParam = if @scope.ctrl.isHistory then {version: @scope.ctrl.currentLog.id} else {}
         @scope.positions = @scope.currentOrg.positions.$refresh(queryParam)
 
