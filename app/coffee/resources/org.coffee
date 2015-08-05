@@ -1,7 +1,7 @@
 resources = angular.module('resources')
 
 
-Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
+Org = (restmod, RMUtils, $Evt, DEPARTMENTS, $http) ->
     Constants = {
         NODE_INDEX: 3 # serial_number 生成策略是parent_node.serial_number+node_index，node_index由3位构成，值为创建该node时，其parent_node.children_count
     }
@@ -87,8 +87,16 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
             if ( parent.parentId || parent.parent_id ) && parent.xdepth > 2
                 parentDep = _.find DEPARTMENTS, 'id', parent.parentId || parent.parent_id
 
+                # 未生效的机构当前在DEPARTMENTS无法找到
+                # OrgStore依赖于Org，这里注入会出现循环依赖
                 if !parentDep
-                    throw new Error("机构 #{parent.name}:#{parent.id}，找不到父级 #{parent.parentId}")
+                    $http.get('/api/departments?edit_mode=true').success (data) ->
+                        parentDep = _.find data.departments, 'id', parent.parentId || parent.parent_id
+
+                        if !parentDep
+                            throw new Error("机构 #{parent.name}:#{parent.id}，找不到父级 #{parent.parentId}")
+                        #console.error "server find", parentDep
+                        return computeFullName(parentDep, ttl, initalArr)
                 else
                     return computeFullName(parentDep, ttl, initalArr)
             else
@@ -96,6 +104,9 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
 
 
     Org = restmod.model('/departments').mix 'nbRestApi', 'DirtyModel', {
+        $config:
+            jsonRootMany: 'departments'
+
         positions: { hasMany: 'Position'}
 
         fullName: {
@@ -106,6 +117,7 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
 
         $hooks:
             'after-fetch-many': -> $Evt.$send('org:refresh')
+
             # 有无必要自定义事件增加系统复杂度? 待观察
             'after-destroy': ->
                 $Evt.$send('org:refresh')
@@ -281,5 +293,5 @@ class OrgStore extends nb.Service
                 throw "can not find org id : #{id} primary org "
 
 
-resources.factory 'Org', ['restmod', 'RMUtils', '$nbEvent', 'DEPARTMENTS', Org]
 resources.service 'OrgStore', OrgStore
+resources.factory 'Org', ['restmod', 'RMUtils', '$nbEvent', 'DEPARTMENTS', '$http', Org]

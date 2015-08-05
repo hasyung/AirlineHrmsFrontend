@@ -255,7 +255,9 @@ class OrgCtrl extends nb.Controller
     newsub: (form, neworg) ->
         return if form.$invalid
         self = @
-        @scope.currentOrg.newSub(neworg).$then -> self.state = 'show'
+
+        @scope.currentOrg.newSub(neworg).$then ->
+            self.state = 'show'
 
     destroy: (isConfirm) ->
         sweet = @sweet
