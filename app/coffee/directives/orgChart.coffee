@@ -1,24 +1,11 @@
-# // depth 修改
-
-# treeData = {
-#     root: root
-# }
-
-
 app = @nb.app
 
 
-
 orgChartDirective = ->
-
     postLink = (scope, elem, attr) ->
-
-        # onItemClick = ->
-        #     scope.$apply -> scope.onItemClick()
         clickHandler = (evt) ->
             scope.$apply ->
-                scope.onItemClick(evt:evt)
-
+                scope.onItemClick(evt: evt)
 
         options = {
             container: elem[0]
@@ -41,7 +28,6 @@ orgChartDirective = ->
 
         scope.$watch 'orgChartData', (newVal) -> render(newVal, options, scope.initSelectOrgId) if newVal
         scope.$on '$destroy', () -> destroyChart()
-        # render(scope.orgChartData, options)
 
     return {
         link: postLink
@@ -55,7 +41,6 @@ orgChartDirective = ->
 
 render = (root, options, select_org_id) ->
     container = options.container
-    # cleanup
     d3.select(container.querySelector('svg')).remove()
 
     if root.xdepth == 1
@@ -63,10 +48,7 @@ render = (root, options, select_org_id) ->
     else
         drawTreeChart(root, options, select_org_id)
 
-# nature.name 分类
-# shengchanbumen
-# jiguanbumen
-# fengongsijidi
+
 drawOrgChart = (root, options, select_org_id) ->
     active_node = null
     staff_nodes = null
@@ -90,11 +72,10 @@ drawOrgChart = (root, options, select_org_id) ->
         length_group = _.countBy root.children, (org) -> return org.nature_id
         return _.max(_.values(length_group))
 
-
     nodesDecorator = (root, tree) ->
         nodes = tree.nodes(root)
         staffLength = root.staff.length
-        console.log staffLength
+
         nodes.forEach (d) ->
             type = if d.nature_id then d.nature_id else 'root'
             branch = nature_type_order.indexOf(type)
@@ -102,6 +83,7 @@ drawOrgChart = (root, options, select_org_id) ->
                 d.y = branch*(rectHeight + rectVerticalSpacing)
             else
                 d.y = branch*(rectHeight + rectVerticalSpacing) + staffLength*(rectWidth + rectHorizontalSpacing) - rectHorizontalSpacing
+
         grouped_org = _.groupBy root.children, (org) -> return org.nature_id
         grouped_org['root'] = [root]
 
@@ -256,15 +238,12 @@ drawOrgChart = (root, options, select_org_id) ->
         active_node = svg.select("#org_#{select_org_id}")
         active_node.classed 'active',true
 
-
-
     layerMaxLength = computeLayerMaxLength(root)
     tree = d3.layout.tree()
     svg = d3.select(container).append('svg')
     nodes = nodesDecorator(root, tree)
     staff_nodes = staffNodesDecorator(root, tree)
     draw(svg, tree, nodes, layerMaxLength, root, staff_nodes)
-
 
 
 drawTreeChart = (root, options, select_org_id) ->
@@ -300,7 +279,6 @@ drawTreeChart = (root, options, select_org_id) ->
 
     #  绘制子机构树
     draw =  (svg, tree, nodes,layerMaxLength, root) ->
-
         drawPath = ->
             svg.selectAll("path")
                 .data(nodes)
@@ -319,7 +297,6 @@ drawTreeChart = (root, options, select_org_id) ->
                 .attr("fill", "transparent")
 
         drawRect = ->
-
             nodeEnter = svg.selectAll("g.node")
                 .data(nodes)
                 .enter()
@@ -372,7 +349,6 @@ drawTreeChart = (root, options, select_org_id) ->
         active_node = svg.select("#org_#{select_org_id}")
         active_node.classed 'active',true
 
-
     #方法调用
     computeLayerMaxLength(root)
     layerMaxLength = leaf
@@ -386,5 +362,5 @@ drawTreeChart = (root, options, select_org_id) ->
     nodes = nodesDecorator(root, tree)
     draw(svg, tree, nodes, layerMaxLength, root)
 
-app.directive('orgChart',[orgChartDirective])
 
+app.directive('orgChart', [orgChartDirective])

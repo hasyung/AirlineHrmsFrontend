@@ -1,0 +1,33 @@
+.app-content-wrapper(flex ng-controller="annuityComputeCtrl as ctrl")
+    md-toolbar.toolbar--welfare
+        .md-toolbar-tools
+            span(layout)
+                label 月度
+                md-select(ng-model="ctrl.currentYear" ng-change="ctrl.loadRecords()" placeholder="请选择年份" aria-label)
+                    md-option(ng-value="item" ng-repeat="item in ctrl.year_list track by $index" ng-bind="item")
+                label(flex-order="2") 年
+                md-select(ng-model="ctrl.currentMonth" ng-change="ctrl.loadRecords()" placeholder="请选择月份" aria-label)
+                    md-option(ng-value="item" ng-repeat="item in ctrl.month_list track by $index" ng-bind="item")
+                label(flex-order="3") 月
+            span(flex)
+            span
+                md-button.md-raised.md-primary(
+                    ng-click="ctrl.exeCalc()"
+                    ng-disabled="ctrl.calcing"
+                    ) 计算
+            span
+                md-button.md-primary.md-raised(
+                    download
+                    ng-href="/api/annuities/export_annuity_to_xls?date={{ctrl.currentCalcTime()}}"
+                    href="javascript:"
+                    ng-disabled="ctrl.calcing || ctrl.socialRecords.length==0"
+                    ) 导出
+
+    div.ui-grid-container.mt5
+        md-toolbar
+            .md-toolbar-tools
+                h2 当期年金
+
+        div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.annuityRecords")
+
+

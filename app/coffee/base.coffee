@@ -1,17 +1,3 @@
-
-
-
-##
-#
-# 基类文件
-#
-#
-#
-#
-#
-#
-#
-
 nb = @.nb
 app = nb.app
 
@@ -20,7 +6,6 @@ class Base
 class Service extends Base
 
 class Controller extends Base
-
     constructor: () ->
         # @initialize()
 
@@ -39,43 +24,72 @@ class Controller extends Base
 
         return @q.reject(xhr)
 
-nb.Base = Base
-nb.Service= Service
-nb.Controller = Controller
+    $getYears: ()->
+        [2015..new Date().getFullYear()]
+
+    $getMonths: ()->
+        months = [1..new Date().getMonth() + 1]
+        months = _.map months, (item) ->
+            item = "0" + item if item < 10
+
+
+class FilterController extends Controller
+    onConditionInValid: ($Evt, invalid) ->
+        $Evt.$send('search:condition:error', {message: invalid.join(",")})
 
 
 class EditableResourceCtrl
-    @.$inject = ['$scope', '$enum']
-    constructor: (scope, $enum) ->
+    @.$inject = ['$scope', '$enum', '$nbEvent']
+
+    constructor: (scope, $enum, $Evt) ->
         scope.editing = false
         scope.$enum = $enum
+
         scope.edit = (evt) ->
             evt.preventDefault() if evt && evt.preventDefault
             scope.editing = true
 
         scope.save = (promise, form) ->
             return if form && form.$invalid
+            self = @
 
             if promise
                 if promise.then
-                    promise.then () -> scope.editing = false
+                    promise.then (data) ->
+                        scope.editing = false
+                        self.response_data = data
                 else if promise.$then
-                    promise.$then () -> scope.editing =false
-
+                    promise.$then (data) ->
+                        scope.editing = false
+                        self.response_data = data
                 else
                     throw new Error('promise 参数错误')
 
-            else scope.editing =false
+                if self.response_data
+                    msg = self.response_data.messages
+                    $Evt.$send('model:save:success', msg || "保存成功")
+            else
+                scope.editing = false
 
-
-
-        scope.cancel = (resource, evt, form) ->
+        scope.cancel = (resource, evt, form, attach_models = []) ->
             evt.preventDefault() if evt
             resource.$restore() if resource && resource.$restore
-            form.$setPristine() if form && form.$setPristine
-            scope.editing = false
-class NewResourceCtrl
 
+            angular.forEach attach_models, (model) ->
+                model.$restore() if model && model.$restore
+            form.$setPristine() if form && form.$setPristine
+
+            scope.editing = false
+
+
+nb.Base = Base
+nb.Service = Service
+nb.Controller = Controller
+nb.FilterController = FilterController
+nb.EditableResourceCtrl = EditableResourceCtrl
+
+
+class NewResourceCtrl
     @.$inject = ['$scope', '$enum']
 
     constructor: (scope, $enum) ->
@@ -83,7 +97,11 @@ class NewResourceCtrl
 
         scope.create = (resource, form) ->
             return if form && form.$invalid
-            resource.$save() if resource.$save
+
+            if resource.$save
+                resource.$save().$asPromise().then (data)->
+                    msg = data.$response.data.messages
+                    $Evt.$send('model:save:success', msg || "创建成功")
 
 
 class NewFlowCtrl
@@ -112,6 +130,7 @@ class NewFlowCtrl
             $http.post("/api/workflows/#{ctrl.flow_type}", data).success () ->
                 scope.panel.close() if scope.panel
                 list.$refresh()
+
                 if scope.panel
                     scope.panel.close()
                     if scope.panel.$$collection #WORKAROUND 临时代码， 因为流程与列表数据展现不一致
@@ -119,12 +138,11 @@ class NewFlowCtrl
 
 
 class NewMyRequestCtrl extends NewFlowCtrl
+    @.$inject = ['$scope', '$http', '$timeout', 'USER_META', '$nbEvent']
 
-    @.$inject = ['$scope', '$http', '$timeout', 'USER_META']
-
-    constructor: (scope, $http, $timeout, meta) ->
+    constructor: (scope, $http, $timeout, meta, @Evt) ->
         super(scope, $http, meta) # 手动注入父类实例化参数
-        ctrl = @
+        self = @
 
         scope.request = {}
         scope.calculating = false
@@ -133,6 +151,7 @@ class NewMyRequestCtrl extends NewFlowCtrl
 
         enableCalculating = ->
             scope.calculating = true
+
         disableCalculating = ->
             scope.calculating = false
 
@@ -143,6 +162,7 @@ class NewMyRequestCtrl extends NewFlowCtrl
                 startOfDay.clone().add(9, 'hours')
                 startOfDay.clone().add(13, 'hours')
             ]
+
         scope.loadEndTime = () ->
             startOfDay = moment(scope.request.end_time).startOf('day')
 
@@ -151,32 +171,30 @@ class NewMyRequestCtrl extends NewFlowCtrl
                 startOfDay.clone().add(17, 'hours')
             ]
 
-
         # 计算请假天数
         scope.calculateTotalDays = (data, vacation_type) ->
-            #validation data
             if data.start_time && data.end_time
+                start = moment(data.start_time)
+                end = moment(data.end_time)
+
                 request_data = {
                     vacation_type: vacation_type
-                    start_time: moment(data.start_time).format()
-                    end_time: moment(data.end_time).format()
+                    start_time: start.format()
+                    end_time: end.format()
                 }
+
+                if start > end
+                    self.Evt.$send("leave:calc_days:error", "开始时间不能大于结束时间")
+                    return
+
                 enableCalculating()
 
-                $http.get(
-                    '/api/vacations/calc_days'
-                    {
-                        params: request_data
-                    }
-                ).success (data) ->
+                $http.get('/api/vacations/calc_days', {params: request_data}).success (data, status)->
                     $timeout disableCalculating, 2000
                     scope.vacation_days = data.vacation_days
 
 
-
-
-
-app.controller('EditableResource', EditableResourceCtrl)
-app.controller('NewResource', NewResourceCtrl)
+app.controller('EditableResourceCtrl', EditableResourceCtrl)
+app.controller('NewResourceCtrl', NewResourceCtrl)
 app.controller('NewFlowCtrl', NewFlowCtrl)
 app.controller('NewMyRequestCtrl', NewMyRequestCtrl)

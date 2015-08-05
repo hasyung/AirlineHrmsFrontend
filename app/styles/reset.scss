@@ -75,8 +75,14 @@ md-sidenav {
     }
 }
 
-md-input-container label {
-    top: 0;
+md-input-container {
+    label {
+        top: 0;
+    }
+
+    .md-input {
+        margin-top: 0;
+    }
 }
 
 md-toolbar {
@@ -103,6 +109,18 @@ md-toolbar {
 
     .md-subheader-inner {
         padding: 0;
+    }
+}
+
+.md-menu {
+    padding: 0;
+}
+//解决md-menu组件中选项过多造成的每个item高度不足
+md-menu-item {
+    min-height: 48px;
+
+    .md-button {
+        line-height: 48px;
     }
 }
 

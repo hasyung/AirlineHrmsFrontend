@@ -1,9 +1,7 @@
-
+# 绩效
 nb = @.nb
 app = nb.app
-extend = angular.extend
 filterBuildUtils = nb.filterBuildUtils
-Modal = nb.Modal
 
 
 getBaseFilterOptions = (fliterName)->
@@ -12,6 +10,7 @@ getBaseFilterOptions = (fliterName)->
         .col 'employee_no',          '员工编号', 'string'
         .col 'department_ids',       '机构',    'org-search'
         .end()
+
 
 BASE_TABLE_DEFS = [
     {displayName: '员工编号', name: 'employeeNo'}
@@ -32,7 +31,6 @@ BASE_TABLE_DEFS = [
         cellTooltip: (row) ->
             return row.entity.departmentName
     }
-
     {
         displayName: '岗位'
         name: 'positionName'
@@ -43,12 +41,10 @@ BASE_TABLE_DEFS = [
 ]
 
 
-
 class Route
     @.$inject = ['$stateProvider', '$urlRouterProvider', '$injector']
 
     constructor: (stateProvider, urlRouterProvider, injector) ->
-
         stateProvider
             .state 'performance_record', {
                 url: '/performance_record'
@@ -70,6 +66,7 @@ class Route
                 controller: PerformanceSetting
                 controllerAs: 'ctrl'
             }
+
 
 class PerformanceRecord extends nb.Controller
     @.$inject = ['$scope', 'Performance', '$http', 'USER_META']
@@ -114,21 +111,21 @@ class PerformanceRecord extends nb.Controller
             temp.push("#{year}-#{item}") for item in [1..month]
             return temp
         dateOptions = [].concat formatOption(year-1, 12), formatOption(year, month+1)
+
     uploadPerformance: (request, params)->
         self = @
-        # 年度的时候assessTime is int 
+        # 年度的时候assessTime是整数
         request.assess_time = moment(new Date(new String(request.assessTime))).format "YYYY-MM-DD"
         params.status = "uploading"
+
         @http.post("/api/performances/import_performances", request).success (response)->
             self.scope.resRecord = response.messages
             params.status = "finish"
         .error ()->
 
-
     uploadAttachments: (collection, $messages)->
         file = JSON.parse($messages)
         collection.$create(file)
-
 
 
 class PerformanceSetting extends nb.Controller
@@ -160,11 +157,13 @@ class PerformanceSetting extends nb.Controller
             {
                 displayName: '月度分配基数'
                 name: 'monthDistributeBase'
+                headerCellClass: 'editable_cell_header'
                 type: 'number'
             }
             {
                 displayName: '考核人员分类'
                 name: 'pcategory'
+                headerCellClass: 'editable_cell_header'
                 editableCellTemplate: 'ui-grid/dropdownEditor'
                 editDropdownValueLabel: 'value'
                 editDropdownIdLabel: 'key'
@@ -175,7 +174,6 @@ class PerformanceSetting extends nb.Controller
                     {key: '主官', value: '主官'}
                 ]
             }
-
         ]
 
         @performanceTemps = @PerformanceTemp.$collection().$fetch()
@@ -206,7 +204,6 @@ class PerformanceSetting extends nb.Controller
 
         gridApi.rowEdit.on.saveRow(@scope, saveRow.bind(@))
 
-
     search: (tableState)->
         @performanceTemps.$refresh(tableState)
 
@@ -223,7 +220,7 @@ class PerformanceAllege extends nb.Controller
         @columnDef = BASE_TABLE_DEFS.concat [
             {displayName: '考核时段', name: 'assessTime'}
             {displayName: '绩效', name: 'result'}
-            {displayName: '申述时间', name: 'createdAt'}
+            {displayName: '申述时间', name: 'createdAt',cellFilter: "date:'yyyy-MM-dd'"}
             {displayName: '申述结果', name: 'outcome'}
             {
                 displayName: '处理',
@@ -251,7 +248,6 @@ class PerformanceAllege extends nb.Controller
         selected = if rows.length >= 1 then rows[0].entity else null
 
     parseJSON: (json)-> JSON.parse json
-
 
 
 app.config(Route)

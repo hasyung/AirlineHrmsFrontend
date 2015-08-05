@@ -1,8 +1,6 @@
 angular.module 'nb.directives'
-
     .directive 'mutiEnumSearch', ['$enum', ($enum) ->
         #筛选器中支持选择多个属地
-        #
         multipleTemplate = '''
             <md-chips ng-model="ctrl.$enums" >
                 <md-autocomplete md-item-text="enum.label"
@@ -34,7 +32,6 @@ angular.module 'nb.directives'
                     if ngModelCtrl.$viewValue && ngModelCtrl.$viewValue.name
                         scope.ctrl.searchText = ngModelCtrl.$viewValue.name
 
-
         return {
             scope: {
                 enumKey: '@'
@@ -59,6 +56,3 @@ class MutiEnumSearchCtrl
         return new Error("enum-key attr is needed!") if !@scope.enumKey
         enums = @enumService.get @scope.enumKey
         enums = enums.filter (item) -> s.include(item.label, text)
-
-
-

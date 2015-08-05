@@ -155,11 +155,11 @@
 
 .anth-attr {
     background: url('/images/personnel/auditing.png');
-    bottom: 15px;
     display: none;
     height: 18px;
     position: absolute;
     right: 10px;
+    top: 25px;
     width: 66px;
 
     &.auditing {
@@ -651,15 +651,38 @@
     }
 }
 
-// <<<<<<< HEAD
-//for org/positions/employee search
+//  人/岗/机构 排序页面
+.ppo-sort {
+    background-color: rgb(245, 245, 245);
+    height: 100%;
+}
+
 .personnel-sort-body {
-    background-color: #fff;
+    background-color: rgb(245, 245, 245);
     overflow: hidden;
+    padding: 20px;
+
+    section {
+        background-color: #fff;
+    }
+
+    md-list {
+        padding: 0;
+    }
+
+    .offset-header-text {
+        font-size: $font-size-md;
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
+    .org-sort-container {
+        margin-right: 10px;
+    }
 
     .org-sort-container,
     .pos-sort-container {
-        padding: 5px;
+        padding-bottom: 20px;
 
         .list-text {
             height: 40px;
@@ -672,29 +695,30 @@
         }
     }
 
-    .offset-header-text {
-        padding-left: 0;
-
-        .md-subheader-content {
-            border-left: 3px solid rgb(46, 55, 169);
-            padding-left: 10px;
-        }
-    }
-
     .cust-content-toolbar {
-        background-color: #f6f8f8;
-        font-size: 26px;
-        height: 28px;
-        line-height: 26px;
-        padding-left: 15px;
+        background-color: #fff;
+        border-bottom: 1px solid #eee;
+        font-size: 16px;
+        height: 48px;
+        line-height: 48px;
+        margin: 0 10px;
+        position: relative;
 
-        i:hover {
+        .fa {
             cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 15px;
+
+            &:before {
+                font-size: 18px;
+            }
         }
     }
 
     .org-sort-content {
-        border: 3px solid #f6f8f8;
+        border-bottom: 1px solid #eee;
+        margin: 0 10px;
 
         .open-orgs {
             font-size: 30px;
@@ -705,41 +729,61 @@
 
     .cust-list-item {
         font-size: 14px;
-        height: 45px;
+        margin: 0 10px;
+        min-height: 40px;
         overflow: hidden;
-        padding: 5px 10px;
+        padding: 0;
 
         &.active {
             background-color: #eee;
         }
     }
 
-    .employees-sort {
-        tr {
-            outline: none;
+    .icon-container {
+        background-color: #bbdefb;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 20px;
+        height: 32px;
+        line-height: 30px;
+        margin-right: 10px;
+        margin-top: 4px;
+        text-align: center;
+        width: 32px;
 
-            td {
-                height: 40px;
-                line-height: 40px;
-            }
+        &.up {
+            line-height: 28px;
+        }
 
-            &.active {
-                td {
-                    background-color: #eee !important;
-                }
-            }
+        &.down {
+            margin-right: 30px;
+        }
+
+        &:hover {
+            background-color: #ccc;
         }
     }
 
-    .icon-container {
-        font-size: 20px;
-        height: 20px;
-        line-height: 20px;
-        text-align: center;
-        width: 20px;
+    .sort-table-container {
+        margin: 0 10px;
 
-        &:hover {
-            background-color: #eee;
+        .table {
+            margin-bottom: 0;
+        }
+
+        tr {
+            td,
+            th {
+                border-bottom: 1px solid #eee;
+                border-right: 1px solid #eee;
+                height: 39px;
+                line-height: 39px;
+
+                &:last-child {
+                    border-right: 0;
+                }
+
+            }
         }
     }
 }

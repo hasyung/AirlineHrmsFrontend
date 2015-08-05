@@ -1,10 +1,4 @@
-###
-# 与用户相关联的资源
-#
-#
-# File: user.coffee
-###
-
+#与用户相关联的资源
 resources = angular.module('resources')
 
 
@@ -14,18 +8,24 @@ User = (restmod, RMUtils, $Evt) ->
             'after-update': ->
                 $Evt.$send('user:update:success', "个人信息更新成功")
 
-        educationExperiences: { hasMany: 'Education'}
-        workExperiences: { hasMany: 'Experience'}
-        resume: { hasOne: 'Resume', mask: 'CU'}
+        educationExperiences: {hasMany: 'Education'}
+        workExperiences: {hasMany: 'Experience'}
+        resume: {hasOne: 'Resume', mask: 'CU'}
+        contact: {hasOne: 'Contact', mask: 'CU'}
+
         $config:
             jsonRoot: 'employee'
+
         familymembers: {hasMany: 'FamilyMember'}
     }
     .single('/me')
+
+
 Education = (restmod, RMUtils, $Evt) ->
     Education = restmod.model().mix 'nbRestApi', 'DirtyModel', {
         admissionDate: {decode: 'date', param: 'yyyy-MM-dd'}
         graduationDate: {decode: 'date', param: 'yyyy-MM-dd'}
+
         $hooks: {
             'after-create': ->
                 $Evt.$send('education:create:success', "教育经历创建成功")
@@ -34,14 +34,18 @@ Education = (restmod, RMUtils, $Evt) ->
             'after-destroy': ->
                 $Evt.$send('education:update:success', "教育经历删除成功")
         }
+
         $config:
             jsonRootSingle: 'education_experience'
             jsonRootMany: 'education_experiences'
     }
+
+
 Experience = (restmod, RMUtils, $Evt) ->
     Experience = restmod.model().mix 'nbRestApi', 'DirtyModel', {
         startDate: {decode: 'date', param: 'yyyy-MM-dd'}
         endDate: {decode: 'date', param: 'yyyy-MM-dd'}
+
         $hooks: {
             'after-create': ->
                 $Evt.$send('work:create:success', "工作经历创建成功")
@@ -51,14 +55,17 @@ Experience = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('work:update:success', "工作经历删除成功")
 
         }
+
         $config:
             jsonRootSingle: 'work_experience'
             jsonRootMany: 'work_experiences'
     }
 
+
 FamilyMember = (restmod, RMUtils, $Evt) ->
     FamilyMember = restmod.model().mix 'nbRestApi', 'DirtyModel', {
         birthday: {decode: 'date', param: 'yyyy-MM-dd'}
+
         $hooks:
             'after-create': ->
                 $Evt.$send('FamilyMember:create:success', "家庭成员创建成功")
@@ -71,14 +78,24 @@ FamilyMember = (restmod, RMUtils, $Evt) ->
             jsonRootSingle: 'family_member'
             jsonRootMany: 'family_members'
     }
+
+
 Resume = (restmod, RMUtils, $Evt) ->
-    Resume = restmod.model().mix 'nbRestApi', {
+    Resume = restmod.model().mix 'nbRestApi', 'DirtyModel', {
         $config:
             jsonRoot: 'employee'
     }
 
+
+Contact = (restmod, RMUtils, $Evt) ->
+    Contact = restmod.model().mix 'nbRestApi', 'DirtyModel', {
+        $config:
+            jsonRoot: 'employee'
+    }
+
+
 UserPerformance = (restmod, RMUtils, $Evt)->
-    UserPerformance = restmod.model('/me/performances').mix 'nbRestApi', { 
+    UserPerformance = restmod.model('/me/performances').mix 'nbRestApi', {
         $hooks:
             'allege-create': ->
                 $Evt.$send('allege:create:success',"绩效申述成功")
@@ -87,20 +104,24 @@ UserPerformance = (restmod, RMUtils, $Evt)->
             Record:
                 allege: (data)->
                     self = @
+
                     request = {
                         method: 'POST',
                         url: "/api/performances/#{this.id}/alleges",
                         data: data
                     }
+
                     onSuccess = (res)->
                         self.$dispatch 'allege-create', res
 
                     this.$send(request, onSuccess)
-
     }
-resources.factory 'User',['restmod', 'RMUtils', '$nbEvent', User]
-resources.factory 'Education',['restmod', 'RMUtils', '$nbEvent', Education]
-resources.factory 'Experience',['restmod', 'RMUtils', '$nbEvent', Experience]
-resources.factory 'FamilyMember',['restmod', 'RMUtils', '$nbEvent', FamilyMember]
-resources.factory 'Resume',['restmod', 'RMUtils', '$nbEvent', Resume]
-resources.factory 'UserPerformance',['restmod', 'RMUtils', '$nbEvent', UserPerformance]
+
+
+resources.factory 'User', ['restmod', 'RMUtils', '$nbEvent', User]
+resources.factory 'Education', ['restmod', 'RMUtils', '$nbEvent', Education]
+resources.factory 'Experience', ['restmod', 'RMUtils', '$nbEvent', Experience]
+resources.factory 'FamilyMember', ['restmod', 'RMUtils', '$nbEvent', FamilyMember]
+resources.factory 'Resume', ['restmod', 'RMUtils', '$nbEvent', Resume]
+resources.factory 'Contact', ['restmod', 'RMUtils', '$nbEvent', Contact]
+resources.factory 'UserPerformance', ['restmod', 'RMUtils', '$nbEvent', UserPerformance]

@@ -1,34 +1,16 @@
-
 # 左侧菜单栏
-
-
 nb = @nb
 app = nb.app
-
-
-self_section = name: '员工自助'
-org_section = name: '组织机构', type: 'link'
-position_section = name: '岗位管理'
-personnel_section = name: '人事信息'
-kaoqin_section = name: '考勤管理'
-train_section = name: '培训管理'
-benefit_section = name: '福利'
-salary_section = name: '薪酬'
-labor_section = name: '劳动关系'
-perf_section = name: '绩效管理'
-
-
-
 
 menuFactory = ($rootScope, $state)->
     sections = []
 
-    sections.push {
-        name: '待办事项'
-        type: 'link'
-        state: 'TODO'
-        icon_src: '/images/svg/left-side-svg/left_icon_22.svg'
-    }
+    #sections.push {
+    #    name: '待办事项'
+    #    type: 'link'
+    #    state: 'TODO'
+    #    icon_src: '/images/svg/left-side-svg/left_icon_22.svg'
+    #}
 
     sections.push {
         name: '组织机构'
@@ -51,11 +33,8 @@ menuFactory = ($rootScope, $state)->
                 state: 'position_changes'
                 permission: 'position_change_index'
             }
-
         ]
     }
-
-
 
     sections.push {
         name: '人事信息'
@@ -76,28 +55,25 @@ menuFactory = ($rootScope, $state)->
                 state: 'personnel_review'
                 permission: ''
             }
-
         ]
     }
 
-    sections.push {
-        name: '培训管理'
-        icon_src: '/images/svg/left-side-svg/left_icon_6.svg'
-        pages: [
-            {
-                name: '培训记录'
-                state: 'position'
-                permission: ''
-            }
-            {
-                name: '学历变更管理'
-                state: 'position'
-                permission: ''
-            }
-
-        ]
-    }
-
+    #sections.push {
+    #    name: '培训管理'
+    #    icon_src: '/images/svg/left-side-svg/left_icon_6.svg'
+    #    pages: [
+    #        {
+    #            name: '培训记录'
+    #            state: 'position'
+    #            permission: ''
+    #        }
+    #        {
+    #            name: '学历变更管理'
+    #            state: 'position'
+    #            permission: ''
+    #        }
+    #    ]
+    #}
 
     sections.push {
         name: '福利'
@@ -118,121 +94,68 @@ menuFactory = ($rootScope, $state)->
                 state: '.welfares_annuities'
                 permission: ''
             }
-            {
-                name: '住房公积金'
-                state: 'position'
-                permission: ''
-            }
-            {
-                name: '劳保制服'
-                state: 'position'
-                permission: ''
-            }
+            #{
+            #    name: '工作餐'
+            #    state: '.welfares_dinnerfee'
+            #    permission: ''
+            #}
         ]
     }
 
-    sections.push {
-        name: '薪酬'
-        icon_src: '/images/svg/left-side-svg/left_icon_8.svg'
-        pages: [
-            {
-                name: '基础公司'
-                state: 'position'
-                permission: ''
-            }
-            {
-                name: '飞行员小时费'
-                state: 'position'
-                permission: ''
-            }
-            {
-                name: '空勤驻站补贴'
-                state: 'position'
-                permission: ''
-            }
-            {
-                name: '交通费'
-                state: 'position'
-                permission: ''
-            }
-            {
-                name: '实习费'
-                state: 'position'
-                permission: ''
-            }
-            {
-                name: '事件奖励'
-                state: 'position'
-                permission: ''
-            }
-            {
-                name: '津补贴'
-                state: 'position'
-                permission: ''
-            }
-            {
-                name: '劳务费'
-                state: 'position'
-                permission: ''
-            }
-        ]
-    }
+    #sections.push {
+    #    name: '薪酬'
+    #    icon_src: '/images/svg/left-side-svg/left_icon_8.svg'
+    #    pages: [
+    #}
 
     sections.push {
         name: '劳动关系'
         icon_src: '/images/svg/left-side-svg/left_icon_9.svg'
         pages: [
-            {
-                name: '员工考勤'
-                state: 'labors_attendance'
-            }
-            {
-                name: '员工调动'
-                state: 'labors_ajust_position'
-                permission: ''
-            }
-            {
-                name: '员工退休'
-                state: 'labors_retirement'
-                permission: ''
-            }
-            {
-                name: '员工退养'
-                state: 'labors_early_retirement'
-                permission: ''
-            }
-            {
-                name: '员工辞退'
-                state: 'labors_dismiss'
-                permission: ''
-            }
-            {
-                name: '员工处分'
-                state: 'labors_punishment'
-                permission: ''
-            }
-            # {
-            #     name: '合同续签'
-            #     state: 'labors_renew_contract'
-            #     permission: ''
-            # }
+            #{
+            #    name: '员工考勤'
+            #    state: 'labors_attendance'
+            #}
+            #{
+            #    name: '员工调动'
+            #    state: 'labors_ajust_position'
+            #    permission: ''
+            #}
+            #{
+            #    name: '员工退休'
+            #    state: 'labors_retirement'
+            #    permission: ''
+            #}
+            #{
+            #    name: '员工退养'
+            #    state: 'labors_early_retirement'
+            #    permission: ''
+            #}
+            #{
+            #    name: '员工辞退'
+            #    state: 'labors_dismiss'
+            #    permission: ''
+            #}
+            #{
+            #    name: '员工处分'
+            #    state: 'labors_punishment'
+            #    permission: ''
+            #}
             {
                 name: '合同管理'
                 state: 'contract_management'
                 permission: ''
             }
-            {
-                name: '员工离职'
-                state: 'labors_leave_job'
-                permission: ''
-            }
-            {
-                name: '员工辞职'
-                state: 'labors_resignation'
-                permission: ''
-            }
-
-
+            #{
+            #    name: '员工离职'
+            #    state: 'labors_leave_job'
+            #    permission: ''
+            #}
+            #{
+            #    name: '员工辞职'
+            #    state: 'labors_resignation'
+            #    permission: ''
+            #}
         ]
     }
 
@@ -260,23 +183,25 @@ menuFactory = ($rootScope, $state)->
 
     self = {
         sections: sections
+
         selectSection: (section) ->
             self.openedSection = section
+
         toggleSelectSection: (section) ->
             self.openedSection = if self.openedSection == section then null else section
 
         isSectionSelected: (section) ->
             return self.openedSection == section
+
         selectPage: (section, page) ->
             self.openedSection = section
             self.currentPage = page
+
         isPageSelected: (page) ->
             return @.currentPage == page
     }
 
-
     onLocationChange = () ->
-
         matchPage = (section, page) ->
             if page.state && $state.includes(page.state)
                 self.selectPage(section, page)
@@ -288,17 +213,12 @@ menuFactory = ($rootScope, $state)->
                 section.pages.forEach (page) ->
                     matchPage(section, page)
 
-
     $rootScope.$on('$stateChangeSuccess', onLocationChange)
-
 
     return self
 
 
-
-
 menuLinkDirective = ($compile, $state) ->
-
     origin_template = '''
         <md-button href="${ url }">
           <div flex layout="layout">
@@ -322,7 +242,6 @@ menuLinkDirective = ($compile, $state) ->
             </div>
         <md-button>
     '''
-
 
     stroke_svg = '''
         <svg width="30" height="50">
@@ -349,19 +268,20 @@ menuLinkDirective = ($compile, $state) ->
         }
 
         transcludeFn = $compile(template)
-        transcludeFn scope, (cloned) -> elem.append(cloned)
+        transcludeFn scope, (cloned) ->
+            elem.append(cloned)
 
     return {
-        # template: template
         scope: {
             page: '='
             isLast: '&'
         }
+
         link: postLink
     }
 
-menuToggleDirective = (menu) ->
 
+menuToggleDirective = (menu) ->
     template = '''
       <md-button flex="flex" class="md-button-toggle" ng-click="toggle()">
         <div flex layout="row">
@@ -375,6 +295,7 @@ menuToggleDirective = (menu) ->
           </span>
         </div>
       </md-button>
+
       <ul ng-show="isOpen()" class="menu-toggle-list">
         <li ng-class="{'active': isSelected(page)}" class="child-list-item" ng-repeat="page in ::section.pages track by $index">
             <menu-link is-last="$last" page="page"></menu-link>
@@ -383,7 +304,6 @@ menuToggleDirective = (menu) ->
     '''
 
     postLink = (scope, elem) ->
-
         scope.toggle = () ->
             menu.toggleSelectSection(scope.section)
 
@@ -392,7 +312,6 @@ menuToggleDirective = (menu) ->
 
         scope.isSelected = (page) ->
             menu.isPageSelected(page)
-
 
     return {
         template: template
@@ -406,4 +325,3 @@ menuToggleDirective = (menu) ->
 app.factory 'menu', menuFactory
 app.directive 'menuLink', ['$compile', '$state', menuLinkDirective]
 app.directive 'menuToggle', ['menu', menuToggleDirective]
-

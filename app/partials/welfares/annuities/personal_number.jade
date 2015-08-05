@@ -1,0 +1,29 @@
+md-dialog.personal_number(
+    ng-init="employee = ctrl.getSelected();\
+             ctrl.loadBasicComputeRecords(employee.id)"
+    )
+    md-toolbar.md-accent(md-theme="hrms")
+            .md-toolbar-tools
+                span 个人基数计算
+    md-content.sticky-container
+        .info-header
+            span.name {{::employee.name}}
+            span.no {{::employee.employeeNo}}
+        .info-body
+            ul
+                li.tcell(ng-repeat="record in ctrl.basicComputeRecords")
+                    .theader(ng-bind="record.month")
+                    .tbody(ng-bind="record.pension_cardinality")
+
+        .info-footer
+            span 月度平均：
+            span(ng-bind="ctrl.averageCompute")
+            span 元
+
+    .md-actions
+        md-button(ng-click="dialog.close()") 关 闭
+
+
+
+
+

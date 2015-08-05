@@ -1,16 +1,12 @@
-# angular warpper for sweetalert
-
-
 nb = @nb
 app = nb.app
 
-al = @swal # sweet alert ref
 
-extend = @angular.extend
+# sweet alert ref
+al = @swal
 
 
 class Alert
-
     constructor: (@q, @timeout) ->
 
     success: (title, message) ->
@@ -34,7 +30,6 @@ class Alert
             200)
 
     confirm: (title, message,  confirmButtonText = '确定', cancelButtonText = '取消') ->
-
         deferred = @q.defer()
 
         options = {
@@ -58,50 +53,6 @@ class Alert
         return deferred.promise
 
 
-
-
 app.factory 'sweet',['$q', '$timeout', ($q, $timeout) ->
-
     return new Alert($q, $timeout)
-
 ]
-
-
-# app.directive 'nbConfirm', ['sweet', (sweet) -> #use $interpolate ?
-
-#     postLink = (scope, elem, attrs) ->
-
-#         title = attrs.nbTitle
-#         type = attrs.nbType || 'warning'
-
-#         attrs.$observe 'nbTitle', (newValue) ->
-#             scope.title = newValue
-
-#         attrs.$observe 'nbText', (newValue) ->
-#             scope.text = newValue
-
-#         callback = (isConfirm) ->
-#             scope.callback(isConfirm: isConfirm)
-
-
-#         elem.on 'click', (e)->
-#             # e.preventDefault()
-#             promise = sweet.confirm(scope.title, scope.text)
-#             promise.then(callback).catch(scope.onCancel || callback)
-
-#         scope.$on '$destroy', ->
-#             elem.off 'click'
-
-#     return {
-#         scope: {
-#             callback: '&nbConfirm'
-#             onCancel: '&'
-#         }
-#         link: postLink
-
-#     }
-
-
-# ]
-
-

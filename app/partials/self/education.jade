@@ -20,7 +20,7 @@ section.personnel-info-section(ng-init="educations = currentUser.educationExperi
                         span.subheader__icon
                             img(src="/images/personnel/subh-icon.png", alt="icon--plane")
                         span 入司前
-                section.form-material-section(ng-controller="EditableResource", ng-repeat="education in educations | filterBy: ['category']:'before'")
+                section.form-material-section(ng-controller="EditableResourceCtrl", ng-repeat="education in educations | filterBy: ['category']:'before'")
                     include edu/exist_edu_exp_form
 
         .personnel-section-wrap()
@@ -29,7 +29,7 @@ section.personnel-info-section(ng-init="educations = currentUser.educationExperi
                     span.subheader__icon
                         img(src="/images/personnel/subh-icon.png", alt="icon--plane")
                     span 入司后
-                section.form-material-section(ng-controller="EditableResource", ng-repeat="education in educations | filterBy: ['category']:'after'")
+                section.form-material-section(ng-controller="EditableResourceCtrl", ng-repeat="education in educations | filterBy: ['category']:'after'")
                     .sep-40
                     include edu/scal_edu_exp_form
                 .sep-40

@@ -1,0 +1,72 @@
+.dialog-content(layout)
+    section.form-material-section(flex)
+        fieldset(flex)
+            div(style="display:none;")
+                input(type="text" ng-model="current.employeeId")
+            div(layout)
+                md-input-container(flex)
+                    label 姓名
+                    input(type="text" ng-model="::current.employeeName" disabled)
+                md-input-container(flex)
+                    label 员工编号
+                    input(type="text" ng-model="::current.employeeNo" disabled)
+
+            div(layout)
+                md-input-container(flex)
+                    label 所在部门
+                    input(type="text" ng-model="::current.departmentName" disabled)
+                md-input-container(flex)
+                    label 原工作属地
+                    input(type="text" ng-model="::current.locationWas" disabled)
+
+            div(layout)
+                md-input-container.row-has-value(flex)
+                    label 用工性质
+                    input(type="text" ng-model="::current.laborRelationName" disabled)
+                md-input-container.row-has-value(flex)
+                    label 身份证
+                    input(type="text" ng-model="::current.identityNo" disabled)
+
+            div(layout)
+                md-input-container.row-has-value(flex)
+                    label 现工作属地
+                    input(type="text" ng-model="::current.identityNo" disabled)
+
+            div(layout)
+                md-input-container(flex)
+                    label 社保属地
+                    md-select(ng-model="setup.socialLocation")
+                        md-option(value="成都") 成都
+                        md-option(value="重庆") 重庆
+                md-input-container(flex)
+                    label 社保编号
+                    input(type="text" ng-model="setup.socialAccount")
+
+            div(layout)
+                md-input-container(flex)
+                    label 年度养老保险
+                    input(type="number" min="0" max="100000" step="1" ng-model="setup.pensionCardinality")
+                md-input-container(flex)
+                    label 年度其他保险
+                    input(type="number" min="0" max="100000" step="1" ng-model="setup.otherCardinality")
+
+            div(layout)
+                md-input-container(flex)
+                    label 社保临时基数
+                    input(type="number" min="0" max="100000" step="1" ng-model="setup.tempCardinality" name="notes")
+
+            div.checkbox-row
+                label 险种选择
+                ul
+                    li
+                        md-checkbox.md-primary(ng-model="setup.pension") 养老
+                    li
+                        md-checkbox.md-primary(ng-model="setup.treatment") 医疗
+                    li
+                        md-checkbox.md-primary(ng-model="setup.unemploy") 失业
+                    li
+                        md-checkbox.md-primary(ng-model="setup.injury") 工伤
+                    li
+                        md-checkbox.md-primary(ng-model="setup.illness") 大病
+                    li
+                        md-checkbox.md-primary(ng-model="setup.fertility") 生育

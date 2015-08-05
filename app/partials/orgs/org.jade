@@ -1,4 +1,4 @@
-section.org-detail(ng-controller="EditableResource")
+section.org-detail(ng-controller="EditableResourceCtrl")
     .org-title.org-form-row
         span(ng-show="orgCtrl.state != 'newsub'") 机构信息
         span(ng-show="orgCtrl.state == 'newsub'") 新增子机构信息
@@ -15,8 +15,8 @@ section.org-detail(ng-controller="EditableResource")
                 template-url="partials/orgs/shared/org_transfer.html"
                 )
 
-            button.btn.btn-sm.btn-default.fa.fa-pencil(has-permission="departments_update" ng-click="edit()",title="编辑")
-            button.btn.btn-sm.btn-default.fa.fa-plus(has-permission="departments_create" title="新增子机构",ng-click="orgCtrl.state = 'newsub'", ng-if="currentOrg.grade.name !== 'secondly_positive'")
+            button.btn.btn-sm.btn-default.fa.fa-pencil(has-permission="departments_update" ng-click="edit()", title="编辑")
+            button.btn.btn-sm.btn-default.fa.fa-plus(has-permission="departments_create" title="新增子机构", ng-click="orgCtrl.state = 'newsub'", ng-if="currentOrg.grade.name !== 'secondly_positive'")
     //- show
     .org-info(ng-hide="orgCtrl.state == 'newsub'")
         form(name="orgUpdateForm" ng-submit="save(currentOrg.$save(), orgUpdateForm)")
@@ -30,13 +30,11 @@ section.org-detail(ng-controller="EditableResource")
                 md-input-container.row-has-value
                     label 机构性质
                     md-select(ng-model="currentOrg.natureId" ng-disabled="!editing")
-                        md-select-label {{$enum.parseLabel(currentOrg.natureId, "department_natures")}}
                         md-option(ng-value="item.id" ng-repeat="item in $enum.get('department_natures')") {{item.label}}
                 md-input-container.row-has-value
                     label 职级
-                    md-select(ng-model="currentOrg.gradeId" disabled)
-                        md-select-label {{(currentOrg.grade.id == 1) ? currentOrg.grade.displayName : $enum.parseLabel(currentOrg.gradeId, "department_grades")}}
-                        md-option(ng-value="item.id" ng-repeat="item in $enum.get('department_grades')") {{item.label}}
+                    md-select(ng-model="currentOrg.gradeId" ng-disabled="!editing")
+                        md-option(ng-value="item.id" ng-repeat="item in orgCtrl.dep_grade_array") {{item.label}}
 
 
             .form-actions(ng-hide="!editing")
@@ -44,7 +42,7 @@ section.org-detail(ng-controller="EditableResource")
                 md-button.skyblue.md-raised(type="submit") 保存
 
     //- new sub
-    .org-info(ng-if="orgCtrl.state == 'newsub' " ng-init="neworg = {}")
+    .org-info(ng-if="orgCtrl.state == 'newsub' " ng-init="neworg = {natureId: currentOrg.natureId}")
         form(novalidate, ng-submit="orgCtrl.newsub(newsubForm, neworg)", name="newsubForm")
             fieldset
                 md-input-container
@@ -52,14 +50,12 @@ section.org-detail(ng-controller="EditableResource")
                     input(ng-model="neworg.name" required name="orgName")
                 md-input-container.row-has-value
                     label 机构性质
-                    md-select(ng-model="neworg.natureId")
-                        md-select-label {{$enum.parseLabel(neworg.natureId, "department_natures")}}
+                    md-select(ng-model="neworg.natureId" ng-disabled="currentOrg.serialNumber.length != 3")
                         md-option(ng-value="item.id" ng-repeat="item in $enum.get('department_natures')") {{item.label}}
                 md-input-container.row-has-value
                     label 职级
                     md-select(ng-model="neworg.gradeId")
-                        md-select-label {{$enum.parseLabel(neworg.gradeId, "department_grades")}}
-                        md-option(ng-value="item.id" ng-repeat="item in $enum.get('department_grades')") {{item.label}}
+                        md-option(ng-value="item.id" ng-repeat="item in orgCtrl.dep_grade_array") {{item.label}}
                 .form-actions
                     md-button.md-raised.white(type="button" ng-click="orgCtrl.state = 'show'") 取消
                     md-button.skyblue.md-raised(type="submit") 保存

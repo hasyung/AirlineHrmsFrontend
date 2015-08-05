@@ -1,11 +1,11 @@
-
-
 app = @nb.app
 
 class AttendanceRecordCtrl extends nb.Controller
     @.$inject = ['$scope', 'Attendance', 'Employee']
+
     constructor: (@scope, @Attendance, @Employee) ->
-        @loadInitailData()
+        @loadInitialData()
+
         @filterOptions = {
             name: 'attendanceRecord'
             constraintDefs: [
@@ -26,7 +26,6 @@ class AttendanceRecordCtrl extends nb.Controller
                     displayName: '机构'
                     type: 'org-search'
                 }
-
             ]
         }
 
@@ -35,7 +34,6 @@ class AttendanceRecordCtrl extends nb.Controller
             {
                 displayName: '姓名'
                 field: 'name'
-                # pinnedLeft: true
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents ng-binding ng-scope">
                     <a nb-panel
@@ -52,7 +50,6 @@ class AttendanceRecordCtrl extends nb.Controller
                 cellTooltip: (row) ->
                     return row.entity.department.name
             }
-
             {
                 displayName: '岗位'
                 name: 'position.name'
@@ -65,8 +62,7 @@ class AttendanceRecordCtrl extends nb.Controller
             {displayName: '到岗时间', name: 'joinScalDate'}
         ]
 
-
-    loadInitailData: ()->
+    loadInitialData: ()->
         @employees = @Employee.$collection().$fetch()
 
     search: (tableState)->
@@ -76,10 +72,13 @@ class AttendanceRecordCtrl extends nb.Controller
         rows = @scope.$gridApi.selection.getSelectedGridRows()
         selected = if rows.length >= 1 then rows[0].entity else null
 
+
 class AttendanceHisCtrl extends nb.Controller
     @.$inject = ['$scope', 'Attendance']
+
     constructor: (@scope, @Attendance) ->
-        @loadInitailData()
+        @loadInitialData()
+
         @filterOptions = {
             name: 'attendanceHis'
             constraintDefs: [
@@ -114,7 +113,6 @@ class AttendanceHisCtrl extends nb.Controller
             {
                 displayName: '姓名'
                 field: 'user.name'
-                # pinnedLeft: true
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents ng-binding ng-scope">
                     <a nb-panel
@@ -131,7 +129,6 @@ class AttendanceHisCtrl extends nb.Controller
                 cellTooltip: (row) ->
                     return row.entity.user.departmentName
             }
-
             {
                 displayName: '岗位'
                 name: 'user.position.name'
@@ -144,17 +141,19 @@ class AttendanceHisCtrl extends nb.Controller
             {displayName: '记录时间', name: 'recordDate'}
         ]
 
-    loadInitailData: ()->
+    loadInitialData: ()->
         @attendances = @Attendance.$collection().$fetch()
 
     search: (tableState)->
         @attendances.$refresh(tableState)
+
     getSelected: () ->
         rows = @scope.$gridApi.selection.getSelectedGridRows()
         selected = if rows.length >= 1 then rows[0].entity else null
 
     markToDeleted: (attendance)->
         self = @
+
         attendance.$destroy().$then ()->
             self.attendances.$refresh()
 

@@ -3,33 +3,20 @@
         .md-toolbar-tools
             span(layout)
                 label 缴纳地区
-                md-select(ng-model="currentSettingLocation" ng-change="" placeholder="请选择地点")
+                md-select(ng-model="currentSettingLocation" placeholder="请选择地点")
                     md-option(ng-value="opt" ng-repeat="opt in locations track by $index") {{opt}}
             span(flex)
             span
                 md-button.md-raised.md-primary(ng-click="saveConfig(setting)") 保存
+
     md-content.pl20.pr20(ng-show="!!currentSettingLocation")
         md-divider
         .children-float-row.mt40.mb20
             label.mr40 个人基数计算方式
-            md-radio-group
-                md-radio-button.md-primary(value="departments" ng-model="setting.is_annual") 年度变化
-                md-radio-button.md-primary(value="reviewer" ng-model="setting.is_annual") 月度随薪酬变化
-        //- div.inline-input-container.mt30.mb30.pl10
-        //-     span.mr20 养老保险基数范围
-        //-     md-input-container(md-no-float).mr10.dib
-        //-         input(placeholder="下限" ng-model="setting.pension_insure.upper_limit" type="number" step="0.01")
-        //-     span.ml10.mr10 至
-        //-     md-input-container(md-no-float).mr10.dib
-        //-         input(placeholder="上限" ng-model="setting.pension_insure.lower_limit" type="number" step="0.01")
-        //- div.inline-input-container.mt30.mb30.pl10
-        //-     span.mr20 其他保险基数范围
-        //-     md-input-container(md-no-float).mr10.dib
-        //-         input(placeholder="下限" ng-model="setting.other_insure.upper_limit" type="number" step="0.01")
-        //-     span.ml10.mr10 至
-        //-     md-input-container(md-no-float).mr10.dib
-        //-         input(placeholder="上限" ng-model="setting.other_insure.lower_limit" type="number" step="0.01")
-        //-     span.muted.f12 (不设置其他保险基数则选用养老保险基数计算)
+            md-radio-group(ng-model="setting.is_annual")
+                md-radio-button.md-primary(ng-value="true") 年度变化
+                md-radio-button.md-primary(ng-value="false") 月度随薪酬变化
+
         md-divider
 
         table.tablexx.table-default.table-bordered
@@ -48,11 +35,11 @@
                     td 养老保险
                     td
                         span.min
-                            input(type="number" ng-model="setting.pension.lower_limit")
+                            input(type="number" min="1" max="100000" step="1" ng-model="setting.pension.lower_limit")
                             |RMB
                         span.to —
                         span.max
-                            input(type="number" ng-model="setting.pension.upper_limit")
+                            input(type="number" min="1" max="100000" ng-model="setting.pension.upper_limit")
                             |RMB
                     td
                         md-switch.md-primary(ng-model="setting.pension.is_ration" ).m0 {{ setting.pension.is_ration ? '按金额(RMB)' : '按比例(%)' }}
@@ -203,16 +190,3 @@
                         span.p2(ng-hide="setting.fertility.is_ration")
                             input(type="number" ng-model="setting.fertility.personage_percent" min="0" max="1" step="0.01")
                             |%
-
-
-
-
-
-
-
-
-
-
-
-
-

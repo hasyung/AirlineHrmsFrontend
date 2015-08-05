@@ -1,5 +1,5 @@
 md-dialog(ng-init="leave = data;leave.$fetch()")
-    md-subheader 
+    md-subheader
         h3 请假单
         md-button.pull-right(ng-click="ctrl.mdDialog.hide()") 关闭
     md-content
@@ -43,4 +43,4 @@ md-dialog(ng-init="leave = data;leave.$fetch()")
                     md-button.md-raised.white(type="button" ng-click="ctrl.reject(leave)") 驳回
                     md-button.skyblue.md-raised(type="button" ng-click="ctrl.pass(leave)") 通过
 
-        
+

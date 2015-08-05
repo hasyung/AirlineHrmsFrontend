@@ -1,13 +1,13 @@
-
 app = @nb.app
 
-angular.module 'nb.directives'
 
+angular.module 'nb.directives'
     .directive 'notification', ['$document', ($doc) ->
         return {
             restrict: 'A'
             link: (scope,elem,attr) ->
                 scope.isOpen = false
+
                 toggle = (e)->
                     e.stopPropagation()
                     if scope.isOpen then close() else open()
@@ -24,15 +24,14 @@ angular.module 'nb.directives'
                 scope.$on 'destroy', ()->
                     elem.off 'click', toggle
                     $doc.off 'click', close
-
-
         }
     ]
 
+
 class NotificationCtrl
     @.$inject = ['$scope', '$state', 'WebsocketClient', '$rootScope', 'Notification', 'toaster', 'USER_MESSAGE']
-    constructor: (scope, @state, WebsocketClient, @rootScope, Notification, toaster, initializedMessage) ->
 
+    constructor: (scope, @state, WebsocketClient, @rootScope, Notification, toaster, initializedMessage) ->
         computeTotalUnreadCount = (res, value) ->
             return res + value.count || value.count || 0
 
@@ -72,6 +71,3 @@ class NotificationCtrl
         @msg_unread_count = 0
 
 app.controller "notificationCtrl", NotificationCtrl
-
-
-

@@ -19,7 +19,6 @@ div.workflow.md-background(md-theme="hrms")
                                         .flow-cell-title 假别
                                         .flow-cell-content #{flowName}
 
-
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1 申请信息
                         fieldset
@@ -27,7 +26,6 @@ div.workflow.md-background(md-theme="hrms")
                                 case formType
                                     when 1
                                         block additional_form
-
 
                                         div(layout)
                                             md-input-container(flex)
@@ -58,7 +56,6 @@ div.workflow.md-background(md-theme="hrms")
                                             md-input-container.row-has-value(style="flex: 0 0 150px;")
                                                 label 详细时间
                                                 md-select(ng-model="request.start_time" ng-change="calculateTotalDays(request, '#{flowName}')" md-on-open="loadStartTime()" ng-disabled="!request.start_time" required)
-                                                    md-select-label {{request.start_time | mdate: 'H:mm' ||'无'}}
                                                     md-option(ng-value="time" ng-repeat="time in start_times" ) {{time | mdate: 'H:mm'}}
                                         div(layout)
                                             md-input-container(flex)
@@ -72,7 +69,6 @@ div.workflow.md-background(md-theme="hrms")
                                                     md-on-open="loadEndTime()"
                                                     ng-disabled="!request.end_time"
                                                     required)
-                                                    md-select-label {{request.end_time | mdate: 'H:mm' ||'无'}}
                                                     md-option(ng-value="time" ng-repeat="time in end_times" ) {{time | mdate: 'H:mm'}}
                                         div(layout)
                                             .without-edit
@@ -88,9 +84,6 @@ div.workflow.md-background(md-theme="hrms")
                                         if need_attachment
                                             md-subheader.accessory-header.md-background.md-hue-1 附件
                                             div(flow-file-upload flow-type="#{flowType}" ng-model="request.attachment_ids")
-
-
-
 
                     md-card.form-material-section.nb-card
                         md-subheader.superior-header.md-background.md-hue-1 提交上级

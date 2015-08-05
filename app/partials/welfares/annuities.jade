@@ -1,6 +1,7 @@
 tabset(flex)
     tab(heading="年金计算")
-        //- include settings/welfare_global
-    tab(heading="年金人员总表")
-        //- include settings/welfare_personal
+        include annuities/annuities_compute
+    tab(heading="历史记录查看")
+        include annuities/annuities_record
     tab(heading="年金变动信息")
+        include annuities/annuities_change

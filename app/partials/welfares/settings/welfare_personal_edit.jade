@@ -1,4 +1,4 @@
-md-dialog.welfare_personal_new(ng-controller="EditableResource")
+md-dialog.welfare_personal_new(ng-controller="EditableResourceCtrl")
     form(ng-init= "current = dialog.setups.$refresh();" ng-submit="save(current.$save(), socialPersonal)" name="socialPersonal")
         md-toolbar.md-accent(md-theme="hrms")
                 .md-toolbar-tools
@@ -21,27 +21,23 @@ md-dialog.welfare_personal_new(ng-controller="EditableResource")
                             md-input-container(flex)
                                 label 所在部门
                                 input(type="text" ng-model="::current.departmentName" disabled)
-                            //- md-input-container(flex)
-                            //-     label 工作属地
-                            //-     input(type="text" ng-model="")
+                            md-input-container(flex)
+                                label 工作属地
+                                input(type="text" ng-model="::current.location" disabled)
 
                         div(layout)
                             md-input-container.row-has-value(flex)
-                                label 用工性质
-                                md-select(ng-model="::current.laborRelationId" disabled)
-                                    md-select-label {{$enum.parseLabel(current.laborRelationId, "labor_relations")}}
-                                    md-option(value="合同") 合同
-                                    md-option(value="合同制") 合同制
-                            md-input-container.row-has-value(flex)
-                                label 社保属地
-                                md-select(ng-model="current.socialLocation")
-                                    md-select-label {{current.socialLocation}}
-                                    md-option(value="成都") 成都
-                                    md-option(value="重庆") 重庆
-                        div(layout)
+                                label 通道
+                                input(type="text" ng-model="::current.channelId" disabled)
                             md-input-container(flex)
                                 label 身份证
                                 input(type="text" ng-model="::current.identityNo" disabled)
+                        div(layout)
+                            md-input-container.row-has-value(flex)
+                                label 社保属地
+                                md-select(ng-model="current.socialLocation")
+                                    md-option(value="成都") 成都
+                                    md-option(value="重庆") 重庆
                             md-input-container(flex)
                                 label 社保编号
                                 input(type="text" ng-model="current.socialAccount")
@@ -49,15 +45,15 @@ md-dialog.welfare_personal_new(ng-controller="EditableResource")
                         div(layout)
                             md-input-container(flex)
                                 label 年度养老保险
-                                input(type="text" ng-model="current.pensionCardinality")
+                                input(type="number" min="0" max="100000" step="1" ng-model="current.pensionCardinality")
                             md-input-container(flex)
                                 label 年度其他保险
-                                input(type="text" ng-model="current.otherCardinality")
+                                input(type="number" min="0" max="100000" step="1" ng-model="current.otherCardinality")
 
                         div(layout)
                             md-input-container(flex)
                                 label 社保临时基数
-                                input(type="type" ng-model="current.tempCardinality" name="notes")
+                                input(type="number" min="0" max="100000" step="1" ng-model="current.tempCardinality" name="notes")
 
                         div.checkbox-row
                             label 险种选择
@@ -76,7 +72,6 @@ md-dialog.welfare_personal_new(ng-controller="EditableResource")
                                     md-checkbox.md-primary(ng-model="current.fertility") 生育
 
 
-
         .md-actions
-            md-button(ng-click="dialog.close()") 取 消
-            md-button.md-primary.md-raised(ng-click="submit; dialog.close()") 确 定
+            md-button(ng-click="cancel(current, $event, socialPersonal);dialog.close()") 取 消
+            md-button.md-primary.md-raised(ng-click="submit();dialog.close()") 确 定

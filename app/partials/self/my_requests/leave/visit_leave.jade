@@ -12,7 +12,6 @@ block additional_form
         md-input-container.row-has-value(flex)
             label 探视目标
             md-select(ng-model="request.relation" required)
-                md-select-label {{request.relation||'无'}}
                 md-option(value="父母") 父母
                 md-option(value="配偶") 配偶
     div(layout)

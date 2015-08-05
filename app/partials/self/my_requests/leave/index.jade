@@ -34,27 +34,99 @@
                             nb-content="当你点击确定时，您所申请的假期将被撤销！"
                         ) 撤销请假
                     span
-                        md-dropmenu()
-                            md-drop-label()
-                                md-button.md-primary.md-raised 请假
-                            md-drop-option(nb-panel locals="{$$collection: leaves}" template-url="partials/self/my_requests/leave/presence_leave.html" ) 派驻人员休假
-                            md-drop-option(nb-panel locals="{$$collection: leaves}" template-url="partials/self/my_requests/leave/yearly_leave.html" ) 年假
-                            md-drop-option(nb-panel locals="{$$collection: leaves}" template-url="partials/self/my_requests/leave/dead_leave.html" ) 丧假
-                            md-drop-option(nb-panel locals="{$$collection: leaves}" template-url="partials/self/my_requests/leave/visit_leave.html" ) 探亲假
-                            md-drop-option(nb-panel locals="{$$collection: leaves}" template-url="partials/self/my_requests/leave/wedding_leave.html" ) 婚假
-                            md-drop-option(nb-panel locals="{$$collection: leaves}" template-url="partials/self/my_requests/leave/abortion_leave.html" ) 产假
-                            md-drop-option(nb-panel locals="{$$collection: leaves}" template-url="partials/self/my_requests/leave/abortion_leave1.html" ) 产假(母乳喂养)
-                            md-drop-option(nb-panel locals="{$$collection: leaves}" template-url="partials/self/my_requests/leave/abortion_leave2.html" ) 产假(剖腹产、难产)
-                            md-drop-option(nb-panel locals="{$$collection: leaves}" template-url="partials/self/my_requests/leave/abortion_leave3.html" ) 产假(晚育)
-                            md-drop-option(nb-panel locals="{$$collection: leaves}" template-url="partials/self/my_requests/leave/abortion_leave4.html" ) 产假(多胞胎)
-                            md-drop-option(nb-panel locals="{$$collection: leaves}" template-url="partials/self/my_requests/leave/abortion_leave5.html" ) 产假(流产)
-                            md-drop-option(nb-panel locals="{$$collection: leaves}" template-url="partials/self/my_requests/leave/matter_leave.html" ) 事假
-                            md-drop-option(nb-panel locals="{$$collection: leaves}" template-url="partials/self/my_requests/leave/produce_before.html" ) 产前孕期检查假
-                            md-drop-option(nb-panel locals="{$$collection: leaves}" template-url="partials/self/my_requests/leave/nurse_leave.html" ) 生育护理假
-                            md-drop-option(nb-panel locals="{$$collection: leaves}" template-url="partials/self/my_requests/leave/sick_leave.html" ) 病假
-                            md-drop-option(nb-panel locals="{$$collection: leaves}" template-url="partials/self/my_requests/leave/sick_leave1.html" ) 病假(工伤待定)
-                            md-drop-option(nb-panel locals="{$$collection: leaves}" template-url="partials/self/my_requests/leave/sick_leave2.html" ) 病假(怀孕待产)
-                            md-drop-option(nb-panel locals="{$$collection: leaves}" template-url="partials/self/my_requests/leave/female_leave.html" ) 女工假
+                        md-menu()
+                            md-button.md-primary.md-raised(ng-click="$mdOpenMenu($event)") 请假
+                            md-menu-content
+                                md-menu-item
+                                    a.md-button(
+                                        nb-panel
+                                        locals="{$$collection: leaves}"
+                                        template-url="partials/self/my_requests/leave/presence_leave.html") 派驻人员休假
+                                md-menu-item
+                                    a.md-button(
+                                        nb-panel
+                                        locals="{$$collection: leaves}"
+                                        template-url="partials/self/my_requests/leave/yearly_leave.html") 年假
+                                md-menu-item
+                                    a.md-button(
+                                        nb-panel
+                                        locals="{$$collection: leaves}"
+                                        template-url="partials/self/my_requests/leave/dead_leave.html") 丧假
+                                md-menu-item
+                                    a.md-button(
+                                        nb-panel
+                                        locals="{$$collection: leaves}"
+                                        template-url="partials/self/my_requests/leave/visit_leave.html") 探亲假
+                                md-menu-item
+                                    a.md-button(
+                                        nb-panel
+                                        locals="{$$collection: leaves}"
+                                        template-url="partials/self/my_requests/leave/wedding_leave.html") 婚假
+                                md-menu-item
+                                    a.md-button(
+                                        nb-panel
+                                        locals="{$$collection: leaves}"
+                                        template-url="partials/self/my_requests/leave/abortion_leave.html") 产假
+                                md-menu-item
+                                    a.md-button(
+                                        nb-panel
+                                        locals="{$$collection: leaves}"
+                                        template-url="partials/self/my_requests/leave/abortion_leave1.html") 产假(母乳喂养)
+                                md-menu-item
+                                    a.md-button(
+                                        nb-panel
+                                        locals="{$$collection: leaves}"
+                                        template-url="partials/self/my_requests/leave/abortion_leave2.html") 产假(剖腹产、难产)
+                                md-menu-item
+                                    a.md-button(
+                                        nb-panel
+                                        locals="{$$collection: leaves}"
+                                        template-url="partials/self/my_requests/leave/abortion_leave3.html") 产假(晚育)
+                                md-menu-item
+                                    a.md-button(
+                                        nb-panel
+                                        locals="{$$collection: leaves}"
+                                        template-url="partials/self/my_requests/leave/abortion_leave4.html") 产假(多胞胎)
+                                md-menu-item
+                                    a.md-button(
+                                        nb-panel
+                                        locals="{$$collection: leaves}"
+                                        template-url="partials/self/my_requests/leave/abortion_leave5.html") 产假(流产)
+                                md-menu-item
+                                    a.md-button(
+                                        nb-panel
+                                        locals="{$$collection: leaves}"
+                                        template-url="partials/self/my_requests/leave/matter_leave.html") 事假
+                                md-menu-item
+                                    a.md-button(
+                                        nb-panel
+                                        locals="{$$collection: leaves}"
+                                        template-url="partials/self/my_requests/leave/produce_before.html") 产前孕期检查假
+                                md-menu-item
+                                    a.md-button(
+                                        nb-panel
+                                        locals="{$$collection: leaves}"
+                                        template-url="partials/self/my_requests/leave/nurse_leave.html") 生育护理假
+                                md-menu-item
+                                    a.md-button(
+                                        nb-panel
+                                        locals="{$$collection: leaves}"
+                                        template-url="partials/self/my_requests/leave/sick_leave.html") 病假
+                                md-menu-item
+                                    a.md-button(
+                                        nb-panel
+                                        locals="{$$collection: leaves}"
+                                        template-url="partials/self/my_requests/leave/sick_leave1.html") 病假(工伤待定)
+                                md-menu-item
+                                    a.md-button(
+                                        nb-panel
+                                        locals="{$$collection: leaves}"
+                                        template-url="partials/self/my_requests/leave/sick_leave2.html") 病假(怀孕待产)
+                                md-menu-item
+                                    a.md-button(
+                                        nb-panel
+                                        locals="{$$collection: leaves}"
+                                        template-url="partials/self/my_requests/leave/female_leave.html") 女工假
 
 
             div(nb-grid column-defs="ctrl.leaveCol" multi-select="false" export-api grid-selection safe-src="leaves")

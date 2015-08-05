@@ -1,4 +1,4 @@
-form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-controller="EditableResource")
+form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-controller="EditableResourceCtrl")
     .form-btn-group(ng-hide="editing" has-permission="employees_update")
         md-button.md-fab.md-primary(ng-click="edit($event)")
             md-icon(md-svg-src="/images/svg/edit_24px.svg" aria-label="修改")
@@ -7,17 +7,15 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
             md-icon(md-svg-src="/images/svg/close.svg" aria-label="取消")
         md-button.md-primary.md-fab(type="submit")
             md-icon(md-svg-src="/images/svg/check.svg" aria-label="保存")
-    fieldset(ng-disabled="!editing")
+    fieldset(ng-disabled="!editing" md-theme="default")
         div(layout)
             md-input-container.row-has-value(flex)
                 label 职称
                 md-select(ng-model="current.jobTitleId" ng-disabled="!editing")
-                    md-select-label {{$enum.parseLabel(current.jobTitleId, "job_titles")}}
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('job_titles')") {{item.label}}
             md-input-container.row-has-value(flex)
                 label 职称级别
                 md-select(ng-model="current.jobTitleDegreeId" ng-disabled="!editing")
-                    md-select-label {{$enum.parseLabel(current.jobTitleDegreeId, "job_title_degrees")}}
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('job_title_degrees')") {{item.label}}
             md-input-container.row-has-value(flex)
                 label 技术职务

@@ -23,36 +23,35 @@ angular.module 'nb.directives'
         toolbarFloat: true
         pasteImage: false
     }
-    .directive 'simditor', ['$timeout','simditorConfig',($timeout,defaultConfig) ->
+
+    .directive 'simditor', ['$timeout', 'simditorConfig', ($timeout, defaultConfig) ->
         return {
             restrict: 'A'
             replace: true
             require: 'ngModel'
+
             scope: {
                 textVal: '=ngModel'
                 toolbar: '='
             }
+
             link: (scope,elem,attrs,ctrl) ->
-
                 customOpt = {}
-
                 customOpt.toolbar = scope.toolbar if scope.toolbar
-
                 opts = angular.extend {},defaultConfig, customOpt,{textarea: elem}
 
                 onValueChanged = _.throttle(() ->
                     # scope.$apply ()->
                     ctrl.$setViewValue editor.getValue()
-
                 ,2000)
+
                 editor = new Simditor opts
                 editor.on 'valuechanged', onValueChanged
 
                 #当编辑文章时初始化文本
                 ctrl.$render = () ->
                     editor.setValue(ctrl.$modelValue)
-                # if attrs.editable == "false"
-                #     editor.body.attr("contenteditable", false)
+
                 scope.$watch 'editable',(newVal,old) ->
                     if newVal == false
                         editor.body.attr('contenteditable',false)
@@ -73,35 +72,30 @@ angular.module 'nb.directives'
                 modelVal: '=ngModel'
                 toolbar: '='
             }
+
             link: (scope,elem,attrs,ctrl) ->
                 customOpt = {}
                 editor = null
-                createEditor = ()->
 
+                createEditor = ()->
                     textarea = elem.find("textarea")
                     customOpt.toolbar = scope.toolbar if scope.toolbar
-
                     opts = angular.extend {},defaultConfig, customOpt,{textarea: textarea}
 
                     onValueChanged = _.throttle(() ->
-                        # scope.$apply ()->
                         ctrl.$setViewValue editor.getValue()
-
                     ,2000)
+
                     editor = new Simditor opts
                     editor.on 'valuechanged', onValueChanged
                     editor.setValue(ctrl.$modelValue)
 
-
                     return editor
-                # if attrs.editable == "false"
-                #     editor.body.attr("contenteditable", false)
-                #当编辑文章时初始化文本
-                # ctrl.$render = () ->
-                #     editor.setValue(ctrl.$modelValue) if editor
+
                 scope.$watch 'editable',(newVal,old) ->
                     if newVal == false
                         editor.body.attr('contenteditable',false)
+
                 if angular.isUndefined scope.editing
                     editor = createEditor()
                 else
@@ -111,9 +105,7 @@ angular.module 'nb.directives'
                         else
                             editor.destroy() if editor
 
-
                 scope.$on '$destroy', () ->
                     editor.destroy() if editor
-
         }
     ]

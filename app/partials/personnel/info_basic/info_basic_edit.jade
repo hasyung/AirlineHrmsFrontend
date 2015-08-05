@@ -1,4 +1,4 @@
-form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-controller="EditableResource")
+form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-controller="EditableResourceCtrl")
     .form-btn-group(ng-hide="editing" has-permission="employees_update")
         md-button.md-fab.md-primary(ng-click="edit($event)")
             md-icon(md-svg-src="/images/svg/edit_24px.svg" aria-label="修改")
@@ -7,7 +7,7 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
             md-icon(md-svg-src="/images/svg/close.svg" aria-label="取消")
         md-button.md-primary.md-fab(type="submit")
             md-icon(md-svg-src="/images/svg/check.svg" aria-label="保存")
-    fieldset(ng-disabled="!editing")
+    fieldset(ng-disabled="!editing" md-theme="default")
         div(layout)
             md-input-container(flex)
                 label 姓名
@@ -18,7 +18,6 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
             md-input-container.row-has-value(flex)
                 label 性别
                 md-select(ng-model="current.genderId" ng-disabled="!editing")
-                    md-select-label {{$enum.parseLabel(current.genderId, "genders")}}
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('genders')") {{item.label}}
 
         div(layout)
@@ -28,8 +27,21 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
             md-input-container.row-has-value(flex)
                 label 政治面貌
                 md-select(ng-model="current.politicalStatusId" ng-disabled="!editing")
-                    md-select-label {{$enum.parseLabel(current.politicalStatusId, "political_status")}}
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('political_status')") {{item.label}}
+            md-input-container(flex)
+                label 联系方式
+                input(type="text", ng-model="current.contact.mobile", name="contact")
+        div(layout)
+            md-input-container(flex)
+                label 参工时间
+                input(ng-model="current.startWorkDate" bs-datepicker)
+            md-input-container(flex)
+                label 到岗时间
+                input(ng-model="current.joinScalDate" bs-datepicker)
+            md-input-container.row-has-value(flex)
+                label 英语等级
+                md-select(ng-model="current.englishLevelId" ng-disabled="!editing")
+                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('english_levels')") {{item.label}}
         div(layout)
             md-input-container(flex)
                 label 毕业院校
@@ -41,28 +53,11 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
             md-input-container.row-has-value(flex)
                 label 学历
                 md-select(ng-model="current.educationBackgroundId" ng-disabled="!editing")
-                    md-select-label {{$enum.parseLabel(current.educationBackgroundId, "education_backgrounds")}}
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('education_backgrounds')") {{item.label}}
             md-input-container.row-has-value(flex)
                 label 学位
                 md-select(ng-model="current.degreeId" ng-disabled="!editing")
-                    md-select-label {{$enum.parseLabel(current.degreeId, "degrees")}}
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('degrees')") {{item.label}}
-            md-input-container.row-has-value(flex)
-                label 英语等级
-                md-select(ng-model="current.englishLevelId" ng-disabled="!editing")
-                    md-select-label {{$enum.parseLabel(current.englishLevelId, "english_levels")}}
-                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('english_levels')") {{item.label}}
-        div(layout)
-            md-input-container(flex)
-                label 联系方式
-                input(type="text", ng-model="current.contact.mobile", name="contact")
-            md-input-container(flex)
-                label 参工时间
-                input(ng-model="current.startWorkDate" bs-datepicker)
-            md-input-container(flex)
-                label 到岗时间
-                input(ng-model="current.joinScalDate" bs-datepicker)
 
 
 

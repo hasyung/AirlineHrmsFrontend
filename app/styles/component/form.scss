@@ -126,7 +126,7 @@ fieldset {
     &[disabled] {
 
         .textarea-row {
-            border-bottom: 1px dotted rgba(0, 0, 0, .1);
+            border-bottom: 1px dotted rgba(0, 0, 0, .26);
             padding-bottom: 2px;
             position: relative;
 
@@ -149,7 +149,15 @@ fieldset {
 
 }
 
+.textarea-row textarea {
+    border-color: #ddd;
+    min-height: 150px;
+}
 
+label:not(.md-no-float),
+.md-placeholder {
+    opacity: 1;
+}
 
 //展示状态下各个组件的样式
 fieldset[disabled] {
@@ -338,17 +346,16 @@ md-input-container {
 .has-placeholder {
     &:focus {
         +.input-placeholder {
-            display: block;
+            display: none;
         }
     }
 }
 
 .input-placeholder {
     color: #e84e40;
-    display: none;
     position: absolute;
-    right: 10px;
-    top: 26px;
+    right: 5px;
+    top: 28px;
 }
 
 .inline-input-container {

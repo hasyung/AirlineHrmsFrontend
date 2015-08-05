@@ -1,4 +1,4 @@
-form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="EditableResource" ng-init="params = {}")
+form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="EditableResourceCtrl" ng-init="params = {}")
     .form-btn-group(ng-hide="editing" has-permission="employees_update")
         md-button.md-fab.md-primary(ng-click="edit($event)")
             md-icon(md-svg-src="/images/svg/edit_24px.svg" aria-label="修改")
@@ -7,7 +7,7 @@ form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="Ed
             md-icon(md-svg-src="/images/svg/close.svg" aria-label="取消")
         md-button.md-raised.md-fab.md-primary(type="submit" ng-disabled="positionEditForm.$invalid")
             md-icon(md-svg-src="/images/svg/check.svg" aria-label="保存")
-    fieldset(ng-disabled="!editing")
+    fieldset(ng-disabled="!editing" md-theme="default")
 
         div(org-muti-pos ng-model="current.positions" editing="editing")
 
@@ -18,12 +18,10 @@ form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="Ed
             md-input-container.row-has-value(flex)
                 label 分类
                 md-select(ng-model="current.categoryId" ng-disabled="!editing")
-                    md-select-label {{$enum.parseLabel(current.categoryId, "categories")}}
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('categories')") {{item.label}}
             md-input-container.row-has-value(flex)
                 label 通道
                 md-select(ng-model="current.channelId" ng-disabled="!editing")
-                    md-select-label {{$enum.parseLabel(current.channelId, "channels")}}
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
             md-input-container(flex)
                 label 类别
@@ -32,18 +30,15 @@ form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="Ed
             md-input-container.row-has-value(flex)
                 label 职务职级
                 md-select(ng-model="current.dutyRankId" ng-disabled="!editing")
-                    md-select-label {{$enum.parseLabel(current.dutyRankId, "duty_ranks")}}
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('duty_ranks')") {{item.label}}
 
             md-input-container.row-has-value(flex)
                 label 用工性质
                 md-select(ng-model="current.laborRelationId" ng-disabled="!editing")
-                    md-select-label {{$enum.parseLabel(current.laborRelationId, "labor_relations")}}
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('labor_relations')") {{item.label}}
             md-input-container.row-has-value(flex)
                 label 用工关系状态
                 md-select(ng-model="current.employmentStatusId" ng-disabled="!editing")
-                    md-select-label {{$enum.parseLabel(current.employmentStatusId, "employment_status")}}
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('employment_status')") {{item.label}}
         div(layout)
             md-input-container.row-has-value(flex="33")

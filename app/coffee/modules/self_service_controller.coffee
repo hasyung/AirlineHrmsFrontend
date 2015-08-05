@@ -1,17 +1,11 @@
-
 nb = @.nb
 app = nb.app
-extend = angular.extend
-resetForm = nb.resetForm
-filterBuildUtils = nb.filterBuildUtils
-Modal = nb.Modal
 
 
 class Route
     @.$inject = ['$stateProvider', '$urlRouterProvider']
 
     constructor: (stateProvider, urlRouterProvider) ->
-
         stateProvider
             .state 'self', {
                 url: '/self-service'
@@ -69,7 +63,6 @@ class Route
                     }
                 }
             }
-            # 辞职
             .state 'my_requests.resignation', {
                 url: '/resignation'
                 views: {
@@ -191,32 +184,30 @@ class Route
                         }
                     }
                 }
-
             }
 
 
-
 class ProfileCtrl extends nb.Controller
-
     @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope', 'User', 'USER_META', 'UserPerformance', 'Performance', '$filter']
 
-
     constructor: (@scope, @sweet, @Employee, @rootScope, @User, @USER_META, @UserPerformance, @Performance, @filter) ->
-        @loadInitailData()
+        @loadInitialData()
         @status = 'show'
 
-    loadInitailData: ->
+    loadInitialData: ->
         @scope.currentUser = @User.$fetch()
 
     # 员工自助中员工编辑自己的信息
     updateInfo: ->
         @scope.currentUser.$update()
+
     updateEdu: (edu)->
         edu.$save()
+
     createEdu: (edu)->
         @scope.currentUser.educationExperiences.createEdu(edu)
         # @scope.currentUser.$update()
-        #
+
     updateFavicon: ()->
         self = @
         @scope.currentUser.$refresh().$then ()->
@@ -231,9 +222,7 @@ class ProfileCtrl extends nb.Controller
         performance.allege(request)
 
 
-
 class MyRequestCtrl extends nb.Controller
-
     @.$inject = ['$scope', 'Employee', 'OrgStore', 'USER_META', 'VACATIONS', 'MyLeave', '$injector']
 
     constructor: (@scope, @Employee, @OrgStore, meta, vacations, @MyLeave, injector) ->
@@ -267,7 +256,6 @@ class MyRequestCtrl extends nb.Controller
                     </a>
                 </div>
                 '''
-
             }
         ]
 
@@ -287,9 +275,6 @@ class MyRequestCtrl extends nb.Controller
         @Employee.leaders()
 
     myRequests: (FlowName) ->
-
-
-
 
 
 app.config(Route)

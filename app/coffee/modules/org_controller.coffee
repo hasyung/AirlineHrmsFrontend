@@ -1,22 +1,16 @@
-
+# 组织机构
 nb = @.nb
 app = nb.app
-extend = angular.extend
-resetForm = nb.resetForm
-Modal = nb.Modal
 
 
 #机构选择树
 orgTree = (Org, $parse) ->
-
     postLink = (scope, elem, attrs, $ctrl) ->
-
-        # getter = $parse('org')
-        # setter = getter.assign
-
         $tree = null
+
         getData = (node) ->
             data = {}
+
             for k, v of node
                 if (
                     k not in ['parent', 'children', 'element', 'tree'] and
@@ -27,11 +21,10 @@ orgTree = (Org, $parse) ->
 
         treeData = scope.treeData.jqTreeful()
         $tree = elem.tree {data: treeData,autoOpen: 0}
+
         $tree.bind 'tree.select', (evt) ->
             node = evt.node
-            # setter(scope, getData(node).id)
             $ctrl.$setViewValue(getData(node))
-
 
         scope.$on '$destroy', () ->
             $tree.tree('destroy') if $tree && $tree.tree #for nest router
@@ -42,39 +35,19 @@ orgTree = (Org, $parse) ->
             org: "=ngModel"
             treeData: '='
         }
+
         require: 'ngModel'
         link: postLink
     }
 
 
-app.directive('nbOrgTree',['Org', '$parse', orgTree])
+app.directive('nbOrgTree', ['Org', '$parse', orgTree])
 
 
-
-###*
- * workaround 写法很奇怪, 编译出的 js 很 OK
- * 在单页面应用中， 路由的过程很复杂， 总体来说最核心的是
- * 准备数据
- * 准备模板
- * 实例化控制器，link 模板
- * 切换URL状态， 将页面渲染交给框架
- *
- * 其中数据、模板准备必须在切换URL之前， 不然会引起页面频繁reflow， 凭白损失性能，用户体验也很差
- *
- * 但是数据和业务紧密相关， 天然不能简单的分离为 route 和 controller
- * so, 将它们放在一起是符合逻辑的， 是合理的
- *
- * 更进一步的， 将天然不能分离的东西，仿造后端架构 route controller ，框架提供这样的抽象
- * 那么框架设计本身就不合理， 因为前后端环境不一样， 应另行处理
- *
- * ##PS： 果不其然， angular2 中将概念进一步简化， 将路由放在业务中
- *
-###
 class Route
     @.$inject = ['$stateProvider']
 
     constructor: (stateProvider) ->
-
         orgs = (Org)-> Org.$collection().$fetch(edit_mode: true).$asPromise()
 
         stateProvider
@@ -89,38 +62,22 @@ class Route
             }
 
 
-
 class OrgsCtrl extends nb.Controller
-
-
     @.$inject = ['orgs', '$http','$stateParams', '$state', '$scope', '$rootScope', '$nbEvent']
-
 
     constructor: (@orgs, @http, @params, @state, @scope, @rootScope, @Evt)->
         @treeRootOrg = _.find @orgs, (org) -> org.xdepth == 1 # 当前树的顶级节点
 
-        @tree = null    # tree化的 orgs 数据
+        @tree = null # tree 化的 orgs 数据
         @currentOrg = @treeRootOrg
-
 
         @scope.$onRootScope 'org:refresh', @.refreshTree.bind(@)
         @scope.$onRootScope 'org:resetData', @.resetData.bind(@)
 
         @buildTree(@treeRootOrg)
 
-    # loadInitialData: () -> #初始化数据
-    #     self = @
-    #     rootScope = @rootScope
-    #     @orgs = @Org.$collection().$fetch({'edit_mode': @eidtMode})
-    #         .$then (orgs) ->
-    #             treeRootOrg = _.find orgs, (org) -> org.xdepth == 1
-    #             self.buildTree(treeRootOrg)
-    #             self.treeRootOrg = treeRootOrg
-
-
     buildTree: (org = @treeRootOrg, depth = 9)->
-        depth = 1 if org.xdepth == 1 #如果是顶级节点 则只显示一级
-        # @treeRootOrg = org
+        depth = 1 if org.xdepth == 1 #如果是顶级节点则只显示一级
         @tree = @orgs.treeful(org, depth)
 
     refreshTree: () ->
@@ -131,12 +88,13 @@ class OrgsCtrl extends nb.Controller
         @tree = @orgs.treeful(@treeRootOrg, depth)
         @currentOrg = @treeRootOrg
 
-    #force 是否修改当前机构
+    # 参数force是否修改当前机构
     reset: (force) ->
         self = @
         #数据入口不止一个，需要解决
         @orgs.$refresh({edit_mode: @eidtMode}).$then () ->
             self.buildTree()
+
     queryMatchedOrg: (text) ->
         @orgs.filter (org) -> s.include(org.fullName, text)
 
@@ -151,14 +109,19 @@ class OrgsCtrl extends nb.Controller
 
     onItemClick: (evt) -> #机构树 点击事件处理 重构？
         orgId = evt.target
+
+        # 放弃当前修改
+        @currentOrg.$restore() if @currentOrg
         @currentOrg = _.find(@orgs, {id: orgId})
 
     revert: (isConfirm) ->
+        self = @
+
         if isConfirm
             @orgs.revert()
             # 是否可以将两步合成一步
             # 即撤销后，后端返回当前机构信息
-            @resetData()
+            @resetData(self.currentOrg)
 
     active: (evt, data) ->
         self = @
@@ -168,12 +131,16 @@ class OrgsCtrl extends nb.Controller
             self.rootScope.allOrgs.$refresh()
         @resetData()
 
-    resetData: () ->
+    resetData: (org) ->
         self = @
         @isHistory = false
+
         @orgs.$refresh({'edit_mode': true}).$then ()->
-            self.treeRootOrg = _.find self.orgs, (org) -> org.xdepth == 1
-            self.currentOrg = self.treeRootOrg
+            if org
+                self.currentOrg = org
+            else
+                self.treeRootOrg = _.find self.orgs, (org) -> org.xdepth == 1
+                self.currentOrg = self.treeRootOrg
 
     rootTree: () ->
         treeRootOrg = _.find @orgs, (org) -> org.xdepth == 1
@@ -183,8 +150,10 @@ class OrgsCtrl extends nb.Controller
         onSuccess = (res)->
             logs = res.data.change_logs
             return if logs.length == 0
+
             groupedLogs = _.groupBy logs, (log) ->
                 moment(log.created_at).format('YYYY')
+
             logsArr = []
             angular.forEach groupedLogs, (yeardLog, key) ->
                 logsArr.push {logs:yeardLog, changeYear: key}
@@ -195,24 +164,20 @@ class OrgsCtrl extends nb.Controller
 
             minDate = moment(firstDate).subtract(1,'days').format('DD/MM/YYYY')
 
-
             return {
                 changeLogs: changeLogs
                 minDate: minDate
             }
 
-
         promise = @http.get('/api/departments/change_logs')
         promise.then onSuccess
 
     pickLog: (date, changeLogs) ->
-
         sortedLogs = _.flatten(_.pluck(changeLogs, 'logs'))
         selectedMoment =  moment(date)
         log = _.find sortedLogs, (log) ->
             return selectedMoment.isAfter(log.created_at)
         @expandLog(log) if log
-
 
     # 返回机构的指定版本
     backToPast: (version)->
@@ -222,6 +187,7 @@ class OrgsCtrl extends nb.Controller
                 self.isHistory = true
                 self.treeRootOrg = _.find self.orgs, (org) -> org.xdepth == 1
                 self.currentOrg = self.treeRootOrg
+
     expandLog: (log)->
         # 防止UI中出现多个被选中的item
         @currentLog.active = false if @currentLog
@@ -229,7 +195,6 @@ class OrgsCtrl extends nb.Controller
         @currentLog = log
 
     print: () ->
-        console.log 111
         $svg = $('.svg-wrapper svg')
         sWidth = $svg.attr('width')
         sHeight = $svg.attr('height')
@@ -250,20 +215,32 @@ class OrgsCtrl extends nb.Controller
         $svg.css("transform", "scale(1)")
 
 
-
-
 class OrgCtrl extends nb.Controller
+    @.$inject = ['Org', '$stateParams', '$scope', '$rootScope', '$nbEvent', 'Position', 'sweet', '$enum']
 
-    @.$inject = ['Org', '$stateParams', '$scope', '$rootScope', '$nbEvent', 'Position', 'sweet']
-
-    constructor: (@Org, @params, @scope, @rootScope, @Evt, @Position , @sweet) ->
+    constructor: (@Org, @params, @scope, @rootScope, @Evt, @Position , @sweet, @enum) ->
         @state = 'show' # show editing newsub
+        @dep_grade_array = @enum.get('department_grades')
+
         self = @
+
         @scope.$parent.$watch 'ctrl.currentOrg', (newval)->
             self.orgLink(newval)
 
+        @scope.$watch 'orgCtrl.state', (newval)->
+            # 过滤机构的职级
+            self.dep_grade_array = _.filter self.enum.get('department_grades'), (item)->
+                #不是新增子机构
+                current_grade_id = self.scope.currentOrg.gradeId
+
+                if newval == 'show'
+                    return item.id >= current_grade_id
+                else
+                    return item.id > current_grade_id
+
     orgLink: (org)->
         @scope.currentOrg = org
+
         queryParam = if @scope.ctrl.isHistory then {version: @scope.ctrl.currentLog.id} else {}
         @scope.positions = @scope.currentOrg.positions.$refresh(queryParam)
 
@@ -292,22 +269,12 @@ class OrgCtrl extends nb.Controller
 
 class PositionCtrl extends nb.Controller
     @.$inject = ['$scope', '$nbEvent', 'Position', '$stateParams', 'Org', 'Specification']
+
     constructor: (@scope, @Evt, @Position, @stateParams, @Org, @Specification) ->
-        # @positions = @scope.panel.data # from parent ctrl
-        # @scope.ctrl = this
-        # orgId = @stateParams.id
-        # @currentOrg = Org.$find(orgId)
-        # @positions = @currentOrg.positions.$fetch()
-        # @selectOrg = null # 划转所选择的机构 rework
-        # @scope.allSelect = false
-        # @scope.$onRootScope 'position:refresh', @.resetData.bind(@)
-
-
         @columnDef = [
             {
                 displayName: '岗位名称'
                 field: 'name'
-                # pinnedLeft: true
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents">
                     <a nb-panel
@@ -333,18 +300,18 @@ class PositionCtrl extends nb.Controller
             {displayName: 'OA文件编号', name: 'oaFileNo'}
         ]
 
-
     getSelectsIds: () ->
         rows = @scope.$gridApi.selection.getSelectedGridRows()
         rows.map (row) -> return row.entity.$pk
 
     posTransfer: (selectOrg, isConfirm) -> #将岗位批量划转到另外一个机构下
         return if !isConfirm
+
         self = @
         selectedPosIds = @getSelectsIds()
+
         if selectedPosIds.length > 0 && selectOrg
-            @positions
-                .$adjust({department_id: selectOrg.id, position_ids: selectedPosIds })
+            @positions.$adjust({department_id: selectOrg.id, position_ids: selectedPosIds})
         else
             # 通知被划转岗位和目标机构必选
             @Evt.$send "position:transfer:error", "被划转岗位和目标机构必选"
@@ -362,29 +329,18 @@ class PositionCtrl extends nb.Controller
             return 'department_id=' + id
         else
             return 'department_id=' + id  + '&position_ids=' + ids.join(',')
+
     createPos: (newPos, spe) ->
-        # self = @
-        # @position.departmentId = @orgId
-        # @position.specification = @specification
-        #将页面跳转放在then里，防止当跳转过去时新创建的岗位未被添加到岗位列表
-        # newPos.specification = @Specification.$buildRaw(spe)
-        # newPos.specification = spe
-        #bug,
         newPos = @positions.$create(newPos).$then (newpos)->
             newpos.$createSpe(spe)
 
     search: (tableState) ->
         @positions.$refresh(tableState)
-    searchEmp: (tableState) ->
 
+    searchEmp: (tableState) ->
 
 
 app.config(Route)
 app.controller('OrgsCtrl', OrgsCtrl)
 app.controller('OrgCtrl', OrgCtrl)
 app.controller('OrgPosCtrl', PositionCtrl)
-
-
-
-
-

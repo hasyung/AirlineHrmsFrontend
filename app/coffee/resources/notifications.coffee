@@ -13,6 +13,7 @@ Notification = (restmod, RMUtils, $Evt) ->
                     return if angular.isUndefined(firstItem)
 
                     url = this.$url()
+
                     request = {
                         url: url
                         method: 'PUT'
@@ -20,15 +21,14 @@ Notification = (restmod, RMUtils, $Evt) ->
                             anchor_id: firstItem.id
                         }
                     }
+
                     this.$send(request).$asPromise()
 
                 loadMore: () ->
                     if this.length > 0
                         anchor_id = this[this.length - 1]['$pk']
                         this.$fetch({anchor_id: anchor_id})
-
     }
 
 
-
-resources.factory 'Notification',['restmod', 'RMUtils', Notification]
+resources.factory 'Notification', ['restmod', 'RMUtils', Notification]
