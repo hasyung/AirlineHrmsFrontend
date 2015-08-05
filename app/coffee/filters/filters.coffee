@@ -64,6 +64,8 @@ module
 
     .filter 'breakit', ['$sce', ($sce) ->
         (text) ->
-            text = text.replace(/\n/g, '<br />')
-            $sce.trustAsHtml(text);
+            if angular.isDefined(text)
+                text = text.replace(/\n/g, '<br />')
+                return $sce.trustAsHtml(text)
+            text
     ]
