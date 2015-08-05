@@ -84,7 +84,7 @@
                         div(layout)
                             md-input-container(flex)
                                 label 通信住址
-                                input(type="text" ng-model="newEmp.mailingAddress")
+                                input(type="text" ng-model="newEmp.contact.mailingAddress")
 
                         //- .form-gourp
             md-content.nb-card-container(layout="column" md-theme="hrms")
@@ -102,16 +102,16 @@
                             md-input-container.row-has-value(flex)
                                 label 分类
                                 md-select(ng-model="newEmp.categoryId" required)
-                                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('categor_id')") {{item.label}}
+                                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('categories')") {{item.label}}
 
                         div(layout)
                             md-input-container.row-has-value(flex)
                                 label 职务职级
-                                md-select(ng-model="newEmp.dutyRankId" required)
-                                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('duty_rank_id')") {{item.label}}
+                                md-select(ng-model="newEmp.dutyRankId")
+                                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('duty_ranks')") {{item.label}}
                             md-input-container.row-has-value(flex)
                                 label 属地化地点
-                                input(ng-model="newEmp.location")
+                                input(ng-model="newEmp.location" required)
 
                         div(layout)
                             md-input-container.row-has-value(flex)
@@ -120,8 +120,8 @@
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('labor_relations')") {{item.label}}
                             md-input-container.row-has-value(flex)
                                 label 通道
-                                md-select(ng-model="newEmp.channelId" required)
-                                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('channel_id')") {{item.label}}
+                                md-select(ng-model="newEmp.channelId")
+                                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
 
                         div(layout)
                             md-input-container.row-has-value(flex)
