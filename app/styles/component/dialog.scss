@@ -62,36 +62,36 @@
     //关闭过程中的动画
     &.ngdialog-closing {
         .ngdialog-overlay {
-            -webkit-animation: ngdialog-fadeout .5s;
-            animation: ngdialog-fadeout .5s;
+            -webkit-animation: ngdialog-fadeout .2s;
+            animation: ngdialog-fadeout .2s;
             -webkit-backface-visibility: hidden;
         }
 
         .ngdialog-content {
-            -webkit-animation: ngdialog-fadeout .5s;
-            animation: ngdialog-fadeout .5s;
+            -webkit-animation: ngdialog-fadeout .2s;
+            animation: ngdialog-fadeout .2s;
             -webkit-backface-visibility: hidden;
         }
         //default主题下的关闭动画
         &.ngdialog-theme-default {
             .ngdialog-content {
-                -webkit-animation: ngdialog-flyout .5s;
-                animation: ngdialog-flyout .5s;
+                -webkit-animation: ngdialog-flyout .2s;
+                animation: ngdialog-flyout .2s;
             }
         }
         //flat主题下的关闭动画
         &.ngdialog-theme-flat {
             .ngdialog-content {
-                -webkit-animation: ngdialog-flipout-horizontal .5s;
-                animation: ngdialog-flipout-horizontal .5s;
+                -webkit-animation: ngdialog-flipout-horizontal .2s;
+                animation: ngdialog-flipout-horizontal .2s;
             }
         }
 
         //panel主题下的关闭动画
         &.ngdialog-theme-panel {
             .ngdialog-content {
-                -webkit-animation: ngdialog-scrollout .5s;
-                animation: ngdialog-scrollout .5s;
+                -webkit-animation: ngdialog-scrollout .2s;
+                animation: ngdialog-scrollout .2s;
             }
         }
     }
@@ -103,8 +103,8 @@
 
         //content样式可以自定义
         .ngdialog-content {
-            -webkit-animation: ngdialog-flyin .5s;
-            animation: ngdialog-flyin .5s;
+            -webkit-animation: ngdialog-flyin .2s;
+            animation: ngdialog-flyin .2s;
             background: #f0f0f0;
             border-radius: 5px;
             color: #444;
@@ -195,8 +195,8 @@
         }
 
         .ngdialog-content {
-            -webkit-animation: ngdialog-flipin-horizontal .5s;
-            animation: ngdialog-flipin-horizontal .5s;
+            -webkit-animation: ngdialog-flipin-horizontal .2s;
+            animation: ngdialog-flipin-horizontal .2s;
             background: #fff;
             border: 1px solid $border-color;
             border-radius: 10px;
@@ -282,8 +282,8 @@
 
         //content样式可以自定义
         .ngdialog-content {
-            -webkit-animation: ngdialog-scrollin .5s;
-            animation: ngdialog-scrollin .5s;
+            -webkit-animation: ngdialog-scrollin .2s;
+            animation: ngdialog-scrollin .2s;
             background: #fff;
             color: $text-color;
             font-family: $font-family-sans-serif;
@@ -364,8 +364,8 @@
 }
 
 .ngdialog-overlay {
-    -webkit-animation: ngdialog-fadein .5s;
-    animation: ngdialog-fadein .5s;
+    -webkit-animation: ngdialog-fadein .2s;
+    animation: ngdialog-fadein .2s;
     -webkit-backface-visibility: hidden;
     background: rgba(0, 0, 0, .4);
     bottom: -10000px;
@@ -376,8 +376,8 @@
 }
 
 .ngdialog-content {
-    -webkit-animation: ngdialog-fadein .5s;
-    animation: ngdialog-fadein .5s;
+    -webkit-animation: ngdialog-fadein .2s;
+    animation: ngdialog-fadein .2s;
     -webkit-backface-visibility: hidden;
     background: #fff;
 }

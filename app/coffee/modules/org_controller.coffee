@@ -94,6 +94,7 @@ class OrgsCtrl extends nb.Controller
         #数据入口不止一个，需要解决
         @orgs.$refresh({edit_mode: @eidtMode}).$then () ->
             self.buildTree()
+
     queryMatchedOrg: (text) ->
         @orgs.filter (org) -> s.include(org.fullName, text)
 
@@ -112,11 +113,13 @@ class OrgsCtrl extends nb.Controller
         @currentOrg = _.find(@orgs, {id: orgId})
 
     revert: (isConfirm) ->
+        self = @
+
         if isConfirm
             @orgs.revert()
             # 是否可以将两步合成一步
             # 即撤销后，后端返回当前机构信息
-            @resetData()
+            @resetData(self.currentOrg)
 
     active: (evt, data) ->
         self = @
@@ -126,13 +129,16 @@ class OrgsCtrl extends nb.Controller
             self.rootScope.allOrgs.$refresh()
         @resetData()
 
-    resetData: () ->
+    resetData: (org) ->
         self = @
         @isHistory = false
 
         @orgs.$refresh({'edit_mode': true}).$then ()->
-            self.treeRootOrg = _.find self.orgs, (org) -> org.xdepth == 1
-            self.currentOrg = self.treeRootOrg
+            if org
+                self.currentOrg = org
+            else
+                self.treeRootOrg = _.find self.orgs, (org) -> org.xdepth == 1
+                self.currentOrg = self.treeRootOrg
 
     rootTree: () ->
         treeRootOrg = _.find @orgs, (org) -> org.xdepth == 1

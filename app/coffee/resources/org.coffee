@@ -130,7 +130,6 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
             'after-transfer': ->
                 $Evt.$send('org:transfer:success', "划转机构成功")
 
-
         $extend:
             Resource:
                 #生效所有已执行的机构操作
@@ -156,10 +155,7 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
 
                     this.$send(request, onSuccess)
 
-
-
             Collection:
-
                 queryPrimaryOrg: (org) ->
                     self = @
                     PRIMARY_ORG_DEPTH = 2 #一正机构 深度
@@ -215,7 +211,6 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS) ->
                     treeData = unflatten(treeData, Infinity, parent)
                     return [treeData]
             Record:
-
                 newSub: (org) ->
                     onSuccess = ->
                         @.$dispatch 'after-newsub'
