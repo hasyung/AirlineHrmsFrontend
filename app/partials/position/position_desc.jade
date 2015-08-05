@@ -9,7 +9,7 @@ form(name="speEditForm" ng-submit="save(currentSpe.$save(), speEditForm)" ng-con
             label 工作职责
             //- textarea(flex nb-simditor, toolbar="['bold', 'italic', 'underline', 'ol', 'ul']", placeholder="这里输入内容", ng-model="currentSpe.duty", editing)
             p(ng-hide="editing" ng-bind-html="currentSpe.duty | breakit")
-            p
+            p(layout)
                 textarea(flex ng-model="currentSpe.duty" ng-show="editing")
         md-input-container
             label 人事权限
@@ -36,5 +36,5 @@ form(name="speEditForm" ng-submit="save(currentSpe.$save(), speEditForm)" ng-con
             label 任职条件
             //- textarea(flex nb-simditor, toolbar="['bold', 'italic', 'underline', 'ol', 'ul']", placeholder="这里输入内容", ng-model="currentSpe.qualification", editing)
             p(ng-hide="editing" ng-bind-html="currentSpe.qualification | breakit")
-            p
+            p(layout)
                 textarea(flex ng-model="currentSpe.qualification" ng-show="editing")

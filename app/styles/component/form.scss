@@ -126,7 +126,7 @@ fieldset {
     &[disabled] {
 
         .textarea-row {
-            border-bottom: 1px dotted rgba(0, 0, 0, .1);
+            border-bottom: 1px dotted rgba(0, 0, 0, .26);
             padding-bottom: 2px;
             position: relative;
 
@@ -147,6 +147,11 @@ fieldset {
         }
     }
 
+}
+
+.textarea-row textarea {
+    border-color: #ddd;
+    min-height: 150px;
 }
 
 label:not(.md-no-float),
