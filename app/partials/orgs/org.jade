@@ -32,7 +32,7 @@ section.org-detail(ng-controller="EditableResourceCtrl")
                     md-select(ng-model="currentOrg.natureId" ng-disabled="!editing")
                         md-option(ng-value="item.id" ng-repeat="item in $enum.get('department_natures')") {{item.label}}
                 md-input-container.row-has-value
-                    label 职级
+                    label 职级{{currentOrg.gradeId}}
                     md-select(ng-model="currentOrg.gradeId" disabled)
                         md-option(ng-value="item.id" ng-repeat="item in $enum.get('department_grades')") {{item.label}}
 
@@ -42,7 +42,7 @@ section.org-detail(ng-controller="EditableResourceCtrl")
                 md-button.skyblue.md-raised(type="submit") 保存
 
     //- new sub
-    .org-info(ng-if="orgCtrl.state == 'newsub' " ng-init="neworg = {}")
+    .org-info(ng-if="orgCtrl.state == 'newsub' " ng-init="neworg = {natureId: currentOrg.natureId}")
         form(novalidate, ng-submit="orgCtrl.newsub(newsubForm, neworg)", name="newsubForm")
             fieldset
                 md-input-container
@@ -50,7 +50,7 @@ section.org-detail(ng-controller="EditableResourceCtrl")
                     input(ng-model="neworg.name" required name="orgName")
                 md-input-container.row-has-value
                     label 机构性质
-                    md-select(ng-model="neworg.natureId")
+                    md-select(ng-model="neworg.natureId" ng-disabled="currentOrg.serialNumber.length != 3")
                         md-option(ng-value="item.id" ng-repeat="item in $enum.get('department_natures')") {{item.label}}
                 md-input-container.row-has-value
                     label 职级
