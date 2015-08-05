@@ -227,6 +227,9 @@ class OrgCtrl extends nb.Controller
         @scope.$parent.$watch 'ctrl.currentOrg', (newval)->
             self.orgLink(newval)
 
+            # 切换后取消编辑模式
+            self.state = 'show'
+
         @scope.$watch 'orgCtrl.state', (newval)->
             # 过滤机构的职级
             self.dep_grade_array = _.filter self.enum.get('department_grades'), (item)->
