@@ -593,15 +593,6 @@ class AnnuityComputeController extends nb.Controller
             {
                 displayName: '姓名'
                 name: 'employeeName'
-                cellTemplate: '''
-                <div class="ui-grid-cell-contents">
-                    <a nb-panel
-                        template-url="partials/personnel/info_basic.html"
-                        locals="{employee: row.entity.owner}">
-                        {{grid.getCellValue(row, col)}}
-                    </a>
-                </div>
-                '''
             }
             {
                 displayName: '所属部门'
