@@ -471,7 +471,7 @@ class AnnuityPersonalController extends nb.Controller
                 <div class="ui-grid-cell-contents ng-binding ng-scope">
                     <a nb-panel
                         template-url="partials/personnel/info_basic.html"
-                        locals="{employee: row.entity.owner}">
+                        locals="{employee: row.entity}">
                         {{grid.getCellValue(row, col)}}
                     </a>
                 </div>

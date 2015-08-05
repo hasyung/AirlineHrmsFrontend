@@ -50,6 +50,7 @@ angular.module 'nb.directives'
 
                 opts['locals'] = scope.$eval(attrs.locals) || {}
                 angular.extend(opts, options)
+
                 promise =  ngDialog.open(opts).closePromise
                 promise.then () ->
                    scope.$eval(preClose) if angular.isDefined(preClose)
