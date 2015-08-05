@@ -185,9 +185,9 @@ class WelfarePersonalController extends nb.Controller
 
 
 class SocialComputeController extends nb.Controller
-    @.$inject = ['$http', '$scope', '$nbEvent', 'SocialRecord']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'SocialRecord', 'toaster']
 
-    constructor: (@http, $scope, @Evt, @SocialRecord) ->
+    constructor: (@http, $scope, @Evt, @SocialRecord, @toaster) ->
         @socialRecords = @loadInitialData()
 
         @columnDef = [
@@ -249,6 +249,7 @@ class SocialComputeController extends nb.Controller
     # 强制计算
     exeCalc: ()->
         @calcing = true
+        @toaster.pop('success', '提示', '开始计算')
         self = this
 
         @socialRecords = @SocialRecord.compute({month: @currentCalcTime()}).$asPromise().then (data)->
@@ -583,9 +584,9 @@ class AnnuityPersonalController extends nb.Controller
 
 
 class AnnuityComputeController extends nb.Controller
-    @.$inject = ['$http', '$scope', '$nbEvent', 'AnnuityRecord']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'AnnuityRecord', 'toaster']
 
-    constructor: ($http, $scope, $Evt, @AnnuityRecord) ->
+    constructor: ($http, $scope, $Evt, @AnnuityRecord, @toaster) ->
         @annuityRecords = @loadInitialData()
 
         @columnDef = [
@@ -632,6 +633,7 @@ class AnnuityComputeController extends nb.Controller
 
     exeCalc: ()->
         @calcing = true
+        @toaster.pop('success', '提示', '开始计算')
         self = @
 
         @AnnuityRecord.compute({date: @currentCalcTime()}).$asPromise().then (data)->

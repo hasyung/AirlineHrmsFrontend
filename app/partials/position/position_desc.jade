@@ -6,8 +6,11 @@ form(name="speEditForm" ng-submit="save(currentSpe.$save(), speEditForm)" ng-con
         md-button.md-raised.md-primary(type="submit" ng-disabled="speEditForm.$invalid") 保存
     fieldset(ng-disabled="!editing")
         .textarea-row()
-            label.text-label 工作职责
-            textarea(flex nb-simditor, toolbar="['bold', 'italic', 'underline', 'ol', 'ul']", placeholder="这里输入内容", ng-model="currentSpe.duty", editing)
+            label 工作职责
+            //- textarea(flex nb-simditor, toolbar="['bold', 'italic', 'underline', 'ol', 'ul']", placeholder="这里输入内容", ng-model="currentSpe.duty", editing)
+            p(ng-hide="editing" ng-bind-html="currentSpe.duty | breakit")
+            p
+                textarea(flex ng-model="currentSpe.duty" ng-show="editing")
         md-input-container
             label 人事权限
             input(type='text', placeholder='请输入人事权限', ng-model="currentSpe.personnelPermission")
@@ -30,5 +33,8 @@ form(name="speEditForm" ng-submit="save(currentSpe.$save(), speEditForm)" ng-con
             label 外部联系
             input(type='text', placeholder='请输入外部联系', ng-model="currentSpe.externalRelation")
         .textarea-row()
-            label.text-label 任职条件
-            textarea(flex nb-simditor, toolbar="['bold', 'italic', 'underline', 'ol', 'ul']", placeholder="这里输入内容", ng-model="currentSpe.qualification", editing)
+            label 任职条件
+            //- textarea(flex nb-simditor, toolbar="['bold', 'italic', 'underline', 'ol', 'ul']", placeholder="这里输入内容", ng-model="currentSpe.qualification", editing)
+            p(ng-hide="editing" ng-bind-html="currentSpe.qualification | breakit")
+            p
+                textarea(flex ng-model="currentSpe.qualification" ng-show="editing")
