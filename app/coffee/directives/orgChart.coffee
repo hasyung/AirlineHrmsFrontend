@@ -306,7 +306,7 @@ drawTreeChart = (root, options, select_org_id) ->
                         return "node chart-box-create_inactive"
                     else if d.status == 'update_inactive'
                         return "node chart-box-update_inactive"
-                    else if d.status == 'delete_inactive'
+                    else if d.status == 'destroy_inactive'
                         return "node chart-box-destroy_inactive"
                     else if d.status == 'transfer_inactive'
                         return "node chart-box-transfer_inactive"
@@ -315,6 +315,7 @@ drawTreeChart = (root, options, select_org_id) ->
                 .style("cursor","pointer")
                 .attr 'id', (d) -> "org_#{d.id}"
                 .on "click", (d) ->
+                    console.log d.status
                     active_node.classed("active",false)
                     d3.select(this).classed("active",true)
                     active_node = d3.select(this)
