@@ -40,14 +40,14 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                     div(layout)
                         md-input-container(flex)
                             label 姓名
-                            input(ng-model="nc.name")
+                            input(ng-model="nc.name" required)
                         md-input-container(flex)
                             label 关系
-                            input(ng-model="nc.relationType")
+                            input(ng-model="nc.relationType" required)
                     div(layout)
                         md-input-container(flex)
                             label 性别
-                            input(ng-model="nc.gender")
+                            input(ng-model="nc.gender" required)
                         md-input-container(flex)
                             label 出生年月
                             input(ng-model="nc.birthday" bs-datepicker)
@@ -58,8 +58,8 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                         label 学校或工作单位
                         input(ng-model="nc.company" columns="1")
                     .form-actions
-                        md-button.md-raised.white(ng-click="newChildren.splice($index, 1)") 取消
-                        md-button.md-raised.md-primary(ng-click="vm.children.$create(nc);newChildren.splice($index, 1)") 提交
+                        md-button.md-raised.white(type="button" ng-click="newChildren.splice($index, 1)") 取消
+                        md-button.md-raised.md-primary(type="button" ng-click="vm.children.$create(nc);newChildren.splice($index, 1)") 提交
 
                 //- .add(ng-hide="newChildren.length")
                 //-     button.fa.fa-plus(ng-click="newChildren.push({})")
@@ -98,14 +98,14 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                     div(layout)
                         md-input-container(flex)
                             label 姓名
-                            input(ng-model="no.name")
+                            input(ng-model="no.name" required)
                         md-input-container(flex)
                             label 关系
-                            input(ng-model="no.relationType")
+                            input(ng-model="no.relationType" required)
                     div(layout)
                         md-input-container(flex)
                             label 性别
-                            input(ng-model="no.gender")
+                            input(ng-model="no.gender" required)
                         md-input-container(flex)
                             label 出生年月
                             input(ng-model="no.birthday" bs-datepicker)
@@ -116,8 +116,8 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                         label 学校或工作单位
                         input(ng-model="no.company")
                     .form-actions()
-                        md-button.md-raised.white(ng-click="newOther.splice($index, 1)") 取消
-                        md-button.md-raised.md-primary(ng-click="vm.other.$create(no);newOther.splice($index, 1)") 提交
+                        md-button.md-raised.white(type="button" ng-click="newOther.splice($index, 1)") 取消
+                        md-button.md-raised.md-primary(type="button" ng-click="vm.other.$create(no);newOther.splice($index, 1)") 提交
 
                 //- .add(ng-hide="newOther.length")
                 //-     button.fa.fa-plus(ng-click="newOther.push({})")

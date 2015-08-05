@@ -16,10 +16,10 @@ form(ng-controller="EditableResourceCtrl" ng-submit="save(wife.$save(),familymem
         div(layout)
             md-input-container(flex)
                 label 姓名
-                input(ng-model="wife.name")
+                input(ng-model="wife.name" required)
             md-input-container(flex)
                 label 性别
-                input(ng-model="wife.gender")
+                input(ng-model="wife.gender" required)
         div(layout)
             md-input-container(flex)
                 label 籍贯
