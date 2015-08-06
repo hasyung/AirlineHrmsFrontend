@@ -8,6 +8,7 @@ singleTemplate =  '''
             md-selected-item="ctrl.org"
             md-search-text="ctrl.searchText"
             md-selected-item-change="onSelectedItemChange(org)"
+            md-search-text-change="onSearchTextChange(text)"
             md-delay="200"
             #placeholder#
             md-no-cache="true"
@@ -36,9 +37,7 @@ multipleTemplate = '''
 
 angular.module 'nb.directives'
     .directive 'orgSearch', ['OrgStore', '$timeout', (OrgStore, $timeout) ->
-
         template = (elem, attrs) ->
-
             if angular.isDefined attrs.multiple
                 return multipleTemplate
             else
@@ -49,16 +48,19 @@ angular.module 'nb.directives'
                 tmpl = singleTemplate.replace("#placeholder#", placeholder_str)
                 return tmpl
 
-
         postLink = (scope, elem, attrs, ctrl) ->
             isMultiple = true if angular.isDefined(attrs.multiple)
             ngModelCtrl = ctrl if ctrl
+
+            onSearchTextChange = (text) ->
+                scope.searchTextChange(text)
 
             onSelectedItemChange = (org) ->
                 return if !org
                 ngModelCtrl.$setViewValue(org) if ngModelCtrl
                 scope.selectedItemChange({org: org})
 
+            scope.onSearchTextChange = onSearchTextChange
             scope.onSelectedItemChange = onSelectedItemChange
 
             if isMultiple && ngModelCtrl
@@ -88,8 +90,10 @@ angular.module 'nb.directives'
         return {
             require: '?ngModel'
             scope: {
-                selectedItemChange: '&'
+                selectedItemChange: '&',
+                searchTextChange: '&'
             }
+
             template: template
             link: postLink
             controller: OrgSearchCtrl
