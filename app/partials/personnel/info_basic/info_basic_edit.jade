@@ -49,6 +49,7 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
             md-input-container(flex)
                 label 专业
                 input(type="text" placeholder="请输入专业" ng-model="current.major")
+            md-input-container(flex)
         div(layout)
             md-input-container.row-has-value(flex)
                 label 学历
@@ -58,6 +59,7 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
                 label 学位
                 md-select(ng-model="current.degreeId" ng-disabled="!editing")
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('degrees')") {{item.label}}
+            md-input-container(flex)
 
 
 
