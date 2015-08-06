@@ -12,6 +12,7 @@ singleTemplate =  '''
             md-delay="200"
             #placeholder#
             md-no-cache="true"
+            required="required"
             ><span md-highlight-text="ctrl.searchText">{{org.fullName}}</span></md-autocomplete>
 
     '''

@@ -664,7 +664,10 @@ class ContractCtrl extends nb.Controller
         self = @
 
         @Employee.$collection().$refresh(params).$then (employees)->
-            matched = _.first employees
+            args = _.mapKeys params, (value, key) ->
+                _.camelCase key
+
+            matched = _.find employees, args
 
             if matched
                 self.loadEmp = matched

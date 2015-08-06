@@ -6,7 +6,12 @@
         div(layout="row" flex)
             div(flex)
                 //- label 所属部门
-                org-search(ng-model="posItem.department" float-label placeholder="所属部门" selected-item-change="itemParams.orgPos = org.positions.$fetch();posItem.position = null;")
+                org-search(
+                    ng-model="posItem.department"
+                    float-label placeholder="所属部门"
+                    search-text-change="posItem.position.id=null;posItem.category=null;itemParams.orgPos=null;"
+                    selected-item-change="itemParams.orgPos = org.positions.$fetch();posItem.position = null;"
+                    )
 
             md-input-container.row-has-value(flex)
                 label 岗位

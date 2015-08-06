@@ -4,9 +4,9 @@ resources = angular.module('resources')
 
 User = (restmod, RMUtils, $Evt) ->
     User = restmod.model(null).mix 'nbRestApi', 'DirtyModel', {
-        $hooks:
-            'after-update': ->
-                $Evt.$send('user:update:success', "个人信息更新成功")
+        #$hooks:
+        #    'after-update': ->
+        #        $Evt.$send('user:update:success', "个人信息更新成功")
 
         educationExperiences: {hasMany: 'Education'}
         workExperiences: {hasMany: 'Experience'}

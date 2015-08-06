@@ -36,17 +36,17 @@
                                 input(ng-model="newEmp.birthday" bs-datepicker required)
                             md-input-container.row-has-value(flex)
                                 label 政治面貌
-                                md-select(ng-model="newEmp.politicalStatusId")
+                                md-select(ng-model="newEmp.politicalStatusId" name="politicalStatus")
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('political_status')") {{item.label}}
 
                         div(layout)
                             md-input-container.row-has-value(flex)
                                 label 学历
-                                md-select(ng-model="newEmp.educationBackgroundId")
+                                md-select(ng-model="newEmp.educationBackgroundId" name="educationBackground")
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('education_backgrounds')") {{item.label}}
                             md-input-container.row-has-value(flex)
                                 label 学位
-                                md-select(ng-model="newEmp.degreeId")
+                                md-select(ng-model="newEmp.degreeId" name="degree")
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('degrees')") {{item.label}}
 
                         div(layout)
@@ -97,11 +97,11 @@
                         div(layout)
                             md-input-container.row-has-value(flex)
                                 label 岗位
-                                md-select(ng-model="newEmp.position" required)
+                                md-select(ng-model="newEmp.position" name="position")
                                     md-option(ng-value="item" ng-repeat="item in params.orgPos") {{item.name}}
                             md-input-container.row-has-value(flex)
                                 label 分类
-                                md-select(ng-model="newEmp.categoryId" required)
+                                md-select(ng-model="newEmp.categoryId" name="category")
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('categories')") {{item.label}}
 
                         div(layout)
@@ -116,11 +116,11 @@
                         div(layout)
                             md-input-container.row-has-value(flex)
                                 label 用工性质
-                                md-select(ng-model="newEmp.laborRelationId")
+                                md-select(ng-model="newEmp.laborRelationId" name="laborRelation")
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('labor_relations')") {{item.label}}
                             md-input-container.row-has-value(flex)
                                 label 通道
-                                md-select(ng-model="newEmp.channelId")
+                                md-select(ng-model="newEmp.channelId" name="channel")
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
 
                         div(layout)
@@ -142,5 +142,8 @@
             .form-bottom-group(layout)
                 span(flex)
                 md-button.md-raised.white(type="button" ng-click="panel.close()") 取消
-                md-button.md-primary.md-raised(type="submit") 保存
+                md-button.md-primary.md-raised(
+                    type="submit"
+                    ng-disabled="!newEmpForm.politicalStatus.$modelValue || !newEmpForm.laborRelation.$modelValue || !newEmpForm.position.$modelValue || !newEmpForm.degree.$modelValue || !newEmpForm.category.$modelValue || !newEmpForm.channel.$modelValue || !newEmpForm.educationBackground.$modelValue"
+                    ) 保存
 

@@ -8,14 +8,14 @@ form(name="posEditForm" ng-submit="save(currentPos.$save(), posEditForm)" ng-con
         div(layout)
             md-input-container(flex)
                 label OA文件编号
-                input(ng-model="currentPos.oaFileNo")
+                input(ng-model="currentPos.oaFileNo" required)
             md-input-container(flex)
                 label 创建时间
                 input(disabled bs-datepicker ng-model="currentPos.createdAt")
         div(layout)
             md-input-container(flex)
                 label 岗位名称
-                input(ng-model="currentPos.name")
+                input(ng-model="currentPos.name" required)
             md-input-container(flex)
                 label 所属部门
                 input(disabled ng-model="currentPos.department.name")
@@ -34,7 +34,7 @@ form(name="posEditForm" ng-submit="save(currentPos.$save(), posEditForm)" ng-con
                 input(ng-model="currentPos.postType")
             md-input-container(flex)
                 label 编制
-                input(ng-model="currentPos.budgetedStaffing")
+                input(ng-model="currentPos.budgetedStaffing" required)
         div(layout)
             md-input-container(flex)
                 label 在岗人数
