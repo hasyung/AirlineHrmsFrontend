@@ -161,9 +161,7 @@ class OrgsCtrl extends nb.Controller
                 logsArr.push {logs:yeardLog, changeYear: key}
 
             changeLogs = _.sortBy(logsArr, 'changeYear').reverse()
-
             firstDate = _.last(logs).created_at
-
             minDate = moment(firstDate).subtract(1,'days').format('DD/MM/YYYY')
 
             return {
@@ -232,27 +230,31 @@ class OrgCtrl extends nb.Controller
         @scope.$parent.$watch 'ctrl.currentOrg', (newval)->
             # 监控变化引起的，删除机构会触发
             return if !newval || newval.name == 'org:resetData'
-
             self.orgLink(newval)
 
             # 切换后取消编辑模式
             self.state = 'show'
 
-            # 切换机构也要刷新下拉式列表
-            current_grade_id = self.scope.currentOrg.gradeId
-            self.dep_grade_array = _.filter self.enum.get('department_grades'), (item)->
-                return item.id >= current_grade_id
+            # 都是show状态，不会触发$watch
+            self.$resetGradeList();
 
         @scope.$watch 'orgCtrl.state', (newval)->
-            # 过滤机构的职级
-            self.dep_grade_array = _.filter self.enum.get('department_grades'), (item)->
-                #不是新增子机构
-                current_grade_id = self.scope.currentOrg.gradeId
+            self.$resetGradeList()
 
-                if newval == 'show'
-                    return item.id >= current_grade_id
-                else
-                    return item.id > current_grade_id
+    $resetGradeList: ()->
+        self = @
+        current_grade_id = @scope.currentOrg.gradeId
+
+        if @state != 'newsub' && @scope.currentOrg.parentId > 0
+            #不是新增子机构和父级比较
+            parentOrg = _.find @DEPARTMENTS, 'id', @scope.currentOrg.parentId
+            current_grade_id = parentOrg.grade.id
+
+        # 过滤机构的职级
+        # TODO 没有考虑编辑的事后节点的职级不能比子节点低的情况
+        @dep_grade_array = _.filter @enum.get('department_grades'), (item)->
+            item.id > current_grade_id
+
 
     orgLink: (org)->
         @scope.currentOrg = org
