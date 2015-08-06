@@ -218,7 +218,8 @@ class NewEmpsCtrl extends nb.Controller
             order: 'desc'
         }
 
-        @employees = @Employee.$collection().$fetch(@collection_param)
+        # 要小心使用$fetch，$fetch是不会reset当前的数据
+        @employees = @Employee.$collection().$refresh(@collection_param)
 
     regEmployee: (employee)->
         self = @
