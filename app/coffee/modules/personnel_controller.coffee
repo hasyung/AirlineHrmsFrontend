@@ -413,7 +413,6 @@ class ReviewCtrl extends nb.Controller
 
         if params.length > 0
             @changes.checkChanges(params)
-            @changes = self.Change.$collection().$refresh()
         else
             self.toaster.pop('error', '提示','请勾选要处理的审核记录')
 
