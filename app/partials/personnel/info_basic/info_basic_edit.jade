@@ -60,6 +60,3 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
                 md-select(ng-model="current.degreeId" ng-disabled="!editing")
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('degrees')") {{item.label}}
             md-input-container(flex)
-
-
-
