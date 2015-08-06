@@ -20,13 +20,13 @@ div(style="height: 100%; background-color: #f5f5f5;")
                                     label 姓名
                                     input(ng-model="ctrl.loadEmp.name" name="name" required
                                         ng-model-options="{debounce: {'default': 500, 'blur':0}}"
-                                        ng-change="ctrl.loadEmployee({name:ctrl.loadEmp.name}, contract);"
+                                        ng-blur="ctrl.loadEmployee({name:ctrl.loadEmp.name}, contract);"
                                         )
                                 md-input-container(flex)
                                     label 员工编号
                                     input(ng-model="ctrl.loadEmp.employeeNo" required
                                         ng-model-options="{debounce: {'default': 500, 'blur':0}}"
-                                        ng-change="ctrl.loadEmployee({employeeNo:ctrl.loadEmp.employeeNo}, contract);"
+                                        ng-blur="ctrl.loadEmployee({employee_no:ctrl.loadEmp.employeeNo}, contract);"
                                         )
 
                             div(layout)

@@ -261,6 +261,7 @@ drawTreeChart = (root, options, select_org_id) ->
     duration              = options.duration || 750
     rectClickHandler      = options.clickHandler
     leaf                  = 0
+    maxDepth              = 0
     # compute leaf size 树的宽度与叶子节点个数线性相关
     computeLayerMaxLength = (source) ->
         if source.children
