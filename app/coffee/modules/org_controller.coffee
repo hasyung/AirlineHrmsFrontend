@@ -230,6 +230,11 @@ class OrgCtrl extends nb.Controller
             # 切换后取消编辑模式
             self.state = 'show'
 
+            # 切换机构也要刷新下拉式列表
+            current_grade_id = self.scope.currentOrg.gradeId
+            self.dep_grade_array = _.filter self.enum.get('department_grades'), (item)->
+                return item.id >= current_grade_id
+
         @scope.$watch 'orgCtrl.state', (newval)->
             # 过滤机构的职级
             self.dep_grade_array = _.filter self.enum.get('department_grades'), (item)->
