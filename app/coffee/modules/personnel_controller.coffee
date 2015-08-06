@@ -101,9 +101,9 @@ class PersonnelCtrl extends nb.Controller
 
 
 class NewEmpsCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Employee', 'Org']
+    @.$inject = ['$scope', 'Employee', 'Org', '$state']
 
-    constructor: (@scope, @Employee, @Org) ->
+    constructor: (@scope, @Employee, @Org, @state) ->
         @newEmp = {}
         @loadInitialData()
 
@@ -218,14 +218,18 @@ class NewEmpsCtrl extends nb.Controller
             order: 'desc'
         }
 
-        # 要小心使用$fetch，$fetch是不会reset当前的数据
-        @employees = @Employee.$collection().$refresh(@collection_param)
+        @employees = @Employee.$collection().$fetch(@collection_param)
+
+    exportGridApi: (gridApi) ->
+        @gridApi = gridApi
 
     regEmployee: (employee)->
         self = @
 
         @employees.$build(employee).$save().$then ()->
             self.loadInitialData()
+            #self.gridApi.core.refresh()
+            self.state.go(self.state.current.name, {}, {reload: true})
 
     getSelectsIds: () ->
         rows = @scope.$gridApi.selection.getSelectedGridRows()

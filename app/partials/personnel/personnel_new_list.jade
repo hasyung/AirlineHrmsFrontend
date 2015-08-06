@@ -41,7 +41,12 @@
                                     download
                                 ) 导出全部人员履历
 
-        div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection safe-src="ctrl.employees")
+        div(
+            nb-grid
+            column-defs="ctrl.columnDef"
+            on-register-api="ctrl.exportGridApi(gridApi)"
+            grid-selection
+            safe-src="ctrl.employees")
 
 
 
