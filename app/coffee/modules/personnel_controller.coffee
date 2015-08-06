@@ -325,6 +325,9 @@ class ReviewCtrl extends nb.Controller
     constructor: (@scope, @Change, @Record, @mdDialog, @toaster) ->
         @loadInitialData()
 
+        @enable_check = false
+        self = @
+
         @recordColumnDef = [
             {name:"department.name", displayName:"所属部门"}
             {name:"name", displayName:"姓名"}
@@ -376,6 +379,12 @@ class ReviewCtrl extends nb.Controller
                 }
             ]
         }
+
+        @scope.$watch 'ctrl.changes', (from, to)->
+            checked = _.filter self.changes, (item)->
+                return item if item.statusCd != "1"
+            self.enable_check = checked.length
+        , true
 
     loadInitialData: ->
         @records = @Record.$collection().$fetch()
