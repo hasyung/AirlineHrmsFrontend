@@ -11,9 +11,6 @@ form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="Ed
 
         div(org-muti-pos ng-model="current.positions" editing="editing")
 
-        md-input-container.row-has-value
-            label 岗位备注
-            input(ng-model="current.positionRemark")
         div(layout)
             md-input-container.row-has-value(flex)
                 label 分类
@@ -39,3 +36,7 @@ form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="Ed
             md-input-container.row-has-value(flex="33")
                 label 属地化地点
                 input(ng-model="current.location")
+
+        md-input-container.row-has-value
+            label 岗位备注
+            input(ng-model="current.positionRemark")

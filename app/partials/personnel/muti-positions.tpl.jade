@@ -1,19 +1,18 @@
 .position-items()
     .position-item(layout ng-repeat="posItem in positions"
         ng-init="itemParams={};\
-            itemParams.orgPos = ctrl.Position.$collection({department_id:posItem.department.id}).$refresh();\
-        "
+            itemParams.orgPos = ctrl.Position.$collection({department_id:posItem.department.id}).$refresh();"
         )
         div(layout="row" flex)
-            div(flex="50")
+            div(flex)
                 //- label 所属部门
                 org-search(ng-model="posItem.department" float-label placeholder="所属部门" selected-item-change="itemParams.orgPos = org.positions.$fetch();posItem.position = null;")
 
-            md-input-container.row-has-value(flex="25")
+            md-input-container.row-has-value(flex)
                 label 岗位
                 md-select(ng-model="posItem.position.id" ng-disabled="!editStatus")
                     md-option(ng-value="pos.id" ng-repeat="pos in itemParams.orgPos") {{::pos.name}}
-            md-input-container.row-has-value(flex="25")
+            md-input-container.row-has-value(flex)
                 label 岗位性质
                 md-select(ng-model="posItem.category" ng-disabled="!editStatus")
                     md-option(aria-label="primary" value="主职") 主职
