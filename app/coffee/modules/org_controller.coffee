@@ -113,7 +113,7 @@ class OrgsCtrl extends nb.Controller
         orgId = evt.target
 
         # 放弃当前修改
-        @currentOrg.$restore() if @currentOrg
+        @currentOrg.$restore() if @currentOrg && @currentOrg.$restore
         @currentOrg = _.find(@orgs, {id: orgId})
 
     revert: (isConfirm) ->
