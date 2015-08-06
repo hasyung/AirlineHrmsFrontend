@@ -30,6 +30,8 @@ Change = (restmod, RMUtils, $Evt) ->
                             self.$remove item
                         self.$dispatch 'after-check', res
 
+                        _.reduce self, (item)-> item.statusCd = "1"
+
                     this.$send(request, onSuccess)
     }
 
