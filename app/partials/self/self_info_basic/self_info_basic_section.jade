@@ -142,14 +142,10 @@ form(ng-controller="EditableResourceCtrl", ng-submit="save(currentUser.$save(), 
                         label 通道
                         md-select(ng-model="currentUser.channelId" disabled)
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
-
-                    md-input-container(flex)
-                        label 类别
-                        input(ng-model="currentUser.position.postType")
-                div(layout)
                     md-input-container.row-has-value(flex)
                         label 属地化地点
                         input(ng-model="currentUser.location" disabled)
+                div(layout)
                     md-input-container.row-has-value(flex)
                         label 用工性质
                         md-select(ng-model="currentUser.laborRelationId" disabled)

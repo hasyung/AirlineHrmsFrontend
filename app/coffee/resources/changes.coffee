@@ -21,7 +21,7 @@ Change = (restmod, RMUtils, $Evt) ->
                     request = {
                         method: 'PUT',
                         url: "/api/employee_changes",
-                        data: {audits:parms}
+                        data: {audits: parms}
                     }
 
                     onSuccess = (res)->

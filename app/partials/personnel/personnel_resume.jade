@@ -1,4 +1,4 @@
-.resume-wrap(ng-init="resume = current.resume.$refresh()" style="max-width: 960px;")
+.resume-wrap(ng-init="current.$refresh();resume=current.resume.$refresh();" style="max-width: 960px;")
     .resume-header
         span {{ resume.name }}
         | 个人履历
@@ -9,7 +9,7 @@
         section.resume-section(layout)
             .resume-section-left(style="flex: 0 0 150px;")
                 .resume-avator
-                    img(ng-src="{{currentUser.favicon.big}}")
+                    img(ng-src="{{current.favicon.big}}")
             .resume-section-right(flex)
                 .resume-row
                     .resume-item
