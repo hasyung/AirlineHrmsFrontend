@@ -414,7 +414,9 @@ class ReviewCtrl extends nb.Controller
             params.push temp
 
         if params.length > 0
-            @changes.checkChanges(params)
+            @changes.checkChanges(params).$asPromise().then (data)->
+                self.changes.$clear()
+                self.changes.$refresh()
         else
             self.toaster.pop('error', '提示','请勾选要处理的审核记录')
 
