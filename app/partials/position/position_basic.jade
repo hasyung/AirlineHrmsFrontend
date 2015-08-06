@@ -30,24 +30,21 @@ form(name="posEditForm" ng-submit="save(currentPos.$save(), posEditForm)" ng-con
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
         div(layout)
             md-input-container(flex)
-                label 类别
-                input(ng-model="currentPos.postType")
-            md-input-container(flex)
                 label 编制
                 input(ng-model="currentPos.budgetedStaffing" required)
-        div(layout)
             md-input-container(flex)
                 label 在岗人数
                 input(ng-model="currentPos.staffing" disabled)
+        div(layout)
             md-input-container(flex)
                 label 超编
                 input(ng-model="currentPos.overstaffedNum" disabled)
-        div(layout)
             md-input-container.row-has-value(flex)
                 label 工时制度
                 //- input(ng-model="currentPos.schedule.displayName")
                 md-select(ng-model="currentPos.scheduleId" ng-disabled="!editing")
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('position_schedules')") {{item.label}}
+        div(layout)
             md-input-container.row-has-value(flex)
                 label 岗位性质
                 //- input(ng-model="currentPos.positionNature.displayName")
