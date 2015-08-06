@@ -52,13 +52,18 @@ div(style="height: 100%; background-color: #f5f5f5;")
                             div(layout)
                                 md-input-container(flex)
                                     label 开始日期
-                                    input(bs-datepicker ng-model="contract.startDate" required)
+                                    input(
+                                        bs-datepicker
+                                        ng-model="contract.startDate"
+                                        required
+                                        )
                                 md-input-container(flex)
                                     label 结束日期
                                     input.has-placeholder(
                                         bs-datepicker
                                         ng-model="contract.endDate"
                                         name="endDate"
+                                        ng-change="contract.dueTime=''"
                                         )
                                     div.input-placeholder 无固定期限合同请勿填写此项
 
