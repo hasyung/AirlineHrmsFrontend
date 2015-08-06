@@ -29,7 +29,7 @@ section.org-detail(ng-controller="EditableResourceCtrl")
                     input(ng-model="::currentOrg.serialNumber" disabled)
                 md-input-container.row-has-value
                     label 机构性质
-                    md-select(ng-model="currentOrg.natureId" ng-disabled="!editing")
+                    md-select(ng-model="currentOrg.natureId" disabled)
                         md-option(ng-value="item.id" ng-repeat="item in $enum.get('department_natures')") {{item.label}}
                 md-input-container.row-has-value
                     label 职级

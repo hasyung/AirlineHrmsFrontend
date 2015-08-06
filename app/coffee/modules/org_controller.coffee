@@ -61,6 +61,8 @@ class Route
                 }
             }
 
+app.config(Route)
+
 
 class OrgsCtrl extends nb.Controller
     @.$inject = ['orgs', '$http','$stateParams', '$state', '$scope', '$rootScope', '$nbEvent']
@@ -175,13 +177,16 @@ class OrgsCtrl extends nb.Controller
     pickLog: (date, changeLogs) ->
         sortedLogs = _.flatten(_.pluck(changeLogs, 'logs'))
         selectedMoment =  moment(date)
+
         log = _.find sortedLogs, (log) ->
             return selectedMoment.isAfter(log.created_at)
+
         @expandLog(log) if log
 
     # 返回机构的指定版本
     backToPast: (version)->
         self = @
+
         if @currentLog
             @orgs.$refresh({version: @currentLog.id}).$then ()->
                 self.isHistory = true
@@ -216,19 +221,27 @@ class OrgsCtrl extends nb.Controller
 
 
 class OrgCtrl extends nb.Controller
-    @.$inject = ['Org', '$stateParams', '$scope', '$rootScope', '$nbEvent', 'Position', 'sweet', '$enum']
+    @.$inject = ['Org', '$stateParams', '$scope', '$rootScope', '$nbEvent', 'Position', 'sweet', '$enum', 'DEPARTMENTS']
 
-    constructor: (@Org, @params, @scope, @rootScope, @Evt, @Position , @sweet, @enum) ->
+    constructor: (@Org, @params, @scope, @rootScope, @Evt, @Position , @sweet, @enum, @DEPARTMENTS) ->
         @state = 'show' # show editing newsub
         @dep_grade_array = @enum.get('department_grades')
 
         self = @
 
         @scope.$parent.$watch 'ctrl.currentOrg', (newval)->
+            # 监控变化引起的，删除机构会触发
+            return if !newval || newval.name == 'org:resetData'
+
             self.orgLink(newval)
 
             # 切换后取消编辑模式
             self.state = 'show'
+
+            # 切换机构也要刷新下拉式列表
+            current_grade_id = self.scope.currentOrg.gradeId
+            self.dep_grade_array = _.filter self.enum.get('department_grades'), (item)->
+                return item.id >= current_grade_id
 
         @scope.$watch 'orgCtrl.state', (newval)->
             # 过滤机构的职级
@@ -263,13 +276,15 @@ class OrgCtrl extends nb.Controller
         sweet = @sweet
         $Evt = @Evt
         orgName = @scope.currentOrg.name
+        self = @
 
         if isConfirm
             @scope.currentOrg.$destroy().$then ->
                 $Evt.$send 'org:resetData'
-                sweet.success('删除成功', "您已成功删除#{orgName}" )
+                sweet.success('删除成功', "您已成功删除#{orgName}")
         else
             sweet.error("您取消了删除#{@scope.currentOrg.name}")
+
 
 
 class PositionCtrl extends nb.Controller
@@ -345,7 +360,6 @@ class PositionCtrl extends nb.Controller
     searchEmp: (tableState) ->
 
 
-app.config(Route)
 app.controller('OrgsCtrl', OrgsCtrl)
 app.controller('OrgCtrl', OrgCtrl)
 app.controller('OrgPosCtrl', PositionCtrl)
