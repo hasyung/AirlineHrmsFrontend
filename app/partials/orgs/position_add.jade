@@ -32,7 +32,7 @@ md-dialog(ng-init="newPos = {departmentId: currentOrg.id}; specification = {}" s
 							md-option(ng-value="item.id" ng-repeat="item in $enum.get('categories')") {{item.label}}
 					md-input-container.row-has-value(flex  style="padding-bottom: 15px;")
 						label 岗位性质
-						md-select(ng-model="newPos.natureId")
+						md-select(ng-model="newPos.positionNatureId")
 							//- md-select-label {{$enum.parseLabel(newPos.natureId, "position_natures")}}
 							md-option(ng-value="item.id" ng-repeat="item in $enum.get('position_natures')") {{item.label}}
 
