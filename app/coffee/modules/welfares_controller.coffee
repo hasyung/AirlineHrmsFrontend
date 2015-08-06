@@ -168,11 +168,14 @@ class WelfarePersonalController extends nb.Controller
         if isConfirm
             @getSelected().forEach (record) -> record.entity.$destroy()
 
-    loadEmployee: (params, newSetup)->
+    loadEmployee: (params, contract)->
         self = @
 
         @Employee.$collection().$refresh(params).$then (employees)->
-            matched = _.first employees
+            args = _.mapKeys params, (value, key) ->
+                _.camelCase key
+
+            matched = _.find employees, args
 
             if matched
                 self.loadEmp = matched
