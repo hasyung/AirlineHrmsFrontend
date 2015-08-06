@@ -223,6 +223,7 @@ class NewEmpsCtrl extends nb.Controller
 
     regEmployee: (employee)->
         self = @
+
         @employees.$build(employee).$save().$then ()->
             self.loadInitialData()
 
