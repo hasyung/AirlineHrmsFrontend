@@ -89,19 +89,21 @@ drawOrgChart = (root, options, select_org_id) ->
 
         nature_type_order.forEach (name, idx) ->
             typed_orgs =  grouped_org[name]
+            console.error typed_orgs
+
             # 计算根节点、奇数列 正确位置
             fixed_odd_position = if typed_orgs.length%2 !=0 && name != 'root' then typed_orgs.length + 1 else typed_orgs.length
             typed_orgs.forEach (d, i) ->
                 d.x = ((rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + 40)/2 -
                     ((fixed_odd_position - 1)*rectHorizontalSpacing +
-                    fixed_odd_position*rectWidth)/2) + i*(rectHorizontalSpacing + rectWidth)
+                    fixed_odd_position*rectWidth)/2) + i*(rectHorizontalSpacing + rectWidth) + (rectHorizontalSpacing + rectWidth)
 
         return nodes
 
     staffNodesDecorator = (root, tree) ->
         nodes = root.staff
         nodes.forEach (d, i) ->
-            d.x = (rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + 40)/2 +100
+            d.x = (rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + (rectHorizontalSpacing + rectWidth))/2 +100
             d.y = rectHeight + (rectVerticalSpacing/2 - rectWidth/2) + i*(rectWidth + rectHorizontalSpacing)
         return nodes
 
@@ -227,9 +229,9 @@ drawOrgChart = (root, options, select_org_id) ->
                 .attr "y", (d) -> d.y + rectWidth/2 + 4
                 .text (d) -> d.name.replace(/（/gm, '︵').replace(/）/gm, '︶')
 
-        svg.attr("width",rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + 40)
+        svg.attr("width",rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + 2*(rectWidth+rectHorizontalSpacing))
             .attr("height",(rectHeight + rectVerticalSpacing)*4 + staff_nodes.length*(rectWidth + rectHorizontalSpacing))
-        tree.size([rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + staff_nodes.length*(rectWidth + rectHorizontalSpacing) + 40,(rectHeight + rectVerticalSpacing)*3+40])
+        tree.size([rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + staff_nodes.length*(rectWidth + rectHorizontalSpacing) + 2*(rectWidth+rectHorizontalSpacing),(rectHeight + rectVerticalSpacing)*3+40])
 
         drawPath()
         drawStaffPath()
