@@ -25,12 +25,10 @@ Change = (restmod, RMUtils, $Evt) ->
                     }
 
                     onSuccess = (res)->
-                        angular.forEach parms, (item) ->
-                            item = _.find self, {id: item.id}
-                            self.$remove item
+                        #angular.forEach parms, (item) ->
+                        #    item = _.find self, {id: item.id}
+                        #    self.$remove item
                         self.$dispatch 'after-check', res
-
-                        _.reduce self, (item)-> item.statusCd = "1"
 
                     this.$send(request, onSuccess)
     }

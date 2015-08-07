@@ -101,9 +101,9 @@ class PersonnelCtrl extends nb.Controller
 
 
 class NewEmpsCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Employee', 'Org']
+    @.$inject = ['$scope', 'Employee', 'Org', '$state']
 
-    constructor: (@scope, @Employee, @Org) ->
+    constructor: (@scope, @Employee, @Org, @state) ->
         @newEmp = {}
         @loadInitialData()
 
@@ -218,14 +218,20 @@ class NewEmpsCtrl extends nb.Controller
             order: 'desc'
         }
 
-        # 要小心使用$fetch，$fetch是不会reset当前的数据
-        @employees = @Employee.$collection().$refresh(@collection_param)
+        @employees = @Employee.$collection().$fetch(@collection_param)
+
+    exportGridApi: (gridApi) ->
+        @gridApi = gridApi
 
     regEmployee: (employee)->
         self = @
 
         @employees.$build(employee).$save().$then ()->
             self.loadInitialData()
+            #self.gridApi.core.refresh()
+            #新增员工后页码刷新，表格控件内容不刷新，未找到确切原因
+            #先使用ui-router的state刷新方法
+            self.state.go(self.state.current.name, {}, {reload: true})
 
     getSelectsIds: () ->
         rows = @scope.$gridApi.selection.getSelectedGridRows()
@@ -414,7 +420,9 @@ class ReviewCtrl extends nb.Controller
             params.push temp
 
         if params.length > 0
-            @changes.checkChanges(params)
+            @changes.checkChanges(params).$asPromise().then (data)->
+                self.changes.$clear()
+                self.changes.$refresh()
         else
             self.toaster.pop('error', '提示','请勾选要处理的审核记录')
 
