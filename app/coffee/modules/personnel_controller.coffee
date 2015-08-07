@@ -229,6 +229,8 @@ class NewEmpsCtrl extends nb.Controller
         @employees.$build(employee).$save().$then ()->
             self.loadInitialData()
             #self.gridApi.core.refresh()
+            #新增员工后页码刷新，表格控件内容不刷新，未找到确切原因
+            #先使用ui-router的state刷新方法
             self.state.go(self.state.current.name, {}, {reload: true})
 
     getSelectsIds: () ->
