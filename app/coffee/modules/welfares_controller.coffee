@@ -250,12 +250,14 @@ class SocialComputeController extends nb.Controller
     exeCalc: ()->
         @calcing = true
         @toaster.pop('success', '提示', '开始计算')
-        self = this
 
-        @socialRecords = @SocialRecord.compute({month: @currentCalcTime()}).$asPromise().then (data)->
+        self = @
+
+        @SocialRecord.compute({month: @currentCalcTime()}).$asPromise().then (data)->
             self.calcing = false
             erorr_msg = data.$response.data.messages
             self.Evt.$send("social:calc:error", erorr_msg) if erorr_msg
+            self.loadRecords()
 
     parseJSON: (data) ->
         angular.fromJson(data)
