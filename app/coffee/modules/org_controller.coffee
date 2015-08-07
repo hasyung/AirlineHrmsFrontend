@@ -121,6 +121,7 @@ class OrgsCtrl extends nb.Controller
 
         if isConfirm
             @orgs.revert()
+
             # 是否可以将两步合成一步
             # 即撤销后，后端返回当前机构信息
             @resetData(self.currentOrg)

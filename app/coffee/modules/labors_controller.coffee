@@ -272,6 +272,8 @@ class Route
                 }
             }
 
+app.config(Route)
+
 
 class AttendanceCtrl extends nb.Controller
     @.$inject = ['GridHelper', 'Leave', '$scope', '$injector', '$http', 'AttendanceSummary']
@@ -532,10 +534,14 @@ class ContractCtrl extends nb.Controller
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents">
                     <a nb-panel
+                        ng-if="row.entity.owner!=null"
                         template-url="partials/personnel/info_basic.html"
-                        locals="{employee: row.entity}">
+                        locals="{employee: row.entity.owner}">
                         {{grid.getCellValue(row, col)}}
                     </a>
+                    <span ng-if="row.entity.owner==null">
+                        {{grid.getCellValue(row, col)}}
+                    </span>
                 </div>
                 '''
             }
@@ -704,7 +710,6 @@ class UserListCtrl extends nb.Controller
             {
                 displayName: '姓名'
                 field: 'name'
-                # pinnedLeft: true
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents">
                     <a nb-panel
@@ -805,7 +810,7 @@ class SbFlowHandlerCtrl
         @columnDef = @userRequestsColDef
         @tableData = @Flow.myRequests()
 
-    getSelected: -> # selected entity || arr
+    getSelected: ->
         rows = @gridApi.selection.getSelectedGridRows()
         selected = if rows.length >= 1 then rows[0].entity else null
 
@@ -844,11 +849,11 @@ class SbFlowHandlerCtrl
         @tableData.$refresh({filter_types: [@FlowName]})
 
 
-app.config(Route)
 app.controller('AttendanceRecordCtrl', AttendanceRecordCtrl)
 app.controller('AttendanceHisCtrl', AttendanceHisCtrl)
 app.controller('UserListCtrl', UserListCtrl)
 app.controller('ContractCtrl', ContractCtrl)
 app.controller('RetirementCtrl', RetirementCtrl)
 app.controller('SbFlowHandlerCtrl', SbFlowHandlerCtrl)
+
 app.constant('ColumnDef', [])
