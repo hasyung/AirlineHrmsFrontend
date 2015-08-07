@@ -127,10 +127,12 @@ class OrgsCtrl extends nb.Controller
 
     active: (evt, data) ->
         self = @
+
         #deparment_id 是否必要?
         data.department_id = @.treeRootOrg.id
         @orgs.active(data).$then ()->
             self.rootScope.allOrgs.$refresh()
+
         @resetData()
 
     resetData: (org) ->
@@ -143,6 +145,10 @@ class OrgsCtrl extends nb.Controller
             else
                 self.treeRootOrg = _.find self.orgs, (org) -> org.xdepth == 1
                 self.currentOrg = self.treeRootOrg
+
+            # 反复划转后情况很复杂
+            self.state.go(self.state.current.name, {}, {reload: true})
+
 
     rootTree: () ->
         treeRootOrg = _.find @orgs, (org) -> org.xdepth == 1
