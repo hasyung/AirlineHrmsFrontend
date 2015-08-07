@@ -89,7 +89,6 @@ drawOrgChart = (root, options, select_org_id) ->
 
         nature_type_order.forEach (name, idx) ->
             typed_orgs =  grouped_org[name]
-            console.error typed_orgs
 
             # 计算根节点、奇数列 正确位置
             fixed_odd_position = if typed_orgs.length%2 !=0 && name != 'root' then typed_orgs.length + 1 else typed_orgs.length
@@ -318,7 +317,6 @@ drawTreeChart = (root, options, select_org_id) ->
                 .style("cursor","pointer")
                 .attr 'id', (d) -> "org_#{d.id}"
                 .on "click", (d) ->
-                    console.log d.status
                     active_node.classed("active",false)
                     d3.select(this).classed("active",true)
                     active_node = d3.select(this)
