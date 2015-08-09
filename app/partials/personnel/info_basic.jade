@@ -2,6 +2,7 @@ div.panel-bg-gray(ng-init= "current = panel.employee; current.$refresh();")
     md-toolbar.md-warn(md-theme="hrms")
         .md-toolbar-tools
             span 人事信息
+
     .personnel-base-info(layout)
         .big-avator-area
             img(ng-src="{{current.favicon.middle}}" ng-if="current.favicon")
@@ -18,6 +19,7 @@ div.panel-bg-gray(ng-init= "current = panel.employee; current.$refresh();")
             .employee-others-info
                 div(ng-bind="current.employeeNo")
                 div(ng-bind="current.department.name")
+
     .personnel-content.personnel-control
         section.personnel-info-section
             tabset(type="pills")
@@ -28,17 +30,18 @@ div.panel-bg-gray(ng-init= "current = panel.employee; current.$refresh();")
                                 md-icon.form-icon(md-svg-src="/images/svg/personnel_24.svg" alt="基本信息")
                                 |基本信息
                             include info_basic/info_basic_edit
+
                         md-card.form-material-section.nb-card
                             md-subheader.md-background.md-hue-1
                                 md-icon.form-icon(md-svg-src="/images/svg/positions_info_24.svg" alt="岗位信息")
                                 |岗位信息
                             include info_basic/info_position_edit
+
                         md-card.form-material-section.nb-card
                             md-subheader.md-background.md-hue-1
                                 md-icon.form-icon(md-svg-src="/images/svg/ic_star_24px.svg" alt="职称信息")
                                 |职称信息
                             include info_basic/info_position_title
-
 
                 tab(heading="培训记录")
 

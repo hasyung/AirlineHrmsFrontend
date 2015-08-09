@@ -535,7 +535,6 @@ orgMutiPos = ($rootScope)->
 
 app.directive('orgMutiPos',[orgMutiPos])
 
-
 app.controller('PersonnelSort', PersonnelSort)
 app.controller('LeaveEmployeesCtrl', LeaveEmployeesCtrl)
 app.controller('EmployeePerformanceCtrl', EmployeePerformanceCtrl)
