@@ -7,8 +7,8 @@
 
         label {
             margin-right: 10px;
-            width: 130px;
             text-align: right;
+            width: 130px;
        }
 
         .md-input {
@@ -24,8 +24,8 @@
             margin-right: 10px;
 
             &.first {
-                width: 130px;
                 text-align: right;
+                width: 130px;
             }
         }
 
@@ -43,3 +43,48 @@
         margin-left: 140px;
     }
 }
+
+// 对material tabs的样式hack
+.salary-basic {
+    // #e84e40
+    background-color: #fff;
+
+    md-tabs {
+        md-ink-bar {
+            background-color: #e84e40;
+        }
+
+        md-tab-item {
+            &.md-active {
+                span {
+                    color: $text-color;
+                }
+
+                .md-ripple-container {
+                    background-color: transparent !important;
+
+                    .md-ripple {
+                        background-color: #e84e40 !important;
+                    }
+                }
+            }
+
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
