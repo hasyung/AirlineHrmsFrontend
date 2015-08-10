@@ -5,12 +5,12 @@ app = nb.app
 menuFactory = ($rootScope, $state)->
     sections = []
 
-    #sections.push {
-    #    name: '待办事项'
-    #    type: 'link'
-    #    state: 'TODO'
-    #    icon_src: '/images/svg/left-side-svg/left_icon_22.svg'
-    #}
+    sections.push {
+        name: '待办事项'
+        type: 'link'
+        state: 'TODO'
+        icon_src: '/images/svg/left-side-svg/left_icon_22.svg'
+    }
 
     sections.push {
         name: '组织机构'
@@ -102,60 +102,69 @@ menuFactory = ($rootScope, $state)->
         ]
     }
 
-    #sections.push {
-    #    name: '薪酬'
-    #    icon_src: '/images/svg/left-side-svg/left_icon_8.svg'
-    #    pages: [
-    #}
+    sections.push {
+        name: '薪酬'
+        icon_src: '/images/svg/left-side-svg/left_icon_8.svg'
+        pages: [
+            {
+                name: '薪酬设置'
+                state: 'salary'
+            }
+            {
+                name: '基础工资'
+                state: 'salary_basic'
+            }
+        ]
+    }
 
     sections.push {
         name: '劳动关系'
         icon_src: '/images/svg/left-side-svg/left_icon_9.svg'
         pages: [
-            #{
-            #    name: '员工考勤'
-            #    state: 'labors_attendance'
-            #}
-            #{
-            #    name: '员工调动'
-            #    state: 'labors_ajust_position'
-            #    permission: ''
-            #}
-            #{
-            #    name: '员工退休'
-            #    state: 'labors_retirement'
-            #    permission: ''
-            #}
-            #{
-            #    name: '员工退养'
-            #    state: 'labors_early_retirement'
-            #    permission: ''
-            #}
-            #{
-            #    name: '员工辞退'
-            #    state: 'labors_dismiss'
-            #    permission: ''
-            #}
-            #{
-            #    name: '员工处分'
-            #    state: 'labors_punishment'
-            #    permission: ''
-            #}
+            {
+                name: '员工考勤'
+                state: 'labors_attendance'
+            }
+            {
+                name: '员工调动'
+                state: 'labors_ajust_position'
+                permission: ''
+            }
+            {
+                name: '员工退休'
+                state: 'labors_retirement'
+                permission: ''
+            }
+            {
+                name: '员工退养'
+                state: 'labors_early_retirement'
+                permission: ''
+            }
+            {
+                name: '员工辞退'
+                state: 'labors_dismiss'
+                permission: ''
+            }
+            {
+                name: '员工处分'
+                state: 'labors_punishment'
+                permission: ''
+            }
             {
                 name: '合同管理'
                 state: 'contract_management'
                 permission: ''
             }
-            #{
-            #    name: '员工离职'
-            #    state: 'labors_leave_job'
-            #    permission: ''
-            #}
-            #{
-            #    name: '员工辞职'
-            #    state: 'labors_resignation'
-            #    permission: ''
-            #}
+            {
+                name: '员工离职'
+                state: 'labors_leave_job'
+                permission: ''
+            }
+            {
+                name: '员工辞职'
+                state: 'labors_resignation'
+                permission: ''
+            }
         ]
     }
 
