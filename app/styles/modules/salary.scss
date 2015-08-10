@@ -1,0 +1,35 @@
+.form-static {
+    background-color: #fff;
+    padding: 20px;
+
+    .form-row {
+        line-height: 34px;
+
+        label {
+            margin-right: 10px;
+       }
+
+        .md-input {
+            font-size: $font-size-md;
+            min-width: 100px;
+        }
+    }
+
+    .form-select-row {
+        line-height: 74px;
+
+        label {
+            margin-right: 10px;
+        }
+
+        md-select {
+            flex: 0 0 120px;
+            width: 100px;
+
+            .md-select-value {
+                width: 120px;
+            }
+        }
+    }
+
+}

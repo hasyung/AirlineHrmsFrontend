@@ -1,2 +1,65 @@
 .app-content-wrapper(flex ng-controller="salaryCtrl as ctrl")
+    form.form-static
+        fieldset
+            .form-row(layout)
+                label 当前汇率
+                span 1美元兑
+                md-input-container(md-no-float)
+                    input(type="number" min="0")
+                span 元人民币
+
+            .form-row(layout)
+                label 当前最低工资
+                md-input-container(md-no-float)
+                    input(type="number")
+                span 元人民币
+
+            .form-row(layout)
+                label 当前成都市最低工资
+                md-input-container(md-no-float)
+                    input(type="number")
+                span 元人民币
+
+            .form-row(layout)
+                label 当前公司薪酬基数
+                md-input-container(md-no-float)
+                    input(type="number")
+                span 元人民币
+
+            md-divider
+
+            .form-select-row(layout)
+                label 月度绩效系数
+                md-select(ng-model="ctrl.currentYear" placeholder="请选择年份")
+                    md-option(ng-value="item" ng-repeat="item in ctrl.year_list track by $index" ng-bind="item")
+                label(flex-order="2") 年
+                md-select(ng-model="ctrl.currentMonth" placeholder="请选择月份")
+                    md-option(ng-value="item" ng-repeat="item in ctrl.month_list track by $index" ng-bind="item")
+                label(flex-order="3") 月
+
+            .form-row(layout)
+                label 公司绩效系数
+                md-input-container(md-no-float)
+                    input(type="number")
+                span 元人民币
+
+            .form-row(layout)
+                label 商委绩效系数
+                md-input-container(md-no-float)
+                    input(type="number")
+                span 元人民币
+
+            .form-row(layout)
+                label 物流部绩效系数
+                md-input-container(md-no-float)
+                    input(type="number")
+                span 元人民币
+
+            md-button.md-raised.md-primary(ng-click="") 保存
+
+
+
+
+
+
 
