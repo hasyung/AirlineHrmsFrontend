@@ -8,6 +8,7 @@
         label {
             margin-right: 10px;
             width: 130px;
+            text-align: right;
        }
 
         .md-input {
@@ -24,6 +25,7 @@
 
             &.first {
                 width: 130px;
+                text-align: right;
             }
         }
 
@@ -37,4 +39,7 @@
         }
     }
 
+    .md-button {
+        margin-left: 140px;
+    }
 }
