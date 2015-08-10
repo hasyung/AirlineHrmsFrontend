@@ -1,16 +1,16 @@
 table(style="border:1px solid #000;width:100%;")
   tr
-    th 档级
-    th(ng-repeat="flag in ctrl.flag_list track by $index") {{::ctrl.flag_names[flag]}}
+    th 档级{{config.flag_list.length}}
+    th(ng-repeat="flag in config.flag_list track by $index") {{config.flag_names[flag]}}
 
-  tr(ng-repeat="(grade, setting) in ctrl.dynamic_config.flags")
+  tr(ng-repeat="(grade, setting) in config.flags")
     td(ng-repeat="column in ctrl.flag_list")
-      div(ng-if="setting[grade][column]")
+      div(ng-if="config[grade][column]")
 
         div(ng-show="ctrl.editing")
-          div(ng-if="setting[grade][column]['edit_mode']")
+          div(ng-if="config[grade][column]['edit_mode']")
 
         div(ng-show="!ctrl.editing")
-          span sadasds{{setting[grade][column]['format_cell'] || setting[grade][column]}}
+          span sadasds{{config[grade][column]['format_cell'] || config[grade][column]}}
 
-      div(ng-if="!dynamic_config.flags[grade][column]")
+      div(ng-if="!config.flags[grade][column]")
