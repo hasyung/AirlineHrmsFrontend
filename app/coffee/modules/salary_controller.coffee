@@ -12,6 +12,11 @@ class Route
                 templateUrl: 'partials/salary/settings.html'
             }
 
+            .state 'salary_personal', {
+                url: '/salary/personal'
+                templateUrl: 'partials/salary/personal.html'
+            }
+
             .state 'salary_basic', {
                 url: '/salary/basic'
                 templateUrl: 'partials/salary/basic.html'
