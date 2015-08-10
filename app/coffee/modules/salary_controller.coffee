@@ -32,7 +32,12 @@ app.config(Route)
 
 
 class SalaryController
+    @.$inject = ['$http', '$scope', '$nbEvent']
 
+    constructor: ($http, $scope, $Evt) ->
+
+
+class SalaryPersonalController
     @.$inject = ['$http', '$scope', '$nbEvent']
 
     constructor: ($http, $scope, $Evt) ->
@@ -50,13 +55,8 @@ class SalaryPerformanceController
     constructor: ($http, $scope, $Evt) ->
 
 
-class SalaryPersonalController
-    @.$inject = ['$http', '$scope', '$nbEvent']
-
-    constructor: ($http, $scope, $Evt) ->
-
 
 app.controller 'salaryCtrl', SalaryController
+app.controller 'salaryPersonalCtrl', SalaryPersonalController
 app.controller 'salaryBasicCtrl', SalaryBasicController
 app.controller 'salaryPerformanceCtrl', SalaryPerformanceController
-app.controller 'salaryPersonalCtrl', SalaryPersonalController
