@@ -34,7 +34,7 @@ app.config(Route)
 class SalaryController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'toaster']
 
-    constructor: (@http, $scope, $Evt, @toaster) ->
+    constructor: (@http, @scope, $Evt, @toaster) ->
         self = @
         @initialize()
 
@@ -64,7 +64,6 @@ class SalaryController extends nb.Controller
         @month_list = @$getMonths()
         @currentYear = _.last @year_list
         @currentMonth = _.last @month_list
-
         @settings = {}
         # 薪酬全局设置
         @global_setting = {}
@@ -78,7 +77,9 @@ class SalaryController extends nb.Controller
                 data[item] ||= {}
                 self.settings[item + '_setting'] = data[item].form_data || {}
 
-            self.load_dynamic_config(self.CATEGORY_LIST[0])
+            self.selectedIndex = 0
+            self.scope.$watch 'ctrl.selectedIndex', (to)->
+                self.load_dynamic_config(self.CATEGORY_LIST[to])
 
     currentCalcTime: ()->
         @currentYear + "-" + @currentMonth
@@ -89,7 +90,8 @@ class SalaryController extends nb.Controller
     load_dynamic_config: (category)->
         @dynamic_config = @settings[category + '_setting']
         @editing = false
-        console.error @dynamic_config
+        @flag_list = @dynamic_config.flag_list
+        @flag_names = @dynamic_config.flag_names
 
     save_config: (category, config)->
         self = @
@@ -234,7 +236,6 @@ class SalaryPersonalController
                 salary.owner = matched
             else
                 self.loadEmp = params
-
 
 
 app.controller 'salaryCtrl', SalaryController

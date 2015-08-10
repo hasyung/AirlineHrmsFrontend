@@ -1,6 +1,6 @@
-.app-content-wrapper(flex ng-controller="salaryBasicCtrl as ctrl")
+.app-content-wrapper(flex ng-controller="salaryCtrl as ctrl")
     .salary-basic
-        md-tabs(md-selected="selectedIndex" md-border-bottom md-autoselect)
+        md-tabs(md-selected="ctrl.selectedIndex" md-border-bottom md-autoselect)
             md-tab(label="干部")
                 include ./settings/dynamic_table.jade
             md-tab(label="管理15")

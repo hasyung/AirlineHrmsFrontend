@@ -1,4 +1,4 @@
 table(style="border:1px solid #000;width='100%';")
   tr
     th 档级
-    th(np-repeat="item in ctrl.dynamic_config.flag_list track by $index") {{::ctrl.dynamic_config.flag_names[item]}}
+    th(np-repeat="flag in ctrl.flag_list track by $index") {{::ctrl.flag_names[flag]}}
