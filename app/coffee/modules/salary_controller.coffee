@@ -35,6 +35,7 @@ class SalaryController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'toaster']
 
     constructor: (@http, $scope, $Evt, @toaster) ->
+        self = @
         @initialize()
 
     $default_coefficient: ()->
@@ -48,39 +49,47 @@ class SalaryController extends nb.Controller
             @global_setting.coefficient[month] = @$default_coefficient()
 
     initialize: () ->
+        self = @
+        @CATEGORY_LIST = ["leader_base",       # 干部
+                          "manager15_base",    # 管理15
+                          "manager12_base",    # 管理12
+                          "flyer_base",        # 飞行员
+                          "air_steward",       # 空乘空保
+                          "service_b",         # 服务B
+                          "air_observer",      # 空中观察员
+                          "front_run",         # 前场运行
+                         ]
+
         @year_list = @$getYears()
         @month_list = @$getMonths()
-
         @currentYear = _.last @year_list
         @currentMonth = _.last @month_list
 
+        @settings = {}
         # 薪酬全局设置
         @global_setting = {}
 
-        self = @
         @http.get('/api/salaries').success (data)->
             # 全局设置单独处理
             self.global_setting = data.global.form_data
             self.$check_coefficient_default()
 
-            CATEGORY_LIST = ["leader_base",       # 干部
-                             "manager15_base",    # 管理15
-                             "manager12_base",    # 管理12
-                             "flyer_base",        # 飞行员
-                             "air_steward",       # 空乘空保
-                             "service_b",         # 服务B
-                             "air_observer",      # 空中观察员
-                             "front_run",         # 前场运行
-                            ]
-            angular.forEach CATEGORY_LIST, (item)->
+            angular.forEach self.CATEGORY_LIST, (item)->
                 data[item] ||= {}
-                self[item + '_setting'] = data[item].form_data || {}
+                self.settings[item + '_setting'] = data[item].form_data || {}
+
+            self.load_dynamic_config(self.CATEGORY_LIST[0])
 
     currentCalcTime: ()->
         @currentYear + "-" + @currentMonth
 
     load_global_coefficient: ()->
         @$check_coefficient_default()
+
+    load_dynamic_config: (category)->
+        @dynamic_config = @settings[category + '_setting']
+        @editing = false
+        console.error @dynamic_config
 
     save_config: (category, config)->
         self = @
