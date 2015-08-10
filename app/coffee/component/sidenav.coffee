@@ -111,6 +111,10 @@ menuFactory = ($rootScope, $state)->
                 state: 'salary'
             }
             {
+                name: '个人薪酬设置'
+                state: 'salary_personal'
+            }
+            {
                 name: '基础工资'
                 state: 'salary_basic'
             }
