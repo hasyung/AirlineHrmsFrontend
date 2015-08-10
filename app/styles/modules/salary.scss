@@ -7,6 +7,7 @@
 
         label {
             margin-right: 10px;
+            width: 130px;
        }
 
         .md-input {
@@ -20,6 +21,10 @@
 
         label {
             margin-right: 10px;
+
+            &.first {
+                width: 130px;
+            }
         }
 
         md-select {
