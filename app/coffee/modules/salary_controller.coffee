@@ -93,8 +93,6 @@ class SalaryController extends nb.Controller
         @flag_list = @dynamic_config.flag_list
         @flag_names = @dynamic_config.flag_names
 
-        console.error @flag_list
-
     save_config: (category, config)->
         self = @
         @http.put('/api/salaries/' + category, {form_data: config}).success (data)->
