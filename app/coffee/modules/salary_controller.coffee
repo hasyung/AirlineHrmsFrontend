@@ -54,15 +54,27 @@ class SalaryController extends nb.Controller
         @currentYear = _.last @year_list
         @currentMonth = _.last @month_list
 
-        @settings = {}
         # 薪酬全局设置
         @global_setting = {}
 
         self = @
         @http.get('/api/salaries').success (data)->
-            self.settings = data
+            # 全局设置单独处理
             self.global_setting = data.global.form_data
             self.$check_coefficient_default()
+
+            CATEGORY_LIST = ["leader_base",       # 干部
+                             "manager15_base",    # 管理15
+                             "manager12_base",    # 管理12
+                             "flyer_base",        # 飞行员
+                             "air_steward",       # 空乘空保
+                             "service_b",         # 服务B
+                             "air_observer",      # 空中观察员
+                             "front_run",         # 前场运行
+                            ]
+            angular.forEach CATEGORY_LIST, (item)->
+                data[item] ||= {}
+                self[item + '_setting'] = data[item].form_data || {}
 
     currentCalcTime: ()->
         @currentYear + "-" + @currentMonth
