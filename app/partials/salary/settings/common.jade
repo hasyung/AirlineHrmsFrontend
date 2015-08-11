@@ -16,8 +16,8 @@ table.table.table-bordered.setting-table
               div(ng-switch-when="text")
                 input(type="text" ng-model="setting[column]['format_value']")
               div(ng-switch-when="select")
-                md-select(ng-model="")
-                  md-option(ng-repeat="item in setting[column]['edit_select_array']" ng-value="item"> {{item}}
+                md-select(ng-model="setting[column]['format_value']")
+                  md-option(ng-repeat="item in setting[column]['edit_select_array']" ng-value="item") {{item}}
               div(ng-switch-when="dialog")
                 a(href="javascript:void(0);" nb-dialog template-url="partials/salary/settings/dialog.html" locals="{}")
 
