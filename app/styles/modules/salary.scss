@@ -46,10 +46,26 @@
 
 // 对material tabs的样式hack
 .salary-basic {
-    // #e84e40
     background-color: #fff;
 
+    md-toolbar {
+        background-color: #fff;
+        border-bottom: 1px solid #000;
+        color: $text-title;
+
+        .md-toolbar-tools {
+            padding-right: 0;
+        }
+    }
+
     md-tabs {
+        min-height: 800px !important;
+
+        md-tab-content {
+            overflow: visible;
+            padding: 0 20px;
+        }
+
         md-ink-bar {
             background-color: #e84e40;
         }
@@ -73,7 +89,13 @@
     }
 }
 
+.setting-table {
+    // width: 100%;
 
+    td input {
+        max-width: 100px !important;
+    }
+}
 
 
 

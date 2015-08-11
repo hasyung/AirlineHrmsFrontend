@@ -1,4 +1,4 @@
-table(style="border:1px solid #000;width:100%")
+table.table.table-bordered.setting-table
   tr
     th 档级
     th(ng-repeat="flag in ctrl.dynamic_config.flag_list track by $index") {{ctrl.dynamic_config.flag_names[flag]}}
