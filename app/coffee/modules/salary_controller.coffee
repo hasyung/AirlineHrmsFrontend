@@ -120,12 +120,13 @@ class SalaryBasicController
     constructor: ($http, $scope, $Evt) ->
 
 class SalaryPersonalController
-    @.$inject = ['$http', '$scope', '$nbEvent', 'Employee']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'SalaryPersonSetup']
 
-    constructor: ($http, $scope, $Evt, @Employee) ->
+    constructor: ($http, $scope, $Evt, @SalaryPersonSetup) ->
+        @loadInitialData()
 
         @filterOptions = {
-            name: 'welfarePersonal'
+            name: 'salaryPersonal'
             constraintDefs: [
                 {
                     name: 'employee_name'
@@ -201,7 +202,6 @@ class SalaryPersonalController
         @constraints = [
 
         ]
-
 
     loadInitialData: ->
         @salaryPersonSetups = @SalaryPersonSetup.$collection().$fetch()
