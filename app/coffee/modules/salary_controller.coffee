@@ -94,12 +94,12 @@ class SalaryController extends nb.Controller
         @dynamic_config = @settings[category + '_setting']
         @editing = false
 
-    save_config: (category, config)->
+    save_config: (config)->
         self = @
-        config = @settings[category + '_setting'] if !config
+        config = @settings[@current_category + '_setting'] if !config
         @editing = false
 
-        @http.put('/api/salaries/' + category, {form_data: config}).success (data)->
+        @http.put('/api/salaries/' + @current_category, {form_data: config}).success (data)->
             error_msg = data.messages
 
             if error_msg
