@@ -95,12 +95,15 @@ class SalaryController extends nb.Controller
 
     save_config: (category, config)->
         self = @
+        config = @settings[category + '_setting'] if !config
+
         @http.put('/api/salaries/' + category, {form_data: config}).success (data)->
             error_msg = data.messages
 
             if error_msg
                 self.toaster.pop('error', '提示', error_msg)
             else
+                self.editing = false
                 self.toaster.pop('success', '提示', '配置已更新')
 
 

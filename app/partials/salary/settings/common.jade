@@ -15,19 +15,18 @@ table.table.table-bordered.setting-table
               //- 判断编辑类型
               div(ng-switch-when="text")
                 input(type="text" ng-model="setting[column]['format_value']")
-
               div(ng-switch-when="select")
                 md-select()
-
               div(ng-switch-when="dialog")
-                a(href="#", target="_blank") dialog
+                a(href="#", target="_blank") link
 
           //- 如果没有编辑模式就是简单列，不需要编辑模式的
           div(ng-if="!setting[column]['edit_mode']") {{setting[column]}}
 
         //- 不是编辑模式
         div(ng-hide="ctrl.editing")
-          span {{setting[column]['format_cell'] || setting[column]}}
+          span(ng-if="setting[column]['format_cell']") {{setting[column]['format_cell'].replace('%{format_value}', setting[column]['format_value'])}}
+          span(ng-if="!setting[column]['format_cell']") {{setting[column]}}
 
       //- 列不存在，不可编辑
       div(ng-if="!setting[column]") -
