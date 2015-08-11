@@ -90,20 +90,21 @@ class SalaryController extends nb.Controller
         @$check_coefficient_default()
 
     load_dynamic_config: (category)->
+        @current_category = category
         @dynamic_config = @settings[category + '_setting']
         @editing = false
 
-    save_config: (category, config)->
+    save_config: (config)->
         self = @
-        config = @settings[category + '_setting'] if !config
+        config = @settings[@current_category + '_setting'] if !config
+        @editing = false
 
-        @http.put('/api/salaries/' + category, {form_data: config}).success (data)->
+        @http.put('/api/salaries/' + @current_category, {form_data: config}).success (data)->
             error_msg = data.messages
 
             if error_msg
                 self.toaster.pop('error', '提示', error_msg)
             else
-                self.editing = false
                 self.toaster.pop('success', '提示', '配置已更新')
 
 
@@ -119,12 +120,13 @@ class SalaryBasicController
     constructor: ($http, $scope, $Evt) ->
 
 class SalaryPersonalController
-    @.$inject = ['$http', '$scope', '$nbEvent', 'Employee']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'SalaryPersonSetup']
 
-    constructor: ($http, $scope, $Evt, @Employee) ->
+    constructor: ($http, $scope, $Evt, @SalaryPersonSetup) ->
+        @loadInitialData()
 
         @filterOptions = {
-            name: 'welfarePersonal'
+            name: 'salaryPersonal'
             constraintDefs: [
                 {
                     name: 'employee_name'
@@ -200,7 +202,6 @@ class SalaryPersonalController
         @constraints = [
 
         ]
-
 
     loadInitialData: ->
         @salaryPersonSetups = @SalaryPersonSetup.$collection().$fetch()
