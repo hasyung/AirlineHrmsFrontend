@@ -19,7 +19,7 @@ table.table.table-bordered.setting-table
                 md-select(ng-model="setting[column]['format_value']")
                   md-option(ng-repeat="item in setting[column]['edit_select_array']" ng-value="item") {{item}}
               div(ng-switch-when="dialog")
-                a(href="javascript:void(0);" nb-dialog template-url="partials/salary/settings/dialog.html" locals="{}")
+                a(href="javascript:void(0);" nb-dialog template-url="partials/salary/settings/dialog_{{::ctrl.current_category}}.html" locals="{current: setting[column]['format_value']}")
 
           //- 如果没有编辑模式就是简单列，不需要编辑模式的
           div(ng-if="!setting[column]['edit_mode']") {{setting[column]}}

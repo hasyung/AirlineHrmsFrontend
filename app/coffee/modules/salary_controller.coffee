@@ -90,6 +90,7 @@ class SalaryController extends nb.Controller
         @$check_coefficient_default()
 
     load_dynamic_config: (category)->
+        @current_category = category
         @dynamic_config = @settings[category + '_setting']
         @editing = false
 
