@@ -123,6 +123,14 @@
             }
         }
     }
+
+    &.table td {
+        padding: 0;
+
+        >div {
+            padding: .5rem;
+        }
+    }
 }
 
 

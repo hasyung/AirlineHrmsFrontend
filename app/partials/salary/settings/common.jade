@@ -6,8 +6,7 @@ table.table.table-bordered.setting-table
   tr(ng-repeat="setting in ctrl.dynamic_config.flags | toArray : 'grade'| orderBy: '-rate'")
     td.tal {{setting.grade}}
     td.tar(ng-repeat="column in ctrl.dynamic_config.flag_list track by $index")
-      div(ng-if="!!setting[column]")
-
+      div(ng-if="!!setting[column]" ng-style="{'background-color' : setting[column]['bg_color'] }")
         div(ng-show="ctrl.editing")
           div(ng-if="!!setting[column]['edit_mode']")
 
