@@ -62,7 +62,6 @@
         min-height: 800px !important;
 
         md-tab-content {
-            overflow: visible;
             padding: 0 20px;
         }
 
@@ -90,10 +89,39 @@
 }
 
 .setting-table {
-    // width: 100%;
+    width: 100%;
 
-    td input {
-        max-width: 100px !important;
+    th {
+        &.tal {
+            text-align: left;
+        }
+
+        &.tar {
+            text-align: right;
+        }
+    }
+
+    td {
+        min-width: 50px;
+
+        &.tal {
+            text-align: left;
+        }
+
+        &.tar {
+            text-align: right;
+        }
+
+        input {
+            border: 1px solid #dedede;
+            border-radius: 2px;
+            transition: border-color .5s linear;
+            width: 100%;
+
+            &:focus {
+                border-color: rgb(53, 130, 243);
+            }
+        }
     }
 }
 
