@@ -120,9 +120,9 @@ class SalaryBasicController
     constructor: ($http, $scope, $Evt) ->
 
 class SalaryPersonalController
-    @.$inject = ['$http', '$scope', '$nbEvent', 'SalaryPersonSetup']
+    @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryPersonSetup']
 
-    constructor: ($http, $scope, $Evt, @SalaryPersonSetup) ->
+    constructor: ($http, $scope, $Evt, $enum, @SalaryPersonSetup) ->
         @loadInitialData()
 
         @filterOptions = {
@@ -168,30 +168,23 @@ class SalaryPersonalController
                 cellTooltip: (row) ->
                     return row.entity.positionName
             }
-            {
-                displayName: '分类'
-                name: 'categorg'
-            }
-            {
-                displayName: '通道'
-                name: 'channel'
-            }
-            {
-                displayName: '用工性质'
-                name: 'laborRelation'
-            }
+            {displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
+            {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
+            {displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
             {
                 displayName: '属地化'
-                name: 'localPosition'
+                name: 'location'
             }
             {
                 displayName: '设置'
                 field: 'setting'
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents">
-                    <a nb-dialog
+                    <a
+                        href="javascript:void(0);"
+                        nb-dialog
                         template-url="partials/salary/settings/personal_edit.html"
-                        locals="{setups: row.entity}">
+                        locals="{setup: row.entity}">
                         设置
                     </a>
                 </div>
@@ -215,12 +208,6 @@ class SalaryPersonalController
 
     getSelected: () ->
         rows = @gridApi.selection.getSelectedGridRows()
-
-    newPersonalSetup: (newSetup)->
-        self = @
-        newSetup = @salaryPersonSetups.$build(newSetup)
-        newSetup.$save().$then ()->
-            self.salaryPersonSetups.$refresh()
 
     delete: (isConfirm) ->
         if isConfirm
