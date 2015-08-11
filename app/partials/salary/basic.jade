@@ -10,19 +10,19 @@
                             md-button.md-primary.md-raised(ng-click="ctrl.editing = true") 编辑
                         span(ng-hide="!ctrl.editing")
                             md-button.md-raised.white(ng-click="ctrl.editing = false") 取消
-                            md-button.md-primary.md-raised(ng-click="ctrl.editing = false;ctrl.save_config('leader_base')") 保存
+                            md-button.md-primary.md-raised(ng-click="ctrl.save_config('leader_base')") 保存
                 include ./settings/common.jade
             md-tab(label="管理15")
-                //- include ./settings/manager15_base.jade
+                include ./settings/common.jade
             md-tab(label="管理12")
-                //- include ./settings/manager12_base.jade
+                include ./settings/common.jade
             md-tab(label="飞行员")
-                //- include ./settings/dynamic_table.jade
+                include ./settings/common.jade
             md-tab(label="空乘空保")
-                //- include ./settings/dynamic_table.jade
+                include ./settings/common.jade
             md-tab(label="服务B")
-                //- include ./settings/dynamic_table.jade
+                include ./settings/common.jade
             md-tab(label="空中观察员")
-                //- include ./settings/dynamic_table.jade
+                include ./settings/common.jade
             md-tab(label="前场运行")
-                //- include ./settings/dynamic_table.jade
+                include ./settings/common.jade
