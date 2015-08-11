@@ -1,16 +1,33 @@
-table(style="border:1px solid #000;width:100%;")
+table(style="border:1px solid #000;width:100%")
   tr
-    th 档级{{config.flag_list.length}}
-    th(ng-repeat="flag in config.flag_list track by $index") {{config.flag_names[flag]}}
+    th 档级
+    th(ng-repeat="flag in ctrl.dynamic_config.flag_list track by $index") {{ctrl.dynamic_config.flag_names[flag]}}
 
-  tr(ng-repeat="(grade, setting) in config.flags")
-    td(ng-repeat="column in ctrl.flag_list")
-      div(ng-if="config[grade][column]")
+  tr(ng-repeat="setting in ctrl.dynamic_config.flags | toArray : 'grade'| orderBy: '-rate'")
+    td {{setting.grade}}
+    td(ng-repeat="column in ctrl.dynamic_config.flag_list track by $index")
+      div(ng-if="!!setting[column]")
 
         div(ng-show="ctrl.editing")
-          div(ng-if="config[grade][column]['edit_mode']")
+          div(ng-if="!!setting[column]['edit_mode']")
 
-        div(ng-show="!ctrl.editing")
-          span sadasds{{config[grade][column]['format_cell'] || config[grade][column]}}
+            div(ng-switch="setting[column]['edit_mode']")
+              //- 判断编辑类型
+              div(ng-switch-when="text")
+                input(type="text" ng-model="setting[column]['change_flag_years']")
 
-      div(ng-if="!config.flags[grade][column]")
+              div(ng-switch-when="select")
+                md-select()
+
+              div(ng-switch-when="dialog")
+                a(href="#", target="_blank") dialog
+
+          //- 如果没有编辑模式就是简单列，不需要编辑模式的
+          div(ng-if="!setting[column]['edit_mode']") {{setting[column]}}
+
+        //- 不是编辑模式
+        div(ng-hide="ctrl.editing")
+          span {{setting[column]['format_cell'] || setting[column]}}
+
+      //- 列不存在，不可编辑
+      div(ng-if="!setting[column]") -

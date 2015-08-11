@@ -64,6 +64,8 @@ class SalaryController extends nb.Controller
         @month_list = @$getMonths()
         @currentYear = _.last @year_list
         @currentMonth = _.last @month_list
+
+        # 所有的设置
         @settings = {}
         # 薪酬全局设置
         @global_setting = {}
@@ -77,9 +79,9 @@ class SalaryController extends nb.Controller
                 data[item] ||= {}
                 self.settings[item + '_setting'] = data[item].form_data || {}
 
-            #self.selectedIndex = 0
-            #self.scope.$watch 'ctrl.selectedIndex', (to)->
-            #    self.load_dynamic_config(self.CATEGORY_LIST[to])
+            self.selectedIndex = 0
+            self.scope.$watch 'ctrl.selectedIndex', (to)->
+                self.load_dynamic_config(self.CATEGORY_LIST[to])
 
     currentCalcTime: ()->
         @currentYear + "-" + @currentMonth
@@ -87,11 +89,9 @@ class SalaryController extends nb.Controller
     load_global_coefficient: ()->
         @$check_coefficient_default()
 
-    #load_dynamic_config: (category)->
-    #    @dynamic_config = @settings[category + '_setting']
-    #    @editing = false
-    #    @flag_list = @dynamic_config.flag_list
-    #    @flag_names = @dynamic_config.flag_names
+    load_dynamic_config: (category)->
+        @dynamic_config = @settings[category + '_setting']
+        @editing = false
 
     save_config: (category, config)->
         self = @

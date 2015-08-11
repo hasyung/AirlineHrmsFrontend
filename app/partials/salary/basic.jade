@@ -2,26 +2,11 @@
     .salary-basic
         md-tabs(md-selected="ctrl.selectedIndex" md-border-bottom md-autoselect)
             md-tab(label="干部")
-                table(style="border:1px solid #000;width:100%;")
-                  tr
-                    th 档级
-                    th(ng-repeat="flag in ctrl.settings.leader_base_setting.flag_list track by $index") {{ctrl.settings.leader_base_setting.flag_names[flag]}}
-
-                  tr(ng-repeat="(grade, setting) in ctrl.settings.leader_base_setting.flags")
-                    td(ng-repeat="column in ctrl.settings.leader_base_setting.flag_list track by $index")
-                      div(ng-if="setting[column]")
-
-                        div(ng-show="ctrl.editing")
-                          div(ng-if="setting[column]['edit_mode']")
-
-                        div(ng-show="!ctrl.editing")
-                          span {{setting[column]['format_cell'] || setting[column]}}
-
-                      div(ng-if="!!setting[column]") -
+                include ./settings/dynamic_table.jade
             md-tab(label="管理15")
-                //- include ./settings/dynamic_table.jade
+                include ./settings/dynamic_table.jade
             md-tab(label="管理12")
-                //- include ./settings/dynamic_table.jade
+                include ./settings/dynamic_table.jade
             md-tab(label="飞行员")
                 //- include ./settings/dynamic_table.jade
             md-tab(label="空乘空保")
