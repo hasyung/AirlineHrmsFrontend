@@ -3,26 +3,49 @@
         md-tabs(md-selected="ctrl.selectedIndex" md-border-bottom md-autoselect)
             md-tab.leader-base(label="干部")
                 md-toolbar
-                    .md-toolbar-tools
-                        h2 干部基础薪酬列表
-                        span(flex)
-                        span(ng-show="!ctrl.editing")
-                            md-button.md-primary.md-raised(ng-click="ctrl.editing = true") 编辑
-                        span(ng-hide="!ctrl.editing")
-                            md-button.md-raised.white(ng-click="ctrl.editing = false") 取消
-                            md-button.md-primary.md-raised(ng-click="ctrl.save_config()") 保存
+                  .md-toolbar-tools
+                    h2 干部基础薪酬列表
+                    include ./settings/btn.jade
                 include ./settings/common.jade
             md-tab(label="管理15")
+                md-toolbar
+                  .md-toolbar-tools
+                    h2 管理15基础薪酬列表
+                    include ./settings/btn.jade
                 include ./settings/common.jade
             md-tab(label="管理12")
+                md-toolbar
+                  .md-toolbar-tools
+                    h2 管理12基础薪酬列表
+                    include ./settings/btn.jade
                 include ./settings/common.jade
             md-tab(label="飞行员")
+                md-toolbar
+                  .md-toolbar-tools
+                    h2 飞行员基础薪酬列表
+                    include ./settings/btn.jade
                 include ./settings/common.jade
             md-tab(label="空乘空保")
+                md-toolbar
+                  .md-toolbar-tools
+                    h2 空乘空保基础薪酬列表
+                    include ./settings/btn.jade
                 include ./settings/common.jade
             md-tab(label="服务B")
+                md-toolbar
+                  .md-toolbar-tools
+                    h2 服务B基础薪酬列表
+                    include ./settings/btn.jade
                 include ./settings/common.jade
             md-tab(label="空中观察员")
+                md-toolbar
+                  .md-toolbar-tools
+                    h2 空中观察员基础薪酬列表
+                    include ./settings/btn.jade
                 include ./settings/common.jade
             md-tab(label="前场运行")
+                md-toolbar
+                  .md-toolbar-tools
+                    h2 前场运行基础薪酬列表
+                    include ./settings/btn.jade
                 include ./settings/common.jade
