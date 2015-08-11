@@ -50,14 +50,14 @@ class SalaryController extends nb.Controller
 
     initialize: () ->
         self = @
-        @CATEGORY_LIST = ["leader_base",       # 干部
-                          "manager15_base",    # 管理15
-                          "manager12_base",    # 管理12
-                          "flyer_base",        # 飞行员
-                          "air_steward",       # 空乘空保
-                          "service_b",         # 服务B
-                          "air_observer",      # 空中观察员
-                          "front_run",         # 前场运行
+        @CATEGORY_LIST = ["leader_base",            # 干部
+                          "manager15_base",         # 管理15
+                          "manager12_base",         # 管理12
+                          "flyer_base",             # 飞行员
+                          "air_steward_base",       # 空乘空保
+                          "service_b_base",         # 服务B
+                          "air_observer_base",      # 空中观察员
+                          "front_run_base",         # 前场运行
                          ]
 
         @year_list = @$getYears()
