@@ -1,0 +1,137 @@
+md-dialog.welfare_personal_new(ng-controller="EditableResourceCtrl")
+    form(ng-init= "current = dialog.setup.$refresh();" ng-submit="save(current.$save(), salaryPersonal)" name="salaryPersonal")
+        md-toolbar.md-accent(md-theme="hrms")
+                .md-toolbar-tools
+                    span 个人薪酬设置
+        md-content.sticky-container
+            .dialog-content(layout layout-align="center")
+                section.form-material-section(flex)
+                    fieldset
+                        div(style="display:none;")
+                            input(type="text" ng-model="current.employeeId")
+                        div(layout)
+                            md-input-container(flex)
+                                label 姓名
+                                input(type="text" ng-model="::current.employeeName" disabled)
+                            md-input-container(flex)
+                                label 员工编号
+                                input(type="text" ng-model="::current.employeeNo" disabled)
+
+                        div(layout)
+                            md-input-container(flex)
+                                label 所在部门
+                                input(type="text" ng-model="::current.departmentName" disabled)
+                            md-input-container(flex)
+                                label 岗位
+                                input(type="text" ng-model="::current.positionName" disabled)
+
+                        div(layout)
+                            md-input-container.row-has-value(flex)
+                                label 分类
+                                input(type="text" ng-model="$enum.parseLabel(current.categoryId, 'categories')" disabled)
+                            md-input-container.row-has-value(flex)
+                                label 通道
+                                input(type="text" ng-model="$enum.parseLabel(current.channelId, 'channels')" disabled)
+                        div(layout)
+                            md-input-container.row-has-value(flex)
+                                label 用工性质
+                                input(type="text" ng-model="$enum.parseLabel(current.laborRelationId, 'laborRelations')" disabled)
+                            md-input-container(flex)
+                                label 属地化
+                                input(type="text" ng-model="current.location" disabled)
+
+                        div(layout)
+                            md-input-container.row-has-value(flex)
+                                label 基本工资
+                                md-select(ng-model="current.baseWage")
+                                    md-option(value="成都") 成都
+                            md-input-container.row-has-value(flex)
+                                label 薪酬通道
+                                md-select(ng-model="current.baseChannel")
+                                    md-option(value="成都") 成都
+                            md-input-container.row-has-value(flex)
+                                label 档级
+                                md-select(ng-model="current.baseFlag")
+                                    md-option(value="成都") 成都
+
+                        div(layout)
+                            md-input-container(flex)
+                                label 金额
+                                input(type="number" min="0" max="1000000" step="1" ng-model="current.tempCardinality" name="notes" disabled)
+                            div(flex)
+                            div(flex)
+
+                        div(layout)
+                            md-input-container(flex)
+                                label 保留工资
+                                input(type="number" min="0" max="100000" step="1" ng-model="current.reserveWage")
+                            md-input-container.row-has-value(flex)
+                                label 到岗日期
+                                input(ng-model="current.joinScalDate" disabled)
+                            md-input-container.row-has-value(flex)
+                                label 工龄工资
+                                input(ng-model="seniorityPay" disabled)
+
+                        div(layout)
+                            md-input-container.row-has-value(flex)
+                                label 绩效工资
+                                md-select(ng-model="current.performanceWage")
+                                    md-option(value="成都") 成都
+                            md-input-container.row-has-value(flex)
+                                label 档级
+                                md-select(ng-model="current.performanceFlag")
+                                    md-option(value="成都") 成都
+                        div(layout)
+                            md-input-container(flex)
+                                label 金额
+                                input(type="number" min="0" max="1000000" ng-model="current.tempCardinality" name="notes" disabled)
+                            div(flex)
+                            div(flex)
+
+                        div(layout)
+                            md-input-container.row-has-value(flex)
+                                label 安检津贴
+                                md-select(ng-model="current.securitySubsidy")
+                                    md-option(value="成都") 成都
+                            md-input-container.row-has-value(flex)
+                                label 安置补贴
+                                md-select(ng-model="current.placementSubsidy")
+                                    md-option(value="成都") 成都
+                            md-input-container.row-has-value(flex)
+                                label 班组长津贴
+                                md-select(ng-model="current.leaderSubsidy")
+                                    md-option(value="成都") 成都
+
+                        div(layout)
+                            md-input-container.row-has-value(flex)
+                                label 航站管理津贴
+                                md-select(ng-model="current.terminalSubsidy")
+                                    md-option(value="成都") 成都
+                            md-input-container.row-has-value(flex)
+                                label 车勤补贴
+                                md-select(ng-model="current.carSubsidy")
+                                    md-option(value="成都") 成都
+                            md-input-container.row-has-value(flex)
+                                label 地勤补贴
+                                md-select(ng-model="current.groundSubsidy")
+                                    md-option(value="成都") 成都
+
+                        div(layout)
+                            md-input-container.row-has-value(flex)
+                                label 机务放行补贴
+                                md-select(ng-model="current.machineSubsidy")
+                                    md-option(value="成都") 成都
+                            md-input-container.row-has-value(flex)
+                                label 试车津贴
+                                md-select(ng-model="current.trialSubsidy")
+                                    md-option(value="成都") 成都
+                            md-input-container.row-has-value(flex)
+                                label 飞行安全荣誉津贴
+                                md-select(ng-model="current.honorSubsidy")
+                                    md-option(value="成都") 成都
+
+
+
+        .md-actions
+            md-button(ng-click="cancel(current, $event, salaryPersonal);dialog.close()") 取 消
+            md-button.md-primary.md-raised(ng-click="submit();dialog.close()") 确 定
