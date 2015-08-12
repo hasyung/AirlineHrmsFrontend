@@ -1,85 +1,85 @@
 .app-content-wrapper(flex ng-controller="salaryCtrl as ctrl")
     .salary-basic
-        md-tabs(md-selected="ctrl.selectedIndex" md-border-bottom md-autoselect)
-            md-tab.leader-base(label="干部")
+        tabset
+            tab.leader-base(heading="干部" ng-click="ctrl.render_table(0)")
                 md-toolbar
                   .md-toolbar-tools
                     h2 干部基础薪酬列表
                     include ./settings/btn.jade
                 include ./settings/common.jade
-            md-tab(label="管理15")
+            tab(heading="管理15" ng-click="ctrl.render_table(1)")
                 md-toolbar
                   .md-toolbar-tools
                     h2 管理15基础薪酬列表
                     include ./settings/btn.jade
                 include ./settings/common.jade
-            md-tab(label="管理12")
+            tab(heading="管理12" ng-click="ctrl.render_table(2)")
                 md-toolbar
                   .md-toolbar-tools
                     h2 管理12基础薪酬列表
                     include ./settings/btn.jade
                 include ./settings/common.jade
-            md-tab(label="飞行员-机长")
+            tab(heading="飞行员-机长"  ng-click="ctrl.render_table(3)")
                 md-toolbar
                   .md-toolbar-tools
                     h2 飞行员-机长基础薪酬列表
                     include ./settings/btn.jade
                 include ./settings/common.jade
-            md-tab(label="飞行员-副驾")
+            tab(heading="飞行员-副驾"  ng-click="ctrl.render_table(4)")
                 md-toolbar
                   .md-toolbar-tools
                     h2 飞行员-副驾基础薪酬列表
                     include ./settings/btn.jade
                 include ./settings/common.jade
-            md-tab(label="飞行员-教员A")
+            tab(heading="飞行员-教员A" ng-click="ctrl.render_table(5)")
                 md-toolbar
                   .md-toolbar-tools
                     h2 飞行员-教员A基础薪酬列表
                     include ./settings/btn.jade
                 include ./settings/common.jade
-            md-tab(label="飞行员-教员B")
+            tab(heading="飞行员-教员B" ng-click="ctrl.render_table(6)")
                 md-toolbar
                   .md-toolbar-tools
                     h2 飞行员-教员B基础薪酬列表
                     include ./settings/btn.jade
                 include ./settings/common.jade
-            md-tab(label="飞行员-教员C")
+            tab(heading="飞行员-教员C" ng-click="ctrl.render_table(7)")
                 md-toolbar
                   .md-toolbar-tools
                     h2 飞行员-教员C基础薪酬列表
                     include ./settings/btn.jade
                 include ./settings/common.jade
-            md-tab(label="飞行员-学员")
+            tab(heading="飞行员-学员" ng-click="ctrl.render_table(8)")
                 md-toolbar
                   .md-toolbar-tools
                     h2 飞行员-机长基础薪酬列表
                     include ./settings/btn.jade
                 include ./settings/common.jade
-            md-tab(label="空乘空保")
+            tab(heading="空乘空保" ng-click="ctrl.render_table(9)")
                 md-toolbar
                   .md-toolbar-tools
                     h2 空乘空保基础薪酬列表
                     include ./settings/btn.jade
                 include ./settings/common.jade
-            md-tab(label="服务B")
+            tab(heading="服务B" ng-click="ctrl.render_table(10)")
                 md-toolbar
                   .md-toolbar-tools
                     h2 服务B基础薪酬列表
                     include ./settings/btn.jade
                 include ./settings/common.jade
-            md-tab(label="服务C")
+            tab(heading="服务C" ng-click="ctrl.render_table(11)")
                 md-toolbar
                   .md-toolbar-tools
                     h2 服务C基础薪酬列表
                     include ./settings/btn.jade
                 include ./settings/common.jade
-            md-tab(label="空中观察员")
+            tab(heading="空中观察员" ng-click="ctrl.render_table(12)")
                 md-toolbar
                   .md-toolbar-tools
                     h2 空中观察员基础薪酬列表
                     include ./settings/btn.jade
                 include ./settings/common.jade
-            md-tab(label="前场运行")
+            tab(heading="前场运行" ng-click="ctrl.render_table(13)")
                 md-toolbar
                   .md-toolbar-tools
                     h2 前场运行基础薪酬列表

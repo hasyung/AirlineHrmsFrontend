@@ -86,9 +86,7 @@ class SalaryController extends nb.Controller
                 data[item] ||= {}
                 self.settings[item + '_setting'] = data[item].form_data || {}
 
-            self.selectedIndex = 0
-            self.scope.$watch 'ctrl.selectedIndex', (to)->
-                self.load_dynamic_config(self.CATEGORY_LIST[to])
+            self.render_table(0)
 
     currentCalcTime: ()->
         @currentYear + "-" + @currentMonth
@@ -100,6 +98,10 @@ class SalaryController extends nb.Controller
         @current_category = category
         @dynamic_config = @settings[category + '_setting']
         @editing = false
+
+    render_table: (index)->
+        self = @
+        self.load_dynamic_config(self.CATEGORY_LIST[index])
 
     save_config: (config)->
         self = @
