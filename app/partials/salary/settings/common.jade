@@ -6,12 +6,13 @@ table.table.table-bordered.setting-table
   tr(ng-repeat="setting in ctrl.dynamic_config.flags | toArray: 'grade' | orderBy: '-amount' track by $index")
     td.tal
       div {{setting.grade}}
-    td.tar(ng-repeat="column in ctrl.dynamic_config.flag_list track by $index" ng-style="{'background-color': ctrl.editing ? 'white': setting[column]['bg_color']}")
+    //- td.tar(ng-repeat="column in ctrl.dynamic_config.flag_list track by $index" ng-style="{'background-color': ctrl.editing ? 'white': setting[column]['bg_color']}")
+    td.tar(ng-repeat="column in ctrl.dynamic_config.flag_list track by $index")
       div(ng-if="ctrl.editing")
         div(ng-switch="setting[column]['edit_mode']")
           //- 判断编辑类型
           div(ng-switch-when="text")
-            input(type="text" ng-model="setting[column]['format_value']")
+            input(ng-if="setting[column]['format_value']" type="text" ng-model="setting[column]['format_value']")
           div(ng-switch-when="select")
             md-select(ng-model="setting[column]['format_value']")
               md-option(ng-repeat="item in setting[column]['edit_select_array']" ng-value="item") {{item}}

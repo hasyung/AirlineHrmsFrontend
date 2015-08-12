@@ -145,7 +145,7 @@ class SalaryController extends nb.Controller
             result = input['format_cell']
             result = result.replace('%{format_value}', input['format_value'])
             result = result.replace('%{work_value}', input['work_value'])
-            result = result.replace('%{work_time}', input['work_time'])
+            result = result.replace('%{time_value}', input['time_value'])
 
         result
 
