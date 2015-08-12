@@ -38,32 +38,48 @@ class SalaryController extends nb.Controller
         self = @
         @initialize()
 
-    $default_coefficient: ()->
+    $defaultCoefficient: ()->
         company: 0.1
         business_council: 0.1
         logistics: 0.1
 
-    $check_coefficient_default: ()->
+    $checkCoefficientDefault: ()->
         month = @currentCalcTime()
         if !angular.isDefined(@global_setting.coefficient[month])
-            @global_setting.coefficient[month] = @$default_coefficient()
+            @global_setting.coefficient[month] = @$defaultCoefficient()
 
     initialize: () ->
         self = @
-        @CATEGORY_LIST = ["leader_base",            # 干部
-                          "manager15_base",         # 管理15
-                          "manager12_base",         # 管理12
-                          "flyer_base_leader",      # 机长
-                          "flyer_base_copilot",     # 副驾
-                          "flyer_base_teacher_A",   # 教员A
-                          "flyer_base_teacher_B",   # 教员B
-                          "flyer_base_teacher_C",   # 教员C
-                          "flyer_base_student",     # 学员
-                          "air_steward_base",       # 空乘空保
-                          "service_b_base",         # 服务B
-                          "service_c_base",         # 服务C
-                          "air_observer_base",      # 空中观察员
-                          "front_run_base",         # 前场运行
+        @CATEGORY_LIST = ["leader_base",                # 干部
+                          "manager15_base",             # 管理15
+                          "manager12_base",             # 管理12
+                          "flyer_legend_base",          # 荣誉级飞行员
+                          "flyer_leader_base",          # 机长
+                          "flyer_copilot_base",         # 副驾
+                          "flyer_teacher_A_base",       # 教员A
+                          "flyer_teacher_B_base",       # 教员B
+                          "flyer_teacher_C_base",       # 教员C
+                          "flyer_student_base",         # 学员
+                          "air_steward_base",           # 空乘空保
+                          "service_b_normal_cleaner_base",      # 服务B-清洁工
+                          "service_b_parking_cleaner_base",     # 服务B-机坪清洁工
+                          "service_b_hotel_service_base",       # 服务B-宾馆服务员
+                          "service_b_green_base",               # 服务B-绿化
+                          "service_b_front_desk_base",          # 服务B-总台服务员
+                          "service_b_security_guard_base",      # 服务B-保安、空保装备保管员
+                          "service_b_data_input_base",          # 服务B-数据录入
+                          "service_b_guard_leader1_base",       # 服务B-保安队长（一类）
+                          "service_b_device_keeper_base",       # 服务B-保管（库房、培训设备、器械）
+                          "service_b_unloading_base",           # 服务B-外站装卸
+                          "service_b_making_water_base",        # 服务B-制水工
+                          "service_b_add_water_base",           # 服务B-加水工、排污工
+                          "service_b_guard_leader2_base",       # 服务B-保安队长（二类）
+                          "service_b_water_light_base",         # 服务B-水电维修
+                          "service_b_car_repair_base",          # 服务B-汽修工
+                          "service_b_airline_keeper_base",      # 服务B-机务工装设备/客舱供应库管
+                          "service_c_base",                     # 服务C
+                          "air_observer_base",                  # 空中观察员
+                          "front_run_base",                     # 前场运行
                          ]
 
         @year_list = @$getYears()
@@ -79,34 +95,35 @@ class SalaryController extends nb.Controller
         @http.get('/api/salaries').success (data)->
             # 全局设置单独处理
             self.global_setting = data.global.form_data
-            self.$check_coefficient_default()
+            self.$checkCoefficientDefault()
             self.basic_cardinality = parseInt(self.global_setting.basic_cardinality)
 
             angular.forEach self.CATEGORY_LIST, (item)->
                 data[item] ||= {}
                 self.settings[item + '_setting'] = data[item].form_data || {}
 
-            self.render_table(0)
+            self.loadDynamicConfig(self.CATEGORY_LIST[0])
 
     currentCalcTime: ()->
         @currentYear + "-" + @currentMonth
 
-    load_global_coefficient: ()->
-        @$check_coefficient_default()
+    loadGlobalCoefficient: ()->
+        @$checkCoefficientDefault()
 
-    load_dynamic_config: (category)->
+    loadDynamicConfig: (category)->
         @current_category = category
         @dynamic_config = @settings[category + '_setting']
+        @backup_config = angular.copy(@dynamic_config)
         @editing = false
 
-    render_table: (index)->
-        self = @
-        self.load_dynamic_config(self.CATEGORY_LIST[index])
+    resetDynamicConfig: ()->
+        @dynamic_config = {}
+        @dynamic_config = angular.copy(@backup_config)
+        @editing = false
 
-    save_config: (config)->
+    saveConfig: (config)->
         self = @
         config = @settings[@current_category + '_setting'] if !config
-        @editing = false
 
         @http.put('/api/salaries/' + @current_category, {form_data: config}).success (data)->
             error_msg = data.messages
@@ -114,10 +131,23 @@ class SalaryController extends nb.Controller
             if error_msg
                 self.toaster.pop('error', '提示', error_msg)
             else
+                self.editing = false
+                self.backup_config = angular.copy(self.dynamic_config)
                 self.toaster.pop('success', '提示', '配置已更新')
 
-    calc_amount: (rate)->
+    calcAmount: (rate)->
         parseInt(@basic_cardinality * parseFloat(rate))
+
+    formatColumn: (input)->
+        result = input
+
+        if input && angular.isDefined(input['format_cell'])
+            result = input['format_cell']
+            result = result.replace('%{format_value}', input['format_value'])
+            result = result.replace('%{work_value}', input['work_value'])
+            result = result.replace('%{work_time}', input['work_time'])
+
+        result
 
 
 class SalaryPerformanceController

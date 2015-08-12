@@ -20,12 +20,11 @@ table.table.table-bordered.setting-table
 
         //- 系数
         div(ng-if="!setting[column]['edit_mode'] && column=='rate'")
-          input(type="number" step="0.1" min="0.1" max="100000" ng-model="setting[column]" ng-blur="setting['amount']=ctrl.calc_amount(setting[column])")
+          input(type="number" step="0.1" min="0.1" max="100000" ng-model="setting[column]" ng-blur="setting['amount']=ctrl.calcAmount(setting[column])")
 
         //- 如果没有编辑模式就是简单列，不需要编辑模式的
         div(ng-if="!setting[column]['edit_mode'] && column!='rate'") {{setting[column]}}
 
       //- 不是编辑模式
       div(ng-if="!ctrl.editing")
-        span(ng-if="setting[column]['format_cell']") {{setting[column]['format_cell'].replace('%{format_value}', setting[column]['format_value'])}}
-        span(ng-if="!setting[column]['format_cell']") {{setting[column]}}
+        span {{ctrl.formatColumn(setting[column])}}
