@@ -28,36 +28,61 @@ md-dialog.welfare_personal_new(ng-controller="EditableResourceCtrl")
                         div(layout)
                             md-input-container.row-has-value(flex)
                                 label 分类
-                                input(type="text" ng-model="$enum.parseLabel(current.categoryId, 'categories')" disabled)
+                                md-select(ng-model="current.categoryId" disabled)
+                                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('categories')") {{item.label}}
                             md-input-container.row-has-value(flex)
                                 label 通道
-                                input(type="text" ng-model="$enum.parseLabel(current.channelId, 'channels')" disabled)
+                                md-select(ng-model="current.channelId" disabled)
+                                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
                         div(layout)
                             md-input-container.row-has-value(flex)
                                 label 用工性质
-                                input(type="text" ng-model="$enum.parseLabel(current.laborRelationId, 'laborRelations')" disabled)
+                                md-select(ng-model="current.laborRelationId" disabled)
+                                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('labor_relations')") {{item.label}}
                             md-input-container(flex)
                                 label 属地化
                                 input(type="text" ng-model="current.location" disabled)
 
                         div(layout)
                             md-input-container.row-has-value(flex)
-                                label 基本工资
+                                label 基础工资
                                 md-select(ng-model="current.baseWage")
-                                    md-option(value="成都") 成都
+                                    md-option(value="无") 无
+                                    md-option(value="干部") 干部
+                                    md-option(value="管理15") 管理15
+                                    md-option(value="管理12") 管理12
+                                    md-option(value="飞行员") 飞行员
+                                    md-option(value="空乘空保") 空乘空保
+                                    md-option(value="服务B") 服务B
+                                    md-option(value="空中观察员") 空中观察员
+                                    md-option(value="前场运行监察") 前场运行监察
                             md-input-container.row-has-value(flex)
                                 label 薪酬通道
                                 md-select(ng-model="current.baseChannel")
-                                    md-option(value="成都") 成都
+                                    md-option(value="D4") D4
+                                    md-option(value="D3") D3
+                                    md-option(value="D2") D2
+                                    md-option(value="D1") D1
+                                    md-option(value="C5") C5
+                                    md-option(value="C4") C4
+                                    md-option(value="C3") C3
+                                    md-option(value="C2") C2
+                                    md-option(value="C1") C1
+                                    md-option(value="B2") B2
+                                    md-option(value="B1") B1
                             md-input-container.row-has-value(flex)
                                 label 档级
                                 md-select(ng-model="current.baseFlag")
-                                    md-option(value="成都") 成都
+                                    md-option(value="6") 6
+                                    md-option(value="7") 7
+                                    md-option(value="8") 8
+                                    md-option(value="9") 9
+                                    md-option(value="10") 10
 
                         div(layout)
                             md-input-container(flex)
                                 label 金额
-                                input(type="number" min="0" max="1000000" step="1" ng-model="current.tempCardinality" name="notes" disabled)
+                                input(type="number" min="0" max="1000000" step="1" ng-model="current.cash" disabled)
                             div(flex)
                             div(flex)
 
@@ -76,15 +101,26 @@ md-dialog.welfare_personal_new(ng-controller="EditableResourceCtrl")
                             md-input-container.row-has-value(flex)
                                 label 绩效工资
                                 md-select(ng-model="current.performanceWage")
-                                    md-option(value="成都") 成都
+                                    md-option(value="无") 无
+                                    md-option(value="信息") 信息
+                                    md-option(value="航务航材") 航务航材
+                                    md-option(value="管理营销") 管理营销
+                                    md-option(value="服务C-1") 服务C-1
+                                    md-option(value="服务C-2") 服务C-2
+                                    md-option(value="服务C-3") 服务C-3
+                                    md-option(value="服务C-驾驶") 服务C-驾驶
                             md-input-container.row-has-value(flex)
                                 label 档级
                                 md-select(ng-model="current.performanceFlag")
-                                    md-option(value="成都") 成都
+                                    md-option(value="6") 6
+                                    md-option(value="7") 7
+                                    md-option(value="8") 8
+                                    md-option(value="9") 9
+                                    md-option(value="10") 10
                         div(layout)
                             md-input-container(flex)
                                 label 金额
-                                input(type="number" min="0" max="1000000" ng-model="current.tempCardinality" name="notes" disabled)
+                                input(type="number" min="0" max="1000000" ng-model="current.cash" disabled)
                             div(flex)
                             div(flex)
 
@@ -92,43 +128,73 @@ md-dialog.welfare_personal_new(ng-controller="EditableResourceCtrl")
                             md-input-container.row-has-value(flex)
                                 label 安检津贴
                                 md-select(ng-model="current.securitySubsidy")
-                                    md-option(value="成都") 成都
+                                    md-option(value="无") 无
+                                    md-option(value="初级") 初级
+                                    md-option(value="中级") 中级
+                                    md-option(value="高级") 高级
                             md-input-container.row-has-value(flex)
                                 label 安置补贴
                                 md-select(ng-model="current.placementSubsidy")
-                                    md-option(value="成都") 成都
+                                    md-option(value="无") 无
+                                    md-option(value="有") 有
                             md-input-container.row-has-value(flex)
                                 label 班组长津贴
                                 md-select(ng-model="current.leaderSubsidy")
-                                    md-option(value="成都") 成都
+                                    md-option(value="无") 无
+                                    md-option(value="一线A类") 一线A类
+                                    md-option(value="一线B类") 一线B类
+                                    md-option(value="一线C类") 一线C类
+                                    md-option(value="一线D类") 一线D类
+                                    md-option(value="后勤一类") 后勤一类
+                                    md-option(value="后勤二类") 后勤二类
 
                         div(layout)
                             md-input-container.row-has-value(flex)
                                 label 航站管理津贴
                                 md-select(ng-model="current.terminalSubsidy")
-                                    md-option(value="成都") 成都
+                                    md-option(value="无") 无
+                                    md-option(value="一类") 一类
+                                    md-option(value="二类") 二类
                             md-input-container.row-has-value(flex)
                                 label 车勤补贴
                                 md-select(ng-model="current.carSubsidy")
-                                    md-option(value="成都") 成都
+                                    md-option(value="无") 无
+                                    md-option(value="有") 有
                             md-input-container.row-has-value(flex)
                                 label 地勤补贴
                                 md-select(ng-model="current.groundSubsidy")
-                                    md-option(value="成都") 成都
+                                    md-option(value="无") 无
+                                    md-option(value="一类") 一类
+                                    md-option(value="二类") 二类
+                                    md-option(value="三类") 三类
+                                    md-option(value="四类") 四类
+                                    md-option(value="五类") 五类
+                                    md-option(value="六类") 六类
 
                         div(layout)
                             md-input-container.row-has-value(flex)
                                 label 机务放行补贴
                                 md-select(ng-model="current.machineSubsidy")
-                                    md-option(value="成都") 成都
+                                    md-option(value="无") 无
+                                    md-option(value="一档") 一档
+                                    md-option(value="二档") 二档
+                                    md-option(value="三档") 三档
+                                    md-option(value="四档") 四档
+                                    md-option(value="五档") 五档
                             md-input-container.row-has-value(flex)
                                 label 试车津贴
                                 md-select(ng-model="current.trialSubsidy")
-                                    md-option(value="成都") 成都
+                                    md-option(value="无") 无
+                                    md-option(value="一类") 一类
+                                    md-option(value="二类") 二类
                             md-input-container.row-has-value(flex)
                                 label 飞行安全荣誉津贴
                                 md-select(ng-model="current.honorSubsidy")
-                                    md-option(value="成都") 成都
+                                    md-option(value="无") 无
+                                    md-option(value="铜质") 铜质
+                                    md-option(value="银质") 银质
+                                    md-option(value="金质") 金质
+                                    md-option(value="功勋") 功勋
 
 
 
