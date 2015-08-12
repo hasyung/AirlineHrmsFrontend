@@ -61,6 +61,7 @@ class SalaryController extends nb.Controller
                           "flyer_base_student",     # 学员
                           "air_steward_base",       # 空乘空保
                           "service_b_base",         # 服务B
+                          "service_C_base",         # 服务B
                           "air_observer_base",      # 空中观察员
                           "front_run_base",         # 前场运行
                          ]
@@ -79,6 +80,7 @@ class SalaryController extends nb.Controller
             # 全局设置单独处理
             self.global_setting = data.global.form_data
             self.$check_coefficient_default()
+            self.basic_cardinality = parseInt(self.global_setting.basic_cardinality)
 
             angular.forEach self.CATEGORY_LIST, (item)->
                 data[item] ||= {}
@@ -97,6 +99,11 @@ class SalaryController extends nb.Controller
     load_dynamic_config: (category)->
         @current_category = category
         @dynamic_config = @settings[category + '_setting']
+        @backup_config = angular.copy(@dynamic_config)
+        @editing = false
+
+    reset_dynamic_config: ()->
+        @dynamic_config = @backup_config
         @editing = false
 
     save_config: (config)->
@@ -110,7 +117,11 @@ class SalaryController extends nb.Controller
             if error_msg
                 self.toaster.pop('error', '提示', error_msg)
             else
+                self.backup_config = angular.copy(self.dynamic_config)
                 self.toaster.pop('success', '提示', '配置已更新')
+
+    calc_amount: (rate)->
+        parseInt(@basic_cardinality * parseFloat(rate))
 
 
 class SalaryPerformanceController

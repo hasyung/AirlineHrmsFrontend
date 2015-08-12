@@ -6,27 +6,28 @@ table.table.table-bordered.setting-table
   tr(ng-repeat="setting in ctrl.dynamic_config.flags | toArray : 'grade'| orderBy: '-amount'")
     td.tal {{setting.grade}}
     td.tar(ng-repeat="column in ctrl.dynamic_config.flag_list track by $index")
-      div(ng-if="!!setting[column]" ng-style="{'background-color' : setting[column]['bg_color'] }")
-        div(ng-show="ctrl.editing")
-          div(ng-if="!!setting[column]['edit_mode']")
+      //- div(ng-style="{'background-color': ctrl.editing ? 'white': setting[column]['bg_color']}")
+      div(ng-show="ctrl.editing")
+        div(ng-if="!!setting[column]['edit_mode']")
 
-            div(ng-switch="setting[column]['edit_mode']")
-              //- 判断编辑类型
-              div(ng-switch-when="text")
-                input(type="text" ng-model="setting[column]['format_value']")
-              div(ng-switch-when="select")
-                md-select(ng-model="setting[column]['format_value']")
-                  md-option(ng-repeat="item in setting[column]['edit_select_array']" ng-value="item") {{item}}
-              div(ng-switch-when="dialog")
-                a(href="javascript:void(0);" nb-dialog template-url="partials/salary/settings/dialog_{{::ctrl.current_category}}.html" locals="{current: setting[column]['format_value']}")
+          div(ng-switch="setting[column]['edit_mode']")
+            //- 判断编辑类型
+            div(ng-switch-when="text")
+              input(type="text" ng-model="setting[column]['format_value']")
+            div(ng-switch-when="select")
+              md-select(ng-model="setting[column]['format_value']")
+                md-option(ng-repeat="item in setting[column]['edit_select_array']" ng-value="item") {{item}}
+            div(ng-switch-when="dialog")
+              a(href="javascript:void(0);" nb-dialog template-url="partials/salary/settings/dialog_{{::ctrl.current_category}}.html" locals="{current: setting[column]['format_value']}")
 
-          //- 如果没有编辑模式就是简单列，不需要编辑模式的
-          div(ng-if="!setting[column]['edit_mode']") {{setting[column]}}
+        //- 系数
+        div(ng-if="!setting[column]['edit_mode'] && column=='rate'")
+          input(type="number" step="0.1" min="0.1" max="100000" ng-model="setting[column]" ng-blur="setting['amount']=ctrl.calc_amount(setting[column])")
 
-        //- 不是编辑模式
-        div(ng-hide="ctrl.editing")
-          span(ng-if="setting[column]['format_cell']") {{setting[column]['format_cell'].replace('%{format_value}', setting[column]['format_value'])}}
-          span(ng-if="!setting[column]['format_cell']") {{setting[column]}}
+        //- 如果没有编辑模式就是简单列，不需要编辑模式的
+        div(ng-if="!setting[column]['edit_mode'] && column!='rate'") {{setting[column]}}
 
-      //- 列不存在，不可编辑
-      div(ng-if="!setting[column]") -
+      //- 不是编辑模式
+      div(ng-hide="ctrl.editing")
+        span(ng-if="setting[column]['format_cell']") {{setting[column]['format_cell'].replace('%{format_value}', setting[column]['format_value'])}}
+        span(ng-if="!setting[column]['format_cell']") {{setting[column]}}
