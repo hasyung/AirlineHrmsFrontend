@@ -64,7 +64,8 @@
         padding: 0;
 
         .nb-nav-item {
-            width: 100px;
+            padding: 0 15px;
+            width: auto;
 
             a {
                 font-size: $font-size-sm;
