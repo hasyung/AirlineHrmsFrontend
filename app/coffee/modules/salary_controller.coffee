@@ -61,7 +61,7 @@ class SalaryController extends nb.Controller
                           "flyer_base_student",     # 学员
                           "air_steward_base",       # 空乘空保
                           "service_b_base",         # 服务B
-                          "service_C_base",         # 服务B
+                          "service_c_base",         # 服务C
                           "air_observer_base",      # 空中观察员
                           "front_run_base",         # 前场运行
                          ]
