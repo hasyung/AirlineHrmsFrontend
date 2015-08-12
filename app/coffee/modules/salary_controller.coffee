@@ -99,11 +99,6 @@ class SalaryController extends nb.Controller
     load_dynamic_config: (category)->
         @current_category = category
         @dynamic_config = @settings[category + '_setting']
-        @backup_config = angular.copy(@dynamic_config)
-        @editing = false
-
-    reset_dynamic_config: ()->
-        @dynamic_config = @backup_config
         @editing = false
 
     save_config: (config)->
@@ -117,7 +112,6 @@ class SalaryController extends nb.Controller
             if error_msg
                 self.toaster.pop('error', '提示', error_msg)
             else
-                self.backup_config = angular.copy(self.dynamic_config)
                 self.toaster.pop('success', '提示', '配置已更新')
 
     calc_amount: (rate)->
