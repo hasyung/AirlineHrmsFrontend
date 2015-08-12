@@ -58,33 +58,24 @@
         }
     }
 
-    md-tabs {
-        min-height: 800px !important;
+    .cust-nav-justified {
+        border-bottom: 1px solid #dedede;
+        height: auto;
+        padding: 0;
 
-        md-tab-content {
-            padding: 0 20px;
-        }
+        .nb-nav-item {
+            width: 100px;
 
-        md-ink-bar {
-            background-color: #e84e40;
-        }
-
-        md-tab-item {
-            &.md-active {
-                span {
-                    color: $text-color;
-                }
-
-                .md-ripple-container {
-                    background-color: transparent !important;
-
-                    .md-ripple {
-                        background-color: #e84e40 !important;
-                    }
-                }
+            a {
+                font-size: $font-size-sm;
+                height: 36px;
+                line-height: 36px;
             }
-
         }
+    }
+
+    .tab-content {
+        padding: 20px;
     }
 }
 
