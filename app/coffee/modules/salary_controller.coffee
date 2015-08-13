@@ -50,36 +50,41 @@ class SalaryController extends nb.Controller
 
     initialize: () ->
         self = @
-        @CATEGORY_LIST = ["leader_base",                # 干部
-                          "manager15_base",             # 管理15
-                          "manager12_base",             # 管理12
-                          "flyer_legend_base",          # 荣誉级飞行员
-                          "flyer_leader_base",          # 机长
-                          "flyer_copilot_base",         # 副驾
-                          "flyer_teacher_A_base",       # 教员A
-                          "flyer_teacher_B_base",       # 教员B
-                          "flyer_teacher_C_base",       # 教员C
-                          "flyer_student_base",         # 学员
-                          "air_steward_base",           # 空乘空保
-                          "service_b_normal_cleaner_base",      # 服务B-清洁工
-                          "service_b_parking_cleaner_base",     # 服务B-机坪清洁工
-                          "service_b_hotel_service_base",       # 服务B-宾馆服务员
-                          "service_b_green_base",               # 服务B-绿化
-                          "service_b_front_desk_base",          # 服务B-总台服务员
-                          "service_b_security_guard_base",      # 服务B-保安、空保装备保管员
-                          "service_b_data_input_base",          # 服务B-数据录入
-                          "service_b_guard_leader1_base",       # 服务B-保安队长（一类）
-                          "service_b_device_keeper_base",       # 服务B-保管（库房、培训设备、器械）
-                          "service_b_unloading_base",           # 服务B-外站装卸
-                          "service_b_making_water_base",        # 服务B-制水工
-                          "service_b_add_water_base",           # 服务B-加水工、排污工
-                          "service_b_guard_leader2_base",       # 服务B-保安队长（二类）
-                          "service_b_water_light_base",         # 服务B-水电维修
-                          "service_b_car_repair_base",          # 服务B-汽修工
-                          "service_b_airline_keeper_base",      # 服务B-机务工装设备/客舱供应库管
-                          "service_c_base",                     # 服务C
-                          "air_observer_base",                  # 空中观察员
-                          "front_run_base",                     # 前场运行
+        @CATEGORY_LIST = ["leader_base",                # 基础-干部
+                          "manager15_base",             # 基础-管理15
+                          "manager12_base",             # 基础-管理12
+                          "flyer_legend_base",          # 基础-荣誉级飞行员
+                          "flyer_leader_base",          # 基础-机长
+                          "flyer_copilot_base",         # 基础-副驾
+                          "flyer_teacher_A_base",       # 基础-教员A
+                          "flyer_teacher_B_base",       # 基础-教员B
+                          "flyer_teacher_C_base",       # 基础-教员C
+                          "flyer_student_base",         # 基础-学员
+                          "air_steward_base",           # 基础-空乘空保
+                          "service_b_normal_cleaner_base",      # 基础-服务B-清洁工
+                          "service_b_parking_cleaner_base",     # 基础-服务B-机坪清洁工
+                          "service_b_hotel_service_base",       # 基础-服务B-宾馆服务员
+                          "service_b_green_base",               # 基础-服务B-绿化
+                          "service_b_front_desk_base",          # 基础-服务B-总台服务员
+                          "service_b_security_guard_base",      # 基础-服务B-保安、空保装备保管员
+                          "service_b_input_base",               # 基础-服务B-数据录入
+                          "service_b_guard_leader1_base",       # 基础-服务B-保安队长（一类）
+                          "service_b_device_keeper_base",       # 基础-服务B-保管（库房、培训设备、器械）
+                          "service_b_unloading_base",           # 基础-服务B-外站装卸
+                          "service_b_making_water_base",        # 基础-服务B-制水工
+                          "service_b_add_water_base",           # 基础-服务B-加水工、排污工
+                          "service_b_guard_leader2_base",       # 基础-服务B-保安队长（二类）
+                          "service_b_water_light_base",         # 基础-服务B-水电维修
+                          "service_b_car_repair_base",          # 基础-服务B-汽修工
+                          "service_b_airline_keeper_base",      # 基础-服务B-机务工装设备/客舱供应库管
+                          "service_c_base",                     # 基础-服务C
+                          "air_observer_base",                  # 基础-空中观察员
+                          "front_run_base",                     # 基础-前场运行
+                          "information_perf",                   # 绩效-信息通道
+                          "airline_business_perf",              # 绩效-航务航材
+                          "manage_market_perf",                 # 绩效-管理营销
+                          "service_c_1_3",                      # 绩效-服务C1-3
+                          "service_c_driving",                  # 绩效-服务C-驾驶
                          ]
 
         @year_list = @$getYears()
@@ -87,11 +92,11 @@ class SalaryController extends nb.Controller
         @currentYear = _.last @year_list
         @currentMonth = _.last @month_list
 
-        # 所有的设置
         @settings = {}
-        # 薪酬全局设置
         @global_setting = {}
 
+    loadConfigFromServer: (category)->
+        self = @
         @http.get('/api/salaries').success (data)->
             # 全局设置单独处理
             self.global_setting = data.global.form_data
@@ -102,7 +107,7 @@ class SalaryController extends nb.Controller
                 data[item] ||= {}
                 self.settings[item + '_setting'] = data[item].form_data || {}
 
-            self.loadDynamicConfig(self.CATEGORY_LIST[0])
+            self.loadDynamicConfig(category)
 
     currentCalcTime: ()->
         @currentYear + "-" + @currentMonth
