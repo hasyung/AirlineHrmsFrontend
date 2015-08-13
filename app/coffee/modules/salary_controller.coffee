@@ -126,11 +126,11 @@ class SalaryController extends nb.Controller
         @dynamic_config = angular.copy(@backup_config)
         @editing = false
 
-    saveConfig: (config)->
+    saveConfig: (category, config)->
         self = @
         config = @settings[@current_category + '_setting'] if !config
 
-        @http.put('/api/salaries/' + @current_category, {form_data: config}).success (data)->
+        @http.put('/api/salaries/' + (category || @current_category), {form_data: config}).success (data)->
             error_msg = data.messages
 
             if error_msg

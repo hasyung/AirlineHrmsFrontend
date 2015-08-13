@@ -10,7 +10,7 @@ md-dialog.socialChangeInfo(
     form(
         ng-submit="save(current.$save(), changeContract)"
         name="changeContract"
-        ng-if="current.category == '合同新签'"
+        ng-if="current.category == '合同新签' || current.category == '合同转制'"
         )
         md-content.sticky-container
             include changeInfo/contract

@@ -51,4 +51,4 @@
                 md-input-container(md-no-float)
                     input(type="number" min="0" max="100" step="0.1" ng-model="ctrl.global_setting.coefficient[ctrl.currentCalcTime()].logistics")
 
-            md-button.md-raised.md-primary(ng-click="ctrl.saveConfig(ctrl.global_setting)") 保存
+            md-button.md-raised.md-primary(ng-click="ctrl.saveConfig('global', ctrl.global_setting)") 保存
