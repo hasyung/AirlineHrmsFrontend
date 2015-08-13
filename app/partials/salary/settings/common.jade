@@ -1,7 +1,7 @@
 table.table.table-bordered.setting-table
   tr
     th.tal 档级
-    th.tar(style="text-align: right;" ng-repeat="flag in ctrl.dynamic_config.flag_list track by $index") {{::ctrl.dynamic_config.flag_names[flag]}}
+    th.tar(style="text-align: right;" ng-repeat="flag in ctrl.dynamic_config.flag_list track by $index") {{ctrl.dynamic_config.flag_names[flag]}}
 
   tr(ng-repeat="setting in ctrl.dynamic_config.flags | toArray: 'grade' | orderBy: '-amount' track by $index")
     td.tal
@@ -13,11 +13,12 @@ table.table.table-bordered.setting-table
           //- 判断编辑类型
           div(ng-switch-when="text")
             input(ng-if="setting[column]['format_value']" type="text" ng-model="setting[column]['format_value']")
+            a(href="javascript:void(0);" nb-dialog template-url="partials/salary/settings/dialogs/{{::ctrl.current_category}}.html" locals="{current: setting[column]}") 设置
           div(ng-switch-when="select")
             md-select(ng-model="setting[column]['format_value']")
               md-option(ng-repeat="item in setting[column]['edit_select_array']" ng-value="item") {{item}}
           div(ng-switch-when="dialog")
-            a(href="javascript:void(0);" nb-dialog template-url="partials/salary/settings/dialog_{{::ctrl.current_category}}.html" locals="{current: setting[column]['format_value']}")
+            a(href="javascript:void(0);" nb-dialog template-url="partials/salary/settings/dialogs/{{::ctrl.current_category}}.html" locals="{current: setting[column]}") 设置
 
         //- 系数
         div(ng-if="!setting[column]['edit_mode'] && column=='rate'")
