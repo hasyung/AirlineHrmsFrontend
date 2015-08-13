@@ -29,14 +29,16 @@ md-dialog.welfare_personal_new(
                             md-input-container(flex)
                                 label 所在部门
                                 input(type="text" ng-model="ctrl.loadEmp.department.name" disabled)
-                            md-input-container(flex)
+                            md-input-container.row-has-value(flex)
                                 label 工作属地
-                                input(type="text" ng-model="ctrl.loadEmp.location" disabled)
+                                md-select(ng-model="ctrl.loadEmp.locationId" disabled)
+                                    md-option(ng-repeat="item in $enum.get('locations')" ng-value="item.id") {{item.label}}
 
                         div(layout)
-                            md-input-container(flex)
+                            md-input-container.row-has-value(flex)
                                 label 通道
-                                input(type="text" ng-model="$enum.parseLabel(ctrl.loadEmp.channelId, 'channels')" disabled)
+                                md-select(ng-model="ctrl.loadEmp.channelId" disabled)
+                                    md-option(ng-repeat="item in $enum.get('channels')" ng-value="item.id") {{item.label}}
                             md-input-container(flex)
                                 label 身份证
                                 input(type="text" ng-model="ctrl.loadEmp.identityNo" disabled)

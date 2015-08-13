@@ -12,8 +12,6 @@ SocialPersonSetup = (restmod, RMUtils, $Evt) ->
         $hooks: {
             'after-destroy': ->
                 $Evt.$send('socialPersonSetups:destroy:success',"删除成功")
-            'after-create': ->
-                $Evt.$send('socialPersonSetups:create:success',"新增成功")
             'after-save': ->
                 $Evt.$send('socialPersonSetups:save:success',"保存成功")
         }

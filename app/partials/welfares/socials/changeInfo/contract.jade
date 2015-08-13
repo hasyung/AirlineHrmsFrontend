@@ -27,7 +27,7 @@
                     label 身份证
                     input(type="text" ng-model="::current.identityNo" disabled)
             div(layout)
-                md-input-container(flex)
+                md-input-container.row-has-value(flex)
                     label 社保属地
                     md-select(ng-model="setup.socialLocation")
                         md-option(value="成都") 成都
