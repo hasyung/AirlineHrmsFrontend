@@ -1,4 +1,4 @@
-.app-content-wrapper(flex ng-controller="salaryCtrl as ctrl")
+.app-content-wrapper(flex ng-controller="salaryCtrl as ctrl" ng-init="ctrl.loadConfigFromServer('global')")
     form.form-static(novalidate)
         fieldset
             .form-row(layout)
@@ -51,4 +51,4 @@
                 md-input-container(md-no-float)
                     input(type="number" min="0" max="100" step="0.1" ng-model="ctrl.global_setting.coefficient[ctrl.currentCalcTime()].logistics")
 
-            md-button.md-raised.md-primary(ng-click="ctrl.save_config('global', ctrl.global_setting)") 保存
+            md-button.md-raised.md-primary(ng-click="ctrl.saveConfig(ctrl.global_setting)") 保存
