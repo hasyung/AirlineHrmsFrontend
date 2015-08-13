@@ -1,5 +1,5 @@
 md-dialog.welfare_personal_new(
-    ng-init= "newSetup = {socialLocation: '成都'}; ctrl.loadEmp = {}"
+    ng-init= "newSetup = {socialLocation: '成都', pension: true, treatment: true, unemploy: true, injury:true,illness:true,fertility:true}; ctrl.loadEmp = {};"
     )
     form(ng-submit="ctrl.newPersonalSetup(newSetup);dialog.close();" name="newPersonalSetupForm")
         md-toolbar.md-accent(md-theme="hrms")
