@@ -73,8 +73,11 @@ module
     .filter 'toArray', [()->
         (obj, key_name) ->
             result = []
+
             angular.forEach obj, (val, key) ->
                 val[key_name] = key
                 result.push val
-            result
+
+            _.sortBy result, (item) ->
+                -item[key_name]
     ]

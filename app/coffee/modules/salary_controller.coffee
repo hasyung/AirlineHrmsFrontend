@@ -138,6 +138,14 @@ class SalaryController extends nb.Controller
     calcAmount: (rate)->
         parseInt(@basic_cardinality * parseFloat(rate))
 
+    calcRate: (amount)->
+        if !@basic_cardinality || @basic_cardinality == 0
+            throw new Error('全局设置薪酬基数无效')
+        Math.round(amount / @basic_cardinality)
+
+    existCurrentRate: ()->
+        @dynamic_config.flag_list.indexOf('rate') >= 0
+
     formatColumn: (input)->
         result = input
 
