@@ -1,5 +1,5 @@
 md-dialog()
-  form(ng-init="current = dialog.current;" ng-submit="")
+  form(ng-init="current=dialog.current;origin={'expr': current['expr'], 'desc': current['format_cell']};input_expr=ctrl.exchangeExpr(current['expr'], true);" ng-submit="$event.preventDefault()")
     md-toolbar.md-accent(md-theme="hrms")
       .md-toolbar-tools
           span 条件设置
@@ -7,40 +7,37 @@ md-dialog()
       fieldset(flex)
         div(layout="column")
           p(flex) 参数调用说明:
-          table.table.table-bordered(style="border:1px solid #ccc;")
+          table.table.table-bordered(style="border:1px solid #ccc;width:600px;")
+            tr(style="background-color:#fcfcfc;border-bottom:1px solid #aaa;")
+              th
+                strong 变量名称
+              th
+                strong
+                  输入举例
             tr
-              th 变量名称
-              th 说明
-              th 举例
+              td 调档时间
+              td 调档时间 >= 2
             tr
-              td %{format_value}
-              td 跳档时间
-              td %{format_value} >= 2
-            tr
-              td %{work_value}
               td 驾驶经历时间
-              td %{work_value} >= 4
+              td 驾驶经历时间 >= 4
             tr
-              td %{time_value}
               td 飞行时间
-              td %{time_value} >= 4000
+              td 飞行时间 >= 4000
             tr
-              td %{education_background}
               td 员工学历
-              td %{education_background} >= %{本科|大专}
+              td 员工学历 >= %{本科 or 大专}
             tr
-              td %{job_title_degree}
-              td 职级
-              td %{job_title_degree} >= %{初级|中级|高级}
+              td 员工职级
+              td 职级 >= %{初级 or 中级 or 高级}
 
           md-input-container(flex)
-            label 调价描述
-            textarea(columns="1" md-maxlength="2000" ng-model="current['format_cell']")
+            label 输入条件描述
+            textarea(columns="1" ng-model="current['format_cell']")
 
           md-input-container(flex)
             label 输入数学公式
-            textarea(columns="1" md-maxlength="2000" ng-model="current['expr']")
+            textarea(columns="1" ng-model="input_expr" ng-change="current['expr']=ctrl.exchangeExpr(input_expr)")
 
     .md-actions
-      //- md-button(type="button" ng-click='dialog.close()') 取 消
+      md-button(type="button" ng-click="current['expr']=origin.expr;current['format_cell']=origin.desc;dialog.close()") 取 消
       md-button.md-primary.md-raised(type="submit" ng-click="dialog.close()") 确 定

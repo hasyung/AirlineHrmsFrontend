@@ -162,6 +162,28 @@ class SalaryController extends nb.Controller
 
         result
 
+    exchangeExpr: (expr, reverse = false)->
+        return if !expr && !angular.isDefined(expr)
+
+        hash = {
+            '调档时间':     '%{format_value}'
+            '驾驶经历时间':  '%{work_value}'
+            '飞行时间':     '%{time_value}'
+            '员工职级':     '%{job_title_degree}'
+            '员工学历':     '%{education_background}'
+            '本科':         "'本科'"
+        }
+
+        result = expr
+
+        angular.forEach hash, (value, key)->
+            if reverse
+                result = result.replace(value, key)
+            else
+                result = result.replace(key, value)
+
+        result
+
 
 class SalaryPerformanceController
     @.$inject = ['$http', '$scope', '$nbEvent']
