@@ -1,19 +1,23 @@
-.app-content-wrapper(flex ng-controller="salaryCtrl as ctrl" ng-init="ctrl.loadConfigFromServer('information_perf')")
+.app-content-wrapper(flex ng-controller="salaryCtrl as ctrl" ng-init="ctrl.loadConfigFromServer('flyer_hour')")
     .salary-basic
         tabset
             tab.leader-base(heading="飞行员" ng-click="ctrl.loadDynamicConfig('flyer_hour')")
                 md-toolbar
                   .md-toolbar-tools
                     h2 飞行员
-            tab.leader-base(heading="空乘" ng-click="ctrl.loadDynamicConfig('flight attendant_hour')")
+                include ./hours/flyer.jade
+            tab.leader-base(heading="空乘" ng-click="ctrl.loadDynamicConfig('flight_attendant_hour')")
                 md-toolbar
                   .md-toolbar-tools
                     h2 空乘
+                include ./hours/flight_attendant.jade
             tab.leader-base(heading="空保" ng-click="ctrl.loadDynamicConfig('air_security_hour')")
                 md-toolbar
                   .md-toolbar-tools
                     h2 空保
+                include ./hours/air_security.jade
             tab.leader-base(heading="未飞补贴" ng-click="ctrl.loadDynamicConfig('unfly_allowance_hour')")
                 md-toolbar
                   .md-toolbar-tools
                     h2 未飞补贴
+                include ./hours/unfly_allowance.jade
