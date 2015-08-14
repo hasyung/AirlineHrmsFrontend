@@ -4,57 +4,54 @@ md-dialog()
       .md-toolbar-tools
           span 条件设置 {{::grade}}档
     .dialog-content(layout layout-align="center")
-      fieldset(flex)
-        div(layout="row" layout-margin)
-          div(flex)
-            p 参数调用说明:
-            table.table.table-bordered(style="border:1px solid #ccc;width:500px;")
-              tr(style="background-color:#fcfcfc;border-bottom:1px solid #aaa;")
-                th(width="150px")
-                  strong 变量名称
-                th
-                  strong
-                    输入举例
-              tr
-                td 调档时间
-                td 调档时间 >= 2
-              tr
-                td 驾驶经历时间
-                td 驾驶经历时间 >= 4
-              tr
-                td 飞行时间
-                td 飞行时间 >= 4000
-              tr
-                td 员工学历
-                td 员工学历 >= %{本科 or 大专}
-              tr
-                td 员工职级
-                td 职级 >= %{初级 or 中级 or 高级}
-          div(flex)
-            p 关系符号说明:
-            table.table.table-bordered(style="border:1px solid #ccc;width:500px;")
-              tr(style="background-color:#fcfcfc;border-bottom:1px solid #aaa;")
-                th(width="150px")
-                  strong
-                    关系名称
-                th
-                  strong
-                    说明
-              tr
-                td and
-                td 并且关系
-              tr
-                td or
-                td 或者
-              tr
-                td ( )
-                td 括号，优先计算
+      div(layout="row" layout-margin)
+        div(flex)
+          p 参数调用说明:
+          table.table.table-bordered(style="border:1px solid #ccc;width:500px;")
+            tr(style="background-color:#fcfcfc;border-bottom:1px solid #aaa;")
+              th(width="150px")
+                strong 变量名称
+              th
+                strong 输入举例
+            tr
+              td 调档时间
+              td 调档时间 >= 2
+            tr
+              td 驾驶经历时间
+              td 驾驶经历时间 >= 4
+            tr
+              td 飞行时间
+              td 飞行时间 >= 4000
+            tr
+              td 员工学历
+              td 员工学历 >= %{本科 or 大专}
+            tr
+              td 员工职级
+              td 职级 >= %{初级 or 中级 or 高级}
+        div(flex)
+          p 关系符号说明:
+          table.table.table-bordered(style="border:1px solid #ccc;width:500px;")
+            tr(style="background-color:#fcfcfc;border-bottom:1px solid #aaa;")
+              th(width="150px")
+                strong 关系名称
+              th
+                strong 说明
+            tr
+              td and
+              td 并且关系
+            tr
+              td or
+              td 或者
+            tr
+              td ( )
+              td 括号，优先计算
 
-    div(layout="column")
+    div(layout="row" layout-margin)
       md-input-container(flex)
         label 输入条件描述
         textarea(columns="1" ng-model="current['format_cell']")
 
+    div(layout="row" layout-margin)
       md-input-container(flex)
         label 输入数学公式
         textarea(columns="1" ng-model="input_expr" ng-change="current['expr']=ctrl.exchangeExpr(input_expr)")
