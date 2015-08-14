@@ -1,0 +1,46 @@
+md-dialog()
+  form(ng-init="current = dialog.current;" ng-submit="")
+    md-toolbar.md-accent(md-theme="hrms")
+      .md-toolbar-tools
+          span 条件设置
+    .dialog-content(layout layout-align="center")
+      fieldset(flex)
+        div(layout="column")
+          p(flex) 参数调用说明:
+          table.table.table-bordered(style="border:1px solid #ccc;")
+            tr
+              th 变量名称
+              th 说明
+              th 举例
+            tr
+              td %{format_value}
+              td 跳档时间
+              td %{format_value} >= 2
+            tr
+              td %{work_value}
+              td 驾驶经历时间
+              td %{work_value} >= 4
+            tr
+              td %{time_value}
+              td 飞行时间
+              td %{time_value} >= 4000
+            tr
+              td %{education_background}
+              td 员工学历
+              td %{education_background} >= %{本科|大专}
+            tr
+              td %{job_title_degree}
+              td 职级
+              td %{job_title_degree} >= %{初级|中级|高级}
+
+          md-input-container(flex)
+            label 调价描述
+            textarea(columns="1" md-maxlength="2000" ng-model="current['format_cell']")
+
+          md-input-container(flex)
+            label 输入数学公式
+            textarea(columns="1" md-maxlength="2000" ng-model="current['expr']")
+
+    .md-actions
+      //- md-button(type="button" ng-click='dialog.close()') 取 消
+      md-button.md-primary.md-raised(type="submit" ng-click="dialog.close()") 确 定

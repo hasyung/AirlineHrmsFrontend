@@ -847,6 +847,11 @@ class SbFlowHandlerCtrl
     refreshTableDate: ()->
         @tableData.$refresh({filter_types: [@FlowName]})
 
+    revert: (isConfirm, flow)->
+        console.error flow
+        if isConfirm
+            flow.revert()
+
 
 app.controller('AttendanceRecordCtrl', AttendanceRecordCtrl)
 app.controller('AttendanceHisCtrl', AttendanceHisCtrl)

@@ -51,7 +51,7 @@ CustomConfig = {
 
 angular.forEach workflows, (item)->
     resource = (restmod, RMUtils, $Evt) ->
-        resource = restmod.model("/workflows/#{item}").mix 'nbRestApi', 'Workflow', {
+        restmod.model("/workflows/#{item}").mix 'nbRestApi', 'Workflow', {
             flowNodes: {hasMany: "FlowReply"}
 
             $config:
@@ -63,8 +63,23 @@ angular.forEach workflows, (item)->
                     records: ->
                         restmod.model("/workflows/#{item}/record").mix(
                             $config:
-                                jsonRootMany:'workflows'
+                                jsonRootMany: 'workflows'
                                 jsonRootSingle: 'workflow'
+
+                            $extends:
+                                Record:
+                                    revert: ()->
+                                        self = this
+
+                                        request = {
+                                            url: "/api/workflows/#{this.type}/#{this.id}/repeal"
+                                            method: "PUT"
+                                        }
+
+                                        onSuccess = (res) ->
+                                            self.$dispatch 'after-revert'
+
+                                        this.$send(request, onSuccess)
                         ).$collection().$fetch()
 
                     myRequests: ->

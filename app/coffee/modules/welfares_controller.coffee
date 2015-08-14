@@ -421,11 +421,15 @@ class SocialChangeProcessController extends nb.EditableResourceCtrl
         super($scope, $enum, $Evt)
 
         @find_or_build_setup = (change)->
-            return change.socialSetup.$fetch() if change.socialSetup
+            change.socialSetup.$fetch() if change.socialSetup
             change.socialSetup = @SocialPersonSetup.$build({
                 employeeId: change.owner.$pk
                 socialAccount: '000000'
             })
+
+            # 默认处理成成都
+            change.socialSetup.socialLocation || = "成都"
+            change.socialSetup
 
 
 app.controller 'welfareCtrl', WelfareController
