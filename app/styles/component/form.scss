@@ -369,5 +369,14 @@ md-input-container {
     }
 }
 
+md-radio-group.horizontal {
+    display: flex;
+    flex-direction: row;
+
+    md-radio-button {
+        margin-right: 30px;
+    }
+}
+
 
 

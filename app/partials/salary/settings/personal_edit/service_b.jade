@@ -1,0 +1,23 @@
+div(layout)
+    md-input-container.row-has-value(flex)
+        label 基础薪酬通道
+        md-select(ng-model="current.baseChannel")
+            md-option(value="清洁工") 清洁工
+            md-option(value="机坪清洁工") 机坪清洁工
+
+    md-input-container.row-has-value(flex)
+        label 档级
+        md-select(ng-model="current.baseFlag")
+            md-option(value="6") 6
+            md-option(value="7") 7
+            md-option(value="8") 8
+            md-option(value="9") 9
+            md-option(value="10") 10
+
+div(layout)
+    md-input-container(flex)
+        label 基础薪酬
+        input(type="number" min="0" max="1000000" ng-model="current.baseWage" disabled)
+    md-input-container(flex)
+        label 绩效薪酬
+        input(type="number" min="0" max="1000000" ng-model="current.performanceWage" disabled)
