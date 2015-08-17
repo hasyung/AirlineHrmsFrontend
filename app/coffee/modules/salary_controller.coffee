@@ -215,9 +215,12 @@ class SalaryPersonalController
                     type: 'string'
                 }
                 {
-                    name: 'employee_no'
-                    displayName: '员工编号'
-                    type: 'string'
+                    name: 'channel_ids'
+                    displayName: '通道'
+                    type: 'muti-enum-search'
+                    params: {
+                        type: 'channels'
+                    }
                 }
             ]
         }
