@@ -12,26 +12,26 @@ md-dialog.welfare_personal_new(ng-controller="EditableResourceCtrl")
                         div(layout)
                             md-input-container(flex)
                                 label 姓名
-                                input(type="text" ng-model="::current.employeeName" disabled)
+                                input(type="text" ng-model="::current.employeeName" readonly)
                             md-input-container(flex)
                                 label 员工编号
-                                input(type="text" ng-model="::current.employeeNo" disabled)
+                                input(type="text" ng-model="::current.employeeNo" readonly)
 
                         div(layout)
                             md-input-container(flex)
                                 label 所在部门
-                                input(type="text" ng-model="::current.departmentName" disabled)
+                                input(type="text" ng-model="::current.departmentName" readonly)
                             md-input-container(flex)
                                 label 工作属地
-                                input(type="text" ng-model="::current.location" disabled)
+                                input(type="text" ng-model="::current.location" readonly)
 
                         div(layout)
                             md-input-container.row-has-value(flex)
                                 label 通道
-                                input(type="text" ng-model="::current.channelId" disabled)
+                                input(type="text" ng-model="::current.channelId" readonly)
                             md-input-container(flex)
                                 label 身份证
-                                input(type="text" ng-model="::current.identityNo" disabled)
+                                input(type="text" ng-model="::current.identityNo" readonly)
                         div(layout)
                             md-input-container.row-has-value(flex)
                                 label 社保属地

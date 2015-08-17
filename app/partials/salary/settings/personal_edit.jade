@@ -12,18 +12,18 @@ md-dialog.welfare_personal_new(ng-controller="EditableResourceCtrl")
                         div(layout)
                             md-input-container(flex)
                                 label 姓名
-                                input(type="text" ng-model="::current.employeeName" disabled)
+                                input(type="text" ng-model="::current.employeeName" readonly)
                             md-input-container(flex)
                                 label 员工编号
-                                input(type="text" ng-model="::current.employeeNo" disabled)
+                                input(type="text" ng-model="::current.employeeNo" readonly)
 
                         div(layout)
                             md-input-container(flex)
                                 label 所在部门
-                                input(type="text" ng-model="::current.departmentName" disabled)
+                                input(type="text" ng-model="::current.departmentName" readonly)
                             md-input-container(flex)
                                 label 岗位
-                                input(type="text" ng-model="::current.positionName" disabled)
+                                input(type="text" ng-model="::current.positionName" readonly)
 
                         div(layout)
                             md-input-container.row-has-value(flex)
@@ -41,7 +41,7 @@ md-dialog.welfare_personal_new(ng-controller="EditableResourceCtrl")
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('labor_relations')") {{item.label}}
                             md-input-container(flex)
                                 label 属地化
-                                input(type="text" ng-model="current.location" disabled)
+                                input(type="text" ng-model="current.location" readonly)
 
                         //- 通道非 服务B 飞行 空勤 服务A
                         div(ng-if="current.channelId != 7 && current.channelId != 4 && current.channelId != 5 && current.channelId != 6")
