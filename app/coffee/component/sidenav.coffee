@@ -10,6 +10,7 @@ menuFactory = ($rootScope, $state)->
         type: 'link'
         state: 'TODO'
         icon_src: '/images/svg/left-side-svg/left_icon_22.svg'
+        roles: []
     }
 
     sections.push {
@@ -17,21 +18,25 @@ menuFactory = ($rootScope, $state)->
         type: 'link'
         state: 'org'
         icon_src: '/images/svg/left-side-svg/left_icon_2.svg'
+        roles: []
     }
 
     sections.push {
         name: '岗位管理'
         icon_src: '/images/svg/left-side-svg/left_icon_3.svg'
+        roles: []
         pages: [
             {
                 name: '岗位列表'
                 state: 'position_list'
                 permission: 'position_index'
+                roles: []
             }
             {
                 name: '岗位异动记录'
                 state: 'position_changes'
                 permission: 'position_change_index'
+                roles: []
             }
         ]
     }
@@ -39,21 +44,25 @@ menuFactory = ($rootScope, $state)->
     sections.push {
         name: '人事信息'
         icon_src: '/images/svg/left-side-svg/left_icon_4.svg'
+        roles: []
         pages: [
             {
                 name: '人事花名册'
                 state: 'personnel_list'
                 permission: 'employees_index'
+                roles: []
             }
             {
                 name: '新员工列表'
                 state: 'personnel_fresh'
                 permission: ''
+                roles: []
             }
             {
                 name: '人事变更信息'
                 state: 'personnel_review'
                 permission: ''
+                roles: []
             }
         ]
     }
@@ -78,26 +87,31 @@ menuFactory = ($rootScope, $state)->
     sections.push {
         name: '福利'
         icon_src: '/images/svg/left-side-svg/left_icon_7.svg'
+        roles: []
         pages: [
             {
                 name: '福利设置'
                 state: '.welfares'
                 permission: ''
+                roles: []
             }
             {
                 name: '社保'
                 state: '.welfares_socials'
                 permission: ''
+                roles: []
             }
             {
                 name: '企业年金'
                 state: '.welfares_annuities'
                 permission: ''
+                roles: []
             }
             #{
             #    name: '工作餐'
             #    state: '.welfares_dinnerfee'
             #    permission: ''
+            #    roles: []
             #}
         ]
     }
@@ -105,22 +119,22 @@ menuFactory = ($rootScope, $state)->
     sections.push {
         name: '薪酬'
         icon_src: '/images/svg/left-side-svg/left_icon_8.svg'
+        roles: []
         pages: [
             {
                 name: '薪酬设置'
                 state: 'salary'
+                roles: []
             }
             {
                 name: '个人薪酬设置'
                 state: 'salary_personal'
+                roles: []
             }
             {
-                name: '基础工资'
-                state: 'salary_basic'
-            }
-            {
-                name: '绩效工资'
-                state: 'salary_performance'
+                name: '薪酬计算'
+                state: 'salary_calc'
+                roles: []
             }
         ]
     }
@@ -128,50 +142,61 @@ menuFactory = ($rootScope, $state)->
     sections.push {
         name: '劳动关系'
         icon_src: '/images/svg/left-side-svg/left_icon_9.svg'
+        roles: []
         pages: [
             {
                 name: '员工考勤'
                 state: 'labors_attendance'
+                permission: ''
+                roles: []
             }
             {
                 name: '员工调动'
                 state: 'labors_ajust_position'
                 permission: ''
+                roles: []
             }
             {
                 name: '员工退休'
                 state: 'labors_retirement'
                 permission: ''
+                roles: []
             }
             {
                 name: '员工退养'
                 state: 'labors_early_retirement'
                 permission: ''
+                roles: []
             }
             {
                 name: '员工辞退'
                 state: 'labors_dismiss'
                 permission: ''
+                roles: []
             }
             {
                 name: '员工处分'
                 state: 'labors_punishment'
                 permission: ''
+                roles: []
             }
             {
                 name: '合同管理'
                 state: 'contract_management'
                 permission: ''
+                roles: []
             }
             {
                 name: '员工离职'
                 state: 'labors_leave_job'
                 permission: ''
+                roles: []
             }
             {
                 name: '员工辞职'
                 state: 'labors_resignation'
                 permission: ''
+                roles: []
             }
         ]
     }
@@ -179,21 +204,25 @@ menuFactory = ($rootScope, $state)->
     sections.push {
         name: '绩效管理'
         icon_src: '/images/svg/left-side-svg/left_icon_10.svg'
+        roles: []
         pages: [
             {
                 name: '绩效记录'
                 state: 'performance_record'
                 permission: ''
+                roles: []
             }
             {
                 name: '绩效申诉'
                 state: 'performance_alleges'
                 permission: ''
+                roles: []
             }
             {
                 name: '绩效设置'
                 state: 'performance_setting'
                 permission: ''
+                roles: []
             }
         ]
     }

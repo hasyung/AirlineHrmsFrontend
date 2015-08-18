@@ -43,6 +43,15 @@
             }
         }
 
+        //解决组织机构列表项的高度不正确bug
+        &:nth-child(1) {
+            height: 70px;
+        }
+
+        &:nth-child(2) {
+            height: 70px;
+        }
+
         &.active {
             transition: none;
 

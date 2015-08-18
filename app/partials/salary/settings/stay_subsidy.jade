@@ -1,0 +1,11 @@
+.app-content-wrapper(flex ng-controller="salaryCtrl as ctrl" ng-init="ctrl.loadConfigFromServer('')")
+    .salary-basic
+        tabset
+            tab.leader-base(heading="地面驻站" ng-click="ctrl.loadDynamicConfig('')")
+                md-toolbar
+                  .md-toolbar-tools
+                    h2 地面驻站
+            tab.leader-base(heading="空勤驻站" ng-click="ctrl.loadDynamicConfig('')")
+                md-toolbar
+                  .md-toolbar-tools
+                    h2 空勤驻站
