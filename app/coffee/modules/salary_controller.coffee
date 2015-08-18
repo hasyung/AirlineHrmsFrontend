@@ -27,9 +27,9 @@ app.config(Route)
 
 
 class SalaryController extends nb.Controller
-    @.$inject = ['$http', '$scope', '$nbEvent', 'toaster']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'toaster', 'SALARY_SETTING']
 
-    constructor: (@http, @scope, $Evt, @toaster) ->
+    constructor: (@http, @scope, $Evt, @toaster, @SALARY_SETTING) ->
         self = @
         @initialize()
 
@@ -104,12 +104,16 @@ class SalaryController extends nb.Controller
             self.global_setting = data.global.form_data
             self.$checkCoefficientDefault()
             self.basic_cardinality = parseInt(self.global_setting.basic_cardinality)
+            self.settings['global_setting'] = self.global_setting
 
             angular.forEach self.CATEGORY_LIST, (item)->
                 data[item] ||= {}
                 self.settings[item + '_setting'] = data[item].form_data || {}
 
             self.loadDynamicConfig(category)
+
+            # 更新薪酬设置
+            self.SALARY_SETTING = angular.copy(self.settings)
 
     currentCalcTime: ()->
         @currentYear + "-" + @currentMonth
@@ -300,6 +304,26 @@ class SalaryPersonalController
                 self.loadEmp = params
 
 
+class SalaryExchangeController
+    @.$inject = ['$http', '$scope', '$nbEvent', 'SALARY_SETTING']
+
+    constructor: ($http, $scope, $Evt, @SALARY_SETTING) ->
+        @flags = []
+
+    $do_calc: (main_category, current)->
+        if main_category == 'service_b'
+            current.baseWage = @setting.flags[current.baseFlag]['amount']
+            current.performanceWage = current.baseWage - @SALARY_SETTING['global_setting']['basic_cardinality']
+
+    lookup: (main_category, current)->
+        @setting = @SALARY_SETTING[current.baseChannel + '_setting']
+        @flags = Object.keys(@setting.flags)
+        @$do_calc(main_category, current)
+
+    show_amount: (main_category, current)->
+        @$do_calc(main_category, current)
+
+
 class SalaryBasicController
     @.$inject = ['$http', '$scope', '$nbEvent']
 
@@ -326,6 +350,7 @@ class SalaryAllowanceController
 
 app.controller 'salaryCtrl', SalaryController
 app.controller 'salaryPersonalCtrl', SalaryPersonalController
+app.controller 'salaryExchangeCtrl', SalaryExchangeController
 app.controller 'salaryBasicCtrl', SalaryBasicController
 app.controller 'salaryPerformanceCtrl', SalaryPerformanceController
 app.controller 'salaryHoursFeeCtrl', SalaryHoursFeeController
