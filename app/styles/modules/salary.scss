@@ -2,6 +2,24 @@
     background-color: #fff;
     padding: 20px;
 
+    &.has-sub {
+        .form-row {
+            .subheader {
+                text-align: right;
+                width: 220px;
+            }
+
+            label {
+                margin-left: 20px;
+                width: 80px;
+            }
+        }
+
+        .md-button {
+            margin-left: 290px;
+        }
+    }
+
     .form-row {
         line-height: 34px;
 

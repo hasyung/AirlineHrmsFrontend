@@ -1,0 +1,41 @@
+.app-content-wrapper(flex ng-controller="salaryCtrl as ctrl" ng-init="ctrl.loadConfigFromServer('unfly_allowance_hour')")
+    form.form-static.has-sub(novalidate)
+        fieldset
+            .form-row(layout)
+                .subheader 飞行教员
+                label 系数
+                md-input-container(md-no-float)
+                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.teacher.rate")
+                label 调资后标准
+                md-input-container(md-no-float)
+                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.teacher.amount")
+
+            .form-row(layout)
+                .subheader 责任机长及进公司10年以上的机长
+                label 系数
+                md-input-container(md-no-float)
+                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.leader.rate")
+                label 调资后标准
+                md-input-container(md-no-float)
+                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.leader.amount")
+
+            .form-row(layout)
+                .subheader 副驾及以上
+                label 系数
+                md-input-container(md-no-float)
+                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.copilot.rate")
+                label 调资后标准
+                md-input-container(md-no-float)
+                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.copilot.amount")
+
+            .form-row(layout)
+                .subheader ELT改装之日起未授权的飞行学员
+                label 系数
+                md-input-container(md-no-float)
+                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.student.rate")
+                label 调资后标准
+                md-input-container(md-no-float)
+                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.student.amount")
+
+            md-button.md-raised.md-primary(ng-click="ctrl.saveConfig('unfly_allowance_hour', ctrl.dynamic_config)") 保存
+
