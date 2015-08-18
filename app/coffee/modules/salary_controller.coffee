@@ -308,19 +308,23 @@ class SalaryExchangeController
     @.$inject = ['$http', '$scope', '$nbEvent', 'SALARY_SETTING']
 
     constructor: ($http, $scope, $Evt, @SALARY_SETTING) ->
-        @flags = []
+        #
 
     $do_calc: (main_category, current)->
         if main_category == 'service_b'
-            current.baseWage = @setting.flags[current.baseFlag]['amount']
-            current.performanceWage = current.baseWage - @SALARY_SETTING['global_setting']['basic_cardinality']
+            current.baseMoney = @setting.flags[current.baseFlag]['amount']
+            current.performanceMoney = current.baseMoney - @SALARY_SETTING['global_setting']['minimum_wage']
+
+    flag_array: (main_category, current)->
+        @setting = @SALARY_SETTING[current.baseChannel + '_setting']
+        Object.keys(@setting.flags)
 
     lookup: (main_category, current)->
         @setting = @SALARY_SETTING[current.baseChannel + '_setting']
-        @flags = Object.keys(@setting.flags)
         @$do_calc(main_category, current)
 
     show_amount: (main_category, current)->
+        @setting = @SALARY_SETTING[current.baseChannel + '_setting']
         @$do_calc(main_category, current)
 
 
