@@ -1,17 +1,39 @@
 .form-static {
     background-color: #fff;
-    padding: 20px;
 
     &.has-sub {
-        .form-row {
+        &.md {
             .subheader {
-                text-align: right;
-                width: 220px;
+                width: 140px;
+            }
+
+            .form-row {
+                label {
+                    margin-left: 0;
+                    width: 60px;
+                }
+            }
+        }
+
+        .subheader {
+            line-height: 34px;
+            text-align: right;
+            width: 220px;
+        }
+
+        .form-row {
+            flex-wrap: wrap;
+
+            .form-cell {
+                margin-left: 10px;
             }
 
             label {
-                margin-left: 20px;
                 width: 80px;
+            }
+
+            span {
+                display: block;
             }
         }
 
