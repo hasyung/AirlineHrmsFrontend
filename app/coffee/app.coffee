@@ -53,6 +53,8 @@ App.constant 'DEPARTMENTS', dep_info.departments || []
 App.constant 'nbConstants', metadata.resources || []
 App.constant 'PUSH_SERVER_CONFIG', metadata.push_server || {host: "192.168.6.99", port: 9927}
 App.constant 'USER_MESSAGE', metadata.messages || {}
+App.constant 'CURRENT_ROLES', metadata.roles || {}
+App.constant 'ROLES_MENU_CONFIG', metadata.roles_menu_config || {}
 
 
 appConf = ($provide, ngDialogProvider) ->

@@ -84,6 +84,9 @@ class SalaryController extends nb.Controller
                           "flight_attendant_hour",              # 小时费-空乘
                           "air_security_hour",                  # 小时费-空保
                           "unfly_allowance_hour",               # 小时费-未飞补贴
+                          "allowance",                          # 津贴设置
+                          "land_subsidy",                       # 地面驻站补贴
+                          "airline_subsidy"                     # 空勤驻站补贴
                          ]
 
         @year_list = @$getYears()

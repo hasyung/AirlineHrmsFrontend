@@ -48,9 +48,9 @@
             height: 70px;
         }
 
-        // &:nth-child(2) {
-        //     height: 70px;
-        // }
+        &:nth-child(2) {
+            height: 70px;
+        }
 
         &.active {
             transition: none;
