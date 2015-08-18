@@ -56,10 +56,6 @@ md-dialog.welfare_personal_new(ng-controller="EditableResourceCtrl")
                         div(ng-if="current.channelId == 5")
                             include personal_edit/fly_attendant
 
-
-
-
-
         .md-actions
             md-button(ng-click="cancel(current, $event, salaryPersonal);dialog.close()") 取 消
             md-button.md-primary.md-raised(ng-hide="current.channelId == 6" ng-click="submit();dialog.close()") 确 定

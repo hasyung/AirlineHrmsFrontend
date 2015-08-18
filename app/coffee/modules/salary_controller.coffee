@@ -17,14 +17,9 @@ class Route
                 templateUrl: 'partials/salary/personal.html'
             }
 
-            .state 'salary_basic', {
-                url: '/salary/basic'
-                templateUrl: 'partials/salary/basic.html'
-            }
-
-            .state 'salary_performance', {
-                url: '/salary/salary_performance'
-                templateUrl: 'partials/salary/performance.html'
+            .state 'salary_calc', {
+                url: '/salary/calc'
+                templateUrl: 'partials/salary/calc.html'
             }
 
 
@@ -175,7 +170,7 @@ class SalaryController extends nb.Controller
             '飞行时间':     '%{time_value}'
             '员工职级':     '%{job_title_degree}'
             '员工学历':     '%{education_background}'
-            '本科':         "'本科'"
+            '去年年度绩效':  '%{last_year_perf}'
         }
 
         result = expr
@@ -188,17 +183,6 @@ class SalaryController extends nb.Controller
 
         result
 
-
-class SalaryPerformanceController
-    @.$inject = ['$http', '$scope', '$nbEvent']
-
-    constructor: ($http, $scope, $Evt) ->
-
-
-class SalaryBasicController
-    @.$inject = ['$http', '$scope', '$nbEvent']
-
-    constructor: ($http, $scope, $Evt) ->
 
 class SalaryPersonalController
     @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryPersonSetup']
@@ -313,7 +297,33 @@ class SalaryPersonalController
                 self.loadEmp = params
 
 
+class SalaryBasicController
+    @.$inject = ['$http', '$scope', '$nbEvent']
+
+    constructor: ($http, $scope, $Evt) ->
+
+
+class SalaryPerformanceController
+    @.$inject = ['$http', '$scope', '$nbEvent']
+
+    constructor: ($http, $scope, $Evt) ->
+
+
+class SalaryHoursFeeController
+    @.$inject = ['$http', '$scope', '$nbEvent']
+
+    constructor: ($http, $scope, $Evt) ->
+
+
+class SalaryAllowanceController
+    @.$inject = ['$http', '$scope', '$nbEvent']
+
+    constructor: ($http, $scope, $Evt) ->
+
+
 app.controller 'salaryCtrl', SalaryController
 app.controller 'salaryPersonalCtrl', SalaryPersonalController
 app.controller 'salaryBasicCtrl', SalaryBasicController
 app.controller 'salaryPerformanceCtrl', SalaryPerformanceController
+app.controller 'salaryHoursFeeCtrl', SalaryHoursFeeController
+app.controller 'salaryAllowanceCtrl', SalaryAllowanceController

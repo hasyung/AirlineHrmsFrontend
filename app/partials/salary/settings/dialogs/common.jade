@@ -24,10 +24,13 @@ md-dialog()
               td 飞行时间 >= 4000
             tr
               td 员工学历
-              td 员工学历 >= %{本科 or 大专}
+              td 员工学历 >= 本科 or 大专
             tr
               td 员工职级
-              td 职级 >= %{初级 or 中级 or 高级}
+              td 职级 >= 初级 or 中级 or 高级
+            tr
+              td 去年年度绩效
+              td 去年年度绩效 == 及格 or 良好 or 优秀
         div(flex)
           p 关系符号说明:
           table.table.table-bordered(style="border:1px solid #ccc;width:500px;")
