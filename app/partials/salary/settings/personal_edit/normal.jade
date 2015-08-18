@@ -1,7 +1,7 @@
 div(layout)
     md-input-container.row-has-value(flex)
         label 基础工资
-        md-select(ng-model="current.baseWage")
+        md-select(ng-model="current.baseWage" placeholder="请选择")
             md-option(value="无") 无
             md-option(value="干部") 干部
             md-option(value="管理15") 管理15
@@ -13,7 +13,7 @@ div(layout)
             md-option(value="前场运行监察") 前场运行监察
     md-input-container.row-has-value(flex)
         label 薪酬通道
-        md-select(ng-model="current.baseChannel")
+        md-select(ng-model="current.baseChannel" placeholder="请选择")
             md-option(value="D4") D4
             md-option(value="D3") D3
             md-option(value="D2") D2
@@ -27,7 +27,7 @@ div(layout)
             md-option(value="B1") B1
     md-input-container.row-has-value(flex)
         label 档级
-        md-select(ng-model="current.baseFlag")
+        md-select(ng-model="current.baseFlag" placeholder="请选择")
             md-option(value="6") 6
             md-option(value="7") 7
             md-option(value="8") 8
@@ -37,7 +37,7 @@ div(layout)
 div(layout)
     md-input-container(flex)
         label 金额
-        input(type="number" min="0" max="1000000" step="1" ng-model="current.cash" disabled)
+        input(type="number" min="0" max="1000000" step="1" ng-model="current.cash" readonly)
     div(flex)
     div(flex)
 
@@ -47,15 +47,15 @@ div(layout)
         input(type="number" min="0" max="100000" step="1" ng-model="current.reserveWage")
     md-input-container.row-has-value(flex)
         label 到岗日期
-        input(ng-model="current.joinScalDate" disabled)
+        input(ng-model="current.joinScalDate" readonly)
     md-input-container.row-has-value(flex)
         label 工龄工资
-        input(ng-model="seniorityPay" disabled)
+        input(ng-model="seniorityPay" readonly)
 
 div(layout)
     md-input-container.row-has-value(flex)
         label 绩效工资
-        md-select(ng-model="current.performanceWage")
+        md-select(ng-model="current.performanceWage" placeholder="请选择")
             md-option(value="无") 无
             md-option(value="信息") 信息
             md-option(value="航务航材") 航务航材
@@ -66,7 +66,7 @@ div(layout)
             md-option(value="服务C-驾驶") 服务C-驾驶
     md-input-container.row-has-value(flex)
         label 档级
-        md-select(ng-model="current.performanceFlag")
+        md-select(ng-model="current.performanceFlag" placeholder="请选择")
             md-option(value="6") 6
             md-option(value="7") 7
             md-option(value="8") 8
@@ -75,26 +75,26 @@ div(layout)
 div(layout)
     md-input-container(flex)
         label 金额
-        input(type="number" min="0" max="1000000" ng-model="current.cash" disabled)
+        input(type="number" min="0" max="1000000" ng-model="current.cash" readonly)
     div(flex)
     div(flex)
 
 div(layout)
     md-input-container.row-has-value(flex)
         label 安检津贴
-        md-select(ng-model="current.securitySubsidy")
+        md-select(ng-model="current.securitySubsidy" placeholder="请选择")
             md-option(value="无") 无
             md-option(value="初级") 初级
             md-option(value="中级") 中级
             md-option(value="高级") 高级
     md-input-container.row-has-value(flex)
         label 安置补贴
-        md-select(ng-model="current.placementSubsidy")
+        md-select(ng-model="current.placementSubsidy" placeholder="请选择")
             md-option(value="无") 无
             md-option(value="有") 有
     md-input-container.row-has-value(flex)
         label 班组长津贴
-        md-select(ng-model="current.leaderSubsidy")
+        md-select(ng-model="current.leaderSubsidy" placeholder="请选择")
             md-option(value="无") 无
             md-option(value="一线A类") 一线A类
             md-option(value="一线B类") 一线B类
@@ -106,18 +106,18 @@ div(layout)
 div(layout)
     md-input-container.row-has-value(flex)
         label 航站管理津贴
-        md-select(ng-model="current.terminalSubsidy")
+        md-select(ng-model="current.terminalSubsidy" placeholder="请选择")
             md-option(value="无") 无
             md-option(value="一类") 一类
             md-option(value="二类") 二类
     md-input-container.row-has-value(flex)
         label 车勤补贴
-        md-select(ng-model="current.carSubsidy")
+        md-select(ng-model="current.carSubsidy" placeholder="请选择")
             md-option(value="无") 无
             md-option(value="有") 有
     md-input-container.row-has-value(flex)
         label 地勤补贴
-        md-select(ng-model="current.groundSubsidy")
+        md-select(ng-model="current.groundSubsidy" placeholder="请选择")
             md-option(value="无") 无
             md-option(value="一类") 一类
             md-option(value="二类") 二类
@@ -129,7 +129,7 @@ div(layout)
 div(layout)
     md-input-container.row-has-value(flex)
         label 机务放行补贴
-        md-select(ng-model="current.machineSubsidy")
+        md-select(ng-model="current.machineSubsidy" placeholder="请选择")
             md-option(value="无") 无
             md-option(value="一档") 一档
             md-option(value="二档") 二档
@@ -138,13 +138,13 @@ div(layout)
             md-option(value="五档") 五档
     md-input-container.row-has-value(flex)
         label 试车津贴
-        md-select(ng-model="current.trialSubsidy")
+        md-select(ng-model="current.trialSubsidy" placeholder="请选择")
             md-option(value="无") 无
             md-option(value="一类") 一类
             md-option(value="二类") 二类
     md-input-container.row-has-value(flex)
         label 飞行安全荣誉津贴
-        md-select(ng-model="current.honorSubsidy")
+        md-select(ng-model="current.honorSubsidy" placeholder="请选择")
             md-option(value="无") 无
             md-option(value="铜质") 铜质
             md-option(value="银质") 银质
