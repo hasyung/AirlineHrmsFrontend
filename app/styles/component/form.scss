@@ -96,6 +96,16 @@ md-select {
         }
     }
 
+    &[readonly] {
+        .md-select-value {
+            color: $text-color;
+        }
+
+        .md-select-icon {
+            opacity: 0;
+        }
+    }
+
 }
 
 // bugfix: 解决下拉框中双滚动条的bug
@@ -377,6 +387,7 @@ md-radio-group.horizontal {
         margin-right: 30px;
     }
 }
+
 
 
 

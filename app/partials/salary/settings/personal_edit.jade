@@ -28,16 +28,16 @@ md-dialog.welfare_personal_new(ng-controller="EditableResourceCtrl")
                         div(layout)
                             md-input-container.row-has-value(flex)
                                 label 分类
-                                md-select(ng-model="current.categoryId" disabled)
+                                md-select(ng-model="current.categoryId" disabled readonly)
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('categories')") {{item.label}}
                             md-input-container.row-has-value(flex)
                                 label 通道
-                                md-select(ng-model="current.channelId" disabled)
+                                md-select(ng-model="current.channelId" disabled readonly)
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
                         div(layout)
                             md-input-container.row-has-value(flex)
                                 label 用工性质
-                                md-select(ng-model="current.laborRelationId" disabled)
+                                md-select(ng-model="current.laborRelationId" disabled readonly)
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('labor_relations')") {{item.label}}
                             md-input-container(flex)
                                 label 属地化
