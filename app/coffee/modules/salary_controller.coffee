@@ -334,7 +334,6 @@ class SalaryExchangeController
 
     normal: (current)->
         return unless current.baseWage
-        return unless current.baseChannel
         return unless current.baseFlag
 
         setting = @$settingHash(current.baseWage)
@@ -354,7 +353,8 @@ class SalaryExchangeController
         channels
 
     normal_flag_array: (current)->
-        return unless current.baseChannel
+        return unless current.baseWage
+
         setting = @$settingHash(current.baseWage)
         Object.keys(setting.flags)
 
