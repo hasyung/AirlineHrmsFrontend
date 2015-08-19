@@ -86,6 +86,11 @@ class WelfarePersonalController extends nb.Controller
                     type: 'string'
                     displayName: '社保属地'
                 }
+                {
+                    name: 'social_account'
+                    displayName: '社保编号'
+                    type: 'string'
+                }
             ]
         }
 
