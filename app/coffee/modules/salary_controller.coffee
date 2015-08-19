@@ -350,7 +350,7 @@ class SalaryExchangeController
         angular.forEach setting.flag_list, (item)->
             if item != 'rate' && !item.startsWith('amount')
                 channels.push(setting.flag_names[item])
-        channels
+        _.uniq(channels)
 
     normal_flag_array: (current)->
         return unless current.baseWage
