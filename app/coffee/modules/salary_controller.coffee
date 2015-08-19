@@ -310,28 +310,71 @@ class SalaryExchangeController
     constructor: ($http, $scope, $Evt, @SALARY_SETTING) ->
         #
 
-    $do_calc: (main_category, current)->
-        if main_category == 'service_b'
-            current.baseMoney = @setting.flags[current.baseFlag]['amount']
-            current.performanceMoney = current.baseMoney - @SALARY_SETTING['global_setting']['minimum_wage']
+    $channelSettingStr: (channel)->
+        channel + '_setting'
 
-    flag_array: (main_category, current)->
-        @setting = @SALARY_SETTING[current.baseChannel + '_setting']
-        Object.keys(@setting.flags)
+    $settingHash: (channel)->
+        @SALARY_SETTING[@$channelSettingStr(channel)]
 
-    lookup: (main_category, current)->
-        @setting = @SALARY_SETTING[current.baseChannel + '_setting']
-        @$do_calc(main_category, current)
+    service_b: (current)->
+        return unless current.baseChannel
 
-    show_amount: (main_category, current)->
-        @setting = @SALARY_SETTING[current.baseChannel + '_setting']
-        @$do_calc(main_category, current)
+        setting = @$settingHash(current.baseChannel)
+        current.baseMoney = setting.flags[current.baseFlag]['amount']
+        # 除开基本工资，剩下的就是绩效工资(service_b)
+        current.performanceMoney = current.baseMoney - @SALARY_SETTING['global_setting']['minimum_wage']
+
+    service_b_flag_array: (current)->
+        return unless current.baseChannel
+
+        setting = @$settingHash(current.baseChannel)
+        Object.keys(setting.flags)
+
+    normal: (current)->
+        return unless current.baseWage
+        return unless current.baseChannel
+        return unless current.baseFlag
+
+        setting = @$settingHash(current.baseWage)
+        flag = setting.flags[current.baseFlag]
+
+        return current.baseMoney = flag.amount if angular.isDefined(flag)
+        return 0
+
+    normal_channel_array: (current)->
+        return unless current.baseWage
+
+        setting = @$settingHash(current.baseWage)
+        channels = []
+        angular.forEach setting.flag_list, (item)->
+            if item != 'rate' && !item.startsWith('amount')
+                channels.push(setting.flag_names[item])
+        channels
+
+    normal_flag_array: (current)->
+        return unless current.baseChannel
+        setting = @$settingHash(current.baseWage)
+        Object.keys(setting.flags)
+
+    perf: (current)->
+        console.error current.performanceWage
+        return unless current.performanceWage
+
+        setting = @$settingHash(current.performanceWage)
+        console.error setting
+
+    perf_flag_array: (current)->
+        console.error current.performanceWage
+        return unless current.performanceWage
+        setting = @$settingHash(current.performanceWage)
+        setting.flags[current.performanceFlag]
 
 
 class SalaryBasicController
     @.$inject = ['$http', '$scope', '$nbEvent']
 
     constructor: ($http, $scope, $Evt) ->
+        #
 
 
 class SalaryPerformanceController
