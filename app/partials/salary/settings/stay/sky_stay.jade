@@ -1,7 +1,75 @@
-.app-content-wrapper(flex ng-controller="salaryCtrl as ctrl" ng-init="ctrl.loadConfigFromServer('allowance')")
-    .salary-basic(style="padding: 0 20px;")
+.app-content-wrapper(flex ng-controller="salaryCtrl as ctrl" ng-init="ctrl.loadConfigFromServer('airline_subsidy')" style="padding: 0;")
+    .salary-basic(style="padding: 0;")
         md-toolbar
             .md-toolbar-tools
-                h2 地面驻站
+                h2 空勤驻站
                 span(flex)
-                md-button.md-raised.md-primary(style="margin-right: 0;" ng-click="ctrl.saveConfig('allowance', ctrl.dynamic_config)") 保存
+                md-button.md-raised.md-primary(style="margin-right: 0;" ng-click="ctrl.saveConfig('airline_subsidy', ctrl.dynamic_config)") 保存
+        div.mt20(layout)
+            div(flex style="margin-right: 40px;")
+                h4 国内驻站地点
+                table.tablexx.table-default.table-bordered(flex)
+                    thead
+                        tr
+                            th 城市名称
+                            th 简称
+                    tbody
+                        tr(ng-repeat="area in ctrl.dynamic_config.inland_areas")
+                            td {{area.city}}
+                            td {{area.abbr}}
+
+                h4.mt20 国内补贴标准
+                table.tablexx.table-default.table-bordered(flex)
+                    thead
+                        tr
+                            th
+                            th 普通驻站
+                            th 中期驻站
+                            th 长期驻站
+                    tbody
+                        tr
+                            th 飞行
+                            td
+                                input(type="number" ng-model="ctrl.dynamic_config.inland_subsidy.airline.general")
+                            td
+                                input(type="number" ng-model="ctrl.dynamic_config.inland_subsidy.airline.metaphase")
+                            td
+                                input(type="number" ng-model="ctrl.dynamic_config.inland_subsidy.airline.long_term")
+                        tr
+                            th 客舱
+                            td
+                                input(type="number" ng-model="ctrl.dynamic_config.inland_subsidy.cabin.general")
+                            td
+                                input(type="number" ng-model="ctrl.dynamic_config.inland_subsidy.cabin.metaphase")
+                            td
+                                input(type="number" ng-model="ctrl.dynamic_config.inland_subsidy.cabin.long_term")
+                        tr
+                            th 空保
+                            td
+                                input(type="number" ng-model="ctrl.dynamic_config.inland_subsidy.air_security.general")
+                            td
+                                input(type="number" ng-model="ctrl.dynamic_config.inland_subsidy.air_security.metaphase")
+                            td
+                                input(type="number" ng-model="ctrl.dynamic_config.inland_subsidy.air_security.long_term")
+
+            div(flex)
+                h4 国外驻站地点
+                table.tablexx.table-default.table-bordered(flex)
+                    thead
+                        tr
+                            th 城市名称
+                            th 简称
+                    tbody
+                        tr(ng-repeat="area in ctrl.dynamic_config.outland_areas")
+                            td {{area.city}}
+                            td {{area.abbr}}
+                .form-static.has-sub
+                    div(layout)
+                        .subheader(style="width: 120px;") 外国餐食补助标准
+                        .form-row(layout flex)
+                            .form-cell(layout)
+                                md-input-container(md-no-float)
+                                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.outland_subsidy")
+                                span 美元/月
+
+
