@@ -1,0 +1,7 @@
+.app-content-wrapper(flex ng-controller="salaryCtrl as ctrl" ng-init="ctrl.loadConfigFromServer('allowance')")
+    .salary-basic(style="padding: 0 20px;")
+        md-toolbar
+            .md-toolbar-tools
+                h2 地面驻站
+                span(flex)
+                md-button.md-raised.md-primary(style="margin-right: 0;" ng-click="ctrl.saveConfig('allowance', ctrl.dynamic_config)") 保存
