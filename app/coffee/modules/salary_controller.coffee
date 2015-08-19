@@ -81,7 +81,7 @@ class SalaryController extends nb.Controller
                           "service_c_1_3_perf",                 # 绩效-服务C1-3
                           "service_c_driving_perf",             # 绩效-服务C-驾驶
                           "flyer_hour",                         # 小时费-飞行员
-                          "flight_attendant_hour",              # 小时费-空乘
+                          "fly_attendant_hour",                 # 小时费-空乘
                           "air_security_hour",                  # 小时费-空保
                           "unfly_allowance_hour",               # 小时费-未飞补贴
                           "allowance",                          # 津贴设置

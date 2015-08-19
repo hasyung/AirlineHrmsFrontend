@@ -1,4 +1,4 @@
-.app-content-wrapper(flex ng-controller="salaryCtrl as ctrl" ng-init="ctrl.loadConfigFromServer('flight_attendant_hour')")
+.app-content-wrapper(flex ng-controller="salaryCtrl as ctrl" ng-init="ctrl.loadConfigFromServer('fly_attendant_hour')")
     form.form-static(novalidate)
         fieldset
             .form-row(layout)
@@ -75,5 +75,5 @@
 
 
 
-            md-button.md-raised.md-primary(ng-click="ctrl.saveConfig('flight_attendant_hour', ctrl.dynamic_config)") 保存
+            md-button.md-raised.md-primary(ng-click="ctrl.saveConfig('fly_attendant_hour', ctrl.dynamic_config)") 保存
 
