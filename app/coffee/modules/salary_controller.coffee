@@ -78,7 +78,9 @@ class SalaryController extends nb.Controller
                           "information_perf",                   # 绩效-信息通道
                           "airline_business_perf",              # 绩效-航务航材
                           "manage_market_perf",                 # 绩效-管理营销
-                          "service_c_1_3_perf",                 # 绩效-服务C1-3
+                          "service_c_1_perf",                   # 绩效-服务C-1
+                          "service_c_2_perf",                   # 绩效-服务C-2
+                          "service_c_3_perf",                   # 绩效-服务C-3
                           "service_c_driving_perf",             # 绩效-服务C-驾驶
                           "flyer_hour",                         # 小时费-飞行员
                           "fly_attendant_hour",                 # 小时费-空乘
@@ -357,17 +359,61 @@ class SalaryExchangeController
         Object.keys(setting.flags)
 
     perf: (current)->
-        console.error current.performanceWage
         return unless current.performanceWage
-
         setting = @$settingHash(current.performanceWage)
-        console.error setting
+
+        flag = setting.flags[current.performanceFlag]
+        return current.performanceMoney = flag.amount if angular.isDefined(flag)
+        return 0
 
     perf_flag_array: (current)->
-        console.error current.performanceWage
         return unless current.performanceWage
         setting = @$settingHash(current.performanceWage)
-        setting.flags[current.performanceFlag]
+        Object.keys(setting.flags)
+
+    fly: (current)->
+        return unless current.baseChannel
+        return unless current.baseFlag
+
+        setting = @$settingHash(current.baseChannel)
+        current.baseMoney = setting.flags[current.baseFlag]['amount']
+
+    fly_flag_array: (current)->
+        return unless current.baseChannel
+
+        setting = @$settingHash(current.baseChannel)
+        Object.keys(setting.flags)
+
+    fly_hour: (current)->
+        return unless current.flyHourFee
+
+        setting = @$settingHash('flyer_hour')
+        current.flyHourMoney = setting[current.flyHourFee]
+
+    airline: (current)->
+        return unless current.baseChannel
+        return unless current.baseFlag
+
+        setting = @$settingHash(current.baseChannel)
+        current.baseMoney = setting.flags[current.baseFlag]['amount']
+
+    airline_flag_array: (current)->
+        return unless current.baseChannel
+
+        setting = @$settingHash(current.baseChannel)
+        Object.keys(setting.flags)
+
+    airline_hour: (current)->
+        return unless current.airlineHourFee
+
+        setting = @$settingHash('fly_attendant_hour')
+        current.airlineHourMoney = setting[current.airlineHourFee]
+
+    security_hour: (current)->
+        return unless current.securityHourFee
+
+        setting = @$settingHash('air_security_hour')
+        current.securityHourMoney = setting[current.securityHourFee]
 
 
 class SalaryBasicController

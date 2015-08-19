@@ -19,10 +19,22 @@
                     h2 管理营销
                     include ./btn.jade
                 include ./common.jade
-            tab.leader-base(heading="服务C1-3" ng-click="ctrl.loadDynamicConfig('service_c_1_3_perf')")
+            tab.leader-base(heading="服务C1" ng-click="ctrl.loadDynamicConfig('service_c_1_perf')")
                 md-toolbar
                   .md-toolbar-tools
-                    h2 服务C1-3
+                    h2 服务C1
+                    include ./btn.jade
+                include ./common.jade
+            tab.leader-base(heading="服务C2" ng-click="ctrl.loadDynamicConfig('service_c_2_perf')")
+                md-toolbar
+                  .md-toolbar-tools
+                    h2 服务C2
+                    include ./btn.jade
+                include ./common.jade
+            tab.leader-base(heading="服务C3" ng-click="ctrl.loadDynamicConfig('service_c_3_perf')")
+                md-toolbar
+                  .md-toolbar-tools
+                    h2 服务C3
                     include ./btn.jade
                 include ./common.jade
             tab.leader-base(heading="服务C-驾驶" ng-click="ctrl.loadDynamicConfig('service_c_driving_perf')")
