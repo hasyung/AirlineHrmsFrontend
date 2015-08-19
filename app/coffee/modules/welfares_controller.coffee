@@ -267,9 +267,9 @@ class SocialComputeController extends nb.Controller
     parseJSON: (data) ->
         angular.fromJson(data)
 
-    upload_salary: ()->
+    upload_salary: (param)->
         self = @
-        calc_month = @currentCalcTime()
+        calc_month = param.year + '-' + param.month
         params = {attachment_id: @upload_xls_id, month: calc_month}
 
         @http.post("/api/social_records/import", params).success (data, status) ->
