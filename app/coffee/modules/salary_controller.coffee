@@ -310,28 +310,34 @@ class SalaryExchangeController
     constructor: ($http, $scope, $Evt, @SALARY_SETTING) ->
         #
 
-    $do_calc: (main_category, current)->
+    $channelSettingStr: (channel)->
+        channel + '_setting'
+
+    $channelSetting: (channel)->
+        @SALARY_SETTING[@$channelSettingStr(channel)]
+
+    do_calc: (main_category, current)->
+        return unless current.baseChannel
+
+        setting = @$channelSetting(current.baseChannel)
+
         if main_category == 'service_b'
-            current.baseMoney = @setting.flags[current.baseFlag]['amount']
+            current.baseMoney = setting.flags[current.baseFlag]['amount']
+            # 除开基本工资，剩下的就是绩效工资
             current.performanceMoney = current.baseMoney - @SALARY_SETTING['global_setting']['minimum_wage']
 
     flag_array: (main_category, current)->
-        @setting = @SALARY_SETTING[current.baseChannel + '_setting']
-        Object.keys(@setting.flags)
+        return unless current.baseChannel
 
-    lookup: (main_category, current)->
-        @setting = @SALARY_SETTING[current.baseChannel + '_setting']
-        @$do_calc(main_category, current)
-
-    show_amount: (main_category, current)->
-        @setting = @SALARY_SETTING[current.baseChannel + '_setting']
-        @$do_calc(main_category, current)
+        setting = @$channelSetting(current.baseChannel)
+        Object.keys(setting.flags)
 
 
 class SalaryBasicController
     @.$inject = ['$http', '$scope', '$nbEvent']
 
     constructor: ($http, $scope, $Evt) ->
+        #
 
 
 class SalaryPerformanceController

@@ -1,7 +1,7 @@
-div(layout ng-controller="salaryExchangeCtrl as exchangeCtrl" ng-init="exchangeCtrl.lookup('service_b', $parent.current)")
+div(layout ng-controller="salaryExchangeCtrl as exchangeCtrl")
     md-input-container.row-has-value(flex)
         label 基础薪酬通道
-        md-select(ng-model="$parent.current.baseChannel" placeholder="请选择" ng-change="exchangeCtrl.lookup('service_b', $parent.current)")
+        md-select(ng-model="current.baseChannel" placeholder="请选择" ng-change="exchangeCtrl.do_calc('service_b', current)")
             md-option(value="service_b_normal_cleaner_base") 清洁工
             md-option(value="service_b_parking_cleaner_base") 机坪清洁工
             md-option(value="service_b_hotel_service_base") 宾馆服务员
@@ -21,13 +21,13 @@ div(layout ng-controller="salaryExchangeCtrl as exchangeCtrl" ng-init="exchangeC
 
     md-input-container.row-has-value(flex)
         label 档级
-        md-select(ng-model="$parent.current.baseFlag" placeholder="请选择" ng-change="exchangeCtrl.show_amount('service_b', $parent.current)")
-            md-option(ng-value="item" ng-repeat="item in exchangeCtrl.flag_array('service_b', $parent.current) track by $index") {{item}}
+        md-select(ng-model="current.baseFlag" placeholder="请选择" ng-change="exchangeCtrl.do_calc('service_b', current)")
+            md-option(ng-value="item" ng-repeat="item in exchangeCtrl.flag_array('service_b', current) track by $index") {{item}}
 
 div(layout)
     md-input-container(flex)
         label 基础薪酬
-        input(type="number" min="0" max="1000000" ng-model="$parent.current.baseMoney" readonly)
+        input(type="number" min="0" max="1000000" ng-model="current.baseMoney" readonly)
     md-input-container(flex)
         label 绩效薪酬
-        input(type="number" min="0" max="1000000" ng-model="$parent.current.performanceMoney" readonly)
+        input(type="number" min="0" max="1000000" ng-model="current.performanceMoney" readonly)
