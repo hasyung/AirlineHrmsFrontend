@@ -240,7 +240,7 @@ class SocialComputeController extends nb.Controller
         @currentYear = _.last(@year_list)
         @currentMonth = _.last(@month_list)
 
-        @socialRecords = @SocialRecord.$collection().$fetch()
+        @socialRecords = @SocialRecord.$collection().$fetch(month: @currentCalcTime())
 
     search: (tableState)->
         @socialRecords.$refresh(tableState)
