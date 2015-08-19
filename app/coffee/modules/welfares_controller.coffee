@@ -86,6 +86,11 @@ class WelfarePersonalController extends nb.Controller
                     type: 'string'
                     displayName: '社保属地'
                 }
+                {
+                    name: 'social_account'
+                    displayName: '社保编号'
+                    type: 'string'
+                }
             ]
         }
 
@@ -235,7 +240,7 @@ class SocialComputeController extends nb.Controller
         @currentYear = _.last(@year_list)
         @currentMonth = _.last(@month_list)
 
-        @socialRecords = @SocialRecord.$collection().$fetch()
+        @socialRecords = @SocialRecord.$collection().$fetch(month: @currentCalcTime())
 
     search: (tableState)->
         @socialRecords.$refresh(tableState)
@@ -262,9 +267,9 @@ class SocialComputeController extends nb.Controller
     parseJSON: (data) ->
         angular.fromJson(data)
 
-    upload_salary: ()->
+    upload_salary: (param)->
         self = @
-        calc_month = @currentCalcTime()
+        calc_month = param.year + '-' + param.month
         params = {attachment_id: @upload_xls_id, month: calc_month}
 
         @http.post("/api/social_records/import", params).success (data, status) ->
