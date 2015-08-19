@@ -1,7 +1,7 @@
 div(layout ng-controller="salaryExchangeCtrl as exchangeCtrl")
     md-input-container.row-has-value(flex)
         label 基础薪酬通道
-        md-select(ng-model="current.baseChannel" placeholder="请选择" ng-change="exchangeCtrl.do_calc('service_b', current)")
+        md-select(ng-model="current.baseChannel" placeholder="请选择" ng-change="exchangeCtrl.service_b(current)")
             md-option(value="service_b_normal_cleaner_base") 清洁工
             md-option(value="service_b_parking_cleaner_base") 机坪清洁工
             md-option(value="service_b_hotel_service_base") 宾馆服务员
@@ -21,8 +21,8 @@ div(layout ng-controller="salaryExchangeCtrl as exchangeCtrl")
 
     md-input-container.row-has-value(flex)
         label 档级
-        md-select(ng-model="current.baseFlag" placeholder="请选择" ng-change="exchangeCtrl.do_calc('service_b', current)")
-            md-option(ng-value="item" ng-repeat="item in exchangeCtrl.flag_array('service_b', current) track by $index") {{item}}
+        md-select(ng-model="current.baseFlag" placeholder="请选择" ng-change="exchangeCtrl.service_b(current)")
+            md-option(ng-value="item" ng-repeat="item in exchangeCtrl.service_b_flag_array(current) track by $index") {{item}}
 
 div(layout)
     md-input-container(flex)
