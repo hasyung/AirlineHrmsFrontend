@@ -13,7 +13,7 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
         md-input-container.row-has-value(flex)
             label 档级
             md-select(ng-model="current.baseFlag" placeholder="请选择" ng-change="exchangeCtrl.fly(current)")
-                md-option(ng-value="item" ng-repeat="item in exchangeCtrl.fly_flag_array(current) track by $index") {{item}}
+                md-option(ng-value="item" ng-repeat="item in exchangeCtrl.fly_flag_array(current)") {{item}}
         md-input-container(flex)
             label 金额
             input(type="number" min="0" max="100000" step="1" ng-model="current.baseMoney" readonly)
