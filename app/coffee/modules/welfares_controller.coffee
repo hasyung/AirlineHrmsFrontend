@@ -485,7 +485,7 @@ class AnnuityPersonalController extends nb.Controller
                 <div class="ui-grid-cell-contents ng-binding ng-scope">
                     <a nb-panel
                         template-url="partials/personnel/info_basic.html"
-                        locals="{employee: row.entity}">
+                        locals="{employee: row.entity.owner}">
                         {{grid.getCellValue(row, col)}}
                     </a>
                 </div>
@@ -511,6 +511,7 @@ class AnnuityPersonalController extends nb.Controller
             {
                 displayName: '本年基数'
                 name: 'annuityCardinality'
+                headerCellClass: 'editable_cell_header'
                 enableCellEdit: true
                 type: 'number'
             }
@@ -701,9 +702,8 @@ class AnnuityHistoryController
                 cellTooltip: (row) ->
                     return row.entity.departmentName
             }
-            {displayName: '身份证号', name: 'identityNo'}
-            {displayName: '手机号', name: 'mobile'}
-            {displayName: '本年基数', name: 'annuityCardinality'}
+            {displayName: '缴费月度', name: 'calDate'}
+            {displayName: '当期基数', name: 'annuityCardinality'}
             {displayName: '个人缴费', name: 'personalPayment'}
             {displayName: '公司缴费', name: 'companyPayment'}
             {displayName: '备注', name: 'note'}
@@ -743,7 +743,11 @@ class AnnuityChangesController
         }
 
         @columnDef = [
-            {displayName: '员工编号', name: 'employeeNo'}
+            {
+                displayName: '员工编号'
+                name: 'employeeNo'
+                enableCellEdit: false
+            }
             {
                 displayName: '姓名'
                 name: 'employeeName'
@@ -801,6 +805,7 @@ class AnnuityChangesController
                 })
                 .success (data) ->
                     dfd.resolve()
+                    self.annuityChanges.$refresh()
                     self.Evt.$send('annuity_change:update:success', data.messages || "处理成功")
                 .error () ->
                     dfd.reject()
