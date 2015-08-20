@@ -294,6 +294,21 @@ class AttendanceCtrl extends nb.Controller
                     displayName: '姓名'
                     type: 'string'
                 }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+                {
+                    name: 'department_ids'
+                    displayName: '机构'
+                    type: 'org-search'
+                }
+                {
+                    name: 'summary_date'
+                    displayName: '汇总时间'
+                    type: 'date-range'
+                }
             ]
         }
 
@@ -304,6 +319,16 @@ class AttendanceCtrl extends nb.Controller
                     name: 'employee_name'
                     displayName: '姓名'
                     type: 'string'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+                {
+                    name: 'department_ids'
+                    displayName: '机构'
+                    type: 'org-search'
                 }
             ]
         }
