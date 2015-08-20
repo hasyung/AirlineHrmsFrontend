@@ -22,7 +22,7 @@
                 table.tablexx.table-default.table-bordered(flex)
                     thead
                         tr
-                            th
+                            th 类别
                             th 普通驻站
                             th 中期驻站
                             th 长期驻站
@@ -64,12 +64,10 @@
                             td {{area.city}}
                             td {{area.abbr}}
                 .form-static.has-sub
-                    div(layout)
-                        .subheader(style="width: 120px;") 外国餐食补助标准
+                    div(layout style="margin-left:-6px;margin-top:22px;")
+                        .subheader(style="width:120px;") 外国餐食补助标准
                         .form-row(layout flex)
                             .form-cell(layout)
                                 md-input-container(md-no-float)
                                     input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.outland_subsidy")
                                 span 美元/月
-
-
