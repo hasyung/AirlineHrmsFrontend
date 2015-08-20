@@ -10,11 +10,11 @@ md-dialog.attendance_new(ng-init="attendance = {};current = dialog.current;atten
                     div(layout)
                         md-input-container(flex)
                             label 员工姓名
-                            input(ng-model="current.name" name="name" required disabled)
+                            input(ng-model="current.name" name="name" readonly)
                     div(layout)
                         md-input-container.row-has-value(flex)
                             label 考勤类型
-                            md-select(ng-model="attendance.recordType" required)
+                            md-select(ng-model="attendance.recordType" placeholder="请选择")
                                 md-option(value="迟到") 迟到
                                 md-option(value="早退") 早退
                                 md-option(value="旷工") 旷工
@@ -31,4 +31,4 @@ md-dialog.attendance_new(ng-init="attendance = {};current = dialog.current;atten
 
             .md-actions
                 md-button(type="button" ng-click='dialog.close()') 取 消
-                md-button.md-primary.md-raised(type="submit") 确 定
+                md-button.md-primary.md-raised(type="submit" ng-disabled="!attendance.recordType || !attendance.recordDate") 确 定
