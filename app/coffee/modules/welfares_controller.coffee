@@ -805,7 +805,6 @@ class AnnuityChangesController
                 })
                 .success (data) ->
                     dfd.resolve()
-                    self.annuityChanges.$refresh()
                     self.Evt.$send('annuity_change:update:success', data.messages || "处理成功")
                 .error () ->
                     dfd.reject()

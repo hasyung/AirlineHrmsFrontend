@@ -75,6 +75,9 @@ AnnuitySetup = (restmod, RMUtils, $Evt) ->
             jsonRootSingle: 'annuity'
             jsonRootMany: 'annuities'
 
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+
         $extend:
             Collection:
                 search: (tableState) ->
@@ -88,6 +91,8 @@ AnnuityRecord = (restmod, RMUtils, $Evt) ->
         $config:
             jsonRootSingle: 'annuity'
             jsonRootMany: 'annuities'
+
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
 
         $extend:
             Scope:
@@ -109,6 +114,8 @@ AnnuityChange = (restmod, RMUtils, $Evt) ->
         $config:
             jsonRootSingle: 'annuity_apply'
             jsonRootMany: 'annuity_applies'
+
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
 
         $extend:
             Collection:
