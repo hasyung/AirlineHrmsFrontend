@@ -476,7 +476,11 @@ class AnnuityPersonalController extends nb.Controller
         }
 
         @columnDef = [
-            {displayName: '员工编号', name: 'employeeNo'}
+            {
+                displayName: '员工编号'
+                name: 'employeeNo'
+                enableCellEdit: false
+            }
             {
                 displayName: '姓名'
                 field: 'name'
