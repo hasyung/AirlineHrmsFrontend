@@ -7,12 +7,16 @@
                 h2 员工人事信息列表
                 div(flex)
                 md-button.md-primary.md-raised(
+                    ng-disabled="!ctrl.getSelected()"
+                    nb-dialog
+                    template-url="partials/labors/attendance/change_leave.html"
+                    locals="{leave: ctrl.getSelected()}"
                 ) 假别修正
                 md-button.md-primary.md-raised(
                     ng-disabled="ctrl.getSelected().type != 'Flow::SickLeaveInjury'"
                     nb-confirm="ctrl.transferToOccupationInjury(ctrl.getSelected())"
                     nb-title="病假（工伤待定）转工伤假"
-                    nb-content="你确认要将员工{{ctrl.getSelected().receptor.name}}的病假（工伤待定）装换为工伤假?"
+                    nb-content="你确认要将该病假（工伤待定）转换为工伤假?"
                 ) 工伤假
                 md-button.md-primary.md-raised(
                 ) 销假
