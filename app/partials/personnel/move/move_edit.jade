@@ -1,0 +1,24 @@
+md-dialog.employee_move(ng-controller="EditableResourceCtrl" style="min-width: 400px;")
+    md-content(ng-init="current = dialog.move.$refresh()")
+        form(flex ng-submit="save(current.$save(), move_edit_form);dialog.close();" name="move_edit_form")
+            md-toolbar.md-accent(md-theme="hrms")
+                .md-toolbar-tools
+                    span 异动修改
+            .dialog-content(layout layout-align="center")
+                fieldset(flex)
+                    div(layout)
+                        md-input-container(flex)
+                            label 姓名
+                            input(style="font-size: 14px;" ng-model="current.employeeName" name="employeeName" readonly)
+                    div(layout)
+                        md-input-container(flex)
+                            label 文件编号
+                            input(ng-model="current.fileNo" name="fileNo" required)
+                    div(layout)
+                        md-input-container(flex)
+                            label 异动期限
+                            input(ng-model="current.limitTime" required)
+
+            .md-actions
+                md-button(type="button" ng-click="cancel(current, $event, move_edit_form);dialog.close()") 取 消
+                md-button.md-primary.md-raised(type="submit") 确 定

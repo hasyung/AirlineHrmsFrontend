@@ -38,6 +38,20 @@ LeaveEmployees = (restmod, RMUtils, $Evt) ->
         startDate: {decode: 'date', param: 'yyyy-MM-dd'}
     }
 
+MoveEmployees = (restmod, RMUtils, $Evt) ->
+    MoveEmployees = restmod.model('/special_states').mix 'nbRestApi', {
+        $config:
+            jsonRootSingle: 'special_state'
+            jsonRootMany: 'special_states'
+
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+        $extend:
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+    }
+
 
 Formerleaders = (restmod, RMUtils, $Evt) ->
     Leader = restmod.model('/formerleaders').mix 'nbRestApi', {
@@ -57,3 +71,5 @@ Formerleaders = (restmod, RMUtils, $Evt) ->
 resources.factory 'Employee', ['restmod', 'RMUtils', '$nbEvent', Employee]
 resources.factory 'Formerleaders', ['restmod', 'RMUtils', '$nbEvent', Formerleaders]
 resources.factory 'LeaveEmployees', ['restmod', 'RMUtils', '$nbEvent', LeaveEmployees]
+resources.factory 'MoveEmployees', ['restmod', 'RMUtils', '$nbEvent', MoveEmployees]
+

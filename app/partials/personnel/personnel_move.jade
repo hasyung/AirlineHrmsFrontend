@@ -1,0 +1,32 @@
+.app-content-wrapper(flex ng-controller="MoveEmployeesCtrl as ctrl")
+    div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+    div.ui-grid-container
+        md-toolbar
+            .md-toolbar-tools
+                h2 员工异动信息列表
+                div(flex)
+                md-button.md-primary.md-raised(
+                    ng-disabled="!ctrl.getSelected()"
+                    nb-dialog
+                    template-url="partials/personnel/move/move_edit.html"
+                    locals="{move: ctrl.getSelected()}"
+                ) 异动修改
+                md-button.md-primary.md-raised(
+                    nb-dialog
+                    template-url="partials/personnel/move/borrow.html"
+                ) 借调设置
+                md-button.md-primary.md-raised(
+                    nb-dialog
+                    template-url="partials/personnel/move/accredit.html"
+                ) 驻派设置
+
+        div(
+            nb-grid
+            column-defs="ctrl.columnDef"
+            on-register-api="ctrl.exportGridApi(gridApi)"
+            grid-selection
+            multi-select="false"
+            safe-src="ctrl.moveEmployees"
+            )
+
+

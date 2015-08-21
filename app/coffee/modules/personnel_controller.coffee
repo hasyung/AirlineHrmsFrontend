@@ -326,6 +326,126 @@ class LeaveEmployeesCtrl extends nb.Controller
     search: (tableState) ->
         @leaveEmployees.$refresh(tableState)
 
+class MoveEmployeesCtrl extends nb.Controller
+    @.$inject = ['$scope', 'MoveEmployees', 'Employee', '$nbEvent']
+
+    constructor: (@scope, @MoveEmployees, @Employee, @Evt) ->
+        @loadInitialData()
+
+        @columnDef = [
+            {
+                displayName: '员工编号'
+                name: 'employeeNo'
+            }
+            {
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+            }
+            {
+                displayName: '岗位'
+                name: 'positionName'
+                cellTooltip: (row) ->
+                    return row.entity.position
+            }
+            {
+                displayName: '异动性质'
+                name: 'specialCategory'
+                cellTooltip: (row) ->
+                    return row.entity.specialCategory
+            }
+            {displayName: '异动时间', name: 'specialTime'}
+            {displayName: '异动地点', name: 'specialLocation'}
+            {
+                displayName: '文件编号'
+                name: 'fileNo'
+                cellTooltip: (row) ->
+                    return row.entity.fileNo
+            }
+            {
+                displayName: '异动期限'
+                name: 'limitTime'
+                cellTooltip: (row) ->
+                    return row.entity.limitTime
+            }
+        ]
+
+        @filterOptions = {
+            name: 'personnelLeave'
+            constraintDefs: [
+                {
+                    name: 'employeeName'
+                    displayName: '姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'employeeNo'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+                {
+                    name: 'department'
+                    displayName: '机构'
+                    type: 'string'
+                }
+                {
+                    name: 'special_category'
+                    type: 'string'
+                    displayName: '异动性质'
+                }
+                {
+                    name: 'special_location'
+                    type: 'date-range'
+                    displayName: '异动地点'
+                }
+            ]
+        }
+
+
+    loadInitialData: ->
+        @moveEmployees = @MoveEmployees.$collection().$fetch()
+
+    newMoveEmployee: (moveEmployee)->
+        self = @
+        @moveEmployees.$build(moveEmployee).$save().$then ()->
+            self.moveEmployees.$refresh()
+
+    search: (tableState) ->
+        @moveEmployees.$refresh(tableState)
+
+    getSelected: () ->
+        rows = @gridApi.selection.getSelectedGridRows()
+        selected = if rows.length >= 1 then rows[0].entity else null
+
+    loadEmployee: (params, moveEmployee)->
+        self = @
+
+        @Employee.$collection().$refresh(params).$then (employees)->
+            args = _.mapKeys params, (value, key) ->
+                _.camelCase key
+
+            matched = _.find employees, args
+
+            if matched
+                self.loadEmp = matched
+                # moveEmployee.owner = matched
+            else
+                self.loadEmp = params
+
 
 class ReviewCtrl extends nb.Controller
     @.$inject = ['$scope', 'Change', 'Record', '$mdDialog', 'toaster']
@@ -537,4 +657,5 @@ app.directive('orgMutiPos',[orgMutiPos])
 
 app.controller('PersonnelSort', PersonnelSort)
 app.controller('LeaveEmployeesCtrl', LeaveEmployeesCtrl)
+app.controller('MoveEmployeesCtrl', MoveEmployeesCtrl)
 app.controller('EmployeePerformanceCtrl', EmployeePerformanceCtrl)
