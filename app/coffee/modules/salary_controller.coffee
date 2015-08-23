@@ -502,6 +502,8 @@ class SalaryBasicController extends nb.Controller
     # 强制计算
     exeCalc: () ->
         @calcing = true
+        @toaster.pop('info', '提示', '开始计算')
+
         self = @
 
         @BasicSalary.compute({month: @currentCalcTime()}).$asPromise().then (data)->
@@ -595,7 +597,7 @@ class SalaryPerformanceController extends nb.Controller
     loadRecords: () ->
         @performanceSalaries.$refresh({month: @currentCalcTime()})
 
-    # 强制计算
+    # 强制计算(计算基数、计算绩效薪酬)
     exeCalc: (type) ->
         @calcing = true
         self = @
@@ -622,6 +624,20 @@ class SalaryAllowanceController extends nb.Controller
         #
 
 
+class SalaryLandAllowanceController extends nb.Controller
+    @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'toaster']
+
+    constructor: ($http, $scope, @Evt, @Employee, @toaster) ->
+        #
+
+
+class SalaryOverviewController extends nb.Controller
+    @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'toaster']
+
+    constructor: ($http, $scope, @Evt, @Employee, @toaster) ->
+        #
+
+
 app.controller 'salaryCtrl', SalaryController
 app.controller 'salaryPersonalCtrl', SalaryPersonalController
 app.controller 'salaryExchangeCtrl', SalaryExchangeController
@@ -629,3 +645,5 @@ app.controller 'salaryBasicCtrl', SalaryBasicController
 app.controller 'salaryPerformanceCtrl', SalaryPerformanceController
 app.controller 'salaryHoursFeeCtrl', SalaryHoursFeeController
 app.controller 'salaryAllowanceCtrl', SalaryAllowanceController
+app.controller 'salaryLandAllowanceCtrl', SalaryLandAllowanceController
+app.controller 'salaryOverviewCtrl', SalaryOverviewController

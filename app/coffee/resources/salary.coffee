@@ -88,6 +88,60 @@ HoursFee = (restmod, RMUtils, $Evt) ->
     }
 
 
+Allowance = (restmod, RMUtils, $Evt) ->
+    restmod.model('/allowances').mix 'nbRestApi', 'DirtyModel', {
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+        $hooks:
+            'after-create': ->
+                $Evt.$send('allowance:create:success', "津贴创建成功")
+
+            'after-update': ->
+                $Evt.$send('allowance:update:success', "津贴更新成功")
+
+        $config:
+            jsonRootSingle: 'allowance'
+            jsonRootMany: 'allowances'
+    }
+
+
+LandAllowance = (restmod, RMUtils, $Evt) ->
+    restmod.model('/land_allowances').mix 'nbRestApi', 'DirtyModel', {
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+        $hooks:
+            'after-create': ->
+                $Evt.$send('land_allowance:create:success', "驻站津贴创建成功")
+
+            'after-update': ->
+                $Evt.$send('land_allowance:update:success', "驻站津贴更新成功")
+
+        $config:
+            jsonRootSingle: 'land_allowance'
+            jsonRootMany: 'land_allowances'
+    }
+
+
+SalaryOverview = (restmod, RMUtils, $Evt) ->
+    restmod.model('/salary_overviews').mix 'nbRestApi', 'DirtyModel', {
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+        $hooks:
+            'after-create': ->
+                $Evt.$send('salary_counter:create:success', "驻站津贴创建成功")
+
+            'after-update': ->
+                $Evt.$send('salary_counter:update:success', "驻站津贴更新成功")
+
+        $config:
+            jsonRootSingle: 'salary_overview'
+            jsonRootMany: 'salary_overviews'
+    }
+
+
 resources.factory 'BasicSalary', ['restmod', 'RMUtils', '$nbEvent', BasicSalary]
 resources.factory 'PerformanceSalary', ['restmod', 'RMUtils', '$nbEvent', PerformanceSalary]
 resources.factory 'HoursFee', ['restmod', 'RMUtils', '$nbEvent', HoursFee]
+resources.factory 'Allowance', ['restmod', 'RMUtils', '$nbEvent', Allowance]
+resources.factory 'LandAllowance', ['restmod', 'RMUtils', '$nbEvent', LandAllowance]
+resources.factory 'SalaryOverview', ['restmod', 'RMUtils', '$nbEvent', SalaryOverview]

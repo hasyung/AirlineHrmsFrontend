@@ -17,19 +17,18 @@
         md-toolbar
             .md-toolbar-tools
                 h2 绩效薪酬
-                span(layout)
+
                 span(flex)
                 span
                     md-button.md-raised.md-primary(
-                        download
-                        ng-href="/api/performance_salaries/export?month={{ctrl.currentCalcTime()}}"
-                        href="javascript:;"
-                        ) 导出
+                        nb-dialog
+                        template-url="partials/salary/performance/performance_upload.html"
+                        ) 导入
                 span
                     md-menu(ng-init="selectedRows=[]")
                         md-button.md-primary.md-raised(
                             ng-click="$mdOpenMenu($event)"
-                            ng-disabled="ctrl.calcing || ctrl.socialRecords.length==0"
+                            ng-disabled="ctrl.calcing"
                             ) 计算
                         md-menu-content
                             md-menu-item()
@@ -44,8 +43,10 @@
                                 ) 计算绩效薪酬
                 span
                     md-button.md-raised.md-primary(
-                        nb-dialog
-                        template-url="partials/salary/performance/performance_upload.html"
-                        ) 导入
+                        download
+                        ng-href="/api/performance_salaries/export?month={{ctrl.currentCalcTime()}}"
+                        href="javascript:;"
+                        ng-disabled="ctrl.calcing || ctrl.performanceSalaries.length==0"
+                        ) 导出
 
         div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.performanceSalaries")
