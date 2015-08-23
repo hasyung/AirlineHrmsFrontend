@@ -462,13 +462,13 @@ class SalaryBasicController extends nb.Controller
             }
             {
                 displayName: '岗位'
-                name: 'position.name'
+                name: 'positionName'
                 cellTooltip: (row) ->
-                    return row.entity.position.name
+                    return row.entity.positionName
             }
             {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
             {displayName: '当月基础薪酬', name: 'salary'}
-            {displayName: '补扣发', name: 'add_garnishee'}
+            {displayName: '补扣发', name: 'addGarnishee'}
             {displayName: '备注', name: 'note'}
         ]
 
@@ -559,14 +559,14 @@ class SalaryPerformanceController extends nb.Controller
             }
             {
                 displayName: '岗位'
-                name: 'position.name'
+                name: 'positionName'
                 cellTooltip: (row) ->
-                    return row.entity.position.name
+                    return row.entity.positionName
             }
             {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
-            {displayName: '当月绩效基数', name: 'base_salary'}
+            {displayName: '当月绩效基数', name: 'baseSalary'}
             {displayName: '当月绩效薪酬', name: 'amount'}
-            {displayName: '补扣发', name: 'add_garnishee'}
+            {displayName: '补扣发', name: 'addGarnishee'}
             {displayName: '备注', name: 'note'}
         ]
 
@@ -618,23 +618,112 @@ class SalaryHoursFeeController extends nb.Controller
 
 
 class SalaryAllowanceController extends nb.Controller
-    @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'toaster']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'Allowance', 'toaster']
 
-    constructor: ($http, $scope, @Evt, @Employee, @toaster) ->
-        #
+    constructor: ($http, $scope, @Evt, @Employee, @Allowance, @toaster) ->
+        @allowances = @loadInitialData()
+
+        @filterOptions = {
+            name: 'allowance'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '员工姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+            ]
+        }
+
+        @columnDef = [
+            {displayName: '员工编号', name: 'employeeNo'}
+            {
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+            }
+            {
+                displayName: '岗位'
+                name: 'positionName'
+                cellTooltip: (row) ->
+                    return row.entity.positionName
+            }
+            {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
+            {displayName: '津贴', name: 'salary'}
+            {displayName: '补扣发', name: 'addGarnishee'}
+            {displayName: '备注', name: 'note'}
+        ]
+
+    loadInitialData: ->
+        @year_list = @$getYears()
+        @month_list = @$getMonths()
+
+        @currentYear = _.last(@year_list)
+        @currentMonth = _.last(@month_list)
+
+        @allowances = @Allowance.$collection().$fetch({month: @currentCalcTime()})
+
+    search: (tableState) ->
+        tableState = {} unless tableState
+        tableState['month'] = @currentCalcTime()
+        @allowances.$refresh(tableState)
+
+    getSelectsIds: () ->
+        rows = @gridApi.selection.getSelectedGridRows()
+        rows.map (row) -> return row.entity.$pk
+
+    getSelected: () ->
+        rows = @gridApi.selection.getSelectedGridRows()
+
+    currentCalcTime: ()->
+        @currentYear + "-" + @currentMonth
+
+    loadRecords: () ->
+        @allowances.$refresh({month: @currentCalcTime()})
+
+    # 强制计算
+    exeCalc: () ->
+        @calcing = true
+        @toaster.pop('info', '提示', '开始计算')
+
+        self = @
+
+        @Allowances.compute({month: @currentCalcTime()}).$asPromise().then (data)->
+            self.calcing = false
+            erorr_msg = data.$response.data.messages
+            self.Evt.$send("basic_salary:calc:error", erorr_msg) if erorr_msg
+            self.loadRecords()
 
 
 class SalaryLandAllowanceController extends nb.Controller
-    @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'toaster']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'LandAllowance', 'toaster']
 
-    constructor: ($http, $scope, @Evt, @Employee, @toaster) ->
+    constructor: ($http, $scope, @Evt, @Employee, @LandAllowance, @toaster) ->
         #
 
 
 class SalaryOverviewController extends nb.Controller
-    @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'toaster']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'SalaryOverview', 'toaster']
 
-    constructor: ($http, $scope, @Evt, @Employee, @toaster) ->
+    constructor: ($http, $scope, @Evt, @Employee, @SalaryOverview, @toaster) ->
         #
 
 

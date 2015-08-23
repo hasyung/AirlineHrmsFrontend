@@ -102,6 +102,18 @@ Allowance = (restmod, RMUtils, $Evt) ->
         $config:
             jsonRootSingle: 'allowance'
             jsonRootMany: 'allowances'
+
+        $extend:
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+            Scope:
+                # 计算(根据年月)
+                compute: (params)->
+                    restmod.model('/allowances/compute').mix(
+                        $config:
+                            jsonRoot: 'allowances'
+                    ).$search(params)
     }
 
 
@@ -119,6 +131,18 @@ LandAllowance = (restmod, RMUtils, $Evt) ->
         $config:
             jsonRootSingle: 'land_allowance'
             jsonRootMany: 'land_allowances'
+
+        $extend:
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+            Scope:
+                # 计算(根据年月)
+                compute: (params)->
+                    restmod.model('/land_allowances/compute').mix(
+                        $config:
+                            jsonRoot: 'land_allowances'
+                    ).$search(params)
     }
 
 

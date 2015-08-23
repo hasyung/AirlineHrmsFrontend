@@ -23,13 +23,25 @@
                     md-button.md-raised.md-primary(
                         ng-click="ctrl.exeCalc()"
                         ng-disabled="ctrl.calcing"
-                        ) 计算
+                    ) 计算
                 span
-                    md-button.md-raised.md-primary(
-                        download
-                        ng-href="/api/basic_salaries/export?month={{ctrl.currentCalcTime()}}"
-                        href="javascript:;"
-                        ng-disabled="ctrl.calcing || ctrl.basicSalaries.length==0"
-                        ) 导出
+                    md-menu(ng-init="selectedRows=[]")
+                        md-button.md-primary.md-raised(
+                            ng-click="$mdOpenMenu($event)"
+                            ng-disabled="ctrl.calcing || ctrl.basicSalaries.length==0"
+                            ) 导出
+                        md-menu-content
+                            md-menu-item()
+                                a.md-button(flex
+                                    download
+                                    ng-href="/api/basic_salaries/export_nc?month={{ctrl.currentCalcTime()}}"
+                                    href="javascript:"
+                                ) NC导入表
+                            md-menu-item()
+                                a.md-button(
+                                    download
+                                    ng-href="/api/basic_salaries/export_approval?month={{ctrl.currentCalcTime()}}"
+                                    href="javascript:"
+                                ) 审批表
 
         div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.basicSalaries")

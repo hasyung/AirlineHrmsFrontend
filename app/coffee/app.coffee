@@ -34,6 +34,7 @@ deps = [
     'nb.component'
     'flow'
     'infinite-scroll'
+    'ng-echarts'
 ]
 
 
