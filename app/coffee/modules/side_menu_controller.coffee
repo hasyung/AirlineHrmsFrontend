@@ -8,6 +8,7 @@ class SideMenuController
     keys = Object.keys(ROLES_MENU_CONFIG)
     pages = []
 
+
     angular.forEach ROLES_MENU_CONFIG, (array, key)->
       angular.forEach array, (page)->
         pages.push key + '@' + page
@@ -19,7 +20,7 @@ class SideMenuController
     # pages
     menu.sections = angular.forEach menu.sections, (item)->
       item.pages = _.filter item.pages, (page)->
-        pages.indexOf(item.name + '@' + page.name)
+        pages.indexOf(item.name + '@' + page.name) >= 0
 
 
 app.controller('sideMenuCtrl', SideMenuController)

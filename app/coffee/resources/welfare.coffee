@@ -39,7 +39,7 @@ SocialRecord = (restmod, RMUtils, $Evt) ->
                     restmod.model('/social_records/compute').mix(
                         $config:
                             jsonRoot: 'social_records'
-                    ).$search(params);
+                    ).$search(params)
 
             Collection:
                 search: (tableState) ->
@@ -96,7 +96,7 @@ AnnuityRecord = (restmod, RMUtils, $Evt) ->
                     restmod.model('/annuities/cal_annuity').mix(
                         $config:
                             jsonRoot: 'annuities'
-                    ).$search(params);
+                    ).$search(params)
 
             Collection:
                 search: (tableState) ->

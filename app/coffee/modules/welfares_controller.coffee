@@ -11,10 +11,12 @@ class Route
                 url: '/welfares'
                 templateUrl: 'partials/welfares/settings.html'
             }
+
             .state 'welfares_socials', {
                 url: '/welfares/socials'
                 templateUrl: 'partials/welfares/socials.html'
             }
+
             .state 'welfares_annuities', {
                 url: '/welfares/annuities'
                 templateUrl: 'partials/welfares/annuities.html'
@@ -240,7 +242,7 @@ class SocialComputeController extends nb.Controller
         @currentYear = _.last(@year_list)
         @currentMonth = _.last(@month_list)
 
-        @socialRecords = @SocialRecord.$collection().$fetch(month: @currentCalcTime())
+        @socialRecords = @SocialRecord.$collection().$fetch({month: @currentCalcTime()})
 
     search: (tableState)->
         @socialRecords.$refresh(tableState)
