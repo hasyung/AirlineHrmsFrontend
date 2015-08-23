@@ -47,4 +47,10 @@
                     'active': item.department_id == ctrl.tableData.$metadata.department_id}"
                     ng-click="ctrl.exeSearch(item.department_id)"
                 )
-        div(nb-grid column-defs="ctrl.summaryListCol" export-api grid-pinning safe-src="ctrl.tableData")
+        div(
+            nb-grid
+            column-defs="ctrl.summaryListCol"
+            export-api
+            grid-pinning
+            safe-src="ctrl.tableData"
+            )

@@ -434,5 +434,18 @@ md-dialog.personal_number {
     }
 }
 
+//异动人员 -> 异动修改dialog
+md-dialog.employee_move {
+    min-width: 500px;
+
+    .md-actions {
+        border-top: 1px solid rgba(0, 0, 0, .12);
+    }
+
+    md-checkbox {
+        margin-left: 20px;
+        margin-top: 25px;
+    }
+}
 
 
