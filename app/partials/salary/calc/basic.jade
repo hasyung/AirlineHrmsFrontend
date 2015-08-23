@@ -18,4 +18,19 @@
             .md-toolbar-tools
                 h2 基础薪酬
 
+            .md-toolbar-tools
+                span(layout)
+                span(flex)
+                span
+                    md-button.md-raised.md-primary(
+                        download
+                        ng-href="/api/basic_salaries/export?month={{ctrl.currentCalcTime()}}"
+                        href="javascript:;"
+                        ) 导出
+                span
+                    md-button.md-raised.md-primary(
+                        ng-click="ctrl.exeCalc()"
+                        ng-disabled="ctrl.calcing"
+                        ) 计算
+
         div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.basicSalaries")

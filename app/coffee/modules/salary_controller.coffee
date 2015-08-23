@@ -504,7 +504,7 @@ class SalaryBasicController extends nb.Controller
         @calcing = true
         self = @
 
-        @BasicSalary.compute({month: @currentCalcTime}).$asPromise().then (data)->
+        @BasicSalary.compute({month: @currentCalcTime()}).$asPromise().then (data)->
             self.calcing = false
             erorr_msg = data.$response.data.messages
             self.Evt.$send("basic_salary:calc:error", erorr_msg) if erorr_msg
@@ -596,11 +596,11 @@ class SalaryPerformanceController extends nb.Controller
         @performanceSalaries.$refresh({month: @currentCalcTime()})
 
     # 强制计算
-    exeCalc: () ->
+    exeCalc: (type) ->
         @calcing = true
         self = @
 
-        @PerformanceSalary.compute({month: @currentCalcTime}).$asPromise().then (data)->
+        @PerformanceSalary.compute({month: @currentCalcTime(), type: type}).$asPromise().then (data)->
             self.calcing = false
             erorr_msg = data.$response.data.messages
             self.Evt.$send("performance_salary:calc:error", erorr_msg) if erorr_msg
