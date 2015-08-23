@@ -667,7 +667,7 @@ class SalaryAllowanceController extends nb.Controller
                     return row.entity.positionName
             }
             {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
-            {displayName: '津贴', name: 'salary'}
+            {displayName: '津贴', name: 'subsidy'}
             {displayName: '补扣发', name: 'addGarnishee'}
             {displayName: '备注', name: 'note'}
         ]
@@ -706,7 +706,7 @@ class SalaryAllowanceController extends nb.Controller
 
         self = @
 
-        @Allowances.compute({month: @currentCalcTime()}).$asPromise().then (data)->
+        @Allowance.compute({month: @currentCalcTime()}).$asPromise().then (data)->
             self.calcing = false
             erorr_msg = data.$response.data.messages
             self.Evt.$send("basic_salary:calc:error", erorr_msg) if erorr_msg
