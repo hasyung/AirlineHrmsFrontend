@@ -256,8 +256,6 @@ class SocialComputeController extends nb.Controller
     # 强制计算
     exeCalc: ()->
         @calcing = true
-        @toaster.pop('info', '提示', '开始计算')
-
         self = @
 
         @SocialRecord.compute({month: @currentCalcTime()}).$asPromise().then (data)->
@@ -668,7 +666,6 @@ class AnnuityComputeController extends nb.Controller
 
     exeCalc: ()->
         @calcing = true
-        @toaster.pop('info', '提示', '开始计算')
         self = @
 
         @AnnuityRecord.compute({date: @currentCalcTime()}).$asPromise().then (data)->

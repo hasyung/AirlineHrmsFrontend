@@ -120,6 +120,57 @@ HANDLER_AND_HISTORY_FILTER_OPTIONS = {
             displayName: '姓名'
             type: 'string'
         }
+        {
+            name: 'employee_no'
+            displayName: '员工编号'
+            type: 'string'
+        }
+        {
+            name: 'gender_id'
+            displayName: '性别'
+            type: 'select'
+            params: {
+                type: 'genders'
+            }
+        }
+        {
+            name: 'birthday'
+            displayName: '出生日期'
+            type: 'date-range'
+        }
+        {
+            name: 'channel_ids'
+            displayName: '通道'
+            type: 'muti-enum-search'
+            params: {
+                type: 'channels'
+            }
+        }
+        {
+            name: 'department_ids'
+            displayName: '机构'
+            type: 'org-search'
+        }
+        {
+            name: 'workflow_state'
+            displayName: '状态'
+            type: 'workflow_status_select'
+        }
+        {
+            name: 'join_scal_date'
+            displayName: '入职时间'
+            type: 'date-range'
+        }
+        {
+            name: 'created_at'
+            displayName: '发起时间'
+            type: 'date-range'
+        }
+        {
+            name: 'updated_at'
+            displayName: '批准时间'
+            type: 'date-range'
+        }
     ]
 }
 
@@ -144,7 +195,6 @@ ATTENDANCE_BASE_TABLE_DEFS = [
         displayName: '发起时间'
         cellFilter: "date:'yyyy-MM-dd'"
     }
-
 ]
 
 
@@ -816,7 +866,15 @@ class SbFlowHandlerCtrl
         @tableData = @Employee.$collection().$fetch({filter_types: [@FlowName]})
 
     checkList: ->
+        # 退休待处理不需要可选择
+        @noGridSelection = (@FlowName == 'Flow::Retirement')
+
         @columnDef = @helper.buildFlowDefault(FLOW_HANDLE_TABLE_DEFS)
+
+        if @FlowName == 'Flow::Retirement'
+            @columnDef.splice 2, 0, {displayName: '出生日期', name: 'receptor.birthday'}
+            @columnDef.splice 3, 0, {displayName: '发起时间', name: 'createdAt'}
+
         filterOptions = _.cloneDeep(HANDLER_AND_HISTORY_FILTER_OPTIONS)
         filterOptions.name = @checkListName
         @filterOptions = filterOptions

@@ -7,4 +7,5 @@
                 div(flex)
                 block check_list_actions
 
-        div(nb-grid column-defs="ctrl.columnDef" on-register-api="ctrl.exportGridApi(gridApi)" grid-selection safe-src="ctrl.tableData")
+        div(ng-if="ctrl.noGridSelection" nb-grid column-defs="ctrl.columnDef" on-register-api="ctrl.exportGridApi(gridApi)" safe-src="ctrl.tableData")
+        div(ng-if="!ctrl.noGridSelection" nb-grid column-defs="ctrl.columnDef" on-register-api="ctrl.exportGridApi(gridApi)" grid-selection safe-src="ctrl.tableData")
