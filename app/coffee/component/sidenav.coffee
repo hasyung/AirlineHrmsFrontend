@@ -147,7 +147,7 @@ menuFactory = ($rootScope, $state)->
     }
 
     sections.push {
-        name: '薪酬'
+        name: '薪酬管理'
         icon_src: '/images/svg/left-side-svg/left_icon_8.svg'
         roles: []
         pages: [
@@ -170,7 +170,7 @@ menuFactory = ($rootScope, $state)->
     }
 
     sections.push {
-        name: '福利'
+        name: '福利管理'
         icon_src: '/images/svg/left-side-svg/left_icon_7.svg'
         roles: []
         pages: [
