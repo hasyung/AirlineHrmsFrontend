@@ -28,7 +28,7 @@
                     md-menu(ng-init="selectedRows=[]")
                         md-button.md-primary.md-raised(
                             ng-click="$mdOpenMenu($event)"
-                            ng-disabled="ctrl.calcing || ctrl.basicSalaries.length==0"
+                            ng-disabled="ctrl.calcing || ctrl.records.length==0"
                             ) 导出
                         md-menu-content
                             md-menu-item()
@@ -44,4 +44,4 @@
                                     href="javascript:"
                                 ) 审批表
 
-        div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.basicSalaries")
+        div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.records")

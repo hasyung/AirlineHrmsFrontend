@@ -23,7 +23,7 @@
                     md-menu(ng-init="selectedRows=[]")
                         md-button.md-primary.md-raised(
                             ng-click="$mdOpenMenu($event)"
-                            ng-disabled="ctrl.calcing || ctrl.salary_overviews.length==0"
+                            ng-disabled="ctrl.calcing || ctrl.records.length==0"
                             ) 导出
                         md-menu-content
                             md-menu-item()
@@ -33,4 +33,4 @@
                                     href="javascript:"
                                 ) NC导入表
 
-        div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.salary_overviews")
+        div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.records")
