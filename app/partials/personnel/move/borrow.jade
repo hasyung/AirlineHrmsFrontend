@@ -33,7 +33,7 @@ md-dialog.employee_move
                             label 借调部门
                             input(ng-model="borrowEmployee.specialLocation" name="specialLocation" required)
                         div(flex)
-                            md-checkbox.md-primary() 公司外
+                            md-checkbox.md-primary(ng-change="borrowEmployee.specialLocation=null") 公司外
                     div(layout)
                         md-input-container(flex)
                             label 借调开始时间
