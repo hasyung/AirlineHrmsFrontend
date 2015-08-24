@@ -194,7 +194,7 @@ class ProfileCtrl extends nb.Controller
         @loadInitialData()
         @status = 'show'
 
-    loadInitialData: ->
+    loadInitialData: () ->
         @scope.currentUser = @User.$fetch()
 
     # 员工自助中员工编辑自己的信息

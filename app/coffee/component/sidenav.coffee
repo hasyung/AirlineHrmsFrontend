@@ -85,61 +85,6 @@ menuFactory = ($rootScope, $state)->
     #}
 
     sections.push {
-        name: '福利'
-        icon_src: '/images/svg/left-side-svg/left_icon_7.svg'
-        roles: []
-        pages: [
-            {
-                name: '福利设置'
-                state: '.welfares'
-                permission: ''
-                roles: []
-            }
-            {
-                name: '社保'
-                state: '.welfares_socials'
-                permission: ''
-                roles: []
-            }
-            {
-                name: '企业年金'
-                state: '.welfares_annuities'
-                permission: ''
-                roles: []
-            }
-            #{
-            #    name: '工作餐'
-            #    state: '.welfares_dinnerfee'
-            #    permission: ''
-            #    roles: []
-            #}
-        ]
-    }
-
-    sections.push {
-        name: '薪酬'
-        icon_src: '/images/svg/left-side-svg/left_icon_8.svg'
-        roles: []
-        pages: [
-            {
-                name: '薪酬设置'
-                state: 'salary'
-                roles: []
-            }
-            {
-                name: '个人薪酬设置'
-                state: 'salary_personal'
-                roles: []
-            }
-            {
-                name: '薪酬计算'
-                state: 'salary_calc'
-                roles: []
-            }
-        ]
-    }
-
-    sections.push {
         name: '劳动关系'
         icon_src: '/images/svg/left-side-svg/left_icon_9.svg'
         roles: []
@@ -198,6 +143,61 @@ menuFactory = ($rootScope, $state)->
                 permission: ''
                 roles: []
             }
+        ]
+    }
+
+    sections.push {
+        name: '薪酬管理'
+        icon_src: '/images/svg/left-side-svg/left_icon_8.svg'
+        roles: []
+        pages: [
+            {
+                name: '薪酬设置'
+                state: 'salary'
+                roles: []
+            }
+            {
+                name: '个人薪酬设置'
+                state: 'salary_personal'
+                roles: []
+            }
+            {
+                name: '薪酬计算'
+                state: 'salary_calc'
+                roles: []
+            }
+        ]
+    }
+
+    sections.push {
+        name: '福利管理'
+        icon_src: '/images/svg/left-side-svg/left_icon_7.svg'
+        roles: []
+        pages: [
+            {
+                name: '福利设置'
+                state: '.welfares'
+                permission: ''
+                roles: []
+            }
+            {
+                name: '社保'
+                state: '.welfares_socials'
+                permission: ''
+                roles: []
+            }
+            {
+                name: '企业年金'
+                state: '.welfares_annuities'
+                permission: ''
+                roles: []
+            }
+            #{
+            #    name: '工作餐'
+            #    state: '.welfares_dinnerfee'
+            #    permission: ''
+            #    roles: []
+            #}
         ]
     }
 

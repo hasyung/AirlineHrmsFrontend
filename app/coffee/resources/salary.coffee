@@ -146,16 +146,45 @@ LandAllowance = (restmod, RMUtils, $Evt) ->
     }
 
 
+Reward = (restmod, RMUtils, $Evt) ->
+    restmod.model('/rewards').mix 'nbRestApi', 'DirtyModel', {
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+        $hooks:
+            'after-create': ->
+                $Evt.$send('reward:create:success', "奖励创建成功")
+
+            'after-update': ->
+                $Evt.$send('reward:update:success', "奖励更新成功")
+
+        $config:
+            jsonRootSingle: 'reward'
+            jsonRootMany: 'rewards'
+
+        $extend:
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+            Scope:
+                # 计算(根据年月)
+                compute: (params)->
+                    restmod.model('/rewards/compute').mix(
+                        $config:
+                            jsonRoot: 'land_allowances'
+                    ).$search(params)
+    }
+
+
 SalaryOverview = (restmod, RMUtils, $Evt) ->
     restmod.model('/salary_overviews').mix 'nbRestApi', 'DirtyModel', {
         owner: {belongsTo: 'Employee', key: 'employee_id'}
 
         $hooks:
             'after-create': ->
-                $Evt.$send('salary_counter:create:success', "驻站津贴创建成功")
+                $Evt.$send('salary_counter:create:success', "薪酬合计创建成功")
 
             'after-update': ->
-                $Evt.$send('salary_counter:update:success', "驻站津贴更新成功")
+                $Evt.$send('salary_counter:update:success', "薪酬合计更新成功")
 
         $config:
             jsonRootSingle: 'salary_overview'
@@ -168,4 +197,5 @@ resources.factory 'PerformanceSalary', ['restmod', 'RMUtils', '$nbEvent', Perfor
 resources.factory 'HoursFee', ['restmod', 'RMUtils', '$nbEvent', HoursFee]
 resources.factory 'Allowance', ['restmod', 'RMUtils', '$nbEvent', Allowance]
 resources.factory 'LandAllowance', ['restmod', 'RMUtils', '$nbEvent', LandAllowance]
+resources.factory 'Reward', ['restmod', 'RMUtils', '$nbEvent', Reward]
 resources.factory 'SalaryOverview', ['restmod', 'RMUtils', '$nbEvent', SalaryOverview]
