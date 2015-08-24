@@ -528,7 +528,7 @@ class SalaryPerformanceController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'PerformanceSalary', 'toaster']
 
     constructor: ($http, $scope, @Evt, @Employee, @PerformanceSalary, @toaster) ->
-        super(@performanceSalary)
+        super(@PerformanceSalary)
 
         @filterOptions = {
             name: 'performanceSalary'
