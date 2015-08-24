@@ -234,7 +234,7 @@ class NewEmpsCtrl extends nb.Controller
             self.state.go(self.state.current.name, {}, {reload: true})
 
     getSelectsIds: () ->
-        rows = @scope.$gridApi.selection.getSelectedGridRows()
+        rows = @gridApi.selection.getSelectedGridRows()
         rows.map (row) -> return row.entity.$pk
 
     search: (tableState) ->
