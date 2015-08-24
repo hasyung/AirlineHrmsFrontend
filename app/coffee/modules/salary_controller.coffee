@@ -273,7 +273,7 @@ class SalaryPersonalController
 
         ]
 
-    loadInitialData: ->
+    loadInitialData: () ->
         @salaryPersonSetups = @SalaryPersonSetup.$collection().$fetch()
 
     search: (tableState) ->
@@ -490,7 +490,7 @@ class SalaryBasicController extends SalaryBaseController
             {displayName: '备注', name: 'note'}
         ]
 
-    loadInitialData: ->
+    loadInitialData: () ->
         @year_list = @$getYears()
         @month_list = @$getMonths()
 
@@ -573,7 +573,7 @@ class SalaryPerformanceController extends SalaryBaseController
             {displayName: '备注', name: 'note'}
         ]
 
-    loadInitialData: ->
+    loadInitialData: () ->
         @year_list = @$getYears()
         @month_list = @$getMonths()
 
@@ -605,7 +605,7 @@ class SalaryHoursFeeController extends SalaryBaseController
         #
 
 
-class SalaryAllowanceController SalaryBaseController
+class SalaryAllowanceController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'Allowance', 'toaster']
 
     constructor: ($http, $scope, @Evt, @Employee, @Allowance, @toaster) ->
@@ -660,7 +660,7 @@ class SalaryAllowanceController SalaryBaseController
             {displayName: '备注', name: 'note'}
         ]
 
-    loadInitialData: ->
+    loadInitialData: () ->
         @year_list = @$getYears()
         @month_list = @$getMonths()
 
@@ -693,11 +693,80 @@ class SalaryLandAllowanceController extends SalaryBaseController
         #
 
 
+class SalaryRewardController extends SalaryBaseController
+    @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'Reward', 'toaster']
+
+    constructor: ($http, $scope, @Evt, @Employee, @Reward, @toaster) ->
+        #
+
+
 class SalaryOverviewController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'SalaryOverview', 'toaster']
 
     constructor: ($http, $scope, @Evt, @Employee, @SalaryOverview, @toaster) ->
-        #
+        @filterOptions = {
+            name: 'allowance'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '员工姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+            ]
+        }
+
+        @columnDef = [
+            {displayName: '员工编号', name: 'employeeNo'}
+            {
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+            }
+            {
+                displayName: '岗位'
+                name: 'positionName'
+                cellTooltip: (row) ->
+                    return row.entity.positionName
+            }
+            {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
+            {displayName: '基础工资', name: 'basic_salary'}
+            {displayName: '绩效工资', name: 'performance_salary'}
+            {displayName: '津贴', name: 'subsidy'}
+            {displayName: '驻站津贴', name: 'land_subsidy'}
+            {displayName: '奖励', name: 'reward'}
+            {displayName: '备注', name: 'note'}
+        ]
+
+    loadInitialData: () ->
+        @year_list = @$getYears()
+        @month_list = @$getMonths()
+
+        @currentYear = _.last(@year_list)
+        @currentMonth = _.last(@month_list)
+
+        @salary_overviews = @SalaryOverview.$collection().$fetch({month: @currentCalcTime()})
+
+    loadRecords: ->
+        @salary_overviews.$refresh({month: @currentCalcTime()})
 
 
 app.controller 'salaryCtrl', SalaryController
@@ -708,4 +777,5 @@ app.controller 'salaryPerformanceCtrl', SalaryPerformanceController
 app.controller 'salaryHoursFeeCtrl', SalaryHoursFeeController
 app.controller 'salaryAllowanceCtrl', SalaryAllowanceController
 app.controller 'salaryLandAllowanceCtrl', SalaryLandAllowanceController
+app.controller 'salaryRewardCtrl', SalaryRewardController
 app.controller 'salaryOverviewCtrl', SalaryOverviewController

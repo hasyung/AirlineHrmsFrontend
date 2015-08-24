@@ -152,7 +152,7 @@ class WelfarePersonalController extends nb.Controller
 
         ]
 
-    loadInitialData: ->
+    loadInitialData: () ->
         @socialPersonSetups = @SocialPersonSetup.$collection().$fetch()
 
     search: (tableState) ->
@@ -340,7 +340,7 @@ class SocialHistoryController
 
         ]
 
-    loadInitialData: ->
+    loadInitialData: () ->
         @socialRecords = @SocialRecord.$collection().$fetch()
 
     search: (tableState) ->
@@ -414,7 +414,7 @@ class SocialChangesController
 
         ]
 
-    loadInitialData: ->
+    loadInitialData: () ->
         @socialChanges = @SocialChange.$collection().$fetch()
 
     search: (tableState) ->
@@ -568,7 +568,7 @@ class AnnuityPersonalController extends nb.Controller
 
         gridApi.rowEdit.on.saveRow(@scope, saveRow.bind(@))
 
-    loadInitialData: ->
+    loadInitialData: () ->
         @start_compute_basic = false
         @annuities = @AnnuitySetup.$collection().$fetch()
 
@@ -639,7 +639,7 @@ class AnnuityComputeController extends nb.Controller
 
         ]
 
-    loadInitialData: ->
+    loadInitialData: () ->
         @year_list = @$getYears()
         @month_list = @$getMonths()
 
@@ -719,7 +719,7 @@ class AnnuityHistoryController
 
         ]
 
-    loadInitialData: ->
+    loadInitialData: () ->
         @annuityRecords = @AnnuityRecord.$collection().$fetch()
 
     search: (tableState) ->
@@ -822,7 +822,7 @@ class AnnuityChangesController
         gridApi.rowEdit.on.saveRow(@scope, saveRow.bind(@))
         @scope.gridApi = gridApi
 
-    loadInitialData: ->
+    loadInitialData: () ->
         @annuityChanges = @AnnuityChange.$collection().$fetch()
 
     search: (tableState) ->

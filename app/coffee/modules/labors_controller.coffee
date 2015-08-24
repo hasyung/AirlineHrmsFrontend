@@ -653,7 +653,7 @@ class ContractCtrl extends nb.Controller
         ]
 
 
-    loadInitialData: ->
+    loadInitialData: () ->
         @contracts = @Contract.$collection().$fetch()
 
     search: (tableState) ->

@@ -86,7 +86,7 @@ class PersonnelCtrl extends nb.Controller
             .col 'join_scal_date',       '入职时间', 'date-range'
             .end()
 
-    loadInitialData: ->
+    loadInitialData: () ->
         @employees = @Employee.$collection().$fetch()
 
     search: (tableState) ->
@@ -207,7 +207,7 @@ class NewEmpsCtrl extends nb.Controller
             ]
         }
 
-    loadInitialData: ->
+    loadInitialData: () ->
         @collection_param = {
             join_scal_date: {
                 from: moment().subtract(1, 'year').format('YYYY-MM-DD')
@@ -320,7 +320,7 @@ class LeaveEmployeesCtrl extends nb.Controller
         }
 
 
-    loadInitialData: ->
+    loadInitialData: () ->
         @leaveEmployees = @LeaveEmployees.$collection().$fetch()
 
     search: (tableState) ->
@@ -416,7 +416,7 @@ class MoveEmployeesCtrl extends nb.Controller
         }
 
 
-    loadInitialData: ->
+    loadInitialData: () ->
         @moveEmployees = @MoveEmployees.$collection().$fetch()
 
     newMoveEmployee: (moveEmployee)->
@@ -514,7 +514,7 @@ class ReviewCtrl extends nb.Controller
             self.enable_check = checked.length
         , true
 
-    loadInitialData: ->
+    loadInitialData: () ->
         @records = @Record.$collection().$fetch()
 
     searchRecord: (tableState)->
@@ -565,7 +565,7 @@ class PersonnelSort extends nb.Controller
         @orgLinks = []
         @loadInitialData()
 
-    loadInitialData: ->
+    loadInitialData: () ->
         self = @
         @currentOrgs = @Org.$search().$then (data)->
             self.currentOrgs = data.jqTreeful()[0]
