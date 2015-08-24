@@ -288,7 +288,8 @@ class SalaryPersonalController
 
     delete: (isConfirm) ->
         if isConfirm
-            @getSelected().forEach (record) -> record.entity.$destroy()
+            @getSelected().forEach (record) ->
+                record.entity.$destroy()
 
     loadEmployee: (params, salary)->
         self = @
@@ -416,8 +417,25 @@ class SalaryExchangeController
         current.securityHourMoney = setting[current.securityHourFee]
 
 
+class SalaryBaseController extends nb.Controller
+    search: (tableState) ->
+        tableState = {} unless tableState
+        tableState['month'] = @currentCalcTime()
+        @basicSalaries.$refresh(tableState)
+
+    getSelectsIds: () ->
+        rows = @gridApi.selection.getSelectedGridRows()
+        rows.map (row) -> return row.entity.$pk
+
+    getSelected: () ->
+        rows = @gridApi.selection.getSelectedGridRows()
+
+    currentCalcTime: ()->
+        @currentYear + "-" + @currentMonth
+
+
 # 基础工资
-class SalaryBasicController extends nb.Controller
+class SalaryBasicController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'BasicSalary', 'toaster']
 
     constructor: ($http, $scope, @Evt, @Employee, @BasicSalary, @toaster) ->
@@ -481,21 +499,6 @@ class SalaryBasicController extends nb.Controller
 
         @basicSalaries = @BasicSalary.$collection().$fetch({month: @currentCalcTime()})
 
-    search: (tableState) ->
-        tableState = {} unless tableState
-        tableState['month'] = @currentCalcTime()
-        @basicSalaries.$refresh(tableState)
-
-    getSelectsIds: () ->
-        rows = @gridApi.selection.getSelectedGridRows()
-        rows.map (row) -> return row.entity.$pk
-
-    getSelected: () ->
-        rows = @gridApi.selection.getSelectedGridRows()
-
-    currentCalcTime: ()->
-        @currentYear + "-" + @currentMonth
-
     loadRecords: () ->
         @basicSalaries.$refresh({month: @currentCalcTime()})
 
@@ -514,7 +517,7 @@ class SalaryBasicController extends nb.Controller
 
 
 # 绩效工资
-class SalaryPerformanceController extends nb.Controller
+class SalaryPerformanceController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'PerformanceSalary', 'toaster']
 
     constructor: ($http, $scope, @Evt, @Employee, @PerformanceSalary, @toaster) ->
@@ -579,21 +582,6 @@ class SalaryPerformanceController extends nb.Controller
 
         @performanceSalaries = @PerformanceSalary.$collection().$fetch({month: @currentCalcTime()})
 
-    search: (tableState) ->
-        tableState = {} unless tableState
-        tableState['month'] = @currentCalcTime()
-        @performanceSalaries.$refresh(tableState)
-
-    getSelectsIds: () ->
-        rows = @gridApi.selection.getSelectedGridRows()
-        rows.map (row) -> return row.entity.$pk
-
-    getSelected: () ->
-        rows = @gridApi.selection.getSelectedGridRows()
-
-    currentCalcTime: ()->
-        @currentYear + "-" + @currentMonth
-
     loadRecords: () ->
         @performanceSalaries.$refresh({month: @currentCalcTime()})
 
@@ -610,14 +598,14 @@ class SalaryPerformanceController extends nb.Controller
 
 
 # 小时费
-class SalaryHoursFeeController extends nb.Controller
+class SalaryHoursFeeController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'HoursFee', 'toaster']
 
     constructor: ($http, $scope, @Evt, @Employee, @HoursFee, @toaster) ->
         #
 
 
-class SalaryAllowanceController extends nb.Controller
+class SalaryAllowanceController SalaryBaseController
     @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'Allowance', 'toaster']
 
     constructor: ($http, $scope, @Evt, @Employee, @Allowance, @toaster) ->
@@ -681,21 +669,6 @@ class SalaryAllowanceController extends nb.Controller
 
         @allowances = @Allowance.$collection().$fetch({month: @currentCalcTime()})
 
-    search: (tableState) ->
-        tableState = {} unless tableState
-        tableState['month'] = @currentCalcTime()
-        @allowances.$refresh(tableState)
-
-    getSelectsIds: () ->
-        rows = @gridApi.selection.getSelectedGridRows()
-        rows.map (row) -> return row.entity.$pk
-
-    getSelected: () ->
-        rows = @gridApi.selection.getSelectedGridRows()
-
-    currentCalcTime: ()->
-        @currentYear + "-" + @currentMonth
-
     loadRecords: () ->
         @allowances.$refresh({month: @currentCalcTime()})
 
@@ -713,14 +686,14 @@ class SalaryAllowanceController extends nb.Controller
             self.loadRecords()
 
 
-class SalaryLandAllowanceController extends nb.Controller
+class SalaryLandAllowanceController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'LandAllowance', 'toaster']
 
     constructor: ($http, $scope, @Evt, @Employee, @LandAllowance, @toaster) ->
         #
 
 
-class SalaryOverviewController extends nb.Controller
+class SalaryOverviewController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'SalaryOverview', 'toaster']
 
     constructor: ($http, $scope, @Evt, @Employee, @SalaryOverview, @toaster) ->
