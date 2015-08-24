@@ -878,6 +878,7 @@ class SbFlowHandlerCtrl
         filterOptions = _.cloneDeep(HANDLER_AND_HISTORY_FILTER_OPTIONS)
         filterOptions.name = @checkListName
         @filterOptions = filterOptions
+
         @tableData = @Flow.$collection().$fetch()
 
     historyList: ->
@@ -892,12 +893,14 @@ class SbFlowHandlerCtrl
         @tableData = @Flow.myRequests()
 
     getSelected: ->
-        rows = @gridApi.selection.getSelectedGridRows()
-        selected = if rows.length >= 1 then rows[0].entity else null
+        unless @noGridSelection
+            rows = @gridApi.selection.getSelectedGridRows()
+            selected = if rows.length >= 1 then rows[0].entity else null
 
     getSelectedEntities: ->
-        rows = @gridApi.selection.getSelectedGridRows()
-        rows.map (row) -> row.entity
+        unless @noGridSelection
+            rows = @gridApi.selection.getSelectedGridRows()
+            rows.map (row) -> row.entity
 
     exportGridApi: (gridApi) ->
         @gridApi = gridApi
