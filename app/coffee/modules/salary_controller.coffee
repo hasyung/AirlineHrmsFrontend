@@ -758,11 +758,12 @@ class SalaryOverviewController extends SalaryBaseController
                     return row.entity.positionName
             }
             {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
-            {displayName: '基础工资', name: 'basic_salary'}
-            {displayName: '绩效工资', name: 'performance_salary'}
+            {displayName: '基础工资', name: 'basic'}
+            {displayName: '绩效工资', name: 'performance'}
             {displayName: '津贴', name: 'subsidy'}
             {displayName: '驻站津贴', name: 'land_subsidy'}
             {displayName: '奖励', name: 'reward'}
+            {displayName: '合计', name: 'total'}
             {displayName: '备注', name: 'note'}
         ]
 
