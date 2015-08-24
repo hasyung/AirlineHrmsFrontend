@@ -20,13 +20,15 @@
     //-                         )
     //-                     td(ng-bind="::emp.startDate")
     .ui-grid-container
-        md-toolbar
-            .md-toolbar-tools
+        md-toolbar(style="background-color: #fff;")
+            .md-toolbar-tools(style="color: rgba(0, 0, 0, .54);")
                 span 在职员工信息
         div(nb-grid column-defs="panel.workingEmpColumnDef" safe-src="currentEmps")
 .position-manage(ng-if="currentPos.category.key == 'LingDao'" has-permission="positions_formerleaders")
-    .table-container
-        h4 历任领导
+    .ui-grid-container
+        md-toolbar(style="background-color: #fff;")
+            .md-toolbar-tools(style="color: rgba(0, 0, 0, .54);")
+                span 历任领导
         div(nb-grid column-defs="panel.formerleadersColumnDef" safe-src="hisLeaders")
         //- table.table.table-striped.custom-table
         //-     thead
