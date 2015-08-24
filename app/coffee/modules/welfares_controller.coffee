@@ -619,7 +619,16 @@ class AnnuityComputeController extends nb.Controller
             {displayName: '员工编号', name: 'employeeNo'}
             {
                 displayName: '姓名'
-                name: 'employeeName'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
             }
             {
                 displayName: '所属部门'
@@ -700,7 +709,16 @@ class AnnuityHistoryController
             {displayName: '员工编号', name: 'employeeNo'}
             {
                 displayName: '姓名'
-                name: 'employeeName'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
             }
             {
                 displayName: '所属部门'
@@ -756,8 +774,17 @@ class AnnuityChangesController
             }
             {
                 displayName: '姓名'
-                name: 'employeeName'
+                field: 'employeeName'
                 enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
             }
             {
                 displayName: '所属部门'

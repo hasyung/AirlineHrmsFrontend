@@ -62,11 +62,6 @@ FLOW_HANDLE_TABLE_DEFS =  [
     }
     {
         name: 'createdAt'
-        displayName: '出生日期'
-        cellFilter: "date:'yyyy-MM-dd'"
-    }
-    {
-        name: 'createdAt'
         displayName: '申请发起时间'
         cellFilter: "date:'yyyy-MM-dd'"
     }
@@ -681,11 +676,15 @@ class ContractCtrl extends nb.Controller
     leaveJob: (contract, isConfirm, reason)->
         return if !isConfirm
 
+        console.log contract
+
         self = @
 
         params = {}
         params.reason = reason
-        params.receptor_id = contract.employeeId
+        # params.receptor_id = contract.owner.$pk
+
+        console.log params
 
         @http.post("/api/workflows/Flow::EmployeeLeaveJob", params).success (data, status)->
             self.Evt.$send "employee_leavejob:create:success", "离职单发起成功"
