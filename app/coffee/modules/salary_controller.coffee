@@ -453,8 +453,6 @@ class SalaryBaseController extends nb.Controller
     # 强制计算
     exeCalc: () ->
         @calcing = true
-        @toaster.pop('info', '提示', '开始计算')
-
         self = @
 
         @Model.compute({month: @currentCalcTime()}).$asPromise().then (data)->
