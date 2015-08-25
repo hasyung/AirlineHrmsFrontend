@@ -1,0 +1,19 @@
+.default-role.role-bg(flex layout)
+    .container1440(layout="row")
+        .controls
+            a.controls__cell(ng-click="rootCtrl.show_main=true")
+                .controls__cell__btn
+                    .icon.people
+                .desc 个人信息
+
+            a.controls__cell(ng-click="rootCtrl.show_main=true")
+                .controls__cell__btn
+                    .icon.pen
+                .desc 员工自助
+
+        div(flex)
+        .logo
+            .logo__area
+                img(src="/images/roles/default_role_logo.png")
+
+        .version 四川航空人力资源管理系统1.0

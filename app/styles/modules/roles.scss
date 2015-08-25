@@ -1,0 +1,74 @@
+.role-bg {
+    background: url('/images/roles/roles_bg.jpg') no-repeat;
+    background-size: 100% 100%;
+}
+
+.container1440 {
+    margin: 0 auto;
+    position: relative;
+    width: 1440px;
+}
+
+.default-role {
+    .container1440 {
+        align-items: center;
+    }
+
+    .controls {
+        height: 130px;
+        margin-left: 185px;
+        width: 360px;
+
+        .controls__cell {
+            display: block;
+            float: left;
+            margin-left: 100px;
+
+            &:first-child {
+                margin-left: 0;
+            }
+
+            .desc {
+                color: rgb(0, 108, 222);
+                font-size: 24px;
+                margin-top: 20px;
+                text-align: center;
+            }
+        }
+
+        .controls__cell__btn {
+            background-color: #60a1f6;
+            border: 2px solid #4b87ea;
+            border-radius: 50%;
+            cursor: pointer;
+            height: 126px;
+            width: 126px;
+
+            .icon {
+                border-radius: 50%;
+                height: 100%;
+                width: 100%;
+
+                &.people {
+                    background: url('/images/roles/icons/people.png') no-repeat center center;
+                }
+
+                &.pen {
+                    background: url('/images/roles/icons/pen.png') no-repeat center center;
+                }
+            }
+        }
+    }
+
+    .logo__area {
+        // background: url('/images/roles/misk.png') no-repeat;
+    }
+
+    .version {
+        bottom: 30px;
+        color: rgb(0, 108, 202);
+        font-size: 20px;
+        left: 220px;
+        position: absolute;
+    }
+}
