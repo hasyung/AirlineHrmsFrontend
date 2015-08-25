@@ -34,7 +34,7 @@ md-dialog.attendance_new(ng-init="contract = dialog.contract; request= {}; recep
         form(flex ng-submit="ctrl.renewContract(request, contract); dialog.close();")
             md-toolbar.md-accent(md-theme="hrms")
                 .md-toolbar-tools
-                    span 员工{{::contract.employeeId}} {{::contract.employeeName}}的合同续签
+                    span 员工{{::contract.employeeName}}的合同续签
             .dialog-content(layout layout-align="center")
                 fieldset(flex)
                     div(ng-if="contract.employeeId == 0 || !contract.employeeExists")

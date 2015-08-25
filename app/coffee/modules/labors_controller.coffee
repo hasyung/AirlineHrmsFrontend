@@ -580,9 +580,9 @@ class AttendanceHisCtrl extends nb.Controller
 
 
 class ContractCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Contract', '$http', 'Employee', '$nbEvent']
+    @.$inject = ['$scope', 'Contract', '$http', 'Employee', '$nbEvent', 'toaster']
 
-    constructor: (@scope, @Contract, @http, @Employee, @Evt) ->
+    constructor: (@scope, @Contract, @http, @Employee, @Evt, @toaster) ->
         @loadInitialData()
         @filterOptions = filterBuildUtils('contract')
             .col 'employee_name',        '姓名',        'string',           '姓名'
@@ -713,8 +713,10 @@ class ContractCtrl extends nb.Controller
         request.receptor_id = contract.employeeId
         request.reviewer_id = contract.employeeId
 
-        @http.post("/api/workflows/Flow::RenewContract", request).then ()->
+        @http.post("/api/workflows/Flow::RenewContract", request).then (data)->
             self.contracts.$refresh()
+            msg = data.$response.data.messages
+            self.Evt.$send("contract:renew:success", msg) if msg
 
     newContract: (contract)->
         self = @
