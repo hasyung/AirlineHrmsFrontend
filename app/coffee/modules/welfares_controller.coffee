@@ -610,7 +610,7 @@ class AnnuityPersonalController extends nb.Controller
 class AnnuityComputeController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'AnnuityRecord', 'toaster']
 
-    constructor: ($http, $scope, $Evt, @AnnuityRecord, @toaster) ->
+    constructor: ($http, $scope, @Evt, @AnnuityRecord, @toaster) ->
         @annuityRecords = @loadInitialData()
 
         @columnDef = [
