@@ -79,7 +79,7 @@ class WelfarePersonalController extends nb.Controller
                     type: 'string'
                 }
                 {
-                    name: 'department_name'
+                    name: 'department_ids'
                     displayName: '机构'
                     type: 'org-search'
                 }
@@ -156,7 +156,11 @@ class WelfarePersonalController extends nb.Controller
         @socialPersonSetups = @SocialPersonSetup.$collection().$fetch()
 
     search: (tableState) ->
-        @socialPersonSetups.$refresh(tableState)
+        condition = {}
+        angular.forEach tableState, (value, key)->
+            condition[key] = value if value && angular.isDefined(value)
+
+        @socialPersonSetups.$refresh(condition)
 
     getSelectsIds: () ->
         rows = @gridApi.selection.getSelectedGridRows()
@@ -604,7 +608,8 @@ class AnnuityPersonalController extends nb.Controller
         .success (data) ->
             self.start_compute_basic = false
             json_data = angular.fromJson(data)
-            self.Evt.$send('year_annuity_cardinality:compute:success', data.messages || "计算结束")
+            self.Evt.$send('year_annuity_cardinality:compute:info', data.messages || "计算结束")
+            self.annuities = self.AnnuitySetup.$collection().$fetch()
 
 
 class AnnuityComputeController extends nb.Controller

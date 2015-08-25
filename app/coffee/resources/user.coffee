@@ -3,7 +3,7 @@ resources = angular.module('resources')
 
 
 User = (restmod, RMUtils, $Evt) ->
-    User = restmod.model(null).mix 'nbRestApi', 'DirtyModel', {
+    User = restmod.model(null).mix 'nbRestApi', 'DirtyModel', 'NestedDirtyModel', {
         #$hooks:
         #    'after-update': ->
         #        $Evt.$send('user:update:success', "个人信息更新成功")
@@ -11,7 +11,7 @@ User = (restmod, RMUtils, $Evt) ->
         educationExperiences: {hasMany: 'Education'}
         workExperiences: {hasMany: 'Experience'}
         resume: {hasOne: 'Resume', mask: 'CU'}
-        contact: {hasOne: 'Contact', mask: 'CU'}
+        #contact: {hasOne: 'Contact', mask: 'CU'}
 
         $config:
             jsonRoot: 'employee'

@@ -868,6 +868,9 @@ class SbFlowHandlerCtrl
             @columnDef.splice 2, 0, {displayName: '出生日期', name: 'receptor.birthday'}
             @columnDef.splice 7, 0, {displayName: '申请发起时间', name: 'createdAt'}
 
+        if @FlowName == 'Flow::AdjustPosition'
+            @columnDef[2].displayName = '转入部门'
+
         filterOptions = _.cloneDeep(HANDLER_AND_HISTORY_FILTER_OPTIONS)
         filterOptions.name = @checkListName
         @filterOptions = filterOptions

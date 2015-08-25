@@ -6,7 +6,7 @@ Contract = (restmod, RMUtils, $Evt) ->
         startDate: {decode: 'date', param: 'yyyy-MM-dd'}
         endDate: {decode: 'date', param: 'yyyy-MM-dd'}
 
-        owner: {belongsTo: 'Employee', key: 'employee_id'}
+        #owner: {belongsTo: 'Employee', key: 'employee_id'}
 
         $hooks:
             'after-create': ->

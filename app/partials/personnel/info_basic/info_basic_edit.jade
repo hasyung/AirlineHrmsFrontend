@@ -31,6 +31,7 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
             md-input-container(flex)
                 label 联系方式
                 input(type="text", ng-model="current.contact.mobile", name="contact")
+
         div(layout)
             md-input-container(flex)
                 label 参工时间
@@ -42,6 +43,7 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
                 label 英语等级
                 md-select(ng-model="current.englishLevelId" ng-disabled="!editing")
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('english_levels')") {{item.label}}
+
         div(layout)
             md-input-container(flex)
                 label 毕业院校
@@ -50,6 +52,7 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
                 label 专业
                 input(type="text" placeholder="请输入专业" ng-model="current.major")
             md-input-container(flex)
+
         div(layout)
             md-input-container.row-has-value(flex)
                 label 学历
