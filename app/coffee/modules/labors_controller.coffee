@@ -534,7 +534,6 @@ class AttendanceHisCtrl extends nb.Controller
             {
                 displayName: '姓名'
                 field: 'user.name'
-                # pinnedLeft: true
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents">
                     <a nb-panel
@@ -599,7 +598,6 @@ class ContractCtrl extends nb.Controller
             {
                 displayName: '姓名'
                 field: 'employeeName'
-                # pinnedLeft: true
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents">
                     <a nb-panel
