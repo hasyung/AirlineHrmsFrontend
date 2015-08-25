@@ -1,13 +1,11 @@
-div(ng-switch="rootCtrl.current_roles[0]")
-    div(ng-switch-when="company_leader")
-      h2 company_leader
-    div(ng-switch-when="hr_leader")
-      h2 hr_leader
-    div(ng-switch-when="department_hr")
-      h2 department_hr
-    div(ng-switch-when="department_leader")
-      h2 department_leader
-    div(ng-switch-default)
-      h2 default role
-
-a(ng-click="rootCtrl.show_main=true") show main
+div(ng-switch="rootCtrl.current_roles[0]" flex layout)
+    //- div(ng-switch-when="company_leader")
+    //-   h2 company_leader
+    //- div(ng-switch-when="hr_leader")
+    //-   h2 hr_leader
+    //- div(ng-switch-when="department_hr")
+    //-   h2 department_hr
+    //- div(ng-switch-when="department_leader")
+    //-   h2 department_leader
+    div(ng-switch-default flex layout="row")
+      include roles_pages/default_role
