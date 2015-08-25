@@ -3,9 +3,9 @@ div(ng-switch="rootCtrl.current_roles[0]" flex layout)
     //-   h2 company_leader
     //- div(ng-switch-when="hr_leader")
     //-   h2 hr_leader
-    //- div(ng-switch-when="department_hr")
-    //-   h2 department_hr
-    //- div(ng-switch-when="department_leader")
-    //-   h2 department_leader
+    div(ng-switch-when="department_hr")
+      include roles_pages/department_hr
+    div(ng-switch-when="department_leader")
+      include roles_pages/department_leader
     div(ng-switch-default flex layout="row")
       include roles_pages/default_role
