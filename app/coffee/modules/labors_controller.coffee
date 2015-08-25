@@ -534,7 +534,6 @@ class AttendanceHisCtrl extends nb.Controller
             {
                 displayName: '姓名'
                 field: 'user.name'
-                # pinnedLeft: true
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents">
                     <a nb-panel
@@ -599,7 +598,6 @@ class ContractCtrl extends nb.Controller
             {
                 displayName: '姓名'
                 field: 'employeeName'
-                # pinnedLeft: true
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents">
                     <a nb-panel
@@ -726,15 +724,10 @@ class ContractCtrl extends nb.Controller
     leaveJob: (contract, isConfirm, reason)->
         return if !isConfirm
 
-        console.log contract
-
         self = @
-
         params = {}
         params.reason = reason
         # params.receptor_id = contract.owner.$pk
-
-        console.log params
 
         @http.post("/api/workflows/Flow::EmployeeLeaveJob", params).success (data, status)->
             self.Evt.$send "employee_leavejob:create:success", "离职单发起成功"
@@ -873,7 +866,7 @@ class SbFlowHandlerCtrl
 
         if @FlowName == 'Flow::Retirement'
             @columnDef.splice 2, 0, {displayName: '出生日期', name: 'receptor.birthday'}
-            @columnDef.splice 3, 0, {displayName: '发起时间', name: 'createdAt'}
+            @columnDef.splice 7, 0, {displayName: '申请发起时间', name: 'createdAt'}
 
         filterOptions = _.cloneDeep(HANDLER_AND_HISTORY_FILTER_OPTIONS)
         filterOptions.name = @checkListName
@@ -883,6 +876,11 @@ class SbFlowHandlerCtrl
 
     historyList: ->
         @columnDef = @helper.buildFlowDefault(FLOW_HISTORY_TABLE_DEFS)
+
+        if @FlowName == 'Flow::Retirement'
+            @columnDef.splice 2, 0, {displayName: '出生日期', name: 'receptor.birthday'}
+            @columnDef.splice 7, 0, {displayName: '申请发起时间', name: 'createdAt'}
+
         filterOptions = _.cloneDeep(HANDLER_AND_HISTORY_FILTER_OPTIONS)
         filterOptions.name = @historyListName
         @filterOptions = filterOptions
