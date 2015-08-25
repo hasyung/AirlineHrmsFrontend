@@ -16,12 +16,14 @@ html
         //- 服务器端配置 metadata
         script(id="CONFIG_SERVER_CODE").
             !{meta}
-    body(ng-app="nb" layout="column")
+    body(ng-app="nb" layout="column" ng-controller="RootCtrl as rootCtrl")
         include partials/shared/top_menu
-        toaster-container(toaster-options="{'time-out': 3000, 'close-button':true, 'animation-class': 'toast-top-right'}")
+        toaster-container(toaster-options="{'time-out': 3000, 'close-button': true, 'animation-class': 'toast-top-right'}")
         nb-loading.nb-loading(ng-show="loading")
         //- .org-container.smooth(ui-view)
-        div(layout="row" flex)
+        div(layout="row" flex ng-if="!rootCtrl.show_main")
+            include partials/role/index.jade
+        div(layout="row" flex ng-if="rootCtrl.show_main")
             include partials/shared/left_sidebar
             .butterbar(ui-butterbar)
             md-content.app-content-body.smooth(ui-view flex layout="row")
