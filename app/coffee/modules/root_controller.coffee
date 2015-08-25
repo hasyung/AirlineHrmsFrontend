@@ -7,5 +7,8 @@ class RootController extends nb.Controller
       @show_main = false
       @current_roles = CURRENT_ROLES
 
+    toggleShowMain: ()->
+      @show_main = !@show_main
+
 
 app.controller('RootCtrl', RootController)
