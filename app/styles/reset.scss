@@ -83,6 +83,14 @@ md-input-container {
     .md-input {
         margin-top: 0;
     }
+
+    >md-select {
+        margin-top: 0;
+
+        .md-select-value {
+            padding-bottom: 1px;
+        }
+    }
 }
 
 md-toolbar {
@@ -126,14 +134,6 @@ md-menu-item {
 
 .md-toolbar-tools > .md-button:last-child {
     margin-right: 0;
-}
-
-md-input-container > md-select {
-    margin-top: 0;
-
-    .md-select-value {
-        padding-bottom: 1px;
-    }
 }
 //重置ui-grid视口的滚动样式，设置为不滚动 !!!这不是一个好办法!!!
 // .ui-grid-viewport {
@@ -330,5 +330,19 @@ md-drop-option {
 
     }
 }
+
+// 解决angularjs 模板未加载完成的页面加载闪烁的bug
+// ng-cloak
+[ng\:cloak],
+[ng-cloak],
+[data-ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak {
+    display: none !important;
+}
+
+
+
 
 

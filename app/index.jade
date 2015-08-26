@@ -16,7 +16,12 @@ html
         //- 服务器端配置 metadata
         script(id="CONFIG_SERVER_CODE").
             !{meta}
-    body(ng-app="nb" layout="column" ng-controller="RootCtrl as rootCtrl")
+    body(
+        ng-app="nb"
+        layout="column"
+        ng-controller="RootCtrl as rootCtrl"
+        ng-cloak
+        )
         include partials/shared/top_menu
         toaster-container(toaster-options="{'time-out': 3000, 'close-button': true, 'animation-class': 'toast-top-right'}")
         nb-loading.nb-loading(ng-show="loading")

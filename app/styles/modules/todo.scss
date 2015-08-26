@@ -304,21 +304,178 @@
     color: $text-color;
     height: auto !important;
 
+    .current-month {
+        margin: 0 auto;
+        padding: 45px 0 20px;
+        text-align: center;
+        width: 960px;
+
+        .month {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        md-icon {
+            &:hover {
+                color: #ef5350;
+            }
+
+            &.prev {
+                margin-right: 10px;
+                transform: rotate(270deg);
+            }
+
+            &.next {
+                margin-left: 10px;
+                transform: rotate(90deg);
+            }
+        }
+    }
+
+    .current-month-info {
+        @include clearfix();
+        margin: 0 auto 100px;
+        width: 960px;
+
+        .info-left {
+            background-color: #f9f9f9;
+            box-sizing: border-box;
+            float: left;
+            height: 440px;
+            padding: 60px 65px 0;
+            width: 360px;
+
+            .title {
+                color: $text-muted;
+                font-size: 16px;
+                margin-bottom: 25px;
+                text-align: center;
+            }
+
+            .salary-circle {
+                background-color: #fae7e7;
+                border-radius: 50%;
+                height: 228px;
+                margin-bottom: 25px;
+                position: relative;
+                width: 228px;
+
+                img {
+                    animation: progress-rotate 5s linear;
+                    transform: rotate(90deg);
+                }
+
+                .value {
+                    color: #ff4d4a;
+                    font-size: 40px;
+                    font-weight: 600;
+                    margin-top: -24px;
+                    position: absolute;
+                    text-align: center;
+                    top: 50%;
+                    width: 100%;
+                }
+            }
+
+            .action {
+                text-align: center;
+
+                button {
+                    background-color: #ff4d4a;
+                    border: 0;
+                    border-radius: 4px;
+                    color: #fff;
+                    cursor: pointer;
+                    font-size: 16px;
+                    font-weight: 700;
+                    height: 33px;
+                    width: 85px;
+                }
+            }
+        }
+
+        .info-right {
+            @include clearfix();
+            background-color: #fff;
+            box-sizing: border-box;
+            float: left;
+            height: 440px;
+            padding: 55px 20px;
+            width: 600px;
+
+            .info-content {
+                height: inherit;
+                position: relative;
+
+                &:after {
+                    background-color: #f4f4f4;
+                    content: '';
+                    display: block;
+                    height: 1px;
+                    left: 0;
+                    position: absolute;
+                    top: 164px;
+                    width: 100%;
+                }
+
+                &:before {
+                    background-color: #f4f4f4;
+                    content: '';
+                    display: block;
+                    height: 330px;
+                    left: 50%;
+                    margin-left: -1px;
+                    position: absolute;
+                    top: 0;
+                    width: 1px;
+                }
+            }
+
+            .info-item {
+                float: left;
+                height: 220px;
+                text-align: center;
+                width: 50%;
+            }
+
+            .title {
+                color: $text-muted;
+                font-size: 16px;
+                margin-bottom: 30px;
+            }
+
+            .value {
+                color: #ff4d4a;
+                font-size: 36px;
+                font-weight: 600;
+
+                span {
+                    color: $text-muted;
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+
     .my-cell-cotainer {
         @include clearfix();
-        margin: 0 auto;
-        padding: 20px 0;
-        width: 500px;
+        margin: 0 auto 100px;
+        width: 960px;
     }
 
     .my-requests-cell {
-        box-sizing: content-box;
+        box-sizing: border-box;
+        cursor: pointer;
+        display: block;
         float: left;
-        height: 100px;
-        margin-bottom: 20px;
-        padding: 0 10px;
+        margin-bottom: 50px;
+        margin-left: 90px;
         text-align: center;
-        width: 80px;
+        width: 120px;
+
+        &.ml0 {
+            margin-left: 0;
+        }
 
         &:hover {
             .md-fab.md-button {
@@ -333,32 +490,69 @@
         }
     }
 
-    .md-fab.md-button {
-        background-color: rgba(0, 0, 0, .26);
+    .cell__btn {
+        border: 2px solid #ffcfce;
         border-radius: 50%;
-        box-shadow: none;
-        height: 70px;
-        line-height: 70px;
-        margin: 0 auto 15px;
-        width: 70px;
+        height: 116px;
+        width: 116px;
 
-        md-icon {
-            height: 50px;
-            margin-top: -3px;
-            width: 50px;
+        &.qingjia {
+            background: #fff url('/images/my_request/qingjia.png') no-repeat center center;
+        }
 
-            * {
-                fill: rgba(255, 255, 255, .9);
-                transition: fill .2s linear;
-            }
+        &.zhuanzheng {
+            background: #fff url('/images/my_request/zhuanzheng.png') no-repeat center center;
+        }
+
+        &.cizhi {
+            background: #fff url('/images/my_request/cizhi.png') no-repeat center center;
+        }
+
+        &.tiaogang {
+            background: #fff url('/images/my_request/tiaogang.png') no-repeat center center;
+        }
+
+        &.tuiyang {
+            background: #fff url('/images/my_request/tuiyang.png') no-repeat center center;
+        }
+
+        &.hetong {
+            background: #fff url('/images/my_request/hetong.png') no-repeat center center;
+        }
+
+        &.xueli {
+            background: #fff url('/images/my_request/xueli.png') no-repeat center center;
+        }
+
+        &.shensu {
+            background: #fff url('/images/my_request/shensu.png') no-repeat center center;
+        }
+
+        &.youmian {
+            background: #fff url('/images/my_request/youmian.png') no-repeat center center;
+        }
+
+        &.zhengming {
+            background: #fff url('/images/my_request/zhengming.png') no-repeat center center;
         }
     }
 
     .desc {
         color: $text-muted;
-        font-size: 12px;
+        font-size: 16px;
+        margin-top: 20px;
     }
 
+}
+
+@keyframes progress-rotate {
+    0% {
+        transform: rotate(90deg);
+    }
+
+    100% {
+        transform: rotate(450deg);
+    }
 }
 
 @media (max-width: 1280px) {
@@ -378,8 +572,6 @@
             transform: translateY(0);
         }
     }
-
-
 }
 
 
