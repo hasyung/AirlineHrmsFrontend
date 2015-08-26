@@ -7,7 +7,7 @@
                 div(flex)
 
                 md-menu()
-                    md-button.md-primary.md-raised(ng-click="$mdOpenMenu($event)" ng-disabled="!ctrl.getSelected()") 代请假
+                    md-button.md-primary.md-raised(ng-click="$mdOpenMenu($event)" ng-if="ctrl.isDepartmentHr()" ng-disabled="!ctrl.getSelected()") 代请假
                     md-menu-content
                         md-menu-item()
                             a.md-button(

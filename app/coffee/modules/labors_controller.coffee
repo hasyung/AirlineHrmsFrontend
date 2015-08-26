@@ -487,9 +487,9 @@ class AttendanceCtrl extends nb.Controller
 
 
 class AttendanceRecordCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Attendance', 'Employee', 'GridHelper', '$enum']
+    @.$inject = ['$scope', 'Attendance', 'Employee', 'GridHelper', '$enum', 'CURRENT_ROLES']
 
-    constructor: (@scope, @Attendance, @Employee, GridHelper, $enum) ->
+    constructor: (@scope, @Attendance, @Employee, GridHelper, $enum, @CURRENT_ROLES) ->
         @loadInitialData()
 
         @scope.$enum = $enum
@@ -517,6 +517,9 @@ class AttendanceRecordCtrl extends nb.Controller
     getSelected: () ->
         rows = @scope.$gridApi.selection.getSelectedGridRows()
         selected = if rows.length >= 1 then rows[0].entity else null
+
+    isDepartmentHr: ()->
+        @CURRENT_ROLES.indexOf('department_hr') >= 0
 
 
 class AttendanceHisCtrl extends nb.Controller
@@ -590,7 +593,7 @@ class ContractCtrl extends nb.Controller
         @filterOptions = filterBuildUtils('contract')
             .col 'employee_name',        '姓名',        'string',           '姓名'
             .col 'employee_no',          '员工编号',     'string'
-            .col 'department_name',       '机构',        'string'
+            .col 'department_ids',       '机构',        'org-search'
             .col 'end_date',             '合同到期时间',  'date-range'
             .col 'apply_type',           '用工性质',     'string'
             .col 'notes',                '是否有备注',   'boolean'
@@ -840,9 +843,9 @@ class RetirementCtrl extends nb.Controller
 
 
 class SbFlowHandlerCtrl
-    @.$inject = ['GridHelper', 'FlowName', '$scope', 'Employee', '$injector', 'OrgStore', 'ColumnDef', '$http', '$nbEvent']
+    @.$inject = ['GridHelper', 'FlowName', '$scope', 'Employee', '$injector', 'OrgStore', 'ColumnDef', '$http', '$nbEvent', 'CURRENT_ROLES']
 
-    constructor: (@helper, @FlowName, @scope, @Employee, $injector, OrgStore, @userRequestsColDef, @http, @Evt) ->
+    constructor: (@helper, @FlowName, @scope, @Employee, $injector, OrgStore, @userRequestsColDef, @http, @Evt, @CURRENT_ROLES) ->
         @scope.ctrl = @
         @Flow = $injector.get(@FlowName)
 
@@ -876,6 +879,10 @@ class SbFlowHandlerCtrl
         if @FlowName == 'Flow::AdjustPosition'
             @columnDef.splice 4, 0, {displayName: '转入部门', name: 'toDepartmentName'}
             @columnDef.splice 5, 1, {displayName: '转入岗位', name: 'toPositionName'}
+
+        if @FlowName == 'Flow::EmployeeLeaveJob'
+            @columnDef.splice 6, 0, {displayName: '用工性质', name: 'receptor.laborRelationId', cellFilter: "enum:'labor_relations'"}
+            @columnDef.splice 6, 0, {displayName: '申请发起时间', name: 'createdAt'}
 
         filterOptions = _.cloneDeep(HANDLER_AND_HISTORY_FILTER_OPTIONS)
         filterOptions.name = @checkListName
@@ -943,11 +950,14 @@ class SbFlowHandlerCtrl
     refreshTableDate: ()->
         @tableData.$refresh({filter_types: [@FlowName]})
 
-    revert: (isConfirm, flow)->
-        console.error flow
-        if isConfirm
-            flow.revert()
+    revert: (isConfirm, record)->
+        console.error "revert method on controller called, object: ", record
 
+        if isConfirm
+            record.revert()
+
+    isDepartmentHr: ()->
+        @CURRENT_ROLES.indexOf('department_hr') >= 0
 
 app.controller('AttendanceRecordCtrl', AttendanceRecordCtrl)
 app.controller('AttendanceHisCtrl', AttendanceHisCtrl)
