@@ -18,13 +18,13 @@
         transform: translateY(200px);
     }
 
-    .todo-aside>div:nth-child(#{$i}) {
-        -webkit-animation: slideTop .75s #{.1*$i}s linear forwards;
-        animation: slideTop .75s #{.1*$i}s linear forwards;
-        opacity: 0;
-        -webkit-transform: translateY(200px);
-        transform: translateY(200px);
-    }
+    // .todo-aside>div:nth-child(#{$i}) {
+    //     -webkit-animation: slideTop .75s #{.1*$i}s linear forwards;
+    //     animation: slideTop .75s #{.1*$i}s linear forwards;
+    //     opacity: 0;
+    //     -webkit-transform: translateY(200px);
+    //     transform: translateY(200px);
+    // }
 }
 
 @-webkit-keyframes slideTop {
@@ -68,9 +68,10 @@
     cursor: pointer;
     display: flex;
     height: 100px;
-    margin-bottom: 20px;
     margin-right: 40px;
     overflow: hidden;
+    padding-bottom: 5px;
+    transform: translate(0, 0, 0);
     transition: height .3s linear;
 
     &:hover {
@@ -362,7 +363,7 @@
 
                 img {
                     animation: progress-rotate 5s linear;
-                    transform: rotate(90deg);
+                    transform: rotate(90deg) translate(0, 0, 0);
                 }
 
                 .value {
