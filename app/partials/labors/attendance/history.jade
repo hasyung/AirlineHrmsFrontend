@@ -3,7 +3,7 @@
     div.ui-grid-container
         md-toolbar
             .md-toolbar-tools
-                h2 员工考勤列表
+                h2 员工考勤记录表
                 div(flex)
                 md-button.md-primary.md-raised(
                     ng-disabled="!ctrl.getSelected()"
@@ -11,6 +11,6 @@
                     template-url="/partials/labors/attendance/edit.html"
                     locals="{current:ctrl.getSelected()}"
                 ) 修改
-                
+
         div(nb-grid column-defs="ctrl.columnDef" multi-select="false" export-api grid-selection safe-src="ctrl.attendances")
 

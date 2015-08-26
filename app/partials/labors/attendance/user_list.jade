@@ -3,15 +3,43 @@
     div.ui-grid-container
         md-toolbar
             .md-toolbar-tools
-                h2 员工考勤列表
+                h2 员工花名册
                 div(flex)
-                md-button.md-primary.md-raised(
-                ) 代请假
+
+                md-menu()
+                    md-button.md-primary.md-raised(ng-click="$mdOpenMenu($event)" ng-if="ctrl.isDepartmentHr()" ng-disabled="!ctrl.getSelected()") 代请假
+                    md-menu-content
+                        md-menu-item()
+                            a.md-button(
+                                nb-panel
+                                locals="{receptor: ctrl.getSelected()}"
+                                template-url="partials/self/my_requests/leave/matter_leave.html") 事假
+                        md-menu-item(ng-if="$enum.parseLabel(ctrl.getSelected().genderId, 'genders') == '男'")
+                            a.md-button(
+                                nb-panel
+                                locals="{receptor: ctrl.getSelected()}"
+                                template-url="partials/self/my_requests/leave/nurse_leave.html") 生育护理假
+                        md-menu-item()
+                            a.md-button(
+                                nb-panel
+                                locals="{receptor: ctrl.getSelected()}"
+                                template-url="partials/self/my_requests/leave/sick_leave.html") 病假
+                        md-menu-item()
+                            a.md-button(
+                                nb-panel
+                                locals="{receptor: ctrl.getSelected()}"
+                                template-url="partials/self/my_requests/leave/sick_leave1.html") 病假(工伤待定)
+                        md-menu-item()
+                            a.md-button(
+                                nb-panel
+                                locals="{receptor: ctrl.getSelected()}"
+                                template-url="partials/self/my_requests/leave/dead_leave.html") 丧假
+
                 md-button.md-primary.md-raised(
                     ng-disabled="!ctrl.getSelected()"
                     nb-dialog
                     template-url="/partials/labors/attendance/new.html"
-                    locals="{current:ctrl.getSelected()}"
+                    locals="{current: ctrl.getSelected()}"
                 ) 新增考勤
-                
+
         div(nb-grid column-defs="ctrl.columnDef" multi-select="false" export-api grid-selection safe-src="ctrl.employees")

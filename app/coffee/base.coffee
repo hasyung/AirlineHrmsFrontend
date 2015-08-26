@@ -105,9 +105,9 @@ class NewResourceCtrl
 
 
 class NewFlowCtrl
-    @.$inject = ['$scope', '$http', 'USER_META']
+    @.$inject = ['$scope', '$http', '$state', 'USER_META']
 
-    constructor: (scope, $http, meta) ->
+    constructor: (scope, $http, @state, meta) ->
         ctrl = @
 
         Moment = moment().constructor
@@ -121,7 +121,7 @@ class NewFlowCtrl
             data.vacation_days = scope.vacation_days
             data.receptor_id = if receptor then receptor.id else meta.id
 
-            #临时处理， moment() 默认的tostring 不符合前后端约定
+            #临时处理, moment() 默认的 toString 不符合前后端约定
             #暂时没有找到好的方法
             for own key, value of data
                 if value instanceof Moment
@@ -138,9 +138,9 @@ class NewFlowCtrl
 
 
 class NewMyRequestCtrl extends NewFlowCtrl
-    @.$inject = ['$scope', '$http', '$timeout', 'USER_META', '$nbEvent']
+    @.$inject = ['$scope', '$http', '$timeout', 'USER_META', '$nbEvent', 'Employee']
 
-    constructor: (scope, $http, $timeout, meta, @Evt) ->
+    constructor: (scope, $http, $timeout, meta, @Evt, @Employee) ->
         super(scope, $http, meta) # 手动注入父类实例化参数
         self = @
 

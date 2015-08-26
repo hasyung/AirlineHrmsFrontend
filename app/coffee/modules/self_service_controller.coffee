@@ -275,6 +275,11 @@ class MyRequestCtrl extends nb.Controller
         @Employee.leaders()
 
     myRequests: (FlowName) ->
+        # 不知道这个啥用，但是在调用，不要删除这个跟踪语句
+        console.error "MyRequestCtrl:myRequests called"
+
+    hasVacation: (name)->
+        @scope.vacations.enable_vacation.indexOf(name) >= 0
 
 
 app.config(Route)
