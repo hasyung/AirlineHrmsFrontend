@@ -871,7 +871,8 @@ class SbFlowHandlerCtrl
             @columnDef.splice 7, 0, {displayName: '申请发起时间', name: 'createdAt'}
 
         if @FlowName == 'Flow::AdjustPosition'
-            @columnDef[2].displayName = '转入部门'
+            @columnDef.splice 4, 0, {displayName: '转入部门', name: 'toDepartmentName'}
+            @columnDef.splice 5, 1, {displayName: '转入岗位', name: 'toPositionName'}
 
         filterOptions = _.cloneDeep(HANDLER_AND_HISTORY_FILTER_OPTIONS)
         filterOptions.name = @checkListName
@@ -885,6 +886,10 @@ class SbFlowHandlerCtrl
         if @FlowName == 'Flow::Retirement'
             @columnDef.splice 2, 0, {displayName: '出生日期', name: 'receptor.birthday'}
             @columnDef.splice 7, 0, {displayName: '申请发起时间', name: 'createdAt'}
+
+        if @FlowName == 'Flow::AdjustPosition'
+            @columnDef.splice 4, 0, {displayName: '转入部门', name: 'toDepartmentName'}
+            @columnDef.splice 5, 1, {displayName: '转入岗位', name: 'toPositionName'}
 
         filterOptions = _.cloneDeep(HANDLER_AND_HISTORY_FILTER_OPTIONS)
         filterOptions.name = @historyListName

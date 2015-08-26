@@ -41,7 +41,7 @@ class FilterController extends Controller
 class EditableResourceCtrl
     @.$inject = ['$scope', '$enum', '$nbEvent']
 
-    constructor: (scope, $enum, $Evt) ->
+    constructor: (scope, $enum, @Evt) ->
         scope.editing = false
         scope.$enum = $enum
 
@@ -67,7 +67,7 @@ class EditableResourceCtrl
 
                 if self.response_data
                     msg = self.response_data.messages
-                    $Evt.$send('model:save:success', msg || "保存成功")
+                    @Evt.$send('model:save:success', msg || "保存成功")
             else
                 scope.editing = false
 
