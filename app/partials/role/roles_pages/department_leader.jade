@@ -11,17 +11,26 @@
                     .icon.news
                 .desc 新闻
 
-            a.controls__cell(ng-click="rootCtrl.show_main=true")
+            a.controls__cell(
+                ng-click="rootCtrl.show_main=true"
+                ui-sref="my_requests"
+                )
                 .controls__cell__btn
                     .icon.pen
                 .desc 员工自助
 
-            a.controls__cell(ng-click="rootCtrl.show_main=true")
+            a.controls__cell(
+                ng-click="rootCtrl.show_main=true"
+                ui-sref="TODO"
+                )
                 .controls__cell__btn
                     .icon.todo
                 .desc 待办事项
 
-            a.controls__cell(ng-click="rootCtrl.show_main=true")
+            a.controls__cell(
+                ng-click="rootCtrl.show_main=true"
+                ui-sref="self.profile"
+                )
                 .controls__cell__btn
                     .icon.people
                 .desc 个人信息
