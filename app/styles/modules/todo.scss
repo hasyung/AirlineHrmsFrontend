@@ -1,9 +1,7 @@
 .todo-container {
-    background: #000 url('/images/wow_bg.jpg') no-repeat fixed;
-    -webkit-background-size: 100% 100%;
-    background-size: 100% 100%;
+    background: #ededed;
     height: 100%;
-    padding: 50px 0;
+    padding: 50px 120px;
     width: 100%;
 }
 
@@ -82,14 +80,20 @@
 
         .item-left {
             .date {
-                font-size: 28px;
+                color: #ff695b;
+            }
+
+            .time {
+                color: #ff695b;
+                font-size: 36px;
             }
         }
 
         .item-right {
-            background-color: rgba(0, 0, 0, .3);
+            background-color: #ff695b;
 
             .content h3,
+            .content p,
             .content .tip {
                 color: #fff;
             }
@@ -106,22 +110,22 @@
         width: 170px;
 
         .date {
-            color: #fff;
+            color: $text-hint;
             font-size: 18px;
-            transition: font-size .5s linear;
         }
 
         .time {
-            color: #fff;
+            color: $text-color;
             font-size: 30px;
+            transition: font-size .3s linear;
         }
     }
 
     .item-right {
-        background-color: rgba(0, 0, 0, .2);
+        background-color: #fff;
         margin-left: 20px;
         position: relative;
-        transition: background-color .5s linear;
+        transition: background-color .25s linear;
 
         .item-msg {
             @include clearfix();
@@ -146,14 +150,14 @@
             overflow: hidden;
 
             h3 {
-                color: #fff;
+                color: $text-muted;
                 font-size: 12px;
                 font-weight: normal;
                 margin-top: 20px;
             }
 
             p {
-                color: #fff;
+                color: $text-color;
                 font-size: $font-size-md;
                 margin: 10px 20px 15px 0;
             }
@@ -183,7 +187,7 @@
             }
 
             .tip {
-                color: #fff;
+                color: $text-muted;
                 font-size: 14px;
                 position: absolute;
                 right: 20px;
