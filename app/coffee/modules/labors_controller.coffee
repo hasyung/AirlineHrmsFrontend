@@ -487,11 +487,12 @@ class AttendanceCtrl extends nb.Controller
 
 
 class AttendanceRecordCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Attendance', 'Employee', 'GridHelper']
+    @.$inject = ['$scope', 'Attendance', 'Employee', 'GridHelper', '$enum']
 
-    constructor: (@scope, @Attendance, @Employee, GridHelper) ->
+    constructor: (@scope, @Attendance, @Employee, GridHelper, $enum) ->
         @loadInitialData()
 
+        @scope.$enum = $enum
         @reviewers = @Employee.leaders()
 
         @filterOptions = filterBuildUtils('attendanceRecord')
