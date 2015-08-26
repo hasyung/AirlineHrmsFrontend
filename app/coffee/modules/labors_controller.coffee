@@ -868,7 +868,7 @@ class SbFlowHandlerCtrl
 
     checkList: ->
         # 退休待处理不需要可选择
-        @noGridSelection = (@FlowName == 'Flow::Retirement')
+        @noGridSelection = (@FlowName == 'Flow::Retirement' || @FlowName == 'Flow::EmployeeLeaveJob')
 
         @columnDef = @helper.buildFlowDefault(FLOW_HANDLE_TABLE_DEFS)
 
