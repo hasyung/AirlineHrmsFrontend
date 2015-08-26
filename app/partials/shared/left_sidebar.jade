@@ -1,4 +1,4 @@
-md-sidenav.nb-nav(md-is-locked-open="true" id="leftSidebar")
+md-sidenav.nb-nav.md-whiteframe-z1(md-is-locked-open="true" id="leftSidebar")
     md-content(flex role="navigation")
         ul.nb-menu(ng-controller="sideMenuCtrl as menuCtrl")
             li.parent-list-item(ng-repeat="section in ::menu.sections" ng-class="{'active': section == menu.openedSection}")

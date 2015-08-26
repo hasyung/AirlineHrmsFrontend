@@ -68,10 +68,9 @@
     cursor: pointer;
     display: flex;
     height: 100px;
+    margin-bottom: 20px;
     margin-right: 40px;
-    opacity: .7;
     overflow: hidden;
-    padding-bottom: 5px;
     transition: height .3s linear;
 
     &:hover {
