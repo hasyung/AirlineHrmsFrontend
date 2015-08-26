@@ -580,9 +580,9 @@ class AttendanceHisCtrl extends nb.Controller
 
 
 class ContractCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Contract', '$http', 'Employee', '$nbEvent']
+    @.$inject = ['$scope', 'Contract', '$http', 'Employee', '$nbEvent', 'toaster']
 
-    constructor: (@scope, @Contract, @http, @Employee, @Evt) ->
+    constructor: (@scope, @Contract, @http, @Employee, @Evt, @toaster) ->
         @loadInitialData()
         @filterOptions = filterBuildUtils('contract')
             .col 'employee_name',        '姓名',        'string',           '姓名'
@@ -713,8 +713,10 @@ class ContractCtrl extends nb.Controller
         request.receptor_id = contract.employeeId
         request.reviewer_id = contract.employeeId
 
-        @http.post("/api/workflows/Flow::RenewContract", request).then ()->
+        @http.post("/api/workflows/Flow::RenewContract", request).then (data)->
             self.contracts.$refresh()
+            msg = data.$response.data.messages
+            self.Evt.$send("contract:renew:success", msg) if msg
 
     newContract: (contract)->
         self = @
@@ -867,6 +869,9 @@ class SbFlowHandlerCtrl
         if @FlowName == 'Flow::Retirement'
             @columnDef.splice 2, 0, {displayName: '出生日期', name: 'receptor.birthday'}
             @columnDef.splice 7, 0, {displayName: '申请发起时间', name: 'createdAt'}
+
+        if @FlowName == 'Flow::AdjustPosition'
+            @columnDef[2].displayName = '转入部门'
 
         filterOptions = _.cloneDeep(HANDLER_AND_HISTORY_FILTER_OPTIONS)
         filterOptions.name = @checkListName
