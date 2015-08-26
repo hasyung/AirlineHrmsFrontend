@@ -7,10 +7,10 @@ div.workflow.md-background(md-theme="hrms")
     .personnel-content.personnel-control
         section.personnel-info-section
             md-content.nb-card-container(layout="column" md-theme="hrms")
-                form(ng-controller="NewMyRequestCtrl" ng-submit="createFlow(request);" name="leave_form" ng-init="request = initialFlow('#{flowType}')")
+                form(ng-controller="NewMyRequestCtrl" ng-submit="createFlow(request, receptor, list);" name="leave_form" ng-init="receptor = panel.receptor; list = panel.list; receptor.$fetch(); request = initialFlow('#{flowType}')")
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1
-                        flow-user-info
+                        flow-user-info(receptor="receptor")
                         .flow-relations(flow-relation-data ng-model="request.relation_data")
 
                             block relation_data

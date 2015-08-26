@@ -276,5 +276,8 @@ class MyRequestCtrl extends nb.Controller
 
     myRequests: (FlowName) ->
 
+    hasVacation: (name)->
+        @scope.vacations.enable_vacation.indexOf(name) >= 0
+
 
 app.config(Route)

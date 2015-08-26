@@ -3,15 +3,108 @@
     div.ui-grid-container
         md-toolbar
             .md-toolbar-tools
-                h2 员工考勤列表
+                h2 员工花名册
                 div(flex)
-                md-button.md-primary.md-raised(
-                ) 代请假
+
+                md-menu()
+                    md-button.md-primary.md-raised(ng-click="$mdOpenMenu($event)" ng-disabled="!ctrl.getSelected()") 代请假
+                    md-menu-content
+                        md-menu-item()
+                            a.md-button(
+                                nb-panel
+                                locals="{receptor: ctrl.getSelected()}"
+                                template-url="partials/self/my_requests/leave/presence_leave.html") 派驻人员休假
+                        md-menu-item()
+                            a.md-button(
+                                nb-panel
+                                locals="{receptor: ctrl.getSelected()}"
+                                template-url="partials/self/my_requests/leave/yearly_leave.html") 年假
+                        md-menu-item()
+                            a.md-button(
+                                nb-panel
+                                locals="{receptor: ctrl.getSelected()}"
+                                template-url="partials/self/my_requests/leave/dead_leave.html") 丧假
+                        md-menu-item()
+                            a.md-button(
+                                nb-panel
+                                locals="{receptor: ctrl.getSelected()}"
+                                template-url="partials/self/my_requests/leave/visit_leave.html") 探亲假
+                        md-menu-item()
+                            a.md-button(
+                                nb-panel
+                                locals="{receptor: ctrl.getSelected()}"
+                                template-url="partials/self/my_requests/leave/wedding_leave.html") 婚假
+                        md-menu-item()
+                            a.md-button(
+                                nb-panel
+                                locals="{receptor: ctrl.getSelected()}"
+                                template-url="partials/self/my_requests/leave/abortion_leave.html") 产假
+                        md-menu-item()
+                            a.md-button(
+                                nb-panel
+                                locals="{receptor: ctrl.getSelected()}"
+                                template-url="partials/self/my_requests/leave/abortion_leave1.html") 产假(母乳喂养)
+                        md-menu-item()
+                            a.md-button(
+                                nb-panel
+                                locals="{receptor: ctrl.getSelected()}"
+                                template-url="partials/self/my_requests/leave/abortion_leave2.html") 产假(剖腹产、难产)
+                        md-menu-item()
+                            a.md-button(
+                                nb-panel
+                                locals="{receptor: ctrl.getSelected()}"
+                                template-url="partials/self/my_requests/leave/abortion_leave3.html") 产假(晚育)
+                        md-menu-item()
+                            a.md-button(
+                                nb-panel
+                                locals="{receptor: ctrl.getSelected()}"
+                                template-url="partials/self/my_requests/leave/abortion_leave4.html") 产假(多胞胎)
+                        md-menu-item()
+                            a.md-button(
+                                nb-panel
+                                locals="{receptor: ctrl.getSelected()}"
+                                template-url="partials/self/my_requests/leave/abortion_leave5.html") 产假(流产)
+                        md-menu-item()
+                            a.md-button(
+                                nb-panel
+                                locals="{receptor: ctrl.getSelected()}"
+                                template-url="partials/self/my_requests/leave/matter_leave.html") 事假
+                        md-menu-item()
+                            a.md-button(
+                                nb-panel
+                                locals="{receptor: ctrl.getSelected()}"
+                                template-url="partials/self/my_requests/leave/produce_before.html") 产前孕期检查假
+                        md-menu-item()
+                            a.md-button(
+                                nb-panel
+                                locals="{receptor: ctrl.getSelected()}"
+                                template-url="partials/self/my_requests/leave/nurse_leave.html") 生育护理假
+                        md-menu-item()
+                            a.md-button(
+                                nb-panel
+                                locals="{receptor: ctrl.getSelected()}"
+                                template-url="partials/self/my_requests/leave/sick_leave.html") 病假
+                        md-menu-item()
+                            a.md-button(
+                                nb-panel
+                                locals="{receptor: ctrl.getSelected()}"
+                                template-url="partials/self/my_requests/leave/sick_leave1.html") 病假(工伤待定)
+                        md-menu-item()
+                            a.md-button(
+                                nb-panel
+                                locals="{receptor: ctrl.getSelected()}"
+                                template-url="partials/self/my_requests/leave/sick_leave2.html") 病假(怀孕待产)
+                        md-menu-item()
+                            a.md-button(
+                                nb-panel
+                                locals="{receptor: ctrl.getSelected()}"
+                                template-url="partials/self/my_requests/leave/female_leave.html") 女工假
+
                 md-button.md-primary.md-raised(
                     ng-disabled="!ctrl.getSelected()"
                     nb-dialog
                     template-url="/partials/labors/attendance/new.html"
-                    locals="{current:ctrl.getSelected()}"
+                    locals="{current: ctrl.getSelected()}"
                 ) 新增考勤
-                
+
         div(nb-grid column-defs="ctrl.columnDef" multi-select="false" export-api grid-selection safe-src="ctrl.employees")

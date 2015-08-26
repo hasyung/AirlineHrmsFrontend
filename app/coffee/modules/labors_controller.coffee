@@ -492,6 +492,8 @@ class AttendanceRecordCtrl extends nb.Controller
     constructor: (@scope, @Attendance, @Employee, GridHelper) ->
         @loadInitialData()
 
+        @reviewers = @Employee.leaders()
+
         @filterOptions = filterBuildUtils('attendanceRecord')
             .col 'name',                 '姓名',    'string',           '姓名'
             .col 'employee_no',          '员工编号', 'string'
@@ -729,7 +731,7 @@ class ContractCtrl extends nb.Controller
         self = @
         params = {}
         params.reason = reason
-        # params.receptor_id = contract.owner.$pk
+        params.receptor_id = contract.owner.$pk
 
         @http.post("/api/workflows/Flow::EmployeeLeaveJob", params).success (data, status)->
             self.Evt.$send "employee_leavejob:create:success", "离职单发起成功"
