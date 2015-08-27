@@ -974,8 +974,8 @@ class SbFlowHandlerCtrl
         self = @
 
         if isConfirm
-            record.revert()
-            @tableData.$refresh()
+            record.revert().$asPromise().then ()->
+                self.tableData.$refresh()
 
     isDepartmentHr: ()->
         @CURRENT_ROLES.indexOf('department_hr') >= 0
