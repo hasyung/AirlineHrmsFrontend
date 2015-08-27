@@ -1,7 +1,21 @@
-.zhuzhuang(flex)
-    ng-echarts.echarts(
-        ec-config="ctrl.lineConfig"
-        ec-option="ctrl.lineOption"
-        )
+.whiteboard.md-whiteframe-z1
+    .whiteboard__cell.md
+        .value 67876
+        .title 部门总薪酬成本
+    .whiteboard__cell.sm
+        .value 10
+        .title 上月离职人数
+    .whiteboard__cell.sm
+        .value 15
+        .title 上月请假人数
+    .whiteboard__cell.sm.br0
+        .value 5
+        .title 今日缺席人数
+
+div.echarts-wrapper.md-whiteframe-z1
+    ng-echarts.echarts-bar(
+        ec-config="ctrl.barConfig"
+        ec-option="ctrl.barOption"
+    )
 
 
