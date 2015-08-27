@@ -13,18 +13,21 @@ block cust_page
                 .md-toolbar-tools
                     h2 合同列表
                     div(flex)
+
                     md-button.md-primary.md-raised(
                         ng-disabled="!ctrl.getSelected() || ctrl.getSelected().workflowState == '已生效'"
                         nb-confirm="ctrl.leaveJob(ctrl.getSelected(), isConfirm, '劳动关系终止')"
                         nb-title="离职流程发起"
                         nb-content="你确定对该员工发起离职通知单流程，请确认。"
                     ) 发起离职流程
+
                     md-button.md-primary.md-raised(
                         nb-dialog
-                        ng-disabled="!ctrl.getSelected()"
+                        ng-disabled="!ctrl.getSelected() || ctrl.getSelected().endDate==null"
                         template-url="/partials/labors/contract/renew.html"
                         locals="{contract: ctrl.getSelected()}"
                     ) 发起续签
+
                     md-button.md-primary.md-raised(
                         nb-panel
                         template-url="/partials/labors/contract/new.html"

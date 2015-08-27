@@ -321,9 +321,9 @@ app.config(Route)
 
 
 class AttendanceCtrl extends nb.Controller
-    @.$inject = ['GridHelper', 'Leave', '$scope', '$injector', '$http', 'AttendanceSummary', 'CURRENT_ROLES']
+    @.$inject = ['GridHelper', 'Leave', '$scope', '$injector', '$http', 'AttendanceSummary', 'CURRENT_ROLES', 'toaster']
 
-    constructor: (helper, @Leave, scope, injector, @http, @AttendanceSummary, @CURRENT_ROLES) ->
+    constructor: (helper, @Leave, scope, injector, @http, @AttendanceSummary, @CURRENT_ROLES, @toaster) ->
         @initDate()
 
         scope.realFlow = (entity) ->
@@ -419,7 +419,12 @@ class AttendanceCtrl extends nb.Controller
         date = moment(new Date("#{this.year}-#{this.month}")).format()
         params = {summary_date: date}
         params.department_id = departmentId if departmentId
-        @search(params)
+
+        self = @
+        @search(params).$asPromise().then (data)->
+            summary_record = _.find data.$response.data.meta.attendance_summary_status, (item)->
+                item.department_id == departmentId
+            self.departmentHrChecked = summary_record.department_hr_checked
 
     initDate: ()->
         date = new Date()
@@ -438,7 +443,6 @@ class AttendanceCtrl extends nb.Controller
 
     loadSummariesList: ()->
         @summaryListCol = ATTENDANCE_SUMMERY_DEFS
-
         @tableData = @AttendanceSummary.records({summary_date: moment().format()})
 
     getDate: ()->
@@ -448,8 +452,10 @@ class AttendanceCtrl extends nb.Controller
         self = @
         params = {summary_date: @getDate()}
 
-        @http.put('/api/attendance_summaries/department_hr_confirm', params).then ()->
+        @http.put('/api/attendance_summaries/department_hr_confirm', params).then (data)->
             self.tableData.$refresh()
+            erorr_msg = data.$response.data.messages
+            toaster.pop('info', '提示', erorr_msg) if erorr_msg
 
     departmentLeaderCheck: ()->
         self = @
@@ -726,9 +732,6 @@ class ContractCtrl extends nb.Controller
         self = @
         return if contract && contract.employeeId == 0
 
-        request.receptor_id = contract.employeeId
-        request.reviewer_id = contract.employeeId
-
         @http.post("/api/workflows/Flow::RenewContract", request).then (data)->
             self.contracts.$refresh()
             msg = data.$response.data.messages
@@ -870,7 +873,7 @@ class SbFlowHandlerCtrl
         @reviewers =  @Employee.leaders()
 
         relationName = @enum.parseLabel(@meta.labor_relation_id, 'labor_relations')
-        @canCreateEarlyRetirement = ["合同", "合同制"].indexOf(relationName)
+        @canCreateEarlyRetirement = (["合同", "合同制"].indexOf(relationName) >= 0)
 
     userList: ->
         filterOptions = _.cloneDeep(userListFilterOptions)
@@ -968,8 +971,11 @@ class SbFlowHandlerCtrl
         @tableData.$refresh({filter_types: [@FlowName]})
 
     revert: (isConfirm, record)->
+        self = @
+
         if isConfirm
             record.revert()
+            tableData.$refresh()
 
     isDepartmentHr: ()->
         @CURRENT_ROLES.indexOf('department_hr') >= 0

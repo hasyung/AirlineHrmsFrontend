@@ -49,15 +49,15 @@ md-dialog.welfare_personal_new(ng-controller="EditableResourceCtrl")
                         div(layout)
                             md-input-container(flex)
                                 label 年度养老保险
-                                input(type="number" min="0" max="100000" step="1" ng-model="current.pensionCardinality")
+                                input(type="number" min="0" max="100000" step="0.000001" ng-model="current.pensionCardinality")
                             md-input-container(flex)
                                 label 年度其他保险
-                                input(type="number" min="0" max="100000" step="1" ng-model="current.otherCardinality")
+                                input(type="number" min="0" max="100000" step="0.000001" ng-model="current.otherCardinality")
 
                         div(layout)
                             md-input-container(flex)
                                 label 社保临时基数
-                                input(type="number" min="0" max="100000" step="1" ng-model="current.tempCardinality" name="notes")
+                                input(type="number" min="0" max="100000" step="0.000001" ng-model="current.tempCardinality" name="notes")
 
                         div.checkbox-row
                             label 险种选择
