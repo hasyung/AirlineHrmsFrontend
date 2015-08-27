@@ -71,6 +71,13 @@ class NbFilterCtrl extends nb.FilterController
                 <md-option ng-value="'checking'" placeholder="状态">审核中</md-option>
                 <md-option ng-value="'accepted'" placeholder="状态">已通过</md-option>
                 <md-option ng-value="'actived'" placeholder="状态">已生效</md-option>
+                <md-option ng-value="'repeal'" placeholder="状态">已撤销</md-option>
+            </md-select>
+        '''
+        'apply_type_select':'''
+            <md-select placeholder="${ displayName }" ng-model="${ name }">
+                <md-option ng-value="'合同'" placeholder="用工性质">合同</md-option>
+                <md-option ng-value="'合同制'" placeholder="用工性质">合同制</md-option>
             </md-select>
         '''
         'boolean': '''

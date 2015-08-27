@@ -32,7 +32,7 @@ block form
     div(ng-init="params = {}; params.orgPos = [];")
         div(layout)
             div(flex)
-                org-search(ng-model="params.org" float-label placeholder="转入部门" selected-item-change="params.orgPos = org.positions.$fetch();")
+                org-search(ng-model="params.org" float-label placeholder="转入部门" search-text-change="request.position=null;params.orgPos=null;" selected-item-change="params.orgPos = org.positions.$refresh(); request.position = null;")
             md-input-container.row-has-value(flex)
                 label 岗位
                 md-select(ng-model="request.position")

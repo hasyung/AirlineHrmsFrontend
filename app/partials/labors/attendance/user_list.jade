@@ -36,6 +36,7 @@
                                     template-url="partials/self/my_requests/leave/dead_leave.html") 丧假
 
                 md-button.md-primary.md-raised(
+                     ng-if="ctrl.isDepartmentHr()"
                     ng-disabled="!ctrl.getSelected()"
                     nb-dialog
                     template-url="/partials/labors/attendance/new.html"

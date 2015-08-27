@@ -6,6 +6,7 @@
                 h2 员工考勤记录表
                 div(flex)
                 md-button.md-primary.md-raised(
+                    ng-if="ctrl.isDepartmentHr()"
                     ng-disabled="!ctrl.getSelected()"
                     nb-dialog
                     template-url="/partials/labors/attendance/edit.html"

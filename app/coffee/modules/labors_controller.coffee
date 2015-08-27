@@ -321,9 +321,9 @@ app.config(Route)
 
 
 class AttendanceCtrl extends nb.Controller
-    @.$inject = ['GridHelper', 'Leave', '$scope', '$injector', '$http', 'AttendanceSummary']
+    @.$inject = ['GridHelper', 'Leave', '$scope', '$injector', '$http', 'AttendanceSummary', 'CURRENT_ROLES']
 
-    constructor: (helper, @Leave, scope, injector, @http, @AttendanceSummary) ->
+    constructor: (helper, @Leave, scope, injector, @http, @AttendanceSummary, @CURRENT_ROLES) ->
         @initDate()
 
         scope.realFlow = (entity) ->
@@ -485,6 +485,12 @@ class AttendanceCtrl extends nb.Controller
         @http.put(url).then ()->
             self.tableData.$refresh()
 
+    isDepartmentHr: ()->
+        @CURRENT_ROLES.indexOf('department_hr') >= 0
+
+    finish: ()->
+        alert '销假的逻辑是啥，讨论过，这个操作到底有无用???'
+
 
 class AttendanceRecordCtrl extends nb.Controller
     @.$inject = ['$scope', 'Attendance', 'Employee', 'GridHelper', '$enum', 'CURRENT_ROLES']
@@ -523,9 +529,9 @@ class AttendanceRecordCtrl extends nb.Controller
 
 
 class AttendanceHisCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Attendance']
+    @.$inject = ['$scope', 'Attendance', 'CURRENT_ROLES']
 
-    constructor: (@scope, @Attendance) ->
+    constructor: (@scope, @Attendance, @CURRENT_ROLES) ->
         @loadInitialData()
 
         @filterOptions = filterBuildUtils('attendanceHis')
@@ -584,18 +590,22 @@ class AttendanceHisCtrl extends nb.Controller
         attendance.$destroy().$then ()->
             self.attendances.$refresh()
 
+    isDepartmentHr: ()->
+        @CURRENT_ROLES.indexOf('department_hr') >= 0
+
 
 class ContractCtrl extends nb.Controller
     @.$inject = ['$scope', 'Contract', '$http', 'Employee', '$nbEvent', 'toaster']
 
     constructor: (@scope, @Contract, @http, @Employee, @Evt, @toaster) ->
         @loadInitialData()
+
         @filterOptions = filterBuildUtils('contract')
             .col 'employee_name',        '姓名',        'string',           '姓名'
             .col 'employee_no',          '员工编号',     'string'
             .col 'department_ids',       '机构',        'org-search'
             .col 'end_date',             '合同到期时间',  'date-range'
-            .col 'apply_type',           '用工性质',     'string'
+            .col 'apply_type',           '用工性质',     'apply_type_select'
             .col 'notes',                '是否有备注',   'boolean'
             .end()
 
@@ -843,9 +853,9 @@ class RetirementCtrl extends nb.Controller
 
 
 class SbFlowHandlerCtrl
-    @.$inject = ['GridHelper', 'FlowName', '$scope', 'Employee', '$injector', 'OrgStore', 'ColumnDef', '$http', '$nbEvent', 'CURRENT_ROLES']
+    @.$inject = ['GridHelper', 'FlowName', '$scope', 'Employee', '$injector', 'OrgStore', 'ColumnDef', '$http', '$nbEvent', 'CURRENT_ROLES', '$enum', 'USER_META']
 
-    constructor: (@helper, @FlowName, @scope, @Employee, $injector, OrgStore, @userRequestsColDef, @http, @Evt, @CURRENT_ROLES) ->
+    constructor: (@helper, @FlowName, @scope, @Employee, $injector, OrgStore, @userRequestsColDef, @http, @Evt, @CURRENT_ROLES, @enum, @meta) ->
         @scope.ctrl = @
         @Flow = $injector.get(@FlowName)
 
@@ -859,6 +869,9 @@ class SbFlowHandlerCtrl
 
         @reviewers =  @Employee.leaders()
 
+        relationName = @enum.parseLabel(@meta.labor_relation_id, 'labor_relations')
+        @canCreateEarlyRetirement = ["合同", "合同制"].indexOf(relationName)
+
     userList: ->
         filterOptions = _.cloneDeep(userListFilterOptions)
         filterOptions.name = @userListName
@@ -868,13 +881,17 @@ class SbFlowHandlerCtrl
 
     checkList: ->
         # 退休待处理不需要可选择
-        @noGridSelection = (@FlowName == 'Flow::Retirement')
+        @noGridSelection = (@FlowName == 'Flow::Retirement' || @FlowName == 'Flow::EmployeeLeaveJob')
 
         @columnDef = @helper.buildFlowDefault(FLOW_HANDLE_TABLE_DEFS)
 
         if @FlowName == 'Flow::Retirement'
             @columnDef.splice 2, 0, {displayName: '出生日期', name: 'receptor.birthday'}
             @columnDef.splice 7, 0, {displayName: '申请发起时间', name: 'createdAt'}
+
+        if @FlowName == 'Flow::EarlyRetirement'
+            @columnDef.splice 2, 0, {displayName: '出生日期', name: 'receptor.birthday'}
+            @columnDef.splice 2, 0, {displayName: '性别', name: 'receptor.genderId', cellFilter: "enum:'genders'"}
 
         if @FlowName == 'Flow::AdjustPosition'
             @columnDef.splice 4, 0, {displayName: '转入部门', name: 'toDepartmentName'}
@@ -951,8 +968,6 @@ class SbFlowHandlerCtrl
         @tableData.$refresh({filter_types: [@FlowName]})
 
     revert: (isConfirm, record)->
-        console.error "revert method on controller called, object: ", record
-
         if isConfirm
             record.revert()
 

@@ -6,19 +6,27 @@
             .md-toolbar-tools
                 h2 请假记录列表
                 div(flex)
+
                 md-button.md-primary.md-raised(
+                    ng-if="ctrl.isDepartmentHr()"
                     ng-disabled="!ctrl.getSelected()"
                     nb-dialog
                     template-url="partials/labors/attendance/change_leave.html"
                     locals="{leave: ctrl.getSelected()}"
                 ) 假别修正
+
                 md-button.md-primary.md-raised(
+                    ng-if="ctrl.isDepartmentHr()"
                     ng-disabled="ctrl.getSelected().type != 'Flow::SickLeaveInjury'"
                     nb-confirm="ctrl.transferToOccupationInjury(ctrl.getSelected())"
                     nb-title="病假（工伤待定）转工伤假"
                     nb-content="你确认要将该病假（工伤待定）转换为工伤假?"
                 ) 工伤假
+
                 md-button.md-primary.md-raised(
+                    ng-if="ctrl.isDepartmentHr()"
+                    ng-disabled="!ctrl.getSelected()"
+                    ng-click="ctrl.finish()"
                 ) 销假
 
         div(nb-grid column-defs="ctrl.recodsColumnDef" on-register-api="ctrl.exportGridApi(gridApi)" multi-select="false" grid-selection safe-src="ctrl.tableData")
