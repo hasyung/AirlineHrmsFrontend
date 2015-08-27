@@ -49,7 +49,7 @@ block form
             .without-edit(flex)
                 div
                     div.without-edit-title 在编情况
-                    div.without-edit-content(style="margin-top: 8px;") {{request.position.staffing}}/{{request.position.budgetedStaffing || "-"}}
+                    div.without-edit-content(style="margin-top: 8px;") {{request.position.staffing}}/{{request.position.budgetedStaffing || "0"}}
 
         div(layout)
             md-input-container(flex)
