@@ -732,9 +732,6 @@ class ContractCtrl extends nb.Controller
         self = @
         return if contract && contract.employeeId == 0
 
-        request.receptor_id = contract.employeeId
-        request.reviewer_id = contract.employeeId
-
         @http.post("/api/workflows/Flow::RenewContract", request).then (data)->
             self.contracts.$refresh()
             msg = data.$response.data.messages
