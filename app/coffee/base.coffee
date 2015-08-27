@@ -105,15 +105,15 @@ class NewResourceCtrl
 
 
 class NewFlowCtrl
-    @.$inject = ['$scope', '$http', '$state', 'USER_META']
+    @.$inject = ['$scope', '$http', '$state', 'USER_META', 'toaster']
 
-    constructor: (scope, $http, @state, meta) ->
-        ctrl = @
+    constructor: (scope, $http, @state, meta, @toaster) ->
+        self = @
 
         Moment = moment().constructor
 
         scope.initialFlow = (type) ->
-            ctrl.flow_type = type
+            self.flow_type = type
 
             return {}
 
@@ -127,21 +127,20 @@ class NewFlowCtrl
                 if value instanceof Moment
                     data[key] = value.format()
 
-            $http.post("/api/workflows/#{ctrl.flow_type}", data).success () ->
+            $http.post("/api/workflows/#{self.flow_type}", data).success () ->
                 scope.panel.close() if scope.panel
-                list.$refresh()
-
-                if scope.panel
-                    scope.panel.close()
-                    if scope.panel.$$collection #WORKAROUND 临时代码， 因为流程与列表数据展现不一致
-                        scope.panel.$$collection.$refresh()
+                # 这个bug很奇葩，刷新了服务器的请假数据后，最新的1条id没有更新，其他的列有更新
+                # 导致点击查看按钮，显示的是错位的流程信息
+                list.$refresh() if list
+                self.toaster.pop('success', '提示', '流程创建成功')
+                self.state.go(self.state.current.name, {}, {reload: true})
 
 
 class NewMyRequestCtrl extends NewFlowCtrl
-    @.$inject = ['$scope', '$http', '$timeout', 'USER_META', '$nbEvent', 'Employee']
+    @.$inject = ['$scope', '$http', '$timeout', '$state', 'USER_META', 'toaster', '$nbEvent', 'Employee']
 
-    constructor: (scope, $http, $timeout, meta, @Evt, @Employee) ->
-        super(scope, $http, meta) # 手动注入父类实例化参数
+    constructor: (scope, $http, $timeout, $state, meta, toaster, @Evt, @Employee) ->
+        super(scope, $http, $state, meta, toaster) # 手动注入父类实例化参数
         self = @
 
         scope.request = {}

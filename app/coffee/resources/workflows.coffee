@@ -20,6 +20,7 @@ workflows = [
     "Flow::SickLeave"
     "Flow::SickLeaveInjury"
     "Flow::SickLeaveNulliparous"
+    "Flow::OccupationInjury"
     "Flow::WomenLeave"
     "Flow::Retirement"
     "Flow::EarlyRetirement"
@@ -69,7 +70,7 @@ angular.forEach workflows, (item)->
                                 jsonRootMany: 'workflows'
                                 jsonRootSingle: 'workflow'
 
-                            $extends:
+                            $extend:
                                 Record:
                                     revert: ()->
                                         self = this
@@ -90,6 +91,21 @@ angular.forEach workflows, (item)->
                             $config:
                                 jsonRootMany:'workflows'
                                 jsonRootSingle: 'workflow'
+
+                            $extend:
+                                Record:
+                                    revert: ()->
+                                        self = this
+
+                                        request = {
+                                            url: "/api/workflows/#{this.type}/#{this.id}/repeal"
+                                            method: "PUT"
+                                        }
+
+                                        onSuccess = (res) ->
+                                            self.$dispatch 'after-revert'
+
+                                        this.$send(request, onSuccess)
                             ).$collection().$fetch()
         }
 

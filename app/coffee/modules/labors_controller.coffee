@@ -951,8 +951,6 @@ class SbFlowHandlerCtrl
         @tableData.$refresh({filter_types: [@FlowName]})
 
     revert: (isConfirm, record)->
-        console.error "revert method on controller called, object: ", record
-
         if isConfirm
             record.revert()
 
