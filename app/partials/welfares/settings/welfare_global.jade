@@ -36,11 +36,11 @@
                         td 养老保险
                         td
                             span.min
-                                input(type="number" min="1" max="100000" step="1" ng-model="setting.pension.lower_limit")
+                                input(type="number" min="1" max="100000" step="0.000001" ng-model="setting.pension.lower_limit")
                                 |RMB
                             span.to —
                             span.max
-                                input(type="number" min="1" max="100000" ng-model="setting.pension.upper_limit")
+                                input(type="number" min="1" max="100000" step="0.000001" ng-model="setting.pension.upper_limit")
                                 |RMB
                         td
                             md-switch.md-primary(ng-model="setting.pension.is_ration" ).m0 {{ setting.pension.is_ration ? '按金额(RMB)' : '按比例(%)' }}
@@ -63,11 +63,11 @@
                         td 医疗保险
                         td
                             span.min
-                                input(type="number" ng-model="setting.treatment.lower_limit")
+                                input(type="number" min="1" max="100000" step="0.000001" ng-model="setting.treatment.lower_limit")
                                 |RMB
                             span.to —
                             span.max
-                                input(type="number" ng-model="setting.treatment.upper_limit")
+                                input(type="number" min="1" max="100000" step="0.000001" ng-model="setting.treatment.upper_limit")
                                 |RMB
                         td
                             md-switch.md-primary(ng-model="setting.treatment.is_ration").m0 {{ setting.treatment.is_ration ? '按金额(RMB)' : '按比例(%)' }}
@@ -90,11 +90,11 @@
                         td 工伤保险
                         td
                             span.min
-                                input(type="number" ng-model="setting.injury.lower_limit")
+                                input(type="number" min="1" max="100000" step="0.000001" ng-model="setting.injury.lower_limit")
                                 |RMB
                             span.to —
                             span.max
-                                input(type="number" ng-model="setting.injury.upper_limit")
+                                input(type="number" min="1" max="100000" step="0.000001" ng-model="setting.injury.upper_limit")
                                 |RMB
                         td
                             md-switch.md-primary(ng-model="setting.injury.is_ration" ).m0 {{ setting.injury.is_ration ? '按金额(RMB)' : '按比例(%)' }}
@@ -117,11 +117,11 @@
                         td 失业保险
                         td
                             span.min
-                                input(type="number" ng-model="setting.unemploy.lower_limit")
+                                input(type="number" min="1" max="100000" step="0.000001" ng-model="setting.unemploy.lower_limit")
                                 |RMB
                             span.to —
                             span.max
-                                input(type="number" ng-model="setting.unemploy.upper_limit")
+                                input(type="number" min="1" max="100000" step="0.000001" ng-model="setting.unemploy.upper_limit")
                                 |RMB
                         td
                             md-switch.md-primary(ng-model="setting.unemploy.is_ration" ).m0 {{ setting.unemploy.is_ration ? '按金额(RMB)' : '按比例(%)' }}
@@ -143,11 +143,11 @@
                         td 大病保险
                         td
                             span.min
-                                input(type="number" ng-model="setting.illness.lower_limit")
+                                input(type="number" min="1" max="100000" step="0.000001" ng-model="setting.illness.lower_limit")
                                 |RMB
                             span.to —
                             span.max
-                                input(type="number" ng-model="setting.illness.upper_limit")
+                                input(type="number" min="1" max="100000" step="0.000001" ng-model="setting.illness.upper_limit")
                                 |RMB
                         td
                             md-switch.md-primary(ng-model="setting.illness.is_ration" ).m0 {{ setting.illness.is_ration ? '按金额(RMB)' : '按比例(%)' }}
@@ -169,11 +169,11 @@
                         td 生育保险
                         td
                             span.min
-                                input(type="number" ng-model="setting.fertility.lower_limit")
+                                input(type="number" min="1" max="100000" step="0.000001" ng-model="setting.fertility.lower_limit")
                                 |RMB
                             span.to —
                             span.max
-                                input(type="number" ng-model="setting.fertility.upper_limit")
+                                input(type="number" min="1" max="100000" step="0.000001" ng-model="setting.fertility.upper_limit")
                                 |RMB
                         td
                             md-switch.md-primary(ng-model="setting.fertility.is_ration" ).m0 {{ setting.fertility.is_ration ? '按金额(RMB)' : '按比例(%)' }}
