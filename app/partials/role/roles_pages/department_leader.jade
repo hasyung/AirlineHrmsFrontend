@@ -35,7 +35,10 @@
                     .icon.people
                 .desc 个人信息
 
-            a.controls__cell(ng-click="rootCtrl.show_main=true")
+            a.controls__cell(
+                ng-click="rootCtrl.show_main=true"
+                ui-sref="charts"
+                )
                 .controls__cell__btn
                     .icon.chart
                 .desc 数据报表

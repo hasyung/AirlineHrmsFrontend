@@ -4,10 +4,10 @@
         md-toolbar
             .md-toolbar-tools
                 h2 员工花名册
-                div(flex)
+                span(flex)
                 span
-                    md-menu()
-                        md-button.md-primary.md-raised(ng-click="$mdOpenMenu($event)" ng-if="ctrl.isDepartmentHr()" ng-disabled="!ctrl.getSelected()") 代请假
+                    md-menu(ng-if="ctrl.isDepartmentHr()")
+                        md-button.md-primary.md-raised(ng-click="$mdOpenMenu($event)" ng-disabled="!ctrl.getSelected()") 代请假
                         md-menu-content
                             md-menu-item()
                                 a.md-button(
