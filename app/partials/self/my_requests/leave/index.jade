@@ -28,7 +28,7 @@
                         ) 年假抵扣
                     span
                         md-button.md-primary.md-raised(
-                            ng-disabled="!(ctrl.getSelected() && ctrl.getSelected().workflowState !== '已生效')"
+                            ng-disabled="!(ctrl.getSelected() && ctrl.getSelected().workflowState !== '已生效' && ctrl.getSelected().workflowState !== '已撤销')"
                             nb-confirm="ctrl.revert(isConfirm, ctrl.getSelected())"
                             nb-title="你是否要撤销所选请假操作?"
                             nb-content="当你点击确定时，您所申请的假期将被撤销！"

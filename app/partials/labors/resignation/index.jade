@@ -8,6 +8,7 @@ block heading
 
 block user_list_actions
     md-button.md-primary.md-raised(
+        ng-if="ctrl.isDepartmentHr()"
         ng-disabled="!ctrl.getSelected()"
         nb-panel
         template-url="/partials/labors/resignation/resignation.html"
