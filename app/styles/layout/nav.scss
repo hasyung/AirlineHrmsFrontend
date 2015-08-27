@@ -55,6 +55,14 @@
         &.active {
             transition: none;
 
+            .type-icon {
+                svg {
+                    * {
+                        fill: #f54b3c;
+                    }
+                }
+            }
+
             > menu-toggle > .md-button,
             > menu-link >.md-button {
                 background-color: #f5f5f5;
@@ -77,6 +85,7 @@
             > menu-toggle > .md-button,
             > menu-link >.md-button {
                 background-color: #f5f5f5;
+                color: #f54b3c;
             }
         }
     }
