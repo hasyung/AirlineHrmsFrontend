@@ -362,7 +362,7 @@
                 width: 228px;
 
                 img {
-                    animation: progress-rotate 5s linear;
+                    animation: progress-rotate 5s linear forwards;
                     transform: rotate(90deg) translate(0, 0, 0);
                 }
 
