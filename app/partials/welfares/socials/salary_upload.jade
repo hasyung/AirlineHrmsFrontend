@@ -29,5 +29,5 @@ md-dialog.performance_upload
             md-button(ng-click='dialog.close()') 取 消
             md-button.md-primary.md-raised(
                 ng-click="dialog.close();ctrl.upload_salary(param)"
-                ng-disabled="!param.year || !param.month"
+                ng-disabled="!param.year || !param.month || ctrl.upload_result==null || ctrl.upload_result==''"
                 ) 确 定
