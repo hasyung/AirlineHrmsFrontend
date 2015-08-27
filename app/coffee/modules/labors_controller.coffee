@@ -734,7 +734,7 @@ class ContractCtrl extends nb.Controller
 
         @http.post("/api/workflows/Flow::RenewContract", request).then (data)->
             self.contracts.$refresh()
-            msg = data.$response.data.messages
+            msg = data.data.messages
             self.Evt.$send("contract:renew:success", msg) if msg
 
     newContract: (contract)->
@@ -975,7 +975,7 @@ class SbFlowHandlerCtrl
 
         if isConfirm
             record.revert()
-            tableData.$refresh()
+            @tableData.$refresh()
 
     isDepartmentHr: ()->
         @CURRENT_ROLES.indexOf('department_hr') >= 0
