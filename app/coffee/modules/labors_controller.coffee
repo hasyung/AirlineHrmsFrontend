@@ -876,7 +876,7 @@ class SbFlowHandlerCtrl
         @reviewers =  @Employee.leaders()
 
         relationName = @enum.parseLabel(@meta.labor_relation_id, 'labor_relations')
-        @canCreateEarlyRetirement = ["合同", "合同制"].indexOf(relationName)
+        @canCreateEarlyRetirement = (["合同", "合同制"].indexOf(relationName) >= 0)
 
     userList: ->
         filterOptions = _.cloneDeep(userListFilterOptions)
