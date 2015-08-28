@@ -8,6 +8,7 @@ block heading
 
 block user_list_actions
     md-button.md-primary.md-raised(
+        ng-if="ctrl.isHrLaborRelationMember()"
         ng-disabled="!ctrl.getSelectedEntities().length"
         nb-dialog
         template-url="/partials/labors/retirement/new_retirement.html"

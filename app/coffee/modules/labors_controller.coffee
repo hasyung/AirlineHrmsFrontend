@@ -986,6 +986,9 @@ class SbFlowHandlerCtrl
     isDepartmentHr: ()->
         @CURRENT_ROLES.indexOf('department_hr') >= 0
 
+    isHrLaborRelationMember: ()->
+        @CURRENT_ROLES.indexOf('hr_labor_relation_member') >= 0
+
 app.controller('AttendanceRecordCtrl', AttendanceRecordCtrl)
 app.controller('AttendanceHisCtrl', AttendanceHisCtrl)
 app.controller('UserListCtrl', UserListCtrl)
