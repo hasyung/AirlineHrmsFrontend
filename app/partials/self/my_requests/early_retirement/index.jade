@@ -18,6 +18,7 @@ block tools
     span
         md-button.md-primary.md-raised(
             ng-if="ctrl.canCreateEarlyRetirement"
+            nb-confirm="ctrl.revert(isConfirm, ctrl.getSelected())"
             nb-title="你是否要撤销所选退养操作?"
             nb-content="当你点击确定时，您所申请的退养将被撤销!"
         ) 撤销退养
