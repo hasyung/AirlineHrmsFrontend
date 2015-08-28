@@ -155,7 +155,7 @@ class FlowController
 
         #加载分类为领导和干部的人员
         scope.reviewers = []
-        scope.leaders = Employee.leaders()
+        scope.leaders = []
         scope.reviewOrgs = OrgStore.getPrimaryOrgs()
         scope.userReply = ""
         scope.state = @state
@@ -234,10 +234,11 @@ class FlowController
                     scope.getContact()
                     Evt.$send 'result:delete:success', '删除常用联系人成功'
 
-        scope.foggy = (param) ->
-
-
-
+        scope.queryContact = (param) ->
+            http.get('/api/employees?&name='+param)
+                .success (result) ->
+                    console.log result
+                    scope.leaders = result.employees
 
 
 app.controller 'FlowController', FlowController
