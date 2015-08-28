@@ -1,12 +1,18 @@
 .default-role.role-bg(flex layout)
     .container1440(layout="row")
         .controls
-            a.controls__cell(ng-click="rootCtrl.show_main=true")
+            a.controls__cell(
+                ng-click="rootCtrl.show_main=true"
+                ui-sref="self.profile"
+                )
                 .controls__cell__btn
                     .icon.people
                 .desc 个人信息
 
-            a.controls__cell(ng-click="rootCtrl.show_main=true")
+            a.controls__cell(
+                ng-click="rootCtrl.show_main=true"
+                ui-sref="my_requests"
+                )
                 .controls__cell__btn
                     .icon.pen
                 .desc 员工自助
