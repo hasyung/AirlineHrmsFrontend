@@ -51,6 +51,7 @@
                     ng-bind="item.department_name"
                     ng-class="{'green': item.hr_department_leader_checked,\
                     'yellow': (!item.hr_department_leader_checked) && item.department_leader_checked && item.department_hr_checked, \
+                    'purple': (!item.hr_department_leader_checked) && (!item.department_leader_checked) && item.department_hr_checked, \
                     'active': item.department_id == ctrl.tableData.$metadata.department_id}"
                     ng-click="ctrl.exeSearch(item.department_id)"
                 )
