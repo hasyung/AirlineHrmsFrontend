@@ -55,7 +55,6 @@ angular.forEach workflows, (item)->
         restmod.model("/workflows/#{item}").mix 'nbRestApi', 'Workflow', {
             receptor: {belongsTo: 'Employee', key: 'receptor_id'}
             sponsor: {belongsTo: 'Employee', key: 'sponsor_id'}
-
             flowNodes: {hasMany: "FlowReply"}
 
             $config:
@@ -66,6 +65,9 @@ angular.forEach workflows, (item)->
                 Scope:
                     records: ->
                         restmod.model("/workflows/#{item}/record").mix(
+                            receptor: {belongsTo: 'Employee', key: 'receptor_id'}
+                            sponsor: {belongsTo: 'Employee', key: 'sponsor_id'}
+
                             $config:
                                 jsonRootMany: 'workflows'
                                 jsonRootSingle: 'workflow'

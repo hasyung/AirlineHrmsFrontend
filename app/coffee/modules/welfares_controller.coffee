@@ -581,6 +581,7 @@ class AnnuityPersonalController extends nb.Controller
         @annuities = @AnnuitySetup.$collection().$fetch()
 
     search: (tableState) ->
+        @tableState = tableState
         @annuities.$refresh(tableState)
 
     getSelectsIds: () ->
@@ -619,7 +620,8 @@ class AnnuityPersonalController extends nb.Controller
             self.loadRecords()
 
     loadRecords: ()->
-        @annuities.$refresh()
+        # 保存搜索状态
+        @annuities.$refresh(@tableState || {})
 
 
 class AnnuityComputeController extends nb.Controller
