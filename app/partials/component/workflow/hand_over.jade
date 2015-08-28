@@ -8,7 +8,10 @@ md-dialog.hand_over(ng-init="params = {type:'departments'};")
                 .hd-manner
                     md-radio-group(ng-model="params.type")
                         md-radio-button.md-primary(value="departments") 移交部门
-                        md-radio-button.md-primary(value="reviewer") 移交个人
+                        md-radio-button.md-primary(
+                            value="reviewer"
+                            ng-click="getContact()"
+                            ) 移交个人
                         md-radio-button.md-primary(value="search_reviewer") 搜索个人
                 .hd-unit-wrapper(layout ng-if="params.type == 'departments'")
                     .hd-choosing(flex)
@@ -26,19 +29,21 @@ md-dialog.hand_over(ng-init="params = {type:'departments'};")
                         .content
                             md-radio-group(ng-model="params.reviewer_id")
                                 .hd__item(ng-repeat="reviewer in reviewers")
-                                    md-radio-button.md-primary(ng-value="reviewer.id") {{ reviewer.name }} ( {{reviewer.department.name}} / {{reviewer.position.name}} )
-                                    .hd__ctrl
-                                        a.hd__ctrl__btn(href="#")
-                                            img(src="/images/svg/close.svg")
+                                    md-radio-button.md-primary(ng-value="reviewer.id") {{ reviewer.name }} ( {{reviewer.department_name}} / {{reviewer.position_name}} )
+                                    .hd__ctrl(ng-click="removeContact(reviewer.id)")
+                                        a.hd__ctrl__btn(href="")
+                                            md-icon(md-svg-src="/images/svg/close.svg")
                 .hd-unit-wrapper(ng-if="params.type == 'search_reviewer'")
                     input.hd__searchbar(type="text" placeholder="请输入要查找的姓名")
                     .content
                         md-radio-group(ng-model="params.reviewer_id")
-                            .hd__item(ng-repeat="reviewer in reviewers")
-                                md-radio-button.md-primary(ng-value="reviewer.id") {{ reviewer.name }} ( {{reviewer.department.name}} / {{reviewer.position.name}} )
-                                .hd__ctrl
-                                    a.hd__ctrl__btn(href="#")
-                                        img(src="/images/svg/plus.svg")
+                            .hd__item(ng-repeat="leader in leaders")
+                                md-radio-button.md-primary(ng-value="leader.id") {{ leader.name }} ( {{leader.department.name}} / {{leader.position.name}} )
+                                .hd__ctrl(
+                                    ng-click="addContact(leader.id)"
+                                    )
+                                    a.hd__ctrl__btn(href="")
+                                        md-icon(md-svg-src="/images/svg/plus.svg")
 
         .md-actions
             md-button.md-raised.white(type='button',ng-click='dialog.cancel()') 取消

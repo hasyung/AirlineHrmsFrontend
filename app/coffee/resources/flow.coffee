@@ -147,14 +147,15 @@ FlowHandlerDirective = (ngDialog)->
 
 
 class FlowController
-    @.$inject = ['$http','$scope', 'USER_META', 'OrgStore', 'Employee', '$state']
+    @.$inject = ['$http','$scope', 'USER_META', 'OrgStore', 'Employee', '$nbEvent', '$state']
 
-    constructor: (http, scope, meta, OrgStore, Employee, @state) ->
+    constructor: (http, scope, meta, OrgStore, Employee, Evt, @state) ->
         FLOW_HTTP_PREFIX = "/api/workflows"
         scope.selectedOrgs = []
 
         #加载分类为领导和干部的人员
-        scope.reviewers = Employee.leaders()
+        scope.reviewers = []
+        scope.leaders = Employee.leaders()
         scope.reviewOrgs = OrgStore.getPrimaryOrgs()
         scope.userReply = ""
         scope.state = @state
@@ -216,6 +217,27 @@ class FlowController
         scope.toggleSelect = (org, list)->
             index = list.indexOf org
             if index > -1 then list.splice(index, 1) else list.push org
+
+        scope.getContact = () ->
+            http.get('/api/me/flow_contact_people')
+                .success (result) ->
+                    scope.reviewers = result.flow_contact_people
+
+        scope.addContact = (param) ->
+            http.post('/api/me/flow_contact_people', {employee_id: param})
+                .success (result) ->
+                    Evt.$send 'result:post:success', '添加常用联系人成功'
+
+        scope.removeContact = (param) ->
+            http.delete('/api/me/flow_contact_people/'+param)
+                .success (result) ->
+                    scope.getContact()
+                    Evt.$send 'result:delete:success', '删除常用联系人成功'
+
+        scope.foggy = (param) ->
+
+
+
 
 
 app.controller 'FlowController', FlowController
