@@ -19,7 +19,10 @@
                     .icon.pen
                 .desc 员工自助
 
-            a.controls__cell(ng-click="rootCtrl.show_main=true")
+            a.controls__cell(
+                ng-click="rootCtrl.show_main=true"
+                ui-sref="TODO"
+                )
                 .controls__cell__btn
                     .icon.todo
                 .desc 待办事项
@@ -32,7 +35,10 @@
                     .icon.people
                 .desc 个人信息
 
-            a.controls__cell(ng-click="rootCtrl.show_main=true")
+            a.controls__cell(
+                ng-click="rootCtrl.show_main=true"
+                ui-sref="charts"
+                )
                 .controls__cell__btn
                     .icon.chart
                 .desc 数据报表
