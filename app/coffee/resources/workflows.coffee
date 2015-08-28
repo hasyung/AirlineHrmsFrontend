@@ -53,10 +53,10 @@ CustomConfig = {
 angular.forEach workflows, (item)->
     resource = (restmod, RMUtils, $Evt) ->
         restmod.model("/workflows/#{item}").mix 'nbRestApi', 'Workflow', {
-            flowNodes: {hasMany: "FlowReply"}
-
             receptor: {belongsTo: 'Employee', key: 'receptor_id'}
             sponsor: {belongsTo: 'Employee', key: 'sponsor_id'}
+
+            flowNodes: {hasMany: "FlowReply"}
 
             $config:
                 jsonRootMany: 'workflows'

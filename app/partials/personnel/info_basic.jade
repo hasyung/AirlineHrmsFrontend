@@ -1,4 +1,4 @@
-div.panel-bg-gray(ng-init= "current = panel.employee; current.$refresh();")
+div.panel-bg-gray(ng-init = "current = panel.employee; current.$refresh();")
     md-toolbar.md-warn(md-theme="hrms")
         .md-toolbar-tools
             span 人事信息
@@ -13,7 +13,7 @@ div.panel-bg-gray(ng-init= "current = panel.employee; current.$refresh();")
                 md-button.md-fab.resume-button.md-warn(
                     nb-dialog
                     template-url="partials/self/self_resume.html"
-                    locals="{currentUser:current}"
+                    locals="{currentUser: current}"
                 )
                     md-icon(md-svg-src="/images/svg/resume_24px.svg" aria-label="简历")
             .employee-others-info

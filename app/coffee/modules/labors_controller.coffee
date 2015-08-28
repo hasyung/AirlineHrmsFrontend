@@ -749,13 +749,14 @@ class ContractCtrl extends nb.Controller
         @contracts.$build(contract).$save().$then ()->
             self.contracts.$refresh()
 
-    leaveJob: (contract, isConfirm, reason)->
+    leaveJob: (contract, isConfirm, reason, flow_id)->
         return if !isConfirm
 
         self = @
         params = {}
         params.reason = reason
         params.receptor_id = contract.owner.$pk
+        params.flow_id = flow_id
 
         @http.post("/api/workflows/Flow::EmployeeLeaveJob", params).success (data, status)->
             self.Evt.$send "employee_leavejob:create:success", "离职单发起成功"
@@ -968,7 +969,7 @@ class SbFlowHandlerCtrl
             self.Evt.$send "retirement:create:success", "退休发起成功"
             self.tableData.$refresh()
 
-    leaveJob: (employeeId, isConfirm, reason)->
+    leaveJob: (employeeId, isConfirm, reason, flow_id)->
         return if !isConfirm
 
         self = @
@@ -976,11 +977,13 @@ class SbFlowHandlerCtrl
         params = {}
         params.reason = reason
         params.receptor_id = employeeId
+        params.flow_id = flow_id
 
         @http.post("/api/workflows/Flow::EmployeeLeaveJob", params).success (data, status)->
             self.Evt.$send "employee_leavejob:create:success", "离职单发起成功"
+            self.refreshTableData()
 
-    refreshTableDate: ()->
+    refreshTableData: ()->
         @tableData.$refresh({filter_types: [@FlowName]})
 
     revert: (isConfirm, record)->
