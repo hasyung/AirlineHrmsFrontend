@@ -80,6 +80,12 @@ class NbFilterCtrl extends nb.FilterController
                 <md-option ng-value="'合同制'" placeholder="用工性质">合同制</md-option>
             </md-select>
         '''
+        'leave_job_state_select':'''
+            <md-select placeholder="${ displayName }" ng-model="${ name }">
+                <md-option ng-value="true" placeholder="离职发起">已发起</md-option>
+                <md-option ng-value="false" placeholder="离职发起">未发起</md-option>
+            </md-select>
+        '''
         'boolean': '''
             <md-select placeholder="${ displayName }" ng-model="${ name }">
                 <md-option value="true" selected)">是</md-option>

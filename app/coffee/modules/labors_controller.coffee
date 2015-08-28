@@ -425,6 +425,7 @@ class AttendanceCtrl extends nb.Controller
             summary_record = _.find data.$response.data.meta.attendance_summary_status, (item)->
                 item.department_id == departmentId
             self.departmentHrChecked = summary_record.department_hr_checked
+            self.departmentLeaderChecked = summary_record.department_leader_checked
 
     initDate: ()->
         date = new Date()
@@ -442,8 +443,16 @@ class AttendanceCtrl extends nb.Controller
         @tableData = @AttendanceSummary.$collection().$fetch()
 
     loadSummariesList: ()->
+        self = @
+
         @summaryListCol = ATTENDANCE_SUMMERY_DEFS
         @tableData = @AttendanceSummary.records({summary_date: moment().format()})
+
+        @AttendanceSummary.records({summary_date: moment().format()}).$asPromise().then (data)->
+            summary_record = _.find data.$response.data.meta.attendance_summary_status, (item)->
+                item.department_id == data.$response.data.meta.department_id
+            self.departmentHrChecked = summary_record.department_hr_checked
+            self.departmentLeaderChecked = summary_record.department_leader_checked
 
     getDate: ()->
         date = moment(new Date("#{this.year}-#{this.month}")).format()
@@ -742,13 +751,14 @@ class ContractCtrl extends nb.Controller
         @contracts.$build(contract).$save().$then ()->
             self.contracts.$refresh()
 
-    leaveJob: (contract, isConfirm, reason)->
+    leaveJob: (contract, isConfirm, reason, flow_id)->
         return if !isConfirm
 
         self = @
         params = {}
         params.reason = reason
         params.receptor_id = contract.owner.$pk
+        params.flow_id = flow_id
 
         @http.post("/api/workflows/Flow::EmployeeLeaveJob", params).success (data, status)->
             self.Evt.$send "employee_leavejob:create:success", "离职单发起成功"
@@ -928,6 +938,10 @@ class SbFlowHandlerCtrl
             @columnDef.splice 6, 0, {displayName: '用工性质', name: 'receptor.laborRelationId', cellFilter: "enum:'labor_relations'"}
 
         filterOptions = _.cloneDeep(HANDLER_AND_HISTORY_FILTER_OPTIONS)
+
+        if @FlowName == 'Flow::Resignation' || @FlowName == 'Flow::Retirement' || @FlowName == 'Flow::Dismiss'
+            filterOptions.constraintDefs.splice 10, 0, {displayName: '离职发起', name: 'leave_job_state', type: 'leave_job_state_select'}
+
         filterOptions.name = @historyListName
         @filterOptions = filterOptions
         @tableData = @Flow.records()
@@ -961,7 +975,7 @@ class SbFlowHandlerCtrl
             self.Evt.$send "retirement:create:success", "退休发起成功"
             self.tableData.$refresh()
 
-    leaveJob: (employeeId, isConfirm, reason)->
+    leaveJob: (employeeId, isConfirm, reason, flow_id)->
         return if !isConfirm
 
         self = @
@@ -969,11 +983,13 @@ class SbFlowHandlerCtrl
         params = {}
         params.reason = reason
         params.receptor_id = employeeId
+        params.flow_id = flow_id
 
         @http.post("/api/workflows/Flow::EmployeeLeaveJob", params).success (data, status)->
             self.Evt.$send "employee_leavejob:create:success", "离职单发起成功"
+            self.refreshTableData()
 
-    refreshTableDate: ()->
+    refreshTableData: ()->
         @tableData.$refresh({filter_types: [@FlowName]})
 
     revert: (isConfirm, record)->

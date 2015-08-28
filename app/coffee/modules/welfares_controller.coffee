@@ -613,11 +613,13 @@ class AnnuityPersonalController extends nb.Controller
         })
         .success (data) ->
             self.start_compute_basic = false
-            self.Evt.$send('year_annuity_cardinality:compute:info', data.messages || "计算结束")
+            self.Evt.$send('year_annuity_cardinality:compute:success', data.messages || "计算结束")
+            self.loadRecords()
+        .error (data)->
             self.loadRecords()
 
     loadRecords: ()->
-        @annuities = @AnnuitySetup.$collection().$refresh()
+        @annuities.$refresh()
 
 
 class AnnuityComputeController extends nb.Controller
