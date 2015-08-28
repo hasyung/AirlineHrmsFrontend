@@ -442,8 +442,15 @@ class AttendanceCtrl extends nb.Controller
         @tableData = @AttendanceSummary.$collection().$fetch()
 
     loadSummariesList: ()->
+        self = @
+
         @summaryListCol = ATTENDANCE_SUMMERY_DEFS
         @tableData = @AttendanceSummary.records({summary_date: moment().format()})
+
+        @AttendanceSummary.records({summary_date: moment().format()}).$asPromise().then (data)->
+            summary_record = _.find data.$response.data.meta.attendance_summary_status, (item)->
+                item.department_id == data.$response.data.meta.department_id
+            self.departmentHrChecked = summary_record.department_hr_checked
 
     getDate: ()->
         date = moment(new Date("#{this.year}-#{this.month}")).format()

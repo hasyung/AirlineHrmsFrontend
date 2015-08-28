@@ -91,8 +91,8 @@ FlowHandlerDirective = (ngDialog)->
                     </div>
                 </md-card>
                 <div class="approval-buttons" ng-if="!flowView || flow.name == '合同续签'">
-                    <md-button class="md-raised md-warn" ng-click="submitFlow({opinion: true}, flow, dialog)" type="button">通过</md-button>
-                    <md-button class="md-raised md-warn" ng-click="submitFlow({opinion: false}, flow, dialog)" type="button">驳回</md-button>
+                    <md-button class="md-raised md-warn" ng-click="submitFlow({opinion: true}, flow, dialog, state)" type="button">通过</md-button>
+                    <md-button class="md-raised md-warn" ng-click="submitFlow({opinion: false}, flow, dialog, state)" type="button">驳回</md-button>
                     <md-button class="md-raised md-primary"
                         nb-dialog
                         template-url="partials/component/workflow/hand_over.html"
@@ -147,19 +147,17 @@ FlowHandlerDirective = (ngDialog)->
 
 
 class FlowController
-    @.$inject = ['$http','$scope', 'USER_META', 'OrgStore', 'Employee']
+    @.$inject = ['$http','$scope', 'USER_META', 'OrgStore', 'Employee', '$state']
 
-    constructor: (http, scope, meta, OrgStore, Employee) ->
+    constructor: (http, scope, meta, OrgStore, Employee, @state) ->
         FLOW_HTTP_PREFIX = "/api/workflows"
-
         scope.selectedOrgs = []
 
         #加载分类为领导和干部的人员
         scope.reviewers = Employee.leaders()
-
         scope.reviewOrgs = OrgStore.getPrimaryOrgs()
-
         scope.userReply = ""
+        scope.state = @state
 
         scope.CHOICE = {
             ACCEPT: true
@@ -182,12 +180,16 @@ class FlowController
                 scope.userReply = ""
                 resetForm(form)
 
-        scope.submitFlow = (req, flow, dialog) ->
+        scope.submitFlow = (req, flow, dialog, state) ->
             url = joinUrl(FLOW_HTTP_PREFIX, flow.type, flow.id)
             promise = http.put(url, req)
 
             promise.then ()->
-                scope.flowSet.$refresh() if angular.isDefined(scope.flowSet)
+                if angular.isDefined(scope.flowSet)
+                    scope.flowSet.$refresh()
+                    # 奇葩bug，表格数据刷新后id错位
+                    # state.go(state.current.name, {}, {reload: true})
+
                 dialog.close()
 
         parseParams = (params)->
