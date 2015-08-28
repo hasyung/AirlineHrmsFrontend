@@ -25,7 +25,7 @@
 
                 md-button.md-primary.md-raised(
                     has-permission="attendance_summaries_department_leader_check"
-                    ng-disabled="!ctrl.departmentHrChecked"
+                    ng-disabled="!ctrl.departmentHrChecked || ctrl.departmentLeaderChecked"
                     nb-confirm="ctrl.departmentLeaderCheck()"
                     nb-title="考勤汇总审核"
                     nb-content="确认本部门{{ctrl.year}}-{{ctrl.month}}考勤汇总通过审核，提交至人力资源部门。"

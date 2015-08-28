@@ -619,8 +619,7 @@ class AnnuityPersonalController extends nb.Controller
             self.loadRecords()
 
     loadRecords: ()->
-        @annuities = @AnnuitySetup.$collection().$refresh()
-        @annuities.$clear()
+        @annuities.$refresh()
 
 
 class AnnuityComputeController extends nb.Controller

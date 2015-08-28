@@ -425,6 +425,7 @@ class AttendanceCtrl extends nb.Controller
             summary_record = _.find data.$response.data.meta.attendance_summary_status, (item)->
                 item.department_id == departmentId
             self.departmentHrChecked = summary_record.department_hr_checked
+            self.departmentLeaderChecked = summary_record.department_leader_checked
 
     initDate: ()->
         date = new Date()
@@ -451,6 +452,7 @@ class AttendanceCtrl extends nb.Controller
             summary_record = _.find data.$response.data.meta.attendance_summary_status, (item)->
                 item.department_id == data.$response.data.meta.department_id
             self.departmentHrChecked = summary_record.department_hr_checked
+            self.departmentLeaderChecked = summary_record.department_leader_checked
 
     getDate: ()->
         date = moment(new Date("#{this.year}-#{this.month}")).format()
