@@ -5,6 +5,16 @@ div(ng-switch="rootCtrl.current_roles[0]" flex layout)
         include roles_pages/department_leader
     div(ng-switch-when="department_hr" flex layout)
         include roles_pages/department_hr
+    div(ng-switch-when="hr_labor_relation_member" flex layout)
+        include roles_pages/department_hr
+    div(ng-switch-when="party_member" flex layout)
+        include roles_pages/department_hr
+    div(ng-switch-when="training_member" flex layout)
+        include roles_pages/department_hr
+    div(ng-switch-when="hr_payment_member" flex layout)
+        include roles_pages/department_hr
+    div(ng-switch-when="file_manager" flex layout)
+        include roles_pages/department_hr
     div(ng-switch-when="department_leader" flex layout)
         include roles_pages/department_leader
     div(ng-switch-default flex layout="row")
