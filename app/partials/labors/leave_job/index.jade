@@ -6,7 +6,7 @@ block heading
 
 block history_list_actions
     md-button.md-primary.md-raised(
-        ng-disabled="!ctrl.getSelected() || ctrl.getSelected().workflowState != '审核中'"
+        ng-disabled="!ctrl.getSelected() || ctrl.getSelected().workflowState != '审批中'"
         nb-confirm="ctrl.revert(isConfirm, ctrl.getSelected())"
         nb-title="离职流程撤销"
         nb-content="你确定撤销{{ctrl.getSelected().receptor.name}}的离职流程，请确认。"

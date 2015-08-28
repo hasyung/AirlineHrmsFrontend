@@ -936,6 +936,10 @@ class SbFlowHandlerCtrl
             @columnDef.splice 6, 0, {displayName: '用工性质', name: 'receptor.laborRelationId', cellFilter: "enum:'labor_relations'"}
 
         filterOptions = _.cloneDeep(HANDLER_AND_HISTORY_FILTER_OPTIONS)
+
+        if @FlowName == 'Flow::Resignation' || @FlowName == 'Flow::Retirement' || @FlowName == 'Flow::Dismiss'
+            filterOptions.constraintDefs.splice 10, 0, {displayName: '离职发起', name: 'leave_job_state', type: 'leave_job_state_select'}
+
         filterOptions.name = @historyListName
         @filterOptions = filterOptions
         @tableData = @Flow.records()
