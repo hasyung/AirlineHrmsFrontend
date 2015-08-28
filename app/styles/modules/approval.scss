@@ -291,6 +291,14 @@
             top: 10px;
             z-index: 2;
 
+            &:hover {
+                .hd__ctrl__btn {
+                    svg>* {
+                        fill: rgb(33,150,243);
+                    }
+                }
+            }
+
             .hd__ctrl__btn {
                 height: 24px;
                 width: 24px;
