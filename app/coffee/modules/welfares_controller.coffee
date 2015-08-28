@@ -456,9 +456,9 @@ app.controller 'socialChangesProcessCtrl', SocialChangeProcessController
 
 
 class AnnuityPersonalController extends nb.Controller
-    @.$inject = ['$http', '$scope', '$nbEvent', 'AnnuitySetup', '$q']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'AnnuitySetup', '$q', '$state']
 
-    constructor: (@http, @scope, @Evt, @AnnuitySetup, @q) ->
+    constructor: (@http, @scope, @Evt, @AnnuitySetup, @q, @state) ->
         @annuities = @loadInitialData()
 
         @filterOptions = {
@@ -613,9 +613,11 @@ class AnnuityPersonalController extends nb.Controller
         })
         .success (data) ->
             self.start_compute_basic = false
-            json_data = angular.fromJson(data)
             self.Evt.$send('year_annuity_cardinality:compute:info', data.messages || "计算结束")
-            self.annuities = self.AnnuitySetup.$collection().$fetch()
+            self.loadRecords()
+
+    loadRecords: ()->
+        @annuities = @AnnuitySetup.$collection().$refresh()
 
 
 class AnnuityComputeController extends nb.Controller

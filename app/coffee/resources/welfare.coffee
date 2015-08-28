@@ -77,7 +77,6 @@ AnnuitySetup = (restmod, RMUtils, $Evt) ->
 
         owner: {belongsTo: 'Employee', key: 'employee_id'}
 
-
         $extend:
             Collection:
                 search: (tableState) ->
