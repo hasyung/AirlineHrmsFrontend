@@ -21,14 +21,14 @@
                                 label 员工编码
                                 input(type="text" ng-model="newEmp.employeeNo" required)
 
-                        div(layout)
+                        div(layout ng-controller="formHelperCtrl as helperCtrl")
+                            md-input-container(flex)
+                                label 身份证号码
+                                input(type="text" ng-model="newEmp.identityNo" required)
                             md-input-container.row-has-value(flex)
                                 label 性别
                                 md-select(ng-model="newEmp.genderId")
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('genders')") {{item.label}}
-                            md-input-container(flex)
-                                label 身份证号码
-                                input(type="text" ng-model="newEmp.identityNo" required)
 
                         div(layout)
                             md-input-container(flex)
