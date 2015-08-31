@@ -12,7 +12,7 @@
                     md-subheader.md-primary(md-theme="default")
                         md-icon.form-icon(md-svg-src="/images/svg/personnel_24.svg" alt="基本信息")
                         | 基本信息
-                    div
+                    div(ng-controller="formHelperCtrl as helperCtrl")
                         div(layout)
                             md-input-container(flex)
                                 label 姓名
@@ -21,10 +21,10 @@
                                 label 员工编码
                                 input(type="text" ng-model="newEmp.employeeNo" required)
 
-                        div(layout ng-controller="formHelperCtrl as helperCtrl")
+                        div(layout)
                             md-input-container(flex)
                                 label 身份证号码
-                                input(type="text" ng-model="newEmp.identityNo" required)
+                                input(type="text" ng-model="newEmp.identityNo" required ng-change="helperCtrl.analysisIdentityNo(newEmp.identityNo, newEmp)")
                             md-input-container.row-has-value(flex)
                                 label 性别
                                 md-select(ng-model="newEmp.genderId")
