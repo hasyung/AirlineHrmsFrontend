@@ -460,7 +460,8 @@ class AttendanceCtrl extends nb.Controller
         @http.put('/api/attendance_summaries/department_hr_confirm', params).then (data)->
             self.tableData.$refresh()
             erorr_msg = data.$response.data.messages
-            toaster.pop('info', '提示', erorr_msg) if erorr_msg
+            toaster.pop('info', '提示', erorr_msg || "确认成功")
+            self.departmentHrChecked = true
 
     departmentLeaderCheck: ()->
         self = @

@@ -6,6 +6,16 @@ block vars
     - var formType = 1
     - var need_attachment = true
 
+block relation_data
+    div.flow-info-row(layout)
+        .flow-info-cell(flex)
+            .flow-cell-title 性别
+            .flow-cell-content {{receptor.name}}
+
+    div.flow-info-row(layout)
+        .flow-info-cell(flex)
+            .flow-cell-title 年龄
+            .flow-cell-content {{flowName}}
 
 block additional_form
     div(layout)

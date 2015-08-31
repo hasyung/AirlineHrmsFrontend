@@ -185,8 +185,12 @@ App
         $rootScope.$on '$stateChangeStart', (evt, _to , _toParam, _from, _fromParam) ->
             startLoading()
 
+        $rootScope.loading = true
+
         $rootScope.$on '$stateChangeSuccess', () ->
             cancelLoading()
+
+            $rootScope.hide_menu = $state.current.url.indexOf('/self/my_requests') >= 0
 
         $rootScope.$on 'process', startLoading
 

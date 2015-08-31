@@ -7,6 +7,12 @@ block vars
     - var need_attachment = true
 
 
+block relation_data
+    div.flow-info-row(layout)
+        .flow-info-cell(flex)
+            .flow-cell-title 婚姻状况
+            .flow-cell-content {{receptor.name}}
+
 block additional_form
     div(layout)
         md-input-container.row-has-value(flex)
