@@ -479,14 +479,12 @@
         }
 
         &:hover {
-            .md-fab.md-button {
-                background-color: rgba(0, 0, 0, .26);
+            .cell__btn {
+                transform: rotateY(180deg);
+            }
 
-                md-icon {
-                    * {
-                        fill: rgba(232, 78, 64, .87);
-                    }
-                }
+            .desc {
+                color: #f54b3c;
             }
         }
     }
@@ -495,6 +493,7 @@
         border: 2px solid #ffcfce;
         border-radius: 50%;
         height: 116px;
+        transition: transform .5s linear;
         width: 116px;
 
         &.qingjia {

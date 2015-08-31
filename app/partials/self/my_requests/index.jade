@@ -1,4 +1,4 @@
-.my-requests(flex)
+.my-requests(flex ng-init="showSalary = true")
     .current-month
         md-icon.prev(md-svg-src="md-toggle-arrow")
         span.month 2015-8
@@ -8,15 +8,22 @@
             .title
                 | 8月工资
             .salary-circle(progres-value)
-                .value 12345.6
+                .value(ng-show="showSalary") 12345.6
                 img(src="/images/my_request/progress-circle.png")
             .action
-                button 隐藏
+                button(
+                    ng-show="showSalary"
+                    ng-click="showSalary=false"
+                    ) 隐藏
+                button(
+                    ng-show="!showSalary"
+                    ng-click="showSalary=true"
+                    ) 显示
         .info-right
             .info-content
                 .info-item
                     .title 绩效
-                    .value 1.2
+                    .value 良
                 .info-item
                     .title 社保
                     .value 123
