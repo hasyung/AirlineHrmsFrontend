@@ -166,11 +166,6 @@ HANDLER_AND_HISTORY_FILTER_OPTIONS = {
             displayName: '发起时间'
             type: 'date-range'
         }
-        {
-            name: 'updated_at'
-            displayName: '批准时间'
-            type: 'date-range'
-        }
     ]
 }
 
@@ -384,9 +379,10 @@ class AttendanceCtrl extends nb.Controller
                 displayName: '详细'
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents" ng-init="realFlow = grid.appScope.$parent.realFlow(row.entity)">
-                    <a flow-handler="realFlow" flows="grid.options.data">
+                    <a ng-if="!realFlow.processed" flow-handler="realFlow" flows="grid.options.data">
                         查看
                     </a>
+                    <span ng-if="realFlow.processed">已处理</span>
                 </div>
                 '''
             }

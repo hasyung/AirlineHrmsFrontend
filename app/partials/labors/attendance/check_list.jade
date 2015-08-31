@@ -5,8 +5,9 @@
         md-toolbar
             .md-toolbar-tools
                 h2 请假待审核列表
-                div(flex)
-                md-button.md-primary.md-raised(
+                span
+                span(flex)
+                  md-button.md-primary.md-raised(
                 ) 销假
 
         div(nb-grid column-defs="ctrl.checksColumnDef" export-api grid-selection safe-src="ctrl.tableData")

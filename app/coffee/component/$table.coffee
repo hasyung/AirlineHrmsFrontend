@@ -68,7 +68,7 @@ class NbFilterCtrl extends nb.FilterController
         'workflow_status_select': '''
             <md-select placeholder="${ displayName }" ng-model="${ name }">
                 <md-option ng-value="'rejected'" placeholder="状态">已驳回</md-option>
-                <md-option ng-value="'checking'" placeholder="状态">审核中</md-option>
+                <md-option ng-value="'checking'" placeholder="状态">审批中</md-option>
                 <md-option ng-value="'accepted'" placeholder="状态">已通过</md-option>
                 <md-option ng-value="'actived'" placeholder="状态">已生效</md-option>
                 <md-option ng-value="'repeal'" placeholder="状态">已撤销</md-option>

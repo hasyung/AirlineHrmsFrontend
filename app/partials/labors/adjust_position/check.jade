@@ -6,7 +6,7 @@
                 h2 退休待审核列表
                 div(flex)
                 md-button.md-primary.md-raised(
-                    ng-disabled="!ctrl.getSelected() || ctrl.getSelected().workflowState == '已生效'"
+                    ng-disabled="!ctrl.getSelected() || ctrl.getSelected().workflowState != '已生效'"
                     nb-dialog
                     template-url="/partials/labors/retirement/retirement.html"
                     locals="{users:getSelecteds()}"

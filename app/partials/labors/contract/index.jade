@@ -15,7 +15,7 @@ block cust_page
                     div(flex)
 
                     md-button.md-primary.md-raised(
-                        ng-disabled="!ctrl.getSelected() || ctrl.getSelected().workflowState == '已生效'"
+                        ng-disabled="!ctrl.getSelected() || ctrl.getSelected().workflowState != '已生效'"
                         nb-confirm="ctrl.leaveJob(ctrl.getSelected(), isConfirm, '劳动关系终止', ctrl.getSelected().id)"
                         nb-title="离职流程发起"
                         nb-content="你确定对该员工发起离职通知单流程，请确认。"
@@ -43,7 +43,7 @@ block cust_page
 
 block user_list_actions
     md-button.md-primary.md-raised(
-        ng-disabled="!ctrl.getSelected() || ctrl.getSelected().workflowState == '已生效'"
+        ng-disabled="!ctrl.getSelected() || ctrl.getSelected().workflowState != '已生效'"
         nb-panel
         template-url="/partials/labors/contract/new.html"
         locals="{users:getSelecteds()}"
