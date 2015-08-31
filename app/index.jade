@@ -29,7 +29,8 @@ html
         div(layout="row" flex ng-if="!rootCtrl.show_main")
             include partials/role/index.jade
         div(layout="row" flex ng-if="rootCtrl.show_main")
-            include partials/shared/left_sidebar
+            div(ng-if="rootCtrl.current_roles[0]")
+                include partials/shared/left_sidebar
             .butterbar(ui-butterbar)
             md-content.app-content-body.smooth(ui-view flex layout="row")
 

@@ -35,8 +35,6 @@ md-toolbar.top-menu-bar.md-warn(md-theme="hrms")
             ul.user-menu(ng-controller="AuthController as ctrl")
                 .nb-dropdown(user-info-dropdown)
                     li()
-                        a(ui-sref="self.profile") 我的基本信息
-                    li()
                         a(nb-dialog template-url="partials/auth/change_pwd.html") 修改密码
                     li()
                         a(ng-click="logout()") 退出
