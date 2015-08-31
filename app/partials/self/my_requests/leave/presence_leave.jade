@@ -5,3 +5,10 @@ block vars
     - var flowName = '派驻人员休假'
     - var formType = 1
     - var need_attachment = true
+
+
+block relation_data
+    div.flow-info-row(layout)
+        .flow-info-cell(flex)
+            .flow-cell-title 属地
+            .flow-cell-content {{receptor.location}}
