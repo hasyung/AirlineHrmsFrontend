@@ -318,7 +318,11 @@ md-drop-option {
         &.yellow {
             background-color: rgb(229, 184, 17);
             color: #fff;
+        }
 
+        &.purple {
+            background-color: #969;
+            color: #fff;
         }
 
         &.active {
