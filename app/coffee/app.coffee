@@ -190,7 +190,9 @@ App
         $rootScope.$on '$stateChangeSuccess', () ->
             cancelLoading()
 
-            $rootScope.hide_menu = $state.current.url.indexOf('/self/my_requests') >= 0
+            $rootScope.hide_menu = $state.current.url.indexOf('/self/my_requests') >= 0  \
+                || $state.current.url.indexOf('/self-service/profile') >= 0  \
+                || $state.current.url.indexOf('/charts') >= 0
 
         $rootScope.$on 'process', startLoading
 

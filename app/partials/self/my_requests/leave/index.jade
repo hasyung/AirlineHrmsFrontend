@@ -1,4 +1,4 @@
-.flow-list(flex ng-init="leaves = ctrl.MyLeave.$collection().$fetch();")
+.flow-list(flex ng-init="leaves = ctrl.MyLeave.$collection().$fetch();receptor=User.$fetch();")
     md-toolbar
         .md-toolbar-tools
             span
@@ -40,7 +40,7 @@
                                 md-menu-item(ng-if="ctrl.hasVacation('派驻人员休假')")
                                     a.md-button(
                                         nb-panel
-                                        locals="{list: leaves}"
+                                        locals="{list: leaves, receptor: receptor}"
                                         template-url="partials/self/my_requests/leave/presence_leave.html") 派驻人员休假
                                 md-menu-item(ng-if="ctrl.hasVacation('年假')")
                                     a.md-button(
