@@ -203,13 +203,13 @@ ATTENDANCE_SUMMERY_DEFS= [
     {width:100, displayName: '年假', name: 'annualLeave', enableCellEdit: false}
     {width:100, displayName: '婚丧假', name: 'marriageFuneralLeave', enableCellEdit: false}
     {width:100, displayName: '产前检查假', name: 'prenatalCheckLeave', enableCellEdit: false}
-    {width:100, displayName: '计生假', name: 'familyPlanningLeave',headerCellClass: 'editable_cell_header'}
+    {width:100, displayName: '计生假', name: 'familyPlanningLeave',headerCellClass: 'editable_cell_header', enableCellEdit: true, type: 'number'}
     {width:100, displayName: '哺乳假', name: 'lactationLeave', enableCellEdit: false}
     {width:100, displayName: '女工假', name: 'womenLeave', enableCellEdit: false}
     {width:100, displayName: '产假', name: 'maternityLeave', enableCellEdit: false}
     {width:100, displayName: '生育护理假', name: 'rearNurseLeave', enableCellEdit: false}
     {width:100, displayName: '工伤假', name: 'injuryLeave', enableCellEdit: false}
-    {width:100, displayName: '疗养假', name: 'recuperateLeave',headerCellClass: 'editable_cell_header'}
+    {width:100, displayName: '疗养假', name: 'recuperateLeave',headerCellClass: 'editable_cell_header', enableCellEdit: true, type: 'number'}
     {width:100, displayName: '派驻休假', name: 'accreditLeave', enableCellEdit: false}
     {width:100, displayName: '病假', name: 'sickLeave', enableCellEdit: false}
     {width:100, displayName: '病假（工伤待定）', name: 'sickLeaveInjury', enableCellEdit: false}
@@ -223,8 +223,8 @@ ATTENDANCE_SUMMERY_DEFS= [
     {width:100, displayName: '空勤停飞', name: 'ground', enableCellEdit: false}
     {width:100, displayName: '空勤地面工作', name: 'surfaceWork', enableCellEdit: false}
     {width:100, displayName: '驻站天数', name: 'stationDays', enableCellEdit: false}
-    {width:100, displayName: '驻站地点', name: 'stationPlace',headerCellClass: 'editable_cell_header'}
-    {width:100, displayName: '备注', name: 'remark',headerCellClass: 'editable_cell_header'}
+    {width:100, displayName: '驻站地点', name: 'stationPlace',headerCellClass: 'editable_cell_header', enableCellEdit: true, type: 'text'}
+    {width:100, displayName: '备注', name: 'remark',headerCellClass: 'editable_cell_header', enableCellEdit: true, type: 'text'}
 ]
 
 
@@ -316,9 +316,9 @@ app.config(Route)
 
 
 class AttendanceCtrl extends nb.Controller
-    @.$inject = ['GridHelper', 'Leave', '$scope', '$injector', '$http', 'AttendanceSummary', 'CURRENT_ROLES', 'toaster', '$q']
+    @.$inject = ['GridHelper', 'Leave', '$scope', '$injector', '$http', 'AttendanceSummary', 'CURRENT_ROLES', 'toaster', '$q', '$nbEvent']
 
-    constructor: (helper, @Leave, scope, injector, @http, @AttendanceSummary, @CURRENT_ROLES, @toaster, @q) ->
+    constructor: (helper, @Leave, @scope, injector, @http, @AttendanceSummary, @CURRENT_ROLES, @toaster, @q, @Evt) ->
         @initDate()
 
         scope.realFlow = (entity) ->
@@ -508,8 +508,6 @@ class AttendanceCtrl extends nb.Controller
         saveRow = (rowEntity) ->
             dfd = @q.defer()
 
-            console.error rowEntity
-
             gridApi.rowEdit.setSavePromise(rowEntity, dfd.promise)
 
             @http({
@@ -517,18 +515,21 @@ class AttendanceCtrl extends nb.Controller
                 url: '/api/attendance_summaries/' + rowEntity.id
                 data: {
                     id: rowEntity.id
-                    annuity_status: rowEntity.annuityStatus
-                    annuity_cardinality: rowEntity.annuityCardinality
+                    family_planning_leave: rowEntity.familyPlanningLeave
+                    recuperate_leave: rowEntity.recuperateLeave
+                    station_place: rowEntity.stationPlace
+                    remark: rowEntity.remark
                 }
             })
             .success (data) ->
                 dfd.resolve()
-                self.Evt.$send('annuity_status:update:success', data.messages)
+                self.Evt.$send('data:update:success', '考勤信息信息修改成功')
             .error () ->
                 dfd.reject()
                 rowEntity.$restore()
 
         gridApi.rowEdit.on.saveRow(@scope, saveRow.bind(@))
+        # @scope.gridApi = gridApi
 
 
 class AttendanceRecordCtrl extends nb.Controller
