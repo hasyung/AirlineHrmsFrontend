@@ -224,7 +224,9 @@ class NewEmpsCtrl extends nb.Controller
         @gridApi = gridApi
 
     analysisIdentityNo: (identityNo, object)->
+        return unless angular.isDefined(identityNo)
         return unless identityNo.length == 15 || identityNo.length == 18
+
         genders = @enum.get('genders')
 
         if identityNo.length == 15
