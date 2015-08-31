@@ -36,6 +36,8 @@ LeaveEmployees = (restmod, RMUtils, $Evt) ->
         joinScalDate: {decode: 'date', param: 'yyyy-MM-dd'}
         startWorkDate: {decode: 'date', param: 'yyyy-MM-dd'}
         startDate: {decode: 'date', param: 'yyyy-MM-dd'}
+
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
     }
 
 MoveEmployees = (restmod, RMUtils, $Evt) ->

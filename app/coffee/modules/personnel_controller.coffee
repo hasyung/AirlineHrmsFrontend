@@ -268,7 +268,7 @@ class LeaveEmployeesCtrl extends nb.Controller
                 <div class="ui-grid-cell-contents ng-binding ng-scope">
                     <a nb-panel
                         template-url="partials/personnel/info_basic.html"
-                        locals="{employee: row.entity}">
+                        locals="{employee: row.entity.owner}">
                         {{grid.getCellValue(row, col)}}
                     </a>
                 </div>
