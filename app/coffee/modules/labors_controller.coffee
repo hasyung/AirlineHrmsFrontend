@@ -785,6 +785,10 @@ class ContractCtrl extends nb.Controller
         params.receptor_id = contract.owner.$pk
         params.flow_id = flow_id
 
+        params.relation_data = '<div class="flow-info-row" layout="layout"> <div class="flow-info-cell" flex="flex"> <div class="flow-cell-title">入职时间</div> <div class="flow-cell-content">{{join_scal_date}}</div> </div> <div class="flow-info-cell" flex="flex"> <div class="flow-cell-title">发起时间</div> <div class="flow-cell-content">{{created_at}}</div> </div> </div>'
+        params.relation_data = params.relation_data.replace('{{join_scal_date}}', contract.owner.joinScalDate)
+        params.relation_data = params.relation_data.replace('{{created_at}}', moment().format('YYYY-MM-DD'))
+
         @http.post("/api/workflows/Flow::EmployeeLeaveJob", params).success (data, status)->
             self.Evt.$send "employee_leavejob:create:success", "离职单发起成功"
 
@@ -1000,7 +1004,7 @@ class SbFlowHandlerCtrl
             self.Evt.$send "retirement:create:success", "退休发起成功"
             self.tableData.$refresh()
 
-    leaveJob: (employeeId, isConfirm, reason, flow_id)->
+    leaveJob: (employeeId, isConfirm, reason, flow_id, join_scal_date)->
         return if !isConfirm
 
         self = @
@@ -1009,6 +1013,10 @@ class SbFlowHandlerCtrl
         params.reason = reason
         params.receptor_id = employeeId
         params.flow_id = flow_id
+
+        params.relation_data = '<div class="flow-info-row" layout="layout"> <div class="flow-info-cell" flex="flex"> <div class="flow-cell-title">入职时间</div> <div class="flow-cell-content">{{join_scal_date}}</div> </div> <div class="flow-info-cell" flex="flex"> <div class="flow-cell-title">发起时间</div> <div class="flow-cell-content">{{created_at}}</div> </div> </div>'
+        params.relation_data = params.relation_data.replace('{{join_scal_date}}', join_scal_date)
+        params.relation_data = params.relation_data.replace('{{created_at}}', moment().format('YYYY-MM-DD'))
 
         @http.post("/api/workflows/Flow::EmployeeLeaveJob", params).success (data, status)->
             self.Evt.$send "employee_leavejob:create:success", "离职单发起成功"
