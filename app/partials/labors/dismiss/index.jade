@@ -18,7 +18,7 @@ block user_list_actions
 block history_list_actions
     md-button.md-primary.md-raised(
         ng-disabled="!ctrl.getSelected() || ctrl.getSelected().workflowState == '已生效'"
-        nb-confirm="ctrl.leaveJob(ctrl.getSelected().receptor.id, isConfirm, '辞退员工')"
+        nb-confirm="ctrl.leaveJob(ctrl.getSelected().receptor.id, isConfirm, '辞退员工', ctrl.getSelected().id)"
         nb-title="离职流程发起"
         nb-content="你确定对{{ctrl.getSelected().receptor.name}}发起离职通知单流程，请确认。"
     ) 发起离职流程
