@@ -331,7 +331,7 @@ app.config(Route)
 class AttendanceCtrl extends nb.Controller
     @.$inject = ['GridHelper', 'Leave', '$scope', '$injector', '$http', 'AttendanceSummary', 'CURRENT_ROLES', 'toaster', '$q', '$nbEvent']
 
-    constructor: (helper, @Leave, @scope, injector, @http, @AttendanceSummary, @CURRENT_ROLES, @toaster, @q, @Evt) ->
+    constructor: (helper, @Leave, scope, injector, @http, @AttendanceSummary, @CURRENT_ROLES, @toaster, @q, @Evt) ->
         @initDate()
 
         scope.realFlow = (entity) ->
