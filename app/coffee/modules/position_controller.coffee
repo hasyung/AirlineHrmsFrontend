@@ -166,7 +166,9 @@ class PositionChangesCtrl extends nb.Controller
             ]
         }
 
-    searchChanges: (tableState)->
+    search: (tableState)->
+        tableState = tableState || {}
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @changes.$refresh(tableState)
 
 
