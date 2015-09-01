@@ -13,6 +13,7 @@ class NbFilterCtrl extends nb.FilterController
             throw "filter template type: #{type} is not implemented"
         else
             template = filter_template_definition[type]
+
         compiled = _.template(template)
 
         return compiled(def)
@@ -371,10 +372,11 @@ nbGridDirective = ($parse)->
 
             onRegisterApi: (gridApi) ->
                 #WARN 必须保持 grid 生命周期与 controller 一致，暂不支持动态生成表格, 不然会内存泄露
+
                 # DEPRECATED
                 gridApi.grid.appScope.$parent.$gridApi = gridApi if exportApi
 
-                #recommended  alpha
+                #recommended alpha
                 scope.onRegisterApi({gridApi: gridApi})
 
                 gridApi.pagination.on.paginationChanged scope, (newPage, pageSize) ->
@@ -422,7 +424,7 @@ nbGridDirective = ($parse)->
 
     #WORKAROUND, issue#27, 当ui-grid-selection 存在时， resize 会存在使table错位的BUG
     #暂时使用 ui-grid-auto-resize 插件 每250ms定时resize，修复改BUG
-    #如果有性能问题， 再修复
+    #如果有性能问题，再修复
     nbGridTemplate =  '''
         <div ui-grid="gridOptions" #plugins# ui-grid-pagination ui-grid-auto-resize></div>
     '''
@@ -450,7 +452,7 @@ nbGridDirective = ($parse)->
                 return res
             ,[])
 
-            nbGridTemplate.replace("#plugins#",applied_plugins.join(" "))
+            nbGridTemplate.replace("#plugins#", applied_plugins.join(" "))
 
         scope: {
             columnDefs: '='
@@ -466,6 +468,7 @@ BooleanTableCell = ->
             <span ng-class="{'valid-mark':grid.getCellValue(row, col), 'invalid-mark': !grid.getCellValue(row, col) }"></span>
         </div>
     '''
+
     return {
         template: template
         replace: true

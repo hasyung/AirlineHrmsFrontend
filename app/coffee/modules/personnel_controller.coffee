@@ -90,6 +90,8 @@ class PersonnelCtrl extends nb.Controller
         @employees = @Employee.$collection().$fetch()
 
     search: (tableState) ->
+        #TODO 如何通过 gridApi 得到当前 grid 的 per_page 参数
+        #console.error @gridApi.gridOptions
         @employees.$refresh(tableState)
 
     getSelectsIds: () ->
