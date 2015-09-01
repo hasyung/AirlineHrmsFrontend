@@ -907,9 +907,6 @@ class SbFlowHandlerCtrl
         @tableData = @Employee.$collection().$fetch({filter_types: [@FlowName]})
 
     checkList: ->
-        # 退休待处理不需要可选择
-        @noGridSelection = (@FlowName == 'Flow::Retirement' || @FlowName == 'Flow::EmployeeLeaveJob')
-
         @columnDef = @helper.buildFlowDefault(FLOW_HANDLE_TABLE_DEFS)
 
         if @FlowName == 'Flow::Retirement'
@@ -965,14 +962,14 @@ class SbFlowHandlerCtrl
         @tableData = @Flow.myRequests()
 
     getSelected: ->
-        unless @noGridSelection
-            rows = @gridApi.selection.getSelectedGridRows()
-            selected = if rows.length >= 1 then rows[0].entity else null
+        return null unless @gridApi.selection
+        rows = @gridApi.selection.getSelectedGridRows()
+        selected = if rows.length >= 1 then rows[0].entity else null
 
     getSelectedEntities: ->
-        unless @noGridSelection
-            rows = @gridApi.selection.getSelectedGridRows()
-            rows.map (row) -> row.entity
+        return [] unless @gridApi.selection
+        rows = @gridApi.selection.getSelectedGridRows()
+        rows.map (row) -> row.entity
 
     exportGridApi: (gridApi) ->
         @gridApi = gridApi
