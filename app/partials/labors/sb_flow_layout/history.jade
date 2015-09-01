@@ -5,4 +5,4 @@
             .md-toolbar-tools
                 h2 #{flowName}历史列表
 
-        div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection safe-src="ctrl.tableData")
+        div(nb-grid column-defs="ctrl.columnDef" export-api on-register-api="ctrl.exportGridApi(gridApi)" grid-selection safe-src="ctrl.tableData")

@@ -5,4 +5,4 @@
         md-toolbar
             .md-toolbar-tools
                 h2 离职人员花名册
-        div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.leaveEmployees")
+        div(nb-grid column-defs="ctrl.columnDef" on-register-api="ctrl.exportGridApi(gridApi)" safe-src="ctrl.leaveEmployees")

@@ -193,7 +193,7 @@ class SalaryController extends nb.Controller
         result
 
 
-class SalaryPersonalController
+class SalaryPersonalController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryPersonSetup']
 
     constructor: ($http, $scope, $Evt, $enum, @SalaryPersonSetup) ->
@@ -277,6 +277,8 @@ class SalaryPersonalController
         @salaryPersonSetups = @SalaryPersonSetup.$collection().$fetch()
 
     search: (tableState) ->
+        tableState = tableState || {}
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @salaryPersonSetups.$refresh(tableState)
 
     getSelectsIds: () ->
@@ -435,6 +437,7 @@ class SalaryBaseController extends nb.Controller
     search: (tableState) ->
         tableState = {} unless tableState
         tableState['month'] = @currentCalcTime()
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @records.$refresh(tableState)
 
     getSelectsIds: () ->

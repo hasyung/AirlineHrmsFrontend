@@ -491,6 +491,8 @@ class AttendanceCtrl extends nb.Controller
             self.tableData.$refresh()
 
     search: (tableState)->
+        tableState = tableState || {}
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @tableData.$refresh(tableState)
 
     getSelected: -> # selected entity || arr
@@ -543,6 +545,8 @@ class AttendanceRecordCtrl extends nb.Controller
         @employees = @Employee.$collection().$fetch()
 
     search: (tableState)->
+        tableState = tableState || {}
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @employees.$refresh(tableState)
 
     getSelected: () ->
@@ -604,6 +608,8 @@ class AttendanceHisCtrl extends nb.Controller
         @attendances = @Attendance.$collection().$fetch()
 
     search: (tableState)->
+        tableState = tableState || {}
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @attendances.$refresh(tableState)
 
     getSelected: () ->
@@ -741,6 +747,8 @@ class ContractCtrl extends nb.Controller
         @contracts = @Contract.$collection().$fetch()
 
     search: (tableState) ->
+        tableState = tableState || {}
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @contracts.$refresh(tableState)
 
     getSelected: () ->
@@ -876,6 +884,8 @@ class RetirementCtrl extends nb.Controller
         @retirements = @Retirement.$collection().$fetch()
 
     search: (tableState)->
+        tableState = tableState || {}
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @retirements.$refresh(tableState)
 
 
@@ -975,6 +985,8 @@ class SbFlowHandlerCtrl
         @gridApi = gridApi
 
     search: (tableState)->
+        tableState = tableState || {}
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @tableData.$refresh(tableState)
 
     retirement: (users)->

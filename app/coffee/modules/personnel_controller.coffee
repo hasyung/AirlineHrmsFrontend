@@ -90,8 +90,8 @@ class PersonnelCtrl extends nb.Controller
         @employees = @Employee.$collection().$fetch()
 
     search: (tableState) ->
-        #TODO 如何通过 gridApi 得到当前 grid 的 per_page 参数
-        console.error @gridApi.pagination
+        tableState = tableState || {}
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @employees.$refresh(tableState)
 
     getSelectsIds: () ->
@@ -254,7 +254,6 @@ class NewEmpsCtrl extends nb.Controller
     regEmployee: (employee)->
         self = @
 
-        console.error employee
         @employees.$build(employee).$save().$then ()->
             self.loadInitialData()
             #self.gridApi.core.refresh()
@@ -268,6 +267,7 @@ class NewEmpsCtrl extends nb.Controller
 
     search: (tableState) ->
         tableState = @mergeParams(tableState)
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @employees.$refresh(tableState)
 
     mergeParams: (tableState)->
@@ -353,6 +353,8 @@ class LeaveEmployeesCtrl extends nb.Controller
         @leaveEmployees = @LeaveEmployees.$collection().$fetch()
 
     search: (tableState) ->
+        tableState = tableState || {}
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @leaveEmployees.$refresh(tableState)
 
 class MoveEmployeesCtrl extends nb.Controller
@@ -450,10 +452,13 @@ class MoveEmployeesCtrl extends nb.Controller
 
     newMoveEmployee: (moveEmployee)->
         self = @
+
         @moveEmployees.$build(moveEmployee).$save().$then ()->
             self.moveEmployees.$refresh()
 
     search: (tableState) ->
+        tableState = tableState || {}
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @moveEmployees.$refresh(tableState)
 
     getSelected: () ->

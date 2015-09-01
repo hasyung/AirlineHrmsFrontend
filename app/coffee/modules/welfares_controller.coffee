@@ -157,8 +157,10 @@ class WelfarePersonalController extends nb.Controller
 
     search: (tableState) ->
         condition = {}
+
         angular.forEach tableState, (value, key)->
             condition[key] = value if value && angular.isDefined(value)
+        condition['per_page'] = @gridApi.grid.options.paginationPageSize
 
         @socialPersonSetups.$refresh(condition)
 
@@ -283,7 +285,7 @@ class SocialComputeController extends nb.Controller
                 self.Evt.$send 'upload:salary_import:success', '月度' + calc_month + '薪酬数据导入成功'
 
 
-class SocialHistoryController
+class SocialHistoryController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'SocialRecord']
 
     constructor: ($http, $scope, $Evt, @SocialRecord) ->
@@ -346,6 +348,8 @@ class SocialHistoryController
         @socialRecords = @SocialRecord.$collection().$fetch()
 
     search: (tableState) ->
+        tableState = tableState || {}
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @socialRecords.$refresh(tableState)
 
     getSelectsIds: () ->
@@ -353,7 +357,7 @@ class SocialHistoryController
         rows.map (row) -> return row.entity.$pk
 
 
-class SocialChangesController
+class SocialChangesController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'SocialChange']
 
     constructor: ($http, $scope, $Evt, @SocialChange) ->
@@ -420,6 +424,8 @@ class SocialChangesController
         @socialChanges = @SocialChange.$collection().$fetch()
 
     search: (tableState) ->
+        tableState = tableState || {}
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @socialChanges.$refresh(tableState)
 
 
@@ -575,6 +581,7 @@ class AnnuityPersonalController extends nb.Controller
         # gridApi.edit.on.afterCellEdit @scope, (rowEntity, colDef, newValue, oldValue) ->
 
         gridApi.rowEdit.on.saveRow(@scope, saveRow.bind(@))
+        @scope.$gridApi = gridApi
 
     loadInitialData: () ->
         @start_compute_basic = false
@@ -582,6 +589,8 @@ class AnnuityPersonalController extends nb.Controller
 
     search: (tableState) ->
         @tableState = tableState
+        tableState = tableState || {}
+        tableState['per_page'] = @scope.$gridApi.grid.options.paginationPageSize
         @annuities.$refresh(tableState)
 
     getSelectsIds: () ->
@@ -673,6 +682,8 @@ class AnnuityComputeController extends nb.Controller
         @annuityRecords = @AnnuityRecord.$collection().$fetch({date: @currentCalcTime()})
 
     search: (tableState) ->
+        tableState = tableState || {}
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @annuityRecords.$refresh(tableState)
 
     currentCalcTime: ()->
@@ -692,7 +703,7 @@ class AnnuityComputeController extends nb.Controller
             self.loadRecords()
 
 
-class AnnuityHistoryController
+class AnnuityHistoryController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'AnnuityRecord']
 
     constructor: ($http, $scope, $Evt, @AnnuityRecord) ->
@@ -755,6 +766,8 @@ class AnnuityHistoryController
         @annuityRecords = @AnnuityRecord.$collection().$fetch()
 
     search: (tableState) ->
+        tableState = tableState || {}
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @annuityRecords.$refresh(tableState)
 
 
@@ -867,6 +880,8 @@ class AnnuityChangesController
         @annuityChanges = @AnnuityChange.$collection().$fetch()
 
     search: (tableState) ->
+        tableState = tableState || {}
+        tableState['per_page'] = @scope.gridApi.grid.options.paginationPageSize
         @annuityChanges.$refresh(tableState)
 
 
