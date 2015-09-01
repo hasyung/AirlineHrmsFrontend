@@ -572,7 +572,7 @@ angular.module 'nb.directives'
 
     .directive 'progressValue', [ () ->
         postLink = (scope, elem, attrs) ->
-            console.error elem
+            #console.error elem
 
         return {
             restrict: "EA"

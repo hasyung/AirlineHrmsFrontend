@@ -4,7 +4,6 @@ class SideMenuController
   @.$inject = ['$scope', '$http', 'menu', 'CURRENT_ROLES', 'ROLES_MENU_CONFIG']
 
   constructor: ($scope, $http, menu, CURRENT_ROLES, ROLES_MENU_CONFIG) ->
-    # console.error CURRENT_ROLES
     keys = Object.keys(ROLES_MENU_CONFIG)
     pages = []
 

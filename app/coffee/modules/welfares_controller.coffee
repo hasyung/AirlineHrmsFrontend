@@ -437,7 +437,6 @@ class SocialChangeProcessController extends nb.EditableResourceCtrl
 
         @find_or_build_setup = (change)->
             if change.socialSetup
-                console.error change.socialSetup
                 change.socialSetup.$fetch()
                 return change.socialSetup
 

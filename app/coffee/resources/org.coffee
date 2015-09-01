@@ -95,7 +95,7 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS, $http) ->
 
                         if !parentDep
                             throw new Error("机构 #{parent.name}:#{parent.id}，找不到父级 #{parent.parentId}")
-                        #console.error "server find", parentDep
+
                         return computeFullName(parentDep, ttl, initalArr)
                 else
                     return computeFullName(parentDep, ttl, initalArr)
