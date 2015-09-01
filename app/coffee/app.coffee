@@ -190,10 +190,19 @@ App
         $rootScope.$on '$stateChangeSuccess', () ->
             cancelLoading()
 
-            #console.error $state.current.url
+            console.error $state.current.url
             $rootScope.hide_menu = $state.current.url.indexOf('/self/my_requests') >= 0  \
                 || $state.current.url.indexOf('/profile') >= 0  \
-                || $state.current.url.indexOf('/charts') >= 0
+                || $state.current.url.indexOf('/charts') >= 0  \
+                || $state.current.url.indexOf('/members') >= 0  \
+                || $state.current.url.indexOf('/education') >= 0  \
+                || $state.current.url.indexOf('/experience') >= 0  \
+                || $state.current.url.indexOf('/performance') >= 0  \
+                || $state.current.url.indexOf('/leave') >= 0  \
+                || $state.current.url.indexOf('/resignation') >= 0  \
+                || $state.current.url.indexOf('/adjust-position') >= 0  \
+                || $state.current.url.indexOf('/erarly_retirement') >= 0  \
+                || $state.current.url.indexOf('/renew_contract') >= 0
 
         $rootScope.$on 'process', startLoading
 
