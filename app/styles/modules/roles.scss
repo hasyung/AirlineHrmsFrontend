@@ -1,6 +1,11 @@
 .role-bg {
     background: url('/images/roles/roles_bg.jpg') no-repeat;
     background-size: 100% 100%;
+    overflow: hidden;
+}
+
+.ola {
+    overflow: auto;
 }
 
 .container1440 {

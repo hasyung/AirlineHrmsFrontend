@@ -194,37 +194,50 @@ ATTENDANCE_BASE_TABLE_DEFS = [
 
 
 ATTENDANCE_SUMMERY_DEFS= [
-    {width:150, displayName: '所属部门', name: 'departmentName', enableCellEdit: false}
-    {width:100, displayName: '员工编号', name: 'employeeNo', enableCellEdit: false}
-    {width:100, displayName: '姓名', name: 'employeeName', enableCellEdit: false}
-    {width:100, displayName: '用工性质', name: 'laborRelation', enableCellEdit: false}
-    {width:100, displayName: '<带薪假>', name: 'paidLeave', enableCellEdit: false}
+    {width:150, displayName: '所属部门', name: 'departmentName'}
+    {width:100, displayName: '员工编号', name: 'employeeNo'}
+    {width:100, displayName: '姓名', name: 'employeeName'}
+    {width:100, displayName: '用工性质', name: 'laborRelation'}
+    {width:100, displayName: '<带薪假>', name: 'paidLeave'}
 
-    {width:100, displayName: '年假', name: 'annualLeave', enableCellEdit: false}
-    {width:100, displayName: '婚丧假', name: 'marriageFuneralLeave', enableCellEdit: false}
-    {width:100, displayName: '产前检查假', name: 'prenatalCheckLeave', enableCellEdit: false}
-    {width:100, displayName: '计生假', name: 'familyPlanningLeave',headerCellClass: 'editable_cell_header', enableCellEdit: true, type: 'number'}
-    {width:100, displayName: '哺乳假', name: 'lactationLeave', enableCellEdit: false}
-    {width:100, displayName: '女工假', name: 'womenLeave', enableCellEdit: false}
-    {width:100, displayName: '产假', name: 'maternityLeave', enableCellEdit: false}
-    {width:100, displayName: '生育护理假', name: 'rearNurseLeave', enableCellEdit: false}
-    {width:100, displayName: '工伤假', name: 'injuryLeave', enableCellEdit: false}
-    {width:100, displayName: '疗养假', name: 'recuperateLeave',headerCellClass: 'editable_cell_header', enableCellEdit: true, type: 'number'}
-    {width:100, displayName: '派驻休假', name: 'accreditLeave', enableCellEdit: false}
-    {width:100, displayName: '病假', name: 'sickLeave', enableCellEdit: false}
-    {width:100, displayName: '病假（工伤待定）', name: 'sickLeaveInjury', enableCellEdit: false}
-    {width:100, displayName: '病假（怀孕待产）', name: 'sickLeaveNulliparous', enableCellEdit: false}
-    {width:100, displayName: '事假', name: 'personalLeave', enableCellEdit: false}
-    {width:100, displayName: '探亲假', name: 'homeLeave', enableCellEdit: false}
-    {width:100, displayName: '培训', name: 'cultivate', enableCellEdit: false}
-    {width:100, displayName: '出差', name: 'evection', enableCellEdit: false}
-    {width:100, displayName: '旷工', name: 'absenteeism', enableCellEdit: false}
-    {width:100, displayName: '迟到早退', name: 'lateOrLeave', enableCellEdit: false}
-    {width:100, displayName: '空勤停飞', name: 'ground', enableCellEdit: false}
-    {width:100, displayName: '空勤地面工作', name: 'surfaceWork', enableCellEdit: false}
-    {width:100, displayName: '驻站天数', name: 'stationDays', enableCellEdit: false}
-    {width:100, displayName: '驻站地点', name: 'stationPlace',headerCellClass: 'editable_cell_header', enableCellEdit: true, type: 'text'}
-    {width:100, displayName: '备注', name: 'remark',headerCellClass: 'editable_cell_header', enableCellEdit: true, type: 'text'}
+    {width:100, displayName: '年假', name: 'annualLeave'}
+    {width:100, displayName: '婚丧假', name: 'marriageFuneralLeave'}
+    {width:100, displayName: '产前检查假', name: 'prenatalCheckLeave'}
+    {width:100, displayName: '计生假', name: 'familyPlanningLeave'}
+    {width:100, displayName: '哺乳假', name: 'lactationLeave'}
+    {width:100, displayName: '女工假', name: 'womenLeave'}
+    {width:100, displayName: '产假', name: 'maternityLeave'}
+    {width:100, displayName: '生育护理假', name: 'rearNurseLeave'}
+    {width:100, displayName: '工伤假', name: 'injuryLeave'}
+    {width:100, displayName: '疗养假', name: 'recuperateLeave'}
+    {width:100, displayName: '派驻休假', name: 'accreditLeave'}
+    {width:100, displayName: '病假', name: 'sickLeave'}
+    {width:100, displayName: '病假（工伤待定）', name: 'sickLeaveInjury'}
+    {width:100, displayName: '病假（怀孕待产）', name: 'sickLeaveNulliparous'}
+    {width:100, displayName: '事假', name: 'personalLeave'}
+    {width:100, displayName: '探亲假', name: 'homeLeave'}
+    {width:100, displayName: '培训', name: 'cultivate'}
+    {width:100, displayName: '出差', name: 'evection'}
+    {width:100, displayName: '旷工', name: 'absenteeism'}
+    {width:100, displayName: '迟到早退', name: 'lateOrLeave'}
+    {width:100, displayName: '空勤停飞', name: 'ground'}
+    {width:100, displayName: '空勤地面工作', name: 'surfaceWork'}
+    {width:100, displayName: '驻站天数', name: 'stationDays'}
+    {width:100, displayName: '驻站地点', name: 'stationPlace'}
+    {width:100, displayName: '备注', name: 'remark'}
+    {
+        width:100,
+        displayName: '编辑',
+        field: '编辑',
+        cellTemplate: '''
+            <div class="ui-grid-cell-contents">
+                <a nb-dialog
+                    template-url="partials/labors/attendance/summary_edit.html"
+                    locals="{summary: row.entity}"> 编辑
+                </a>
+            </div>
+        '''
+    }
 ]
 
 
@@ -502,35 +515,6 @@ class AttendanceCtrl extends nb.Controller
 
     finish: ()->
         alert '销假的逻辑是啥，讨论过，这个操作到底有无用???'
-
-    initialize: (gridApi) ->
-        self = @
-
-        saveRow = (rowEntity) ->
-            dfd = @q.defer()
-
-            gridApi.rowEdit.setSavePromise(rowEntity, dfd.promise)
-
-            @http({
-                method: 'PUT'
-                url: '/api/attendance_summaries/' + rowEntity.id
-                data: {
-                    id: rowEntity.id
-                    family_planning_leave: rowEntity.familyPlanningLeave
-                    recuperate_leave: rowEntity.recuperateLeave
-                    station_place: rowEntity.stationPlace
-                    remark: rowEntity.remark
-                }
-            })
-            .success (data) ->
-                dfd.resolve()
-                self.Evt.$send('data:update:success', '考勤信息信息修改成功')
-            .error () ->
-                dfd.reject()
-                rowEntity.$restore()
-
-        gridApi.rowEdit.on.saveRow(@scope, saveRow.bind(@))
-        # @scope.gridApi = gridApi
 
 
 class AttendanceRecordCtrl extends nb.Controller
