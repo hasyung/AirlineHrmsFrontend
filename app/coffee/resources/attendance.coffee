@@ -16,6 +16,11 @@ Attendance = (restmod, RMUtils, $Evt) ->
 
 AttendanceSummary = (restmod, RMUtils, $Evt) ->
     AttendanceSummary = restmod.model('/attendance_summaries').mix 'nbRestApi', {
+
+        $hooks:
+            'after-update': ->
+                $Evt.$send('attendance_summaries:update:success', "考勤汇总更新成功")
+
         $extend:
             Scope:
                 records: (params)->
