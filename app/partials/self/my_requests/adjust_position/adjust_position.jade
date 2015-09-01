@@ -3,7 +3,7 @@ extends ../../../component/workflow/rfc
 block vars
     - var flowType = "Flow::AdjustPosition"
     - var flowTitle = "调岗申请单"
-    - var paramsChange = "request.to_position_id = request.position.id; request.position = undefined;"
+    - var paramsChange = "request.to_position_id = request.position.id;"
 
 block relation_data
     div.flow-info-row(layout)
@@ -25,7 +25,7 @@ block relation_data
             .flow-cell-title 当前岗位年限
             .flow-cell-content {{receptor.masterPositionYears}}
         .flow-info-cell(flex)
-            .flow-cell-title 近6各月绩效
+            .flow-cell-title 近6个月绩效
             .flow-cell-content {{receptor.sixPerformances}}
 
 block form
@@ -42,10 +42,6 @@ block form
                 label 转入通道
                 md-select(ng-model="request.position.channelId" disabled)
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
-            //- md-input-container(flex)
-            //-     label 在编情况
-            //-     input(ng-model="request.position.staffing" disabled)
-                //- span {{request.position.staffing}}/{{budgetedStaffing}}
             .without-edit(flex)
                 div
                     div.without-edit-title 在编情况
