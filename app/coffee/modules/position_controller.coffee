@@ -110,6 +110,8 @@ class PositionCtrl extends nb.Controller
         @positions = @Position.$collection().$fetch()
 
     search: (tableState) ->
+        tableState = tableState || {}
+        tableState['per_page'] = @scope.$gridApi.grid.options.paginationPageSize
         @positions.$refresh(tableState)
 
     getSelectsIds: () ->

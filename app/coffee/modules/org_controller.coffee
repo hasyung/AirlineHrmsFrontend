@@ -364,6 +364,8 @@ class PositionCtrl extends nb.Controller
             newpos.$createSpe(spe)
 
     search: (tableState) ->
+        tableState = tableState || {}
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @positions.$refresh(tableState)
 
     searchEmp: (tableState) ->

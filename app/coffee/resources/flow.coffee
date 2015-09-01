@@ -11,7 +11,6 @@ joinUrl = (_head) ->
 flowRelationDataDirective = ($timeout)->
     postLink = (scope, elem, attrs, ctrl) ->
         getRelationDataHTML = () ->
-            #console.error elem.html()
             ctrl.$setViewValue(elem.html())
 
         $timeout getRelationDataHTML, 300
@@ -177,7 +176,6 @@ class FlowController
                 if last_msg && last_msg.reviewerId == meta.id
                     last_msg.$update({body: userReply})
                 else
-                    console.error scope.flow.flowNodes.length
                     scope.flow.flowNodes.$create({body: userReply})
             finally
                 scope.userReply = ""

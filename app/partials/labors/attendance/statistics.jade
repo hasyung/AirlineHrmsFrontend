@@ -8,4 +8,4 @@
                 div(flex)
 
 
-        div(nb-grid column-defs="ctrl.summaryCols" export-api grid-selection safe-src="ctrl.tableData")
+        div(nb-grid column-defs="ctrl.summaryCols" export-api on-register-api="ctrl.exportGridApi(gridApi)" grid-selection safe-src="ctrl.tableData")

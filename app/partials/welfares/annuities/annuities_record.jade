@@ -7,4 +7,4 @@
             .md-toolbar-tools
                 h2 社保个人设置
 
-        div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.configurations")
+        div(nb-grid column-defs="ctrl.columnDef" on-register-api="ctrl.exportGridApi(gridApi)" safe-src="ctrl.configurations")

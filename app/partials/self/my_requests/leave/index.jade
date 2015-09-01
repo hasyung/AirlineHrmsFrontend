@@ -129,4 +129,4 @@
                                         template-url="partials/self/my_requests/leave/female_leave.html") 女工假
 
 
-            div(nb-grid column-defs="ctrl.leaveCol" multi-select="false" export-api grid-selection safe-src="leaves")
+            div(nb-grid column-defs="ctrl.leaveCol" multi-select="false" export-api on-register-api="ctrl.exportGridApi(gridApi)" grid-selection safe-src="leaves")

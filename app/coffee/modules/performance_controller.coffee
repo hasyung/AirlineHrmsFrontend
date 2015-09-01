@@ -93,6 +93,8 @@ class PerformanceRecord extends nb.Controller
         @performances = @Performance.$collection().$fetch()
 
     search: (tableState)->
+        tableState = tableState || {}
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @performances.$refresh(tableState)
 
     getSelected: () ->
@@ -203,8 +205,11 @@ class PerformanceSetting extends nb.Controller
         # gridApi.edit.on.afterCellEdit @scope, (rowEntity, colDef, newValue, oldValue) ->
 
         gridApi.rowEdit.on.saveRow(@scope, saveRow.bind(@))
+        @scope.$gridApi = gridApi
 
     search: (tableState)->
+        tableState = tableState || {}
+        tableState['per_page'] = @scope.$gridApi.grid.options.paginationPageSize
         @performanceTemps.$refresh(tableState)
 
     getSelected: () ->
@@ -241,6 +246,8 @@ class PerformanceAllege extends nb.Controller
         @alleges = @Allege.$collection().$fetch()
 
     search: (tableState)->
+        tableState = tableState || {}
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @alleges.$refresh(tableState)
 
     getSelected: () ->
