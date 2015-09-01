@@ -117,7 +117,13 @@ class NewFlowCtrl
 
             return {}
 
-        scope.createFlow = (data, receptor, list) ->
+        scope.createFlow = (request, receptor, list) ->
+            data = _.cloneDeep(request)
+
+            if data.position
+                # 调岗数据处理，否则无法序列化错误
+                data.position = undefined
+
             data.vacation_days = scope.vacation_days
             data.receptor_id = if receptor then receptor.id else meta.id
 

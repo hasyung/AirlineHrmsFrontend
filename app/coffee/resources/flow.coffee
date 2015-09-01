@@ -11,9 +11,10 @@ joinUrl = (_head) ->
 flowRelationDataDirective = ($timeout)->
     postLink = (scope, elem, attrs, ctrl) ->
         getRelationDataHTML = () ->
+            #console.error elem.html()
             ctrl.$setViewValue(elem.html())
 
-        $timeout getRelationDataHTML, 3000
+        $timeout getRelationDataHTML, 300
 
     return {
         require: 'ngModel'
@@ -44,7 +45,7 @@ FlowHandlerDirective = (ngDialog)->
                         </div>
                     </div>
                 </md-card>
-                <md-card>
+                <md-card ng-if="flow.type != 'Flow::Retirement'">
                     <div class="approval-relation-info">
                         <div class="approval-subheader">申请信息</div>
                         <div class="approval-relations">
@@ -114,7 +115,7 @@ FlowHandlerDirective = (ngDialog)->
 
         offeredExtra = (flow) ->
             return template
-                    .replace(/#flowRelationData#/, `flow.relationData? flow.relationData : ''`)
+                    .replace(/#flowRelationData#/, `flow.relationData ? flow.relationData : ''`)
                     .replace(/#extraFormLayout#/, `flow.$extraForm ? flow.$extraForm : ''`)
 
         openDialog = (evt)->

@@ -22,6 +22,9 @@ md-dialog
                             .flow-info-cell(flex)
                                 .flow-cell-title 年龄
                                 .flow-cell-content {{emp.age}}
+                            .flow-info-cell(flex style="display:none")
+                                .flow-cell-title 社保缴费年限
+                                .flow-cell-content [数据无从获取]
 
             .md-actions
                 md-button(type="button" ng-click='dialog.close()') 取 消
