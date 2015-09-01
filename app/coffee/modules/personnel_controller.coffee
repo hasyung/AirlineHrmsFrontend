@@ -91,7 +91,7 @@ class PersonnelCtrl extends nb.Controller
 
     search: (tableState) ->
         #TODO 如何通过 gridApi 得到当前 grid 的 per_page 参数
-        #console.error @gridApi.gridOptions
+        console.error @gridApi.pagination
         @employees.$refresh(tableState)
 
     getSelectsIds: () ->
