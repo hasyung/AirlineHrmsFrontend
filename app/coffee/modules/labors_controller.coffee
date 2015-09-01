@@ -1001,6 +1001,8 @@ class SbFlowHandlerCtrl
         params = users.map (user)->
             {id: user.id, relation_data: user.relation_data}
 
+        console.error params
+
         @http.post("/api/workflows/Flow::Retirement/batch_create", {receptors: params}).success (data, status)->
             self.Evt.$send "retirement:create:success", "退休发起成功"
             self.tableData.$refresh()
