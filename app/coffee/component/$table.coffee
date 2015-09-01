@@ -378,6 +378,7 @@ nbGridDirective = ($parse)->
                 scope.onRegisterApi({gridApi: gridApi})
 
                 gridApi.pagination.on.paginationChanged scope, (newPage, pageSize) ->
+                    console.error safeSrc
                     currentQueryParams = safeSrc.$queryParams || {}
 
                     queryParams = angular.extend {}, currentQueryParams, {
