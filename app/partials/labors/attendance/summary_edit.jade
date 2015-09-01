@@ -1,0 +1,27 @@
+md-dialog(
+    style="width:360px;margin:40px auto;"
+    ng-controller="EditableResourceCtrl"
+    ng-init="summary = dialog.summary.$refresh();"
+    )
+    form(novalidate, name="summaryEditForm", ng-submit="save(summary.$save(), summaryEditForm);dialog.close();")
+        md-content.sticky-container
+            md-toolbar.md-accent(md-theme="hrms")
+                .md-toolbar-tools
+                    span 修改密码
+            .dialog-content
+                fieldset
+                    md-input-container
+                        label 计生假
+                        input(type="number" ng-model="summary.familyPlanningLeave" required="true" min="0" step="1")
+                    md-input-container
+                        label 疗养假
+                        input(type="number" ng-model="summary.recuperateLeave" required="true" min="0" step="1")
+                    md-input-container
+                        label 派驻地点
+                        input(type="text" ng-model="summary.stationPlace" required="true")
+                    md-input-container
+                        label 备注
+                        input(type="text" ng-model="summary.remark" required="true")
+            .md-actions
+                md-button(type='button',ng-click="dialog.close()") 取消
+                md-button.md-primary(ng-disabled="summaryEditForm.$invalid" type="submit") 确定
