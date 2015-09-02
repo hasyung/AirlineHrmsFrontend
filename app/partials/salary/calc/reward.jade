@@ -1,1 +1,83 @@
 .app-content-wrapper(flex ng-controller="salaryRewardCtrl as ctrl")
+    md-toolbar.toolbar--welfare
+        .md-toolbar-tools
+            span(layout)
+                label 月度
+                md-select(style="width:100px;" ng-model="ctrl.currentYear" ng-change="ctrl.loadRecords()" placeholder="请选择年份")
+                    md-option(ng-value="item" ng-repeat="item in ctrl.year_list track by $index" ng-bind="item")
+                label(flex-order="2") 年
+                md-select(ng-model="ctrl.currentMonth" ng-change="ctrl.loadRecords()" placeholder="请选择月份")
+                    md-option(ng-value="item" ng-repeat="item in ctrl.month_list track by $index" ng-bind="item")
+                label(flex-order="3") 月
+            span(flex)
+
+    div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+
+    div.ui-grid-container.mt5
+        md-toolbar
+            .md-toolbar-tools
+                h2 奖金发放
+
+                span(flex)
+                span
+                    md-menu(ng-init="selectedRows=[]")
+                        md-button.md-primary.md-raised(
+                            ng-click="$mdOpenMenu($event)"
+                            ) 导入
+                        md-menu-content
+                            md-menu-item()
+                                a.md-button(flex
+                                    ng-click="ctrl.import('flight_bonus')"
+                                    href="javascript:;"
+                                ) 航班正常奖
+                            md-menu-item()
+                                a.md-button(flex
+                                    ng-click="ctrl.import('service_bonus')"
+                                    href="javascript:;"
+                                ) 服务质量奖
+                            md-menu-item()
+                                a.md-button(flex
+                                    ng-click="ctrl.import('ailine_security_bonus')"
+                                    href="javascript:;"
+                                ) 航空安全奖
+                            md-menu-item()
+                                a.md-button(flex
+                                    ng-click="ctrl.import('composite_bonus')"
+                                    href="javascript:;"
+                                ) 社会治安综合治理奖
+                            md-menu-item()
+                                a.md-button(flex
+                                    ng-click="ctrl.import('in_out_bonus')"
+                                    href="javascript:;"
+                                ) 收支目标考核奖
+                            md-menu-item()
+                                a.md-button(flex
+                                    ng-click="ctrl.import('bonus_1')"
+                                    href="javascript:;"
+                                ) 奖1
+                            md-menu-item()
+                                a.md-button(flex
+                                    ng-click="ctrl.import('bonus_2')"
+                                    href="javascript:;"
+                                ) 奖2
+                span
+                    md-menu(ng-init="selectedRows=[]")
+                        md-button.md-primary.md-raised(
+                            ng-click="$mdOpenMenu($event)"
+                            ng-disabled="ctrl.calcing || ctrl.records.length==0"
+                            ) 导出
+                        md-menu-content
+                            md-menu-item()
+                                a.md-button(flex
+                                    download
+                                    ng-href="/api/rewards/export_nc?month={{ctrl.currentCalcTime()}}"
+                                    href="javascript:"
+                                ) NC导入表
+                            md-menu-item()
+                                a.md-button(
+                                    download
+                                    ng-href="/api/rewards/export_approval?month={{ctrl.currentCalcTime()}}"
+                                    href="javascript:"
+                                ) 审批表
+
+        div(nb-grid column-defs="ctrl.columnDef" on-register-api="ctrl.exportGridApi(gridApi)" safe-src="ctrl.records")
