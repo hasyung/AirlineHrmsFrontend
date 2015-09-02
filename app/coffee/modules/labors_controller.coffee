@@ -225,19 +225,6 @@ ATTENDANCE_SUMMERY_DEFS= [
     {width:100, displayName: '驻站天数', name: 'stationDays'}
     {width:100, displayName: '驻站地点', name: 'stationPlace'}
     {width:100, displayName: '备注', name: 'remark'}
-    {
-        width:100,
-        displayName: '编辑',
-        field: '编辑',
-        cellTemplate: '''
-            <div class="ui-grid-cell-contents">
-                <a nb-dialog
-                    template-url="partials/labors/attendance/summary_edit.html"
-                    locals="{summary: row.entity}"> 编辑
-                </a>
-            </div>
-        '''
-    }
 ]
 
 
@@ -329,9 +316,9 @@ app.config(Route)
 
 
 class AttendanceCtrl extends nb.Controller
-    @.$inject = ['GridHelper', 'Leave', '$scope', '$injector', '$http', 'AttendanceSummary', 'CURRENT_ROLES', 'toaster', '$q', '$nbEvent', '$rootScope']
+    @.$inject = ['GridHelper', 'Leave', '$scope', '$injector', '$http', 'AttendanceSummary', 'CURRENT_ROLES', 'toaster', '$q', '$nbEvent']
 
-    constructor: (helper, @Leave, scope, injector, @http, @AttendanceSummary, @CURRENT_ROLES, @toaster, @q, @Evt, rootScope) ->
+    constructor: (helper, @Leave, scope, injector, @http, @AttendanceSummary, @CURRENT_ROLES, @toaster, @q, @Evt) ->
         @initDate()
 
         scope.realFlow = (entity) ->
@@ -454,6 +441,23 @@ class AttendanceCtrl extends nb.Controller
 
     loadSummariesList: ()->
         self = @
+
+        if @CURRENT_ROLES[0] == 'department_hr'
+            @summaryListCol = ATTENDANCE_BASE_TABLE_DEFS.concat [
+                {
+                width:100,
+                displayName: '编辑',
+                field: '编辑',
+                cellTemplate: '''
+                    <div class="ui-grid-cell-contents">
+                        <a nb-dialog
+                            template-url="partials/labors/attendance/summary_edit.html"
+                            locals="{summary: row.entity}"> 编辑
+                        </a>
+                    </div>
+                '''
+                }
+            ]
 
         @summaryListCol = ATTENDANCE_SUMMERY_DEFS
         @tableData = @AttendanceSummary.records({summary_date: moment().format()})
