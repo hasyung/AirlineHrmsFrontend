@@ -316,9 +316,9 @@ app.config(Route)
 
 
 class AttendanceCtrl extends nb.Controller
-    @.$inject = ['GridHelper', 'Leave', '$scope', '$injector', '$http', 'AttendanceSummary', 'CURRENT_ROLES', 'toaster', '$q', '$nbEvent']
+    @.$inject = ['GridHelper', 'Leave', '$scope', '$injector', '$http', 'AttendanceSummary', 'CURRENT_ROLES', 'toaster', '$q', '$nbEvent', '$timeout']
 
-    constructor: (helper, @Leave, scope, injector, @http, @AttendanceSummary, @CURRENT_ROLES, @toaster, @q, @Evt) ->
+    constructor: (helper, @Leave, scope, injector, @http, @AttendanceSummary, @CURRENT_ROLES, @toaster, @q, @Evt, @timeout) ->
         @initDate()
 
         scope.realFlow = (entity) ->
@@ -441,26 +441,6 @@ class AttendanceCtrl extends nb.Controller
 
     loadSummariesList: ()->
         self = @
-        console.log @CURRENT_ROLES
-        if @CURRENT_ROLES[0] == 'department_hr'
-            @summaryListCol = ATTENDANCE_SUMMERY_DEFS.concat [
-                {
-                width:100,
-                displayName: '编辑',
-                field: '编辑',
-                cellTemplate: '''
-                    <div class="ui-grid-cell-contents">
-                        <a nb-dialog
-                            template-url="partials/labors/attendance/summary_edit.html"
-                            locals="{summary: row.entity}"> 编辑
-                        </a>
-                    </div>
-                '''
-                }
-            ]
-        else
-            @summaryListCol = ATTENDANCE_SUMMERY_DEFS
-        @tableData = @AttendanceSummary.records({summary_date: moment().format()})
 
         @AttendanceSummary.records({summary_date: moment().format()}).$asPromise().then (data)->
             summary_record = _.find data.$response.data.meta.attendance_summary_status, (item)->
@@ -468,6 +448,29 @@ class AttendanceCtrl extends nb.Controller
             self.departmentHrChecked = summary_record.department_hr_checked
             self.departmentLeaderChecked = summary_record.department_leader_checked
             self.hrDepartmentLeaderChecked = summary_record.hr_department_leader_checked
+
+        if self.CURRENT_ROLES[0] == 'department_hr' && !(self.departmentLeaderChecked) && !(self.hrDepartmentLeaderChecked)
+            console.error self.departmentLeaderChecked+'接上去'+self.hrDepartmentLeaderChecked
+            self.summaryListCol = ATTENDANCE_SUMMERY_DEFS.concat [
+                {
+                    width:100,
+                    displayName: '编辑',
+                    field: '编辑',
+                    cellTemplate: '''
+                        <div class="ui-grid-cell-contents">
+                            <a nb-dialog
+                                template-url="partials/labors/attendance/summary_edit.html"
+                                locals="{summary: row.entity}"> 编辑
+                            </a>
+                        </div>
+                    '''
+                }
+            ]
+        else
+            console.error '不接'
+            self.summaryListCol = ATTENDANCE_SUMMERY_DEFS
+
+        @tableData = @AttendanceSummary.records({summary_date: moment().format()})
 
     getDate: ()->
         date = moment(new Date("#{this.year}-#{this.month}")).format()
