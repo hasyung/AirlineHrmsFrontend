@@ -132,8 +132,10 @@ class OrgsCtrl extends nb.Controller
 
         #deparment_id 是否必要?
         data.department_id = @.treeRootOrg.id
+
         @orgs.active(data).$then ()->
-            self.rootScope.allOrgs.$refresh()
+            # resetData中会刷新
+            #self.rootScope.allOrgs.$refresh()
 
         @resetData()
 
@@ -149,6 +151,7 @@ class OrgsCtrl extends nb.Controller
                 self.currentOrg = self.treeRootOrg
 
             self.OrgStore.reload()
+            self.rootScope.allOrgs.$refresh()
 
             # 反复划转后情况很复杂
             self.state.go(self.state.current.name, {}, {reload: true})

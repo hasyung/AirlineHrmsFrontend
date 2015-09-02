@@ -46,17 +46,17 @@
                             md-switch.md-primary(ng-model="setting.pension.is_ration" ).m0 {{ setting.pension.is_ration ? '按金额(RMB)' : '按比例(%)' }}
                         td
                             span.p2(ng-show="setting.pension.is_ration")
-                                input(type="number" ng-model="setting.pension.company_money" min="0" step="1" )
+                                input(type="number" ng-model="setting.pension.company_money" min="0" max="100000" step="0.000001")
                                 |RMB
                             span.p2(ng-hide="setting.pension.is_ration")
-                                input(type="number" ng-model="setting.pension.company_percent" min="0" max="100" step="1")
+                                input(type="number" ng-model="setting.pension.company_percent" min="0" max="100000" step="0.000001")
                                 |%
                         td
                             span.p2(ng-show="setting.pension.is_ration")
-                                input(type="number" ng-model="setting.pension.personage_money" min="0" step="1" )
+                                input(type="number" ng-model="setting.pension.personage_money" min="0" max="100000" step="0.000001")
                                 |RMB
                             span.p2(ng-hide="setting.pension.is_ration")
-                                input(type="number" ng-model="setting.pension.personage_percent" min="0" max="100" step="1")
+                                input(type="number" ng-model="setting.pension.personage_percent" min="0"  max="100000" step="0.000001")
                                 |%
 
                     tr
@@ -73,17 +73,17 @@
                             md-switch.md-primary(ng-model="setting.treatment.is_ration").m0 {{ setting.treatment.is_ration ? '按金额(RMB)' : '按比例(%)' }}
                         td
                             span.p2(ng-show="setting.treatment.is_ration")
-                                input(type="number" ng-model="setting.treatment.company_money" min="0" step="1" )
+                                input(type="number" ng-model="setting.treatment.company_money" min="0" max="100000" step="0.000001")
                                 |RMB
                             span.p2(ng-hide="setting.treatment.is_ration")
-                                input(type="number" ng-model="setting.treatment.company_percent" min="0" max="100" step="1")
+                                input(type="number" ng-model="setting.treatment.company_percent" min="0" max="100000" step="0.000001")
                                 |%
                         td
                             span.p2(ng-show="setting.treatment.is_ration")
-                                input(type="number" ng-model="setting.treatment.personage_money" min="0" step="1" )
+                                input(type="number" ng-model="setting.treatment.personage_money" min="0" max="100000" step="0.000001")
                                 |RMB
                             span.p2(ng-hide="setting.treatment.is_ration")
-                                input(type="number" ng-model="setting.treatment.personage_percent" min="0" max="100" step="1")
+                                input(type="number" ng-model="setting.treatment.personage_percent" min="0" max="100000" step="0.000001")
                                 |%
 
                     tr
@@ -100,17 +100,17 @@
                             md-switch.md-primary(ng-model="setting.injury.is_ration" ).m0 {{ setting.injury.is_ration ? '按金额(RMB)' : '按比例(%)' }}
                         td
                             span.p2(ng-show="setting.injury.is_ration")
-                                input(type="number" ng-model="setting.injury.company_money" min="0" step="1" )
+                                input(type="number" ng-model="setting.injury.company_money" min="0" max="100000" step="0.000001")
                                 |RMB
                             span.p2(ng-hide="setting.injury.is_ration")
-                                input(type="number" ng-model="setting.injury.company_percent" min="0" max="100" step="1")
+                                input(type="number" ng-model="setting.injury.company_percent" min="0" max="100000" step="0.000001")
                                 |%
                         td
                             span.p2(ng-show="setting.injury.is_ration")
-                                input(type="number" ng-model="setting.injury.personage_money" min="0" step="1" )
+                                input(type="number" ng-model="setting.injury.personage_money" min="0" max="100000" step="0.000001")
                                 |RMB
                             span.p2(ng-hide="setting.injury.is_ration")
-                                input(type="number" ng-model="setting.injury.personage_percent" min="0" max="100" step="1")
+                                input(type="number" ng-model="setting.injury.personage_percent" min="0" max="100000" step="0.000001")
                                 |%
 
                     tr
@@ -127,17 +127,17 @@
                             md-switch.md-primary(ng-model="setting.unemploy.is_ration" ).m0 {{ setting.unemploy.is_ration ? '按金额(RMB)' : '按比例(%)' }}
                         td
                             span.p2(ng-show="setting.unemploy.is_ration")
-                                input(type="number" ng-model="setting.unemploy.company_money" min="0" step="1" )
+                                input(type="number" ng-model="setting.unemploy.company_money" min="0" max="100000" step="0.000001")
                                 |RMB
                             span.p2(ng-hide="setting.unemploy.is_ration")
-                                input(type="number" ng-model="setting.unemploy.company_percent" min="0" max="100" step="1")
+                                input(type="number" ng-model="setting.unemploy.company_percent" min="0" max="100000" step="0.000001")
                                 |%
                         td
                             span.p2(ng-show="setting.unemploy.is_ration")
-                                input(type="number" ng-model="setting.unemploy.personage_money" min="0" step="1" )
+                                input(type="number" ng-model="setting.unemploy.personage_money" min="0" max="100000" step="0.000001")
                                 |RMB
                             span.p2(ng-hide="setting.unemploy.is_ration")
-                                input(type="number" ng-model="setting.unemploy.personage_percent" min="0" max="100" step="1")
+                                input(type="number" ng-model="setting.unemploy.personage_percent" min="0" max="100000" step="0.000001")
                                 |%
                     tr
                         td 大病保险
@@ -153,17 +153,17 @@
                             md-switch.md-primary(ng-model="setting.illness.is_ration" ).m0 {{ setting.illness.is_ration ? '按金额(RMB)' : '按比例(%)' }}
                         td
                             span.p2(ng-show="setting.illness.is_ration")
-                                input(type="number" ng-model="setting.illness.company_money" min="0" step="1" )
+                                input(type="number" ng-model="setting.illness.company_money" min="0" max="100000" step="0.000001")
                                 |RMB
                             span.p2(ng-hide="setting.illness.is_ration")
-                                input(type="number" ng-model="setting.illness.company_percent" min="0" max="100" step="1")
+                                input(type="number" ng-model="setting.illness.company_percent" min="0" max="100000" step="0.000001")
                                 |%
                         td
                             span.p2(ng-show="setting.illness.is_ration")
-                                input(type="number" ng-model="setting.illness.personage_money" min="0" step="1" )
+                                input(type="number" ng-model="setting.illness.personage_money" min="0" max="100000" step="0.000001")
                                 |RMB
                             span.p2(ng-hide="setting.illness.is_ration")
-                                input(type="number" ng-model="setting.illness.personage_percent" min="0" max="100" step="1")
+                                input(type="number" ng-model="setting.illness.personage_percent" min="0" max="100000" step="0.000001")
                                 |%
                     tr
                         td 生育保险
@@ -179,15 +179,15 @@
                             md-switch.md-primary(ng-model="setting.fertility.is_ration" ).m0 {{ setting.fertility.is_ration ? '按金额(RMB)' : '按比例(%)' }}
                         td
                             span.p2(ng-show="setting.fertility.is_ration")
-                                input(type="number" ng-model="setting.fertility.company_money" min="0" step="1" )
+                                input(type="number" ng-model="setting.fertility.company_money" min="0" max="100000" step="0.000001")
                                 |RMB
                             span.p2(ng-hide="setting.fertility.is_ration")
-                                input(type="number" ng-model="setting.fertility.company_percent" min="0" max="100" step="1")
+                                input(type="number" ng-model="setting.fertility.company_percent" min="0" max="100000" step="0.000001")
                                 |%
                         td
                             span.p2(ng-show="setting.fertility.is_ration")
-                                input(type="number" ng-model="setting.fertility.personage_money" min="0" step="1" )
+                                input(type="number" ng-model="setting.fertility.personage_money" min="0" max="100000" step="0.000001")
                                 |RMB
                             span.p2(ng-hide="setting.fertility.is_ration")
-                                input(type="number" ng-model="setting.fertility.personage_percent" min="0" max="100" step="1")
+                                input(type="number" ng-model="setting.fertility.personage_percent" min="0" max="100000" step="0.000001")
                                 |%
