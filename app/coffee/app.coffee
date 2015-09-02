@@ -190,7 +190,7 @@ App
         $rootScope.$on '$stateChangeSuccess', () ->
             cancelLoading()
 
-            console.error $state.current.url
+            #console.error $state.current.url
             $rootScope.hide_menu = $state.current.url.indexOf('/self/my_requests') >= 0  \
                 || $state.current.url.indexOf('/profile') >= 0  \
                 || $state.current.url.indexOf('/charts') >= 0  \
