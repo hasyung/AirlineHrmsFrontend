@@ -65,9 +65,9 @@ app.config(Route)
 
 
 class OrgsCtrl extends nb.Controller
-    @.$inject = ['orgs', '$http','$stateParams', '$state', '$scope', '$rootScope', '$nbEvent']
+    @.$inject = ['orgs', '$http','$stateParams', '$state', '$scope', '$rootScope', '$nbEvent', 'OrgStore']
 
-    constructor: (@orgs, @http, @params, @state, @scope, @rootScope, @Evt)->
+    constructor: (@orgs, @http, @params, @state, @scope, @rootScope, @Evt, @OrgStore)->
         @treeRootOrg = _.find @orgs, (org) -> org.xdepth == 1 # 当前树的顶级节点
 
         @tree = null # tree 化的 orgs 数据
@@ -93,6 +93,7 @@ class OrgsCtrl extends nb.Controller
     # 参数force是否修改当前机构
     reset: (force) ->
         self = @
+
         #数据入口不止一个，需要解决
         @orgs.$refresh({edit_mode: @eidtMode}).$then () ->
             self.buildTree()
@@ -146,6 +147,8 @@ class OrgsCtrl extends nb.Controller
             else
                 self.treeRootOrg = _.find self.orgs, (org) -> org.xdepth == 1
                 self.currentOrg = self.treeRootOrg
+
+            self.OrgStore.reload()
 
             # 反复划转后情况很复杂
             self.state.go(self.state.current.name, {}, {reload: true})

@@ -258,7 +258,10 @@ class OrgStore extends nb.Service
     constructor: (@Org, @DEPARTMENTS, @USER_META) ->
 
     initialize: () ->
-        @orgs = @Org.$collection().$fetch()
+        @orgs = @Org.$collection().$fetch(edit_mode: true)
+
+    reload: ()->
+        @orgs.$refresh({edit_mode: true})
 
     get: ->
         return @orgs
@@ -276,7 +279,8 @@ class OrgStore extends nb.Service
         ids.reduce(reduceOrgs, [])
 
     queryMatchedOrgs: (text) ->
-        @orgs.filter (org) -> s.include(org.fullName, text)
+        @orgs.filter (org) ->
+            s.include(org.fullName, text)
 
     getPrimaryOrgId: (id) ->
         currentOrg = _.find(@DEPARTMENTS, {id: @USER_META.department.id})
