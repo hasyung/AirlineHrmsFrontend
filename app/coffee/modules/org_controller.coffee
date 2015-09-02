@@ -132,6 +132,7 @@ class OrgsCtrl extends nb.Controller
 
         #deparment_id 是否必要?
         data.department_id = @.treeRootOrg.id
+
         @orgs.active(data).$then ()->
             self.rootScope.allOrgs.$refresh()
 

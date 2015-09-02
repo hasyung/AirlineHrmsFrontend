@@ -40,8 +40,24 @@ class SalaryController extends nb.Controller
 
     $checkCoefficientDefault: ()->
         month = @currentCalcTime()
+
         if !angular.isDefined(@global_setting.coefficient[month])
             @global_setting.coefficient[month] = @$defaultCoefficient()
+
+    $checkRewardDefault: ()->
+        year = @currentYear
+
+        if !angular.isDefined(@global_setting.flight_bonus[year])
+            @global_setting.flight_bonus[year] = 100000000
+
+        if !angular.isDefined(@global_setting.service_bonus[year])
+            @global_setting.service_bonus[year] = 100000000
+
+        if !angular.isDefined(@global_setting.ailine_security_bonus[year])
+            @global_setting.ailine_security_bonus[year] = 100000000
+
+        if !angular.isDefined(@global_setting.composite_bonus[year])
+            @global_setting.composite_bonus[year] = 100000000
 
     initialize: () ->
         self = @
@@ -122,6 +138,9 @@ class SalaryController extends nb.Controller
 
     loadGlobalCoefficient: ()->
         @$checkCoefficientDefault()
+
+    loadGlobalReward: ()->
+        @$checkRewardDefault()
 
     loadDynamicConfig: (category)->
         @current_category = category
@@ -518,9 +537,9 @@ class SalaryBasicController extends SalaryBaseController
                     return row.entity.positionName
             }
             {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
-            {displayName: '岗位薪酬', name: 'position_salary'}
-            {displayName: '工龄工资', name: 'working_years_salary'}
-            {displayName: '保留工资', name: 'reserve_salary'}
+            {displayName: '岗位薪酬', name: 'positionSalary'}
+            {displayName: '工龄工资', name: 'workingYearsSalary'}
+            {displayName: '保留工资', name: 'reserveSalary'}
             {displayName: '补扣发', name: 'addGarnishee'}
             {displayName: '备注', name: 'note'}
         ]
