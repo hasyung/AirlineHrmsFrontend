@@ -441,9 +441,9 @@ class AttendanceCtrl extends nb.Controller
 
     loadSummariesList: ()->
         self = @
-
+        console.log @CURRENT_ROLES
         if @CURRENT_ROLES[0] == 'department_hr'
-            @summaryListCol = ATTENDANCE_BASE_TABLE_DEFS.concat [
+            @summaryListCol = ATTENDANCE_SUMMERY_DEFS.concat [
                 {
                 width:100,
                 displayName: '编辑',
@@ -458,8 +458,8 @@ class AttendanceCtrl extends nb.Controller
                 '''
                 }
             ]
-
-        @summaryListCol = ATTENDANCE_SUMMERY_DEFS
+        else
+            @summaryListCol = ATTENDANCE_SUMMERY_DEFS
         @tableData = @AttendanceSummary.records({summary_date: moment().format()})
 
         @AttendanceSummary.records({summary_date: moment().format()}).$asPromise().then (data)->
