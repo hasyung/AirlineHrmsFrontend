@@ -204,6 +204,9 @@ App
                 || $state.current.url.indexOf('/erarly_retirement') >= 0  \
                 || $state.current.url.indexOf('/renew_contract') >= 0
 
+            if $state.current.url.indexOf('/performance_') >= 0
+                $rootScope.hide_menu = false
+
         $rootScope.$on 'process', startLoading
 
         $rootScope.$on 'success', (code, info)->
