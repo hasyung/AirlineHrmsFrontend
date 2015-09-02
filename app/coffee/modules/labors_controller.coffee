@@ -422,6 +422,7 @@ class AttendanceCtrl extends nb.Controller
                 item.department_id == departmentId
             self.departmentHrChecked = summary_record.department_hr_checked
             self.departmentLeaderChecked = summary_record.department_leader_checked
+            self.hrDepartmentLeaderChecked = summary_record.hr_department_leader_checked
 
     initDate: ()->
         date = new Date()
@@ -466,6 +467,7 @@ class AttendanceCtrl extends nb.Controller
                 item.department_id == data.$response.data.meta.department_id
             self.departmentHrChecked = summary_record.department_hr_checked
             self.departmentLeaderChecked = summary_record.department_leader_checked
+            self.hrDepartmentLeaderChecked = summary_record.hr_department_leader_checked
 
     getDate: ()->
         date = moment(new Date("#{this.year}-#{this.month}")).format()
@@ -484,15 +486,21 @@ class AttendanceCtrl extends nb.Controller
         self = @
         params = {summary_date: @getDate()}
 
-        @http.put('/api/attendance_summaries/department_leader_check', params).then ()->
+        @http.put('/api/attendance_summaries/department_leader_check', params).then (data)->
             self.tableData.$refresh()
+            erorr_msg = data.$response.data.messages
+            toaster.pop('info', '提示', erorr_msg || "审核成功")
+            self.departmentLeaderChecked = true
 
     hrLeaderCheck: ()->
         self = @
         params = {summary_date: @getDate()}
 
-        @http.put('/api/attendance_summaries/hr_leader_check', params).then ()->
+        @http.put('/api/attendance_summaries/hr_leader_check', params).then (data)->
             self.tableData.$refresh()
+            erorr_msg = data.$response.data.messages
+            toaster.pop('info', '提示', erorr_msg || "审核成功")
+            self.hrDepartmentLeaderChecked = true
 
     search: (tableState)->
         tableState = tableState || {}
