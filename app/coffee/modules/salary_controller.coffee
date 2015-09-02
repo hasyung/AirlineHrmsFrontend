@@ -537,9 +537,9 @@ class SalaryBasicController extends SalaryBaseController
                     return row.entity.positionName
             }
             {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
-            {displayName: '岗位薪酬', name: 'position_salary'}
-            {displayName: '工龄工资', name: 'working_years_salary'}
-            {displayName: '保留工资', name: 'reserve_salary'}
+            {displayName: '岗位薪酬', name: 'positionSalary'}
+            {displayName: '工龄工资', name: 'workingYearsSalary'}
+            {displayName: '保留工资', name: 'reserveSalary'}
             {displayName: '补扣发', name: 'addGarnishee'}
             {displayName: '备注', name: 'note'}
         ]
