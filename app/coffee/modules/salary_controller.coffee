@@ -518,7 +518,9 @@ class SalaryBasicController extends SalaryBaseController
                     return row.entity.positionName
             }
             {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
-            {displayName: '当月基础薪酬', name: 'salary'}
+            {displayName: '岗位薪酬', name: 'position_salary'}
+            {displayName: '工龄工资', name: 'working_years_salary'}
+            {displayName: '保留工资', name: 'reserve_salary'}
             {displayName: '补扣发', name: 'addGarnishee'}
             {displayName: '备注', name: 'note'}
         ]
@@ -707,6 +709,58 @@ class SalaryRewardController extends SalaryBaseController
 
     constructor: ($http, $scope, @Evt, @Employee, @Reward, @toaster) ->
         super(@Reward)
+
+        @filterOptions = {
+            name: 'landAllowance'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '员工姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+            ]
+        }
+
+        @columnDef = [
+            {displayName: '员工编号', name: 'employeeNo'}
+            {
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+            }
+            {
+                displayName: '岗位'
+                name: 'positionName'
+                cellTooltip: (row) ->
+                    return row.entity.positionName
+            }
+            {displayName: '航班正常奖', name: 'flight_bonus'}
+            {displayName: '服务质量奖', name: 'service_bonus'}
+            {displayName: '航空安全奖', name: 'ailine_security_bonus'}
+            {displayName: '综治奖', name: 'composite_bonus'}
+            {displayName: '收支目标考核奖', name: 'in_out_bonus'}
+            {displayName: '奖1', name: 'bonus_1'}
+            {displayName: '奖2', name: 'bonus_2'}
+        ]
 
 
 class SalaryOverviewController extends SalaryBaseController

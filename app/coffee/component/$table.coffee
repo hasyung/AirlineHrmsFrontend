@@ -367,7 +367,7 @@ nbGridDirective = ($parse)->
             enableColumnMenus: false
             multiSelect: multiSelect
             paginationCurrentPage: 1
-            paginationPageSizes: [20, 40, 60, 80, 100]
+            paginationPageSizes: [2, 20, 40, 60, 80, 100]
             paginationPageSize: 60
 
             onRegisterApi: (gridApi) ->
