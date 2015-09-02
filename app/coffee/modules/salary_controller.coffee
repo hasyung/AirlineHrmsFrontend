@@ -40,8 +40,24 @@ class SalaryController extends nb.Controller
 
     $checkCoefficientDefault: ()->
         month = @currentCalcTime()
+
         if !angular.isDefined(@global_setting.coefficient[month])
             @global_setting.coefficient[month] = @$defaultCoefficient()
+
+    $checkRewardDefault: ()->
+        year = @currentYear
+
+        if !angular.isDefined(@global_setting.flight_bonus[year])
+            @global_setting.flight_bonus[year] = 100000000
+
+        if !angular.isDefined(@global_setting.service_bonus[year])
+            @global_setting.service_bonus[year] = 100000000
+
+        if !angular.isDefined(@global_setting.ailine_security_bonus[year])
+            @global_setting.ailine_security_bonus[year] = 100000000
+
+        if !angular.isDefined(@global_setting.composite_bonus[year])
+            @global_setting.composite_bonus[year] = 100000000
 
     initialize: () ->
         self = @
@@ -122,6 +138,9 @@ class SalaryController extends nb.Controller
 
     loadGlobalCoefficient: ()->
         @$checkCoefficientDefault()
+
+    loadGlobalReward: ()->
+        @$checkRewardDefault()
 
     loadDynamicConfig: (category)->
         @current_category = category
