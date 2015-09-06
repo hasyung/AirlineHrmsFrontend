@@ -3,7 +3,7 @@ block vars
 div.workflow.md-background(md-theme="hrms")
     md-toolbar.md-warn(md-theme="hrms")
         .md-toolbar-tools
-            span 请假单填写
+            span 请假单填写111
     .personnel-content.personnel-control
         section.personnel-info-section
             md-content.nb-card-container(layout="column" md-theme="hrms")
@@ -47,6 +47,7 @@ div.workflow.md-background(md-theme="hrms")
                                         if need_attachment
                                             md-subheader.accessory-header.md-background.md-hue-1 附件
                                             div(flow-file-upload flow-type="#{flowType}" ng-model="request.attachment_ids")
+                                            block attachment_tip
                                     when 2
                                         div(layout)
                                             md-input-container(flex)
@@ -83,6 +84,7 @@ div.workflow.md-background(md-theme="hrms")
                                         if need_attachment
                                             md-subheader.accessory-header.md-background.md-hue-1 附件
                                             div(flow-file-upload flow-type="#{flowType}" ng-model="request.attachment_ids")
+                                            block attachment_tip
 
                     md-card.form-material-section.nb-card
                         md-subheader.superior-header.md-background.md-hue-1 提交上级
