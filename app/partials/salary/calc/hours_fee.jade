@@ -1,1 +1,81 @@
 .app-content-wrapper(flex ng-controller="salaryHoursFeeCtrl as ctrl")
+    md-toolbar.toolbar--welfare
+        .md-toolbar-tools
+            span(layout)
+                label 月度
+                md-select(style="width:100%" ng-model="ctrl.currentYear" ng-change="ctrl.loadRecords()" placeholder="请选择年份")
+                    md-option(ng-value="item" ng-repeat="item in ctrl.year_list track by $index" ng-bind="item")
+
+                label(flex-order="2") 年
+                md-select(ng-model="ctrl.currentMonth" ng-change="ctrl.loadRecords()" placeholder="请选择月份")
+                    md-option(ng-value="item" ng-repeat="item in ctrl.month_list track by $index" ng-bind="item")
+                label(flex-order="3") 月
+
+                label(flex-order="4") 人员类别
+                md-select(flex-order="5" ng-model="ctrl.person_category" style="width:250px" ng-change="ctrl.loadRecords")
+                    md-option(ng-value="'flyer'") 飞行员
+                    md-option(ng-value="'airline'") 空勤
+                    md-option(ng-value="'air_steward'") 空保
+            span(flex)
+
+    div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+
+    div.ui-grid-container.mt5
+        md-toolbar
+            .md-toolbar-tools
+                h2 津贴
+
+                span(flex)
+                span
+                    md-menu(ng-init="selectedRows=[]")
+                        md-button.md-primary.md-raised(
+                            ng-click="$mdOpenMenu($event)"
+                            ng-disabled="ctrl.calcing"
+                            ) 导入
+                        md-menu-content
+                            md-menu-item()
+                                a.md-button(flex
+                                    nb-dialog
+                                    template-url="partials/salary/hours_fee/fee_summary.html"
+                                ) 小时费合计表
+                            md-menu-item(ng-if="ctrl.person_category=='flyer'")
+                                a.md-button(flex
+                                    nb-dialog
+                                    template-url="partials/salary/hours_fee/hours_summary.html"
+                                ) 飞行时间汇总表
+                            md-menu-item(ng-if="ctrl.person_category=='airline' || ctrl.person_category=='air_steward'")
+                                a.md-button(
+                                    nb-dialog
+                                    template-url="partials/salary/hours_fee/up_list.html"
+                                ) 上浮名单
+                            md-menu-item(ng-if="ctrl.person_category=='airline'")
+                                a.md-button(
+                                    nb-dialog
+                                    template-url="partials/salary/hours_fee/down_list.html"
+                                ) 下靠名单
+                span
+                    md-button.md-raised.md-primary(
+                        ng-click="ctrl.exeCalc()"
+                        ng-disabled="ctrl.calcing"
+                    ) 计算
+                span
+                    md-menu(ng-init="selectedRows=[]")
+                        md-button.md-primary.md-raised(
+                            ng-click="$mdOpenMenu($event)"
+                            ng-disabled="ctrl.calcing || ctrl.records.length==0"
+                            ) 导出
+                        md-menu-content
+                            md-menu-item()
+                                a.md-button(flex
+                                    download
+                                    ng-href="/api/hours_fees/export_nc?month={{ctrl.currentCalcTime()}}"
+                                    href="javascript:"
+                                ) NC导入表
+                            md-menu-item()
+                                a.md-button(
+                                    download
+                                    ng-href="/api/hours_fees/export_approval?month={{ctrl.currentCalcTime()}}"
+                                    href="javascript:"
+                                ) 审批表
+
+        div(nb-grid column-defs="ctrl.columnDef" on-register-api="ctrl.exportGridApi(gridApi)" safe-src="ctrl.records")
