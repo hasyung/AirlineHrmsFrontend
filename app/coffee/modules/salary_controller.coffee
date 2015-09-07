@@ -611,7 +611,7 @@ class SalaryHoursFeeController extends SalaryBaseController
         super(@HoursFee)
 
         @filterOptions = {
-            name: 'performanceSalary'
+            name: 'HoursFee'
             constraintDefs: [
                 {
                     name: 'employee_name'
