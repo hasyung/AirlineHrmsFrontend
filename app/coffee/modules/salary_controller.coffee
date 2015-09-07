@@ -2,6 +2,55 @@
 nb = @.nb
 app = nb.app
 
+SALARY_FILTER_DEFAULT = {
+    name: 'salary'
+    constraintDefs: [
+        {
+            name: 'employee_name'
+            displayName: '员工姓名'
+            type: 'string'
+        }
+        {
+            name: 'employee_no'
+            displayName: '员工编号'
+            type: 'string'
+        }
+    ]
+}
+
+SALARY_COLUMNDEF_DEFAULT = [
+    {displayName: '员工编号', name: 'employeeNo', enableCellEdit: false}
+        {
+            displayName: '姓名'
+            field: 'employeeName'
+            enableCellEdit: false
+            cellTemplate: '''
+            <div class="ui-grid-cell-contents">
+                <a nb-panel
+                    template-url="partials/personnel/info_basic.html"
+                    locals="{employee: row.entity.owner}">
+                    {{grid.getCellValue(row, col)}}
+                </a>
+            </div>
+            '''
+        }
+        {
+            displayName: '所属部门'
+            name: 'departmentName'
+            enableCellEdit: false
+            cellTooltip: (row) ->
+                return row.entity.departmentName
+        }
+        {
+            displayName: '岗位'
+            name: 'positionName'
+            enableCellEdit: false
+            cellTooltip: (row) ->
+                return row.entity.positionName
+        }
+        {displayName: '通道', name: 'channelId', enableCellEdit: false, cellFilter: "enum:'channels'"}
+    ]
+
 class Route
     @.$inject = ['$stateProvider']
 
@@ -449,9 +498,28 @@ class SalaryExchangeController
 
 
 class SalaryBaseController extends nb.Controller
-    constructor: (@Model) ->
+    constructor: (@Model, @scope, @q) ->
         @loadDateTime()
         @loadInitialData()
+
+    initialize: (gridApi) ->
+        saveRow = (rowEntity) ->
+            dfd = @q.defer()
+
+            gridApi.rowEdit.setSavePromise(rowEntity, dfd.promise)
+
+            rowEntity.$save().$asPromise().then(
+                () -> dfd.resolve(),
+                () ->
+                    dfd.reject()
+                    rowEntity.$restore())
+
+        # edit.on.afterCellEdit($scope,function(rowEntity, colDef, newValue, oldValue)
+        # gridApi.edit.on.afterCellEdit @scope, (rowEntity, colDef, newValue, oldValue) ->
+
+        gridApi.rowEdit.on.saveRow(@scope, saveRow.bind(@))
+        @scope.$gridApi = gridApi
+        @gridApi = gridApi
 
     loadDateTime: ()->
         @year_list = @$getYears()
@@ -503,178 +571,55 @@ class SalaryBaseController extends nb.Controller
 
 # 基础工资
 class SalaryBasicController extends SalaryBaseController
-    @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'BasicSalary', 'toaster']
+    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'BasicSalary', 'toaster']
 
-    constructor: ($http, $scope, @Evt, @Employee, @BasicSalary, @toaster) ->
-        super(@BasicSalary)
+    constructor: ($http, $scope, $q, @Evt, @Employee, @BasicSalary, @toaster) ->
+        super(@BasicSalary, $scope, $q)
 
-        @filterOptions = {
-            name: 'basicSalary'
-            constraintDefs: [
-                {
-                    name: 'employee_name'
-                    displayName: '员工姓名'
-                    type: 'string'
-                }
-                {
-                    name: 'employee_no'
-                    displayName: '员工编号'
-                    type: 'string'
-                }
-            ]
-        }
+        @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
-        @columnDef = [
-            {displayName: '员工编号', name: 'employeeNo'}
-            {
-                displayName: '姓名'
-                field: 'employeeName'
-                cellTemplate: '''
-                <div class="ui-grid-cell-contents">
-                    <a nb-panel
-                        template-url="partials/personnel/info_basic.html"
-                        locals="{employee: row.entity.owner}">
-                        {{grid.getCellValue(row, col)}}
-                    </a>
-                </div>
-                '''
-            }
-            {
-                displayName: '所属部门'
-                name: 'departmentName'
-                cellTooltip: (row) ->
-                    return row.entity.departmentName
-            }
-            {
-                displayName: '岗位'
-                name: 'positionName'
-                cellTooltip: (row) ->
-                    return row.entity.positionName
-            }
-            {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
-            {displayName: '岗位薪酬', name: 'positionSalary'}
-            {displayName: '工龄工资', name: 'workingYearsSalary'}
-            {displayName: '保留工资', name: 'reserveSalary'}
+        @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
+            {displayName: '岗位薪酬', name: 'positionSalary', enableCellEdit: false}
+            {displayName: '工龄工资', name: 'workingYearsSalary', enableCellEdit: false}
+            {displayName: '保留工资', name: 'reserveSalary', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee'}
             {displayName: '备注', name: 'note'}
-        ]
+        ])
 
 
 # 绩效工资
 class SalaryPerformanceController extends SalaryBaseController
-    @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'PerformanceSalary', 'toaster']
+    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'PerformanceSalary', 'toaster']
 
-    constructor: ($http, $scope, @Evt, @Employee, @PerformanceSalary, @toaster) ->
-        super(@PerformanceSalary)
+    constructor: ($http, $scope, $q, @Evt, @Employee, @PerformanceSalary, @toaster) ->
+        super(@PerformanceSalary, $scope, $q)
 
-        @filterOptions = {
-            name: 'performanceSalary'
-            constraintDefs: [
-                {
-                    name: 'employee_name'
-                    displayName: '员工姓名'
-                    type: 'string'
-                }
-                {
-                    name: 'employee_no'
-                    displayName: '员工编号'
-                    type: 'string'
-                }
-            ]
-        }
+        @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
-        @columnDef = [
-            {displayName: '员工编号', name: 'employeeNo'}
-            {
-                displayName: '姓名'
-                field: 'employeeName'
-                cellTemplate: '''
-                <div class="ui-grid-cell-contents">
-                    <a nb-panel
-                        template-url="partials/personnel/info_basic.html"
-                        locals="{employee: row.entity.owner}">
-                        {{grid.getCellValue(row, col)}}
-                    </a>
-                </div>
-                '''
-            }
-            {
-                displayName: '所属部门'
-                name: 'departmentName'
-                cellTooltip: (row) ->
-                    return row.entity.departmentName
-            }
-            {
-                displayName: '岗位'
-                name: 'positionName'
-                cellTooltip: (row) ->
-                    return row.entity.positionName
-            }
-            {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
-            {displayName: '当月绩效基数', name: 'baseSalary'}
-            {displayName: '当月绩效薪酬', name: 'amount'}
-            {displayName: '补扣发', name: 'addGarnishee'}
+        @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
+            {displayName: '当月绩效基数', name: 'baseSalary', enableCellEdit: false},
+            {displayName: '当月绩效薪酬', name: 'amount', enableCellEdit: false},
+            {displayName: '补扣发', name: 'addGarnishee'},
             {displayName: '备注', name: 'note'}
-        ]
+        ])
 
 
 # 小时费
 class SalaryHoursFeeController extends SalaryBaseController
-    @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'HoursFee', 'toaster']
+    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'HoursFee', 'toaster']
 
-    constructor: ($http, $scope, @Evt, @Employee, @HoursFee, @toaster) ->
-        super(@HoursFee)
+    constructor: ($http, $scope, $q, @Evt, @Employee, @HoursFee, @toaster) ->
+        super(@HoursFee, $scope, $q)
 
-        @filterOptions = {
-            name: 'HoursFee'
-            constraintDefs: [
-                {
-                    name: 'employee_name'
-                    displayName: '员工姓名'
-                    type: 'string'
-                }
-                {
-                    name: 'employee_no'
-                    displayName: '员工编号'
-                    type: 'string'
-                }
-            ]
-        }
+        @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
-        @columnDef = [
-            {displayName: '员工编号', name: 'employeeNo'}
-            {
-                displayName: '姓名'
-                field: 'employeeName'
-                cellTemplate: '''
-                <div class="ui-grid-cell-contents">
-                    <a nb-panel
-                        template-url="partials/personnel/info_basic.html"
-                        locals="{employee: row.entity.owner}">
-                        {{grid.getCellValue(row, col)}}
-                    </a>
-                </div>
-                '''
-            }
-            {
-                displayName: '所属部门'
-                name: 'departmentName'
-                cellTooltip: (row) ->
-                    return row.entity.departmentName
-            }
-            {
-                displayName: '岗位'
-                name: 'positionName'
-                cellTooltip: (row) ->
-                    return row.entity.positionName
-            }
-            {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
-            {displayName: '飞行时间', name: 'flyHours'}
-            {displayName: '小时费', name: 'flyFee'}
-            {displayName: '空勤灶', name: 'airlineFee'}
+        @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
+            {displayName: '飞行时间', name: 'flyHours', enableCellEdit: false}
+            {displayName: '小时费', name: 'flyFee', enableCellEdit: false}
+            {displayName: '空勤灶', name: 'airlineFee', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee'}
             {displayName: '备注', name: 'note'}
-        ]
+        ])
 
         @hours_fee_category = '飞行员'
 
@@ -689,234 +634,71 @@ class SalaryHoursFeeController extends SalaryBaseController
 
 
 class SalaryAllowanceController extends SalaryBaseController
-    @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'Allowance', 'toaster']
+    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'Allowance', 'toaster']
 
-    constructor: ($http, $scope, @Evt, @Employee, @Allowance, @toaster) ->
-        super(@Allowance)
+    constructor: ($http, $scope, $q, @Evt, @Employee, @Allowance, @toaster) ->
+        super(@Allowance, $scope, $q)
 
-        @filterOptions = {
-            name: 'allowance'
-            constraintDefs: [
-                {
-                    name: 'employee_name'
-                    displayName: '员工姓名'
-                    type: 'string'
-                }
-                {
-                    name: 'employee_no'
-                    displayName: '员工编号'
-                    type: 'string'
-                }
-            ]
-        }
+        @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
-        @columnDef = [
-            {displayName: '员工编号', name: 'employeeNo'}
-            {
-                displayName: '姓名'
-                field: 'employeeName'
-                cellTemplate: '''
-                <div class="ui-grid-cell-contents">
-                    <a nb-panel
-                        template-url="partials/personnel/info_basic.html"
-                        locals="{employee: row.entity.owner}">
-                        {{grid.getCellValue(row, col)}}
-                    </a>
-                </div>
-                '''
-            }
-            {
-                displayName: '所属部门'
-                name: 'departmentName'
-                cellTooltip: (row) ->
-                    return row.entity.departmentName
-            }
-            {
-                displayName: '岗位'
-                name: 'positionName'
-                cellTooltip: (row) ->
-                    return row.entity.positionName
-            }
-            {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
-            {displayName: '津贴', name: 'subsidy'}
+        @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
+            {displayName: '津贴', name: 'subsidy', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee'}
             {displayName: '备注', name: 'note'}
-        ]
+        ])
 
 
 class SalaryLandAllowanceController extends SalaryBaseController
-    @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'LandAllowance', 'toaster']
+    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'LandAllowance', 'toaster']
 
-    constructor: ($http, $scope, @Evt, @Employee, @LandAllowance, @toaster) ->
-        super(@LandAllowance)
+    constructor: ($http, $scope, $q, @Evt, @Employee, @LandAllowance, @toaster) ->
+        super(@LandAllowance, $scope, $q)
 
-        @filterOptions = {
-            name: 'landAllowance'
-            constraintDefs: [
-                {
-                    name: 'employee_name'
-                    displayName: '员工姓名'
-                    type: 'string'
-                }
-                {
-                    name: 'employee_no'
-                    displayName: '员工编号'
-                    type: 'string'
-                }
-            ]
-        }
+        @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
-        @columnDef = [
-            {displayName: '员工编号', name: 'employeeNo'}
-            {
-                displayName: '姓名'
-                field: 'employeeName'
-                cellTemplate: '''
-                <div class="ui-grid-cell-contents">
-                    <a nb-panel
-                        template-url="partials/personnel/info_basic.html"
-                        locals="{employee: row.entity.owner}">
-                        {{grid.getCellValue(row, col)}}
-                    </a>
-                </div>
-                '''
-            }
-            {
-                displayName: '所属部门'
-                name: 'departmentName'
-                cellTooltip: (row) ->
-                    return row.entity.departmentName
-            }
-            {
-                displayName: '岗位'
-                name: 'positionName'
-                cellTooltip: (row) ->
-                    return row.entity.positionName
-            }
-            {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
-            {displayName: '津贴', name: 'subsidy'}
+        @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
+            {displayName: '津贴', name: 'subsidy', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee'}
             {displayName: '备注', name: 'note'}
-        ]
+        ])
 
 
 class SalaryRewardController extends SalaryBaseController
-    @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'Reward', 'toaster']
+    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'Reward', 'toaster']
 
-    constructor: ($http, $scope, @Evt, @Employee, @Reward, @toaster) ->
-        super(@Reward)
+    constructor: ($http, $scope, $q, @Evt, @Employee, @Reward, @toaster) ->
+        super(@Reward, $scope, $q)
 
-        @filterOptions = {
-            name: 'landAllowance'
-            constraintDefs: [
-                {
-                    name: 'employee_name'
-                    displayName: '员工姓名'
-                    type: 'string'
-                }
-                {
-                    name: 'employee_no'
-                    displayName: '员工编号'
-                    type: 'string'
-                }
-            ]
-        }
+        @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
-        @columnDef = [
-            {displayName: '员工编号', name: 'employeeNo'}
-            {
-                displayName: '姓名'
-                field: 'employeeName'
-                cellTemplate: '''
-                <div class="ui-grid-cell-contents">
-                    <a nb-panel
-                        template-url="partials/personnel/info_basic.html"
-                        locals="{employee: row.entity.owner}">
-                        {{grid.getCellValue(row, col)}}
-                    </a>
-                </div>
-                '''
-            }
-            {
-                displayName: '所属部门'
-                name: 'departmentName'
-                cellTooltip: (row) ->
-                    return row.entity.departmentName
-            }
-            {
-                displayName: '岗位'
-                name: 'positionName'
-                cellTooltip: (row) ->
-                    return row.entity.positionName
-            }
-            {displayName: '航班正常奖', name: 'flight_bonus'}
-            {displayName: '服务质量奖', name: 'service_bonus'}
-            {displayName: '航空安全奖', name: 'airline_security_bonus'}
-            {displayName: '综治奖', name: 'composite_bonus'}
-            {displayName: '收支目标考核奖', name: 'in_out_bonus'}
-            {displayName: '奖1', name: 'bonus_1'}
-            {displayName: '奖2', name: 'bonus_2'}
-        ]
+        @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
+            {displayName: '航班正常奖', name: 'flight_bonus', enableCellEdit: false}
+            {displayName: '服务质量奖', name: 'service_bonus', enableCellEdit: false}
+            {displayName: '航空安全奖', name: 'airline_security_bonus', enableCellEdit: false}
+            {displayName: '综治奖', name: 'composite_bonus', enableCellEdit: false}
+            {displayName: '收支目标考核奖', name: 'in_out_bonus', enableCellEdit: false}
+            {displayName: '奖1', name: 'bonus_1', enableCellEdit: false}
+            {displayName: '奖2', name: 'bonus_2', enableCellEdit: false}
+        ])
 
 
 class SalaryOverviewController extends SalaryBaseController
-    @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'SalaryOverview', 'toaster']
+    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'SalaryOverview', 'toaster']
 
-    constructor: ($http, $scope, @Evt, @Employee, @SalaryOverview, @toaster) ->
-        super(@SalaryOverview)
+    constructor: ($http, $scope, $q, @Evt, @Employee, @SalaryOverview, @toaster) ->
+        super(@SalaryOverview, $scope, $http)
 
-        @filterOptions = {
-            name: 'allowance'
-            constraintDefs: [
-                {
-                    name: 'employee_name'
-                    displayName: '员工姓名'
-                    type: 'string'
-                }
-                {
-                    name: 'employee_no'
-                    displayName: '员工编号'
-                    type: 'string'
-                }
-            ]
-        }
+        @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
-        @columnDef = [
-            {displayName: '员工编号', name: 'employeeNo'}
-            {
-                displayName: '姓名'
-                field: 'employeeName'
-                cellTemplate: '''
-                <div class="ui-grid-cell-contents">
-                    <a nb-panel
-                        template-url="partials/personnel/info_basic.html"
-                        locals="{employee: row.entity.owner}">
-                        {{grid.getCellValue(row, col)}}
-                    </a>
-                </div>
-                '''
-            }
-            {
-                displayName: '所属部门'
-                name: 'departmentName'
-                cellTooltip: (row) ->
-                    return row.entity.departmentName
-            }
-            {
-                displayName: '岗位'
-                name: 'positionName'
-                cellTooltip: (row) ->
-                    return row.entity.positionName
-            }
-            {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
-            {displayName: '基础工资', name: 'basic'}
-            {displayName: '绩效工资', name: 'performance'}
-            {displayName: '津贴', name: 'subsidy'}
-            {displayName: '驻站津贴', name: 'land_subsidy'}
-            {displayName: '奖励', name: 'reward'}
-            {displayName: '合计', name: 'total'}
+        @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
+            {displayName: '基础工资', name: 'basic', enableCellEdit: false}
+            {displayName: '绩效工资', name: 'performance', enableCellEdit: false}
+            {displayName: '津贴', name: 'subsidy', enableCellEdit: false}
+            {displayName: '驻站津贴', name: 'land_subsidy', enableCellEdit: false}
+            {displayName: '奖励', name: 'reward', enableCellEdit: false}
+            {displayName: '合计', name: 'total', enableCellEdit: false}
             {displayName: '备注', name: 'note'}
-        ]
+        ])
 
 
 app.controller 'salaryCtrl', SalaryController
