@@ -59,6 +59,9 @@ md-dialog.welfare_personal_new(ng-controller="EditableResourceCtrl")
                         div(ng-if="current.channelId == 6")
                             include personal_edit/service_a
 
+                        div(layout)
+                            md-checkbox(class="md-primary" ng-model="current.isSalarySpecial") 薪酬特殊人员
+
         .md-actions
             md-button(ng-click="cancel(current, $event, salaryPersonal);dialog.close()") 取 消
             md-button.md-primary.md-raised(ng-hide="current.channelId == 6" ng-click="submit();dialog.close()") 确 定

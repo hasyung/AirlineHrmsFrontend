@@ -23,7 +23,7 @@
                     md-menu(ng-init="selectedRows=[]")
                         md-button.md-primary.md-raised(
                             ng-click="$mdOpenMenu($event)"
-                            ng-disabled="ctrl.calcing || ctrl.records.length==0"
+                            ng-disabled="ctrl.calcing"
                             ) 导入
                         md-menu-content
                             md-menu-item()

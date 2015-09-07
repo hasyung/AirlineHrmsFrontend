@@ -53,8 +53,8 @@ class SalaryController extends nb.Controller
         if !angular.isDefined(@global_setting.service_bonus[year])
             @global_setting.service_bonus[year] = 100000000
 
-        if !angular.isDefined(@global_setting.ailine_security_bonus[year])
-            @global_setting.ailine_security_bonus[year] = 100000000
+        if !angular.isDefined(@global_setting.airline_security_bonus[year])
+            @global_setting.airline_security_bonus[year] = 100000000
 
         if !angular.isDefined(@global_setting.composite_bonus[year])
             @global_setting.composite_bonus[year] = 100000000
@@ -610,6 +610,69 @@ class SalaryHoursFeeController extends SalaryBaseController
     constructor: ($http, $scope, @Evt, @Employee, @HoursFee, @toaster) ->
         super(@HoursFee)
 
+        @filterOptions = {
+            name: 'HoursFee'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '员工姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+            ]
+        }
+
+        @columnDef = [
+            {displayName: '员工编号', name: 'employeeNo'}
+            {
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+            }
+            {
+                displayName: '岗位'
+                name: 'positionName'
+                cellTooltip: (row) ->
+                    return row.entity.positionName
+            }
+            {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
+            {displayName: '飞行时间', name: 'fly_hours'}
+            {displayName: '小时费', name: 'fly_fee'}
+            {displayName: '空勤灶', name: 'airline_fee'}
+            {displayName: '补扣发', name: 'addGarnishee'}
+            {displayName: '备注', name: 'note'}
+        ]
+
+        @person_category = 'flyer'
+
+    search: (tableState) ->
+        tableState = {} unless tableState
+        tableState['month'] = @currentCalcTime()
+        tableState['person_category'] = @person_category
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+        @records.$refresh(tableState)
+
+    loadRecords: () ->
+        @records.$refresh({month: @currentCalcTime(), person_category: @person_category})
+
 
 class SalaryAllowanceController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$nbEvent', 'Employee', 'Allowance', 'toaster']
@@ -774,7 +837,7 @@ class SalaryRewardController extends SalaryBaseController
             }
             {displayName: '航班正常奖', name: 'flight_bonus'}
             {displayName: '服务质量奖', name: 'service_bonus'}
-            {displayName: '航空安全奖', name: 'ailine_security_bonus'}
+            {displayName: '航空安全奖', name: 'airline_security_bonus'}
             {displayName: '综治奖', name: 'composite_bonus'}
             {displayName: '收支目标考核奖', name: 'in_out_bonus'}
             {displayName: '奖1', name: 'bonus_1'}
