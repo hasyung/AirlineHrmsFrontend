@@ -227,12 +227,22 @@ class SalaryPersonalController extends nb.Controller
                     type: 'string'
                 }
                 {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+                {
                     name: 'channel_ids'
                     displayName: '通道'
                     type: 'muti-enum-search'
                     params: {
                         type: 'channels'
                     }
+                }
+                {
+                    name: 'is_salary_special'
+                    displayName: '薪酬特殊人员'
+                    type: 'boolean'
                 }
             ]
         }
@@ -469,15 +479,20 @@ class SalaryBaseController extends nb.Controller
     currentCalcTime: ()->
         @currentYear + "-" + @currentMonth
 
-    loadRecords: () ->
-        @records.$refresh({month: @currentCalcTime()})
+    loadRecords: (options = null) ->
+        args = {month: @currentCalcTime()}
+        angular.extend(args) if angular.isDefined(options)
+        @records.$refresh(args)
 
     # 强制计算
-    exeCalc: () ->
+    exeCalc: (options = null) ->
         @calcing = true
         self = @
 
-        @Model.compute({month: @currentCalcTime()}).$asPromise().then (data)->
+        args = {month: @currentCalcTime()}
+        angular.extend(args, options) if angular.isDefined(options)
+
+        @Model.compute(args).$asPromise().then (data)->
             self.calcing = false
             erorr_msg = data.$response.data.messages
             # _.snakeCase('Foo Bar')
@@ -654,24 +669,23 @@ class SalaryHoursFeeController extends SalaryBaseController
                     return row.entity.positionName
             }
             {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
-            {displayName: '飞行时间', name: 'fly_hours'}
-            {displayName: '小时费', name: 'fly_fee'}
-            {displayName: '空勤灶', name: 'airline_fee'}
+            {displayName: '飞行时间', name: 'flyHours'}
+            {displayName: '小时费', name: 'flyFee'}
+            {displayName: '空勤灶', name: 'airlineFee'}
             {displayName: '补扣发', name: 'addGarnishee'}
             {displayName: '备注', name: 'note'}
         ]
 
-        @person_category = 'flyer'
+        @hours_fee_category = '飞行员'
 
-    search: (tableState) ->
-        tableState = {} unless tableState
-        tableState['month'] = @currentCalcTime()
-        tableState['person_category'] = @person_category
-        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
-        @records.$refresh(tableState)
+    search: () ->
+        super({hours_fee_category: @hours_fee_category})
 
     loadRecords: () ->
-        @records.$refresh({month: @currentCalcTime(), person_category: @person_category})
+        super({hours_fee_category: @hours_fee_category})
+
+    exeCalc: ()->
+        super({hours_fee_category: @hours_fee_category})
 
 
 class SalaryAllowanceController extends SalaryBaseController
