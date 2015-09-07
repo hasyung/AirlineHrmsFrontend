@@ -812,6 +812,7 @@ class ContractCtrl extends nb.Controller
             if matched
                 self.loadEmp = matched
                 contract.owner = matched
+                console.log contract
             else
                 self.loadEmp = params
 

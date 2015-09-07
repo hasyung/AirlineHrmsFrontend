@@ -358,9 +358,9 @@ class LeaveEmployeesCtrl extends nb.Controller
         @leaveEmployees.$refresh(tableState)
 
 class MoveEmployeesCtrl extends nb.Controller
-    @.$inject = ['$scope', 'MoveEmployees', 'Employee', '$nbEvent']
+    @.$inject = ['$scope', 'MoveEmployees', 'Employee', '$nbEvent', '$http']
 
-    constructor: (@scope, @MoveEmployees, @Employee, @Evt) ->
+    constructor: (@scope, @MoveEmployees, @Employee, @Evt, @http) ->
         @moveEmployees = @loadInitialData()
 
         @columnDef = [
@@ -450,11 +450,20 @@ class MoveEmployeesCtrl extends nb.Controller
     loadInitialData: () ->
         @moveEmployees = @MoveEmployees.$collection().$fetch()
 
-    newMoveEmployee: (moveEmployee)->
+    newBorrowEmployee: (moveEmployee)->
+        self = @
+        moveEmployee.department_id = moveEmployee.department_id.$pk if moveEmployee.department_id
+
+        @http.post('/api/special_states/temporarily_transfer', moveEmployee).then (data)->
+            self.moveEmployees.$refresh()
+            self.Evt.$send("moveEmployee:save:success", '设置成功')
+
+    newAccreditEmployee: (moveEmployee)->
         self = @
 
-        @moveEmployees.$build(moveEmployee).$save().$then ()->
+        @http.post('/api/special_states/temporarily_defend', moveEmployee).then (data)->
             self.moveEmployees.$refresh()
+            self.Evt.$send("moveEmployee:save:success", '设置成功')
 
     search: (tableState) ->
         tableState = tableState || {}
@@ -476,7 +485,7 @@ class MoveEmployeesCtrl extends nb.Controller
 
             if matched
                 self.loadEmp = matched
-                # moveEmployee.owner = matched
+                moveEmployee.employee_id = matched.$pk
             else
                 self.loadEmp = params
 
