@@ -12,10 +12,10 @@
                 label(flex-order="3") 月
 
                 label(flex-order="4") 人员类别
-                md-select(flex-order="5" ng-model="ctrl.person_category" style="width:250px" ng-change="ctrl.loadRecords")
-                    md-option(ng-value="'flyer'") 飞行员
-                    md-option(ng-value="'airline'") 空勤
-                    md-option(ng-value="'air_steward'") 空保
+                md-select(flex-order="5" ng-model="ctrl.hours_fee_category" style="width:250px" ng-change="ctrl.loadRecords()")
+                    md-option(ng-value="'飞行员'") 飞行员
+                    md-option(ng-value="'空勤'") 空勤
+                    md-option(ng-value="'空保'") 空保
             span(flex)
 
     div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
@@ -78,4 +78,10 @@
                                     href="javascript:"
                                 ) 审批表
 
-        div(nb-grid column-defs="ctrl.columnDef" on-register-api="ctrl.exportGridApi(gridApi)" safe-src="ctrl.records")
+        div(nb-grid
+            column-defs="ctrl.columnDef"
+            export-api
+            grid-selection
+            grid-edit
+            grid-row-edit
+            on-register-api="ctrl.initialize(gridApi)" safe-src="ctrl.records")
