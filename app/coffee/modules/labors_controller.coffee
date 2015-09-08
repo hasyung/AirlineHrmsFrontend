@@ -466,6 +466,8 @@ class AttendanceCtrl extends nb.Controller
                     '''
                 }
             ]
+        else
+            self.summaryListCol = ATTENDANCE_SUMMERY_DEFS
 
         @tableData = @AttendanceSummary.records({summary_date: moment().format()})
 
