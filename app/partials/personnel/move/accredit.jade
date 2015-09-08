@@ -1,6 +1,6 @@
 md-dialog.employee_move
-    md-content(ng-init="accreditEmployee = {special_category:'派驻'}; ctrl.loadEmp = {};")
-        form(ng-submit="ctrl.newMoveEmployee(accreditEmployee);dialog.close();" name="newAccreditForm" flex)
+    md-content(ng-init="accreditEmployee = {}; ctrl.loadEmp = {};")
+        form(ng-submit="ctrl.newAccreditEmployee(accreditEmployee);dialog.close();" name="newAccreditForm" flex)
             md-toolbar.md-accent(md-theme="hrms")
                 .md-toolbar-tools
                     span 驻派设置
@@ -31,18 +31,18 @@ md-dialog.employee_move
                     div(layout)
                         md-input-container(flex)
                             label 派驻地点
-                            input(ng-model="accreditEmployee.specialLocation" name="specialLocation" required)
+                            input(ng-model="accreditEmployee.special_location" name="specialLocation" required)
                     div(layout)
                         md-input-container(flex)
                             label 派驻开始时间
-                            input(ng-model="accreditEmployee.limitTime.startDate" name="startDate" bs-datepicker required)
+                            input(ng-model="accreditEmployee.special_date_from" name="startDate" bs-datepicker required)
                         md-input-container(flex)
                             label 派驻结束时间
-                            input(ng-model="accreditEmployee.limitTime.endDate" name="endDate" bs-datepicker required)
+                            input(ng-model="accreditEmployee.special_date_to" name="endDate" bs-datepicker required)
                     div(layout)
                         md-input-container(flex)
                             label 文件编号
-                            input(ng-model="accreditEmployee.fileNo" name="fileNo" required)
+                            input(ng-model="accreditEmployee.file_no" name="fileNo" required)
 
             .md-actions
                 md-button(type="button" ng-click="cancel(accreditEmployee, $event, newAccreditForm);dialog.close()") 取 消

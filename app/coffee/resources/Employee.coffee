@@ -48,6 +48,11 @@ MoveEmployees = (restmod, RMUtils, $Evt) ->
 
         owner: {belongsTo: 'Employee', key: 'employee_id'}
 
+        $hooks: {
+            'after-update': ->
+                $Evt.$send('MoveEmployees:update:success', "修改成功")
+        }
+
         $extend:
             Collection:
                 search: (tableState) ->
