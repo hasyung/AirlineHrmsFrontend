@@ -427,6 +427,7 @@ class AttendanceCtrl extends nb.Controller
             self.hrDepartmentLeaderChecked = summary_record.hr_department_leader_checked
 
             angular.forEach self.tableData, (item)->
+                item.departmentHrChecked = self.departmentHrChecked
                 item.departmentLeaderChecked = self.departmentLeaderChecked
                 item.hrDepartmentLeaderChecked = self.hrDepartmentLeaderChecked
 
@@ -457,11 +458,11 @@ class AttendanceCtrl extends nb.Controller
                     cellTemplate: '''
                         <div class="ui-grid-cell-contents">
                             <a nb-dialog
-                                ng-hide="row.entity.departmentLeaderChecked || row.entity.hrDepartmentLeaderChecked"
+                                ng-hide="row.entity.departmentHrChecked"
                                 template-url="partials/labors/attendance/summary_edit.html"
                                 locals="{summary: row.entity}"> 编辑
                             </a>
-                            <span ng-show="row.entity.departmentLeaderChecked || row.entity.hrDepartmentLeaderChecked">已审</span>
+                            <span ng-show="row.entity.departmentHrChecked">已确认</span>
                         </div>
                     '''
                 }
@@ -480,6 +481,7 @@ class AttendanceCtrl extends nb.Controller
             self.hrDepartmentLeaderChecked = summary_record.hr_department_leader_checked
 
             angular.forEach self.tableData, (item)->
+                item.departmentHrChecked = self.departmentHrChecked
                 item.departmentLeaderChecked = self.departmentLeaderChecked
                 item.hrDepartmentLeaderChecked = self.hrDepartmentLeaderChecked
 
@@ -495,6 +497,9 @@ class AttendanceCtrl extends nb.Controller
             erorr_msg = data.$response.data.messages
             toaster.pop('info', '提示', erorr_msg || "确认成功")
             self.departmentHrChecked = true
+
+            angular.forEach self.tableData, (item)->
+                item.departmentHrChecked = true
 
     departmentLeaderCheck: ()->
         self = @
@@ -527,13 +532,15 @@ class AttendanceCtrl extends nb.Controller
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @tableData.$refresh(tableState)
 
-    getSelected: -> # selected entity || arr
-        rows = @gridApi.selection.getSelectedGridRows()
-        selected = if rows.length >= 1 then rows[0].entity else null
+    getSelected: ->
+        if @gridApi.selection
+            rows = @gridApi.selection.getSelectedGridRows()
+            selected = if rows.length >= 1 then rows[0].entity else null
 
     getSelectedEntities: ->
-        rows = @gridApi.selection.getSelectedGridRows()
-        rows.map (row) -> row.entity
+        if @gridApi.selection
+            rows = @gridApi.selection.getSelectedGridRows()
+            rows.map (row) -> row.entity
 
     exportGridApi: (gridApi) ->
         @gridApi = gridApi
