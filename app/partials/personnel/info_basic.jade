@@ -22,7 +22,7 @@ div.panel-bg-gray(ng-init = "current = panel.employee; current.$refresh();" ng-c
 
     .personnel-content.personnel-control
         section.personnel-info-section
-            tabset(type="pills")
+            tabset.personnel-tabs(type="pills")
                 tab(heading="基本信息")
                     md-content.nb-card-container(layout="column" md-theme="hrms")
                         md-card.form-material-section.nb-card
@@ -46,7 +46,8 @@ div.panel-bg-gray(ng-init = "current = panel.employee; current.$refresh();" ng-c
                 tab(heading="培训记录")
 
                 tab(heading="奖惩记录")
-
+                    md-content.nb-card-container(flex layout="column" md-theme="hrms")
+                        include reward/index
                 tab(heading="考勤信息")
 
                 tab(heading="绩效考核")

@@ -789,9 +789,48 @@
 }
 
 .personnel-salary {
+    .nb-card {
+        padding: 0 20px;
+    }
+
     .toolbar--welfare {
         background-color: #fff;
+        border-bottom: 1px solid #000;
+        box-sizing: border-box;
         color: $text-muted;
+    }
+}
+
+.personnel-reward {
+    .nb-card {
+        padding: 0 20px;
+    }
+
+    .nb-card-content {
+        padding: 0 20px;
+    }
+
+    .toolbar--welfare {
+        background-color: #fff;
+        border-bottom: 1px solid #000;
+        box-sizing: border-box;
+        color: $text-muted;
+
+        .md-toolbar-tools span {
+            font-size: $font-size-lg;
+        }
+    }
+
+    .punishItem {
+        margin: 20px 0;
+
+        &__row {
+            margin: 10px 0;
+
+            &__key {
+                flex: 120px 0 0;
+            }
+        }
     }
 }
 
