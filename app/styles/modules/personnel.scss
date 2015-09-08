@@ -788,6 +788,31 @@
     }
 }
 
+.personnel-salary {
+    .toolbar--welfare {
+        background-color: #fff;
+        color: $text-muted;
+    }
+}
+
+.herizolStatic {
+    @include clearfix();
+
+    &__cell {
+        float: left;
+        line-height: 34px;
+        width: 33%;
+
+        &__key {
+            color: $text-muted;
+            width: 40%;
+        }
+    }
+}
+
+
+
+
 @media (max-width: 1280px){
     .personnel-content.self-info-content {
         flex: 1;

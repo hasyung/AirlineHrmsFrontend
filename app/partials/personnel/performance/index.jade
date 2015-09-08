@@ -4,32 +4,31 @@ div(ng-controller="EmployeePerformanceCtrl as ctrl")
             ng-repeat="group in ctrl.performances | toArray: true| big2small"
         )
             .performance-content.self_performance
-                    .performance-list-item.open
-                        .item-action
-                            md-button(ng-click="show=!show")
-                                div(layout)
-                                    span {{group.$key}}年绩效
-                                    span(flex)
-                                    span.md-toggle-icon(ng-class="{'toggled': show}")
-                                        md-icon(md-svg-src="md-toggle-arrow")
-                        .form-table-container(
-                            ng-class="{'open': show}"
-                            )
-                            table.table.table-mc-light-blue.table-bordered
-                                thead
-                                    tr
-                                        th 考核时段
-                                        th 绩效
-                                        th 附件
-                                tbody
-                                    tr(ng-repeat="performance in group track by $index")
-                                        td(ng-bind="performance.assessTime")
-                                            td(ng-bind="performance.result")
-                                            td
-                                                a(
-                                                    ng-if="performance.attachmentStatus"
-                                                    nb-dialog
-                                                    template-url="partials/self/performance/attachments.html"
-                                                    locals="{performance:performance}"
-                                                    ) 查看
-       
+                .performance-list-item.open
+                    .item-action
+                        md-button(ng-click="show=!show")
+                            div(layout)
+                                span {{group.true}}年绩效
+                                span(flex)
+                                span.md-toggle-icon(ng-class="{'toggled': show}")
+                                    md-icon(md-svg-src="md-toggle-arrow")
+                    .form-table-container(
+                        ng-class="{'open': show}"
+                        )
+                        table.table.table-mc-light-blue.table-bordered
+                            thead
+                                tr
+                                    th 考核时段
+                                    th 绩效
+                                    th 附件
+                            tbody
+                                tr(ng-repeat="performance in group track by $index")
+                                    td(ng-bind="performance.assessTime")
+                                        td(ng-bind="performance.result")
+                                        td
+                                            a(
+                                                ng-if="performance.attachmentStatus"
+                                                nb-dialog
+                                                template-url="partials/self/performance/attachments.html"
+                                                locals="{performance:performance}"
+                                                ) 查看
