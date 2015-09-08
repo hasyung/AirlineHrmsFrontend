@@ -94,6 +94,10 @@ class PersonnelCtrl extends nb.Controller
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @employees.$refresh(tableState)
 
+    getSelected: () ->
+        rows = @gridApi.selection.getSelectedGridRows()
+        rows.map (row) -> return row.entity
+
     getSelectsIds: () ->
         rows = @gridApi.selection.getSelectedGridRows()
         rows.map (row) -> return row.entity.$pk

@@ -9,6 +9,12 @@ tabset(flex)
                         h2 员工人事花名册
                         div(flex)
                         md-button.md-primary.md-raised(
+                            ng-disabled="ctrl.getSelected().length == 0"
+                            nb-panel
+                            template-url="/partials/personnel/punishment.html"
+                            locals="{employee: ctrl.getSelected()}"
+                        ) 人员处分
+                        md-button.md-primary.md-raised(
                             nb-panel
                             template-url="partials/personnel/org_pos_per_sort.html"
                         ) 排序

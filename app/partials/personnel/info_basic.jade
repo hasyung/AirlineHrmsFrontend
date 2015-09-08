@@ -55,19 +55,6 @@ div.panel-bg-gray(ng-init = "current = panel.employee; current.$refresh();")
 
                 tab(heading="档案信息")
 
-                //- tab(heading="个人履历" has-permission="employees_resume")
-                //-     include personnel_resume
-            //- md-tabs(md-selected="data.selectedIndex")
-            //-     md-tab(id="tab1" label="基本人事信息" md-active)
-            //-         //- div(role="tabpanel" layout="column" aria-labelledby="tab1")
-            //-         //-     section.form-material-section
-            //-         //-         md-subheader.md-primary 基本信息
-            //-         //-         include info_basic/info_basic_edit
-            //-         //-     section.form-material-section
-            //-         //-         md-subheader.md-warn 岗位信息
-            //-         //-         include info_basic/info_position_edit
-            //-     md-tab(id="tab2" label="培训记录")
-            //-     md-tab(label="奖惩记录")
-            //-     md-tab(label="考勤信息")
-            //-     md-tab(label="档案信息")
-            //-     md-tab(label="个人履历")
+                tab(heading="薪酬信息")
+                        md-content.nb-card-container(flex layout="column" md-theme="hrms")
+                        include salary/index
