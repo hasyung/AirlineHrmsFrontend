@@ -124,6 +124,13 @@ class NewFlowCtrl
         scope.createFlow = (request, receptor, list) ->
             data = _.cloneDeep(request)
 
+            if data.start_time && typeof(data.start_time) == 'object'
+                console.error moment(data.start_time._d).format('YYYY-MM-DD hh:mm:ss')
+                data.start_time = moment(data.start_time._d).format('YYYY-MM-DD hh:mm:ss')
+            if data.end_time && typeof(data.end_time) == 'object'
+                console.error moment(data.end_time._d).format('YYYY-MM-DD hh:mm:ss')
+                data.end_time = moment(data.end_time._d).add(8, 'hours').format('YYYY-MM-DD hh:mm:ss')
+
             if data.position
                 # 调岗数据处理，否则无法序列化错误
                 data.position = undefined
