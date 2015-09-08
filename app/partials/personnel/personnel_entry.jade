@@ -19,7 +19,7 @@
                                 input(type="text" ng-model="newEmp.name" required)
                             md-input-container(flex)
                                 label 员工编码
-                                input(type="text" ng-model="newEmp.employeeNo" required)
+                                input(type="text" ng-model="newEmp.employeeNo" required ng-blur="ctrl.checkExistEmployeeNo(newEmp.employeeNo)")
 
                         div(layout)
                             md-input-container(flex)

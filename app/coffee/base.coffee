@@ -90,9 +90,9 @@ nb.EditableResourceCtrl = EditableResourceCtrl
 
 
 class NewResourceCtrl
-    @.$inject = ['$scope', '$enum', '$nbEvent']
+    @.$inject = ['$scope', '$enum', '$nbEvent', 'toaster']
 
-    constructor: (scope, $enum, $Evt) ->
+    constructor: (scope, $enum, $Evt, @toaster) ->
         scope.$enum = $enum
 
         scope.create = (resource, form) ->
