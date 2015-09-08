@@ -35,6 +35,10 @@ md-dialog.employee_move(ng-controller="NewResourceCtrl")
                                 float-label
                                 placeholder="借调部门"
                                 )
+                        div(flex ng-if="borrowEmployee.out_company")
+                            md-input-container(flex)
+                                label 借调地点
+                                input(ng-model="borrowEmployee.special_location" name="specialLocation")
                         div(flex)
                             md-checkbox.md-primary(
                                 ng-model="borrowEmployee.out_company"
