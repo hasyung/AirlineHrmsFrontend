@@ -363,7 +363,12 @@ angular.module 'nb.directives'
     # MOCK angular-strap datepicker directive
     .directive 'bsDatepicker', ['$parse', ->
         postLink = (scope, elem, attrs, ngModelCtrl) ->
-            config = autoclose: true, format: 'yyyy-mm-dd', language: 'zh-cn'
+            config = {
+                autoclose: true
+                format: 'yyyy-mm-dd'
+                language: 'zh-cn'
+                todayHighlight: true
+            }
 
             if attrs.endDate == 'today'
                 config['endDate'] = moment().endOf('day').toDate()
