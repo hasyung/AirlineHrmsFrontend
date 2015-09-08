@@ -371,6 +371,8 @@ angular.module 'nb.directives'
             elem.datepicker(config)
             # .on 'changeDate', (evt) ->
             #     ngModelCtrl.$setViewValue(evt.date)
+            if attrs.defaultToday
+                elem.datepicker('update', moment().endOf('day').toDate())
 
             ngModelCtrl.$parsers.unshift (viewValue) ->
                 #only allowed yyyy-mm-dd format
