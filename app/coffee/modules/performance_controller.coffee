@@ -69,9 +69,9 @@ class Route
 
 
 class PerformanceRecord extends nb.Controller
-    @.$inject = ['$scope', 'Performance', '$http', 'USER_META']
+    @.$inject = ['$scope', 'Performance', '$http', 'USER_META', '$nbEvent']
 
-    constructor: (@scope, @Performance, @http, @USER_META)->
+    constructor: (@scope, @Performance, @http, @USER_META, @Evt)->
         @filterOptions = getBaseFilterOptions('performance_record')
 
         @columnDef = BASE_TABLE_DEFS.concat [
@@ -128,6 +128,12 @@ class PerformanceRecord extends nb.Controller
     uploadAttachments: (collection, $messages)->
         file = JSON.parse($messages)
         collection.$create(file)
+    #安排离岗培训
+    #post
+    newTrainEmployee: (moveEmployee)->
+        self = @
+        @http.post('/api/special_states/temporarily_train', moveEmployee).then (data)->
+            self.Evt.$send("moveEmployee:save:success", '离岗培训设置成功')
 
 
 class PerformanceSetting extends nb.Controller
