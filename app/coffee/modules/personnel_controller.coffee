@@ -710,6 +710,8 @@ class PersonnelDataCtrl extends nb.Controller
     @.$inject = ['$scope', 'CURRENT_ROLES']
 
     constructor: (@scope, @CURRENT_ROLES) ->
+        @year_list = @$getYears()
+        @month_list = @$getMonths()
 
     isHrPaymentMember: ()->
         @CURRENT_ROLES.indexOf('hr_payment_member') >= 0
