@@ -106,8 +106,8 @@
 
                         div(layout)
                             md-input-container.row-has-value(flex)
-                                label 职务职级
-                                md-select(ng-model="newEmp.dutyRankId")
+                                label 职务职级(员工分类不可选)
+                                md-select(ng-model="newEmp.dutyRankId" ng-disabled="$enum.parseLabel(newEmp.categoryId, 'categories') == '员工'")
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('duty_ranks')") {{item.label}}
                             md-input-container.row-has-value(flex)
                                 label 属地化地点
