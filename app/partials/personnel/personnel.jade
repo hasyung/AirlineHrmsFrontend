@@ -9,10 +9,11 @@ tabset(flex)
                         h2 员工人事花名册
                         div(flex)
                         md-button.md-primary.md-raised(
-                            ng-disabled="ctrl.getSelected().length == 0"
+                            ng-if="ctrl.isDepartmentHr()"
+                            ng-disabled="ctrl.getSelected().length != 1"
                             nb-dialog
                             template-url="/partials/personnel/punishment.html"
-                            locals="{employee: ctrl.getSelected()}"
+                            locals="{employee: ctrl.getSelected()[0]}"
                         ) 人员处分
                         md-button.md-primary.md-raised(
                             nb-panel

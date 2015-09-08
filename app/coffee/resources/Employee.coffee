@@ -12,6 +12,7 @@ Employee = (restmod, RMUtils, $Evt) ->
 
         resume: {hasOne: 'Resume', mask: 'CU'}
         performances: {hasMany: 'Performance', mask: 'CU'}
+        punishments: {hasMany: 'Punishment', mask: 'CU'}
 
         $hooks: {
             'after-create': ->

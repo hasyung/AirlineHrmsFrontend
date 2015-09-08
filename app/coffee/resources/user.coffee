@@ -11,6 +11,8 @@ User = (restmod, RMUtils, $Evt) ->
         educationExperiences: {hasMany: 'Education'}
         workExperiences: {hasMany: 'Experience'}
         resume: {hasOne: 'Resume', mask: 'CU'}
+        rewards: {hasMany: 'UserReward'}
+        punishments: {hasMany: 'UserPunishment'}
 
         $config:
             jsonRoot: 'employee'
@@ -117,6 +119,18 @@ UserPerformance = (restmod, RMUtils, $Evt)->
     }
 
 
+UserReward = (restmod, RMUtils, $Evt)->
+    restmod.model('/me/rewards').mix 'nbRestApi', {
+
+    }
+
+
+UserPunishment = (restmod, RMUtils, $Evt)->
+    restmod.model('/me/punishments').mix 'nbRestApi', {
+
+    }
+
+
 resources.factory 'User', ['restmod', 'RMUtils', '$nbEvent', User]
 resources.factory 'Education', ['restmod', 'RMUtils', '$nbEvent', Education]
 resources.factory 'Experience', ['restmod', 'RMUtils', '$nbEvent', Experience]
@@ -124,3 +138,5 @@ resources.factory 'FamilyMember', ['restmod', 'RMUtils', '$nbEvent', FamilyMembe
 resources.factory 'Resume', ['restmod', 'RMUtils', '$nbEvent', Resume]
 resources.factory 'Contact', ['restmod', 'RMUtils', '$nbEvent', Contact]
 resources.factory 'UserPerformance', ['restmod', 'RMUtils', '$nbEvent', UserPerformance]
+resources.factory 'UserReward', ['restmod', 'RMUtils', '$nbEvent', UserReward]
+resources.factory 'UserPunishment', ['restmod', 'RMUtils', '$nbEvent', UserPunishment]

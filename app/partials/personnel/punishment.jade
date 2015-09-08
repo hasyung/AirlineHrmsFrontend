@@ -1,6 +1,6 @@
-md-dialog.punishment_new(style="min-width: 400px;")
-    md-content(ng-init="current = dialog.employee.$refresh()")
-        form(flex ng-submit="dialog.close();" name="newPunishmentForm")
+md-dialog.punishment_new(style="min-width: 450px;")
+    md-content(ng-init="current = dialog.employee.$refresh(); punishment = current.punishments.$build({owner: current});")
+        form(flex ng-controller="NewResourceCtrl" ng-submit="create(punishment, newPunishmentForm); dialog.close();" name="newPunishmentForm")
             md-toolbar.md-accent(md-theme="hrms")
                 .md-toolbar-tools
                     span 处分录入
@@ -9,24 +9,24 @@ md-dialog.punishment_new(style="min-width: 400px;")
                     div(layout)
                         md-input-container(flex)
                             label 姓名
-                            input(ng-model="current.employeeName" name="employeeName" readonly)
+                            input(ng-model="::current.name" name="name" readonly)
                     div(layout)
                         md-input-container(flex)
                             label 处分类别
-                            input(ng-model="current.aaa" required)
+                            input(ng-model="punishment.category" required)
                     div(layout)
                         md-input-container(flex)
                             label 处分描述
-                            textarea(ng-model="current.aaa" md-maxlength="2000" required)
+                            textarea(ng-model="punishment.desc" md-maxlength="2000" required)
 
                     div(layout)
                         md-input-container(flex)
                             label 处分开始时间
-                            input(ng-model="current.aaa" bs-datepicker)
+                            input(ng-model="punishment.startDate" bs-datepicker)
                         div.hyphen 至
                         md-input-container(flex)
                             label 处分结束时间
-                            input(ng-model="current.aaa" bs-datepicker)
+                            input(ng-model="punishment.endDate" bs-datepicker)
 
             .md-actions
                 md-button(type="button" ng-click="dialog.close()") 取 消

@@ -43,6 +43,12 @@ class Route
                 controllerAs: 'ctrl'
                 templateUrl: 'partials/self/performance/performance.html'
             }
+            .state 'self.reward_punishment', {
+                url: '/reward_punishment'
+                controller: ProfileCtrl
+                controllerAs: 'ctrl'
+                templateUrl: 'partials/self/reward_punishment.html'
+            }
             .state 'self.resume', {
                 url: '/resume'
                 controller: ProfileCtrl
@@ -192,9 +198,9 @@ class Route
 
 
 class ProfileCtrl extends nb.Controller
-    @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope', 'User', 'USER_META', 'UserPerformance', 'Performance', '$filter']
+    @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope', 'User', 'USER_META', 'UserPerformance', 'Performance', '$filter', 'UserReward', 'UserPunishment']
 
-    constructor: (@scope, @sweet, @Employee, @rootScope, @User, @USER_META, @UserPerformance, @Performance, @filter) ->
+    constructor: (@scope, @sweet, @Employee, @rootScope, @User, @USER_META, @UserPerformance, @Performance, @filter, @UserReward, @UserPunishment) ->
         @loadInitialData()
         @status = 'show'
 
@@ -221,6 +227,12 @@ class ProfileCtrl extends nb.Controller
         self = @
         @UserPerformance.$collection().$fetch().$then (performances)->
             self.performances = _.groupBy performances, (item)-> item.assessYear
+
+    loadRewards: ()->
+        @rewards = @UserReward.$collection().$fetch()
+
+    loadPunishments: ()->
+        @punishments = @UserPunishment.$collection().$fetch()
 
     allege: (performance, request)->
         performance.allege(request)
@@ -761,7 +773,6 @@ app.controller 'CompanyLeaderChartsCtrl', CompanyLeaderChartsController
 app.controller 'DepartmentHrChartsCtrl', DepartmentHrChartsController
 app.controller 'DepartmentLeaderChartsCtrl', DepartmentLeaderChartsController
 app.controller 'HrLeaderChartsCtrl', HrLeaderChartsController
-
 
 
 app.config(Route)

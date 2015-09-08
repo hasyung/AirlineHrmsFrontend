@@ -31,9 +31,9 @@ app.config(Route)
 
 
 class PersonnelCtrl extends nb.Controller
-    @.$inject = ['$scope', 'sweet', 'Employee']
+    @.$inject = ['$scope', 'sweet', 'Employee', 'CURRENT_ROLES']
 
-    constructor: (@scope, @sweet, @Employee) ->
+    constructor: (@scope, @sweet, @Employee, @CURRENT_ROLES) ->
         @loadInitialData()
         @selectedIndex = 1
 
@@ -104,6 +104,9 @@ class PersonnelCtrl extends nb.Controller
 
     exportGridApi: (gridApi) ->
         @gridApi = gridApi
+
+    isDepartmentHr: ()->
+        @CURRENT_ROLES.indexOf('department_hr') >= 0
 
 
 class NewEmpsCtrl extends nb.Controller
@@ -702,7 +705,18 @@ orgMutiPos = ($rootScope)->
 
 app.directive('orgMutiPos',[orgMutiPos])
 
+
+class PersonnelDataCtrl extends nb.Controller
+    @.$inject = ['$scope', 'USER_META']
+
+    constructor: (@scope, @USER_META) ->
+
+    isHrPaymentMember: ()->
+        console.error @USER_META
+
+
 app.controller('PersonnelSort', PersonnelSort)
 app.controller('LeaveEmployeesCtrl', LeaveEmployeesCtrl)
 app.controller('MoveEmployeesCtrl', MoveEmployeesCtrl)
 app.controller('EmployeePerformanceCtrl', EmployeePerformanceCtrl)
+app.controller('PersonnelDataCtrl', PersonnelDataCtrl)

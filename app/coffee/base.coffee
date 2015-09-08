@@ -90,9 +90,9 @@ nb.EditableResourceCtrl = EditableResourceCtrl
 
 
 class NewResourceCtrl
-    @.$inject = ['$scope', '$enum']
+    @.$inject = ['$scope', '$enum', '$nbEvent']
 
-    constructor: (scope, $enum) ->
+    constructor: (scope, $enum, $Evt) ->
         scope.$enum = $enum
 
         scope.create = (resource, form) ->
@@ -101,7 +101,11 @@ class NewResourceCtrl
             if resource.$save
                 resource.$save().$asPromise().then (data)->
                     msg = data.$response.data.messages
-                    $Evt.$send('model:save:success', msg || "创建成功")
+
+                    if data.$response.status == 200
+                        $Evt.$send('model:save:success', msg || "创建成功")
+                    else
+                        $Evt.$send('model:save:error', msg || "创建失败")
 
 
 class NewFlowCtrl
