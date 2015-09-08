@@ -19,7 +19,7 @@
                                 input(type="text" ng-model="newEmp.name" required)
                             md-input-container(flex)
                                 label 员工编码
-                                input(type="text" ng-model="newEmp.employeeNo" required)
+                                input(type="text" ng-model="newEmp.employeeNo" required ng-blur="ctrl.checkExistEmployeeNo(newEmp.employeeNo)")
 
                         div(layout)
                             md-input-container(flex)
@@ -101,13 +101,13 @@
                                     md-option(ng-value="item" ng-repeat="item in params.orgPos") {{item.name}}
                             md-input-container.row-has-value(flex)
                                 label 分类
-                                md-select(ng-model="newEmp.categoryId" name="category")
+                                md-select(ng-model="newEmp.categoryId" name="category" ng-change="newEmp.dutyRankId=null")
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('categories')") {{item.label}}
 
                         div(layout)
                             md-input-container.row-has-value(flex)
-                                label 职务职级
-                                md-select(ng-model="newEmp.dutyRankId")
+                                label 职务职级(员工分类不可选)
+                                md-select(ng-model="newEmp.dutyRankId" ng-disabled="$enum.parseLabel(newEmp.categoryId, 'categories') == '员工'")
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('duty_ranks')") {{item.label}}
                             md-input-container.row-has-value(flex)
                                 label 属地化地点

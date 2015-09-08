@@ -7,7 +7,6 @@ div.panel-bg-gray(ng-init = "current = panel.employee; current.$refresh();" ng-c
         .big-avator-area
             img(ng-src="{{current.favicon.middle}}" ng-if="current.favicon")
             img(src="http://www.placehold.it/110x110/EFEFEF/AAAAAA&text=no+image" ng-if="!current.favicon")
-            //- img(src="http://192.168.6.99:9001/uploads/employees/favicons/11556/791d7d2bbee699f891b164d3e86ad9ce.png")
         .employee-info
             .employee-name() {{::current.name}}
                 md-button.md-fab.resume-button.md-warn(

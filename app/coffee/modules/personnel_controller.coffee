@@ -110,9 +110,9 @@ class PersonnelCtrl extends nb.Controller
 
 
 class NewEmpsCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Employee', 'Org', '$state', '$enum']
+    @.$inject = ['$scope', 'Employee', 'Org', '$state', '$enum', '$http', 'toaster']
 
-    constructor: (@scope, @Employee, @Org, @state, @enum) ->
+    constructor: (@scope, @Employee, @Org, @state, @enum, @http, @toaster) ->
         @newEmp = {}
         @loadInitialData()
 
@@ -267,6 +267,17 @@ class NewEmpsCtrl extends nb.Controller
             #新增员工后页码刷新，表格控件内容不刷新，未找到确切原因
             #先使用ui-router的state刷新方法
             self.state.go(self.state.current.name, {}, {reload: true})
+
+    checkExistEmployeeNo: (employeeNo)->
+        self = @
+
+        @http({
+                method: 'GET'
+                url: '/api/employees/?employee_no=' + employeeNo
+            })
+            .success (data) ->
+                if data.employees.length > 0
+                    self.toaster.pop('error', '提示', '员工编号已经存在')
 
     getSelectsIds: () ->
         rows = @gridApi.selection.getSelectedGridRows()
