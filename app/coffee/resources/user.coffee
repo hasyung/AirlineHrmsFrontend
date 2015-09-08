@@ -11,6 +11,7 @@ User = (restmod, RMUtils, $Evt) ->
         educationExperiences: {hasMany: 'Education'}
         workExperiences: {hasMany: 'Experience'}
         resume: {hasOne: 'Resume', mask: 'CU'}
+        punishments: {hasMany: 'Punishment'}
 
         $config:
             jsonRoot: 'employee'
