@@ -132,7 +132,6 @@ class PerformanceRecord extends nb.Controller
     #post
     newTrainEmployee: (moveEmployee)->
         self = @
-        console.error moveEmployee
         @http.post('/api/special_states/temporarily_train', moveEmployee).then (data)->
             self.Evt.$send("moveEmployee:save:success", '离岗培训设置成功')
 
