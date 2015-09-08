@@ -1,5 +1,5 @@
 div(ng-controller="EmployeePerformanceCtrl as ctrl")
-    div(ng-init="current = panel.employee;ctrl.loadData(current);")
+    div(ng-init="current = panel.employee; ctrl.loadData(current);")
         md-card.form-material-section.nb-card.no-padding(ng-class="{'active': show}"
             ng-repeat="group in ctrl.performances | toArray: true| big2small"
         )

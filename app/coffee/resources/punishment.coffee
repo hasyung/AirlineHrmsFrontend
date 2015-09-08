@@ -3,6 +3,7 @@ resources = angular.module('resources')
 
 Punishment = (restmod, RMUtils, $Evt) ->
     restmod.model('/punishments').mix 'nbRestApi', 'DirtyModel', {
+        createdAt: {decode: 'date', param: 'yyyy-MM-dd'}
         startDate: {decode: 'date', param: 'yyyy-MM-dd'}
         endDate: {decode: 'date', param: 'yyyy-MM-dd'}
 

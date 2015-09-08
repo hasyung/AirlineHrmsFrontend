@@ -3,6 +3,7 @@ resources = angular.module('resources')
 
 Reward = (restmod, RMUtils, $Evt) ->
     restmod.model('/rewards').mix 'nbRestApi', 'DirtyModel', {
+        createdAt: {decode: 'date', param: 'yyyy-MM-dd'}
         startDate: {decode: 'date', param: 'yyyy-MM-dd'}
         endDate: {decode: 'date', param: 'yyyy-MM-dd'}
 
