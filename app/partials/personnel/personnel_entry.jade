@@ -101,7 +101,7 @@
                                     md-option(ng-value="item" ng-repeat="item in params.orgPos") {{item.name}}
                             md-input-container.row-has-value(flex)
                                 label 分类
-                                md-select(ng-model="newEmp.categoryId" name="category")
+                                md-select(ng-model="newEmp.categoryId" name="category" ng-change="newEmp.dutyRankId=null")
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('categories')") {{item.label}}
 
                         div(layout)
