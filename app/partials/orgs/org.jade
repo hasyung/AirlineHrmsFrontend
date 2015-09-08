@@ -65,7 +65,7 @@ section(ng-if="currentOrg.status !== 'destroy_inactive'")
     .org-title
         span 下属岗位信息
         button.btn.btn-default.fa.fa-cog(
-            ng-disabled="ctrl.isHistory || ctrl.currentOrg.status == 'create_inactive'"
+            ng-if="!ctrl.isHistory && ctrl.currentOrg.status != 'create_inactive'"
             title="设置岗位"
             nb-panel
             template-url="partials/orgs/position.html"
