@@ -442,15 +442,7 @@ class AttendanceCtrl extends nb.Controller
     loadSummariesList: ()->
         self = @
 
-        @AttendanceSummary.records({summary_date: moment().format()}).$asPromise().then (data)->
-            summary_record = _.find data.$response.data.meta.attendance_summary_status, (item)->
-                item.department_id == data.$response.data.meta.department_id
-            self.departmentHrChecked = summary_record.department_hr_checked
-            self.departmentLeaderChecked = summary_record.department_leader_checked
-            self.hrDepartmentLeaderChecked = summary_record.hr_department_leader_checked
-
-        if self.CURRENT_ROLES[0] == 'department_hr' && !(self.departmentLeaderChecked) && !(self.hrDepartmentLeaderChecked)
-            console.error self.departmentLeaderChecked+'接上去'+self.hrDepartmentLeaderChecked
+        if @isDepartmentHr()
             self.summaryListCol = ATTENDANCE_SUMMERY_DEFS.concat [
                 {
                     width:100,
@@ -459,18 +451,29 @@ class AttendanceCtrl extends nb.Controller
                     cellTemplate: '''
                         <div class="ui-grid-cell-contents">
                             <a nb-dialog
+                                ng-hide="row.entity.departmentLeaderChecked || row.entity.hrDepartmentLeaderChecked"
                                 template-url="partials/labors/attendance/summary_edit.html"
                                 locals="{summary: row.entity}"> 编辑
                             </a>
+                            <span ng-show="row.entity.departmentLeaderChecked || row.entity.hrDepartmentLeaderChecked">已审</span>
                         </div>
                     '''
                 }
             ]
-        else
-            console.error '不接'
-            self.summaryListCol = ATTENDANCE_SUMMERY_DEFS
 
         @tableData = @AttendanceSummary.records({summary_date: moment().format()})
+
+        @AttendanceSummary.records({summary_date: moment().format()}).$asPromise().then (data)->
+            summary_record = _.find data.$response.data.meta.attendance_summary_status, (item)->
+                item.department_id == data.$response.data.meta.department_id
+
+            self.departmentHrChecked = summary_record.department_hr_checked
+            self.departmentLeaderChecked = summary_record.department_leader_checked
+            self.hrDepartmentLeaderChecked = summary_record.hr_department_leader_checked
+
+            angular.forEach self.tableData, (item)->
+                item.departmentLeaderChecked = self.departmentLeaderChecked
+                item.hrDepartmentLeaderChecked = self.hrDepartmentLeaderChecked
 
     getDate: ()->
         date = moment(new Date("#{this.year}-#{this.month}")).format()
@@ -495,6 +498,9 @@ class AttendanceCtrl extends nb.Controller
             toaster.pop('info', '提示', erorr_msg || "审核成功")
             self.departmentLeaderChecked = true
 
+            angular.forEach self.tableData, (item)->
+                item.departmentLeaderChecked = true
+
     hrLeaderCheck: ()->
         self = @
         params = {summary_date: @getDate()}
@@ -504,6 +510,9 @@ class AttendanceCtrl extends nb.Controller
             erorr_msg = data.$response.data.messages
             toaster.pop('info', '提示', erorr_msg || "审核成功")
             self.hrDepartmentLeaderChecked = true
+
+            angular.forEach self.tableData, (item)->
+                item.hrDepartmentLeaderChecked = true
 
     search: (tableState)->
         tableState = tableState || {}

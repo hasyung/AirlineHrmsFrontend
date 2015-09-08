@@ -705,7 +705,18 @@ orgMutiPos = ($rootScope)->
 
 app.directive('orgMutiPos',[orgMutiPos])
 
+
+class PersonnelDataCtrl extends nb.Controller
+    @.$inject = ['$scope', 'USER_META']
+
+    constructor: (@scope, @USER_META) ->
+
+    isHrPaymentMember: ()->
+        console.error @USER_META
+
+
 app.controller('PersonnelSort', PersonnelSort)
 app.controller('LeaveEmployeesCtrl', LeaveEmployeesCtrl)
 app.controller('MoveEmployeesCtrl', MoveEmployeesCtrl)
 app.controller('EmployeePerformanceCtrl', EmployeePerformanceCtrl)
+app.controller('PersonnelDataCtrl', PersonnelDataCtrl)
