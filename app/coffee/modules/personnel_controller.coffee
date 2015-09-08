@@ -379,7 +379,6 @@ class MoveEmployeesCtrl extends nb.Controller
     @.$inject = ['$scope', 'MoveEmployees', 'Employee', '$nbEvent', '$http']
 
     constructor: (@scope, @MoveEmployees, @Employee, @Evt, @http) ->
-        @currentDate = new Date();
         @moveEmployees = @loadInitialData()
 
         @columnDef = [

@@ -1,5 +1,5 @@
 md-dialog.employee_move
-    md-content(ng-init="accreditEmployee = {special_date_from: ctrl.currentDate}; ctrl.loadEmp = {};")
+    md-content(ng-init="accreditEmployee = {}; ctrl.loadEmp = {};")
         form(ng-submit="ctrl.newAccreditEmployee(accreditEmployee); dialog.close();" name="newAccreditForm" flex)
             md-toolbar.md-accent(md-theme="hrms")
                 .md-toolbar-tools
@@ -35,7 +35,7 @@ md-dialog.employee_move
                     div(layout)
                         md-input-container(flex)
                             label 派驻开始时间
-                            input(ng-model="accreditEmployee.special_date_from" name="startDate" bs-datepicker required)
+                            input(ng-model="accreditEmployee.special_date_from" name="startDate" bs-datepicker defaultToday required)
                         md-input-container(flex)
                             label 派驻结束时间
                             input(ng-model="accreditEmployee.special_date_to" name="endDate" bs-datepicker required)
