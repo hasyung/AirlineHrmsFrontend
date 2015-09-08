@@ -56,6 +56,6 @@ div.panel-bg-gray(ng-init = "current = panel.employee; current.$refresh();" ng-c
 
                 tab(heading="档案信息")
 
-                tab(heading="薪酬信息")
-                    md-content.nb-card-container(flex layout="column" md-theme="hrms")
+                tab(heading="薪酬信息" ng-if="pdCtrl.isHrPaymentMember()")
+                        md-content.nb-card-container(flex layout="column" md-theme="hrms")
                         include salary/index
