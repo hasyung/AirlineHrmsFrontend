@@ -713,8 +713,17 @@ class PersonnelDataCtrl extends nb.Controller
         @year_list = @$getYears()
         @month_list = @$getMonths()
 
+        @currentYear = @year_list[0]
+        @currentMonth = @month_list[@month_list.length - 1]
+
+    calcTime: ()->
+        @currentYear + '-' + @currentMonth
+
     isHrPaymentMember: ()->
         @CURRENT_ROLES.indexOf('hr_payment_member') >= 0
+
+    loadSalary: ()->
+        console.error '载入' + @calcTime() + '薪酬'
 
 
 app.controller('PersonnelSort', PersonnelSort)
