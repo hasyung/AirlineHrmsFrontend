@@ -707,12 +707,12 @@ app.directive('orgMutiPos',[orgMutiPos])
 
 
 class PersonnelDataCtrl extends nb.Controller
-    @.$inject = ['$scope', 'USER_META']
+    @.$inject = ['$scope', 'CURRENT_ROLES']
 
-    constructor: (@scope, @USER_META) ->
+    constructor: (@scope, @CURRENT_ROLES) ->
 
     isHrPaymentMember: ()->
-        console.error @USER_META
+        @CURRENT_ROLES.indexOf('hr_payment_member') >= 0
 
 
 app.controller('PersonnelSort', PersonnelSort)

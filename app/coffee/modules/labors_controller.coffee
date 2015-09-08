@@ -312,6 +312,7 @@ class Route
                 }
             }
 
+
 app.config(Route)
 
 
@@ -420,9 +421,14 @@ class AttendanceCtrl extends nb.Controller
         @search(params).$asPromise().then (data)->
             summary_record = _.find data.$response.data.meta.attendance_summary_status, (item)->
                 item.department_id == departmentId
+
             self.departmentHrChecked = summary_record.department_hr_checked
             self.departmentLeaderChecked = summary_record.department_leader_checked
             self.hrDepartmentLeaderChecked = summary_record.hr_department_leader_checked
+
+            angular.forEach self.tableData, (item)->
+                item.departmentLeaderChecked = self.departmentLeaderChecked
+                item.hrDepartmentLeaderChecked = self.hrDepartmentLeaderChecked
 
     initDate: ()->
         date = new Date()
