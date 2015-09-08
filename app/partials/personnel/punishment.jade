@@ -1,1 +1,33 @@
-h1 员工处分录入对话框
+md-dialog.punishment_new(style="min-width: 400px;")
+    md-content(ng-init="current = dialog.employee.$refresh()")
+        form(flex ng-submit="dialog.close();" name="newPunishmentForm")
+            md-toolbar.md-accent(md-theme="hrms")
+                .md-toolbar-tools
+                    span 处分录入
+            .dialog-content(layout layout-align="center")
+                fieldset(flex)
+                    div(layout)
+                        md-input-container(flex)
+                            label 姓名
+                            input(ng-model="current.employeeName" name="employeeName" readonly)
+                    div(layout)
+                        md-input-container(flex)
+                            label 处分类别
+                            input(ng-model="current.aaa" required)
+                    div(layout)
+                        md-input-container(flex)
+                            label 处分描述
+                            textarea(ng-model="current.aaa" md-maxlength="2000" required)
+
+                    div(layout)
+                        md-input-container(flex)
+                            label 处分开始时间
+                            input(ng-model="current.aaa" bs-datepicker)
+                        div.hyphen 至
+                        md-input-container(flex)
+                            label 处分结束时间
+                            input(ng-model="current.aaa" bs-datepicker)
+
+            .md-actions
+                md-button(type="button" ng-click="dialog.close()") 取 消
+                md-button.md-primary.md-raised(type="submit") 确 定

@@ -6,6 +6,12 @@
                 h2 绩效记录
                 div(flex)
                 md-button.md-primary.md-raised(
+                    nb-dialog
+                    ng-disabled="!ctrl.getSelected()"
+                    template-url="/partials/performance/record/leave_to_train.html"
+                    locals="{current: ctrl.getSelected()}"
+                    ) 离岗培训
+                md-button.md-primary.md-raised(
                     href="/api/performances/temp_export"
                 ) 导出模板
 

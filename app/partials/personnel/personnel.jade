@@ -10,7 +10,7 @@ tabset(flex)
                         div(flex)
                         md-button.md-primary.md-raised(
                             ng-disabled="ctrl.getSelected().length == 0"
-                            nb-panel
+                            nb-dialog
                             template-url="/partials/personnel/punishment.html"
                             locals="{employee: ctrl.getSelected()}"
                         ) 人员处分
