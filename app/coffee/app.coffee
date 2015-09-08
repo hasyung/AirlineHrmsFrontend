@@ -203,7 +203,8 @@ App
                 || $state.current.url.indexOf('/resignation') >= 0  \
                 || $state.current.url.indexOf('/adjust-position') >= 0  \
                 || $state.current.url.indexOf('/erarly_retirement') >= 0  \
-                || $state.current.url.indexOf('/renew_contract') >= 0
+                || $state.current.url.indexOf('/renew_contract') >= 0 \
+                || $state.current.url.indexOf('/reward_punishment') >= 0
 
             if $state.current.url.indexOf('/performance_') >= 0
                 $rootScope.hide_menu = false

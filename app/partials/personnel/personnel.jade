@@ -13,7 +13,7 @@ tabset(flex)
                             ng-disabled="ctrl.getSelected().length != 1"
                             nb-dialog
                             template-url="/partials/personnel/punishment.html"
-                            locals="{employee: ctrl.getSelected()}"
+                            locals="{employee: ctrl.getSelected()[0]}"
                         ) 人员处分
                         md-button.md-primary.md-raised(
                             nb-panel

@@ -10,10 +10,10 @@ Punishment = (restmod, RMUtils, $Evt) ->
 
         $hooks:
             'after-create': ->
-                $Evt.$send('punishment:create:success', "处分记录创建成功")
+                #$Evt.$send('punishment:create:success', "处分记录创建成功")
 
             'after-update': ->
-                $Evt.$send('punishment:update:success', "处分记录更新成功")
+                #$Evt.$send('punishment:update:success', "处分记录更新成功")
     }
 
 
