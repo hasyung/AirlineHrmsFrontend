@@ -1,6 +1,6 @@
 md-dialog.employee_move
-    md-content(ng-init="accreditEmployee = {}; ctrl.loadEmp = {};")
-        form(ng-submit="ctrl.newAccreditEmployee(accreditEmployee);dialog.close();" name="newAccreditForm" flex)
+    md-content(ng-init="accreditEmployee = {special_date_from: ctrl.currentDate}; ctrl.loadEmp = {};")
+        form(ng-submit="ctrl.newAccreditEmployee(accreditEmployee); dialog.close();" name="newAccreditForm" flex)
             md-toolbar.md-accent(md-theme="hrms")
                 .md-toolbar-tools
                     span 驻派设置

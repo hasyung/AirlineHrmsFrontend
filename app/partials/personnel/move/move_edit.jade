@@ -1,6 +1,6 @@
 md-dialog.employee_move(ng-controller="EditableResourceCtrl" style="min-width: 400px;")
-    md-content(ng-init="current = dialog.move.$refresh()")
-        form(flex ng-submit="save(current.$save(), move_edit_form);dialog.close();" name="move_edit_form")
+    md-content(ng-init="current = dialog.move.$refresh(); list = dialog.list;")
+        form(flex ng-submit="save(current.$save(), move_edit_form); list.$refresh(); dialog.close();" name="move_edit_form")
             md-toolbar.md-accent(md-theme="hrms")
                 .md-toolbar-tools
                     span 异动修改
@@ -16,8 +16,11 @@ md-dialog.employee_move(ng-controller="EditableResourceCtrl" style="min-width: 4
                             input(ng-model="current.fileNo" name="fileNo" required)
                     div(layout)
                         md-input-container(flex)
-                            label 异动期限
-                            input(ng-model="current.limitTime" required)
+                            label 起始期限(不可修改)
+                            input(type="text" bs-datepicker ng-model="current.specialDateFrom" required ng-disabled="true")
+                        md-input-container(flex)
+                            label 结束期限
+                            input(type="text" bs-datepicker ng-model="current.specialDateTo" required)
 
             .md-actions
                 md-button(type="button" ng-click="cancel(current, $event, move_edit_form);dialog.close()") 取 消

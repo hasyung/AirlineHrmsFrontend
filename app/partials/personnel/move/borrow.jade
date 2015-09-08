@@ -2,8 +2,8 @@ md-dialog.employee_move
     md-toolbar.md-accent(md-theme="hrms")
         .md-toolbar-tools
             span 借调设置
-    form(ng-submit="ctrl.newBorrowEmployee(borrowEmployee);dialog.close();" name="newBorrowForm" flex)
-        md-content(ng-init="borrowEmployee = {out_company:false}; ctrl.loadEmp = {};")
+    form(ng-submit="ctrl.newBorrowEmployee(borrowEmployee); dialog.close();" name="newBorrowForm" flex)
+        md-content(ng-init="borrowEmployee = {out_company: false, special_date_from: ctrl.currentDate}; ctrl.loadEmp = {};")
             .dialog-content(layout layout-align="center")
                 fieldset(flex)
                     div(style="display:none;")

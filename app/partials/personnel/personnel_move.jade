@@ -9,12 +9,14 @@
                     ng-disabled="!ctrl.getSelected()"
                     nb-dialog
                     template-url="partials/personnel/move/move_edit.html"
-                    locals="{move: ctrl.getSelected()}"
+                    locals="{move: ctrl.getSelected(), list: ctrl.moveEmployees}"
                 ) 异动修改
+
                 md-button.md-primary.md-raised(
                     nb-dialog
                     template-url="partials/personnel/move/borrow.html"
                 ) 借调设置
+
                 md-button.md-primary.md-raised(
                     nb-dialog
                     template-url="partials/personnel/move/accredit.html"
