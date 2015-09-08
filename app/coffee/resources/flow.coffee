@@ -240,9 +240,8 @@ class FlowController
                     Evt.$send 'result:delete:success', '删除常用联系人成功'
 
         scope.queryContact = (param) ->
-            http.get('/api/employees?&name='+param)
+            http.get('/api/me/auditor_list?&name='+param)
                 .success (result) ->
-                    console.log result
                     scope.leaders = result.employees
 
 
