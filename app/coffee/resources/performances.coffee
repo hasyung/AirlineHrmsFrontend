@@ -4,6 +4,8 @@ resources = angular.module('resources')
 Performance = (restmod, RMUtils, $Evt) ->
     Performance = restmod.model('/performances').mix 'nbRestApi', {
         attachments: {hasMany: 'Attachment'}
+
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
     }
 
 
