@@ -154,7 +154,6 @@ class OrgsCtrl extends nb.Controller
             # 反复划转后情况很复杂
             self.state.go(self.state.current.name, {}, {reload: true})
 
-
     rootTree: () ->
         treeRootOrg = _.find @orgs, (org) -> org.xdepth == 1
         @buildTree(treeRootOrg)
