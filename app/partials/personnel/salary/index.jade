@@ -11,13 +11,14 @@ div.personnel-salary()
                         md-select(ng-model="pdCtrl.currentMonth" ng-change="pdCtrl.loadSalary()" placeholder="请选择月份" aria-label)
                             md-option(ng-value="item" ng-repeat="item in pdCtrl.month_list track by $index" ng-bind="item")
                         label(flex-order="3") 月
-            ul.herizolStatic
-                li.herizolStatic__cell(layout)
-                    .herizolStatic__cell__key 岗位工资
-                    .herizolStatic__cell__val XXXXXX
+            .nb-card-content
+                ul.herizolStatic
+                    li.herizolStatic__cell(layout)
+                        .herizolStatic__cell__key 岗位工资
+                        .herizolStatic__cell__val XXXXXX
 
-            ul.herizolStatic
-                li.herizolStatic__cell(layout)
-                    .herizolStatic__cell__key 合计
-                    .herizolStatic__cell__val XXXXXX
+                ul.herizolStatic
+                    li.herizolStatic__cell(layout)
+                        .herizolStatic__cell__key 合计
+                        .herizolStatic__cell__val XXXXXX
 
