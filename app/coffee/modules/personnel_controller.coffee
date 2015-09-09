@@ -634,8 +634,8 @@ class EmployeeRewardPunishmentCtrl extends nb.Controller
     constructor: (@scope, @Employee, @Reward, @Punishment)->
 
     loadData: (employee)->
-        #@rewards = employee.rewards.$fetch()
-        @punishments = employee.punishments.$fetch()
+        #@rewards = employee.rewards.$refresh()
+        @punishments = employee.punishments.$refresh()
 
 
 class PersonnelSort extends nb.Controller
