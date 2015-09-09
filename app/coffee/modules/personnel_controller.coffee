@@ -272,9 +272,9 @@ class NewEmpsCtrl extends nb.Controller
         self = @
 
         @http({
-                method: 'GET'
-                url: '/api/employees/?employee_no=' + employeeNo
-            })
+            method: 'GET'
+            url: '/api/employees/?employee_no=' + employeeNo
+        })
             .success (data) ->
                 if data.employees.length > 0
                     self.toaster.pop('error', '提示', '员工编号已经存在')
@@ -625,7 +625,7 @@ class EmployeePerformanceCtrl extends nb.Controller
 
     loadData: (employee)->
         self = @
-        employee.performances.$fetch().$then (performances)->
+        employee.performances.$refresh().$then (performances)->
             self.performances = _.groupBy performances, (item)-> item.assessYear
 
 class EmployeeRewardPunishmentCtrl extends nb.Controller
@@ -635,7 +635,7 @@ class EmployeeRewardPunishmentCtrl extends nb.Controller
 
     loadData: (employee)->
         #@rewards = employee.rewards.$fetch()
-        @punishments = employee.punishments.$fetch()
+        @punishments = employee.punishments.$refresh()
 
 
 class PersonnelSort extends nb.Controller
