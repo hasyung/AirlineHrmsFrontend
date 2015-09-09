@@ -406,14 +406,6 @@ class AttendanceCtrl extends nb.Controller
         @checksColumnDef = helper.buildFlowDefault(checkBaseDef)
         @recodsColumnDef = helper.buildFlowDefault(recordsBaseDef)
 
-    getYears: ()->
-        [2015..new Date().getFullYear()]
-
-    getMonths: ()->
-        months = [1..new Date().getMonth() + 1]
-        months = _.map months, (item) ->
-            item = "0" + item if item < 10
-
     exeSearch: (departmentId)->
         date = moment(new Date("#{this.year}-#{this.month}")).format()
         params = {summary_date: date}
@@ -434,12 +426,11 @@ class AttendanceCtrl extends nb.Controller
                 item.hrDepartmentLeaderChecked = self.hrDepartmentLeaderChecked
 
     initDate: ()->
-        date = new Date()
-        year_list = @getYears()
-        month_list = @getMonths()
+        @year_list = @$getYears()
+        @month_list = @$getMonths()
 
-        @year = year_list[year_list.length - 1]
-        @month = month_list[month_list.length - 1]
+        @year = @year_list[@year_list.length - 1]
+        @month = @month_list[@month_list.length - 1]
 
     loadCheckList: ()->
         @tableData = @Leave.$collection().$fetch()
