@@ -8,10 +8,10 @@
                     label.row-text 月度：
                     .year-and-month(layout)
                         md-select.year(ng-model="ctrl.year" flex ng-change="ctrl.exeSearch()")
-                            md-option(ng-value="item" ng-repeat="item in ctrl.getYears()" ng-bind="item")
+                            md-option(ng-value="item" ng-repeat="item in ctrl.year_list" ng-bind="item")
 
                         md-select.month(ng-model="ctrl.month" flex ng-change="ctrl.exeSearch()")
-                            md-option(ng-value="item" ng-repeat="item in ctrl.getMonths()" ng-bind="item")
+                            md-option(ng-value="item" ng-repeat="item in ctrl.month_list" ng-bind="item")
 
                     span.row-text.last {{ctrl.tableData.$metadata.status}}
                 md-button.md-primary.md-raised(

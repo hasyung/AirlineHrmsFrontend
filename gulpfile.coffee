@@ -34,7 +34,7 @@ debugMode       = true
 
 
 DEVELOPMENT_TEST_SERVER = "http://192.168.6.99:9001"
-RELEASE_TEST_SERVER = "http://114.215.142.122:9001"
+RELEASE_TEST_SERVER = "http://114.215.142.105:9001"
 
 
 if argv.addr
