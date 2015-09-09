@@ -435,8 +435,11 @@ class AttendanceCtrl extends nb.Controller
 
     initDate: ()->
         date = new Date()
-        @year = date.getFullYear()
-        @month = date.getMonth() + 1
+        year_list = @getYears()
+        month_list = @getMonths()
+
+        @year = year_list[year_list.length - 1]
+        @month = month_list[month_list.length - 1]
 
     loadCheckList: ()->
         @tableData = @Leave.$collection().$fetch()
