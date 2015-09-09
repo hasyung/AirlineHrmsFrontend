@@ -123,6 +123,9 @@ resources.factory 'FlowReply', (restmod) ->
 
 resources.factory 'Leave', (restmod, $injector) ->
     restmod.model("/workflows/leave").mix 'nbRestApi', 'Workflow', {
+        receptor: {belongsTo: 'Employee', key: 'receptor_id'}
+        sponsor: {belongsTo: 'Employee', key: 'sponsor_id'}
+
         $config:
             jsonRootMany: 'workflows'
             jsonRootSingle: 'workflow'
@@ -131,6 +134,9 @@ resources.factory 'Leave', (restmod, $injector) ->
             Scope:
                 records: ->
                     restmod.model("/workflows/leave/record").mix(
+                        receptor: {belongsTo: 'Employee', key: 'receptor_id'}
+                        sponsor: {belongsTo: 'Employee', key: 'sponsor_id'}
+
                         $config:
                             jsonRootMany:'workflows'
                             jsonRootSingle: 'workflow'
