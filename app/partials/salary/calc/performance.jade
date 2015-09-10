@@ -19,11 +19,10 @@
                 h2 绩效薪酬
 
                 span(flex)
-                span
-                    md-button.md-raised.md-primary(
-                        nb-dialog
-                        template-url="partials/salary/performance/performance_upload.html"
-                        ) 导入文化传媒绩效金额
+                span(flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                    flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                    flow-file-success="upload_start=false;ctrl.upload_performance('小时费合计表', ctrl.parseJSON($message).id);")
+                    md-button.md-raised.md-primary(flex flow-btn type="button") 导入文化传媒绩效金额
                 span
                     md-menu(ng-init="selectedRows=[]")
                         md-button.md-primary.md-raised(

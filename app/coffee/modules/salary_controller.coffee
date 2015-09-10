@@ -603,6 +603,16 @@ class SalaryPerformanceController extends SalaryBaseController
             {displayName: '备注', name: 'remark'}
         ])
 
+    upload_performance: (attachment_id)->
+        self = @
+        params = {}
+
+        @http.post("/api/performance_salaries/import", params).success (data, status) ->
+            if data.error_count > 0
+                @toaster.pop('error', '提示', '导入失败')
+            else
+                @toaster.pop('error', '提示', '导入成功')
+
 
 # 小时费
 class SalaryHoursFeeController extends SalaryBaseController
@@ -660,6 +670,16 @@ class SalaryAllowanceController extends SalaryBaseController
             {displayName: '备注', name: 'remark'}
         ])
 
+    upload_allowance: (data_type, attachment_id)->
+        self = @
+        params = {data_type: data_type}
+
+        @http.post("/api/allowances/import", params).success (data, status) ->
+            if data.error_count > 0
+                @toaster.pop('error', '提示', '导入失败')
+            else
+                @toaster.pop('error', '提示', '导入成功')
+
 
 class SalaryLandAllowanceController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'LandAllowance', 'toaster']
@@ -693,6 +713,16 @@ class SalaryRewardController extends SalaryBaseController
             {displayName: '奖1', name: 'bonus_1', enableCellEdit: false}
             {displayName: '奖2', name: 'bonus_2', enableCellEdit: false}
         ])
+
+    upload_reward: (data_type, attachment_id)->
+        self = @
+        params = {data_type: data_type}
+
+        @http.post("/api/rewards/import", params).success (data, status) ->
+            if data.error_count > 0
+                @toaster.pop('error', '提示', '导入失败')
+            else
+                @toaster.pop('error', '提示', '导入成功')
 
 
 class SalaryOverviewController extends SalaryBaseController
