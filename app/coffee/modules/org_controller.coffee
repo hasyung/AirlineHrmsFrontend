@@ -182,12 +182,25 @@ class OrgsCtrl extends nb.Controller
         promise = @http.get('/api/departments/change_logs')
         promise.then onSuccess
 
+    initVisble: (changeLogs) ->
+        _.flatten(_.pluck(changeLogs, 'logs')).forEach (log) ->
+            log.visible = true
+
     pickLog: (date, changeLogs) ->
         sortedLogs = _.flatten(_.pluck(changeLogs, 'logs'))
         selectedMoment =  moment(date)
 
+        _.flatten(_.pluck(changeLogs, 'logs')).forEach (log) ->
+            log.visible = false
+
         log = _.find sortedLogs, (log) ->
             return selectedMoment.isAfter(log.created_at)
+
+        visibleLogs = _.filter sortedLogs, (log) ->
+            return selectedMoment.isAfter(log.created_at)
+
+        _.forEach visibleLogs, (log)->
+            log.visible = true
 
         @expandLog(log) if log
 
