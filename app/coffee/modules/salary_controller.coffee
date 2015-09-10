@@ -605,7 +605,7 @@ class SalaryPerformanceController extends SalaryBaseController
 
     upload_performance: (attachment_id)->
         self = @
-        params = {}
+        params = {attachment_id: attachment_id}
 
         @http.post("/api/performance_salaries/import", params).success (data, status) ->
             if data.error_count > 0
@@ -642,12 +642,10 @@ class SalaryHoursFeeController extends SalaryBaseController
     exeCalc: ()->
         super({hours_fee_category: @hours_fee_category})
 
-    parseJSON: (data) ->
-        angular.toJson(data)
-
-    upload_hours_fee: (data_type, attachment_id)->
+    upload_hours_fee: (type, attachment_id)->
         self = @
-        params = {data_type: data_type}
+        params = {type: type, attachment_id: attachment_id}
+        @show_error_names = false
 
         @http.post("/api/hours_fees/import", params).success (data, status) ->
             if data.error_count > 0
@@ -673,9 +671,9 @@ class SalaryAllowanceController extends SalaryBaseController
             {displayName: '备注', name: 'remark'}
         ])
 
-    upload_allowance: (data_type, attachment_id)->
+    upload_allowance: (type, attachment_id)->
         self = @
-        params = {data_type: data_type}
+        params = {type: type, attachment_id: attachment_id}
 
         @http.post("/api/allowances/import", params).success (data, status) ->
             if data.error_count > 0
@@ -717,9 +715,9 @@ class SalaryRewardController extends SalaryBaseController
             {displayName: '奖2', name: 'bonus_2', enableCellEdit: false}
         ])
 
-    upload_reward: (data_type, attachment_id)->
+    upload_reward: (type, attachment_id)->
         self = @
-        params = {data_type: data_type}
+        params = {type: type, attachment_id: attachment_id}
 
         @http.post("/api/rewards/import", params).success (data, status) ->
             if data.error_count > 0

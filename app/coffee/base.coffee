@@ -32,6 +32,9 @@ class Controller extends Base
         months = _.map months, (item) ->
             item = "0" + item if item < 10
 
+    parseJSON: (data) ->
+        angular.fromJson(data)
+
 
 class FilterController extends Controller
     onConditionInValid: ($Evt, invalid) ->

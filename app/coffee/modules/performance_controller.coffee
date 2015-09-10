@@ -262,7 +262,5 @@ class PerformanceAllege extends nb.Controller
         rows = @scope.$gridApi.selection.getSelectedGridRows()
         selected = if rows.length >= 1 then rows[0].entity else null
 
-    parseJSON: (json)-> JSON.parse json
-
 
 app.config(Route)

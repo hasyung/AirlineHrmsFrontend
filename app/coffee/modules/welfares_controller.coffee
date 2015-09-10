@@ -270,9 +270,6 @@ class SocialComputeController extends nb.Controller
             self.Evt.$send("social:calc:error", erorr_msg) if erorr_msg
             self.loadRecords()
 
-    parseJSON: (data) ->
-        angular.fromJson(data)
-
     upload_salary: (param)->
         self = @
         calc_month = param.year + '-' + param.month
