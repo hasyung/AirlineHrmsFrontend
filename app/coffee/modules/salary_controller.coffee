@@ -644,7 +644,7 @@ class SalaryHoursFeeController extends SalaryBaseController
 
     upload_hours_fee: (type, attachment_id)->
         self = @
-        params = {type: type, attachment_id: attachment_id}
+        params = {type: type, attachment_id: attachment_id, month: @currentCalcTime()}
         @show_error_names = false
 
         @http.post("/api/hours_fees/import", params).success (data, status) ->
