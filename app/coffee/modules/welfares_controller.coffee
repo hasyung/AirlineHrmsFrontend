@@ -452,14 +452,6 @@ class SocialChangeProcessController extends nb.EditableResourceCtrl
             change.socialSetup
 
 
-app.controller 'welfareCtrl', WelfareController
-app.controller 'welfarePersonalCtrl', WelfarePersonalController
-app.controller 'socialComputeCtrl', SocialComputeController
-app.controller 'socialHistoryCtrl', SocialHistoryController
-app.controller 'socialChangesCtrl', SocialChangesController
-app.controller 'socialChangesProcessCtrl', SocialChangeProcessController
-
-
 class AnnuityPersonalController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'AnnuitySetup', '$q', '$state']
 
@@ -882,6 +874,14 @@ class AnnuityChangesController
         tableState = tableState || {}
         tableState['per_page'] = @scope.gridApi.grid.options.paginationPageSize
         @annuityChanges.$refresh(tableState)
+
+
+app.controller 'welfareCtrl', WelfareController
+app.controller 'welfarePersonalCtrl', WelfarePersonalController
+app.controller 'socialComputeCtrl', SocialComputeController
+app.controller 'socialHistoryCtrl', SocialHistoryController
+app.controller 'socialChangesCtrl', SocialChangesController
+app.controller 'socialChangesProcessCtrl', SocialChangeProcessController
 
 
 app.controller 'annuityPersonalCtrl', AnnuityPersonalController

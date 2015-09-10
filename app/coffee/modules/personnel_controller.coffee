@@ -474,9 +474,9 @@ class MoveEmployeesCtrl extends nb.Controller
 
         @http.post('/api/special_states/temporarily_transfer', moveEmployee).then (data)->
             self.moveEmployees.$refresh()
-            msg = data.$response.data.messages
+            msg = data.messages
 
-            if data.$response.status == 200
+            if data.status == 200
                 self.Evt.$send("special_state:save:success", msg || "创建成功")
             else
                 $Evt.$send('special_state:save:error', msg || "创建失败")

@@ -608,7 +608,7 @@ class SalaryPerformanceController extends SalaryBaseController
 class SalaryHoursFeeController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'HoursFee', 'toaster']
 
-    constructor: ($http, $scope, $q, @Evt, @Employee, @HoursFee, @toaster) ->
+    constructor: (@http, $scope, $q, @Evt, @Employee, @HoursFee, @toaster) ->
         super(@HoursFee, $scope, $q)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
@@ -631,6 +631,19 @@ class SalaryHoursFeeController extends SalaryBaseController
 
     exeCalc: ()->
         super({hours_fee_category: @hours_fee_category})
+
+    parseJSON: (data) ->
+        angular.toJson(data)
+
+    upload_hours_fee: (data_type, attachment_id)->
+        self = @
+        params = {data_type: data_type}
+
+        @http.post("/api/hours_fees/import", params).success (data, status) ->
+            if data.error_count > 0
+                @toaster.pop('error', '提示', '导入失败')
+            else
+                @toaster.pop('error', '提示', '导入成功')
 
 
 class SalaryAllowanceController extends SalaryBaseController
