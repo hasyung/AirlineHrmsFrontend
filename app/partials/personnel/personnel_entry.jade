@@ -135,10 +135,16 @@
                         div(layout)
                             md-input-container(flex)
                                 label 到岗时间
-                                input(ng-model="newEmp.joinScalDate" bs-datepicker required)
+                                input(ng-model="newEmp.joinScalDate" bs-datepicker)
                             md-input-container(flex)
                                 label 参工时间
                                 input(ng-model="newEmp.startWorkDate" bs-datepicker)
+
+                        div(layout)
+                            md-input-container(flex)
+                                label 实习时间
+                                input(ng-model="newEmp.practiceDate" bs-datepicker)
+                            md-input-container(flex)
             .form-bottom-group(layout)
                 span(flex)
                 md-button.md-raised.white(type="button" ng-click="panel.close()") 取消

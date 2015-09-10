@@ -39,19 +39,21 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
             md-input-container(flex)
                 label 到岗时间
                 input(ng-model="current.joinScalDate" bs-datepicker)
+            md-input-container(flex)
+                label 实习时间
+                input(ng-model="current.practiceDate" bs-datepicker)
+
+        div(layout)
             md-input-container.row-has-value(flex)
                 label 英语等级
                 md-select(ng-model="current.englishLevelId" ng-disabled="!editing")
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('english_levels')") {{item.label}}
-
-        div(layout)
             md-input-container(flex)
                 label 毕业院校
                 input(type="text", ng-model="current.school")
             md-input-container(flex)
                 label 专业
                 input(type="text" placeholder="请输入专业" ng-model="current.major")
-            md-input-container(flex)
 
         div(layout)
             md-input-container.row-has-value(flex)
