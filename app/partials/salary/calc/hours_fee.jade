@@ -32,27 +32,33 @@
                             ng-click="$mdOpenMenu($event)"
                             ng-disabled="ctrl.calcing"
                             ) 导入
-                        md-menu-content
-                            md-menu-item()
-                                a.md-button(flex
-                                    nb-dialog
-                                    template-url="partials/salary/hours_fee/fee_summary.html"
-                                ) 小时费合计表
-                            md-menu-item(ng-if="ctrl.person_category=='flyer'")
-                                a.md-button(flex
-                                    nb-dialog
-                                    template-url="partials/salary/hours_fee/hours_summary.html"
-                                ) 飞行时间汇总表
-                            md-menu-item(ng-if="ctrl.person_category=='airline' || ctrl.person_category=='air_steward'")
-                                a.md-button(
-                                    nb-dialog
-                                    template-url="partials/salary/hours_fee/up_list.html"
-                                ) 上浮名单
-                            md-menu-item(ng-if="ctrl.person_category=='airline'")
-                                a.md-button(
-                                    nb-dialog
-                                    template-url="partials/salary/hours_fee/down_list.html"
-                                ) 下靠名单
+                        md-menu-content(ng-disabled="upload_start")
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_hours_fee('小时费合计表', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 小时费合计表
+
+                            md-menu-item(
+                                ng-if="ctrl.person_category=='flyer'"
+                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_hours_fee('小时费合计表', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 飞行时间汇总表
+
+                            md-menu-item(
+                                ng-if="ctrl.person_category=='airline' || ctrl.person_category=='air_steward'"
+                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_hours_fee('小时费合计表', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 上浮名单
+
+                            md-menu-item(
+                                ng-if="ctrl.person_category=='airline'"
+                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_hours_fee('小时费合计表', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 下靠名单
                 span
                     md-button.md-raised.md-primary(
                         ng-click="ctrl.exeCalc()"
