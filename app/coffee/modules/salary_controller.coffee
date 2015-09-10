@@ -609,9 +609,9 @@ class SalaryPerformanceController extends SalaryBaseController
 
         @http.post("/api/performance_salaries/import", params).success (data, status) ->
             if data.error_count > 0
-                @toaster.pop('error', '提示', '导入失败')
+                self.toaster.pop('error', '提示', '导入失败')
             else
-                @toaster.pop('error', '提示', '导入成功')
+                self.toaster.pop('error', '提示', '导入成功')
 
 
 # 小时费
@@ -651,9 +651,12 @@ class SalaryHoursFeeController extends SalaryBaseController
 
         @http.post("/api/hours_fees/import", params).success (data, status) ->
             if data.error_count > 0
-                @toaster.pop('error', '提示', '导入失败')
+                self.show_error_names = true
+                self.error_names = data.error_names
+
+                self.toaster.pop('error', '提示', '导入失败')
             else
-                @toaster.pop('error', '提示', '导入成功')
+                self.toaster.pop('error', '提示', '导入成功')
 
 
 class SalaryAllowanceController extends SalaryBaseController
@@ -676,9 +679,9 @@ class SalaryAllowanceController extends SalaryBaseController
 
         @http.post("/api/allowances/import", params).success (data, status) ->
             if data.error_count > 0
-                @toaster.pop('error', '提示', '导入失败')
+                self.toaster.pop('error', '提示', '导入失败')
             else
-                @toaster.pop('error', '提示', '导入成功')
+                self.toaster.pop('error', '提示', '导入成功')
 
 
 class SalaryLandAllowanceController extends SalaryBaseController
@@ -720,9 +723,9 @@ class SalaryRewardController extends SalaryBaseController
 
         @http.post("/api/rewards/import", params).success (data, status) ->
             if data.error_count > 0
-                @toaster.pop('error', '提示', '导入失败')
+                self.toaster.pop('error', '提示', '导入失败')
             else
-                @toaster.pop('error', '提示', '导入成功')
+                self.toaster.pop('error', '提示', '导入成功')
 
 
 class SalaryOverviewController extends SalaryBaseController
