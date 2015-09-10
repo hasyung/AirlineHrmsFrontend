@@ -25,41 +25,48 @@
                             ng-click="$mdOpenMenu($event)"
                             ) 导入
                         md-menu-content
-                            md-menu-item()
-                                a.md-button(flex
-                                    nb-dialog
-                                    template-url="partials/salary/clac/reward_upload.html"
-                                ) 航班正常奖
-                            md-menu-item()
-                                a.md-button(flex
-                                    nb-dialog
-                                    template-url="partials/salary/calc/reward_upload.html"
-                                ) 服务质量奖
-                            md-menu-item()
-                                a.md-button(flex
-                                    nb-dialog
-                                    template-url="partials/salary/calc/reward_upload.html"
-                                ) 航空安全奖
-                            md-menu-item()
-                                a.md-button(flex
-                                    nb-dialog
-                                    template-url="partials/salary/calc/reward_upload.html"
-                                ) 社会治安综合治理奖
-                            md-menu-item()
-                                a.md-button(flex
-                                    nb-dialog
-                                    template-url="partials/salary/calc/reward_upload.html"
-                                ) 收支目标考核奖
-                            md-menu-item()
-                                a.md-button(flex
-                                    nb-dialog
-                                    template-url="partials/salary/calc/reward_upload.html"
-                                ) 奖1
-                            md-menu-item()
-                                a.md-button(flex
-                                    nb-dialog
-                                    template-url="partials/salary/calc/reward_upload.html"
-                                ) 奖2
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_reward('航班正常奖', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 航班正常奖
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_reward('服务质量奖', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 服务质量奖
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_reward('航空安全奖', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 航空安全奖
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_reward('社会治安综合治理奖', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 社会治安综合治理奖
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_reward('收支目标考核奖', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 收支目标考核奖
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_reward('奖1', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 奖1
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_reward('奖2', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 奖2
+
                 span
                     md-menu(ng-init="selectedRows=[]")
                         md-button.md-primary.md-raised(
