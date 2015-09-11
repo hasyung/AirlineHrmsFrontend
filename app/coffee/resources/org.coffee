@@ -75,6 +75,9 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS, $http) ->
 
         staff_org = _.remove treeData, (child) -> child.is_stick == true
         parent.staff = staff_org.sort (a, b) -> a.sort_no - b.sort_no
+
+        committee_org = _.remove treeData, (child) -> child.committee == true
+        parent.committee = committee_org.sort (a, b) -> a.sort_no - b.sort_no
         return unflatten(treeData, DEPTH, parent)
 
 
