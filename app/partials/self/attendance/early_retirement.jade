@@ -12,6 +12,7 @@ md-dialog
         div.item
             span 当前岗位
             span {{}}
+
     div.relation-data(flow-relation-data ng-model="relation_data")
         div 学位： {{::currentUser.name}}
         | 学位：
@@ -22,9 +23,7 @@ md-dialog
         | 最近6个月绩效：
 
 
-
     form(name="adjust_form" ng-submit="req.relation_data = relation_data;createFlow(req,'Flow::EarlyRetirement')" ng-init="params = {};req = {}")
-
         md-input-container
             label 申请理由
             textarea(type="text" ng-model="req.desc" container="body")
