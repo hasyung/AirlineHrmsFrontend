@@ -81,6 +81,7 @@ class OrgsCtrl extends nb.Controller
     buildTree: (org = @treeRootOrg, depth = 9)->
         depth = 1 if org.xdepth == 1 #如果是顶级节点则只显示一级
         @tree = @orgs.treeful(org, depth)
+        console.log @tree
 
     refreshTree: () ->
         return unless @treeRootOrg
