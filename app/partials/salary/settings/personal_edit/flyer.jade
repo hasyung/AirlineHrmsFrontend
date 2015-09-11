@@ -39,10 +39,11 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
                 md-option(value="copilot_1") 副驾驶1
                 md-option(value="copilot_special") 副驾驶特别
                 md-option(value="leader") 机长
-                md-option(value="leader_B") 机长B
-                md-option(value="leader_A") 机长A
+                md-option(value="leader_B") 责任机长B
+                md-option(value="leader_A") 责任机长A
                 md-option(value="techer_B") 教员B
                 md-option(value="techer_A") 教员A
+                md-option(value="student") 飞行学员
         md-input-container(flex)
             label 标准
             input(type="number" min="0" max="100000" ng-model="current.flyHourMoney" readonly)
