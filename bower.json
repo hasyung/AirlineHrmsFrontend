@@ -47,6 +47,7 @@
     "bootstrap-datepicker": "~1.4.0",
     "ngInfiniteScroll": "~1.2.0",
     "ng-echarts": "https://github.com/boostbob/ng-echarts.git",
-    "echarts": "~2.2.7"
+    "echarts": "~2.2.7",
+    "angular-ui-calendar": "latest"
   }
 }
