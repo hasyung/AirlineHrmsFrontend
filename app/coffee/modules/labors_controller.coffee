@@ -709,7 +709,7 @@ class ContractCtrl extends nb.Controller
             {displayName: '用工性质', name: 'applyType'}
             {displayName: '变更标志', name: 'changeFlag'}
             {displayName: '合同开始时间', name: 'startDate'}
-            {displayName: '合同结束时间', name: 'endDate'}
+            {displayName: '合同结束时间', name: 'endDateStr'}
             {displayName: '备注', name: 'notes'}
             {
                 displayName: '详细',
@@ -801,6 +801,11 @@ class ContractCtrl extends nb.Controller
 
     newContract: (contract)->
         self = @
+
+        unless contract.is_unfix
+            if !contract.end_date || contract.end_date <= contract.start_date
+                @toaster.pop('error', '提示', '非无固定合同结束时间不能小于等于开始时间')
+
         @contracts.$build(contract).$save().$then ()->
             self.contracts.$refresh()
 
