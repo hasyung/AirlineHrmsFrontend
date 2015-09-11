@@ -3,7 +3,7 @@ div(style="height: 100%; background-color: #f5f5f5;")
         .md-toolbar-tools
             span 新建合同
 
-    .personnel-content.personnel-control(ng-init="contract = {}; ctrl.loadEmp = {}")
+    .personnel-content.personnel-control(ng-init="contract = {is_unfix: true}; ctrl.loadEmp = {}")
         section.personnel-info-section
             md-content.nb-card-container(layout="column" md-theme="hrms")
                 form(ng-submit="ctrl.newContract(contract);panel.close();" name="newContractForm")
@@ -50,14 +50,18 @@ div(style="height: 100%; background-color: #f5f5f5;")
                                         md-option(value="续签") 续签
                                         md-option(value="转制") 转制
                             div(layout)
+                                md-checkbox(class="md-primary" ng-model="contract.is_unfix") 签署无固定期限合同
+                                md-input-container(flex)
+
+                            div(layout)
                                 md-input-container(flex)
                                     label 开始日期
                                     input(
                                         bs-datepicker
                                         ng-model="contract.startDate"
-                                        required
-                                        )
-                                md-input-container(flex)
+                                        required)
+
+                                md-input-container(flex ng-if="!contract.is_unfix")
                                     label 结束日期
                                     input.has-placeholder(
                                         bs-datepicker
@@ -65,10 +69,9 @@ div(style="height: 100%; background-color: #f5f5f5;")
                                         name="endDate"
                                         ng-change="contract.dueTime=null"
                                         )
-                                    div.input-placeholder 无固定期限合同请勿填写此项
+                                    //- div.input-placeholder 无固定期限合同请勿填写此项
 
-                            div(layout)
-                                md-input-container(flex md-no-float)
+                                md-input-container(flex md-no-float ng-if="!contract.is_unfix")
                                     label 合同时长/年
                                     input(
                                         type="text"
