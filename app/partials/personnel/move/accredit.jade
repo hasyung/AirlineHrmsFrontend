@@ -37,7 +37,7 @@ md-dialog.employee_move
                             label 派驻开始时间
                             input(ng-model="accreditEmployee.special_date_from" name="startDate" bs-datepicker default-today required)
                         md-input-container(flex)
-                            label 派驻结束时间
+                            label 派驻结束时间(大于开始时间)
                             input(ng-model="accreditEmployee.special_date_to" name="endDate" bs-datepicker required)
                     div(layout)
                         md-input-container(flex)
@@ -46,4 +46,4 @@ md-dialog.employee_move
 
             .md-actions
                 md-button(type="button" ng-click="cancel(accreditEmployee, $event, newAccreditForm);dialog.close()") 取 消
-                md-button.md-primary.md-raised(type="submit") 确 定
+                md-button.md-primary.md-raised(type="submit" ng-disabled="newAccreditForm.$invalid || newAccreditForm.endDate.$modelValue <= newAccreditForm.startDate.$modelValue") 确 定
