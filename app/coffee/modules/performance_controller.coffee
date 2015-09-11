@@ -100,8 +100,9 @@ class PerformanceRecord extends nb.Controller
         @performances.$refresh(tableState)
 
     getSelected: () ->
-        rows = @scope.$gridApi.selection.getSelectedGridRows()
-        selected = if rows.length >= 1 then rows[0].entity else null
+        if @scope.$gridApi.selection
+            rows = @scope.$gridApi.selection.getSelectedGridRows()
+            selected = if rows.length >= 1 then rows[0].entity else null
 
     getDateOptions: (type)->
         date = new Date()

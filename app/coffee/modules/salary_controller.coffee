@@ -498,9 +498,9 @@ class SalaryExchangeController
 
 
 class SalaryBaseController extends nb.Controller
-    constructor: (@Model, @scope, @q) ->
+    constructor: (@Model, @scope, @q, options = null) ->
         @loadDateTime()
-        @loadInitialData()
+        @loadInitialData(options)
 
     initialize: (gridApi) ->
         saveRow = (rowEntity) ->
@@ -528,8 +528,10 @@ class SalaryBaseController extends nb.Controller
         @currentYear = _.last(@year_list)
         @currentMonth = _.last(@month_list)
 
-    loadInitialData: () ->
-        @records = @Model.$collection().$fetch({month: @currentCalcTime()})
+    loadInitialData: (options) ->
+        args = {month: @currentCalcTime()}
+        angular.extend(args, options) if angular.isDefined(options)
+        @records = @Model.$collection(args).$fetch()
 
     search: (tableState) ->
         tableState = {} unless tableState
@@ -549,7 +551,7 @@ class SalaryBaseController extends nb.Controller
 
     loadRecords: (options = null) ->
         args = {month: @currentCalcTime()}
-        angular.extend(args) if angular.isDefined(options)
+        angular.extend(args, options) if angular.isDefined(options)
         @records.$refresh(args)
 
     # 强制计算
@@ -619,7 +621,8 @@ class SalaryHoursFeeController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'HoursFee', 'toaster']
 
     constructor: (@http, $scope, $q, @Evt, @Employee, @HoursFee, @toaster) ->
-        super(@HoursFee, $scope, $q)
+        @hours_fee_category = '飞行员'
+        super(@HoursFee, $scope, $q, {hours_fee_category: @hours_fee_category})
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
@@ -630,8 +633,6 @@ class SalaryHoursFeeController extends SalaryBaseController
             {displayName: '补扣发', name: 'addGarnishee'}
             {displayName: '备注', name: 'remark'}
         ])
-
-        @hours_fee_category = '飞行员'
 
     search: () ->
         super({hours_fee_category: @hours_fee_category})
