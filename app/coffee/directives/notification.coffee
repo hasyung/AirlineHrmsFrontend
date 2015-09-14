@@ -40,8 +40,6 @@ class NotificationCtrl
         ctrl.msg_unread_count = initializedMessage.user_message.unread_count || 0
         initWorkflows = initializedMessage.workflows || []
 
-        console.error initWorkflows
-
         ctrl.workflows = workflows = initWorkflows.reduce(
             (res, value) ->
                 res[value.type] = value
@@ -72,5 +70,6 @@ class NotificationCtrl
     markToReaded: ->
         @notifications.markToReaded()
         @msg_unread_count = 0
+
 
 app.controller "notificationCtrl", NotificationCtrl
