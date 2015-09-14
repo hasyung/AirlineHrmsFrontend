@@ -808,6 +808,10 @@
 
     .nb-card-content {
         padding: 0 20px;
+
+        .punishItem:last-child md-divider {
+            display: none;
+        }
     }
 
     .toolbar--welfare {
