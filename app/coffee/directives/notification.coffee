@@ -64,6 +64,7 @@ class NotificationCtrl
         @notifications = Notification.$collection().$fetch()
 
     redirectTo: (state) ->
+        @rootScope.show_main = true
         @state.go(state)
 
     markToReaded: ->

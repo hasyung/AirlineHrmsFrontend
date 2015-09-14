@@ -6,7 +6,7 @@ md-toolbar.top-menu-bar.md-warn(md-theme="hrms")
         span(flex)
         span
             div.top-btn-wrap
-                md-button(ng-click="rootCtrl.show_main=false")
+                md-button(ng-click="rootCtrl.backToHome()")
                     md-icon(md-svg-icon="/images/svg/home.svg")
         span
             div.top-notification.top-btn-wrap(notification ng-class="{'open': isOpen}")
