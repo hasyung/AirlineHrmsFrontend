@@ -65,6 +65,7 @@ class NotificationCtrl
 
     redirectTo: (state) ->
         @rootScope.show_main = true
+        @rootScope.selectPending = true
         @state.go(state)
 
     markToReaded: ->

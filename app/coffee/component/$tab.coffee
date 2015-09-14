@@ -2,24 +2,39 @@
 com = angular.module('nb.component')
 
 class TabsetCtrl
-    @.$inject = ['$scope']
+    @.$inject = ['$scope', '$rootScope']
 
-    constructor: (scope) ->
+    constructor: (@scope, @rootScope) ->
         self = @
-        @tabs = scope.tabs = []
+
+        @tabs = @scope.tabs = []
         @destroyed = undefined
 
-        scope.$on '$destroy', -> self.destroyed
+        @scope.$on '$destroy', -> self.destroyed
+
+        @rootScope.$watch 'selectPending', (newVal, oldVal) ->
+            self.selectPendingTab() if newVal
 
     select: (selectedTab) ->
         angular.forEach @tabs, (tab) ->
             if tab.active && tab != selectedTab
                 tab.active = false
                 tab.onDeselect()
+
         selectedTab.active = true
         selectedTab.onSelect()
 
+    # 选择待处理的tab标签页
+    selectPendingTab: () ->
+        self = @
+
+        angular.forEach @tabs, (tab) ->
+            if tab.pending
+                self.rootScope.selectPending = false
+                self.select(tab)
+
     addTab: (tab) ->
+        # 该tab是个scope类型的数据结构
         @tabs.push(tab)
 
         if @tabs.length == 1
@@ -33,6 +48,7 @@ class TabsetCtrl
         if tab.active && @tabs.length > 1 && @destroyed
             newActiveIndex = index = if @tabs.length - 1 then index - 1 else index + 1
             @select(@tabs[newActiveIndex])
+
         @tabs.splice(index, 1)
 
 
@@ -61,10 +77,12 @@ tabDirective = ($parse) ->
         transclude: true
         scope: {
             active: '=?'
+            pending: '=?'
             heading: '@'
             onSelect: '&select'
             onDeselect: '&deselect'
         }
+
         controller: ->
         compile: (elem, attrs, transclude) ->
             postlink = (scope, elem, attrs, tabsetCtrl) ->
