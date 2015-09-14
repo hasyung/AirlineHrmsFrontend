@@ -242,12 +242,15 @@ conditionInputContainer = ($enum) ->
 
         month_list = []
         date = new Date()
+
         angular.forEach [2015..date.getFullYear()], (year) ->
             months = [1..12]
             months = [1..date.getMonth() + 1] if year = date.getFullYear()
+
             angular.forEach months, (month)->
                 month = "0" + month if month < 10
                 month_list.push(year + "-" + month)
+
         scope.month_list = month_list
 
         ctrl.initialCondition(scope.condition.selectedConstraint, scope, elem, scope.condition.initialValue)
@@ -281,7 +284,7 @@ NbFilterDirective = ["$nbEvent", "$enum", ($Evt, $enum)->
 
             <form ng-submit="search(filter.exportQueryParams())">
                 <div ng-form="conditionForm" class="search-row" ng-repeat="condition in filter.conditions">
-                    <md-button type="button" class="md-icon-button" ng-click="filter.removeCondition(condition)">
+                    <md-button type="button" class="md-icon-button" ng-click="filter.removeCondition(condition)" ng-disabled=""="filter.conditions.length <= 1">
                         <md-icon md-svg-icon="../../images/svg/close.svg"></md-icon>
                     </md-button>
                     <md-select ng-model="condition.selectedConstraint">
