@@ -13,10 +13,12 @@ table.table.table-bordered.setting-table
         div(ng-switch="setting[column]['edit_mode']")
           //- 判断编辑类型
           div(ng-switch-when="text")
-            input(ng-if="setting[column]['format_value']" type="text" ng-model="setting[column]['format_value']")
+            input(ng-if="ctrl.editing || setting[column]['format_value']" type="text" ng-model="setting[column]['format_value']" required)
+
           div(ng-switch-when="select")
             md-select(ng-model="setting[column]['format_value']")
               md-option(ng-repeat="item in setting[column]['edit_select_array']" ng-value="item") {{item}}
+
           div(ng-switch-when="dialog")
             a(href="javascript:void(0);" nb-dialog template-url="partials/salary/settings/dialogs/{{::ctrl.current_category}}.html" locals="{current: setting[column], grade: setting.grade}") 设置
 
