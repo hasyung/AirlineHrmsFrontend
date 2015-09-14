@@ -29,9 +29,9 @@ angular.module 'nb.directives'
 
 
 class NotificationCtrl
-    @.$inject = ['$scope', '$state', 'WebsocketClient', '$rootScope', 'Notification', 'toaster', 'USER_MESSAGE']
+    @.$inject = ['$scope', '$state', 'WebsocketClient', '$rootScope', 'Notification', 'toaster', 'USER_MESSAGE', '$timeout']
 
-    constructor: (scope, @state, WebsocketClient, @rootScope, Notification, toaster, initializedMessage) ->
+    constructor: (scope, @state, WebsocketClient, @rootScope, Notification, toaster, initializedMessage, @timeout) ->
         computeTotalUnreadCount = (res, value) ->
             return res + value.count || value.count || 0
 
@@ -64,9 +64,15 @@ class NotificationCtrl
         @notifications = Notification.$collection().$fetch()
 
     redirectTo: (state) ->
-        @rootScope.show_main = true
-        @rootScope.selectPending = true
+        self = @
+
+        # 切换状态
         @state.go(state)
+
+        @timeout ()->
+            self.rootScope.show_main = true
+            self.rootScope.selectPending = true
+        , 500
 
     markToReaded: ->
         @notifications.markToReaded()

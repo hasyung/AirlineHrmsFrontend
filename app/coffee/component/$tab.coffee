@@ -29,6 +29,7 @@ class TabsetCtrl
         self = @
 
         angular.forEach @tabs, (tab) ->
+            # 如果是待处理类型的tab标签
             if tab.pending
                 self.rootScope.selectPending = false
                 self.select(tab)
