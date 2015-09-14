@@ -738,6 +738,7 @@ class SalaryOverviewController extends SalaryBaseController
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
             {displayName: '基础工资', name: 'basic', enableCellEdit: false}
             {displayName: '绩效工资', name: 'performance', enableCellEdit: false}
+            {displayName: '小时费', name: 'hours_fee', enableCellEdit: false}
             {displayName: '津贴', name: 'subsidy', enableCellEdit: false}
             {displayName: '驻站津贴', name: 'land_subsidy', enableCellEdit: false}
             {displayName: '奖励', name: 'reward', enableCellEdit: false}

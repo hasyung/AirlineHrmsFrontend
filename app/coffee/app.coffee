@@ -53,12 +53,14 @@ App.value 'USER_META', metadata.user || {}
 App.constant 'VACATIONS', metadata.vacation_summary || {}
 App.constant 'DEPARTMENTS', dep_info.departments || []
 App.constant 'nbConstants', metadata.resources || []
-App.constant 'PUSH_SERVER_CONFIG', metadata.push_server || {host: "192.168.6.99", port: 9927}
+
+# 服务器必须提供推送配置信息
+App.constant 'PUSH_SERVER_CONFIG', metadata.push_server
+
 App.constant 'USER_MESSAGE', metadata.messages || {}
 App.constant 'CURRENT_ROLES', metadata.roles || {}
 App.constant 'ROLES_MENU_CONFIG', metadata.roles_menu_config || {}
 App.value 'SALARY_SETTING', metadata.salary_setting || {}
-
 
 appConf = ($provide, ngDialogProvider) ->
     # 事件广播始终锁定在 rootScope 上， 提高性能

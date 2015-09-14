@@ -8,13 +8,6 @@ SUBSCRIBE_EVENT = "connector.entryHandler.enter"
 SEND_MSG_EVENT = "message.messageHandler.send"
 
 
-CONNECTION_CONFIG = {
-    host: "192.168.6.99"
-    port: "9927"
-    log: true
-}
-
-
 MESSAGE_KEYS = ['user_message', 'workflow_step_action']
 
 
