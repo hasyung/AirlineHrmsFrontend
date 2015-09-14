@@ -284,7 +284,7 @@ NbFilterDirective = ["$nbEvent", "$enum", ($Evt, $enum)->
 
             <form ng-submit="search(filter.exportQueryParams())">
                 <div ng-form="conditionForm" class="search-row" ng-repeat="condition in filter.conditions">
-                    <md-button type="button" class="md-icon-button" ng-click="filter.removeCondition(condition)" ng-disabled=""="filter.conditions.length <= 1">
+                    <md-button type="button" class="md-icon-button" ng-click="filter.removeCondition(condition)" ng-disabled="filter.conditions.length <= 1">
                         <md-icon md-svg-icon="../../images/svg/close.svg"></md-icon>
                     </md-button>
                     <md-select ng-model="condition.selectedConstraint">
