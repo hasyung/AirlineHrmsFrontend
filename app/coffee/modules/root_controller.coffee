@@ -12,7 +12,6 @@ class RootController extends nb.Controller
         @rootScope.$watch 'show_main', (newVal, oldVal) ->
             self.show_main = newVal
 
-
     backToHome: () ->
       @show_main = false
       @rootScope.show_main = false
