@@ -257,8 +257,19 @@ class ProfileCtrl extends nb.Controller
         performance.allege(request)
 
     loadAttendance: ()->
-        colors = ["#006600", "#ffff66", "#ff0033", "#9933ff", "#0066ff", "#ff6633", "#33ff00"]
+        self = @
+
         @eventSources = []
+        keys = ["leaves", "late_or_early_leaves", "absences", "lands", "off_post_trains", "filigt_groundeds", "flight_ground_works"]
+        colors = {
+            "leaves": "#006600"
+            "late_or_early_leaves": "#ffff66"
+            "absences": "#ff0033"
+            "lands": "#9933ff"
+            "off_post_trains": "#0066ff"
+            "filigt_groundeds": "#ff6633"
+            "flight_ground_works": "#33ff00"
+        }
 
         @uiConfig = {
           calendar: {
@@ -287,12 +298,20 @@ class ProfileCtrl extends nb.Controller
         }
 
         @http.get('/api/me/attendance_records/').success (data)->
-            angular.forEach data.attendance_records, (events, key)->
-                # {events: [{...}, {...}]}
-                console.error key
-                console.error events
-                source = {color: colors[key], textColor: "#000", events}
-                @eventSources.push(source)
+            angular.forEach keys, (key)->
+                events = data.attendance_records[key]
+
+                events = angular.forEach events, (item)->
+                    item["start"] = new Date(item["start"]) if item["start"]
+                    item["end"] = new Date(item["end"]) if item["end"]
+
+                source = {
+                    color: colors[key]
+                    textColor: '#000'
+                    events: events
+                }
+
+                self.eventSources.push(source)
 
 
 class MyRequestCtrl extends nb.Controller
