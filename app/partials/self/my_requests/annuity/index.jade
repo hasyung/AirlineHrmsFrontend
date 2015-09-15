@@ -11,8 +11,16 @@ block tools
     span(flex)
     span
         md-button.md-primary.md-raised(
+            ng-if="ctrl.annuity_apply_status"
+            ng-disabled="true"
+            ng-click="ctrl.toggleAnnuity(true)"
+            locals="{list: ctrl.tableData}"
+        ) 你的申请处理中...
+
+    span
+        md-button.md-primary.md-raised(
             ng-if="!ctrl.annuity_status"
-            ng-disabled="ctrl.operated"
+            ng-disabled="ctrl.operated || ctrl.annuity_apply_status"
             ng-click="ctrl.toggleAnnuity(true)"
             locals="{list: ctrl.tableData}"
         ) 加入年金
@@ -20,7 +28,7 @@ block tools
     span
         md-button.md-primary.md-raised(
             ng-if="ctrl.annuity_status"
-            ng-disabled="ctrl.operated"
+            ng-disabled="ctrl.operated || ctrl.annuity_apply_status"
             ng-click="ctrl.toggleAnnuity(false)"
             locals="{list: ctrl.tableData}"
         ) 退出年金
