@@ -802,9 +802,14 @@ class ContractCtrl extends nb.Controller
     newContract: (contract)->
         self = @
 
-        unless contract.is_unfix
-            if !contract.end_date || contract.end_date <= contract.start_date
+        unless contract.isUnfix
+            if !contract.endDate
+                @toaster.pop('error', '提示', '非无固定合同结束时间必填')
+                return
+
+            if contract.endDate <= contract.startDate
                 @toaster.pop('error', '提示', '非无固定合同结束时间不能小于等于开始时间')
+                return
 
         @contracts.$build(contract).$save().$then ()->
             self.contracts.$refresh()
