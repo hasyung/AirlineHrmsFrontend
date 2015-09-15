@@ -107,9 +107,9 @@ class NbFilterCtrl extends nb.FilterController
             </md-chips>
         '''
 
-    @.$inject = ['$scope', '$element', '$attrs', '$parse', '$compile', 'SerializedFilter']
+    @.$inject = ['$scope', '$element', '$attrs', '$parse', '$compile', 'SerializedFilter', '$http','$nbEvent']
 
-    constructor: (scope, elem, attrs, $parse, @compile, SerializedFilter) ->
+    constructor: (scope, elem, attrs, $parse, @compile, SerializedFilter, @http, @Evt) ->
         options = scope.nbFilter
         @conditionCode = options.name
         defs    = options.constraintDefs
@@ -224,6 +224,15 @@ class NbFilterCtrl extends nb.FilterController
 
         promise = @filters.$create(request_data)
 
+    removeFilter: (filterId, $event) ->
+        self = @
+        $event.stopPropagation()
+
+        @http.delete('/api/search_conditions/'+filterId)
+                .success (result) ->
+                    self.filters.$refresh()
+
+
     restoreFilter: (queryParams) ->
         @.$clearAllCondition()
         self = @
@@ -277,7 +286,10 @@ NbFilterDirective = ["$nbEvent", "$enum", ($Evt, $enum)->
                     <md-select ng-model="filter.serializedFilter"
                     ng-if="filter.filters.length"
                     ng-change="filter.restoreFilter(filter.serializedFilter.parse());search(filter.serializedFilter.parse())" placeholder="请选择筛选条件">
-                        <md-option ng-value="f" ng-repeat="f in filter.filters">{{f.name}}</md-option>
+                        <md-option ng-value="f" ng-repeat="f in filter.filters">
+                            {{f.name}}
+                            <md-icon style="position: absolute; right: 10px;" ng-click="filter.removeFilter(f.id, $event)" md-svg-icon="../../images/svg/close.svg"></md-icon>
+                        </md-option>
                     </md-select>
                 </div>
             </md-toolbar>
