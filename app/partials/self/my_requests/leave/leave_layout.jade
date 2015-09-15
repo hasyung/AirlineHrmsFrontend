@@ -23,6 +23,14 @@ div.workflow.md-background(md-theme="hrms")
                         fieldset
                             block form
                                 case formType
+                                    when 0
+                                        block additional_form
+
+                                        div(layout)
+                                            md-input-container(flex)
+                                                label 日期
+                                                input(ng-model="request.start_time" ng-change="calculateTotalDays(request, '#{flowName}')" name="start_time" bs-datepicker required)
+                                            md-input-container(flex)
                                     when 1
                                         block additional_form
 
