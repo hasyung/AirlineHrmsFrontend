@@ -884,6 +884,30 @@
     }
 }
 
+.attendanceMarks {
+    @include clearfix();
+    margin: 20px 0px;
+
+    .attendanceMark {
+        float: left;
+
+        &__square {
+            background-color: #000;
+            display: inline-block;
+            height: 12px;
+            width: 12px;
+            margin: -2px 0px;
+        }
+
+        &__text {
+            color: $text-muted;
+            display: inline-block;
+            font-size: 12px;
+            margin: 0px 4px ;
+        }
+    }
+}
+
 
 
 

@@ -220,59 +220,6 @@ class ProfileCtrl extends nb.Controller
         @loadInitialData()
         @status = 'show'
 
-        date = new Date()
-        d = date.getDate()
-        m = date.getMonth()
-        y = date.getFullYear()
-
-        @events1 = {
-            color: '#f00',
-            textColor: 'yellow',
-            events: [
-                {title: 'All Day Event', start: new Date(y, m, 1)}
-                {title: 'Long Event', start: new Date(y, m, d - 5), end: new Date(y, m, d - 2)}
-                {id: 999,title: 'Repeating Event', start: new Date(y, m, d - 3, 16, 0), allDay: false}
-            ]
-        }
-
-        @events2 = {
-            color: '#f0f',
-            textColor: 'blue',
-            events: [
-                {id: 999,title: 'Repeating Event', start: new Date(y, m, d + 4, 16, 0), allDay: false}
-                {title: 'Birthday Party', start: new Date(y, m, d + 1, 19, 0), end: new Date(y, m, d + 1, 22, 30), allDay: false}
-                {title: 'Click for Google', start: new Date(y, m, 28), end: new Date(y, m, 29), url: 'http://google.com/'}
-            ]
-        }
-
-        @eventSources = [@events1, @events2]
-
-        @uiConfig = {
-          calendar: {
-            dayNames: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
-            dayNamesShort: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
-            monthNamesShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月","八月","九月","十月","十一月","十二月"]
-            monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月","八月","九月","十月","十一月","十二月"]
-
-            height: 450
-            editable: false
-
-            header: {
-              #left: 'month basicWeek basicDay agendaWeek agendaDay'
-              left: 'month basicWeek'
-              center: 'title'
-              right: 'today prev,next'
-            }
-
-            #viewRender: (view, element)->
-               #console.error("View Changed: ", view.visStart, view.visEnd, view.start, view.end)
-
-            dayClick: @dayOnClick
-            #eventDrop
-            #eventResize
-          }
-        }
-
     dayOnClick: ()->
         alert('clicked')
 
@@ -308,6 +255,44 @@ class ProfileCtrl extends nb.Controller
 
     allege: (performance, request)->
         performance.allege(request)
+
+    loadAttendance: ()->
+        colors = ["#006600", "#ffff66", "#ff0033", "#9933ff", "#0066ff", "#ff6633", "#33ff00"]
+        @eventSources = []
+
+        @uiConfig = {
+          calendar: {
+            dayNames: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
+            dayNamesShort: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
+            monthNamesShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月","八月","九月","十月","十一月","十二月"]
+            monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月","八月","九月","十月","十一月","十二月"]
+
+            height: 450
+            editable: false
+
+            header: {
+              #left: 'month basicWeek basicDay agendaWeek agendaDay'
+              left: 'month basicWeek'
+              center: 'title'
+              right: 'today prev,next'
+            }
+
+            #viewRender: (view, element)->
+               #console.error("View Changed: ", view.visStart, view.visEnd, view.start, view.end)
+
+            dayClick: @dayOnClick
+            #eventDrop
+            #eventResize
+          }
+        }
+
+        @http.get('/api/me/attendance_records/').success (data)->
+            angular.forEach data.attendance_records, (events, key)->
+                # {events: [{...}, {...}]}
+                console.error key
+                console.error events
+                source = {color: colors[key], textColor: "#000", events}
+                @eventSources.push(source)
 
 
 class MyRequestCtrl extends nb.Controller
