@@ -372,12 +372,6 @@ class MyRequestCtrl extends nb.Controller
     loadAnnuities: ()->
         self = @
 
-        @annuities = @UserAnnuity.$collection().$fetch().$asPromise().then (data) ->
-            self.annuity_status = data.$response.data.meta
-
-    toggleAnnuity: (status)->
-        self = @
-
         @columnDef = [
             {name:"employeeNo", displayName:"员工编号"}
             {name:"employeeName", displayName:"姓名"}
@@ -389,11 +383,21 @@ class MyRequestCtrl extends nb.Controller
             {name:"companyPayment", displayName:"公司部分"}
         ]
 
-        @http.get('/api/annuity_apply/apply_for_annuity', {status: status})
+        @tableData = @UserAnnuity.$collection().$fetch()
+
+        @UserAnnuity.$collection().$fetch().$asPromise().then (data) ->
+            self.annuity_status = data.$response.data.meta.annuity_status
+
+    toggleAnnuity: (status)->
+        self = @
+
+        @http.get('/api/annuity_apply/apply_for_annuity?status=' + status)
             .success (data)->
                 self.toaster.pop('success', '提示', data.messages || '申请成功')
             .error (data)->
                 self.toaster.pop('error', '提示', data.messages || '申请失败')
+
+        self.operated = true
 
 
 #分角色图表页面控制器部分
