@@ -37,6 +37,7 @@
 
             .controls__cell__outline {
                 background-size: 100% 100%;
+                border-radius: 50%;
                 height: 130px;
                 position: absolute;
                 transform: translateZ(0);
@@ -46,7 +47,8 @@
             &:hover {
                 .controls__cell__btn {
                     @include bg-gradient-t2b(#ff9600, #f8e904);
-                    border-color: transparent;
+                    border: 0;
+                    padding: 2px;
                 }
 
                 .controls__cell__outline {
