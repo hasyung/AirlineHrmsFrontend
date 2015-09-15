@@ -92,7 +92,8 @@ div.workflow.md-background(md-theme="hrms")
                             md-radio-group(ng-model="request.reviewer_id" md-theme="default")
                                 md-radio-button.md-primary(
                                     ng-repeat="reviewer in ::ctrl.reviewers track by reviewer.id"
-                                    ng-value="reviewer.id") {{ reviewer.name }} ( {{reviewer.department.name}} / {{reviewer.position.name}} )
+                                    ng-value="reviewer.id") {{ reviewer.name }}
+                                    div {{reviewer.department.name}} / {{reviewer.position.name}}
 
                     .form-bottom-group(layout)
                         span(flex)

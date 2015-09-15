@@ -195,11 +195,44 @@
 }
 
 .superior-container {
+    position: relative;
+
+    &:after {
+        background-color: #ddd;
+        content: '';
+        display: block;
+        height: 100%;
+        left: 50%;
+        margin-left: -1px;
+        position: absolute;
+        width: 1px;
+    }
+
     md-radio-button {
         float: left;
-        margin-bottom: 10px;
-        margin-right: 20px;
-        width: 266px;
+        margin-bottom: 40px;
+        width: 400px;
+
+        &:nth-child(odd) {
+            margin-right: 50px;
+        }
+
+        &:nth-last-child(-n+2) {
+            margin-bottom: 0;
+        }
+
+        .md-container {
+            vertical-align: top;
+        }
+
+        .md-label {
+            padding-top: 2px;
+
+            div {
+                color: $text-muted;
+                margin-top: 5px;
+            }
+        }
     }
 }
 
@@ -296,7 +329,7 @@
             &:hover {
                 .hd__ctrl__btn {
                     svg>* {
-                        fill: rgb(33,150,243);
+                        fill: rgb(33, 150, 243);
                     }
                 }
             }
