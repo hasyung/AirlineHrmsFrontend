@@ -22,21 +22,22 @@ md-toolbar.top-menu-bar.md-warn.md-whiteframe-z1(md-theme="hrms")
                                     span {{flow.oldest_at}}
                                 .dd-item-count {{flow.count}}
 
-        //- 当前川航的认证平台没有提供修改密码接口
-        //- span
-        //-     div.top-messages.top-btn-wrap()
-        //-         md-button(
-        //-             nb-panel
-        //-             template-url="partials/shared/notification_center.html"
-        //-             pre-close="notify.markToReaded()"
-        //-         )
-        //-             md-icon(md-svg-icon="/images/svg/email-outline.svg")
-        //-         .ms-count(ng-if="notify.msg_unread_count" ng-bind="notify.msg_unread_count")
+        span
+            div.top-messages.top-btn-wrap()
+                md-button(
+                    nb-panel
+                    template-url="partials/shared/notification_center.html"
+                    pre-close="notify.markToReaded()"
+                )
+                    md-icon(md-svg-icon="/images/svg/email-outline.svg")
+                .ms-count(ng-if="notify.msg_unread_count" ng-bind="notify.msg_unread_count")
+
         span
             ul.user-menu(ng-controller="AuthController as ctrl")
                 .nb-dropdown(user-info-dropdown)
-                    li()
-                        a(nb-dialog template-url="partials/auth/change_pwd.html") 修改密码
+                    //- 当前川航的认证平台没有提供修改密码接口
+                    //- li()
+                    //-     a(nb-dialog template-url="partials/auth/change_pwd.html") 修改密码
                     li()
                         a(ng-click="logout()") 退出
 

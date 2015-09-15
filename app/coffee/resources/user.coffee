@@ -131,6 +131,12 @@ UserPunishment = (restmod, RMUtils, $Evt)->
     }
 
 
+UserAnnuity = (restmod, RMUtils, $Evt)->
+    restmod.model('/me/annuities').mix 'nbRestApi', {
+
+    }
+
+
 resources.factory 'User', ['restmod', 'RMUtils', '$nbEvent', User]
 resources.factory 'Education', ['restmod', 'RMUtils', '$nbEvent', Education]
 resources.factory 'Experience', ['restmod', 'RMUtils', '$nbEvent', Experience]
@@ -140,3 +146,4 @@ resources.factory 'Contact', ['restmod', 'RMUtils', '$nbEvent', Contact]
 resources.factory 'UserPerformance', ['restmod', 'RMUtils', '$nbEvent', UserPerformance]
 resources.factory 'UserReward', ['restmod', 'RMUtils', '$nbEvent', UserReward]
 resources.factory 'UserPunishment', ['restmod', 'RMUtils', '$nbEvent', UserPunishment]
+resources.factory 'UserAnnuity', ['restmod', 'RMUtils', '$nbEvent', UserAnnuity]
