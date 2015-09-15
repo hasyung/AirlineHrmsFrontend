@@ -72,7 +72,7 @@ class NotificationCtrl
         @timeout ()->
             self.rootScope.show_main = true
             self.rootScope.selectPending = true
-        , 500
+        , 800
 
     markToReaded: ->
         @notifications.markToReaded()

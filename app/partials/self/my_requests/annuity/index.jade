@@ -1,0 +1,26 @@
+extends ../../../component/workflow/my_requests
+
+block vars
+    - var requestTitle = '企业年金'
+    - var requestTip = '点击加入年金或者退出年金可以提交年金申请'
+    - var girdSelection = false
+
+block tools
+    span 年金缴费记录
+
+    span(flex)
+    span
+        md-button.md-primary.md-raised(
+            ng-if="!ctrl.annuity_status"
+            ng-disabled="ctrl.operated"
+            ng-click="ctrl.toggleAnnuity(true)"
+            locals="{list: ctrl.tableData}"
+        ) 加入年金
+
+    span
+        md-button.md-primary.md-raised(
+            ng-if="ctrl.annuity_status"
+            ng-disabled="ctrl.operated"
+            ng-click="ctrl.toggleAnnuity(false)"
+            locals="{list: ctrl.tableData}"
+        ) 退出年金

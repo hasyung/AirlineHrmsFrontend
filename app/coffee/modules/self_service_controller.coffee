@@ -79,6 +79,16 @@ class Route
                     }
                 }
             }
+            .state 'my_requests.annuity', {
+                url: '/annuity'
+                views: {
+                    '@': {
+                        templateUrl: 'partials/self/my_requests/annuity/index.html'
+                        controller: MyRequestCtrl
+                        controllerAs: 'ctrl'
+                    }
+                }
+            }
             .state 'my_requests.resignation', {
                 url: '/resignation'
                 views: {
@@ -204,9 +214,9 @@ class Route
 
 
 class ProfileCtrl extends nb.Controller
-    @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope', 'User', 'USER_META', 'UserPerformance', 'Performance', '$filter', 'UserReward', 'UserPunishment']
+    @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope', 'User', 'USER_META', 'UserPerformance', 'Performance', '$filter', 'UserReward', 'UserPunishment', '$http']
 
-    constructor: (@scope, @sweet, @Employee, @rootScope, @User, @USER_META, @UserPerformance, @Performance, @filter, @UserReward, @UserPunishment) ->
+    constructor: (@scope, @sweet, @Employee, @rootScope, @User, @USER_META, @UserPerformance, @Performance, @filter, @UserReward, @UserPunishment, @http) ->
         @loadInitialData()
         @status = 'show'
 
@@ -301,9 +311,9 @@ class ProfileCtrl extends nb.Controller
 
 
 class MyRequestCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Employee', 'OrgStore', 'USER_META', 'VACATIONS', 'MyLeave', '$injector']
+    @.$inject = ['$scope', 'Employee', 'OrgStore', 'USER_META', 'VACATIONS', 'MyLeave', '$injector', 'UserAnnuity', '$http', 'toaster']
 
-    constructor: (@scope, @Employee, @OrgStore, meta, vacations, @MyLeave, injector) ->
+    constructor: (@scope, @Employee, @OrgStore, meta, vacations, @MyLeave, injector, @UserAnnuity, @http, @toaster) ->
         @scope.realFlow = (entity) ->
             t = entity.type
             m = injector.get(t)
@@ -338,6 +348,7 @@ class MyRequestCtrl extends nb.Controller
         ]
 
     getSelected: () ->
+        return unless @scope.$gridApi && @scope.$gridApi.selection
         rows = @scope.$gridApi.selection.getSelectedGridRows()
         selected = if rows.length >= 1 then rows[0].entity else null
 
@@ -353,11 +364,41 @@ class MyRequestCtrl extends nb.Controller
         @Employee.leaders()
 
     myRequests: (FlowName) ->
-        # 不知道这个啥用，但是在调用，不要删除这个跟踪语句
-        console.error "MyRequestCtrl:myRequests called"
+        @loadAnnuities()
 
     hasVacation: (name)->
         @scope.vacations.enable_vacation.indexOf(name) >= 0
+
+    loadAnnuities: ()->
+        self = @
+
+        @columnDef = [
+            {name:"employeeNo", displayName:"员工编号"}
+            {name:"employeeName", displayName:"姓名"}
+            {name:"departmentName", displayName:"所属部门"}
+            {name:"positionName", displayName:"岗位"}
+            {name:"calDate", displayName:"月度"}
+            {name:"annuityCardinality", displayName:"基数"}
+            {name:"personalPayment", displayName:"个人部分"}
+            {name:"companyPayment", displayName:"公司部分"}
+        ]
+
+        @tableData = @UserAnnuity.$collection().$fetch()
+
+        @UserAnnuity.$collection().$fetch().$asPromise().then (data) ->
+            self.annuity_status = data.$response.data.meta.annuity_status
+
+    toggleAnnuity: (status)->
+        self = @
+
+        @http.get('/api/annuity_apply/apply_for_annuity?status=' + status)
+            .success (data)->
+                self.toaster.pop('success', '提示', data.messages || '申请成功')
+            .error (data)->
+                self.toaster.pop('error', '提示', data.messages || '申请失败')
+
+        self.operated = true
+
 
 #分角色图表页面控制器部分
 #图标主控制器 通用方法在这里
