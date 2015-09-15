@@ -5,7 +5,7 @@ form(name="speEditForm" ng-submit="save(currentSpe.$save(), speEditForm)" ng-con
         md-button.md-raised.white(ng-click="cancel(currentSpe, $event, speEditForm)") 取消
         md-button.md-raised.md-primary(type="submit" ng-disabled="speEditForm.$invalid") 保存
     fieldset(ng-disabled="!editing")
-        .textarea-row()
+        .textarea-row.mt30
             label 工作职责
             //- textarea(flex nb-simditor, toolbar="['bold', 'italic', 'underline', 'ol', 'ul']", placeholder="这里输入内容", ng-model="currentSpe.duty", editing)
             p(ng-hide="editing" ng-bind-html="currentSpe.duty | breakit")
@@ -32,7 +32,7 @@ form(name="speEditForm" ng-submit="save(currentSpe.$save(), speEditForm)" ng-con
         md-input-container
             label 外部联系
             input(type='text', placeholder='请输入外部联系', ng-model="currentSpe.externalRelation")
-        .textarea-row()
+        .textarea-row(style="margin-top: 25px;")
             label 任职条件
             //- textarea(flex nb-simditor, toolbar="['bold', 'italic', 'underline', 'ol', 'ul']", placeholder="这里输入内容", ng-model="currentSpe.qualification", editing)
             p(ng-hide="editing" ng-bind-html="currentSpe.qualification | breakit")

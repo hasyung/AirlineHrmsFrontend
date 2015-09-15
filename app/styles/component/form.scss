@@ -142,7 +142,9 @@ fieldset {
             position: relative;
 
             label {
-                margin: 6px 0;
+                // margin: 6px 0;
+                color: $text-muted;
+                padding-left: 4px;
             }
 
             .text-container {
