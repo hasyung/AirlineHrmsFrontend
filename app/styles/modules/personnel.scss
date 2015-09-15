@@ -721,9 +721,14 @@
         margin: 0 10px;
 
         .open-orgs {
-            font-size: 30px;
+            color: #aaa;
+            font-size: 22px;
             height: 40px;
             line-height: 40px;
+
+            &:hover {
+                color: #3a98f0;
+            }
         }
     }
 
@@ -740,8 +745,6 @@
     }
 
     .icon-container {
-        background-color: #bbdefb;
-        border-radius: 50%;
         cursor: pointer;
         font-size: 20px;
         height: 32px;
@@ -753,14 +756,44 @@
 
         &.up {
             line-height: 28px;
+
+            i {
+                border-bottom: 8px solid #ddd;
+                border-left: 8px solid transparent;
+                border-right: 8px solid transparent;
+                border-top: 8px solid transparent;
+                display: block;
+                height: 0;
+                margin: 3px auto 0;
+                width: 0;
+            }
+
+            &:hover {
+                i {
+                    border-bottom-color: #3a98f0;
+                }
+            }
         }
 
         &.down {
             margin-right: 30px;
-        }
 
-        &:hover {
-            background-color: #ccc;
+            i {
+                border-bottom: 8px solid transparent;
+                border-left: 8px solid transparent;
+                border-right: 8px solid transparent;
+                border-top: 8px solid #ddd;
+                display: block;
+                height: 0;
+                margin: 12px auto 0;
+                width: 0;
+            }
+
+            &:hover {
+                i {
+                    border-top-color: #3a98f0;
+                }
+            }
         }
     }
 
@@ -886,7 +919,7 @@
 
 .attendanceMarks {
     @include clearfix();
-    margin: 20px 0px;
+    margin: 20px 0;
 
     .attendanceMark {
         float: left;
@@ -895,15 +928,15 @@
             background-color: #000;
             display: inline-block;
             height: 12px;
+            margin: -2px 0 -2px 20px;
             width: 12px;
-            margin: -2px 0px -2px 20px;
         }
 
         &__text {
             color: $text-muted;
             display: inline-block;
             font-size: 12px;
-            margin: 0px 2px ;
+            margin: 0 2px;
         }
     }
 }
