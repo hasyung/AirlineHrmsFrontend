@@ -28,9 +28,33 @@ div.workflow.md-background(md-theme="hrms")
 
                                         div(layout)
                                             md-input-container(flex)
-                                                label 日期
-                                                input(ng-model="request.start_time" ng-change="calculateTotalDays(request, '#{flowName}')" name="start_time" bs-datepicker required)
+                                                label 开始日期
+                                                input(ng-model="request.start_time" ng-change="calculateTotalDays(request, '#{flowName}', true)" name="start_time" bs-datepicker required)
+                                            md-input-container.row-has-value(style="flex: 0 0 150px;")
+                                                label 详细时间
+                                                md-select(ng-model="request.start_time" ng-change="calculateTotalDays(request, '#{flowName}')" md-on-open="loadStartTime()" ng-disabled="!request.start_time" required)
+                                                    md-option(ng-value="time" ng-repeat="time in start_times" ) {{time | mdate: 'H:mm'}}
+                                        div(layout)
                                             md-input-container(flex)
+                                                label 结束日期
+                                                input(ng-model="request.end_time" name="end_time" required bs-datepicker ng-disabled="true")
+                                            md-input-container.row-has-value(style="flex: 0 0 150px;")
+                                                label 详细时间
+                                                md-select(
+                                                    ng-model="request.end_time"
+                                                    ng-change="calculateTotalDays(request, '#{flowName}')"
+                                                    md-on-open="loadEndTime()"
+                                                    ng-disabled="!request.end_time"
+                                                    required)
+                                                    md-option(ng-value="time" ng-repeat="time in end_times" ) {{time | mdate: 'H:mm'}}
+
+                                        div(layout)
+                                            .without-edit
+                                                div.progress-wrapper(ng-if="calculating")
+                                                    md-progress-circular(md-mode="indeterminate")
+                                                div(ng-if="!calculating")
+                                                    div.without-edit-title 天数
+                                                    div.without-edit-content {{ vacation_days }}
                                     when 1
                                         block additional_form
 

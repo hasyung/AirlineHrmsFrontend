@@ -387,6 +387,13 @@ class SalaryPersonalController extends nb.Controller
                 self.loadEmp = params
 
 
+class SalaryChangeController extends nb.Controller
+    @.$inject = ['$http', '$scope', '$nbEvent', '$enum']
+
+    constructor: ($http, $scope, $Evt, $enum) ->
+        #
+
+
 class SalaryExchangeController
     @.$inject = ['$http', '$scope', '$nbEvent', 'SALARY_SETTING']
 
@@ -749,6 +756,7 @@ class SalaryOverviewController extends SalaryBaseController
 
 app.controller 'salaryCtrl', SalaryController
 app.controller 'salaryPersonalCtrl', SalaryPersonalController
+app.controller 'salaryChangeCtrl', SalaryChangeController
 app.controller 'salaryExchangeCtrl', SalaryExchangeController
 app.controller 'salaryBasicCtrl', SalaryBasicController
 app.controller 'salaryPerformanceCtrl', SalaryPerformanceController

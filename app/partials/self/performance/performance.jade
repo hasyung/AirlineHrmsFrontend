@@ -2,7 +2,7 @@ section.self_performance(ng-init="ctrl.loadPerformance()")
     .personnel-content-body
         .personnel-section-wrap
             md-content.performance-content
-                .performance-list-item(ng-repeat="group in ctrl.performances | toArray: true| big2small")
+                .performance-list-item(ng-repeat="group in ctrl.performances | toArray: true | big2small")
                     .subheader--center
                         .subheader__content
                             span.subheader__icon
@@ -20,8 +20,8 @@ section.self_performance(ng-init="ctrl.loadPerformance()")
                                 tr
                                     th 考核时段
                                     th 绩效
-                                    th 附件
-                                    th 申述
+                                    th(width="25%") 附件
+                                    th(width="25%") 申述
                             tbody
                                 tr(ng-repeat="performance in group")
                                     td(ng-bind="performance.assessTime")
@@ -38,5 +38,6 @@ section.self_performance(ng-init="ctrl.loadPerformance()")
                                             ng-if="!performance.allegeStatus"
                                             nb-dialog
                                             template-url="partials/self/performance/represent.html"
-                                            locals="{performance:performance}"
+                                            locals="{performance: performance}"
                                             ) 绩效申述
+                                        span(ng-if="performance.allegeStatus") 已申诉

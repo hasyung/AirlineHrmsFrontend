@@ -94,14 +94,17 @@ class PerformanceRecord extends nb.Controller
 
         @performances = @Performance.$collection().$fetch()
 
+    exportGridApi: (gridApi) ->
+        @gridApi = gridApi
+
     search: (tableState)->
         tableState = tableState || {}
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @performances.$refresh(tableState)
 
     getSelected: () ->
-        if @scope.$gridApi.selection
-            rows = @scope.$gridApi.selection.getSelectedGridRows()
+        if @gridApi && @gridApi.selection
+            rows = @gridApi.selection.getSelectedGridRows()
             selected = if rows.length >= 1 then rows[0].entity else null
 
     getDateOptions: (type)->
@@ -119,7 +122,8 @@ class PerformanceRecord extends nb.Controller
 
     uploadPerformance: (request, params)->
         self = @
-        # 年度的时候assessTime是整数
+
+        # 年度的时候 assessTime 是整数
         request.assess_time = moment(new Date(new String(request.assessTime))).format "YYYY-MM-DD"
         params.status = "uploading"
 
@@ -128,11 +132,18 @@ class PerformanceRecord extends nb.Controller
             params.status = "finish"
         .error ()->
 
-    uploadAttachments: (collection, $messages)->
-        file = JSON.parse($messages)
-        collection.$create(file)
-    #安排离岗培训
-    #post
+    uploadAttachments: (performance_id, collection, $messages)->
+        data = JSON.parse($messages)
+        hash = {
+            id: data.id
+            name: data.file_name
+            type: data.file_type
+            size: data.file_size
+            performance_id: performance_id
+        }
+        collection.$create(hash)
+
+    # 安排离岗培训
     newTrainEmployee: (moveEmployee)->
         self = @
         @http.post('/api/special_states/temporarily_train', moveEmployee).then (data)->

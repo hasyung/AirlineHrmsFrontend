@@ -424,6 +424,7 @@ class MyRequestCtrl extends nb.Controller
 
         @UserAnnuity.$collection().$fetch().$asPromise().then (data) ->
             self.annuity_status = data.$response.data.meta.annuity_status
+            self.annuity_apply_status = data.$response.data.meta.annuity_apply_status
 
     toggleAnnuity: (status)->
         self = @
