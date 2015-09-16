@@ -89,6 +89,16 @@ class Route
                     }
                 }
             }
+            .state 'my_requests.performance', {
+                url: '/performance'
+                views: {
+                    '@': {
+                        templateUrl: 'partials/self/my_requests/performance/index.html'
+                        controller: MyRequestCtrl
+                        controllerAs: 'ctrl'
+                    }
+                }
+            }
             .state 'my_requests.resignation', {
                 url: '/resignation'
                 views: {
@@ -315,9 +325,9 @@ class ProfileCtrl extends nb.Controller
 
 
 class MyRequestCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Employee', 'OrgStore', 'USER_META', 'VACATIONS', 'MyLeave', '$injector', 'UserAnnuity', '$http', 'toaster']
+    @.$inject = ['$scope', 'Employee', 'OrgStore', 'USER_META', 'VACATIONS', 'MyLeave', '$injector', 'UserAnnuity', '$http', 'toaster', 'UserAllege']
 
-    constructor: (@scope, @Employee, @OrgStore, meta, vacations, @MyLeave, injector, @UserAnnuity, @http, @toaster) ->
+    constructor: (@scope, @Employee, @OrgStore, meta, vacations, @MyLeave, injector, @UserAnnuity, @http, @toaster, @UserAllege) ->
         @scope.realFlow = (entity) ->
             t = entity.type
             m = injector.get(t)
@@ -344,6 +354,29 @@ class MyRequestCtrl extends nb.Controller
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents" ng-init="realFlow = grid.appScope.$parent.realFlow(row.entity)">
                     <a flow-handler="realFlow" flow-view="true">
+                        查看
+                    </a>
+                </div>
+                '''
+            }
+        ]
+
+        @allegeCol = [
+            {name:"employeeNo", displayName:"员工编号"}
+            {name:"employeeName", displayName:"姓名"}
+            {name:"departmentName", displayName:"所属部门"}
+            {name:"positionName", displayName:"岗位"}
+            {name:"createdAt", displayName:"申述时间", cellFilter:"date:'yyyy-MM-dd'"}
+            {name:"assessTime", displayName:"考核时间"}
+            {name:"result", displayName:"绩效"}
+            {name:"category", displayName:"排名"}
+            {name:"outcome", displayName:"申述结果"}
+            {
+                name: 'type'
+                displayName: '详细'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a flow-handler="row.entity" flows="grid.options.data">
                         查看
                     </a>
                 </div>

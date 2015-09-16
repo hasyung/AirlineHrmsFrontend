@@ -136,6 +136,11 @@ UserAnnuity = (restmod, RMUtils, $Evt)->
 
     }
 
+UserAllege = (restmod, RMUtils, $Evt)->
+    restmod.model('/me/allege').mix 'nbRestApi', {
+
+    }
+
 
 resources.factory 'User', ['restmod', 'RMUtils', '$nbEvent', User]
 resources.factory 'Education', ['restmod', 'RMUtils', '$nbEvent', Education]
@@ -147,3 +152,4 @@ resources.factory 'UserPerformance', ['restmod', 'RMUtils', '$nbEvent', UserPerf
 resources.factory 'UserReward', ['restmod', 'RMUtils', '$nbEvent', UserReward]
 resources.factory 'UserPunishment', ['restmod', 'RMUtils', '$nbEvent', UserPunishment]
 resources.factory 'UserAnnuity', ['restmod', 'RMUtils', '$nbEvent', UserAnnuity]
+resources.factory 'UserAllege', ['restmod', 'RMUtils', '$nbEvent', UserAllege]
