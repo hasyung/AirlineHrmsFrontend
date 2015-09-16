@@ -119,6 +119,11 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
                 md-option(value="金质") 金质
                 md-option(value="功勋") 功勋
         md-input-container(flex)
+        md-input-container(flex)
+        md-input-container(flex)
+
+    div(layout)
+        md-input-container(flex)
             label 费用化报销金额
             input(type="number" min="0" max="1000000" ng-model="current.refund_fee")
         md-input-container(flex)
@@ -127,6 +132,24 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
         md-input-container(flex)
             label 通讯补贴
             input(type="number" min="0" max="1000000" ng-model="current.communicate_allowance")
+        md-input-container(flex)
+            label 公务车报销额度
+            input(type="number" min="0" max="1000000" ng-model="current.official_car")
 
     div(layout)
         md-checkbox.md-primary(ng-model="current.limitLeader") 是否飞行受限干部
+    div(layout)
+        md-input-container(flex)
+            label 最低飞行时间
+            input(type="number" min="0" max="1000000" ng-model="current.lowest_fly_time")
+        md-input-container(flex)
+            label 最低计费时间
+            input(type="number" min="0" max="1000000" ng-model="current.lowest_calc_time")
+        md-input-container(flex)
+            label 干部补贴飞行时间
+            input(type="number" min="0" max="1000000" ng-model="current.leader_subsidy_time")
+        md-input-container(flex style="margin-top:20px")
+            md-select(ng-model="current.fly_check_lifecycle" placeholder="飞行时限考核周期")
+                md-option(value="无") 无
+                md-option(value="季度考核") 季度考核
+                md-option(value="月度考核") 月度考核

@@ -142,4 +142,6 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
         md-input-container(flex)
             label 通讯补贴
             input(type="number" min="0" max="1000000" ng-model="current.communicate_allowance")
-        md-input-container.row-has-value(flex)
+        md-input-container(flex)
+            label 公务车报销额度
+            input(type="number" min="0" max="1000000" ng-model="current.official_car")

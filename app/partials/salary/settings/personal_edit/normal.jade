@@ -136,4 +136,11 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
         md-input-container(flex)
             label 通讯补贴
             input(type="number" min="0" max="1000000" ng-model="current.communicate_allowance")
-        md-input-container.row-has-value(flex)
+        md-input-container(flex)
+            label 公务车报销额度
+            input(type="number" min="0" max="1000000" ng-model="current.official_car")
+
+    div(layout)
+        md-checkbox(class="md-primary" ng-model="current.doubleDepartmentCheck") 双部门考核
+    div(layout)
+        org-search(flex ng-model="current.secondDepartmentId" ng-if="current.doubleDepartmentCheck" placeholder="第二考核部门" float-label)
