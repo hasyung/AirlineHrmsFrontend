@@ -161,6 +161,8 @@ class SalaryController extends nb.Controller
         @currentYear = _.last @year_list
         @currentMonth = _.last @month_list
 
+        @currentCity = "成都"
+
         @settings = {}
         @global_setting = {}
 
@@ -612,9 +614,9 @@ class SalaryPerformanceController extends SalaryBaseController
             {displayName: '备注', name: 'remark'}
         ])
 
-    upload_performance: (attachment_id)->
+    upload_performance: (type, attachment_id)->
         self = @
-        params = {attachment_id: attachment_id}
+        params = {type: type, attachment_id: attachment_id}
 
         @http.post("/api/performance_salaries/import", params).success (data, status) ->
             if data.error_count > 0
@@ -674,7 +676,20 @@ class SalaryAllowanceController extends SalaryBaseController
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
-            {displayName: '津贴', name: 'subsidy', enableCellEdit: false}
+            {displayName: '安检津贴', name: 'security_check', enableCellEdit: false}
+            {displayName: '安置津贴', name: 'resettlement', enableCellEdit: false}
+            {displayName: '班组长津贴', name: 'group_leader', enableCellEdit: false}
+            {displayName: '航站管理津贴', name: 'air_station_manage', enableCellEdit: false}
+            {displayName: '车勤补贴', name: 'car_present', enableCellEdit: false}
+            {displayName: '地勤补贴', name: 'land_present', enableCellEdit: false}
+            {displayName: '放行补贴', name: 'permit_entry', enableCellEdit: false}
+            {displayName: '试车津贴', name: 'try_drive', enableCellEdit: false}
+            {displayName: '飞行荣誉津贴', name: 'fly_honor', enableCellEdit: false}
+            {displayName: '航线实习补贴', name: 'airline_practice', enableCellEdit: false}
+            {displayName: '随机补贴', name: 'follow_plane', enableCellEdit: false}
+            {displayName: '签派放行补贴', name: 'permit_sign', enableCellEdit: false}
+            {displayName: '梭班补贴', name: 'work_overtime', enableCellEdit: false}
+            {displayName: '高温补贴', name: 'temp', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee'}
             {displayName: '备注', name: 'remark'}
         ])
