@@ -38,4 +38,4 @@ table.table.table-bordered.setting-table
 
       //- 不是编辑模式
       div(ng-if="!ctrl.editing")
-        span {{ctrl.formatColumn(setting[column])}}
+        span {{setting[column]['format_value'] || ctrl.formatColumn(setting[column])}}
