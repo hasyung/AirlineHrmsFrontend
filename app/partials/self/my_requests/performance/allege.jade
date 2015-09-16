@@ -17,15 +17,15 @@
                   .flow-cell-content {{::current.channel}}
                 .flow-info-cell(flex)
                   .flow-cell-title 用工性质
-                  .flow-cell-content 合同制
+                  .flow-cell-content {{::current.laborRelation}}
               .flow-info-row(layout)
                 .flow-info-cell(flex)
                   .flow-cell-title 考核时间
                   .flow-cell-content {{::current.assessTime}}
                 .flow-info-cell(flex)
                   .flow-cell-title 绩效
-                  .flow-cell-content {{::current.result}}
-        md-card(ng-if="flow.type != 'Flow::Retirement'")
+                  .flow-cell-content {{::current.performanceWas}}
+        md-card
           .approval-relation-info
             .approval-subheader 申请信息
             .approval-relations
@@ -33,7 +33,7 @@
                 .approval-cell(flex='flex')
                   span.cell-title 申请理由
                   span.cell-content {{::current.reason}}
-        md-card
+        md-card(ng-if="current.outcome")
           .approval-msg
             .approval-subheader 处理结果
             .approval-relations
@@ -41,7 +41,7 @@
                 .approval-cell(flex='flex')
                   span.cell-title 处理结果
                   span.cell-content {{::current.outcome}}
-                .approval-cell(flex='flex')
+                .approval-cell(flex='flex' ng-if="current.outcome=='通过'")
                   span.cell-title 绩效调整为
                   span.cell-content {{::current.result}}
 
