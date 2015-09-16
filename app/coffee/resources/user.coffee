@@ -137,8 +137,10 @@ UserAnnuity = (restmod, RMUtils, $Evt)->
     }
 
 UserAllege = (restmod, RMUtils, $Evt)->
-    restmod.model('/me/allege').mix 'nbRestApi', {
-
+    restmod.model('/me/alleges').mix 'nbRestApi', {
+        $config:
+            jsonRootSingle: 'allege'
+            jsonRootMany: 'alleges'
     }
 
 

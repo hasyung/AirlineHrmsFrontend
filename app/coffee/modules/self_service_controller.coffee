@@ -255,7 +255,7 @@ class ProfileCtrl extends nb.Controller
     loadPerformance: ()->
         self = @
         @UserPerformance.$collection().$fetch().$then (performances)->
-            self.performances = _.groupBy performances, (item)-> item.assessYear
+            self.performances = _.sortBy((_.groupBy performances, (item)-> item.assessYear)).reverse()
 
     loadRewards: ()->
         @rewards = @UserReward.$collection().$fetch()
@@ -376,7 +376,10 @@ class MyRequestCtrl extends nb.Controller
                 displayName: '详细'
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents">
-                    <a flow-handler="row.entity" flows="grid.options.data">
+                    <a nb-panel
+                        template-url="/partials/self/my_requests/performance/allege.html"
+                        locals="{allege: row.entity}"
+                    >
                         查看
                     </a>
                 </div>
