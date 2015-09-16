@@ -138,8 +138,10 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
                 md-option(value="功勋") 功勋
         md-input-container(flex)
             label 高温补贴
-            input(type="number" min="0" max="1000000" ng-model="current.temp_allowance")
+            input(type="number" min="0" max="1000000" ng-model="current.tempAllowance")
         md-input-container(flex)
             label 通讯补贴
-            input(type="number" min="0" max="1000000" ng-model="current.communicate_allowance")
-        md-input-container.row-has-value(flex)
+            input(type="number" min="0" max="1000000" ng-model="current.communicateAllowance")
+        md-input-container(flex)
+            label 公务车报销额度
+            input(type="number" min="0" max="1000000" ng-model="current.officialCar")

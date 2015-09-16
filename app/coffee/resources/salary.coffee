@@ -175,6 +175,23 @@ Reward = (restmod, RMUtils, $Evt) ->
     }
 
 
+SalaryChange = (restmod, RMUtils, $Evt) ->
+    restmod.model('/salary_changes').mix 'nbRestApi', 'DirtyModel', {
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+        $hooks:
+            'after-create': ->
+                $Evt.$send('salary_change:create:success', "薪酬变更创建成功")
+
+            'after-update': ->
+                $Evt.$send('salary_change:update:success', "薪酬变更更新成功")
+
+        $config:
+            jsonRootSingle: 'salary_change'
+            jsonRootMany: 'salary_changes'
+    }
+
+
 SalaryOverview = (restmod, RMUtils, $Evt) ->
     restmod.model('/salary_overviews').mix 'nbRestApi', 'DirtyModel', {
         owner: {belongsTo: 'Employee', key: 'employee_id'}
@@ -198,4 +215,5 @@ resources.factory 'HoursFee', ['restmod', 'RMUtils', '$nbEvent', HoursFee]
 resources.factory 'Allowance', ['restmod', 'RMUtils', '$nbEvent', Allowance]
 resources.factory 'LandAllowance', ['restmod', 'RMUtils', '$nbEvent', LandAllowance]
 resources.factory 'Reward', ['restmod', 'RMUtils', '$nbEvent', Reward]
+resources.factory 'SalaryChange', ['restmod', 'RMUtils', '$nbEvent', SalaryChange]
 resources.factory 'SalaryOverview', ['restmod', 'RMUtils', '$nbEvent', SalaryOverview]

@@ -19,7 +19,7 @@ block tools
 
     span
         md-button.md-primary.md-raised(
-            ng-if="!ctrl.annuity_status && !ctrl.annuity_apply_status"
+            ng-if="ctrl.can_join_annuity && !ctrl.annuity_status && !ctrl.annuity_apply_status"
             ng-disabled="ctrl.operated"
             ng-click="ctrl.toggleAnnuity(true)"
             locals="{list: ctrl.tableData}"

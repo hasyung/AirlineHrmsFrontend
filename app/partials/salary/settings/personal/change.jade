@@ -1,0 +1,15 @@
+.app-content-wrapper(flex ng-controller="salaryChangeCtrl as ctrl")
+    div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+
+    div.ui-grid-container
+        md-toolbar
+            .md-toolbar-tools
+                h2 薪酬变动信息
+
+        div(
+            nb-grid
+            column-defs="ctrl.columnDef"
+            on-register-api="ctrl.exportGridApi(gridApi)"
+            export-api
+            safe-src="ctrl.salaryChanges"
+        )

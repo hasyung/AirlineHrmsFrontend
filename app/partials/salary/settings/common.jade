@@ -10,10 +10,10 @@ table.table.table-bordered.setting-table
     //- td.tar(ng-repeat="column in ctrl.dynamic_config.flag_list track by $index" ng-style="{'background-color': ctrl.editing ? 'white': setting[column]['bg_color']}")
     td.tar(ng-repeat="column in ctrl.dynamic_config.flag_list track by $index")
       div(ng-if="ctrl.editing")
-        div(ng-switch="setting[column]['edit_mode']")
+        div(ng-switch="setting[column]['edit_mode']" ng-if="column!='rate' && column!='amount'")
           //- 判断编辑类型
-          div(ng-switch-when="text")
-            input(ng-if="ctrl.editing || setting[column]['format_value']" type="text" ng-model="setting[column]['format_value']" required)
+          //- div(ng-switch-when="text")
+          //-   input(ng-if="ctrl.editing || setting[column]['format_value']" type="text" ng-model="setting[column]['format_value']")
 
           div(ng-switch-when="select")
             md-select(ng-model="setting[column]['format_value']")
@@ -22,15 +22,19 @@ table.table.table-bordered.setting-table
           div(ng-switch-when="dialog")
             a(href="javascript:void(0);" nb-dialog template-url="partials/salary/settings/dialogs/{{::ctrl.current_category}}.html" locals="{current: setting[column], grade: setting.grade}") 设置
 
+          div(ng-switch-default)
+            input(type="text" ng-model="setting[column]['format_value']")
+
         //- 系数
-        div(ng-if="!setting[column]['edit_mode'] && column=='rate'")
+        div(ng-if="column=='rate'")
           input(type="number" step="0.1" min="0.1" max="100000" ng-model="setting[column]" ng-change="setting['amount']=ctrl.calcAmount(setting[column])")
+
         //- 金额
-        div(ng-if="!setting[column]['edit_mode'] && column=='amount' && !ctrl.existCurrentRate()")
+        div(ng-if="column=='amount' && !ctrl.existCurrentRate()")
           input(type="number" step="1" min="1" max="100000" ng-model="setting[column]" ng-change="setting['rate']=ctrl.calcRate(setting[column])")
 
-        //- 如果没有编辑模式就是简单列，不需要编辑模式的
-        div(ng-if="!setting[column]['edit_mode'] && column!='rate' && (column=='amount' && ctrl.existCurrentRate())") {{setting[column]}}
+        div(ng-if="column=='amount' && ctrl.existCurrentRate()")
+          span {{setting[column]}}
 
       //- 不是编辑模式
       div(ng-if="!ctrl.editing")

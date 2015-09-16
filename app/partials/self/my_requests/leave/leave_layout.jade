@@ -55,6 +55,11 @@ div.workflow.md-background(md-theme="hrms")
                                                 div(ng-if="!calculating")
                                                     div.without-edit-title 天数
                                                     div.without-edit-content {{ vacation_days }}
+
+                                        div(layout)
+                                            md-input-container(flex)
+                                                label 申请理由
+                                                textarea(ng-model="request.reason" columns="1" md-maxlength="150")
                                     when 1
                                         block additional_form
 

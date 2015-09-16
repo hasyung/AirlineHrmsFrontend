@@ -390,10 +390,82 @@ class SalaryPersonalController extends nb.Controller
 
 
 class SalaryChangeController extends nb.Controller
-    @.$inject = ['$http', '$scope', '$nbEvent', '$enum']
+    @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryChange']
 
-    constructor: ($http, $scope, $Evt, $enum) ->
-        #
+    constructor: ($http, $scope, $Evt, $enum, @SalaryChange) ->
+        @loadInitialData()
+
+        @filterOptions = {
+            name: 'salaryPersonal'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '员工姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+                {
+                    name: 'channel_ids'
+                    displayName: '通道'
+                    type: 'muti-enum-search'
+                    params: {
+                        type: 'channels'
+                    }
+                }
+            ]
+        }
+
+        @columnDef = [
+            {displayName: '员工编号', name: 'employeeNo'}
+            {
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+            }
+            {displayName: '信息发生时间', name: 'createdAt'}
+            {displayName: '信息种类', name: 'applyCategory'}
+            {
+                displayName: '查看'
+                field: 'setting'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a
+                        href="javascript:void(0);"
+                        nb-dialog
+                        template-url="partials/salary/settings/changes/index.html"
+                        locals="{change: row.entity}">
+                        查看
+                    </a>
+                </div>
+                '''
+            }
+        ]
+
+    loadInitialData: () ->
+        @salaryChanges = @SalaryChange.$collection().$fetch()
+
+    search: (tableState) ->
+        tableState = tableState || {}
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+        @salaryChanges.$refresh(tableState)
 
 
 class SalaryExchangeController
