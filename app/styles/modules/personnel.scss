@@ -205,10 +205,11 @@
 
             md-icon {
                 color: #fff;
+                transform: rotate(180deg) translate3d(0, 0, 0);
                 transition: transform .25s linear;
 
                 &.toggled {
-                    transform: rotate(180deg) translate3d(0, 0, 0);
+                    transform: rotate(0) translate3d(0, 0, 0);
                 }
             }
         }

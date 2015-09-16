@@ -1,0 +1,50 @@
+.approval-wapper.panel-bg-gray(ng-init="current=panel.allege.$refresh()")
+      md-toolbar.md-warn(md-theme='hrms')
+        .md-toolbar-tools
+          span 绩效申述申请单
+      .approval-container
+        md-card
+          .approval-info
+            .approval-info-head
+              .name(ng-bind='current.employeeName')
+              .approval-info-plus
+                span.serial-num(ng-bind='current.employeeNo')
+                span.position  {{::current.departmentName}} / {{::current.positionName}}
+            .flow-relations
+              .flow-info-row(layout)
+                .flow-info-cell(flex)
+                  .flow-cell-title 通道
+                  .flow-cell-content {{::current.channel}}
+                .flow-info-cell(flex)
+                  .flow-cell-title 用工性质
+                  .flow-cell-content 合同制
+              .flow-info-row(layout)
+                .flow-info-cell(flex)
+                  .flow-cell-title 考核时间
+                  .flow-cell-content {{::current.assessTime}}
+                .flow-info-cell(flex)
+                  .flow-cell-title 绩效
+                  .flow-cell-content {{::current.result}}
+        md-card(ng-if="flow.type != 'Flow::Retirement'")
+          .approval-relation-info
+            .approval-subheader 申请信息
+            .approval-relations
+              div(layout)
+                .approval-cell(flex='flex')
+                  span.cell-title 申请理由
+                  span.cell-content {{::current.reason}}
+        md-card
+          .approval-msg
+            .approval-subheader 处理结果
+            .approval-relations
+              div(layout)
+                .approval-cell(flex='flex')
+                  span.cell-title 处理结果
+                  span.cell-content {{::current.outcome}}
+                .approval-cell(flex='flex')
+                  span.cell-title 绩效调整为
+                  span.cell-content {{::current.result}}
+
+
+        .approval-buttons
+          md-button.md-raised.md-warn(ng-click='dialog.close()', type='button') 关闭

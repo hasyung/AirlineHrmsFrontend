@@ -3,11 +3,11 @@ section.self_performance(ng-init="ctrl.loadPerformance()")
         .personnel-section-wrap
             md-content.performance-content
                 .performance-list-item(ng-repeat="group in ctrl.performances | toArray: true | big2small")
-                    .subheader--center
+                    .subheader--center(ng-init="$first? show=true:''")
                         .subheader__content
                             span.subheader__icon
                                 img(src="/images/personnel/subh-icon.png", alt="icon--plane")
-                            span {{group.$key}}年绩效
+                            span {{group[0].assessYear}}年绩效
                         .subheader__btns(ng-click="show = !show")
                             button
                                 md-icon(md-svg-src="md-toggle-arrow" ng-class="{'toggled': show}")
