@@ -31,3 +31,11 @@ div(layout)
     md-input-container(flex)
         label 绩效薪酬
         input(type="number" min="0" max="1000000" ng-model="current.performanceMoney" readonly)
+
+div(layout)
+    md-input-container(flex)
+        label 高温补贴
+        input(type="number" min="0" max="1000000" ng-model="current.temp_allowance")
+    md-input-container(flex)
+        label 通讯补贴
+        input(type="number" min="0" max="1000000" ng-model="current.communicate_allowance")

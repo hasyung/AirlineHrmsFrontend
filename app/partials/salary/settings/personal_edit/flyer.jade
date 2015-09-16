@@ -122,7 +122,11 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
             label 费用化报销金额
             input(type="number" min="0" max="1000000" ng-model="current.refund_fee")
         md-input-container(flex)
+            label 高温补贴
+            input(type="number" min="0" max="1000000" ng-model="current.temp_allowance")
         md-input-container(flex)
+            label 通讯补贴
+            input(type="number" min="0" max="1000000" ng-model="current.communicate_allowance")
 
     div(layout)
         md-checkbox.md-primary(ng-model="current.limitLeader") 是否飞行受限干部

@@ -136,6 +136,10 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
                 md-option(value="银质") 银质
                 md-option(value="金质") 金质
                 md-option(value="功勋") 功勋
-        md-input-container.row-has-value(flex)
-        md-input-container.row-has-value(flex)
+        md-input-container(flex)
+            label 高温补贴
+            input(type="number" min="0" max="1000000" ng-model="current.temp_allowance")
+        md-input-container(flex)
+            label 通讯补贴
+            input(type="number" min="0" max="1000000" ng-model="current.communicate_allowance")
         md-input-container.row-has-value(flex)
