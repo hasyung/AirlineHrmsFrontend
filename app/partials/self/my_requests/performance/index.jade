@@ -1,0 +1,17 @@
+.flow-list(flex ng-init="alleges = ctrl.UserAllege.$collection().$fetch();")
+    md-toolbar
+        .md-toolbar-tools
+            span
+                md-button.md-icon-button(ui-sref="my_requests")
+                    md-icon(md-svg-src="/images/svg/arrow-left.svg")
+            span 绩效申述结果
+    .flow-list-body
+        .flow-list-content.ui-grid-container
+            .flow-list-tip
+                | 本页面中列表显示发起的所有绩效申述记录。
+            md-toolbar
+                .md-toolbar-tools
+                    span 绩效申述记录列表
+                    span(flex)
+
+            div(nb-grid column-defs="ctrl.allegeCol" multi-select="false" export-api on-register-api="ctrl.exportGridApi(gridApi)" grid-selection safe-src="alleges")
