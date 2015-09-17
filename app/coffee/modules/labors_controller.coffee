@@ -412,6 +412,7 @@ class AttendanceCtrl extends nb.Controller
         params.department_id = departmentId if departmentId
 
         self = @
+
         @search(params).$asPromise().then (data)->
             summary_record = _.find data.$response.data.meta.attendance_summary_status, (item)->
                 item.department_id == departmentId
@@ -457,7 +458,7 @@ class AttendanceCtrl extends nb.Controller
                             <a nb-dialog
                                 ng-hide="row.entity.departmentHrChecked"
                                 template-url="partials/labors/attendance/summary_edit.html"
-                                locals="{summary: row.entity}"> 编辑
+                                locals="{summary: row.entity, list_ref: row.entity.$scope}"> 编辑
                             </a>
                             <span ng-show="row.entity.departmentHrChecked">已确认</span>
                         </div>
