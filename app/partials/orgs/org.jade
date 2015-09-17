@@ -4,6 +4,7 @@ section.org-detail(ng-controller="EditableResourceCtrl")
         span(ng-show="orgCtrl.state == 'newsub'") 新增子机构信息
         div(ng-if="orgCtrl.state == 'show' && !(ctrl.isHistory || currentOrg.status == 'destroy_inactive')")
             button.btn.btn-sm.btn-default.fa.fa-trash-o(
+                ng-if="!currentOrg.committee"
                 has-permission="departments_destroy"
                 nb-confirm="orgCtrl.destroy(isConfirm)"
                 nb-title="您确定要删除{{currentOrg.name}}吗?"
