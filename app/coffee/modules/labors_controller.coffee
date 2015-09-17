@@ -710,7 +710,7 @@ class ContractCtrl extends nb.Controller
             {displayName: '变更标志', name: 'changeFlag'}
             {displayName: '合同开始时间', name: 'startDate'}
             {displayName: '合同结束时间', name: 'endDateStr'}
-            {displayName: '备注', name: 'notes'}
+            {displayName: '备注', name: 'notes', cellTooltip: (row) -> return row.entity.note}
             {
                 displayName: '详细',
                 field: '详细',

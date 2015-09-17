@@ -666,7 +666,7 @@ class SalaryBasicController extends SalaryBaseController
             {displayName: '工龄工资', name: 'workingYearsSalary', enableCellEdit: false}
             {displayName: '保留工资', name: 'reserveSalary', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee'}
-            {displayName: '备注', name: 'remark'}
+            {displayName: '备注', name: 'remark', cellTooltip: (row) -> return row.entity.note}
         ])
 
 
@@ -683,7 +683,7 @@ class SalaryPerformanceController extends SalaryBaseController
             {displayName: '当月绩效基数', name: 'baseSalary', enableCellEdit: false},
             {displayName: '当月绩效薪酬', name: 'amount', enableCellEdit: false},
             {displayName: '补扣发', name: 'addGarnishee'},
-            {displayName: '备注', name: 'remark'}
+            {displayName: '备注', name: 'remark', cellTooltip: (row) -> return row.entity.note}
         ])
 
     upload_performance: (type, attachment_id)->
@@ -712,7 +712,7 @@ class SalaryHoursFeeController extends SalaryBaseController
             {displayName: '小时费', name: 'flyFee', enableCellEdit: false}
             {displayName: '空勤灶', name: 'airlineFee', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee'}
-            {displayName: '备注', name: 'remark'}
+            {displayName: '备注', name: 'remark', cellTooltip: (row) -> return row.entity.note}
         ])
 
     search: () ->
@@ -763,7 +763,7 @@ class SalaryAllowanceController extends SalaryBaseController
             {displayName: '梭班补贴', name: 'work_overtime', enableCellEdit: false}
             {displayName: '高温补贴', name: 'temp', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee'}
-            {displayName: '备注', name: 'remark'}
+            {displayName: '备注', name: 'remark', cellTooltip: (row) -> return row.entity.note}
         ])
 
     upload_allowance: (type, attachment_id)->
@@ -788,7 +788,7 @@ class SalaryLandAllowanceController extends SalaryBaseController
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
             {displayName: '津贴', name: 'subsidy', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee'}
-            {displayName: '备注', name: 'remark'}
+            {displayName: '备注', name: 'remark',  cellTooltip: (row) -> return row.entity.note}
         ])
 
 
@@ -837,7 +837,7 @@ class SalaryOverviewController extends SalaryBaseController
             {displayName: '驻站津贴', name: 'land_subsidy', enableCellEdit: false}
             {displayName: '奖励', name: 'reward', enableCellEdit: false}
             {displayName: '合计', name: 'total', enableCellEdit: false}
-            {displayName: '备注', name: 'remark'}
+            {displayName: '备注', name: 'remark',  cellTooltip: (row) -> return row.entity.note}
         ])
 
 

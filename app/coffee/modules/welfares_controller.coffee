@@ -748,7 +748,7 @@ class AnnuityHistoryController extends nb.Controller
             {displayName: '当期基数', name: 'annuityCardinality'}
             {displayName: '个人缴费', name: 'personalPayment'}
             {displayName: '公司缴费', name: 'companyPayment'}
-            {displayName: '备注', name: 'note'}
+            {displayName: '备注', name: 'note', cellTooltip: (row) -> return row.entity.note}
         ]
 
         @constraints = [
