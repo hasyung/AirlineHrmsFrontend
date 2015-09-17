@@ -348,7 +348,7 @@ class AttendanceCtrl extends nb.Controller
                 {
                     name: 'summary_date'
                     displayName: '汇总时间'
-                    type: 'date-range'
+                    type: 'month-list'
                 }
             ]
         }
@@ -428,6 +428,7 @@ class AttendanceCtrl extends nb.Controller
     initDate: ()->
         @year_list = @$getYears()
         @month_list = @$getMonths()
+        @filter_month_list = @$getFilterMonths()
 
         @year = @year_list[@year_list.length - 1]
         @month = @month_list[@month_list.length - 1]
@@ -813,6 +814,11 @@ class ContractCtrl extends nb.Controller
 
         @contracts.$build(contract).$save().$then ()->
             self.contracts.$refresh()
+
+    clearData: (contract)->
+        if contract.isUnfix
+            contract.endDate = null
+            contract.dueTime = null
 
     leaveJob: (contract, isConfirm, reason, flow_id)->
         return if !isConfirm

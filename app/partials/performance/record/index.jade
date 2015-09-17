@@ -37,7 +37,7 @@
                     nb-dialog
                     ng-disabled="!ctrl.getSelected()"
                     template-url="/partials/performance/record/add_attachment.html"
-                    locals="{performance: ctrl.getSelected()}"
+                    locals="{performance: ctrl.getSelected(), can_upload: true}"
                 ) 上传文档
 
         div(nb-grid multi-select="false" export-api on-register-api="ctrl.exportGridApi(gridApi)" grid-selection column-defs="ctrl.columnDef" safe-src="ctrl.performances")

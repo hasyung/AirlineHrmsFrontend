@@ -32,6 +32,27 @@ class Controller extends Base
         months = _.map months, (item) ->
             item = "0" + item if item < 10
 
+    $getFilterMonths: ()->
+        years = @$getYears()
+        months = @$getMonths()
+
+        array = []
+        angular.forEach years, (year)->
+            angular.forEach months, (month)->
+                array.push(year + '-' + month)
+
+        array
+
+    $getSeasons: ()->
+        years = @$getYears()
+        array = []
+
+        angular.forEach years, (year)->
+            angular.forEach [1,2,3,4], (quarter)->
+                array.push(year + '-' + quarter)
+
+        array
+
     parseJSON: (data) ->
         angular.fromJson(data)
 

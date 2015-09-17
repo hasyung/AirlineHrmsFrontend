@@ -36,7 +36,7 @@ class NbFilterCtrl extends nb.FilterController
             </div>
         '''
         'month-range': '''
-            <div cla<div class="md-input-container-row">
+            <div class="md-input-container-row">
                 <md-input-container md-no-float>
                     <md-select placeholder="${ displayName }" ng-model="${ name }.from">
                         <md-option ng-value="item" ng-repeat="item in $parent.month_list">{{item}}</md-option>
@@ -50,6 +50,22 @@ class NbFilterCtrl extends nb.FilterController
                 </md-input-container>
             </div>
         '''
+        'month-list': '''
+                <md-input-container md-no-float>
+                    <md-select placeholder="年份月份" ng-model="${ name }">
+                        <md-option ng-value="item" ng-repeat="item in $parent.month_list">{{item}}</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+        '''
+        'year-list': '''
+                <md-input-container md-no-float>
+                    <md-select placeholder="年份" ng-model="${ name }">
+                        <md-option ng-value="item" ng-repeat="item in $parent.year_list">{{item}}</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+        '''
         'date': '''
             <md-input-container md-no-float>
                 <input type="text" placeholder="${ displayName }" bs-datepicker container="body" ng-model="${name}">
@@ -59,6 +75,31 @@ class NbFilterCtrl extends nb.FilterController
             <md-select placeholder="${ displayName }" ng-model="${ name }">
                 <md-option ng-value="item.id" ng-repeat="item in $parent.$enum.get('${ params.type }')">{{item.label}}</md-option>
             </md-select>
+        '''
+        'perf_category_select': '''
+            <md-select placeholder="${ displayName }" ng-model="${ name }">
+                <md-option value="普通员工" placeholder="人员分类">普通员工</md-option>
+                <md-option value="基层干部" placeholder="人员分类">基层干部</md-option>
+                <md-option value="中层干部" placeholder="人员分类">中层干部</md-option>
+                <md-option value="主官" placeholder="人员分类">主官</md-option>
+            </md-select>
+        '''
+        'performance_select': '''
+            <md-select placeholder="${ displayName }" ng-model="${ name }">
+                <md-option value="优秀" placeholder="绩效结果">优秀</md-option>
+                <md-option value="良好" placeholder="绩效结果">良好</md-option>
+                <md-option value="合格" placeholder="绩效结果">合格</md-option>
+                <md-option value="待改进" placeholder="绩效结果">待改进</md-option>
+                <md-option value="不合格" placeholder="绩效结果">不合格</md-option>
+            </md-select>
+        '''
+        'season-list': '''
+                <md-input-container md-no-float>
+                    <md-select placeholder="季度" ng-model="${ name }">
+                        <md-option ng-value="item" ng-repeat="item in $parent.season_list">{{item}}</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
         '''
         'annuity_status_select': '''
             <md-select placeholder="${ displayName }" ng-model="${ name }">
@@ -248,11 +289,13 @@ class NbFilterCtrl extends nb.FilterController
 conditionInputContainer = ($enum) ->
     postLink = (scope, elem, attr, ctrl) ->
         scope.$enum = $enum
-
-        month_list = []
         date = new Date()
 
-        angular.forEach [2015..date.getFullYear()], (year) ->
+        year_list = [2015..date.getFullYear()]
+        month_list = []
+        season_list = []
+
+        angular.forEach year_list, (year) ->
             months = [1..12]
             months = [1..date.getMonth() + 1] if year = date.getFullYear()
 
@@ -260,7 +303,12 @@ conditionInputContainer = ($enum) ->
                 month = "0" + month if month < 10
                 month_list.push(year + "-" + month)
 
+            angular.forEach [1,2,3,4], (quarter)->
+                season_list.push(year + '-' + quarter)
+
+        scope.year_list = year_list
         scope.month_list = month_list
+        scope.season_list = season_list
 
         ctrl.initialCondition(scope.condition.selectedConstraint, scope, elem, scope.condition.initialValue)
         scope.$watch 'condition.selectedConstraint', (newValue, old) ->

@@ -12,7 +12,7 @@ md-dialog.sample-dialog(ng-init="performance = dialog.performance;attachments = 
                         .accessory-switch
                             md-button.md-icon-button(type="button" ng-click="attachment.$destroy()" ng-if="ctrl.USER_META.id == attachment.employeeId")
                                 md-icon.md-warn(md-svg-src="/images/svg/close.svg")
-                .accessory-btn-group(
+                .accessory-btn-group(ng-if="dialog.can_upload"
                     flow-init="{target: '/api/attachments/upload_file', testChunks:false, uploadMethod:'POST', singleFile:true}"
                     flow-files-submitted="$flow.upload()"
                     flow-file-success="ctrl.uploadAttachments(performance.id, attachments, $message);")

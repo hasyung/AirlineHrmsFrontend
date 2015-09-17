@@ -74,7 +74,43 @@ class PerformanceRecord extends nb.Controller
     @.$inject = ['$scope', 'Performance', '$http', 'USER_META', '$nbEvent']
 
     constructor: (@scope, @Performance, @http, @USER_META, @Evt)->
+        @year_list = @$getYears()
+        @filter_month_list = @$getFilterMonths()
+        @test = 'zhangsan'
+
         @filterOptions = getBaseFilterOptions('performance_record')
+        @filterOptions.constraintDefs = @filterOptions.constraintDefs.concat [
+            {
+                displayName: '月度绩效'
+                name: 'month_assess_time'
+                placeholder: '月度绩效'
+                type: 'month-list'
+            }
+            {
+                displayName: '季度绩效'
+                name: 'season_assess_time'
+                placeholder: '季度绩效'
+                type: 'season-list'
+            }
+            {
+                displayName: '年度绩效'
+                name: 'year_assess_time'
+                placeholder: '年度绩效'
+                type: 'year-list'
+            }
+            {
+                displayName: '绩效人员分类'
+                name: 'employee_category'
+                placeholder: '年度绩效'
+                type: 'perf_category_select'
+            }
+            {
+                displayName: '绩效'
+                name: 'result'
+                placeholder: '绩效'
+                type: 'performance_select'
+            }
+        ]
 
         @columnDef = BASE_TABLE_DEFS.concat [
             {displayName: '考核时段', name: 'assessTime'}
@@ -85,7 +121,11 @@ class PerformanceRecord extends nb.Controller
                 field: '查看',
                 cellTemplate: '''
                     <div class="ui-grid-cell-contents ng-binding ng-scope">
-                        <a ng-if="row.entity.attachmentStatus"> 查看
+                        <a ng-if="row.entity.attachmentStatus"
+                            nb-dialog
+                            locals="{performance: row.entity, can_upload: false}"
+                            template-url="/partials/performance/record/add_attachment.html"
+                        > 查看
                         </a>
                     </div>
                 '''
