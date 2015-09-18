@@ -240,6 +240,7 @@ class NbFilterCtrl extends nb.FilterController
         $el = @compile(currentConstraint.template) scope, (cloned, scope) ->
             parentElem.append(cloned)
 
+
         currentConstraint.block = {
             scope: scope
             element: $el
@@ -474,21 +475,19 @@ nbGridDirective = ($parse)->
         scope.gridOptions = options
 
         scope.$watch(
-            -> itemCountGetter(scope)
-            ,
-            (newValue) -> options.totalItems =  newValue if angular.isNumber(newValue)
-            )
+            -> itemCountGetter(scope),
+            (newValue) -> options.totalItems = newValue if angular.isNumber(newValue)
+        )
 
         scope.$watch(
-            -> pageGetter(scope)
-            ,
-            (newValue) -> options.paginationCurrentPage =  newValue if angular.isNumber(newValue)
-            )
+            -> pageGetter(scope),
+            (newValue) -> options.paginationCurrentPage = newValue if angular.isNumber(newValue)
+        )
+
         # scope.$watch('gridOptions.paginationPageSize') #watch 每页数据
 
-    #WORKAROUND, issue#27, 当ui-grid-selection 存在时， resize 会存在使table错位的BUG
-    #暂时使用 ui-grid-auto-resize 插件 每250ms定时resize，修复改BUG
-    #如果有性能问题，再修复
+    #WORKAROUND, issue#27, 当ui-grid-selection 存在时, resize 会存在使 table 错位的BUG
+    #暂时使用 ui-grid-auto-resize 插件每250ms定时resize, 修复改BUG, 如果有性能问题, 再修复
     nbGridTemplate =  '''
         <div ui-grid="gridOptions" #plugins# ui-grid-pagination ui-grid-auto-resize></div>
     '''
