@@ -213,6 +213,7 @@ class OrgsCtrl extends nb.Controller
                 self.isHistory = true
                 self.treeRootOrg = _.find self.orgs, (org) -> org.xdepth == 1
                 self.currentOrg = self.treeRootOrg
+                self.buildTree(self.currentOrg)
 
     expandLog: (log)->
         # 防止UI中出现多个被选中的item

@@ -118,6 +118,23 @@ md-select {
 
 
 fieldset {
+    md-autocomplete {
+        padding-bottom: 0 !important;
+
+        md-input-container {
+            padding-bottom: 0 !important;
+        }
+
+        .md-input {
+            color: $text-color !important;
+            height: 23.5px;
+        }
+
+        label {
+            position: relative;
+            top: -4px;
+        }
+    }
 
     .text-label {
         color: rgba(0, 0, 0, .54);
@@ -171,7 +188,6 @@ label:not(.md-no-float),
 .md-placeholder {
     opacity: 1;
 }
-
 //展示状态下各个组件的样式
 fieldset[disabled] {
     label:not(.md-no-float),
@@ -238,6 +254,24 @@ fieldset[disabled] {
     org-search {
         md-autocomplete-wrap button {
             display: none;
+        }
+    }
+    //hack md-autocomplete的样式
+    md-autocomplete {
+        padding-bottom: 0 !important;
+
+        md-input-container {
+            padding-bottom: 0 !important;
+        }
+
+        .md-input {
+            color: $text-color !important;
+            height: 24px;
+        }
+
+        label {
+            position: relative;
+            top: -1px;
         }
     }
 }

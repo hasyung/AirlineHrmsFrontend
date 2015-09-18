@@ -14,7 +14,7 @@ form(ng-controller="EditableResourceCtrl", ng-submit="save(currentUser.$save(), 
                 .subheader__content
                     span.subheader__icon
                         img(src="/images/personnel/subh-icon.png", alt="icon--plane")
-                    span 个人信息
+                    span 个人信息{{currentUser.nationId}}
 
             fieldset(ng-disabled="!editing")
                 div(layout)
@@ -31,10 +31,27 @@ form(ng-controller="EditableResourceCtrl", ng-submit="save(currentUser.$save(), 
                         label 性别
                         md-select(ng-model="currentUser.genderId" ng-disabled="!editing")
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('genders')") {{item.label}}
-                    md-input-container.row-has-value(flex)
+                    md-input-container(flex)
+                        //- md-autocomplete(
+                        //-     ng-if="editing"
+                        //-     ng-init="infoForm.nation.$modelValue=currentUser.employeeNo"
+                        //-     md-selected-item="ctrl.selectedItem"
+                        //-     md-selected-item-change="currentUser.nation=ctrl.selectedItem"
+                        //-     md-search-text-change="currentUser.nation=ctrl.searchText"
+                        //-     md-search-text="ctrl.searchText"
+                        //-     md-items="item in ctrl.queryNations(ctrl.searchText)"
+                        //-     md-min-length="0"
+                        //-     md-floating-label="民族"
+                        //-     md-input-name="nation"
+                        //-     )
+                        //-     md-item-template
+                        //-         span {{item}}
+                        //-     md-not-found
+                        //-         | 没有匹配项，请自行输入
                         label 民族
-                        md-select(ng-model="currentUser.nationId" ng-disabled="!editing")
-                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('nations')") {{item.label}}
+                        input(ng-disabled="!editing" ng-model="currentUser.nation")
+                        //- md-select(ng-model="currentUser.nationId" ng-disabled="!editing")
+                        //-     md-option(ng-value="item.id" ng-repeat="item in $enum.get('nations')") {{item.label}}
                 div(layout)
                     md-input-container(flex)
                         label 籍贯
