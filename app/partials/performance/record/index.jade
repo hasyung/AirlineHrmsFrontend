@@ -1,43 +1,5 @@
-.app-content-wrapper(flex)
-    div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
-    div.ui-grid-container
-        md-toolbar
-            .md-toolbar-tools
-                h2 绩效记录 (提示: 数据默认为空，请执行搜索操作)
-                div(flex)
-
-                md-button.md-primary.md-raised(
-                    nb-dialog
-                    ng-disabled="!ctrl.getSelected()"
-                    template-url="/partials/performance/record/leave_to_train.html"
-                    locals="{current: ctrl.getSelected()}"
-                    ) 离岗培训
-
-                md-button.md-primary.md-raised(
-                    href="/api/performances/temp_export"
-                ) 导出模板
-
-                md-menu()
-                    md-button.md-primary.md-raised(ng-click="$mdOpenMenu($event)") 上传绩效
-                    md-menu-content
-                        md-menu-item()
-                            a.md-button(
-                                nb-dialog
-                                template-url="/partials/performance/record/add.html"
-                                locals="{performanceType: 'month'}"
-                            ) 员工月度绩效
-                        md-menu-item()
-                            a.md-button(
-                                nb-dialog
-                                template-url="/partials/performance/record/add.html"
-                                locals="{performanceType: 'year'}"
-                            ) 员工年度绩效
-
-                md-button.md-primary.md-raised(
-                    nb-dialog
-                    ng-disabled="!ctrl.getSelected()"
-                    template-url="/partials/performance/record/add_attachment.html"
-                    locals="{performance: ctrl.getSelected(), can_upload: true}"
-                ) 上传文档
-
-        div(nb-grid multi-select="false" export-api on-register-api="ctrl.exportGridApi(gridApi)" grid-selection column-defs="ctrl.columnDef" safe-src="ctrl.performances")
+tabset(flex)
+    tab(heading="绩效记录")
+        include category/normal.jade
+    tab(heading="主官绩效录入")
+        include category/master.jade

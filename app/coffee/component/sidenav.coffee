@@ -179,7 +179,7 @@ menuFactory = ($rootScope, $state)->
         pages: [
             {
                 name: '绩效记录'
-                state: 'performance_record'
+                state: 'performance_list'
                 permission: ''
             }
             {

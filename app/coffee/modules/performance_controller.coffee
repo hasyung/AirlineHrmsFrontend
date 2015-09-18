@@ -48,11 +48,9 @@ class Route
 
     constructor: (stateProvider, urlRouterProvider, injector) ->
         stateProvider
-            .state 'performance_record', {
-                url: '/performance_record'
+            .state 'performance_list', {
+                url: '/performance_list'
                 templateUrl: 'partials/performance/record/index.html'
-                controller: PerformanceRecord
-                controllerAs: 'ctrl'
 
             }
             .state 'performance_alleges', {
@@ -112,7 +110,7 @@ class PerformanceRecord extends nb.Controller
         ]
 
         @columnDef = BASE_TABLE_DEFS.concat [
-            {displayName: '绩效类型', name: 'category_name'}
+            {displayName: '绩效类型', name: 'categoryName'}
             {displayName: '考核时段', name: 'assessTime'}
             {displayName: '绩效', name: 'result'}
             {displayName: '排序', name: 'sortNo'}
@@ -132,9 +130,8 @@ class PerformanceRecord extends nb.Controller
             }
         ]
 
-        #@performances = @Performance.$collection().$fetch()
         #PRD要求初始化表体为空
-        @performances = []
+        @performances = @Performance.$collection().$fetch({employee_category: 'NULL'})
 
     exportGridApi: (gridApi) ->
         @gridApi = gridApi
@@ -143,6 +140,7 @@ class PerformanceRecord extends nb.Controller
         tableState = tableState || {}
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @performances.$refresh(tableState)
+
 
     getSelected: () ->
         if @gridApi && @gridApi.selection
@@ -190,6 +188,47 @@ class PerformanceRecord extends nb.Controller
         self = @
         @http.post('/api/special_states/temporarily_train', moveEmployee).then (data)->
             self.Evt.$send("moveEmployee:save:success", '离岗培训设置成功')
+
+
+class PerformanceMasterRecord extends nb.Controller
+    @.$inject = ['$scope', 'Performance', '$http', 'USER_META', '$nbEvent']
+
+    constructor: (@scope, @Performance, @http, @USER_META, @Evt)->
+        @year_list = @$getYears()
+        @filter_month_list = @$getFilterMonths()
+
+        @filterOptions = getBaseFilterOptions('performance_record')
+        @filterOptions.constraintDefs = @filterOptions.constraintDefs.concat [
+            {
+                displayName: '绩效'
+                name: 'result'
+                placeholder: '绩效'
+                type: 'performance_select'
+            }
+        ]
+
+        @columnDef = BASE_TABLE_DEFS.concat [
+            {displayName: '绩效类型', name: 'category_name'}
+            {displayName: '考核时段', name: 'assessTime'}
+            {displayName: '绩效', name: 'result'}
+            {displayName: '排序', name: 'sortNo'}
+            {
+                displayName: '附件',
+                field: '查看',
+                cellTemplate: '''
+                    <div class="ui-grid-cell-contents ng-binding ng-scope">
+                        <a ng-if="row.entity.attachmentStatus"
+                            nb-dialog
+                            locals="{performance: row.entity, can_upload: false}"
+                            template-url="/partials/performance/record/add_attachment.html"
+                        > 查看
+                        </a>
+                    </div>
+                '''
+            }
+        ]
+
+        @performances = @Performance.$collection({employee_category: '主官'}).$fetch()
 
 
 class PerformanceSetting extends nb.Controller
@@ -310,7 +349,7 @@ class PerformanceAllege extends nb.Controller
         ]
 
         @columnDef = BASE_TABLE_DEFS.concat [
-            {displayName: '绩效类型', name: 'category_name'}
+            {displayName: '绩效类型', name: 'categoryName'}
             {displayName: '考核时段', name: 'assessTime'}
             {displayName: '绩效', name: 'result'}
             {displayName: '申述时间', name: 'createdAt',cellFilter: "date:'yyyy-MM-dd'"}
@@ -344,3 +383,7 @@ class PerformanceAllege extends nb.Controller
 
 
 app.config(Route)
+
+
+app.controller 'PerformanceRecord', PerformanceRecord
+app.controller 'PerformanceMasterRecord', PerformanceMasterRecord
