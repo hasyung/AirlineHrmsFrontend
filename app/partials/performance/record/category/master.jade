@@ -4,8 +4,15 @@
     div.ui-grid-container
         md-toolbar
             .md-toolbar-tools
-                h2 绩效记录 (提示: 数据默认为空，请执行搜索操作)
+                h2 绩效记录
                 div(flex)
+
+                md-button.md-primary.md-raised(
+                    nb-dialog
+                    ng-disabled="!ctrl.getSelected()"
+                    template-url="/partials/performance/record/add_attachment.html"
+                    locals="{performance: ctrl.getSelected(), can_upload: true}"
+                ) 上传文档
 
         div(nb-grid
             multi-select="false"

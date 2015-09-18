@@ -191,9 +191,9 @@ class PerformanceRecord extends nb.Controller
 
 
 class PerformanceMasterRecord extends nb.Controller
-    @.$inject = ['$scope', 'Performance', '$http', 'USER_META', '$nbEvent', '$q']
+    @.$inject = ['$scope', 'Performance', '$http', 'USER_META', '$nbEvent', '$q', 'toaster']
 
-    constructor: (@scope, @Performance, @http, @USER_META, @Evt, @q)->
+    constructor: (@scope, @Performance, @http, @USER_META, @Evt, @q, @toaster)->
         @year_list = @$getYears()
         @filter_month_list = @$getFilterMonths()
 
@@ -239,6 +239,8 @@ class PerformanceMasterRecord extends nb.Controller
         @performances = @Performance.$collection({employee_category: '主官'}).$fetch()
 
     initialize: (gridApi) ->
+        self = @
+
         saveRow = (rowEntity) ->
             dfd = @q.defer()
 
@@ -251,8 +253,9 @@ class PerformanceMasterRecord extends nb.Controller
                     sort_no: rowEntity.sortNo
                 }
             })
-            .success () ->
+            .success (data) ->
                 dfd.resolve()
+                self.toaster.pop('success', '提示', '修改成功')
             .error () ->
                 dfd.reject()
                 rowEntity.$restore()
