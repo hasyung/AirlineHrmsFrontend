@@ -4,7 +4,7 @@ block heading
     - var user_list = '退休发起'
     - var flowName = "员工退休"
     - var enableSelect = false
-    - var multiSelect = true
+    - var multiSelect = false
     - var hisMultiSelect = false
 
 block user_list_actions
@@ -13,7 +13,7 @@ block user_list_actions
         ng-disabled="!ctrl.getSelectedEntities().length"
         nb-dialog
         template-url="/partials/labors/retirement/new_retirement.html"
-        locals="{users: ctrl.getSelectedEntities()}"
+        locals="{user: ctrl.getSelected()}"
     ) 人员退休
 
 block history_list_actions
