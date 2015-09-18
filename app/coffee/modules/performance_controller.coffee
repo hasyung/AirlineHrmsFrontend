@@ -113,6 +113,7 @@ class PerformanceRecord extends nb.Controller
         ]
 
         @columnDef = BASE_TABLE_DEFS.concat [
+            {displayName: '绩效类型', name: 'category_name'}
             {displayName: '考核时段', name: 'assessTime'}
             {displayName: '绩效', name: 'result'}
             {displayName: '排序', name: 'sortNo'}
@@ -195,6 +196,16 @@ class PerformanceSetting extends nb.Controller
 
     constructor: (@scope, @PerformanceTemp, @http, @q)->
         @filterOptions = getBaseFilterOptions('performance_setting')
+
+        @filterOptions.constraintDefs = @filterOptions.constraintDefs.concat [
+            {
+                displayName: '绩效人员分类'
+                name: 'employee_category'
+                placeholder: '年度绩效'
+                type: 'perf_category_select'
+            }
+        ]
+
 
         @columnDef = [
             {displayName: '员工编号', name: 'employeeNo', enableCellEdit: false}
@@ -282,7 +293,23 @@ class PerformanceAllege extends nb.Controller
     constructor: (@scope, @Allege, @Performance, @Employee)->
         @filterOptions = getBaseFilterOptions('performance_allege')
 
+        @filterOptions.constraintDefs = @filterOptions.constraintDefs.concat [
+            {
+                displayName: '绩效'
+                name: 'result'
+                placeholder: '绩效'
+                type: 'performance_select'
+            }
+            {
+                displayName: '申诉时间'
+                name: 'created_at'
+                placeholder: '申诉时间'
+                type: 'date-range'
+            }
+        ]
+
         @columnDef = BASE_TABLE_DEFS.concat [
+            {displayName: '绩效类型', name: 'category_name'}
             {displayName: '考核时段', name: 'assessTime'}
             {displayName: '绩效', name: 'result'}
             {displayName: '申述时间', name: 'createdAt',cellFilter: "date:'yyyy-MM-dd'"}
