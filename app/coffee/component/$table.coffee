@@ -153,7 +153,7 @@ class NbFilterCtrl extends nb.FilterController
     constructor: (scope, elem, attrs, $parse, @compile, SerializedFilter, @http, @Evt) ->
         options = scope.nbFilter
         @conditionCode = options.name
-        defs    = options.constraintDefs
+        defs = options.constraintDefs
 
         @filters = SerializedFilter.$search({code: @conditionCode})
 
@@ -347,6 +347,7 @@ NbFilterDirective = ["$nbEvent", "$enum", ($Evt, $enum)->
                     <md-button type="button" class="md-icon-button" ng-click="filter.removeCondition(condition)" ng-disabled="filter.conditions.length <= 1">
                         <md-icon md-svg-icon="../../images/svg/close.svg"></md-icon>
                     </md-button>
+                    <!-- Error: [ng:cpws] Can't copy! Making copies of Window or Scope instances is not supported. -->
                     <md-select ng-model="condition.selectedConstraint">
                         <md-option ng-value="inert_cons" ng-repeat="inert_cons in filter.inertConstraints() track by inert_cons.name">
                             {{inert_cons.displayName}}
