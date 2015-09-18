@@ -1044,6 +1044,7 @@ class SbFlowHandlerCtrl
 
     retirement: (users)->
         self = @
+
         params = users.map (user)->
             {id: user.id, relation_data: user.relation_data}
 
