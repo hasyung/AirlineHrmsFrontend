@@ -141,7 +141,6 @@ class PerformanceRecord extends nb.Controller
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @performances.$refresh(tableState)
 
-
     getSelected: () ->
         if @gridApi && @gridApi.selection
             rows = @gridApi.selection.getSelectedGridRows()
@@ -172,15 +171,18 @@ class PerformanceRecord extends nb.Controller
             params.status = "finish"
         .error ()->
 
-    uploadAttachments: (performance_id, collection, $messages)->
+    uploadAttachments: (performance, collection, $messages)->
         data = JSON.parse($messages)
+
         hash = {
             id: data.id
             name: data.file_name
             type: data.file_type
             size: data.file_size
-            performance_id: performance_id
+            performance_id: performance.id
         }
+
+        performance.attachmentStatus = true
         collection.$create(hash)
 
     # 安排离岗培训
@@ -271,6 +273,25 @@ class PerformanceMasterRecord extends nb.Controller
         tableState = tableState || {}
         tableState['per_page'] = @scope.$gridApi.grid.options.paginationPageSize
         @performances.$refresh(tableState)
+
+    getSelected: () ->
+        if @scope.$gridApi && @scope.$gridApi.selection
+            rows = @scope.$gridApi.selection.getSelectedGridRows()
+            selected = if rows.length >= 1 then rows[0].entity else null
+
+    uploadAttachments: (performance, collection, $messages)->
+        data = JSON.parse($messages)
+
+        hash = {
+            id: data.id
+            name: data.file_name
+            type: data.file_type
+            size: data.file_size
+            performance_id: performance.id
+        }
+
+        performance.attachmentStatus = true
+        collection.$create(hash)
 
 
 class PerformanceSetting extends nb.Controller
