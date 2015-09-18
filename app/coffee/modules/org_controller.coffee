@@ -338,7 +338,7 @@ class PositionCtrl extends nb.Controller
                 name: 'budgetedStaffing'
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents">
-                    {{row.entity.staffing}}/{{grid.getCellValue(row, col)}}
+                    {{grid.getCellValue(row, col)}}
                 </div>
                 '''
             }
@@ -347,9 +347,11 @@ class PositionCtrl extends nb.Controller
                 displayName: '超/缺编'
                 name: 'staffingStatus'
                 cellTemplate: '''
-                    <span style="color:blue" ng-if="row.entity.budgetedStaffing > row.entity.staffing">{{row.entity.budgetedStaffing - row.entity.staffing}}</span>
-                    <span style="color:red" ng-if="row.entity.budgetedStaffing < row.entity.staffing">{{row.entity.staffing - row.entity.budgetedStaffing}}</span>
-                    <span style="color:black" ng-if="row.entity.budgetedStaffing == row.entity.staffing">0</span>
+                    <div class="ui-grid-cell-contents">
+                        <span style="color:blue" ng-if="row.entity.budgetedStaffing > row.entity.staffing">{{row.entity.budgetedStaffing - row.entity.staffing}}</span>
+                        <span style="color:red" ng-if="row.entity.budgetedStaffing < row.entity.staffing">{{row.entity.budgetedStaffing - row.entity.staffing}}</span>
+                        <span style="color:black" ng-if="row.entity.budgetedStaffing == row.entity.staffing">0</span>
+                    </div>
                 '''
             }
             {displayName: '工作时间', name: 'scheduleId', cellFilter: "enum:'position_schedules'"}
