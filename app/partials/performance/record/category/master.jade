@@ -7,4 +7,12 @@
                 h2 绩效记录 (提示: 数据默认为空，请执行搜索操作)
                 div(flex)
 
-        div(nb-grid multi-select="false" export-api on-register-api="ctrl.exportGridApi(gridApi)" grid-selection column-defs="ctrl.columnDef" safe-src="ctrl.performances")
+        div(nb-grid
+            multi-select="false"
+            export-api
+            grid-edit
+            grid-row-edit
+            grid-cellNav
+            on-register-api="ctrl.initialize(gridApi)"
+            grid-selection column-defs="ctrl.columnDef"
+            safe-src="ctrl.performances")

@@ -2,7 +2,7 @@ resources = angular.module('resources')
 
 
 Performance = (restmod, RMUtils, $Evt) ->
-    Performance = restmod.model('/performances').mix 'nbRestApi', {
+    Performance = restmod.model('/performances').mix 'nbRestApi', 'DirtyModel', {
         attachments: {hasMany: 'Attachment'}
 
         owner: {belongsTo: 'Employee', key: 'employee_id'}

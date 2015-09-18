@@ -191,9 +191,9 @@ class PerformanceRecord extends nb.Controller
 
 
 class PerformanceMasterRecord extends nb.Controller
-    @.$inject = ['$scope', 'Performance', '$http', 'USER_META', '$nbEvent']
+    @.$inject = ['$scope', 'Performance', '$http', 'USER_META', '$nbEvent', '$q']
 
-    constructor: (@scope, @Performance, @http, @USER_META, @Evt)->
+    constructor: (@scope, @Performance, @http, @USER_META, @Evt, @q)->
         @year_list = @$getYears()
         @filter_month_list = @$getFilterMonths()
 
@@ -208,7 +208,7 @@ class PerformanceMasterRecord extends nb.Controller
         ]
 
         @columnDef = BASE_TABLE_DEFS.concat [
-            {displayName: '绩效类型', name: 'category_name'}
+            {displayName: '绩效类型', name: 'categoryName'}
             {displayName: '考核时段', name: 'assessTime'}
             {displayName: '绩效', name: 'result'}
             {displayName: '排序', name: 'sortNo'}
@@ -228,7 +228,46 @@ class PerformanceMasterRecord extends nb.Controller
             }
         ]
 
+
+        angular.forEach @columnDef, (item)->
+            if item['name'] == 'sortNo'
+                item['headerCellClass'] = 'editable_cell_header'
+                item['enableCellEdit'] = true
+            else
+                item['enableCellEdit'] = false
+
         @performances = @Performance.$collection({employee_category: '主官'}).$fetch()
+
+    initialize: (gridApi) ->
+        saveRow = (rowEntity) ->
+            dfd = @q.defer()
+
+            gridApi.rowEdit.setSavePromise(rowEntity, dfd.promise)
+
+            @http({
+                method: 'PUT'
+                url: '/api/performances/' + rowEntity.id
+                data: {
+                    sort_no: rowEntity.sortNo
+                }
+            })
+            .success () ->
+                dfd.resolve()
+            .error () ->
+                dfd.reject()
+                rowEntity.$restore()
+
+        # edit.on.afterCellEdit($scope,function(rowEntity, colDef, newValue, oldValue)
+        # gridApi.edit.on.afterCellEdit @scope, (rowEntity, colDef, newValue, oldValue) ->
+
+        gridApi.rowEdit.on.saveRow(@scope, saveRow.bind(@))
+        @scope.$gridApi = gridApi
+
+
+    search: (tableState)->
+        tableState = tableState || {}
+        tableState['per_page'] = @scope.$gridApi.grid.options.paginationPageSize
+        @performances.$refresh(tableState)
 
 
 class PerformanceSetting extends nb.Controller
