@@ -76,7 +76,6 @@ class PerformanceRecord extends nb.Controller
     constructor: (@scope, @Performance, @http, @USER_META, @Evt)->
         @year_list = @$getYears()
         @filter_month_list = @$getFilterMonths()
-        @test = 'zhangsan'
 
         @filterOptions = getBaseFilterOptions('performance_record')
         @filterOptions.constraintDefs = @filterOptions.constraintDefs.concat [
@@ -133,7 +132,9 @@ class PerformanceRecord extends nb.Controller
             }
         ]
 
-        @performances = @Performance.$collection().$fetch()
+        #@performances = @Performance.$collection().$fetch()
+        #PRD要求初始化表体为空
+        @performances = []
 
     exportGridApi: (gridApi) ->
         @gridApi = gridApi
