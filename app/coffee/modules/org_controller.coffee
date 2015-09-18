@@ -342,6 +342,16 @@ class PositionCtrl extends nb.Controller
                 </div>
                 '''
             }
+            {displayName: '在编', name: 'staffing'}
+            {
+                displayName: '超/缺编'
+                name: 'staffingStatus'
+                cellTemplate: '''
+                    <span style="color:blue" ng-if="row.entity.budgetedStaffing > row.entity.staffing">{{row.entity.budgetedStaffing - row.entity.staffing}}</span>
+                    <span style="color:red" ng-if="row.entity.budgetedStaffing < row.entity.staffing">{{row.entity.staffing - row.entity.budgetedStaffing}}</span>
+                    <span style="color:black" ng-if="row.entity.budgetedStaffing == row.entity.staffing">0</span>
+                '''
+            }
             {displayName: '工作时间', name: 'scheduleId', cellFilter: "enum:'position_schedules'"}
             {displayName: 'OA文件编号', name: 'oaFileNo'}
         ]
