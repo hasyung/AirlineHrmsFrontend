@@ -1,13 +1,14 @@
 md-dialog(
     style="width:360px;margin:40px auto;"
     ng-controller="EditableResourceCtrl"
-    ng-init="summary = dialog.summary.$refresh();"
+    ng-init="summary=dialog.summary.$refresh(); list_ref=dialog.list_ref;"
     )
-    form(novalidate, name="summaryEditForm", ng-submit="save(summary.$save(), summaryEditForm);dialog.close();")
+    form(novalidate, name="summaryEditForm", ng-submit="save(summary.$save(), summaryEditForm);dialog.close();list_ref=list_ref.$refresh();")
         md-content.sticky-container
             md-toolbar.md-accent(md-theme="hrms")
                 .md-toolbar-tools
                     span 考勤汇总编辑
+
             .dialog-content
                 fieldset
                     md-input-container
@@ -22,6 +23,7 @@ md-dialog(
                     md-input-container
                         label 备注
                         input(type="text" ng-model="summary.remark")
+
             .md-actions
                 md-button(type='button',ng-click="dialog.close()") 取消
                 md-button.md-primary(ng-disabled="summaryEditForm.$invalid" type="submit") 确定
