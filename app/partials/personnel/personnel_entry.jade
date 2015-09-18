@@ -135,7 +135,7 @@
                         div(layout)
                             md-input-container(flex)
                                 label 到岗时间
-                                input(ng-model="newEmp.joinScalDate" bs-datepicker)
+                                input(ng-model="newEmp.joinScalDate" bs-datepicker name="joinScalDate")
                             md-input-container(flex)
                                 label 参工时间
                                 input(ng-model="newEmp.startWorkDate" bs-datepicker)
@@ -143,13 +143,14 @@
                         div(layout)
                             md-input-container(flex)
                                 label 实习时间
-                                input(ng-model="newEmp.startInternshipDate" bs-datepicker)
+                                input(ng-model="newEmp.startInternshipDate" bs-datepicker name="startInternshipDate")
                             md-input-container(flex)
+                                label (注: 到岗时间和实习时间必须填1个)
             .form-bottom-group(layout)
                 span(flex)
                 md-button.md-raised.white(type="button" ng-click="panel.close()") 取消
                 md-button.md-primary.md-raised(
                     type="submit"
-                    ng-disabled="!newEmpForm.politicalStatus.$modelValue || !newEmpForm.laborRelation.$modelValue || !newEmpForm.position.$modelValue || !newEmpForm.degree.$modelValue || !newEmpForm.category.$modelValue || !newEmpForm.channel.$modelValue || !newEmpForm.educationBackground.$modelValue"
+                    ng-disabled="!newEmpForm.politicalStatus.$modelValue || !newEmpForm.laborRelation.$modelValue || !newEmpForm.position.$modelValue || !newEmpForm.degree.$modelValue || !newEmpForm.category.$modelValue || !newEmpForm.channel.$modelValue || !newEmpForm.educationBackground.$modelValue || (!newEmpForm.joinScalDate.$modelValue && !newEmpForm.startInternshipDate.$modelValue)"
                     ) 保存
 
