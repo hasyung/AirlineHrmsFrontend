@@ -7,6 +7,13 @@
                 h2 绩效记录
                 div(flex)
 
+                md-button.md-primary.md-raised(
+                    nb-dialog
+                    ng-disabled="!ctrl.getSelected()"
+                    template-url="/partials/performance/record/add_attachment.html"
+                    locals="{performance: ctrl.getSelected(), can_upload: true}"
+                ) 上传文档
+
         div(nb-grid
             multi-select="false"
             export-api
