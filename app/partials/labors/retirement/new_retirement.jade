@@ -26,9 +26,10 @@ md-dialog
                                 .flow-cell-title 社保缴费年限
                                 .flow-cell-content [数据无从获取]
 
-            md-input-container(flex)
-                label 退休日期
-                input(ng-model="emp.retirementDate" bs-datepicker required)
+            div(layout ng-repeat="user in [current]")
+                md-input-container(flex)
+                    label 退休日期
+                    input(ng-model="user.retirementDate" bs-datepicker required)
 
             .md-actions
                 md-button(type="button" ng-click='dialog.close()') 取 消
