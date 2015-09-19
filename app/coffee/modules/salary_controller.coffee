@@ -199,6 +199,16 @@ class SalaryController extends nb.Controller
         @backup_config = angular.copy(@dynamic_config)
         @editing = false
 
+    isComplexSetting: (column)->
+        if ['information_perf', 'airline_business_perf', 'manage_market_perf'].indexOf(@current_category) >= 0
+            column['edit_mode'] = 'dialog'
+            column['format_cell'] = 'desc'
+            column['format_value'] = 'test'
+
+            return true
+
+        return false
+
     resetDynamicConfig: ()->
         @dynamic_config = {}
         @dynamic_config = angular.copy(@backup_config)
