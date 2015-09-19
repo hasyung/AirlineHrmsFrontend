@@ -186,18 +186,40 @@ class OrgsCtrl extends nb.Controller
         _.flatten(_.pluck(changeLogs, 'logs')).forEach (log) ->
             log.visible = true
 
-    pickLog: (date, changeLogs) ->
+    pickLog: (date, referOrgName, changeLogs) ->
         sortedLogs = _.flatten(_.pluck(changeLogs, 'logs'))
-        selectedMoment =  moment(date)
 
         _.flatten(_.pluck(changeLogs, 'logs')).forEach (log) ->
-            log.visible = false
+                log.visible = false
+
+        if !referOrgName || angular.isUndefined(referOrgName) || referOrgName.length == 0
+            referOrgName = null
+
+        if !date || angular.isUndefined(date) || date.length == 0
+            date = null
+        else
+            selectedMoment = moment(date)
 
         log = _.find sortedLogs, (log) ->
-            return selectedMoment.isAfter(log.created_at)
+            if date && !referOrgName
+                return selectedMoment.isAfter(log.created_at)
+
+            if !date && referOrgName
+                return log.dep_name.indexOf(referOrgName) >= 0
+
+            if referOrgName && referOrgName
+                return selectedMoment.isAfter(log.created_at) && log.dep_name.indexOf(referOrgName) >= 0
 
         visibleLogs = _.filter sortedLogs, (log) ->
-            return selectedMoment.isAfter(log.created_at)
+            if date && !referOrgName
+                return selectedMoment.isAfter(log.created_at)
+
+            if !date && referOrgName
+                return log.dep_name.indexOf(referOrgName) >= 0
+
+            if referOrgName && referOrgName
+                return selectedMoment.isAfter(log.created_at) && log.dep_name.indexOf(referOrgName) >= 0
+
 
         _.forEach visibleLogs, (log)->
             log.visible = true

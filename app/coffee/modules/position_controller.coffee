@@ -183,7 +183,7 @@ class PositionChangesCtrl extends nb.Controller
                     displayName: '变更时间'
                 }
                 {
-                    name: 'remark'
+                    name: 'staffing_remark'
                     type: 'boolean'
                     displayName: '是否有备注'
                 }
