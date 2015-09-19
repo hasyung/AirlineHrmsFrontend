@@ -1046,7 +1046,7 @@ class SbFlowHandlerCtrl
         self = @
 
         params = users.map (user)->
-            {id: user.id, relation_data: user.relation_data}
+            {id: user.id, relation_data: user.relation_data, retirement_date: user.retirementDate}
 
         @http.post("/api/workflows/Flow::Retirement/batch_create", {receptors: params}).success (data, status)->
             self.Evt.$send "retirement:create:success", "退休发起成功"
