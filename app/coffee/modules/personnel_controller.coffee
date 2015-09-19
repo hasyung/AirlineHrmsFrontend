@@ -366,7 +366,6 @@ class LeaveEmployeesCtrl extends nb.Controller
             ]
         }
 
-
     loadInitialData: () ->
         @leaveEmployees = @LeaveEmployees.$collection().$fetch()
 
@@ -374,6 +373,18 @@ class LeaveEmployeesCtrl extends nb.Controller
         tableState = tableState || {}
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @leaveEmployees.$refresh(tableState)
+
+    getSelected: () ->
+        rows = @gridApi.selection.getSelectedGridRows()
+        rows.map (row) -> return row.entity
+
+    getSelectsIds: () ->
+        rows = @gridApi.selection.getSelectedGridRows()
+        rows.map (row) -> return row.entity.$pk
+
+    exportGridApi: (gridApi) ->
+        @gridApi = gridApi
+
 
 class MoveEmployeesCtrl extends nb.Controller
     @.$inject = ['$scope', 'MoveEmployees', 'Employee', '$nbEvent', '$http']

@@ -409,6 +409,12 @@ class PerformanceAllege extends nb.Controller
                 placeholder: '申诉时间'
                 type: 'date-range'
             }
+            {
+                displayName: '申诉结果'
+                name: 'is_managed'
+                placeholder: '申诉结果'
+                type: 'allege_result_select'
+            }
         ]
 
         @columnDef = BASE_TABLE_DEFS.concat [

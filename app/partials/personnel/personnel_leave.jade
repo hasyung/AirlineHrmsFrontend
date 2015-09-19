@@ -1,8 +1,30 @@
 .app-content-wrapper(flex style="height: 700px;" ng-controller="LeaveEmployeesCtrl as ctrl")
 
     div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+
     div.ui-grid-container
         md-toolbar
             .md-toolbar-tools
                 h2 离职人员花名册
-        div(nb-grid column-defs="ctrl.columnDef" on-register-api="ctrl.exportGridApi(gridApi)" safe-src="ctrl.leaveEmployees")
+                div(flex)
+                md-menu(ng-init="selectedRows=[]")
+                    md-button.md-primary.md-raised(
+                        ng-click="selectedRows = ctrl.getSelectsIds(); $mdOpenMenu($event)"
+                        ) 导出
+                    md-menu-content
+                        md-menu-item()
+                            a.md-button(flex ng-href="/api/leave_employees/export_to_xls") 导出全部人员
+                        md-menu-item(ng-if="selectedRows.length > 0")
+                            a.md-button(
+                                nb-download
+                                url-prefix="/api/leave_employees/export_to_xls?leave_employee_ids=#param#"
+                                param-getter="ctrl.getSelectsIds()"
+                                href="javascript:;"
+                                download
+                            ) 导出所选人员
+
+        div(nb-grid
+          column-defs="ctrl.columnDef"
+          on-register-api="ctrl.exportGridApi(gridApi)"
+          grid-selection
+          safe-src="ctrl.leaveEmployees")

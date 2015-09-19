@@ -128,6 +128,19 @@ class NbFilterCtrl extends nb.FilterController
                 <md-option ng-value="false" placeholder="离职发起">未发起</md-option>
             </md-select>
         '''
+        'allege_result_select':'''
+            <md-select placeholder="${ displayName }" ng-model="${ name }">
+                <md-option ng-value="true" placeholder="申诉结果">已处理</md-option>
+                <md-option ng-value="false" placeholder="申诉结果">未处理</md-option>
+            </md-select>
+        '''
+        'budget_staffing_select':'''
+            <md-select placeholder="${ displayName }" ng-model="${ name }">
+                <md-option value="1" placeholder="编制状态">超编</md-option>
+                <md-option value="-1" placeholder="编制状态">缺编</md-option>
+                <md-option value="0" placeholder="编制状态">正常</md-option>
+            </md-select>
+        '''
         'boolean': '''
             <md-select placeholder="${ displayName }" ng-model="${ name }">
                 <md-option value="true" selected)">是</md-option>

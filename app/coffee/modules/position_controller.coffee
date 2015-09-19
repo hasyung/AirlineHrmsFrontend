@@ -68,8 +68,8 @@ class PositionCtrl extends nb.Controller
                 name: 'staffingStatus'
                 cellTemplate: '''
                     <div class="ui-grid-cell-contents">
-                        <span style="color:blue" ng-if="row.entity.budgetedStaffing > row.entity.staffing">{{row.entity.budgetedStaffing - row.entity.staffing}}</span>
-                        <span style="color:red" ng-if="row.entity.budgetedStaffing < row.entity.staffing">{{row.entity.budgetedStaffing - row.entity.staffing}}</span>
+                        <span style="color:blue" ng-if="row.entity.budgetedStaffing > row.entity.staffing">{{row.entity.staffing - row.entity.budgetedStaffing}}</span>
+                        <span style="color:red" ng-if="row.entity.budgetedStaffing < row.entity.staffing">{{row.entity.staffing - row.entity.budgetedStaffing}}</span>
                         <span style="color:black" ng-if="row.entity.budgetedStaffing == row.entity.staffing">0</span>
                     </div>
                 '''
@@ -114,6 +114,11 @@ class PositionCtrl extends nb.Controller
                     displayName: '机构'
                     type: 'org-search'
                 }
+                {
+                    name: 'budgeted_staffinged'
+                    displayName: '编制状态'
+                    type: 'budget_staffing_select'
+                }
             ]
         }
 
@@ -136,6 +141,7 @@ class PositionChangesCtrl extends nb.Controller
 
     constructor: (@PositionChange) ->
         @changes = @PositionChange.$collection().$refresh()
+
         @columnDef = [
             {name:"name", displayName:"岗位名称"}
             {name:"department.name", displayName:"所属部门"}
@@ -155,6 +161,7 @@ class PositionChangesCtrl extends nb.Controller
                 '''
             }
             {name:"createdAt", displayName:"变更时间"}
+            {name:"positionRemark", displayName:"备注"}
         ]
 
         @filterOptions = {
@@ -174,6 +181,11 @@ class PositionChangesCtrl extends nb.Controller
                     name: 'created_at'
                     type: 'date-range'
                     displayName: '变更时间'
+                }
+                {
+                    name: 'remark'
+                    type: 'boolean'
+                    displayName: '是否有备注'
                 }
             ]
         }

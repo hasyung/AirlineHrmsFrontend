@@ -10,6 +10,9 @@ md-dialog.org_history
                     bs-datepicker container="body" data-autoclose="1"
                     min-date="{{dialog.historyData.minDate}}" max-date="today" ng-model="selectedDate"
                     ng-change="ctrl.pickLog(selectedDate, dialog.historyData.changeLogs)")
+            md-input-container(flex)
+                label 相关机构名称
+                input(ng-model="referOrgName")
         div.wrapper.org-timline(ng-init="activeLog = {}; ctrl.initVisble(dialog.historyData.changeLogs)")
             ul.timeline(ng-repeat="yearLogs in dialog.historyData.changeLogs")
                 li.tl-header
@@ -31,6 +34,8 @@ md-dialog.org_history
                                 ul(ng-show="log.active")
                                     li(ng-repeat="step in log.step_desc track by $index")
                                         p {{::step}}
+                                h1.pull-right(style="margin-top:-24px;color:#000")
+                                    span 操作者: {{::log.creator}}
                         div.tl-point
 
     .md-actions

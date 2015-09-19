@@ -42,7 +42,11 @@ tabset(flex)
                                         href="javascript:;"
                                         download
                                     ) 导出所选人员履历
-                div(nb-grid column-defs="ctrl.columnDef" on-register-api="ctrl.exportGridApi(gridApi)"  grid-selection safe-src="ctrl.employees")
+
+                div(nb-grid column-defs="ctrl.columnDef"
+                    on-register-api="ctrl.exportGridApi(gridApi)"
+                    grid-selection
+                    safe-src="ctrl.employees")
 
     tab(heading="离职人员花名册")
         include personnel_leave

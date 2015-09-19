@@ -129,8 +129,12 @@
                                 input(ng-model="newEmp.technicalDuty")
                             md-input-container.row-has-value(flex)
                                 label 用工关系状态
-                                md-select(ng-model="newEmp.employmentStatusId")
+                                md-select(ng-model="newEmp.employmentStatusId" ng-change="newEmp.probation_months = 0")
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('employment_status')") {{item.label}}
+                            md-input-container.row-has-value(flex ng-if="$enum.parseLabel(newEmp.employmentStatusId, 'employment_status') == '试用期员工'")
+                                label 试用时间
+                                md-select(ng-model="newEmp.probation_months")
+                                    md-option(ng-value="item.id" ng-repeat="item in [1,2,3,4,5,6,7,8,9,10,11,12]") {{item}}
 
                         div(layout)
                             md-input-container(flex)

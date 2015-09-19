@@ -312,7 +312,6 @@ class OrgCtrl extends nb.Controller
             sweet.error("您取消了删除#{@scope.currentOrg.name}")
 
 
-
 class PositionCtrl extends nb.Controller
     @.$inject = ['$scope', '$nbEvent', 'Position', '$stateParams', 'Org', 'Specification']
 
@@ -348,8 +347,8 @@ class PositionCtrl extends nb.Controller
                 name: 'staffingStatus'
                 cellTemplate: '''
                     <div class="ui-grid-cell-contents">
-                        <span style="color:blue" ng-if="row.entity.budgetedStaffing > row.entity.staffing">{{row.entity.budgetedStaffing - row.entity.staffing}}</span>
-                        <span style="color:red" ng-if="row.entity.budgetedStaffing < row.entity.staffing">{{row.entity.budgetedStaffing - row.entity.staffing}}</span>
+                        <span style="color:blue" ng-if="row.entity.budgetedStaffing > row.entity.staffing">{{row.entity.staffing - row.entity.budgetedStaffing}}</span>
+                        <span style="color:red" ng-if="row.entity.budgetedStaffing < row.entity.staffing">{{row.entity.staffing - row.entity.budgetedStaffing}}</span>
                         <span style="color:black" ng-if="row.entity.budgetedStaffing == row.entity.staffing">0</span>
                     </div>
                 '''
