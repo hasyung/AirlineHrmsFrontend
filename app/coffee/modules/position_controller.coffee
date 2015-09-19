@@ -145,7 +145,8 @@ class PositionChangesCtrl extends nb.Controller
         @columnDef = [
             {name:"name", displayName:"岗位名称"}
             {name:"department.name", displayName:"所属部门"}
-            {name:"action", displayName:"操作"}
+            {name:"user.name", displayName:"操作者"}
+            {name:"action", displayName:"操作类型"}
             {
                 displayName: '信息变更模块'
                 field: 'auditableType'
@@ -161,7 +162,7 @@ class PositionChangesCtrl extends nb.Controller
                 '''
             }
             {name:"createdAt", displayName:"变更时间"}
-            {name:"positionRemark", displayName:"备注"}
+            {name:"remark", displayName:"备注"}
         ]
 
         @filterOptions = {
@@ -183,7 +184,7 @@ class PositionChangesCtrl extends nb.Controller
                     displayName: '变更时间'
                 }
                 {
-                    name: 'staffing_remark'
+                    name: 'has_remark'
                     type: 'boolean'
                     displayName: '是否有备注'
                 }
