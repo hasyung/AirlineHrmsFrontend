@@ -20,11 +20,13 @@ table.table.table-bordered.setting-table
               md-option(ng-repeat="item in setting[column]['edit_select_array']" ng-value="item") {{item}}
 
           div(ng-switch-when="dialog")
-            a(href="javascript:void(0);" nb-dialog template-url="partials/salary/settings/dialogs/{{::ctrl.current_category}}.html" locals="{current: setting[column], grade: setting.grade}") 设置
+            a(href="javascript:void(0);" nb-dialog template-url="partials/salary/settings/dialogs/{{::ctrl.current_category}}.html" locals="{current: setting[column], grade: setting.grade}")
+              span(ng-if="setting[column]['add']") +
+              span(ng-if="!setting[column]['add']") 设置
 
           div(ng-switch-default)
-            a(ng-if="ctrl.isComplexSetting(setting[column])" href="javascript:void(0);" nb-dialog template-url="partials/salary/settings/dialogs/{{::ctrl.current_category}}.html" locals="{current: setting[column], grade: setting.grade}") +??
-            input(ng-if="!ctrl.isComplexSetting()" type="text" ng-model="setting[column]['format_value']")
+            a(ng-if="ctrl.isComplexSetting(ctrl.dynamic_config.flags, setting.grade, column, setting)" href="javascript:void(0);" nb-dialog template-url="partials/salary/settings/dialogs/{{::ctrl.current_category}}.html" locals="{current: setting[column], grade: setting.grade}") +
+            input(ng-if="!ctrl.isComplexSetting(ctrl.dynamic_config.flags, setting.grade, column, setting)" type="text" ng-model="setting[column]['format_value']")
 
         //- 系数
         div(ng-if="column=='rate'")
@@ -39,4 +41,4 @@ table.table.table-bordered.setting-table
 
       //- 不是编辑模式
       div(ng-if="!ctrl.editing")
-        span {{setting[column]['format_value'] || ctrl.formatColumn(setting[column])}}
+        span {{setting[column]['format_value'] || ctrl.formatColumn(ctrl.dynamic_config.flags, setting.grade, setting, column)}}

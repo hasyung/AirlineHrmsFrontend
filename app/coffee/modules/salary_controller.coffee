@@ -199,11 +199,16 @@ class SalaryController extends nb.Controller
         @backup_config = angular.copy(@dynamic_config)
         @editing = false
 
-    isComplexSetting: (column)->
+    isComplexSetting: (flags, grade, column, setting)->
         if ['information_perf', 'airline_business_perf', 'manage_market_perf'].indexOf(@current_category) >= 0
-            column['edit_mode'] = 'dialog'
-            column['format_cell'] = 'desc'
-            column['format_value'] = 'test'
+            flags[grade] = {} if !angular.isDefined(flags[grade])
+            flags[grade][column] = {} if !angular.isDefined(flags[grade][column])
+
+            setting = flags[grade]
+            setting[column]['edit_mode'] = 'dialog'
+            setting[column]['add'] = true
+            setting[column]['format_cell'] = null
+            setting[column]['expr'] = null
 
             return true
 
@@ -239,14 +244,18 @@ class SalaryController extends nb.Controller
     existCurrentRate: ()->
         @dynamic_config.flag_list.indexOf('rate') >= 0
 
-    formatColumn: (input)->
-        result = input
+    formatColumn: (flags, grade, setting, column)->
+        if setting[column] && (setting[column]['expr'] || setting[column]['format_cell'])
+            setting[column]['add'] = false
+            flags[grade][column]['add'] = false
+
+        result = input = setting[column]
 
         if input && angular.isDefined(input['format_cell'])
             result = input['format_cell']
-            result = result.replace('%{format_value}', input['format_value'])
-            result = result.replace('%{work_value}', input['work_value'])
-            result = result.replace('%{time_value}', input['time_value'])
+            result = result.replace('%{format_value}', input['format_value']) if result
+            result = result.replace('%{work_value}', input['work_value']) if result
+            result = result.replace('%{time_value}', input['time_value']) if result
 
         result
 
@@ -266,9 +275,9 @@ class SalaryController extends nb.Controller
 
         angular.forEach hash, (value, key)->
             if reverse
-                result = result.replace(value, key)
+                result = result.replace(value, key) if result
             else
-                result = result.replace(key, value)
+                result = result.replace(key, value) if result
 
         result
 
