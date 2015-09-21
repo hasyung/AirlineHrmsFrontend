@@ -459,7 +459,7 @@ class SalaryChangeController extends nb.Controller
                     type: 'string'
                 }
                 {
-                    name: 'applyCategory'
+                    name: 'category'
                     displayName: '信息种类'
                     type: 'salary_change_category_select'
                 }
@@ -488,7 +488,7 @@ class SalaryChangeController extends nb.Controller
                     return row.entity.departmentName
             }
             {displayName: '信息发生时间', name: 'changeDate'}
-            {displayName: '信息种类', name: 'applyCategory'}
+            {displayName: '信息种类', name: 'category'}
             {
                 displayName: '查看'
                 field: 'setting'
