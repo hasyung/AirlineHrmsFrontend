@@ -1,12 +1,12 @@
 .workflow.md-background(md-theme="hrms"
-    ng-init="allege = panel.allege; request = {};\
-        outerScope = panel.outerScope;\
+    ng-init="allege = panel.allege;\
+        request = {};\
         allege.$refresh();\
+        outerScope = panel.outerScope;\
         Performance = panel.Performance;\
         Employee = panel.Employee;\
         performanceAttachs = Performance.$new(allege.performanceId).attachments.$fetch();\
         receptor = Employee.$find(allege.employeeId);\
-        targetUrl = '/api/alleges/' + allege.id +'/attachments';\
     "
 )
     md-toolbar.md-warn(md-theme="hrms")
@@ -60,7 +60,7 @@
                                         md-icon.md-warn(md-svg-src="/images/svg/close.svg")
 
                         .accessory-btn-group(
-                            flow-init="{target: targetUrl, testChunks:false, uploadMethod:'POST', singleFile:true}"
+                            flow-init="{target:'/api/alleges/' + allege.id +'/attachments', testChunks:false, uploadMethod:'POST', singleFile:true}"
                             flow-files-submitted="$flow.upload()"
                             flow-file-success="allege.allegeAttachments.push(outerScope.ctrl.parseJSON($message).allege_attachment)"
                         )
@@ -85,7 +85,7 @@
                     .form-bottom-group(layout)
                         span(flex)
                         md-button.md-raised.white(type="button" ng-click="panel.close()") 取消
-                        md-button.md-primary.md-raised(type="submit") 确定
+                        md-button.md-primary.md-raised(ng-disabled="!request.outcome" type="submit") 确定
 
 
 
