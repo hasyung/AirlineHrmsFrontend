@@ -2,7 +2,7 @@
     .salary-basic(style="padding: 0;")
         md-toolbar
             .md-toolbar-tools
-                h2 岗位发放总表
+                h2 当前岗位发放列表
                 span(flex)
 
         div(layout)
@@ -15,9 +15,9 @@
         table.tablexx.table-default.table-bordered
           thead
               tr
-                  th 岗位名称
+                  th 岗位名称 {{ctrl.currentTempPositions.length}}
 
           tbody
               tr
                   td
-                      span(ng-repeat="item in ctrl.currentTempPositions") {{item.positionName}}
+                      span(ng-repeat="item in ctrl.currentTempPositions") {{item.full_position_name}}

@@ -283,20 +283,22 @@ class SalaryController extends nb.Controller
 
     loadPositions: (selectDepId)->
         @http.get('/api/salaries/temperature_amount?department_ids=' + selectDepId)
-            .success ()->
-                #
+            .success (data)->
+                console.error data
 
     listTempPosition: (amount)->
-        @http.get('/api/salaries/temperature_amount?amount=' + amount)
-            .success ()->
-                #
+        @http.get('/api/salaries/temperature_amount?per_page=3000&amount=' + amount)
+            .success (data)->
+                self.currentTempPositions = data.temperature_amounts
 
     updateTempAmount: (position_id)->
+        self = @
         params = {position_id: position_id, amount: amount}
 
         @http.put('/api/salaries/temperature_amount', params)
-            .success ()->
-                #
+            .success (data, status)->
+                console.error status
+
 
 
 class SalaryPersonalController extends nb.Controller
