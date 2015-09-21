@@ -153,7 +153,8 @@ class SalaryController extends nb.Controller
                           "unfly_allowance_hour",               # 小时费-未飞补贴
                           "allowance",                          # 津贴设置
                           "land_subsidy",                       # 地面驻站补贴
-                          "airline_subsidy"                     # 空勤驻站补贴
+                          "airline_subsidy",                    # 空勤驻站补贴
+                          "temp"                                # 高温补贴
                          ]
 
         @year_list = @$getYears()
@@ -168,6 +169,7 @@ class SalaryController extends nb.Controller
 
     loadConfigFromServer: (category)->
         self = @
+
         @http.get('/api/salaries').success (data)->
             # 全局设置单独处理
             self.global_setting = data.global.form_data
@@ -281,24 +283,34 @@ class SalaryController extends nb.Controller
 
         result
 
-    loadPositions: (selectDepId)->
-        @http.get('/api/salaries/temperature_amount?department_ids=' + selectDepId)
+    loadPositions: (selectDepIds, keywords)->
+        self = @
+        return unless selectDepIds
+
+        @http.get('/api/salaries/temperature_amount?department_ids=' + selectDepIds)
             .success (data)->
-                console.error data
+                self.tempPositions = data.temperature_amounts
+
+                if !!keywords && keywords.length > 0
+                    self.tempPositions = _.filter self.tempPositions, (item)->
+                        item.full_position_name.indexOf(keywords) >= 0
 
     listTempPosition: (amount)->
-        @http.get('/api/salaries/temperature_amount?per_page=3000&amount=' + amount)
+        self = @
+
+        @http.get('/api/salaries/temperature_amount?per_page=3000&temperature_amount=' + amount)
             .success (data)->
                 self.currentTempPositions = data.temperature_amounts
 
-    updateTempAmount: (position_id)->
+    updateTempAmount: (position_id, amount)->
         self = @
-        params = {position_id: position_id, amount: amount}
+        params = {position_id: position_id, temperature_amount: parseInt(amount)}
 
-        @http.put('/api/salaries/temperature_amount', params)
-            .success (data, status)->
-                console.error status
-
+        @http.put('/api/salaries/update_temperature_amount', params)
+            .success (data)->
+                self.toaster.pop('success', '提示', '更新成功')
+            .error (data)->
+                self.toaster.pop('success', '提示', '更新成功')
 
 
 class SalaryPersonalController extends nb.Controller

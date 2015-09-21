@@ -13,7 +13,7 @@
                     th 城市
 
             tbody
-                tr(ng-reqpeat="item in ctrl.dynamic_config.city_list")
+                tr(ng-repeat="item in ctrl.dynamic_config.city_list")
                     td {{item.start_month}} - {{item.end_month}}
                     td
-                        span(ng-reqpeat="city in item.cities") {{city}}{{ $last? '' : '/' }}
+                        span(ng-repeat="city in item.cities") {{city}}{{ $last? '' : '/' }}
