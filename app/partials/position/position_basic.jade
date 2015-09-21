@@ -31,14 +31,14 @@ form(name="posEditForm" ng-submit="save(currentPos.$save(), posEditForm)" ng-con
         div(layout)
             md-input-container(flex)
                 label 编制
-                input(ng-model="currentPos.budgetedStaffing" required ng-change="currentPos.staffingRemark=null;")
+                input(ng-model="currentPos.budgetedStaffing" ng-change="currentPos.staffingRemark=null" required)
             md-input-container(flex)
                 label 在岗人数
                 input(ng-model="currentPos.staffing" disabled)
         duv(layout ng-if="currentPos.budgetedStaffing != oldBudgetedStaffing")
             md-input-container(flex)
                 label 修改编制备注
-                input(ng-model="currentPos.staffingRemark")
+                input(ng-model="currentPos.staffingRemark" ng-required="currentPos.budgetedStaffing != oldBudgetedStaffing")
         div(layout)
             md-input-container.row-has-value(flex)
                 label 工时制度
