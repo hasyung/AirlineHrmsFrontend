@@ -20,17 +20,12 @@
 
                 span(flex)
                 span
-                    md-menu(ng-init="selectedRows=[]")
-                        md-button.md-primary.md-raised(
-                            ng-click="$mdOpenMenu($event)"
-                            ng-disabled="ctrl.calcing || ctrl.upload_start"
-                            ) 导入
-                        md-menu-content()
-                            md-menu-item(
-                                flow-init="{target: '/api/attachments/upload_file', testChunks: false, uploadMethod: 'POST', singleFile: true}"
-                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
-                                flow-file-success="ctrl.upload_start=false;ctrl.upload_bus_fee('班车费', ctrl.parseJSON($message).id);")
-                                md-button(flex flow-btn type="button") 班车费
+                    md-button.md-raised.md-primary(
+                        flow-init="{target: '/api/attachments/upload_file', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                        flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                        flow-file-success="ctrl.upload_start=false;ctrl.upload_bus_fee('班车费', ctrl.parseJSON($message).id);"
+                        flow-btn type="button"
+                    ) 导入班车费
                 span
                     md-button.md-raised.md-primary(
                         ng-click="ctrl.exeCalc()"
@@ -43,12 +38,6 @@
                             ng-disabled="ctrl.calcing || ctrl.records.length==0"
                             ) 导出
                         md-menu-content
-                            md-menu-item()
-                                a.md-button(flex
-                                    download
-                                    ng-href="/api/transport_fees/export_nc?month={{ctrl.currentCalcTime()}}"
-                                    href="javascript:"
-                                ) NC导入表
                             md-menu-item()
                                 a.md-button(
                                     download
