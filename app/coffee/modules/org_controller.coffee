@@ -202,23 +202,29 @@ class OrgsCtrl extends nb.Controller
 
         log = _.find sortedLogs, (log) ->
             if date && !referOrgName
-                return selectedMoment.isAfter(log.created_at)
+                return selectedMoment.isAfter(log.created_at) || selectedMoment.isSame(log.created_at, 'day')
 
             if !date && referOrgName
                 return log.dep_name.indexOf(referOrgName) >= 0
 
             if referOrgName && referOrgName
-                return selectedMoment.isAfter(log.created_at) && log.dep_name.indexOf(referOrgName) >= 0
+                return (selectedMoment.isAfter(log.created_at) || selectedMoment.isSame(log.created_at, 'day')) && log.dep_name.indexOf(referOrgName) >= 0
+
+            else
+                return true
 
         visibleLogs = _.filter sortedLogs, (log) ->
             if date && !referOrgName
-                return selectedMoment.isAfter(log.created_at)
+                return selectedMoment.isAfter(log.created_at) || selectedMoment.isSame(log.created_at, 'day')
 
             if !date && referOrgName
                 return log.dep_name.indexOf(referOrgName) >= 0
 
             if referOrgName && referOrgName
-                return selectedMoment.isAfter(log.created_at) && log.dep_name.indexOf(referOrgName) >= 0
+                return (selectedMoment.isAfter(log.created_at)|| selectedMoment.isSame(log.created_at, 'day')) && log.dep_name.indexOf(referOrgName) >= 0
+
+            else
+                return true
 
 
         _.forEach visibleLogs, (log)->

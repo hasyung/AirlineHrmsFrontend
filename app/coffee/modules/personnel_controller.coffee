@@ -538,6 +538,54 @@ class ReviewCtrl extends nb.Controller
         @enable_check = false
         self = @
 
+        @changeColumnDef = [
+            {name:"department.name", displayName:"所属部门"}
+            {name:"name", displayName:"姓名"}
+            {name:"employeeNo", displayName:"员工编号"}
+            {
+                displayName: '信息变更模块'
+                field: 'auditableType'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                    <a
+                        href="javascript:void(0);"
+                        nb-dialog
+                        template-url="partials/common/{{row.entity.action == '修改'? 'update_change_review.tpl.html': 'create_change_review.tpl.html'}}"
+                        locals="{'change': row.entity}"> {{row.entity.auditableType}}
+                    </a>
+                </div>
+                '''
+            }
+            {name:"createdAt", displayName:"变更时间"}
+            {
+                displayName: '操作'
+                field: 'statusCd'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <div class="radio-group" radio-box ng-model="row.entity.statusCd"></div>
+                </div>
+                '''
+            }
+            {
+                name:"reason"
+                displayName:"理由"
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">{{row.entity.reason || '请输入'}}
+                        <popup-template style="padding:8px;border:1px solid #eee;" class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <md-input-container>
+                                    <label>请输入理由</label>
+                                    <textarea ng-model="row.entity.reason" style="resize:none;" class="reason-input"></textarea>
+                                </md-input-container>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+            }
+        ]
+
         @recordColumnDef = [
             {name:"department.name", displayName:"所属部门"}
             {name:"name", displayName:"姓名"}
