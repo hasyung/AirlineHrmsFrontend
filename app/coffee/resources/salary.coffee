@@ -175,6 +175,35 @@ Reward = (restmod, RMUtils, $Evt) ->
     }
 
 
+TransportFee = (restmod, RMUtils, $Evt) ->
+    restmod.model('/transport_fees').mix 'nbRestApi', 'DirtyModel', {
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+        $hooks:
+            'after-create': ->
+                $Evt.$send('transport_fee:create:success', "交通费创建成功")
+
+            'after-update': ->
+                $Evt.$send('transport_fee:update:success', "交通费更新成功")
+
+        $config:
+            jsonRootSingle: 'transport_fee'
+            jsonRootMany: 'transport_fees'
+
+        $extend:
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+            Scope:
+                # 计算(根据年月)
+                compute: (params)->
+                    restmod.model('/transport_fees/compute').mix(
+                        $config:
+                            jsonRoot: 'transport_fees'
+                    ).$search(params)
+    }
+
+
 SalaryChange = (restmod, RMUtils, $Evt) ->
     restmod.model('/salary_changes').mix 'nbRestApi', 'DirtyModel', {
         owner: {belongsTo: 'Employee', key: 'employee_id'}
@@ -189,6 +218,23 @@ SalaryChange = (restmod, RMUtils, $Evt) ->
         $config:
             jsonRootSingle: 'salary_change'
             jsonRootMany: 'salary_changes'
+    }
+
+
+SalaryGradeChange = (restmod, RMUtils, $Evt) ->
+    restmod.model('/salary_grade_changes').mix 'nbRestApi', 'DirtyModel', {
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+        $hooks:
+            'after-create': ->
+                $Evt.$send('salary_grade_change:create:success', "薪酬档级变更创建成功")
+
+            'after-update': ->
+                $Evt.$send('salary_grade_change:update:success', "薪酬档级变更更新成功")
+
+        $config:
+            jsonRootSingle: 'salary_grade_change'
+            jsonRootMany: 'salary_grade_changes'
     }
 
 
@@ -215,5 +261,7 @@ resources.factory 'HoursFee', ['restmod', 'RMUtils', '$nbEvent', HoursFee]
 resources.factory 'Allowance', ['restmod', 'RMUtils', '$nbEvent', Allowance]
 resources.factory 'LandAllowance', ['restmod', 'RMUtils', '$nbEvent', LandAllowance]
 resources.factory 'Reward', ['restmod', 'RMUtils', '$nbEvent', Reward]
+resources.factory 'TransportFee', ['restmod', 'RMUtils', '$nbEvent', TransportFee]
 resources.factory 'SalaryChange', ['restmod', 'RMUtils', '$nbEvent', SalaryChange]
+resources.factory 'SalaryGradeChange', ['restmod', 'RMUtils', '$nbEvent', SalaryGradeChange]
 resources.factory 'SalaryOverview', ['restmod', 'RMUtils', '$nbEvent', SalaryOverview]
