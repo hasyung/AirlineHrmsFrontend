@@ -1,0 +1,9 @@
+.app-content-wrapper(flex ng-controller="salaryCtrl as ctrl" ng-init="ctrl.loadConfigFromServer('')")
+    .salary-basic
+        tabset
+            tab.leader-base(heading="城市设置" ng-click="ctrl.loadDynamicConfig('')")
+                include temp/city
+            tab.leader-base(heading="岗位设置" ng-click="ctrl.loadDynamicConfig('')")
+                include temp/position_setting
+            tab.leader-base(heading="岗位发放总表" ng-click="ctrl.loadDynamicConfig('')")
+                include temp/position_list

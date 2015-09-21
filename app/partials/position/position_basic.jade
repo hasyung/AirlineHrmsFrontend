@@ -31,7 +31,7 @@ form(name="posEditForm" ng-submit="save(currentPos.$save(), posEditForm)" ng-con
         div(layout)
             md-input-container(flex)
                 label 编制
-                input(ng-model="currentPos.budgetedStaffing" required)
+                input(ng-model="currentPos.budgetedStaffing" required ng-change="currentPos.staffingRemark=null;")
             md-input-container(flex)
                 label 在岗人数
                 input(ng-model="currentPos.staffing" disabled)

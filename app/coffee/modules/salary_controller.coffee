@@ -281,6 +281,16 @@ class SalaryController extends nb.Controller
 
         result
 
+    loadPositions: (selectDepId)->
+        @http.get('/api/salaries/temp_positons?dep_id=' + selectDepId)
+            .success ()->
+                #
+
+    listTempPosition: (amount)->
+        @http.get('/api/salaries/temp_positons?amount=' + amount)
+            .success ()->
+                #
+
 
 class SalaryPersonalController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryPersonSetup']
@@ -415,7 +425,7 @@ class SalaryChangeController extends nb.Controller
         @loadInitialData()
 
         @filterOptions = {
-            name: 'salaryPersonal'
+            name: 'salaryChange'
             constraintDefs: [
                 {
                     name: 'employee_name'
@@ -469,7 +479,7 @@ class SalaryChangeController extends nb.Controller
                     <a
                         href="javascript:void(0);"
                         nb-dialog
-                        template-url="partials/salary/settings/changes/index.html"
+                        template-url="partials/salary/settings/changes/personal.html"
                         locals="{change: row.entity}">
                         查看
                     </a>
@@ -485,6 +495,92 @@ class SalaryChangeController extends nb.Controller
         tableState = tableState || {}
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @salaryChanges.$refresh(tableState)
+
+
+class SalaryGradeChangeController extends nb.Controller
+    @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryGradeChange']
+
+    constructor: ($http, $scope, $Evt, $enum, @SalaryGradeChange) ->
+        @loadInitialData()
+
+        @filterOptions = {
+            name: 'salaryPersonal'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '员工姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+                {
+                    name: 'channel_ids'
+                    displayName: '通道'
+                    type: 'muti-enum-search'
+                    params: {
+                        type: 'channels'
+                    }
+                }
+                {
+                    name: 'department_ids'
+                    displayName: '机构'
+                    type: 'org-search'
+                }
+            ]
+        }
+
+        @columnDef = [
+            {displayName: '员工编号', name: 'employeeNo'}
+            {
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+            }
+            {displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
+            {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
+            {displayName: '薪酬模块', name: 'applyCategory'}
+            {displayName: '信息发生时间', name: 'createdAt'}
+            {
+                displayName: '查看'
+                field: 'setting'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a
+                        href="javascript:void(0);"
+                        nb-dialog
+                        template-url="partials/salary/settings/changes/grade.html"
+                        locals="{change: row.entity}">
+                        查看
+                    </a>
+                </div>
+                '''
+            }
+        ]
+
+    loadInitialData: () ->
+        @salaryGradeChanges = @SalaryGradeChange.$collection().$fetch()
+
+    search: (tableState) ->
+        tableState = tableState || {}
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+        @salaryGradeChanges.$refresh(tableState)
 
 
 class SalaryExchangeController
@@ -840,6 +936,32 @@ class SalaryRewardController extends SalaryBaseController
                 self.toaster.pop('error', '提示', '导入成功')
 
 
+class SalaryTransportFeeController extends SalaryBaseController
+    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'TransportFee', 'toaster']
+
+    constructor: ($http, $scope, $q, @Evt, @Employee, @TransportFee, @toaster) ->
+        super(@TransportFee, $scope, $q)
+
+        @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
+
+        @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
+            {displayName: '交通费', name: 'transport_fee', enableCellEdit: false}
+            {displayName: '班车费扣除', name: 'bus_fee', enableCellEdit: false}
+            {displayName: '补扣发', name: 'addGarnishee'}
+            {displayName: '备注', name: 'remark',  cellTooltip: (row) -> return row.entity.note}
+        ])
+
+    upload_bus_fee: (type, attachment_id)->
+        self = @
+        params = {type: type, attachment_id: attachment_id}
+
+        @http.post("/api/transport_fees/import", params).success (data, status) ->
+            if data.error_count > 0
+                self.toaster.pop('error', '提示', '导入失败')
+            else
+                self.toaster.pop('error', '提示', '导入成功')
+
+
 class SalaryOverviewController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'SalaryOverview', 'toaster']
 
@@ -863,6 +985,7 @@ class SalaryOverviewController extends SalaryBaseController
 app.controller 'salaryCtrl', SalaryController
 app.controller 'salaryPersonalCtrl', SalaryPersonalController
 app.controller 'salaryChangeCtrl', SalaryChangeController
+app.controller 'salaryGradeChangeCtrl', SalaryGradeChangeController
 app.controller 'salaryExchangeCtrl', SalaryExchangeController
 app.controller 'salaryBasicCtrl', SalaryBasicController
 app.controller 'salaryPerformanceCtrl', SalaryPerformanceController
@@ -870,4 +993,5 @@ app.controller 'salaryHoursFeeCtrl', SalaryHoursFeeController
 app.controller 'salaryAllowanceCtrl', SalaryAllowanceController
 app.controller 'salaryLandAllowanceCtrl', SalaryLandAllowanceController
 app.controller 'salaryRewardCtrl', SalaryRewardController
+app.controller 'salaryTransportFeeCtrl', SalaryTransportFeeController
 app.controller 'salaryOverviewCtrl', SalaryOverviewController
