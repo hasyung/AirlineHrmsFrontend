@@ -2,14 +2,14 @@
     .salary-basic(style="padding: 0;")
         md-toolbar
             .md-toolbar-tools
-                h2 岗位设置
+                h2 岗位高温补贴设置
                 span(flex)
 
         div(layout)
-            org-search(flex ng-model="selectDepId" placeholder="部门" float-label)
+            org-search(flex placeholder="部门" float-label search-text-change="selectDepIds=null" selected-item-change="selectDepIds = org.id;ctrl.loadPositions(selectDepIds, keywords)")
             md-input-container(flex)
               label 关键词过滤
-              input(ng-model="keywords" placeholder="关键词" ng-change="ctrl.loadPositions(selectDepId)")
+              input(ng-model="keywords" placeholder="关键词" ng-change="ctrl.loadPositions(selectDepIds, keywords)")
 
         table.tablexx.table-default.table-bordered
             thead
@@ -18,10 +18,10 @@
                     th 标准
 
             tbody
-                tr(ng-repeat="item in ctrl.positions track by $index")
-                    td {{item.positionName}}
+                tr(ng-repeat="item in ctrl.tempPositions track by $index")
+                    td {{::item.full_position_name}}
                     td
-                        md-select(ng-model="item.temperature_amount")
+                        md-select(ng-model="item.temperature_amount" ng-change="ctrl.updateTempAmount(item.id, item.temperature_amount)")
                             md-option(value="0") 无
                             md-option(value="400") 400
                             md-option(value="300") 300

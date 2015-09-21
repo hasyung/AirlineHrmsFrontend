@@ -31,9 +31,11 @@ md-dialog.employee_move
                     div(layout)
                         div(flex ng-if="!borrowEmployee.out_company")
                             org-search(
-                                ng-model="borrowEmployee.department_id"
+                                ng-model="borrowEmployee.department"
                                 float-label
                                 placeholder="借调部门"
+                                search-text-change="borrowEmployee.department_id=null"
+                                selected-item-change="borrowEmployee.department_id=org.id"
                                 )
                         div(flex ng-if="borrowEmployee.out_company")
                             md-input-container(flex)

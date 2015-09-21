@@ -2,7 +2,7 @@
     .salary-basic(style="padding: 0;")
         md-toolbar
             .md-toolbar-tools
-                h2 月份和城市
+                h2 月份和城市设置
                 span(flex)
                 md-button.md-raised.md-primary(style="margin-right: 0;" ng-click="ctrl.saveConfig('temp', ctrl.dynamic_config)") 保存
 
@@ -13,7 +13,7 @@
                     th 城市
 
             tbody
-                tr(ng-reqpeat="item in ctrl.dynamic_config.city_list")
+                tr(ng-repeat="item in ctrl.dynamic_config.city_list")
                     td {{item.start_month}} - {{item.end_month}}
                     td
-                        span(ng-reqpeat="city in item.cities") {{city}}{{ $last? '' : '/' }}
+                        span(ng-repeat="city in item.cities") {{city}}{{ $last? '' : '/' }}
