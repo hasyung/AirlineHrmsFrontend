@@ -459,7 +459,7 @@ class SalaryChangeController extends nb.Controller
                     type: 'string'
                 }
                 {
-                    name: 'applyCategory'
+                    name: 'category'
                     displayName: '信息种类'
                     type: 'salary_change_category_select'
                 }
@@ -488,7 +488,7 @@ class SalaryChangeController extends nb.Controller
                     return row.entity.departmentName
             }
             {displayName: '信息发生时间', name: 'changeDate'}
-            {displayName: '信息种类', name: 'applyCategory'}
+            {displayName: '信息种类', name: 'category'}
             {
                 displayName: '查看'
                 field: 'setting'
@@ -605,10 +605,8 @@ class SalaryGradeChangeController extends nb.Controller
 
         @http.get('/api/salary_person_setups/lookup?employee_id=' + employee_id)
             .success (data)->
-                self.setting = data
-
-                # 根据薪酬通道找到通道列表
-                self.channels = null
+                self.setting = data.salary_person_setup
+                self.flags = []
 
 
 class SalaryExchangeController

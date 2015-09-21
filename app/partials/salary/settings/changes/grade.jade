@@ -49,23 +49,37 @@ md-dialog.welfare_personal_new(ng-init="current=dialog.gradeChange;setting=ctrl.
 
                         div(layout)
                             md-input-container.row-has-value(flex)
-                                label 原基本工资
-                                input(type="text" ng-model="::setting.base_wage" readonly)
+                                label 原薪酬通道
+                                md-select(ng-model="setting.base_channel" placeholder="")
+                                    md-option(value="flyer_legend_base") 荣誉级飞行员
+                                    md-option(value="flyer_leader_base") 机长
+                                    md-option(value="flyer_copilot_base") 副驾
+                                    md-option(value="flyer_teacher_A_base") 教员A
+                                    md-option(value="flyer_teacher_B_base") 教员B
+                                    md-option(value="flyer_teacher_C_base") 教员C
+                                    md-option(value="flyer_student_base") 学员
                             md-input-container.row-has-value(flex)
                                 label 原档级
-                                input(type="text" ng-model="::setting.base_channel" readonly)
+                                input(type="text" ng-model="::setting.base_flag" readonly)
                             md-input-container(flex)
                                 label 金额
                                 input(type="number" min="0" max="100000" step="1" ng-model="::setting.base_money" readonly)
 
                         div(layout)
                             md-input-container.row-has-value(flex)
-                                label 拟基本工资
-                                input(type="text" ng-model="::setting.base_wage" readonly)
+                                label 拟薪酬通道
+                                md-select(ng-model="setting.base_channel" placeholder="")
+                                    md-option(value="flyer_legend_base") 荣誉级飞行员
+                                    md-option(value="flyer_leader_base") 机长
+                                    md-option(value="flyer_copilot_base") 副驾
+                                    md-option(value="flyer_teacher_A_base") 教员A
+                                    md-option(value="flyer_teacher_B_base") 教员B
+                                    md-option(value="flyer_teacher_C_base") 教员C
+                                    md-option(value="flyer_student_base") 学员
                             md-input-container.row-has-value(flex)
                                 label 拟档级
-                                md-select(ng-model="setting.base_channel" placeholder="请选择")
-                                    md-option(ng-value="item" ng-repeat="item in ctrl.channels") {{item}}
+                                md-select(ng-model="setting.base_flag" placeholder="请选择")
+                                    md-option(ng-value="item" ng-repeat="item in ctrl.flags") {{item}}
                             md-input-container(flex)
                                 label 金额
                                 input(type="number" min="0" max="100000" step="1" readonly ng-model="::setting.base_money")
