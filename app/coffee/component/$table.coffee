@@ -93,6 +93,14 @@ class NbFilterCtrl extends nb.FilterController
                 <md-option value="不合格" placeholder="绩效结果">不合格</md-option>
             </md-select>
         '''
+        'salary_change_category_select': '''
+            <md-select placeholder="${ displayName }" ng-model="${ name }">
+                <md-option value="合同新签" placeholder="信息种类">合同新签</md-option>
+                <md-option value="岗位变动" placeholder="信息种类">岗位变动</md-option>
+                <md-option value="停薪调" placeholder="信息种类">停薪调</md-option>
+                <md-option value="停薪调停止" placeholder="信息种类">停薪调停止</md-option>
+            </md-select>
+        '''
         'season-list': '''
                 <md-input-container md-no-float>
                     <md-select placeholder="季度" ng-model="${ name }">

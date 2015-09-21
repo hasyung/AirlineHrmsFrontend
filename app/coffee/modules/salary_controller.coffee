@@ -459,12 +459,9 @@ class SalaryChangeController extends nb.Controller
                     type: 'string'
                 }
                 {
-                    name: 'channel_ids'
-                    displayName: '通道'
-                    type: 'muti-enum-search'
-                    params: {
-                        type: 'channels'
-                    }
+                    name: 'applyCategory'
+                    displayName: '信息种类'
+                    type: 'salary_change_category_select'
                 }
             ]
         }
@@ -490,7 +487,7 @@ class SalaryChangeController extends nb.Controller
                 cellTooltip: (row) ->
                     return row.entity.departmentName
             }
-            {displayName: '信息发生时间', name: 'createdAt'}
+            {displayName: '信息发生时间', name: 'changeDate'}
             {displayName: '信息种类', name: 'applyCategory'}
             {
                 displayName: '查看'
@@ -576,8 +573,8 @@ class SalaryGradeChangeController extends nb.Controller
             }
             {displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
             {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
-            {displayName: '薪酬模块', name: 'applyCategory'}
-            {displayName: '信息发生时间', name: 'createdAt'}
+            {displayName: '薪酬模块', name: 'changeModule'}
+            {displayName: '信息发生时间', name: 'recordDate'}
             {
                 displayName: '查看'
                 field: 'setting'
