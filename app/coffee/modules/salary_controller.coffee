@@ -606,9 +606,7 @@ class SalaryGradeChangeController extends nb.Controller
         @http.get('/api/salary_person_setups/lookup?employee_id=' + employee_id)
             .success (data)->
                 self.setting = data.salary_person_setup
-
-                # 根据薪酬通道找到通道列表
-                self.channels = null
+                self.flags = []
 
 
 class SalaryExchangeController
