@@ -16,7 +16,7 @@ md-dialog.sample-dialog(ng-init="performance = dialog.performance;attachments = 
                         div(ng-if="!ctrl.isImgObj(attachment)" style="cursor: pointer;")
                             a(
                                 style="display: block; color: rgba(0,0,0,0.87)"
-                                ng-href="attachment.default"
+                                ng-href="{{attachment.default}}"
                                 download
                                 )
                                 .accessory-name() {{attachment.name}}
