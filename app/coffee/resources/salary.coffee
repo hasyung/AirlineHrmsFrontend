@@ -235,6 +235,19 @@ SalaryGradeChange = (restmod, RMUtils, $Evt) ->
         $config:
             jsonRootSingle: 'salary_grade_change'
             jsonRootMany: 'salary_grade_changes'
+
+        $extend:
+            Record:
+                audit: (params)->
+                    self = this
+
+                    request = {
+                        url: "/api/salary_grade_changes/#{this.id}/audit"
+                        method: "PUT"
+                        params: params
+                    }
+
+                    this.$send(request, onSuccess)
     }
 
 

@@ -516,9 +516,9 @@ class SalaryChangeController extends nb.Controller
 
 
 class SalaryGradeChangeController extends nb.Controller
-    @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryGradeChange']
+    @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryGradeChange', 'SALARY_SETTING']
 
-    constructor: ($http, $scope, $Evt, $enum, @SalaryGradeChange) ->
+    constructor: (@http, $scope, $Evt, $enum, @SalaryGradeChange, @SALARY_SETTING) ->
         @loadInitialData()
 
         @filterOptions = {
@@ -599,6 +599,16 @@ class SalaryGradeChangeController extends nb.Controller
         tableState = tableState || {}
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @salaryGradeChanges.$refresh(tableState)
+
+    loadSalarySetting: (employee_id)->
+        self = @
+
+        @http.get('/api/salary_person_setups/lookup?employee_id=' + employee_id)
+            .success (data)->
+                self.setting = data
+
+                # 根据薪酬通道找到通道列表
+                self.channels = null
 
 
 class SalaryExchangeController
@@ -963,8 +973,8 @@ class SalaryTransportFeeController extends SalaryBaseController
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
-            {displayName: '交通费', name: 'transport_fee', enableCellEdit: false}
-            {displayName: '班车费扣除', name: 'bus_fee', enableCellEdit: false}
+            {displayName: '交通费', name: 'transportFee', enableCellEdit: false}
+            {displayName: '班车费扣除', name: 'busFee', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee'}
             {displayName: '备注', name: 'remark',  cellTooltip: (row) -> return row.entity.note}
         ])
