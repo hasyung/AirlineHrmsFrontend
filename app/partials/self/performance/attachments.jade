@@ -7,8 +7,17 @@ md-dialog(style="min-width: 500px;" ng-init="performance = dialog.performance; a
             div(style="padding: 30px 60px;")
                 .accessory-container()
                     .accessory-cell(ng-repeat="attachment in attachments")
-                        .accessory-name(ng-bind="attachment.name")
-                        .accessory-size(ng-bind="attachment.size | byteFmt:2")
+                        div(ng-if="ctrl.isImgObj(attachment)" nb-gallery img-obj="attachment")
+                            .accessory-name(ng-bind="attachment.name")
+                            .accessory-size(ng-bind="attachment.size | byteFmt:2")
+                        div(ng-if="!ctrl.isImgObj(attachment)")
+                            a(
+                                style="display: block; color: rgba(0,0,0,0.87)"
+                                ng-href="{{attachment.default}}"
+                                download
+                                )
+                                .accessory-name(ng-bind="attachment.name")
+                                .accessory-size(ng-bind="attachment.size | byteFmt:2")
 
             .md-actions(style="border-top: 1px solid rgba(0, 0, 0, .12); padding: 0 20px;")
                 md-button.md-primary.md-raised.pull-right(type="button" ng-click="dialog.close();") 关 闭

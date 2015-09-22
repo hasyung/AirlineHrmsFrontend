@@ -38,8 +38,17 @@
                         md-subheader.accessory-header.md-background.md-hue-1 附件
                         .accessory-container
                             .accessory-cell(ng-repeat="attachment in performanceAttachs")
-                                .accessory-name(ng-bind="attachment.name")
-                                .accessory-size(ng-bind="attachment.size | byteFmt:2")
+                                div(ng-if="ctrl.isImgObj(attachment)" nb-gallery img-obj="attachment" style="cursor: pointer;")
+                                    .accessory-name(ng-bind="attachment.name")
+                                    .accessory-size(ng-bind="attachment.size | byteFmt:2")
+                                div(ng-if="!ctrl.isImgObj(attachment)" style="cursor: pointer;")
+                                    a(
+                                    style="display: block; color: rgba(0,0,0,0.87)"
+                                    ng-href="{{attachment.default}}"
+                                    download
+                                    )
+                                        .accessory-name(ng-bind="attachment.name")
+                                        .accessory-size(ng-bind="attachment.size | byteFmt:2")
 
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1 申述理由
@@ -53,11 +62,23 @@
                         md-subheader.md-background.md-hue-1(style="margin-bottom: 20px;") 处理附件
                         .accessory-container
                             .accessory-cell(ng-repeat="attachment in allege.allegeAttachments")
-                                .accessory-name(ng-bind="attachment.name")
-                                .accessory-size(ng-bind="attachment.size | byteFmt:2")
-                                .accessory-switch
-                                    md-button.md-icon-button(ng-click="allege.attachments.$new(attachment.id).$destroy()")
-                                        md-icon.md-warn(md-svg-src="/images/svg/close.svg")
+                                div(ng-if="ctrl.isImgObj(attachment)" nb-gallery img-obj="attachment" style="cursor: pointer;")
+                                    .accessory-name(ng-bind="attachment.name")
+                                    .accessory-size(ng-bind="attachment.size | byteFmt:2")
+                                    .accessory-switch
+                                        md-button.md-icon-button(ng-click="allege.attachments.$new(attachment.id).$destroy()")
+                                            md-icon.md-warn(md-svg-src="/images/svg/close.svg")
+                                div(ng-if="!ctrl.isImgObj(attachment)" style="cursor: pointer;")
+                                    a(
+                                    style="display: block; color: rgba(0,0,0,0.87)"
+                                    ng-href="{{attachment.default}}"
+                                    download
+                                    )
+                                        .accessory-name(ng-bind="attachment.name")
+                                        .accessory-size(ng-bind="attachment.size | byteFmt:2")
+                                        .accessory-switch
+                                            md-button.md-icon-button(ng-click="allege.attachments.$new(attachment.id).$destroy()")
+                                                md-icon.md-warn(md-svg-src="/images/svg/close.svg")
 
                         .accessory-btn-group(
                             flow-init="{target:'/api/alleges/' + allege.id +'/attachments', testChunks:false, uploadMethod:'POST', singleFile:true}"
