@@ -25,7 +25,7 @@ section.self_performance(ng-init="ctrl.loadPerformance()")
                                     th(width="25%") 申述
                             tbody
                                 tr(ng-repeat="performance in group")
-                                    td(ng-bind="performance.assessTime | date: 'yyyy-MM'")
+                                    td(ng-bind="performance.assessTime")
                                     td(ng-bind="performance.result")
                                     td(ng-bind="performance.sortNo" ng-if="!(currentUser.pcategory=='员工')")
                                     td
