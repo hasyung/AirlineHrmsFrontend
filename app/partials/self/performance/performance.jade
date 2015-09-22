@@ -20,14 +20,14 @@ section.self_performance(ng-init="ctrl.loadPerformance()")
                                 tr
                                     th 考核时段
                                     th 绩效
-                                    th(ng-if="rootCtrl.current_roles[0]=='company_leader'||rootCtrl.current_roles[0]=='department_leader'") 排序
+                                    th(ng-if="!(currentUser.pcategory=='员工')") 排序
                                     th(width="25%") 附件
                                     th(width="25%") 申述
                             tbody
                                 tr(ng-repeat="performance in group")
-                                    td(ng-bind="performance.assessTime")
+                                    td(ng-bind="performance.assessTime | date: 'yyyy-MM'")
                                     td(ng-bind="performance.result")
-                                    td(ng-bind="performance.sortNo" ng-if="rootCtrl.current_roles[0]=='company_leader'||rootCtrl.current_roles[0]=='department_leader'")
+                                    td(ng-bind="performance.sortNo" ng-if="!(currentUser.pcategory=='员工')")
                                     td
                                         a(
                                             ng-if="performance.attachmentStatus"
