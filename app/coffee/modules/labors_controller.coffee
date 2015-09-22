@@ -991,13 +991,6 @@ class SbFlowHandlerCtrl
         @columnDef = _.cloneDeep(USER_LIST_TABLE_DEFS)
         @tableData = @Employee.$collection().$fetch({filter_types: [@FlowName]})
 
-        if @FlowName == 'Flow::Retirement'
-            self = @
-            @Employee.$collection().$fetch({filter_types: [@FlowName]}).$asPromise().then ()->
-                self.tableData = _.filter self.tableData, (item)->
-                    str = self.enum.parseLabel(item.laborRelationId, 'labor_relations')
-                    str == '合同' || str == '合同制'
-
     checkList: ->
         @columnDef = @helper.buildFlowDefault(FLOW_HANDLE_TABLE_DEFS)
 
