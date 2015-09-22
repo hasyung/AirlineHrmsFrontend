@@ -431,13 +431,15 @@ angular.module 'nb.directives'
                         </div>
                     </div>
                     <div ng-if="!ctrl.isImage(file)">
-                        <div class="accessory-name" ng-bind="file.name"></div>
-                        <div class="accessory-size" ng-bind="file.size | byteFmt:2"></div>
-                        <div class="accessory-switch">
-                            <md-button type="button" class="md-icon-button" ng-click="ctrl.removeFile($index)">
-                                <md-icon md-svg-src="/images/svg/close.svg" class="md-warn"></md-icon>
-                            </md-button>
-                        </div>
+                        <a ng-href="{{file.default}}" download style="display:block;color:rgba(0,0,0,0.87);">
+                            <div class="accessory-name" ng-bind="file.name"></div>
+                            <div class="accessory-size" ng-bind="file.size | byteFmt:2"></div>
+                            <div class="accessory-switch">
+                                <md-button type="button" class="md-icon-button" ng-click="ctrl.removeFile($index)">
+                                    <md-icon md-svg-src="/images/svg/close.svg" class="md-warn"></md-icon>
+                                </md-button>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>

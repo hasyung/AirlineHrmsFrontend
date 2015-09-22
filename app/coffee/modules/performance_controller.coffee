@@ -441,6 +441,9 @@ class PerformanceAllege extends nb.Controller
 
         @alleges = @Allege.$collection().$fetch()
 
+    isImgObj: (obj)->
+        return /jpg|jpeg|png|gif/.test(obj.type)
+
     search: (tableState)->
         tableState = tableState || {}
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize

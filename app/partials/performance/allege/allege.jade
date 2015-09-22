@@ -10,7 +10,7 @@
     "
 )
     md-toolbar.md-warn(md-theme="hrms")
-        .md-toolbar-tools
+        .md-toolbar-tools(ng-init="ctrl.isImgObj")
             span 绩效申述
     .personnel-content.personnel-control
         section.personnel-info-section
@@ -36,19 +36,20 @@
                                     .flow-cell-content {{::allege.result}}
 
                         md-subheader.accessory-header.md-background.md-hue-1 附件
-                        .accessory-container
-                            .accessory-cell(ng-repeat="attachment in performanceAttachs")
-                                div(ng-if="ctrl.isImgObj(attachment)" nb-gallery img-obj="attachment" style="cursor: pointer;")
-                                    .accessory-name(ng-bind="attachment.name")
-                                    .accessory-size(ng-bind="attachment.size | byteFmt:2")
-                                div(ng-if="!ctrl.isImgObj(attachment)" style="cursor: pointer;")
-                                    a(
-                                    style="display: block; color: rgba(0,0,0,0.87)"
-                                    ng-href="{{attachment.default}}"
-                                    download
-                                    )
-                                        .accessory-name(ng-bind="attachment.name")
-                                        .accessory-size(ng-bind="attachment.size | byteFmt:2")
+                        div(nb-annexs-box annexs="performanceAttachs")
+                        //- .accessory-container
+                        //-     .accessory-cell(ng-repeat="attachment in performanceAttachs")
+                        //-         div(ng-if="ctrl.isImgObj(attachment)" nb-gallery img-obj="attachment" style="cursor: pointer;")
+                        //-             .accessory-name(ng-bind="attachment.name")
+                        //-             .accessory-size(ng-bind="attachment.size | byteFmt:2")
+                        //-         div(ng-if="!ctrl.isImgObj(attachment)" style="cursor: pointer;")
+                        //-             a(
+                        //-             style="display: block; color: rgba(0,0,0,0.87)"
+                        //-             ng-href="{{attachment.default}}"
+                        //-             download
+                        //-             )
+                        //-                 .accessory-name(ng-bind="attachment.name")
+                        //-                 .accessory-size(ng-bind="attachment.size | byteFmt:2")
 
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1 申述理由
@@ -61,14 +62,14 @@
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1(style="margin-bottom: 20px;") 处理附件
                         .accessory-container
-                            .accessory-cell(ng-repeat="attachment in allege.allegeAttachments")
-                                div(ng-if="ctrl.isImgObj(attachment)" nb-gallery img-obj="attachment" style="cursor: pointer;")
+                            .accessory-cell(ng-repeat="attachment in allege.allegeAttachments" ng-init)
+                                div(ng-if="outerScope.ctrl.isImgObj(attachment)" nb-gallery img-obj="attachment" style="cursor: pointer;")
                                     .accessory-name(ng-bind="attachment.name")
                                     .accessory-size(ng-bind="attachment.size | byteFmt:2")
                                     .accessory-switch
                                         md-button.md-icon-button(ng-click="allege.attachments.$new(attachment.id).$destroy()")
                                             md-icon.md-warn(md-svg-src="/images/svg/close.svg")
-                                div(ng-if="!ctrl.isImgObj(attachment)" style="cursor: pointer;")
+                                div(ng-if="!outerScope.ctrl.isImgObj(attachment)" style="cursor: pointer;")
                                     a(
                                     style="display: block; color: rgba(0,0,0,0.87)"
                                     ng-href="{{attachment.default}}"
