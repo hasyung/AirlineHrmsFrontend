@@ -108,14 +108,14 @@
                                 md-input-container.row-has-value(flex)
                                     label 处理结果
                                     input(ng-model="allege.outcome" readonly)
-                                md-input-container.row-has-value(flex)
+                                md-input-container.row-has-value(flex ng-if="allege.outcome=='通过'")
                                     label 绩效调整为
                                     input(ng-model="allege.result" readonly)
 
                     .form-bottom-group(layout)
                         span(flex)
                         md-button.md-raised.white(type="button" ng-click="panel.close()") 取消
-                        md-button.md-primary.md-raised(ng-disabled="!request.outcome" type="submit") 确定
+                        md-button.md-primary.md-raised(ng-disabled="!request.outcome" type="submit" ng-if="!allege.isManaged") 确定
 
 
 
