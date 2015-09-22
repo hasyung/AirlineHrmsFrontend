@@ -4,13 +4,14 @@ app = nb.app
 filterBuildUtils = nb.filterBuildUtils
 
 userListFilterOptions = filterBuildUtils('laborsRetirement')
-    .col 'name',                 '姓名',    'string',           '姓名'
+    .col 'name',                 '姓名',     'string', '姓名'
     .col 'employee_no',          '员工编号', 'string'
-    .col 'department_ids',       '机构',    'org-search'
+    .col 'department_ids',       '机构',     'org-search'
     .col 'position_names',       '岗位名称', 'string_array'
-    .col 'locations',            '属地',    'string_array'
-    .col 'channel_ids',          '通道',    'muti-enum-search', '',    {type: 'channels'}
-    .col 'employment_status_id', '用工状态', 'select',           '',    {type: 'employment_status'}
+    .col 'locations',            '属地',     'string_array'
+    .col 'channel_ids',          '通道',     'muti-enum-search', '', {type: 'channels'}
+    .col 'employment_status_id', '用工状态', 'select',           '', {type: 'employment_status'}
+    .col 'gender_id',            '性别',     'select',           '', {type: 'genders'}
     .col 'birthday',             '出生日期', 'date-range'
     .col 'join_scal_date',       '入职时间', 'date-range'
     .end()
@@ -179,7 +180,7 @@ ATTENDANCE_BASE_TABLE_DEFS = [
     }
     {
         name: 'vacationDays'
-        displayName: '时长'
+        displayName: '天数'
     }
     {
         name: 'workflowState'
@@ -188,6 +189,16 @@ ATTENDANCE_BASE_TABLE_DEFS = [
     {
         name: 'createdAt'
         displayName: '发起时间'
+        cellFilter: "date:'yyyy-MM-dd'"
+    }
+    {
+        name: 'formData.startTime'
+        displayName: '开始时间'
+        cellFilter: "date:'yyyy-MM-dd'"
+    }
+    {
+        name: 'formData.endTime'
+        displayName: '结束时间'
         cellFilter: "date:'yyyy-MM-dd'"
     }
 ]
@@ -371,6 +382,16 @@ class AttendanceCtrl extends nb.Controller
                     displayName: '机构'
                     type: 'org-search'
                 }
+                {
+                    name: 'leave_date'
+                    displayName: '起始时间'
+                    type: 'date-range'
+                }
+                {
+                    name: 'name'
+                    displayName: '假别'
+                    type: 'vacation_select'
+                }
             ]
         }
 
@@ -442,6 +463,7 @@ class AttendanceCtrl extends nb.Controller
 
     loadSummaries: ()->
         @summaryCols = ATTENDANCE_SUMMERY_DEFS
+        @summaryCols.splice(4, 0, {width:100, displayName: '月份', name: 'summary_date'})
         @tableData = @AttendanceSummary.$collection().$fetch()
 
     loadSummariesList: ()->
@@ -552,7 +574,7 @@ class AttendanceCtrl extends nb.Controller
     isDepartmentHr: ()->
         @CURRENT_ROLES.indexOf('department_hr') >= 0
 
-    finish: ()->
+    finishVacation: ()->
         alert '销假的逻辑是啥，讨论过，这个操作到底有无用???'
 
 
@@ -968,6 +990,13 @@ class SbFlowHandlerCtrl
         @filterOptions = filterOptions
         @columnDef = _.cloneDeep(USER_LIST_TABLE_DEFS)
         @tableData = @Employee.$collection().$fetch({filter_types: [@FlowName]})
+
+        if @FlowName == 'Flow::Retirement'
+            self = @
+            @Employee.$collection().$fetch({filter_types: [@FlowName]}).$asPromise().then ()->
+                self.tableData = _.filter self.tableData, (item)->
+                    str = self.enum.parseLabel(item.laborRelationId, 'labor_relations')
+                    str == '合同' || str == '合同制'
 
     checkList: ->
         @columnDef = @helper.buildFlowDefault(FLOW_HANDLE_TABLE_DEFS)

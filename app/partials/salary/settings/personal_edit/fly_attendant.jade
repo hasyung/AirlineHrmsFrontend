@@ -28,6 +28,7 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
         md-input-container.row-has-value(flex)
             label 空乘小时费
             md-select(ng-model="current.airlineHourFee" placeholder="请选择" ng-change="exchangeCtrl.airline_hour(current)")
+                md-option(value="") 无
                 md-option(value="trainee_B") 见习乘B
                 md-option(value="trainee_A") 见习乘A
                 md-option(value="attendant_C") 乘务员C
@@ -46,6 +47,7 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
         md-input-container.row-has-value(flex)
             label 空保小时费
             md-select(ng-model="current.securityHourFee" placeholder="请选择" ng-change="exchangeCtrl.security_hour(current)")
+                md-option(value="") 无
                 md-option(value="noviciate_safety") 见习安
                 md-option(value="security_D") 安全员D
                 md-option(value="security_C") 安全员C

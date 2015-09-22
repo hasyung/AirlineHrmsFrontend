@@ -26,7 +26,7 @@
                 md-button.md-primary.md-raised(
                     ng-if="ctrl.isDepartmentHr()"
                     ng-disabled="!ctrl.getSelected()"
-                    ng-click="ctrl.finish()"
+                    ng-click="ctrl.finishVacation()"
                 ) 销假
 
         div(nb-grid column-defs="ctrl.recodsColumnDef" on-register-api="ctrl.exportGridApi(gridApi)" multi-select="false" grid-selection safe-src="ctrl.tableData")

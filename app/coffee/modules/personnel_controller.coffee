@@ -223,6 +223,11 @@ class NewEmpsCtrl extends nb.Controller
                 to: moment().format("YYYY-MM-DD")
             }
 
+            start_internship_date: {
+                from: moment().subtract(1, 'year').format('YYYY-MM-DD')
+                to: moment().format("YYYY-MM-DD")
+            }
+
             sort: 'join_scal_date'
             order: 'desc'
         }
