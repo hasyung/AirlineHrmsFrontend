@@ -8,6 +8,7 @@ tabset(flex)
                     .md-toolbar-tools
                         h2 员工人事花名册
                         div(flex)
+
                         md-button.md-primary.md-raised(
                             ng-if="ctrl.isDepartmentHr()"
                             ng-disabled="ctrl.getSelected().length != 1"
@@ -15,17 +16,29 @@ tabset(flex)
                             template-url="/partials/personnel/punishment.html"
                             locals="{employee: ctrl.getSelected()[0]}"
                         ) 人员处分
+
+                        md-button.md-primary.md-raised(
+                            ng-if="ctrl.isDepartmentHr()"
+                            ng-disabled="ctrl.getSelected().length != 1"
+                            nb-dialog
+                            template-url="/partials/personnel/punishment.html"
+                            locals="{employee: ctrl.getSelected()[0]}"
+                        ) 人员奖励
+
                         md-button.md-primary.md-raised(
                             nb-panel
                             template-url="partials/personnel/org_pos_per_sort.html"
                         ) 排序
+
                         md-menu(ng-init="selectedRows=[]")
                             md-button.md-primary.md-raised(
                                 ng-click="selectedRows = ctrl.getSelectsIds(); $mdOpenMenu($event)"
                                 ) 导出
+
                             md-menu-content
                                 md-menu-item()
                                     a.md-button(flex ng-href="/api/employees/export_to_xls") 导出全部人员
+
                                 md-menu-item(ng-if="selectedRows.length > 0")
                                     a.md-button(
                                         nb-download
@@ -34,6 +47,7 @@ tabset(flex)
                                         href="javascript:;"
                                         download
                                     ) 导出所选人员
+
                                 md-menu-item(ng-if="selectedRows.length > 0")
                                     a.md-button(
                                         nb-download
