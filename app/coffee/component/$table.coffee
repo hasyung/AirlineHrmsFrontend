@@ -93,6 +93,29 @@ class NbFilterCtrl extends nb.FilterController
                 <md-option value="不合格" placeholder="绩效结果">不合格</md-option>
             </md-select>
         '''
+        'vacation_select': '''
+            <md-select placeholder="${ displayName }" ng-model="${ name }">
+                <md-option value="派驻人员休假" placeholder="假别">派驻人员休假</md-option>
+                <md-option value="年假" placeholder="假别">年假</md-option>
+                <md-option value="丧假" placeholder="假别">丧假</md-option>
+                <md-option value="探亲假" placeholder="假别">探亲假</md-option>
+                <md-option value="婚假" placeholder="假别">婚假</md-option>
+                <md-option value="产假" placeholder="假别">产假</md-option>
+                <md-option value="哺乳假" placeholder="假别">哺乳假</md-option>
+                <md-option value="产假(母乳喂养)" placeholder="假别">产假(母乳喂养)</md-option>
+                <md-option value="产假(剖腹产、难产)" placeholder="假别">产假(剖腹产、难产)</md-option>
+                <md-option value="产假(晚育)" placeholder="假别">产假(晚育)</md-option>
+                <md-option value="产假(多胞胎)" placeholder="假别">产假(多胞胎)</md-option>
+                <md-option value="产假(流产)" placeholder="假别">产假(流产)</md-option>
+                <md-option value="事假" placeholder="假别">事假</md-option>
+                <md-option value="产前孕期检查假" placeholder="假别">产前孕期检查假</md-option>
+                <md-option value="生育护理假" placeholder="假别">生育护理假</md-option>
+                <md-option value="病假" placeholder="假别">病假</md-option>
+                <md-option value="病假(工伤待定)" placeholder="假别">病假(工伤待定)</md-option>
+                <md-option value="病假(怀孕待产)" placeholder="假别">病假(怀孕待产)</md-option>
+                <md-option value="女工假" placeholder="假别">女工假</md-option>
+            </md-select>
+        '''
         'salary_change_category_select': '''
             <md-select placeholder="${ displayName }" ng-model="${ name }">
                 <md-option value="合同新签" placeholder="信息种类">合同新签</md-option>
