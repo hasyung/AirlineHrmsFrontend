@@ -25,6 +25,7 @@
                         flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
                         flow-file-success="ctrl.upload_start=false;ctrl.upload_bus_fee('班车费', ctrl.parseJSON($message).id);"
                         flow-btn type="button"
+                        ng-disabled="ctrl.calcing"
                     ) 导入班车费
                 span
                     md-button.md-raised.md-primary(

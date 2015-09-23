@@ -53,7 +53,7 @@ SALARY_COLUMNDEF_DEFAULT = [
 
 CALC_STEP_COLUMN = [
     {
-        displayName: '∂f(a+b+c)'
+        displayName: '∑φ ∂f(a+b)'
         field: 'step'
         enableCellEdit: false
         cellTemplate: '''
@@ -61,7 +61,7 @@ CALC_STEP_COLUMN = [
             <a nb-panel
                 template-url="partials/salary/calc/step.html"
                 locals="{employee: row.entity.owner}">
-                ∑φ cos(θ)
+                计算过程
             </a>
         </div>
         '''
@@ -1002,7 +1002,7 @@ class SalaryTransportFeeController extends SalaryBaseController
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
-            {displayName: '交通费', name: 'transportFee', enableCellEdit: false}
+            {displayName: '交通费', name: 'amount', enableCellEdit: false}
             {displayName: '班车费扣除', name: 'busFee', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee'}
             {displayName: '备注', name: 'remark',  cellTooltip: (row) -> return row.entity.note}
