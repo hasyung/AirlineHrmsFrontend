@@ -744,11 +744,24 @@ class SalaryBaseController extends nb.Controller
         @gridApi = gridApi
 
     loadDateTime: ()->
+        date = new Date()
+
         @year_list = @$getYears()
         @month_list = @$getMonths()
 
-        @currentYear = _.last(@year_list)
-        @currentMonth = _.last(@month_list)
+        if date.getMonth() == 0
+            @year_list.pop()
+            @year_list.unshift(date.getFullYear() - 1)
+            @month_list = _.map [1..12], (item)->
+                item = '0' + item if item < 10
+                item + '' # to string
+
+            @currentYear = _.last(@year_list)
+            @currentMonth = _.last(@month_list)
+        else
+            @currentYear = _.last(@year_list)
+            @month_list.pop()
+            @currentMonth = _.last(@month_list)
 
     loadInitialData: (options) ->
         args = {month: @currentCalcTime()}

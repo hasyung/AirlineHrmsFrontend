@@ -218,18 +218,10 @@ class NewEmpsCtrl extends nb.Controller
 
     loadInitialData: () ->
         @collection_param = {
-            join_scal_date: {
+            new_join_date: {
                 from: moment().subtract(1, 'year').format('YYYY-MM-DD')
                 to: moment().format("YYYY-MM-DD")
             }
-
-            start_internship_date: {
-                from: moment().subtract(1, 'year').format('YYYY-MM-DD')
-                to: moment().format("YYYY-MM-DD")
-            }
-
-            sort: 'join_scal_date'
-            order: 'desc'
         }
 
         @employees = @Employee.$collection().$fetch(@collection_param)
