@@ -21,6 +21,20 @@ SALARY_FILTER_DEFAULT = {
 SALARY_COLUMNDEF_DEFAULT = [
     {displayName: '员工编号', name: 'employeeNo', enableCellEdit: false}
         {
+            displayName: '∂f(a+b+c)'
+            field: 'step'
+            enableCellEdit: false
+            cellTemplate: '''
+            <div class="ui-grid-cell-contents">
+                <a nb-panel
+                    template-url="partials/salary/calc/step.html"
+                    locals="{employee: row.entity.owner}">
+                    ∑φ cos(θ)
+                </a>
+            </div>
+            '''
+        }
+        {
             displayName: '姓名'
             field: 'employeeName'
             enableCellEdit: false
