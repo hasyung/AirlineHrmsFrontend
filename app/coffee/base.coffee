@@ -31,6 +31,7 @@ class Controller extends Base
         months = [1..new Date().getMonth() + 1]
         months = _.map months, (item) ->
             item = "0" + item if item < 10
+            item + '' # to string
 
     $getFilterMonths: ()->
         years = @$getYears()

@@ -20,36 +20,54 @@ SALARY_FILTER_DEFAULT = {
 
 SALARY_COLUMNDEF_DEFAULT = [
     {displayName: '员工编号', name: 'employeeNo', enableCellEdit: false}
-        {
-            displayName: '姓名'
-            field: 'employeeName'
-            enableCellEdit: false
-            cellTemplate: '''
-            <div class="ui-grid-cell-contents">
-                <a nb-panel
-                    template-url="partials/personnel/info_basic.html"
-                    locals="{employee: row.entity.owner}">
-                    {{grid.getCellValue(row, col)}}
-                </a>
-            </div>
-            '''
-        }
-        {
-            displayName: '所属部门'
-            name: 'departmentName'
-            enableCellEdit: false
-            cellTooltip: (row) ->
-                return row.entity.departmentName
-        }
-        {
-            displayName: '岗位'
-            name: 'positionName'
-            enableCellEdit: false
-            cellTooltip: (row) ->
-                return row.entity.positionName
-        }
-        {displayName: '通道', name: 'channelId', enableCellEdit: false, cellFilter: "enum:'channels'"}
-    ]
+    {
+        displayName: '姓名'
+        field: 'employeeName'
+        enableCellEdit: false
+        cellTemplate: '''
+        <div class="ui-grid-cell-contents">
+            <a nb-panel
+                template-url="partials/personnel/info_basic.html"
+                locals="{employee: row.entity.owner}">
+                {{grid.getCellValue(row, col)}}
+            </a>
+        </div>
+        '''
+    }
+    {
+        displayName: '所属部门'
+        name: 'departmentName'
+        enableCellEdit: false
+        cellTooltip: (row) ->
+            return row.entity.departmentName
+    }
+    {
+        displayName: '岗位'
+        name: 'positionName'
+        enableCellEdit: false
+        cellTooltip: (row) ->
+            return row.entity.positionName
+    }
+    {displayName: '通道', name: 'channelId', enableCellEdit: false, cellFilter: "enum:'channels'"}
+]
+
+CALC_STEP_COLUMN = [
+    {
+        displayName: '∂f(a+b+c)'
+        field: 'step'
+        enableCellEdit: false
+        cellTemplate: '''
+        <div class="ui-grid-cell-contents">
+            <a nb-panel
+                template-url="partials/salary/calc/step.html"
+                locals="{employee: row.entity.owner}">
+                ∑φ cos(θ)
+            </a>
+        </div>
+        '''
+    }
+]
+
 
 class Route
     @.$inject = ['$stateProvider']
@@ -744,11 +762,24 @@ class SalaryBaseController extends nb.Controller
         @gridApi = gridApi
 
     loadDateTime: ()->
+        date = new Date()
+
         @year_list = @$getYears()
         @month_list = @$getMonths()
 
-        @currentYear = _.last(@year_list)
-        @currentMonth = _.last(@month_list)
+        if date.getMonth() == 0
+            @year_list.pop()
+            @year_list.unshift(date.getFullYear() - 1)
+            @month_list = _.map [1..12], (item)->
+                item = '0' + item if item < 10
+                item + '' # to string
+
+            @currentYear = _.last(@year_list)
+            @currentMonth = _.last(@month_list)
+        else
+            @currentYear = _.last(@year_list)
+            @month_list.pop()
+            @currentMonth = _.last(@month_list)
 
     loadInitialData: (options) ->
         args = {month: @currentCalcTime()}
@@ -808,7 +839,7 @@ class SalaryBasicController extends SalaryBaseController
             {displayName: '保留工资', name: 'reserveSalary', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee'}
             {displayName: '备注', name: 'remark', cellTooltip: (row) -> return row.entity.note}
-        ])
+        ]).concat(CALC_STEP_COLUMN)
 
 
 # 绩效工资
@@ -825,7 +856,7 @@ class SalaryPerformanceController extends SalaryBaseController
             {displayName: '当月绩效薪酬', name: 'amount', enableCellEdit: false},
             {displayName: '补扣发', name: 'addGarnishee'},
             {displayName: '备注', name: 'remark', cellTooltip: (row) -> return row.entity.note}
-        ])
+        ]).concat(CALC_STEP_COLUMN)
 
     upload_performance: (type, attachment_id)->
         self = @
@@ -854,7 +885,7 @@ class SalaryHoursFeeController extends SalaryBaseController
             {displayName: '空勤灶', name: 'airlineFee', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee'}
             {displayName: '备注', name: 'remark', cellTooltip: (row) -> return row.entity.note}
-        ])
+        ]).concat(CALC_STEP_COLUMN)
 
     search: () ->
         super({hours_fee_category: @hours_fee_category})
@@ -905,7 +936,7 @@ class SalaryAllowanceController extends SalaryBaseController
             {displayName: '高温补贴', name: 'temp', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee'}
             {displayName: '备注', name: 'remark', cellTooltip: (row) -> return row.entity.note}
-        ])
+        ]).concat(CALC_STEP_COLUMN)
 
     upload_allowance: (type, attachment_id)->
         self = @
@@ -930,7 +961,7 @@ class SalaryLandAllowanceController extends SalaryBaseController
             {displayName: '津贴', name: 'subsidy', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee'}
             {displayName: '备注', name: 'remark',  cellTooltip: (row) -> return row.entity.note}
-        ])
+        ]).concat(CALC_STEP_COLUMN)
 
 
 class SalaryRewardController extends SalaryBaseController
@@ -949,7 +980,7 @@ class SalaryRewardController extends SalaryBaseController
             {displayName: '收支目标考核奖', name: 'in_out_bonus', enableCellEdit: false}
             {displayName: '奖1', name: 'bonus_1', enableCellEdit: false}
             {displayName: '奖2', name: 'bonus_2', enableCellEdit: false}
-        ])
+        ]).concat(CALC_STEP_COLUMN)
 
     upload_reward: (type, attachment_id)->
         self = @
@@ -975,7 +1006,7 @@ class SalaryTransportFeeController extends SalaryBaseController
             {displayName: '班车费扣除', name: 'busFee', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee'}
             {displayName: '备注', name: 'remark',  cellTooltip: (row) -> return row.entity.note}
-        ])
+        ]).concat(CALC_STEP_COLUMN)
 
     upload_bus_fee: (type, attachment_id)->
         self = @
@@ -1005,7 +1036,7 @@ class SalaryOverviewController extends SalaryBaseController
             {displayName: '奖励', name: 'reward', enableCellEdit: false}
             {displayName: '合计', name: 'total', enableCellEdit: false}
             {displayName: '备注', name: 'remark',  cellTooltip: (row) -> return row.entity.note}
-        ])
+        ]).concat(CALC_STEP_COLUMN)
 
 
 app.controller 'salaryCtrl', SalaryController
