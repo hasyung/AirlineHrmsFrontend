@@ -111,7 +111,7 @@ class PerformanceRecord extends nb.Controller
 
         @columnDef = BASE_TABLE_DEFS.concat [
             {displayName: '绩效类型', name: 'categoryName'}
-            {displayName: '考核时段', name: 'assessTime'}
+            {displayName: '考核时段', name: 'assessTime', width: '180', cellTooltip: (row) -> return row.entity.assessTime}
             {displayName: '绩效', name: 'result'}
             {displayName: '排序', name: 'sortNo'}
             {
