@@ -274,6 +274,9 @@ class PerformanceMasterRecord extends nb.Controller
         tableState['per_page'] = @scope.$gridApi.grid.options.paginationPageSize
         @performances.$refresh(tableState)
 
+    isImgObj: (obj)->
+        return /jpg|jpeg|png|gif/.test(obj.type)
+
     getSelected: () ->
         if @scope.$gridApi && @scope.$gridApi.selection
             rows = @scope.$gridApi.selection.getSelectedGridRows()
@@ -440,6 +443,9 @@ class PerformanceAllege extends nb.Controller
         ]
 
         @alleges = @Allege.$collection().$fetch()
+
+    isImgObj: (obj)->
+        return /jpg|jpeg|png|gif/.test(obj.type)
 
     search: (tableState)->
         tableState = tableState || {}

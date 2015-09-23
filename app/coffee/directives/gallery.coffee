@@ -13,13 +13,15 @@ angular.module 'nb.directives'
                     </div>
                 </div>
                 <div ng-if="!ctrl.isImgObj(annex)">
-                    <div class="accessory-name" ng-bind="annex.name">附件1.jpg</div>
-                    <div class="accessory-size" ng-bind="annex.size | byteFmt:2">500kb</div>
-                    <div class="accessory-switch">
-                        <md-button class="md-icon-button">
-                            <md-icon md-svg-src="/images/svg/close.svg" class="md-warn"></md-icon>
-                        </md-button>
-                    </div>
+                    <a ng-href="{{annex.default}}" download style="display:block;color:rgba(0,0,0,0.87);">
+                        <div class="accessory-name" ng-bind="annex.name">附件1.jpg</div>
+                        <div class="accessory-size" ng-bind="annex.size | byteFmt:2">500kb</div>
+                        <div class="accessory-switch" style="display:none;>
+                            <md-button class="md-icon-button">
+                                <md-icon md-svg-src="/images/svg/close.svg" class="md-warn"></md-icon>
+                            </md-button>
+                        </div>
+                    </a>
                 </div>
 
             </div>
