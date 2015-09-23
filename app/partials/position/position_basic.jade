@@ -1,12 +1,12 @@
-form(name="posEditForm" ng-submit="save(currentPos.$save(), posEditForm)" ng-controller="EditableResourceCtrl" ng-init="params = {}; oldBudgetedStaffing=currentPos.budgetedStaffing")
+form(name="posEditForm" ng-submit="save(currentPos.$save(), posEditForm);currentPos.staffingRemark=null" ng-controller="EditableResourceCtrl" ng-init="params = {}; oldBudgetedStaffing=currentPos.budgetedStaffing")
     .form-btn-group(ng-hide="editing" has-permission="positions_update" style="top: -36px;")
-        md-button.md-primary.md-raised(ng-click="edit($event)") 编辑
+        md-button.md-primary.md-raised(ng-click="edit($event);currentPos.staffingRemark=null;") 编辑
     .form-btn-group.alive(ng-show="editing" style="top: -36px;")
-        md-button.md-raised.white(ng-click="cancel(currentPos,$event, posEditForm)") 取消
+        md-button.md-raised.white(ng-click="cancel(currentPos,$event, posEditForm);") 取消
         md-button.md-primary.md-raised(
             type="submit"
             ng-disabled="(currentPos.budgetedStaffing != oldBudgetedStaffing && !currentPos.staffingRemark)"
-            ng-click="oldBudgetedStaffing=currentPos.budgetedStaffing"
+            ng-click="oldBudgetedStaffing=currentPos.budgetedStaffing;"
             ) 保存
     fieldset(ng-disabled="!editing")
         div(layout)
