@@ -57,7 +57,7 @@ class PositionCtrl extends nb.Controller
                 displayName: '编制数'
                 name: 'budgetedStaffing'
                 cellTemplate: '''
-                <div class="ui-grid-cell-contents" ng-class="{'overstaffed': row.entity.overstaffedNum > 0}">
+                <div class="ui-grid-cell-contents">
                     {{grid.getCellValue(row, col)}}
                 </div>
                 '''
@@ -90,11 +90,6 @@ class PositionCtrl extends nb.Controller
                     displayName: '岗位名称'
                     type: 'string'
                     placeholder: '岗位名称'
-                }
-                {
-                    name: 'staffing_surpass'
-                    displayName: '是否超编'
-                    type: 'boolean'
                 }
                 {
                     name: 'channel_ids'
