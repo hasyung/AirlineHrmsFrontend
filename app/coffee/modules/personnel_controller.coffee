@@ -476,6 +476,20 @@ class MoveEmployeesCtrl extends nb.Controller
     loadInitialData: () ->
         @moveEmployees = @MoveEmployees.$collection().$fetch()
 
+    newStopEmployee: (moveEmployee)->
+        self = @
+        # moveEmployee.department_id = moveEmployee.department_id.$pk if moveEmployee.department_id
+
+        @http.post('/api/special_states/temporarily_stop_air_duty', moveEmployee).then (data)->
+            self.moveEmployees.$refresh()
+            msg = data.messages
+
+            if data.status == 200
+                self.Evt.$send("special_state:save:success", msg || "创建成功")
+            else
+                $Evt.$send('special_state:save:error', msg || "创建失败")
+
+
     newBorrowEmployee: (moveEmployee)->
         self = @
         moveEmployee.department_id = moveEmployee.department_id.$pk if moveEmployee.department_id
