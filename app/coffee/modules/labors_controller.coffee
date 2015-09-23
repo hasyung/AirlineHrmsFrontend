@@ -688,7 +688,6 @@ class ContractCtrl extends nb.Controller
     @.$inject = ['$scope', 'Contract', '$http', 'Employee', '$nbEvent', 'toaster']
 
     constructor: (@scope, @Contract, @http, @Employee, @Evt, @toaster) ->
-        @dueTimeStr=''
         @loadInitialData()
 
         @filterOptions = filterBuildUtils('contract')
@@ -832,7 +831,8 @@ class ContractCtrl extends nb.Controller
         unless contract.isUnfix
             if s && e && s <= e
                 d = moment.range(s, e).diff('days')
-                self.dueTimeStr = parseInt(d/365)+'年'+(d-parseInt(d/365)*365)+'天'
+                dueTimeStr = parseInt(d/365)+'年'+(d-parseInt(d/365)*365)+'天'
+                contract.dueTime = dueTimeStr
 
             else
                 self.toaster.pop('error', '提示', '开始时间、结束时间必填，且结束时间需大于开始时间')
