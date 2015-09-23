@@ -327,7 +327,7 @@ class OrgCtrl extends nb.Controller
             self.state = 'show'
 
     destroy: (isConfirm) ->
-        sweet = @sweet
+        # sweet = @sweet
         $Evt = @Evt
         orgName = @scope.currentOrg.name
         self = @
@@ -335,9 +335,9 @@ class OrgCtrl extends nb.Controller
         if isConfirm
             @scope.currentOrg.$destroy().$then ->
                 $Evt.$send 'org:resetData'
-                sweet.success('删除成功', "您已成功删除#{orgName}")
-        else
-            sweet.error("您取消了删除#{@scope.currentOrg.name}")
+                # sweet.success('删除成功', "您已成功删除#{orgName}")
+        # else
+            # sweet.error("您取消了删除#{@scope.currentOrg.name}")
 
 
 class PositionCtrl extends nb.Controller
