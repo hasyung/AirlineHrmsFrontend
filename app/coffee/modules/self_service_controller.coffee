@@ -338,6 +338,9 @@ class ProfileCtrl extends nb.Controller
             _.includes nation, text
         return nations
 
+    isImgObj: (obj)->
+        return /jpg|jpeg|png|gif/.test(obj.type)
+
 
 
 class MyRequestCtrl extends nb.Controller

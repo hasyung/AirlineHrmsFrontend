@@ -149,6 +149,7 @@
     .accessory-cell {
         background-color: rgba(0, 0, 0, .06);
         border-left: 2px solid #7cb342;
+        cursor: pointer;
         float: left;
         font-size: $font-size-sm;
         height: 50px;
