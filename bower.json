@@ -48,6 +48,7 @@
     "ngInfiniteScroll": "~1.2.0",
     "ng-echarts": "https://github.com/boostbob/ng-echarts.git",
     "echarts": "~2.2.7",
-    "angular-ui-calendar": "latest"
+    "angular-ui-calendar": "latest",
+    "moment-range": "latest"
   }
 }

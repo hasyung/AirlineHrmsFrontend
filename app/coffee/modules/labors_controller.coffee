@@ -688,6 +688,7 @@ class ContractCtrl extends nb.Controller
     @.$inject = ['$scope', 'Contract', '$http', 'Employee', '$nbEvent', 'toaster']
 
     constructor: (@scope, @Contract, @http, @Employee, @Evt, @toaster) ->
+        @dueTimeStr=''
         @loadInitialData()
 
         @filterOptions = filterBuildUtils('contract')
@@ -823,16 +824,30 @@ class ContractCtrl extends nb.Controller
             msg = data.data.messages
             self.Evt.$send("contract:renew:success", msg) if msg
 
+    loadDueTime: (contract)->
+        self = @
+        s = contract.startDate
+        e = contract.endDate
+
+        unless contract.isUnfix
+            if s && e && s <= e
+                d = moment.range(s, e).diff('days')
+                self.dueTimeStr = parseInt(d/365)+'年'+(d-parseInt(d/365)*365)+'天'
+
+            else
+                self.toaster.pop('error', '提示', '开始时间、结束时间必填，且结束时间需大于开始时间')
+                return
+
     newContract: (contract)->
         self = @
 
         unless contract.isUnfix
             if !contract.endDate
-                @toaster.pop('error', '提示', '非无固定合同结束时间必填')
+                self.toaster.pop('error', '提示', '非无固定合同结束时间必填')
                 return
 
             if contract.endDate <= contract.startDate
-                @toaster.pop('error', '提示', '非无固定合同结束时间不能小于等于开始时间')
+                self.toaster.pop('error', '提示', '非无固定合同结束时间不能小于等于开始时间')
                 return
 
         @contracts.$build(contract).$save().$then ()->
@@ -871,7 +886,6 @@ class ContractCtrl extends nb.Controller
             if matched
                 self.loadEmp = matched
                 contract.owner = matched
-                console.log contract
             else
                 self.loadEmp = params
 

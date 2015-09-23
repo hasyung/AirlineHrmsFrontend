@@ -121,6 +121,7 @@ paths =
         'deps/angular-ui-calendar/src/calendar.js'
         'deps/fullcalendar/dist/fullcalendar.min.js'
         'deps/fullcalendar/dist/gcal.js'
+        'deps/moment-range/dist/moment-range.min.js'
     ]
 
 

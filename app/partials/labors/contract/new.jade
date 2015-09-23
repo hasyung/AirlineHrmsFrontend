@@ -60,7 +60,9 @@ div(style="height: 100%; background-color: #f5f5f5;")
                                         name="startDate"
                                         bs-datepicker
                                         ng-model="contract.startDate"
-                                        required)
+                                        required
+                                        ng-change="ctrl.dueTimeStr='';ctrl.loadDueTime(contract)"
+                                            )
 
                                 md-input-container(flex ng-if="!contract.isUnfix")
                                     label 结束日期(大于开始日期)
@@ -68,21 +70,17 @@ div(style="height: 100%; background-color: #f5f5f5;")
                                         bs-datepicker
                                         ng-model="contract.endDate"
                                         name="endDate"
-                                        ng-change="contract.dueTime=null"
+                                        ng-change="ctrl.dueTimeStr='';ctrl.loadDueTime(contract)"
                                         )
-                                    //- div.input-placeholder 无固定期限合同请勿填写此项
 
                                 md-input-container(flex md-no-float ng-if="!contract.isUnfix")
-                                    label 合同时长/年
+                                    label 合同时长
                                     input(
                                         type="text"
-                                        ng-model="contract.dueTime"
+                                        ng-model="ctrl.dueTimeStr"
                                         name="dueTime"
-                                        ng-disabled="!newContractForm.endDate.$modelValue"
-                                        ng-required="newContractForm.endDate.$modelValue"
+                                        readonly
                                         )
-                                    div(ng-messages="newContractForm.dueTime.$error")
-                                        div(ng-message="required") 结束日期、合同时长需同时填写
 
                             div(layout)
                                 md-input-container(flex)
