@@ -144,6 +144,13 @@ class PerformanceRecord extends nb.Controller
     isImgObj: (obj)->
         return /jpg|jpeg|png|gif/.test(obj.type)
 
+    attachmentDestroy: (attachment, e) ->
+        self = @
+
+        e.stopPropagation()
+        attachment.$destroy()
+        @performances.$refresh()
+
     getSelected: () ->
         if @gridApi && @gridApi.selection
             rows = @gridApi.selection.getSelectedGridRows()

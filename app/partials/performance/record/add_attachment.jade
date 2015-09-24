@@ -16,7 +16,7 @@ md-dialog.sample-dialog(
                             .accessory-name() {{attachment.name}}
                             .accessory-size() {{attachment.size | byteFmt:2}}
                             .accessory-switch
-                                md-button.md-icon-button(type="button" ng-click="attachment.$destroy()" ng-if="ctrl.USER_META.id == attachment.employeeId")
+                                md-button.md-icon-button(type="button" ng-click="outerScope.ctrl.attachmentDestroy(attachment, $event)" ng-if="outerScope.ctrl.USER_META.id == attachment.employeeId")
                                     md-icon.md-warn(md-svg-src="/images/svg/close.svg")
                         div(ng-if="!outerScope.ctrl.isImgObj(attachment)" style="cursor: pointer;")
                             a(
@@ -27,7 +27,7 @@ md-dialog.sample-dialog(
                                 .accessory-name() {{attachment.name}}
                                 .accessory-size() {{attachment.size | byteFmt:2}}
                                 .accessory-switch
-                                    md-button.md-icon-button(type="button" ng-click="attachment.$destroy()" ng-if="ctrl.USER_META.id == attachment.employeeId")
+                                    md-button.md-icon-button(type="button" ng-click="outerScope.ctrl.attachmentDestroy(attachment, $event)" ng-if="outerScope.ctrl.USER_META.id == attachment.employeeId")
                                         md-icon.md-warn(md-svg-src="/images/svg/close.svg")
                 .accessory-btn-group(ng-if="dialog.can_upload"
                     flow-init="{target: '/api/attachments/upload_file', testChunks:false, uploadMethod:'POST', singleFile:true}"
