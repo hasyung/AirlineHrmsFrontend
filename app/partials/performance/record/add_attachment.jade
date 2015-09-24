@@ -1,4 +1,9 @@
-md-dialog.sample-dialog(ng-init="performance = dialog.performance;attachments = performance.attachments.$refresh();")
+md-dialog.sample-dialog(
+    ng-init="performance = dialog.performance;attachments = performance.attachments.$refresh();\
+            outerScope = dialog.outerScope;\
+    "
+
+    )
     md-toolbar.md-accent(md-theme="hrms")
         .md-toolbar-tools
             span 附件列表
@@ -7,13 +12,13 @@ md-dialog.sample-dialog(ng-init="performance = dialog.performance;attachments = 
             .dialog-content.show-text()
                 .accessory-container
                     .accessory-cell(ng-repeat="attachment in attachments")
-                        div(ng-if="ctrl.isImgObj(attachment)" nb-gallery img-obj="attachment" style="cursor: pointer;")
+                        div(ng-if="outerScope.ctrl.isImgObj(attachment)" nb-gallery img-obj="attachment" style="cursor: pointer;")
                             .accessory-name() {{attachment.name}}
                             .accessory-size() {{attachment.size | byteFmt:2}}
                             .accessory-switch
                                 md-button.md-icon-button(type="button" ng-click="attachment.$destroy()" ng-if="ctrl.USER_META.id == attachment.employeeId")
                                     md-icon.md-warn(md-svg-src="/images/svg/close.svg")
-                        div(ng-if="!ctrl.isImgObj(attachment)" style="cursor: pointer;")
+                        div(ng-if="!outerScope.ctrl.isImgObj(attachment)" style="cursor: pointer;")
                             a(
                                 style="display: block; color: rgba(0,0,0,0.87)"
                                 ng-href="{{attachment.default}}"

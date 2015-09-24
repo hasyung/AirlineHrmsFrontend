@@ -118,10 +118,10 @@ class PerformanceRecord extends nb.Controller
                 displayName: '附件',
                 field: '查看',
                 cellTemplate: '''
-                    <div class="ui-grid-cell-contents ng-binding ng-scope">
+                    <div class="ui-grid-cell-contents" ng-init="outerScope=grid.appScope.$parent">
                         <a ng-if="row.entity.attachmentStatus"
                             nb-dialog
-                            locals="{performance: row.entity, can_upload: false}"
+                            locals="{performance: row.entity, can_upload: false, outerScope: outerScope}"
                             template-url="/partials/performance/record/add_attachment.html"
                         > 查看
                         </a>
@@ -140,6 +140,9 @@ class PerformanceRecord extends nb.Controller
         tableState = tableState || {}
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @performances.$refresh(tableState)
+
+    isImgObj: (obj)->
+        return /jpg|jpeg|png|gif/.test(obj.type)
 
     getSelected: () ->
         if @gridApi && @gridApi.selection
@@ -218,10 +221,10 @@ class PerformanceMasterRecord extends nb.Controller
                 displayName: '附件',
                 field: '查看',
                 cellTemplate: '''
-                    <div class="ui-grid-cell-contents ng-binding ng-scope">
+                    <div class="ui-grid-cell-contents" ng-init="outerScope=grid.appScope.$parent">
                         <a ng-if="row.entity.attachmentStatus"
                             nb-dialog
-                            locals="{performance: row.entity, can_upload: false}"
+                            locals="{performance: row.entity, can_upload: false, outerScope: outerScope}"
                             template-url="/partials/performance/record/add_attachment.html"
                         > 查看
                         </a>
@@ -392,6 +395,9 @@ class PerformanceSetting extends nb.Controller
     getSelected: () ->
         rows = @scope.$gridApi.selection.getSelectedGridRows()
         selected = if rows.length >= 1 then rows[0].entity else null
+
+    isImgObj: (obj)->
+        return /jpg|jpeg|png|gif/.test(obj.type)
 
 class PerformanceAllege extends nb.Controller
     @.$inject = ['$scope', 'Allege', 'Performance', 'Employee']
