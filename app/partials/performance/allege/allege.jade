@@ -1,32 +1,34 @@
 .workflow.md-background(md-theme="hrms"
-    ng-init="allege = panel.allege;\
+    ng-init="allege = panel.allege.$refresh();\
         request = {};\
-        allege.$refresh();\
         outerScope = panel.outerScope;\
         Performance = panel.Performance;\
-        Employee = panel.Employee;\
-        performanceAttachs = Performance.$new(allege.performanceId).attachments.$fetch();\
-        receptor = Employee.$find(allege.employeeId);\
+        employee = panel.employee;\
+        performanceAttachs = Performance.$new(allege.performanceId).attachments.$refresh();\
     "
 )
     md-toolbar.md-warn(md-theme="hrms")
         .md-toolbar-tools(ng-init="ctrl.isImgObj")
-            span 绩效申述
+            span 绩效申述{{employee}}
     .personnel-content.personnel-control
         section.personnel-info-section
             md-content.nb-card-container(layout="column" md-theme="hrms")
                 form(ng-submit="allege.$update(request); panel.close();")
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1
-                        flow-user-info(receptor="receptor")
+                        div(class="flow-info-head")
+                            div(class="name" ng-bind="allege.employeeName")
+                            div(class="flow-info-plus")
+                                span(class="serial-num" ng-bind="allege.employeeNo")
+                                span(class="position"){{ allege.departmentName }} / {{ allege.positionName }}
                         .flow-relations
                             div.flow-info-row(layout)
                                 .flow-info-cell(flex)
                                     .flow-cell-title 通道
-                                    .flow-cell-content {{receptor.channelId | enum: 'channels'}}
+                                    .flow-cell-content {{allege.channel}}
                                 .flow-info-cell(flex)
                                     .flow-cell-title 用工性质
-                                    .flow-cell-content {{receptor.laborRelationId | enum: 'labor_relations'}}
+                                    .flow-cell-content {{allege.laborRelation}}
                             div.flow-info-row(layout)
                                 .flow-info-cell(flex)
                                     .flow-cell-title 考核时段

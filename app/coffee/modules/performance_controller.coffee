@@ -447,7 +447,7 @@ class PerformanceAllege extends nb.Controller
                         <a
                             nb-panel
                             template-url="/partials/performance/allege/allege.html"
-                            locals="{allege: row.entity, Performance: outerScope.ctrl.Performance, Employee:outerScope.ctrl.Employee, outerScope: outerScope}"
+                            locals="{allege: row.entity, Performance: outerScope.ctrl.Performance, employee:row.entity.owner, outerScope: outerScope}"
                         > 查看
                         </a>
                     </div>
