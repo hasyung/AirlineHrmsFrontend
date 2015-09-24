@@ -98,9 +98,11 @@
                                 md-input-container.row-has-value(flex)
                                     label 绩效调整为
                                     md-select(ng-model="request.result" ng-required="request.outcome=='通过'")
-                                        md-option(value="合格") 合格
                                         md-option(value="不合格") 不合格
+                                        md-option(value="待改进") 待改进
+                                        md-option(value="合格") 合格
                                         md-option(value="良好") 良好
+                                        md-option(value="优秀") 优秀
                                 div(flex)
                     md-card.form-material-section.nb-card.performance-result(ng-if="allege.isManaged")
                         md-subheader.md-background.md-hue-1 处理结果
