@@ -26,6 +26,13 @@ tabset(flex)
                         ) 人员奖励
 
                         md-button.md-primary.md-raised(
+                            ng-disabled="ctrl.getSelected().length != 1"
+                            nb-dialog
+                            template-url="/partials/personnel/adjust_position.html"
+                            locals="{employee: ctrl.getSelected()[0]}"
+                        ) 员工调岗
+
+                        md-button.md-primary.md-raised(
                             nb-panel
                             template-url="partials/personnel/org_pos_per_sort.html"
                         ) 排序
