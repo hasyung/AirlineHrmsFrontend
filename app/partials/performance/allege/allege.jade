@@ -15,11 +15,11 @@
                 form(ng-submit="allege.$update(request); panel.close();")
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1
-                        div(class="flow-info-head")
-                            div(class="name" ng-bind="allege.employeeName")
-                            div(class="flow-info-plus")
-                                span(class="serial-num" ng-bind="allege.employeeNo")
-                                span(class="position"){{ allege.departmentName }} / {{ allege.positionName }}
+                        .flow-info-head
+                            .name(ng-bind="allege.employeeName")
+                            .flow-info-plus
+                                span.serial-num(ng-bind="allege.employeeNo")
+                                span.position {{ allege.departmentName }} / {{ allege.positionName }}
                         .flow-relations
                             div.flow-info-row(layout)
                                 .flow-info-cell(flex)
