@@ -3,13 +3,12 @@
         request = {};\
         outerScope = panel.outerScope;\
         Performance = panel.Performance;\
-        employee = panel.employee;\
         performanceAttachs = Performance.$new(allege.performanceId).attachments.$refresh();\
     "
 )
     md-toolbar.md-warn(md-theme="hrms")
         .md-toolbar-tools(ng-init="ctrl.isImgObj")
-            span 绩效申述{{employee}}
+            span 绩效申述
     .personnel-content.personnel-control
         section.personnel-info-section
             md-content.nb-card-container(layout="column" md-theme="hrms")
@@ -32,7 +31,7 @@
                             div.flow-info-row(layout)
                                 .flow-info-cell(flex)
                                     .flow-cell-title 考核时段
-                                    .flow-cell-content {{::allege.assessTime | date: 'yyyy-MM'}}
+                                    .flow-cell-content {{::allege.assessTime}}
                                 .flow-info-cell(flex)
                                     .flow-cell-title 绩效
                                     .flow-cell-content {{::allege.result}}
@@ -59,7 +58,7 @@
                             div(layout)
                                 md-input-container(flex)
                                     //- label 申述理由
-                                    textarea(ng-model="allege.reason" columns="1" md-maxlength="2000" disabled)
+                                    textarea(ng-model="allege.reason" columns="1" md-maxlength="2000" readonly)
 
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1(style="margin-bottom: 20px;") 处理附件
