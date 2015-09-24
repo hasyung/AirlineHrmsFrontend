@@ -864,7 +864,7 @@ class SalaryPerformanceController extends SalaryBaseController
 
         @http.post("/api/performance_salaries/import", params).success (data, status) ->
             if data.error_count > 0
-                self.toaster.pop('error', '提示', '导入失败')
+                self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
             else
                 self.toaster.pop('error', '提示', '导入成功')
 
@@ -906,7 +906,7 @@ class SalaryHoursFeeController extends SalaryBaseController
                 self.show_error_names = true
                 self.error_names = data.error_names
 
-                self.toaster.pop('error', '提示', '导入失败')
+                self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
             else
                 self.toaster.pop('error', '提示', '导入成功')
 
@@ -944,7 +944,7 @@ class SalaryAllowanceController extends SalaryBaseController
 
         @http.post("/api/allowances/import", params).success (data, status) ->
             if data.error_count > 0
-                self.toaster.pop('error', '提示', '导入失败')
+                self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
             else
                 self.toaster.pop('error', '提示', '导入成功')
 
@@ -989,7 +989,7 @@ class SalaryRewardController extends SalaryBaseController
 
         @http.post("/api/rewards/import", params).success (data, status) ->
             if data.error_count > 0
-                self.toaster.pop('error', '提示', '导入失败')
+                self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
             else
                 self.toaster.pop('error', '提示', '导入成功')
 
@@ -997,7 +997,7 @@ class SalaryRewardController extends SalaryBaseController
 class SalaryTransportFeeController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'TransportFee', 'toaster']
 
-    constructor: ($http, $scope, $q, @Evt, @Employee, @TransportFee, @toaster) ->
+    constructor: (@http, $scope, $q, @Evt, @Employee, @TransportFee, @toaster) ->
         super(@TransportFee, $scope, $q)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
@@ -1015,7 +1015,7 @@ class SalaryTransportFeeController extends SalaryBaseController
 
         @http.post("/api/transport_fees/import", params).success (data, status) ->
             if data.error_count > 0
-                self.toaster.pop('error', '提示', '导入失败')
+                self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
             else
                 self.toaster.pop('error', '提示', '导入成功')
 
