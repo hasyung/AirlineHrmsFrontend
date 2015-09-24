@@ -2,7 +2,7 @@ md-dialog.punishment_new(
     style="min-width: 900px;"
     ng-init="current = dialog.employee.$refresh();"
     )
-    form(flex ng-controller="NewResourceCtrl" ng-submit="create(punishment, newForm); dialog.close();" name="newPunishmentForm")
+    form(flex ng-controller="NewResourceCtrl" ng-submit="create(current, newPositionForm); dialog.close();" name="newPositionForm")
         md-toolbar.md-accent(md-theme="hrms")
             .md-toolbar-tools
                 span 员工调岗
