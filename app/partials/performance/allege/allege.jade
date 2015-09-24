@@ -1,12 +1,9 @@
 .workflow.md-background(md-theme="hrms"
-    ng-init="allege = panel.allege;\
+    ng-init="allege = panel.allege.$refresh();\
         request = {};\
-        allege.$refresh();\
         outerScope = panel.outerScope;\
         Performance = panel.Performance;\
-        Employee = panel.Employee;\
-        performanceAttachs = Performance.$new(allege.performanceId).attachments.$fetch();\
-        receptor = Employee.$find(allege.employeeId);\
+        performanceAttachs = Performance.$new(allege.performanceId).attachments.$refresh();\
     "
 )
     md-toolbar.md-warn(md-theme="hrms")
@@ -18,19 +15,23 @@
                 form(ng-submit="allege.$update(request); panel.close();")
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1
-                        flow-user-info(receptor="receptor")
+                        .flow-info-head
+                            .name(ng-bind="allege.employeeName")
+                            .flow-info-plus
+                                span.serial-num(ng-bind="allege.employeeNo")
+                                span.position {{ allege.departmentName }} / {{ allege.positionName }}
                         .flow-relations
                             div.flow-info-row(layout)
                                 .flow-info-cell(flex)
                                     .flow-cell-title 通道
-                                    .flow-cell-content {{receptor.channelId | enum: 'channels'}}
+                                    .flow-cell-content {{allege.channel}}
                                 .flow-info-cell(flex)
                                     .flow-cell-title 用工性质
-                                    .flow-cell-content {{receptor.laborRelationId | enum: 'labor_relations'}}
+                                    .flow-cell-content {{allege.laborRelation}}
                             div.flow-info-row(layout)
                                 .flow-info-cell(flex)
                                     .flow-cell-title 考核时段
-                                    .flow-cell-content {{::allege.assessTime | date: 'yyyy-MM'}}
+                                    .flow-cell-content {{::allege.assessTime}}
                                 .flow-info-cell(flex)
                                     .flow-cell-title 绩效
                                     .flow-cell-content {{::allege.result}}
@@ -57,7 +58,7 @@
                             div(layout)
                                 md-input-container(flex)
                                     //- label 申述理由
-                                    textarea(ng-model="allege.reason" columns="1" md-maxlength="2000" disabled)
+                                    textarea(ng-model="allege.reason" columns="1" md-maxlength="2000" readonly)
 
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1(style="margin-bottom: 20px;") 处理附件
