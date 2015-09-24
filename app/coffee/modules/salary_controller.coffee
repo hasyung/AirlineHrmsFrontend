@@ -952,7 +952,7 @@ class SalaryAllowanceController extends SalaryBaseController
 class SalaryLandAllowanceController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'LandAllowance', 'toaster']
 
-    constructor: ($http, $scope, $q, @Evt, @Employee, @LandAllowance, @toaster) ->
+    constructor: (@http, $scope, $q, @Evt, @Employee, @LandAllowance, @toaster) ->
         super(@LandAllowance, $scope, $q)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
@@ -962,6 +962,16 @@ class SalaryLandAllowanceController extends SalaryBaseController
             {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {displayName: '备注', name: 'remark', headerCellClass: 'editable_cell_header', cellTooltip: (row) -> return row.entity.note}
         ]).concat(CALC_STEP_COLUMN)
+
+    upload_land_allowance: (type, attachment_id)->
+        self = @
+        params = {type: type, attachment_id: attachment_id}
+
+        @http.post("/api/land_allowances/import", params).success (data, status) ->
+            if data.error_count > 0
+                self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
+            else
+                self.toaster.pop('error', '提示', '导入成功')
 
 
 class SalaryRewardController extends SalaryBaseController
