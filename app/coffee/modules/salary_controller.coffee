@@ -920,19 +920,19 @@ class SalaryAllowanceController extends SalaryBaseController
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
-            {displayName: '安检津贴', name: 'security_check', enableCellEdit: false}
+            {displayName: '安检津贴', name: 'securityCheck', enableCellEdit: false}
             {displayName: '安置津贴', name: 'resettlement', enableCellEdit: false}
-            {displayName: '班组长津贴', name: 'group_leader', enableCellEdit: false}
-            {displayName: '航站管理津贴', name: 'air_station_manage', enableCellEdit: false}
-            {displayName: '车勤补贴', name: 'car_present', enableCellEdit: false}
-            {displayName: '地勤补贴', name: 'land_present', enableCellEdit: false}
-            {displayName: '放行补贴', name: 'permit_entry', enableCellEdit: false}
-            {displayName: '试车津贴', name: 'try_drive', enableCellEdit: false}
-            {displayName: '飞行荣誉津贴', name: 'fly_honor', enableCellEdit: false}
-            {displayName: '航线实习补贴', name: 'airline_practice', enableCellEdit: false}
-            {displayName: '随机补贴', name: 'follow_plane', enableCellEdit: false}
-            {displayName: '签派放行补贴', name: 'permit_sign', enableCellEdit: false}
-            {displayName: '梭班补贴', name: 'work_overtime', enableCellEdit: false}
+            {displayName: '班组长津贴', name: 'groupLeader', enableCellEdit: false}
+            {displayName: '航站管理津贴', name: 'airStationManage', enableCellEdit: false}
+            {displayName: '车勤补贴', name: 'carPresent', enableCellEdit: false}
+            {displayName: '地勤补贴', name: 'landPresent', enableCellEdit: false}
+            {displayName: '放行补贴', name: 'permitEntry', enableCellEdit: false}
+            {displayName: '试车津贴', name: 'tryDrive', enableCellEdit: false}
+            {displayName: '飞行荣誉津贴', name: 'flyHonor', enableCellEdit: false}
+            {displayName: '航线实习补贴', name: 'airlinePractice', enableCellEdit: false}
+            {displayName: '随机补贴', name: 'followPlane', enableCellEdit: false}
+            {displayName: '签派放行补贴', name: 'permitSign', enableCellEdit: false}
+            {displayName: '梭班补贴', name: 'workOvertime', enableCellEdit: false}
             {displayName: '高温补贴', name: 'temp', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee'}
             {displayName: '备注', name: 'remark', cellTooltip: (row) -> return row.entity.note}
@@ -973,12 +973,13 @@ class SalaryRewardController extends SalaryBaseController
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
-            {displayName: '航班正常奖', name: 'flight_bonus', enableCellEdit: false}
-            {displayName: '服务质量奖', name: 'service_bonus', enableCellEdit: false}
-            {displayName: '航空安全奖', name: 'airline_security_bonus', enableCellEdit: false}
+            {displayName: '航班正常奖', name: 'flightBonus', enableCellEdit: false}
+            {displayName: '服务质量奖', name: 'serviceBonus', enableCellEdit: false}
+            {displayName: '航空安全奖', name: 'airlineSecurityBonus', enableCellEdit: false}
             {displayName: '综治奖', name: 'composite_bonus', enableCellEdit: false}
-            {displayName: '收支目标考核奖', name: 'in_out_bonus', enableCellEdit: false}
-            {displayName: '奖1', name: 'bonus_1', enableCellEdit: false}
+            {displayName: '收支目标考核奖', name: 'inOutBonus', enableCellEdit: false}
+            {displayName: '精品奖励', name: 'bestGoods', enableCellEdit: false}
+            {displayName: '精编奖励', name: 'bestPlan', enableCellEdit: false}
             {displayName: '奖2', name: 'bonus_2', enableCellEdit: false}
         ]).concat(CALC_STEP_COLUMN)
 
@@ -1030,9 +1031,9 @@ class SalaryOverviewController extends SalaryBaseController
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
             {displayName: '基础工资', name: 'basic', enableCellEdit: false}
             {displayName: '绩效工资', name: 'performance', enableCellEdit: false}
-            {displayName: '小时费', name: 'hours_fee', enableCellEdit: false}
+            {displayName: '小时费', name: 'hoursFee', enableCellEdit: false}
             {displayName: '津贴', name: 'subsidy', enableCellEdit: false}
-            {displayName: '驻站津贴', name: 'land_subsidy', enableCellEdit: false}
+            {displayName: '驻站津贴', name: 'landSubsidy', enableCellEdit: false}
             {displayName: '奖励', name: 'reward', enableCellEdit: false}
             {displayName: '合计', name: 'total', enableCellEdit: false}
             {displayName: '备注', name: 'remark',  cellTooltip: (row) -> return row.entity.note}
