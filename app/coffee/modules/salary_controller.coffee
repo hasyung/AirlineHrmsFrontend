@@ -837,8 +837,8 @@ class SalaryBasicController extends SalaryBaseController
             {displayName: '岗位薪酬', name: 'positionSalary', enableCellEdit: false}
             {displayName: '工龄工资', name: 'workingYearsSalary', enableCellEdit: false}
             {displayName: '保留工资', name: 'reserveSalary', enableCellEdit: false}
-            {displayName: '补扣发', name: 'addGarnishee'}
-            {displayName: '备注', name: 'remark', cellTooltip: (row) -> return row.entity.note}
+            {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {displayName: '备注', name: 'remark', headerCellClass: 'editable_cell_header', cellTooltip: (row) -> return row.entity.note}
         ]).concat(CALC_STEP_COLUMN)
 
 
@@ -854,8 +854,8 @@ class SalaryPerformanceController extends SalaryBaseController
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
             {displayName: '当月绩效基数', name: 'baseSalary', enableCellEdit: false},
             {displayName: '当月绩效薪酬', name: 'amount', enableCellEdit: false},
-            {displayName: '补扣发', name: 'addGarnishee'},
-            {displayName: '备注', name: 'remark', cellTooltip: (row) -> return row.entity.note}
+            {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'},
+            {displayName: '备注', name: 'remark', headerCellClass: 'editable_cell_header', cellTooltip: (row) -> return row.entity.note}
         ]).concat(CALC_STEP_COLUMN)
 
     upload_performance: (type, attachment_id)->
@@ -883,8 +883,8 @@ class SalaryHoursFeeController extends SalaryBaseController
             {displayName: '飞行时间', name: 'flyHours', enableCellEdit: false}
             {displayName: '小时费', name: 'flyFee', enableCellEdit: false}
             {displayName: '空勤灶', name: 'airlineFee', enableCellEdit: false}
-            {displayName: '补扣发', name: 'addGarnishee'}
-            {displayName: '备注', name: 'remark', cellTooltip: (row) -> return row.entity.note}
+            {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {displayName: '备注', name: 'remark', headerCellClass: 'editable_cell_header', cellTooltip: (row) -> return row.entity.note}
         ]).concat(CALC_STEP_COLUMN)
 
     search: () ->
@@ -934,8 +934,8 @@ class SalaryAllowanceController extends SalaryBaseController
             {displayName: '签派放行补贴', name: 'permitSign', enableCellEdit: false}
             {displayName: '梭班补贴', name: 'workOvertime', enableCellEdit: false}
             {displayName: '高温补贴', name: 'temp', enableCellEdit: false}
-            {displayName: '补扣发', name: 'addGarnishee'}
-            {displayName: '备注', name: 'remark', cellTooltip: (row) -> return row.entity.note}
+            {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {displayName: '备注', name: 'remark', headerCellClass: 'editable_cell_header', cellTooltip: (row) -> return row.entity.note}
         ]).concat(CALC_STEP_COLUMN)
 
     upload_allowance: (type, attachment_id)->
@@ -959,8 +959,8 @@ class SalaryLandAllowanceController extends SalaryBaseController
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
             {displayName: '津贴', name: 'subsidy', enableCellEdit: false}
-            {displayName: '补扣发', name: 'addGarnishee'}
-            {displayName: '备注', name: 'remark',  cellTooltip: (row) -> return row.entity.note}
+            {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {displayName: '备注', name: 'remark', headerCellClass: 'editable_cell_header', cellTooltip: (row) -> return row.entity.note}
         ]).concat(CALC_STEP_COLUMN)
 
 
@@ -1005,8 +1005,8 @@ class SalaryTransportFeeController extends SalaryBaseController
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
             {displayName: '交通费', name: 'amount', enableCellEdit: false}
             {displayName: '班车费扣除', name: 'busFee', enableCellEdit: false}
-            {displayName: '补扣发', name: 'addGarnishee'}
-            {displayName: '备注', name: 'remark',  cellTooltip: (row) -> return row.entity.note}
+            {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {displayName: '备注', name: 'remark', headerCellClass: 'editable_cell_header', cellTooltip: (row) -> return row.entity.note}
         ]).concat(CALC_STEP_COLUMN)
 
     upload_bus_fee: (type, attachment_id)->
@@ -1036,7 +1036,7 @@ class SalaryOverviewController extends SalaryBaseController
             {displayName: '驻站津贴', name: 'landSubsidy', enableCellEdit: false}
             {displayName: '奖励', name: 'reward', enableCellEdit: false}
             {displayName: '合计', name: 'total', enableCellEdit: false}
-            {displayName: '备注', name: 'remark',  cellTooltip: (row) -> return row.entity.note}
+            {displayName: '备注', name: 'remark', headerCellClass: 'editable_cell_header', cellTooltip: (row) -> return row.entity.note}
         ]).concat(CALC_STEP_COLUMN)
 
 
