@@ -44,7 +44,7 @@ FlowHandlerDirective = (ngDialog)->
                         </div>
                     </div>
                 </md-card>
-                <md-card ng-if="flow.type != 'Flow::Retirement'">
+                <md-card>
                     <div class="approval-relation-info">
                         <div class="approval-subheader">申请信息</div>
                         <div class="approval-relations">
