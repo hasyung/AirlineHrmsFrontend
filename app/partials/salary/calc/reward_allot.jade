@@ -1,0 +1,32 @@
+md-dialog.punishment_new(
+    style="min-width: 500px;"
+    )
+    form(flex ng-submit="dialog.close();" name="allotRewardForm")
+        md-toolbar.md-accent(md-theme="hrms")
+            .md-toolbar-tools
+                span 员工调岗
+        md-content
+            .dialog-content(layout layout-align="center")
+                fieldset(flex)
+                    div(layout)
+                        md-input-container.row-has-value(flex)
+                            label 奖金类别
+                            md-select(ng-model="rewards.category" placeholder="请选择奖金类别")
+                                md-option(ng-value="item" ng-repeat="item in $enum.get('channels')") {{item.label}}
+                    div(layout)
+                        table.table.table-mc-light-blue.table-bordered
+                            thead
+                                tr
+                                    th 部门
+                                    th 分配金额
+                            tbody
+                                tr(ng-repeat)
+                                    td(ng-bind="department")
+                                    td
+                                        md-input-container(md-no-float)
+                                            input(ng-model="reward.money")
+
+
+        .md-actions
+            md-button(type="button" ng-click="dialog.close()") 取 消
+            md-button.md-primary.md-raised(type="submit") 确 定

@@ -22,7 +22,7 @@ section.self_performance(ng-init="ctrl.loadPerformance()")
                                     th 绩效
                                     th(ng-if="!(currentUser.pcategory=='员工')") 排序
                                     th(width="25%") 附件
-                                    th(width="25%") 申述
+                                    th(width="25%") 申诉
                             tbody
                                 tr(ng-repeat="performance in group")
                                     td(ng-bind="performance.assessTime")
@@ -41,5 +41,5 @@ section.self_performance(ng-init="ctrl.loadPerformance()")
                                             nb-dialog
                                             template-url="partials/self/performance/represent.html"
                                             locals="{performance: performance}"
-                                            ) 绩效申述
+                                            ) 绩效申诉
                                         span(ng-if="performance.allegeStatus") 已申诉

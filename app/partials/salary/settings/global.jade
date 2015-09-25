@@ -76,6 +76,12 @@
                 label 已发
                 md-input-container(md-no-float)
                     input(type="number" ng-model="ctrl.global_setting.flight_bonus[ctrl.currentYear].sent" readonly)
+                label 剩余
+                .leave(
+                    ng-class="{'yellow': ctrl.global_setting.flight_bonus[ctrl.currentYear].sent/ctrl.global_setting.flight_bonus[ctrl.currentYear].budget>=0.8, 'red': ctrl.global_setting.flight_bonus[ctrl.currentYear].sent/ctrl.global_setting.flight_bonus[ctrl.currentYear].budget>=1}"
+                    ) {{ctrl.global_setting.flight_bonus[ctrl.currentYear].budget - ctrl.global_setting.flight_bonus[ctrl.currentYear].sent}}
+                //- md-input-container(md-no-float)
+                //-     input(type="number" ng-model="ctrl.global_setting.flight_bonus[ctrl.currentYear].leave" readonly)
 
             .form-row(layout)
                 label 服务质量奖预算
@@ -84,6 +90,10 @@
                 label 已发
                 md-input-container(md-no-float)
                     input(type="number" ng-model="ctrl.global_setting.service_bonus[ctrl.currentYear].sent" readonly)
+                label 剩余
+                .leave(
+                    ng-class="{'yellow': ctrl.global_setting.service_bonus[ctrl.currentYear].sent/ctrl.global_setting.service_bonus[ctrl.currentYear].budget>=0.8, 'red': ctrl.global_setting.service_bonus[ctrl.currentYear].sent/ctrl.global_setting.service_bonus[ctrl.currentYear].budget>=1}"
+                    ) {{ctrl.global_setting.service_bonus[ctrl.currentYear].budget - ctrl.global_setting.service_bonus[ctrl.currentYear].sent}}
 
             .form-row(layout)
                 label 航空安全奖预算
@@ -92,6 +102,10 @@
                 label 已发
                 md-input-container(md-no-float)
                     input(type="number" ng-model="ctrl.global_setting.ailine_security_bonus[ctrl.currentYear].sent" readonly)
+                label 剩余
+                .leave(
+                    ng-class="{'yellow': ctrl.global_setting.ailine_security_bonus[ctrl.currentYear].sent/ctrl.global_setting.ailine_security_bonus[ctrl.currentYear].budget>=0.8, 'red': ctrl.global_setting.ailine_security_bonus[ctrl.currentYear].sent/ctrl.global_setting.ailine_security_bonus[ctrl.currentYear].budget>=1}"
+                    ) {{ctrl.global_setting.ailine_security_bonus[ctrl.currentYear].budget - ctrl.global_setting.ailine_security_bonus[ctrl.currentYear].sent}}
 
             .form-row(layout)
                 label 社会综治奖预算
@@ -100,6 +114,154 @@
                 label 已发
                 md-input-container(md-no-float)
                     input(type="number" ng-model="ctrl.global_setting.composite_bonus[ctrl.currentYear].sent" readonly)
+                label 剩余
+                .leave(
+                    ng-class="{'yellow': ctrl.global_setting.composite_bonus[ctrl.currentYear].sent/ctrl.global_setting.composite_bonus[ctrl.currentYear].budget>=0.8, 'red': ctrl.global_setting.composite_bonus[ctrl.currentYear].sent/ctrl.global_setting.composite_bonus[ctrl.currentYear].budget>=1}"
+                    ) {{ctrl.global_setting.composite_bonus[ctrl.currentYear].budget - ctrl.global_setting.composite_bonus[ctrl.currentYear].sent}}
+
+            .form-row(layout)
+                label 航意险代理奖预算
+                md-input-container(md-no-float)
+                    input(type="number" min="0" max="100000000" step="1" ng-model="ctrl.global_setting.air_accident_bonus[ctrl.currentYear].budget")
+                label 已发
+                md-input-container(md-no-float)
+                    input(type="number" ng-model="ctrl.global_setting.air_accident_bonus[ctrl.currentYear].sent" readonly)
+                label 剩余
+                .leave(
+                    ng-class="{'yellow': ctrl.global_setting.air_accident_bonus[ctrl.currentYear].sent/ctrl.global_setting.air_accident_bonus[ctrl.currentYear].budget>=0.8, 'red': ctrl.global_setting.air_accident_bonus[ctrl.currentYear].sent/ctrl.global_setting.air_accident_bonus[ctrl.currentYear].budget>=1}"
+                    ) {{ctrl.global_setting.air_accident_bonus[ctrl.currentYear].budget - ctrl.global_setting.air_accident_bonus[ctrl.currentYear].sent}}
+
+            .form-row(layout)
+                label 客舱升舱奖预算
+                md-input-container(md-no-float)
+                    input(type="number" min="0" max="100000000" step="1" ng-model="ctrl.global_setting.upgrades_bonus[ctrl.currentYear].budget")
+                label 已发
+                md-input-container(md-no-float)
+                    input(type="number" ng-model="ctrl.global_setting.upgrades_bonus[ctrl.currentYear].sent" readonly)
+                label 剩余
+                .leave(
+                    ng-class="{'yellow': ctrl.global_setting.upgrades_bonus[ctrl.currentYear].sent/ctrl.global_setting.upgrades_bonus[ctrl.currentYear].budget>=0.8, 'red': ctrl.global_setting.upgrades_bonus[ctrl.currentYear].sent/ctrl.global_setting.upgrades_bonus[ctrl.currentYear].budget>=1}"
+                    ) {{ctrl.global_setting.upgrades_bonus[ctrl.currentYear].budget - ctrl.global_setting.upgrades_bonus[ctrl.currentYear].sent}}
+
+            .form-row(layout)
+                label 全员促销奖预算
+                md-input-container(md-no-float)
+                    input(type="number" min="0" max="100000000" step="1" ng-model="ctrl.global_setting.promotions_bonus[ctrl.currentYear].budget")
+                label 已发
+                md-input-container(md-no-float)
+                    input(type="number" ng-model="ctrl.global_setting.promotions_bonus[ctrl.currentYear].sent" readonly)
+                label 剩余
+                .leave(
+                    ng-class="{'yellow': ctrl.global_setting.promotions_bonus[ctrl.currentYear].sent/ctrl.global_setting.promotions_bonus[ctrl.currentYear].budget>=0.8, 'red': ctrl.global_setting.promotions_bonus[ctrl.currentYear].sent/ctrl.global_setting.promotions_bonus[ctrl.currentYear].budget>=1}"
+                    ) {{ctrl.global_setting.promotions_bonus[ctrl.currentYear].budget - ctrl.global_setting.promotions_bonus[ctrl.currentYear].sent}}
+
+            .form-row(layout)
+                label 川航稿费奖预算
+                md-input-container(md-no-float)
+                    input(type="number" min="0" max="100000000" step="1" ng-model="ctrl.global_setting.royalties_bonus[ctrl.currentYear].budget")
+                label 已发
+                md-input-container(md-no-float)
+                    input(type="number" ng-model="ctrl.global_setting.royalties_bonus[ctrl.currentYear].sent" readonly)
+                label 剩余
+                .leave(
+                    ng-class="{'yellow': ctrl.global_setting.royalties_bonus[ctrl.currentYear].sent/ctrl.global_setting.royalties_bonus[ctrl.currentYear].budget>=0.8, 'red': ctrl.global_setting.royalties_bonus[ctrl.currentYear].sent/ctrl.global_setting.royalties_bonus[ctrl.currentYear].budget>=1}"
+                    ) {{ctrl.global_setting.royalties_bonus[ctrl.currentYear].budget - ctrl.global_setting.royalties_bonus[ctrl.currentYear].sent}}
+
+            .form-row(layout)
+                label 无差错中队奖预算
+                md-input-container(md-no-float)
+                    input(type="number" min="0" max="100000000" step="1" ng-model="ctrl.global_setting.no_error_bonus[ctrl.currentYear].budget")
+                label 已发
+                md-input-container(md-no-float)
+                    input(type="number" ng-model="ctrl.global_setting.no_error_bonus[ctrl.currentYear].sent" readonly)
+                label 剩余
+                .leave(
+                    ng-class="{'yellow': ctrl.global_setting.no_error_bonus[ctrl.currentYear].sent/ctrl.global_setting.no_error_bonus[ctrl.currentYear].budget>=0.8, 'red': ctrl.global_setting.no_error_bonus[ctrl.currentYear].sent/ctrl.global_setting.no_error_bonus[ctrl.currentYear].budget>=1}"
+                    ) {{ctrl.global_setting.no_error_bonus[ctrl.currentYear].budget - ctrl.global_setting.no_error_bonus[ctrl.currentYear].sent}}
+
+            .form-row(layout)
+                label 年度综治奖预算
+                md-input-container(md-no-float)
+                    input(type="number" min="0" max="100000000" step="1" ng-model="ctrl.global_setting.yearly_composite_bonus[ctrl.currentYear].budget")
+                label 已发
+                md-input-container(md-no-float)
+                    input(type="number" ng-model="ctrl.global_setting.yearly_composite_bonus[ctrl.currentYear].sent" readonly)
+                label 剩余
+                .leave(
+                    ng-class="{'yellow': ctrl.global_setting.yearly_composite_bonus[ctrl.currentYear].sent/ctrl.global_setting.yearly_composite_bonus[ctrl.currentYear].budget>=0.8, 'red': ctrl.global_setting.yearly_composite_bonus[ctrl.currentYear].sent/ctrl.global_setting.yearly_composite_bonus[ctrl.currentYear].budget>=1}"
+                    ) {{ctrl.global_setting.yearly_composite_bonus[ctrl.currentYear].budget - ctrl.global_setting.yearly_composite_bonus[ctrl.currentYear].sent}}
+
+            .form-row(layout)
+                label 运兵先进奖预算
+                md-input-container(md-no-float)
+                    input(type="number" min="0" max="100000000" step="1" ng-model="ctrl.global_setting.transport_bonus[ctrl.currentYear].budget")
+                label 已发
+                md-input-container(md-no-float)
+                    input(type="number" ng-model="ctrl.global_setting.transport_bonus[ctrl.currentYear].sent" readonly)
+                label 剩余
+                .leave(
+                    ng-class="{'yellow': ctrl.global_setting.transport_bonus[ctrl.currentYear].sent/ctrl.global_setting.transport_bonus[ctrl.currentYear].budget>=0.8, 'red': ctrl.global_setting.transport_bonus[ctrl.currentYear].sent/ctrl.global_setting.transport_bonus[ctrl.currentYear].budget>=1}"
+                    ) {{ctrl.global_setting.transport_bonus[ctrl.currentYear].budget - ctrl.global_setting.transport_bonus[ctrl.currentYear].sent}}
+
+            .form-row(layout)
+                label 航安特贡奖预算
+                md-input-container(md-no-float)
+                    input(type="number" min="0" max="100000000" step="1" ng-model="ctrl.global_setting.safe_special_bonus[ctrl.currentYear].budget")
+                label 已发
+                md-input-container(md-no-float)
+                    input(type="number" ng-model="ctrl.global_setting.safe_special_bonus[ctrl.currentYear].sent" readonly)
+                label 剩余
+                .leave(
+                    ng-class="{'yellow': ctrl.global_setting.safe_special_bonus[ctrl.currentYear].sent/ctrl.global_setting.safe_special_bonus[ctrl.currentYear].budget>=0.8, 'red': ctrl.global_setting.safe_special_bonus[ctrl.currentYear].sent/ctrl.global_setting.safe_special_bonus[ctrl.currentYear].budget>=1}"
+                    ) {{ctrl.global_setting.safe_special_bonus[ctrl.currentYear].budget - ctrl.global_setting.safe_special_bonus[ctrl.currentYear].sent}}
+
+            .form-row(layout)
+                label 安管目标奖预算
+                md-input-container(md-no-float)
+                    input(type="number" min="0" max="100000000" step="1" ng-model="ctrl.global_setting.safe_manage_bonus[ctrl.currentYear].budget")
+                label 已发
+                md-input-container(md-no-float)
+                    input(type="number" ng-model="ctrl.global_setting.safe_manage_bonus[ctrl.currentYear].sent" readonly)
+                label 剩余
+                .leave(
+                    ng-class="{'yellow': ctrl.global_setting.safe_manage_bonus[ctrl.currentYear].sent/ctrl.global_setting.safe_manage_bonus[ctrl.currentYear].budget>=0.8, 'red': ctrl.global_setting.safe_manage_bonus[ctrl.currentYear].sent/ctrl.global_setting.safe_manage_bonus[ctrl.currentYear].budget>=1}"
+                    ) {{ctrl.global_setting.safe_manage_bonus[ctrl.currentYear].budget - ctrl.global_setting.safe_manage_bonus[ctrl.currentYear].sent}}
+
+            .form-row(layout)
+                label 飞安星级奖预算
+                md-input-container(md-no-float)
+                    input(type="number" min="0" max="100000000" step="1" ng-model="ctrl.global_setting.fly_safe_bonus[ctrl.currentYear].budget")
+                label 已发
+                md-input-container(md-no-float)
+                    input(type="number" ng-model="ctrl.global_setting.fly_safe_bonus[ctrl.currentYear].sent" readonly)
+                label 剩余
+                .leave(
+                    ng-class="{'yellow': ctrl.global_setting.fly_safe_bonus[ctrl.currentYear].sent/ctrl.global_setting.fly_safe_bonus[ctrl.currentYear].budget>=0.8, 'red': ctrl.global_setting.fly_safe_bonus[ctrl.currentYear].sent/ctrl.global_setting.fly_safe_bonus[ctrl.currentYear].budget>=1}"
+                    ) {{ctrl.global_setting.fly_safe_bonus[ctrl.currentYear].budget - ctrl.global_setting.fly_safe_bonus[ctrl.currentYear].sent}}
+
+            .form-row(layout)
+                label 年度无错机维奖预算
+                md-input-container(md-no-float)
+                    input(type="number" min="0" max="100000000" step="1" ng-model="ctrl.global_setting.yearly_fix_bonus[ctrl.currentYear].budget")
+                label 已发
+                md-input-container(md-no-float)
+                    input(type="number" ng-model="ctrl.global_setting.yearly_fix_bonus[ctrl.currentYear].sent" readonly)
+                label 剩余
+                .leave(
+                    ng-class="{'yellow': ctrl.global_setting.yearly_fix_bonus[ctrl.currentYear].sent/ctrl.global_setting.yearly_fix_bonus[ctrl.currentYear].budget>=0.8, 'red': ctrl.global_setting.yearly_fix_bonus[ctrl.currentYear].sent/ctrl.global_setting.yearly_fix_bonus[ctrl.currentYear].budget>=1}"
+                    ) {{ctrl.global_setting.yearly_fix_bonus[ctrl.currentYear].budget - ctrl.global_setting.yearly_fix_bonus[ctrl.currentYear].sent}}
+
+            .form-row(layout)
+                label 收支考核奖预算
+                md-input-container(md-no-float)
+                    input(type="number" min="0" max="100000000" step="1" ng-model="ctrl.global_setting.balance_payment_bonus[ctrl.currentYear].budget")
+                label 已发
+                md-input-container(md-no-float)
+                    input(type="number" ng-model="ctrl.global_setting.balance_payment_bonus[ctrl.currentYear].sent" readonly)
+                label 剩余
+                .leave(
+                    ng-class="{'yellow': ctrl.global_setting.balance_payment_bonus[ctrl.currentYear].sent/ctrl.global_setting.balance_payment_bonus[ctrl.currentYear].budget>=0.8, 'red': ctrl.global_setting.balance_payment_bonus[ctrl.currentYear].sent/ctrl.global_setting.balance_payment_bonus[ctrl.currentYear].budget>=1}"
+                    ) {{ctrl.global_setting.balance_payment_bonus[ctrl.currentYear].budget - ctrl.global_setting.balance_payment_bonus[ctrl.currentYear].sent}}
 
             //- md-divider
             //- .form-select-row(layout)
