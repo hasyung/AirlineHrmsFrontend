@@ -385,11 +385,11 @@ class MyRequestCtrl extends nb.Controller
             {name:"employeeName", displayName:"姓名"}
             {name:"departmentName", displayName:"所属部门"}
             {name:"positionName", displayName:"岗位"}
-            {name:"createdAt", displayName:"申述时间", cellFilter:"date:'yyyy-MM-dd'"}
+            {name:"createdAt", displayName:"申诉时间", cellFilter:"date:'yyyy-MM-dd'"}
             {name:"assessTime", displayName:"考核时间"}
             {name:"result", displayName:"绩效"}
             {name:"category", displayName:"排名"}
-            {name:"outcome", displayName:"申述结果"}
+            {name:"outcome", displayName:"申诉结果"}
             {
                 name: 'type'
                 displayName: '详细'
