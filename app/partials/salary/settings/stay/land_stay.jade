@@ -64,8 +64,8 @@
                 tr
                     td 境外3
                     td
-                        input(type="number" ng-model="ctrl.dynamic_config.overseas_2nd.amount")
+                        input(type="number" ng-model="ctrl.dynamic_config.overseas_3rd.amount")
                     td
                         span(
-                            ng-repeat="city in ctrl.dynamic_config.overseas_2nd.cities track by $index"
+                            ng-repeat="city in ctrl.dynamic_config.overseas_3rd.cities track by $index"
                             ) {{city}}{{ $last? '' : '/' }}
