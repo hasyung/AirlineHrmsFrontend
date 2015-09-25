@@ -1,23 +1,23 @@
 div.personnel-reward
     div
-        md-card.nb-card()
+        md-card.nb-card(ng-init="ctrl.loadRewards()")
             md-toolbar.toolbar--welfare
                 .md-toolbar-tools
                     span 奖励
             .nb-card-content
-                .punishItem
+                .punishItem(ng-repeat="item in ctrl.rewards")
                     .punishItem__row(layout)
                         .punishItem__row__key 奖励时间
-                        .punishItem__row__val 2015-9-8
+                        .punishItem__row__val {{item.createdAt}}
                     .punishItem__row(layout)
                         .punishItem__row__key 奖励类别
-                        .punishItem__row__val 经济奖励
+                        .punishItem__row__val {{item.category}}
                     .punishItem__row(layout)
                         .punishItem__row__key 奖励描述
-                        .punishItem__row__val 员工见义勇为，保护乘客免受歹徒伤害，奖励 1000 美金以资鼓励。
+                        .punishItem__row__val {{item.desc}}
                     .punishItem__row(layout)
                         .punishItem__row__key 奖励期限
-                        .punishItem__row__val 2015-9-8 至 2016-9-8
+                        .punishItem__row__val {{item.rewardDate}}
 
 
         md-card.nb-card(ng-init="ctrl.loadPunishments()")

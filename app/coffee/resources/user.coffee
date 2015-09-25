@@ -99,7 +99,7 @@ UserPerformance = (restmod, RMUtils, $Evt)->
     UserPerformance = restmod.model('/me/performances').mix 'nbRestApi', {
         $hooks:
             'allege-create': ->
-                $Evt.$send('allege:create:success',"绩效申述成功")
+                $Evt.$send('allege:create:success',"绩效申诉成功")
 
         $extend:
             Record:

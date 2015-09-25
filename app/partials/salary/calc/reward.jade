@@ -20,6 +20,12 @@
 
                 span(flex)
                 span
+                    md-button.md-primary.md-raised(
+                        nb-dialog
+                        template-url="partials/salary/calc/reward_allot.html"
+                        locals="{}"
+                        ) 奖金分配
+                span
                     md-menu(ng-init="selectedRows=[]")
                         md-button.md-primary.md-raised(
                             ng-click="$mdOpenMenu($event)"

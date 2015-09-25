@@ -79,6 +79,28 @@
         }
     }
 
+    .leave {
+        min-width: 170px;
+        position: relative;
+
+        &.yellow {
+            color: #f58220;
+        }
+
+        &.red {
+            color: rgb(239, 83, 80);
+        }
+
+        &:after {
+            background: rgba(0, 0, 0, .1);
+            content: '';
+            display: block;
+            height: 1px;
+            margin-top: -2px;
+            width: 100%;
+        }
+    }
+
     .md-button {
         margin-left: 140px;
     }

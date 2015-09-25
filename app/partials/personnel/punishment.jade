@@ -12,11 +12,11 @@ md-dialog.punishment_new(style="min-width: 450px;")
                             input(ng-model="::current.name" name="name" readonly)
                     div(layout)
                         md-input-container(flex)
-                            label 处分类别
+                            label {{dialog.genre}}类别
                             input(ng-model="punishment.category" required)
                     div(layout)
                         md-input-container(flex)
-                            label 处分描述
+                            label {{dialog.genre}}描述
                             textarea(ng-model="punishment.desc" md-maxlength="2000" required)
 
                     div(layout ng-if="dialog.genre == '处分'")
