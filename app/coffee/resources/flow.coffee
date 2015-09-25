@@ -77,7 +77,7 @@ FlowHandlerDirective = (ngDialog)->
                                 </div>
                             </div>
                         </div>
-                        <div class="approval-opinions" ng-if="!flowView || flow.name == '合同续签'">
+                        <div class="approval-opinions" ng-if="!flowView">
                             <form name="flowReplyForm" ng-submit="reply(userReply, flowReplyForm);">
                                 <div layout>
                                     <md-input-container flex>
@@ -90,7 +90,7 @@ FlowHandlerDirective = (ngDialog)->
                         </div>
                     </div>
                 </md-card>
-                <div class="approval-buttons" ng-if="!flowView || flow.name == '合同续签'">
+                <div class="approval-buttons" ng-if="!flowView">
                     <md-button class="md-raised md-warn" ng-click="submitFlow({opinion: true}, flow, dialog, state)" type="button">通过</md-button>
                     <md-button class="md-raised md-warn" ng-click="submitFlow({opinion: false}, flow, dialog, state)" type="button">驳回</md-button>
                     <md-button class="md-raised md-primary"
