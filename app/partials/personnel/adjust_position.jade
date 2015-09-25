@@ -1,6 +1,6 @@
 md-dialog.punishment_new(
     style="min-width: 900px;"
-    ng-init="current = dialog.employee.$refresh();"
+    ng-init="current = dialog.employee.$refresh();request={}"
     )
     form(flex ng-controller="AdjustPositionCtrl as ctrl" ng-submit="ctrl.adjustPosition(current); dialog.close();" name="newPositionForm")
         md-toolbar.md-accent(md-theme="hrms")

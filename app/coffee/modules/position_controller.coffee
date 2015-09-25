@@ -217,19 +217,18 @@ class AdjustPositionCtrl
         self = @
 
         params = {}
-        params.employee_id = employee.employee_id
+        params.employee_id = employee.id
         params.positions = employee.positions
-        params.channel_id = employee.channel_id
-        params.category_id = employee.category_id
-        params.duty_rank_id = employee.duty_rank_id
-        params.position_remark = employee.position_remark
-        params.oa_file_no = employee.oa_file_no
-        params.position_change_date = employee.position_change_date
-        params.probation_duration = employee.probation_duration
+        params.channel_id = employee.channelId
+        params.category_id = employee.categoryId
+        params.duty_rank_id = employee.dutyRankId
+        params.position_remark = employee.positionRemark
+        params.oa_file_no = employee.oaFileNo
+        params.position_change_date = employee.positionChangeDate
+        params.probation_duration = employee.probationDuration
 
         @http.post("/api/position_change_records", params).success (data, status)->
-            # self.Evt.$send "employee_leavejob:create:success", "离职单发起成功"
-            console.log '@@@'
+            self.Evt.$send "data:create:success", "员工转岗成功"
 
 
 app.controller 'PositionDetailCtrl', PositionDetailCtrl
