@@ -770,6 +770,7 @@ orgMutiPos = ($rootScope)->
 
         constructor: (@scope, @Position) ->
             @scope.positions = []
+            @scope.hasPrimary = false
 
         addPositions: ->
             @scope.positions.push {
@@ -785,6 +786,15 @@ orgMutiPos = ($rootScope)->
             temp = @scope.positions[index]
             @scope.positions[index] = @scope.positions[index-1]
             @scope.positions[index-1] = temp
+
+        queryPrimary: (positions)->
+            self = @
+
+            self.scope.hasPrimary = false
+            _.forEach positions, (position)->
+                if position.category == '主职'
+                    return self.scope.hasPrimary = true
+
 
     postLink = (elem, attrs, ctrl)->
 
