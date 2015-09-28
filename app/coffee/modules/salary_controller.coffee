@@ -932,7 +932,7 @@ class SalaryAllowanceController extends SalaryBaseController
             {displayName: '航站管理津贴', name: 'airStationManage', enableCellEdit: false}
             {displayName: '车勤补贴', name: 'carPresent', enableCellEdit: false}
             {displayName: '地勤补贴', name: 'landPresent', enableCellEdit: false}
-            {displayName: '放行补贴', name: 'permitEntry', enableCellEdit: false}
+            {displayName: '机务放行补贴', name: 'permitEntry', enableCellEdit: false}
             {displayName: '试车津贴', name: 'tryDrive', enableCellEdit: false}
             {displayName: '飞行荣誉津贴', name: 'flyHonor', enableCellEdit: false}
             {displayName: '航线实习补贴', name: 'airlinePractice', enableCellEdit: false}
@@ -992,11 +992,23 @@ class SalaryRewardController extends SalaryBaseController
             {displayName: '航班正常奖', name: 'flightBonus', enableCellEdit: false}
             {displayName: '服务质量奖', name: 'serviceBonus', enableCellEdit: false}
             {displayName: '航空安全奖', name: 'airlineSecurityBonus', enableCellEdit: false}
-            {displayName: '综治奖', name: 'composite_bonus', enableCellEdit: false}
-            {displayName: '收支目标考核奖', name: 'inOutBonus', enableCellEdit: false}
-            {displayName: '精品奖励', name: 'bestGoods', enableCellEdit: false}
-            {displayName: '精编奖励', name: 'bestPlan', enableCellEdit: false}
-            {displayName: '奖2', name: 'bonus_2', enableCellEdit: false}
+            {displayName: '社会治安综合治理奖', name: 'compositeBonus', enableCellEdit: false}
+            {displayName: '电子航意险代理提成奖', name: 'insuranceProxy', enableCellEdit: false}
+            {displayName: '客舱升舱提成奖', name: 'cabinGrowUp', enableCellEdit: false}
+            {displayName: '全员促销奖', name: 'fullSalePromotion', enableCellEdit: false}
+            {displayName: '四川航空报稿费', name: 'articleFee', enableCellEdit: false}
+            {displayName: '无差错飞行中队奖', name: 'allRightFly', enableCellEdit: false}
+            {displayName: '年度综治奖', name: 'yearCompositeBonus', enableCellEdit: false}
+            {displayName: '运兵先进奖', name: 'movePerfect', enableCellEdit: false}
+            {displayName: '航空安全特殊贡献奖', name: 'securitySpecial', enableCellEdit: false}
+            {displayName: '部门安全管理目标承包奖', name: 'depSecurityUndertake', enableCellEdit: false}
+            {displayName: '飞行安全星级奖', name: 'flyStar', enableCellEdit: false}
+            {displayName: '年度无差错机务维修中队奖', name: 'yearAllRightFly', enableCellEdit: false}
+            {displayName: '网络联程奖', name: 'networkConnect', enableCellEdit: false}
+            {displayName: '季度奖', name: 'quarterFee', enableCellEdit: false}
+            {displayName: '收益奖励金', name: 'earningsFee', enableCellEdit: false}
+            {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {displayName: '备注', name: 'remark', headerCellClass: 'editable_cell_header', cellTooltip: (row) -> return row.entity.note}
         ]).concat(CALC_STEP_COLUMN)
 
     upload_reward: (type, attachment_id)->
