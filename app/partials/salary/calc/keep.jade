@@ -1,4 +1,4 @@
-.app-content-wrapper(flex ng-controller="salaryOverviewCtrl as ctrl")
+.app-content-wrapper(flex ng-controller="salaryKeepCtrl as ctrl")
     md-toolbar.toolbar--welfare
         .md-toolbar-tools
             span(layout)
@@ -16,7 +16,7 @@
     div.ui-grid-container.mt5
         md-toolbar
             .md-toolbar-tools
-                h2 合计
+                h2 基础薪酬
 
                 span(flex)
                 span
@@ -34,9 +34,15 @@
                             md-menu-item()
                                 a.md-button(flex
                                     download
-                                    ng-href="/api/salary_overviews/export?month={{ctrl.currentCalcTime()}}"
+                                    ng-href="/api/basic_salaries/export_nc?month={{ctrl.currentCalcTime()}}"
                                     href="javascript:"
                                 ) NC导入表
+                            md-menu-item()
+                                a.md-button(
+                                    download
+                                    ng-href="/api/basic_salaries/export_approval?month={{ctrl.currentCalcTime()}}"
+                                    href="javascript:"
+                                ) 审批表
 
         div(nb-grid
             column-defs="ctrl.columnDef"
@@ -44,4 +50,5 @@
             grid-selection
             grid-edit
             grid-row-edit
-            on-register-api="ctrl.initialize(gridApi)" safe-src="ctrl.records")
+            on-register-api="ctrl.initialize(gridApi)"
+            safe-src="ctrl.records")

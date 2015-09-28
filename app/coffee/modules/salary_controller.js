@@ -1,5 +1,5 @@
 (function() {
-  var CALC_STEP_COLUMN, Route, SALARY_COLUMNDEF_DEFAULT, SALARY_FILTER_DEFAULT, SalaryAllowanceController, SalaryBaseController, SalaryBasicController, SalaryChangeController, SalaryController, SalaryExchangeController, SalaryGradeChangeController, SalaryHoursFeeController, SalaryLandAllowanceController, SalaryOverviewController, SalaryPerformanceController, SalaryPersonalController, SalaryRewardController, SalaryTransportFeeController, app, nb,
+  var CALC_STEP_COLUMN, Route, SALARY_COLUMNDEF_DEFAULT, SALARY_FILTER_DEFAULT, SalaryAllowanceController, SalaryBaseController, SalaryBasicController, SalaryChangeController, SalaryController, SalaryExchangeController, SalaryGradeChangeController, SalaryHoursFeeController, SalaryKeepController, SalaryLandAllowanceController, SalaryOverviewController, SalaryPerformanceController, SalaryPersonalController, SalaryRewardController, SalaryTransportFeeController, app, nb,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -960,8 +960,72 @@
           name: 'workingYearsSalary',
           enableCellEdit: false
         }, {
-          displayName: '保留工资',
-          name: 'reserveSalary',
+          displayName: '补扣发',
+          name: 'addGarnishee',
+          headerCellClass: 'editable_cell_header'
+        }, {
+          displayName: '备注',
+          name: 'remark',
+          headerCellClass: 'editable_cell_header',
+          cellTooltip: function(row) {
+            return row.entity.note;
+          }
+        }
+      ]).concat(CALC_STEP_COLUMN);
+    }
+
+    return SalaryBasicController;
+
+  })(SalaryBaseController);
+
+  SalaryKeepController = (function(_super) {
+    __extends(SalaryKeepController, _super);
+
+    SalaryKeepController.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'KeepSalary', 'toaster'];
+
+    function SalaryKeepController($http, $scope, $q, Evt, Employee, KeepSalary, toaster) {
+      this.Evt = Evt;
+      this.Employee = Employee;
+      this.KeepSalary = KeepSalary;
+      this.toaster = toaster;
+      SalaryKeepController.__super__.constructor.call(this, this.KeepSalary, $scope, $q, true);
+      this.filterOptions = angular.copy(SALARY_FILTER_DEFAULT);
+      this.columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
+        {
+          displayName: '岗位工资保留',
+          name: 'position',
+          enableCellEdit: false
+        }, {
+          displayName: '业绩奖保留',
+          name: 'performance',
+          enableCellEdit: false
+        }, {
+          displayName: '工龄工资保留',
+          name: 'workingYears',
+          enableCellEdit: false
+        }, {
+          displayName: '保底增幅',
+          name: 'minimumGrowth',
+          enableCellEdit: false
+        }, {
+          displayName: '地勤补贴保留',
+          name: 'landAllowance',
+          enableCellEdit: false
+        }, {
+          displayName: '生活补贴保留',
+          name: 'lifeAllowance',
+          enableCellEdit: false
+        }, {
+          displayName: '09调资增加保留',
+          name: 'adjustmen_09',
+          enableCellEdit: false
+        }, {
+          displayName: '14公务用车保留',
+          name: 'bus_14',
+          enableCellEdit: false
+        }, {
+          displayName: '14通信补贴保留',
+          name: 'communication_14',
           enableCellEdit: false
         }, {
           displayName: '补扣发',
@@ -978,7 +1042,7 @@
       ]).concat(CALC_STEP_COLUMN);
     }
 
-    return SalaryBasicController;
+    return SalaryKeepController;
 
   })(SalaryBaseController);
 
@@ -1525,6 +1589,8 @@
   app.controller('salaryExchangeCtrl', SalaryExchangeController);
 
   app.controller('salaryBasicCtrl', SalaryBasicController);
+
+  app.controller('salaryKeepCtrl', SalaryKeepController);
 
   app.controller('salaryPerformanceCtrl', SalaryPerformanceController);
 
