@@ -35,4 +35,5 @@ md-dialog.punishment_new(style="min-width: 450px;")
 
             .md-actions
                 md-button(type="button" ng-click="dialog.close()") 取 消
-                md-button.md-primary.md-raised(type="submit" ng-disabled="(dialog.genre == '奖励' && !newPunishmentForm.rewardDate.$modelValue) || (dialog.genre == '处分' && newPunishmentForm.startDate.$modelValue && !newPunishmentForm.endDate.$modelValue) || ((dialog.genre == '处分' && !newPunishmentForm.startDate.$modelValue && newPunishmentForm.endDate.$modelValue))") 确 定
+                md-button.md-primary.md-raised(type="submit" ng-disabled="(newPunishmentForm.startDate.$modelValue >= newPunishmentForm.endDate.$modelValue) || (dialog.genre == '奖励' && !newPunishmentForm.rewardDate.$modelValue) || (dialog.genre == '处分' && newPunishmentForm.startDate.$modelValue && !newPunishmentForm.endDate.$modelValue) || ((dialog.genre == '处分' && !newPunishmentForm.startDate.$modelValue && newPunishmentForm.endDate.$modelValue))") 确 定
+
