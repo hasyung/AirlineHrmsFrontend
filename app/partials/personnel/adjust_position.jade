@@ -20,16 +20,16 @@ md-dialog.punishment_new(
                     div(org-muti-pos ng-model="current.positions" editing="true")
 
                     div(layout)
-                        md-input-container(flex)
+                        md-input-container.row-has-value(flex)
                             label 通道
                             md-select(ng-model="current.channelId")
                                 md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
-                        md-input-container(flex)
+                        md-input-container.row-has-value(flex)
                             label 分类
                             md-select(ng-model="current.categoryId")
                                 md-option(ng-value="item.id" ng-repeat="item in $enum.get('categories')") {{item.label}}
                     div(layout)
-                        md-input-container(flex)
+                        md-input-container.row-has-value(flex)
                             label 职务职级
                             md-select(ng-model="current.dutyRankId")
                                 md-option(ng-value="item.id" ng-repeat="item in $enum.get('duty_ranks')") {{item.label}}
@@ -48,7 +48,7 @@ md-dialog.punishment_new(
 
                     div(layout)
                         md-input-container(flex)
-                            label 调岗备注
+                            label 岗位备注
                             input(ng-model="current.positionRemark")
 
         .md-actions
