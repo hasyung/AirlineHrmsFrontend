@@ -460,7 +460,7 @@ class SalaryPersonalController extends nb.Controller
 class SalaryChangeController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryChange', 'SalaryPersonSetup']
 
-    constructor: ($http, $scope, $Evt, $enum, @SalaryChange, @SalaryPersonSetup) ->
+    constructor: (@http, $scope, $Evt, $enum, @SalaryChange, @SalaryPersonSetup) ->
         @loadInitialData()
 
         @filterOptions = {
@@ -528,8 +528,10 @@ class SalaryChangeController extends nb.Controller
         @salaryChanges = @SalaryChange.$collection().$fetch()
 
     loadPersonSettings: (change) ->
-        console.log change
-        return @SalaryPersonSetup.$collection({id: change.salary_person_setup_id}).$fetch()
+        self = @
+        return @SalaryPersonSetup.$collection().$fetch().$find(change.salaryPersonSetupId)
+
+        # return @SalaryPersonSetup.$collection().$fetch(change.salaryPersonSetupId)
 
     search: (tableState) ->
         tableState = tableState || {}
