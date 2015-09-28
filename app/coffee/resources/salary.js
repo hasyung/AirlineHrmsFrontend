@@ -363,10 +363,10 @@
       },
       $hooks: {
         'after-create': function() {
-          return $Evt.$send('salary_counter:create:success', "薪酬合计创建成功");
+          return $Evt.$send('salary_overview:create:success', "薪酬合计创建成功");
         },
         'after-update': function() {
-          return $Evt.$send('salary_counter:update:success', "薪酬合计更新成功");
+          return $Evt.$send('salary_overview:update:success', "薪酬合计更新成功");
         }
       },
       $config: {
