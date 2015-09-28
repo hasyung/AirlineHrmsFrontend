@@ -842,7 +842,30 @@ class SalaryBasicController extends SalaryBaseController
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
             {displayName: '岗位薪酬', name: 'positionSalary', enableCellEdit: false}
             {displayName: '工龄工资', name: 'workingYearsSalary', enableCellEdit: false}
-            {displayName: '保留工资', name: 'reserveSalary', enableCellEdit: false}
+            {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {displayName: '备注', name: 'remark', headerCellClass: 'editable_cell_header', cellTooltip: (row) -> return row.entity.note}
+        ]).concat(CALC_STEP_COLUMN)
+
+
+# 保留工资
+class SalaryKeepController extends SalaryBaseController
+    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'KeepSalary', 'toaster']
+
+    constructor: ($http, $scope, $q, @Evt, @Employee, @KeepSalary, @toaster) ->
+        super(@KeepSalary, $scope, $q, true)
+
+        @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
+
+        @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
+            {displayName: '岗位工资保留', name: 'position', enableCellEdit: false}
+            {displayName: '业绩奖保留', name: 'performance', enableCellEdit: false}
+            {displayName: '工龄工资保留', name: 'workingYears', enableCellEdit: false}
+            {displayName: '保底增幅', name: 'minimumGrowth', enableCellEdit: false}
+            {displayName: '地勤补贴保留', name: 'landAllowance', enableCellEdit: false}
+            {displayName: '生活补贴保留', name: 'lifeAllowance', enableCellEdit: false}
+            {displayName: '09调资增加保留', name: 'adjustmen_09', enableCellEdit: false}
+            {displayName: '14公务用车保留', name: 'bus_14', enableCellEdit: false}
+            {displayName: '14通信补贴保留', name: 'communication_14', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {displayName: '备注', name: 'remark', headerCellClass: 'editable_cell_header', cellTooltip: (row) -> return row.entity.note}
         ]).concat(CALC_STEP_COLUMN)
@@ -1074,6 +1097,7 @@ app.controller 'salaryChangeCtrl', SalaryChangeController
 app.controller 'salaryGradeChangeCtrl', SalaryGradeChangeController
 app.controller 'salaryExchangeCtrl', SalaryExchangeController
 app.controller 'salaryBasicCtrl', SalaryBasicController
+app.controller 'salaryKeepCtrl', SalaryKeepController
 app.controller 'salaryPerformanceCtrl', SalaryPerformanceController
 app.controller 'salaryHoursFeeCtrl', SalaryHoursFeeController
 app.controller 'salaryAllowanceCtrl', SalaryAllowanceController
