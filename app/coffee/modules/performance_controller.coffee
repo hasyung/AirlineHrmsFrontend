@@ -222,7 +222,10 @@ class PerformanceMasterRecord extends nb.Controller
         @columnDef = BASE_TABLE_DEFS.concat [
             {displayName: '绩效类型', name: 'categoryName'}
             {displayName: '考核时段', name: 'assessTime'}
-            {displayName: '绩效', name: 'result'}
+            {
+                displayName: '绩效'
+                name: 'result'
+            }
             {displayName: '排序', name: 'sortNo'}
             {
                 displayName: '附件',
@@ -245,6 +248,20 @@ class PerformanceMasterRecord extends nb.Controller
             if item['name'] == 'sortNo'
                 item['headerCellClass'] = 'editable_cell_header'
                 item['enableCellEdit'] = true
+            else if item['name'] == 'result'
+                item['enableCellEdit'] = true
+                item['editableCellTemplate'] = 'ui-grid/dropdownEditor'
+                item['headerCellClass'] = 'editable_cell_header'
+                item['editDropdownValueLabel'] = 'value'
+                item['editDropdownIdLabel'] = 'key'
+                item['editDropdownOptionsArray'] = [
+                    {key: '无', value: '无'}
+                    {key: '优秀', value: '优秀'}
+                    {key: '良好', value: '良好'}
+                    {key: '合格', value: '合格'}
+                    {key: '待改进', value: '待改进'}
+                    {key: '不合格', value: '不合格'}
+                ]
             else
                 item['enableCellEdit'] = false
 

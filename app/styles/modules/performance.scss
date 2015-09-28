@@ -23,10 +23,10 @@
 
             .md-toggle-icon {
                 @include transition(transform .5s ease-in-out);
-                transform: rotate(0deg);
+                transform: rotate(180deg);
 
                 &.toggled {
-                    transform: rotate(180deg);
+                    transform: rotate(0deg);
                 }
             }
         }

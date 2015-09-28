@@ -45,6 +45,22 @@
     .form-row {
         line-height: 34px;
 
+        &.yellow {
+            color: #f58220;
+
+            .md-input {
+                color: #f58220;
+            }
+        }
+
+        &.red {
+            color: rgb(239, 83, 80);
+
+            .md-input {
+                color: rgb(239, 83, 80);
+            }
+        }
+
         label {
             margin-right: 10px;
             text-align: right;
@@ -82,14 +98,6 @@
     .leave {
         min-width: 170px;
         position: relative;
-
-        &.yellow {
-            color: #f58220;
-        }
-
-        &.red {
-            color: rgb(239, 83, 80);
-        }
 
         &:after {
             background: rgba(0, 0, 0, .1);
