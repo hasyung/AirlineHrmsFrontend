@@ -372,6 +372,22 @@
       $config: {
         jsonRootSingle: 'salary_overview',
         jsonRootMany: 'salary_overviews'
+      },
+      $extend: {
+        Collection: {
+          search: function(tableState) {
+            return this.$refresh(tableState);
+          }
+        },
+        Scope: {
+          compute: function(params) {
+            return restmod.model('/salary_overviews/compute').mix({
+              $config: {
+                jsonRoot: 'salary_overviews'
+              }
+            }).$search(params);
+          }
+        }
       }
     });
   };

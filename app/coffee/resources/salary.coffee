@@ -294,6 +294,18 @@ SalaryOverview = (restmod, RMUtils, $Evt) ->
         $config:
             jsonRootSingle: 'salary_overview'
             jsonRootMany: 'salary_overviews'
+
+        $extend:
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+            Scope:
+                # 计算(根据年月)
+                compute: (params)->
+                    restmod.model('/salary_overviews/compute').mix(
+                        $config:
+                            jsonRoot: 'salary_overviews'
+                    ).$search(params)
     }
 
 
