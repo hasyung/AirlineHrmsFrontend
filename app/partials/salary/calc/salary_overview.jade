@@ -16,9 +16,14 @@
     div.ui-grid-container.mt5
         md-toolbar
             .md-toolbar-tools
-                h2 津贴
+                h2 合计
 
                 span(flex)
+                span
+                    md-button.md-raised.md-primary(
+                        ng-click="ctrl.exeCalc()"
+                        ng-disabled="ctrl.calcing"
+                    ) 计算
                 span
                     md-menu(ng-init="selectedRows=[]")
                         md-button.md-primary.md-raised(

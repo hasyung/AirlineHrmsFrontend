@@ -286,14 +286,26 @@ SalaryOverview = (restmod, RMUtils, $Evt) ->
 
         $hooks:
             'after-create': ->
-                $Evt.$send('salary_counter:create:success', "薪酬合计创建成功")
+                $Evt.$send('salary_overview:create:success', "薪酬合计创建成功")
 
             'after-update': ->
-                $Evt.$send('salary_counter:update:success', "薪酬合计更新成功")
+                $Evt.$send('salary_overview:update:success', "薪酬合计更新成功")
 
         $config:
             jsonRootSingle: 'salary_overview'
             jsonRootMany: 'salary_overviews'
+
+        $extend:
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+            Scope:
+                # 计算(根据年月)
+                compute: (params)->
+                    restmod.model('/salary_overviews/compute').mix(
+                        $config:
+                            jsonRoot: 'salary_overviews'
+                    ).$search(params)
     }
 
 
