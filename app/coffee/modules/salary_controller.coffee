@@ -458,9 +458,9 @@ class SalaryPersonalController extends nb.Controller
 
 
 class SalaryChangeController extends nb.Controller
-    @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryChange']
+    @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryChange', 'SalaryPersonSetup']
 
-    constructor: ($http, $scope, $Evt, $enum, @SalaryChange) ->
+    constructor: ($http, $scope, $Evt, $enum, @SalaryChange, @SalaryPersonSetup) ->
         @loadInitialData()
 
         @filterOptions = {
@@ -511,12 +511,12 @@ class SalaryChangeController extends nb.Controller
                 displayName: '查看'
                 field: 'setting'
                 cellTemplate: '''
-                <div class="ui-grid-cell-contents">
+                <div class="ui-grid-cell-contents" ng-init="outerScope=grid.appScope.$parent">
                     <a
                         href="javascript:void(0);"
                         nb-dialog
                         template-url="partials/salary/settings/changes/personal.html"
-                        locals="{change: row.entity}">
+                        locals="{change: row.entity, outerScope: outerScope}">
                         查看
                     </a>
                 </div>
@@ -526,6 +526,10 @@ class SalaryChangeController extends nb.Controller
 
     loadInitialData: () ->
         @salaryChanges = @SalaryChange.$collection().$fetch()
+
+    loadPersonSettings: (change) ->
+        console.log change
+        return @SalaryPersonSetup.$collection({id: change.salary_person_setup_id}).$fetch()
 
     search: (tableState) ->
         tableState = tableState || {}
