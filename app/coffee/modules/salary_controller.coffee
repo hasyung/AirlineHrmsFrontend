@@ -738,7 +738,7 @@ class SalaryExchangeController
 
 
 class SalaryBaseController extends nb.Controller
-    constructor: (@Model, @scope, @q, options = null) ->
+    constructor: (@Model, @scope, @q, @right_hand_mode, options = null) ->
         @loadDateTime()
         @loadInitialData(options)
 
@@ -767,18 +767,24 @@ class SalaryBaseController extends nb.Controller
         @year_list = @$getYears()
         @month_list = @$getMonths()
 
-        if date.getMonth() == 0
-            @year_list.pop()
-            @year_list.unshift(date.getFullYear() - 1)
-            @month_list = _.map [1..12], (item)->
-                item = '0' + item if item < 10
-                item + '' # to string
+        unless @right_hand_mode
+            # 不是正扣倒发模式，看上个月的数据
+            if date.getMonth() == 0
+                @year_list.pop()
+                @year_list.unshift(date.getFullYear() - 1)
+                @month_list = _.map [1..12], (item)->
+                    item = '0' + item if item < 10
+                    item + '' # to string
 
-            @currentYear = _.last(@year_list)
-            @currentMonth = _.last(@month_list)
+                @currentYear = _.last(@year_list)
+                @currentMonth = _.last(@month_list)
+            else
+                @currentYear = _.last(@year_list)
+                @month_list.pop()
+                @currentMonth = _.last(@month_list)
         else
+            # 正发倒扣模式
             @currentYear = _.last(@year_list)
-            @month_list.pop()
             @currentMonth = _.last(@month_list)
 
     loadInitialData: (options) ->
@@ -829,7 +835,7 @@ class SalaryBasicController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'BasicSalary', 'toaster']
 
     constructor: ($http, $scope, $q, @Evt, @Employee, @BasicSalary, @toaster) ->
-        super(@BasicSalary, $scope, $q)
+        super(@BasicSalary, $scope, $q, true)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
@@ -847,7 +853,7 @@ class SalaryPerformanceController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'PerformanceSalary', 'toaster']
 
     constructor: ($http, $scope, $q, @Evt, @Employee, @PerformanceSalary, @toaster) ->
-        super(@PerformanceSalary, $scope, $q)
+        super(@PerformanceSalary, $scope, $q, false)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
@@ -875,7 +881,7 @@ class SalaryHoursFeeController extends SalaryBaseController
 
     constructor: (@http, $scope, $q, @Evt, @Employee, @HoursFee, @toaster) ->
         @hours_fee_category = '飞行员'
-        super(@HoursFee, $scope, $q, {hours_fee_category: @hours_fee_category})
+        super(@HoursFee, $scope, $q, false, {hours_fee_category: @hours_fee_category})
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
@@ -915,7 +921,7 @@ class SalaryAllowanceController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'Allowance', 'toaster']
 
     constructor: ($http, $scope, $q, @Evt, @Employee, @Allowance, @toaster) ->
-        super(@Allowance, $scope, $q)
+        super(@Allowance, $scope, $q, true)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
@@ -953,7 +959,7 @@ class SalaryLandAllowanceController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'LandAllowance', 'toaster']
 
     constructor: (@http, $scope, $q, @Evt, @Employee, @LandAllowance, @toaster) ->
-        super(@LandAllowance, $scope, $q)
+        super(@LandAllowance, $scope, $q, false)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
@@ -978,7 +984,7 @@ class SalaryRewardController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'Reward', 'toaster']
 
     constructor: ($http, $scope, $q, @Evt, @Employee, @Reward, @toaster) ->
-        super(@Reward, $scope, $q)
+        super(@Reward, $scope, $q, true)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
@@ -1008,7 +1014,7 @@ class SalaryTransportFeeController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'TransportFee', 'toaster']
 
     constructor: (@http, $scope, $q, @Evt, @Employee, @TransportFee, @toaster) ->
-        super(@TransportFee, $scope, $q)
+        super(@TransportFee, $scope, $q, true)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
@@ -1034,7 +1040,7 @@ class SalaryOverviewController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'SalaryOverview', 'toaster']
 
     constructor: ($http, $scope, $q, @Evt, @Employee, @SalaryOverview, @toaster) ->
-        super(@SalaryOverview, $scope, $http)
+        super(@SalaryOverview, $scope, $http, true)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
