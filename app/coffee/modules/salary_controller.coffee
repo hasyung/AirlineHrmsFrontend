@@ -330,6 +330,9 @@ class SalaryController extends nb.Controller
             .error (data)->
                 self.toaster.pop('success', '提示', '更新成功')
 
+    destroyCity: (cities, idx) ->
+        cities.splice(idx, 1)
+
 
 class SalaryPersonalController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryPersonSetup']

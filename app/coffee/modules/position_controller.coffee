@@ -227,6 +227,8 @@ class AdjustPositionCtrl
         params.position_change_date = employee.positionChangeDate
         params.probation_duration = employee.probationDuration
 
+        console.log employee
+
         @http.post("/api/position_change_records", params).success (data, status)->
             self.Evt.$send "data:create:success", "员工转岗成功"
 

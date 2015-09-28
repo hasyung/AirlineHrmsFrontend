@@ -463,4 +463,58 @@ md-dialog.punishment_new {
     }
 }
 
+//城市编辑dialog
+.city-editor {
+    .city-list {
+        margin: 20px auto;
+        padding-left: 0;
+        width: 60%;
+
+        li {
+            @include clearfix();
+            border: 1px solid #eee;
+
+            .md-button {
+                float: right;
+            }
+        }
+    }
+}
+
+.city-chip {
+    background-color: #ddd;
+    border-radius: 8px;
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+    margin-left: 5px;
+    margin-top: 5px;
+    min-width: 100px;
+    text-align: center;
+
+    md-icon {
+        display: none;
+    }
+
+    &:last-child {
+        margin-bottom: 5px;
+    }
+
+    &:hover {
+        md-icon {
+            display: inline-block;
+        }
+    }
+}
+
+.add-chip {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    width: 36px;
+}
 
