@@ -1,5 +1,5 @@
 (function() {
-  var CALC_STEP_COLUMN, Route, SALARY_COLUMNDEF_DEFAULT, SALARY_FILTER_DEFAULT, SalaryAllowanceController, SalaryBaseController, SalaryBasicController, SalaryChangeController, SalaryController, SalaryExchangeController, SalaryGradeChangeController, SalaryHoursFeeController, SalaryKeepController, SalaryLandAllowanceController, SalaryOverviewController, SalaryPerformanceController, SalaryPersonalController, SalaryRewardController, SalaryTransportFeeController, app, nb,
+  var CALC_STEP_COLUMN, CalcStepsController, Route, SALARY_COLUMNDEF_DEFAULT, SALARY_FILTER_DEFAULT, SalaryAllowanceController, SalaryBaseController, SalaryBasicController, SalaryChangeController, SalaryController, SalaryExchangeController, SalaryGradeChangeController, SalaryHoursFeeController, SalaryKeepController, SalaryLandAllowanceController, SalaryOverviewController, SalaryPerformanceController, SalaryPersonalController, SalaryRewardController, SalaryTransportFeeController, app, nb,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -1600,6 +1600,27 @@
 
   })(SalaryBaseController);
 
+  CalcStepsController = (function() {
+    CalcStepsController.$inject = ['$http', '$scope', 'CalcStep'];
+
+    function CalcStepsController(http, $scope, CalcStep) {
+      this.http = http;
+      this.CalcStep = CalcStep;
+    }
+
+    CalcStepsController.prototype.loadFromServer = function(category, month, employee_id) {
+      var self;
+      self = this;
+      return this.http.get('/api/calc_steps?category=' + category + "&month=" + month + "&employee_id=" + employee_id).success(function(data) {
+        self.step_notes = data.step_notes;
+        return self.amount = data.amount;
+      });
+    };
+
+    return CalcStepsController;
+
+  })();
+
   app.controller('salaryCtrl', SalaryController);
 
   app.controller('salaryPersonalCtrl', SalaryPersonalController);
@@ -1627,5 +1648,7 @@
   app.controller('salaryTransportFeeCtrl', SalaryTransportFeeController);
 
   app.controller('salaryOverviewCtrl', SalaryOverviewController);
+
+  app.controller('calcStepCtrl', CalcStepsController);
 
 }).call(this);
