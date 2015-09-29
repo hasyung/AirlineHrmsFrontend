@@ -333,6 +333,14 @@ class SalaryController extends nb.Controller
     destroyCity: (cities, idx) ->
         cities.splice(idx, 1)
 
+    addSkyCity: (cities, city) ->
+        self = @
+
+        if city.city && city.abbr
+            cities.push(city)
+            self.scope.cityForeign = {}
+            self.scope.cityNation = {}
+
 
 class SalaryPersonalController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryPersonSetup']
