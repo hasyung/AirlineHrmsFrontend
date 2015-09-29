@@ -714,7 +714,7 @@ class EmployeeRewardPunishmentCtrl extends nb.Controller
     constructor: (@scope, @Employee, @Reward, @Punishment)->
 
     loadData: (employee)->
-        #@rewards = employee.rewards.$refresh()
+        @rewards = employee.rewards.$refresh()
         @punishments = employee.punishments.$refresh()
 
 
