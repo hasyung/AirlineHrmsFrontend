@@ -12,9 +12,36 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
             label 金额
             input(type="number" min="0" max="100000" step="1" ng-model="current.baseMoney" readonly)
 
+    div(layout)
         md-input-container(flex)
-            label 保留工资
-            input(type="number" min="0" max="100000" step="1" ng-model="current.reserveWage")
+            label 岗位工资保留
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepPosition")
+        md-input-container(flex)
+            label 业绩奖保留
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepPerformance")
+        md-input-container(flex)
+            label 工龄工资保留
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepWorkingYears")
+    div(layout)
+        md-input-container(flex)
+            label 保底增幅
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepMinimumGrowth")
+        md-input-container(flex)
+            label 地勤补贴保留
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepLandAllowance")
+        md-input-container(flex)
+            label 生活补贴保留
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepLifeAllowance")
+    div(layout)
+        md-input-container(flex)
+            label 09调资增加保留
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepAdjustmen09")
+        md-input-container(flex)
+            label 14公务用车保留
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepBus14")
+        md-input-container(flex)
+            label 14通信补贴保留
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepCommunication14")
 
     div(layout)
         md-input-container.row-has-value(flex)
