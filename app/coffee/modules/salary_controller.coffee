@@ -1108,6 +1108,20 @@ class SalaryOverviewController extends SalaryBaseController
         ]).concat(CALC_STEP_COLUMN)
 
 
+class CalcStepsController
+    @.$inject = ['$http', '$scope', 'CalcStep']
+
+    constructor: (@http, $scope, @CalcStep)->
+        #
+
+    loadFromServer: (category, month, employee_id)->
+        self = @
+
+        @http.get('/api/calc_steps?category=' + category + "&month=" + month + "&employee_id=" + employee_id).success (data)->
+            self.step_notes = data.step_notes
+            self.amount = data.amount
+
+
 app.controller 'salaryCtrl', SalaryController
 app.controller 'salaryPersonalCtrl', SalaryPersonalController
 app.controller 'salaryChangeCtrl', SalaryChangeController
@@ -1122,3 +1136,4 @@ app.controller 'salaryLandAllowanceCtrl', SalaryLandAllowanceController
 app.controller 'salaryRewardCtrl', SalaryRewardController
 app.controller 'salaryTransportFeeCtrl', SalaryTransportFeeController
 app.controller 'salaryOverviewCtrl', SalaryOverviewController
+app.controller 'calcStepCtrl', CalcStepsController
