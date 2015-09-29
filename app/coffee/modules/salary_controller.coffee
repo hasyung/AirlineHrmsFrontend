@@ -53,7 +53,7 @@ SALARY_COLUMNDEF_DEFAULT = [
 
 CALC_STEP_COLUMN = [
     {
-        displayName: '∑φ ∂f(a+b)'
+        displayName: '计算过程'
         field: 'step'
         enableCellEdit: false
         cellTemplate: '''
@@ -61,7 +61,7 @@ CALC_STEP_COLUMN = [
             <a nb-panel
                 template-url="partials/salary/calc/step.html"
                 locals="{employee: row.entity.owner}">
-                计算过程
+                显示
             </a>
         </div>
         '''

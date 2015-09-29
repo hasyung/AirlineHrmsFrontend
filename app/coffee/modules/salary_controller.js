@@ -56,10 +56,10 @@
 
   CALC_STEP_COLUMN = [
     {
-      displayName: '∑φ ∂f(a+b)',
+      displayName: '计算过程',
       field: 'step',
       enableCellEdit: false,
-      cellTemplate: '<div class="ui-grid-cell-contents">\n    <a nb-panel\n        template-url="partials/salary/calc/step.html"\n        locals="{employee: row.entity.owner}">\n        计算过程\n    </a>\n</div>'
+      cellTemplate: '<div class="ui-grid-cell-contents">\n    <a nb-panel\n        template-url="partials/salary/calc/step.html"\n        locals="{employee: row.entity.owner}">\n        显示\n    </a>\n</div>'
     }
   ];
 
@@ -333,6 +333,20 @@
       });
     };
 
+    SalaryController.prototype.destroyCity = function(cities, idx) {
+      return cities.splice(idx, 1);
+    };
+
+    SalaryController.prototype.addSkyCity = function(cities, city) {
+      var self;
+      self = this;
+      if (city.city && city.abbr) {
+        cities.push(city);
+        self.scope.cityForeign = {};
+        return self.scope.cityNation = {};
+      }
+    };
+
     return SalaryController;
 
   })(nb.Controller);
@@ -470,10 +484,12 @@
   SalaryChangeController = (function(_super) {
     __extends(SalaryChangeController, _super);
 
-    SalaryChangeController.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryChange'];
+    SalaryChangeController.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryChange', 'SalaryPersonSetup'];
 
-    function SalaryChangeController($http, $scope, $Evt, $enum, SalaryChange) {
+    function SalaryChangeController(http, $scope, $Evt, $enum, SalaryChange, SalaryPersonSetup) {
+      this.http = http;
       this.SalaryChange = SalaryChange;
+      this.SalaryPersonSetup = SalaryPersonSetup;
       this.loadInitialData();
       this.filterOptions = {
         name: 'salaryChange',
@@ -516,13 +532,19 @@
         }, {
           displayName: '查看',
           field: 'setting',
-          cellTemplate: '<div class="ui-grid-cell-contents">\n    <a\n        href="javascript:void(0);"\n        nb-dialog\n        template-url="partials/salary/settings/changes/personal.html"\n        locals="{change: row.entity}">\n        查看\n    </a>\n</div>'
+          cellTemplate: '<div class="ui-grid-cell-contents" ng-init="outerScope=grid.appScope.$parent">\n    <a\n        href="javascript:void(0);"\n        nb-dialog\n        template-url="partials/salary/settings/changes/personal.html"\n        locals="{change: row.entity, outerScope: outerScope}">\n        查看\n    </a>\n</div>'
         }
       ];
     }
 
     SalaryChangeController.prototype.loadInitialData = function() {
       return this.salaryChanges = this.SalaryChange.$collection().$fetch();
+    };
+
+    SalaryChangeController.prototype.loadPersonSettings = function(change) {
+      var self;
+      self = this;
+      return this.SalaryPersonSetup.$collection().$fetch().$find(change.salaryPersonSetupId);
     };
 
     SalaryChangeController.prototype.search = function(tableState) {
