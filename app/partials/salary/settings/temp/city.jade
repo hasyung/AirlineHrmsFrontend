@@ -16,4 +16,11 @@
                 tr(ng-repeat="item in ctrl.dynamic_config.city_list")
                     td {{item.start_month}} - {{item.end_month}}
                     td
-                        span(ng-repeat="city in item.cities") {{city}}{{ $last? '' : '/' }}
+                        span.city-chip(
+                            ng-repeat="city in item.cities track by $index"
+                            ) {{city}}
+                            md-icon.md-warn(
+                                md-svg-src="/images/svg/close.svg"
+                                ng-click="ctrl.destroyCity(item.cities, $index)"
+                                )
+                        add-city(ng-model="item.cities")

@@ -53,7 +53,7 @@ SALARY_COLUMNDEF_DEFAULT = [
 
 CALC_STEP_COLUMN = [
     {
-        displayName: '∑φ ∂f(a+b)'
+        displayName: '计算过程'
         field: 'step'
         enableCellEdit: false
         cellTemplate: '''
@@ -61,7 +61,7 @@ CALC_STEP_COLUMN = [
             <a nb-panel
                 template-url="partials/salary/calc/step.html"
                 locals="{employee: row.entity.owner}">
-                计算过程
+                显示
             </a>
         </div>
         '''
@@ -329,6 +329,17 @@ class SalaryController extends nb.Controller
                 self.toaster.pop('success', '提示', '更新成功')
             .error (data)->
                 self.toaster.pop('success', '提示', '更新成功')
+
+    destroyCity: (cities, idx) ->
+        cities.splice(idx, 1)
+
+    addSkyCity: (cities, city) ->
+        self = @
+
+        if city.city && city.abbr
+            cities.push(city)
+            self.scope.cityForeign = {}
+            self.scope.cityNation = {}
 
 
 class SalaryPersonalController extends nb.Controller

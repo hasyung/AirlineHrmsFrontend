@@ -584,3 +584,28 @@ angular.module 'nb.directives'
             link: postLink
         }
     ]
+
+    # 在变更记录中使用
+    .directive 'addCity', [()->
+        postLink = (scope, elem, attrs) ->
+
+        return {
+            restrict: 'E'
+            link: postLink
+            template: '''
+            <span>
+                <input ng-show="adding" type="text" ng-model="city" ng-blur="cities.push(city); city=''; adding=false;" />
+                <span ng-click="adding=true" ng-hide="adding" class="add-chip">
+                    <md-icon md-svg-src="/images/svg/plus.svg" class="md-primary"></md-icon>
+                </span>
+            </span>
+            '''
+            scope: {
+                city: "=?"
+                adding: "=?"
+                cities: "=ngModel"
+            }
+            require: 'ngModel'
+            replace: true
+        }
+    ]
