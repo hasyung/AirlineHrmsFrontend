@@ -1,5 +1,5 @@
 div.personnel-reward(ng-controller="EmployeeRewardPunishmentCtrl as ctrl")
-    div(ng-init="current = panel.employee; ctrl.loadData(current);")
+    div(ng-init="current = panel.employee; ctrl.loadPunishments(current); ctrl.loadRewards(current)")
         md-card.nb-card
             md-toolbar.toolbar--welfare
                 .md-toolbar-tools
@@ -18,6 +18,7 @@ div.personnel-reward(ng-controller="EmployeeRewardPunishmentCtrl as ctrl")
                     .punishItem__row(layout)
                         .punishItem__row__key 奖励期限
                         .punishItem__row__val {{item.rewardDate}}
+                    md-divider
 
 
         md-card.nb-card
