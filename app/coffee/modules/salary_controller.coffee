@@ -1117,7 +1117,7 @@ class CalcStepsController
     loadFromServer: (category, month, employee_id)->
         self = @
 
-        @http.get('/api/calc_steps?category=' + category + "&month=" + month + "&employee_id=" + employee_id).success (data)->
+        @http.get('/api/calc_steps/search?category=' + category + "&month=" + month + "&employee_id=" + employee_id).success (data)->
             self.step_notes = data.step_notes
             self.amount = data.amount
 
