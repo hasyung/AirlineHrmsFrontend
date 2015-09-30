@@ -1126,8 +1126,7 @@ class RewardsAllocationController
 
     constructor: (@http, @scope, @Evt)->
         @rewards = {}
-        @rewardsCategory = 'airline_security_bonus'
-        @loadRewardsAllocation()
+        @rewardsCategory = 'flight_bonus'
 
     currentCalcTime: ()->
         @currentYear + "-" + @currentMonth
@@ -1142,10 +1141,11 @@ class RewardsAllocationController
     saveReward: (departmentId, bonus) ->
         self = @
 
-        param = bonus
+        param = {}
+        param[@rewardsCategory] = bonus
         month = @currentCalcTime()
-        @http.put('/api/departments/rewards?month='+month+'&department_id='+departmentId, param).success (msg)->
-            self.Evt.$send('修改成功')
+        @http.put('/api/departments/reward_update?month='+month+'&department_id='+departmentId, param).success (data)->
+            self.Evt.$send('data:update:success', '修改成功')
 
 
 
