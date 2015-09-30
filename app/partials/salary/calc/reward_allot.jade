@@ -1,5 +1,9 @@
 md-dialog.punishment_new(
     style="min-width: 500px;"
+    ng-controller="rewardsAllocationCtrl as ctrl"
+    ng-init="ctrl.currentYear = dialog.currentYear;\
+        ctrl.currentMonth = dialog.currentMonth;\
+    "
     )
     form(flex ng-submit="dialog.close();" name="allotRewardForm")
         md-toolbar.md-accent(md-theme="hrms")
@@ -11,8 +15,9 @@ md-dialog.punishment_new(
                     div(layout)
                         md-input-container.row-has-value(flex)
                             label 奖金类别
-                            md-select(ng-model="rewards.category" placeholder="请选择奖金类别")
-                                md-option(ng-value="item" ng-repeat="item in $enum.get('channels')") {{item.label}}
+                            md-select(ng-model="ctrl.rewardsCategory" placeholder="请选择奖金类别")
+                                md-option(value="airline_security_bonus") 航班正常奖
+                                md-option(value="service_bonus") 服务质量奖
                     div(layout)
                         table.table.table-mc-light-blue.table-bordered
                             thead
@@ -20,13 +25,14 @@ md-dialog.punishment_new(
                                     th 部门
                                     th 分配金额
                             tbody
-                                tr(ng-repeat)
-                                    td(ng-bind="department")
-                                    td
-                                        md-input-container(md-no-float)
-                                            input(ng-model="reward.money")
+                                tr(ng-repeat="reward in ctrl.rewards")
+                                    td {{reward.department_name}}
+                                    td(ng-if="ctrl.rewardsCategory=='airline_security_bonus'")
+                                        input(type="text" ng-model="reward.airline_security_bonus" ng-blur="ctrl.saveReward(reward.department_id, reward.airline_security_bonus)")
+                                    td(ng-if="ctrl.rewardsCategory=='service_bonus'")
+                                        input(type="text" ng-model="reward.service_bonus")
 
 
         .md-actions
-            md-button(type="button" ng-click="dialog.close()") 取 消
-            md-button.md-primary.md-raised(type="submit") 确 定
+            md-button(type="button" ng-click="dialog.close()") 关 闭
+            //- md-button.md-primary.md-raised(type="submit") 确 定

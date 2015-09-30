@@ -1121,6 +1121,33 @@ class CalcStepsController
             self.step_notes = data.step_notes
             self.amount = data.amount
 
+class RewardsAllocationController
+    @.$inject = ['$http', '$scope', '$nbEvent']
+
+    constructor: (@http, @scope, @Evt)->
+        @rewards = {}
+        @rewardsCategory = 'airline_security_bonus'
+        @loadRewardsAllocation()
+
+    currentCalcTime: ()->
+        @currentYear + "-" + @currentMonth
+
+    loadRewardsAllocation: () ->
+        self = @
+
+        month = @currentCalcTime()
+        @http.get('/api/departments/rewards?month='+month).success (data)->
+            self.rewards = data.rewards
+
+    saveReward: (departmentId, bonus) ->
+        self = @
+
+        param = bonus
+        month = @currentCalcTime()
+        @http.put('/api/departments/rewards?month='+month+'&department_id='+departmentId, param).success (msg)->
+            self.Evt.$send('修改成功')
+
+
 
 app.controller 'salaryCtrl', SalaryController
 app.controller 'salaryPersonalCtrl', SalaryPersonalController
@@ -1137,3 +1164,4 @@ app.controller 'salaryRewardCtrl', SalaryRewardController
 app.controller 'salaryTransportFeeCtrl', SalaryTransportFeeController
 app.controller 'salaryOverviewCtrl', SalaryOverviewController
 app.controller 'calcStepCtrl', CalcStepsController
+app.controller 'rewardsAllocationCtrl', RewardsAllocationController
