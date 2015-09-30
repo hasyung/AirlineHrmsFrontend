@@ -105,7 +105,7 @@ FLOW_HISTORY_TABLE_DEFS =  [
         displayName: '详细'
         cellTemplate: '''
         <div class="ui-grid-cell-contents">
-            <a flow-handler="row.entity" flow-view="true">
+            <a flow-handler="row.entity" flow-view="true" is-history="true">
                 查看
             </a>
         </div>
