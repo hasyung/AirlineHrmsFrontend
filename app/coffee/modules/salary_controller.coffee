@@ -61,7 +61,7 @@ CALC_STEP_COLUMN = [
             <a nb-panel
                 template-url="partials/salary/calc/step.html"
                 locals="{employee: row.entity.owner}">
-                显示
+                显示过程
             </a>
         </div>
         '''
@@ -1118,16 +1118,15 @@ class CalcStepsController
         self = @
 
         @http.get('/api/calc_steps/search?category=' + category + "&month=" + month + "&employee_id=" + employee_id).success (data)->
-            self.step_notes = data.step_notes
-            self.amount = data.amount
+            self.step_notes = data.calc_step.step_notes
+            self.amount = data.calc_step.amount
 
 class RewardsAllocationController
-    @.$inject = ['$http', '$scope', '$nbEvent']
+    @.$inject = ['$http', '$scope', 'toaster']
 
-    constructor: (@http, @scope, @Evt)->
+    constructor: (@http, @scope, @toaster)->
         @rewards = {}
-        @rewardsCategory = 'airline_security_bonus'
-        @loadRewardsAllocation()
+        @rewardsCategory = 'flight_bonus'
 
     currentCalcTime: ()->
         @currentYear + "-" + @currentMonth
@@ -1136,17 +1135,18 @@ class RewardsAllocationController
         self = @
 
         month = @currentCalcTime()
-        @http.get('/api/departments/rewards?month='+month).success (data)->
+        @http.get('/api/departments/rewards?month=' + month).success (data)->
             self.rewards = data.rewards
 
     saveReward: (departmentId, bonus) ->
         self = @
 
-        param = bonus
+        param = {}
+        param[@rewardsCategory] = bonus
         month = @currentCalcTime()
-        @http.put('/api/departments/rewards?month='+month+'&department_id='+departmentId, param).success (msg)->
-            self.Evt.$send('修改成功')
 
+        @http.put('/api/departments/reward_update?month=' + month + '&department_id=' + departmentId, param).success (data)->
+            self.toaster.pop('success', '提示', '修改成功')
 
 
 app.controller 'salaryCtrl', SalaryController

@@ -1,5 +1,5 @@
 (function() {
-  var CALC_STEP_COLUMN, CalcStepsController, Route, SALARY_COLUMNDEF_DEFAULT, SALARY_FILTER_DEFAULT, SalaryAllowanceController, SalaryBaseController, SalaryBasicController, SalaryChangeController, SalaryController, SalaryExchangeController, SalaryGradeChangeController, SalaryHoursFeeController, SalaryKeepController, SalaryLandAllowanceController, SalaryOverviewController, SalaryPerformanceController, SalaryPersonalController, SalaryRewardController, SalaryTransportFeeController, app, nb,
+  var CALC_STEP_COLUMN, CalcStepsController, RewardsAllocationController, Route, SALARY_COLUMNDEF_DEFAULT, SALARY_FILTER_DEFAULT, SalaryAllowanceController, SalaryBaseController, SalaryBasicController, SalaryChangeController, SalaryController, SalaryExchangeController, SalaryGradeChangeController, SalaryHoursFeeController, SalaryKeepController, SalaryLandAllowanceController, SalaryOverviewController, SalaryPerformanceController, SalaryPersonalController, SalaryRewardController, SalaryTransportFeeController, app, nb,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -59,7 +59,7 @@
       displayName: '计算过程',
       field: 'step',
       enableCellEdit: false,
-      cellTemplate: '<div class="ui-grid-cell-contents">\n    <a nb-panel\n        template-url="partials/salary/calc/step.html"\n        locals="{employee: row.entity.owner}">\n        显示\n    </a>\n</div>'
+      cellTemplate: '<div class="ui-grid-cell-contents">\n    <a nb-panel\n        template-url="partials/salary/calc/step.html"\n        locals="{employee: row.entity.owner}">\n        显示过程\n    </a>\n</div>'
     }
   ];
 
@@ -1612,12 +1612,51 @@
       var self;
       self = this;
       return this.http.get('/api/calc_steps/search?category=' + category + "&month=" + month + "&employee_id=" + employee_id).success(function(data) {
-        self.step_notes = data.step_notes;
-        return self.amount = data.amount;
+        self.step_notes = data.calc_step.step_notes;
+        return self.amount = data.calc_step.amount;
       });
     };
 
     return CalcStepsController;
+
+  })();
+
+  RewardsAllocationController = (function() {
+    RewardsAllocationController.$inject = ['$http', '$scope', 'toaster'];
+
+    function RewardsAllocationController(http, scope, toaster) {
+      this.http = http;
+      this.scope = scope;
+      this.toaster = toaster;
+      this.rewards = {};
+      this.rewardsCategory = 'flight_bonus';
+    }
+
+    RewardsAllocationController.prototype.currentCalcTime = function() {
+      return this.currentYear + "-" + this.currentMonth;
+    };
+
+    RewardsAllocationController.prototype.loadRewardsAllocation = function() {
+      var month, self;
+      self = this;
+      month = this.currentCalcTime();
+      return this.http.get('/api/departments/rewards?month=' + month).success(function(data) {
+        return self.rewards = data.rewards;
+      });
+    };
+
+    RewardsAllocationController.prototype.saveReward = function(departmentId, bonus) {
+      var month, param, self;
+      self = this;
+      param = {};
+      param[this.rewardsCategory] = bonus;
+      month = this.currentCalcTime();
+      return this.http.put('/api/departments/reward_update?month=' + month + '&department_id=' + departmentId, param).success(function(data) {
+        return self.toaster.pop('success', '提示', '修改成功');
+      });
+    };
+
+    return RewardsAllocationController;
 
   })();
 
@@ -1650,5 +1689,7 @@
   app.controller('salaryOverviewCtrl', SalaryOverviewController);
 
   app.controller('calcStepCtrl', CalcStepsController);
+
+  app.controller('rewardsAllocationCtrl', RewardsAllocationController);
 
 }).call(this);

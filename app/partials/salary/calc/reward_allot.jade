@@ -3,6 +3,7 @@ md-dialog.punishment_new(
     ng-controller="rewardsAllocationCtrl as ctrl"
     ng-init="ctrl.currentYear = dialog.currentYear;\
         ctrl.currentMonth = dialog.currentMonth;\
+        ctrl.loadRewardsAllocation();\
     "
     )
     form(flex ng-submit="dialog.close();" name="allotRewardForm")
@@ -16,8 +17,24 @@ md-dialog.punishment_new(
                         md-input-container.row-has-value(flex)
                             label 奖金类别
                             md-select(ng-model="ctrl.rewardsCategory" placeholder="请选择奖金类别")
-                                md-option(value="airline_security_bonus") 航班正常奖
+                                md-option(value="flight_bonus") 航班正常奖
                                 md-option(value="service_bonus") 服务质量奖
+                                md-option(value="airline_security_bonus") 日常航空安全奖
+                                md-option(value="composite_bonus") 社会治安综合治理奖
+                                md-option(value="insurance_proxy") 电子航意险代理提成奖
+                                md-option(value="cabin_grow_up") 客舱升舱提成奖
+                                md-option(value="full_sale_promotion") 全员促销奖
+                                md-option(value="article_fee") 四川航空报稿费
+                                md-option(value="all_right_fly") 无差错飞行中队奖
+                                md-option(value="year_composite_bonus") 年度综治奖
+                                md-option(value="move_perfect") 运兵先进奖
+                                md-option(value="security_special") 航空安全特殊贡献奖
+                                md-option(value="dep_security_undertake") 部门安全管理目标承包奖
+                                md-option(value="fly_star") 飞行安全星级奖
+                                md-option(value="year_all_right_fly") 年度无差错机务维修中队奖
+                                md-option(value="network_connect") 网络联程奖
+                                md-option(value="quarter_fee") 季度奖
+                                md-option(value="earnings_fee") 收益奖励金
                     div(layout)
                         table.table.table-mc-light-blue.table-bordered
                             thead
@@ -27,10 +44,25 @@ md-dialog.punishment_new(
                             tbody
                                 tr(ng-repeat="reward in ctrl.rewards")
                                     td {{reward.department_name}}
-                                    td(ng-if="ctrl.rewardsCategory=='airline_security_bonus'")
-                                        input(type="text" ng-model="reward.airline_security_bonus" ng-blur="ctrl.saveReward(reward.department_id, reward.airline_security_bonus)")
-                                    td(ng-if="ctrl.rewardsCategory=='service_bonus'")
-                                        input(type="text" ng-model="reward.service_bonus")
+                                    td
+                                        input(ng-if="ctrl.rewardsCategory=='flight_bonus'" type="text" ng-model="reward.flight_bonus" ng-blur="ctrl.saveReward(reward.department_id, reward.flight_bonus)")
+                                        input(ng-if="ctrl.rewardsCategory=='service_bonus'" type="text" ng-model="reward.service_bonus" ng-blur="ctrl.saveReward(reward.department_id, reward.service_bonus)")
+                                        input(ng-if="ctrl.rewardsCategory=='airline_security_bonus'" type="text" ng-model="reward.airline_security_bonus" ng-blur="ctrl.saveReward(reward.department_id, reward.airline_security_bonus)")
+                                        input(ng-if="ctrl.rewardsCategory=='composite_bonus'" type="text" ng-model="reward.composite_bonus" ng-blur="ctrl.saveReward(reward.department_id, reward.composite_bonus)")
+                                        input(ng-if="ctrl.rewardsCategory=='insurance_proxy'" type="text" ng-model="reward.insurance_proxy" ng-blur="ctrl.saveReward(reward.department_id, reward.insurance_proxy)")
+                                        input(ng-if="ctrl.rewardsCategory=='cabin_grow_up'" type="text" ng-model="reward.cabin_grow_up" ng-blur="ctrl.saveReward(reward.department_id, reward.cabin_grow_up)")
+                                        input(ng-if="ctrl.rewardsCategory=='full_sale_promotion'" type="text" ng-model="reward.full_sale_promotion" ng-blur="ctrl.saveReward(reward.department_id, reward.full_sale_promotion)")
+                                        input(ng-if="ctrl.rewardsCategory=='article_fee'" type="text" ng-model="reward.article_fee" ng-blur="ctrl.saveReward(reward.department_id, reward.article_fee)")
+                                        input(ng-if="ctrl.rewardsCategory=='all_right_fly'" type="text" ng-model="reward.all_right_fly" ng-blur="ctrl.saveReward(reward.department_id, reward.all_right_fly)")
+                                        input(ng-if="ctrl.rewardsCategory=='year_composite_bonus'" type="text" ng-model="reward.year_composite_bonus" ng-blur="ctrl.saveReward(reward.department_id, reward.year_composite_bonus)")
+                                        input(ng-if="ctrl.rewardsCategory=='move_perfect'" type="text" ng-model="reward.move_perfect" ng-blur="ctrl.saveReward(reward.department_id, reward.move_perfect)")
+                                        input(ng-if="ctrl.rewardsCategory=='security_special'" type="text" ng-model="reward.security_special" ng-blur="ctrl.saveReward(reward.department_id, reward.security_special)")
+                                        input(ng-if="ctrl.rewardsCategory=='dep_security_undertake'" type="text" ng-model="reward.dep_security_undertake" ng-blur="ctrl.saveReward(reward.department_id, reward.dep_security_undertake)")
+                                        input(ng-if="ctrl.rewardsCategory=='fly_star'" type="text" ng-model="reward.fly_star" ng-blur="ctrl.saveReward(reward.department_id, reward.fly_star)")
+                                        input(ng-if="ctrl.rewardsCategory=='year_all_right_fly'" type="text" ng-model="reward.year_all_right_fly" ng-blur="ctrl.saveReward(reward.department_id, reward.year_all_right_fly)")
+                                        input(ng-if="ctrl.rewardsCategory=='network_connect'" type="text" ng-model="reward.network_connect" ng-blur="ctrl.saveReward(reward.department_id, reward.network_connect)")
+                                        input(ng-if="ctrl.rewardsCategory=='quarter_fee'" type="text" ng-model="reward.quarter_fee" ng-blur="ctrl.saveReward(reward.department_id, reward.quarter_fee)")
+                                        input(ng-if="ctrl.rewardsCategory=='earnings_fee'" type="text" ng-model="reward.earnings_fee" ng-blur="ctrl.saveReward(reward.department_id, reward.earnings_fee)")
 
 
         .md-actions
