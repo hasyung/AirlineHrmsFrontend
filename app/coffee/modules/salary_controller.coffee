@@ -1126,8 +1126,7 @@ class RewardsAllocationController
 
     constructor: (@http, @scope, @toaster)->
         @rewards = {}
-        @rewardsCategory = 'airline_security_bonus'
-        @loadRewardsAllocation()
+        @rewardsCategory = 'flight_bonus'
 
     currentCalcTime: ()->
         @currentYear + "-" + @currentMonth
@@ -1142,10 +1141,11 @@ class RewardsAllocationController
     saveReward: (departmentId, bonus) ->
         self = @
 
-        param = bonus
+        param = {}
+        param[@rewardsCategory] = bonus
         month = @currentCalcTime()
 
-        @http.put('/api/departments/rewards?month=' + month + '&department_id=' + departmentId, param).success (msg)->
+        @http.put('/api/departments/reward_update?month=' + month + '&department_id=' + departmentId, param).success (data)->
             self.toaster.pop('success', '提示', '修改成功')
 
 

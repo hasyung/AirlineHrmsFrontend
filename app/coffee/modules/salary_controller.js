@@ -1629,8 +1629,7 @@
       this.scope = scope;
       this.toaster = toaster;
       this.rewards = {};
-      this.rewardsCategory = 'airline_security_bonus';
-      this.loadRewardsAllocation();
+      this.rewardsCategory = 'flight_bonus';
     }
 
     RewardsAllocationController.prototype.currentCalcTime = function() {
@@ -1649,9 +1648,10 @@
     RewardsAllocationController.prototype.saveReward = function(departmentId, bonus) {
       var month, param, self;
       self = this;
-      param = bonus;
+      param = {};
+      param[this.rewardsCategory] = bonus;
       month = this.currentCalcTime();
-      return this.http.put('/api/departments/rewards?month=' + month + '&department_id=' + departmentId, param).success(function(msg) {
+      return this.http.put('/api/departments/reward_update?month=' + month + '&department_id=' + departmentId, param).success(function(data) {
         return self.toaster.pop('success', '提示', '修改成功');
       });
     };
