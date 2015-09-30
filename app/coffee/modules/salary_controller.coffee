@@ -58,9 +58,9 @@ CALC_STEP_COLUMN = [
         enableCellEdit: false
         cellTemplate: '''
         <div class="ui-grid-cell-contents">
-            <a nb-panel
+            <a nb-dialog
                 template-url="partials/salary/calc/step.html"
-                locals="{employee: row.entity.owner}">
+                locals="{employee_id: row.entity.owner.$pk, employee_name: row.entity.employee_name, month: row.entity.month, category: row.entity.category}">
                 显示过程
             </a>
         </div>
@@ -1109,17 +1109,20 @@ class SalaryOverviewController extends SalaryBaseController
 
 
 class CalcStepsController
-    @.$inject = ['$http', '$scope', 'CalcStep']
+    @.$inject = ['$http', '$scope']
 
-    constructor: (@http, $scope, @CalcStep)->
+    constructor: (@http, $scope)->
         #
 
     loadFromServer: (category, month, employee_id)->
         self = @
 
         @http.get('/api/calc_steps/search?category=' + category + "&month=" + month + "&employee_id=" + employee_id).success (data)->
-            self.step_notes = data.calc_step.step_notes
-            self.amount = data.calc_step.amount
+            self.error_msg = data.messages
+
+            if (!self.error_msg)
+                self.step_notes = data.calc_step.step_notes
+                self.amount = data.calc_step.amount
 
 class RewardsAllocationController
     @.$inject = ['$http', '$scope', 'toaster']
@@ -1141,11 +1144,10 @@ class RewardsAllocationController
     saveReward: (departmentId, bonus) ->
         self = @
 
-        param = {}
+        param = { month: month = @currentCalcTime(), department_id: departmentId}
         param[@rewardsCategory] = bonus
-        month = @currentCalcTime()
 
-        @http.put('/api/departments/reward_update?month=' + month + '&department_id=' + departmentId, param).success (data)->
+        @http.put('/api/departments/reward_update', param).success (data)->
             self.toaster.pop('success', '提示', '修改成功')
 
 

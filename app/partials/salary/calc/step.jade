@@ -1,1 +1,19 @@
-h1 显示计算过程
+md-dialog.personal_number(ng-controller="calcStepCtrl as stepCtrl" ng-init="amount = dialog.amount;stepCtrl.loadFromServer(dialog.category, dialog.month, dialog.employee_id)")
+    md-toolbar.md-accent(md-theme="hrms")
+        .md-toolbar-tools
+            span 计算过程
+                
+    md-content.sticky-container
+        .info-body(style="margin: 10px" ng-if="!stepCtrl.error_msg")
+            ul(style="margin: 0px" ng-repeat="text in stepCtrl.step_notes")
+                li.tcell
+                    .tbody {{text}}
+            ul(style="margin: 0px")
+                li.tcell
+                    .tbody 最后金额: {{dialog.amount}}
+                    
+        .info-body(style="margin: 10px" ng-if="stepCtrl.error_msg")
+            对不起，没有找到计算过程.
+
+    .md-actions
+        md-button(ng-click="dialog.close()") 关 闭
