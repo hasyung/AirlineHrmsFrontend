@@ -59,7 +59,7 @@
       displayName: '计算过程',
       field: 'step',
       enableCellEdit: false,
-      cellTemplate: '<div class="ui-grid-cell-contents">\n    <a nb-panel\n        template-url="partials/salary/calc/step.html"\n        locals="{employee: row.entity.owner}">\n        显示过程\n    </a>\n</div>'
+      cellTemplate: '<div class="ui-grid-cell-contents">\n    <a nb-panel\n        template-url="partials/salary/calc/step.html"\n        locals="{employee_id: row.entity.employee_id, month: row.entity.month, category: row.entity.category}">\n        显示过程\n    </a>\n</div>'
     }
   ];
 
@@ -1648,10 +1648,12 @@
     RewardsAllocationController.prototype.saveReward = function(departmentId, bonus) {
       var month, param, self;
       self = this;
-      param = {};
+      param = {
+        month: month = this.currentCalcTime(),
+        department_id: departmentId
+      };
       param[this.rewardsCategory] = bonus;
-      month = this.currentCalcTime();
-      return this.http.put('/api/departments/reward_update?month=' + month + '&department_id=' + departmentId, param).success(function(data) {
+      return this.http.put('/api/departments/reward_update', param).success(function(data) {
         return self.toaster.pop('success', '提示', '修改成功');
       });
     };

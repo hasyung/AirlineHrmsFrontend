@@ -60,7 +60,7 @@ CALC_STEP_COLUMN = [
         <div class="ui-grid-cell-contents">
             <a nb-panel
                 template-url="partials/salary/calc/step.html"
-                locals="{employee: row.entity.owner}">
+                locals="{employee_id: row.entity.employee_id, month: row.entity.month, category: row.entity.category}">
                 显示过程
             </a>
         </div>
@@ -1141,11 +1141,10 @@ class RewardsAllocationController
     saveReward: (departmentId, bonus) ->
         self = @
 
-        param = {}
+        param = { month: month = @currentCalcTime(), department_id: departmentId}
         param[@rewardsCategory] = bonus
-        month = @currentCalcTime()
 
-        @http.put('/api/departments/reward_update?month=' + month + '&department_id=' + departmentId, param).success (data)->
+        @http.put('/api/departments/reward_update', param).success (data)->
             self.toaster.pop('success', '提示', '修改成功')
 
 
