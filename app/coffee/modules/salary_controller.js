@@ -59,7 +59,7 @@
       displayName: '计算过程',
       field: 'step',
       enableCellEdit: false,
-      cellTemplate: '<div class="ui-grid-cell-contents">\n    <a nb-panel\n        template-url="partials/salary/calc/step.html"\n        locals="{employee_id: row.entity.employee_id, month: row.entity.month, category: row.entity.category}">\n        显示过程\n    </a>\n</div>'
+      cellTemplate: '<div class="ui-grid-cell-contents">\n    <a nb-dialog\n        template-url="partials/salary/calc/step.html"\n        locals="{employee_id: row.entity.owner.$pk, employee_name: row.entity.employee_name, month: row.entity.month, category: row.entity.category}">\n        显示过程\n    </a>\n</div>'
     }
   ];
 
@@ -1601,16 +1601,16 @@
   })(SalaryBaseController);
 
   CalcStepsController = (function() {
-    CalcStepsController.$inject = ['$http', '$scope', 'CalcStep'];
+    CalcStepsController.$inject = ['$http', '$scope'];
 
-    function CalcStepsController(http, $scope, CalcStep) {
+    function CalcStepsController(http, $scope) {
       this.http = http;
-      this.CalcStep = CalcStep;
     }
 
     CalcStepsController.prototype.loadFromServer = function(category, month, employee_id) {
       var self;
       self = this;
+      console.error(employee_id);
       return this.http.get('/api/calc_steps/search?category=' + category + "&month=" + month + "&employee_id=" + employee_id).success(function(data) {
         self.step_notes = data.calc_step.step_notes;
         return self.amount = data.calc_step.amount;
