@@ -1120,8 +1120,11 @@ class CalcStepsController
         console.error employee_id
 
         @http.get('/api/calc_steps/search?category=' + category + "&month=" + month + "&employee_id=" + employee_id).success (data)->
-            self.step_notes = data.calc_step.step_notes
-            self.amount = data.calc_step.amount
+            self.error_msg = data.messages
+
+            if (!self.error_msg)
+                self.step_notes = data.calc_step.step_notes
+                self.amount = data.calc_step.amount
 
 class RewardsAllocationController
     @.$inject = ['$http', '$scope', 'toaster']

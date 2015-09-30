@@ -1612,8 +1612,11 @@
       self = this;
       console.error(employee_id);
       return this.http.get('/api/calc_steps/search?category=' + category + "&month=" + month + "&employee_id=" + employee_id).success(function(data) {
-        self.step_notes = data.calc_step.step_notes;
-        return self.amount = data.calc_step.amount;
+        self.error_msg = data.messages;
+        if (!self.error_msg) {
+          self.step_notes = data.calc_step.step_notes;
+          return self.amount = data.calc_step.amount;
+        }
       });
     };
 
