@@ -1611,7 +1611,7 @@
     CalcStepsController.prototype.loadFromServer = function(category, month, employee_id) {
       var self;
       self = this;
-      return this.http.get('/api/calc_steps?category=' + category + "&month=" + month + "&employee_id=" + employee_id).success(function(data) {
+      return this.http.get('/api/calc_steps/search?category=' + category + "&month=" + month + "&employee_id=" + employee_id).success(function(data) {
         self.step_notes = data.step_notes;
         return self.amount = data.amount;
       });
