@@ -1612,8 +1612,8 @@
       var self;
       self = this;
       return this.http.get('/api/calc_steps/search?category=' + category + "&month=" + month + "&employee_id=" + employee_id).success(function(data) {
-        self.step_notes = data.step_notes;
-        return self.amount = data.amount;
+        self.step_notes = data.calc_step.step_notes;
+        return self.amount = data.calc_step.amount;
       });
     };
 
@@ -1622,12 +1622,12 @@
   })();
 
   RewardsAllocationController = (function() {
-    RewardsAllocationController.$inject = ['$http', '$scope', '$nbEvent'];
+    RewardsAllocationController.$inject = ['$http', '$scope', 'toaster'];
 
-    function RewardsAllocationController(http, scope, Evt) {
+    function RewardsAllocationController(http, scope, toaster) {
       this.http = http;
       this.scope = scope;
-      this.Evt = Evt;
+      this.toaster = toaster;
       this.rewards = {};
       this.rewardsCategory = 'airline_security_bonus';
       this.loadRewardsAllocation();
@@ -1652,7 +1652,7 @@
       param = bonus;
       month = this.currentCalcTime();
       return this.http.put('/api/departments/rewards?month=' + month + '&department_id=' + departmentId, param).success(function(msg) {
-        return self.Evt.$send('修改成功');
+        return self.toaster.pop('success', '提示', '修改成功');
       });
     };
 
