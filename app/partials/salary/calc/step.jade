@@ -1,1 +1,22 @@
-h1 显示计算过程
+md-dialog.personal_number()
+    md-toolbar.md-accent(md-theme="hrms")
+            .md-toolbar-tools
+                span 计算过程
+    md-content.sticky-container
+        .info-header
+            span.name 谢文卿
+            span.no 003740
+        .info-body
+            ul
+                li.tcell
+                    .theader 1月
+                    .tbody 1000元
+
+        .info-footer
+            span 月度平均：
+            span 100
+            span 元
+
+    .md-actions
+        md-button(ng-click="dialog.close()") 确 认
+        md-button(ng-click="dialog.close()") 关 闭
