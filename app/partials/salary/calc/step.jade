@@ -1,7 +1,7 @@
 md-dialog.personal_number(ng-controller="calcStepCtrl as stepCtrl" ng-init="amount = dialog.amount;stepCtrl.loadFromServer(dialog.category, dialog.month, dialog.employee_id)")
     md-toolbar.md-accent(md-theme="hrms")
-            .md-toolbar-tools
-                span 计算过程
+        .md-toolbar-tools
+            span 计算过程
                 
     md-content.sticky-container
         .info-body(style="margin: 10px" ng-if="!stepCtrl.error_msg")

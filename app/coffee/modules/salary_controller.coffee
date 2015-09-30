@@ -1117,8 +1117,6 @@ class CalcStepsController
     loadFromServer: (category, month, employee_id)->
         self = @
 
-        console.error employee_id
-
         @http.get('/api/calc_steps/search?category=' + category + "&month=" + month + "&employee_id=" + employee_id).success (data)->
             self.error_msg = data.messages
 

@@ -1610,7 +1610,6 @@
     CalcStepsController.prototype.loadFromServer = function(category, month, employee_id) {
       var self;
       self = this;
-      console.error(employee_id);
       return this.http.get('/api/calc_steps/search?category=' + category + "&month=" + month + "&employee_id=" + employee_id).success(function(data) {
         self.error_msg = data.messages;
         if (!self.error_msg) {
