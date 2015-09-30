@@ -1,5 +1,5 @@
 (function() {
-  var CALC_STEP_COLUMN, CalcStepsController, Route, SALARY_COLUMNDEF_DEFAULT, SALARY_FILTER_DEFAULT, SalaryAllowanceController, SalaryBaseController, SalaryBasicController, SalaryChangeController, SalaryController, SalaryExchangeController, SalaryGradeChangeController, SalaryHoursFeeController, SalaryKeepController, SalaryLandAllowanceController, SalaryOverviewController, SalaryPerformanceController, SalaryPersonalController, SalaryRewardController, SalaryTransportFeeController, app, nb,
+  var CALC_STEP_COLUMN, CalcStepsController, RewardsAllocationController, Route, SALARY_COLUMNDEF_DEFAULT, SALARY_FILTER_DEFAULT, SalaryAllowanceController, SalaryBaseController, SalaryBasicController, SalaryChangeController, SalaryController, SalaryExchangeController, SalaryGradeChangeController, SalaryHoursFeeController, SalaryKeepController, SalaryLandAllowanceController, SalaryOverviewController, SalaryPerformanceController, SalaryPersonalController, SalaryRewardController, SalaryTransportFeeController, app, nb,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -59,7 +59,7 @@
       displayName: '计算过程',
       field: 'step',
       enableCellEdit: false,
-      cellTemplate: '<div class="ui-grid-cell-contents">\n    <a nb-panel\n        template-url="partials/salary/calc/step.html"\n        locals="{employee: row.entity.owner}">\n        显示\n    </a>\n</div>'
+      cellTemplate: '<div class="ui-grid-cell-contents">\n    <a nb-panel\n        template-url="partials/salary/calc/step.html"\n        locals="{employee: row.entity.owner}">\n        显示过程\n    </a>\n</div>'
     }
   ];
 
@@ -1621,6 +1621,45 @@
 
   })();
 
+  RewardsAllocationController = (function() {
+    RewardsAllocationController.$inject = ['$http', '$scope', '$nbEvent'];
+
+    function RewardsAllocationController(http, scope, Evt) {
+      this.http = http;
+      this.scope = scope;
+      this.Evt = Evt;
+      this.rewards = {};
+      this.rewardsCategory = 'airline_security_bonus';
+      this.loadRewardsAllocation();
+    }
+
+    RewardsAllocationController.prototype.currentCalcTime = function() {
+      return this.currentYear + "-" + this.currentMonth;
+    };
+
+    RewardsAllocationController.prototype.loadRewardsAllocation = function() {
+      var month, self;
+      self = this;
+      month = this.currentCalcTime();
+      return this.http.get('/api/departments/rewards?month=' + month).success(function(data) {
+        return self.rewards = data.rewards;
+      });
+    };
+
+    RewardsAllocationController.prototype.saveReward = function(departmentId, bonus) {
+      var month, param, self;
+      self = this;
+      param = bonus;
+      month = this.currentCalcTime();
+      return this.http.put('/api/departments/rewards?month=' + month + '&department_id=' + departmentId, param).success(function(msg) {
+        return self.Evt.$send('修改成功');
+      });
+    };
+
+    return RewardsAllocationController;
+
+  })();
+
   app.controller('salaryCtrl', SalaryController);
 
   app.controller('salaryPersonalCtrl', SalaryPersonalController);
@@ -1650,5 +1689,7 @@
   app.controller('salaryOverviewCtrl', SalaryOverviewController);
 
   app.controller('calcStepCtrl', CalcStepsController);
+
+  app.controller('rewardsAllocationCtrl', RewardsAllocationController);
 
 }).call(this);

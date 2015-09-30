@@ -61,7 +61,7 @@ CALC_STEP_COLUMN = [
             <a nb-panel
                 template-url="partials/salary/calc/step.html"
                 locals="{employee: row.entity.owner}">
-                显示
+                显示过程
             </a>
         </div>
         '''
@@ -1146,7 +1146,6 @@ class RewardsAllocationController
         month = @currentCalcTime()
         @http.put('/api/departments/rewards?month='+month+'&department_id='+departmentId, param).success (msg)->
             self.Evt.$send('修改成功')
-
 
 
 app.controller 'salaryCtrl', SalaryController
