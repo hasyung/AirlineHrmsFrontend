@@ -42,7 +42,11 @@ div.panel-bg-gray(ng-init = "current = panel.employee; current.$refresh();" ng-c
                                 |职称信息
                             include info_basic/info_position_title
 
-                tab(heading="培训记录")
+                tab(heading="家庭成员")
+                    md-content.nb-card-container(flex layout="column" md-theme="hrms")
+                        include family/family_member
+
+                //- tab(heading="培训记录")
 
                 tab(heading="奖惩记录")
                     md-content.nb-card-container(flex layout="column" md-theme="hrms")
@@ -54,8 +58,6 @@ div.panel-bg-gray(ng-init = "current = panel.employee; current.$refresh();" ng-c
                 tab(heading="绩效考核")
                     md-content.nb-card-container(flex layout="column" md-theme="hrms")
                         include performance/index
-
-                tab(heading="档案信息")
 
                 tab(heading="薪酬信息" ng-if="pdCtrl.isHrPaymentMember()")
                     md-content.nb-card-container(flex layout="column" md-theme="hrms")

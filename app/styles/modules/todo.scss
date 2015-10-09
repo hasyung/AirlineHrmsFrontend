@@ -467,6 +467,7 @@
         float: left;
         margin-bottom: 50px;
         margin-left: 90px;
+        position: relative;
         text-align: center;
         width: 120px;
 
@@ -481,6 +482,28 @@
 
             .desc {
                 color: #f54b3c;
+            }
+        }
+
+        &.havent {
+            cursor: not-allowed;
+
+            .cell__btn {
+                border-color: #ddd;
+            }
+
+            .desc {
+                color: #bbb;
+            }
+
+            &:hover {
+                .cell__btn {
+                    transform: translateZ(0) scale(1);
+                }
+
+                .desc {
+                    color: #bbb;
+                }
             }
         }
     }
