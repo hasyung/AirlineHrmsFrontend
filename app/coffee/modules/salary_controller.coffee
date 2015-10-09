@@ -1047,6 +1047,7 @@ class SalaryRewardController extends SalaryBaseController
             {displayName: '网络联程奖', name: 'networkConnect', enableCellEdit: false}
             {displayName: '季度奖', name: 'quarterFee', enableCellEdit: false}
             {displayName: '收益奖励金', name: 'earningsFee', enableCellEdit: false}
+            {displayName: '预算外奖励', name: 'offBudgetFee', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {displayName: '备注', name: 'remark', headerCellClass: 'editable_cell_header', cellTooltip: (row) -> return row.entity.note}
         ]).concat(CALC_STEP_COLUMN)
