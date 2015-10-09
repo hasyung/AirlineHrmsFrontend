@@ -1453,6 +1453,10 @@
           name: 'earningsFee',
           enableCellEdit: false
         }, {
+          displayName: '预算外奖励',
+          name: 'offBudgetFee',
+          enableCellEdit: false
+        }, {
           displayName: '补扣发',
           name: 'addGarnishee',
           headerCellClass: 'editable_cell_header'
