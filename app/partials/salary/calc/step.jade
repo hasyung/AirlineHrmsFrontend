@@ -2,7 +2,7 @@ md-dialog.personal_number(ng-controller="calcStepCtrl as stepCtrl" ng-init="amou
     md-toolbar.md-accent(md-theme="hrms")
         .md-toolbar-tools
             span 计算过程
-                
+
     md-content.sticky-container
         .info-body(style="margin: 10px" ng-if="!stepCtrl.error_msg")
             ul(style="margin: 0px" ng-repeat="text in stepCtrl.step_notes")
@@ -11,7 +11,7 @@ md-dialog.personal_number(ng-controller="calcStepCtrl as stepCtrl" ng-init="amou
             ul(style="margin: 0px")
                 li.tcell
                     .tbody 最后金额: {{dialog.amount}}
-                    
+
         .info-body(style="margin: 10px" ng-if="stepCtrl.error_msg")
             对不起，没有找到计算过程.
 
