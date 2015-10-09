@@ -11,6 +11,7 @@ Employee = (restmod, RMUtils, $Evt) ->
         isSelected: {mask: "CU"}
 
         resume: {hasOne: 'Resume', mask: 'CU'}
+        familyMembers: {hasMany: 'FamilyMember', mask: 'CU'}
         performances: {hasMany: 'Performance', mask: 'CU'}
         rewards: {hasMany: 'Reward', mask: 'CU'}
         punishments: {hasMany: 'Punishment', mask: 'CU'}

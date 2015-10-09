@@ -697,6 +697,15 @@ class ReviewCtrl extends nb.Controller
         else
             self.toaster.pop('error', '提示','请勾选要处理的审核记录')
 
+class EmployeeMemberCtrl extends nb.Controller
+    @.$inject = ['$scope', 'Employee']
+
+    constructor: (@scope, @Employee)->
+
+    loadMembers: (employee)->
+        @scope.lovers = employee.familyMembers.$search({relation: 'lover'})
+        @scope.children = employee.familyMembers.$search({relation: 'children'})
+        @scope.others = employee.familyMembers.$search({relation: 'other'})
 
 class EmployeePerformanceCtrl extends nb.Controller
     @.$inject = ['$scope', 'Employee', 'Performance']
@@ -718,6 +727,76 @@ class EmployeeRewardPunishmentCtrl extends nb.Controller
 
     loadPunishments: (employee)->
         @punishments = employee.punishments.$refresh({genre: '处分'})
+
+class EmployeeAttendanceCtrl extends nb.Controller
+    @.$inject = ['$scope', '$http', 'Employee', 'CURRENT_ROLES']
+
+    constructor: (@scope, @http, @Employee, @CURRENT_ROLES)->
+
+    isHrPaymentMember: ()->
+        @CURRENT_ROLES.indexOf('hr_payment_member') >= 0
+
+    dayOnClick: ()->
+        alert('clicked')
+
+    # 因为没有数据，所以现在暂时用了当前人员的考勤数据
+    loadAttendance: (employee)->
+        self = @
+
+        @eventSources = []
+        keys = ["leaves", "late_or_early_leaves", "absences", "lands", "off_post_trains", "filigt_groundeds", "flight_ground_works"]
+        colors = {
+            "leaves": "#006600"
+            "late_or_early_leaves": "#ffff66"
+            "absences": "#ff0033"
+            "lands": "#9933ff"
+            "off_post_trains": "#0066ff"
+            "filigt_groundeds": "#ff6633"
+            "flight_ground_works": "#33ff00"
+        }
+
+        @uiConfig = {
+            calendar: {
+                dayNames: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
+                dayNamesShort: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
+                monthNamesShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"]
+                monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"]
+
+                height: 450
+                editable: false
+
+                header: {
+                  #left: 'month basicWeek basicDay agendaWeek agendaDay'
+                  left: 'month basicWeek'
+                  center: 'title'
+                  right: 'today prev,next'
+                }
+
+                #viewRender: (view, element)->
+                   #console.error("View Changed: ", view.visStart, view.visEnd, view.start, view.end)
+
+                dayClick: @dayOnClick
+                #eventDrop
+                #eventResize
+            }
+        }
+
+        @http.get('/api/me/attendance_records/').success (data)->
+            angular.forEach keys, (key)->
+                events = data.attendance_records[key]
+
+                events = angular.forEach events, (item)->
+                    item["start"] = new Date(item["start"]) if item["start"]
+                    item["end"] = new Date(item["end"]) if item["end"]
+
+                source = {
+                    color: colors[key]
+                    textColor: '#000'
+                    events: events
+                }
+
+                self.eventSources.push(source)
+
 
 
 class PersonnelSort extends nb.Controller
@@ -851,6 +930,8 @@ class PersonnelDataCtrl extends nb.Controller
 app.controller('PersonnelSort', PersonnelSort)
 app.controller('LeaveEmployeesCtrl', LeaveEmployeesCtrl)
 app.controller('MoveEmployeesCtrl', MoveEmployeesCtrl)
+app.controller('EmployeeMemberCtrl', EmployeeMemberCtrl)
 app.controller('EmployeePerformanceCtrl', EmployeePerformanceCtrl)
+app.controller('EmployeeAttendanceCtrl', EmployeeAttendanceCtrl)
 app.controller('EmployeeRewardPunishmentCtrl', EmployeeRewardPunishmentCtrl)
 app.controller('PersonnelDataCtrl', PersonnelDataCtrl)
