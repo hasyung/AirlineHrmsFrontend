@@ -25,7 +25,7 @@ md-dialog.hand_over(ng-init="params = {type:'departments'};")
                             div(ng-repeat="org in selectedOrgs track by $index") {{org.name}}
                 .hd-unit-wrapper(ng-if="params.type == 'reviewer'")
                     .hd-choosing
-                        .title 领导列表
+                        .title 常用列表
                         .content
                             md-radio-group(ng-model="params.reviewer_id")
                                 .hd__item(ng-repeat="reviewer in reviewers")
