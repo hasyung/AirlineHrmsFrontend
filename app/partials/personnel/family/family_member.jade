@@ -1,90 +1,95 @@
-md-card.form-material-section.nb-card
-    md-subheader.md-background.md-hue-1
-        | 配偶
-    form(name="familymembersForm")
-        fieldset(ng-disabled="!editing")
-            input(type="hidden" ng-model="wife.relationType" ng-init="wife.relationType = '配偶'")
-            div(layout)
-                md-input-container(flex)
-                    label 姓名
-                    input(ng-model="wife.name" required)
-                md-input-container(flex)
-                    label 性别
-                    input(ng-model="wife.gender" required)
-            div(layout)
-                md-input-container(flex)
-                    label 籍贯
-                    input(ng-model="wife.nativePlace")
-                md-input-container(flex)
-                    label 民族
-                    input(ng-model="wife.nation")
-            div(layout)
-                md-input-container(flex)
-                    label 出生年月
-                    input(bs-datepicker ng-model="wife.birthday")
-                md-input-container(flex)
-                    label 身份证号
-                    input(ng-model="wife.identityNo" type="text" required name="identityNo" minlength="15" maxlength="18")
-            div(layout)
-                md-input-container(flex)
-                    label 文化程度
-                    input(ng-model="wife.educationBackground")
-                md-input-container(flex)
-                    label 政治面貌
-                    input(ng-model="wife.politicalStatus")
-            div(layout)
-                md-input-container(flex)
-                    label 工作单位
-                    input(ng-model="wife.company")
-                md-input-container(flex)
-                    label 职业
-                    input(ng-model="wife.position")
-            div(layout)
-                md-input-container(flex)
-                    label 联系方式
-                    input(ng-model="wife.mobile" type="tel")
-                div(flex)
+div(ng-controller="EmployeeMemberCtrl as ctrl"
+    ng-init="current = panel.employee;\
+        ctrl.loadMembers(current)\
+    "
+    )
+    md-card.form-material-section.nb-card
+        md-subheader.md-background.md-hue-1
+            | 配偶
+        form(name="familymembersForm")
+            fieldset(ng-disabled="!editing" ng-repeat="lover in lovers")
+                input(type="hidden" ng-model="lover.relationType")
+                div(layout)
+                    md-input-container(flex)
+                        label 姓名
+                        input(ng-model="lover.name" required)
+                    md-input-container(flex)
+                        label 性别
+                        input(ng-model="lover.gender" required)
+                div(layout)
+                    md-input-container(flex)
+                        label 籍贯
+                        input(ng-model="lover.nativePlace")
+                    md-input-container(flex)
+                        label 民族
+                        input(ng-model="lover.nation")
+                div(layout)
+                    md-input-container(flex)
+                        label 出生年月
+                        input(bs-datepicker ng-model="lover.birthday")
+                    md-input-container(flex)
+                        label 身份证号
+                        input(ng-model="lover.identityNo" type="text" required name="identityNo" minlength="15" maxlength="18")
+                div(layout)
+                    md-input-container(flex)
+                        label 文化程度
+                        input(ng-model="lover.educationBackground")
+                    md-input-container(flex)
+                        label 政治面貌
+                        input(ng-model="lover.politicalStatus")
+                div(layout)
+                    md-input-container(flex)
+                        label 工作单位
+                        input(ng-model="lover.company")
+                    md-input-container(flex)
+                        label 职业
+                        input(ng-model="lover.position")
+                div(layout)
+                    md-input-container(flex)
+                        label 联系方式
+                        input(ng-model="lover.mobile" type="tel")
+                    div(flex)
 
-md-card.form-material-section.nb-card
-    md-subheader.md-background.md-hue-1
-        | 子女情况
-    table.table.table-hover.table-mc-light-blue.table-bordered
-        thead
-            tr
-                th 姓名
-                th 关系
-                th 性别
-                th 出生年月
-                th 常住户口所在地
-                th 学校或工作单位
-        tbody
-            tr(ng-repeat="child in vm.children")
-                td(ng-bind="child.name")
-                td(ng-bind="child.relationType")
-                td(ng-bind="child.gender")
-                td(ng-bind="child.birthday | date:'yyyy-MM-dd'")
-                td(ng-bind="child.residenceBooklet")
-                td(ng-bind="child.company")
+    md-card.form-material-section.nb-card
+        md-subheader.md-background.md-hue-1
+            | 子女情况
+        table.table.table-hover.table-mc-light-blue.table-bordered
+            thead
+                tr
+                    th 姓名
+                    th 关系
+                    th 性别
+                    th 出生年月
+                    th 常住户口所在地
+                    th 学校或工作单位
+            tbody
+                tr(ng-repeat="child in children")
+                    td(ng-bind="child.name")
+                    td(ng-bind="child.relationType")
+                    td(ng-bind="child.gender")
+                    td(ng-bind="child.birthday | date:'yyyy-MM-dd'")
+                    td(ng-bind="child.residenceBooklet")
+                    td(ng-bind="child.company")
 
-md-card.form-material-section.nb-card
-    md-subheader.md-background.md-hue-1
-        | 父母、兄妹、配偶父母情况
-    table.table.table-hover.table-mc-light-blue.table-bordered
-        thead
-            tr
-                th 姓名
-                th 关系
-                th 性别
-                th 出生年月
-                th 常住户口所在地
-                th 学校或工作单位
-        tbody
-            tr(ng-repeat="child in vm.children")
-                td(ng-bind="child.name")
-                td(ng-bind="child.relationType")
-                td(ng-bind="child.gender")
-                td(ng-bind="child.birthday | date:'yyyy-MM-dd'")
-                td(ng-bind="child.residenceBooklet")
-                td(ng-bind="child.company")
+    md-card.form-material-section.nb-card
+        md-subheader.md-background.md-hue-1
+            | 父母、兄妹、配偶父母情况
+        table.table.table-hover.table-mc-light-blue.table-bordered
+            thead
+                tr
+                    th 姓名
+                    th 关系
+                    th 性别
+                    th 出生年月
+                    th 常住户口所在地
+                    th 学校或工作单位
+            tbody
+                tr(ng-repeat="other in others")
+                    td(ng-bind="other.name")
+                    td(ng-bind="other.relationType")
+                    td(ng-bind="other.gender")
+                    td(ng-bind="other.birthday | date:'yyyy-MM-dd'")
+                    td(ng-bind="other.residenceBooklet")
+                    td(ng-bind="other.company")
 
 

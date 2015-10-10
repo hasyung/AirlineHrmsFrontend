@@ -53,6 +53,7 @@ div.panel-bg-gray(ng-init = "current = panel.employee; current.$refresh();" ng-c
                         include reward/index
 
                 tab(heading="考勤信息")
+                    md-content.nb-card-container(flex layout="column" md-theme="hrms")
                         include attendance/index
 
                 tab(heading="绩效考核")

@@ -291,29 +291,29 @@ class ProfileCtrl extends nb.Controller
         }
 
         @uiConfig = {
-          calendar: {
-            dayNames: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
-            dayNamesShort: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
-            monthNamesShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月","八月","九月","十月","十一月","十二月"]
-            monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月","八月","九月","十月","十一月","十二月"]
+            calendar: {
+                dayNames: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
+                dayNamesShort: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
+                monthNamesShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月","八月","九月","十月","十一月","十二月"]
+                monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月","八月","九月","十月","十一月","十二月"]
 
-            height: 450
-            editable: false
+                height: 450
+                editable: false
 
-            header: {
-              #left: 'month basicWeek basicDay agendaWeek agendaDay'
-              left: 'month basicWeek'
-              center: 'title'
-              right: 'today prev,next'
+                header: {
+                  #left: 'month basicWeek basicDay agendaWeek agendaDay'
+                  left: 'month basicWeek'
+                  center: 'title'
+                  right: 'today prev,next'
+                }
+
+                #viewRender: (view, element)->
+                   #console.error("View Changed: ", view.visStart, view.visEnd, view.start, view.end)
+
+                dayClick: @dayOnClick
+                #eventDrop
+                #eventResize
             }
-
-            #viewRender: (view, element)->
-               #console.error("View Changed: ", view.visStart, view.visEnd, view.start, view.end)
-
-            dayClick: @dayOnClick
-            #eventDrop
-            #eventResize
-          }
         }
 
         @http.get('/api/me/attendance_records/').success (data)->
