@@ -91,15 +91,15 @@
                 label 剩余
                 .leave {{ctrl.global_setting.service_bonus[ctrl.currentYear].budget - ctrl.global_setting.service_bonus[ctrl.currentYear].sent}}
 
-            .form-row(layout ng-class="{'yellow': ctrl.global_setting.ailine_security_bonus[ctrl.currentYear].sent/ctrl.global_setting.ailine_security_bonus[ctrl.currentYear].budget>=0.8, 'red': ctrl.global_setting.ailine_security_bonus[ctrl.currentYear].sent/ctrl.global_setting.ailine_security_bonus[ctrl.currentYear].budget>=1}")
+            .form-row(layout ng-class="{'yellow': ctrl.global_setting.airline_security_bonus[ctrl.currentYear].sent/ctrl.global_setting.airline_security_bonus[ctrl.currentYear].budget>=0.8, 'red': ctrl.global_setting.airline_security_bonus[ctrl.currentYear].sent/ctrl.global_setting.airline_security_bonus[ctrl.currentYear].budget>=1}")
                 label 航空安全奖预算
                 md-input-container(md-no-float)
-                    input(type="number" min="0" max="100000000" step="1" ng-model="ctrl.global_setting.ailine_security_bonus[ctrl.currentYear].budget")
+                    input(type="number" min="0" max="100000000" step="1" ng-model="ctrl.global_setting.airline_security_bonus[ctrl.currentYear].budget")
                 label 已发
                 md-input-container(md-no-float)
-                    input(type="number" ng-model="ctrl.global_setting.ailine_security_bonus[ctrl.currentYear].sent" readonly)
+                    input(type="number" ng-model="ctrl.global_setting.airline_security_bonus[ctrl.currentYear].sent" readonly)
                 label 剩余
-                .leave {{ctrl.global_setting.ailine_security_bonus[ctrl.currentYear].budget - ctrl.global_setting.ailine_security_bonus[ctrl.currentYear].sent}}
+                .leave {{ctrl.global_setting.airline_security_bonus[ctrl.currentYear].budget - ctrl.global_setting.airline_security_bonus[ctrl.currentYear].sent}}
 
             .form-row(layout ng-class="{'yellow': ctrl.global_setting.composite_bonus[ctrl.currentYear].sent/ctrl.global_setting.composite_bonus[ctrl.currentYear].budget>=0.8, 'red': ctrl.global_setting.composite_bonus[ctrl.currentYear].sent/ctrl.global_setting.composite_bonus[ctrl.currentYear].budget>=1}")
                 label 社会综治奖预算
