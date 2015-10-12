@@ -24,11 +24,11 @@ div(ng-controller="EmployeePerformanceCtrl as ctrl")
                             tbody
                                 tr(ng-repeat="performance in group track by $index")
                                     td(ng-bind="performance.assessTime")
-                                        td(ng-bind="performance.result")
-                                        td
-                                            a(
-                                                ng-if="performance.attachmentStatus"
-                                                nb-dialog
-                                                template-url="partials/self/performance/attachments.html"
-                                                locals="{performance:performance}"
-                                                ) 查看
+                                    td(ng-bind="performance.result")
+                                    td
+                                        a(
+                                            ng-if="performance.attachmentStatus"
+                                            nb-dialog
+                                            template-url="partials/self/performance/attachments.html"
+                                            locals="{performance:performance}"
+                                            ) 查看
