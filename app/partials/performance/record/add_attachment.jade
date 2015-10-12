@@ -26,7 +26,7 @@ md-dialog.sample-dialog(
                                 download
                                 )
                                 .accessory-name() {{attachment.name}}
-                                .accessory-size() {{attachment.size | byteFmt:2}}{{attachment.id}}
+                                .accessory-size() {{attachment.size | byteFmt:2}}
                         .accessory-switch
                             md-button.md-icon-button(type="button" ng-click="outerScope.ctrl.attachmentDestroy(attachment)" ng-if="outerScope.ctrl.USER_META.id == attachment.employeeId")
                                 md-icon.md-warn(md-svg-src="/images/svg/close.svg")
