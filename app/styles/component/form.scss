@@ -206,6 +206,10 @@ fieldset[disabled] {
         label {
             color: $text-muted;
         }
+
+        .require-tip {
+            display: none;
+        }
     }
 
     .md-default-theme .md-input {
@@ -300,6 +304,13 @@ md-input-container {
         .md-select-icon {
             visibility: visible;
         }
+    }
+
+    .require-tip {
+        color: #f00;
+        left: 5px;
+        position: relative;
+        top: 2px;
     }
 }
 

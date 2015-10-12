@@ -11,6 +11,7 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
         div(layout)
             md-input-container(flex)
                 label 姓名
+                    span.require-tip *
                 input(ng-model="current.name" name="name" required)
             md-input-container(flex)
                 label 员工编号
@@ -23,6 +24,7 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
         div(layout)
             md-input-container(flex)
                 label 身份证号
+                    span.require-tip *
                 input(ng-model="current.identityNo", name="identityNo" required)
             md-input-container.row-has-value(flex)
                 label 政治面貌
@@ -66,4 +68,4 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('degrees')") {{item.label}}
             md-input-container.row-has-value(flex)
                 label 试用时间(月)
-                input(type="number" ng-model="current.probation_months" max="12" min="0")
+                input(type="number" ng-model="current.probationMonths" max="12" min="0")

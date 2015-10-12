@@ -9,7 +9,7 @@ div(style="height: 100%; background-color: #f5f5f5;")
                 form(ng-submit="ctrl.newContract(contract);panel.close();" name="newContractForm")
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1
-                            md-icon.form-icon(md-svg-src="/images/svg/personnel_24.svg" alt="基本信息")
+                            //- md-icon.form-icon(md-svg-src="/images/svg/personnel_24.svg" alt="基本信息")
                             | 合同信息
 
                         fieldset(md-theme="default")
@@ -18,12 +18,14 @@ div(style="height: 100%; background-color: #f5f5f5;")
                             div(layout)
                                 md-input-container(flex)
                                     label 姓名
+                                        span.require-tip *
                                     input(ng-model="ctrl.loadEmp.name" name="name" required
                                         ng-model-options="{debounce: {'default': 1000, 'blur': 0}}"
                                         ng-change="ctrl.loadEmployee({name: ctrl.loadEmp.name}, contract);"
                                         )
                                 md-input-container(flex)
                                     label 员工编号
+                                        span.require-tip *
                                     input(ng-model="ctrl.loadEmp.employeeNo" required
                                         ng-model-options="{debounce: {'default': 1000, 'blur': 0}}"
                                         ng-change="ctrl.loadEmployee({employee_no: ctrl.loadEmp.employeeNo}, contract);"
@@ -40,11 +42,13 @@ div(style="height: 100%; background-color: #f5f5f5;")
                             div(layout)
                                 md-input-container.row-has-value(flex)
                                     label 用工性质
+                                        span.require-tip *
                                     md-select(ng-model="contract.applyType" required)
                                         md-option(value="合同") 合同
                                         md-option(value="合同制") 合同制
                                 md-input-container.row-has-value(flex)
                                     label 变更标志
+                                        span.require-tip *
                                     md-select(ng-model="contract.changeFlag" required)
                                         md-option(value="新签") 新签
                                         md-option(value="续签") 续签
@@ -56,6 +60,7 @@ div(style="height: 100%; background-color: #f5f5f5;")
                             div(layout)
                                 md-input-container(flex)
                                     label 开始日期
+                                        span.require-tip *
                                     input(
                                         name="startDate"
                                         bs-datepicker
@@ -66,6 +71,7 @@ div(style="height: 100%; background-color: #f5f5f5;")
 
                                 md-input-container(flex ng-if="!contract.isUnfix")
                                     label 结束日期(大于开始日期)
+                                        span.require-tip *
                                     input.has-placeholder(
                                         bs-datepicker
                                         ng-model="contract.endDate"
