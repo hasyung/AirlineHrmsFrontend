@@ -144,10 +144,9 @@ class PerformanceRecord extends nb.Controller
     isImgObj: (obj)->
         return /jpg|jpeg|png|gif/.test(obj.type)
 
-    attachmentDestroy: (attachment, e) ->
+    attachmentDestroy: (attachment) ->
         self = @
 
-        e.stopPropagation()
         attachment.$destroy()
         @performances.$refresh()
 
@@ -322,6 +321,12 @@ class PerformanceMasterRecord extends nb.Controller
 
         performance.attachmentStatus = true
         collection.$create(hash)
+
+    attachmentDestroy: (attachment) ->
+        self = @
+
+        attachment.$destroy()
+        @performances.$refresh()
 
 
 class PerformanceSetting extends nb.Controller
