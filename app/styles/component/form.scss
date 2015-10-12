@@ -207,6 +207,7 @@ fieldset[disabled] {
             color: $text-muted;
         }
 
+        // 必填红色*提示
         .require-tip {
             display: none;
         }
