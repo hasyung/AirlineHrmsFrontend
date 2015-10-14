@@ -1,59 +1,58 @@
-.app-content-wrapper(flex ng-controller="salaryCtrl as ctrl" ng-init="ctrl.loadConfigFromServer('air_security_hour')")
-    form.form-static(novalidate)
-        fieldset
-            .form-row(layout)
-                label 资深安A
-                md-input-container(md-no-float)
-                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.security_A")
-                span 元/小时
+.app-content-wrapper(flex ng-init="ctrl.loadConfigFromServer('air_security_hour')")
+    fieldset
+        .form-row(layout)
+            label 资深安A
+            md-input-container(md-no-float)
+                input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.security_A")
+            span 元/小时
 
-            .form-row(layout)
-                label 资深安B
-                md-input-container(md-no-float)
-                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.security_B")
-                span 元/小时
+        .form-row(layout)
+            label 资深安B
+            md-input-container(md-no-float)
+                input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.security_B")
+            span 元/小时
 
-            .form-row(layout)
-                label 资深安C
-                md-input-container(md-no-float)
-                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.security_C")
-                span 元/小时
+        .form-row(layout)
+            label 资深安C
+            md-input-container(md-no-float)
+                input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.security_C")
+            span 元/小时
 
-            .form-row(layout)
-                label 资深安D
-                md-input-container(md-no-float)
-                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.security_D")
-                span 元/小时
+        .form-row(layout)
+            label 资深安D
+            md-input-container(md-no-float)
+                input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.security_D")
+            span 元/小时
 
-            .form-row(layout)
-                label 安全员A
-                md-input-container(md-no-float)
-                    input(type="number" min="0" max="100000" setp="1" ng-model="ctrl.dynamic_config.safety_A")
-                span 元/小时
+        .form-row(layout)
+            label 安全员A
+            md-input-container(md-no-float)
+                input(type="number" min="0" max="100000" setp="1" ng-model="ctrl.dynamic_config.safety_A")
+            span 元/小时
 
-            .form-row(layout)
-                label 安全员B
-                md-input-container(md-no-float)
-                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.safety_B")
-                span 元/小时
+        .form-row(layout)
+            label 安全员B
+            md-input-container(md-no-float)
+                input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.safety_B")
+            span 元/小时
 
-            .form-row(layout)
-                label 安全员C
-                md-input-container(md-no-float)
-                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.safety_C")
-                span 元/小时
+        .form-row(layout)
+            label 安全员C
+            md-input-container(md-no-float)
+                input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.safety_C")
+            span 元/小时
 
-            .form-row(layout)
-                label 安全员D
-                md-input-container(md-no-float)
-                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.safety_D")
-                span 元/小时
+        .form-row(layout)
+            label 安全员D
+            md-input-container(md-no-float)
+                input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.safety_D")
+            span 元/小时
 
-            .form-row(layout)
-                label 见习安
-                md-input-container(md-no-float)
-                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.noviciate_safety")
-                span 元/小时
+        .form-row(layout)
+            label 见习安
+            md-input-container(md-no-float)
+                input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.noviciate_safety")
+            span 元/小时
 
-            md-button.md-raised.md-primary(ng-click="ctrl.saveConfig('air_security_hour', ctrl.dynamic_config)") 保存
+
 
