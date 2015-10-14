@@ -160,8 +160,8 @@ class Route
                     }
                 }
             }
-            .state 'my_requests.erarly_retirement', {
-                url: '/erarly_retirement'
+            .state 'my_requests.early_retirement', {
+                url: '/early_retirement'
                 views: {
                     '@': {
                         templateUrl: 'partials/self/my_requests/early_retirement/index.html'
