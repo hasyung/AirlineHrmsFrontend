@@ -284,13 +284,6 @@ fieldset[disabled] {
 md-input-container {
     font-family: $font-family-sans-serif;
     font-size: $font-size-base;
-    // margin-right: 10px;
-
-    //css Hack : 解决360浏览器对material默认变形及样式的兼容性问题
-    &.md-input-has-value label:not(.md-no-float) {
-        -webkit-transform: translate3d(0, 6px, 0) scale(.75);
-        -webkit-transform-origin: left top;
-    }
 
     &.mix-height {
         height: 76px;
