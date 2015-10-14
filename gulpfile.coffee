@@ -165,6 +165,7 @@ gulp.task "sass-watch", ->
         .pipe(plumber())
         .pipe(sass({includePaths: require('node-bourbon').includePaths}))
         .pipe(rename("web.css"))
+        .pipe(autoprefixer())
         .pipe(gulp.dest(paths.distStylesPath))
 
 
@@ -186,6 +187,7 @@ gulp.task "sass-deploy", ->
         .pipe(sass({includePaths: require('node-bourbon').includePaths}))
         .pipe(sourcemaps.write())
         .pipe(rename("app.css"))
+        .pipe(autoprefixer())
         .pipe(gulp.dest(paths.distStylesPath))
 
 
