@@ -175,6 +175,7 @@ gulp.task "sass-lib", ->
         .pipe(sass())
         .pipe(sourcemaps.write())
         .pipe(rename("lib.css"))
+        .pipe(autoprefixer())
         .pipe(gulp.dest(paths.distStylesPath))
 
 
@@ -192,6 +193,7 @@ gulp.task "sass-deploy", ->
 gulp.task "css-vendor", ->
     gulp.src(paths.vendorStyles)
         .pipe(concat("vendor1.css"))
+        .pipe(autoprefixer())
         .pipe(gulp.dest(paths.distStylesPath))
 
 
