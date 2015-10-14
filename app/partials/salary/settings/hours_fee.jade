@@ -2,22 +2,34 @@
     .salary-basic
         tabset
             tab.leader-base(heading="飞行员")
-                md-toolbar
-                  .md-toolbar-tools
-                    h2 飞行员
-                include ./hours/flyer.jade
+                form.form-static(novalidate)
+                    md-toolbar
+                      .md-toolbar-tools
+                        h2 飞行员
+                        span(flex)
+                        md-button.md-raised.md-primary(ng-click="ctrl.saveConfig('flyer_hour', ctrl.dynamic_config)") 保存
+                    include ./hours/flyer.jade
             tab.leader-base(heading="空乘")
-                md-toolbar
-                  .md-toolbar-tools
-                    h2 空乘
-                include ./hours/flight_attendant.jade
+                form.form-static(novalidate)
+                    md-toolbar
+                      .md-toolbar-tools
+                        h2 空乘
+                        span(flex)
+                        md-button.md-raised.md-primary(ng-click="ctrl.saveConfig('fly_attendant_hour', ctrl.dynamic_config)") 保存
+                    include ./hours/flight_attendant.jade
             tab.leader-base(heading="空保")
-                md-toolbar
-                  .md-toolbar-tools
-                    h2 空保
-                include ./hours/air_security.jade
+                form.form-static(novalidate)
+                    md-toolbar
+                      .md-toolbar-tools
+                        h2 空保
+                        span(flex)
+                        md-button.md-raised.md-primary(ng-click="ctrl.saveConfig('air_security_hour', ctrl.dynamic_config)") 保存
+                    include ./hours/air_security.jade
             tab.leader-base(heading="未飞补贴")
-                md-toolbar
-                  .md-toolbar-tools
-                    h2 未飞补贴
-                include ./hours/unfly_allowance.jade
+                form.form-static(novalidate)
+                    md-toolbar
+                      .md-toolbar-tools
+                        h2 未飞补贴
+                        span(flex)
+                        md-button.md-raised.md-primary(ng-click="ctrl.saveConfig('unfly_allowance_hour', ctrl.dynamic_config)") 保存
+                    include ./hours/unfly_allowance.jade
