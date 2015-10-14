@@ -271,11 +271,18 @@ class SalaryController extends nb.Controller
 
         result = input = setting[column]
 
-        if input && angular.isDefined(input['format_cell'])
+        if input && angular.isDefined(input)
             result = input['format_cell']
-            result = result.replace('%{format_value}', input['format_value']) if result
-            result = result.replace('%{work_value}', input['work_value']) if result
-            result = result.replace('%{time_value}', input['time_value']) if result
+
+            if result && angular.isDefined(result)
+                vars = ['transfer_years', 'drive_work_value', 'fly_time_value', 'job_title_degree', 'education_background', 'last_year_perf']
+                angular.forEach vars, (item) ->
+                    result = result.replace('%{' + item + '}', input[item])
+            else if angular.isDefined(input['transfer_years'])
+                if input['transfer_years'] == '99'
+                    result = '封顶'
+                if input['transfer_years'] == '999'
+                    result = '荣誉'
 
         result
 
@@ -283,11 +290,11 @@ class SalaryController extends nb.Controller
         return if !expr && !angular.isDefined(expr)
 
         hash = {
-            '调档时间':     '%{format_value}'
-            '驾驶经历时间':  '%{work_value}'
-            '飞行时间':     '%{time_value}'
-            '员工职级':     '%{job_title_degree}'
-            '员工学历':     '%{education_background}'
+            '调档时间':      '%{transfer_years}'
+            '驾驶经历时间':  '%{drive_work_value}'
+            '飞行时间':      '%{fly_time_value}'
+            '员工职级':      '%{job_title_degree}'
+            '员工学历':      '%{education_background}'
             '去年年度绩效':  '%{last_year_perf}'
         }
 
