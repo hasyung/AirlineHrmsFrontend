@@ -13,10 +13,10 @@ table.table.table-bordered.setting-table
         div(ng-switch="setting[column]['edit_mode']" ng-if="column!='rate' && column!='amount'")
           //- 判断编辑类型
           //- div(ng-switch-when="text")
-          //-   input(ng-if="ctrl.editing || setting[column]['format_value']" type="text" ng-model="setting[column]['format_value']")
+          //-   input(ng-if="ctrl.editing || setting[column]['transfer_years']" type="text" ng-model="setting[column]['transfer_years']")
 
           div(ng-switch-when="select")
-            md-select(ng-model="setting[column]['format_value']")
+            md-select(ng-model="setting[column]['transfer_years']")
               md-option(ng-repeat="item in setting[column]['edit_select_array']" ng-value="item") {{item}}
 
           div(ng-switch-when="dialog")
@@ -26,7 +26,7 @@ table.table.table-bordered.setting-table
 
           div(ng-switch-default)
             a(ng-if="ctrl.isComplexSetting(ctrl.dynamic_config.flags, setting.grade, column, setting)" href="javascript:void(0);" nb-dialog template-url="partials/salary/settings/dialogs/{{::ctrl.current_category}}.html" locals="{current: setting[column], grade: setting.grade}") +
-            input(ng-if="!ctrl.isComplexSetting(ctrl.dynamic_config.flags, setting.grade, column, setting)" type="text" ng-model="setting[column]['format_value']")
+            input(ng-if="!ctrl.isComplexSetting(ctrl.dynamic_config.flags, setting.grade, column, setting)" type="text" ng-model="setting[column]['transfer_years']")
 
         //- 系数
         div(ng-if="column=='rate'")
@@ -41,4 +41,4 @@ table.table.table-bordered.setting-table
 
       //- 不是编辑模式
       div(ng-if="!ctrl.editing")
-        span {{setting[column]['format_value'] || ctrl.formatColumn(ctrl.dynamic_config.flags, setting.grade, setting, column)}}
+        span {{ctrl.formatColumn(ctrl.dynamic_config.flags, setting.grade, setting, column)}}
