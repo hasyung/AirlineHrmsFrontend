@@ -144,10 +144,9 @@ class PerformanceRecord extends nb.Controller
     isImgObj: (obj)->
         return /jpg|jpeg|png|gif/.test(obj.type)
 
-    attachmentDestroy: (attachment, e) ->
+    attachmentDestroy: (attachment) ->
         self = @
 
-        e.stopPropagation()
         attachment.$destroy()
         @performances.$refresh()
 
@@ -193,7 +192,8 @@ class PerformanceRecord extends nb.Controller
         }
 
         performance.attachmentStatus = true
-        collection.$create(hash)
+        collection.$create(hash).$asPromise().then (data)->
+            collection.$refresh()
 
     # 安排离岗培训
     newTrainEmployee: (moveEmployee)->
@@ -321,7 +321,14 @@ class PerformanceMasterRecord extends nb.Controller
         }
 
         performance.attachmentStatus = true
-        collection.$create(hash)
+        collection.$create(hash).$asPromise().then (data)->
+            collection.$refresh()
+
+    attachmentDestroy: (attachment) ->
+        self = @
+
+        attachment.$destroy()
+        @performances.$refresh()
 
 
 class PerformanceSetting extends nb.Controller

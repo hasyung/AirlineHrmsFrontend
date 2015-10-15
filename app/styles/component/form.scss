@@ -206,6 +206,11 @@ fieldset[disabled] {
         label {
             color: $text-muted;
         }
+
+        // 必填红色*提示
+        .require-tip {
+            display: none;
+        }
     }
 
     .md-default-theme .md-input {
@@ -279,7 +284,6 @@ fieldset[disabled] {
 md-input-container {
     font-family: $font-family-sans-serif;
     font-size: $font-size-base;
-    // margin-right: 10px;
 
     &.mix-height {
         height: 76px;
@@ -300,6 +304,13 @@ md-input-container {
         .md-select-icon {
             visibility: visible;
         }
+    }
+
+    .require-tip {
+        color: #f00;
+        left: 5px;
+        position: relative;
+        top: 2px;
     }
 }
 

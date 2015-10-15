@@ -25,19 +25,19 @@ div.panel-bg-gray(ng-init = "current = panel.employee; current.$refresh();" ng-c
                 tab(heading="基本信息")
                     md-content.nb-card-container(layout="column" md-theme="hrms")
                         md-card.form-material-section.nb-card
-                            md-subheader.md-background.md-hue-1
+                            .md-subheader
                                 //- md-icon.form-icon(md-svg-src="/images/svg/personnel_24.svg" alt="基本信息")
                                 |基本信息
                             include info_basic/info_basic_edit
 
                         md-card.form-material-section.nb-card
-                            md-subheader.md-background.md-hue-1
+                            .md-subheader
                                 //- md-icon.form-icon(md-svg-src="/images/svg/positions_info_24.svg" alt="岗位信息")
                                 |岗位信息
                             include info_basic/info_position_edit
 
                         md-card.form-material-section.nb-card
-                            md-subheader.md-background.md-hue-1
+                            .md-subheader
                                 //- md-icon.form-icon(md-svg-src="/images/svg/ic_star_24px.svg" alt="职称信息")
                                 |职称信息
                             include info_basic/info_position_title

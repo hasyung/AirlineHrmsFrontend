@@ -219,21 +219,6 @@ class SalaryController extends nb.Controller
         @backup_config = angular.copy(@dynamic_config)
         @editing = false
 
-    isComplexSetting: (flags, grade, column, setting)->
-        if ['information_perf', 'airline_business_perf', 'manage_market_perf'].indexOf(@current_category) >= 0
-            flags[grade] = {} if !angular.isDefined(flags[grade])
-            flags[grade][column] = {} if !angular.isDefined(flags[grade][column])
-
-            setting = flags[grade]
-            setting[column]['edit_mode'] = 'dialog'
-            setting[column]['add'] = true
-            setting[column]['format_cell'] = null
-            setting[column]['expr'] = null
-
-            return true
-
-        return false
-
     resetDynamicConfig: ()->
         @dynamic_config = {}
         @dynamic_config = angular.copy(@backup_config)
@@ -265,30 +250,40 @@ class SalaryController extends nb.Controller
         @dynamic_config.flag_list.indexOf('rate') >= 0
 
     formatColumn: (flags, grade, setting, column)->
-        if setting[column] && (setting[column]['expr'] || setting[column]['format_cell'])
-            setting[column]['add'] = false
-            flags[grade][column]['add'] = false
-
         result = input = setting[column]
 
-        if input && angular.isDefined(input['format_cell'])
+        if column == 'rate' || column == 'amount'
+            return result
+
+        if input && angular.isDefined(input)
             result = input['format_cell']
-            result = result.replace('%{format_value}', input['format_value']) if result
-            result = result.replace('%{work_value}', input['work_value']) if result
-            result = result.replace('%{time_value}', input['time_value']) if result
+
+            if result && angular.isDefined(result)
+                vars = ['transfer_years', 'drive_work_value', 'teacher_drive_years', 'fly_time_value', 'job_title_degree', 'education_background', 'last_year_perf', 'join_scal_years', 'no_subjective_accident', 'no_serious_security_error']
+                angular.forEach vars, (item) ->
+                    result = result.replace('%{' + item + '}', input[item])
+            else if angular.isDefined(input['transfer_years'])
+                if input['transfer_years'] == '99'
+                    result = '封顶'
+                if input['transfer_years'] == '999'
+                    result = '荣誉'
 
         result
 
     exchangeExpr: (expr, reverse = false)->
-        return if !expr && !angular.isDefined(expr)
+        expr = "" if !expr
 
         hash = {
-            '调档时间':     '%{format_value}'
-            '驾驶经历时间':  '%{work_value}'
-            '飞行时间':     '%{time_value}'
-            '员工职级':     '%{job_title_degree}'
-            '员工学历':     '%{education_background}'
-            '去年年度绩效':  '%{last_year_perf}'
+            '调档时间':            '%{transfer_years}'
+            '驾驶经历时间':        '%{drive_work_value}'
+            '教员经历时间':        '%{teacher_drive_years}'
+            '飞行时间':            '%{fly_time_value}'
+            '员工职级':            '%{job_title_degree}'
+            '员工学历':            '%{education_background}'
+            '去年年度绩效':        '%{last_year_perf}'
+            '本企业经历时间':      '%{join_scal_years}'
+            '无人为飞行事故':      '%{no_subjective_accident}'
+            '无安全严重差错':      '%{no_serious_security_error}'
         }
 
         result = expr
@@ -360,6 +355,11 @@ class SalaryPersonalController extends nb.Controller
                     name: 'employee_no'
                     displayName: '员工编号'
                     type: 'string'
+                }
+                {
+                    name: 'department_ids'
+                    displayName: '机构'
+                    type: 'org-search'
                 }
                 {
                     name: 'channel_ids'

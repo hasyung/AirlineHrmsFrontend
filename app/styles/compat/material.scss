@@ -1,0 +1,22 @@
+//解决material css在360安全浏览器下的样式bug
+
+//单选框 内部圆圈占满圆形外包围的bug
+md-radio-button.md-checked .md-on,
+.md-switch-thumb.md-checked .md-on {
+    -webkit-transform: scale(.5);
+    transform: scale(.5);
+}
+
+//解决 输入框有值时，label不缩小，且平移位置不对的bug
+md-input-container {
+    &.md-input-has-value label:not(.md-no-float) {
+        -webkit-transform: translate3d(0, 6px, 0) scale(.75);
+        -webkit-transform-origin: left top;
+    }
+}
+
+//解决 多选框内的‘勾选’图标旋转角度不对的bug
+md-checkbox.md-checked .md-icon:after {
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}

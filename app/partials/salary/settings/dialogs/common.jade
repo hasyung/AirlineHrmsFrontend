@@ -18,7 +18,10 @@ md-dialog()
               td 调档时间 >= 2
             tr
               td 驾驶经历时间
-              td 驾驶经历时间 >= 4
+              td 驾驶经历时间 >= 2
+            tr
+              td 驾驶经历时间
+              td 驾驶经历时间 >= 2
             tr
               td 飞行时间
               td 飞行时间 >= 4000
@@ -31,6 +34,15 @@ md-dialog()
             tr
               td 去年年度绩效
               td 去年年度绩效 == 及格 or 良好 or 优秀
+            tr
+              td 本企业经历时间
+              td 本企业经历时间 >= 2
+            tr
+              td 无人为飞行事故
+              td 无人为飞行事故 == 0
+            tr
+              td 无安全严重差错
+              td 无安全严重差错 == 0
         div(flex)
           p 关系符号说明:
           table.table.table-bordered(style="border:1px solid #ccc;width:300px;")

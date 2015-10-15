@@ -11,7 +11,7 @@
                     nb-dialog
                     ng-disabled="!ctrl.getSelected()"
                     template-url="/partials/performance/record/add_attachment.html"
-                    locals="{performance: ctrl.getSelected(), can_upload: true}"
+                    locals="{performance: ctrl.getSelected(), can_upload: true, outerScope: ctrl.scope}"
                 ) 上传文档
 
         div(nb-grid

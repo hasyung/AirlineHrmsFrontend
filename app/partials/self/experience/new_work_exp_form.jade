@@ -12,16 +12,20 @@ form(ng-controller="NewResourceCtrl", ng-submit="create(newExp,newWorkBeforeForm
     div(layout)
         md-input-container(flex)
             label 单位名称
+                span.require-tip *
             input(ng-model="newExp.company" name="company" required)
         md-input-container(flex)
             label 任职部门
+                span.require-tip *
             input(ng-model="newExp.department" name="department" required)
     div(layout)
         md-input-container(flex)
             label 担任职位
+                span.require-tip *
             input(ng-model="newExp.position" name="position" required)
         md-input-container(flex)
             label 工作描述
+                span.require-tip *
             input(ng-model="newExp.jobDesc" name="jobDesc" required)
     //- md-input-container
     //-     label 证明人

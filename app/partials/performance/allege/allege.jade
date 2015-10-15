@@ -67,9 +67,9 @@
                                 div(ng-if="outerScope.ctrl.isImgObj(attachment)" nb-gallery img-obj="attachment" style="cursor: pointer;")
                                     .accessory-name(ng-bind="attachment.name")
                                     .accessory-size(ng-bind="attachment.size | byteFmt:2")
-                                    .accessory-switch
-                                        md-button.md-icon-button(ng-click="allege.attachments.$new(attachment.id).$destroy()")
-                                            md-icon.md-warn(md-svg-src="/images/svg/close.svg")
+                                    //- .accessory-switch
+                                    //-     md-button.md-icon-button(ng-click="allege.attachments.$new(attachment.id).$destroy()")
+                                    //-         md-icon.md-warn(md-svg-src="/images/svg/close.svg")
                                 div(ng-if="!outerScope.ctrl.isImgObj(attachment)" style="cursor: pointer;")
                                     a(
                                     style="display: block; color: rgba(0,0,0,0.87)"
@@ -78,9 +78,9 @@
                                     )
                                         .accessory-name(ng-bind="attachment.name")
                                         .accessory-size(ng-bind="attachment.size | byteFmt:2")
-                                        .accessory-switch
-                                            md-button.md-icon-button(ng-click="allege.attachments.$new(attachment.id).$destroy()")
-                                                md-icon.md-warn(md-svg-src="/images/svg/close.svg")
+                                .accessory-switch
+                                    md-button.md-icon-button(ng-click="allege.attachments.$new(attachment.id).$destroy()")
+                                        md-icon.md-warn(md-svg-src="/images/svg/close.svg")
 
                         .accessory-btn-group(
                             flow-init="{target:'/api/alleges/' + allege.id +'/attachments', testChunks:false, uploadMethod:'POST', singleFile:true}"

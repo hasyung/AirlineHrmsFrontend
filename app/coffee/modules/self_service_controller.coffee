@@ -160,8 +160,8 @@ class Route
                     }
                 }
             }
-            .state 'my_requests.erarly_retirement', {
-                url: '/erarly_retirement'
+            .state 'my_requests.early_retirement', {
+                url: '/early_retirement'
                 views: {
                     '@': {
                         templateUrl: 'partials/self/my_requests/early_retirement/index.html'
@@ -224,9 +224,9 @@ class Route
 
 
 class ProfileCtrl extends nb.Controller
-    @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope', 'User', 'USER_META', 'UserPerformance', 'Performance', '$filter', 'UserReward', 'UserPunishment', '$http']
+    @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope', 'User', 'USER_META', 'UserPerformance', 'Performance', '$filter', 'UserReward', 'UserPunishment', '$http', '$nbEvent']
 
-    constructor: (@scope, @sweet, @Employee, @rootScope, @User, @USER_META, @UserPerformance, @Performance, @filter, @UserReward, @UserPunishment, @http) ->
+    constructor: (@scope, @sweet, @Employee, @rootScope, @User, @USER_META, @UserPerformance, @Performance, @filter, @UserReward, @UserPunishment, @http, @Evt) ->
         @loadInitialData()
         @status = 'show'
 

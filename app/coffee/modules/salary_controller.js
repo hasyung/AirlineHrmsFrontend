@@ -252,13 +252,18 @@
       if (input && angular.isDefined(input['format_cell'])) {
         result = input['format_cell'];
         if (result) {
-          result = result.replace('%{format_value}', input['format_value']);
-        }
-        if (result) {
           result = result.replace('%{work_value}', input['work_value']);
         }
         if (result) {
           result = result.replace('%{time_value}', input['time_value']);
+        }
+        if (angular.isDefined(input['format_value'])) {
+          if (input['format_value'] === 99) {
+            result = result.replace('%{format_value}', '封顶');
+          }
+          if (input['format_value'] === 999) {
+            result = result.replace('%{format_value}', '荣誉');
+          }
         }
       }
       return result;
