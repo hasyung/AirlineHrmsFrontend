@@ -224,9 +224,9 @@ class Route
 
 
 class ProfileCtrl extends nb.Controller
-    @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope', 'User', 'USER_META', 'UserPerformance', 'Performance', '$filter', 'UserReward', 'UserPunishment', '$http']
+    @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope', 'User', 'USER_META', 'UserPerformance', 'Performance', '$filter', 'UserReward', 'UserPunishment', '$http', '$nbEvent']
 
-    constructor: (@scope, @sweet, @Employee, @rootScope, @User, @USER_META, @UserPerformance, @Performance, @filter, @UserReward, @UserPunishment, @http) ->
+    constructor: (@scope, @sweet, @Employee, @rootScope, @User, @USER_META, @UserPerformance, @Performance, @filter, @UserReward, @UserPunishment, @http, @Evt) ->
         @loadInitialData()
         @status = 'show'
 
