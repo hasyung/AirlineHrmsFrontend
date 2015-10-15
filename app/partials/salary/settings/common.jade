@@ -10,23 +10,10 @@ table.table.table-bordered.setting-table
     //- td.tar(ng-repeat="column in ctrl.dynamic_config.flag_list track by $index" ng-style="{'background-color': ctrl.editing ? 'white': setting[column]['bg_color']}")
     td.tar(ng-repeat="column in ctrl.dynamic_config.flag_list track by $index")
       div(ng-if="ctrl.editing")
-        div(ng-switch="setting[column]['edit_mode']" ng-if="column!='rate' && column!='amount'")
-          //- 判断编辑类型
-          //- div(ng-switch-when="text")
-          //-   input(ng-if="ctrl.editing || setting[column]['transfer_years']" type="text" ng-model="setting[column]['transfer_years']")
-
-          div(ng-switch-when="select")
-            md-select(ng-model="setting[column]['transfer_years']")
-              md-option(ng-repeat="item in setting[column]['edit_select_array']" ng-value="item") {{item}}
-
-          div(ng-switch-when="dialog")
-            a(href="javascript:void(0);" nb-dialog template-url="partials/salary/settings/dialogs/{{::ctrl.current_category}}.html" locals="{current: setting[column], grade: setting.grade}")
-              span(ng-if="setting[column]['add']") +
-              span(ng-if="!setting[column]['add']") 设置
-
-          div(ng-switch-default)
-            a(ng-if="ctrl.isComplexSetting(ctrl.dynamic_config.flags, setting.grade, column, setting)" href="javascript:void(0);" nb-dialog template-url="partials/salary/settings/dialogs/{{::ctrl.current_category}}.html" locals="{current: setting[column], grade: setting.grade}") +
-            input(ng-if="!ctrl.isComplexSetting(ctrl.dynamic_config.flags, setting.grade, column, setting)" type="text" ng-model="setting[column]['transfer_years']")
+        div(ng-if="column!='rate' && column!='amount'")
+          a(href="javascript:void(0);" nb-dialog template-url="partials/salary/settings/dialogs/common.html" locals="{current: setting[column], grade: setting.grade}")
+            span(ng-if="!setting[column]['format_cell'] || setting[column]['format_cell'].length == 0") +
+            span(ng-if="setting[column]['format_cell'] && setting[column]['format_cell'].length > 0") 设置
 
         //- 系数
         div(ng-if="column=='rate'")
