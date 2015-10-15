@@ -361,6 +361,11 @@ class SalaryPersonalController extends nb.Controller
                     type: 'string'
                 }
                 {
+                    name: 'department_ids'
+                    displayName: '机构'
+                    type: 'org-search'
+                }
+                {
                     name: 'channel_ids'
                     displayName: '通道'
                     type: 'muti-enum-search'
