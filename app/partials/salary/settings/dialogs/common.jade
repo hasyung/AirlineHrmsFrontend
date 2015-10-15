@@ -1,11 +1,11 @@
-md-dialog()
+md-dialog.normal
+  md-toolbar.md-accent(md-theme="hrms")
+    .md-toolbar-tools
+      span 条件设置 {{::grade}}档
   form(ng-init="current=dialog.current;ctrl=dialog.ctrl;grade=dialog.grade;origin={'expr': current['expr'], 'desc': current['format_cell']};input_expr=ctrl.exchangeExpr(current['expr'], true);" ng-submit="$event.preventDefault()")
-    md-toolbar.md-accent(md-theme="hrms")
-      .md-toolbar-tools
-          span 条件设置 {{::grade}}档
-    .dialog-content(layout layout-align="center")
+    md-content.sticky-container
       div(layout="row" layout-margin)
-        div(flex)
+        div()
           p 参数调用说明:
           table.table.table-bordered(style="border:1px solid #ccc;width:450px;")
             tr(style="background-color:#fcfcfc;border-bottom:1px solid #aaa;")
@@ -43,7 +43,7 @@ md-dialog()
             tr
               td 无安全严重差错
               td 无安全严重差错 == 0
-        div(flex)
+        div()
           p 关系符号说明:
           table.table.table-bordered(style="border:1px solid #ccc;width:300px;")
             tr(style="background-color:#fcfcfc;border-bottom:1px solid #aaa;")
@@ -61,28 +61,27 @@ md-dialog()
               td ( )
               td 括号，优先计算
 
-    div(layout="row" layout-margin)
-      md-input-container(flex)
-        label 输入条件描述
-        textarea(columns="1" ng-model="current['format_cell']")
+      div(layout="row" layout-margin)
+        md-input-container(flex)
+          label 输入条件描述
+          textarea(columns="1" ng-model="current['format_cell']")
 
-    div(layout="row" layout-margin)
-      md-input-container(flex)
-        //- label 输入数学公式
-        md-autocomplete(
-            ng-init="ctrl.searchText=input_expr"
-            md-selected-item="ctrl.selectedItem"
-            md-selected-item-change="input_expr=ctrl.selectedItem"
-            md-search-text-change="input_expr=ctrl.searchText"
-            md-search-text="ctrl.searchText"
-            md-items="item in ctrl.queryVariables(ctrl.searchText)"
-            md-min-length="0"
-            md-floating-label="输入数学公式"
-            md-input-name="nation"
-            )
-            md-item-template
-                span {{item}}
-        //- textarea(columns="1" ng-model="input_expr" ng-change="current['expr']=ctrl.exchangeExpr(input_expr)")
+      div(layout="row" layout-margin)
+        md-input-container(flex ng-init="ctrl.searchText=input_expr")
+          //- label 输入数学公式
+          md-autocomplete(
+              md-selected-item="ctrl.selectedItem"
+              md-selected-item-change="input_expr=ctrl.selectedItem"
+              md-search-text-change="input_expr=ctrl.searchText"
+              md-search-text="ctrl.searchText"
+              md-items="item in ctrl.queryVariables(ctrl.searchText)"
+              md-min-length="0"
+              md-floating-label="输入数学公式"
+              md-input-name="Maths"
+              )
+              md-item-template
+                  span {{item}}
+          //- textarea(columns="1" ng-model="input_expr" ng-change="current['expr']=ctrl.exchangeExpr(input_expr)")
 
     .md-actions
       md-button(type="button" ng-click="current['expr']=origin.expr;current['format_cell']=origin.desc;dialog.close()") 取消更改
