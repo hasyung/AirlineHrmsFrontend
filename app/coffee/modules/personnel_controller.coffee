@@ -291,6 +291,20 @@ class NewEmpsCtrl extends nb.Controller
 
         return tableState
 
+    uploadNewEmployees: (type, attachment_id)->
+        self = @
+        params = {type: type, attachment_id: attachment_id}
+        @show_error_names = false
+
+        @http.post("/api/employees/import", params).success (data, status) ->
+            if data.error_count > 0
+                self.show_error_names = true
+                self.error_names = data.error_names
+
+                self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
+            else
+                self.toaster.pop('error', '提示', '导入成功')
+
 
 class LeaveEmployeesCtrl extends nb.Controller
     @.$inject = ['$scope', 'LeaveEmployees']

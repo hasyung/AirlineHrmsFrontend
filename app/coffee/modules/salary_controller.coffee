@@ -100,6 +100,14 @@ class SalaryController extends nb.Controller
         self = @
         @initialize()
 
+        @variables = ['调档时间','驾驶经历时间','飞行时间','员工学历','员工职级','去年年度绩效','本企业经历时间','无人为飞行事故','无安全严重差错']
+
+    queryVariables: (text)->
+        self = @
+        variables = _.filter self.variables, (variable)->
+            _.includes variable, text
+        return variables
+
     $defaultCoefficient: ()->
         company: 0.1
         business_council: 0.1
