@@ -11,7 +11,7 @@ table.table.table-bordered.setting-table
     td.tar(ng-repeat="column in ctrl.dynamic_config.flag_list track by $index")
       div(ng-if="ctrl.editing")
         div(ng-if="column!='rate' && column!='amount'")
-          a(href="javascript:void(0);" nb-dialog template-url="partials/salary/settings/dialogs/common.html" locals="{current: setting[column], grade: setting.grade}")
+          a(href="javascript:void(0);" nb-dialog template-url="partials/salary/settings/dialogs/common.html" locals="{current: setting[column], grade: setting.grade, ctrl: ctrl}")
             span(ng-if="!setting[column]['format_cell'] || setting[column]['format_cell'].length == 0") +
             span(ng-if="setting[column]['format_cell'] && setting[column]['format_cell'].length > 0") 设置
 
