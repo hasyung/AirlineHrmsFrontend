@@ -250,10 +250,6 @@ class SalaryController extends nb.Controller
         @dynamic_config.flag_list.indexOf('rate') >= 0
 
     formatColumn: (flags, grade, setting, column)->
-        if setting[column]
-            setting[column]['add'] = false
-            flags[grade][column]['add'] = false
-
         result = input = setting[column]
 
         if column == 'rate' || column == 'amount'
