@@ -20,6 +20,12 @@
                         h2 管理12
                         include ./btn.jade
                     include ./common.jade
+                tab(heading="飞行员-荣誉" ng-click="ctrl.loadDynamicConfig('flyer_legend_base')")
+                    md-toolbar
+                      .md-toolbar-tools
+                        h2 飞行员-荣誉
+                        include ./btn.jade
+                    include ./common.jade
                 tab(heading="飞行员-机长"  ng-click="ctrl.loadDynamicConfig('flyer_leader_base')")
                     md-toolbar
                       .md-toolbar-tools

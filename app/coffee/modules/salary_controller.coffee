@@ -139,7 +139,7 @@ class SalaryController extends nb.Controller
         @CATEGORY_LIST = ["leader_base",                # 基础-干部
                           "manager15_base",             # 基础-管理15
                           "manager12_base",             # 基础-管理12
-                          "flyer_legend_base",          # 基础-荣誉级飞行员
+                          "flyer_legend_base",          # 基础-荣誉级
                           "flyer_leader_base",          # 基础-机长
                           "flyer_copilot_base",         # 基础-副驾
                           "flyer_teacher_A_base",       # 基础-教员A
