@@ -71,8 +71,8 @@ md-dialog.normal
           //- label 输入数学公式
           md-autocomplete(
               md-selected-item="ctrl.selectedItem"
-              md-selected-item-change="input_expr=ctrl.selectedItem"
-              md-search-text-change="input_expr=ctrl.searchText"
+              md-selected-item-change="input_expr=ctrl.selectedItem; current['expr']=ctrl.exchangeExpr(input_expr);"
+              md-search-text-change="input_expr=ctrl.searchText; current['expr']=ctrl.exchangeExpr(input_expr);"
               md-search-text="ctrl.searchText"
               md-items="item in ctrl.queryVariables(ctrl.searchText)"
               md-min-length="0"
