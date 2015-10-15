@@ -27,46 +27,46 @@ div(layout ng-controller="salaryExchangeCtrl as exchangeCtrl")
 div(layout)
     md-input-container(flex)
         label 基础薪酬
-        input(type="number" min="0" max="1000000" ng-model="current.baseMoney" readonly)
+        input(type="number" min="0" ng-model="current.baseMoney" readonly)
     md-input-container(flex)
         label 绩效薪酬
-        input(type="number" min="0" max="1000000" ng-model="current.performanceMoney" readonly)
+        input(type="number" min="0" ng-model="current.performanceMoney" readonly)
 
 div(layout)
         md-input-container(flex)
             label 岗位工资保留
-            input(type="number" min="0" max="100000" step="1" ng-model="current.keepPosition")
+            input(type="number" min="0" step="1" ng-model="current.keepPosition")
         md-input-container(flex)
             label 业绩奖保留
-            input(type="number" min="0" max="100000" step="1" ng-model="current.keepPerformance")
+            input(type="number" min="0" step="1" ng-model="current.keepPerformance")
         md-input-container(flex)
             label 工龄工资保留
-            input(type="number" min="0" max="100000" step="1" ng-model="current.keepWorkingYears")
+            input(type="number" min="0" step="1" ng-model="current.keepWorkingYears")
     div(layout)
         md-input-container(flex)
             label 保底增幅
-            input(type="number" min="0" max="100000" step="1" ng-model="current.keepMinimumGrowth")
+            input(type="number" min="0" step="1" ng-model="current.keepMinimumGrowth")
         md-input-container(flex)
             label 地勤补贴保留
-            input(type="number" min="0" max="100000" step="1" ng-model="current.keepLandAllowance")
+            input(type="number" min="0" step="1" ng-model="current.keepLandAllowance")
         md-input-container(flex)
             label 生活补贴保留
-            input(type="number" min="0" max="100000" step="1" ng-model="current.keepLifeAllowance")
+            input(type="number" min="0" step="1" ng-model="current.keepLifeAllowance")
     div(layout)
         md-input-container(flex)
             label 09调资增加保留
-            input(type="number" min="0" max="100000" step="1" ng-model="current.keepAdjustmen09")
+            input(type="number" min="0" step="1" ng-model="current.keepAdjustment09")
         md-input-container(flex)
             label 14公务用车保留
-            input(type="number" min="0" max="100000" step="1" ng-model="current.keepBus14")
+            input(type="number" min="0" step="1" ng-model="current.keepBus14")
         md-input-container(flex)
             label 14通信补贴保留
-            input(type="number" min="0" max="100000" step="1" ng-model="current.keepCommunication14")
+            input(type="number" min="0" step="1" ng-model="current.keepCommunication14")
 
 div(layout)
     md-input-container(flex)
         label 高温补贴
-        input(type="number" min="0" max="1000000" ng-model="current.temp_allowance")
+        input(type="number" min="0" ng-model="current.temp_allowance")
     md-input-container(flex)
         label 通讯补贴
-        input(type="number" min="0" max="1000000" ng-model="current.communicate_allowance")
+        input(type="number" min="0" ng-model="current.communicate_allowance")
