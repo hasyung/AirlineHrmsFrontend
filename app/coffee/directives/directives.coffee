@@ -604,3 +604,60 @@ angular.module 'nb.directives'
             replace: true
         }
     ]
+
+    #自动提示输入框
+    .directive 'nbAutocomplete', [()->
+        postLink = (scope, elem, attrs) ->
+
+        return {
+            restrict: 'E'
+            link: postLink
+            template: '''
+            <md-autocomplete
+                ng-disabled="ctrl.isDisabled"
+                md-selected-item="selectedItem"
+                md-search-text-change="value=searchText"
+                md-search-text="searchText"
+                md-selected-item-change="value=selectedItem"
+                md-items="item in ctrl.queryMatchedValues(searchText)"
+                md-floating-label="please replace me!"
+                <md-item-template>
+                    <span md-highlight-text="searchText">{{item}}</span>
+                </md-item-template>
+                <md-not-found>
+                    未找到 "{{searchText}}"
+                </md-not-found>
+            </md-autocomplete>
+            '''
+            scope: {
+                value: "=ngModel"
+                searchText: "=?"
+                selectedItem: "=?"
+            }
+            require: 'ngModel'
+            replace: true
+            controller: NbAutocompleteCtrl
+            controllerAs: 'ctrl'
+        }
+    ]
+
+class NbAutocompleteCtrl
+    @.$inject = ['$scope', '$attrs']
+
+    constructor: (scope, attrs) ->
+        @values = attrs.values if angular.isDefined(attrs.values)
+        @isDisabled = attrs.isDisabled if angular.isDefined(attrs.isDisabled)
+
+    queryMatchedValues = (text) ->
+        self = @
+        matched = _.filter self.values, (value)->
+            _.includes value, text
+        return matched
+
+
+
+
+
+
+
+
