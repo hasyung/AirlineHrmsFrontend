@@ -50,7 +50,7 @@ form(ng-controller="EditableResourceCtrl", ng-submit="save(currentUser.$save(), 
                         //-     md-not-found
                         //-         | 没有匹配项，请自行输入
                         label 民族
-                        input(ng-disabled="!editing" ng-model="currentUser.nation")
+                        input(ng-model="currentUser.nation")
                         //- md-select(ng-model="currentUser.nationId" ng-disabled="!editing")
                         //-     md-option(ng-value="item.id" ng-repeat="item in $enum.get('nations')") {{item.label}}
                 div(layout)

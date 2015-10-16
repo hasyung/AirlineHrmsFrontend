@@ -7,49 +7,48 @@ md-dialog.punishment_new(
             .md-toolbar-tools
                 span 员工调岗
         md-content
-            .dialog-content(layout layout-align="center")
-                fieldset(flex)
-                    div(layout)
-                        md-input-container(flex)
-                            label 姓名
-                            input(ng-model="::current.name" readonly)
-                        md-input-container(flex)
-                            label 员工编号
-                            input(ng-model="::current.employeeNo" readonly)
+            fieldset(flex)
+                div(layout)
+                    md-input-container(flex)
+                        label 姓名
+                        input(ng-model="::current.name" readonly)
+                    md-input-container(flex)
+                        label 员工编号
+                        input(ng-model="::current.employeeNo" readonly)
 
-                    div(org-muti-pos ng-model="current.positions" editing="true")
+                div(org-muti-pos ng-model="current.positions" editing="true")
 
-                    div(layout)
-                        md-input-container.row-has-value(flex)
-                            label 通道
-                            md-select(ng-model="current.channelId")
-                                md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
-                        md-input-container.row-has-value(flex)
-                            label 分类
-                            md-select(ng-model="current.categoryId")
-                                md-option(ng-value="item.id" ng-repeat="item in $enum.get('categories')") {{item.label}}
-                    div(layout)
-                        md-input-container.row-has-value(flex)
-                            label 职务职级
-                            md-select(ng-model="current.dutyRankId")
-                                md-option(ng-value="item.id" ng-repeat="item in $enum.get('duty_ranks')") {{item.label}}
-                        md-input-container(flex)
-                            label 调岗日期
-                            input(ng-model="current.positionChangeDate" bs-datepicker)
-                    div(layout)
-                        md-input-container.row-has-value(flex)
-                            label 试岗期
-                            md-select(ng-model="current.probationDuration" placeholder="请选择")
-                                md-option(value="0") 无
-                                md-option(ng-value="item" ng-repeat="item in [1,2,3,4,5,6]") {{item}}月
-                        md-input-container(flex)
-                            label 调岗文件
-                            input(ng-model="current.oaFileNo" required)
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 通道
+                        md-select(ng-model="current.channelId")
+                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
+                    md-input-container.row-has-value(flex)
+                        label 分类
+                        md-select(ng-model="current.categoryId")
+                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('categories')") {{item.label}}
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 职务职级
+                        md-select(ng-model="current.dutyRankId")
+                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('duty_ranks')") {{item.label}}
+                    md-input-container(flex)
+                        label 调岗日期
+                        input(ng-model="current.positionChangeDate" bs-datepicker)
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 试岗期
+                        md-select(ng-model="current.probationDuration" placeholder="请选择")
+                            md-option(value="0") 无
+                            md-option(ng-value="item" ng-repeat="item in [1,2,3,4,5,6]") {{item}}月
+                    md-input-container(flex)
+                        label 调岗文件
+                        input(ng-model="current.oaFileNo" required)
 
-                    div(layout)
-                        md-input-container(flex)
-                            label 岗位备注
-                            input(ng-model="current.positionRemark")
+                div(layout)
+                    md-input-container(flex)
+                        label 岗位备注
+                        input(ng-model="current.positionRemark")
 
         .md-actions
             md-button(type="button" ng-click="dialog.close()") 取 消

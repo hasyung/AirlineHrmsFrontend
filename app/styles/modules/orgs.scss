@@ -360,6 +360,14 @@ md-dialog.socialChangeInfo {
         border-top: 1px solid rgba(0, 0, 0, .12);
     }
 }
+
+md-dialog.normal {
+    min-width: 600px;
+
+    .md-actions {
+        border-top: 1px solid rgba(0, 0, 0, .12);
+    }
+}
 //年金 个人基数计算dialog
 md-dialog.personal_number {
     font-size: $font-size-md;

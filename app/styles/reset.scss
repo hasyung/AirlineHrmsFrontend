@@ -115,6 +115,9 @@ md-toolbar {
     }
 }
 
+md-input-container:not(.md-input-has-value) input:not(:focus) {
+    color: $text-color;
+}
 
 .md-subheader {
     font-family: $font-family-sans-serif;
