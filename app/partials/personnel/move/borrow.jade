@@ -4,59 +4,58 @@ md-dialog.employee_move
             span 借调设置
     form(ng-submit="ctrl.newBorrowEmployee(borrowEmployee); dialog.close();" name="newBorrowForm" flex)
         md-content(ng-init="borrowEmployee = {out_company: false}; ctrl.loadEmp = {};")
-            .dialog-content(layout layout-align="center")
-                fieldset(flex)
-                    div(style="display:none;")
-                        input(ng-model="borrowEmployee.employee_id")
-                    div(layout)
+            fieldset(flex)
+                div(style="display:none;")
+                    input(ng-model="borrowEmployee.employee_id")
+                div(layout)
+                    md-input-container(flex)
+                        label 姓名
+                        input(ng-model="ctrl.loadEmp.name"
+                            name="employeeName"
+                            ng-model-options="{debounce: {'default': 1000, 'blur': 0}}"
+                            ng-change="ctrl.loadEmployee({name: ctrl.loadEmp.name}, borrowEmployee);"
+                            required)
+                    div(flex)
+                div(layout)
+                    md-input-container(flex)
+                        label 部门
+                        input(
+                            ng-model="ctrl.loadEmp.department.name"
+                            name="department"
+                            readonly
+                            )
+                    md-input-container(flex)
+                        label 岗位
+                        input(ng-model="ctrl.loadEmp.position.name" name="position" readonly)
+                div(layout)
+                    div(flex ng-if="!borrowEmployee.out_company")
+                        org-search(
+                            ng-model="borrowEmployee.department"
+                            float-label
+                            placeholder="借调部门"
+                            search-text-change="borrowEmployee.department_id=null"
+                            selected-item-change="borrowEmployee.department_id=org.id"
+                            )
+                    div(flex ng-if="borrowEmployee.out_company")
                         md-input-container(flex)
-                            label 姓名
-                            input(ng-model="ctrl.loadEmp.name"
-                                name="employeeName"
-                                ng-model-options="{debounce: {'default': 1000, 'blur': 0}}"
-                                ng-change="ctrl.loadEmployee({name: ctrl.loadEmp.name}, borrowEmployee);"
-                                required)
-                        div(flex)
-                    div(layout)
-                        md-input-container(flex)
-                            label 部门
-                            input(
-                                ng-model="ctrl.loadEmp.department.name"
-                                name="department"
-                                readonly
-                                )
-                        md-input-container(flex)
-                            label 岗位
-                            input(ng-model="ctrl.loadEmp.position.name" name="position" readonly)
-                    div(layout)
-                        div(flex ng-if="!borrowEmployee.out_company")
-                            org-search(
-                                ng-model="borrowEmployee.department"
-                                float-label
-                                placeholder="借调部门"
-                                search-text-change="borrowEmployee.department_id=null"
-                                selected-item-change="borrowEmployee.department_id=org.id"
-                                )
-                        div(flex ng-if="borrowEmployee.out_company")
-                            md-input-container(flex)
-                                label 借调地点
-                                input(ng-model="borrowEmployee.special_location" name="specialLocation")
-                        div(flex)
-                            md-checkbox.md-primary(
-                                ng-model="borrowEmployee.out_company"
-                                ng-change="borrowEmployee.department_id=null;"
-                                ) 公司外
-                    div(layout)
-                        md-input-container(flex)
-                            label 借调开始时间
-                            input(ng-model="borrowEmployee.special_date_from" name="startDate" bs-datepicker default-today required)
-                        md-input-container(flex)
-                            label 借调结束时间(大于开始时间)
-                            input(ng-model="borrowEmployee.special_date_to" name="endDate" bs-datepicker)
-                    div(layout)
-                        md-input-container(flex)
-                            label 文件编号
-                            input(ng-model="borrowEmployee.file_no" name="fileNo" required)
+                            label 借调地点
+                            input(ng-model="borrowEmployee.special_location" name="specialLocation")
+                    div(flex)
+                        md-checkbox.md-primary(
+                            ng-model="borrowEmployee.out_company"
+                            ng-change="borrowEmployee.department_id=null;"
+                            ) 公司外
+                div(layout)
+                    md-input-container(flex)
+                        label 借调开始时间
+                        input(ng-model="borrowEmployee.special_date_from" name="startDate" bs-datepicker default-today required)
+                    md-input-container(flex)
+                        label 借调结束时间(大于开始时间)
+                        input(ng-model="borrowEmployee.special_date_to" name="endDate" bs-datepicker)
+                div(layout)
+                    md-input-container(flex)
+                        label 文件编号
+                        input(ng-model="borrowEmployee.file_no" name="fileNo" required)
 
         .md-actions
             md-button(type="button" ng-click="cancel(borrowEmployee, $event, newBorrowForm);dialog.close()") 取 消

@@ -402,7 +402,7 @@ class SalaryPersonalController extends nb.Controller
             }
             {
                 displayName: '所属部门'
-                name: 'departmentName'
+                name: 'department.name'
                 cellTooltip: (row) ->
                     return row.entity.departmentName
             }
