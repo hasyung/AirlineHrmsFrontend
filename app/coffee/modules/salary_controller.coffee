@@ -694,7 +694,7 @@ class SalaryExchangeController
         setting = @$settingHash(current.baseWage)
         channels = []
         angular.forEach setting.flag_list, (item)->
-            if item != 'rate' && !item.startsWith('amount')
+            if item != 'rate' && !_.startsWith(item, 'amount')
                 channels.push(setting.flag_names[item])
         _.uniq(channels)
 

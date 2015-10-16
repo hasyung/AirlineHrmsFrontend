@@ -203,7 +203,7 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS, $http) ->
                         #tree 数据深度不能超过 DEPTH
                         return false if orgItem.xdepth - rootDepth > DEPTH
 
-                        isChild = s.startsWith(orgItem.serial_number,rootSerialNumber) #子机构的serialNumber number 前缀和父机构相同
+                        isChild = _.startsWith(orgItem.serial_number, rootSerialNumber) #子机构的serialNumber number 前缀和父机构相同
                         # isModified = true if isChild and IneffectiveOrg(orgItem)
 
                         return isChild
