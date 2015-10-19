@@ -669,11 +669,11 @@ class SalaryExchangeController
         setting = @$settingHash(current.baseChannel)
 
         # 总工资
-        current.totalMoney = setting.flags[current.baseFlag]['amount']
+        current.basePerformanceMoney = setting.flags[current.baseFlag]['amount']
         # 基本工资
         current.baseMoney = @SALARY_SETTING['global_setting']['minimum_wage']
         # 除开基本工资，剩下的就是绩效工资(service_b)
-        current.performanceMoney = current.totalMoney - current.baseMoney
+        current.performanceMoney = current.basePerformanceMoney - current.baseMoney
 
     service_b_flag_array: (current)->
         return unless current.baseChannel

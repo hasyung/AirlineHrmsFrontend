@@ -42,6 +42,12 @@
                             md-menu-item()
                                 a.md-button(
                                     download
+                                    ng-href="/api/transport_fees/export_nc?month={{ctrl.currentCalcTime()}}"
+                                    href="javascript:"
+                                ) 合同制NC导入表
+                            md-menu-item()
+                                a.md-button(
+                                    download
                                     ng-href="/api/transport_fees/export_approval?month={{ctrl.currentCalcTime()}}"
                                     href="javascript:"
                                 ) 审批表

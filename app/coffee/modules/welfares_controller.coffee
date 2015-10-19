@@ -878,6 +878,18 @@ class AnnuityChangesController
         @annuityChanges.$refresh(tableState)
 
 
+class DinnerPersonalController extends nb.Controller
+    @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerSetup', '$q', '$state']
+
+    constructor: (@http, @scope, @Evt, @DinnerSetup, @q, @state) ->
+
+
+class DinnerComputeController extends nb.Controller
+    @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerRecord', 'toaster']
+
+    constructor: ($http, $scope, @Evt, @DinnerRecord, @toaster) ->
+
+
 app.controller 'welfareCtrl', WelfareController
 app.controller 'welfarePersonalCtrl', WelfarePersonalController
 app.controller 'socialComputeCtrl', SocialComputeController
@@ -890,3 +902,6 @@ app.controller 'annuityPersonalCtrl', AnnuityPersonalController
 app.controller 'annuityComputeCtrl', AnnuityComputeController
 app.controller 'annuityHistoryCtrl', AnnuityHistoryController
 app.controller 'annuityChangesCtrl', AnnuityChangesController
+
+app.controller 'dinnerPersonalCtrl', DinnerPersonalController
+app.controller 'dinnerComputeCtrl', DinnerComputeController

@@ -143,6 +143,10 @@ menuFactory = ($rootScope, $state)->
                 name: '薪酬计算'
                 state: 'salary_calc'
             }
+            {
+                name: '工作餐'
+                state: 'dinnerfee_calc'
+            }
         ]
     }
 
