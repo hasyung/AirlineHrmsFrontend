@@ -22,6 +22,12 @@ class Route
                 templateUrl: 'partials/welfares/annuities.html'
             }
 
+            .state 'welfares_dinnerfee', {
+                url: '/welfares/dinnerfee'
+                templateUrl: 'partials/welfares/dinnerfee.html'
+            }
+
+
 app.config(Route)
 
 
