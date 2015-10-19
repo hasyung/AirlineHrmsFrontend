@@ -1,0 +1,17 @@
+.app-content-wrapper(flex ng-controller="dinnerPersonalCtrl as ctrl")
+    div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+    div.ui-grid-container
+        md-toolbar
+            .md-toolbar-tools
+                h2 工作餐个人设置
+                div(flex)
+
+        div(
+            nb-grid
+            column-defs="ctrl.columnDef"
+            on-register-api="ctrl.exportGridApi(gridApi)"
+            export-api
+            grid-selection
+            multi-select="false"
+            safe-src="ctrl.configurations"
+            )
