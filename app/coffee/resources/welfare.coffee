@@ -23,6 +23,28 @@ SocialPersonSetup = (restmod, RMUtils, $Evt) ->
     }
 
 
+DinnerPersonSetup = (restmod, RMUtils, $Evt) ->
+    restmod.model('/dinner_person_setups').mix 'nbRestApi', 'DirtyModel', {
+        $config:
+            jsonRootSingle: 'dinner_person_setup'
+            jsonRootMany: 'dinner_person_setups'
+
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+        $hooks: {
+            'after-destroy': ->
+                $Evt.$send('dinnerPersonSetups:destroy:success',"删除成功")
+            'after-save': ->
+                $Evt.$send('dinnerPersonSetups:save:success',"保存成功")
+        }
+
+        $extend:
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+    }
+
+
 # 社保记录
 SocialRecord = (restmod, RMUtils, $Evt) ->
     restmod.model('/social_records').mix 'nbRestApi', {
@@ -135,3 +157,5 @@ resources.factory 'SocialChange', ['restmod', 'RMUtils', '$nbEvent', SocialChang
 resources.factory 'AnnuitySetup', ['restmod', 'RMUtils', '$nbEvent', AnnuitySetup]
 resources.factory 'AnnuityRecord', ['restmod', 'RMUtils', '$nbEvent', AnnuityRecord]
 resources.factory 'AnnuityChange', ['restmod', 'RMUtils', '$nbEvent', AnnuityChange]
+
+resources.factory 'DinnerPersonSetup', ['restmod', 'RMUtils', '$nbEvent', DinnerPersonSetup]
