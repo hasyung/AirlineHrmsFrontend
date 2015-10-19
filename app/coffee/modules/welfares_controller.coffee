@@ -889,7 +889,7 @@ class DinnerPersonalController extends nb.Controller
 
     constructor: (@http, @scope, @Evt, @DinnerPersonSetup, @q, @state) ->
         @filterOptions = {
-            name: 'welfarePersonal'
+            name: 'dinnerPersonal'
             constraintDefs: [
                 {
                     name: 'employee_name'
