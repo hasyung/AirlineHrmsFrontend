@@ -12,6 +12,13 @@ block cust_page
             md-toolbar
                 .md-toolbar-tools
                     h2 合同列表
+
+                    div(style="font-size: 14px; margin-left: 50px;")
+                        md-checkbox.md-primary(
+                            ng-model="ctrl.show_merged"
+                            ng-change="ctrl.loadInitialData()"
+                            ) 是否合并员工合同
+
                     div(flex)
 
                     md-button.md-primary.md-raised(
