@@ -169,8 +169,18 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
         md-input-container(flex)
             label 公务车报销额度
             input(type="number" min="0" max="1000000" ng-model="current.officialCar")
+    div(layout)
+        md-checkbox(class="md-primary" ng-model="current.doubleDepartmentCheck" ng-change="current.secondDepartment=null") 双部门考核
+    div(layout)
+        org-search(
+            ng-required="current.doubleDepartmentCheck"
+            flex ng-model="current.secondDepartment"
+            ng-if="current.doubleDepartmentCheck"
+            placeholder="第二考核部门"
+            float-label
+            ng-change="current.secondDepartmentId=null;current.secondDepartmentId = current.secondDepartment.id;"
+                )
 
-    div(layout)
-        md-checkbox(class="md-primary" ng-model="current.doubleDepartmentCheck") 双部门考核
-    div(layout)
-        org-search(flex ng-model="current.secondDepartmentId" ng-if="current.doubleDepartmentCheck" placeholder="第二考核部门" float-label)
+
+
+
