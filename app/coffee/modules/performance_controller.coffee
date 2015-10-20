@@ -121,7 +121,7 @@ class PerformanceRecord extends nb.Controller
                     <div class="ui-grid-cell-contents" ng-init="outerScope=grid.appScope.$parent">
                         <a ng-if="row.entity.attachmentStatus"
                             nb-dialog
-                            locals="{performance: row.entity, can_upload: false, outerScope: outerScope}"
+                            locals="{performance: row.entity, can_upload: false, outerScope: outerScope, can_del: false}"
                             template-url="/partials/performance/record/add_attachment.html"
                         > 查看
                         </a>
@@ -234,7 +234,7 @@ class PerformanceMasterRecord extends nb.Controller
                     <div class="ui-grid-cell-contents" ng-init="outerScope=grid.appScope.$parent">
                         <a ng-if="row.entity.attachmentStatus"
                             nb-dialog
-                            locals="{performance: row.entity, can_upload: false, outerScope: outerScope}"
+                            locals="{performance: row.entity, can_upload: false, outerScope: outerScope, can_del: false}"
                             template-url="/partials/performance/record/add_attachment.html"
                         > 查看
                         </a>
