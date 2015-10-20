@@ -22,6 +22,12 @@ class Route
                 templateUrl: 'partials/welfares/annuities.html'
             }
 
+            .state 'welfares_dinnerfee', {
+                url: '/welfares/dinnerfee'
+                templateUrl: 'partials/welfares/dinnerfee.html'
+            }
+
+
 app.config(Route)
 
 
@@ -878,6 +884,78 @@ class AnnuityChangesController
         @annuityChanges.$refresh(tableState)
 
 
+class DinnerPersonalController extends nb.Controller
+    @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerPersonSetup', '$q', '$state']
+
+    constructor: (@http, @scope, @Evt, @DinnerPersonSetup, @q, @state) ->
+        @filterOptions = {
+            name: 'dinnerPersonal'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '员工姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+                {
+                    name: 'department_ids'
+                    displayName: '机构'
+                    type: 'org-search'
+                }
+                {
+                    name: 'social_location'
+                    type: 'string'
+                    displayName: '社保属地'
+                }
+            ]
+        }
+
+        @columnDef = [
+            {displayName: '员工编号', name: 'employeeNo'}
+            {
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+            }
+            {
+                displayName: '岗位'
+                name: 'positionName'
+                cellTooltip: (row) ->
+                    return row.entity.positionName
+            }
+            {displayName: '班制', name: 'shiftsType'}
+            {displayName: '驻地', name: 'landLocation'}
+            {displayName: '成都区域', name: 'chengduArea'}
+            {displayName: '卡金额', name: 'cardAmount'}
+            {displayName: '卡次数', name: 'cardNumber'}
+            {displayName: '工作餐', name: 'dinnerfee'}
+        ]
+
+
+class DinnerComputeController extends nb.Controller
+    @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerRecord', 'toaster']
+
+    constructor: ($http, $scope, @Evt, @DinnerRecord, @toaster) ->
+
+
 app.controller 'welfareCtrl', WelfareController
 app.controller 'welfarePersonalCtrl', WelfarePersonalController
 app.controller 'socialComputeCtrl', SocialComputeController
@@ -890,3 +968,6 @@ app.controller 'annuityPersonalCtrl', AnnuityPersonalController
 app.controller 'annuityComputeCtrl', AnnuityComputeController
 app.controller 'annuityHistoryCtrl', AnnuityHistoryController
 app.controller 'annuityChangesCtrl', AnnuityChangesController
+
+app.controller 'dinnerPersonalCtrl', DinnerPersonalController
+app.controller 'dinnerComputeCtrl', DinnerComputeController
