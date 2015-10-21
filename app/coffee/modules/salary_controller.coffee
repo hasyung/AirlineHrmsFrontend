@@ -481,6 +481,7 @@ class SalaryPersonalController extends nb.Controller
 
         @http.post("/api/salary_person_setups/upload_salary_set_book", params).success (data, status) ->
             self.toaster.pop('success', '提示', '导入成功')
+            self.import_finish = true
 
 
 class SalaryChangeController extends nb.Controller
