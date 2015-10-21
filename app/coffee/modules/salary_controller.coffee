@@ -479,7 +479,7 @@ class SalaryPersonalController extends nb.Controller
         self = @
         params = {attachment_id: attachment_id}
 
-        @http.post("/api/salary_person_setups/import_salary_set_book", params).success (data, status) ->
+        @http.post("/api/salary_person_setups/upload_salary_set_book", params).success (data, status) ->
             self.toaster.pop('success', '提示', '导入成功')
 
 
