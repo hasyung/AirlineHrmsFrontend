@@ -1,4 +1,4 @@
-.app-content-wrapper(flex ng-controller="salaryPersonalCtrl as ctrl")
+.app-content-wrapper(flex ng-controller="salaryPersonalCtrl as ctrl" ng-init="ctrl.import_finish=true;")
     div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
 
     div.ui-grid-container
@@ -9,9 +9,10 @@
                 span(flex)
                 span
                     md-button.md-raised.md-primary(
+                        ng-disabled="!ctrl.import_finish"
                         flow-init="{target: '/api/attachments/upload_file', testChunks: false, uploadMethod: 'POST', singleFile: true}"
-                        flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
-                        flow-file-success="ctrl.upload_start=false;ctrl.upload_salary_set_book(ctrl.parseJSON($message).id);"
+                        flow-files-submitted="ctrl.import_finish=false;$flow.upload();"
+                        flow-file-success="ctrl.upload_salary_set_book(ctrl.parseJSON($message).id);"
                         flex flow-btn
                     ) 导入当前帐套
 
