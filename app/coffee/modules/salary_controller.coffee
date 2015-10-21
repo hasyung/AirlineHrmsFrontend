@@ -348,7 +348,7 @@ class SalaryController extends nb.Controller
 class SalaryPersonalController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryPersonSetup', 'toaster']
 
-    constructor: ($http, $scope, $Evt, $enum, @SalaryPersonSetup, @toaster) ->
+    constructor: (@http, $scope, $Evt, $enum, @SalaryPersonSetup, @toaster) ->
         @loadInitialData()
 
         @filterOptions = {
