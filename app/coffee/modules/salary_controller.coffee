@@ -346,9 +346,9 @@ class SalaryController extends nb.Controller
 
 
 class SalaryPersonalController extends nb.Controller
-    @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryPersonSetup']
+    @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryPersonSetup', 'toaster']
 
-    constructor: ($http, $scope, $Evt, $enum, @SalaryPersonSetup) ->
+    constructor: (@http, $scope, $Evt, $enum, @SalaryPersonSetup, @toaster) ->
         @loadInitialData()
 
         @filterOptions = {
@@ -474,6 +474,13 @@ class SalaryPersonalController extends nb.Controller
                 salary.owner = matched
             else
                 self.loadEmp = params
+
+    upload_salary_set_book: (attachment_id)->
+        self = @
+        params = {attachment_id: attachment_id}
+
+        @http.post("/api/salary_person_setups/upload_salary_set_book", params).success (data, status) ->
+            self.toaster.pop('success', '提示', '导入成功')
 
 
 class SalaryChangeController extends nb.Controller

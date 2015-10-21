@@ -1,5 +1,5 @@
 md-dialog.welfare_personal_new(ng-controller="EditableResourceCtrl")
-    form(ng-init="current=dialog.setup.$refresh();" ng-submit="save(current.$save(), salaryPersonal)" name="salaryPersonal")
+    form(ng-init="current=dialog.setup.$refresh();" ng-submit="save(current.$save(), salaryPersonal);dialog.close()" name="salaryPersonal")
         md-toolbar.md-accent(md-theme="hrms")
                 .md-toolbar-tools
                     span 个人薪酬设置
@@ -64,4 +64,4 @@ md-dialog.welfare_personal_new(ng-controller="EditableResourceCtrl")
 
         .md-actions
             md-button(ng-click="cancel(current, $event, salaryPersonal);dialog.close()") 取 消
-            md-button.md-primary.md-raised(ng-hide="current.channelId == 6" ng-click="submit();dialog.close()") 确 定
+            md-button.md-primary.md-raised(type="submit" ng-hide="current.channelId == 6") 确 定

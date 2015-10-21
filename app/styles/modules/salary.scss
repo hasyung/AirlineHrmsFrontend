@@ -1,6 +1,22 @@
 .form-static {
     background-color: #fff;
 
+    .global_part {
+        margin-bottom: 30px;
+        max-height: 25px;
+        overflow: hidden;
+        padding: 0 20px;
+        transition: max-height 1s linear;
+
+        &.open {
+            max-height: 3000px;
+        }
+
+        .subheader--center {
+            height: 21px;
+        }
+    }
+
     &.has-sub {
         &.md {
             .subheader {

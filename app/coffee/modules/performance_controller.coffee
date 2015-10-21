@@ -121,7 +121,7 @@ class PerformanceRecord extends nb.Controller
                     <div class="ui-grid-cell-contents" ng-init="outerScope=grid.appScope.$parent">
                         <a ng-if="row.entity.attachmentStatus"
                             nb-dialog
-                            locals="{performance: row.entity, can_upload: false, outerScope: outerScope}"
+                            locals="{performance: row.entity, can_upload: false, outerScope: outerScope, can_del: false}"
                             template-url="/partials/performance/record/add_attachment.html"
                         > 查看
                         </a>
@@ -147,8 +147,8 @@ class PerformanceRecord extends nb.Controller
     attachmentDestroy: (attachment) ->
         self = @
 
-        attachment.$destroy()
-        @performances.$refresh()
+        attachment.$destroy().$asPromise().then (data)->
+            self.performances.$refresh()
 
     getSelected: () ->
         if @gridApi && @gridApi.selection
@@ -181,6 +181,8 @@ class PerformanceRecord extends nb.Controller
         .error ()->
 
     uploadAttachments: (performance, collection, $messages)->
+        self = @
+
         data = JSON.parse($messages)
 
         hash = {
@@ -194,6 +196,7 @@ class PerformanceRecord extends nb.Controller
         performance.attachmentStatus = true
         collection.$create(hash).$asPromise().then (data)->
             collection.$refresh()
+            self.performances.$refresh()
 
     # 安排离岗培训
     newTrainEmployee: (moveEmployee)->
@@ -234,7 +237,7 @@ class PerformanceMasterRecord extends nb.Controller
                     <div class="ui-grid-cell-contents" ng-init="outerScope=grid.appScope.$parent">
                         <a ng-if="row.entity.attachmentStatus"
                             nb-dialog
-                            locals="{performance: row.entity, can_upload: false, outerScope: outerScope}"
+                            locals="{performance: row.entity, can_upload: false, outerScope: outerScope, can_del: false}"
                             template-url="/partials/performance/record/add_attachment.html"
                         > 查看
                         </a>

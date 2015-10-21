@@ -721,6 +721,7 @@ class ContractCtrl extends nb.Controller
     @.$inject = ['$scope', 'Contract', '$http', 'Employee', '$nbEvent', 'toaster']
 
     constructor: (@scope, @Contract, @http, @Employee, @Evt, @toaster) ->
+        @show_merged = true
         @loadInitialData()
 
         @filterOptions = filterBuildUtils('contract')
@@ -836,11 +837,14 @@ class ContractCtrl extends nb.Controller
 
 
     loadInitialData: () ->
-        @contracts = @Contract.$collection().$fetch()
+        self = @
+
+        @contracts = @Contract.$collection().$fetch({'show_merged': self.show_merged})
 
     search: (tableState) ->
         tableState = tableState || {}
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+        tableState['show_merged'] = @show_merged
         @contracts.$refresh(tableState)
 
     getSelected: () ->
