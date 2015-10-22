@@ -1027,14 +1027,19 @@ class BirthAllowanceController extends nb.Controller
 
             matched = _.find employees, args
 
-            if matched
+            if matched && matched.genderId == 27
                 self.loadEmp = matched
+                self.isFemale = true
                 contract.employeeId = matched.id
                 contract.employeeNo = matched.employeeNo
                 contract.departmentName = matched.department.name
                 contract.positionName = matched.position.name
                 contract.employeeName = matched.name
                 contract.owner = matched
+            else if matched && matched.genderId == 26
+                self.loadEmp = matched
+                self.isFemale = false
+                self.toaster.pop('error', '警告', '男性不能发放剩余津贴')
             else
                 self.loadEmp = params
 
