@@ -220,8 +220,8 @@ class NewMyRequestCtrl extends NewFlowCtrl
 
                 request_data = {
                     vacation_type: vacation_type
-                    start_time: start.add(8, 'hours').toJSON()
-                    end_time: end.add(8, 'hours').toJSON()
+                    start_time: start.format()
+                    end_time: end.format()
                 }
 
                 if start > end
