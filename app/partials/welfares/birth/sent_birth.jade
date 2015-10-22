@@ -1,0 +1,50 @@
+md-dialog.punishment_new.browser360(
+    style="min-width: 500px;"
+    ng-init="ctrl = dialog.ctrl; birthAllowance = {}; ctrl.loadEmp = {}"
+    )
+    form(ng-submit="ctrl.newBirthAllowance(birthAllowance); dialog.close();" name="newBirthForm")
+        md-toolbar.md-accent(md-theme="hrms")
+            .md-toolbar-tools
+                span 生育津贴发放
+        md-content
+            fieldset(flex)
+                div(style="display:none;")
+                    input(ng-model="birthAllowance.employeeId")
+                div(layout)
+                    md-input-container(flex)
+                        label 姓名
+                            span.require-tip *
+                        input(ng-model="ctrl.loadEmp.name" name="name" required
+                            ng-model-options="{debounce: {'default': 1000, 'blur': 0}}"
+                            ng-change="ctrl.loadEmployee({name: ctrl.loadEmp.name}, birthAllowance);"
+                            )
+                    md-input-container(flex)
+                        label 员工编号
+                            span.require-tip *
+                        input(ng-model="ctrl.loadEmp.employeeNo" required
+                            ng-model-options="{debounce: {'default': 1000, 'blur': 0}}"
+                            ng-change="ctrl.loadEmployee({employee_no: ctrl.loadEmp.employeeNo}, birthAllowance);"
+                            )
+
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 部门
+                        input(ng-model="ctrl.loadEmp.department.name" readonly)
+                    md-input-container.row-has-value(flex)
+                        label 岗位
+                        input(ng-model="ctrl.loadEmp.position.name" readonly)
+
+                div(layout)
+                    md-input-container(flex)
+                        label 发放日期
+                        input(ng-model="birthAllowance.sentDate" bs-datepicker)
+
+                div(layout)
+                    md-input-container(flex)
+                        label 发放金额
+                        input(ng-model="birthAllowance.sentAmount")
+
+        .md-actions
+            md-button(type="button" ng-click="dialog.close()") 取 消
+            md-button.md-primary.md-raised(type="submit") 确 定
+
