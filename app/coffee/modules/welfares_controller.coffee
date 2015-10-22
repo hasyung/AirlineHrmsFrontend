@@ -1013,6 +1013,11 @@ class BirthAllowanceController extends nb.Controller
     loadInitialData: () ->
         @birthAllowances = @BirthAllowance.$collection().$fetch()
 
+    search: (tableState) ->
+        tableState = tableState || {}
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+        @birthAllowances.$refresh(tableState)
+
     loadEmployee: (params, contract)->
         self = @
 
