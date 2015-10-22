@@ -502,6 +502,8 @@ class AttendanceCtrl extends nb.Controller
     loadSummariesList: ()->
         self = @
 
+        @initDate()
+
         if @isDepartmentHr()
             self.summaryListCol = ATTENDANCE_SUMMERY_DEFS.concat [
                 {
