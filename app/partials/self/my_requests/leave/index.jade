@@ -102,6 +102,11 @@
                                         nb-panel
                                         locals="{list: leaves}"
                                         template-url="partials/self/my_requests/leave/matter_leave.html") 事假
+                                md-menu-item(ng-if="ctrl.hasVacation('公假')")
+                                    a.md-button(
+                                        nb-panel
+                                        locals="{list: leaves}"
+                                        template-url="partials/self/my_requests/leave/public_leave.html") 公假
                                 md-menu-item(ng-if="ctrl.hasVacation('产前孕期检查假')")
                                     a.md-button(
                                         nb-panel
