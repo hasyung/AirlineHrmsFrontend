@@ -168,9 +168,9 @@ class NewFlowCtrl
 
             #临时处理, moment() 默认的 toString 不符合前后端约定
             #暂时没有找到好的方法
-            # for own key, value of data
-            #     if value instanceof Moment
-            #         data[key] = value.format()
+            for own key, value of data
+                if value instanceof Moment
+                    data[key] = value.format()
 
             $http.post("/api/workflows/#{self.flow_type}", data).success () ->
                 scope.panel.close() if scope.panel
