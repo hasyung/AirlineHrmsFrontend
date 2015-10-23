@@ -155,9 +155,9 @@ class NewFlowCtrl
             data = _.cloneDeep(request)
 
             if data.start_time && typeof(data.start_time) == 'object'
-                data.start_time = moment(data.start_time._d).format('YYYY-MM-DD HH:MM:ss')
+                data.start_time = moment(data.start_time._d).format()
             if data.end_time && typeof(data.end_time) == 'object'
-                data.end_time = moment(data.end_time._d).format('YYYY-MM-DD HH:MM:ss')
+                data.end_time = moment(data.end_time._d).format()
 
             if data.position
                 # 调岗数据处理，否则无法序列化错误
@@ -168,9 +168,9 @@ class NewFlowCtrl
 
             #临时处理, moment() 默认的 toString 不符合前后端约定
             #暂时没有找到好的方法
-            for own key, value of data
-                if value instanceof Moment
-                    data[key] = value.format()
+            # for own key, value of data
+            #     if value instanceof Moment
+            #         data[key] = value.format()
 
             $http.post("/api/workflows/#{self.flow_type}", data).success () ->
                 scope.panel.close() if scope.panel
