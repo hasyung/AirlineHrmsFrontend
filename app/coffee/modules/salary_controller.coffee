@@ -713,7 +713,16 @@ class SalaryExchangeController
         return unless current.baseWage
 
         setting = @$settingHash(current.baseWage)
-        Object.keys(setting.flags)
+        flags = []
+
+        angular.forEach setting.flags, (config, flag)->
+          if Object.keys(config).indexOf(current.baseChannel) >= 0
+            format_cell = config[current.baseChannel]['format_cell']
+
+            if format_cell && format_cell.length > 0
+              flags.push(flag)
+
+        return flags
 
     perf: (current)->
         return unless current.performanceWage
