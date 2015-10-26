@@ -31,6 +31,7 @@ workflows = [
     "Flow::AdjustPosition"
     "Flow::EmployeeLeaveJob"
     "Flow::Resignation"
+    "Flow::PublicLeave"
 ]
 
 

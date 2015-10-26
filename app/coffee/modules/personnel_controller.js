@@ -426,12 +426,9 @@
             displayName: '姓名',
             type: 'string'
           }, {
-            name: 'channel_ids',
+            name: 'channel',
             displayName: '通道',
-            type: 'muti-enum-search',
-            params: {
-              type: 'channels'
-            }
+            type: 'string'
           }, {
             name: 'department',
             displayName: '机构',
@@ -562,7 +559,7 @@
             type: 'org-search'
           }, {
             name: 'special_category',
-            type: 'string',
+            type: 'move_select',
             displayName: '异动性质'
           }, {
             name: 'special_location',

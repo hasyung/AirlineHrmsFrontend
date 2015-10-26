@@ -356,12 +356,9 @@ class LeaveEmployeesCtrl extends nb.Controller
                     type: 'string'
                 }
                 {
-                    name: 'channel_ids'
+                    name: 'channel'
                     displayName: '通道'
-                    type: 'muti-enum-search'
-                    params: {
-                        type: 'channels'
-                    }
+                    type: 'string'
                 }
                 {
                     name: 'department'
