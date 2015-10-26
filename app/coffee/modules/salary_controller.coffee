@@ -165,7 +165,7 @@ class SalaryController extends nb.Controller
                           "service_b_airline_keeper_base",      # 基础-服务B-机务工装设备/客舱供应库管
                           "service_c_base",                     # 基础-服务C
                           "air_observer_base",                  # 基础-空中观察员
-                          "front_run_base",                     # 基础-前场运行
+                          "front_run_base",                     # 基础-前场运行监察
                           "information_perf",                   # 绩效-信息通道
                           "airline_business_perf",              # 绩效-航务航材
                           "manage_market_perf",                 # 绩效-管理营销
@@ -696,6 +696,7 @@ class SalaryExchangeController
 
         if current.baseWage == 'service_c_driving_base'
           current.baseMoney = 2100
+          return
 
         setting = @$settingHash(current.baseWage)
         flag = setting.flags[current.baseFlag]

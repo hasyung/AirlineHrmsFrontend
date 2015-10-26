@@ -713,6 +713,7 @@
       }
       if (current.baseWage === 'service_c_driving_base') {
         current.baseMoney = 2100;
+        return;
       }
       setting = this.$settingHash(current.baseWage);
       flag = setting.flags[current.baseFlag];
