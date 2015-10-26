@@ -225,6 +225,7 @@ ATTENDANCE_SUMMERY_DEFS= [
     {width:100, displayName: '病假（工伤待定）', name: 'sickLeaveInjury'}
     {width:100, displayName: '病假（怀孕待产）', name: 'sickLeaveNulliparous'}
     {width:100, displayName: '事假', name: 'personalLeave'}
+    {width:100, displayName: '公假', name: 'publicLeave'}
     {width:100, displayName: '探亲假', name: 'homeLeave'}
     {width:100, displayName: '培训', name: 'cultivate'}
     {width:100, displayName: '出差', name: 'evection'}
@@ -259,6 +260,7 @@ ATTENDANCE_SUMMERY_HIS_DEFS= [
     {width:100, displayName: '病假（工伤待定）', name: 'sickLeaveInjury'}
     {width:100, displayName: '病假（怀孕待产）', name: 'sickLeaveNulliparous'}
     {width:100, displayName: '事假', name: 'personalLeave'}
+    {width:100, displayName: '公假', name: 'publicLeave'}
     {width:100, displayName: '探亲假', name: 'homeLeave'}
     {width:100, displayName: '培训', name: 'cultivate'}
     {width:100, displayName: '出差', name: 'evection'}
@@ -501,6 +503,8 @@ class AttendanceCtrl extends nb.Controller
 
     loadSummariesList: ()->
         self = @
+
+        @initDate()
 
         if @isDepartmentHr()
             self.summaryListCol = ATTENDANCE_SUMMERY_DEFS.concat [

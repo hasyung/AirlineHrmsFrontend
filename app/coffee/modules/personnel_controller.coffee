@@ -484,7 +484,7 @@ class MoveEmployeesCtrl extends nb.Controller
                 }
                 {
                     name: 'special_category'
-                    type: 'string'
+                    type: 'move_select'
                     displayName: '异动性质'
                 }
                 {

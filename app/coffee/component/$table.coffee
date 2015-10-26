@@ -172,6 +172,14 @@ class NbFilterCtrl extends nb.FilterController
                 <md-option value="0" placeholder="编制状态">正常</md-option>
             </md-select>
         '''
+        'move_select':'''
+            <md-select placeholder="${ displayName }" ng-model="${ name }">
+                <md-option value="派驻" placeholder="异动性质">派驻</md-option>
+                <md-option value="借调" placeholder="异动性质">借调</md-option>
+                <md-option value="空勤地面" placeholder="异动性质">空勤地面</md-option>
+                <md-option value="空勤停飞" placeholder="异动性质">空勤停飞</md-option>
+            </md-select>
+        '''
         'boolean': '''
             <md-select placeholder="${ displayName }" ng-model="${ name }">
                 <md-option value="true" selected)">是</md-option>

@@ -3,11 +3,11 @@ md-dialog(
     ng-controller="EditableResourceCtrl"
     ng-init="summary=dialog.summary.$refresh(); list_ref=dialog.list_ref;"
     )
-    form(novalidate, name="summaryEditForm", ng-submit="save(summary.$save(), summaryEditForm);dialog.close();list_ref=list_ref.$refresh();")
+    md-toolbar.md-accent(md-theme="hrms")
+        .md-toolbar-tools
+            span 考勤汇总编辑
+    form(novalidate, name="summaryEditForm", ng-submit="save(summary.$save(), summaryEditForm, list_ref);dialog.close();")
         md-content.sticky-container
-            md-toolbar.md-accent(md-theme="hrms")
-                .md-toolbar-tools
-                    span 考勤汇总编辑
 
             .dialog-content
                 fieldset
@@ -18,12 +18,15 @@ md-dialog(
                         label 疗养假
                         input(type="text" ng-model="summary.recuperateLeave")
                     md-input-container
+                        label 出差
+                        input(type="text" ng-model="summary.evection")
+                    md-input-container
                         label 派驻地点
                         input(type="text" ng-model="summary.stationPlace")
                     md-input-container
                         label 备注
                         input(type="text" ng-model="summary.remark")
 
-            .md-actions
-                md-button(type='button',ng-click="dialog.close()") 取消
-                md-button.md-primary(ng-disabled="summaryEditForm.$invalid" type="submit") 确定
+        .md-actions
+            md-button(type='button',ng-click="dialog.close()") 取消
+            md-button.md-primary(ng-disabled="summaryEditForm.$invalid" type="submit") 确定
