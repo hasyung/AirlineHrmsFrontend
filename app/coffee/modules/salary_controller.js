@@ -664,6 +664,8 @@
       });
     };
 
+    SalaryGradeChangeController.prototype.checkUpdateChange = function(type) {};
+
     return SalaryGradeChangeController;
 
   })(nb.Controller);

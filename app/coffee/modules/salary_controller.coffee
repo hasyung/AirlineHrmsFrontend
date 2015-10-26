@@ -660,6 +660,9 @@ class SalaryGradeChangeController extends nb.Controller
                 self.setting = data.salary_person_setup
                 self.flags = []
 
+    checkUpdateChange: (type)->
+        #
+
 
 class SalaryExchangeController
     @.$inject = ['$http', '$scope', '$nbEvent', 'SALARY_SETTING']
