@@ -612,7 +612,7 @@ class AttendanceCtrl extends nb.Controller
         @CURRENT_ROLES.indexOf('department_hr') >= 0
 
     finishVacation: ()->
-        alert '销假的逻辑是啥，讨论过，这个操作到底有无用???'
+        # 销假的逻辑目前没有实际的数据影响
 
 
 class AttendanceRecordCtrl extends nb.Controller

@@ -188,7 +188,7 @@ class FlowController
 
             promise.then ()->
                 if angular.isDefined(scope.flowSet)
-                    flow.processed = '已处理'
+                    #flow.processed = '已处理'
                     scope.flowSet.$refresh() # 刷新TODO列表
                     # 表格数据刷新后id错位，因为查看这列的ng-init中的realFlow绑定关系没有更新
                     # state.go(state.current.name, {}, {reload: true})

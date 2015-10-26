@@ -172,6 +172,7 @@ class SalaryController extends nb.Controller
                           "service_c_1_perf",                   # 绩效-服务C-1
                           "service_c_2_perf",                   # 绩效-服务C-2
                           "service_c_3_perf",                   # 绩效-服务C-3
+                          "service_c_driving_base",             # 基础-服务C-驾驶，固定2100
                           "service_c_driving_perf",             # 绩效-服务C-驾驶
                           "flyer_hour",                         # 小时费-飞行员
                           "fly_attendant_hour",                 # 小时费-空乘
@@ -693,6 +694,9 @@ class SalaryExchangeController
         return unless current.baseWage
         return unless current.baseFlag
 
+        if current.baseWage == 'service_c_driving_base'
+          current.baseMoney = 2100
+
         setting = @$settingHash(current.baseWage)
         flag = setting.flags[current.baseFlag]
 
@@ -715,6 +719,9 @@ class SalaryExchangeController
         setting = @$settingHash(current.baseWage)
         flags = []
 
+        if current.baseWage == 'service_c_driving_base'
+          return
+
         angular.forEach setting.flags, (config, flag)->
           if Object.keys(config).indexOf(current.baseChannel) >= 0
             format_cell = config[current.baseChannel]['format_cell']
@@ -732,10 +739,30 @@ class SalaryExchangeController
         return current.performanceMoney = flag.amount if angular.isDefined(flag)
         return 0
 
+    perf_channel_array: (current)->
+      return unless current.performanceWage
+
+      setting = @$settingHash(current.performanceWage)
+      channels = []
+      angular.forEach setting.flag_list, (item)->
+          if item != 'rate' && !_.startsWith(item, 'amount')
+              channels.push(setting.flag_names[item])
+      _.uniq(channels)
+
     perf_flag_array: (current)->
         return unless current.performanceWage
+
         setting = @$settingHash(current.performanceWage)
-        Object.keys(setting.flags)
+        flags = []
+
+        angular.forEach setting.flags, (config, flag)->
+          if Object.keys(config).indexOf(current.performanceChannel) >= 0
+            format_cell = config[current.performanceChannel]['format_cell']
+
+            if format_cell && format_cell.length > 0
+              flags.push(flag)
+
+        return flags
 
     fly: (current)->
         return unless current.baseChannel

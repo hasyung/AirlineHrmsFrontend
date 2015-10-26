@@ -146,7 +146,7 @@
     SalaryController.prototype.initialize = function() {
       var self;
       self = this;
-      this.CATEGORY_LIST = ["leader_base", "manager15_base", "manager12_base", "flyer_legend_base", "flyer_leader_base", "flyer_copilot_base", "flyer_teacher_A_base", "flyer_teacher_B_base", "flyer_teacher_C_base", "flyer_student_base", "air_steward_base", "service_b_normal_cleaner_base", "service_b_parking_cleaner_base", "service_b_hotel_service_base", "service_b_green_base", "service_b_front_desk_base", "service_b_security_guard_base", "service_b_input_base", "service_b_guard_leader1_base", "service_b_device_keeper_base", "service_b_unloading_base", "service_b_making_water_base", "service_b_add_water_base", "service_b_guard_leader2_base", "service_b_water_light_base", "service_b_car_repair_base", "service_b_airline_keeper_base", "service_c_base", "air_observer_base", "front_run_base", "information_perf", "airline_business_perf", "manage_market_perf", "service_c_1_perf", "service_c_2_perf", "service_c_3_perf", "service_c_driving_perf", "flyer_hour", "fly_attendant_hour", "air_security_hour", "unfly_allowance_hour", "allowance", "land_subsidy", "airline_subsidy", "temp"];
+      this.CATEGORY_LIST = ["leader_base", "manager15_base", "manager12_base", "flyer_legend_base", "flyer_leader_base", "flyer_copilot_base", "flyer_teacher_A_base", "flyer_teacher_B_base", "flyer_teacher_C_base", "flyer_student_base", "air_steward_base", "service_b_normal_cleaner_base", "service_b_parking_cleaner_base", "service_b_hotel_service_base", "service_b_green_base", "service_b_front_desk_base", "service_b_security_guard_base", "service_b_input_base", "service_b_guard_leader1_base", "service_b_device_keeper_base", "service_b_unloading_base", "service_b_making_water_base", "service_b_add_water_base", "service_b_guard_leader2_base", "service_b_water_light_base", "service_b_car_repair_base", "service_b_airline_keeper_base", "service_c_base", "air_observer_base", "front_run_base", "information_perf", "airline_business_perf", "manage_market_perf", "service_c_1_perf", "service_c_2_perf", "service_c_3_perf", "service_c_driving_base", "service_c_driving_perf", "flyer_hour", "fly_attendant_hour", "air_security_hour", "unfly_allowance_hour", "allowance", "land_subsidy", "airline_subsidy", "temp"];
       this.year_list = this.$getYears();
       this.month_list = this.$getMonths();
       this.currentYear = _.last(this.year_list);
@@ -711,6 +711,9 @@
       if (!current.baseFlag) {
         return;
       }
+      if (current.baseWage === 'service_c_driving_base') {
+        current.baseMoney = 2100;
+      }
       setting = this.$settingHash(current.baseWage);
       flag = setting.flags[current.baseFlag];
       if (angular.isDefined(flag)) {
@@ -741,6 +744,9 @@
       }
       setting = this.$settingHash(current.baseWage);
       flags = [];
+      if (current.baseWage === 'service_c_driving_base') {
+        return;
+      }
       angular.forEach(setting.flags, function(config, flag) {
         var format_cell;
         if (Object.keys(config).indexOf(current.baseChannel) >= 0) {
@@ -766,13 +772,38 @@
       return 0;
     };
 
-    SalaryExchangeController.prototype.perf_flag_array = function(current) {
-      var setting;
+    SalaryExchangeController.prototype.perf_channel_array = function(current) {
+      var channels, setting;
       if (!current.performanceWage) {
         return;
       }
       setting = this.$settingHash(current.performanceWage);
-      return Object.keys(setting.flags);
+      channels = [];
+      angular.forEach(setting.flag_list, function(item) {
+        if (item !== 'rate' && !_.startsWith(item, 'amount')) {
+          return channels.push(setting.flag_names[item]);
+        }
+      });
+      return _.uniq(channels);
+    };
+
+    SalaryExchangeController.prototype.perf_flag_array = function(current) {
+      var flags, setting;
+      if (!current.performanceWage) {
+        return;
+      }
+      setting = this.$settingHash(current.performanceWage);
+      flags = [];
+      angular.forEach(setting.flags, function(config, flag) {
+        var format_cell;
+        if (Object.keys(config).indexOf(current.performanceChannel) >= 0) {
+          format_cell = config[current.performanceChannel]['format_cell'];
+          if (format_cell && format_cell.length > 0) {
+            return flags.push(flag);
+          }
+        }
+      });
+      return flags;
     };
 
     SalaryExchangeController.prototype.fly = function(current) {
