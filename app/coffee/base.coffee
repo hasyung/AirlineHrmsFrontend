@@ -74,7 +74,7 @@ class EditableResourceCtrl
             evt.preventDefault() if evt && evt.preventDefault
             scope.editing = true
 
-        scope.save = (promise, form) ->
+        scope.save = (promise, form, promises) ->
             return if form && form.$invalid
             self = @
 
@@ -83,10 +83,15 @@ class EditableResourceCtrl
                     promise.then (data) ->
                         scope.editing = false
                         self.response_data = data
-                else if promise.$then
+                else if promise.$then && !promises
                     promise.$then (data) ->
                         scope.editing = false
                         self.response_data = data
+                else if promise.$then && promises
+                    promise.$then (data) ->
+                        scope.editing = false
+                        self.response_data = data
+                        promises.$refresh()
                 else
                     throw new Error('promise 参数错误')
 
@@ -150,9 +155,9 @@ class NewFlowCtrl
             data = _.cloneDeep(request)
 
             if data.start_time && typeof(data.start_time) == 'object'
-                data.start_time = moment(data.start_time._d).format('YYYY-MM-DD HH:MM:ss')
+                data.start_time = moment(data.start_time._d).format()
             if data.end_time && typeof(data.end_time) == 'object'
-                data.end_time = moment(data.end_time._d).format('YYYY-MM-DD HH:MM:ss')
+                data.end_time = moment(data.end_time._d).format()
 
             if data.position
                 # 调岗数据处理，否则无法序列化错误
@@ -220,8 +225,8 @@ class NewMyRequestCtrl extends NewFlowCtrl
 
                 request_data = {
                     vacation_type: vacation_type
-                    start_time: start.add(8, 'hours').toJSON()
-                    end_time: end.add(8, 'hours').toJSON()
+                    start_time: start.format()
+                    end_time: end.format()
                 }
 
                 if start > end

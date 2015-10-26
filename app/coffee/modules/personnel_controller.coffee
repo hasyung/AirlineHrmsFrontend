@@ -83,7 +83,8 @@ class PersonnelCtrl extends nb.Controller
             .col 'channel_ids',          '通道',     'muti-enum-search', '',    {type: 'channels'}
             .col 'employment_status_id', '用工状态', 'select',           '',    {type: 'employment_status'}
             .col 'birthday',             '出生日期', 'date-range'
-            .col 'join_scal_date',       '入职时间', 'date-range'
+            .col 'join_scal_date',       '入职日期', 'date-range'
+            .col 'start_work_date',      '参工日期', 'date-range'
             .end()
 
     loadInitialData: () ->
@@ -355,6 +356,11 @@ class LeaveEmployeesCtrl extends nb.Controller
                     type: 'string'
                 }
                 {
+                    name: 'channel'
+                    displayName: '通道'
+                    type: 'string'
+                }
+                {
                     name: 'department'
                     displayName: '机构'
                     type: 'string'
@@ -423,7 +429,7 @@ class MoveEmployeesCtrl extends nb.Controller
             }
             {
                 displayName: '所属部门'
-                name: 'departmentName'
+                name: 'department.name'
                 cellTooltip: (row) ->
                     return row.entity.departmentName
             }
@@ -459,28 +465,28 @@ class MoveEmployeesCtrl extends nb.Controller
             name: 'personnelLeave'
             constraintDefs: [
                 {
-                    name: 'employeeName'
+                    name: 'name'
                     displayName: '姓名'
                     type: 'string'
                 }
                 {
-                    name: 'employeeNo'
+                    name: 'employee_no'
                     displayName: '员工编号'
                     type: 'string'
                 }
                 {
-                    name: 'department'
+                    name: 'department_ids'
                     displayName: '机构'
-                    type: 'string'
+                    type: 'org-search'
                 }
                 {
                     name: 'special_category'
-                    type: 'string'
+                    type: 'move_select'
                     displayName: '异动性质'
                 }
                 {
                     name: 'special_location'
-                    type: 'date-range'
+                    type: 'string'
                     displayName: '异动地点'
                 }
             ]
@@ -540,7 +546,7 @@ class MoveEmployeesCtrl extends nb.Controller
 
     search: (tableState) ->
         tableState = tableState || {}
-        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+        # tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @moveEmployees.$refresh(tableState)
 
     getSelected: () ->

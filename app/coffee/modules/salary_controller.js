@@ -98,7 +98,17 @@
       this.SALARY_SETTING = SALARY_SETTING;
       self = this;
       this.initialize();
+      this.variables = ['调档时间', '驾驶经历时间', '飞行时间', '员工学历', '员工职级', '去年年度绩效', '本企业经历时间', '无人为飞行事故', '无安全严重差错'];
     }
+
+    SalaryController.prototype.queryVariables = function(text) {
+      var self, variables;
+      self = this;
+      variables = _.filter(self.variables, function(variable) {
+        return _.includes(variable, text);
+      });
+      return variables;
+    };
 
     SalaryController.prototype.$defaultCoefficient = function() {
       return {
@@ -136,7 +146,7 @@
     SalaryController.prototype.initialize = function() {
       var self;
       self = this;
-      this.CATEGORY_LIST = ["leader_base", "manager15_base", "manager12_base", "flyer_legend_base", "flyer_leader_base", "flyer_copilot_base", "flyer_teacher_A_base", "flyer_teacher_B_base", "flyer_teacher_C_base", "flyer_student_base", "air_steward_base", "service_b_normal_cleaner_base", "service_b_parking_cleaner_base", "service_b_hotel_service_base", "service_b_green_base", "service_b_front_desk_base", "service_b_security_guard_base", "service_b_input_base", "service_b_guard_leader1_base", "service_b_device_keeper_base", "service_b_unloading_base", "service_b_making_water_base", "service_b_add_water_base", "service_b_guard_leader2_base", "service_b_water_light_base", "service_b_car_repair_base", "service_b_airline_keeper_base", "service_c_base", "air_observer_base", "front_run_base", "information_perf", "airline_business_perf", "manage_market_perf", "service_c_1_perf", "service_c_2_perf", "service_c_3_perf", "service_c_driving_perf", "flyer_hour", "fly_attendant_hour", "air_security_hour", "unfly_allowance_hour", "allowance", "land_subsidy", "airline_subsidy", "temp"];
+      this.CATEGORY_LIST = ["leader_base", "manager15_base", "manager12_base", "flyer_legend_base", "flyer_leader_base", "flyer_copilot_base", "flyer_teacher_A_base", "flyer_teacher_B_base", "flyer_teacher_C_base", "flyer_student_base", "air_steward_base", "service_b_normal_cleaner_base", "service_b_parking_cleaner_base", "service_b_hotel_service_base", "service_b_green_base", "service_b_front_desk_base", "service_b_security_guard_base", "service_b_input_base", "service_b_guard_leader1_base", "service_b_device_keeper_base", "service_b_unloading_base", "service_b_making_water_base", "service_b_add_water_base", "service_b_guard_leader2_base", "service_b_water_light_base", "service_b_car_repair_base", "service_b_airline_keeper_base", "service_c_base", "air_observer_base", "front_run_base", "information_perf", "airline_business_perf", "manage_market_perf", "service_c_1_perf", "service_c_2_perf", "service_c_3_perf", "service_c_driving_base", "service_c_driving_perf", "flyer_hour", "fly_attendant_hour", "air_security_hour", "unfly_allowance_hour", "allowance", "land_subsidy", "airline_subsidy", "temp"];
       this.year_list = this.$getYears();
       this.month_list = this.$getMonths();
       this.currentYear = _.last(this.year_list);
@@ -182,24 +192,6 @@
       return this.editing = false;
     };
 
-    SalaryController.prototype.isComplexSetting = function(flags, grade, column, setting) {
-      if (['information_perf', 'airline_business_perf', 'manage_market_perf'].indexOf(this.current_category) >= 0) {
-        if (!angular.isDefined(flags[grade])) {
-          flags[grade] = {};
-        }
-        if (!angular.isDefined(flags[grade][column])) {
-          flags[grade][column] = {};
-        }
-        setting = flags[grade];
-        setting[column]['edit_mode'] = 'dialog';
-        setting[column]['add'] = true;
-        setting[column]['format_cell'] = null;
-        setting[column]['expr'] = null;
-        return true;
-      }
-      return false;
-    };
-
     SalaryController.prototype.resetDynamicConfig = function() {
       this.dynamic_config = {};
       this.dynamic_config = angular.copy(this.backup_config);
@@ -243,26 +235,24 @@
     };
 
     SalaryController.prototype.formatColumn = function(flags, grade, setting, column) {
-      var input, result;
-      if (setting[column] && (setting[column]['expr'] || setting[column]['format_cell'])) {
-        setting[column]['add'] = false;
-        flags[grade][column]['add'] = false;
-      }
+      var input, result, vars;
       result = input = setting[column];
-      if (input && angular.isDefined(input['format_cell'])) {
+      if (column === 'rate' || column === 'amount') {
+        return result;
+      }
+      if (input && angular.isDefined(input)) {
         result = input['format_cell'];
-        if (result) {
-          result = result.replace('%{work_value}', input['work_value']);
-        }
-        if (result) {
-          result = result.replace('%{time_value}', input['time_value']);
-        }
-        if (angular.isDefined(input['format_value'])) {
-          if (input['format_value'] === 99) {
-            result = result.replace('%{format_value}', '封顶');
+        if (result && angular.isDefined(result)) {
+          vars = ['transfer_years', 'drive_work_value', 'teacher_drive_years', 'fly_time_value', 'job_title_degree', 'education_background', 'last_year_perf', 'join_scal_years', 'no_subjective_accident', 'no_serious_security_error'];
+          angular.forEach(vars, function(item) {
+            return result = result.replace('%{' + item + '}', input[item]);
+          });
+        } else if (angular.isDefined(input['transfer_years'])) {
+          if (input['transfer_years'] === '99') {
+            result = '封顶';
           }
-          if (input['format_value'] === 999) {
-            result = result.replace('%{format_value}', '荣誉');
+          if (input['transfer_years'] === '999') {
+            result = '荣誉';
           }
         }
       }
@@ -274,16 +264,20 @@
       if (reverse == null) {
         reverse = false;
       }
-      if (!expr && !angular.isDefined(expr)) {
-        return;
+      if (!expr) {
+        expr = "";
       }
       hash = {
-        '调档时间': '%{format_value}',
-        '驾驶经历时间': '%{work_value}',
-        '飞行时间': '%{time_value}',
+        '调档时间': '%{transfer_years}',
+        '驾驶经历时间': '%{drive_work_value}',
+        '教员经历时间': '%{teacher_drive_years}',
+        '飞行时间': '%{fly_time_value}',
         '员工职级': '%{job_title_degree}',
         '员工学历': '%{education_background}',
-        '去年年度绩效': '%{last_year_perf}'
+        '去年年度绩效': '%{last_year_perf}',
+        '本企业经历时间': '%{join_scal_years}',
+        '无人为飞行事故': '%{no_subjective_accident}',
+        '无安全严重差错': '%{no_serious_security_error}'
       };
       result = expr;
       angular.forEach(hash, function(value, key) {
@@ -359,10 +353,12 @@
   SalaryPersonalController = (function(_super) {
     __extends(SalaryPersonalController, _super);
 
-    SalaryPersonalController.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryPersonSetup'];
+    SalaryPersonalController.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryPersonSetup', 'toaster'];
 
-    function SalaryPersonalController($http, $scope, $Evt, $enum, SalaryPersonSetup) {
+    function SalaryPersonalController(http, $scope, $Evt, $enum, SalaryPersonSetup, toaster) {
+      this.http = http;
       this.SalaryPersonSetup = SalaryPersonSetup;
+      this.toaster = toaster;
       this.loadInitialData();
       this.filterOptions = {
         name: 'salaryPersonal',
@@ -375,6 +371,10 @@
             name: 'employee_no',
             displayName: '员工编号',
             type: 'string'
+          }, {
+            name: 'department_ids',
+            displayName: '机构',
+            type: 'org-search'
           }, {
             name: 'channel_ids',
             displayName: '通道',
@@ -399,7 +399,7 @@
           cellTemplate: '<div class="ui-grid-cell-contents">\n    <a nb-panel\n        template-url="partials/personnel/info_basic.html"\n        locals="{employee: row.entity.owner}">\n        {{grid.getCellValue(row, col)}}\n    </a>\n</div>'
         }, {
           displayName: '所属部门',
-          name: 'departmentName',
+          name: 'department.name',
           cellTooltip: function(row) {
             return row.entity.departmentName;
           }
@@ -479,6 +479,18 @@
         } else {
           return self.loadEmp = params;
         }
+      });
+    };
+
+    SalaryPersonalController.prototype.upload_salary_set_book = function(attachment_id) {
+      var params, self;
+      self = this;
+      params = {
+        attachment_id: attachment_id
+      };
+      return this.http.post("/api/salary_person_setups/upload_salary_set_book", params).success(function(data, status) {
+        self.toaster.pop('success', '提示', '导入成功');
+        return self.import_finish = true;
       });
     };
 
@@ -652,6 +664,8 @@
       });
     };
 
+    SalaryGradeChangeController.prototype.checkUpdateChange = function(type) {};
+
     return SalaryGradeChangeController;
 
   })(nb.Controller);
@@ -677,8 +691,9 @@
         return;
       }
       setting = this.$settingHash(current.baseChannel);
-      current.baseMoney = setting.flags[current.baseFlag]['amount'];
-      return current.performanceMoney = current.baseMoney - this.SALARY_SETTING['global_setting']['minimum_wage'];
+      current.basePerformanceMoney = setting.flags[current.baseFlag]['amount'];
+      current.baseMoney = this.SALARY_SETTING['global_setting']['minimum_wage'];
+      return current.performanceMoney = current.basePerformanceMoney - current.baseMoney;
     };
 
     SalaryExchangeController.prototype.service_b_flag_array = function(current) {
@@ -698,6 +713,10 @@
       if (!current.baseFlag) {
         return;
       }
+      if (current.baseWage === 'service_c_driving_base') {
+        current.baseMoney = 2100;
+        return;
+      }
       setting = this.$settingHash(current.baseWage);
       flag = setting.flags[current.baseFlag];
       if (angular.isDefined(flag)) {
@@ -714,7 +733,7 @@
       setting = this.$settingHash(current.baseWage);
       channels = [];
       angular.forEach(setting.flag_list, function(item) {
-        if (item !== 'rate' && !item.startsWith('amount')) {
+        if (item !== 'rate' && !_.startsWith(item, 'amount')) {
           return channels.push(setting.flag_names[item]);
         }
       });
@@ -722,12 +741,25 @@
     };
 
     SalaryExchangeController.prototype.normal_flag_array = function(current) {
-      var setting;
+      var flags, setting;
       if (!current.baseWage) {
         return;
       }
       setting = this.$settingHash(current.baseWage);
-      return Object.keys(setting.flags);
+      flags = [];
+      if (current.baseWage === 'service_c_driving_base') {
+        return;
+      }
+      angular.forEach(setting.flags, function(config, flag) {
+        var format_cell;
+        if (Object.keys(config).indexOf(current.baseChannel) >= 0) {
+          format_cell = config[current.baseChannel]['format_cell'];
+          if (format_cell && format_cell.length > 0) {
+            return flags.push(flag);
+          }
+        }
+      });
+      return flags;
     };
 
     SalaryExchangeController.prototype.perf = function(current) {
@@ -743,13 +775,38 @@
       return 0;
     };
 
-    SalaryExchangeController.prototype.perf_flag_array = function(current) {
-      var setting;
+    SalaryExchangeController.prototype.perf_channel_array = function(current) {
+      var channels, setting;
       if (!current.performanceWage) {
         return;
       }
       setting = this.$settingHash(current.performanceWage);
-      return Object.keys(setting.flags);
+      channels = [];
+      angular.forEach(setting.flag_list, function(item) {
+        if (item !== 'rate' && !_.startsWith(item, 'amount')) {
+          return channels.push(setting.flag_names[item]);
+        }
+      });
+      return _.uniq(channels);
+    };
+
+    SalaryExchangeController.prototype.perf_flag_array = function(current) {
+      var flags, setting;
+      if (!current.performanceWage) {
+        return;
+      }
+      setting = this.$settingHash(current.performanceWage);
+      flags = [];
+      angular.forEach(setting.flags, function(config, flag) {
+        var format_cell;
+        if (Object.keys(config).indexOf(current.performanceChannel) >= 0) {
+          format_cell = config[current.performanceChannel]['format_cell'];
+          if (format_cell && format_cell.length > 0) {
+            return flags.push(flag);
+          }
+        }
+      });
+      return flags;
     };
 
     SalaryExchangeController.prototype.fly = function(current) {
@@ -991,9 +1048,11 @@
           name: 'addGarnishee',
           headerCellClass: 'editable_cell_header'
         }, {
-          displayName: '备注',
-          name: 'remark',
+          name: "remark",
+          displayName: "备注",
           headerCellClass: 'editable_cell_header',
+          enableCellEdit: false,
+          cellTemplate: '<div class="ui-grid-cell-contents">\n    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">\n        {{row.entity.remark || \'请输入备注\'}}\n        <popup-template\n            style="padding:8px;border:1px solid #eee;"\n            class="nb-popup org-default-popup-template">\n            <div class="panel-body popup-body">\n                <md-input-container>\n                    <label>备注</label>\n                    <textarea\n                        ng-blur="row.entity.$save()"\n                        ng-model="row.entity.remark"\n                        style="resize:none;"\n                        class="reason-input"></textarea>\n                </md-input-container>\n            </div>\n        </popup-template>\n    </a>\n</div>',
           cellTooltip: function(row) {
             return row.entity.note;
           }
@@ -1059,9 +1118,11 @@
           name: 'addGarnishee',
           headerCellClass: 'editable_cell_header'
         }, {
-          displayName: '备注',
-          name: 'remark',
+          name: "remark",
+          displayName: "备注",
           headerCellClass: 'editable_cell_header',
+          enableCellEdit: false,
+          cellTemplate: '<div class="ui-grid-cell-contents">\n    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">\n        {{row.entity.remark || \'请输入备注\'}}\n        <popup-template\n            style="padding:8px;border:1px solid #eee;"\n            class="nb-popup org-default-popup-template">\n            <div class="panel-body popup-body">\n                <md-input-container>\n                    <label>备注</label>\n                    <textarea\n                        ng-blur="row.entity.$save()"\n                        ng-model="row.entity.remark"\n                        style="resize:none;"\n                        class="reason-input"></textarea>\n                </md-input-container>\n            </div>\n        </popup-template>\n    </a>\n</div>',
           cellTooltip: function(row) {
             return row.entity.note;
           }
@@ -1099,9 +1160,11 @@
           name: 'addGarnishee',
           headerCellClass: 'editable_cell_header'
         }, {
-          displayName: '备注',
-          name: 'remark',
+          name: "remark",
+          displayName: "备注",
           headerCellClass: 'editable_cell_header',
+          enableCellEdit: false,
+          cellTemplate: '<div class="ui-grid-cell-contents">\n    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">\n        {{row.entity.remark || \'请输入备注\'}}\n        <popup-template\n            style="padding:8px;border:1px solid #eee;"\n            class="nb-popup org-default-popup-template">\n            <div class="panel-body popup-body">\n                <md-input-container>\n                    <label>备注</label>\n                    <textarea\n                        ng-blur="row.entity.$save()"\n                        ng-model="row.entity.remark"\n                        style="resize:none;"\n                        class="reason-input"></textarea>\n                </md-input-container>\n            </div>\n        </popup-template>\n    </a>\n</div>',
           cellTooltip: function(row) {
             return row.entity.note;
           }
@@ -1163,9 +1226,11 @@
           name: 'addGarnishee',
           headerCellClass: 'editable_cell_header'
         }, {
-          displayName: '备注',
-          name: 'remark',
+          name: "remark",
+          displayName: "备注",
           headerCellClass: 'editable_cell_header',
+          enableCellEdit: false,
+          cellTemplate: '<div class="ui-grid-cell-contents">\n    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">\n        {{row.entity.remark || \'请输入备注\'}}\n        <popup-template\n            style="padding:8px;border:1px solid #eee;"\n            class="nb-popup org-default-popup-template">\n            <div class="panel-body popup-body">\n                <md-input-container>\n                    <label>备注</label>\n                    <textarea\n                        ng-blur="row.entity.$save()"\n                        ng-model="row.entity.remark"\n                        style="resize:none;"\n                        class="reason-input"></textarea>\n                </md-input-container>\n            </div>\n        </popup-template>\n    </a>\n</div>',
           cellTooltip: function(row) {
             return row.entity.note;
           }
@@ -1289,9 +1354,11 @@
           name: 'addGarnishee',
           headerCellClass: 'editable_cell_header'
         }, {
-          displayName: '备注',
-          name: 'remark',
+          name: "remark",
+          displayName: "备注",
           headerCellClass: 'editable_cell_header',
+          enableCellEdit: false,
+          cellTemplate: '<div class="ui-grid-cell-contents">\n    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">\n        {{row.entity.remark || \'请输入备注\'}}\n        <popup-template\n            style="padding:8px;border:1px solid #eee;"\n            class="nb-popup org-default-popup-template">\n            <div class="panel-body popup-body">\n                <md-input-container>\n                    <label>备注</label>\n                    <textarea\n                        ng-blur="row.entity.$save()"\n                        ng-model="row.entity.remark"\n                        style="resize:none;"\n                        class="reason-input"></textarea>\n                </md-input-container>\n            </div>\n        </popup-template>\n    </a>\n</div>',
           cellTooltip: function(row) {
             return row.entity.note;
           }
@@ -1342,9 +1409,11 @@
           name: 'addGarnishee',
           headerCellClass: 'editable_cell_header'
         }, {
-          displayName: '备注',
-          name: 'remark',
+          name: "remark",
+          displayName: "备注",
           headerCellClass: 'editable_cell_header',
+          enableCellEdit: false,
+          cellTemplate: '<div class="ui-grid-cell-contents">\n    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">\n        {{row.entity.remark || \'请输入备注\'}}\n        <popup-template\n            style="padding:8px;border:1px solid #eee;"\n            class="nb-popup org-default-popup-template">\n            <div class="panel-body popup-body">\n                <md-input-container>\n                    <label>备注</label>\n                    <textarea\n                        ng-blur="row.entity.$save()"\n                        ng-model="row.entity.remark"\n                        style="resize:none;"\n                        class="reason-input"></textarea>\n                </md-input-container>\n            </div>\n        </popup-template>\n    </a>\n</div>',
           cellTooltip: function(row) {
             return row.entity.note;
           }
@@ -1466,9 +1535,11 @@
           name: 'addGarnishee',
           headerCellClass: 'editable_cell_header'
         }, {
-          displayName: '备注',
-          name: 'remark',
+          name: "remark",
+          displayName: "备注",
           headerCellClass: 'editable_cell_header',
+          enableCellEdit: false,
+          cellTemplate: '<div class="ui-grid-cell-contents">\n    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">\n        {{row.entity.remark || \'请输入备注\'}}\n        <popup-template\n            style="padding:8px;border:1px solid #eee;"\n            class="nb-popup org-default-popup-template">\n            <div class="panel-body popup-body">\n                <md-input-container>\n                    <label>备注</label>\n                    <textarea\n                        ng-blur="row.entity.$save()"\n                        ng-model="row.entity.remark"\n                        style="resize:none;"\n                        class="reason-input"></textarea>\n                </md-input-container>\n            </div>\n        </popup-template>\n    </a>\n</div>',
           cellTooltip: function(row) {
             return row.entity.note;
           }
@@ -1523,9 +1594,11 @@
           name: 'addGarnishee',
           headerCellClass: 'editable_cell_header'
         }, {
-          displayName: '备注',
-          name: 'remark',
+          name: "remark",
+          displayName: "备注",
           headerCellClass: 'editable_cell_header',
+          enableCellEdit: false,
+          cellTemplate: '<div class="ui-grid-cell-contents">\n    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">\n        {{row.entity.remark || \'请输入备注\'}}\n        <popup-template\n            style="padding:8px;border:1px solid #eee;"\n            class="nb-popup org-default-popup-template">\n            <div class="panel-body popup-body">\n                <md-input-container>\n                    <label>备注</label>\n                    <textarea\n                        ng-blur="row.entity.$save()"\n                        ng-model="row.entity.remark"\n                        style="resize:none;"\n                        class="reason-input"></textarea>\n                </md-input-container>\n            </div>\n        </popup-template>\n    </a>\n</div>',
           cellTooltip: function(row) {
             return row.entity.note;
           }
@@ -1595,9 +1668,11 @@
           name: 'total',
           enableCellEdit: false
         }, {
-          displayName: '备注',
-          name: 'remark',
+          name: "remark",
+          displayName: "备注",
           headerCellClass: 'editable_cell_header',
+          enableCellEdit: false,
+          cellTemplate: '<div class="ui-grid-cell-contents">\n    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">\n        {{row.entity.remark || \'请输入备注\'}}\n        <popup-template\n            style="padding:8px;border:1px solid #eee;"\n            class="nb-popup org-default-popup-template">\n            <div class="panel-body popup-body">\n                <md-input-container>\n                    <label>备注</label>\n                    <textarea\n                        ng-blur="row.entity.$save()"\n                        ng-model="row.entity.remark"\n                        style="resize:none;"\n                        class="reason-input"></textarea>\n                </md-input-container>\n            </div>\n        </popup-template>\n    </a>\n</div>',
           cellTooltip: function(row) {
             return row.entity.note;
           }

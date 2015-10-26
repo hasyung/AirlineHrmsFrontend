@@ -217,8 +217,9 @@ class AdjustPositionCtrl
         self = @
 
         params = {}
+        params.positions = []
+
         params.employee_id = employee.id
-        params.positions = employee.positions
         params.channel_id = employee.channelId
         params.category_id = employee.categoryId
         params.duty_rank_id = employee.dutyRankId
@@ -227,7 +228,15 @@ class AdjustPositionCtrl
         params.position_change_date = employee.positionChangeDate
         params.probation_duration = employee.probationDuration
 
-        console.log employee
+        employee.positions.map (position) ->
+            params.positions.push({
+                'position': {'id': position.position.id},
+                'category': position.category
+                'department': {'id': position.department.id}
+                })
+
+
+        console.log params
 
         @http.post("/api/position_change_records", params).success (data, status)->
             self.Evt.$send "data:create:success", "员工转岗成功"

@@ -170,6 +170,11 @@ menuFactory = ($rootScope, $state)->
                 state: 'welfares_dinnerfee'
                 permission: ''
             }
+            {
+                name: '生育津贴'
+                state: 'welfares_birth'
+                permission: ''
+            }
         ]
     }
 

@@ -1,0 +1,25 @@
+.app-content-wrapper(
+    flex
+    ng-controller="birthAllowanceCtrl as ctrl"
+        )
+
+    div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+
+    div.ui-grid-container
+        md-toolbar
+            .md-toolbar-tools
+                h2 生育津贴发放列表
+                div(flex)
+
+                md-button.md-primary.md-raised(
+                    nb-dialog
+                    template-url="/partials/welfares/birth/sent_birth.html"
+                    locals="{ctrl: ctrl}"
+                ) 生育津贴发放
+
+        div(
+            nb-grid
+            column-defs="ctrl.columnDef"
+            on-register-api="ctrl.exportGridApi(gridApi)"
+            safe-src="ctrl.birthAllowances"
+            )

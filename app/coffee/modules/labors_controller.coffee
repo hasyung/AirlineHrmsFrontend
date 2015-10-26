@@ -225,6 +225,7 @@ ATTENDANCE_SUMMERY_DEFS= [
     {width:100, displayName: '病假（工伤待定）', name: 'sickLeaveInjury'}
     {width:100, displayName: '病假（怀孕待产）', name: 'sickLeaveNulliparous'}
     {width:100, displayName: '事假', name: 'personalLeave'}
+    {width:100, displayName: '公假', name: 'publicLeave'}
     {width:100, displayName: '探亲假', name: 'homeLeave'}
     {width:100, displayName: '培训', name: 'cultivate'}
     {width:100, displayName: '出差', name: 'evection'}
@@ -259,6 +260,7 @@ ATTENDANCE_SUMMERY_HIS_DEFS= [
     {width:100, displayName: '病假（工伤待定）', name: 'sickLeaveInjury'}
     {width:100, displayName: '病假（怀孕待产）', name: 'sickLeaveNulliparous'}
     {width:100, displayName: '事假', name: 'personalLeave'}
+    {width:100, displayName: '公假', name: 'publicLeave'}
     {width:100, displayName: '探亲假', name: 'homeLeave'}
     {width:100, displayName: '培训', name: 'cultivate'}
     {width:100, displayName: '出差', name: 'evection'}
@@ -502,6 +504,8 @@ class AttendanceCtrl extends nb.Controller
     loadSummariesList: ()->
         self = @
 
+        @initDate()
+
         if @isDepartmentHr()
             self.summaryListCol = ATTENDANCE_SUMMERY_DEFS.concat [
                 {
@@ -608,7 +612,7 @@ class AttendanceCtrl extends nb.Controller
         @CURRENT_ROLES.indexOf('department_hr') >= 0
 
     finishVacation: ()->
-        alert '销假的逻辑是啥，讨论过，这个操作到底有无用???'
+        # 销假的逻辑目前没有实际的数据影响
 
 
 class AttendanceRecordCtrl extends nb.Controller

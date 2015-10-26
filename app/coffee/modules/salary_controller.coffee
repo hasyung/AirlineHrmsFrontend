@@ -165,13 +165,14 @@ class SalaryController extends nb.Controller
                           "service_b_airline_keeper_base",      # 基础-服务B-机务工装设备/客舱供应库管
                           "service_c_base",                     # 基础-服务C
                           "air_observer_base",                  # 基础-空中观察员
-                          "front_run_base",                     # 基础-前场运行
+                          "front_run_base",                     # 基础-前场运行监察
                           "information_perf",                   # 绩效-信息通道
                           "airline_business_perf",              # 绩效-航务航材
                           "manage_market_perf",                 # 绩效-管理营销
                           "service_c_1_perf",                   # 绩效-服务C-1
                           "service_c_2_perf",                   # 绩效-服务C-2
                           "service_c_3_perf",                   # 绩效-服务C-3
+                          "service_c_driving_base",             # 基础-服务C-驾驶，固定2100
                           "service_c_driving_perf",             # 绩效-服务C-驾驶
                           "flyer_hour",                         # 小时费-飞行员
                           "fly_attendant_hour",                 # 小时费-空乘
@@ -659,6 +660,9 @@ class SalaryGradeChangeController extends nb.Controller
                 self.setting = data.salary_person_setup
                 self.flags = []
 
+    checkUpdateChange: (type)->
+        #
+
 
 class SalaryExchangeController
     @.$inject = ['$http', '$scope', '$nbEvent', 'SALARY_SETTING']
@@ -693,6 +697,10 @@ class SalaryExchangeController
         return unless current.baseWage
         return unless current.baseFlag
 
+        if current.baseWage == 'service_c_driving_base'
+          current.baseMoney = 2100
+          return
+
         setting = @$settingHash(current.baseWage)
         flag = setting.flags[current.baseFlag]
 
@@ -713,7 +721,19 @@ class SalaryExchangeController
         return unless current.baseWage
 
         setting = @$settingHash(current.baseWage)
-        Object.keys(setting.flags)
+        flags = []
+
+        if current.baseWage == 'service_c_driving_base'
+          return
+
+        angular.forEach setting.flags, (config, flag)->
+          if Object.keys(config).indexOf(current.baseChannel) >= 0
+            format_cell = config[current.baseChannel]['format_cell']
+
+            if format_cell && format_cell.length > 0
+              flags.push(flag)
+
+        return flags
 
     perf: (current)->
         return unless current.performanceWage
@@ -723,10 +743,30 @@ class SalaryExchangeController
         return current.performanceMoney = flag.amount if angular.isDefined(flag)
         return 0
 
+    perf_channel_array: (current)->
+      return unless current.performanceWage
+
+      setting = @$settingHash(current.performanceWage)
+      channels = []
+      angular.forEach setting.flag_list, (item)->
+          if item != 'rate' && !_.startsWith(item, 'amount')
+              channels.push(setting.flag_names[item])
+      _.uniq(channels)
+
     perf_flag_array: (current)->
         return unless current.performanceWage
+
         setting = @$settingHash(current.performanceWage)
-        Object.keys(setting.flags)
+        flags = []
+
+        angular.forEach setting.flags, (config, flag)->
+          if Object.keys(config).indexOf(current.performanceChannel) >= 0
+            format_cell = config[current.performanceChannel]['format_cell']
+
+            if format_cell && format_cell.length > 0
+              flags.push(flag)
+
+        return flags
 
     fly: (current)->
         return unless current.baseChannel

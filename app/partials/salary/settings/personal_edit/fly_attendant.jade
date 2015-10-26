@@ -89,10 +89,11 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
             label 标准
             input(type="number" min="0" max="100000" ng-model="current.securityHourMoney" readonly)
 
-    div(layout)
-        md-radio-group.horizontal.mb30(ng-model="params.type")
-            md-radio-button.md-primary(ng-disabled="current.categoryId !== 2" value="空勤飞行") 空勤飞行
-            md-radio-button.md-primary(ng-disabled="current.categoryId !== 2" value="空勤地面") 空勤地面
+    // 干部和领导才可以设置该值
+    div(layout ng-if="current.categoryId >= 2")
+        md-radio-group.horizontal.mb30(ng-model="current.airlineAttendantType")
+            md-radio-button.md-primary(value="fly") 空勤飞行
+            md-radio-button.md-primary(value="land") 空勤地面
 
     div(layout)
         md-input-container.row-has-value(flex)
