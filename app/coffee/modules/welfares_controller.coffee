@@ -888,6 +888,31 @@ class AnnuityChangesController
         tableState['per_page'] = @scope.gridApi.grid.options.paginationPageSize
         @annuityChanges.$refresh(tableState)
 
+class DinnerController
+    @.$inject = ['$http', '$scope', '$nbEvent']
+
+    constructor: ($http, $scope, $Evt) ->
+        $scope.currentSettingLocation = null
+        #当前配置项
+        $scope.setting = null
+        $scope.configurations = null
+        $scope.locations = null
+
+        $http.get('api/welfares/dinners')
+            .success (result) ->
+                $scope.configurations = result.dinners
+
+        #保存社保配置信息
+        $scope.saveConfig = (settings)->
+            $http.put('/api/welfares/dinners', {
+                dinners: settings
+            }).success ()->
+                $Evt.$send('dinners:update:success', '工作餐配置保存成功')
+
+    destroyCity: (cities, idx) ->
+        cities.splice(idx, 1)
+
+
 
 class DinnerPersonalController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerPersonSetup', '$q', '$state']
@@ -1064,6 +1089,7 @@ app.controller 'annuityComputeCtrl', AnnuityComputeController
 app.controller 'annuityHistoryCtrl', AnnuityHistoryController
 app.controller 'annuityChangesCtrl', AnnuityChangesController
 
+app.controller 'dinnerCtrl', DinnerController
 app.controller 'dinnerPersonalCtrl', DinnerPersonalController
 app.controller 'dinnerComputeCtrl', DinnerComputeController
 
