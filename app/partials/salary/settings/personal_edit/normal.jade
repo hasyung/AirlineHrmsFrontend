@@ -13,17 +13,18 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
                 //- md-option(value="flyer_teacher_B_base") 教员B
                 //- md-option(value="flyer_teacher_C_base") 教员C
                 //- md-option(value="air_steward_base") 空乘空保
-                //- md-option(value="service_c_base") 空中观察员
-                md-option(value="air_observer_base") 前场运行监察
-                md-option(value="service_c_1_perf") 服务C1
-                md-option(value="service_c_2_perf") 服务C2
-                md-option(value="service_c_3_perf") 服务C3
-                md-option(value="service_c_driving_perf") 服务C-驾驶
-        md-input-container.row-has-value(flex)
+                //- md-option(value="air_observer_base") 空中观察员
+                md-option(value="front_run_base") 前场运行监察
+                //- md-option(value="service_c_1_perf") 服务C1
+                //- md-option(value="service_c_2_perf") 服务C2
+                //- md-option(value="service_c_3_perf") 服务C3
+                md-option(value="service_c_driving_base") 服务C-驾驶
+                md-option(value="service_c_base") 服务C
+        md-input-container.row-has-value(flex ng-if="current.baseWage != 'service_c_driving_base'")
             label 薪酬通道
             md-select(ng-model="current.baseChannel" placeholder="请选择" ng-change="exchangeCtrl.normal(current)")
                 md-option(ng-value="item" ng-repeat="item in exchangeCtrl.normal_channel_array(current)") {{item}}
-        md-input-container.row-has-value(flex)
+        md-input-container.row-has-value(flex ng-if="current.baseWage != 'service_c_driving_base'")
             label 档级
             md-select(ng-model="current.baseFlag" placeholder="请选择" ng-change="exchangeCtrl.normal(current)")
                 md-option(ng-value="item" ng-repeat="item in exchangeCtrl.normal_flag_array(current)") {{item}}
@@ -43,6 +44,11 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
                 md-option(value="service_c_2_perf") 服务C2
                 md-option(value="service_c_3_perf") 服务C3
                 md-option(value="service_c_driving_perf") 服务C-驾驶
+                //- md-option(value="service_c_base") 服务C
+        md-input-container.row-has-value(flex)
+            label 绩效考核结果
+            md-select(ng-model="current.performanceChannel" placeholder="请选择" ng-change="exchangeCtrl.perf(current)")
+                md-option(ng-value="item" ng-repeat="item in exchangeCtrl.perf_channel_array(current)") {{item}}
         md-input-container.row-has-value(flex)
             label 档级
             md-select(ng-model="current.performanceFlag" placeholder="请选择" ng-change="exchangeCtrl.perf(current)")
@@ -191,7 +197,3 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
             float-label
             ng-change="current.secondDepartmentId=null;current.secondDepartmentId = current.secondDepartment.id;"
                 )
-
-
-
-

@@ -83,7 +83,8 @@ class PersonnelCtrl extends nb.Controller
             .col 'channel_ids',          '通道',     'muti-enum-search', '',    {type: 'channels'}
             .col 'employment_status_id', '用工状态', 'select',           '',    {type: 'employment_status'}
             .col 'birthday',             '出生日期', 'date-range'
-            .col 'join_scal_date',       '入职时间', 'date-range'
+            .col 'join_scal_date',       '入职日期', 'date-range'
+            .col 'start_work_date',      '参工日期', 'date-range'
             .end()
 
     loadInitialData: () ->
@@ -352,6 +353,11 @@ class LeaveEmployeesCtrl extends nb.Controller
                 {
                     name: 'name'
                     displayName: '姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'channel'
+                    displayName: '通道'
                     type: 'string'
                 }
                 {
