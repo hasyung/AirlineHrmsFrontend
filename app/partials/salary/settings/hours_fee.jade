@@ -26,7 +26,7 @@
                         md-button.md-raised.md-primary(ng-click="ctrl.saveConfig('air_security_hour', ctrl.dynamic_config)") 保存
                     include ./hours/air_security.jade
             tab.leader-base(heading="未飞补贴")
-                form.form-static(novalidate)
+                form.form-static.has-sub(novalidate)
                     md-toolbar
                       .md-toolbar-tools
                         h2 未飞补贴
