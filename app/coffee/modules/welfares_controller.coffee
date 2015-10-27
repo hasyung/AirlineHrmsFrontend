@@ -964,11 +964,11 @@ class DinnerPersonalController extends nb.Controller
                     return row.entity.positionName
             }
             {displayName: '班制', name: 'shiftsType'}
-            {displayName: '驻地', name: 'landLocation'}
-            {displayName: '成都区域', name: 'chengduArea'}
+            {displayName: '驻地', name: 'location'}
+            {displayName: '餐费区域', name: 'area'}
             {displayName: '卡金额', name: 'cardAmount'}
             {displayName: '卡次数', name: 'cardNumber'}
-            {displayName: '工作餐', name: 'workingfee'}
+            {displayName: '工作餐', name: 'workingFee'}
             {
                 displayName: '设置'
                 field: 'setting'
@@ -976,7 +976,7 @@ class DinnerPersonalController extends nb.Controller
                 <div class="ui-grid-cell-contents ng-binding ng-scope">
                     <a nb-dialog
                         template-url="partials/welfares/dinners/person.html"
-                        locals="{}">
+                        locals="{dinner: row.entity}">
                         设置
                     </a>
                 </div>
