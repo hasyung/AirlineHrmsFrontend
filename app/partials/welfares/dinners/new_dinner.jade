@@ -1,11 +1,11 @@
 md-dialog.punishment_new(
     style="min-width: 500px;"
-    ng-init="ctrl = dialog.ctrl; dinner = dialog.dinner; ctrl.loadEmp = {};"
+    ng-init="ctrl = dialog.ctrl; dinner = {}; ctrl.loadEmp = {};"
     )
     form(ng-submit="ctrl.newDinner(dinner); dialog.close();" name="newDinnerForm")
         md-toolbar.md-accent(md-theme="hrms")
             .md-toolbar-tools
-                span 工作餐设置
+                span 新建工作餐
         md-content
             fieldset(flex)
                 div(style="display:none;")
@@ -13,23 +13,31 @@ md-dialog.punishment_new(
                 div(layout)
                     md-input-container(flex)
                         label 姓名
-                        input(ng-model="dinner.employeeName" readonly)
+                            span.require-tip *
+                        input(ng-model="ctrl.loadEmp.name" name="name" required
+                            ng-model-options="{debounce: {'default': 1000, 'blur': 0}}"
+                            ng-change="ctrl.loadEmployee({name: ctrl.loadEmp.name}, dinner);"
+                            )
                     md-input-container(flex)
                         label 员工编号
-                        input(ng-model="dinner.employeeNo" readonly)
+                            span.require-tip *
+                        input(ng-model="ctrl.loadEmp.employeeNo" required
+                            ng-model-options="{debounce: {'default': 1000, 'blur': 0}}"
+                            ng-change="ctrl.loadEmployee({employee_no: ctrl.loadEmp.employeeNo}, dinner);"
+                            )
 
                 div(layout)
                     md-input-container.row-has-value(flex)
                         label 部门
-                        input(ng-model="dinner.departmentName" readonly)
+                        input(ng-model="ctrl.loadEmp.department.name" readonly)
                     md-input-container.row-has-value(flex)
                         label 岗位
-                        input(ng-model="dinner.positionName" readonly)
+                        input(ng-model="ctrl.loadEmp.position.name" readonly)
 
                 div(layout)
                     md-input-container(flex)
                         label 驻地
-                        input(ng-model="dinner.location" readonly)
+                        input(ng-model="ctrl.loadEmp.location" readonly)
 
                 div(layout)
                     md-input-container.row-has-value(flex)
@@ -63,11 +71,6 @@ md-dialog.punishment_new(
                     md-input-container(flex)
                         label 晚餐次数
                         input(ng-model="dinner.dinnerNumber" required)
-
-                div(layout)
-                    md-input-container(flex)
-                        label 变动日期
-                        input(ng-model="dinner.changeDate" required bs-datepicker)
 
 
         .md-actions

@@ -915,9 +915,9 @@ class DinnerController
 
 
 class DinnerPersonalController extends nb.Controller
-    @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerPersonSetup', '$q', '$state']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerPersonSetup', '$q', '$state', 'Employee']
 
-    constructor: (@http, @scope, @Evt, @DinnerPersonSetup, @q, @state) ->
+    constructor: (@http, @scope, @Evt, @DinnerPersonSetup, @q, @state, @Employee) ->
         @loadInitialData()
 
         @filterOptions = {
@@ -968,7 +968,7 @@ class DinnerPersonalController extends nb.Controller
             {displayName: '成都区域', name: 'chengduArea'}
             {displayName: '卡金额', name: 'cardAmount'}
             {displayName: '卡次数', name: 'cardNumber'}
-            {displayName: '工作餐', name: 'dinnerfee'}
+            {displayName: '工作餐', name: 'workingfee'}
             {
                 displayName: '设置'
                 field: 'setting'
@@ -986,6 +986,33 @@ class DinnerPersonalController extends nb.Controller
 
     loadInitialData: () ->
         @configurations = @DinnerPersonSetup.$collection().$fetch()
+
+    loadEmployee: (params, contract)->
+        self = @
+
+        @Employee.$collection().$refresh(params).$then (employees)->
+            args = _.mapKeys params, (value, key) ->
+                _.camelCase key
+
+            matched = _.find employees, args
+
+            if matched
+                self.loadEmp = matched
+                self.isFemale = true
+                contract.employeeId = matched.id
+                contract.employeeNo = matched.employeeNo
+                contract.departmentName = matched.department.name
+                contract.positionName = matched.position.name
+                contract.employeeName = matched.name
+                contract.owner = matched
+            else
+                self.loadEmp = params
+
+    newDinner: (dinner) ->
+        self = @
+
+        @configurations.$build(dinner).$save().$then ()->
+            self.configurations.$refresh()
 
 
 class DinnerComputeController extends nb.Controller

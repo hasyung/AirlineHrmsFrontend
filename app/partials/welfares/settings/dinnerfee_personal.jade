@@ -5,6 +5,11 @@
             .md-toolbar-tools
                 h2 工作餐个人设置
                 div(flex)
+                md-button.md-primary.md-raised(
+                    nb-dialog
+                    template-url="/partials/welfares/dinners/new_dinner.html"
+                    locals="{ctrl: ctrl}"
+                    ) 新建工作餐
 
         div(
             nb-grid
