@@ -919,6 +919,7 @@ class SalaryBasicController extends SalaryBaseController
             {displayName: '岗位薪酬', name: 'positionSalary', enableCellEdit: false}
             {displayName: '工龄工资', name: 'workingYearsSalary', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {displayName: '说明', name: 'notes', enableCellEdit: false}
             {
                 name:"remark"
                 displayName:"备注"
@@ -967,10 +968,11 @@ class SalaryKeepController extends SalaryBaseController
             {displayName: '保底增幅', name: 'minimumGrowth', enableCellEdit: false}
             {displayName: '地勤补贴保留', name: 'landAllowance', enableCellEdit: false}
             {displayName: '生活补贴保留', name: 'lifeAllowance', enableCellEdit: false}
-            {displayName: '09调资增加保留', name: 'adjustmen_09', enableCellEdit: false}
-            {displayName: '14公务用车保留', name: 'bus_14', enableCellEdit: false}
-            {displayName: '14通信补贴保留', name: 'communication_14', enableCellEdit: false}
+            {displayName: '09调资增加保留', name: 'adjustmen09', enableCellEdit: false}
+            {displayName: '14公务用车保留', name: 'bus14', enableCellEdit: false}
+            {displayName: '14通信补贴保留', name: 'communication14', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {displayName: '说明', name: 'notes', enableCellEdit: false}
             {
                 name:"remark"
                 displayName:"备注"
@@ -1013,9 +1015,10 @@ class SalaryPerformanceController extends SalaryBaseController
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
-            {displayName: '当月绩效基数', name: 'baseSalary', enableCellEdit: false},
-            {displayName: '当月绩效薪酬', name: 'amount', enableCellEdit: false},
-            {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'},
+            {displayName: '当月绩效基数', name: 'baseSalary', enableCellEdit: false}
+            {displayName: '当月绩效薪酬', name: 'amount', enableCellEdit: false}
+            {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {displayName: '说明', name: 'notes', enableCellEdit: false}
             {
                 name:"remark"
                 displayName:"备注"
@@ -1073,6 +1076,7 @@ class SalaryHoursFeeController extends SalaryBaseController
             {displayName: '小时费', name: 'flyFee', enableCellEdit: false}
             {displayName: '空勤灶', name: 'airlineFee', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {displayName: '说明', name: 'notes', enableCellEdit: false}
             {
                 name:"remark"
                 displayName:"备注"
@@ -1152,6 +1156,7 @@ class SalaryAllowanceController extends SalaryBaseController
             {displayName: '梭班补贴', name: 'workOvertime', enableCellEdit: false}
             {displayName: '高温补贴', name: 'temp', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {displayName: '说明', name: 'notes', enableCellEdit: false}
             {
                 name:"remark"
                 displayName:"备注"
@@ -1205,6 +1210,7 @@ class SalaryLandAllowanceController extends SalaryBaseController
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
             {displayName: '津贴', name: 'subsidy', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {displayName: '说明', name: 'notes', enableCellEdit: false}
             {
                 name:"remark"
                 displayName:"备注"
@@ -1276,6 +1282,7 @@ class SalaryRewardController extends SalaryBaseController
             {displayName: '收益奖励金', name: 'earningsFee', enableCellEdit: false}
             {displayName: '预算外奖励', name: 'offBudgetFee', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {displayName: '说明', name: 'notes', enableCellEdit: false}
             {
                 name:"remark"
                 displayName:"备注"
@@ -1330,6 +1337,7 @@ class SalaryTransportFeeController extends SalaryBaseController
             {displayName: '交通费', name: 'amount', enableCellEdit: false}
             {displayName: '班车费扣除', name: 'busFee', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {displayName: '说明', name: 'notes', enableCellEdit: false}
             {
                 name:"remark"
                 displayName:"备注"
@@ -1388,6 +1396,7 @@ class SalaryOverviewController extends SalaryBaseController
             {displayName: '驻站津贴', name: 'landSubsidy', enableCellEdit: false}
             {displayName: '奖励', name: 'reward', enableCellEdit: false}
             {displayName: '合计', name: 'total', enableCellEdit: false}
+            {displayName: '说明', name: 'notes', enableCellEdit: false}
             {
                 name:"remark"
                 displayName:"备注"

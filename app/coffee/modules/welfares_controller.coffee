@@ -888,11 +888,38 @@ class AnnuityChangesController
         tableState['per_page'] = @scope.gridApi.grid.options.paginationPageSize
         @annuityChanges.$refresh(tableState)
 
+class DinnerController
+    @.$inject = ['$http', '$scope', '$nbEvent']
+
+    constructor: ($http, $scope, $Evt) ->
+        $scope.currentSettingLocation = null
+        #当前配置项
+        $scope.setting = null
+        $scope.configurations = null
+        $scope.locations = null
+
+        $http.get('api/welfares/dinners')
+            .success (result) ->
+                $scope.configurations = result.dinners
+
+        #保存社保配置信息
+        $scope.saveConfig = (settings)->
+            $http.put('/api/welfares/dinners', {
+                dinners: settings
+            }).success ()->
+                $Evt.$send('dinners:update:success', '工作餐配置保存成功')
+
+    destroyCity: (cities, idx) ->
+        cities.splice(idx, 1)
+
+
 
 class DinnerPersonalController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerPersonSetup', '$q', '$state']
 
     constructor: (@http, @scope, @Evt, @DinnerPersonSetup, @q, @state) ->
+        @loadInitialData()
+
         @filterOptions = {
             name: 'dinnerPersonal'
             constraintDefs: [
@@ -905,16 +932,6 @@ class DinnerPersonalController extends nb.Controller
                     name: 'employee_no'
                     displayName: '员工编号'
                     type: 'string'
-                }
-                {
-                    name: 'department_ids'
-                    displayName: '机构'
-                    type: 'org-search'
-                }
-                {
-                    name: 'social_location'
-                    type: 'string'
-                    displayName: '社保属地'
                 }
             ]
         }
@@ -952,7 +969,23 @@ class DinnerPersonalController extends nb.Controller
             {displayName: '卡金额', name: 'cardAmount'}
             {displayName: '卡次数', name: 'cardNumber'}
             {displayName: '工作餐', name: 'dinnerfee'}
+            {
+                displayName: '设置'
+                field: 'setting'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                    <a nb-dialog
+                        template-url="partials/welfares/dinners/person.html"
+                        locals="{}">
+                        设置
+                    </a>
+                </div>
+                '''
+            }
         ]
+
+    loadInitialData: () ->
+        @configurations = @DinnerPersonSetup.$collection().$fetch()
 
 
 class DinnerComputeController extends nb.Controller
@@ -1064,6 +1097,7 @@ app.controller 'annuityComputeCtrl', AnnuityComputeController
 app.controller 'annuityHistoryCtrl', AnnuityHistoryController
 app.controller 'annuityChangesCtrl', AnnuityChangesController
 
+app.controller 'dinnerCtrl', DinnerController
 app.controller 'dinnerPersonalCtrl', DinnerPersonalController
 app.controller 'dinnerComputeCtrl', DinnerComputeController
 

@@ -14,7 +14,7 @@ body {
     opacity: .3;
 }
 //暂时暴力解决一些md-dialog在360安全浏览器下没有高度的bug
-.md-dialog.browser360 {
+md-dialog.browser360 {
     height: 80%;
 }
 

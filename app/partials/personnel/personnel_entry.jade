@@ -36,15 +36,18 @@
                         div(layout)
                             md-input-container(flex)
                                 label 生日
+                                    span.require-tip *
                                 input(ng-model="newEmp.birthday" bs-datepicker required)
                             md-input-container.row-has-value(flex)
                                 label 政治面貌
+                                    span.require-tip *
                                 md-select(ng-model="newEmp.politicalStatusId" name="politicalStatus" placeholder="请选择")
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('political_status')") {{item.label}}
 
                         div(layout)
                             md-input-container.row-has-value(flex)
                                 label 学历
+                                    span.require-tip *
                                 md-select(ng-model="newEmp.educationBackgroundId" name="educationBackground" placeholder="请选择")
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('education_backgrounds')") {{item.label}}
                             md-input-container.row-has-value(flex)
@@ -105,6 +108,7 @@
                                     md-option(ng-value="item" ng-repeat="item in params.orgPos") {{item.name}}
                             md-input-container.row-has-value(flex)
                                 label 分类
+                                    span.require-tip *
                                 md-select(ng-model="newEmp.categoryId" name="category" ng-change="newEmp.dutyRankId=null" placeholder="请选择")
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('categories')") {{item.label}}
 
@@ -121,10 +125,12 @@
                         div(layout)
                             md-input-container.row-has-value(flex)
                                 label 用工性质
+                                    span.require-tip *
                                 md-select(ng-model="newEmp.laborRelationId" name="laborRelation" placeholder="请选择")
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('labor_relations')") {{item.label}}
                             md-input-container.row-has-value(flex)
                                 label 通道
+                                    span.require-tip *
                                 md-select(ng-model="newEmp.channelId" name="channel" placeholder="请选择")
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
 
@@ -153,6 +159,7 @@
                         div(layout)
                             md-input-container(flex)
                                 label 实习时间
+                                    span.require-tip *
                                 input(ng-model="newEmp.startInternshipDate" bs-datepicker name="startInternshipDate")
                             md-input-container(flex)
                                 label (注: 到岗时间和实习时间必须填1个)
