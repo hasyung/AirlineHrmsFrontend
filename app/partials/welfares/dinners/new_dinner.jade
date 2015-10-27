@@ -56,21 +56,21 @@ md-dialog.punishment_new(
                 div(layout)
                     md-input-container(flex)
                         label 卡金额
-                        input(ng-model="dinner.cardAmount" required)
+                        input(ng-model="dinner.cardAmount" required type="number")
                     md-input-container(flex)
                         label 工作餐
-                        input(ng-model="dinner.workingfee" required)
+                        input(ng-model="dinner.workingfee" required type="number")
 
                 div(layout)
                     md-input-container(flex)
                         label 早餐次数
-                        input(ng-model="dinner.breakfastNumber" required)
+                        input(ng-model="dinner.breakfastNumber" required type="number")
                     md-input-container(flex)
                         label 午餐次数
-                        input(ng-model="dinner.lunchNumber" required)
+                        input(ng-model="dinner.lunchNumber" required type="number")
                     md-input-container(flex)
                         label 晚餐次数
-                        input(ng-model="dinner.dinnerNumber" required)
+                        input(ng-model="dinner.dinnerNumber" required type="number")
 
 
         .md-actions
