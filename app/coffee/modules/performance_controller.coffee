@@ -313,6 +313,8 @@ class PerformanceMasterRecord extends nb.Controller
             selected = if rows.length >= 1 then rows[0].entity else null
 
     uploadAttachments: (performance, collection, $messages)->
+        self = @
+
         data = JSON.parse($messages)
 
         hash = {
@@ -326,6 +328,7 @@ class PerformanceMasterRecord extends nb.Controller
         performance.attachmentStatus = true
         collection.$create(hash).$asPromise().then (data)->
             collection.$refresh()
+            self.performances.$refresh()
 
     attachmentDestroy: (attachment) ->
         self = @
