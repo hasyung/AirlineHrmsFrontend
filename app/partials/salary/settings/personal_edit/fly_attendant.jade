@@ -48,6 +48,9 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
             label 到岗日期
             input(ng-model="current.joinScalDate" readonly)
         md-input-container.row-has-value(flex)
+            label 薪酬到岗日期
+            input(bs-datepicker ng-model="current.joinSalaryScalDate")
+        md-input-container.row-has-value(flex)
             label 工龄工资
             input(ng-model="current.workingYearsSalary")
 
