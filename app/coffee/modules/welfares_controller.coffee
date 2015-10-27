@@ -977,6 +977,19 @@ class DinnerPersonalController extends nb.Controller
             {displayName: '卡金额', name: 'cardAmount'}
             {displayName: '卡次数', name: 'cardNumber'}
             {displayName: '工作餐', name: 'dinnerfee'}
+            {
+                displayName: '设置'
+                field: 'setting'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                    <a nb-dialog
+                        template-url="partials/welfares/dinners/person.html"
+                        locals="{}">
+                        设置
+                    </a>
+                </div>
+                '''
+            }
         ]
 
 
