@@ -918,6 +918,8 @@ class DinnerPersonalController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerPersonSetup', '$q', '$state']
 
     constructor: (@http, @scope, @Evt, @DinnerPersonSetup, @q, @state) ->
+        @loadInitialData()
+
         @filterOptions = {
             name: 'dinnerPersonal'
             constraintDefs: [
@@ -930,16 +932,6 @@ class DinnerPersonalController extends nb.Controller
                     name: 'employee_no'
                     displayName: '员工编号'
                     type: 'string'
-                }
-                {
-                    name: 'department_ids'
-                    displayName: '机构'
-                    type: 'org-search'
-                }
-                {
-                    name: 'social_location'
-                    type: 'string'
-                    displayName: '社保属地'
                 }
             ]
         }
@@ -991,6 +983,9 @@ class DinnerPersonalController extends nb.Controller
                 '''
             }
         ]
+
+    loadInitialData: () ->
+        @configurations = @DinnerPersonSetup.$collection().$fetch()
 
 
 class DinnerComputeController extends nb.Controller
