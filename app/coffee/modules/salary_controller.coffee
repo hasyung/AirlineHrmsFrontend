@@ -968,7 +968,7 @@ class SalaryKeepController extends SalaryBaseController
             {displayName: '保底增幅', name: 'minimumGrowth', enableCellEdit: false}
             {displayName: '地勤补贴保留', name: 'landAllowance', enableCellEdit: false}
             {displayName: '生活补贴保留', name: 'lifeAllowance', enableCellEdit: false}
-            {displayName: '09调资增加保留', name: 'adjustmen09', enableCellEdit: false}
+            {displayName: '09调资增加保留', name: 'adjustment09', enableCellEdit: false}
             {displayName: '14公务用车保留', name: 'bus14', enableCellEdit: false}
             {displayName: '14通信补贴保留', name: 'communication14', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
