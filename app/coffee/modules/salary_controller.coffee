@@ -919,7 +919,34 @@ class SalaryBasicController extends SalaryBaseController
             {displayName: '岗位薪酬', name: 'positionSalary', enableCellEdit: false}
             {displayName: '工龄工资', name: 'workingYearsSalary', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
-            {displayName: '说明', name: 'notes', enableCellEdit: false}
+            {
+                name:"notes"
+                displayName:"说明"
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
+                        {{row.entity.notes || '无'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #eee;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <md-input-container>
+                                    <label>说明</label>
+                                    <textarea
+                                        ng-model="row.entity.notes"
+                                        style="resize:none;"
+                                        class="reason-input"
+                                        readonly></textarea>
+                                </md-input-container>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.notes
+            }
             {
                 name:"remark"
                 displayName:"备注"
@@ -972,7 +999,34 @@ class SalaryKeepController extends SalaryBaseController
             {displayName: '14公务用车保留', name: 'bus14', enableCellEdit: false}
             {displayName: '14通信补贴保留', name: 'communication14', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
-            {displayName: '说明', name: 'notes', enableCellEdit: false}
+            {
+                name:"notes"
+                displayName:"说明"
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
+                        {{row.entity.notes || '无'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #eee;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <md-input-container>
+                                    <label>说明</label>
+                                    <textarea
+                                        ng-model="row.entity.notes"
+                                        style="resize:none;"
+                                        class="reason-input"
+                                        readonly></textarea>
+                                </md-input-container>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.notes
+            }
             {
                 name:"remark"
                 displayName:"备注"
@@ -1018,7 +1072,34 @@ class SalaryPerformanceController extends SalaryBaseController
             {displayName: '当月绩效基数', name: 'baseSalary', enableCellEdit: false}
             {displayName: '当月绩效薪酬', name: 'amount', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
-            {displayName: '说明', name: 'notes', enableCellEdit: false}
+            {
+                name:"notes"
+                displayName:"说明"
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
+                        {{row.entity.notes || '无'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #eee;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <md-input-container>
+                                    <label>说明</label>
+                                    <textarea
+                                        ng-model="row.entity.notes"
+                                        style="resize:none;"
+                                        class="reason-input"
+                                        readonly></textarea>
+                                </md-input-container>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.notes
+            }
             {
                 name:"remark"
                 displayName:"备注"
@@ -1076,7 +1157,34 @@ class SalaryHoursFeeController extends SalaryBaseController
             {displayName: '小时费', name: 'flyFee', enableCellEdit: false}
             {displayName: '空勤灶', name: 'airlineFee', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
-            {displayName: '说明', name: 'notes', enableCellEdit: false}
+            {
+                name:"notes"
+                displayName:"说明"
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
+                        {{row.entity.notes || '无'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #eee;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <md-input-container>
+                                    <label>说明</label>
+                                    <textarea
+                                        ng-model="row.entity.notes"
+                                        style="resize:none;"
+                                        class="reason-input"
+                                        readonly></textarea>
+                                </md-input-container>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.notes
+            }
             {
                 name:"remark"
                 displayName:"备注"
@@ -1156,7 +1264,34 @@ class SalaryAllowanceController extends SalaryBaseController
             {displayName: '梭班补贴', name: 'workOvertime', enableCellEdit: false}
             {displayName: '高温补贴', name: 'temp', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
-            {displayName: '说明', name: 'notes', enableCellEdit: false}
+            {
+                name:"notes"
+                displayName:"说明"
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
+                        {{row.entity.notes || '无'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #eee;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <md-input-container>
+                                    <label>说明</label>
+                                    <textarea
+                                        ng-model="row.entity.notes"
+                                        style="resize:none;"
+                                        class="reason-input"
+                                        readonly></textarea>
+                                </md-input-container>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.notes
+            }
             {
                 name:"remark"
                 displayName:"备注"
@@ -1210,7 +1345,34 @@ class SalaryLandAllowanceController extends SalaryBaseController
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
             {displayName: '津贴', name: 'subsidy', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
-            {displayName: '说明', name: 'notes', enableCellEdit: false}
+            {
+                name:"notes"
+                displayName:"说明"
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
+                        {{row.entity.notes || '无'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #eee;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <md-input-container>
+                                    <label>说明</label>
+                                    <textarea
+                                        ng-model="row.entity.notes"
+                                        style="resize:none;"
+                                        class="reason-input"
+                                        readonly></textarea>
+                                </md-input-container>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.notes
+            }
             {
                 name:"remark"
                 displayName:"备注"
@@ -1282,7 +1444,34 @@ class SalaryRewardController extends SalaryBaseController
             {displayName: '收益奖励金', name: 'earningsFee', enableCellEdit: false}
             {displayName: '预算外奖励', name: 'offBudgetFee', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
-            {displayName: '说明', name: 'notes', enableCellEdit: false}
+            {
+                name:"notes"
+                displayName:"说明"
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
+                        {{row.entity.notes || '无'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #eee;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <md-input-container>
+                                    <label>说明</label>
+                                    <textarea
+                                        ng-model="row.entity.notes"
+                                        style="resize:none;"
+                                        class="reason-input"
+                                        readonly></textarea>
+                                </md-input-container>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.notes
+            }
             {
                 name:"remark"
                 displayName:"备注"
@@ -1337,7 +1526,34 @@ class SalaryTransportFeeController extends SalaryBaseController
             {displayName: '交通费', name: 'amount', enableCellEdit: false}
             {displayName: '班车费扣除', name: 'busFee', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
-            {displayName: '说明', name: 'notes', enableCellEdit: false}
+            {
+                name:"notes"
+                displayName:"说明"
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
+                        {{row.entity.notes || '无'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #eee;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <md-input-container>
+                                    <label>说明</label>
+                                    <textarea
+                                        ng-model="row.entity.notes"
+                                        style="resize:none;"
+                                        class="reason-input"
+                                        readonly></textarea>
+                                </md-input-container>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.notes
+            }
             {
                 name:"remark"
                 displayName:"备注"
@@ -1396,7 +1612,34 @@ class SalaryOverviewController extends SalaryBaseController
             {displayName: '驻站津贴', name: 'landSubsidy', enableCellEdit: false}
             {displayName: '奖励', name: 'reward', enableCellEdit: false}
             {displayName: '合计', name: 'total', enableCellEdit: false}
-            {displayName: '说明', name: 'notes', enableCellEdit: false}
+            {
+                name:"notes"
+                displayName:"说明"
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
+                        {{row.entity.notes || '无'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #eee;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <md-input-container>
+                                    <label>说明</label>
+                                    <textarea
+                                        ng-model="row.entity.notes"
+                                        style="resize:none;"
+                                        class="reason-input"
+                                        readonly></textarea>
+                                </md-input-container>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.notes
+            }
             {
                 name:"remark"
                 displayName:"备注"
