@@ -74,6 +74,12 @@
                                     ng-href="/api/performance_salaries/export_approval?month={{ctrl.currentCalcTime()}}"
                                     href="javascript:"
                                 ) 审批表
+                            md-menu-item()
+                                a.md-button(
+                                    download
+                                    ng-href="/api/performance_salaries/export_base_salary?month={{ctrl.currentCalcTime()}}"
+                                    href="javascript:"
+                                ) 绩效基数
 
         div(nb-grid
             column-defs="ctrl.columnDef"
