@@ -1029,10 +1029,10 @@ class DinnerComputeController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerRecord', 'toaster','$q']
 
     constructor: (@http, @scope, @Evt, @DinnerRecord, @toaster, @q) ->
-        opitions = null
+        options = null
 
         @loadDateTime()
-        @loadInitialData(opitions)
+        @loadInitialData(options)
 
         @filterOptions = {
             name: 'dinnerCompute'
@@ -1099,23 +1099,23 @@ class DinnerComputeController extends nb.Controller
         @currentYear = @year_list[@year_list.length - 1]
         @currentMonth = @month_list[@month_list.length - 1]
 
-    loadInitialData: (opitions) ->
+    loadInitialData: (options) ->
         args = {month: @currentCalcTime()}
-        angular.extend(args, opitions) if angular.isDefined(opitions)
+        angular.extend(args, options) if angular.isDefined(options)
         @records = @DinnerRecord.$collection(args).$fetch()
 
     search: (tableState) ->
         tableState = {} unless tableState
         tableState['month'] = @currentCalcTime()
-        tableState['per_page'] = @gridApi.grid.opitions.paginationPageSize
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @records.$refresh(tableState)
 
     currentCalcTime: ()->
         @currentYear + "-" + @currentMonth
 
-    loadRecords: (opitions = null) ->
+    loadRecords: (options = null) ->
         args = {month: @currentCalcTime()}
-        angular.extend(args, opitions) if angular.isDefined(opitions)
+        angular.extend(args, options) if angular.isDefined(options)
         @records.$refresh(args)
 
 
