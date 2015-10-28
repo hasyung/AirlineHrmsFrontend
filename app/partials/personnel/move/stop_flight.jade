@@ -1,4 +1,4 @@
-md-dialog.employee_move.browser360
+md-dialog.employee_move
     md-toolbar.md-accent(md-theme="hrms")
         .md-toolbar-tools
             span 空勤停飞设置
@@ -33,6 +33,16 @@ md-dialog.employee_move.browser360
                         md-select(ng-model="stopEmployee.special_category" placeholder="请选择")
                             md-option(value="空勤停飞") 空勤停飞
                             md-option(value="空勤地面") 空勤地面
+                div(layout)
+                    md-radio-group(ng-model="stopEmployee.stop_fly_reason" layout)
+                        md-radio-button.md-primary(
+                            style="margin: 0 30px 20px 0;"
+                            value="身体原因"
+                            ) 身体原因停飞
+                        md-radio-button.md-primary(
+                            value="个人原因"
+                            ) 个人原因停飞
+
                 div(layout)
                     md-input-container(flex)
                         label 停飞开始时间
