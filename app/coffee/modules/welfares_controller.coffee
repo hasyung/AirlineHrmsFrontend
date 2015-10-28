@@ -918,6 +918,8 @@ class DinnerPersonalController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerPersonSetup', '$q', '$state', 'Employee']
 
     constructor: (@http, @scope, @Evt, @DinnerPersonSetup, @q, @state, @Employee) ->
+        @areas = []
+
         @loadInitialData()
 
         @filterOptions = {
@@ -973,10 +975,10 @@ class DinnerPersonalController extends nb.Controller
                 displayName: '设置'
                 field: 'setting'
                 cellTemplate: '''
-                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                <div class="ui-grid-cell-contents">
                     <a nb-dialog
                         template-url="partials/welfares/dinners/person.html"
-                        locals="{dinner: row.entity}">
+                        locals="{dinner: row.entity, ctrl: grid.appScope.$parent.ctrl}">
                         设置
                     </a>
                 </div>
@@ -985,7 +987,10 @@ class DinnerPersonalController extends nb.Controller
         ]
 
     loadInitialData: () ->
-        @configurations = @DinnerPersonSetup.$collection().$fetch()
+        self = @
+
+        @configurations = @DinnerPersonSetup.$collection().$fetch().$then (response)->
+            self.areas = response.$response.data.areas
 
     loadEmployee: (params, contract)->
         self = @
@@ -1012,6 +1017,11 @@ class DinnerPersonalController extends nb.Controller
         self = @
 
         @configurations.$build(dinner).$save().$then ()->
+            self.configurations.$refresh()
+
+    saveDinner: (dinner) ->
+        self = @
+        dinner.$save().$then () ->
             self.configurations.$refresh()
 
 

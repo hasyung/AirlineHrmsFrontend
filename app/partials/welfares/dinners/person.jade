@@ -1,8 +1,8 @@
 md-dialog.punishment_new(
     style="min-width: 500px;"
-    ng-init="ctrl = dialog.ctrl; dinner = dialog.dinner; ctrl.loadEmp = {};"
+    ng-init="ctrl = dialog.ctrl; dinner = dialog.dinner;"
     )
-    form(ng-submit="ctrl.newDinner(dinner); dialog.close();" name="newDinnerForm")
+    form(ng-submit="ctrl.saveDinner(dinner); dialog.close();" name="editDinnerForm")
         md-toolbar.md-accent(md-theme="hrms")
             .md-toolbar-tools
                 span 工作餐设置
@@ -43,15 +43,15 @@ md-dialog.punishment_new(
                     md-input-container.row-has-value(flex)
                         label 餐费区域
                         md-select(ng-model="dinner.area" required)
-                            md-option(value="北头食堂") 北头食堂
-                            md-option(value="机关食堂") 机关食堂
+                            md-option(ng-value="area" ng-repeat="area in ctrl.areas") {{area}}
+
                 div(layout)
                     md-input-container(flex)
                         label 卡金额
                         input(ng-model="dinner.cardAmount" required)
                     md-input-container(flex)
                         label 工作餐
-                        input(ng-model="dinner.workingfee" required)
+                        input(ng-model="dinner.workingFee" required)
 
                 div(layout)
                     md-input-container(flex)

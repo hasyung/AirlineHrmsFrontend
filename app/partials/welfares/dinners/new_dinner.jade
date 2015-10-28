@@ -38,6 +38,7 @@ md-dialog.punishment_new(
                     md-input-container(flex)
                         label 驻地
                         input(ng-model="ctrl.loadEmp.location" readonly)
+                    div(flex)
 
                 div(layout)
                     md-input-container.row-has-value(flex)
@@ -51,8 +52,8 @@ md-dialog.punishment_new(
                     md-input-container.row-has-value(flex)
                         label 餐费区域
                         md-select(ng-model="dinner.area" required)
-                            md-option(value="北头食堂") 北头食堂
-                            md-option(value="机关食堂") 机关食堂
+                            md-option(ng-value="area" ng-repeat="area in ctrl.areas") {{area}}
+
                 div(layout)
                     md-input-container(flex)
                         label 卡金额
