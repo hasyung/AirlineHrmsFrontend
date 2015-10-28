@@ -1028,14 +1028,14 @@ class DinnerPersonalController extends nb.Controller
 class DinnerComputeController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerRecord', 'toaster','$q']
 
-    constructor: ($http, $scope, @Evt, @DinnerRecord, @toaster, @q) ->
+    constructor: (@http, @scope, @Evt, @DinnerRecord, @toaster, @q) ->
         opitions = null
 
         @loadDateTime()
         @loadInitialData(opitions)
 
         @filterOptions = {
-            name: 'dinnerPersonal'
+            name: 'dinnerCompute'
             constraintDefs: [
                 {
                     name: 'employee_name'
@@ -1074,7 +1074,7 @@ class DinnerComputeController extends nb.Controller
             # {displayName: '发放日期', name: 'sentDate'}
         ]
 
-    # initialize: (gridApi) ->
+    initialize: (gridApi) ->
     #     saveRow = (rowEntity) ->
     #         dfd = @q.defer()
 
@@ -1087,14 +1087,17 @@ class DinnerComputeController extends nb.Controller
     #                 rowEntity.$restore())
 
     #     gridApi.rowEdit.on.saveRow(@scope, saveRow.bind(@))
-    #     @scope.$gridApi = gridApi
-    #     @gridApi = gridApi
+        @scope.$gridApi = gridApi
+        @gridApi = gridApi
 
     loadDateTime: () ->
         date = new Date()
 
         @year_list = @$getYears()
         @month_list = @$getMonths()
+
+        @currentYear = @year_list[@year_list.length - 1]
+        @currentMonth = @month_list[@month_list.length - 1]
 
     loadInitialData: (opitions) ->
         args = {month: @currentCalcTime()}

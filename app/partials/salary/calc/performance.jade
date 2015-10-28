@@ -47,12 +47,12 @@
                         md-menu-content
                             md-menu-item()
                                 a.md-button(flex
-                                    ng-click="ctrl.exeCalc('base_salary')"
+                                    ng-click="ctrl.exeCalc({type: 'base_salary'})"
                                     href="javascript:;"
                                 ) 计算绩效基数
                             md-menu-item()
                                 a.md-button(
-                                    ng-click="ctrl.exeCalc('amount')"
+                                    ng-click="ctrl.exeCalc({type: 'amount'})"
                                     href="javascript:;"
                                 ) 计算绩效薪酬
                 span
