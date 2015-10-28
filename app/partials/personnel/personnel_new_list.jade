@@ -6,6 +6,14 @@
             .md-toolbar-tools
                 h2 员工人事花名册
                 div(flex)
+                md-button.md-primary.md-raised(
+                        has-permission="employees_create"
+                        flow-init="{target: '/api/attachments/upload_file', testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
+                        flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                        flow-file-success="ctrl.upload_start=false;ctrl.uploadNewEmployees('新员工导入', ctrl.parseJSON($message).id);"
+                        flow-btn
+                        type="button"
+                    ) 新员工导入
                 span
                     md-button.md-primary.md-raised(
                         has-permission="employees_create"

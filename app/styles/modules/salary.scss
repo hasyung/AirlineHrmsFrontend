@@ -1,6 +1,22 @@
 .form-static {
     background-color: #fff;
 
+    .global_part {
+        margin-bottom: 30px;
+        max-height: 25px;
+        overflow: hidden;
+        padding: 0 20px;
+        transition: max-height 1s linear;
+
+        &.open {
+            max-height: 3000px;
+        }
+
+        .subheader--center {
+            height: 21px;
+        }
+    }
+
     &.has-sub {
         &.md {
             .subheader {
@@ -45,6 +61,22 @@
     .form-row {
         line-height: 34px;
 
+        &.yellow {
+            color: #f58220;
+
+            .md-input {
+                color: #f58220;
+            }
+        }
+
+        &.red {
+            color: rgb(239, 83, 80);
+
+            .md-input {
+                color: rgb(239, 83, 80);
+            }
+        }
+
         label {
             margin-right: 10px;
             text-align: right;
@@ -76,6 +108,20 @@
             .md-select-value {
                 width: 120px;
             }
+        }
+    }
+
+    .leave {
+        min-width: 170px;
+        position: relative;
+
+        &:after {
+            background: rgba(0, 0, 0, .1);
+            content: '';
+            display: block;
+            height: 1px;
+            margin-top: -2px;
+            width: 100%;
         }
     }
 

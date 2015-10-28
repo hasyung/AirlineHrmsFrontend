@@ -205,7 +205,7 @@ App
                 || $state.current.url.indexOf('/leave') >= 0  \
                 || $state.current.url.indexOf('/resignation') >= 0  \
                 || $state.current.url.indexOf('/adjust-position') >= 0  \
-                || $state.current.url.indexOf('/erarly_retirement') >= 0  \
+                || $state.current.url.indexOf('/early_retirement') >= 0  \
                 || $state.current.url.indexOf('/renew_contract') >= 0 \
                 || $state.current.url.indexOf('/reward_punishment') >= 0 \
                 || $state.current.url.indexOf('/attendance') >= 0 \

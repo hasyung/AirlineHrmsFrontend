@@ -244,11 +244,11 @@ angular.module 'nb.directives'
                 switch options.position
                     when 'left-bottom'
                         pTip = {
-                            top: elemPosition.top - tipHeight * options.offset + elemHeight/2,
+                            top: elemPosition.top - 20 + elemHeight/2,
                             left: elemPosition.left - options.space - tipWidth
                         }
                         pArrow = {
-                            top: tipHeight * options.offset,
+                            top: 20
                             left: tipWidth - 2 * options.border
                         }
                     when 'right-bottom'

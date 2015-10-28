@@ -21,6 +21,7 @@ form(ng-controller="EditableResourceCtrl", ng-submit="save(currentUser.$save(), 
                     md-input-container(flex)
                         div.anth-attr(title="该属性需要审核" ng-hide="editing" ng-class="{auditing: currentUser.$metadata.audited_changes.name}")
                         label 姓名
+                            span.require-tip *
                         input(ng-model="currentUser.name" name="name" required)
                     md-input-container(flex)
                         label 员工编号
@@ -48,21 +49,24 @@ form(ng-controller="EditableResourceCtrl", ng-submit="save(currentUser.$save(), 
                         //-         span {{item}}
                         //-     md-not-found
                         //-         | 没有匹配项，请自行输入
+
+                        //- nb-autocomplete(ng-model="currentUser.nation" values="ctrl.nations" flex)
                         label 民族
-                        input(ng-disabled="!editing" ng-model="currentUser.nation")
-                        //- md-select(ng-model="currentUser.nationId" ng-disabled="!editing")
-                        //-     md-option(ng-value="item.id" ng-repeat="item in $enum.get('nations')") {{item.label}}
+                        input(ng-model="currentUser.nation")
                 div(layout)
                     md-input-container(flex)
                         label 籍贯
+                            span.require-tip *
                         input(ng-model="currentUser.nativePlace" name="nativePlace" required)
                     md-input-container(flex)
                         label 出生地
+                            span.require-tip *
                         input(ng-model="currentUser.birthPlace" name="birthPlace" required)
                 div(layout)
                     md-input-container(flex)
                         div.anth-attr(title="该属性需要审核" ng-hide="editing" ng-class="{auditing: currentUser.$metadata.audited_changes.identity_no}")
                         label 身份证号
+                            span.require-tip *
                         input(ng-model="currentUser.identityNo" name="identityNo" required)
                     md-input-container.row-has-value(flex)
                         label 婚姻状况

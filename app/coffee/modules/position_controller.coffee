@@ -208,4 +208,41 @@ class PositionDetailCtrl
             {displayName: '到岗时间', name: 'startDate'}
         ]
 
+class AdjustPositionCtrl
+    @.$inject = ['$scope', '$http', '$nbEvent']
+
+    constructor: (scope, @http, @Evt) ->
+
+    adjustPosition: (employee) ->
+        self = @
+
+        params = {}
+        params.positions = []
+
+        params.employee_id = employee.id
+        params.channel_id = employee.channelId
+        params.category_id = employee.categoryId
+        params.duty_rank_id = employee.dutyRankId
+        params.position_remark = employee.positionRemark
+        params.oa_file_no = employee.oaFileNo
+        params.position_change_date = employee.positionChangeDate
+        params.probation_duration = employee.probationDuration
+
+        employee.positions.map (position) ->
+            params.positions.push({
+                'position': {'id': position.position.id},
+                'category': position.category
+                'department': {'id': position.department.id}
+                })
+
+
+        console.log params
+
+        @http.post("/api/position_change_records", params).success (data, status)->
+            self.Evt.$send "data:create:success", "员工转岗成功"
+
+
 app.controller 'PositionDetailCtrl', PositionDetailCtrl
+app.controller 'AdjustPositionCtrl', AdjustPositionCtrl
+
+

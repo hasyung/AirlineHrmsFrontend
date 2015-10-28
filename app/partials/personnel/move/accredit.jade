@@ -1,49 +1,48 @@
-md-dialog.employee_move
-    md-content(ng-init="accreditEmployee = {}; ctrl.loadEmp = {};")
-        form(ng-submit="ctrl.newAccreditEmployee(accreditEmployee); dialog.close();" name="newAccreditForm" flex)
-            md-toolbar.md-accent(md-theme="hrms")
-                .md-toolbar-tools
-                    span 驻派设置
-            .dialog-content(layout layout-align="center")
-                fieldset(flex)
-                    div(style="display:none;")
-                        input(ng-model="accreditEmployee.employeeId")
-                    div(layout)
-                        md-input-container(flex)
-                            label 姓名
-                            input(ng-model="ctrl.loadEmp.name"
-                                name="employeeName"
-                                ng-model-options="{debounce: {'default': 1000, 'blur': 0}}"
-                                ng-change="ctrl.loadEmployee({name: ctrl.loadEmp.name}, accreditEmployee);"
-                                required)
-                        div(flex)
-                    div(layout)
-                        md-input-container(flex)
-                            label 部门
-                            input(
-                                ng-model="ctrl.loadEmp.department.name"
-                                name="department"
-                                readonly
-                                )
-                        md-input-container(flex)
-                            label 岗位
-                            input(ng-model="ctrl.loadEmp.position.name" name="position" readonly)
-                    div(layout)
-                        md-input-container(flex)
-                            label 派驻地点
-                            input(ng-model="accreditEmployee.special_location" name="specialLocation" required)
-                    div(layout)
-                        md-input-container(flex)
-                            label 派驻开始时间
-                            input(ng-model="accreditEmployee.special_date_from" name="startDate" bs-datepicker default-today required)
-                        md-input-container(flex)
-                            label 派驻结束时间(大于开始时间)
-                            input(ng-model="accreditEmployee.special_date_to" name="endDate" bs-datepicker required)
-                    div(layout)
-                        md-input-container(flex)
-                            label 文件编号
-                            input(ng-model="accreditEmployee.file_no" name="fileNo" required)
+md-dialog.employee_move.browser360
+    md-toolbar.md-accent(md-theme="hrms")
+        .md-toolbar-tools
+            span 派驻设置
+    form(ng-submit="ctrl.newAccreditEmployee(accreditEmployee); dialog.close();" name="newAccreditForm" flex)
+        md-content(ng-init="accreditEmployee = {}; ctrl.loadEmp = {};")
+            fieldset(flex)
+                div(style="display:none;")
+                    input(ng-model="accreditEmployee.employeeId")
+                div(layout)
+                    md-input-container(flex)
+                        label 姓名
+                        input(ng-model="ctrl.loadEmp.name"
+                            name="employeeName"
+                            ng-model-options="{debounce: {'default': 1000, 'blur': 0}}"
+                            ng-change="ctrl.loadEmployee({name: ctrl.loadEmp.name}, accreditEmployee);"
+                            required)
+                    div(flex)
+                div(layout)
+                    md-input-container(flex)
+                        label 部门
+                        input(
+                            ng-model="ctrl.loadEmp.department.name"
+                            name="department"
+                            readonly
+                            )
+                    md-input-container(flex)
+                        label 岗位
+                        input(ng-model="ctrl.loadEmp.position.name" name="position" readonly)
+                div(layout)
+                    md-input-container(flex)
+                        label 派驻地点
+                        input(ng-model="accreditEmployee.special_location" name="specialLocation" required)
+                div(layout)
+                    md-input-container(flex)
+                        label 派驻开始时间
+                        input(ng-model="accreditEmployee.special_date_from" name="startDate" bs-datepicker default-today required)
+                    md-input-container(flex)
+                        label 派驻结束时间(大于开始时间)
+                        input(ng-model="accreditEmployee.special_date_to" name="endDate" bs-datepicker ng-required="ctrl.loadEmp.channelId==4 || ctrl.loadEmp.channelId==5")
+                div(layout)
+                    md-input-container(flex)
+                        label 文件编号
+                        input(ng-model="accreditEmployee.file_no" name="fileNo" required)
 
-            .md-actions
-                md-button(type="button" ng-click="cancel(accreditEmployee, $event, newAccreditForm);dialog.close()") 取 消
-                md-button.md-primary.md-raised(type="submit" ng-disabled="newAccreditForm.$invalid || newAccreditForm.endDate.$modelValue <= newAccreditForm.startDate.$modelValue") 确 定
+        .md-actions
+            md-button(type="button" ng-click="cancel(accreditEmployee, $event, newAccreditForm);dialog.close()") 取 消
+            md-button.md-primary.md-raised(type="submit" ng-disabled="newAccreditForm.$invalid || newAccreditForm.endDate.$modelValue <= newAccreditForm.startDate.$modelValue") 确 定

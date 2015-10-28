@@ -1,50 +1,49 @@
-md-dialog.employee_move
+md-dialog.employee_move.browser360
     md-toolbar.md-accent(md-theme="hrms")
         .md-toolbar-tools
             span 空勤停飞设置
     form(ng-submit="ctrl.newStopEmployee(stopEmployee); dialog.close();" name="newStopForm" flex)
         md-content(ng-init="stopEmployee = {out_company: false}; ctrl.loadEmp = {};")
-            .dialog-content(layout layout-align="center")
-                fieldset(flex)
-                    div(style="display:none;")
-                        input(ng-model="stopEmployee.employee_id")
-                    div(layout)
-                        md-input-container(flex)
-                            label 姓名
-                            input(ng-model="ctrl.loadEmp.name"
-                                name="employeeName"
-                                ng-model-options="{debounce: {'default': 1000, 'blur': 0}}"
-                                ng-change="ctrl.loadEmployee({name: ctrl.loadEmp.name}, stopEmployee);"
-                                required)
-                        div(flex)
-                    div(layout)
-                        md-input-container(flex)
-                            label 部门
-                            input(
-                                ng-model="ctrl.loadEmp.department.name"
-                                name="department"
-                                readonly
-                                )
-                        md-input-container(flex)
-                            label 岗位
-                            input(ng-model="ctrl.loadEmp.position.name" name="position" readonly)
-                    div(layout)
-                        md-input-container.row-has-value(flex)
-                            label 停飞种类
-                            md-select(ng-model="stopEmployee.special_category" placeholder="请选择")
-                                md-option(value="空勤停飞") 空勤停飞
-                                md-option(value="空勤地面") 空勤地面
-                    div(layout)
-                        md-input-container(flex)
-                            label 停飞开始时间
-                            input(ng-model="stopEmployee.special_date_from" name="startDate" bs-datepicker default-today required)
-                        md-input-container(flex)
-                            label 停飞结束时间(大于开始时间)
-                            input(ng-model="stopEmployee.special_date_to" name="endDate" bs-datepicker)
-                    div(layout)
-                        md-input-container(flex)
-                            label 文件编号
-                            input(ng-model="stopEmployee.file_no" name="fileNo" required)
+            fieldset(flex)
+                div(style="display:none;")
+                    input(ng-model="stopEmployee.employee_id")
+                div(layout)
+                    md-input-container(flex)
+                        label 姓名
+                        input(ng-model="ctrl.loadEmp.name"
+                            name="employeeName"
+                            ng-model-options="{debounce: {'default': 1000, 'blur': 0}}"
+                            ng-change="ctrl.loadEmployee({name: ctrl.loadEmp.name}, stopEmployee);"
+                            required)
+                    div(flex)
+                div(layout)
+                    md-input-container(flex)
+                        label 部门
+                        input(
+                            ng-model="ctrl.loadEmp.department.name"
+                            name="department"
+                            readonly
+                            )
+                    md-input-container(flex)
+                        label 岗位
+                        input(ng-model="ctrl.loadEmp.position.name" name="position" readonly)
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 停飞种类
+                        md-select(ng-model="stopEmployee.special_category" placeholder="请选择")
+                            md-option(value="空勤停飞") 空勤停飞
+                            md-option(value="空勤地面") 空勤地面
+                div(layout)
+                    md-input-container(flex)
+                        label 停飞开始时间
+                        input(ng-model="stopEmployee.special_date_from" name="startDate" bs-datepicker default-today required)
+                    md-input-container(flex)
+                        label 停飞结束时间(大于开始时间)
+                        input(ng-model="stopEmployee.special_date_to" name="endDate" bs-datepicker)
+                div(layout)
+                    md-input-container(flex)
+                        label 文件编号
+                        input(ng-model="stopEmployee.file_no" name="fileNo" required)
 
         .md-actions
             md-button(type="button" ng-click="cancel(stopEmployee, $event, newStopForm);dialog.close()") 取 消

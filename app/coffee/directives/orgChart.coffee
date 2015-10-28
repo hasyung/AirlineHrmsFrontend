@@ -248,7 +248,7 @@ drawOrgChart = (root, options, select_org_id) ->
                 .attr "y", (d) -> d.y
 
             nodeEnter.append("text")
-                .attr("class", "orgchart-text")
+                .attr("class", "orgchart-text-staff")
                 .attr("text-anchor", "middle")
                 .style("font-size", "12px")
                 .attr "x", (d) -> d.x + rectHeight/2 - 2

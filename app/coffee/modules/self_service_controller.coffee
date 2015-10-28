@@ -160,8 +160,8 @@ class Route
                     }
                 }
             }
-            .state 'my_requests.erarly_retirement', {
-                url: '/erarly_retirement'
+            .state 'my_requests.early_retirement', {
+                url: '/early_retirement'
                 views: {
                     '@': {
                         templateUrl: 'partials/self/my_requests/early_retirement/index.html'
@@ -224,9 +224,9 @@ class Route
 
 
 class ProfileCtrl extends nb.Controller
-    @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope', 'User', 'USER_META', 'UserPerformance', 'Performance', '$filter', 'UserReward', 'UserPunishment', '$http']
+    @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope', 'User', 'USER_META', 'UserPerformance', 'Performance', '$filter', 'UserReward', 'UserPunishment', '$http', '$nbEvent']
 
-    constructor: (@scope, @sweet, @Employee, @rootScope, @User, @USER_META, @UserPerformance, @Performance, @filter, @UserReward, @UserPunishment, @http) ->
+    constructor: (@scope, @sweet, @Employee, @rootScope, @User, @USER_META, @UserPerformance, @Performance, @filter, @UserReward, @UserPunishment, @http, @Evt) ->
         @loadInitialData()
         @status = 'show'
 
@@ -291,29 +291,29 @@ class ProfileCtrl extends nb.Controller
         }
 
         @uiConfig = {
-          calendar: {
-            dayNames: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
-            dayNamesShort: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
-            monthNamesShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月","八月","九月","十月","十一月","十二月"]
-            monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月","八月","九月","十月","十一月","十二月"]
+            calendar: {
+                dayNames: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
+                dayNamesShort: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
+                monthNamesShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月","八月","九月","十月","十一月","十二月"]
+                monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月","八月","九月","十月","十一月","十二月"]
 
-            height: 450
-            editable: false
+                height: 450
+                editable: false
 
-            header: {
-              #left: 'month basicWeek basicDay agendaWeek agendaDay'
-              left: 'month basicWeek'
-              center: 'title'
-              right: 'today prev,next'
+                header: {
+                  #left: 'month basicWeek basicDay agendaWeek agendaDay'
+                  left: 'month basicWeek'
+                  center: 'title'
+                  right: 'today prev,next'
+                }
+
+                #viewRender: (view, element)->
+                   #console.error("View Changed: ", view.visStart, view.visEnd, view.start, view.end)
+
+                dayClick: @dayOnClick
+                #eventDrop
+                #eventResize
             }
-
-            #viewRender: (view, element)->
-               #console.error("View Changed: ", view.visStart, view.visEnd, view.start, view.end)
-
-            dayClick: @dayOnClick
-            #eventDrop
-            #eventResize
-          }
         }
 
         @http.get('/api/me/attendance_records/').success (data)->
@@ -385,11 +385,11 @@ class MyRequestCtrl extends nb.Controller
             {name:"employeeName", displayName:"姓名"}
             {name:"departmentName", displayName:"所属部门"}
             {name:"positionName", displayName:"岗位"}
-            {name:"createdAt", displayName:"申述时间", cellFilter:"date:'yyyy-MM-dd'"}
+            {name:"createdAt", displayName:"申诉时间", cellFilter:"date:'yyyy-MM-dd'"}
             {name:"assessTime", displayName:"考核时间"}
             {name:"result", displayName:"绩效"}
             {name:"category", displayName:"排名"}
-            {name:"outcome", displayName:"申述结果"}
+            {name:"outcome", displayName:"申诉结果"}
             {
                 name: 'type'
                 displayName: '详细'

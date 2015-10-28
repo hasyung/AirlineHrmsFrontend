@@ -18,6 +18,10 @@
                 // vertical-align: top;
                 transition: all .3 ease;
 
+                &.mini {
+                    width: 8%;
+                }
+
                 &.sm {
                     width: 18%;
                 }

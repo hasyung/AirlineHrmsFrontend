@@ -53,15 +53,15 @@ SALARY_COLUMNDEF_DEFAULT = [
 
 CALC_STEP_COLUMN = [
     {
-        displayName: '∑φ ∂f(a+b)'
+        displayName: '计算过程'
         field: 'step'
         enableCellEdit: false
         cellTemplate: '''
         <div class="ui-grid-cell-contents">
-            <a nb-panel
+            <a nb-dialog
                 template-url="partials/salary/calc/step.html"
-                locals="{employee: row.entity.owner}">
-                计算过程
+                locals="{employee_id: row.entity.owner.$pk, employee_name: row.entity.employee_name, month: row.entity.month, category: row.entity.category}">
+                显示过程
             </a>
         </div>
         '''
@@ -100,6 +100,14 @@ class SalaryController extends nb.Controller
         self = @
         @initialize()
 
+        @variables = ['调档时间','驾驶经历时间','飞行时间','员工学历','员工职级','去年年度绩效','本企业经历时间','无人为飞行事故','无安全严重差错']
+
+    queryVariables: (text)->
+        self = @
+        variables = _.filter self.variables, (variable)->
+            _.includes variable, text
+        return variables
+
     $defaultCoefficient: ()->
         company: 0.1
         business_council: 0.1
@@ -131,7 +139,7 @@ class SalaryController extends nb.Controller
         @CATEGORY_LIST = ["leader_base",                # 基础-干部
                           "manager15_base",             # 基础-管理15
                           "manager12_base",             # 基础-管理12
-                          "flyer_legend_base",          # 基础-荣誉级飞行员
+                          "flyer_legend_base",          # 基础-荣誉级
                           "flyer_leader_base",          # 基础-机长
                           "flyer_copilot_base",         # 基础-副驾
                           "flyer_teacher_A_base",       # 基础-教员A
@@ -157,13 +165,14 @@ class SalaryController extends nb.Controller
                           "service_b_airline_keeper_base",      # 基础-服务B-机务工装设备/客舱供应库管
                           "service_c_base",                     # 基础-服务C
                           "air_observer_base",                  # 基础-空中观察员
-                          "front_run_base",                     # 基础-前场运行
+                          "front_run_base",                     # 基础-前场运行监察
                           "information_perf",                   # 绩效-信息通道
                           "airline_business_perf",              # 绩效-航务航材
                           "manage_market_perf",                 # 绩效-管理营销
                           "service_c_1_perf",                   # 绩效-服务C-1
                           "service_c_2_perf",                   # 绩效-服务C-2
                           "service_c_3_perf",                   # 绩效-服务C-3
+                          "service_c_driving_base",             # 基础-服务C-驾驶，固定2100
                           "service_c_driving_perf",             # 绩效-服务C-驾驶
                           "flyer_hour",                         # 小时费-飞行员
                           "fly_attendant_hour",                 # 小时费-空乘
@@ -219,21 +228,6 @@ class SalaryController extends nb.Controller
         @backup_config = angular.copy(@dynamic_config)
         @editing = false
 
-    isComplexSetting: (flags, grade, column, setting)->
-        if ['information_perf', 'airline_business_perf', 'manage_market_perf'].indexOf(@current_category) >= 0
-            flags[grade] = {} if !angular.isDefined(flags[grade])
-            flags[grade][column] = {} if !angular.isDefined(flags[grade][column])
-
-            setting = flags[grade]
-            setting[column]['edit_mode'] = 'dialog'
-            setting[column]['add'] = true
-            setting[column]['format_cell'] = null
-            setting[column]['expr'] = null
-
-            return true
-
-        return false
-
     resetDynamicConfig: ()->
         @dynamic_config = {}
         @dynamic_config = angular.copy(@backup_config)
@@ -265,30 +259,40 @@ class SalaryController extends nb.Controller
         @dynamic_config.flag_list.indexOf('rate') >= 0
 
     formatColumn: (flags, grade, setting, column)->
-        if setting[column] && (setting[column]['expr'] || setting[column]['format_cell'])
-            setting[column]['add'] = false
-            flags[grade][column]['add'] = false
-
         result = input = setting[column]
 
-        if input && angular.isDefined(input['format_cell'])
+        if column == 'rate' || column == 'amount'
+            return result
+
+        if input && angular.isDefined(input)
             result = input['format_cell']
-            result = result.replace('%{format_value}', input['format_value']) if result
-            result = result.replace('%{work_value}', input['work_value']) if result
-            result = result.replace('%{time_value}', input['time_value']) if result
+
+            if result && angular.isDefined(result)
+                vars = ['transfer_years', 'drive_work_value', 'teacher_drive_years', 'fly_time_value', 'job_title_degree', 'education_background', 'last_year_perf', 'join_scal_years', 'no_subjective_accident', 'no_serious_security_error']
+                angular.forEach vars, (item) ->
+                    result = result.replace('%{' + item + '}', input[item])
+            else if angular.isDefined(input['transfer_years'])
+                if input['transfer_years'] == '99'
+                    result = '封顶'
+                if input['transfer_years'] == '999'
+                    result = '荣誉'
 
         result
 
     exchangeExpr: (expr, reverse = false)->
-        return if !expr && !angular.isDefined(expr)
+        expr = "" if !expr
 
         hash = {
-            '调档时间':     '%{format_value}'
-            '驾驶经历时间':  '%{work_value}'
-            '飞行时间':     '%{time_value}'
-            '员工职级':     '%{job_title_degree}'
-            '员工学历':     '%{education_background}'
-            '去年年度绩效':  '%{last_year_perf}'
+            '调档时间':            '%{transfer_years}'
+            '驾驶经历时间':        '%{drive_work_value}'
+            '教员经历时间':        '%{teacher_drive_years}'
+            '飞行时间':            '%{fly_time_value}'
+            '员工职级':            '%{job_title_degree}'
+            '员工学历':            '%{education_background}'
+            '去年年度绩效':        '%{last_year_perf}'
+            '本企业经历时间':      '%{join_scal_years}'
+            '无人为飞行事故':      '%{no_subjective_accident}'
+            '无安全严重差错':      '%{no_serious_security_error}'
         }
 
         result = expr
@@ -330,11 +334,22 @@ class SalaryController extends nb.Controller
             .error (data)->
                 self.toaster.pop('success', '提示', '更新成功')
 
+    destroyCity: (cities, idx) ->
+        cities.splice(idx, 1)
+
+    addSkyCity: (cities, city) ->
+        self = @
+
+        if city.city && city.abbr
+            cities.push(city)
+            self.scope.cityForeign = {}
+            self.scope.cityNation = {}
+
 
 class SalaryPersonalController extends nb.Controller
-    @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryPersonSetup']
+    @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryPersonSetup', 'toaster']
 
-    constructor: ($http, $scope, $Evt, $enum, @SalaryPersonSetup) ->
+    constructor: (@http, $scope, $Evt, $enum, @SalaryPersonSetup, @toaster) ->
         @loadInitialData()
 
         @filterOptions = {
@@ -349,6 +364,11 @@ class SalaryPersonalController extends nb.Controller
                     name: 'employee_no'
                     displayName: '员工编号'
                     type: 'string'
+                }
+                {
+                    name: 'department_ids'
+                    displayName: '机构'
+                    type: 'org-search'
                 }
                 {
                     name: 'channel_ids'
@@ -383,7 +403,7 @@ class SalaryPersonalController extends nb.Controller
             }
             {
                 displayName: '所属部门'
-                name: 'departmentName'
+                name: 'department.name'
                 cellTooltip: (row) ->
                     return row.entity.departmentName
             }
@@ -456,11 +476,19 @@ class SalaryPersonalController extends nb.Controller
             else
                 self.loadEmp = params
 
+    upload_salary_set_book: (attachment_id)->
+        self = @
+        params = {attachment_id: attachment_id}
+
+        @http.post("/api/salary_person_setups/upload_salary_set_book", params).success (data, status) ->
+            self.toaster.pop('success', '提示', '导入成功')
+            self.import_finish = true
+
 
 class SalaryChangeController extends nb.Controller
-    @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryChange']
+    @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryChange', 'SalaryPersonSetup']
 
-    constructor: ($http, $scope, $Evt, $enum, @SalaryChange) ->
+    constructor: (@http, $scope, $Evt, $enum, @SalaryChange, @SalaryPersonSetup) ->
         @loadInitialData()
 
         @filterOptions = {
@@ -511,12 +539,12 @@ class SalaryChangeController extends nb.Controller
                 displayName: '查看'
                 field: 'setting'
                 cellTemplate: '''
-                <div class="ui-grid-cell-contents">
+                <div class="ui-grid-cell-contents" ng-init="outerScope=grid.appScope.$parent">
                     <a
                         href="javascript:void(0);"
                         nb-dialog
                         template-url="partials/salary/settings/changes/personal.html"
-                        locals="{change: row.entity}">
+                        locals="{change: row.entity, outerScope: outerScope}">
                         查看
                     </a>
                 </div>
@@ -526,6 +554,12 @@ class SalaryChangeController extends nb.Controller
 
     loadInitialData: () ->
         @salaryChanges = @SalaryChange.$collection().$fetch()
+
+    loadPersonSettings: (change) ->
+        self = @
+        return @SalaryPersonSetup.$collection().$fetch().$find(change.salaryPersonSetupId)
+
+        # return @SalaryPersonSetup.$collection().$fetch(change.salaryPersonSetupId)
 
     search: (tableState) ->
         tableState = tableState || {}
@@ -626,6 +660,9 @@ class SalaryGradeChangeController extends nb.Controller
                 self.setting = data.salary_person_setup
                 self.flags = []
 
+    checkUpdateChange: (type)->
+        #
+
 
 class SalaryExchangeController
     @.$inject = ['$http', '$scope', '$nbEvent', 'SALARY_SETTING']
@@ -641,11 +678,14 @@ class SalaryExchangeController
 
     service_b: (current)->
         return unless current.baseChannel
-
         setting = @$settingHash(current.baseChannel)
-        current.baseMoney = setting.flags[current.baseFlag]['amount']
+
+        # 总工资
+        current.basePerformanceMoney = setting.flags[current.baseFlag]['amount']
+        # 基本工资
+        current.baseMoney = @SALARY_SETTING['global_setting']['minimum_wage']
         # 除开基本工资，剩下的就是绩效工资(service_b)
-        current.performanceMoney = current.baseMoney - @SALARY_SETTING['global_setting']['minimum_wage']
+        current.performanceMoney = current.basePerformanceMoney - current.baseMoney
 
     service_b_flag_array: (current)->
         return unless current.baseChannel
@@ -656,6 +696,10 @@ class SalaryExchangeController
     normal: (current)->
         return unless current.baseWage
         return unless current.baseFlag
+
+        if current.baseWage == 'service_c_driving_base'
+          current.baseMoney = 2100
+          return
 
         setting = @$settingHash(current.baseWage)
         flag = setting.flags[current.baseFlag]
@@ -669,7 +713,7 @@ class SalaryExchangeController
         setting = @$settingHash(current.baseWage)
         channels = []
         angular.forEach setting.flag_list, (item)->
-            if item != 'rate' && !item.startsWith('amount')
+            if item != 'rate' && !_.startsWith(item, 'amount')
                 channels.push(setting.flag_names[item])
         _.uniq(channels)
 
@@ -677,7 +721,19 @@ class SalaryExchangeController
         return unless current.baseWage
 
         setting = @$settingHash(current.baseWage)
-        Object.keys(setting.flags)
+        flags = []
+
+        if current.baseWage == 'service_c_driving_base'
+          return
+
+        angular.forEach setting.flags, (config, flag)->
+          if Object.keys(config).indexOf(current.baseChannel) >= 0
+            format_cell = config[current.baseChannel]['format_cell']
+
+            if format_cell && format_cell.length > 0
+              flags.push(flag)
+
+        return flags
 
     perf: (current)->
         return unless current.performanceWage
@@ -687,10 +743,30 @@ class SalaryExchangeController
         return current.performanceMoney = flag.amount if angular.isDefined(flag)
         return 0
 
+    perf_channel_array: (current)->
+      return unless current.performanceWage
+
+      setting = @$settingHash(current.performanceWage)
+      channels = []
+      angular.forEach setting.flag_list, (item)->
+          if item != 'rate' && !_.startsWith(item, 'amount')
+              channels.push(setting.flag_names[item])
+      _.uniq(channels)
+
     perf_flag_array: (current)->
         return unless current.performanceWage
+
         setting = @$settingHash(current.performanceWage)
-        Object.keys(setting.flags)
+        flags = []
+
+        angular.forEach setting.flags, (config, flag)->
+          if Object.keys(config).indexOf(current.performanceChannel) >= 0
+            format_cell = config[current.performanceChannel]['format_cell']
+
+            if format_cell && format_cell.length > 0
+              flags.push(flag)
+
+        return flags
 
     fly: (current)->
         return unless current.baseChannel
@@ -738,7 +814,7 @@ class SalaryExchangeController
 
 
 class SalaryBaseController extends nb.Controller
-    constructor: (@Model, @scope, @q, options = null) ->
+    constructor: (@Model, @scope, @q, @right_hand_mode, options = null) ->
         @loadDateTime()
         @loadInitialData(options)
 
@@ -767,18 +843,24 @@ class SalaryBaseController extends nb.Controller
         @year_list = @$getYears()
         @month_list = @$getMonths()
 
-        if date.getMonth() == 0
-            @year_list.pop()
-            @year_list.unshift(date.getFullYear() - 1)
-            @month_list = _.map [1..12], (item)->
-                item = '0' + item if item < 10
-                item + '' # to string
+        unless @right_hand_mode
+            # 不是正扣倒发模式，看上个月的数据
+            if date.getMonth() == 0
+                @year_list.pop()
+                @year_list.unshift(date.getFullYear() - 1)
+                @month_list = _.map [1..12], (item)->
+                    item = '0' + item if item < 10
+                    item + '' # to string
 
-            @currentYear = _.last(@year_list)
-            @currentMonth = _.last(@month_list)
+                @currentYear = _.last(@year_list)
+                @currentMonth = _.last(@month_list)
+            else
+                @currentYear = _.last(@year_list)
+                @month_list.pop()
+                @currentMonth = _.last(@month_list)
         else
+            # 正发倒扣模式
             @currentYear = _.last(@year_list)
-            @month_list.pop()
             @currentMonth = _.last(@month_list)
 
     loadInitialData: (options) ->
@@ -829,16 +911,97 @@ class SalaryBasicController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'BasicSalary', 'toaster']
 
     constructor: ($http, $scope, $q, @Evt, @Employee, @BasicSalary, @toaster) ->
-        super(@BasicSalary, $scope, $q)
+        super(@BasicSalary, $scope, $q, true)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
             {displayName: '岗位薪酬', name: 'positionSalary', enableCellEdit: false}
             {displayName: '工龄工资', name: 'workingYearsSalary', enableCellEdit: false}
-            {displayName: '保留工资', name: 'reserveSalary', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
-            {displayName: '备注', name: 'remark', headerCellClass: 'editable_cell_header', cellTooltip: (row) -> return row.entity.note}
+            {displayName: '说明', name: 'notes', enableCellEdit: false}
+            {
+                name:"remark"
+                displayName:"备注"
+                headerCellClass: 'editable_cell_header'
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">
+                        {{row.entity.remark || '请输入备注'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #eee;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <md-input-container>
+                                    <label>备注</label>
+                                    <textarea
+                                        ng-blur="row.entity.$save()"
+                                        ng-model="row.entity.remark"
+                                        style="resize:none;"
+                                        class="reason-input"></textarea>
+                                </md-input-container>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.note
+            }
+        ]).concat(CALC_STEP_COLUMN)
+
+
+# 保留工资
+class SalaryKeepController extends SalaryBaseController
+    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'KeepSalary', 'toaster']
+
+    constructor: ($http, $scope, $q, @Evt, @Employee, @KeepSalary, @toaster) ->
+        super(@KeepSalary, $scope, $q, true)
+
+        @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
+
+        @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
+            {displayName: '岗位工资保留', name: 'position', enableCellEdit: false}
+            {displayName: '业绩奖保留', name: 'performance', enableCellEdit: false}
+            {displayName: '工龄工资保留', name: 'workingYears', enableCellEdit: false}
+            {displayName: '保底增幅', name: 'minimumGrowth', enableCellEdit: false}
+            {displayName: '地勤补贴保留', name: 'landAllowance', enableCellEdit: false}
+            {displayName: '生活补贴保留', name: 'lifeAllowance', enableCellEdit: false}
+            {displayName: '09调资增加保留', name: 'adjustment09', enableCellEdit: false}
+            {displayName: '14公务用车保留', name: 'bus14', enableCellEdit: false}
+            {displayName: '14通信补贴保留', name: 'communication14', enableCellEdit: false}
+            {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {displayName: '说明', name: 'notes', enableCellEdit: false}
+            {
+                name:"remark"
+                displayName:"备注"
+                headerCellClass: 'editable_cell_header'
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">
+                        {{row.entity.remark || '请输入备注'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #eee;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <md-input-container>
+                                    <label>备注</label>
+                                    <textarea
+                                        ng-blur="row.entity.$save()"
+                                        ng-model="row.entity.remark"
+                                        style="resize:none;"
+                                        class="reason-input"></textarea>
+                                </md-input-container>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.note
+            }
         ]).concat(CALC_STEP_COLUMN)
 
 
@@ -847,15 +1010,44 @@ class SalaryPerformanceController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'PerformanceSalary', 'toaster']
 
     constructor: ($http, $scope, $q, @Evt, @Employee, @PerformanceSalary, @toaster) ->
-        super(@PerformanceSalary, $scope, $q)
+        super(@PerformanceSalary, $scope, $q, false)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
-            {displayName: '当月绩效基数', name: 'baseSalary', enableCellEdit: false},
-            {displayName: '当月绩效薪酬', name: 'amount', enableCellEdit: false},
-            {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'},
-            {displayName: '备注', name: 'remark', headerCellClass: 'editable_cell_header', cellTooltip: (row) -> return row.entity.note}
+            {displayName: '当月绩效基数', name: 'baseSalary', enableCellEdit: false}
+            {displayName: '当月绩效薪酬', name: 'amount', enableCellEdit: false}
+            {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {displayName: '说明', name: 'notes', enableCellEdit: false}
+            {
+                name:"remark"
+                displayName:"备注"
+                headerCellClass: 'editable_cell_header'
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">
+                        {{row.entity.remark || '请输入备注'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #eee;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <md-input-container>
+                                    <label>备注</label>
+                                    <textarea
+                                        ng-blur="row.entity.$save()"
+                                        ng-model="row.entity.remark"
+                                        style="resize:none;"
+                                        class="reason-input"></textarea>
+                                </md-input-container>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.note
+            }
         ]).concat(CALC_STEP_COLUMN)
 
     upload_performance: (type, attachment_id)->
@@ -875,7 +1067,7 @@ class SalaryHoursFeeController extends SalaryBaseController
 
     constructor: (@http, $scope, $q, @Evt, @Employee, @HoursFee, @toaster) ->
         @hours_fee_category = '飞行员'
-        super(@HoursFee, $scope, $q, {hours_fee_category: @hours_fee_category})
+        super(@HoursFee, $scope, $q, false, {hours_fee_category: @hours_fee_category})
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
@@ -884,7 +1076,36 @@ class SalaryHoursFeeController extends SalaryBaseController
             {displayName: '小时费', name: 'flyFee', enableCellEdit: false}
             {displayName: '空勤灶', name: 'airlineFee', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
-            {displayName: '备注', name: 'remark', headerCellClass: 'editable_cell_header', cellTooltip: (row) -> return row.entity.note}
+            {displayName: '说明', name: 'notes', enableCellEdit: false}
+            {
+                name:"remark"
+                displayName:"备注"
+                headerCellClass: 'editable_cell_header'
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">
+                        {{row.entity.remark || '请输入备注'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #eee;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <md-input-container>
+                                    <label>备注</label>
+                                    <textarea
+                                        ng-blur="row.entity.$save()"
+                                        ng-model="row.entity.remark"
+                                        style="resize:none;"
+                                        class="reason-input"></textarea>
+                                </md-input-container>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.note
+            }
         ]).concat(CALC_STEP_COLUMN)
 
     search: () ->
@@ -915,7 +1136,7 @@ class SalaryAllowanceController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'Allowance', 'toaster']
 
     constructor: ($http, $scope, $q, @Evt, @Employee, @Allowance, @toaster) ->
-        super(@Allowance, $scope, $q)
+        super(@Allowance, $scope, $q, true)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
@@ -926,7 +1147,7 @@ class SalaryAllowanceController extends SalaryBaseController
             {displayName: '航站管理津贴', name: 'airStationManage', enableCellEdit: false}
             {displayName: '车勤补贴', name: 'carPresent', enableCellEdit: false}
             {displayName: '地勤补贴', name: 'landPresent', enableCellEdit: false}
-            {displayName: '放行补贴', name: 'permitEntry', enableCellEdit: false}
+            {displayName: '机务放行补贴', name: 'permitEntry', enableCellEdit: false}
             {displayName: '试车津贴', name: 'tryDrive', enableCellEdit: false}
             {displayName: '飞行荣誉津贴', name: 'flyHonor', enableCellEdit: false}
             {displayName: '航线实习补贴', name: 'airlinePractice', enableCellEdit: false}
@@ -935,7 +1156,36 @@ class SalaryAllowanceController extends SalaryBaseController
             {displayName: '梭班补贴', name: 'workOvertime', enableCellEdit: false}
             {displayName: '高温补贴', name: 'temp', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
-            {displayName: '备注', name: 'remark', headerCellClass: 'editable_cell_header', cellTooltip: (row) -> return row.entity.note}
+            {displayName: '说明', name: 'notes', enableCellEdit: false}
+            {
+                name:"remark"
+                displayName:"备注"
+                headerCellClass: 'editable_cell_header'
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">
+                        {{row.entity.remark || '请输入备注'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #eee;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <md-input-container>
+                                    <label>备注</label>
+                                    <textarea
+                                        ng-blur="row.entity.$save()"
+                                        ng-model="row.entity.remark"
+                                        style="resize:none;"
+                                        class="reason-input"></textarea>
+                                </md-input-container>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.note
+            }
         ]).concat(CALC_STEP_COLUMN)
 
     upload_allowance: (type, attachment_id)->
@@ -952,23 +1202,62 @@ class SalaryAllowanceController extends SalaryBaseController
 class SalaryLandAllowanceController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'LandAllowance', 'toaster']
 
-    constructor: ($http, $scope, $q, @Evt, @Employee, @LandAllowance, @toaster) ->
-        super(@LandAllowance, $scope, $q)
+    constructor: (@http, $scope, $q, @Evt, @Employee, @LandAllowance, @toaster) ->
+        super(@LandAllowance, $scope, $q, false)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
             {displayName: '津贴', name: 'subsidy', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
-            {displayName: '备注', name: 'remark', headerCellClass: 'editable_cell_header', cellTooltip: (row) -> return row.entity.note}
+            {displayName: '说明', name: 'notes', enableCellEdit: false}
+            {
+                name:"remark"
+                displayName:"备注"
+                headerCellClass: 'editable_cell_header'
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">
+                        {{row.entity.remark || '请输入备注'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #eee;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <md-input-container>
+                                    <label>备注</label>
+                                    <textarea
+                                        ng-blur="row.entity.$save()"
+                                        ng-model="row.entity.remark"
+                                        style="resize:none;"
+                                        class="reason-input"></textarea>
+                                </md-input-container>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.note
+            }
         ]).concat(CALC_STEP_COLUMN)
+
+    upload_land_allowance: (type, attachment_id)->
+        self = @
+        params = {type: type, attachment_id: attachment_id}
+
+        @http.post("/api/land_allowances/import", params).success (data, status) ->
+            if data.error_count > 0
+                self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
+            else
+                self.toaster.pop('error', '提示', '导入成功')
 
 
 class SalaryRewardController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'Reward', 'toaster']
 
     constructor: ($http, $scope, $q, @Evt, @Employee, @Reward, @toaster) ->
-        super(@Reward, $scope, $q)
+        super(@Reward, $scope, $q, true)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
@@ -976,11 +1265,53 @@ class SalaryRewardController extends SalaryBaseController
             {displayName: '航班正常奖', name: 'flightBonus', enableCellEdit: false}
             {displayName: '服务质量奖', name: 'serviceBonus', enableCellEdit: false}
             {displayName: '航空安全奖', name: 'airlineSecurityBonus', enableCellEdit: false}
-            {displayName: '综治奖', name: 'composite_bonus', enableCellEdit: false}
-            {displayName: '收支目标考核奖', name: 'inOutBonus', enableCellEdit: false}
-            {displayName: '精品奖励', name: 'bestGoods', enableCellEdit: false}
-            {displayName: '精编奖励', name: 'bestPlan', enableCellEdit: false}
-            {displayName: '奖2', name: 'bonus_2', enableCellEdit: false}
+            {displayName: '社会治安综合治理奖', name: 'compositeBonus', enableCellEdit: false}
+            {displayName: '电子航意险代理提成奖', name: 'insuranceProxy', enableCellEdit: false}
+            {displayName: '客舱升舱提成奖', name: 'cabinGrowUp', enableCellEdit: false}
+            {displayName: '全员促销奖', name: 'fullSalePromotion', enableCellEdit: false}
+            {displayName: '四川航空报稿费', name: 'articleFee', enableCellEdit: false}
+            {displayName: '无差错飞行中队奖', name: 'allRightFly', enableCellEdit: false}
+            {displayName: '年度综治奖', name: 'yearCompositeBonus', enableCellEdit: false}
+            {displayName: '运兵先进奖', name: 'movePerfect', enableCellEdit: false}
+            {displayName: '航空安全特殊贡献奖', name: 'securitySpecial', enableCellEdit: false}
+            {displayName: '部门安全管理目标承包奖', name: 'depSecurityUndertake', enableCellEdit: false}
+            {displayName: '飞行安全星级奖', name: 'flyStar', enableCellEdit: false}
+            {displayName: '年度无差错机务维修中队奖', name: 'yearAllRightFly', enableCellEdit: false}
+            {displayName: '网络联程奖', name: 'networkConnect', enableCellEdit: false}
+            {displayName: '季度奖', name: 'quarterFee', enableCellEdit: false}
+            {displayName: '收益奖励金', name: 'earningsFee', enableCellEdit: false}
+            {displayName: '预算外奖励', name: 'offBudgetFee', enableCellEdit: false}
+            {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {displayName: '说明', name: 'notes', enableCellEdit: false}
+            {
+                name:"remark"
+                displayName:"备注"
+                headerCellClass: 'editable_cell_header'
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">
+                        {{row.entity.remark || '请输入备注'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #eee;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <md-input-container>
+                                    <label>备注</label>
+                                    <textarea
+                                        ng-blur="row.entity.$save()"
+                                        ng-model="row.entity.remark"
+                                        style="resize:none;"
+                                        class="reason-input"></textarea>
+                                </md-input-container>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.note
+            }
         ]).concat(CALC_STEP_COLUMN)
 
     upload_reward: (type, attachment_id)->
@@ -998,7 +1329,7 @@ class SalaryTransportFeeController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'TransportFee', 'toaster']
 
     constructor: (@http, $scope, $q, @Evt, @Employee, @TransportFee, @toaster) ->
-        super(@TransportFee, $scope, $q)
+        super(@TransportFee, $scope, $q, true)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
@@ -1006,7 +1337,36 @@ class SalaryTransportFeeController extends SalaryBaseController
             {displayName: '交通费', name: 'amount', enableCellEdit: false}
             {displayName: '班车费扣除', name: 'busFee', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
-            {displayName: '备注', name: 'remark', headerCellClass: 'editable_cell_header', cellTooltip: (row) -> return row.entity.note}
+            {displayName: '说明', name: 'notes', enableCellEdit: false}
+            {
+                name:"remark"
+                displayName:"备注"
+                headerCellClass: 'editable_cell_header'
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">
+                        {{row.entity.remark || '请输入备注'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #eee;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <md-input-container>
+                                    <label>备注</label>
+                                    <textarea
+                                        ng-blur="row.entity.$save()"
+                                        ng-model="row.entity.remark"
+                                        style="resize:none;"
+                                        class="reason-input"></textarea>
+                                </md-input-container>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.note
+            }
         ]).concat(CALC_STEP_COLUMN)
 
     upload_bus_fee: (type, attachment_id)->
@@ -1024,7 +1384,7 @@ class SalaryOverviewController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'SalaryOverview', 'toaster']
 
     constructor: ($http, $scope, $q, @Evt, @Employee, @SalaryOverview, @toaster) ->
-        super(@SalaryOverview, $scope, $http)
+        super(@SalaryOverview, $scope, $http, true)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
@@ -1036,8 +1396,80 @@ class SalaryOverviewController extends SalaryBaseController
             {displayName: '驻站津贴', name: 'landSubsidy', enableCellEdit: false}
             {displayName: '奖励', name: 'reward', enableCellEdit: false}
             {displayName: '合计', name: 'total', enableCellEdit: false}
-            {displayName: '备注', name: 'remark', headerCellClass: 'editable_cell_header', cellTooltip: (row) -> return row.entity.note}
+            {displayName: '说明', name: 'notes', enableCellEdit: false}
+            {
+                name:"remark"
+                displayName:"备注"
+                headerCellClass: 'editable_cell_header'
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">
+                        {{row.entity.remark || '请输入备注'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #eee;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <md-input-container>
+                                    <label>备注</label>
+                                    <textarea
+                                        ng-blur="row.entity.$save()"
+                                        ng-model="row.entity.remark"
+                                        style="resize:none;"
+                                        class="reason-input"></textarea>
+                                </md-input-container>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.note
+            }
         ]).concat(CALC_STEP_COLUMN)
+
+
+class CalcStepsController
+    @.$inject = ['$http', '$scope']
+
+    constructor: (@http, $scope)->
+        #
+
+    loadFromServer: (category, month, employee_id)->
+        self = @
+
+        @http.get('/api/calc_steps/search?category=' + category + "&month=" + month + "&employee_id=" + employee_id).success (data)->
+            self.error_msg = data.messages
+
+            if (!self.error_msg)
+                self.step_notes = data.calc_step.step_notes
+                self.amount = data.calc_step.amount
+
+class RewardsAllocationController
+    @.$inject = ['$http', '$scope', 'toaster']
+
+    constructor: (@http, @scope, @toaster)->
+        @rewards = {}
+        @rewardsCategory = 'flight_bonus'
+
+    currentCalcTime: ()->
+        @currentYear + "-" + @currentMonth
+
+    loadRewardsAllocation: () ->
+        self = @
+
+        month = @currentCalcTime()
+        @http.get('/api/departments/rewards?month=' + month).success (data)->
+            self.rewards = data.rewards
+
+    saveReward: (departmentId, bonus) ->
+        self = @
+
+        param = { month: month = @currentCalcTime(), department_id: departmentId}
+        param[@rewardsCategory] = bonus
+
+        @http.put('/api/departments/reward_update', param).success (data)->
+            self.toaster.pop('success', '提示', '修改成功')
 
 
 app.controller 'salaryCtrl', SalaryController
@@ -1046,6 +1478,7 @@ app.controller 'salaryChangeCtrl', SalaryChangeController
 app.controller 'salaryGradeChangeCtrl', SalaryGradeChangeController
 app.controller 'salaryExchangeCtrl', SalaryExchangeController
 app.controller 'salaryBasicCtrl', SalaryBasicController
+app.controller 'salaryKeepCtrl', SalaryKeepController
 app.controller 'salaryPerformanceCtrl', SalaryPerformanceController
 app.controller 'salaryHoursFeeCtrl', SalaryHoursFeeController
 app.controller 'salaryAllowanceCtrl', SalaryAllowanceController
@@ -1053,3 +1486,5 @@ app.controller 'salaryLandAllowanceCtrl', SalaryLandAllowanceController
 app.controller 'salaryRewardCtrl', SalaryRewardController
 app.controller 'salaryTransportFeeCtrl', SalaryTransportFeeController
 app.controller 'salaryOverviewCtrl', SalaryOverviewController
+app.controller 'calcStepCtrl', CalcStepsController
+app.controller 'rewardsAllocationCtrl', RewardsAllocationController

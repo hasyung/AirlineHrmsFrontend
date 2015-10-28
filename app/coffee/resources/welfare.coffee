@@ -23,6 +23,71 @@ SocialPersonSetup = (restmod, RMUtils, $Evt) ->
     }
 
 
+DinnerPersonSetup = (restmod, RMUtils, $Evt) ->
+    restmod.model('/dinner_person_setups').mix 'nbRestApi', 'DirtyModel', {
+        $config:
+            jsonRootSingle: 'dinner_person_setup'
+            jsonRootMany: 'dinner_person_setups'
+
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+        $hooks: {
+            'after-destroy': ->
+                $Evt.$send('dinnerPersonSetups:destroy:success',"删除成功")
+            'after-save': ->
+                $Evt.$send('dinnerPersonSetups:save:success',"保存成功")
+        }
+
+        $extend:
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+    }
+
+dinnerRecord = (restmod, RMUtils, $Evt) ->
+    restmod.model('/dinner_records').mix 'nbRestApi', {
+        $config:
+            jsonRootSingle: 'dinner_record'
+            jsonRootMany: 'dinner_records'
+
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+        $extend:
+            Scope:
+                # 计算(根据年月)
+                compute: (params)->
+                    restmod.model('/dinner_records/compute').mix(
+                        $config:
+                            jsonRoot: 'dinner_records'
+                    ).$search(params)
+
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+    }
+
+BirthAllowance = (restmod, RMUtils, $Evt) ->
+    restmod.model('/birth_allowances').mix 'nbRestApi', 'DirtyModel', {
+        $config:
+            jsonRootSingle: 'birth_allowance'
+            jsonRootMany: 'birth_allowances'
+
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+        $hooks: {
+            'after-destroy': ->
+                $Evt.$send('dinnerPersonSetups:destroy:success',"删除成功")
+            'after-save': ->
+                $Evt.$send('dinnerPersonSetups:save:success',"保存成功")
+        }
+
+        $extend:
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+    }
+
+
 # 社保记录
 SocialRecord = (restmod, RMUtils, $Evt) ->
     restmod.model('/social_records').mix 'nbRestApi', {
@@ -135,3 +200,8 @@ resources.factory 'SocialChange', ['restmod', 'RMUtils', '$nbEvent', SocialChang
 resources.factory 'AnnuitySetup', ['restmod', 'RMUtils', '$nbEvent', AnnuitySetup]
 resources.factory 'AnnuityRecord', ['restmod', 'RMUtils', '$nbEvent', AnnuityRecord]
 resources.factory 'AnnuityChange', ['restmod', 'RMUtils', '$nbEvent', AnnuityChange]
+
+#津贴
+resources.factory 'DinnerPersonSetup', ['restmod', 'RMUtils', '$nbEvent', DinnerPersonSetup]
+resources.factory 'DinnerRecord', ['restmod', 'RMUtils', '$nbEvent', dinnerRecord]
+resources.factory 'BirthAllowance', ['restmod', 'RMUtils', '$nbEvent', BirthAllowance]

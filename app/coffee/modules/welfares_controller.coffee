@@ -22,6 +22,17 @@ class Route
                 templateUrl: 'partials/welfares/annuities.html'
             }
 
+            .state 'welfares_dinnerfee', {
+                url: '/welfares/dinnerfee'
+                templateUrl: 'partials/welfares/dinnerfee.html'
+            }
+
+            .state 'welfares_birth', {
+                url: '/welfares/birth'
+                templateUrl: 'partials/welfares/birth.html'
+            }
+
+
 app.config(Route)
 
 
@@ -877,6 +888,326 @@ class AnnuityChangesController
         tableState['per_page'] = @scope.gridApi.grid.options.paginationPageSize
         @annuityChanges.$refresh(tableState)
 
+class DinnerController
+    @.$inject = ['$http', '$scope', '$nbEvent']
+
+    constructor: ($http, $scope, $Evt) ->
+        $scope.currentSettingLocation = null
+        #当前配置项
+        $scope.setting = null
+        $scope.configurations = null
+        $scope.locations = null
+
+        $http.get('api/welfares/dinners')
+            .success (result) ->
+                $scope.configurations = result.dinners
+
+        #保存社保配置信息
+        $scope.saveConfig = (settings)->
+            $http.put('/api/welfares/dinners', {
+                dinners: settings
+            }).success ()->
+                $Evt.$send('dinners:update:success', '工作餐配置保存成功')
+
+    destroyCity: (cities, idx) ->
+        cities.splice(idx, 1)
+
+
+
+class DinnerPersonalController extends nb.Controller
+    @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerPersonSetup', '$q', '$state', 'Employee']
+
+    constructor: (@http, @scope, @Evt, @DinnerPersonSetup, @q, @state, @Employee) ->
+        @areas = []
+
+        @loadInitialData()
+
+        @filterOptions = {
+            name: 'dinnerPersonal'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '员工姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+            ]
+        }
+
+        @columnDef = [
+            {displayName: '员工编号', name: 'employeeNo'}
+            {
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+            }
+            {
+                displayName: '岗位'
+                name: 'positionName'
+                cellTooltip: (row) ->
+                    return row.entity.positionName
+            }
+            {displayName: '班制', name: 'shiftsType'}
+            {displayName: '驻地', name: 'location'}
+            {displayName: '餐费区域', name: 'area'}
+            {displayName: '卡金额', name: 'cardAmount'}
+            {displayName: '卡次数', name: 'cardNumber'}
+            {displayName: '工作餐', name: 'workingFee'}
+            {
+                displayName: '设置'
+                field: 'setting'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-dialog
+                        template-url="partials/welfares/dinners/person.html"
+                        locals="{dinner: row.entity, ctrl: grid.appScope.$parent.ctrl}">
+                        设置
+                    </a>
+                </div>
+                '''
+            }
+        ]
+
+    loadInitialData: () ->
+        self = @
+
+        @configurations = @DinnerPersonSetup.$collection().$fetch().$then (response)->
+            self.areas = response.$response.data.areas
+
+    loadEmployee: (params, contract)->
+        self = @
+
+        @Employee.$collection().$refresh(params).$then (employees)->
+            args = _.mapKeys params, (value, key) ->
+                _.camelCase key
+
+            matched = _.find employees, args
+
+            if matched
+                self.loadEmp = matched
+                self.isFemale = true
+                contract.employeeId = matched.id
+                contract.employeeNo = matched.employeeNo
+                contract.departmentName = matched.department.name
+                contract.positionName = matched.position.name
+                contract.employeeName = matched.name
+                contract.owner = matched
+            else
+                self.loadEmp = params
+
+    newDinner: (dinner) ->
+        self = @
+
+        @configurations.$build(dinner).$save().$then ()->
+            self.configurations.$refresh()
+
+    saveDinner: (dinner) ->
+        self = @
+        dinner.$save().$then () ->
+            self.configurations.$refresh()
+
+
+class DinnerComputeController extends nb.Controller
+    @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerRecord', 'toaster','$q']
+
+    constructor: (@http, @scope, @Evt, @DinnerRecord, @toaster, @q) ->
+        opitions = null
+
+        @loadDateTime()
+        @loadInitialData(opitions)
+
+        @filterOptions = {
+            name: 'dinnerCompute'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '员工姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+            ]
+        }
+
+        @columnDef = [
+            {displayName: '员工编号', name: 'employeeNo'}
+            {
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+            }
+            # {displayName: '发放日期', name: 'sentDate'}
+        ]
+
+    initialize: (gridApi) ->
+    #     saveRow = (rowEntity) ->
+    #         dfd = @q.defer()
+
+    #         gridApi.rowEdit.setSavePromise(rowEntity, dfd.promise)
+
+    #         rowEntity.$save().$asPromise().then(
+    #             () -> dfd.resolve(),
+    #             () ->
+    #                 dfd.reject()
+    #                 rowEntity.$restore())
+
+    #     gridApi.rowEdit.on.saveRow(@scope, saveRow.bind(@))
+        @scope.$gridApi = gridApi
+        @gridApi = gridApi
+
+    loadDateTime: () ->
+        date = new Date()
+
+        @year_list = @$getYears()
+        @month_list = @$getMonths()
+
+        @currentYear = @year_list[@year_list.length - 1]
+        @currentMonth = @month_list[@month_list.length - 1]
+
+    loadInitialData: (opitions) ->
+        args = {month: @currentCalcTime()}
+        angular.extend(args, opitions) if angular.isDefined(opitions)
+        @records = @DinnerRecord.$collection(args).$fetch()
+
+    search: (tableState) ->
+        tableState = {} unless tableState
+        tableState['month'] = @currentCalcTime()
+        tableState['per_page'] = @gridApi.grid.opitions.paginationPageSize
+        @records.$refresh(tableState)
+
+    currentCalcTime: ()->
+        @currentYear + "-" + @currentMonth
+
+    loadRecords: (opitions = null) ->
+        args = {month: @currentCalcTime()}
+        angular.extend(args, opitions) if angular.isDefined(opitions)
+        @records.$refresh(args)
+
+
+
+class BirthAllowanceController extends nb.Controller
+    @.$inject = ['$http', '$scope', '$nbEvent', 'BirthAllowance', 'Employee', 'toaster']
+
+    constructor: ($http, $scope, @Evt, @BirthAllowance, @Employee, @toaster) ->
+        @loadInitialData()
+
+        @filterOptions = {
+            name: 'dinnerPersonal'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '员工姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+            ]
+        }
+
+        @columnDef = [
+            {displayName: '员工编号', name: 'employeeNo'}
+            {
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+            }
+            {displayName: '发放日期', name: 'sentDate'}
+            {displayName: '发放金额', name: 'sentAmount'}
+            {displayName: '抵扣金额', name: 'deductAmount'}
+        ]
+
+    loadInitialData: () ->
+        @birthAllowances = @BirthAllowance.$collection().$fetch()
+
+    search: (tableState) ->
+        tableState = tableState || {}
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+        @birthAllowances.$refresh(tableState)
+
+    loadEmployee: (params, contract)->
+        self = @
+
+        @Employee.$collection().$refresh(params).$then (employees)->
+            args = _.mapKeys params, (value, key) ->
+                _.camelCase key
+
+            matched = _.find employees, args
+
+            if matched && matched.genderId == 27
+                self.loadEmp = matched
+                self.isFemale = true
+                contract.employeeId = matched.id
+                contract.employeeNo = matched.employeeNo
+                contract.departmentName = matched.department.name
+                contract.positionName = matched.position.name
+                contract.employeeName = matched.name
+                contract.owner = matched
+            else if matched && matched.genderId == 26
+                self.loadEmp = matched
+                self.isFemale = false
+                self.toaster.pop('error', '警告', '男性不能发放剩余津贴')
+            else
+                self.loadEmp = params
+
+    newBirthAllowance: (birthAllowance) ->
+        self = @
+
+        @birthAllowances.$build(birthAllowance).$save().$then ()->
+            self.birthAllowances.$refresh()
+
+
 
 app.controller 'welfareCtrl', WelfareController
 app.controller 'welfarePersonalCtrl', WelfarePersonalController
@@ -890,3 +1221,9 @@ app.controller 'annuityPersonalCtrl', AnnuityPersonalController
 app.controller 'annuityComputeCtrl', AnnuityComputeController
 app.controller 'annuityHistoryCtrl', AnnuityHistoryController
 app.controller 'annuityChangesCtrl', AnnuityChangesController
+
+app.controller 'dinnerCtrl', DinnerController
+app.controller 'dinnerPersonalCtrl', DinnerPersonalController
+app.controller 'dinnerComputeCtrl', DinnerComputeController
+
+app.controller 'birthAllowanceCtrl', BirthAllowanceController

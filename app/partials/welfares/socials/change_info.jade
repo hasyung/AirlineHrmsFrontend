@@ -5,8 +5,8 @@ md-dialog.socialChangeInfo(
                  setup = process_ctrl.find_or_build_setup(current)"
     )
     md-toolbar.md-accent(md-theme="hrms")
-            .md-toolbar-tools
-                span 变动信息-{{current.category}}{{current.employeeId}}
+        .md-toolbar-tools
+            span 变动信息-{{current.category}}{{current.employeeId}}
     form(
         ng-submit="save(current.$save(), changeContract)"
         name="changeContract"

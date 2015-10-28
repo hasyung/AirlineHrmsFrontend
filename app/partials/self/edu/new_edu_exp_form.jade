@@ -13,9 +13,11 @@ form(ng-controller="NewResourceCtrl", ng-submit="create(newExp,newEduBeforeForm)
     div(layout)
         md-input-container(flex)
             label 毕业院校
+                span.require-tip *
             input(required ng-model="newExp.school")
         md-input-container(flex)
             label 专业
+                span.require-tip *
             input(ng-model="newExp.major" name="major" required)
     div(layout)
         md-input-container.row-has-value(flex)

@@ -44,7 +44,7 @@ FlowHandlerDirective = (ngDialog)->
                         </div>
                     </div>
                 </md-card>
-                <md-card ng-if="flow.type != 'Flow::Retirement'">
+                <md-card>
                     <div class="approval-relation-info">
                         <div class="approval-subheader">申请信息</div>
                         <div class="approval-relations">
@@ -77,7 +77,7 @@ FlowHandlerDirective = (ngDialog)->
                                 </div>
                             </div>
                         </div>
-                        <div class="approval-opinions" ng-if="!flowView || flow.name == '合同续签'">
+                        <div class="approval-opinions" ng-if="!flowView || (!isHistory && flow.name=='合同续签')">
                             <form name="flowReplyForm" ng-submit="reply(userReply, flowReplyForm);">
                                 <div layout>
                                     <md-input-container flex>
@@ -90,7 +90,7 @@ FlowHandlerDirective = (ngDialog)->
                         </div>
                     </div>
                 </md-card>
-                <div class="approval-buttons" ng-if="!flowView || flow.name == '合同续签'">
+                <div class="approval-buttons" ng-if="!flowView || (!isHistory && flow.name=='合同续签')">
                     <md-button class="md-raised md-warn" ng-click="submitFlow({opinion: true}, flow, dialog, state)" type="button">通过</md-button>
                     <md-button class="md-raised md-warn" ng-click="submitFlow({opinion: false}, flow, dialog, state)" type="button">驳回</md-button>
                     <md-button class="md-raised md-primary"
@@ -99,7 +99,7 @@ FlowHandlerDirective = (ngDialog)->
                         locals="{flow:flow}"
                         >移交</md-button>
                 </div>
-                <div class="approval-buttons" ng-if="flowView">
+                <div class="approval-buttons" ng-if="flowView && (flow.name!='合同续签' || isHistory)">
                     <md-button class="md-raised md-warn" ng-click="dialog.close()" type="button">关闭</md-button>
                 </div>
             </div>
@@ -111,6 +111,7 @@ FlowHandlerDirective = (ngDialog)->
         options = angular.extend {}, defaults, scope.options
 
         scope.flowView = angular.isDefined(attrs.flowView)
+        scope.isHistory = angular.isDefined(attrs.isHistory)
 
         offeredExtra = (flow) ->
             return template
@@ -187,7 +188,7 @@ class FlowController
 
             promise.then ()->
                 if angular.isDefined(scope.flowSet)
-                    flow.processed = '已处理'
+                    #flow.processed = '已处理'
                     scope.flowSet.$refresh() # 刷新TODO列表
                     # 表格数据刷新后id错位，因为查看这列的ng-init中的realFlow绑定关系没有更新
                     # state.go(state.current.name, {}, {reload: true})

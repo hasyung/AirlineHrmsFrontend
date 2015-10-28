@@ -30,6 +30,35 @@ BasicSalary = (restmod, RMUtils, $Evt) ->
     }
 
 
+KeepSalary = (restmod, RMUtils, $Evt) ->
+    restmod.model('/keep_salaries').mix 'nbRestApi', 'DirtyModel', {
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+        $hooks:
+            'after-create': ->
+                $Evt.$send('basic_salary:create:success', "保留工资创建成功")
+
+            'after-update': ->
+                $Evt.$send('basic_salary:update:success', "保留工资更新成功")
+
+        $config:
+            jsonRootSingle: 'keep_salary'
+            jsonRootMany: 'keep_salaries'
+
+        $extend:
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+            Scope:
+                # 计算(根据年月)
+                compute: (params)->
+                    restmod.model('/keep_salaries/compute').mix(
+                        $config:
+                            jsonRoot: 'keep_salaries'
+                    ).$search(params)
+    }
+
+
 PerformanceSalary = (restmod, RMUtils, $Evt) ->
     restmod.model('/performance_salaries').mix 'nbRestApi', 'DirtyModel', {
         owner: {belongsTo: 'Employee', key: 'employee_id'}
@@ -257,18 +286,31 @@ SalaryOverview = (restmod, RMUtils, $Evt) ->
 
         $hooks:
             'after-create': ->
-                $Evt.$send('salary_counter:create:success', "薪酬合计创建成功")
+                $Evt.$send('salary_overview:create:success', "薪酬合计创建成功")
 
             'after-update': ->
-                $Evt.$send('salary_counter:update:success', "薪酬合计更新成功")
+                $Evt.$send('salary_overview:update:success', "薪酬合计更新成功")
 
         $config:
             jsonRootSingle: 'salary_overview'
             jsonRootMany: 'salary_overviews'
+
+        $extend:
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+            Scope:
+                # 计算(根据年月)
+                compute: (params)->
+                    restmod.model('/salary_overviews/compute').mix(
+                        $config:
+                            jsonRoot: 'salary_overviews'
+                    ).$search(params)
     }
 
 
 resources.factory 'BasicSalary', ['restmod', 'RMUtils', '$nbEvent', BasicSalary]
+resources.factory 'KeepSalary', ['restmod', 'RMUtils', '$nbEvent', KeepSalary]
 resources.factory 'PerformanceSalary', ['restmod', 'RMUtils', '$nbEvent', PerformanceSalary]
 resources.factory 'HoursFee', ['restmod', 'RMUtils', '$nbEvent', HoursFee]
 resources.factory 'Allowance', ['restmod', 'RMUtils', '$nbEvent', Allowance]

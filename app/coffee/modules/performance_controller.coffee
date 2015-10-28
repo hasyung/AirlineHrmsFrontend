@@ -121,7 +121,7 @@ class PerformanceRecord extends nb.Controller
                     <div class="ui-grid-cell-contents" ng-init="outerScope=grid.appScope.$parent">
                         <a ng-if="row.entity.attachmentStatus"
                             nb-dialog
-                            locals="{performance: row.entity, can_upload: false, outerScope: outerScope}"
+                            locals="{performance: row.entity, can_upload: false, outerScope: outerScope, can_del: false}"
                             template-url="/partials/performance/record/add_attachment.html"
                         > 查看
                         </a>
@@ -144,12 +144,11 @@ class PerformanceRecord extends nb.Controller
     isImgObj: (obj)->
         return /jpg|jpeg|png|gif/.test(obj.type)
 
-    attachmentDestroy: (attachment, e) ->
+    attachmentDestroy: (attachment) ->
         self = @
 
-        e.stopPropagation()
-        attachment.$destroy()
-        @performances.$refresh()
+        attachment.$destroy().$asPromise().then (data)->
+            self.performances.$refresh()
 
     getSelected: () ->
         if @gridApi && @gridApi.selection
@@ -182,6 +181,8 @@ class PerformanceRecord extends nb.Controller
         .error ()->
 
     uploadAttachments: (performance, collection, $messages)->
+        self = @
+
         data = JSON.parse($messages)
 
         hash = {
@@ -193,7 +194,9 @@ class PerformanceRecord extends nb.Controller
         }
 
         performance.attachmentStatus = true
-        collection.$create(hash)
+        collection.$create(hash).$asPromise().then (data)->
+            collection.$refresh()
+            self.performances.$refresh()
 
     # 安排离岗培训
     newTrainEmployee: (moveEmployee)->
@@ -222,7 +225,10 @@ class PerformanceMasterRecord extends nb.Controller
         @columnDef = BASE_TABLE_DEFS.concat [
             {displayName: '绩效类型', name: 'categoryName'}
             {displayName: '考核时段', name: 'assessTime'}
-            {displayName: '绩效', name: 'result'}
+            {
+                displayName: '绩效'
+                name: 'result'
+            }
             {displayName: '排序', name: 'sortNo'}
             {
                 displayName: '附件',
@@ -231,7 +237,7 @@ class PerformanceMasterRecord extends nb.Controller
                     <div class="ui-grid-cell-contents" ng-init="outerScope=grid.appScope.$parent">
                         <a ng-if="row.entity.attachmentStatus"
                             nb-dialog
-                            locals="{performance: row.entity, can_upload: false, outerScope: outerScope}"
+                            locals="{performance: row.entity, can_upload: false, outerScope: outerScope, can_del: false}"
                             template-url="/partials/performance/record/add_attachment.html"
                         > 查看
                         </a>
@@ -245,6 +251,20 @@ class PerformanceMasterRecord extends nb.Controller
             if item['name'] == 'sortNo'
                 item['headerCellClass'] = 'editable_cell_header'
                 item['enableCellEdit'] = true
+            else if item['name'] == 'result'
+                item['enableCellEdit'] = true
+                item['editableCellTemplate'] = 'ui-grid/dropdownEditor'
+                item['headerCellClass'] = 'editable_cell_header'
+                item['editDropdownValueLabel'] = 'value'
+                item['editDropdownIdLabel'] = 'key'
+                item['editDropdownOptionsArray'] = [
+                    {key: '无', value: '无'}
+                    {key: '优秀', value: '优秀'}
+                    {key: '良好', value: '良好'}
+                    {key: '合格', value: '合格'}
+                    {key: '待改进', value: '待改进'}
+                    {key: '不合格', value: '不合格'}
+                ]
             else
                 item['enableCellEdit'] = false
 
@@ -293,6 +313,8 @@ class PerformanceMasterRecord extends nb.Controller
             selected = if rows.length >= 1 then rows[0].entity else null
 
     uploadAttachments: (performance, collection, $messages)->
+        self = @
+
         data = JSON.parse($messages)
 
         hash = {
@@ -304,7 +326,15 @@ class PerformanceMasterRecord extends nb.Controller
         }
 
         performance.attachmentStatus = true
-        collection.$create(hash)
+        collection.$create(hash).$asPromise().then (data)->
+            collection.$refresh()
+            self.performances.$refresh()
+
+    attachmentDestroy: (attachment) ->
+        self = @
+
+        attachment.$destroy()
+        @performances.$refresh()
 
 
 class PerformanceSetting extends nb.Controller
@@ -437,8 +467,8 @@ class PerformanceAllege extends nb.Controller
             {displayName: '绩效类型', name: 'categoryName'}
             {displayName: '考核时段', name: 'assessTime'}
             {displayName: '绩效', name: 'result'}
-            {displayName: '申述时间', name: 'createdAt',cellFilter: "date:'yyyy-MM-dd'"}
-            {displayName: '申述结果', name: 'outcome'}
+            {displayName: '申诉时间', name: 'createdAt',cellFilter: "date:'yyyy-MM-dd'"}
+            {displayName: '申诉结果', name: 'outcome'}
             {
                 displayName: '处理',
                 field: '查看',

@@ -8,6 +8,16 @@ body {
     font-family: $font-family-sans-serif;
     font-size: $font-size-sm;
 }
+
+//由于360下 ui-grid的选中行按钮灰度太低，看不清楚，hack 其透明度
+.ui-grid-selection-row-header-buttons {
+    opacity: .3;
+}
+//暂时暴力解决一些md-dialog在360安全浏览器下没有高度的bug
+md-dialog.browser360 {
+    height: 80%;
+}
+
 //重置material design影响标签的样式
 fieldset {
     border: 0;
@@ -109,6 +119,9 @@ md-toolbar {
     }
 }
 
+md-input-container:not(.md-input-has-value) input:not(:focus) {
+    color: $text-color;
+}
 
 .md-subheader {
     font-family: $font-family-sans-serif;

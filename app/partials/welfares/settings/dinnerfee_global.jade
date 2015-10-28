@@ -1,0 +1,135 @@
+.app-content-wrapper(
+    flex ng-controller="dinnerCtrl as ctrl"
+    ng-init="currentSettingLocation='成都总部'"
+
+    )
+    form(ng-submit="saveConfig(configurations)")
+        md-toolbar.toolbar--welfare
+            .md-toolbar-tools
+                span(layout)
+                    label 缴纳地区
+                    md-select(ng-model="currentSettingLocation")
+                        md-option(value="成都总部") 成都总部
+                        md-option(value="成都北头") 成都北头
+                        md-option(value="其他区域") 其他区域
+                span(flex)
+                span
+                    md-button.md-raised.md-primary(type="submit") 保存
+
+        md-content.pl20.pr20(ng-if="currentSettingLocation=='成都总部'")
+            md-divider
+
+            table.tablexx.table-default.table-bordered
+                thead
+                    tr
+                        th 就餐地点
+                        th 班制
+                        th.mini 充值金额
+                        th.mini 早餐次数
+                        th.mini 早餐刷卡金额
+                        th.mini 早餐补贴金额
+                        th.mini 午餐次数
+                        th.mini 午餐刷卡金额
+                        th.mini 午餐补贴金额
+                        th.mini 晚餐次数
+                        th.mini 晚餐刷卡金额
+                        th.mini 晚餐补贴金额
+                tbody
+                    tr(ng-repeat="setting in configurations[0].chengdu_head_office")
+                        td {{setting.areas}}
+                        td {{setting.shifts_type}}
+                        td
+                            input(type="number" ng-model="setting.charge_amount" min="0"  max="100000" step="1")
+                        td
+                            input(type="number" ng-model="setting.breakfast_number" min="0"  max="100000" step="1")
+                        td
+                            input(type="number" ng-model="setting.breakfast_card_amount" min="0"  max="100000" step="1")
+                        td
+                            input(type="number" ng-model="setting.breakfast_subsidy_amount" min="0"  max="100000" step="1")
+                        td
+                            input(type="number" ng-model="setting.lunch_number" min="0"  max="100000" step="1")
+                        td
+                            input(type="number" ng-model="setting.lunch_card_amount" min="0"  max="100000" step="1")
+                        td
+                            input(type="number" ng-model="setting.lunch_subsidy_amount" min="0"  max="100000" step="1")
+                        td
+                            input(type="number" ng-model="setting.dinner_number" min="0"  max="100000" step="1")
+                        td
+                            input(type="number" ng-model="setting.dinner_card_amount" min="0"  max="100000" step="1")
+                        td
+                            input(type="number" ng-model="setting.dinner_subsidy_amount" min="0"  max="100000" step="1")
+
+        md-content.pl20.pr20(ng-if="currentSettingLocation=='成都北头'")
+            md-divider
+
+            table.tablexx.table-default.table-bordered
+                thead
+                    tr
+                        th 就餐地点
+                        th 班制
+                        th.mini 充值金额
+                        th.mini 早餐次数
+                        th.mini 早餐刷卡金额
+                        th.mini 早餐补贴金额
+                        th.mini 午餐次数
+                        th.mini 午餐刷卡金额
+                        th.mini 午餐补贴金额
+                        th.mini 晚餐次数
+                        th.mini 晚餐刷卡金额
+                        th.mini 晚餐补贴金额
+                tbody
+                    tr(ng-repeat="setting in configurations[1].chengdu_north_part")
+                        td {{setting.areas}}
+                        td {{setting.shifts_type}}
+                        td
+                            input(type="number" ng-model="setting.charge_amount" min="0"  max="100000" step="1")
+                        td
+                            input(type="number" ng-model="setting.breakfast_number" min="0"  max="100000" step="1")
+                        td
+                            input(type="number" ng-model="setting.breakfast_card_amount" min="0"  max="100000" step="1")
+                        td
+                            input(type="number" ng-model="setting.breakfast_subsidy_amount" min="0"  max="100000" step="1")
+                        td
+                            input(type="number" ng-model="setting.lunch_number" min="0"  max="100000" step="1")
+                        td
+                            input(type="number" ng-model="setting.lunch_card_amount" min="0"  max="100000" step="1")
+                        td
+                            input(type="number" ng-model="setting.lunch_subsidy_amount" min="0"  max="100000" step="1")
+                        td
+                            input(type="number" ng-model="setting.dinner_number" min="0"  max="100000" step="1")
+                        td
+                            input(type="number" ng-model="setting.dinner_card_amount" min="0"  max="100000" step="1")
+                        td
+                            input(type="number" ng-model="setting.dinner_subsidy_amount" min="0"  max="100000" step="1")
+
+        md-content.pl20.pr20(ng-if="currentSettingLocation=='其他区域'")
+            md-divider
+
+            table.tablexx.table-default.table-bordered
+                thead
+                    tr
+                        th 城市
+                        th.mini 金额
+                        th.mini 月/天
+
+                tbody
+                    tr(ng-repeat="setting in configurations[2].others")
+                        td
+                            span.city-chip(
+                                ng-repeat="city in setting.cities track by $index"
+                                ) {{city}}
+                                md-icon.md-warn(
+                                    md-svg-src="/images/svg/close.svg"
+                                    ng-click="ctrl.destroyCity(setting.cities, $index)"
+                                    )
+                            add-city(ng-model="setting.cities")
+                        td
+                            input(type="number" ng-model="setting.amount" min="0"  max="100000" step="1")
+                        td
+                            md-radio-group(ng-model="setting.unit" layout)
+                                md-radio-button.md-primary(style="margin-right: 30px;" value="month") 月
+                                md-radio-button.md-primary(value="day") 天
+
+
+
+

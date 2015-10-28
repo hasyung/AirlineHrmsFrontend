@@ -1,84 +1,80 @@
-.app-content-wrapper(flex ng-controller="salaryCtrl as ctrl" ng-init="ctrl.loadConfigFromServer('flyer_hour')")
-    form.form-static(novalidate)
-        fieldset
-            .form-row(layout)
-                label 教员A
-                md-input-container(md-no-float)
-                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.techer_A")
-                span 元/小时
+.app-content-wrapper(flex ng-init="ctrl.loadConfigFromServer('flyer_hour')")
+    fieldset
+        .form-row(layout)
+            label 教员A
+            md-input-container(md-no-float)
+                input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.techer_A")
+            span 元/小时
 
-            .form-row(layout)
-                label 教员B
-                md-input-container(md-no-float)
-                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.techer_B")
-                span 元/小时
+        .form-row(layout)
+            label 教员B
+            md-input-container(md-no-float)
+                input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.techer_B")
+            span 元/小时
 
-            .form-row(layout)
-                label 责任机长A
-                md-input-container(md-no-float)
-                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.lerder_A")
-                span 元/小时
+        .form-row(layout)
+            label 责任机长A
+            md-input-container(md-no-float)
+                input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.lerder_A")
+            span 元/小时
 
-            .form-row(layout)
-                label 责任机长B
-                md-input-container(md-no-float)
-                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.lerder_B")
-                span 元/小时
+        .form-row(layout)
+            label 责任机长B
+            md-input-container(md-no-float)
+                input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.lerder_B")
+            span 元/小时
 
-            .form-row(layout)
-                label 机长
-                md-input-container(md-no-float)
-                    input(type="number" min="0" max="100000" setp="1" ng-model="ctrl.dynamic_config.lerder_base")
-                span 元/小时
+        .form-row(layout)
+            label 机长
+            md-input-container(md-no-float)
+                input(type="number" min="0" max="100000" setp="1" ng-model="ctrl.dynamic_config.lerder_base")
+            span 元/小时
 
-            .form-row(layout)
-                label 副驾驶特别
-                md-input-container(md-no-float)
-                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.copilot_special")
-                span 元/小时
+        .form-row(layout)
+            label 副驾驶特别
+            md-input-container(md-no-float)
+                input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.copilot_special")
+            span 元/小时
 
-            .form-row(layout)
-                label 副驾驶1
-                md-input-container(md-no-float)
-                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.copilot_1")
-                span 元/小时
+        .form-row(layout)
+            label 副驾驶1
+            md-input-container(md-no-float)
+                input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.copilot_1")
+            span 元/小时
 
-            .form-row(layout)
-                label 副驾驶2
-                md-input-container(md-no-float)
-                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.copilot_2")
-                span 元/小时
+        .form-row(layout)
+            label 副驾驶2
+            md-input-container(md-no-float)
+                input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.copilot_2")
+            span 元/小时
 
-            .form-row(layout)
-                label 副驾驶3
-                md-input-container(md-no-float)
-                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.copilot_3")
-                span 元/小时
+        .form-row(layout)
+            label 副驾驶3
+            md-input-container(md-no-float)
+                input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.copilot_3")
+            span 元/小时
 
-            .form-row(layout)
-                label 副驾驶4
-                md-input-container(md-no-float)
-                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.copilot_4")
-                span 元/小时
+        .form-row(layout)
+            label 副驾驶4
+            md-input-container(md-no-float)
+                input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.copilot_4")
+            span 元/小时
 
-            .form-row(layout)
-                label 副驾驶5
-                md-input-container(md-no-float)
-                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.copilot_5")
-                span 元/小时
+        .form-row(layout)
+            label 副驾驶5
+            md-input-container(md-no-float)
+                input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.copilot_5")
+            span 元/小时
 
-            .form-row(layout)
-                label 副驾驶6
-                md-input-container(md-no-float)
-                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.copilot_6")
-                span 元/小时
+        .form-row(layout)
+            label 副驾驶6
+            md-input-container(md-no-float)
+                input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.copilot_6")
+            span 元/小时
 
-            .form-row(layout)
-                label 空中观察员
-                md-input-container(md-no-float)
-                    input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.observer")
-                span 元/小时
-
-
-            md-button.md-raised.md-primary(ng-click="ctrl.saveConfig('flyer_hour', ctrl.dynamic_config)") 保存
+        .form-row(layout)
+            label 空中观察员
+            md-input-container(md-no-float)
+                input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.observer")
+            span 元/小时
 

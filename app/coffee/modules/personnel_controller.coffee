@@ -83,7 +83,8 @@ class PersonnelCtrl extends nb.Controller
             .col 'channel_ids',          '通道',     'muti-enum-search', '',    {type: 'channels'}
             .col 'employment_status_id', '用工状态', 'select',           '',    {type: 'employment_status'}
             .col 'birthday',             '出生日期', 'date-range'
-            .col 'join_scal_date',       '入职时间', 'date-range'
+            .col 'join_scal_date',       '入职日期', 'date-range'
+            .col 'start_work_date',      '参工日期', 'date-range'
             .end()
 
     loadInitialData: () ->
@@ -291,6 +292,20 @@ class NewEmpsCtrl extends nb.Controller
 
         return tableState
 
+    uploadNewEmployees: (type, attachment_id)->
+        self = @
+        params = {type: type, attachment_id: attachment_id}
+        @show_error_names = false
+
+        @http.post("/api/employees/import", params).success (data, status) ->
+            if data.error_count > 0
+                self.show_error_names = true
+                self.error_names = data.error_names
+
+                self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
+            else
+                self.toaster.pop('error', '提示', '导入成功')
+
 
 class LeaveEmployeesCtrl extends nb.Controller
     @.$inject = ['$scope', 'LeaveEmployees']
@@ -338,6 +353,11 @@ class LeaveEmployeesCtrl extends nb.Controller
                 {
                     name: 'name'
                     displayName: '姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'channel'
+                    displayName: '通道'
                     type: 'string'
                 }
                 {
@@ -409,7 +429,7 @@ class MoveEmployeesCtrl extends nb.Controller
             }
             {
                 displayName: '所属部门'
-                name: 'departmentName'
+                name: 'department.name'
                 cellTooltip: (row) ->
                     return row.entity.departmentName
             }
@@ -445,28 +465,28 @@ class MoveEmployeesCtrl extends nb.Controller
             name: 'personnelLeave'
             constraintDefs: [
                 {
-                    name: 'employeeName'
+                    name: 'name'
                     displayName: '姓名'
                     type: 'string'
                 }
                 {
-                    name: 'employeeNo'
+                    name: 'employee_no'
                     displayName: '员工编号'
                     type: 'string'
                 }
                 {
-                    name: 'department'
+                    name: 'department_ids'
                     displayName: '机构'
-                    type: 'string'
+                    type: 'org-search'
                 }
                 {
                     name: 'special_category'
-                    type: 'string'
+                    type: 'move_select'
                     displayName: '异动性质'
                 }
                 {
                     name: 'special_location'
-                    type: 'date-range'
+                    type: 'string'
                     displayName: '异动地点'
                 }
             ]
@@ -492,9 +512,17 @@ class MoveEmployeesCtrl extends nb.Controller
 
     newBorrowEmployee: (moveEmployee)->
         self = @
-        moveEmployee.department_id = moveEmployee.department_id.$pk if moveEmployee.department_id
 
-        @http.post('/api/special_states/temporarily_transfer', moveEmployee).then (data)->
+        params = {}
+        moveEmployee.department_id = moveEmployee.department.$pk if moveEmployee.department
+        params.department_id = moveEmployee.department_id
+        params.out_company = moveEmployee.out_company
+        params.employee_id = moveEmployee.employee_id
+        params.special_date_from = moveEmployee.special_date_from
+        params.special_date_to = moveEmployee.special_date_to
+        params.file_no = moveEmployee.file_no
+
+        @http.post('/api/special_states/temporarily_transfer', params).then (data)->
             self.moveEmployees.$refresh()
             msg = data.messages
 
@@ -508,16 +536,17 @@ class MoveEmployeesCtrl extends nb.Controller
 
         @http.post('/api/special_states/temporarily_defend', moveEmployee).then (data)->
             self.moveEmployees.$refresh()
-            msg = data.$response.data.messages
 
-            if data.$response.status == 200
+            msg = data.messages
+
+            if data.status == 200
                 self.Evt.$send("special_state:save:success", msg || "创建成功")
             else
                 $Evt.$send('special_state:save:error', msg || "创建失败")
 
     search: (tableState) ->
         tableState = tableState || {}
-        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+        # tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @moveEmployees.$refresh(tableState)
 
     getSelected: () ->
@@ -616,6 +645,7 @@ class ReviewCtrl extends nb.Controller
                 '''
             }
             {name:"createdAt", displayName:"变更时间"}
+            {name:"user.name", displayName:"操作者"}
             {name:"statusCd", displayName:"状态", cellFilter: "dictmap:'personnel'"}
             {name:"checkDate", displayName:"审核时间"}
             {name:"reason", displayName:"理由"}
@@ -687,6 +717,15 @@ class ReviewCtrl extends nb.Controller
         else
             self.toaster.pop('error', '提示','请勾选要处理的审核记录')
 
+class EmployeeMemberCtrl extends nb.Controller
+    @.$inject = ['$scope', 'Employee']
+
+    constructor: (@scope, @Employee)->
+
+    loadMembers: (employee)->
+        @scope.lovers = employee.familyMembers.$search({relation: 'lover'})
+        @scope.children = employee.familyMembers.$search({relation: 'children'})
+        @scope.others = employee.familyMembers.$search({relation: 'other'})
 
 class EmployeePerformanceCtrl extends nb.Controller
     @.$inject = ['$scope', 'Employee', 'Performance']
@@ -696,16 +735,88 @@ class EmployeePerformanceCtrl extends nb.Controller
     loadData: (employee)->
         self = @
         employee.performances.$refresh().$then (performances)->
-            self.performances = _.groupBy performances, (item)-> item.assessYear
+            self.performances = _.sortBy(_.groupBy performances, (item)-> item.assessYear).reverse()
 
 class EmployeeRewardPunishmentCtrl extends nb.Controller
     @.$inject = ['$scope', 'Employee', 'Reward', 'Punishment']
 
     constructor: (@scope, @Employee, @Reward, @Punishment)->
 
-    loadData: (employee)->
-        #@rewards = employee.rewards.$refresh()
-        @punishments = employee.punishments.$refresh()
+    loadRewards: (employee) ->
+        @rewards = employee.rewards.$refresh({genre: '奖励'})
+
+    loadPunishments: (employee)->
+        @punishments = employee.punishments.$refresh({genre: '处分'})
+
+class EmployeeAttendanceCtrl extends nb.Controller
+    @.$inject = ['$scope', '$http', 'Employee', 'CURRENT_ROLES']
+
+    constructor: (@scope, @http, @Employee, @CURRENT_ROLES)->
+
+    isHrPaymentMember: ()->
+        @CURRENT_ROLES.indexOf('hr_payment_member') >= 0
+
+    dayOnClick: ()->
+        alert('clicked')
+
+    # 因为没有数据，所以现在暂时用了当前人员的考勤数据
+    loadAttendance: (employee)->
+        self = @
+
+        @eventSources = []
+        keys = ["leaves", "late_or_early_leaves", "absences", "lands", "off_post_trains", "filigt_groundeds", "flight_ground_works"]
+        colors = {
+            "leaves": "#006600"
+            "late_or_early_leaves": "#ffff66"
+            "absences": "#ff0033"
+            "lands": "#9933ff"
+            "off_post_trains": "#0066ff"
+            "filigt_groundeds": "#ff6633"
+            "flight_ground_works": "#33ff00"
+        }
+
+        @uiConfig = {
+            calendar: {
+                dayNames: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
+                dayNamesShort: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
+                monthNamesShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"]
+                monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"]
+
+                height: 450
+                editable: false
+
+                header: {
+                  #left: 'month basicWeek basicDay agendaWeek agendaDay'
+                  left: 'month basicWeek'
+                  center: 'title'
+                  right: 'today prev,next'
+                }
+
+                #viewRender: (view, element)->
+                   #console.error("View Changed: ", view.visStart, view.visEnd, view.start, view.end)
+
+                dayClick: @dayOnClick
+                #eventDrop
+                #eventResize
+            }
+        }
+
+        @http.get('/api/me/attendance_records/').success (data)->
+            angular.forEach keys, (key)->
+                events = data.attendance_records[key]
+
+                events = angular.forEach events, (item)->
+                    item["start"] = new Date(item["start"]) if item["start"]
+                    item["end"] = new Date(item["end"]) if item["end"]
+
+                source = {
+                    color: colors[key]
+                    textColor: '#000'
+                    events: events
+                }
+
+                self.eventSources.push(source)
+
 
 
 class PersonnelSort extends nb.Controller
@@ -770,6 +881,7 @@ orgMutiPos = ($rootScope)->
 
         constructor: (@scope, @Position) ->
             @scope.positions = []
+            @scope.hasPrimary = false
 
         addPositions: ->
             @scope.positions.push {
@@ -785,6 +897,15 @@ orgMutiPos = ($rootScope)->
             temp = @scope.positions[index]
             @scope.positions[index] = @scope.positions[index-1]
             @scope.positions[index-1] = temp
+
+        queryPrimary: (positions)->
+            self = @
+
+            self.scope.hasPrimary = false
+            _.forEach positions, (position)->
+                if position.category == '主职'
+                    return self.scope.hasPrimary = true
+
 
     postLink = (elem, attrs, ctrl)->
 
@@ -829,6 +950,8 @@ class PersonnelDataCtrl extends nb.Controller
 app.controller('PersonnelSort', PersonnelSort)
 app.controller('LeaveEmployeesCtrl', LeaveEmployeesCtrl)
 app.controller('MoveEmployeesCtrl', MoveEmployeesCtrl)
+app.controller('EmployeeMemberCtrl', EmployeeMemberCtrl)
 app.controller('EmployeePerformanceCtrl', EmployeePerformanceCtrl)
+app.controller('EmployeeAttendanceCtrl', EmployeeAttendanceCtrl)
 app.controller('EmployeeRewardPunishmentCtrl', EmployeeRewardPunishmentCtrl)
 app.controller('PersonnelDataCtrl', PersonnelDataCtrl)

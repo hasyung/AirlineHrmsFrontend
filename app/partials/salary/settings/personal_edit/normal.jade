@@ -6,26 +6,32 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
                 md-option(value="leader_base") 干部
                 md-option(value="manager15_base") 管理15
                 md-option(value="manager12_base") 管理12
-                md-option(value="flyer_legend_base") 荣誉级飞行员
-                md-option(value="flyer_leader_base") 机长
-                md-option(value="flyer_copilot_base") 副驾
-                md-option(value="flyer_teacher_A_base") 教员A
-                md-option(value="flyer_teacher_B_base") 教员B
-                md-option(value="flyer_teacher_C_base") 教员C
-                md-option(value="air_steward_base") 空乘空保
-                md-option(value="service_c_base") 空中观察员
-                md-option(value="air_observer_base") 前场运行监察
-        md-input-container.row-has-value(flex)
+                //- md-option(value="flyer_legend_base") 荣誉级飞行员
+                //- md-option(value="flyer_leader_base") 机长
+                //- md-option(value="flyer_copilot_base") 副驾
+                //- md-option(value="flyer_teacher_A_base") 教员A
+                //- md-option(value="flyer_teacher_B_base") 教员B
+                //- md-option(value="flyer_teacher_C_base") 教员C
+                //- md-option(value="air_steward_base") 空乘空保
+                //- md-option(value="air_observer_base") 空中观察员
+                md-option(value="front_run_base") 前场运行监察
+                //- md-option(value="service_c_1_perf") 服务C1
+                //- md-option(value="service_c_2_perf") 服务C2
+                //- md-option(value="service_c_3_perf") 服务C3
+                md-option(value="service_c_driving_base") 服务C-驾驶
+                md-option(value="service_c_base") 服务C
+        md-input-container.row-has-value(flex ng-if="current.baseWage != 'service_c_driving_base'")
             label 薪酬通道
             md-select(ng-model="current.baseChannel" placeholder="请选择" ng-change="exchangeCtrl.normal(current)")
                 md-option(ng-value="item" ng-repeat="item in exchangeCtrl.normal_channel_array(current)") {{item}}
-        md-input-container.row-has-value(flex)
+        md-input-container.row-has-value(flex ng-if="current.baseWage != 'service_c_driving_base'")
             label 档级
             md-select(ng-model="current.baseFlag" placeholder="请选择" ng-change="exchangeCtrl.normal(current)")
                 md-option(ng-value="item" ng-repeat="item in exchangeCtrl.normal_flag_array(current)") {{item}}
         md-input-container(flex)
             label 金额
             input(type="number" min="0" max="100000" step="1" ng-model="current.baseMoney" readonly)
+
 
     div(layout)
         md-input-container.row-has-value(flex)
@@ -38,6 +44,11 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
                 md-option(value="service_c_2_perf") 服务C2
                 md-option(value="service_c_3_perf") 服务C3
                 md-option(value="service_c_driving_perf") 服务C-驾驶
+                //- md-option(value="service_c_base") 服务C
+        md-input-container.row-has-value(flex)
+            label 绩效考核结果
+            md-select(ng-model="current.performanceChannel" placeholder="请选择" ng-change="exchangeCtrl.perf(current)")
+                md-option(ng-value="item" ng-repeat="item in exchangeCtrl.perf_channel_array(current)") {{item}}
         md-input-container.row-has-value(flex)
             label 档级
             md-select(ng-model="current.performanceFlag" placeholder="请选择" ng-change="exchangeCtrl.perf(current)")
@@ -45,26 +56,58 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
         md-input-container(flex)
             label 金额
             input(type="number" min="0" max="100000" step="1" ng-model="current.performanceMoney" readonly)
+        //- md-input-container(flex)
+        //-     label 保留工资
+        //-     input(type="number" min="0" max="100000" step="1" ng-model="current.reserveWage")
+    div(layout)
         md-input-container(flex)
-            label 保留工资
-            input(type="number" min="0" max="100000" step="1" ng-model="current.reserveWage")
-
+            label 岗位工资保留
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepPosition")
+        md-input-container(flex)
+            label 业绩奖保留
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepPerformance")
+        md-input-container(flex)
+            label 工龄工资保留
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepWorkingYears")
+    div(layout)
+        md-input-container(flex)
+            label 保底增幅
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepMinimumGrowth")
+        md-input-container(flex)
+            label 地勤补贴保留
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepLandAllowance")
+        md-input-container(flex)
+            label 生活补贴保留
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepLifeAllowance")
+    div(layout)
+        md-input-container(flex)
+            label 09调资增加保留
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepAdjustment09")
+        md-input-container(flex)
+            label 14公务用车保留
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepBus14")
+        md-input-container(flex)
+            label 14通信补贴保留
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepCommunication14")
     div(layout)
         md-input-container.row-has-value(flex)
             label 到岗日期
             input(ng-model="current.joinScalDate" readonly)
         md-input-container.row-has-value(flex)
+            label 薪酬到岗日期
+            input(bs-datepicker ng-model="current.joinSalaryScalDate")
+        md-input-container.row-has-value(flex)
             label 工龄工资
-            input(ng-model="current.workingYearsSalary" readonly)
+            input(ng-model="current.workingYearsSalary")
 
     div(layout)
         md-input-container.row-has-value(flex)
             label 安检津贴
             md-select(ng-model="current.securitySubsidy" placeholder="请选择")
-                md-option(value="无") 无
-                md-option(value="初级") 初级
-                md-option(value="中级") 中级
-                md-option(value="高级") 高级
+                md-option(value="none") 无
+                md-option(value="lower") 初级
+                md-option(value="middle") 中级
+                md-option(value="higher") 高级
 
         md-input-container.row-has-value(flex)
             label 安置补贴
@@ -75,19 +118,19 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
         md-input-container.row-has-value(flex)
             label 班组长津贴
             md-select(ng-model="current.leaderSubsidy" placeholder="请选择")
-                md-option(value="无") 无
-                md-option(value="一线A类") 一线A类
-                md-option(value="一线B类") 一线B类
-                md-option(value="一线C类") 一线C类
-                md-option(value="一线D类") 一线D类
-                md-option(value="后勤一类") 后勤一类
-                md-option(value="后勤二类") 后勤二类
+                md-option(value="none") 无
+                md-option(value="line_A") 一线A类
+                md-option(value="line_B") 一线B类
+                md-option(value="line_C") 一线C类
+                md-option(value="line_D") 一线D类
+                md-option(value="logistics_1") 后勤一类
+                md-option(value="logistics_2") 后勤二类
         md-input-container.row-has-value(flex)
             label 航站管理津贴
             md-select(ng-model="current.terminalSubsidy" placeholder="请选择")
-                md-option(value="无") 无
-                md-option(value="一类") 一类
-                md-option(value="二类") 二类
+                md-option(value="none") 无
+                md-option(value="first") 一类
+                md-option(value="second") 二类
 
     div(layout)
         md-input-container.row-has-value(flex)
@@ -98,38 +141,38 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
         md-input-container.row-has-value(flex)
             label 地勤补贴
             md-select(ng-model="current.groundSubsidy" placeholder="请选择")
-                md-option(value="无") 无
-                md-option(value="一类") 一类
-                md-option(value="二类") 二类
-                md-option(value="三类") 三类
-                md-option(value="四类") 四类
-                md-option(value="五类") 五类
-                md-option(value="六类") 六类
+                md-option(value="none") 无
+                md-option(value="first") 一类
+                md-option(value="second") 二类
+                md-option(value="third") 三类
+                md-option(value="fourth") 四类
+                md-option(value="fifth") 五类
+                md-option(value="sixth") 六类
         md-input-container.row-has-value(flex)
             label 机务放行补贴
             md-select(ng-model="current.machineSubsidy" placeholder="请选择")
-                md-option(value="无") 无
-                md-option(value="一档") 一档
-                md-option(value="二档") 二档
-                md-option(value="三档") 三档
-                md-option(value="四档") 四档
-                md-option(value="五档") 五档
+                md-option(value="none") 无
+                md-option(value="first") 一档
+                md-option(value="second") 二档
+                md-option(value="third") 三档
+                md-option(value="fourth") 四档
+                md-option(value="fifth") 五档
         md-input-container.row-has-value(flex)
             label 试车津贴
             md-select(ng-model="current.trialSubsidy" placeholder="请选择")
-                md-option(value="无") 无
-                md-option(value="一类") 一类
-                md-option(value="二类") 二类
+                md-option(value="none") 无
+                md-option(value="first") 一类
+                md-option(value="second") 二类
 
     div(layout)
         md-input-container.row-has-value(flex)
             label 飞行安全荣誉津贴
             md-select(ng-model="current.honorSubsidy" placeholder="请选择")
-                md-option(value="无") 无
-                md-option(value="铜质") 铜质
-                md-option(value="银质") 银质
-                md-option(value="金质") 金质
-                md-option(value="功勋") 功勋
+                md-option(value="none") 无
+                md-option(value="copper") 铜质
+                md-option(value="silver") 银质
+                md-option(value="gold") 金质
+                md-option(value="exploit") 功勋
         md-input-container(flex)
             label 高温补贴
             input(type="number" min="0" max="1000000" ng-model="current.tempAllowance")
@@ -139,8 +182,21 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
         md-input-container(flex)
             label 公务车报销额度
             input(type="number" min="0" max="1000000" ng-model="current.officialCar")
-
     div(layout)
-        md-checkbox(class="md-primary" ng-model="current.doubleDepartmentCheck") 双部门考核
+        md-input-container(flex)
+            label 费用化报销金额
+            input(type="number" min="0" ng-model="current.refundFee")
+        div(flex)
+        div(flex)
+        div(flex)
     div(layout)
-        org-search(flex ng-model="current.secondDepartmentId" ng-if="current.doubleDepartmentCheck" placeholder="第二考核部门" float-label)
+        md-checkbox(class="md-primary" ng-model="current.doubleDepartmentCheck" ng-change="current.secondDepartment=null") 双部门考核
+    div(layout)
+        org-search(
+            ng-required="current.doubleDepartmentCheck"
+            flex ng-model="current.secondDepartment"
+            ng-if="current.doubleDepartmentCheck"
+            placeholder="第二考核部门"
+            float-label
+            ng-change="current.secondDepartmentId=null;current.secondDepartmentId = current.secondDepartment.id;"
+                )

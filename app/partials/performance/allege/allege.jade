@@ -8,7 +8,7 @@
 )
     md-toolbar.md-warn(md-theme="hrms")
         .md-toolbar-tools(ng-init="ctrl.isImgObj")
-            span 绩效申述
+            span 绩效申诉
     .personnel-content.personnel-control
         section.personnel-info-section
             md-content.nb-card-container(layout="column" md-theme="hrms")
@@ -53,11 +53,11 @@
                         //-                 .accessory-size(ng-bind="attachment.size | byteFmt:2")
 
                     md-card.form-material-section.nb-card
-                        md-subheader.md-background.md-hue-1 申述理由
+                        md-subheader.md-background.md-hue-1 申诉理由
                         fieldset
                             div(layout)
                                 md-input-container(flex)
-                                    //- label 申述理由
+                                    //- label 申诉理由
                                     textarea(ng-model="allege.reason" columns="1" md-maxlength="2000" readonly)
 
                     md-card.form-material-section.nb-card
@@ -67,9 +67,9 @@
                                 div(ng-if="outerScope.ctrl.isImgObj(attachment)" nb-gallery img-obj="attachment" style="cursor: pointer;")
                                     .accessory-name(ng-bind="attachment.name")
                                     .accessory-size(ng-bind="attachment.size | byteFmt:2")
-                                    .accessory-switch
-                                        md-button.md-icon-button(ng-click="allege.attachments.$new(attachment.id).$destroy()")
-                                            md-icon.md-warn(md-svg-src="/images/svg/close.svg")
+                                    //- .accessory-switch
+                                    //-     md-button.md-icon-button(ng-click="allege.attachments.$new(attachment.id).$destroy()")
+                                    //-         md-icon.md-warn(md-svg-src="/images/svg/close.svg")
                                 div(ng-if="!outerScope.ctrl.isImgObj(attachment)" style="cursor: pointer;")
                                     a(
                                     style="display: block; color: rgba(0,0,0,0.87)"
@@ -78,9 +78,9 @@
                                     )
                                         .accessory-name(ng-bind="attachment.name")
                                         .accessory-size(ng-bind="attachment.size | byteFmt:2")
-                                        .accessory-switch
-                                            md-button.md-icon-button(ng-click="allege.attachments.$new(attachment.id).$destroy()")
-                                                md-icon.md-warn(md-svg-src="/images/svg/close.svg")
+                                .accessory-switch
+                                    md-button.md-icon-button(ng-click="allege.attachments.$new(attachment.id).$destroy()")
+                                        md-icon.md-warn(md-svg-src="/images/svg/close.svg")
 
                         .accessory-btn-group(
                             flow-init="{target:'/api/alleges/' + allege.id +'/attachments', testChunks:false, uploadMethod:'POST', singleFile:true}"
