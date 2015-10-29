@@ -13,7 +13,7 @@ flowRelationDataDirective = ($timeout)->
         getRelationDataHTML = () ->
             ctrl.$setViewValue(elem.html())
 
-        $timeout getRelationDataHTML, 3000
+        $timeout getRelationDataHTML, 300
 
     return {
         require: 'ngModel'
@@ -77,7 +77,7 @@ FlowHandlerDirective = (ngDialog)->
                                 </div>
                             </div>
                         </div>
-                        <div class="approval-opinions" ng-if="!flowView">
+                        <div class="approval-opinions" ng-if="!flowView || (!isHistory && flow.name=='合同续签')">
                             <form name="flowReplyForm" ng-submit="reply(userReply, flowReplyForm);">
                                 <div layout>
                                     <md-input-container flex>
@@ -90,16 +90,16 @@ FlowHandlerDirective = (ngDialog)->
                         </div>
                     </div>
                 </md-card>
-                <div class="approval-buttons" ng-if="!flowView">
-                    <md-button class="md-raised md-warn" ng-click="submitFlow({opinion: true}, flow, dialog)" type="button">通过</md-button>
-                    <md-button class="md-raised md-warn" ng-click="submitFlow({opinion: false}, flow, dialog)" type="button">驳回</md-button>
+                <div class="approval-buttons" ng-if="!flowView || (!isHistory && flow.name=='合同续签')">
+                    <md-button class="md-raised md-warn" ng-click="submitFlow({opinion: true}, flow, dialog, state)" type="button">通过</md-button>
+                    <md-button class="md-raised md-warn" ng-click="submitFlow({opinion: false}, flow, dialog, state)" type="button">驳回</md-button>
                     <md-button class="md-raised md-primary"
                         nb-dialog
                         template-url="partials/component/workflow/hand_over.html"
                         locals="{flow:flow}"
                         >移交</md-button>
                 </div>
-                <div class="approval-buttons" ng-if="flowView">
+                <div class="approval-buttons" ng-if="flowView && (flow.name!='合同续签' || isHistory)">
                     <md-button class="md-raised md-warn" ng-click="dialog.close()" type="button">关闭</md-button>
                 </div>
             </div>
@@ -111,10 +111,11 @@ FlowHandlerDirective = (ngDialog)->
         options = angular.extend {}, defaults, scope.options
 
         scope.flowView = angular.isDefined(attrs.flowView)
+        scope.isHistory = angular.isDefined(attrs.isHistory)
 
         offeredExtra = (flow) ->
             return template
-                    .replace(/#flowRelationData#/, `flow.relationData? flow.relationData : ''`)
+                    .replace(/#flowRelationData#/, `flow.relationData ? flow.relationData : ''`)
                     .replace(/#extraFormLayout#/, `flow.$extraForm ? flow.$extraForm : ''`)
 
         openDialog = (evt)->
@@ -147,19 +148,18 @@ FlowHandlerDirective = (ngDialog)->
 
 
 class FlowController
-    @.$inject = ['$http','$scope', 'USER_META', 'OrgStore', 'Employee']
+    @.$inject = ['$http','$scope', 'USER_META', 'OrgStore', 'Employee', '$nbEvent', '$state']
 
-    constructor: (http, scope, meta, OrgStore, Employee) ->
+    constructor: (http, scope, meta, OrgStore, Employee, Evt, @state) ->
         FLOW_HTTP_PREFIX = "/api/workflows"
-
         scope.selectedOrgs = []
 
         #加载分类为领导和干部的人员
-        scope.reviewers = Employee.leaders()
-
+        scope.reviewers = []
+        scope.leaders = []
         scope.reviewOrgs = OrgStore.getPrimaryOrgs()
-
         scope.userReply = ""
+        scope.state = @state
 
         scope.CHOICE = {
             ACCEPT: true
@@ -182,12 +182,17 @@ class FlowController
                 scope.userReply = ""
                 resetForm(form)
 
-        scope.submitFlow = (req, flow, dialog) ->
+        scope.submitFlow = (req, flow, dialog, state) ->
             url = joinUrl(FLOW_HTTP_PREFIX, flow.type, flow.id)
             promise = http.put(url, req)
 
             promise.then ()->
-                scope.flowSet.$refresh() if angular.isDefined(scope.flowSet)
+                if angular.isDefined(scope.flowSet)
+                    #flow.processed = '已处理'
+                    scope.flowSet.$refresh() # 刷新TODO列表
+                    # 表格数据刷新后id错位，因为查看这列的ng-init中的realFlow绑定关系没有更新
+                    # state.go(state.current.name, {}, {reload: true})
+
                 dialog.close()
 
         parseParams = (params)->
@@ -206,13 +211,39 @@ class FlowController
             promise = http.put(url, params)
 
             promise.then ()->
-                scope.flowSet.$refresh() if angular.isDefined(scope.flowSet)
+                if angular.isDefined(scope.flowSet)
+                    flow.processed = '已处理'
+                    scope.flowSet.$refresh() # 刷新TODO列表
+                    # 表格数据刷新后id错位，因为查看这列的ng-init中的realFlow绑定关系没有更新
+                    # state.go(state.current.name, {}, {reload: true})
+
                 dialog.close()
                 parentDialog.close()
 
         scope.toggleSelect = (org, list)->
             index = list.indexOf org
             if index > -1 then list.splice(index, 1) else list.push org
+
+        scope.getContact = () ->
+            http.get('/api/me/flow_contact_people')
+                .success (result) ->
+                    scope.reviewers = result.flow_contact_people
+
+        scope.addContact = (param) ->
+            http.post('/api/me/flow_contact_people', {employee_id: param})
+                .success (result) ->
+                    Evt.$send 'result:post:success', '添加常用联系人成功'
+
+        scope.removeContact = (param) ->
+            http.delete('/api/me/flow_contact_people/'+param)
+                .success (result) ->
+                    scope.getContact()
+                    Evt.$send 'result:delete:success', '删除常用联系人成功'
+
+        scope.queryContact = (param) ->
+            http.get('/api/me/auditor_list?&name='+param)
+                .success (result) ->
+                    scope.leaders = result.employees
 
 
 app.controller 'FlowController', FlowController

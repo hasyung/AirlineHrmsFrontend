@@ -1,0 +1,24 @@
+div.personnel-salary()
+    div()
+        md-card.nb-card()
+            md-toolbar.toolbar--welfare
+                .md-toolbar-tools
+                    span(layout)
+                        label 月度
+                        md-select(style="width: 100px;" ng-model="pdCtrl.currentYear" ng-change="pdCtrl.loadSalary()" placeholder="请选择年份" aria-label)
+                            md-option(ng-value="item" ng-repeat="item in pdCtrl.year_list track by $index" ng-bind="item")
+                        label(flex-order="2") 年
+                        md-select(ng-model="pdCtrl.currentMonth" ng-change="pdCtrl.loadSalary()" placeholder="请选择月份" aria-label)
+                            md-option(ng-value="item" ng-repeat="item in pdCtrl.month_list track by $index" ng-bind="item")
+                        label(flex-order="3") 月
+            .nb-card-content
+                ul.herizolStatic
+                    li.herizolStatic__cell(layout)
+                        .herizolStatic__cell__key 岗位工资
+                        .herizolStatic__cell__val XXXXXX
+
+                ul.herizolStatic
+                    li.herizolStatic__cell(layout)
+                        .herizolStatic__cell__key 合计
+                        .herizolStatic__cell__val XXXXXX
+

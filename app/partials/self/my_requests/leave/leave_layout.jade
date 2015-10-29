@@ -7,23 +7,59 @@ div.workflow.md-background(md-theme="hrms")
     .personnel-content.personnel-control
         section.personnel-info-section
             md-content.nb-card-container(layout="column" md-theme="hrms")
-                form(ng-controller="NewMyRequestCtrl" ng-submit="createFlow(request);" name="leave_form" ng-init="request = initialFlow('#{flowType}')")
+                form(ng-controller="NewMyRequestCtrl" ng-submit="createFlow(request, receptor, list);" name="leave_form" ng-init="receptor = panel.receptor; list = panel.list; receptor.$fetch(); request = initialFlow('#{flowType}');")
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1
-                        flow-user-info
+                        flow-user-info(receptor="receptor")
                         .flow-relations(flow-relation-data ng-model="request.relation_data")
-
                             block relation_data
-                                div.flow-info-row(layout)
-                                    .flow-info-cell(flex)
-                                        .flow-cell-title 假别
-                                        .flow-cell-content #{flowName}
+                            div.flow-info-row(layout)
+                                .flow-info-cell(flex)
+                                    .flow-cell-title 假别
+                                    .flow-cell-content #{flowName}
 
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1 申请信息
                         fieldset
                             block form
                                 case formType
+                                    when 0
+                                        block additional_form
+
+                                        div(layout)
+                                            md-input-container(flex)
+                                                label 开始日期
+                                                input(ng-model="request.start_time" ng-change="calculateTotalDays(request, '#{flowName}', true)" name="start_time" bs-datepicker required)
+                                            md-input-container.row-has-value(style="flex: 0 0 150px;")
+                                                label 详细时间
+                                                md-select(ng-model="request.start_time" ng-change="calculateTotalDays(request, '#{flowName}')" md-on-open="loadStartTime()" ng-disabled="!request.start_time" required)
+                                                    md-option(ng-value="time" ng-repeat="time in start_times" ) {{time | mdate: 'H:mm'}}
+                                        div(layout)
+                                            md-input-container(flex)
+                                                label 结束日期
+                                                input(ng-model="request.end_time" name="end_time" required bs-datepicker ng-disabled="true")
+                                            md-input-container.row-has-value(style="flex: 0 0 150px;")
+                                                label 详细时间
+                                                md-select(
+                                                    ng-model="request.end_time"
+                                                    ng-change="calculateTotalDays(request, '#{flowName}')"
+                                                    md-on-open="loadEndTime()"
+                                                    ng-disabled="!request.end_time"
+                                                    required)
+                                                    md-option(ng-value="time" ng-repeat="time in end_times" ) {{time | mdate: 'H:mm'}}
+
+                                        div(layout)
+                                            .without-edit
+                                                div.progress-wrapper(ng-if="calculating")
+                                                    md-progress-circular(md-mode="indeterminate")
+                                                div(ng-if="!calculating")
+                                                    div.without-edit-title 天数
+                                                    div.without-edit-content {{ vacation_days }}
+
+                                        div(layout)
+                                            md-input-container(flex)
+                                                label 申请理由
+                                                textarea(ng-model="request.reason" columns="1" md-maxlength="150")
                                     when 1
                                         block additional_form
 
@@ -48,6 +84,7 @@ div.workflow.md-background(md-theme="hrms")
                                         if need_attachment
                                             md-subheader.accessory-header.md-background.md-hue-1 附件
                                             div(flow-file-upload flow-type="#{flowType}" ng-model="request.attachment_ids")
+                                            block attachment_tip
                                     when 2
                                         div(layout)
                                             md-input-container(flex)
@@ -84,6 +121,7 @@ div.workflow.md-background(md-theme="hrms")
                                         if need_attachment
                                             md-subheader.accessory-header.md-background.md-hue-1 附件
                                             div(flow-file-upload flow-type="#{flowType}" ng-model="request.attachment_ids")
+                                            block attachment_tip
 
                     md-card.form-material-section.nb-card
                         md-subheader.superior-header.md-background.md-hue-1 提交上级
@@ -91,7 +129,8 @@ div.workflow.md-background(md-theme="hrms")
                             md-radio-group(ng-model="request.reviewer_id" md-theme="default")
                                 md-radio-button.md-primary(
                                     ng-repeat="reviewer in ::ctrl.reviewers track by reviewer.id"
-                                    ng-value="reviewer.id") {{ reviewer.name }} ( {{reviewer.department.name}} / {{reviewer.position.name}} )
+                                    ng-value="reviewer.id") {{ reviewer.name }}
+                                    div {{reviewer.department.name}} / {{reviewer.position.name}}
 
                     .form-bottom-group(layout)
                         span(flex)

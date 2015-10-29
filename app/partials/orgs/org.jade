@@ -4,6 +4,7 @@ section.org-detail(ng-controller="EditableResourceCtrl")
         span(ng-show="orgCtrl.state == 'newsub'") 新增子机构信息
         div(ng-if="orgCtrl.state == 'show' && !(ctrl.isHistory || currentOrg.status == 'destroy_inactive')")
             button.btn.btn-sm.btn-default.fa.fa-trash-o(
+                ng-if="!currentOrg.committee"
                 has-permission="departments_destroy"
                 nb-confirm="orgCtrl.destroy(isConfirm)"
                 nb-title="您确定要删除{{currentOrg.name}}吗?"
@@ -65,7 +66,7 @@ section(ng-if="currentOrg.status !== 'destroy_inactive'")
     .org-title
         span 下属岗位信息
         button.btn.btn-default.fa.fa-cog(
-            ng-disabled="ctrl.isHistory"
+            ng-if="!ctrl.isHistory && ctrl.currentOrg.status != 'create_inactive'"
             title="设置岗位"
             nb-panel
             template-url="partials/orgs/position.html"
@@ -93,7 +94,7 @@ section(ng-if="currentOrg.status !== 'destroy_inactive'")
                     td.org-post(ng-if="ctrl.isHistory")
                         a(
                             nb-panel
-                            template-url="partials/orgs/position_detail_history.html"
+                            template-url="partials/position/position_detail.html"
                             panel-controller="PositionDetailCtrl"
                             locals="{'position': position}"
                             ) {{position.name}}

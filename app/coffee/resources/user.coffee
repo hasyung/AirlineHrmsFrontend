@@ -3,7 +3,7 @@ resources = angular.module('resources')
 
 
 User = (restmod, RMUtils, $Evt) ->
-    User = restmod.model(null).mix 'nbRestApi', 'DirtyModel', {
+    User = restmod.model(null).mix 'nbRestApi', 'DirtyModel', 'NestedDirtyModel', {
         #$hooks:
         #    'after-update': ->
         #        $Evt.$send('user:update:success', "个人信息更新成功")
@@ -11,7 +11,8 @@ User = (restmod, RMUtils, $Evt) ->
         educationExperiences: {hasMany: 'Education'}
         workExperiences: {hasMany: 'Experience'}
         resume: {hasOne: 'Resume', mask: 'CU'}
-        contact: {hasOne: 'Contact', mask: 'CU'}
+        rewards: {hasMany: 'UserReward'}
+        punishments: {hasMany: 'UserPunishment'}
 
         $config:
             jsonRoot: 'employee'
@@ -98,7 +99,7 @@ UserPerformance = (restmod, RMUtils, $Evt)->
     UserPerformance = restmod.model('/me/performances').mix 'nbRestApi', {
         $hooks:
             'allege-create': ->
-                $Evt.$send('allege:create:success',"绩效申述成功")
+                $Evt.$send('allege:create:success',"绩效申诉成功")
 
         $extend:
             Record:
@@ -118,6 +119,31 @@ UserPerformance = (restmod, RMUtils, $Evt)->
     }
 
 
+UserReward = (restmod, RMUtils, $Evt)->
+    restmod.model('/me/rewards').mix 'nbRestApi', {
+
+    }
+
+
+UserPunishment = (restmod, RMUtils, $Evt)->
+    restmod.model('/me/punishments').mix 'nbRestApi', {
+
+    }
+
+
+UserAnnuity = (restmod, RMUtils, $Evt)->
+    restmod.model('/me/annuities').mix 'nbRestApi', {
+
+    }
+
+UserAllege = (restmod, RMUtils, $Evt)->
+    restmod.model('/me/alleges').mix 'nbRestApi', {
+        $config:
+            jsonRootSingle: 'allege'
+            jsonRootMany: 'alleges'
+    }
+
+
 resources.factory 'User', ['restmod', 'RMUtils', '$nbEvent', User]
 resources.factory 'Education', ['restmod', 'RMUtils', '$nbEvent', Education]
 resources.factory 'Experience', ['restmod', 'RMUtils', '$nbEvent', Experience]
@@ -125,3 +151,7 @@ resources.factory 'FamilyMember', ['restmod', 'RMUtils', '$nbEvent', FamilyMembe
 resources.factory 'Resume', ['restmod', 'RMUtils', '$nbEvent', Resume]
 resources.factory 'Contact', ['restmod', 'RMUtils', '$nbEvent', Contact]
 resources.factory 'UserPerformance', ['restmod', 'RMUtils', '$nbEvent', UserPerformance]
+resources.factory 'UserReward', ['restmod', 'RMUtils', '$nbEvent', UserReward]
+resources.factory 'UserPunishment', ['restmod', 'RMUtils', '$nbEvent', UserPunishment]
+resources.factory 'UserAnnuity', ['restmod', 'RMUtils', '$nbEvent', UserAnnuity]
+resources.factory 'UserAllege', ['restmod', 'RMUtils', '$nbEvent', UserAllege]

@@ -1,21 +1,29 @@
 md-dialog.org_history
+    md-toolbar.md-accent(md-theme="hrms")
+            .md-toolbar-tools
+                span 时间轴（历史记录）
     md-content.sticky-container
-        md-toolbar.md-accent(md-theme="hrms")
-                .md-toolbar-tools
-                    span 时间轴（历史记录）
         .dialog-content(layout layout-align="center")
             md-input-container(flex)
                 label 机构历史版本
                 input(
-                    bs-datepicker=""  container="body" data-autoclose="1"
+                    bs-datepicker container="body" data-autoclose="1"
                     min-date="{{dialog.historyData.minDate}}" max-date="today" ng-model="selectedDate"
-                    ng-change="ctrl.pickLog(selectedDate, dialog.historyData.changeLogs)")
-        div.wrapper.org-timline(ng-init="activeLog = {}")
+                    ng-change="ctrl.pickLog(selectedDate, referOrgName, dialog.historyData.changeLogs)")
+            md-input-container(flex)
+                label 相关机构名称
+                input(ng-model="referOrgName" ng-change="ctrl.pickLog(selectedDate, referOrgName, dialog.historyData.changeLogs)")
+        div.wrapper.org-timline(ng-init="activeLog = {}; ctrl.initVisble(dialog.historyData.changeLogs)")
             ul.timeline(ng-repeat="yearLogs in dialog.historyData.changeLogs")
                 li.tl-header
                     div.year {{::yearLogs.changeYear}}
                     span.changes_count 有{{::yearLogs.logs.length || 0}}次变动
-                li.tl-item(ng-repeat="log in yearLogs.logs track by $index", ng-click="ctrl.expandLog(log)", ng-class="{'active': log.active}")
+                li.tl-item(
+                    ng-repeat="log in yearLogs.logs track by $index"
+                    ng-click="ctrl.expandLog(log)"
+                    ng-class="{'active': log.active}"
+                    ng-if="log.visible"
+                    )
                     div.tl-wrap
                         div.tl-content.panel.padder.b-a
                             span.arrow.left
@@ -26,6 +34,8 @@ md-dialog.org_history
                                 ul(ng-show="log.active")
                                     li(ng-repeat="step in log.step_desc track by $index")
                                         p {{::step}}
+                                h1.pull-right(style="margin-top:-24px;color:#000")
+                                    span 操作者: {{::log.creator || "-"}}
                         div.tl-point
 
     .md-actions

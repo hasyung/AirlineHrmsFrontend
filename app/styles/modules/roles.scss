@@ -1,0 +1,207 @@
+.role-bg {
+    background: url('/images/roles/role_bg.jpg') no-repeat;
+    background-size: 100% 100%;
+    overflow: hidden;
+}
+
+.ola {
+    overflow: auto;
+}
+
+.container1440 {
+    margin: 0 auto;
+    position: relative;
+    width: 1440px;
+}
+
+.container960 {
+    margin: 0 auto;
+    position: relative;
+    width: 960px;
+}
+
+.default-role {
+    .container1440 {
+        align-items: center;
+    }
+
+    .controls {
+        margin-left: 90px;
+        width: 360px;
+
+        .controls__cell {
+            display: block;
+            float: left;
+            margin-top: 30px;
+            position: relative;
+
+            .controls__cell__outline {
+                background-size: 100% 100%;
+                border-radius: 50%;
+                height: 130px;
+                position: absolute;
+                transform: translateZ(0);
+                width: 130px;
+            }
+
+            &:hover {
+                .controls__cell__btn {
+                    @include bg-gradient-t2b(#ff9600, #f8e904);
+                    border: 0;
+                    padding: 2px;
+                }
+
+                .controls__cell__outline {
+                    animation: outlineRotate 2s linear infinite;
+                    background: url('/images/roles/outline.png') no-repeat;
+                    background-size: 100% 100%;
+                }
+
+                .desc {
+                    color: #fff;
+                }
+            }
+
+            &.mt0 {
+                margin-top: 0;
+            }
+
+            &:nth-child(even) {
+                margin-left: 92px;
+            }
+
+            .desc {
+                color: #fff;
+                font-size: 20px;
+                margin-top: 10px;
+                text-align: center;
+            }
+        }
+
+        .controls__cell__btn {
+            background: rgba(255, 255, 255, .2);
+            background-size: 100% 100%;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            cursor: pointer;
+            height: 122px;
+            margin-left: 2px;
+            margin-top: 2px;
+            transition: background .5s linear;
+            width: 122px;
+
+            .icon {
+                border-radius: 50%;
+                height: 100%;
+                width: 100%;
+
+                &.people {
+                    background: url('/images/roles/icons/people.png') no-repeat center center;
+                }
+
+                &.pen {
+                    background: url('/images/roles/icons/pen.png') no-repeat center 45px;
+                }
+
+                &.news {
+                    background: url('/images/roles/icons/news.png') no-repeat center center;
+                }
+
+                &.contact {
+                    background: url('/images/roles/icons/contact.png') no-repeat center center;
+                }
+
+                &.todo {
+                    background: url('/images/roles/icons/todo.png') no-repeat center center;
+                }
+
+                &.chart {
+                    background: url('/images/roles/icons/chart.png') no-repeat center center;
+                }
+            }
+        }
+    }
+
+    .logo__area {
+        // background: url('/images/roles/misk.png') no-repeat;
+    }
+
+    .version {
+        bottom: 30px;
+        color: #aa1a1a;
+        font-size: 14px;
+        position: absolute;
+        right: 185px;
+    }
+}
+
+.charts-container {
+    padding: 40px 0;
+
+    .whiteboard {
+        @include clearfix();
+        background-color: #fff;
+        margin-bottom: 20px;
+        padding: 30px 0;
+    }
+
+    .whiteboard__cell {
+        border-right: 2px solid rgba(200, 200, 200, .5);
+        box-sizing: border-box;
+        float: left;
+        height: 140px;
+        padding-top: 20px;
+
+        &.br0 {
+            border-right: 0;
+        }
+
+        .title {
+            color: $text-hint;
+            font-size: 16px;
+            text-align: center;
+
+        }
+
+        .value {
+            color: #ff4d4a;
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        &.sm {
+            width: 220px;
+        }
+
+        &.md {
+            width: 300px;
+        }
+
+        &.lg {
+            width: 360px;
+        }
+    }
+
+    .echarts-wrapper {
+        background-color: #fff;
+        margin-bottom: 20px;
+        padding: 20px 0;
+    }
+}
+
+.echarts-bar {
+    display: block;
+    height: 400px;
+}
+
+@keyframes outlineRotate {
+    0% {
+        transform: rotate(0) translateZ(0);
+    }
+
+    100% {
+        transform: rotate(-360deg) translateZ(0);
+    }
+}
+

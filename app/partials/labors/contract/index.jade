@@ -12,19 +12,29 @@ block cust_page
             md-toolbar
                 .md-toolbar-tools
                     h2 合同列表
+
+                    div(style="font-size: 14px; margin-left: 50px;")
+                        md-checkbox.md-primary(
+                            ng-model="ctrl.show_merged"
+                            ng-change="ctrl.loadInitialData()"
+                            ) 是否合并员工合同
+
                     div(flex)
+
                     md-button.md-primary.md-raised(
                         ng-disabled="!ctrl.getSelected()"
-                        nb-confirm="ctrl.leaveJob(ctrl.getSelected(), isConfirm, '劳动关系终止')"
+                        nb-confirm="ctrl.leaveJob(ctrl.getSelected(), isConfirm, '劳动关系终止', ctrl.getSelected().id)"
                         nb-title="离职流程发起"
                         nb-content="你确定对该员工发起离职通知单流程，请确认。"
-                    ) 发起离职
+                    ) 合同终止发起离职流程
+
                     md-button.md-primary.md-raised(
                         nb-dialog
-                        ng-disabled="!ctrl.getSelected()"
+                        ng-disabled="!ctrl.getSelected() || ctrl.getSelected().endDate==null"
                         template-url="/partials/labors/contract/renew.html"
-                        locals="{contract:ctrl.getSelected()}"
+                        locals="{contract: ctrl.getSelected()}"
                     ) 发起续签
+
                     md-button.md-primary.md-raised(
                         nb-panel
                         template-url="/partials/labors/contract/new.html"
@@ -40,11 +50,11 @@ block cust_page
 
 block user_list_actions
     md-button.md-primary.md-raised(
-        ng-disabled="!getSelected()"
+        ng-disabled="!ctrl.getSelected() || ctrl.getSelected().workflowState != '已生效'"
         nb-panel
         template-url="/partials/labors/contract/new.html"
         locals="{users:getSelecteds()}"
-    ) 发起离职
+    ) 发起离职流程
 
     md-button.md-primary.md-raised(
         ng-disabled="!getSelected()"

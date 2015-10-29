@@ -1,0 +1,25 @@
+.app-content-wrapper(flex ng-controller="salaryGradeChangeCtrl as ctrl")
+    div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+
+    div.ui-grid-container
+        md-toolbar
+            .md-toolbar-tools
+                h2 薪酬档级变动
+                span(flex)
+                span
+                    md-button.md-raised.md-primary(
+                        ng-click="ctrl.checkUpdateChange('performance')"
+                    ) 年度绩效调级
+                span
+                    md-button.md-raised.md-primary(
+                        ng-disabled="true"
+                        ng-click="ctrl.checkUpdateChange('position')"
+                    ) 年度岗工调级
+
+        div(
+            nb-grid
+            column-defs="ctrl.columnDef"
+            on-register-api="ctrl.exportGridApi(gridApi)"
+            export-api
+            safe-src="ctrl.salaryGradeChanges"
+        )

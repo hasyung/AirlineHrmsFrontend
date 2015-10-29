@@ -2,13 +2,20 @@ extends ../../../component/workflow/my_requests
 
 block vars
     - var requestTitle = '我要调岗'
-    - var requestTip = '点击我要调岗，可发起调岗流程。列表中选择未生效的申请，可撤销调岗申请'
-    - var girdSelection = true
+    - var requestTip = '点击我要调岗，可发起调岗流程，列表中选择未生效的申请，可撤销调岗申请。'
+    - var gridSelection = true
     - var flowName = "Flow::AdjustPosition"
 
 block tools
     span 调岗列表
     span(flex)
+    span
+        md-button.md-primary.md-raised(
+            ng-disabled="!ctrl.getSelected() || ctrl.getSelected().workflowState == '已生效'"
+            nb-confirm="ctrl.revert(isConfirm, ctrl.getSelected())"
+            nb-title="调岗流程撤销"
+            nb-content="你确定撤销调岗流程，请确认。"
+        ) 撤销申请
     span
         md-button.md-primary.md-raised(
             nb-panel

@@ -4,10 +4,13 @@ tabset(flex)
     if user_list
         tab(heading="#{user_list}")
             include user_list
+
     if cust_page
         tab(heading="#{cust_page}")
             block cust_page
-    tab(heading="待处理")
+
+    tab(heading="待处理" pending="true")
         include check_list
+
     tab(heading="历史记录")
         include history

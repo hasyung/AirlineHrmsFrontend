@@ -1,0 +1,31 @@
+table.table.table-bordered.setting-table
+  tr
+    th.tal 档级
+    th.tar(style="text-align: right;" ng-repeat="flag in ctrl.dynamic_config.flag_list track by $index") {{ctrl.dynamic_config.flag_names[flag]}}
+
+  //- tr(ng-repeat="setting in ctrl.dynamic_config.flags | toArray: 'grade' | orderBy: '-amount' track by $index")
+  tr(ng-repeat="setting in ctrl.dynamic_config.flags | toArray: 'grade' track by $index")
+    td.tal
+      div {{setting.grade}}
+    //- td.tar(ng-repeat="column in ctrl.dynamic_config.flag_list track by $index" ng-style="{'background-color': ctrl.editing ? 'white': setting[column]['bg_color']}")
+    td.tar(ng-repeat="column in ctrl.dynamic_config.flag_list track by $index")
+      div(ng-if="ctrl.editing")
+        div(ng-if="column!='rate' && column!='amount'")
+          a(href="javascript:void(0);" nb-dialog template-url="partials/salary/settings/dialogs/common.html" locals="{current: setting[column], grade: setting.grade, ctrl: ctrl}")
+            span(ng-if="!setting[column]['format_cell'] || setting[column]['format_cell'].length == 0") +
+            span(ng-if="setting[column]['format_cell'] && setting[column]['format_cell'].length > 0") 设置
+
+        //- 系数
+        div(ng-if="column=='rate'")
+          input(type="number" step="0.1" min="0.1" max="100000" ng-model="setting[column]" ng-change="setting['amount']=ctrl.calcAmount(setting[column])")
+
+        //- 金额
+        div(ng-if="column=='amount' && !ctrl.existCurrentRate()")
+          input(type="number" step="1" min="1" max="100000" ng-model="setting[column]" ng-change="setting['rate']=ctrl.calcRate(setting[column])")
+
+        div(ng-if="column=='amount' && ctrl.existCurrentRate()")
+          span {{setting[column]}}
+
+      //- 不是编辑模式
+      div(ng-if="!ctrl.editing")
+        span {{ctrl.formatColumn(ctrl.dynamic_config.flags, setting.grade, setting, column)}}

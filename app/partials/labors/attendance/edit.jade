@@ -1,9 +1,9 @@
-md-dialog.attendance_new(ng-init="current = dialog.current;")
+md-dialog.attendance_new(ng-init="current = dialog.current;oldRecordType=current.recordType")
     md-content
         form(flex ng-submit="current.$update();dialog.close();")
             md-toolbar.md-accent(md-theme="hrms")
                 .md-toolbar-tools
-                    span 新增考勤记录
+                    span 修改考勤记录
             .dialog-content(layout layout-align="center")
                 fieldset(flex)
                     div(layout)
@@ -12,7 +12,11 @@ md-dialog.attendance_new(ng-init="current = dialog.current;")
                             input(ng-model="current.user.name" name="name" required disabled)
                     div(layout)
                         md-input-container.row-has-value(flex)
-                            label 考勤类型
+                            label 当前考勤类型
+                            input(ng-value="::oldRecordType" name="name" required disabled)
+                    div(layout)
+                        md-input-container.row-has-value(flex)
+                            label 请选新的类型
                             md-select(ng-model="current.recordType" required)
                                 md-option(value="迟到") 迟到
                                 md-option(value="早退") 早退
@@ -25,4 +29,4 @@ md-dialog.attendance_new(ng-init="current = dialog.current;")
             .md-actions
                 md-button(type="button" ng-click="ctrl.markToDeleted(current);dialog.close();") 删 除
                 md-button(type="button" ng-click='dialog.close()') 取 消
-                md-button.md-primary.md-raised(type="submit") 确 定
+                md-button.md-primary.md-raised(type="submit" ng-disabled="(current.recordType != '迟到' && current.recordType != '早退' && current.recordType != '旷工') || current.recordType == oldRecordType") 确 定

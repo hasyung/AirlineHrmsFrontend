@@ -31,6 +31,31 @@ class Controller extends Base
         months = [1..new Date().getMonth() + 1]
         months = _.map months, (item) ->
             item = "0" + item if item < 10
+            item + '' # to string
+
+    $getFilterMonths: ()->
+        years = @$getYears()
+        months = @$getMonths()
+
+        array = []
+        angular.forEach years, (year)->
+            angular.forEach months, (month)->
+                array.push(year + '-' + month)
+
+        array
+
+    $getSeasons: ()->
+        years = @$getYears()
+        array = []
+
+        angular.forEach years, (year)->
+            angular.forEach [1,2,3,4], (quarter)->
+                array.push(year + '-' + quarter)
+
+        array
+
+    parseJSON: (data) ->
+        angular.fromJson(data)
 
 
 class FilterController extends Controller
@@ -41,7 +66,7 @@ class FilterController extends Controller
 class EditableResourceCtrl
     @.$inject = ['$scope', '$enum', '$nbEvent']
 
-    constructor: (scope, $enum, $Evt) ->
+    constructor: (scope, $enum, @Evt) ->
         scope.editing = false
         scope.$enum = $enum
 
@@ -49,7 +74,7 @@ class EditableResourceCtrl
             evt.preventDefault() if evt && evt.preventDefault
             scope.editing = true
 
-        scope.save = (promise, form) ->
+        scope.save = (promise, form, promises) ->
             return if form && form.$invalid
             self = @
 
@@ -58,16 +83,21 @@ class EditableResourceCtrl
                     promise.then (data) ->
                         scope.editing = false
                         self.response_data = data
-                else if promise.$then
+                else if promise.$then && !promises
                     promise.$then (data) ->
                         scope.editing = false
                         self.response_data = data
+                else if promise.$then && promises
+                    promise.$then (data) ->
+                        scope.editing = false
+                        self.response_data = data
+                        promises.$refresh()
                 else
                     throw new Error('promise 参数错误')
 
                 if self.response_data
                     msg = self.response_data.messages
-                    $Evt.$send('model:save:success', msg || "保存成功")
+                    @Evt.$send('model:save:success', msg || "保存成功")
             else
                 scope.editing = false
 
@@ -90,9 +120,9 @@ nb.EditableResourceCtrl = EditableResourceCtrl
 
 
 class NewResourceCtrl
-    @.$inject = ['$scope', '$enum']
+    @.$inject = ['$scope', '$enum', '$nbEvent', 'toaster']
 
-    constructor: (scope, $enum) ->
+    constructor: (scope, $enum, $Evt, @toaster) ->
         scope.$enum = $enum
 
         scope.create = (resource, form) ->
@@ -101,47 +131,61 @@ class NewResourceCtrl
             if resource.$save
                 resource.$save().$asPromise().then (data)->
                     msg = data.$response.data.messages
-                    $Evt.$send('model:save:success', msg || "创建成功")
+
+                    if data.$response.status == 200
+                        $Evt.$send('model:save:success', msg || "创建成功")
+                    else
+                        $Evt.$send('model:save:error', msg || "创建失败")
 
 
 class NewFlowCtrl
-    @.$inject = ['$scope', '$http', 'USER_META']
+    @.$inject = ['$scope', '$http', '$state', 'USER_META', 'toaster']
 
-    constructor: (scope, $http, meta) ->
-        ctrl = @
+    constructor: (scope, $http, @state, meta, @toaster) ->
+        self = @
 
         Moment = moment().constructor
 
         scope.initialFlow = (type) ->
-            ctrl.flow_type = type
+            self.flow_type = type
 
             return {}
 
-        scope.createFlow = (data, receptor, list) ->
+        scope.createFlow = (request, receptor, list) ->
+            data = _.cloneDeep(request)
+
+            if data.start_time && typeof(data.start_time) == 'object'
+                data.start_time = moment(data.start_time._d).format()
+            if data.end_time && typeof(data.end_time) == 'object'
+                data.end_time = moment(data.end_time._d).format()
+
+            if data.position
+                # 调岗数据处理，否则无法序列化错误
+                data.position = undefined
+
             data.vacation_days = scope.vacation_days
             data.receptor_id = if receptor then receptor.id else meta.id
 
-            #临时处理， moment() 默认的tostring 不符合前后端约定
+            #临时处理, moment() 默认的 toString 不符合前后端约定
             #暂时没有找到好的方法
             for own key, value of data
                 if value instanceof Moment
                     data[key] = value.format()
 
-            $http.post("/api/workflows/#{ctrl.flow_type}", data).success () ->
+            $http.post("/api/workflows/#{self.flow_type}", data).success () ->
                 scope.panel.close() if scope.panel
-                list.$refresh()
-
-                if scope.panel
-                    scope.panel.close()
-                    if scope.panel.$$collection #WORKAROUND 临时代码， 因为流程与列表数据展现不一致
-                        scope.panel.$$collection.$refresh()
+                # 这个bug很奇葩，刷新了服务器的请假数据后，最新的1条id没有更新，其他的列有更新
+                # 导致点击查看按钮，显示的是错位的流程信息
+                list.$refresh() if list
+                self.toaster.pop('success', '提示', '流程创建成功')
+                self.state.go(self.state.current.name, {}, {reload: true})
 
 
 class NewMyRequestCtrl extends NewFlowCtrl
-    @.$inject = ['$scope', '$http', '$timeout', 'USER_META', '$nbEvent']
+    @.$inject = ['$scope', '$http', '$timeout', '$state', 'USER_META', 'toaster', '$nbEvent', 'Employee']
 
-    constructor: (scope, $http, $timeout, meta, @Evt) ->
-        super(scope, $http, meta) # 手动注入父类实例化参数
+    constructor: (scope, $http, $timeout, $state, meta, toaster, @Evt, @Employee) ->
+        super(scope, $http, $state, meta, toaster) # 手动注入父类实例化参数
         self = @
 
         scope.request = {}
@@ -172,7 +216,9 @@ class NewMyRequestCtrl extends NewFlowCtrl
             ]
 
         # 计算请假天数
-        scope.calculateTotalDays = (data, vacation_type) ->
+        scope.calculateTotalDays = (data, vacation_type, sync_end_time) ->
+            data.end_time = data.start_time if sync_end_time
+
             if data.start_time && data.end_time
                 start = moment(data.start_time)
                 end = moment(data.end_time)

@@ -6,19 +6,46 @@ tabset(flex)
             div.ui-grid-container
                 md-toolbar
                     .md-toolbar-tools
-                        h2 员工人事信息列表
+                        h2 员工人事花名册
                         div(flex)
+
+                        md-button.md-primary.md-raised(
+                            ng-if="ctrl.isDepartmentHr()"
+                            ng-disabled="ctrl.getSelected().length != 1"
+                            nb-dialog
+                            template-url="/partials/personnel/punishment.html"
+                            locals="{employee: ctrl.getSelected()[0], genre: '处分'}"
+                        ) 人员处分
+
+                        md-button.md-primary.md-raised(
+                            ng-if="ctrl.isDepartmentHr()"
+                            ng-disabled="ctrl.getSelected().length != 1"
+                            nb-dialog
+                            template-url="/partials/personnel/punishment.html"
+                            locals="{employee: ctrl.getSelected()[0], genre: '奖励'}"
+                        ) 人员奖励
+
+                        md-button.md-primary.md-raised(
+                            ng-disabled="ctrl.getSelected().length != 1"
+                            nb-dialog
+                            template-url="/partials/personnel/adjust_position.html"
+                            locals="{employee: ctrl.getSelected()[0]}"
+                        ) 员工调岗
+
                         md-button.md-primary.md-raised(
                             nb-panel
                             template-url="partials/personnel/org_pos_per_sort.html"
                         ) 排序
+
                         md-menu(ng-init="selectedRows=[]")
                             md-button.md-primary.md-raised(
                                 ng-click="selectedRows = ctrl.getSelectsIds(); $mdOpenMenu($event)"
                                 ) 导出
+
                             md-menu-content
                                 md-menu-item()
                                     a.md-button(flex ng-href="/api/employees/export_to_xls") 导出全部人员
+
                                 md-menu-item(ng-if="selectedRows.length > 0")
                                     a.md-button(
                                         nb-download
@@ -27,6 +54,7 @@ tabset(flex)
                                         href="javascript:;"
                                         download
                                     ) 导出所选人员
+
                                 md-menu-item(ng-if="selectedRows.length > 0")
                                     a.md-button(
                                         nb-download
@@ -35,8 +63,14 @@ tabset(flex)
                                         href="javascript:;"
                                         download
                                     ) 导出所选人员履历
-                div(nb-grid column-defs="ctrl.columnDef" on-register-api="ctrl.exportGridApi(gridApi)"  grid-selection safe-src="ctrl.employees")
+
+                div(nb-grid column-defs="ctrl.columnDef"
+                    on-register-api="ctrl.exportGridApi(gridApi)"
+                    grid-selection
+                    safe-src="ctrl.employees")
 
     tab(heading="离职人员花名册")
         include personnel_leave
 
+    tab(heading="异动人员名册")
+        include personnel_move

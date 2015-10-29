@@ -3,7 +3,7 @@
         .md-toolbar-tools
             span(layout)
                 label 月度
-                md-select(ng-model="ctrl.currentYear" ng-change="ctrl.loadRecords()" placeholder="请选择年份")
+                md-select(style="width:100px;" ng-model="ctrl.currentYear" ng-change="ctrl.loadRecords()" placeholder="请选择年份")
                     md-option(ng-value="item" ng-repeat="item in ctrl.year_list track by $index" ng-bind="item")
                 label(flex-order="2") 年
                 md-select(ng-model="ctrl.currentMonth" ng-change="ctrl.loadRecords()" placeholder="请选择月份")

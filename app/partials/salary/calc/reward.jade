@@ -1,0 +1,108 @@
+.app-content-wrapper(flex ng-controller="salaryRewardCtrl as ctrl")
+    md-toolbar.toolbar--welfare
+        .md-toolbar-tools
+            span(layout)
+                label 月度
+                md-select(style="width:100px;" ng-model="ctrl.currentYear" ng-change="ctrl.loadRecords()" placeholder="请选择年份")
+                    md-option(ng-value="item" ng-repeat="item in ctrl.year_list track by $index" ng-bind="item")
+                label(flex-order="2") 年
+                md-select(ng-model="ctrl.currentMonth" ng-change="ctrl.loadRecords()" placeholder="请选择月份")
+                    md-option(ng-value="item" ng-repeat="item in ctrl.month_list track by $index" ng-bind="item")
+                label(flex-order="3") 月
+            span(flex)
+
+    div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+
+    div.ui-grid-container.mt5
+        md-toolbar
+            .md-toolbar-tools
+                h2 奖金发放
+
+                span(flex)
+                span
+                    md-button.md-primary.md-raised(
+                        nb-dialog
+                        template-url="partials/salary/calc/reward_allot.html"
+                        locals="{currentYear: ctrl.currentYear, currentMonth: ctrl.currentMonth}"
+                        ) 奖金分配
+                span
+                    md-menu(ng-init="selectedRows=[]")
+                        md-button.md-primary.md-raised(
+                            ng-click="$mdOpenMenu($event)"
+                            ) 导入
+                        md-menu-content
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_reward('航班正常奖', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 航班正常奖
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_reward('服务质量奖', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 服务质量奖
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_reward('航空安全奖', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 航空安全奖
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_reward('社会治安综合治理奖', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 社会治安综合治理奖
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_reward('收支目标考核奖', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 收支目标考核奖
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_reward('精品奖励', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 精品奖励
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_reward('精编奖励', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 精编奖励
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_reward('奖2', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 奖2
+
+                span
+                    md-menu(ng-init="selectedRows=[]")
+                        md-button.md-primary.md-raised(
+                            ng-click="$mdOpenMenu($event)"
+                            ng-disabled="ctrl.calcing || ctrl.records.length==0"
+                            ) 导出
+                        md-menu-content
+                            md-menu-item()
+                                a.md-button(flex
+                                    download
+                                    ng-href="/api/rewards/export_nc?month={{ctrl.currentCalcTime()}}"
+                                    href="javascript:"
+                                ) NC导入表
+                            md-menu-item()
+                                a.md-button(
+                                    download
+                                    ng-href="/api/rewards/export_approval?month={{ctrl.currentCalcTime()}}"
+                                    href="javascript:"
+                                ) 审批表
+
+        div(nb-grid
+            column-defs="ctrl.columnDef"
+            export-api
+            grid-selection
+            grid-edit
+            grid-row-edit
+            on-register-api="ctrl.initialize(gridApi)" safe-src="ctrl.records")

@@ -31,6 +31,6 @@
                                     href="javascript:;"
                                     download
                                 ) 导出所选岗位描述书
-        div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection safe-src="ctrl.positions")
+        div(nb-grid column-defs="ctrl.columnDef" export-api on-register-api="ctrl.exportGridApi(gridApi)" grid-selection safe-src="ctrl.positions")
 
 

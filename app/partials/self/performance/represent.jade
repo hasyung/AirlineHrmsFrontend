@@ -1,12 +1,12 @@
 md-dialog(style="min-width: 500px;" ng-init="performance = dialog.performance; request = {};")
     md-toolbar.md-accent(md-theme="hrms")
         .md-toolbar-tools
-            span 绩效申述
+            span 绩效申诉
     md-content
         form(ng-submit="ctrl.allege(performance, request);dialog.close();")
             div(style="padding: 0 20px; margin-bottom: 40px;")
                 md-input-container(flex style="padding-bottom: 19px;")
-                    label 申述理由
+                    label 申诉理由
                     textarea(ng-model="request.reason" md-maxlength="2000")
 
             .md-actions(style="border-top: 1px solid rgba(0, 0, 0, .12); padding: 0 20px;")

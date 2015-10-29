@@ -25,9 +25,9 @@
                             )
                                 .list-text(flex="70" ng-bind="org.label")
                                 .icon-container.up
-                                    i.fa.fa-angle-up(ng-click="ctrl.setHeigher(ctrl.currentOrgs.children, $index, 'department')")
+                                    i(ng-click="ctrl.setHeigher(ctrl.currentOrgs.children, $index, 'department')")
                                 .icon-container.down
-                                    i.fa.fa-angle-down(ng-click="ctrl.setLower(ctrl.currentOrgs.children, $index, 'department')")
+                                    i(ng-click="ctrl.setLower(ctrl.currentOrgs.children, $index, 'department')")
                                 .open-orgs
                                     i.fa.fa-angle-right(ng-click="ctrl.showChildsOrg(org)" ng-if="org.children")
 
@@ -45,9 +45,9 @@
                             .list-row(flex layout="row" ng-click="initData.selectPos = pos;")
                                 .list-text(flex="70" ng-bind="pos.name")
                                 .icon-container.up
-                                    i.fa.fa-angle-up(ng-click="ctrl.setHeigher(initData.positions, $index, 'position')")
+                                    i(ng-click="ctrl.setHeigher(initData.positions, $index, 'position')")
                                 .icon-container.down
-                                    i.fa.fa-angle-down(ng-click="ctrl.setLower(initData.positions, $index, 'position')")
+                                    i(ng-click="ctrl.setLower(initData.positions, $index, 'position')")
         div(flex)
             section.pb20
                 .cust-content-toolbar
@@ -74,7 +74,7 @@
                                 td
                                     div(layout)
                                         .icon-container.up
-                                            i.fa.fa-angle-up(ng-click="ctrl.setHeigher(initData.employees, $index, 'employee')")
+                                            i(ng-click="ctrl.setHeigher(initData.employees, $index, 'employee')")
                                         .icon-container.down
-                                            i.fa.fa-angle-down(ng-click="ctrl.setLower(initData.employees, $index, 'employee')")
+                                            i(ng-click="ctrl.setLower(initData.employees, $index, 'employee')")
 

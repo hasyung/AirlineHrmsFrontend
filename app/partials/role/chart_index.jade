@@ -1,0 +1,25 @@
+div.charts-container(
+    flex
+    ng-controller="ChartsMainCtrl as ctrl"
+    ng-switch="rootCtrl.current_roles[0]"
+    )
+    .container960(
+        ng-controller="DepartmentLeaderChartsCtrl as ctrl"
+        ng-switch-when="department_leader"
+        )
+        include charts/department_leader
+    .container960(
+        ng-controller="HrLeaderChartsCtrl as ctrl"
+        ng-switch-when="hr_leader"
+        )
+        include charts/hr_leader
+    .container960(
+        ng-controller="DepartmentHrChartsCtrl as ctrl"
+        ng-switch-default
+        )
+        include charts/department_hr
+    .container960(
+        ng-controller="CompanyLeaderChartsCtrl as ctrl"
+        ng-switch-when="company_leader"
+        )
+        include charts/company_leader

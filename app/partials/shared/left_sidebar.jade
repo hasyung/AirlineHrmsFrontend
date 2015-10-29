@@ -1,6 +1,6 @@
-md-sidenav.nb-nav(md-is-locked-open="true" id="leftSidebar")
+md-sidenav.nb-nav(md-is-locked-open="true" id="leftSidebar" ng-hide='hide_menu')
     md-content(flex role="navigation")
-        ul.nb-menu
+        ul.nb-menu(ng-controller="sideMenuCtrl as menuCtrl")
             li.parent-list-item(ng-repeat="section in ::menu.sections" ng-class="{'active': section == menu.openedSection}")
                 menu-link(page="section" menu ng-if="section.type == 'link'")
                 menu-toggle(section="section" ng-if="section.type != 'link'")

@@ -1,0 +1,32 @@
+md-card.form-material-section.nb-card(ng-controller="EmployeeAttendanceCtrl as ctrl")
+    md-content(style="padding:20px; background-color: #fff;" ng-init="ctrl.loadAttendance()")
+        div(ui-calendar="ctrl.uiConfig.calendar" ng-model="ctrl.eventSources" calendar="attendanceCalendar")
+
+        .attendanceMarks
+          .attendanceMark
+            .attendanceMark__square(style="background-color: #006600")
+            .attendanceMark__text 请假
+
+          .attendanceMark
+            .attendanceMark__square(style="background-color: #ffff66")
+            .attendanceMark__text 迟到/早退
+
+          .attendanceMark
+            .attendanceMark__square(style="background-color: #ff0033")
+            .attendanceMark__text 旷工
+
+          .attendanceMark
+            .attendanceMark__square(style="background-color: #9933ff")
+            .attendanceMark__text 驻站
+
+          .attendanceMark
+            .attendanceMark__square(style="background-color: #0066ff")
+            .attendanceMark__text 离岗培训
+
+          .attendanceMark
+            .attendanceMark__square(style="background-color: #ff6633")
+            .attendanceMark__text 空勤停飞
+
+          .attendanceMark
+            .attendanceMark__square(style="background-color: #33ff00")
+            .attendanceMark__text 空勤地面工作

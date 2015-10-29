@@ -1,5 +1,15 @@
 tabset(flex)
-    tab(heading="薪资全局设置")
-        include settings/salary_global
-    tab(heading="薪资个人设置")
-        include settings/salary_personal
+    tab(heading="薪酬全局设置")
+        include settings/global.jade
+    tab(heading="基本工资设置")
+        include settings/basic.jade
+    tab(heading="考核性收入设置")
+        include settings/performance.jade
+    tab(heading="小时费设置")
+        include settings/hours_fee.jade
+    tab(heading="津贴设置")
+        include settings/allowance.jade
+    tab(heading="驻站补贴设置")
+        include settings/stay_subsidy.jade
+    tab(heading="高温补贴设置")
+        include settings/temperature.jade

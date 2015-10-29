@@ -1,43 +1,12 @@
 .position-manage(ng-if="currentPos.category.key != 'LingDao'" has-permission="positions_employees")
-    //- div(nb-table='currentEmps' nb-safe-src="currentEmps" )
-    //-     input(type="hidden" nb-pipe="currentEmps.search(tableState)")
-    //-     .table-container
-    //-         h4 在职员工信息
-    //-         table.table.table-striped.custom-table
-    //-             thead
-    //-                 tr
-    //-                     th 员工编码
-    //-                     th 姓名
-    //-                     th 到岗时间
-    //-             tbody
-    //-                 tr(ng-repeat="emp in currentEmps track by emp.id")
-    //-                     td(ng-bind="::emp.employeeNo")
-    //-                     td()
-    //-                         a(ng-bind="::emp.employee.name"
-    //-                         nb-panel
-    //-                         template-url="partials/personnel/info_basic.html"
-    //-                         locals="{'employee': emp}"
-    //-                         )
-    //-                     td(ng-bind="::emp.startDate")
     .ui-grid-container
-        md-toolbar
-            .md-toolbar-tools
+        md-toolbar(style="background-color: #fff;")
+            .md-toolbar-tools(style="color: rgba(0, 0, 0, .54);")
                 span 在职员工信息
         div(nb-grid column-defs="panel.workingEmpColumnDef" safe-src="currentEmps")
 .position-manage(ng-if="currentPos.category.key == 'LingDao'" has-permission="positions_formerleaders")
-    .table-container
-        h4 历任领导
+    .ui-grid-container
+        md-toolbar(style="background-color: #fff;")
+            .md-toolbar-tools(style="color: rgba(0, 0, 0, .54);")
+                span 历任领导
         div(nb-grid column-defs="panel.formerleadersColumnDef" safe-src="hisLeaders")
-        //- table.table.table-striped.custom-table
-        //-     thead
-        //-         tr
-        //-             th 工号
-        //-             th 姓名
-        //-             th 到岗时间
-        //-             th 离岗时间
-        //-     tbody
-        //-         tr(ng-repeat="emp in hisLeaders track by emp.id")
-        //-             td(ng-bind="::emp.employee.employeeNo")
-        //-             td(ng-bind="::emp.employee.name")
-        //-             td(ng-bind="::emp.startDate")
-        //-             td(ng-bind="::emp.endDate")

@@ -363,14 +363,17 @@ angular.module 'nb.directives'
     # MOCK angular-strap datepicker directive
     .directive 'bsDatepicker', ['$parse', ->
         postLink = (scope, elem, attrs, ngModelCtrl) ->
-            config = autoclose: true, format: 'yyyy-mm-dd', language: 'zh-cn'
+            config = autoclose: true, format: 'yyyy-mm-dd', language: 'zh-cn', todayHignlight: true
 
             if attrs.endDate == 'today'
                 config['endDate'] = moment().endOf('day').toDate()
 
-            elem.datepicker(config)
-            # .on 'changeDate', (evt) ->
-            #     ngModelCtrl.$setViewValue(evt.date)
+            elem.datepicker(config).on 'changeDate', (evt) ->
+                #ngModelCtrl.$setViewValue(evt.date)
+
+            if attrs.defaultToday
+                elem.datepicker('update', moment().startOf('day').format('YYYY-MM-DD'))
+                ngModelCtrl.$setViewValue(moment().startOf('day').format())
 
             ngModelCtrl.$parsers.unshift (viewValue) ->
                 #only allowed yyyy-mm-dd format
@@ -421,20 +424,17 @@ angular.module 'nb.directives'
                     <div ng-if="ctrl.isImage(file)" nb-gallery img-obj="file">
                         <div class="accessory-name" ng-bind="file.name"></div>
                         <div class="accessory-size" ng-bind="file.size | byteFmt:2"></div>
-                        <div class="accessory-switch">
-                            <md-button type="button" class="md-icon-button" ng-click="ctrl.removeFile($index)">
-                                <md-icon md-svg-src="/images/svg/close.svg" class="md-warn"></md-icon>
-                            </md-button>
-                        </div>
                     </div>
                     <div ng-if="!ctrl.isImage(file)">
-                        <div class="accessory-name" ng-bind="file.name"></div>
-                        <div class="accessory-size" ng-bind="file.size | byteFmt:2"></div>
-                        <div class="accessory-switch">
-                            <md-button type="button" class="md-icon-button" ng-click="ctrl.removeFile($index)">
-                                <md-icon md-svg-src="/images/svg/close.svg" class="md-warn"></md-icon>
-                            </md-button>
-                        </div>
+                        <a ng-href="{{file.default}}" download style="display:block;color:rgba(0,0,0,0.87);">
+                            <div class="accessory-name" ng-bind="file.name"></div>
+                            <div class="accessory-size" ng-bind="file.size | byteFmt:2"></div>
+                        </a>
+                    </div>
+                    <div class="accessory-switch">
+                        <md-button type="button" class="md-icon-button" ng-click="ctrl.removeFile($index)">
+                            <md-icon md-svg-src="/images/svg/close.svg" class="md-warn"></md-icon>
+                        </md-button>
                     </div>
                 </div>
             </div>
@@ -569,3 +569,95 @@ angular.module 'nb.directives'
             controllerAs: 'ctrl'
         }
     ]
+
+    .directive 'progressValue', [ () ->
+        postLink = (scope, elem, attrs) ->
+            #console.error elem
+
+        return {
+            restrict: "EA"
+            link: postLink
+        }
+    ]
+
+    # 在变更记录中使用
+    .directive 'addCity', [()->
+        postLink = (scope, elem, attrs) ->
+
+        return {
+            restrict: 'E'
+            link: postLink
+            template: '''
+            <span>
+                <input ng-show="adding" type="text" ng-model="city" ng-blur="cities.push(city); city=''; adding=false;" />
+                <span ng-click="adding=true" ng-hide="adding" class="add-chip">
+                    <md-icon md-svg-src="/images/svg/plus.svg" class="md-primary"></md-icon>
+                </span>
+            </span>
+            '''
+            scope: {
+                city: "=?"
+                adding: "=?"
+                cities: "=ngModel"
+            }
+            require: 'ngModel'
+            replace: true
+        }
+    ]
+
+    #自动提示输入框
+    .directive 'nbAutocomplete', [()->
+        postLink = (scope, elem, attrs) ->
+
+        return {
+            restrict: 'E'
+            link: postLink
+            template: '''
+            <md-autocomplete
+                ng-disabled="ctrl.isDisabled"
+                md-selected-item="selectedItem"
+                md-search-text-change="value=searchText"
+                md-search-text="searchText"
+                md-selected-item-change="value=selectedItem"
+                md-items="item in ctrl.queryMatchedValues(searchText)"
+                md-floating-label="please replace me!"
+                <md-item-template>
+                    <span md-highlight-text="searchText">{{item}}</span>
+                </md-item-template>
+                <md-not-found>
+                    未找到 "{{searchText}}"
+                </md-not-found>
+            </md-autocomplete>
+            '''
+            scope: {
+                value: "=ngModel"
+                searchText: "=?"
+                selectedItem: "=?"
+            }
+            require: 'ngModel'
+            replace: true
+            controller: NbAutocompleteCtrl
+            controllerAs: 'ctrl'
+        }
+    ]
+
+class NbAutocompleteCtrl
+    @.$inject = ['$scope', '$attrs']
+
+    constructor: (scope, attrs) ->
+        @values = attrs.values if angular.isDefined(attrs.values)
+        @isDisabled = attrs.isDisabled if angular.isDefined(attrs.isDisabled)
+
+    queryMatchedValues = (text) ->
+        self = @
+        matched = _.filter self.values, (value)->
+            _.includes value, text
+        return matched
+
+
+
+
+
+
+
+

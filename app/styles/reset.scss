@@ -8,6 +8,16 @@ body {
     font-family: $font-family-sans-serif;
     font-size: $font-size-sm;
 }
+
+//由于360下 ui-grid的选中行按钮灰度太低，看不清楚，hack 其透明度
+.ui-grid-selection-row-header-buttons {
+    opacity: .3;
+}
+//暂时暴力解决一些md-dialog在360安全浏览器下没有高度的bug
+md-dialog.browser360 {
+    height: 80%;
+}
+
 //重置material design影响标签的样式
 fieldset {
     border: 0;
@@ -83,6 +93,14 @@ md-input-container {
     .md-input {
         margin-top: 0;
     }
+
+    >md-select {
+        margin-top: 0;
+
+        .md-select-value {
+            padding-bottom: 1px;
+        }
+    }
 }
 
 md-toolbar {
@@ -101,6 +119,9 @@ md-toolbar {
     }
 }
 
+md-input-container:not(.md-input-has-value) input:not(:focus) {
+    color: $text-color;
+}
 
 .md-subheader {
     font-family: $font-family-sans-serif;
@@ -115,7 +136,7 @@ md-toolbar {
 .md-menu {
     padding: 0;
 }
-//解决md-menu组件中选项过多造成的每个item高度不足
+// 解决md-menu组件中选项过多造成的每个item高度不足
 md-menu-item {
     min-height: 48px;
 
@@ -124,12 +145,8 @@ md-menu-item {
     }
 }
 
-md-input-container > md-select {
-    margin-top: 0;
-
-    .md-select-value {
-        padding-bottom: 1px;
-    }
+.md-toolbar-tools > .md-button:last-child {
+    margin-right: 0;
 }
 //重置ui-grid视口的滚动样式，设置为不滚动 !!!这不是一个好办法!!!
 // .ui-grid-viewport {
@@ -277,6 +294,7 @@ md-drop-option {
     .row-text {
         display: inline-block;
         font-size: 14px;
+        line-height: 56px;
         padding-top: 8px;
 
         &.last {
@@ -313,7 +331,11 @@ md-drop-option {
         &.yellow {
             background-color: rgb(229, 184, 17);
             color: #fff;
+        }
 
+        &.purple {
+            background-color: #969;
+            color: #fff;
         }
 
         &.active {
@@ -325,5 +347,19 @@ md-drop-option {
 
     }
 }
+
+// 解决angularjs 模板未加载完成的页面加载闪烁的bug
+// ng-cloak
+[ng\:cloak],
+[ng-cloak],
+[data-ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak {
+    display: none !important;
+}
+
+
+
 
 

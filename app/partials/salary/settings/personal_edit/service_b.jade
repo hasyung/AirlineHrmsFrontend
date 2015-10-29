@@ -1,0 +1,75 @@
+div(layout ng-controller="salaryExchangeCtrl as exchangeCtrl")
+    md-input-container.row-has-value(flex)
+        label 基础薪酬通道
+        md-select(ng-model="current.baseChannel" placeholder="请选择" ng-change="exchangeCtrl.service_b(current)")
+            md-option(value="service_b_normal_cleaner_base") 清洁工
+            md-option(value="service_b_parking_cleaner_base") 机坪清洁工
+            md-option(value="service_b_hotel_service_base") 宾馆服务员
+            md-option(value="service_b_green_base") 绿化
+            md-option(value="service_b_front_desk_base") 总台服务员
+            md-option(value="service_b_security_guard_base") 保安、空保装备保管员
+            md-option(value="service_b_input_base") 数据录入
+            md-option(value="service_b_guard_leader1_base") 保安队长（一类）
+            md-option(value="service_b_device_keeper_base") 保管（库房、培训设备、器械）
+            md-option(value="service_b_unloading_base") 外站装卸
+            md-option(value="service_b_making_water_base") 制水工
+            md-option(value="service_b_add_water_base") 加水工、排污工
+            md-option(value="service_b_guard_leader2_base") 保安队长（二类）
+            md-option(value="service_b_water_light_base") 水电维修
+            md-option(value="service_b_car_repair_base") 汽修工
+            md-option(value="service_b_airline_keeper_base") 机务工装设备/客舱供应库管
+
+    md-input-container.row-has-value(flex)
+        label 档级
+        md-select(ng-model="current.baseFlag" placeholder="请选择" ng-change="exchangeCtrl.service_b(current)")
+            md-option(ng-value="item" ng-repeat="item in exchangeCtrl.service_b_flag_array(current)") {{item}}
+
+div(layout)
+    md-input-container(flex)
+        label 基础薪酬
+        input(type="number" min="0" ng-model="current.baseMoney" readonly)
+    md-input-container(flex)
+        label 绩效薪酬
+        input(type="number" min="0" ng-model="current.performanceMoney" readonly)
+    md-input-container(flex)
+        label 总和薪酬
+        input(type="number" min="0" ng-model="current.basePerformanceMoney" readonly)
+
+div(layout)
+        md-input-container(flex)
+            label 岗位工资保留
+            input(type="number" min="0" step="1" ng-model="current.keepPosition")
+        md-input-container(flex)
+            label 业绩奖保留
+            input(type="number" min="0" step="1" ng-model="current.keepPerformance")
+        md-input-container(flex)
+            label 工龄工资保留
+            input(type="number" min="0" step="1" ng-model="current.keepWorkingYears")
+    div(layout)
+        md-input-container(flex)
+            label 保底增幅
+            input(type="number" min="0" step="1" ng-model="current.keepMinimumGrowth")
+        md-input-container(flex)
+            label 地勤补贴保留
+            input(type="number" min="0" step="1" ng-model="current.keepLandAllowance")
+        md-input-container(flex)
+            label 生活补贴保留
+            input(type="number" min="0" step="1" ng-model="current.keepLifeAllowance")
+    div(layout)
+        md-input-container(flex)
+            label 09调资增加保留
+            input(type="number" min="0" step="1" ng-model="current.keepAdjustment09")
+        md-input-container(flex)
+            label 14公务用车保留
+            input(type="number" min="0" step="1" ng-model="current.keepBus14")
+        md-input-container(flex)
+            label 14通信补贴保留
+            input(type="number" min="0" step="1" ng-model="current.keepCommunication14")
+
+div(layout)
+    md-input-container(flex)
+        label 高温补贴
+        input(type="number" min="0" ng-model="current.tempAllowance")
+    md-input-container(flex)
+        label 通讯补贴
+        input(type="number" min="0" ng-model="current.communicateAllowance")

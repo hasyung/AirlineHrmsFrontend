@@ -20,7 +20,7 @@
                         has-permission="positions_adjust"
                         nb-dialog
                         template-url="partials/position/position_transfer.html"
-                        ) 调整机构
+                        ) 调整岗位
                 span
                     md-menu(ng-init="selectedRows=[]")
                         md-button.md-primary.md-raised(
@@ -56,4 +56,4 @@
                         nb-title="您确定要删除所选的岗位吗?"
                         nb-content="删除操作将在你点击确定后执行，岗位删除后将无法恢复。") 删除岗位
 
-        div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection safe-src="ctrl.positions")
+        div(nb-grid column-defs="ctrl.columnDef" export-api on-register-api="ctrl.exportGridApi(gridApi)" grid-selection safe-src="ctrl.positions")

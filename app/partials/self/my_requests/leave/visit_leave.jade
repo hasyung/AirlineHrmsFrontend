@@ -7,6 +7,12 @@ block vars
     - var need_attachment = true
 
 
+block relation_data
+    div.flow-info-row(layout)
+        .flow-info-cell(flex)
+            .flow-cell-title 婚姻状况
+            .flow-cell-content {{$enum.parseLabel(receptor.marital_status_id, 'marital_status')}}
+
 block additional_form
     div(layout)
         md-input-container.row-has-value(flex)
@@ -21,3 +27,6 @@ block additional_form
             md-radio-group(ng-model="request.journey")
                 md-radio-button.md-primary(value="省内" ng-disabled="!additional") 省内
                 md-radio-button.md-primary(value="省外" ng-disabled="!additional") 省外
+
+block attachment_tip
+    p.attachment-tip 请上传您的往返车票照片

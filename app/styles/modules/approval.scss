@@ -149,6 +149,7 @@
     .accessory-cell {
         background-color: rgba(0, 0, 0, .06);
         border-left: 2px solid #7cb342;
+        cursor: pointer;
         float: left;
         font-size: $font-size-sm;
         height: 50px;
@@ -195,10 +196,44 @@
 }
 
 .superior-container {
+    position: relative;
+
+    &:after {
+        background-color: #ddd;
+        content: '';
+        display: block;
+        height: 100%;
+        left: 50%;
+        margin-left: -1px;
+        position: absolute;
+        width: 1px;
+    }
+
     md-radio-button {
         float: left;
-        margin-bottom: 10px;
-        width: 286px;
+        margin-bottom: 40px;
+        width: 400px;
+
+        &:nth-child(odd) {
+            margin-right: 50px;
+        }
+
+        &:nth-last-child(-n+2) {
+            margin-bottom: 0;
+        }
+
+        .md-container {
+            vertical-align: top;
+        }
+
+        .md-label {
+            padding-top: 2px;
+
+            div {
+                color: $text-muted;
+                margin-top: 5px;
+            }
+        }
     }
 }
 
@@ -217,6 +252,8 @@
     }
 
     .hd-unit-wrapper {
+        min-height: 250px;
+
         .hd-choosing,
         .hd-choosed {
             margin: 10px 0;
@@ -289,6 +326,14 @@
             right: 10px;
             top: 10px;
             z-index: 2;
+
+            &:hover {
+                .hd__ctrl__btn {
+                    svg>* {
+                        fill: rgb(33, 150, 243);
+                    }
+                }
+            }
 
             .hd__ctrl__btn {
                 height: 24px;

@@ -3,13 +3,13 @@ div(style="height: 100%; background-color: #f5f5f5;")
         .md-toolbar-tools
             span 新建合同
 
-    .personnel-content.personnel-control(ng-init="contract = {}; ctrl.loadEmp = {}")
+    .personnel-content.personnel-control(ng-init="contract = {isUnfix: true}; ctrl.loadEmp = {}")
         section.personnel-info-section
             md-content.nb-card-container(layout="column" md-theme="hrms")
                 form(ng-submit="ctrl.newContract(contract);panel.close();" name="newContractForm")
                     md-card.form-material-section.nb-card
-                        md-subheader.md-background.md-hue-1
-                            md-icon.form-icon(md-svg-src="/images/svg/personnel_24.svg" alt="基本信息")
+                        .md-subheader
+                            //- md-icon.form-icon(md-svg-src="/images/svg/personnel_24.svg" alt="基本信息")
                             | 合同信息
 
                         fieldset(md-theme="default")
@@ -18,12 +18,14 @@ div(style="height: 100%; background-color: #f5f5f5;")
                             div(layout)
                                 md-input-container(flex)
                                     label 姓名
+                                        span.require-tip *
                                     input(ng-model="ctrl.loadEmp.name" name="name" required
                                         ng-model-options="{debounce: {'default': 1000, 'blur': 0}}"
                                         ng-change="ctrl.loadEmployee({name: ctrl.loadEmp.name}, contract);"
                                         )
                                 md-input-container(flex)
                                     label 员工编号
+                                        span.require-tip *
                                     input(ng-model="ctrl.loadEmp.employeeNo" required
                                         ng-model-options="{debounce: {'default': 1000, 'blur': 0}}"
                                         ng-change="ctrl.loadEmployee({employee_no: ctrl.loadEmp.employeeNo}, contract);"
@@ -32,53 +34,59 @@ div(style="height: 100%; background-color: #f5f5f5;")
                             div(layout)
                                 md-input-container.row-has-value(flex)
                                     label 部门
-                                    input(ng-model="ctrl.loadEmp.department.name" disabled)
+                                    input(ng-model="ctrl.loadEmp.department.name" readonly)
                                 md-input-container.row-has-value(flex)
                                     label 岗位
-                                    input(ng-model="ctrl.loadEmp.position.name" disabled)
+                                    input(ng-model="ctrl.loadEmp.position.name" readonly)
 
                             div(layout)
                                 md-input-container.row-has-value(flex)
                                     label 用工性质
+                                        span.require-tip *
                                     md-select(ng-model="contract.applyType" required)
                                         md-option(value="合同") 合同
                                         md-option(value="合同制") 合同制
                                 md-input-container.row-has-value(flex)
                                     label 变更标志
+                                        span.require-tip *
                                     md-select(ng-model="contract.changeFlag" required)
                                         md-option(value="新签") 新签
                                         md-option(value="续签") 续签
                                         md-option(value="转制") 转制
                             div(layout)
+                                md-checkbox(class="md-primary" ng-model="contract.isUnfix" ng-change="ctrl.clearData(contract)") 签署无固定期限合同
+                                md-input-container(flex)
+
+                            div(layout)
                                 md-input-container(flex)
                                     label 开始日期
+                                        span.require-tip *
                                     input(
+                                        name="startDate"
                                         bs-datepicker
                                         ng-model="contract.startDate"
                                         required
-                                        )
-                                md-input-container(flex)
-                                    label 结束日期
+                                        ng-change="ctrl.dueTimeStr='';ctrl.loadDueTime(contract)"
+                                            )
+
+                                md-input-container(flex ng-if="!contract.isUnfix")
+                                    label 结束日期(大于开始日期)
+                                        span.require-tip *
                                     input.has-placeholder(
                                         bs-datepicker
                                         ng-model="contract.endDate"
                                         name="endDate"
-                                        ng-change="contract.dueTime=null"
+                                        ng-change="ctrl.dueTimeStr='';ctrl.loadDueTime(contract)"
                                         )
-                                    div.input-placeholder 无固定期限合同请勿填写此项
 
-                            div(layout)
-                                md-input-container(flex md-no-float)
-                                    label 合同时长/年
+                                md-input-container(flex md-no-float ng-if="!contract.isUnfix")
+                                    label 合同时长
                                     input(
                                         type="text"
                                         ng-model="contract.dueTime"
                                         name="dueTime"
-                                        ng-disabled="!newContractForm.endDate.$modelValue"
-                                        ng-required="newContractForm.endDate.$modelValue"
+                                        readonly
                                         )
-                                    div(ng-messages="newContractForm.dueTime.$error")
-                                        div(ng-message="required") 结束日期、合同时长需同时填写
 
                             div(layout)
                                 md-input-container(flex)
@@ -88,4 +96,6 @@ div(style="height: 100%; background-color: #f5f5f5;")
                     .form-bottom-group(layout style="margin-top: 20px;")
                         span(flex)
                         md-button.md-raised(type="button" ng-click="panel.close();") 取消
-                        md-button.md-primary.md-raised(type="submit" ng-disabled="newContractForm.$invalid") 提交
+                        md-button.md-primary.md-raised(
+                            type="submit"
+                            ng-disabled="newContractForm.$invalid || (!contract.isUnfix && !contract.endDate && !contract.dueTime) || (!contract.isUnfix && newContractForm.endDate.$modelValue <= newContractForm.startDate.$modelValue)") 提交

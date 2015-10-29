@@ -8,6 +8,7 @@ block heading
 
 block user_list_actions
     md-button.md-primary.md-raised(
+        ng-if="ctrl.isDepartmentHr()"
         ng-disabled="!ctrl.getSelected()"
         nb-panel
         template-url="/partials/labors/resignation/resignation.html"
@@ -15,6 +16,12 @@ block user_list_actions
     ) 代理发起辞职
 
 block history_list_actions
+    md-button.md-primary.md-raised(
+        ng-disabled="!ctrl.getSelected() || ctrl.getSelected().workflowState != '审批中'"
+        nb-confirm="ctrl.revert(isConfirm, ctrl.getSelected())"
+        nb-title="辞职流程撤销"
+        nb-content="你确定撤销{{ctrl.getSelected().receptor.name}}的辞职流程，请确认。"
+    ) 撤销辞职
 
     md-menu(ng-disabled="!ctrl.getSelected()")
         md-button.md-primary.md-raised(
@@ -25,13 +32,13 @@ block history_list_actions
         md-menu-content
             md-menu-item()
                 a.md-button(
-                    nb-confirm="ctrl.leaveJob(ctrl.getSelected().receptor.id, isConfirm, '员工辞职')"
+                    nb-confirm="ctrl.leaveJob(ctrl.getSelected().receptor.id, isConfirm, '员工辞职', ctrl.getSelected().id, ctrl.getSelected().receptor.joinScalDate)"
                     nb-title="离职流程发起"
                     nb-content="你确定对{{ctrl.getSelected().receptor.name}}发起离职通知单流程，请确认。"
                 ) 员工辞职
             md-menu-item()
                 a.md-button(
-                    nb-confirm="ctrl.leaveJob(ctrl.getSelected().receptor.id, isConfirm, '工作调动')"
+                    nb-confirm="ctrl.leaveJob(ctrl.getSelected().receptor.id, isConfirm, '工作调动', ctrl.getSelected().id, ctrl.getSelected().receptor.joinScalDate)"
                     nb-title="离职流程发起"
                     nb-content="你确定对{{ctrl.getSelected().receptor.name}}发起离职通知单流程，请确认。"
                 ) 工作调动

@@ -8,12 +8,12 @@ md-dialog.sample-dialog(ng-init="request = {};params = {status:'init'}")
                 div(layout ng-if="dialog.performanceType == 'month'" ng-init="request.category = 'month'")
                     md-input-container(flex)
                         label 考核时段
-                        md-select(ng-model="request.assessTime")
+                        md-select(ng-model="request.assessTime" placeholder="请选择考核时段")
                             md-option(ng-value="item" ng-repeat="item in ctrl.getDateOptions() track by $index") {{item}}
                 div(layout ng-if="dialog.performanceType == 'year'" ng-init="request.category = 'year'")
                     md-input-container(flex)
                         label 考核时段
-                        md-select(ng-model="request.assessTime")
+                        md-select(ng-model="request.assessTime" placeholder="请选择考核时段")
                             md-option(ng-value="item" ng-repeat="item in ctrl.getDateOptions('year') track by $index") {{item}}
                 div(nb-file-upload ng-model="request.file_id" single-file)
             .dialog-content.loading(ng-if="params.status == 'uploading'" layout-align="center")

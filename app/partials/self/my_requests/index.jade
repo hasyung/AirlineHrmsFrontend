@@ -1,100 +1,71 @@
-.my-requests(flex)
-    .my-requests-header 考勤 / 劳动关系 / 培训 / 绩效
+.my-requests(flex ng-init="showSalary = true")
+    .current-month
+        md-icon.prev(md-svg-src="md-toggle-arrow")
+        span.month 2015-8
+        md-icon.next(md-svg-src="md-toggle-arrow")
+    .current-month-info
+        .info-left
+            .title
+                | 8月工资
+            .salary-circle(progres-value)
+                .value(ng-show="showSalary") 12000.68
+                img(src="/images/my_request/progress-circle.png")
+            .action
+                button(
+                    ng-show="showSalary"
+                    ng-click="showSalary=false"
+                    ) 隐藏
+                button(
+                    ng-show="!showSalary"
+                    ng-click="showSalary=true"
+                    ) 显示
+        .info-right
+            .info-content
+                .info-item
+                    .title 绩效
+                    .value 优秀
+                .info-item
+                    .title 社保
+                    .value 860
+                        span 元
+                .info-item.pt45
+                    .title 公积金
+                    .value 980
+                        span 元
+                .info-item.pt45
+                    .title 剩余年假
+                    .value 8
+                        span 天
+
+
     .my-cell-cotainer
-        a.my-requests-cell(ui-sref=".leave")
-            md-button.md-fab
-                md-icon(md-svg-src="/images/svg/flow/ask_for_leave.svg")
+        a.my-requests-cell.ml0(ui-sref=".leave")
+            .cell__btn.qingjia
             .desc 我要请假
-        a.my-requests-cell(ui-sref=".")
-            md-button.md-fab
-                md-icon(md-svg-src="/images/svg/flow/turn.svg")
+        a.my-requests-cell.havent(ui-sref=".")
+            .cell__btn.zhuanzheng
             .desc 我要转正
         a.my-requests-cell(ui-sref=".resignation")
-            md-button.md-fab
-                md-icon(md-svg-src="/images/svg/flow/resignation.svg")
+            .cell__btn.cizhi
             .desc 我要辞职
         a.my-requests-cell(ui-sref=".adjust_position")
-            md-button.md-fab
-                md-icon(md-svg-src="/images/svg/flow/adjust_position.svg")
+            .cell__btn.tiaogang
             .desc 我要调岗
-        a.my-requests-cell(ui-sref=".erarly_retirement")
-            md-button.md-fab
-                md-icon(md-svg-src="/images/svg/flow/early_retirement.svg")
+        a.my-requests-cell(ui-sref=".early_retirement")
+            .cell__btn.tuiyang
             .desc 我要退养
-        a.my-requests-cell(ui-sref=".renew_contract")
-            md-button.md-fab
-                md-icon(md-svg-src="/images/svg/flow/contract.svg")
+        a.my-requests-cell.ml0(ui-sref=".renew_contract")
+            .cell__btn.hetong
             .desc 合同续签
-        a.my-requests-cell(ui-sref=".")
-            md-button.md-fab
-                md-icon(md-svg-src="/images/svg/flow/degree.svg")
+        a.my-requests-cell.havent(ui-sref=".")
+            .cell__btn.xueli
             .desc 学历变更
-        a.my-requests-cell(ui-sref=".")
-            md-button.md-fab
-                md-icon(md-svg-src="/images/svg/flow/performance.svg")
-            .desc 绩效申述结果
-
-
-
-
-
-
-    //- .classify.md-whiteframe-z1
-    //-     .classify-header
-    //-         | 考勤
-    //-     .classify-wrapper
-    //-         .classify-cell
-    //-             md-button.md-fab.md-primary(ui-sref=".leave")
-    //-                 md-icon(md-svg-src="/images/svg/flow/ask_for_leave.svg")
-    //-             .desc 我要请假
-    //- .classify.md-whiteframe-z1
-    //-     .classify-header
-    //-         | 劳动关系
-    //-     .classify-wrapper
-    //-         .classify-cell
-    //-             md-button.md-fab.md-primary(ui-sref=".resignation")
-    //-                 md-icon(md-svg-src="/images/svg/flow/turn.svg")
-    //-             .desc 我要转正
-    //-         .classify-cell
-    //-             md-button.md-fab.md-primary(ui-sref=".resignation")
-    //-                 md-icon(md-svg-src="/images/svg/flow/resignation.svg")
-    //-             .desc 我要辞职
-    //-         .classify-cell
-    //-             md-button.md-fab.md-primary(ui-sref=".adjust_position")
-    //-                 md-icon(md-svg-src="/images/svg/flow/adjust_position.svg")
-    //-             .desc 我要调岗
-    //-         .classify-cell
-    //-             md-button.md-fab.md-primary(ui-sref=".erarly_retirement")
-    //-                 md-icon(md-svg-src="/images/svg/flow/early_retirement.svg")
-    //-             .desc 我要退养
-    //-         .classify-cell
-    //-             md-button.md-fab.md-primary(ui-sref=".renew_contract")
-    //-                 md-icon(md-svg-src="/images/svg/flow/contract.svg")
-    //-             .desc 合同续签
-    //- .classify.md-whiteframe-z1
-    //-     .classify-header
-    //-         | 培训
-    //-     .classify-wrapper
-    //-         .classify-cell
-    //-             md-button.md-fab.md-primary(ui-sref=".")
-    //-                 md-icon(md-svg-src="/images/svg/flow/degree.svg")
-    //-             .desc 学历变更
-    //- .classify.md-whiteframe-z1
-    //-     .classify-header
-    //-         | 绩效
-    //-     .classify-wrapper
-    //-         .classify-cell
-    //-             md-button.md-fab.md-primary(ui-sref=".")
-    //-                 md-icon(md-svg-src="/images/svg/flow/performance.svg")
-    //-             .desc 绩效申述
-
-
-
-
-
-
-//- md-button(nb-panel template-url="partials/self/my_requests/ask_for_leave.html") 我要请假
-//- md-button(nb-dialog template-url="partials/self/my_requests/leave_revocation.html") 我要撤销假
-//- md-button(nb-dialog template-url="partials/self/my_requests/offset_leave.html") 我要冲抵
-//- md-button(nb-dialog template-url="partials/self/my_requests/check_in.html") 我要销假
-//- md-button(nb-dialog template-url="partials/self/my_requests/adjust_position.html") 我要调岗
+        a.my-requests-cell(ui-sref=".performance")
+            .cell__btn.shensu
+            .desc 绩效申诉结果
+        a.my-requests-cell.havent(ui-sref=".")
+            .cell__btn.youmian
+            .desc 优免票
+        a.my-requests-cell(ui-sref=".annuity")
+            .cell__btn.nianjin
+            .desc 企业年金

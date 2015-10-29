@@ -57,9 +57,21 @@ class PositionCtrl extends nb.Controller
                 displayName: '编制数'
                 name: 'budgetedStaffing'
                 cellTemplate: '''
-                <div class="ui-grid-cell-contents" ng-class="{'overstaffed': row.entity.overstaffedNum > 0}">
-                    {{row.entity.staffing}}/{{grid.getCellValue(row, col)}}
+                <div class="ui-grid-cell-contents">
+                    {{grid.getCellValue(row, col)}}
                 </div>
+                '''
+            }
+            {displayName: '在编', name: 'staffing'}
+            {
+                displayName: '超/缺编'
+                name: 'staffingStatus'
+                cellTemplate: '''
+                    <div class="ui-grid-cell-contents">
+                        <span style="color:blue" ng-if="row.entity.budgetedStaffing > row.entity.staffing">{{row.entity.staffing - row.entity.budgetedStaffing}}</span>
+                        <span style="color:red" ng-if="row.entity.budgetedStaffing < row.entity.staffing">{{row.entity.staffing - row.entity.budgetedStaffing}}</span>
+                        <span style="color:black" ng-if="row.entity.budgetedStaffing == row.entity.staffing">0</span>
+                    </div>
                 '''
             }
             {displayName: '工作时间', name: 'scheduleId', cellFilter: "enum:'position_schedules'"}
@@ -80,11 +92,6 @@ class PositionCtrl extends nb.Controller
                     placeholder: '岗位名称'
                 }
                 {
-                    name: 'staffing_surpass'
-                    displayName: '是否超编'
-                    type: 'boolean'
-                }
-                {
                     name: 'channel_ids'
                     type: 'muti-enum-search'
                     displayName: '通道'
@@ -102,14 +109,21 @@ class PositionCtrl extends nb.Controller
                     displayName: '机构'
                     type: 'org-search'
                 }
+                {
+                    name: 'budgeted_staffinged'
+                    displayName: '编制状态'
+                    type: 'budget_staffing_select'
+                }
             ]
         }
 
-    loadInitialData: ->
+    loadInitialData: () ->
         self = @
         @positions = @Position.$collection().$fetch()
 
     search: (tableState) ->
+        tableState = tableState || {}
+        tableState['per_page'] = @scope.$gridApi.grid.options.paginationPageSize
         @positions.$refresh(tableState)
 
     getSelectsIds: () ->
@@ -122,10 +136,12 @@ class PositionChangesCtrl extends nb.Controller
 
     constructor: (@PositionChange) ->
         @changes = @PositionChange.$collection().$refresh()
+
         @columnDef = [
             {name:"name", displayName:"岗位名称"}
             {name:"department.name", displayName:"所属部门"}
-            {name:"action", displayName:"操作"}
+            {name:"user.name", displayName:"操作者"}
+            {name:"action", displayName:"操作类型"}
             {
                 displayName: '信息变更模块'
                 field: 'auditableType'
@@ -141,6 +157,7 @@ class PositionChangesCtrl extends nb.Controller
                 '''
             }
             {name:"createdAt", displayName:"变更时间"}
+            {name:"remark", displayName:"备注"}
         ]
 
         @filterOptions = {
@@ -161,10 +178,17 @@ class PositionChangesCtrl extends nb.Controller
                     type: 'date-range'
                     displayName: '变更时间'
                 }
+                {
+                    name: 'has_remark'
+                    type: 'boolean'
+                    displayName: '是否有备注'
+                }
             ]
         }
 
-    searchChanges: (tableState)->
+    search: (tableState)->
+        tableState = tableState || {}
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @changes.$refresh(tableState)
 
 
@@ -184,4 +208,41 @@ class PositionDetailCtrl
             {displayName: '到岗时间', name: 'startDate'}
         ]
 
+class AdjustPositionCtrl
+    @.$inject = ['$scope', '$http', '$nbEvent']
+
+    constructor: (scope, @http, @Evt) ->
+
+    adjustPosition: (employee) ->
+        self = @
+
+        params = {}
+        params.positions = []
+
+        params.employee_id = employee.id
+        params.channel_id = employee.channelId
+        params.category_id = employee.categoryId
+        params.duty_rank_id = employee.dutyRankId
+        params.position_remark = employee.positionRemark
+        params.oa_file_no = employee.oaFileNo
+        params.position_change_date = employee.positionChangeDate
+        params.probation_duration = employee.probationDuration
+
+        employee.positions.map (position) ->
+            params.positions.push({
+                'position': {'id': position.position.id},
+                'category': position.category
+                'department': {'id': position.department.id}
+                })
+
+
+        console.log params
+
+        @http.post("/api/position_change_records", params).success (data, status)->
+            self.Evt.$send "data:create:success", "员工转岗成功"
+
+
 app.controller 'PositionDetailCtrl', PositionDetailCtrl
+app.controller 'AdjustPositionCtrl', AdjustPositionCtrl
+
+

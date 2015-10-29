@@ -11,6 +11,7 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
         div(layout)
             md-input-container(flex)
                 label 姓名
+                    span.require-tip *
                 input(ng-model="current.name" name="name" required)
             md-input-container(flex)
                 label 员工编号
@@ -23,6 +24,7 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
         div(layout)
             md-input-container(flex)
                 label 身份证号
+                    span.require-tip *
                 input(ng-model="current.identityNo", name="identityNo" required)
             md-input-container.row-has-value(flex)
                 label 政治面貌
@@ -31,6 +33,7 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
             md-input-container(flex)
                 label 联系方式
                 input(type="text", ng-model="current.contact.mobile", name="contact")
+
         div(layout)
             md-input-container(flex)
                 label 参工时间
@@ -38,18 +41,22 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
             md-input-container(flex)
                 label 到岗时间
                 input(ng-model="current.joinScalDate" bs-datepicker)
+            md-input-container(flex)
+                label 实习时间
+                input(ng-model="current.startInternshipDate" bs-datepicker)
+
+        div(layout)
             md-input-container.row-has-value(flex)
                 label 英语等级
                 md-select(ng-model="current.englishLevelId" ng-disabled="!editing")
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('english_levels')") {{item.label}}
-        div(layout)
             md-input-container(flex)
                 label 毕业院校
                 input(type="text", ng-model="current.school")
             md-input-container(flex)
                 label 专业
                 input(type="text" placeholder="请输入专业" ng-model="current.major")
-            md-input-container(flex)
+
         div(layout)
             md-input-container.row-has-value(flex)
                 label 学历
@@ -59,4 +66,6 @@ form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-contro
                 label 学位
                 md-select(ng-model="current.degreeId" ng-disabled="!editing")
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('degrees')") {{item.label}}
-            md-input-container(flex)
+            md-input-container.row-has-value(flex)
+                label 试用时间(月)
+                input(type="number" ng-model="current.probationMonths" max="12" min="0")

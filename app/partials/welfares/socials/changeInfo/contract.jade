@@ -1,4 +1,4 @@
-.dialog-content(layout)
+.dialog-content(layout ng-init="setup.pension=setup.treatment=setup.unemploy=setup.injury=setup.illness=setup.fertility=true; setup.socialLocation = '成都';")
     section.form-material-section(flex)
         fieldset(flex)
             div(style="display:none;")
@@ -27,11 +27,15 @@
                     label 身份证
                     input(type="text" ng-model="::current.identityNo" disabled)
             div(layout)
-                md-input-container(flex)
+                md-input-container.row-has-value(flex)
                     label 社保属地
                     md-select(ng-model="setup.socialLocation")
                         md-option(value="成都") 成都
                         md-option(value="重庆") 重庆
+                        md-option(value="北京") 北京
+                        md-option(value="上海") 上海
+                        md-option(value="广州") 广州
+                        md-option(value="深圳") 深圳
                 md-input-container(flex)
                     label 社保编号
                     input(type="text" ng-model="setup.socialAccount")
@@ -39,15 +43,15 @@
             div(layout)
                 md-input-container(flex)
                     label 年度养老保险
-                    input(type="number" min="1" max="100000" setp="1" ng-model="setup.pensionCardinality")
+                    input(type="number" min="1" max="100000" setp="0.000001" ng-model="setup.pensionCardinality")
                 md-input-container(flex)
                     label 年度其他保险
-                    input(type="number" min="1" max="100000" setp="1" ng-model="setup.otherCardinality")
+                    input(type="number" min="1" max="100000" setp="0.000001" ng-model="setup.otherCardinality")
 
             div(layout)
                 md-input-container(flex)
                     label 社保临时基数
-                    input(type="number" min="1" max="100000" setp="1" ng-model="setup.tempCardinality" name="notes")
+                    input(type="number" min="1" max="100000" setp="0.000001" ng-model="setup.tempCardinality" name="notes")
 
             div.checkbox-row
                 label 险种选择

@@ -1,11 +1,10 @@
 .app-content-wrapper(flex ng-init="ctrl.loadSummaries()")
-
     div(nb-filter="ctrl.checksFilterOptions" on-search="ctrl.search(state)")
+
     div.ui-grid-container
         md-toolbar
             .md-toolbar-tools
                 h2 考勤汇总表
                 div(flex)
-                
 
-        div(nb-grid column-defs="ctrl.summaryCols" export-api grid-selection safe-src="ctrl.tableData")
+        div(nb-grid column-defs="ctrl.summaryCols" export-api on-register-api="ctrl.exportGridApi(gridApi)" grid-selection safe-src="ctrl.tableData")

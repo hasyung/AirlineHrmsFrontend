@@ -3,5 +3,8 @@ extends leave_layout
 block vars
     - var flowType = 'Flow::WomenLeave'
     - var flowName = '女工假'
-    - var formType = 2
+    - var formType = 0
     - var need_attachment = false
+
+block attachment_tip
+    p.attachment-tip 请上传医院为您开具的证明照片

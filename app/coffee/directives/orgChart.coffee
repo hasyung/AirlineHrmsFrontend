@@ -106,6 +106,15 @@ drawOrgChart = (root, options, select_org_id) ->
             d.y = rectHeight + (rectVerticalSpacing/2 - rectWidth/2) + i*(rectWidth + rectHorizontalSpacing)
         return nodes
 
+    committeeNodesDecorator = (root, tree) ->
+        staffLength = root.staff.length
+
+        nodes = root.committee
+        nodes.forEach (d, i) ->
+            d.x = layerMaxLength*(rectHorizontalSpacing + rectWidth) + i*(rectHorizontalSpacing + rectWidth) + (rectHorizontalSpacing + rectWidth)
+            d.y = (rectHeight + rectVerticalSpacing) + staffLength*(rectWidth + rectHorizontalSpacing) - rectHorizontalSpacing
+        return nodes
+
     draw = (svg, tree, nodes, layerMaxLength, root, staff_nodes) ->
 
         drawPath = ->
@@ -135,6 +144,24 @@ drawOrgChart = (root, options, select_org_id) ->
                     """
                      M#{root.x + rectWidth/2} #{d.y + rectWidth/2}
                      L#{d.x} #{d.y + rectWidth/2}
+                    """
+                .attr("stroke", linkColor)
+                .attr("stroke-width", linkWidth)
+                .attr("fill", "transparent")
+
+        drawCommitteePath = ->
+            svg.selectAll("path.link-committee")
+                .data(committee_nodes)
+                .enter()
+                .append("path")
+                .attr("class","link")
+                .attr "d", (d, i) ->
+                    """
+                     M#{root.x+ rectWidth/2} #{root.y+rectHeight/2}
+                     L#{root.x + (layerMaxLength+committee_nodes.length)*(rectWidth+rectHorizontalSpacing)/2} #{root.y+rectHeight/2}
+                     L#{root.x + (layerMaxLength+committee_nodes.length)*(rectWidth+rectHorizontalSpacing)/2} #{d.y - rectVerticalSpacing/2}
+                     L#{d.x + rectWidth/2} #{d.y - rectVerticalSpacing/2}
+                     L#{d.x + rectWidth/2} #{d.y}
                     """
                 .attr("stroke", linkColor)
                 .attr("stroke-width", linkWidth)
@@ -221,21 +248,68 @@ drawOrgChart = (root, options, select_org_id) ->
                 .attr "y", (d) -> d.y
 
             nodeEnter.append("text")
-                .attr("class", "orgchart-text")
+                .attr("class", "orgchart-text-staff")
                 .attr("text-anchor", "middle")
                 .style("font-size", "12px")
                 .attr "x", (d) -> d.x + rectHeight/2 - 2
                 .attr "y", (d) -> d.y + rectWidth/2 + 4
                 .text (d) -> d.name.replace(/（/gm, '︵').replace(/）/gm, '︶')
 
-        svg.attr("width",rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + 2*(rectWidth+rectHorizontalSpacing))
+        drawCommitteeRect = ->
+            nodeEnter = svg.selectAll("g.node-committee")
+                .data(committee_nodes)
+                .enter()
+                .append("g")
+                .attr "class", (d) ->
+                    if d.status == 'create_inactive'
+                        return "node chart-box-create_inactive"
+                    else if d.status == 'update_inactive'
+                        return "node chart-box-update_inactive"
+                    else if d.status == 'destroy_inactive'
+                        return "node chart-box-destroy_inactive"
+                    else if d.status == 'transfer_inactive'
+                        return "node chart-box-transfer_inactive"
+                    else
+                        return "node"
+                .style("cursor", "pointer")
+                .attr 'id', (d) -> "org_#{d.id}"
+                .on 'click', (d,i) ->   #To Do:
+                    active_node.classed("active",false)
+                    d3.select(this).classed("active",true)
+                    active_node = d3.select(this)
+                    rectClickHandler(target: d.id)
+
+
+            nodeEnter.append("rect")
+                .attr("width", rectWidth)
+                .attr("height", rectHeight)
+                .attr("rx", rectBorderRadius)
+                .attr("ry", rectBorderRadius)
+                .attr("stroke", linkColor)
+                .attr("stroke-width", borderWidth)
+                .attr "x", (d,i) -> d.x
+                .attr "y", (d) -> d.y
+
+            nodeEnter.append("text")
+                .attr("class", "orgchart-text")
+                .attr("text-anchor", "middle")
+                .attr("glyph-orientation-vertical", 0)
+                .attr("writing-mode", "tb")
+                .style("font-size", "12px")
+                .attr "x", (d) -> d.x + rectWidth/2
+                .attr "y", (d) -> d.y + rectHeight/2
+                .text (d) -> d.name.replace(/（/gm, '︵').replace(/）/gm, '︶')
+
+        svg.attr("width",rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + (2+committee_nodes.length)*(rectWidth+rectHorizontalSpacing))
             .attr("height",(rectHeight + rectVerticalSpacing)*4 + staff_nodes.length*(rectWidth + rectHorizontalSpacing))
-        tree.size([rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + staff_nodes.length*(rectWidth + rectHorizontalSpacing) + 2*(rectWidth+rectHorizontalSpacing),(rectHeight + rectVerticalSpacing)*3+40])
+        tree.size([rectWidth*layerMaxLength + rectHorizontalSpacing*(layerMaxLength - 1) + staff_nodes.length*(rectWidth + rectHorizontalSpacing) + (2+committee_nodes.length)*(rectWidth+rectHorizontalSpacing),(rectHeight + rectVerticalSpacing)*3+40])
 
         drawPath()
         drawStaffPath()
+        drawCommitteePath()
         drawRect()
         drawStaffRect()
+        drawCommitteeRect()
         active_node = svg.select("#org_#{select_org_id}")
         active_node.classed 'active',true
 
@@ -244,6 +318,7 @@ drawOrgChart = (root, options, select_org_id) ->
     svg = d3.select(container).append('svg')
     nodes = nodesDecorator(root, tree)
     staff_nodes = staffNodesDecorator(root, tree)
+    committee_nodes = committeeNodesDecorator(root, tree)
     draw(svg, tree, nodes, layerMaxLength, root, staff_nodes)
 
 

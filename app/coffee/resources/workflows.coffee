@@ -20,6 +20,7 @@ workflows = [
     "Flow::SickLeave"
     "Flow::SickLeaveInjury"
     "Flow::SickLeaveNulliparous"
+    "Flow::OccupationInjury"
     "Flow::WomenLeave"
     "Flow::Retirement"
     "Flow::EarlyRetirement"
@@ -30,6 +31,7 @@ workflows = [
     "Flow::AdjustPosition"
     "Flow::EmployeeLeaveJob"
     "Flow::Resignation"
+    "Flow::PublicLeave"
 ]
 
 
@@ -51,7 +53,9 @@ CustomConfig = {
 
 angular.forEach workflows, (item)->
     resource = (restmod, RMUtils, $Evt) ->
-        resource = restmod.model("/workflows/#{item}").mix 'nbRestApi', 'Workflow', {
+        restmod.model("/workflows/#{item}").mix 'nbRestApi', 'Workflow', {
+            receptor: {belongsTo: 'Employee', key: 'receptor_id'}
+            sponsor: {belongsTo: 'Employee', key: 'sponsor_id'}
             flowNodes: {hasMany: "FlowReply"}
 
             $config:
@@ -62,9 +66,27 @@ angular.forEach workflows, (item)->
                 Scope:
                     records: ->
                         restmod.model("/workflows/#{item}/record").mix(
+                            receptor: {belongsTo: 'Employee', key: 'receptor_id'}
+                            sponsor: {belongsTo: 'Employee', key: 'sponsor_id'}
+
                             $config:
-                                jsonRootMany:'workflows'
+                                jsonRootMany: 'workflows'
                                 jsonRootSingle: 'workflow'
+
+                            $extend:
+                                Record:
+                                    revert: ()->
+                                        self = this
+
+                                        request = {
+                                            url: "/api/workflows/#{this.type}/#{this.id}/repeal"
+                                            method: "PUT"
+                                        }
+
+                                        onSuccess = (res) ->
+                                            self.$dispatch 'after-revert'
+
+                                        this.$send(request, onSuccess)
                         ).$collection().$fetch()
 
                     myRequests: ->
@@ -72,6 +94,21 @@ angular.forEach workflows, (item)->
                             $config:
                                 jsonRootMany:'workflows'
                                 jsonRootSingle: 'workflow'
+
+                            $extend:
+                                Record:
+                                    revert: ()->
+                                        self = this
+
+                                        request = {
+                                            url: "/api/workflows/#{this.type}/#{this.id}/repeal"
+                                            method: "PUT"
+                                        }
+
+                                        onSuccess = (res) ->
+                                            self.$dispatch 'after-revert'
+
+                                        this.$send(request, onSuccess)
                             ).$collection().$fetch()
         }
 
@@ -87,6 +124,9 @@ resources.factory 'FlowReply', (restmod) ->
 
 resources.factory 'Leave', (restmod, $injector) ->
     restmod.model("/workflows/leave").mix 'nbRestApi', 'Workflow', {
+        receptor: {belongsTo: 'Employee', key: 'receptor_id'}
+        sponsor: {belongsTo: 'Employee', key: 'sponsor_id'}
+
         $config:
             jsonRootMany: 'workflows'
             jsonRootSingle: 'workflow'
@@ -95,6 +135,9 @@ resources.factory 'Leave', (restmod, $injector) ->
             Scope:
                 records: ->
                     restmod.model("/workflows/leave/record").mix(
+                        receptor: {belongsTo: 'Employee', key: 'receptor_id'}
+                        sponsor: {belongsTo: 'Employee', key: 'sponsor_id'}
+
                         $config:
                             jsonRootMany:'workflows'
                             jsonRootSingle: 'workflow'

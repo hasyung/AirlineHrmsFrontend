@@ -65,9 +65,9 @@ app.config(Route)
 
 
 class OrgsCtrl extends nb.Controller
-    @.$inject = ['orgs', '$http','$stateParams', '$state', '$scope', '$rootScope', '$nbEvent']
+    @.$inject = ['orgs', '$http','$stateParams', '$state', '$scope', '$rootScope', '$nbEvent', 'OrgStore']
 
-    constructor: (@orgs, @http, @params, @state, @scope, @rootScope, @Evt)->
+    constructor: (@orgs, @http, @params, @state, @scope, @rootScope, @Evt, @OrgStore)->
         @treeRootOrg = _.find @orgs, (org) -> org.xdepth == 1 # 当前树的顶级节点
 
         @tree = null # tree 化的 orgs 数据
@@ -93,6 +93,7 @@ class OrgsCtrl extends nb.Controller
     # 参数force是否修改当前机构
     reset: (force) ->
         self = @
+
         #数据入口不止一个，需要解决
         @orgs.$refresh({edit_mode: @eidtMode}).$then () ->
             self.buildTree()
@@ -131,6 +132,7 @@ class OrgsCtrl extends nb.Controller
 
         #deparment_id 是否必要?
         data.department_id = @.treeRootOrg.id
+
         @orgs.active(data).$then ()->
             self.rootScope.allOrgs.$refresh()
 
@@ -147,9 +149,10 @@ class OrgsCtrl extends nb.Controller
                 self.treeRootOrg = _.find self.orgs, (org) -> org.xdepth == 1
                 self.currentOrg = self.treeRootOrg
 
+            self.OrgStore.reload()
+
             # 反复划转后情况很复杂
             self.state.go(self.state.current.name, {}, {reload: true})
-
 
     rootTree: () ->
         treeRootOrg = _.find @orgs, (org) -> org.xdepth == 1
@@ -179,12 +182,53 @@ class OrgsCtrl extends nb.Controller
         promise = @http.get('/api/departments/change_logs')
         promise.then onSuccess
 
-    pickLog: (date, changeLogs) ->
+    initVisble: (changeLogs) ->
+        _.flatten(_.pluck(changeLogs, 'logs')).forEach (log) ->
+            log.visible = true
+
+    pickLog: (date, referOrgName, changeLogs) ->
         sortedLogs = _.flatten(_.pluck(changeLogs, 'logs'))
-        selectedMoment =  moment(date)
+
+        _.flatten(_.pluck(changeLogs, 'logs')).forEach (log) ->
+                log.visible = false
+
+        if !referOrgName || angular.isUndefined(referOrgName) || referOrgName.length == 0
+            referOrgName = null
+
+        if !date || angular.isUndefined(date) || date.length == 0
+            date = null
+        else
+            selectedMoment = moment(date)
 
         log = _.find sortedLogs, (log) ->
-            return selectedMoment.isAfter(log.created_at)
+            if date && !referOrgName
+                return selectedMoment.isAfter(log.created_at) || selectedMoment.isSame(log.created_at, 'day')
+
+            if !date && referOrgName
+                return log.dep_name.indexOf(referOrgName) >= 0
+
+            if referOrgName && referOrgName
+                return (selectedMoment.isAfter(log.created_at) || selectedMoment.isSame(log.created_at, 'day')) && log.dep_name.indexOf(referOrgName) >= 0
+
+            else
+                return true
+
+        visibleLogs = _.filter sortedLogs, (log) ->
+            if date && !referOrgName
+                return selectedMoment.isAfter(log.created_at) || selectedMoment.isSame(log.created_at, 'day')
+
+            if !date && referOrgName
+                return log.dep_name.indexOf(referOrgName) >= 0
+
+            if referOrgName && referOrgName
+                return (selectedMoment.isAfter(log.created_at)|| selectedMoment.isSame(log.created_at, 'day')) && log.dep_name.indexOf(referOrgName) >= 0
+
+            else
+                return true
+
+
+        _.forEach visibleLogs, (log)->
+            log.visible = true
 
         @expandLog(log) if log
 
@@ -197,6 +241,7 @@ class OrgsCtrl extends nb.Controller
                 self.isHistory = true
                 self.treeRootOrg = _.find self.orgs, (org) -> org.xdepth == 1
                 self.currentOrg = self.treeRootOrg
+                self.buildTree(self.currentOrg)
 
     expandLog: (log)->
         # 防止UI中出现多个被选中的item
@@ -282,7 +327,7 @@ class OrgCtrl extends nb.Controller
             self.state = 'show'
 
     destroy: (isConfirm) ->
-        sweet = @sweet
+        # sweet = @sweet
         $Evt = @Evt
         orgName = @scope.currentOrg.name
         self = @
@@ -290,10 +335,9 @@ class OrgCtrl extends nb.Controller
         if isConfirm
             @scope.currentOrg.$destroy().$then ->
                 $Evt.$send 'org:resetData'
-                sweet.success('删除成功', "您已成功删除#{orgName}")
-        else
-            sweet.error("您取消了删除#{@scope.currentOrg.name}")
-
+                # sweet.success('删除成功', "您已成功删除#{orgName}")
+        # else
+            # sweet.error("您取消了删除#{@scope.currentOrg.name}")
 
 
 class PositionCtrl extends nb.Controller
@@ -321,8 +365,20 @@ class PositionCtrl extends nb.Controller
                 name: 'budgetedStaffing'
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents">
-                    {{row.entity.staffing}}/{{grid.getCellValue(row, col)}}
+                    {{grid.getCellValue(row, col)}}
                 </div>
+                '''
+            }
+            {displayName: '在编', name: 'staffing'}
+            {
+                displayName: '超/缺编'
+                name: 'staffingStatus'
+                cellTemplate: '''
+                    <div class="ui-grid-cell-contents">
+                        <span style="color:blue" ng-if="row.entity.budgetedStaffing > row.entity.staffing">{{row.entity.staffing - row.entity.budgetedStaffing}}</span>
+                        <span style="color:red" ng-if="row.entity.budgetedStaffing < row.entity.staffing">{{row.entity.staffing - row.entity.budgetedStaffing}}</span>
+                        <span style="color:black" ng-if="row.entity.budgetedStaffing == row.entity.staffing">0</span>
+                    </div>
                 '''
             }
             {displayName: '工作时间', name: 'scheduleId', cellFilter: "enum:'position_schedules'"}
@@ -364,6 +420,8 @@ class PositionCtrl extends nb.Controller
             newpos.$createSpe(spe)
 
     search: (tableState) ->
+        tableState = tableState || {}
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @positions.$refresh(tableState)
 
     searchEmp: (tableState) ->

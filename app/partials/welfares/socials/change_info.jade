@@ -5,12 +5,12 @@ md-dialog.socialChangeInfo(
                  setup = process_ctrl.find_or_build_setup(current)"
     )
     md-toolbar.md-accent(md-theme="hrms")
-            .md-toolbar-tools
-                span 变动信息-{{current.category}}
+        .md-toolbar-tools
+            span 变动信息-{{current.category}}{{current.employeeId}}
     form(
         ng-submit="save(current.$save(), changeContract)"
         name="changeContract"
-        ng-if="current.category == '合同新签'"
+        ng-if="current.category == '合同新签' || current.category == '合同转制'"
         )
         md-content.sticky-container
             include changeInfo/contract

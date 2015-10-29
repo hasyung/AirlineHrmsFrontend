@@ -1,0 +1,40 @@
+.whiteboard.md-whiteframe-z1
+    .whiteboard__cell.md.mb30
+        .value 67876
+        .title 月平均薪酬
+    .whiteboard__cell.lg.mb30
+        .value 45,666,283
+        .title 工资
+    .whiteboard__cell.md.br0.mb30
+        .value 45
+        .title 离职人数
+    .whiteboard__cell.md
+        .value 45322
+        .title 社保
+    .whiteboard__cell.lg
+        .value 23463
+        .title 年金
+    .whiteboard__cell.md.br0
+        .value 6542
+        .title 工作餐
+
+div.echarts-wrapper.md-whiteframe-z1
+    ng-echarts.echarts-bar(
+        ec-config="ctrl.barConfig"
+        ec-option="ctrl.barOption"
+    )
+//- pie chart
+div.echarts-wrapper.md-whiteframe-z1
+    ng-echarts.echarts-bar(
+        ec-config="ctrl.pieConfig1"
+        ec-option="ctrl.pieOption1"
+    )
+//- pie chart
+div.echarts-wrapper.md-whiteframe-z1
+    ng-echarts.echarts-bar(
+        ec-config="ctrl.pieConfig2"
+        ec-option="ctrl.pieOption2"
+    )
+
+
+

@@ -1,6 +1,6 @@
 //左侧边栏
 .nb-nav.md-locked-open {
-    background: transparent url('/images/leftside_bg.png') no-repeat;
+    background: #fff;
     min-width: 200px;
     width: 200px;
 
@@ -32,41 +32,32 @@
 
         > menu-toggle > .md-button,
         > menu-link >.md-button {
-            color: #fff;
+            color: $text-muted;
         }
 
         .type-icon {
             svg {
                 * {
-                    fill: #fff;
+                    fill: $text-muted;
                 }
             }
         }
 
         //解决组织机构列表项的高度不正确bug
-        &:nth-child(1) {
-            height: 70px;
-        }
-
-        // &:nth-child(2) {
-        //     height: 70px;
-        // }
-
         &.active {
             transition: none;
 
             .type-icon {
                 svg {
                     * {
-                        fill: #fff;
+                        fill: #f54b3c;
                     }
                 }
             }
 
             > menu-toggle > .md-button,
             > menu-link >.md-button {
-                background-color: rgba(0, 0, 0, .08);
-                color: #fff;
+                background-color: #f5f5f5;
             }
         }
     }
@@ -74,18 +65,19 @@
     .child-list-item {
         > menu-toggle > .md-button,
         > menu-link >.md-button {
-            color: #fff;
+            background-color: #f5f5f5;
+            color: $text-muted;
         }
 
         &.active {
             circle {
-                fill: rgb(255, 255, 255);
+                fill: #f54b3c;
             }
 
             > menu-toggle > .md-button,
             > menu-link >.md-button {
-                background-color: rgba(0, 0, 0, .08);
-                color: #fff;
+                background-color: #f5f5f5;
+                color: #f54b3c;
             }
         }
     }
@@ -100,7 +92,6 @@
         width: 100%;
 
         md-icon {
-            color: #fff;
             height: 22px;
             width: 22px;
         }

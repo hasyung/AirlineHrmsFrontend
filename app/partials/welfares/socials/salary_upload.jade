@@ -1,6 +1,6 @@
 md-dialog.performance_upload
     md-toolbar.md-accent(md-theme="hrms"
-        ng-init="targetUrl='/api/attachments/upload_xls';ctrl.upload_result='';")
+        ng-init="targetUrl='/api/attachments/upload_xls';ctrl.upload_result=''; param={}")
             .md-toolbar-tools
                 span 上传薪酬
     md-content.sticky-container
@@ -8,10 +8,10 @@ md-dialog.performance_upload
             section.form-material-section(flex)
                 .upload-date(layout)
                     label 选择月份
-                    md-select(ng-model="ctrl.currentYear" ng-change="" placeholder="请选择年份")
+                    md-select(style="width: 100px;" ng-model="param.year" ng-change="" placeholder="请选择")
                         md-option(ng-value="item" ng-repeat="item in ctrl.year_list track by $index" ng-bind="item")
                     label(flex-order="2") 年
-                    md-select(ng-model="ctrl.currentMonth" ng-change="" placeholder="请选择月份")
+                    md-select(style="width: 100px;" ng-model="param.month" ng-change="" placeholder="请选择")
                         md-option(ng-value="item" ng-repeat="item in ctrl.month_list track by $index" ng-bind="item")
                     label(flex-order="3") 月
 
@@ -27,4 +27,7 @@ md-dialog.performance_upload
 
         .md-actions
             md-button(ng-click='dialog.close()') 取 消
-            md-button.md-primary.md-raised(ng-click="dialog.close();ctrl.upload_salary()") 确 定
+            md-button.md-primary.md-raised(
+                ng-click="dialog.close();ctrl.upload_salary(param)"
+                ng-disabled="!param.year || !param.month || ctrl.upload_result==null || ctrl.upload_result==''"
+                ) 确 定

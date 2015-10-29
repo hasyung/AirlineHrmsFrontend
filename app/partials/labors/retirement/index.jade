@@ -3,21 +3,23 @@ extends ../../component/workflow/index
 block heading
     - var user_list = '退休发起'
     - var flowName = "员工退休"
-    - var multiSelect = true
+    - var enableSelect = false
+    - var multiSelect = false
     - var hisMultiSelect = false
 
 block user_list_actions
     md-button.md-primary.md-raised(
+        ng-if="ctrl.isHrLaborRelationMember()"
         ng-disabled="!ctrl.getSelectedEntities().length"
         nb-dialog
         template-url="/partials/labors/retirement/new_retirement.html"
-        locals="{users: ctrl.getSelectedEntities()}"
+        locals="{user: ctrl.getSelected()}"
     ) 人员退休
 
 block history_list_actions
     md-button.md-primary.md-raised(
-        ng-disabled="!ctrl.getSelected()"
-        nb-confirm="ctrl.leaveJob(ctrl.getSelected().receptor.id, isConfirm, '劳动关系终止')"
+        ng-disabled="!ctrl.getSelected() || ctrl.getSelected().workflowState == '已驳回'"
+        nb-confirm="ctrl.leaveJob(ctrl.getSelected().receptor.id, isConfirm, '劳动关系终止', ctrl.getSelected().id, ctrl.getSelected().receptor.joinScalDate)"
         nb-title="离职流程发起"
         nb-content="你确定对{{ctrl.getSelected().receptor.name}}发起离职通知单流程，请确认。"
-    ) 发起离职
+    ) 发起离职流程

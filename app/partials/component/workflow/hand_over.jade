@@ -1,4 +1,4 @@
-md-dialog.hand_over(ng-init="params = {type:'departments'};")
+md-dialog.hand_over(ng-init="params = {type:'departments'}; selectedOrgs = [];")
     md-toolbar.md-accent(md-theme="hrms")
         .md-toolbar-tools
             span 移交
@@ -7,9 +7,18 @@ md-dialog.hand_over(ng-init="params = {type:'departments'};")
             .dialog-content(md-theme="default")
                 .hd-manner
                     md-radio-group(ng-model="params.type")
-                        md-radio-button.md-primary(value="departments") 移交部门
-                        md-radio-button.md-primary(value="reviewer") 移交个人
-                        md-radio-button.md-primary(value="search_reviewer") 搜索个人
+                        md-radio-button.md-primary(
+                            value="departments"
+                            ng-click="selectedOrgs = [];"
+                            ) 移交部门
+                        md-radio-button.md-primary(
+                            value="reviewer"
+                            ng-click="getContact(); selectedOrgs = [];"
+                            ) 移交个人
+                        md-radio-button.md-primary(
+                            value="search_reviewer"
+                            ng-click="selectedOrgs = [];"
+                            ) 搜索个人
                 .hd-unit-wrapper(layout ng-if="params.type == 'departments'")
                     .hd-choosing(flex)
                         .title 部门列表
@@ -22,23 +31,33 @@ md-dialog.hand_over(ng-init="params = {type:'departments'};")
                             div(ng-repeat="org in selectedOrgs track by $index") {{org.name}}
                 .hd-unit-wrapper(ng-if="params.type == 'reviewer'")
                     .hd-choosing
-                        .title 领导列表
+                        .title 常用列表
                         .content
                             md-radio-group(ng-model="params.reviewer_id")
                                 .hd__item(ng-repeat="reviewer in reviewers")
-                                    md-radio-button.md-primary(ng-value="reviewer.id") {{ reviewer.name }} ( {{reviewer.department.name}} / {{reviewer.position.name}} )
-                                    .hd__ctrl
-                                        a.hd__ctrl__btn(href="#")
-                                            img(src="/images/svg/close.svg")
-                .hd-unit-wrapper(ng-if="params.type == 'search_reviewer'")
-                    input.hd__searchbar(type="text" placeholder="请输入要查找的姓名")
+                                    md-radio-button.md-primary(ng-value="reviewer.id") {{ reviewer.name }} ( {{reviewer.department_name}} / {{reviewer.position_name}} )
+                                    .hd__ctrl(ng-click="removeContact(reviewer.id)")
+                                        a.hd__ctrl__btn(href="")
+                                            md-icon(md-svg-src="/images/svg/close.svg")
+                .hd-unit-wrapper(
+                    ng-if="params.type == 'search_reviewer'"
+                    ng-init="querystr=''"
+                    )
+                    input.hd__searchbar(
+                        type="text"
+                        placeholder="请输入要查找的姓名"
+                        ng-model="querystr"
+                        ng-change="queryContact(querystr)"
+                        )
                     .content
                         md-radio-group(ng-model="params.reviewer_id")
-                            .hd__item(ng-repeat="reviewer in reviewers")
-                                md-radio-button.md-primary(ng-value="reviewer.id") {{ reviewer.name }} ( {{reviewer.department.name}} / {{reviewer.position.name}} )
-                                .hd__ctrl
-                                    a.hd__ctrl__btn(href="#")
-                                        img(src="/images/svg/plus.svg")
+                            .hd__item(ng-repeat="leader in leaders")
+                                md-radio-button.md-primary(ng-value="leader.id") {{ leader.name }} ( {{leader.department.name}} / {{leader.position.name}} )
+                                .hd__ctrl(
+                                    ng-click="addContact(leader.id)"
+                                    )
+                                    a.hd__ctrl__btn(href="")
+                                        md-icon(md-svg-src="/images/svg/plus.svg")
 
         .md-actions
             md-button.md-raised.white(type='button',ng-click='dialog.cancel()') 取消

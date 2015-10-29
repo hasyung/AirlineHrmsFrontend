@@ -75,6 +75,9 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS, $http) ->
 
         staff_org = _.remove treeData, (child) -> child.is_stick == true
         parent.staff = staff_org.sort (a, b) -> a.sort_no - b.sort_no
+
+        committee_org = _.remove treeData, (child) -> child.committee == true
+        parent.committee = committee_org.sort (a, b) -> a.sort_no - b.sort_no
         return unflatten(treeData, DEPTH, parent)
 
 
@@ -95,7 +98,7 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS, $http) ->
 
                         if !parentDep
                             throw new Error("机构 #{parent.name}:#{parent.id}，找不到父级 #{parent.parentId}")
-                        #console.error "server find", parentDep
+
                         return computeFullName(parentDep, ttl, initalArr)
                 else
                     return computeFullName(parentDep, ttl, initalArr)
@@ -200,7 +203,7 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS, $http) ->
                         #tree 数据深度不能超过 DEPTH
                         return false if orgItem.xdepth - rootDepth > DEPTH
 
-                        isChild = s.startsWith(orgItem.serial_number,rootSerialNumber) #子机构的serialNumber number 前缀和父机构相同
+                        isChild = _.startsWith(orgItem.serial_number, rootSerialNumber) #子机构的serialNumber number 前缀和父机构相同
                         # isModified = true if isChild and IneffectiveOrg(orgItem)
 
                         return isChild
@@ -258,7 +261,10 @@ class OrgStore extends nb.Service
     constructor: (@Org, @DEPARTMENTS, @USER_META) ->
 
     initialize: () ->
-        @orgs = @Org.$collection().$fetch()
+        @orgs = @Org.$collection().$fetch(edit_mode: true)
+
+    reload: ()->
+        @orgs.$refresh({edit_mode: true})
 
     get: ->
         return @orgs
@@ -276,7 +282,8 @@ class OrgStore extends nb.Service
         ids.reduce(reduceOrgs, [])
 
     queryMatchedOrgs: (text) ->
-        @orgs.filter (org) -> s.include(org.fullName, text)
+        @orgs.filter (org) ->
+            s.include(org.fullName, text)
 
     getPrimaryOrgId: (id) ->
         currentOrg = _.find(@DEPARTMENTS, {id: @USER_META.department.id})

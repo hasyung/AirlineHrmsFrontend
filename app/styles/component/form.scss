@@ -96,6 +96,17 @@ md-select {
         }
     }
 
+    // hack : 当需要md-select为只读模式的时候，就在md-select中同时加上 disabled 和 readonly属性
+    &[readonly] {
+        .md-select-value {
+            color: $text-color;
+        }
+
+        .md-select-icon {
+            opacity: 0;
+        }
+    }
+
 }
 
 // bugfix: 解决下拉框中双滚动条的bug
@@ -107,6 +118,23 @@ md-select {
 
 
 fieldset {
+    md-autocomplete {
+        padding-bottom: 0 !important;
+
+        md-input-container {
+            padding-bottom: 0 !important;
+        }
+
+        .md-input {
+            color: $text-color !important;
+            height: 23.5px;
+        }
+
+        label {
+            position: relative;
+            top: -4px;
+        }
+    }
 
     .text-label {
         color: rgba(0, 0, 0, .54);
@@ -131,7 +159,9 @@ fieldset {
             position: relative;
 
             label {
-                margin: 6px 0;
+                // margin: 6px 0;
+                color: $text-muted;
+                padding-left: 4px;
             }
 
             .text-container {
@@ -158,7 +188,6 @@ label:not(.md-no-float),
 .md-placeholder {
     opacity: 1;
 }
-
 //展示状态下各个组件的样式
 fieldset[disabled] {
     label:not(.md-no-float),
@@ -176,6 +205,11 @@ fieldset[disabled] {
 
         label {
             color: $text-muted;
+        }
+
+        // 必填红色*提示
+        .require-tip {
+            display: none;
         }
     }
 
@@ -227,12 +261,29 @@ fieldset[disabled] {
             display: none;
         }
     }
+    //hack md-autocomplete的样式
+    md-autocomplete {
+        padding-bottom: 0 !important;
+
+        md-input-container {
+            padding-bottom: 0 !important;
+        }
+
+        .md-input {
+            color: $text-color !important;
+            height: 24px;
+        }
+
+        label {
+            position: relative;
+            top: -1px;
+        }
+    }
 }
 
 md-input-container {
     font-family: $font-family-sans-serif;
     font-size: $font-size-base;
-    margin-right: 10px;
 
     &.mix-height {
         height: 76px;
@@ -253,6 +304,13 @@ md-input-container {
         .md-select-icon {
             visibility: visible;
         }
+    }
+
+    .require-tip {
+        color: #f00;
+        left: 5px;
+        position: relative;
+        top: 2px;
     }
 }
 
@@ -368,6 +426,16 @@ md-input-container {
         padding: 2px 2px 1px;
     }
 }
+
+md-radio-group.horizontal {
+    display: flex;
+    flex-direction: row;
+
+    md-radio-button {
+        margin-right: 30px;
+    }
+}
+
 
 
 

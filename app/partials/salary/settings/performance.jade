@@ -1,0 +1,46 @@
+.app-content-wrapper(flex ng-controller="salaryCtrl as ctrl" ng-init="ctrl.loadConfigFromServer('information_perf')")
+    .salary-basic
+        form(name="configForm" ng-submit="ctrl.saveConfig()")
+            tabset
+                tab.leader-base(heading="信息通道" ng-click="ctrl.loadDynamicConfig('information_perf')")
+                    md-toolbar
+                      .md-toolbar-tools
+                        h2 信息通道
+                        include ./btn.jade
+                    include ./common.jade
+                tab.leader-base(heading="航务航材" ng-click="ctrl.loadDynamicConfig('airline_business_perf')")
+                    md-toolbar
+                      .md-toolbar-tools
+                        h2 航务航材
+                        include ./btn.jade
+                    include ./common.jade
+                tab.leader-base(heading="管理营销" ng-click="ctrl.loadDynamicConfig('manage_market_perf')")
+                    md-toolbar
+                      .md-toolbar-tools
+                        h2 管理营销
+                        include ./btn.jade
+                    include ./common.jade
+                tab.leader-base(heading="服务C1" ng-click="ctrl.loadDynamicConfig('service_c_1_perf')")
+                    md-toolbar
+                      .md-toolbar-tools
+                        h2 服务C1
+                        include ./btn.jade
+                    include ./common.jade
+                tab.leader-base(heading="服务C2" ng-click="ctrl.loadDynamicConfig('service_c_2_perf')")
+                    md-toolbar
+                      .md-toolbar-tools
+                        h2 服务C2
+                        include ./btn.jade
+                    include ./common.jade
+                tab.leader-base(heading="服务C3" ng-click="ctrl.loadDynamicConfig('service_c_3_perf')")
+                    md-toolbar
+                      .md-toolbar-tools
+                        h2 服务C3
+                        include ./btn.jade
+                    include ./common.jade
+                tab.leader-base(heading="服务C-驾驶" ng-click="ctrl.loadDynamicConfig('service_c_driving_perf')")
+                    md-toolbar
+                      .md-toolbar-tools
+                        h2 服务C-驾驶
+                        include ./btn.jade
+                    include ./common.jade

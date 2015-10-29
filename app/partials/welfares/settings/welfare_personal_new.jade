@@ -1,5 +1,5 @@
 md-dialog.welfare_personal_new(
-    ng-init= "newSetup = {socialLocation: '成都'}; ctrl.loadEmp = {}"
+    ng-init= "newSetup = {socialLocation: '成都', pension: true, treatment: true, unemploy: true, injury:true,illness:true,fertility:true}; ctrl.loadEmp = {};"
     )
     form(ng-submit="ctrl.newPersonalSetup(newSetup);dialog.close();" name="newPersonalSetupForm")
         md-toolbar.md-accent(md-theme="hrms")
@@ -15,31 +15,37 @@ md-dialog.welfare_personal_new(
                             md-input-container(flex)
                                 label 姓名
                                 input(type="text" ng-model="ctrl.loadEmp.name" name="name" required
-                                    ng-model-options="{debounce: {'default': 500, 'blur':0}}"
-                                    ng-blur="ctrl.loadEmployee({name:ctrl.loadEmp.name}, newSetup);"
+                                    ng-model-options="{debounce: {'default': 1000, 'blur':0}}"
+                                    ng-change="ctrl.loadEmployee({name:ctrl.loadEmp.name}, newSetup);"
                                     )
                             md-input-container(flex)
                                 label 员工编号
                                 input(type="text" ng-model="ctrl.loadEmp.employeeNo" required
-                                    ng-model-options="{debounce: {'default': 500, 'blur':0}}"
-                                    ng-blur="ctrl.loadEmployee({employee_no:ctrl.loadEmp.employeeNo}, newSetup);"
+                                    ng-model-options="{debounce: {'default': 1000, 'blur':0}}"
+                                    ng-change="ctrl.loadEmployee({employee_no:ctrl.loadEmp.employeeNo}, newSetup);"
                                     )
 
                         div(layout)
                             md-input-container(flex)
                                 label 所在部门
-                                input(type="text" ng-model="ctrl.loadEmp.department.name" disabled)
-                            md-input-container(flex)
+                                input(type="text" ng-model="ctrl.loadEmp.department.name" readonly)
+                            md-input-container.row-has-value(flex)
                                 label 工作属地
-                                input(type="text" ng-model="ctrl.loadEmp.location" disabled)
+                                md-select(ng-model="ctrl.loadEmp.location" disabled readonly)
+                                    md-option(value="成都") 成都
+                                    md-option(value="重庆") 重庆
+                                    md-option(value="北京") 北京
+                                    md-option(value="上海") 上海
+                                    md-option(value="广州") 广州
 
                         div(layout)
-                            md-input-container(flex)
+                            md-input-container.row-has-value(flex)
                                 label 通道
-                                input(type="text" ng-model="$enum.parseLabel(ctrl.loadEmp.channelId, 'channels')" disabled)
+                                md-select(ng-model="ctrl.loadEmp.channelId" disabled readonly)
+                                    md-option(ng-repeat="item in $enum.get('channels')" ng-value="item.id") {{item.label}}
                             md-input-container(flex)
                                 label 身份证
-                                input(type="text" ng-model="ctrl.loadEmp.identityNo" disabled)
+                                input(type="text" ng-model="ctrl.loadEmp.identityNo" readonly)
 
                         div(layout)
                             md-input-container.row-has-value(flex)
@@ -47,6 +53,10 @@ md-dialog.welfare_personal_new(
                                 md-select(ng-model="newSetup.socialLocation" required)
                                     md-option(value="成都") 成都
                                     md-option(value="重庆") 重庆
+                                    md-option(value="北京") 北京
+                                    md-option(value="上海") 上海
+                                    md-option(value="广州") 广州
+                                    md-option(value="深圳") 深圳
                             md-input-container(flex md-no-float)
                                 label 社保编号
                                 input(type="text" ng-model="newSetup.socialAccount")
@@ -54,15 +64,15 @@ md-dialog.welfare_personal_new(
                         div(layout)
                             md-input-container(flex)
                                 label 年度养老保险
-                                input(type="number" min="0" max="100000" step="1" ng-model="newSetup.pensionCardinality")
+                                input(type="number" min="0" max="100000" step="0.000001" ng-model="newSetup.pensionCardinality")
                             md-input-container(flex)
                                 label 年度其他保险
-                                input(type="number" min="0" max="100000" step="1" ng-model="newSetup.otherCardinality")
+                                input(type="number" min="0" max="100000" step="0.000001" ng-model="newSetup.otherCardinality")
 
                         div(layout)
                             md-input-container(flex)
                                 label 社保临时基数
-                                input(type="number" min="0" max="100000" step="1" ng-model="newSetup.tempCardinality")
+                                input(type="number" min="0" max="100000" step="0.000001" ng-model="newSetup.tempCardinality")
 
                         div.checkbox-row
                             label 险种选择

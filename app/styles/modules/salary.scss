@@ -1,0 +1,313 @@
+.form-static {
+    background-color: #fff;
+
+    .global_part {
+        margin-bottom: 30px;
+        max-height: 25px;
+        overflow: hidden;
+        padding: 0 20px;
+        transition: max-height 1s linear;
+
+        &.open {
+            max-height: 3000px;
+        }
+
+        .subheader--center {
+            height: 21px;
+        }
+    }
+
+    &.has-sub {
+        &.md {
+            .subheader {
+                width: 140px;
+            }
+
+            .form-row {
+                label {
+                    margin-left: 0;
+                    width: 60px;
+                }
+            }
+        }
+
+        .subheader {
+            line-height: 34px;
+            text-align: right;
+            width: 220px;
+        }
+
+        .form-row {
+            flex-wrap: wrap;
+
+            .form-cell {
+                margin-left: 10px;
+            }
+
+            label {
+                width: 80px;
+            }
+
+            span {
+                display: block;
+            }
+        }
+
+        .md-button {
+            margin-left: 290px;
+        }
+    }
+
+    .form-row {
+        line-height: 34px;
+
+        &.yellow {
+            color: #f58220;
+
+            .md-input {
+                color: #f58220;
+            }
+        }
+
+        &.red {
+            color: rgb(239, 83, 80);
+
+            .md-input {
+                color: rgb(239, 83, 80);
+            }
+        }
+
+        label {
+            margin-right: 10px;
+            text-align: right;
+            width: 130px;
+       }
+
+        .md-input {
+            font-size: $font-size-md;
+            min-width: 100px;
+        }
+    }
+
+    .form-select-row {
+        line-height: 74px;
+
+        label {
+            margin-right: 10px;
+
+            &.first {
+                text-align: right;
+                width: 130px;
+            }
+        }
+
+        md-select {
+            flex: 0 0 120px;
+            width: 100px;
+
+            .md-select-value {
+                width: 120px;
+            }
+        }
+    }
+
+    .leave {
+        min-width: 170px;
+        position: relative;
+
+        &:after {
+            background: rgba(0, 0, 0, .1);
+            content: '';
+            display: block;
+            height: 1px;
+            margin-top: -2px;
+            width: 100%;
+        }
+    }
+
+    .md-button {
+        margin-left: 140px;
+    }
+}
+
+// 对material tabs的样式hack
+.salary-basic {
+    background-color: #fff;
+
+    md-toolbar {
+        background-color: #fff;
+        border-bottom: 1px solid #000;
+        color: $text-title;
+
+        .md-toolbar-tools {
+            padding-right: 0;
+        }
+    }
+
+    .cust-nav-justified {
+        border-bottom: 1px solid #dedede;
+        height: auto;
+        padding: 0;
+
+        .nb-nav-item {
+            padding: 0 15px;
+            width: auto;
+
+            a {
+                font-size: $font-size-sm;
+                height: 36px;
+                line-height: 36px;
+            }
+        }
+    }
+
+    .tab-content {
+        padding: 20px;
+    }
+}
+
+.setting-table {
+    width: 100%;
+
+    th {
+        &.tal {
+            text-align: left;
+        }
+
+        &.tar {
+            text-align: right;
+        }
+    }
+
+    td {
+        min-width: 50px;
+
+        &.tal {
+            text-align: left;
+        }
+
+        &.tar {
+            text-align: right;
+        }
+
+        input {
+            border: 1px solid #dedede;
+            border-radius: 2px;
+            max-width: 120px;
+            transition: border-color .5s linear;
+            width: 100%;
+
+            &:focus {
+                border-color: rgb(53, 130, 243);
+            }
+        }
+    }
+
+    &.table td {
+        padding: 0;
+
+        >div {
+            padding: .5rem;
+        }
+    }
+}
+
+.hoursFee-dialog-container {
+    align-items: center;
+    background-color: rgba(0, 0, 0, .3);
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    left: 0;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 80;
+}
+
+.hoursFee-dialog {
+    box-shadow: 0 8px 10px -5px rgba(0, 0, 0, .14), 0 16px 24px 2px rgba(0, 0, 0, .098), 0 6px 30px 5px rgba(0, 0, 0, .084);
+    display: flex;
+    flex-direction: column;
+    max-height: 80%;
+    max-width: 80%;
+    min-width: 600px;
+    position: relative;
+
+    ul {
+        @include clearfix();
+        margin: 0 auto;
+        padding: 20px 0;
+        width: 500px;
+
+        .tcell:nth-child(4n+1) {
+            margin-left: 0;
+        }
+
+        .tcell:nth-child(1) {
+            margin-top: 0;
+        }
+
+        .tcell:nth-child(2) {
+            margin-top: 0;
+        }
+
+        .tcell:nth-child(3) {
+            margin-top: 0;
+        }
+
+        .tcell:nth-child(4) {
+            margin-top: 0;
+        }
+    }
+
+    .tcell {
+        float: left;
+        margin-left: -1px;
+        margin-top: -1px;
+        width: 125px;
+    }
+
+    .theader {
+        background-color: rgb(245, 245, 245);
+        border: 1px solid #ddd;
+        color: $text-muted;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+    }
+
+    .tbody {
+        border: 1px solid #ddd;
+        border-top: 0;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+    }
+
+    .md-actions {
+        @include clearfix();
+        background-color: #fff;
+        border-top: 1px solid rgba(0, 0, 0, .12);
+        padding-right: 20px;
+
+        .md-button {
+            float: right;
+            margin: 8px 0;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

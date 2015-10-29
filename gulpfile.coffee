@@ -34,7 +34,7 @@ debugMode       = true
 
 
 DEVELOPMENT_TEST_SERVER = "http://192.168.6.99:9001"
-RELEASE_TEST_SERVER = "http://114.215.142.122:9001"
+RELEASE_TEST_SERVER = "http://114.215.142.105:9001"
 
 
 if argv.addr
@@ -80,8 +80,6 @@ paths =
         'deps/print-area/demo/jquery.PrintArea.js'
         #alert
         'deps/sweetalert/lib/sweet-alert.js'
-
-        #end
         'deps/angular/angular.js'
         'deps/angular-i18n/angular-locale_zh-cn.js'
         #http://harvesthq.github.io/chosen/
@@ -118,10 +116,19 @@ paths =
         'deps/ng-flow/dist/ng-flow-standalone.js'
         # 'deps/angular-ui-utils/ui-utils.js'
         # 'deps/jasny-bootstrap/dist/js/jasny-bootstrap.js' jasny bootstrap 增强版，提供一些好用组件
+        'deps/ng-echarts/dist/ng-echarts.js'
+        'deps/echarts/build/dist/echarts-all.js'
+        'deps/angular-ui-calendar/src/calendar.js'
+        'deps/fullcalendar/dist/fullcalendar.min.js'
+        'deps/fullcalendar/dist/gcal.js'
+        'deps/moment-range/dist/moment-range.min.js'
     ]
+
+
 ############################################################################
 # Layout/CSS Related tasks
 ##############################################################################
+
 
 gulp.task "jade-deploy", ->
     gulp.src(paths.jade)
@@ -129,6 +136,7 @@ gulp.task "jade-deploy", ->
         .pipe(cache("jade"))
         .pipe(jade({pretty: false}))
         .pipe(gulp.dest("#{paths.dist}/partials"))
+
 
 gulp.task "jade-watch", ->
     gulp.src(paths.jade)
@@ -138,22 +146,26 @@ gulp.task "jade-watch", ->
         .pipe(jade({pretty: true}))
         .pipe(gulp.dest("#{paths.dist}"))
 
+
 gulp.task "template",['copy'], ->
     gulp.src("#{paths.app}/index.jade")
         .pipe(plumber())
         .pipe(jade({pretty: true, locals:{debugMode: debugMode,v: (new Date()).getTime(),libs: generate_scripts()}}))
         .pipe(gulp.dest("#{paths.dist}"))
 
+
 gulp.task "sass-lint", ->
     gulp.src([paths.scssStyles, '!app/styles/lib/**/*.scss'])
         .pipe(cache("sasslint"))
         .pipe(scsslint({config: "scsslint.yml"}))
+
 
 gulp.task "sass-watch", ->
     gulp.src(paths.sassStylesMain)
         .pipe(plumber())
         .pipe(sass({includePaths: require('node-bourbon').includePaths}))
         .pipe(rename("web.css"))
+        .pipe(autoprefixer())
         .pipe(gulp.dest(paths.distStylesPath))
 
 
@@ -164,6 +176,7 @@ gulp.task "sass-lib", ->
         .pipe(sass())
         .pipe(sourcemaps.write())
         .pipe(rename("lib.css"))
+        .pipe(autoprefixer())
         .pipe(gulp.dest(paths.distStylesPath))
 
 
@@ -174,13 +187,17 @@ gulp.task "sass-deploy", ->
         .pipe(sass({includePaths: require('node-bourbon').includePaths}))
         .pipe(sourcemaps.write())
         .pipe(rename("app.css"))
+        .pipe(autoprefixer())
         .pipe(gulp.dest(paths.distStylesPath))
+
 
 # 引入第三方 CSS
 gulp.task "css-vendor", ->
     gulp.src(paths.vendorStyles)
         .pipe(concat("vendor1.css"))
+        .pipe(autoprefixer())
         .pipe(gulp.dest(paths.distStylesPath))
+
 
 gulp.task "less-vendor", ->
     gulp.src(paths.lessVendorStyles)
@@ -188,10 +205,12 @@ gulp.task "less-vendor", ->
         .pipe(rename("angulr.css"))
         .pipe(gulp.dest(paths.distStylesPath))
 
+
 gulp.task "css-lint-app", ["sass-watch"],  ->
     gulp.src(paths.distStylesPath + "/app.css")
         .pipe(csslint("csslintrc.json"))
         .pipe(csslint.reporter())
+
 
 gulp.task "styles-watch", ["sass-watch", "css-vendor", "css-lint-app"], ->
     gulp.src(paths.distStyles)
@@ -199,15 +218,18 @@ gulp.task "styles-watch", ["sass-watch", "css-vendor", "css-lint-app"], ->
         .pipe(autoprefixer())
         .pipe(gulp.dest(paths.distStylesPath))
 
+
 gulp.task "styles-deploy", ["sass-deploy", "css-vendor"], ->
     gulp.src(paths.distStyles)
         .pipe(concat("main.css"))
         .pipe(minifyCSS())
         .pipe(gulp.dest(paths.distStylesPath))
 
+
 ##############################################################################
 # JS Related tasks
 ##############################################################################
+
 
 gulp.task "coffee-watch", ->
     gulp.src(paths.coffee)
@@ -216,14 +238,12 @@ gulp.task "coffee-watch", ->
         .pipe(concat("app.js"))
         .pipe(gulp.dest("dist/js/"))
 
+
 gulp.task "js-watch", ->
     gulp.src(paths.js)
         .pipe(plumber())
         .pipe(concat("appjs.js"))
         .pipe(gulp.dest("dist/js/"))
-
-
-
 
 
 gulp.task "coffee-deploy", ->
@@ -234,11 +254,13 @@ gulp.task "coffee-deploy", ->
         .pipe(uglify({mangle:false, preserveComments: false}))
         .pipe(gulp.dest("dist/js/"))
 
+
 gulp.task "jslibs-watch", ->
     gulp.src(paths.vendorJsLibs)
         .pipe(plumber())
         .pipe(concat("libs.js"))
         .pipe(gulp.dest("dist/js/"))
+
 
 gulp.task "jslibs-deploy", ->
     gulp.src(paths.vendorJsLibs)
@@ -247,9 +269,11 @@ gulp.task "jslibs-deploy", ->
         .pipe(uglify({mangle:false, preserveComments: false}))
         .pipe(gulp.dest("dist/js/"))
 
+
 ##############################################################################
 # Common tasks
 ##############################################################################
+
 
 # SVG
 gulp.task "svg",  ->
@@ -356,7 +380,6 @@ gulp.task "watch", ['jade-deploy'],  ->
         .on("change",livereload.changed)
 
 
-
 gulp.task "deploy", [
     "jade-deploy"
     "less-vendor"
@@ -397,10 +420,3 @@ generate_scripts = () ->
     _.sortBy files,(fileName) ->
         _.findIndex paths.vendorJsLibs,(path) ->
             path.indexOf(fileName) != -1
-
-
-
-
-
-
-

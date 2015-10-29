@@ -34,6 +34,8 @@ deps = [
     'nb.component'
     'flow'
     'infinite-scroll'
+    'ng-echarts'
+    'ui.calendar'
 ]
 
 
@@ -51,9 +53,14 @@ App.value 'USER_META', metadata.user || {}
 App.constant 'VACATIONS', metadata.vacation_summary || {}
 App.constant 'DEPARTMENTS', dep_info.departments || []
 App.constant 'nbConstants', metadata.resources || []
-App.constant 'PUSH_SERVER_CONFIG', metadata.push_server || {host: "192.168.6.99", port: 9927}
-App.constant 'USER_MESSAGE', metadata.messages || {}
 
+# 服务器必须提供推送配置信息
+App.constant 'PUSH_SERVER_CONFIG', metadata.push_server
+
+App.constant 'USER_MESSAGE', metadata.messages || {}
+App.constant 'CURRENT_ROLES', metadata.roles || {}
+App.constant 'ROLES_MENU_CONFIG', metadata.roles_menu_config || {}
+App.value 'SALARY_SETTING', metadata.salary_setting || {}
 
 appConf = ($provide, ngDialogProvider) ->
     # 事件广播始终锁定在 rootScope 上， 提高性能
@@ -108,7 +115,7 @@ mdThemingConf = ($mdThemingProvider) ->
 
 routeConf = ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) ->
     $locationProvider.html5Mode(false)
-    $urlRouterProvider.otherwise('/orgs')
+    $urlRouterProvider.otherwise('/todo')
 
     $stateProvider
         .state 'home', {
@@ -181,8 +188,31 @@ App
         $rootScope.$on '$stateChangeStart', (evt, _to , _toParam, _from, _fromParam) ->
             startLoading()
 
+        $rootScope.loading = true
+
         $rootScope.$on '$stateChangeSuccess', () ->
             cancelLoading()
+
+            #console.error $state.current.url
+
+            $rootScope.hide_menu = $state.current.url.indexOf('/self/my_requests') >= 0  \
+                || $state.current.url.indexOf('/profile') >= 0  \
+                || $state.current.url.indexOf('/charts') >= 0  \
+                || $state.current.url.indexOf('/members') >= 0  \
+                || $state.current.url.indexOf('/education') >= 0  \
+                || $state.current.url.indexOf('/experience') >= 0  \
+                || $state.current.url.indexOf('/performance') >= 0  \
+                || $state.current.url.indexOf('/leave') >= 0  \
+                || $state.current.url.indexOf('/resignation') >= 0  \
+                || $state.current.url.indexOf('/adjust-position') >= 0  \
+                || $state.current.url.indexOf('/early_retirement') >= 0  \
+                || $state.current.url.indexOf('/renew_contract') >= 0 \
+                || $state.current.url.indexOf('/reward_punishment') >= 0 \
+                || $state.current.url.indexOf('/attendance') >= 0 \
+                || $state.current.url.indexOf('/annuity') >= 0
+
+            if $state.current.url.indexOf('/performance_') >= 0 || $state.current.url.indexOf('labors_attendance') >= 0
+                $rootScope.hide_menu = false
 
         $rootScope.$on 'process', startLoading
 

@@ -1,0 +1,109 @@
+.app-content-wrapper(flex ng-controller="salaryHoursFeeCtrl as ctrl")
+    md-toolbar.toolbar--welfare
+        .md-toolbar-tools
+            span(layout)
+                label 月度
+                md-select(style="width:100%" ng-model="ctrl.currentYear" ng-change="ctrl.loadRecords()" placeholder="请选择年份")
+                    md-option(ng-value="item" ng-repeat="item in ctrl.year_list track by $index" ng-bind="item")
+
+                label(flex-order="2") 年
+                md-select(ng-model="ctrl.currentMonth" ng-change="ctrl.loadRecords()" placeholder="请选择月份")
+                    md-option(ng-value="item" ng-repeat="item in ctrl.month_list track by $index" ng-bind="item")
+                label(flex-order="3") 月
+
+                label(flex-order="4") 人员类别
+                md-select(flex-order="5" ng-model="ctrl.hours_fee_category" style="width:250px" ng-change="ctrl.loadRecords()")
+                    md-option(ng-value="'飞行员'") 飞行员
+                    md-option(ng-value="'空勤'") 空勤
+                    md-option(ng-value="'空保'") 空保
+            span(flex)
+
+    div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+
+    //- 数据导入提示
+    .hoursFee-dialog-container(ng-if="ctrl.show_error_names")
+        .hoursFee-dialog()
+            md-toolbar.md-accent(md-theme="hrms")
+                .md-toolbar-tools
+                    span 数据导入提示(失败名单)
+            md-content.sticky-container(flex)
+                .info-body
+                    ul
+                        li.tcell(ng-repeat="item in ctrl.error_names")
+                            //- .theader 姓名
+                            .tbody {{item}}
+
+            .md-actions
+                md-button(ng-click="ctrl.show_error_names=false") 关闭
+
+    div.ui-grid-container.mt5
+        md-toolbar
+            .md-toolbar-tools
+                h2 津贴
+
+                span(flex)
+                span
+                    md-menu(ng-init="selectedRows=[]")
+                        md-button.md-primary.md-raised(
+                            ng-click="$mdOpenMenu($event)"
+                            ng-disabled="ctrl.calcing || ctrl.upload_start"
+                            ) 导入
+                        md-menu-content()
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_file', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="ctrl.upload_start=false;ctrl.upload_hours_fee('飞行员小时费合计表', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 飞行员小时费合计表
+
+                            md-menu-item(
+                                ng-if="ctrl.hours_fee_category=='飞行员'"
+                                flow-init="{target: '/api/attachments/upload_file', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="ctrl.upload_start=false;ctrl.upload_hours_fee('飞行时间汇总表', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 飞行时间汇总表
+
+                            md-menu-item(
+                                ng-if="ctrl.hours_fee_category=='空勤' || ctrl.hours_fee_category=='空保'"
+                                flow-init="{target: '/api/attachments/upload_file', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="ctrl.upload_start=false;ctrl.upload_hours_fee('小时费合计表', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 上浮名单
+
+                            md-menu-item(
+                                ng-if="ctrl.hours_fee_category=='空勤' || ctrl.hours_fee_category=='空保'"
+                                flow-init="{target: '/api/attachments/upload_file', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="ctrl.upload_start=false;ctrl.upload_hours_fee('小时费合计表', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 下靠名单
+                span
+                    md-button.md-raised.md-primary(
+                        ng-click="ctrl.exeCalc()"
+                        ng-disabled="ctrl.calcing"
+                    ) 计算
+                span
+                    md-menu(ng-init="selectedRows=[]")
+                        md-button.md-primary.md-raised(
+                            ng-click="$mdOpenMenu($event)"
+                            ng-disabled="ctrl.calcing || ctrl.records.length==0"
+                            ) 导出
+                        md-menu-content
+                            md-menu-item()
+                                a.md-button(flex
+                                    download
+                                    ng-href="/api/hours_fees/export_nc?month={{ctrl.currentCalcTime()}}"
+                                    href="javascript:"
+                                ) NC导入表
+                            md-menu-item()
+                                a.md-button(
+                                    download
+                                    ng-href="/api/hours_fees/export_approval?month={{ctrl.currentCalcTime()}}"
+                                    href="javascript:"
+                                ) 审批表
+
+        div(nb-grid
+            column-defs="ctrl.columnDef"
+            export-api
+            grid-selection
+            grid-edit
+            grid-row-edit
+            on-register-api="ctrl.initialize(gridApi)" safe-src="ctrl.records")

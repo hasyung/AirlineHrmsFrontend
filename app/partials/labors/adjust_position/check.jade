@@ -6,10 +6,10 @@
                 h2 退休待审核列表
                 div(flex)
                 md-button.md-primary.md-raised(
-                    ng-disabled="!getSelected()"
+                    ng-disabled="!ctrl.getSelected() || ctrl.getSelected().workflowState != '已生效'"
                     nb-dialog
                     template-url="/partials/labors/retirement/retirement.html"
-                    locals="{users:getSelecteds()}"
+                    locals="{users: getSelecteds()}"
                 ) 发起离职流程
 
-        div(nb-grid column-defs="ctrl.columnDef" export-api grid-selection safe-src="ctrl.retirements")
+        div(nb-grid column-defs="ctrl.columnDef" export-api on-register-api="ctrl.exportGridApi(gridApi)" grid-selection safe-src="ctrl.retirements")

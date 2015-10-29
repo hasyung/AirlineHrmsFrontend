@@ -5,12 +5,12 @@ app = nb.app
 menuFactory = ($rootScope, $state)->
     sections = []
 
-    #sections.push {
-    #    name: '待办事项'
-    #    type: 'link'
-    #    state: 'TODO'
-    #    icon_src: '/images/svg/left-side-svg/left_icon_22.svg'
-    #}
+    sections.push {
+        name: '待办事项'
+        type: 'link'
+        state: 'TODO'
+        icon_src: '/images/svg/left-side-svg/left_icon_22.svg'
+    }
 
     sections.push {
         name: '组织机构'
@@ -76,66 +76,34 @@ menuFactory = ($rootScope, $state)->
     #}
 
     sections.push {
-        name: '福利'
-        icon_src: '/images/svg/left-side-svg/left_icon_7.svg'
-        pages: [
-            {
-                name: '福利设置'
-                state: '.welfares'
-                permission: ''
-            }
-            {
-                name: '社保'
-                state: '.welfares_socials'
-                permission: ''
-            }
-            {
-                name: '企业年金'
-                state: '.welfares_annuities'
-                permission: ''
-            }
-            #{
-            #    name: '工作餐'
-            #    state: '.welfares_dinnerfee'
-            #    permission: ''
-            #}
-        ]
-    }
-
-    #sections.push {
-    #    name: '薪酬'
-    #    icon_src: '/images/svg/left-side-svg/left_icon_8.svg'
-    #    pages: [
-    #}
-
-    sections.push {
         name: '劳动关系'
         icon_src: '/images/svg/left-side-svg/left_icon_9.svg'
         pages: [
-            #{
-            #    name: '员工考勤'
-            #    state: 'labors_attendance'
-            #}
-            #{
-            #    name: '员工调动'
-            #    state: 'labors_ajust_position'
-            #    permission: ''
-            #}
-            #{
-            #    name: '员工退休'
-            #    state: 'labors_retirement'
-            #    permission: ''
-            #}
-            #{
-            #    name: '员工退养'
-            #    state: 'labors_early_retirement'
-            #    permission: ''
-            #}
-            #{
-            #    name: '员工辞退'
-            #    state: 'labors_dismiss'
-            #    permission: ''
-            #}
+            {
+                name: '员工考勤'
+                state: 'labors_attendance'
+                permission: ''
+            }
+            {
+                name: '员工调动'
+                state: 'labors_ajust_position'
+                permission: ''
+            }
+            {
+                name: '员工退休'
+                state: 'labors_retirement'
+                permission: ''
+            }
+            {
+                name: '员工退养'
+                state: 'labors_early_retirement'
+                permission: ''
+            }
+            {
+                name: '员工辞退'
+                state: 'labors_dismiss'
+                permission: ''
+            }
             #{
             #    name: '员工处分'
             #    state: 'labors_punishment'
@@ -146,16 +114,67 @@ menuFactory = ($rootScope, $state)->
                 state: 'contract_management'
                 permission: ''
             }
-            #{
-            #    name: '员工离职'
-            #    state: 'labors_leave_job'
-            #    permission: ''
-            #}
-            #{
-            #    name: '员工辞职'
-            #    state: 'labors_resignation'
-            #    permission: ''
-            #}
+            {
+                name: '员工辞职'
+                state: 'labors_resignation'
+                permission: ''
+            }
+            {
+                name: '员工离职'
+                state: 'labors_leave_job'
+                permission: ''
+            }
+        ]
+    }
+
+    sections.push {
+        name: '薪酬管理'
+        icon_src: '/images/svg/left-side-svg/left_icon_8.svg'
+        pages: [
+            {
+                name: '薪酬设置'
+                state: 'salary'
+            }
+            {
+                name: '个人薪酬设置'
+                state: 'salary_personal'
+            }
+            {
+                name: '薪酬计算'
+                state: 'salary_calc'
+            }
+        ]
+    }
+
+    sections.push {
+        name: '福利管理'
+        icon_src: '/images/svg/left-side-svg/left_icon_7.svg'
+        pages: [
+            {
+                name: '福利设置'
+                state: 'welfares'
+                permission: ''
+            }
+            {
+                name: '社保'
+                state: 'welfares_socials'
+                permission: ''
+            }
+            {
+                name: '企业年金'
+                state: 'welfares_annuities'
+                permission: ''
+            }
+            {
+                name: '工作餐'
+                state: 'welfares_dinnerfee'
+                permission: ''
+            }
+            {
+                name: '生育津贴'
+                state: 'welfares_birth'
+                permission: ''
+            }
         ]
     }
 
@@ -165,7 +184,7 @@ menuFactory = ($rootScope, $state)->
         pages: [
             {
                 name: '绩效记录'
-                state: 'performance_record'
+                state: 'performance_list'
                 permission: ''
             }
             {
@@ -245,15 +264,15 @@ menuLinkDirective = ($compile, $state) ->
 
     stroke_svg = '''
         <svg width="30" height="50">
-            <path d="M1 0 L1 25 L21 25 M1 25 L1 50" fill="transparent" stroke="#fff" stroke-width="1"></path>
-            <circle r="4" cx="21" cy="25" fill="#fff"></circle>
+            <path d="M1 0 L1 25 L21 25 M1 25 L1 50" fill="transparent" stroke="#cacaca" stroke-width="1"></path>
+            <circle r="4" cx="21" cy="25" fill="#cacaca"></circle>
         </svg>
     '''
 
     last_stroke_svg = '''
         <svg width="30" height="40">
-            <path d="M1 0 L1 25 L21 25" fill="transparent" stroke="#fff" stroke-width="1"></path>
-            <circle r="4" cx="21" cy="25" fill="#fff"></circle>
+            <path d="M1 0 L1 25 L21 25" fill="transparent" stroke="#cacaca" stroke-width="1"></path>
+            <circle r="4" cx="21" cy="25" fill="#cacaca"></circle>
         </svg>
     '''
 

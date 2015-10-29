@@ -1,0 +1,42 @@
+div.personnel-reward
+    div
+        md-card.nb-card(ng-init="ctrl.loadRewards()")
+            md-toolbar.toolbar--welfare
+                .md-toolbar-tools
+                    span 奖励
+            .nb-card-content
+                .punishItem(ng-repeat="item in ctrl.rewards")
+                    .punishItem__row(layout)
+                        .punishItem__row__key 奖励时间
+                        .punishItem__row__val {{item.createdAt}}
+                    .punishItem__row(layout)
+                        .punishItem__row__key 奖励类别
+                        .punishItem__row__val {{item.category}}
+                    .punishItem__row(layout)
+                        .punishItem__row__key 奖励描述
+                        .punishItem__row__val {{item.desc}}
+                    .punishItem__row(layout)
+                        .punishItem__row__key 奖励期限
+                        .punishItem__row__val {{item.rewardDate}}
+                    md-divider
+
+
+        md-card.nb-card(ng-init="ctrl.loadPunishments()")
+            md-toolbar.toolbar--welfare
+                .md-toolbar-tools
+                    span 处分
+            .nb-card-content
+                .punishItem(ng-repeat="item in ctrl.punishments")
+                    .punishItem__row(layout)
+                        .punishItem__row__key 处分时间
+                        .punishItem__row__val {{item.createdAt}}
+                    .punishItem__row(layout)
+                        .punishItem__row__key 处分类别
+                        .punishItem__row__val {{item.category}}
+                    .punishItem__row(layout)
+                        .punishItem__row__key 处分描述
+                        .punishItem__row__val {{item.desc}}
+                    .punishItem__row(layout ng-if="!!item.startDate && !!item.endDate")
+                        .punishItem__row__key 处分期限
+                        .punishItem__row__val {{item.startDate}} 至 {{item.endDate}}
+                    md-divider

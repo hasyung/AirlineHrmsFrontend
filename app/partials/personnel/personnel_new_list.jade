@@ -4,8 +4,16 @@
     div.ui-grid-container
         md-toolbar
             .md-toolbar-tools
-                h2 员工人事信息列表
+                h2 员工人事花名册
                 div(flex)
+                md-button.md-primary.md-raised(
+                        has-permission="employees_create"
+                        flow-init="{target: '/api/attachments/upload_file', testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
+                        flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                        flow-file-success="ctrl.upload_start=false;ctrl.uploadNewEmployees('新员工导入', ctrl.parseJSON($message).id);"
+                        flow-btn
+                        type="button"
+                    ) 新员工导入
                 span
                     md-button.md-primary.md-raised(
                         has-permission="employees_create"
@@ -21,7 +29,7 @@
                             ) 导出
                         md-menu-content
                             md-menu-item()
-                                a.md-button(ng-href="/api/employees/export_to_xls") 导出全部人员
+                                a.md-button(ng-href="/api/employees/export_to_xls?new_employee=true") 导出全部人员
                             md-menu-item(ng-if="selectedRows.length > 0")
                                 a.md-button(
                                     nb-download
@@ -30,8 +38,6 @@
                                     href="javascript:;"
                                     download
                                 ) 导出所选人员
-                            md-menu-item()
-                                a.md-button(ng-href="/api/employees/export_resume") 导出全部人员履历
                             md-menu-item(ng-if="selectedRows.length > 0")
                                 a.md-button(
                                     nb-download
@@ -39,7 +45,7 @@
                                     param-getter="ctrl.getSelectsIds()"
                                     href="javascript:;"
                                     download
-                                ) 导出全部人员履历
+                                ) 导出所选人员履历
 
         div(
             nb-grid

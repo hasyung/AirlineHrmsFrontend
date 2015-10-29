@@ -1,0 +1,107 @@
+.app-content-wrapper(flex ng-controller="salaryCtrl as ctrl" ng-init="ctrl.loadConfigFromServer('land_subsidy')" style="padding: 0;")
+    .salary-basic(style="padding: 0;")
+        md-toolbar
+            .md-toolbar-tools
+                h2 地面驻站
+                span(flex)
+                md-button.md-raised.md-primary(style="margin-right: 0;" ng-click="ctrl.saveConfig('land_subsidy', ctrl.dynamic_config)") 保存
+
+        table.tablexx.table-default.table-bordered
+            thead
+                tr
+                    th 驻站类别
+                    th 标准
+                    th 城市
+                    //- th 编辑
+            tbody
+                tr
+                    td 普通
+                    td
+                        input(type="number" ng-model="ctrl.dynamic_config.general.amount")
+                    td
+                        span.city-chip(
+                            ng-repeat="city in ctrl.dynamic_config.general.cities track by $index"
+                            ) {{city}}
+                            md-icon.md-warn(
+                                md-svg-src="/images/svg/close.svg"
+                                ng-click="ctrl.destroyCity(ctrl.dynamic_config.general.cities, $index)"
+                                )
+                        //- add-city(ng-model="ctrl.dynamic_config.general.cities")
+                tr
+                    td 高原1
+                    td
+                        input(type="number" ng-model="ctrl.dynamic_config.highland_1st.amount")
+                    td
+                        span.city-chip(
+                            ng-repeat="city in ctrl.dynamic_config.highland_1st.cities track by $index"
+                            ) {{city}}
+                            md-icon.md-warn(
+                                md-svg-src="/images/svg/close.svg"
+                                ng-click="ctrl.destroyCity(ctrl.dynamic_config.highland_1st.cities, $index)"
+                                )
+                        add-city(ng-model="ctrl.dynamic_config.highland_1st.cities")
+                tr
+                    td 高原2
+                    td
+                        input(type="number" ng-model="ctrl.dynamic_config.highland_2nd.amount")
+                    td
+                        span.city-chip(
+                            ng-repeat="city in ctrl.dynamic_config.highland_2nd.cities track by $index"
+                            ) {{city}}
+                            md-icon.md-warn(
+                                md-svg-src="/images/svg/close.svg"
+                                ng-click="ctrl.destroyCity(ctrl.dynamic_config.highland_2nd.cities, $index)"
+                                )
+                        add-city(ng-model="ctrl.dynamic_config.highland_2nd.cities")
+                tr
+                    td 高寒(11月到次年3月在基础标准上额外补助)
+                    td
+                        input(type="number" ng-model="ctrl.dynamic_config.high_cold.amount")
+                    td
+                        span.city-chip(
+                            ng-repeat="city in ctrl.dynamic_config.high_cold.cities track by $index"
+                            ) {{city}}
+                            md-icon.md-warn(
+                                md-svg-src="/images/svg/close.svg"
+                                ng-click="ctrl.destroyCity(ctrl.dynamic_config.high_cold.cities, $index)"
+                                )
+                        add-city(ng-model="ctrl.dynamic_config.high_cold.cities")
+                tr
+                    td 境外1
+                    td
+                        input(type="number" ng-model="ctrl.dynamic_config.overseas_1st.amount")
+                    td
+                        span.city-chip(
+                            ng-repeat="city in ctrl.dynamic_config.overseas_1st.cities track by $index"
+                            ) {{city}}
+                            md-icon.md-warn(
+                                md-svg-src="/images/svg/close.svg"
+                                ng-click="ctrl.destroyCity(ctrl.dynamic_config.overseas_1st.cities, $index)"
+                                )
+                        add-city(ng-model="ctrl.dynamic_config.overseas_1st.cities")
+                tr
+                    td 境外2
+                    td
+                        input(type="number" ng-model="ctrl.dynamic_config.overseas_2nd.amount")
+                    td
+                        span.city-chip(
+                            ng-repeat="city in ctrl.dynamic_config.overseas_2nd.cities track by $index"
+                            ) {{city}}
+                            md-icon.md-warn(
+                                md-svg-src="/images/svg/close.svg"
+                                ng-click="ctrl.destroyCity(ctrl.dynamic_config.overseas_2nd.cities, $index)"
+                                )
+                        add-city(ng-model="ctrl.dynamic_config.overseas_2nd.cities")
+                tr
+                    td 境外3
+                    td
+                        input(type="number" ng-model="ctrl.dynamic_config.overseas_3rd.amount")
+                    td
+                        span.city-chip(
+                            ng-repeat="city in ctrl.dynamic_config.overseas_3rd.cities track by $index"
+                            ) {{city}}
+                            md-icon.md-warn(
+                                md-svg-src="/images/svg/close.svg"
+                                ng-click="ctrl.destroyCity(ctrl.dynamic_config.overseas_3rd.cities, $index)"
+                                )
+                        add-city(ng-model="ctrl.dynamic_config.overseas_3rd.cities")

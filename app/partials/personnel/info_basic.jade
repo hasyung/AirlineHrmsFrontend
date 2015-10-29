@@ -1,70 +1,65 @@
-div.panel-bg-gray(ng-init= "current = panel.employee; current.$refresh();")
+div.panel-bg-gray(ng-init = "current = panel.employee; current.$refresh();" ng-controller="PersonnelDataCtrl as pdCtrl")
     md-toolbar.md-warn(md-theme="hrms")
         .md-toolbar-tools
             span 人事信息
+
     .personnel-base-info(layout)
         .big-avator-area
             img(ng-src="{{current.favicon.middle}}" ng-if="current.favicon")
             img(src="http://www.placehold.it/110x110/EFEFEF/AAAAAA&text=no+image" ng-if="!current.favicon")
-            //- img(src="http://192.168.6.99:9001/uploads/employees/favicons/11556/791d7d2bbee699f891b164d3e86ad9ce.png")
         .employee-info
             .employee-name() {{::current.name}}
                 md-button.md-fab.resume-button.md-warn(
                     nb-dialog
                     template-url="partials/self/self_resume.html"
-                    locals="{currentUser:current}"
+                    locals="{currentUser: current}"
                 )
                     md-icon(md-svg-src="/images/svg/resume_24px.svg" aria-label="简历")
             .employee-others-info
                 div(ng-bind="current.employeeNo")
                 div(ng-bind="current.department.name")
+
     .personnel-content.personnel-control
         section.personnel-info-section
-            tabset(type="pills")
+            tabset.personnel-tabs(type="pills")
                 tab(heading="基本信息")
                     md-content.nb-card-container(layout="column" md-theme="hrms")
                         md-card.form-material-section.nb-card
-                            md-subheader.md-background.md-hue-1
-                                md-icon.form-icon(md-svg-src="/images/svg/personnel_24.svg" alt="基本信息")
+                            .md-subheader
+                                //- md-icon.form-icon(md-svg-src="/images/svg/personnel_24.svg" alt="基本信息")
                                 |基本信息
                             include info_basic/info_basic_edit
+
                         md-card.form-material-section.nb-card
-                            md-subheader.md-background.md-hue-1
-                                md-icon.form-icon(md-svg-src="/images/svg/positions_info_24.svg" alt="岗位信息")
+                            .md-subheader
+                                //- md-icon.form-icon(md-svg-src="/images/svg/positions_info_24.svg" alt="岗位信息")
                                 |岗位信息
                             include info_basic/info_position_edit
+
                         md-card.form-material-section.nb-card
-                            md-subheader.md-background.md-hue-1
-                                md-icon.form-icon(md-svg-src="/images/svg/ic_star_24px.svg" alt="职称信息")
+                            .md-subheader
+                                //- md-icon.form-icon(md-svg-src="/images/svg/ic_star_24px.svg" alt="职称信息")
                                 |职称信息
                             include info_basic/info_position_title
 
+                tab(heading="家庭成员")
+                    md-content.nb-card-container(flex layout="column" md-theme="hrms")
+                        include family/family_member
 
-                tab(heading="培训记录")
+                //- tab(heading="培训记录")
 
                 tab(heading="奖惩记录")
+                    md-content.nb-card-container(flex layout="column" md-theme="hrms")
+                        include reward/index
 
                 tab(heading="考勤信息")
+                    md-content.nb-card-container(flex layout="column" md-theme="hrms")
+                        include attendance/index
 
                 tab(heading="绩效考核")
                     md-content.nb-card-container(flex layout="column" md-theme="hrms")
                         include performance/index
 
-                tab(heading="档案信息")
-
-                //- tab(heading="个人履历" has-permission="employees_resume")
-                //-     include personnel_resume
-            //- md-tabs(md-selected="data.selectedIndex")
-            //-     md-tab(id="tab1" label="基本人事信息" md-active)
-            //-         //- div(role="tabpanel" layout="column" aria-labelledby="tab1")
-            //-         //-     section.form-material-section
-            //-         //-         md-subheader.md-primary 基本信息
-            //-         //-         include info_basic/info_basic_edit
-            //-         //-     section.form-material-section
-            //-         //-         md-subheader.md-warn 岗位信息
-            //-         //-         include info_basic/info_position_edit
-            //-     md-tab(id="tab2" label="培训记录")
-            //-     md-tab(label="奖惩记录")
-            //-     md-tab(label="考勤信息")
-            //-     md-tab(label="档案信息")
-            //-     md-tab(label="个人履历")
+                tab(heading="薪酬信息" ng-if="pdCtrl.isHrPaymentMember()")
+                    md-content.nb-card-container(flex layout="column" md-theme="hrms")
+                        include salary/index

@@ -1,0 +1,8 @@
+span(flex)
+
+span(ng-show="!ctrl.editing")
+    md-button.md-primary.md-raised(ng-click="ctrl.editing=true" type="button") 编辑
+
+span(ng-hide="!ctrl.editing")
+    md-button.md-raised.white(ng-click="ctrl.resetDynamicConfig()" type="reset") 取消
+    md-button.md-primary.md-raised(ng-disabled="configForm.$invalid" type="submit") 保存

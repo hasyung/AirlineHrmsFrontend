@@ -1,5 +1,5 @@
 .app-content-wrapper(flex style="height: 700px;")
-    div(nb-filter="ctrl.filterOptions" on-search="ctrl.searchChanges(state)")
+    div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
     div.ui-grid-container
         md-toolbar
             .md-toolbar-tools
@@ -11,9 +11,7 @@
                 //-         template-url="partials/personnel/org_pos_per_sort.html"
                 //-     ) 排序
                 //- md-button.md-primary.md-raised 导出
-        div(nb-grid column-defs="ctrl.columnDef" safe-src="ctrl.changes")
-
-
+        div(nb-grid column-defs="ctrl.columnDef" on-register-api="ctrl.exportGridApi(gridApi)" safe-src="ctrl.changes")
 
 
 //- .app-content-wrapper(flex nb-table='ctrl.records' nb-safe-src="ctrl.changes" ng-init="ctrl.changes = ctrl.PositionChange.$collection().$refresh()")
