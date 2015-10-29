@@ -864,7 +864,7 @@ class ContractCtrl extends nb.Controller
         return if contract && contract.employeeId == 0
 
         @http.post("/api/workflows/Flow::RenewContract", request).then (data)->
-            self.contracts.$refresh()
+            self.contracts.$refresh({'show_merged': self.show_merged})
             msg = data.data.messages
             self.Evt.$send("contract:renew:success", msg) if msg
 
@@ -896,7 +896,7 @@ class ContractCtrl extends nb.Controller
                 return
 
         @contracts.$build(contract).$save().$then ()->
-            self.contracts.$refresh()
+            self.contracts.$refresh({'show_merged': self.show_merged})
 
     clearData: (contract)->
         if contract.isUnfix
