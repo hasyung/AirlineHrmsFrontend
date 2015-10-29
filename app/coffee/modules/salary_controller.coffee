@@ -677,8 +677,8 @@ class SalaryExchangeController
         @SALARY_SETTING[@$channelSettingStr(channel)]
 
     service_b: (current)->
-        return unless current.baseChannel
-        setting = @$settingHash(current.baseChannel)
+        return unless current.baseWage
+        setting = @$settingHash(current.baseWage)
 
         # 总工资
         current.basePerformanceMoney = setting.flags[current.baseFlag]['amount']
@@ -688,9 +688,9 @@ class SalaryExchangeController
         current.performanceMoney = current.basePerformanceMoney - current.baseMoney
 
     service_b_flag_array: (current)->
-        return unless current.baseChannel
+        return unless current.baseWage
 
-        setting = @$settingHash(current.baseChannel)
+        setting = @$settingHash(current.baseWage)
         Object.keys(setting.flags)
 
     normal: (current)->
@@ -769,16 +769,16 @@ class SalaryExchangeController
         return flags
 
     fly: (current)->
-        return unless current.baseChannel
+        return unless current.baseWage
         return unless current.baseFlag
 
-        setting = @$settingHash(current.baseChannel)
+        setting = @$settingHash(current.baseWage)
         current.baseMoney = setting.flags[current.baseFlag]['amount']
 
     fly_flag_array: (current)->
-        return unless current.baseChannel
+        return unless current.baseWage
 
-        setting = @$settingHash(current.baseChannel)
+        setting = @$settingHash(current.baseWage)
         Object.keys(setting.flags)
 
     fly_hour: (current)->
@@ -788,16 +788,16 @@ class SalaryExchangeController
         current.flyHourMoney = setting[current.flyHourFee]
 
     airline: (current)->
-        return unless current.baseChannel
+        return unless current.baseWage
         return unless current.baseFlag
 
-        setting = @$settingHash(current.baseChannel)
+        setting = @$settingHash(current.baseWage)
         current.baseMoney = setting.flags[current.baseFlag]['amount']
 
     airline_flag_array: (current)->
-        return unless current.baseChannel
+        return unless current.baseWage
 
-        setting = @$settingHash(current.baseChannel)
+        setting = @$settingHash(current.baseWage)
         Object.keys(setting.flags)
 
     airline_hour: (current)->
