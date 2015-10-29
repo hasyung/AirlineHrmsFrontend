@@ -995,6 +995,8 @@ class DinnerPersonalController extends nb.Controller
     loadEmployee: (params, contract)->
         self = @
 
+        return if _.includes params.employee_no, 'w'
+
         @Employee.$collection().$refresh(params).$then (employees)->
             args = _.mapKeys params, (value, key) ->
                 _.camelCase key
@@ -1023,6 +1025,18 @@ class DinnerPersonalController extends nb.Controller
         self = @
         dinner.$save().$then () ->
             self.configurations.$refresh()
+
+    loadDefaultConfig: (params, dinner) ->
+        if params.area && params.shifts_type
+
+            url = '/api/dinner_person_setups/load_config?area='+params.area+'&shifts_type='+params.shifts_type+'&employee_id='+params.employee_id
+
+            @http.get(url).success (data) ->
+                dinner.cardAmount = data.card_amount
+                dinner.workingFee = data.working_fee
+                dinner.breakfastNumber = data.breakfast_number
+                dinner.lunchNumber = data.lunch_number
+                dinner.dinnerNumber = data.dinner_number
 
 
 class DinnerComputeController extends nb.Controller
