@@ -843,7 +843,11 @@ class ContractCtrl extends nb.Controller
     loadInitialData: () ->
         self = @
 
-        @contracts = @Contract.$collection().$fetch({'show_merged': self.show_merged})
+        @contracts = @Contract.$collection().$fetch().$then () ->
+            self.contracts.$refresh({'show_merged': self.show_merged})
+
+    changeLoadRule: () ->
+        @contracts.$refresh({'show_merged': @show_merged})
 
     search: (tableState) ->
         tableState = tableState || {}
