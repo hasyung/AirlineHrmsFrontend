@@ -677,8 +677,8 @@ class SalaryExchangeController
         @SALARY_SETTING[@$channelSettingStr(channel)]
 
     service_b: (current)->
-        return unless current.baseChannel
-        setting = @$settingHash(current.baseChannel)
+        return unless current.baseWage
+        setting = @$settingHash(current.baseWage)
 
         # 总工资
         current.basePerformanceMoney = setting.flags[current.baseFlag]['amount']
@@ -688,9 +688,9 @@ class SalaryExchangeController
         current.performanceMoney = current.basePerformanceMoney - current.baseMoney
 
     service_b_flag_array: (current)->
-        return unless current.baseChannel
+        return unless current.baseWage
 
-        setting = @$settingHash(current.baseChannel)
+        setting = @$settingHash(current.baseWage)
         Object.keys(setting.flags)
 
     normal: (current)->
@@ -769,16 +769,16 @@ class SalaryExchangeController
         return flags
 
     fly: (current)->
-        return unless current.baseChannel
+        return unless current.baseWage
         return unless current.baseFlag
 
-        setting = @$settingHash(current.baseChannel)
+        setting = @$settingHash(current.baseWage)
         current.baseMoney = setting.flags[current.baseFlag]['amount']
 
     fly_flag_array: (current)->
-        return unless current.baseChannel
+        return unless current.baseWage
 
-        setting = @$settingHash(current.baseChannel)
+        setting = @$settingHash(current.baseWage)
         Object.keys(setting.flags)
 
     fly_hour: (current)->
@@ -788,16 +788,16 @@ class SalaryExchangeController
         current.flyHourMoney = setting[current.flyHourFee]
 
     airline: (current)->
-        return unless current.baseChannel
+        return unless current.baseWage
         return unless current.baseFlag
 
-        setting = @$settingHash(current.baseChannel)
+        setting = @$settingHash(current.baseWage)
         current.baseMoney = setting.flags[current.baseFlag]['amount']
 
     airline_flag_array: (current)->
-        return unless current.baseChannel
+        return unless current.baseWage
 
-        setting = @$settingHash(current.baseChannel)
+        setting = @$settingHash(current.baseWage)
         Object.keys(setting.flags)
 
     airline_hour: (current)->
@@ -866,10 +866,17 @@ class SalaryBaseController extends nb.Controller
     loadInitialData: (options) ->
         args = {month: @currentCalcTime()}
         angular.extend(args, options) if angular.isDefined(options)
-        @records = @Model.$collection(args).$fetch()
+        # 这种写法只有一次请求
+        # 造成：先根据员工姓名搜索，再将下拉框改为员工编号搜索，
+        #      两次搜索的条件会被合并起来，导致搜索请求错误
+        # 原因：待查明，跟restmod相关
+        # @records = @Model.$collection(args).$fetch()
+        # 解决：换为下面的方法，得到更干净的集合records,但请求2次
+        @records = @Model.$collection().$fetch()
+        @records.$refresh(args)
 
     search: (tableState) ->
-        tableState = {} unless tableState
+        tableState = tableState || {}
         tableState['month'] = @currentCalcTime()
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @records.$refresh(tableState)
