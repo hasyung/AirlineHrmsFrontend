@@ -1026,9 +1026,97 @@ class DinnerPersonalController extends nb.Controller
 
 
 class DinnerComputeController extends nb.Controller
-    @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerRecord', 'toaster']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerRecord', 'toaster','$q']
 
-    constructor: ($http, $scope, @Evt, @DinnerRecord, @toaster) ->
+    constructor: (@http, @scope, @Evt, @DinnerRecord, @toaster, @q) ->
+        opitions = null
+
+        @loadDateTime()
+        @loadInitialData(opitions)
+
+        @filterOptions = {
+            name: 'dinnerCompute'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '员工姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+            ]
+        }
+
+        @columnDef = [
+            {displayName: '员工编号', name: 'employeeNo'}
+            {
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+            }
+            # {displayName: '发放日期', name: 'sentDate'}
+        ]
+
+    initialize: (gridApi) ->
+    #     saveRow = (rowEntity) ->
+    #         dfd = @q.defer()
+
+    #         gridApi.rowEdit.setSavePromise(rowEntity, dfd.promise)
+
+    #         rowEntity.$save().$asPromise().then(
+    #             () -> dfd.resolve(),
+    #             () ->
+    #                 dfd.reject()
+    #                 rowEntity.$restore())
+
+    #     gridApi.rowEdit.on.saveRow(@scope, saveRow.bind(@))
+        @scope.$gridApi = gridApi
+        @gridApi = gridApi
+
+    loadDateTime: () ->
+        date = new Date()
+
+        @year_list = @$getYears()
+        @month_list = @$getMonths()
+
+        @currentYear = @year_list[@year_list.length - 1]
+        @currentMonth = @month_list[@month_list.length - 1]
+
+    loadInitialData: (opitions) ->
+        args = {month: @currentCalcTime()}
+        angular.extend(args, opitions) if angular.isDefined(opitions)
+        @records = @DinnerRecord.$collection(args).$fetch()
+
+    search: (tableState) ->
+        tableState = {} unless tableState
+        tableState['month'] = @currentCalcTime()
+        tableState['per_page'] = @gridApi.grid.opitions.paginationPageSize
+        @records.$refresh(tableState)
+
+    currentCalcTime: ()->
+        @currentYear + "-" + @currentMonth
+
+    loadRecords: (opitions = null) ->
+        args = {month: @currentCalcTime()}
+        angular.extend(args, opitions) if angular.isDefined(opitions)
+        @records.$refresh(args)
 
 
 

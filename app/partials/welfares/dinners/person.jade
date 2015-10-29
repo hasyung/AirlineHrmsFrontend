@@ -1,6 +1,6 @@
 md-dialog.punishment_new(
     style="min-width: 500px;"
-    ng-init="ctrl = dialog.ctrl; dinner = dialog.dinner;"
+    ng-init="ctrl = dialog.ctrl; dinner = dialog.dinner; dinner.changeDate=null;"
     )
     form(ng-submit="ctrl.saveDinner(dinner); dialog.close();" name="editDinnerForm")
         md-toolbar.md-accent(md-theme="hrms")
@@ -72,5 +72,5 @@ md-dialog.punishment_new(
 
         .md-actions
             md-button(type="button" ng-click="dialog.close()") 取 消
-            md-button.md-primary.md-raised(type="submit") 确 定
+            md-button.md-primary.md-raised(type="submit" ng-disabled="!editDinnerForm.$valid") 确 定
 

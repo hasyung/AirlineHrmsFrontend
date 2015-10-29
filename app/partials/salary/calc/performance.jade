@@ -47,12 +47,12 @@
                         md-menu-content
                             md-menu-item()
                                 a.md-button(flex
-                                    ng-click="ctrl.exeCalc('base_salary')"
+                                    ng-click="ctrl.exeCalc({type: 'base_salary'})"
                                     href="javascript:;"
                                 ) 计算绩效基数
                             md-menu-item()
                                 a.md-button(
-                                    ng-click="ctrl.exeCalc('amount')"
+                                    ng-click="ctrl.exeCalc({type: 'amount'})"
                                     href="javascript:;"
                                 ) 计算绩效薪酬
                 span
@@ -74,6 +74,12 @@
                                     ng-href="/api/performance_salaries/export_approval?month={{ctrl.currentCalcTime()}}"
                                     href="javascript:"
                                 ) 审批表
+                            md-menu-item()
+                                a.md-button(
+                                    download
+                                    ng-href="/api/performance_salaries/export_base_salary?month={{ctrl.currentCalcTime()}}"
+                                    href="javascript:"
+                                ) 绩效基数
 
         div(nb-grid
             column-defs="ctrl.columnDef"
