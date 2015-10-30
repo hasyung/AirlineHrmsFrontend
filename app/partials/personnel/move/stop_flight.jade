@@ -2,7 +2,7 @@ md-dialog.employee_move
     md-toolbar.md-accent(md-theme="hrms")
         .md-toolbar-tools
             span 空勤停飞设置
-    form(ng-submit="ctrl.newStopEmployee(stopEmployee); dialog.close();" name="newStopForm" flex)
+    form(ng-submit="ctrl.newStopEmployee(stopEmployee); dialog.close();" name="newStopForm")
         md-content(ng-init="stopEmployee = {out_company: false}; ctrl.loadEmp = {};")
             fieldset(flex)
                 div(style="display:none;")
