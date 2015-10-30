@@ -13,10 +13,6 @@ body {
 .ui-grid-selection-row-header-buttons {
     opacity: .3;
 }
-//暂时暴力解决一些md-dialog在360安全浏览器下没有高度的bug
-md-dialog.browser360 {
-    height: 80%;
-}
 
 //重置material design影响标签的样式
 fieldset {
