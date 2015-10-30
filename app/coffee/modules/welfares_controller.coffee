@@ -1085,7 +1085,12 @@ class DinnerComputeController extends nb.Controller
                 cellTooltip: (row) ->
                     return row.entity.departmentName
             }
-            # {displayName: '发放日期', name: 'sentDate'}
+            {displayName: '班制', name: 'shiftsType'}
+            {displayName: '驻地', name: 'location'}
+            {displayName: '餐费区域', name: 'area'}
+            {displayName: '卡金额', name: 'cardAmount'}
+            {displayName: '卡次数', name: 'cardNumber'}
+            {displayName: '误餐费', name: 'dinnerfee'}
         ]
 
     initialize: (gridApi) ->
@@ -1110,8 +1115,12 @@ class DinnerComputeController extends nb.Controller
         @year_list = @$getYears()
         @month_list = @$getMonths()
 
-        @currentYear = @year_list[@year_list.length - 1]
-        @currentMonth = @month_list[@month_list.length - 1]
+        if @month_list.length - 2 >=0
+            @currentYear = @year_list[@year_list.length - 1]
+            @currentMonth = @month_list[@month_list.length - 2]
+        else
+            @currentYear = @year_list[@year_list.length - 1]
+            @currentMonth = @month_list[0]
 
     loadInitialData: (options) ->
         args = {month: @currentCalcTime()}
@@ -1131,6 +1140,138 @@ class DinnerComputeController extends nb.Controller
         args = {month: @currentCalcTime()}
         angular.extend(args, options) if angular.isDefined(options)
         @records.$refresh(args)
+
+    exeCalc: (options = null) ->
+        @calcing = true
+        self = @
+
+        args = {month: @currentCalcTime()}
+        angular.extend(args, options) if angular.isDefined(options)
+
+        @records.compute(args).$asPromise().then (data)->
+            self.calcing = false
+            erorr_msg = data.$response.data.messages
+            # _.snakeCase('Foo Bar')
+            # @Model => String???
+            self.Evt.$send("dinner_fees:calc:error", erorr_msg) if erorr_msg
+            self.loadRecords()
+
+class DinnerClearingController extends nb.Controller
+    @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerSettle', 'toaster','$q']
+
+    constructor: (@http, @scope, @Evt, @DinnerSettle, @toaster, @q) ->
+        options = null
+
+        @loadDateTime()
+        @loadInitialData(options)
+
+        @filterOptions = {
+            name: 'dinnerClearing'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '员工姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+            ]
+        }
+
+        @columnDef = [
+            {displayName: '员工编号', name: 'employeeNo'}
+            {
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+            }
+            {displayName: '班制', name: 'shiftsType'}
+            {displayName: '驻地', name: 'location'}
+            {displayName: '餐费区域', name: 'area'}
+            {displayName: '卡金额', name: 'cardAmount'}
+            {displayName: '卡次数', name: 'cardNumber'}
+            {displayName: '误餐费', name: 'dinnerfee'}
+        ]
+
+    initialize: (gridApi) ->
+    #     saveRow = (rowEntity) ->
+    #         dfd = @q.defer()
+
+    #         gridApi.rowEdit.setSavePromise(rowEntity, dfd.promise)
+
+    #         rowEntity.$save().$asPromise().then(
+    #             () -> dfd.resolve(),
+    #             () ->
+    #                 dfd.reject()
+    #                 rowEntity.$restore())
+
+    #     gridApi.rowEdit.on.saveRow(@scope, saveRow.bind(@))
+        @scope.$gridApi = gridApi
+        @gridApi = gridApi
+
+    loadDateTime: () ->
+        date = new Date()
+
+        @year_list = @$getYears()
+        @month_list = @$getMonths()
+
+        if @month_list.length - 2 >=0
+            @currentYear = @year_list[@year_list.length - 1]
+            @currentMonth = @month_list[@month_list.length - 2]
+        else
+            @currentYear = @year_list[@year_list.length - 1]
+            @currentMonth = @month_list[0]
+
+    loadInitialData: (options) ->
+        args = {month: @currentCalcTime()}
+        angular.extend(args, options) if angular.isDefined(options)
+        @records = @DinnerSettle.$collection(args).$fetch()
+
+    search: (tableState) ->
+        tableState = {} unless tableState
+        tableState['month'] = @currentCalcTime()
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+        @records.$refresh(tableState)
+
+    currentCalcTime: ()->
+        @currentYear + "-" + @currentMonth
+
+    loadRecords: (options = null) ->
+        args = {month: @currentCalcTime()}
+        angular.extend(args, options) if angular.isDefined(options)
+        @records.$refresh(args)
+
+    exeCalc: (options = null) ->
+        @calcing = true
+        self = @
+
+        args = {month: @currentCalcTime()}
+        angular.extend(args, options) if angular.isDefined(options)
+
+        @records.compute(args).$asPromise().then (data)->
+            self.calcing = false
+            erorr_msg = data.$response.data.messages
+            # _.snakeCase('Foo Bar')
+            # @Model => String???
+            self.Evt.$send("dinner_fees:calc:error", erorr_msg) if erorr_msg
+            self.loadRecords()
 
 
 
@@ -1239,5 +1380,6 @@ app.controller 'annuityChangesCtrl', AnnuityChangesController
 app.controller 'dinnerCtrl', DinnerController
 app.controller 'dinnerPersonalCtrl', DinnerPersonalController
 app.controller 'dinnerComputeCtrl', DinnerComputeController
+app.controller 'dinnerClearingCtrl', DinnerClearingController
 
 app.controller 'birthAllowanceCtrl', BirthAllowanceController
