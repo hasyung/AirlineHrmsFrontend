@@ -16,9 +16,13 @@
     div.ui-grid-container.mt5
         md-toolbar
             .md-toolbar-tools
-                h2 基础薪酬
+                h2 当期工作餐
 
                 span(flex)
+                span
+                    md-button.md-raised.md-primary(
+                        ng-disabled="ctrl.calcing"
+                    ) 导入备份数据
                 span
                     md-button.md-raised.md-primary(
                         ng-click="ctrl.exeCalc()"
