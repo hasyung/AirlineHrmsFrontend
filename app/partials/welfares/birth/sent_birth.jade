@@ -1,11 +1,11 @@
-md-dialog.punishment_new.browser360(
+md-dialog.punishment_new(
     style="min-width: 500px;"
     ng-init="ctrl = dialog.ctrl; birthAllowance = {}; ctrl.loadEmp = {}; ctrl.isFemale=false"
     )
+    md-toolbar.md-accent(md-theme="hrms")
+        .md-toolbar-tools
+            span 生育津贴发放
     form(ng-submit="ctrl.newBirthAllowance(birthAllowance); dialog.close();" name="newBirthForm")
-        md-toolbar.md-accent(md-theme="hrms")
-            .md-toolbar-tools
-                span 生育津贴发放
         md-content
             fieldset(flex)
                 div(style="display:none;")
