@@ -892,6 +892,8 @@ class ContractCtrl extends nb.Controller
             d = moment.range(s, e).diff('days')
             dueTimeStr = parseInt(d/365)+'年'+(d-parseInt(d/365)*365)+'天'
             return dueTimeStr
+        else if !e
+            return '无固定'
 
     newContract: (contract)->
         self = @
