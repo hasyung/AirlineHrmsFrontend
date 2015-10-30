@@ -777,10 +777,10 @@ class ContractCtrl extends nb.Controller
                 displayName: '详细',
                 field: '详细',
                 cellTemplate: '''
-                    <div class="ui-grid-cell-contents">
+                    <div class="ui-grid-cell-contents" ng-init="outerScope=grid.appScope.$parent">
                         <a nb-panel
                             template-url="partials/labors/contract/detail.dialog.html"
-                            locals="{contract: row.entity.$refresh()}"> 详细
+                            locals="{contract: row.entity.$refresh(), ctrl: outerScope.ctrl}"> 详细
                         </a>
                     </div>
                 '''
@@ -882,6 +882,16 @@ class ContractCtrl extends nb.Controller
             else
                 self.toaster.pop('error', '提示', '开始时间、结束时间必填，且结束时间需大于开始时间')
                 return
+
+    showDueTime: (contract)->
+        self = @
+        s = contract.startDate
+        e = contract.endDate
+
+        if s && e && s <= e
+            d = moment.range(s, e).diff('days')
+            dueTimeStr = parseInt(d/365)+'年'+(d-parseInt(d/365)*365)+'天'
+            return dueTimeStr
 
     newContract: (contract)->
         self = @

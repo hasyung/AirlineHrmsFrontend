@@ -1,4 +1,6 @@
-div(style="height: 100%; background-color: #f5f5f5;"
+div(
+    style="height: 100%; background-color: #f5f5f5;"
+    ng-init="contract=panel.contract; ctrl=panel.ctrl; showDueTime=ctrl.showDueTime(contract);"
     )
     md-toolbar.md-warn(md-theme="hrms")
         md-content.md-toolbar-tools(style="background-color: transparent;")
@@ -8,43 +10,46 @@ div(style="height: 100%; background-color: #f5f5f5;"
         section.personnel-info-section
             md-content.nb-card-container(layout="column" md-theme="hrms")
                 md-card.form-material-section.nb-card
-                    fieldset(disabled)
+                    .md-subheader
+                        | 合同信息
+
+                    fieldset
                         div(layout)
                             md-input-container(flex)
                                 label 姓名
-                                input(ng-model="::panel.contract.employeeName")
+                                input(ng-model="::contract.employeeName" readonly)
                             md-input-container(flex)
                                 label 员工编号
-                                input(ng-model="::panel.contract.employeeNo")
+                                input(ng-model="::contract.employeeNo" readonly)
                         div(layout)
                             md-input-container(flex)
                                 label 部门
-                                input(ng-model="::panel.contract.departmentName")
+                                input(ng-model="::contract.departmentName" readonly)
                             md-input-container(flex)
                                 label 岗位
-                                input(ng-model="::panel.contract.positionName")
+                                input(ng-model="::contract.positionName" readonly)
                         div(layout)
                             md-input-container(flex)
                                 label 用工性质
-                                input(ng-model="::panel.contract.applyType")
+                                input(ng-model="::contract.applyType" readonly)
                             md-input-container(flex)
                                 label 变更标志
-                                input(ng-model="::panel.contract.changeFlag")
+                                input(ng-model="::contract.changeFlag" readonly)
                         div(layout)
                             md-input-container(flex)
                                 label 开始日期
-                                input(ng-model="::panel.contract.startDate")
+                                input(ng-model="contract.startDate" readonly)
                             md-input-container(flex)
                                 label 结束日期
-                                input(ng-model="::panel.contract.endDate")
+                                input(ng-model="contract.endDate" readonly)
                         div(layout)
                             md-input-container(flex)
                                 label 合同时长
-                                input(ng-model="::panel.contract.dueTime")
+                                input(ng-model="showDueTime" readonly)
                         div(layout)
                             md-input-container(flex)
                                 label 合同备注
-                                input(ng-model="::panel.contract.notes")
+                                input(ng-model="::contract.notes" readonly)
 
                 .form-bottom-group(layout style="margin-top: 20px;")
                         span(flex)
