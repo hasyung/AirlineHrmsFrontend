@@ -1154,8 +1154,8 @@ class SalaryHoursFeeController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'HoursFee', 'toaster']
 
     constructor: (@http, $scope, $q, @Evt, @Employee, @HoursFee, @toaster) ->
-        @category = 'hours_fee/flyer'
-        super(@HoursFee, $scope, $q, false, {category: @category})
+        @hours_fee_category = '飞行员'
+        super(@HoursFee, $scope, $q, false, {hours_fee_category: @hours_fee_category})
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
@@ -1224,13 +1224,13 @@ class SalaryHoursFeeController extends SalaryBaseController
         ]).concat(CALC_STEP_COLUMN)
 
     search: () ->
-        super({category: @category})
+        super({hours_fee_category: @hours_fee_category})
 
     loadRecords: () ->
-        super({category: @category})
+        super({hours_fee_category: @hours_fee_category})
 
     exeCalc: ()->
-        super({category: @category})
+        super({hours_fee_category: @hours_fee_category})
 
     upload_hours_fee: (type, attachment_id)->
         self = @
