@@ -1091,7 +1091,7 @@ class DinnerComputeController extends nb.Controller
             {displayName: '卡金额', name: 'cardAmount'}
             {displayName: '卡次数', name: 'cardNumber'}
             {displayName: '误餐费', name: 'dinnerfee'}
-            {displayName: '备份餐', name: 'dinnerfee'}
+            {displayName: '备份餐', name: 'beifencan'}
         ]
 
     initialize: (gridApi) ->
@@ -1222,6 +1222,9 @@ class DinnerClearingController extends nb.Controller
             {displayName: '卡金额', name: 'cardAmount'}
             {displayName: '卡次数', name: 'cardNumber'}
             {displayName: '误餐费', name: 'dinnerfee'}
+            {displayName: '备份餐', name: 'beifencan'}
+            {displayName: '补贴', name: 'allowance'}
+            {displayName: '总计', name: 'total'}
         ]
 
     initialize: (gridApi) ->
@@ -1283,6 +1286,20 @@ class DinnerClearingController extends nb.Controller
             self.Evt.$send("dinner_fees:calc:error", erorr_msg) if erorr_msg
             self.loadRecords()
 
+    upload_settles: (type, attachment_id)->
+        self = @
+        params = {type: type, attachment_id: attachment_id, month: @currentCalcTime()}
+        @show_error_names = false
+
+        @http.post("/api/dinner_settles/import", params).success (data, status) ->
+            if data.error_count > 0
+                self.show_error_names = true
+                self.error_names = data.error_names
+
+                self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
+            else
+                self.toaster.pop('error', '提示', '导入成功')
+
 class DinnerChangesController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerChange', 'toaster','$q']
 
@@ -1328,12 +1345,21 @@ class DinnerChangesController extends nb.Controller
                 cellTooltip: (row) ->
                     return row.entity.departmentName
             }
-            {displayName: '班制', name: 'shiftsType'}
-            {displayName: '驻地', name: 'location'}
-            {displayName: '餐费区域', name: 'area'}
-            {displayName: '卡金额', name: 'cardAmount'}
-            {displayName: '卡次数', name: 'cardNumber'}
-            {displayName: '误餐费', name: 'dinnerfee'}
+            {displayName: '信息发生时间', name: 'createdAt'}
+            {displayName: '信息种类', name: 'category'}
+            {
+                displayName: '处理'
+                field: '查看'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-panel
+                        template-url="partials/welfares/dinners/change_deal.html"
+                        locals="{change: row.entity}">
+                        查看
+                    </a>
+                </div>
+                '''
+            }
         ]
 
     loadInitialData: (options) ->
