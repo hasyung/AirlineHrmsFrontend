@@ -171,7 +171,7 @@
             .resume-section-left(style="flex: 0 0 150px;")
                 h4 教育经历
             .resume-section-right(flex)
-                div.resume-cell(ng-repeat="edu in educationBackground")
+                div.resume-cell(ng-repeat="edu in ctrl.eduBefore")
                     .resume-row
                         .resume-item
                             label.control-label 入学日期
@@ -197,6 +197,37 @@
                         .resume-item
                             label.control-label 证明人
                             .form-content(ng-bind="edu.witness")
+        section.resume-section(layout)
+            .resume-section-left(style="flex: 0 0 150px;")
+                h4 到川航后教育经历
+            .resume-section-right(flex)
+                div.resume-cell(ng-repeat="edu in ctrl.eduAfter")
+                    .resume-row
+                        .resume-item
+                            label.control-label 入学日期
+                            .form-content(ng-bind="edu.admissionDate  | date:'yyyy-MM-dd'")
+                        .resume-item
+                            label.control-label 毕业日期
+                            .form-content(ng-bind="edu.graduationDate | date:'yyyy-MM-dd'")
+                    .resume-row
+                        .resume-item
+                            label.control-label 毕业院校
+                            .form-content(ng-bind="edu.school")
+                        .resume-item
+                            label.control-label 专业
+                            .form-content(ng-bind="edu.major")
+                    .resume-row
+                        .resume-item
+                            label.control-label 学历
+                            .form-content(ng-bind="edu.educationBackground.displayName")
+                        .resume-item
+                            label.control-label 学位
+                            .form-content(ng-bind="edu.degree.displayName")
+                    .resume-row
+                        .resume-item
+                            label.control-label 证明人
+                            .form-content(ng-bind="edu.witness")
+
         section.resume-section(layout)
             .resume-section-left(style="flex: 0 0 150px;")
                 h4 工作后培训经历
@@ -285,11 +316,3 @@
                             label.control-label 工作描述
                             .form-content(ng-bind="work.jobDesc")
 
-                    //- ul.nice-table
-                    //-     li.nice-table-row(ng-repeat="other in resume.familyMembers | filterBy: ['relation']: 'other' track by $index")
-                    //-         span.nt-cell.nt-cell-md(ng-bind="other.name")
-                    //-         span.nt-cell.nt-cell-sm(ng-bind="other.relationType")
-                    //-         span.nt-cell.nt-cell-sm(ng-bind="other.gender")
-                    //-         span.nt-cell.nt-cell-md(ng-bind="other.birthday  | date:'yyyy-MM-dd'")
-                    //-         span.nt-cell.nt-cell-lg(ng-bind="other.residenceBooklet")
-                    //-         span.nt-cell.nt-cell-lg(ng-bind="other.company")

@@ -347,6 +347,8 @@ class ProfileCtrl extends nb.Controller
         resume.$refresh().$then (resume) ->
             self.workBefore = _.filter(resume.workExperiences, _.matches({'category': 'before'}))
             self.workAfter = _.filter resume.workExperiences, _.matches({'category': 'after'})
+            self.eduBefore = _.filter(resume.educationExperiences, _.matches({'category': 'before'}))
+            self.eduAfter = _.filter resume.educationExperiences, _.matches({'category': 'after'})
 
 
 
