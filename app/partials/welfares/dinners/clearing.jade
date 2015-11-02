@@ -23,22 +23,61 @@
                     md-menu
                         md-button.md-primary.md-raised(
                             ng-click="$mdOpenMenu($event)"
-                            ng-disabled="ctrl.calcing"
-                            ) 导入
-                        md-menu-content
-                            md-menu-item()
-                                a.md-button(flex
-                                    download
-                                    ng-href="/api/basic_salaries/export_nc?month={{ctrl.currentCalcTime()}}"
-                                    href="javascript:"
-                                ) NC导入表
-                span
-                    md-button.md-raised.md-primary(
-                        ng-click="ctrl.exeCalc()"
-                        ng-disabled="ctrl.calcing"
-                    ) 计算
+                            ng-disabled="ctrl.calcing || ctrl.upload_start"
+                            ) 导入备份餐数据
+                        md-menu-content()
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_file', testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="ctrl.upload_start=false;ctrl.upload_settles('北头股份明细表', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 北头股份明细表
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_file', testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="ctrl.upload_start=false;ctrl.upload_settles('北头股份总表', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 北头股份总表
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_file', testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="ctrl.upload_start=false;ctrl.upload_settles('机关股份明细', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 机关股份明细
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_file', testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="ctrl.upload_start=false;ctrl.upload_settles('机关股份总表', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 机关股份总表
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_file', testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="ctrl.upload_start=false;ctrl.upload_settles('重庆食堂充值表', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 重庆食堂充值表
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_file', testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="ctrl.upload_start=false;ctrl.upload_settles('昆明食堂充值表', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 昆明食堂充值表
                 span
                     md-menu(ng-init="selectedRows=[]")
+                        md-button.md-primary.md-raised(
+                            ng-click="$mdOpenMenu($event)"
+                            ng-disabled="ctrl.calcing"
+                            ) 计算
+                        md-menu-content
+                            md-menu-item()
+                                md-button(
+                                    ng-click="ctrl.exeCalc({type: '餐卡数据'})"
+                                    ng-disabled="ctrl.calcing"
+                                ) 餐卡数据
+                            md-menu-item()
+                                md-button(
+                                    ng-click="ctrl.exeCalc({type: '重庆和昆明食堂数据'})"
+                                    ng-disabled="ctrl.calcing"
+                                ) 重庆和昆明食堂数据
+
+                span
+                    md-menu
                         md-button.md-primary.md-raised(
                             ng-click="$mdOpenMenu($event)"
                             ng-disabled="ctrl.calcing || ctrl.records.length==0"
@@ -47,9 +86,21 @@
                             md-menu-item()
                                 a.md-button(flex
                                     download
-                                    ng-href="/api/basic_salaries/export_nc?month={{ctrl.currentCalcTime()}}"
+                                    ng-href="/api/dinner_settles/export?type=食堂拨付表"
                                     href="javascript:"
-                                ) NC导入表
+                                ) 食堂拨付表
+                            md-menu-item()
+                                a.md-button(flex
+                                    download
+                                    ng-href="/api/dinner_settles/export?type=重庆食堂拨付表"
+                                    href="javascript:"
+                                ) 重庆食堂拨付表
+                            md-menu-item()
+                                a.md-button(flex
+                                    download
+                                    ng-href="/api/dinner_settles/export?type=昆明食堂拨付表"
+                                    href="javascript:"
+                                ) 昆明食堂拨付表
 
         div(nb-grid
             column-defs="ctrl.columnDef"
@@ -59,3 +110,4 @@
             grid-row-edit
             on-register-api="ctrl.initialize(gridApi)"
             safe-src="ctrl.records")
+
