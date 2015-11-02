@@ -1,4 +1,6 @@
-.resume-wrap(ng-init="current.$refresh();resume=current.resume.$refresh();" style="max-width: 960px;")
+.resume-wrap(
+    ng-init="current.$refresh();resume=current.resume.$refresh(); ctrl.distinguish(current.resume)"
+    style="max-width: 960px;")
     .resume-header
         span {{ resume.name }}
         | 个人履历
@@ -168,112 +170,120 @@
         section.resume-section(layout)
             .resume-section-left(style="flex: 0 0 150px;")
                 h4 教育经历
-            .resume-section-right(flex ng-repeat="edu in resume.educationExperiences")
-                .resume-row
-                    .resume-item
-                        label.control-label 入学日期
-                        .form-content(ng-bind="edu.admissionDate  | date:'yyyy-MM-dd'")
-                    .resume-item
-                        label.control-label 毕业日期
-                        .form-content(ng-bind="edu.graduationDate | date:'yyyy-MM-dd'")
-                .resume-row
-                    .resume-item
-                        label.control-label 毕业院校
-                        .form-content(ng-bind="edu.school")
-                    .resume-item
-                        label.control-label 专业
-                        .form-content(ng-bind="edu.major")
-                .resume-row
-                    .resume-item
-                        label.control-label 学历
-                        .form-content(ng-bind="edu.educationBackground.displayName")
-                    .resume-item
-                        label.control-label 学位
-                        .form-content(ng-bind="edu.degree.displayName")
-                .resume-row
-                    .resume-item
-                        label.control-label 证明人
-                        .form-content(ng-bind="edu.witness")
+            .resume-section-right(flex)
+                div.resume-cell(ng-repeat="edu in educationBackground")
+                    .resume-row
+                        .resume-item
+                            label.control-label 入学日期
+                            .form-content(ng-bind="edu.admissionDate  | date:'yyyy-MM-dd'")
+                        .resume-item
+                            label.control-label 毕业日期
+                            .form-content(ng-bind="edu.graduationDate | date:'yyyy-MM-dd'")
+                    .resume-row
+                        .resume-item
+                            label.control-label 毕业院校
+                            .form-content(ng-bind="edu.school")
+                        .resume-item
+                            label.control-label 专业
+                            .form-content(ng-bind="edu.major")
+                    .resume-row
+                        .resume-item
+                            label.control-label 学历
+                            .form-content(ng-bind="edu.educationBackground.displayName")
+                        .resume-item
+                            label.control-label 学位
+                            .form-content(ng-bind="edu.degree.displayName")
+                    .resume-row
+                        .resume-item
+                            label.control-label 证明人
+                            .form-content(ng-bind="edu.witness")
         section.resume-section(layout)
             .resume-section-left(style="flex: 0 0 150px;")
                 h4 工作后培训经历
             .resume-section-right(flex)
-                .resume-row
-                    .resume-item
-                        label.control-label 开始日期
-                        .form-content 2010-05-25
-                    .resume-item
-                        label.control-label 结束日期
-                        .form-content 2010-10-25
-                .resume-row
-                    .resume-item
-                        label.control-label 培训课程
-                        .form-content HR专业培训
-                    .resume-item
-                        label.control-label 培训课时
-                        .form-content 100
-                .resume-row
-                    .resume-item
-                        label.control-label 是否全勤
-                        .form-content 全勤
-                    .resume-item
-                        label.control-label 考核成绩
-                        .form-content 90
-                .resume-row
-                    .resume-item.auto-height
-                        label.control-label 培训内容
-                        .form-content 提高员工忠诚度，增强员工适应度，提高员工工作效率，提高员工归属感，企业文化与理念，发展目标与愿景，企业规章制度，工作职责与方式。
+                div.resume-cell
+                    .resume-row
+                        .resume-item
+                            label.control-label 开始日期
+                            .form-content 2010-05-25
+                        .resume-item
+                            label.control-label 结束日期
+                            .form-content 2010-10-25
+                    .resume-row
+                        .resume-item
+                            label.control-label 培训课程
+                            .form-content HR专业培训
+                        .resume-item
+                            label.control-label 培训课时
+                            .form-content 100
+                    .resume-row
+                        .resume-item
+                            label.control-label 是否全勤
+                            .form-content 全勤
+                        .resume-item
+                            label.control-label 考核成绩
+                            .form-content 90
+                    .resume-row
+                        .resume-item.auto-height
+                            label.control-label 培训内容
+                            .form-content 提高员工忠诚度，增强员工适应度，提高员工工作效率，提高员工归属感，企业文化与理念，发展目标与愿景，企业规章制度，工作职责与方式。
         section.resume-section(layout)
             .resume-section-left(style="flex: 0 0 150px;")
                 h4 工作经历
-            .resume-section-right(flex ng-repeat="work in resume.workExperiences")
-                .resume-row
-                    .resume-item
-                        label.control-label 开始日期
-                        .form-content(ng-bind="work.startDate | date:'yyyy-MM-dd'")
-                    .resume-item
-                        label.control-label 结束日期
-                        .form-content(ng-bind="work.endDate | date:'yyyy-MM-dd'")
-                .resume-row
-                    .resume-item
-                        label.control-label 单位名称
-                        .form-content(ng-bind="work.company")
-                    .resume-item
-                        label.control-label 任职部门
-                        .form-content(ng-bind="work.department")
-                .resume-row
-                    .resume-item.block
-                        label.control-label 担任职位
-                        .form-content(ng-bind="work.position")
-                    .resume-item
-                        label.control-label 证明人
-                        .form-content(ng-bind="work.witness")
-                .resume-row
-                    .resume-item.auto-height
-                        label.control-label 工作描述
-                        .form-content(ng-bind="work.jobDesc")
+            .resume-section-right(flex)
+                div.resume-cell(ng-repeat="work in ctrl.workBefore")
+                    .resume-row
+                        .resume-item
+                            label.control-label 开始日期
+                            .form-content(ng-bind="work.startDate | date:'yyyy-MM-dd'")
+                        .resume-item
+                            label.control-label 结束日期
+                            .form-content(ng-bind="work.endDate | date:'yyyy-MM-dd'")
+                    .resume-row
+                        .resume-item
+                            label.control-label 单位名称
+                            .form-content(ng-bind="work.company")
+                        .resume-item
+                            label.control-label 任职部门
+                            .form-content(ng-bind="work.department")
+                    .resume-row
+                        .resume-item.block
+                            label.control-label 担任职位
+                            .form-content(ng-bind="work.position")
+                        .resume-item
+                            label.control-label 证明人
+                            .form-content(ng-bind="work.witness")
+                    .resume-row
+                        .resume-item.auto-height
+                            label.control-label 工作描述
+                            .form-content(ng-bind="work.jobDesc")
         section.resume-section.last(layout)
             .resume-section-left(style="flex: 0 0 150px;")
                 h4 到川航后任职记录
             .resume-section-right(flex)
-                .resume-row
-                    .resume-item
-                        label.control-label 开始日期
-                        .form-content 2010-03
-                    .resume-item
-                        label.control-label 结束日期
-                        .form-content 至今
-                .resume-row
-                    .resume-item
-                        label.control-label 担任职务
-                        .form-content 人事主管
-                    .resume-item
-                        label.control-label 任职部门
-                        .form-content 人力资源部
-                .resume-row
-                    .resume-item
-                        label.control-label 证明人
-                        .form-content 段红
+                div.resume-cell(ng-repeat="work in ctrl.workAfter")
+                    .resume-row
+                        .resume-item
+                            label.control-label 开始日期
+                            .form-content(ng-bind="work.startDate | date:'yyyy-MM-dd'")
+                        .resume-item
+                            label.control-label 结束日期
+                            .form-content(ng-bind="work.endDate | date:'yyyy-MM-dd'")
+                    .resume-row
+                        .resume-item
+                            label.control-label 任职部门
+                            .form-content(ng-bind="work.department")
+                        .resume-item.block
+                            label.control-label 担任职位
+                            .form-content(ng-bind="work.position")
+                    .resume-row
+                        .resume-item
+                            label.control-label 证明人
+                            .form-content(ng-bind="work.witness")
+                    .resume-row
+                        .resume-item.auto-height
+                            label.control-label 工作描述
+                            .form-content(ng-bind="work.jobDesc")
 
                     //- ul.nice-table
                     //-     li.nice-table-row(ng-repeat="other in resume.familyMembers | filterBy: ['relation']: 'other' track by $index")
