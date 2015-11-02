@@ -1,1 +1,16 @@
-h1 变动信息
+.app-content-wrapper(flex ng-controller="dinnerChangesCtrl as ctrl")
+    div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+
+    div.ui-grid-container.mt5
+        md-toolbar
+            .md-toolbar-tools
+                h2 变动信息列表
+                span(flex)
+
+        div(nb-grid
+            column-defs="ctrl.columnDef"
+            export-api
+            grid-selection
+            grid-edit
+            grid-row-edit
+            safe-src="ctrl.records")

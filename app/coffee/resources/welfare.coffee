@@ -88,6 +88,20 @@ dinnerSettle = (restmod, RMUtils, $Evt) ->
                     this.$refresh(tableState)
     }
 
+dinnerChange = (restmod, RMUtils, $Evt) ->
+    restmod.model('/dinner_changes').mix 'nbRestApi', {
+        $config:
+            jsonRootSingle: 'dinner_change'
+            jsonRootMany: 'dinner_changes'
+
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+        $extend:
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+    }
+
 BirthAllowance = (restmod, RMUtils, $Evt) ->
     restmod.model('/birth_allowances').mix 'nbRestApi', 'DirtyModel', {
         $config:
@@ -227,4 +241,5 @@ resources.factory 'AnnuityChange', ['restmod', 'RMUtils', '$nbEvent', AnnuityCha
 resources.factory 'DinnerPersonSetup', ['restmod', 'RMUtils', '$nbEvent', DinnerPersonSetup]
 resources.factory 'DinnerRecord', ['restmod', 'RMUtils', '$nbEvent', dinnerRecord]
 resources.factory 'DinnerSettle', ['restmod', 'RMUtils', '$nbEvent', dinnerSettle]
+resources.factory 'DinnerChange', ['restmod', 'RMUtils', '$nbEvent', dinnerChange]
 resources.factory 'BirthAllowance', ['restmod', 'RMUtils', '$nbEvent', BirthAllowance]

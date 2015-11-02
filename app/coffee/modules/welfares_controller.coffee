@@ -1091,6 +1091,7 @@ class DinnerComputeController extends nb.Controller
             {displayName: '卡金额', name: 'cardAmount'}
             {displayName: '卡次数', name: 'cardNumber'}
             {displayName: '误餐费', name: 'dinnerfee'}
+            {displayName: '备份餐', name: 'dinnerfee'}
         ]
 
     initialize: (gridApi) ->
@@ -1115,12 +1116,11 @@ class DinnerComputeController extends nb.Controller
         @year_list = @$getYears()
         @month_list = @$getMonths()
 
-        if @month_list.length - 2 >=0
-            @currentYear = @year_list[@year_list.length - 1]
-            @currentMonth = @month_list[@month_list.length - 2]
-        else
-            @currentYear = @year_list[@year_list.length - 1]
-            @currentMonth = @month_list[0]
+        @currentYear = @year_list[@year_list.length - 1]
+        @currentMonth = @month_list[@month_list.length - 1]
+
+        if @currentMonth < 12
+            @month_list.push(parseInt(@currentMonth, 10)+1)
 
     loadInitialData: (options) ->
         args = {month: @currentCalcTime()}
@@ -1155,6 +1155,20 @@ class DinnerComputeController extends nb.Controller
             # @Model => String???
             self.Evt.$send("dinner_fees:calc:error", erorr_msg) if erorr_msg
             self.loadRecords()
+
+    upload_copy: (type, attachment_id)->
+        self = @
+        params = {type: type, attachment_id: attachment_id, month: @currentCalcTime()}
+        @show_error_names = false
+
+        @http.post("/api/dinner_fees/import", params).success (data, status) ->
+            if data.error_count > 0
+                self.show_error_names = true
+                self.error_names = data.error_names
+
+                self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
+            else
+                self.toaster.pop('error', '提示', '导入成功')
 
 class DinnerClearingController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerSettle', 'toaster','$q']
@@ -1232,12 +1246,8 @@ class DinnerClearingController extends nb.Controller
         @year_list = @$getYears()
         @month_list = @$getMonths()
 
-        if @month_list.length - 2 >=0
-            @currentYear = @year_list[@year_list.length - 1]
-            @currentMonth = @month_list[@month_list.length - 2]
-        else
-            @currentYear = @year_list[@year_list.length - 1]
-            @currentMonth = @month_list[0]
+        @currentYear = @year_list[@year_list.length - 1]
+        @currentMonth = @month_list[@month_list.length - 1]
 
     loadInitialData: (options) ->
         args = {month: @currentCalcTime()}
@@ -1273,7 +1283,68 @@ class DinnerClearingController extends nb.Controller
             self.Evt.$send("dinner_fees:calc:error", erorr_msg) if erorr_msg
             self.loadRecords()
 
+class DinnerChangesController extends nb.Controller
+    @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerChange', 'toaster','$q']
 
+    constructor: (@http, @scope, @Evt, @DinnerChange, @toaster, @q) ->
+        options = null
+
+        @loadInitialData(options)
+
+        @filterOptions = {
+            name: 'dinnerchanges'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '员工姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+            ]
+        }
+
+        @columnDef = [
+            {displayName: '员工编号', name: 'employeeNo'}
+            {
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+            }
+            {displayName: '班制', name: 'shiftsType'}
+            {displayName: '驻地', name: 'location'}
+            {displayName: '餐费区域', name: 'area'}
+            {displayName: '卡金额', name: 'cardAmount'}
+            {displayName: '卡次数', name: 'cardNumber'}
+            {displayName: '误餐费', name: 'dinnerfee'}
+        ]
+
+    loadInitialData: (options) ->
+        args = options || {}
+        @changes = @DinnerChange.$collection(args).$fetch()
+
+    # search: (tableState) ->
+    #     tableState = {} unless tableState
+    #     tableState['month'] = @currentCalcTime()
+    #     tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+    #     @records.$refresh(tableState)
 
 class BirthAllowanceController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'BirthAllowance', 'Employee', 'toaster']
@@ -1381,5 +1452,6 @@ app.controller 'dinnerCtrl', DinnerController
 app.controller 'dinnerPersonalCtrl', DinnerPersonalController
 app.controller 'dinnerComputeCtrl', DinnerComputeController
 app.controller 'dinnerClearingCtrl', DinnerClearingController
+app.controller 'dinnerChangesCtrl', DinnerChangesController
 
 app.controller 'birthAllowanceCtrl', BirthAllowanceController
