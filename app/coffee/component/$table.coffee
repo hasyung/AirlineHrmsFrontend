@@ -378,10 +378,13 @@ conditionInputContainer = ($enum) ->
 
 NbFilterDirective = ["$nbEvent", "$enum", ($Evt, $enum)->
     template = '''
-        <md-content class="search-container">
+        <md-content class="search-container" ng-init="doorIsOpen=false" ng-class="{'open-door': doorIsOpen}">
             <md-toolbar>
                 <div class="md-toolbar-tools">
                     <h2>筛选条件</h2>
+                    <button class="search-door" ng-click="doorIsOpen=!doorIsOpen">
+                        <md-icon md-svg-src="md-toggle-arrow" ng-class="{'toggled': doorIsOpen}"></md-icon>
+                    </button>
                     <div flex></div>
                     <md-button class="md-primary md-raised" nb-dialog template-url="partials/component/table/save_filter_dialog.html">保存</md-button>
                     <md-select ng-model="filter.serializedFilter"
