@@ -1026,6 +1026,21 @@ class DinnerPersonalController extends nb.Controller
         dinner.$save().$then () ->
             self.configurations.$refresh()
 
+    suspendDinner: (dinner) ->
+        self = @
+        dinner.isSuspend = true
+        dinner.shiftsType = null
+        dinner.area = null
+        dinner.cardAmount = 0
+        dinner.workingFee = 0
+        dinner.breakfastNumber = 0
+        dinner.lunchNumber = 0
+        dinner.dinnerNumber = 0
+        dinner.changeDate = new Date()
+        dinner.$save().$then () ->
+            self.configurations.$refresh()
+
+
     loadDefaultConfig: (params, dinner) ->
         if params.area && params.shifts_type
 
