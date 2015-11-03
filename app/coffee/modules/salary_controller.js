@@ -98,7 +98,7 @@
       this.SALARY_SETTING = SALARY_SETTING;
       self = this;
       this.initialize();
-      this.variables = ['调档时间', '驾驶经历时间', '飞行时间', '员工学历', '员工职级', '去年年度绩效', '本企业经历时间', '无人为飞行事故', '无安全严重差错'];
+      this.variables = ['调档年限', '驾驶经历年限', '教员经历年限', '飞行时间', '员工学历', '员工职级', '去年年度绩效', '本企业经历年限', '无人为飞行事故年限', '无安全严重差错年限', '高原特殊机场飞行资格'];
     }
 
     SalaryController.prototype.queryVariables = function(text) {
