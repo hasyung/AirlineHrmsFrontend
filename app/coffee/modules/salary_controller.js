@@ -243,7 +243,7 @@
       if (input && angular.isDefined(input)) {
         result = input['format_cell'];
         if (result && angular.isDefined(result)) {
-          vars = ['transfer_years', 'drive_work_value', 'teacher_drive_years', 'fly_time_value', 'job_title_degree', 'education_background', 'last_year_perf', 'join_scal_years', 'no_subjective_accident', 'no_serious_security_error'];
+          vars = ['transfer_years', 'drive_work_years', 'teacher_drive_years', 'fly_time_value', 'job_title_degree', 'education_background', 'last_year_perf', 'join_scal_years', 'no_subjective_accident', 'no_serious_security_error', 'can_fly_highland_special'];
           angular.forEach(vars, function(item) {
             return result = result.replace('%{' + item + '}', input[item]);
           });
@@ -269,15 +269,16 @@
       }
       hash = {
         '调档时间': '%{transfer_years}',
-        '驾驶经历时间': '%{drive_work_value}',
-        '教员经历时间': '%{teacher_drive_years}',
+        '驾驶经历年限': '%{drive_work_years}',
+        '教员经历年限': '%{teacher_drive_years}',
         '飞行时间': '%{fly_time_value}',
         '员工职级': '%{job_title_degree}',
         '员工学历': '%{education_background}',
         '去年年度绩效': '%{last_year_perf}',
         '本企业经历时间': '%{join_scal_years}',
-        '无人为飞行事故': '%{no_subjective_accident}',
-        '无安全严重差错': '%{no_serious_security_error}'
+        '无人为飞行事故年限': '%{no_subjective_accident_years}',
+        '无安全严重差错年限': '%{no_serious_security_error_years}',
+        '高原特殊机场飞行资格': '%{can_fly_highland_special}'
       };
       result = expr;
       angular.forEach(hash, function(value, key) {
@@ -687,10 +688,10 @@
 
     SalaryExchangeController.prototype.service_b = function(current) {
       var setting;
-      if (!current.baseChannel) {
+      if (!current.baseWage) {
         return;
       }
-      setting = this.$settingHash(current.baseChannel);
+      setting = this.$settingHash(current.baseWage);
       current.basePerformanceMoney = setting.flags[current.baseFlag]['amount'];
       current.baseMoney = this.SALARY_SETTING['global_setting']['minimum_wage'];
       return current.performanceMoney = current.basePerformanceMoney - current.baseMoney;
@@ -698,10 +699,10 @@
 
     SalaryExchangeController.prototype.service_b_flag_array = function(current) {
       var setting;
-      if (!current.baseChannel) {
+      if (!current.baseWage) {
         return;
       }
-      setting = this.$settingHash(current.baseChannel);
+      setting = this.$settingHash(current.baseWage);
       return Object.keys(setting.flags);
     };
 
@@ -811,22 +812,22 @@
 
     SalaryExchangeController.prototype.fly = function(current) {
       var setting;
-      if (!current.baseChannel) {
+      if (!current.baseWage) {
         return;
       }
       if (!current.baseFlag) {
         return;
       }
-      setting = this.$settingHash(current.baseChannel);
+      setting = this.$settingHash(current.baseWage);
       return current.baseMoney = setting.flags[current.baseFlag]['amount'];
     };
 
     SalaryExchangeController.prototype.fly_flag_array = function(current) {
       var setting;
-      if (!current.baseChannel) {
+      if (!current.baseWage) {
         return;
       }
-      setting = this.$settingHash(current.baseChannel);
+      setting = this.$settingHash(current.baseWage);
       return Object.keys(setting.flags);
     };
 
@@ -841,22 +842,22 @@
 
     SalaryExchangeController.prototype.airline = function(current) {
       var setting;
-      if (!current.baseChannel) {
+      if (!current.baseWage) {
         return;
       }
       if (!current.baseFlag) {
         return;
       }
-      setting = this.$settingHash(current.baseChannel);
+      setting = this.$settingHash(current.baseWage);
       return current.baseMoney = setting.flags[current.baseFlag]['amount'];
     };
 
     SalaryExchangeController.prototype.airline_flag_array = function(current) {
       var setting;
-      if (!current.baseChannel) {
+      if (!current.baseWage) {
         return;
       }
-      setting = this.$settingHash(current.baseChannel);
+      setting = this.$settingHash(current.baseWage);
       return Object.keys(setting.flags);
     };
 
@@ -951,13 +952,12 @@
       if (angular.isDefined(options)) {
         angular.extend(args, options);
       }
-      return this.records = this.Model.$collection(args).$fetch();
+      this.records = this.Model.$collection().$fetch();
+      return this.records.$refresh(args);
     };
 
     SalaryBaseController.prototype.search = function(tableState) {
-      if (!tableState) {
-        tableState = {};
-      }
+      tableState = tableState || {};
       tableState['month'] = this.currentCalcTime();
       tableState['per_page'] = this.gridApi.grid.options.paginationPageSize;
       return this.records.$refresh(tableState);
@@ -1048,6 +1048,14 @@
           name: 'addGarnishee',
           headerCellClass: 'editable_cell_header'
         }, {
+          name: "notes",
+          displayName: "说明",
+          enableCellEdit: false,
+          cellTemplate: '<div class="ui-grid-cell-contents">\n    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">\n        {{row.entity.notes || \'无\'}}\n        <popup-template\n            style="padding:8px;border:1px solid #eee;"\n            class="nb-popup org-default-popup-template">\n            <div class="panel-body popup-body">\n                <md-input-container>\n                    <label>说明</label>\n                    <textarea\n                        ng-model="row.entity.notes"\n                        style="resize:none;"\n                        class="reason-input"\n                        readonly></textarea>\n                </md-input-container>\n            </div>\n        </popup-template>\n    </a>\n</div>',
+          cellTooltip: function(row) {
+            return row.entity.notes;
+          }
+        }, {
           name: "remark",
           displayName: "备注",
           headerCellClass: 'editable_cell_header',
@@ -1103,20 +1111,28 @@
           enableCellEdit: false
         }, {
           displayName: '09调资增加保留',
-          name: 'adjustmen_09',
+          name: 'adjustment09',
           enableCellEdit: false
         }, {
           displayName: '14公务用车保留',
-          name: 'bus_14',
+          name: 'bus14',
           enableCellEdit: false
         }, {
           displayName: '14通信补贴保留',
-          name: 'communication_14',
+          name: 'communication14',
           enableCellEdit: false
         }, {
           displayName: '补扣发',
           name: 'addGarnishee',
           headerCellClass: 'editable_cell_header'
+        }, {
+          name: "notes",
+          displayName: "说明",
+          enableCellEdit: false,
+          cellTemplate: '<div class="ui-grid-cell-contents">\n    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">\n        {{row.entity.notes || \'无\'}}\n        <popup-template\n            style="padding:8px;border:1px solid #eee;"\n            class="nb-popup org-default-popup-template">\n            <div class="panel-body popup-body">\n                <md-input-container>\n                    <label>说明</label>\n                    <textarea\n                        ng-model="row.entity.notes"\n                        style="resize:none;"\n                        class="reason-input"\n                        readonly></textarea>\n                </md-input-container>\n            </div>\n        </popup-template>\n    </a>\n</div>',
+          cellTooltip: function(row) {
+            return row.entity.notes;
+          }
         }, {
           name: "remark",
           displayName: "备注",
@@ -1159,6 +1175,14 @@
           displayName: '补扣发',
           name: 'addGarnishee',
           headerCellClass: 'editable_cell_header'
+        }, {
+          name: "notes",
+          displayName: "说明",
+          enableCellEdit: false,
+          cellTemplate: '<div class="ui-grid-cell-contents">\n    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">\n        {{row.entity.notes || \'无\'}}\n        <popup-template\n            style="padding:8px;border:1px solid #eee;"\n            class="nb-popup org-default-popup-template">\n            <div class="panel-body popup-body">\n                <md-input-container>\n                    <label>说明</label>\n                    <textarea\n                        ng-model="row.entity.notes"\n                        style="resize:none;"\n                        class="reason-input"\n                        readonly></textarea>\n                </md-input-container>\n            </div>\n        </popup-template>\n    </a>\n</div>',
+          cellTooltip: function(row) {
+            return row.entity.notes;
+          }
         }, {
           name: "remark",
           displayName: "备注",
@@ -1225,6 +1249,14 @@
           displayName: '补扣发',
           name: 'addGarnishee',
           headerCellClass: 'editable_cell_header'
+        }, {
+          name: "notes",
+          displayName: "说明",
+          enableCellEdit: false,
+          cellTemplate: '<div class="ui-grid-cell-contents">\n    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">\n        {{row.entity.notes || \'无\'}}\n        <popup-template\n            style="padding:8px;border:1px solid #eee;"\n            class="nb-popup org-default-popup-template">\n            <div class="panel-body popup-body">\n                <md-input-container>\n                    <label>说明</label>\n                    <textarea\n                        ng-model="row.entity.notes"\n                        style="resize:none;"\n                        class="reason-input"\n                        readonly></textarea>\n                </md-input-container>\n            </div>\n        </popup-template>\n    </a>\n</div>',
+          cellTooltip: function(row) {
+            return row.entity.notes;
+          }
         }, {
           name: "remark",
           displayName: "备注",
@@ -1354,6 +1386,14 @@
           name: 'addGarnishee',
           headerCellClass: 'editable_cell_header'
         }, {
+          name: "notes",
+          displayName: "说明",
+          enableCellEdit: false,
+          cellTemplate: '<div class="ui-grid-cell-contents">\n    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">\n        {{row.entity.notes || \'无\'}}\n        <popup-template\n            style="padding:8px;border:1px solid #eee;"\n            class="nb-popup org-default-popup-template">\n            <div class="panel-body popup-body">\n                <md-input-container>\n                    <label>说明</label>\n                    <textarea\n                        ng-model="row.entity.notes"\n                        style="resize:none;"\n                        class="reason-input"\n                        readonly></textarea>\n                </md-input-container>\n            </div>\n        </popup-template>\n    </a>\n</div>',
+          cellTooltip: function(row) {
+            return row.entity.notes;
+          }
+        }, {
           name: "remark",
           displayName: "备注",
           headerCellClass: 'editable_cell_header',
@@ -1408,6 +1448,14 @@
           displayName: '补扣发',
           name: 'addGarnishee',
           headerCellClass: 'editable_cell_header'
+        }, {
+          name: "notes",
+          displayName: "说明",
+          enableCellEdit: false,
+          cellTemplate: '<div class="ui-grid-cell-contents">\n    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">\n        {{row.entity.notes || \'无\'}}\n        <popup-template\n            style="padding:8px;border:1px solid #eee;"\n            class="nb-popup org-default-popup-template">\n            <div class="panel-body popup-body">\n                <md-input-container>\n                    <label>说明</label>\n                    <textarea\n                        ng-model="row.entity.notes"\n                        style="resize:none;"\n                        class="reason-input"\n                        readonly></textarea>\n                </md-input-container>\n            </div>\n        </popup-template>\n    </a>\n</div>',
+          cellTooltip: function(row) {
+            return row.entity.notes;
+          }
         }, {
           name: "remark",
           displayName: "备注",
@@ -1535,6 +1583,14 @@
           name: 'addGarnishee',
           headerCellClass: 'editable_cell_header'
         }, {
+          name: "notes",
+          displayName: "说明",
+          enableCellEdit: false,
+          cellTemplate: '<div class="ui-grid-cell-contents">\n    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">\n        {{row.entity.notes || \'无\'}}\n        <popup-template\n            style="padding:8px;border:1px solid #eee;"\n            class="nb-popup org-default-popup-template">\n            <div class="panel-body popup-body">\n                <md-input-container>\n                    <label>说明</label>\n                    <textarea\n                        ng-model="row.entity.notes"\n                        style="resize:none;"\n                        class="reason-input"\n                        readonly></textarea>\n                </md-input-container>\n            </div>\n        </popup-template>\n    </a>\n</div>',
+          cellTooltip: function(row) {
+            return row.entity.notes;
+          }
+        }, {
           name: "remark",
           displayName: "备注",
           headerCellClass: 'editable_cell_header',
@@ -1593,6 +1649,14 @@
           displayName: '补扣发',
           name: 'addGarnishee',
           headerCellClass: 'editable_cell_header'
+        }, {
+          name: "notes",
+          displayName: "说明",
+          enableCellEdit: false,
+          cellTemplate: '<div class="ui-grid-cell-contents">\n    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">\n        {{row.entity.notes || \'无\'}}\n        <popup-template\n            style="padding:8px;border:1px solid #eee;"\n            class="nb-popup org-default-popup-template">\n            <div class="panel-body popup-body">\n                <md-input-container>\n                    <label>说明</label>\n                    <textarea\n                        ng-model="row.entity.notes"\n                        style="resize:none;"\n                        class="reason-input"\n                        readonly></textarea>\n                </md-input-container>\n            </div>\n        </popup-template>\n    </a>\n</div>',
+          cellTooltip: function(row) {
+            return row.entity.notes;
+          }
         }, {
           name: "remark",
           displayName: "备注",
@@ -1667,6 +1731,14 @@
           displayName: '合计',
           name: 'total',
           enableCellEdit: false
+        }, {
+          name: "notes",
+          displayName: "说明",
+          enableCellEdit: false,
+          cellTemplate: '<div class="ui-grid-cell-contents">\n    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">\n        {{row.entity.notes || \'无\'}}\n        <popup-template\n            style="padding:8px;border:1px solid #eee;"\n            class="nb-popup org-default-popup-template">\n            <div class="panel-body popup-body">\n                <md-input-container>\n                    <label>说明</label>\n                    <textarea\n                        ng-model="row.entity.notes"\n                        style="resize:none;"\n                        class="reason-input"\n                        readonly></textarea>\n                </md-input-container>\n            </div>\n        </popup-template>\n    </a>\n</div>',
+          cellTooltip: function(row) {
+            return row.entity.notes;
+          }
         }, {
           name: "remark",
           displayName: "备注",
