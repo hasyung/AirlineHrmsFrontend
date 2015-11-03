@@ -54,7 +54,7 @@ md-dialog.punishment_new(
                         label 卡金额
                         input(ng-model="dinner.cardAmount" required)
                     md-input-container(flex)
-                        label 工作餐
+                        label 现金
                         input(ng-model="dinner.workingFee" required)
 
                 div(layout)
@@ -75,6 +75,12 @@ md-dialog.punishment_new(
 
 
         .md-actions
+            md-button.md-warn.md-raised(
+                type="button"
+                ng-disabled="dinner.isSuspend==true"
+                ng-click="ctrl.suspendDinner(dinner);dialog.close();"
+                ) 暂停发放
+            div(flex)
             md-button(type="button" ng-click="dialog.close()") 取 消
             md-button.md-primary.md-raised(type="submit" ng-disabled="!editDinnerForm.$valid") 确 定
 
