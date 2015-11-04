@@ -200,9 +200,9 @@ class NbFilterCtrl extends nb.FilterController
             </md-chips>
         '''
 
-    @.$inject = ['$scope', '$element', '$attrs', '$parse', '$compile', 'SerializedFilter', '$http','$nbEvent']
+    @.$inject = ['$scope', '$element', '$attrs', '$parse', '$compile', 'SerializedFilter', '$http','$nbEvent', '$enum', 'OrgStore', 'Org']
 
-    constructor: (scope, elem, attrs, $parse, @compile, SerializedFilter, @http, @Evt) ->
+    constructor: (scope, elem, attrs, $parse, @compile, SerializedFilter, @http, @Evt, @enum, @OrgStore, @Org) ->
         options = scope.nbFilter
         @conditionCode = options.name
         defs = options.constraintDefs
@@ -213,13 +213,25 @@ class NbFilterCtrl extends nb.FilterController
             propertyGetter = $parse(val.name)
             template = preCompileTemplate(val)
 
-            constraint = {
-                propertyGetter: propertyGetter
-                template: template
-                displayName: val.displayName
-                active: false
-                name: val.name
-            }
+            if val.params
+                constraint = {
+                    propertyGetter: propertyGetter
+                    template: template
+                    displayName: val.displayName
+                    active: false
+                    name: val.name
+                    type: val.type
+                    enumType: val.params.type
+                }
+            else
+                constraint = {
+                    propertyGetter: propertyGetter
+                    template: template
+                    displayName: val.displayName
+                    active: false
+                    name: val.name
+                    type: val.type
+                }
 
             Object.defineProperties constraint, {
                 destroy: {
@@ -381,11 +393,10 @@ NbFilterDirective = ["$nbEvent", "$enum", ($Evt, $enum)->
         <md-content class="search-container" ng-init="doorIsOpen=false" ng-class="{'open-door': doorIsOpen}">
             <md-toolbar>
                 <div class="md-toolbar-tools">
-                    <h2>筛选条件</h2>
                     <button class="search-door" ng-click="doorIsOpen=!doorIsOpen">
                         <md-icon md-svg-src="md-toggle-arrow" ng-class="{'toggled': doorIsOpen}"></md-icon>
                     </button>
-                    <div flex></div>
+                    <input ng-click="doorIsOpen=!doorIsOpen" class="filter-view" type="text" ng-model="filterView" readonly flex />
                     <md-button class="md-primary md-raised" nb-dialog template-url="partials/component/table/save_filter_dialog.html">保存</md-button>
                     <md-select ng-model="filter.serializedFilter"
                     ng-if="filter.filters.length"
@@ -425,6 +436,135 @@ NbFilterDirective = ["$nbEvent", "$enum", ($Evt, $enum)->
 
     postLink = (scope, elem, attr, ctrl) ->
         ctrl.initialize()
+
+        # 筛选器显示筛选内容功能（新增初版）
+        # $watch的表达式有待寻找更加合适的
+        # 将各项id转换为中文 $enum
+        # 根据各种同类型组件来区分，代码显得丑陋而冗余，待寻找更好的方法
+        scope.$watch ()->
+            ctrl.exportQueryParams()
+
+        , (newVal)->
+            filterView = []
+
+            _.map scope.filter.constraints, (obj) ->
+                if obj.active
+                    if obj.type == 'string'||obj.type == 'month-list'||obj.type == 'year-list'||obj.type == 'perf_category_select'||obj.type == 'performance_select'||obj.type == 'vacation_select'||obj.type == 'salary_change_category_select'||obj.type == 'season-list'||obj.type == 'apply_type_select'||obj.type == 'move_select'
+                        key = obj.displayName
+                        val = obj.exportData() || ' '
+                        filterView.push(key+' : '+val)
+                    else if obj.type == 'muti-enum-search'
+                        valStr = ''
+                        valArr = []
+                        key = obj.displayName
+                        val = obj.exportData() || ' '
+
+                        _.map val, (id) ->
+                            valArr.push(scope.filter.enum.parseLabel(id, obj.enumType))
+
+                        valStr = valArr.join ','
+
+                        filterView.push(key+' : '+valStr)
+                    else if obj.type == 'boolean'
+                        key = obj.displayName
+                        val = obj.exportData()
+                        switch val
+                            when undefined then val=' '
+                            when 'true' then val='是'
+                            when 'false' then val='否'
+                        filterView.push(key+' : '+val)
+                    else if obj.type == 'date-range'
+                        key = obj.displayName
+                        val = obj.exportData() || ' '
+                        if val.from==undefined || val.to==undefined
+                            val=' '
+                            filterView.push(key+' : '+val)
+                        else
+                            filterView.push(key+' : '+moment(val.from).format('YYYY-MM-DD')+'到'+moment(val.to).format('YYYY-MM-DD'))
+                    else if obj.type == 'month-range'
+                        key = obj.displayName
+                        val = obj.exportData() || ' '
+                        if val.from==undefined || val.to==undefined
+                            val=' '
+                            filterView.push(key+' : '+val)
+                        else
+                            filterView.push(key+' : '+val.from+'到'+val.to)
+                    else if obj.type == 'date'
+                        key = obj.displayName
+                        val = obj.exportData() || ' '
+                        filterView.push(key+' : '+moment(val).format('YYYY-MM-DD'))
+                    else if obj.type == 'select'
+                        key = obj.displayName
+                        val = obj.exportData() || ' '
+                        filterView.push(key+' : '+scope.filter.enum.parseLabel(val, obj.enumType))
+                    else if obj.type == 'annuity_status_select'
+                        key = obj.displayName
+                        val = obj.exportData() || ' '
+                        switch val
+                            when undefined then val=' '
+                            when 'true' then val='在缴'
+                            when 'false' then val='退出'
+                        filterView.push(key+' : '+val)
+                    else if obj.type == 'workflow_status_select'
+                        key = obj.displayName
+                        val = obj.exportData() || ' '
+                        switch val
+                            when undefined then val=' '
+                            when 'rejected' then val='已驳回'
+                            when 'checking' then val='审批中'
+                            when 'accepted' then val='已通过'
+                            when 'actived' then val='已生效'
+                            when 'repeal' then val='已撤销'
+                        filterView.push(key+' : '+val)
+                    else if obj.type == 'leave_job_state_select'
+                        key = obj.displayName
+                        val = obj.exportData() || ' '
+                        switch val
+                            when undefined then val=' '
+                            when 'true' then val='已发起'
+                            when 'false' then val='未发起'
+                        filterView.push(key+' : '+val)
+                    else if obj.type == 'allege_result_select'
+                        key = obj.displayName
+                        val = obj.exportData() || ' '
+                        switch val
+                            when undefined then val=' '
+                            when 'true' then val='已处理'
+                            when 'false' then val='未处理'
+                        filterView.push(key+' : '+val)
+                    else if obj.type == 'budget_staffing_select'
+                        key = obj.displayName
+                        val = obj.exportData() || ' '
+                        switch val
+                            when undefined then val=' '
+                            when '1' then val='超编'
+                            when '0' then val='正常'
+                            when '-1' then val='缺编'
+                        filterView.push(key+' : '+val)
+                    else if obj.type == 'org-search'
+                        key = obj.displayName
+                        val = obj.exportData() || ' '
+
+                        valStr = ''
+                        valArr = []
+                        orgArr = scope.filter.OrgStore.getOrgsByIds(val)
+                        _.map orgArr, (item) ->
+                            valArr.push item.fullName
+
+                        valStr = valArr.join ' , '
+                        filterView.push(key+' : '+valStr)
+                    else if obj.type == 'string_array'
+                        key = obj.displayName
+                        val = obj.exportData() || ' '
+
+                        valStr = val.join ' , '
+                        filterView.push(key+' : '+valStr)
+
+
+
+
+            scope.filterView = filterView.join(' ; ')
+        , true
 
         scope.search = (queryParams)->
             invalid = []
