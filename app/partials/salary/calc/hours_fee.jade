@@ -56,7 +56,7 @@
                                 flow-file-success="ctrl.upload_start=false;ctrl.upload_hours_fee('飞行员小时费合计表', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 飞行员小时费合计表
                             md-menu-item(
-                                ng-if="ctrl.hours_fee_category=='空勤'"
+                                ng-if="ctrl.hours_fee_category=='空乘'"
                                 flow-init="{target: '/api/attachments/upload_file', testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
                                 flow-file-success="ctrl.upload_start=false;ctrl.upload_hours_fee('空乘小时费合计表', ctrl.parseJSON($message).id);")
@@ -76,14 +76,14 @@
                                 md-button(flex flow-btn type="button") 飞行时间汇总表
 
                             md-menu-item(
-                                ng-if="ctrl.hours_fee_category=='空勤' || ctrl.hours_fee_category=='空保'"
+                                ng-if="ctrl.hours_fee_category=='空乘' || ctrl.hours_fee_category=='空保'"
                                 flow-init="{target: '/api/attachments/upload_file', testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
                                 flow-file-success="ctrl.upload_start=false;ctrl.upload_hours_fee('小时费合计表', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 上浮名单
 
                             md-menu-item(
-                                ng-if="ctrl.hours_fee_category=='空勤' || ctrl.hours_fee_category=='空保'"
+                                ng-if="ctrl.hours_fee_category=='空乘' || ctrl.hours_fee_category=='空保'"
                                 flow-init="{target: '/api/attachments/upload_file', testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
                                 flow-file-success="ctrl.upload_start=false;ctrl.upload_hours_fee('小时费合计表', ctrl.parseJSON($message).id);")
