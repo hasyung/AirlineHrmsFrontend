@@ -14,7 +14,7 @@
                 label(flex-order="4") 人员类别
                 md-select(flex-order="5" ng-model="ctrl.hours_fee_category" style="width:250px" ng-change="ctrl.loadRecords()")
                     md-option(value="飞行员") 飞行员
-                    md-option(value="空勤") 空勤
+                    md-option(value="空乘") 空乘
                     md-option(value="空保") 空保
             span(flex)
 
@@ -59,8 +59,8 @@
                                 ng-if="ctrl.hours_fee_category=='空勤'"
                                 flow-init="{target: '/api/attachments/upload_file', testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
-                                flow-file-success="ctrl.upload_start=false;ctrl.upload_hours_fee('空勤小时费合计表', ctrl.parseJSON($message).id);")
-                                md-button(flex flow-btn type="button") 空勤小时费合计表
+                                flow-file-success="ctrl.upload_start=false;ctrl.upload_hours_fee('空乘小时费合计表', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 空乘小时费合计表
                             md-menu-item(
                                 ng-if="ctrl.hours_fee_category=='空保'"
                                 flow-init="{target: '/api/attachments/upload_file', testChunks: false, uploadMethod: 'POST', singleFile: true}"
