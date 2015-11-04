@@ -19,3 +19,5 @@ div(ng-switch="rootCtrl.current_roles[0]" flex layout)
         include roles_pages/department_leader
     div.ola(ng-switch-default flex layout="row")
         include roles_pages/default_role
+    div.ola(ng-switch-when="hr_normal" flex layout)
+        include roles_pages/department_hr
