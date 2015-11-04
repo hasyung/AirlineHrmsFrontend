@@ -440,6 +440,7 @@ NbFilterDirective = ["$nbEvent", "$enum", ($Evt, $enum)->
         # 筛选器显示筛选内容功能（新增初版）
         # $watch的表达式有待寻找更加合适的
         # 将各项id转换为中文 $enum
+        # 根据各种同类型组件来区分，代码显得丑陋而冗余，待寻找更好的方法
         scope.$watch ()->
             ctrl.exportQueryParams()
 
