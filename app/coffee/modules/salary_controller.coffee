@@ -802,13 +802,13 @@ class SalaryExchangeController
         Object.keys(setting.flags)
 
     airline_hour: (current)->
-        return unless current.airlineHourFee
+        return current.airlineHourMoney = 0 unless current.airlineHourFee
 
         setting = @$settingHash('fly_attendant_hour')
         current.airlineHourMoney = setting[current.airlineHourFee]
 
     security_hour: (current)->
-        return unless current.securityHourFee
+        return current.securityHourMoney = 0 unless current.securityHourFee
 
         setting = @$settingHash('air_security_hour')
         current.securityHourMoney = setting[current.securityHourFee]
