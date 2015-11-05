@@ -70,8 +70,12 @@ md-dialog.punishment_new(
 
                 div(layout)
                     md-input-container(flex)
+                        label 欠费金额
+                        input(ng-model="dinner.deficitAmount" required)
+                    md-input-container(flex)
                         label 变动日期
                         input(ng-model="dinner.changeDate" required bs-datepicker)
+
 
 
         .md-actions
