@@ -16,7 +16,7 @@ block cust_page
                     div(style="font-size: 14px; margin-left: 50px;")
                         md-checkbox.md-primary(
                             ng-model="ctrl.show_merged"
-                            ng-change="ctrl.loadInitialData()"
+                            ng-change="ctrl.changeLoadRule()"
                             ) 是否合并员工合同
 
                     div(flex)

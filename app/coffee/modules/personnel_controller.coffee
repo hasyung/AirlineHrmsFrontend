@@ -946,6 +946,16 @@ class PersonnelDataCtrl extends nb.Controller
     loadSalary: ()->
         console.error '载入' + @calcTime() + '薪酬'
 
+    distinguish: (resume) ->
+        self = @
+
+        resume.$refresh().$then (resume) ->
+            self.workBefore = _.filter(resume.workExperiences, _.matches({'category': 'before'}))
+            self.workAfter = _.filter resume.workExperiences, _.matches({'category': 'after'})
+            self.eduBefore = _.filter(resume.educationExperiences, _.matches({'category': 'before'}))
+            self.eduAfter = _.filter resume.educationExperiences, _.matches({'category': 'after'})
+
+
 
 app.controller('PersonnelSort', PersonnelSort)
 app.controller('LeaveEmployeesCtrl', LeaveEmployeesCtrl)

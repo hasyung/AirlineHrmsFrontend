@@ -1,6 +1,6 @@
 md-dialog.punishment_new(
     style="min-width: 500px;"
-    ng-init="ctrl = dialog.ctrl; dinner = dialog.dinner; dinner.changeDate=null;"
+    ng-init="ctrl = dialog.ctrl; dinner = dialog.dinner.$refresh(); dinner.changeDate=null;"
     )
     form(ng-submit="ctrl.saveDinner(dinner); dialog.close();" name="editDinnerForm")
         md-toolbar.md-accent(md-theme="hrms")
@@ -8,8 +8,6 @@ md-dialog.punishment_new(
                 span 工作餐设置
         md-content
             fieldset(flex)
-                div(style="display:none;")
-                    input(ng-model="dinner.employeeId")
                 div(layout)
                     md-input-container(flex)
                         label 姓名
@@ -34,7 +32,10 @@ md-dialog.punishment_new(
                 div(layout)
                     md-input-container.row-has-value(flex)
                         label 班制
-                        md-select(ng-model="dinner.shiftsType" required)
+                        md-select(
+                            ng-model="dinner.shiftsType"
+                            ng-change="ctrl.loadDefaultConfig({shifts_type: dinner.shiftsType, area: dinner.area, employee_id: dinner.owner.$pk}, dinner)"
+                            required)
                             md-option(value="行政班") 行政班
                             md-option(value="两班倒") 两班倒
                             md-option(value="三班倒") 三班倒
@@ -42,7 +43,10 @@ md-dialog.punishment_new(
                             md-option(value="空勤") 空勤
                     md-input-container.row-has-value(flex)
                         label 餐费区域
-                        md-select(ng-model="dinner.area" required)
+                        md-select(
+                            ng-model="dinner.area"
+                            ng-change="ctrl.loadDefaultConfig({shifts_type: dinner.shiftsType, area: dinner.area, employee_id: dinner.employeeId}, dinner)"
+                            required)
                             md-option(ng-value="area" ng-repeat="area in ctrl.areas") {{area}}
 
                 div(layout)
@@ -50,7 +54,7 @@ md-dialog.punishment_new(
                         label 卡金额
                         input(ng-model="dinner.cardAmount" required)
                     md-input-container(flex)
-                        label 工作餐
+                        label 现金
                         input(ng-model="dinner.workingFee" required)
 
                 div(layout)
@@ -71,6 +75,12 @@ md-dialog.punishment_new(
 
 
         .md-actions
+            md-button.md-warn.md-raised(
+                type="button"
+                ng-disabled="dinner.isSuspend==true"
+                ng-click="ctrl.suspendDinner(dinner);dialog.close();"
+                ) 暂停发放
+            div(flex)
             md-button(type="button" ng-click="dialog.close()") 取 消
             md-button.md-primary.md-raised(type="submit" ng-disabled="!editDinnerForm.$valid") 确 定
 

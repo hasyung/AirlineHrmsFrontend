@@ -1,11 +1,44 @@
 md-content.search-container {
     margin-bottom: 10px;
+    max-height: 64px;
+    overflow: hidden;
     padding: 0 20px;
+
+    &.open-door {
+        max-height: 1000px;
+    }
+
+    .search-door {
+        background-color: #fff;
+        border: 0;
+
+        md-icon {
+            color: $text-hint;
+            transform: translate3d(0, 0, 0) rotate(180deg);
+            transition: transform .25s cubic-bezier(.35, 0, .25, 1);
+
+            &.toggled {
+                transform: translate3d(0, 0, 0) rotate(0);
+            }
+        }
+    }
 
     md-toolbar {
         background-color: #fff;
         border-bottom: 1px solid #000;
         color: $text-title;
+
+        .md-toolbar-tools {
+            padding: 0;
+        }
+
+        .filter-view {
+            border: 1px solid #ddd;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: $font-size-sm;
+            height: 32px;
+        }
 
         .md-button {
             margin-right: 20px;

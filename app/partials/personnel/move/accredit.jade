@@ -1,8 +1,8 @@
-md-dialog.employee_move.browser360
+md-dialog.employee_move
     md-toolbar.md-accent(md-theme="hrms")
         .md-toolbar-tools
             span 派驻设置
-    form(ng-submit="ctrl.newAccreditEmployee(accreditEmployee); dialog.close();" name="newAccreditForm" flex)
+    form(ng-submit="ctrl.newAccreditEmployee(accreditEmployee); dialog.close();" name="newAccreditForm")
         md-content(ng-init="accreditEmployee = {}; ctrl.loadEmp = {};")
             fieldset(flex)
                 div(style="display:none;")

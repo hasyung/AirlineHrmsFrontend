@@ -45,10 +45,10 @@ DinnerPersonSetup = (restmod, RMUtils, $Evt) ->
     }
 
 dinnerRecord = (restmod, RMUtils, $Evt) ->
-    restmod.model('/dinner_records').mix 'nbRestApi', {
+    restmod.model('/dinner_fees').mix 'nbRestApi', {
         $config:
-            jsonRootSingle: 'dinner_record'
-            jsonRootMany: 'dinner_records'
+            jsonRootSingle: 'dinner_fee'
+            jsonRootMany: 'dinner_fees'
 
         owner: {belongsTo: 'Employee', key: 'employee_id'}
 
@@ -56,11 +56,47 @@ dinnerRecord = (restmod, RMUtils, $Evt) ->
             Scope:
                 # 计算(根据年月)
                 compute: (params)->
-                    restmod.model('/dinner_records/compute').mix(
+                    restmod.model('/dinner_fees/compute').mix(
                         $config:
-                            jsonRoot: 'dinner_records'
+                            jsonRoot: 'dinner_fees'
                     ).$search(params)
 
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+    }
+
+dinnerSettle = (restmod, RMUtils, $Evt) ->
+    restmod.model('/dinner_settles').mix 'nbRestApi', {
+        $config:
+            jsonRootSingle: 'dinner_settle'
+            jsonRootMany: 'dinner_settles'
+
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+        $extend:
+            Scope:
+                # 计算(根据年月)
+                compute: (params)->
+                    restmod.model('/dinner_settles/compute').mix(
+                        $config:
+                            jsonRoot: 'dinner_settles'
+                    ).$search(params)
+
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+    }
+
+dinnerChange = (restmod, RMUtils, $Evt) ->
+    restmod.model('/dinner_changes').mix 'nbRestApi', {
+        $config:
+            jsonRootSingle: 'dinner_change'
+            jsonRootMany: 'dinner_changes'
+
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+        $extend:
             Collection:
                 search: (tableState) ->
                     this.$refresh(tableState)
@@ -204,4 +240,6 @@ resources.factory 'AnnuityChange', ['restmod', 'RMUtils', '$nbEvent', AnnuityCha
 #津贴
 resources.factory 'DinnerPersonSetup', ['restmod', 'RMUtils', '$nbEvent', DinnerPersonSetup]
 resources.factory 'DinnerRecord', ['restmod', 'RMUtils', '$nbEvent', dinnerRecord]
+resources.factory 'DinnerSettle', ['restmod', 'RMUtils', '$nbEvent', dinnerSettle]
+resources.factory 'DinnerChange', ['restmod', 'RMUtils', '$nbEvent', dinnerChange]
 resources.factory 'BirthAllowance', ['restmod', 'RMUtils', '$nbEvent', BirthAllowance]
