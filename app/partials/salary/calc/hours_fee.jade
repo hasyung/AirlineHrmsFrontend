@@ -29,8 +29,7 @@
             md-content.sticky-container(flex)
                 .info-body
                     ul
-                        li.tcell(ng-repeat="item in ctrl.error_names")
-                            //- .theader 姓名
+                        li.tcell(style="border-top: 1px solid #ddd;" ng-repeat="item in ctrl.error_names")
                             .tbody {{item}}
 
             .md-actions
