@@ -935,6 +935,26 @@ class DinnerPersonalController extends nb.Controller
                     displayName: '员工编号'
                     type: 'string'
                 }
+                {
+                    name: 'department_ids'
+                    displayName: '机构'
+                    type: 'org-search'
+                }
+                {
+                    name: 'is_employee_owned'
+                    displayName: '员工持卡'
+                    type: 'boolean'
+                }
+                {
+                    name: 'is_suspend'
+                    displayName: '暂停发放'
+                    type: 'boolean'
+                }
+                {
+                    name: 'is_zombie'
+                    displayName: '停发饭卡'
+                    type: 'boolean'
+                }
             ]
         }
 
@@ -1014,6 +1034,19 @@ class DinnerPersonalController extends nb.Controller
                 contract.owner = matched
             else
                 self.loadEmp = params
+
+    getSelectsIds: () ->
+        rows = @scope.$gridApi.selection.getSelectedGridRows()
+        rows.map (row) -> return row.entity.$pk
+
+    batchDelete: (ids) ->
+        self = @
+        params = {}
+        idsStr = ids.join ','
+        params.ids = idsStr
+
+        @http.post('/api/dinner_person_setups/batch_delete', params).success (data) ->
+            self.configurations.$refresh()
 
     newDinner: (dinner) ->
         self = @
