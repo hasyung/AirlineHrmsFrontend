@@ -12,7 +12,7 @@ div.panel-bg-gray(ng-init = "current = panel.employee; current.$refresh();" ng-c
                 md-button.md-fab.resume-button.md-warn(
                     nb-dialog
                     template-url="partials/self/self_resume.html"
-                    locals="{currentUser: current}"
+                    locals="{currentUser: current, ctrl: pdCtrl}"
                 )
                     md-icon(md-svg-src="/images/svg/resume_24px.svg" aria-label="简历")
             .employee-others-info

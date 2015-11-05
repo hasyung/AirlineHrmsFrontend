@@ -1,8 +1,8 @@
 div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
     div(layout)
         md-input-container.row-has-value(flex)
-            label 薪酬通道
-            md-select(ng-model="current.baseChannel" placeholder="请选择" ng-change="exchangeCtrl.airline(current)")
+            label 基础工资
+            md-select(ng-model="current.baseWage" placeholder="请选择" ng-change="exchangeCtrl.airline(current)")
                 md-option(value="air_steward_base") 空乘空保
         md-input-container.row-has-value(flex)
             label 档级

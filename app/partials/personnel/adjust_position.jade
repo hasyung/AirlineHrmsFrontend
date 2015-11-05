@@ -1,11 +1,11 @@
-md-dialog.punishment_new.browser360(
-    style="min-width: 900px; height: 80%;"
+md-dialog.punishment_new(
+    style="min-width: 900px;"
     ng-init="current = dialog.employee.$refresh();request={}"
     )
-    form(flex ng-controller="AdjustPositionCtrl as ctrl" ng-submit="ctrl.adjustPosition(current); dialog.close();" name="newPositionForm")
-        md-toolbar.md-accent(md-theme="hrms")
-            .md-toolbar-tools
-                span 员工调岗
+    md-toolbar.md-accent(md-theme="hrms")
+        .md-toolbar-tools
+            span 员工调岗
+    form(ng-controller="AdjustPositionCtrl as ctrl" ng-submit="ctrl.adjustPosition(current); dialog.close();" name="newPositionForm")
         md-content
             fieldset(flex)
                 div(layout)

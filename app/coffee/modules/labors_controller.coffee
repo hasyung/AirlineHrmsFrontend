@@ -778,10 +778,10 @@ class ContractCtrl extends nb.Controller
                 displayName: '详细',
                 field: '详细',
                 cellTemplate: '''
-                    <div class="ui-grid-cell-contents">
+                    <div class="ui-grid-cell-contents" ng-init="outerScope=grid.appScope.$parent">
                         <a nb-panel
                             template-url="partials/labors/contract/detail.dialog.html"
-                            locals="{contract: row.entity.$refresh()}"> 详细
+                            locals="{contract: row.entity.$refresh(), ctrl: outerScope.ctrl}"> 详细
                         </a>
                     </div>
                 '''
@@ -844,7 +844,11 @@ class ContractCtrl extends nb.Controller
     loadInitialData: () ->
         self = @
 
-        @contracts = @Contract.$collection().$fetch({'show_merged': self.show_merged})
+        @contracts = @Contract.$collection().$fetch().$then () ->
+            self.contracts.$refresh({'show_merged': self.show_merged})
+
+    changeLoadRule: () ->
+        @contracts.$refresh({'show_merged': @show_merged})
 
     search: (tableState) ->
         tableState = tableState || {}
@@ -861,7 +865,7 @@ class ContractCtrl extends nb.Controller
         return if contract && contract.employeeId == 0
 
         @http.post("/api/workflows/Flow::RenewContract", request).then (data)->
-            self.contracts.$refresh()
+            self.contracts.$refresh({'show_merged': self.show_merged})
             msg = data.data.messages
             self.Evt.$send("contract:renew:success", msg) if msg
 
@@ -880,6 +884,18 @@ class ContractCtrl extends nb.Controller
                 self.toaster.pop('error', '提示', '开始时间、结束时间必填，且结束时间需大于开始时间')
                 return
 
+    showDueTime: (contract)->
+        self = @
+        s = contract.startDate
+        e = contract.endDate
+
+        if s && e && s <= e
+            d = moment.range(s, e).diff('days')
+            dueTimeStr = parseInt(d/365)+'年'+(d-parseInt(d/365)*365)+'天'
+            return dueTimeStr
+        else if !e
+            return '无固定'
+
     newContract: (contract)->
         self = @
 
@@ -893,7 +909,7 @@ class ContractCtrl extends nb.Controller
                 return
 
         @contracts.$build(contract).$save().$then ()->
-            self.contracts.$refresh()
+            self.contracts.$refresh({'show_merged': self.show_merged})
 
     clearData: (contract)->
         if contract.isUnfix

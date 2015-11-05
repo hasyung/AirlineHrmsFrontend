@@ -1,0 +1,26 @@
+md-dialog.employee_move(ng-controller="EditableResourceCtrl" style="min-width: 400px;")
+    md-toolbar.md-accent(md-theme="hrms")
+        .md-toolbar-tools
+            span 工作餐变动处理
+    form(ng-submit="save(current.$save(), change_deal_form); dialog.close();" name="change_deal_form")
+        md-content(ng-init="current = dialog.change.$refresh();")
+            fieldset(flex)
+                div(layout)
+                    md-input-container(flex)
+                        label 姓名
+                        input(style="font-size: 14px;" ng-model="current.employeeName" readonly)
+                //- div(layout)
+                //-     md-input-container(flex)
+                //-         label 文件编号
+                //-         input(ng-model="current.fileNo" name="fileNo" required)
+                //- div(layout)
+                //-     md-input-container(flex)
+                //-         label 起始期限(不可修改)
+                //-         input(type="text" bs-datepicker ng-model="current.specialDateFrom" required ng-disabled="true")
+                //-     md-input-container(flex)
+                //-         label 结束期限
+                //-         input(type="text" bs-datepicker ng-model="current.specialDateTo" required)
+
+        .md-actions
+            md-button(type="button" ng-click="cancel(current, $event, change_deal_form);dialog.close()") 取 消
+            md-button.md-primary.md-raised(type="submit") 确 定

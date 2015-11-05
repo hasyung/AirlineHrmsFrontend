@@ -7,10 +7,10 @@ md-dialog.personal_number(ng-controller="calcStepCtrl as stepCtrl" ng-init="amou
         .info-body(style="margin: 10px" ng-if="!stepCtrl.error_msg")
             ul(style="margin: 0px" ng-repeat="text in stepCtrl.step_notes")
                 li.tcell(style="width: auto;")
-                    .tbody(style="border: 0;") {{text}}
+                    .tbody(style="border: 0; height: auto; line-height: normal; text-align: left;") {{text}}
             ul(style="margin: 0px")
                 li.tcell(style="width: auto;")
-                    .tbody(style="border: 0;") 最后金额: {{stepCtrl.amount}}
+                    .tbody(style="border: 0; height: auto; line-height: normal;  text-align: left;") 最后金额: {{stepCtrl.amount}}
 
         .info-body(style="margin: 10px" ng-if="stepCtrl.error_msg")
             | 对不起，没有找到计算过程.
