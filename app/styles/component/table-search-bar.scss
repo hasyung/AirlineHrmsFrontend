@@ -1,11 +1,13 @@
 md-content.search-container {
-    margin-bottom: 10px;
-    max-height: 64px;
-    overflow: hidden;
-    padding: 0 20px;
+    box-shadow: 0 0 5px #ccc;
+    margin-bottom: 20px;
+    overflow: visible;
+    padding: 0;
 
     &.open-door {
-        max-height: 1000px;
+        .form-wrapper {
+            max-height: 1500px;
+        }
     }
 
     .search-door {
@@ -25,16 +27,15 @@ md-content.search-container {
 
     md-toolbar {
         background-color: #fff;
-        border-bottom: 1px solid #000;
         color: $text-title;
+        padding: 0 20px;
 
         .md-toolbar-tools {
             padding: 0;
         }
 
         .filter-view {
-            border: 1px solid #ddd;
-            border-radius: 2px;
+            border: 0;
             cursor: pointer;
             font-size: $font-size-sm;
             height: 32px;
@@ -70,6 +71,22 @@ md-content.search-container {
 
     h2 {
         margin: 0;
+    }
+
+    .form-wrapper {
+        background-color: #fff;
+        box-shadow: 0 3px 3px #ccc;
+        max-height: 0;
+        overflow: hidden;
+        position: absolute;
+        transition: max-height .4s linear;
+        width: 100%;
+        z-index: 10;
+    }
+
+    .search-form {
+        border-top: 1px solid #000;
+        margin: 0 20px;
     }
 
     .search-row {

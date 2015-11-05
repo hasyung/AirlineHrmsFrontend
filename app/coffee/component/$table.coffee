@@ -408,29 +408,30 @@ NbFilterDirective = ["$nbEvent", "$enum", ($Evt, $enum)->
                     </md-select>
                 </div>
             </md-toolbar>
-
-            <form ng-submit="search(filter.exportQueryParams())">
-                <div ng-form="conditionForm" class="search-row" ng-repeat="condition in filter.conditions">
-                    <md-button type="button" class="md-icon-button" ng-click="filter.removeCondition(condition)" ng-disabled="filter.conditions.length <= 1">
-                        <md-icon md-svg-icon="../../images/svg/close.svg"></md-icon>
-                    </md-button>
-                    <!-- Error: [ng:cpws] Can't copy! Making copies of Window or Scope instances is not supported. -->
-                    <md-select ng-model="condition.selectedConstraint">
-                        <md-option ng-value="inert_cons" ng-repeat="inert_cons in filter.inertConstraints() track by inert_cons.name">
-                            {{inert_cons.displayName}}
-                        </md-option>
-                    </md-select>
-                    <condition-input-container></condition-input-container>
-                    <md-button type="button" class="md-icon-button"
-                        ng-show="$last && filter.inertConstraints().length > 0"
-                        ng-click="filter.addNewCondition(filter.inertConstraints()[0])">
-                        <md-icon md-svg-icon="../../images/svg/plus.svg"></md-icon>
-                    </md-button>
-                </div>
-                <div class="search-footer">
-                    <md-button class="md-primary md-raised" type="submit">搜索</md-button>
-                </div>
-            </form>
+            <div class="form-wrapper">
+                <form class="search-form" ng-submit="search(filter.exportQueryParams())">
+                    <div ng-form="conditionForm" class="search-row" ng-repeat="condition in filter.conditions">
+                        <md-button type="button" class="md-icon-button" ng-click="filter.removeCondition(condition)" ng-disabled="filter.conditions.length <= 1">
+                            <md-icon md-svg-icon="../../images/svg/close.svg"></md-icon>
+                        </md-button>
+                        <!-- Error: [ng:cpws] Can't copy! Making copies of Window or Scope instances is not supported. -->
+                        <md-select ng-model="condition.selectedConstraint">
+                            <md-option ng-value="inert_cons" ng-repeat="inert_cons in filter.inertConstraints() track by inert_cons.name">
+                                {{inert_cons.displayName}}
+                            </md-option>
+                        </md-select>
+                        <condition-input-container></condition-input-container>
+                        <md-button type="button" class="md-icon-button"
+                            ng-show="$last && filter.inertConstraints().length > 0"
+                            ng-click="filter.addNewCondition(filter.inertConstraints()[0])">
+                            <md-icon md-svg-icon="../../images/svg/plus.svg"></md-icon>
+                        </md-button>
+                    </div>
+                    <div class="search-footer">
+                        <md-button class="md-primary md-raised" type="submit">搜索</md-button>
+                    </div>
+                </form>
+            </div>
         </md-content>
     '''
 
