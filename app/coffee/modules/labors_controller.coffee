@@ -545,8 +545,9 @@ class AttendanceCtrl extends nb.Controller
     getDate: ()->
         date = moment(new Date("#{this.year}-#{this.month}")).format()
 
-    departmentHrConfirm: ()->
+    departmentHrConfirm: (isConfirm)->
         self = @
+
         params = {summary_date: @getDate()}
 
         @http.put('/api/attendance_summaries/department_hr_confirm', params).then (data)->
