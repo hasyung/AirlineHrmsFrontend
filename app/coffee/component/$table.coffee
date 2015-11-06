@@ -428,7 +428,7 @@ NbFilterDirective = ["$nbEvent", "$enum", ($Evt, $enum)->
                         </md-button>
                     </div>
                     <div class="search-footer">
-                        <md-button class="md-primary md-raised" type="submit">搜索</md-button>
+                        <md-button class="md-primary md-raised" ng-click="doorIsOpen=false" type="submit">搜索</md-button>
                     </div>
                 </form>
             </div>
@@ -449,7 +449,7 @@ NbFilterDirective = ["$nbEvent", "$enum", ($Evt, $enum)->
             filterView = []
 
             _.map scope.filter.constraints, (obj) ->
-                if obj.active
+                if obj.active && obj.exportData()
                     if obj.type == 'string'||obj.type == 'month-list'||obj.type == 'year-list'||obj.type == 'perf_category_select'||obj.type == 'performance_select'||obj.type == 'vacation_select'||obj.type == 'salary_change_category_select'||obj.type == 'season-list'||obj.type == 'apply_type_select'||obj.type == 'move_select'
                         key = obj.displayName
                         val = obj.exportData() || ' '
