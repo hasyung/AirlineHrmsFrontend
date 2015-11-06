@@ -22,20 +22,24 @@ section.org-detail(ng-controller="EditableResourceCtrl")
     .org-info(ng-hide="orgCtrl.state == 'newsub'")
         form(name="orgUpdateForm" ng-submit="save(currentOrg.$save(), orgUpdateForm)")
             fieldset(ng-disabled="!editing")
-                md-input-container
-                    label 名称
-                    input(ng-model="currentOrg.name" required name="orgName")
-                md-input-container
-                    label 编号
-                    input(ng-model="::currentOrg.serialNumber" disabled)
-                md-input-container.row-has-value
-                    label 机构性质
-                    md-select(ng-model="currentOrg.natureId" disabled)
-                        md-option(ng-value="item.id" ng-repeat="item in $enum.get('department_natures')") {{item.label}}
-                md-input-container.row-has-value
-                    label 职级
-                    md-select(ng-model="currentOrg.gradeId" ng-disabled="!editing")
-                        md-option(ng-value="item.id" ng-repeat="item in orgCtrl.dep_grade_array") {{item.label}}
+                div(layout)
+                    md-input-container(flex)
+                        label 名称
+                        input(ng-model="currentOrg.name" required name="orgName")
+                div(layout)
+                    md-input-container(flex)
+                        label 编号
+                        input(ng-model="::currentOrg.serialNumber" disabled)
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 机构性质
+                        md-select(ng-model="currentOrg.natureId" disabled)
+                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('department_natures')") {{item.label}}
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 职级
+                        md-select(ng-model="currentOrg.gradeId" ng-disabled="!editing")
+                            md-option(ng-value="item.id" ng-repeat="item in orgCtrl.dep_grade_array") {{item.label}}
 
 
             .form-actions(ng-hide="!editing")
@@ -46,17 +50,20 @@ section.org-detail(ng-controller="EditableResourceCtrl")
     .org-info(ng-if="orgCtrl.state == 'newsub' " ng-init="neworg = {natureId: currentOrg.natureId}")
         form(novalidate, ng-submit="orgCtrl.newsub(newsubForm, neworg)", name="newsubForm")
             fieldset
-                md-input-container
-                    label 名称
-                    input(ng-model="neworg.name" required name="orgName")
-                md-input-container.row-has-value
-                    label 机构性质
-                    md-select(ng-model="neworg.natureId" ng-disabled="currentOrg.serialNumber.length != 3")
-                        md-option(ng-value="item.id" ng-repeat="item in $enum.get('department_natures')") {{item.label}}
-                md-input-container.row-has-value
-                    label 职级
-                    md-select(ng-model="neworg.gradeId")
-                        md-option(ng-value="item.id" ng-repeat="item in orgCtrl.dep_grade_array") {{item.label}}
+                div(layout)
+                    md-input-container
+                        label 名称
+                        input(ng-model="neworg.name" required name="orgName")
+                div(layout)
+                    md-input-container.row-has-value
+                        label 机构性质
+                        md-select(ng-model="neworg.natureId" ng-disabled="currentOrg.serialNumber.length != 3")
+                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('department_natures')") {{item.label}}
+                div(layout)
+                    md-input-container.row-has-value
+                        label 职级
+                        md-select(ng-model="neworg.gradeId")
+                            md-option(ng-value="item.id" ng-repeat="item in orgCtrl.dep_grade_array") {{item.label}}
                 .form-actions
                     md-button.md-raised.white(type="button" ng-click="orgCtrl.state = 'show'") 取消
                     md-button.skyblue.md-raised(type="submit") 保存

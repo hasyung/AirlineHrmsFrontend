@@ -85,14 +85,15 @@ md-select {
     padding: 2px;
 
     .md-select-value {
-        font-size: $font-size-base;
-        padding-bottom: 0 !important;
+        // font-size: $font-size-base;
+        padding-bottom: 1px !important;
         padding-top: 0;
         transition: padding-left cubic-bezier(.25, .8, .25, 1) .25s;
 
         span {
-            height: inherit;
-            line-height: 26px;
+            // height: inherit;
+            // line-height: 26px;
+            margin-top: -6px;
         }
     }
 
@@ -197,7 +198,7 @@ fieldset[disabled] {
     }
 
     md-input-container {
-        padding-bottom: 9px;
+        // padding-bottom: 9px;
 
         &.mix-height {
             height: 59px;
@@ -213,34 +214,24 @@ fieldset[disabled] {
         }
     }
 
-    .md-default-theme .md-input {
-        color: $text-color;
-    }
-
     .md-input {
+        color: $text-color;
         font-family: $font-family-sans-serif;
-        padding-left: 70px;
+        // padding-left: 70px;
     }
 
     //md-select
-    md-select {
-        @include background-image(linear-gradient(to right, rgba(0, 0, 0, .12) 0, rgba(0, 0, 0, .12) 33%, transparent 0));
-        background-position: 0 28px;
-        background-repeat: repeat-x;
-        background-size: 3px 1px;
-        height: 30px !important;
+    // md-select {
+    //     .md-select-value {
+    //         border: 0;
+    //         padding-bottom: 0 !important;
+    //     }
 
-        .md-select-value {
-            border: 0;
-            padding-bottom: 0 !important;
-        }
+    // }
 
-    }
-
-    .md-default-theme .md-select-value {
-        border-bottom-color: transparent;
+    .md-select-value {
         color: $text-color;
-        padding-left: 70px;
+        padding-left: 90px;
 
     }
     // 模拟 input 处于有值得情况

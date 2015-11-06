@@ -161,6 +161,24 @@
 
 .org-info {
     @include clearfix();
+
+    fieldset {
+        md-input-container {
+            .md-input {
+                padding-left: 0;
+            }
+
+            .md-placeholder {
+                top: -19px;
+            }
+        }
+
+        &[disabled] {
+            .md-input {
+                padding-left: 90px;
+            }
+        }
+    }
 }
 
 .form-actions {
