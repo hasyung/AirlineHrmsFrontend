@@ -140,6 +140,7 @@ class SalaryController extends nb.Controller
                           "manager15_base",             # 基础-管理15
                           "manager12_base",             # 基础-管理12
                           "flyer_legend_base",          # 基础-荣誉级
+                          "flyer_duty_leader_base",     # 基础-责任机长
                           "flyer_leader_base",          # 基础-机长
                           "flyer_copilot_base",         # 基础-副驾
                           "flyer_teacher_A_base",       # 基础-教员A
@@ -227,6 +228,8 @@ class SalaryController extends nb.Controller
         @dynamic_config = @settings[category + '_setting']
         @backup_config = angular.copy(@dynamic_config)
         @editing = false
+
+        console.log @dynamic_config
 
     resetDynamicConfig: ()->
         @dynamic_config = {}
