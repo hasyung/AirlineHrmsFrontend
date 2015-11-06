@@ -13,7 +13,7 @@ class RootController extends nb.Controller
             self.show_main = newVal
 
     backToHome: () ->
-      @show_main = false
-      @rootScope.show_main = false
+        @show_main = false
+        @rootScope.show_main = false
 
 app.controller('RootCtrl', RootController)
