@@ -1394,7 +1394,7 @@ class DinnerChangesController extends nb.Controller
                     return row.entity.departmentName
             }
             {displayName: '信息发生时间', name: 'changeDate'}
-            {displayName: '信息种类', name: 'category'}
+            {displayName: '信息种类', name: 'changeCategory'}
             {
                 displayName: '处理'
                 field: '查看'
