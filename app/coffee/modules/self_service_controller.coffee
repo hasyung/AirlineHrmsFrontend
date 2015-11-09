@@ -240,7 +240,7 @@ class ProfileCtrl extends nb.Controller
                 , '乌兹别克族'  , '门巴族'  , '鄂伦春族'  , '独龙族'  , '塔塔尔族'  , '赫哲族'  , '珞巴族']
 
     dayOnClick: ()->
-        alert('clicked')
+        #
 
     loadInitialData: () ->
         @scope.currentUser = @User.$fetch()
@@ -349,7 +349,6 @@ class ProfileCtrl extends nb.Controller
             self.workAfter = _.filter resume.workExperiences, _.matches({'category': 'after'})
             self.eduBefore = _.filter(resume.educationExperiences, _.matches({'category': 'before'}))
             self.eduAfter = _.filter resume.educationExperiences, _.matches({'category': 'after'})
-
 
 
 class MyRequestCtrl extends nb.Controller
