@@ -30,43 +30,13 @@ Employee = (restmod, RMUtils, $Evt) ->
 
             Record:
                 update_basic_info: ()->
-                    self = this
-
-                    request = {
-                        url: "/api/employees/#{this.id}/update_basic_info"
-                        method: "PUT"
-                    }
-
-                    onSuccess = (res) ->
-                        self.$dispatch 'after-update'
-
-                    this.$send(request, onSuccess)
+                    this.$save()
 
                 update_position_info: ()->
-                    self = this
-
-                    request = {
-                        url: "/api/employees/#{this.id}/update_position_info"
-                        method: "PUT"
-                    }
-
-                    onSuccess = (res) ->
-                        self.$dispatch 'after-update'
-
-                    this.$send(request, onSuccess)
+                    this.$save()
 
                 update_skill_info: ()->
-                    self = this
-
-                    request = {
-                        url: "/api/employees/#{this.id}/update_skill_info"
-                        method: "PUT"
-                    }
-
-                    onSuccess = (res) ->
-                        self.$dispatch 'after-update'
-
-                    this.$send(request, onSuccess)
+                    this.$save()
 
             Collection:
                 search: (tableState) ->
