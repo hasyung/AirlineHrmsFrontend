@@ -22,15 +22,15 @@ div.panel-bg-gray(ng-init = "current = panel.employee; current.$refresh();" ng-c
     .personnel-content.personnel-control
         section.personnel-info-section
             tabset.personnel-tabs(type="pills")
-                tab(heading="基本信息")
+                tab(heading="基本信息" has-permission="employees_show")
                     md-content.nb-card-container(layout="column" md-theme="hrms")
-                        md-card.form-material-section.nb-card(has-permission="employees_update_basic_info")
+                        md-card.form-material-section.nb-card
                             .md-subheader
                                 //- md-icon.form-icon(md-svg-src="/images/svg/personnel_24.svg" alt="基本信息")
                                 |基本信息
                             include info_basic/info_basic_edit
 
-                        md-card.form-material-section.nb-card(has-permission="employees_update_position_info")
+                        md-card.form-material-section.nb-card
                             .md-subheader
                                 //- md-icon.form-icon(md-svg-src="/images/svg/positions_info_24.svg" alt="岗位信息")
                                 |岗位信息
