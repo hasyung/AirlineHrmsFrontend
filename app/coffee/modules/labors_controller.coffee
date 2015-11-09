@@ -723,9 +723,9 @@ class AttendanceHisCtrl extends nb.Controller
 
 
 class ContractCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Contract', '$http', 'Employee', '$nbEvent', 'toaster']
+    @.$inject = ['$scope', 'Contract', '$http', 'Employee', '$nbEvent', 'toaster', 'CURRENT_ROLES']
 
-    constructor: (@scope, @Contract, @http, @Employee, @Evt, @toaster) ->
+    constructor: (@scope, @Contract, @http, @Employee, @Evt, @toaster, @CURRENT_ROLES) ->
         @show_merged = true
         @loadInitialData()
 
@@ -840,6 +840,8 @@ class ContractCtrl extends nb.Controller
             }
         ]
 
+    isHrLaborRelationMember: ()->
+        @CURRENT_ROLES.indexOf('department_hr') >= 0
 
     loadInitialData: () ->
         self = @
