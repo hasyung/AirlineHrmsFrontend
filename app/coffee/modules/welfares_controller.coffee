@@ -1087,7 +1087,7 @@ class DinnerPersonalController extends nb.Controller
                 dinner.dinnerNumber = data.dinner_number
 
 
-class DinnerComputeController extends nb.Controller
+class DinnerFeeController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerRecord', 'toaster','$q']
 
     constructor: (@http, @scope, @Evt, @DinnerRecord, @toaster, @q) ->
@@ -1218,7 +1218,7 @@ class DinnerComputeController extends nb.Controller
             else
                 self.toaster.pop('error', '提示', '导入成功')
 
-class DinnerClearingController extends nb.Controller
+class DinnerSettleController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerSettle', 'toaster','$q']
 
     constructor: (@http, @scope, @Evt, @DinnerSettle, @toaster, @q) ->
@@ -1524,8 +1524,8 @@ app.controller 'annuityChangesCtrl', AnnuityChangesController
 
 app.controller 'dinnerCtrl', DinnerController
 app.controller 'dinnerPersonalCtrl', DinnerPersonalController
-app.controller 'dinnerComputeCtrl', DinnerComputeController
-app.controller 'dinnerClearingCtrl', DinnerClearingController
+app.controller 'dinnerFeeCtrl', DinnerFeeController
+app.controller 'dinnerSettleCtrl', DinnerSettleController
 app.controller 'dinnerChangesCtrl', DinnerChangesController
 
 app.controller 'birthAllowanceCtrl', BirthAllowanceController
