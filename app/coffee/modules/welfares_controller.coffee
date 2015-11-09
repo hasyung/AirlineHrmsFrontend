@@ -1097,7 +1097,7 @@ class DinnerFeeController extends nb.Controller
         @loadInitialData(options)
 
         @filterOptions = {
-            name: 'dinnerCompute'
+            name: 'dinnerFee'
             constraintDefs: [
                 {
                     name: 'employee_name'
@@ -1228,7 +1228,7 @@ class DinnerSettleController extends nb.Controller
         @loadInitialData(options)
 
         @filterOptions = {
-            name: 'dinnerClearing'
+            name: 'dinnerSettle'
             constraintDefs: [
                 {
                     name: 'employee_name'
@@ -1357,7 +1357,7 @@ class DinnerChangesController extends nb.Controller
         @loadInitialData(options)
 
         @filterOptions = {
-            name: 'dinnerchanges'
+            name: 'dinnerChange'
             constraintDefs: [
                 {
                     name: 'employee_name'
