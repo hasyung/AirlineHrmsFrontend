@@ -10,7 +10,7 @@ tabset(flex)
                         div(flex)
 
                         md-button.md-primary.md-raised(
-                            ng-if="ctrl.isDepartmentHr()"
+                            has-permission="punishments_create"
                             ng-disabled="ctrl.getSelected().length != 1"
                             nb-dialog
                             template-url="/partials/personnel/punishment.html"
@@ -18,7 +18,7 @@ tabset(flex)
                         ) 人员处分
 
                         md-button.md-primary.md-raised(
-                            ng-if="ctrl.isDepartmentHr()"
+                            has-permission="punishments_create"
                             ng-disabled="ctrl.getSelected().length != 1"
                             nb-dialog
                             template-url="/partials/personnel/punishment.html"
