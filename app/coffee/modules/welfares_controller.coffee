@@ -1393,7 +1393,7 @@ class DinnerChangesController extends nb.Controller
                 cellTooltip: (row) ->
                     return row.entity.departmentName
             }
-            {displayName: '信息发生时间', name: 'createdAt'}
+            {displayName: '信息发生时间', name: 'changeDate'}
             {displayName: '信息种类', name: 'category'}
             {
                 displayName: '处理'
