@@ -26,7 +26,13 @@
                         h2 飞行员-荣誉
                         include ./btn.jade
                     include ./common.jade
-                tab(heading="飞行员-机长"  ng-click="ctrl.loadDynamicConfig('flyer_leader_base')")
+                tab(heading="飞行员-责任机长"  ng-click="ctrl.loadDynamicConfig('flyer_duty_leader_base')")
+                    md-toolbar
+                      .md-toolbar-tools
+                        h2 飞行员-责任机长
+                        include ./btn.jade
+                    include ./common.jade
+                tab(heading="飞行员-机长" ng-click="ctrl.loadDynamicConfig('flyer_leader_base')")
                     md-toolbar
                       .md-toolbar-tools
                         h2 飞行员-机长

@@ -76,12 +76,16 @@ class PersonnelCtrl extends nb.Controller
 
         @filterOptions = filterBuildUtils('personnel')
             .col 'name',                 '姓名',     'string'
+            .col 'gender_id',            '性别',     'select', '', {type: 'genders'}
             .col 'employee_no',          '员工编号', 'string'
             .col 'department_ids',       '机构',     'org-search'
+            .col 'grade_id',             '机构职级', 'select',           '',    {type: 'department_grades'}
             .col 'position_name',        '岗位名称', 'string'
+            .col 'duty_rank_id',         '岗位职务职级', 'select',           '',    {type: 'duty_ranks'}
             .col 'location',             '属地',     'string'
             .col 'channel_ids',          '通道',     'muti-enum-search', '',    {type: 'channels'}
             .col 'employment_status_id', '用工状态', 'select',           '',    {type: 'employment_status'}
+            .col 'labor_relation_id',    '用工性质', 'select',           '',    {type: 'labor_relations'}
             .col 'birthday',             '出生日期', 'date-range'
             .col 'join_scal_date',       '入职日期', 'date-range'
             .col 'start_work_date',      '参工日期', 'date-range'
@@ -160,6 +164,14 @@ class NewEmpsCtrl extends nb.Controller
                     placeholder: '姓名'
                 }
                 {
+                    name: 'gender_id'
+                    type: 'select'
+                    displayName: '性别'
+                    params: {
+                        type: 'genders'
+                    }
+                }
+                {
                     name: 'employee_no'
                     displayName: '员工编号'
                     type: 'string'
@@ -171,9 +183,25 @@ class NewEmpsCtrl extends nb.Controller
                     type: 'org-search'
                 }
                 {
+                    name: 'grade_id'
+                    type: 'select'
+                    displayName: '机构职级'
+                    params: {
+                        type: 'department_grades'
+                    }
+                }
+                {
                     name: 'position_name'
                     displayName: '岗位名称'
                     type: 'string'
+                }
+                {
+                    name: 'duty_rank_id'
+                    type: 'select'
+                    displayName: '岗位职务职级'
+                    params: {
+                        type: 'duty_ranks'
+                    }
                 }
                 {
                     name: 'locations'
