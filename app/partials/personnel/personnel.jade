@@ -10,7 +10,7 @@ tabset(flex)
                         div(flex)
 
                         md-button.md-primary.md-raised(
-
+                            has-permission="employees_set_leave"
                             ng-disabled="ctrl.getSelected().length != 1"
                             nb-dialog
                             template-url="/partials/personnel/set_leave.html"
