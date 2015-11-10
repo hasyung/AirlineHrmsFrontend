@@ -10,6 +10,14 @@ tabset(flex)
                         div(flex)
 
                         md-button.md-primary.md-raised(
+
+                            ng-disabled="ctrl.getSelected().length != 1"
+                            nb-dialog
+                            template-url="/partials/personnel/set_leave.html"
+                            locals="{employee: ctrl.getSelected()[0]}"
+                        ) 人员离职
+
+                        md-button.md-primary.md-raised(
                             has-permission="punishments_create"
                             ng-disabled="ctrl.getSelected().length != 1"
                             nb-dialog
