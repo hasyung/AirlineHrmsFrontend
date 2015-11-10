@@ -1,0 +1,29 @@
+md-dialog.punishment_new(style="min-width: 450px;")
+    md-content(ng-init="current=dialog.employee.$refresh();list=dialog.list;params={}")
+        form(flex ng-submit="current.set_leave(params);list.$refresh();dialog.close();" name="newLeaveForm")
+            md-toolbar.md-accent(md-theme="hrms")
+                .md-toolbar-tools
+                    span 人员离职
+            .dialog-content(layout layout-align="center")
+                fieldset(flex)
+                    div(layout)
+                        md-input-container(flex)
+                            label 姓名
+                            input(ng-model="::current.name" name="name" readonly)
+
+                    div(layout)
+                        md-input-container(flex)
+                            label 离职时间
+                            input(ng-model="params.date" name="date" bs-datepicker)
+
+                    div(layout)
+                        md-input-container(flex)
+                            md-select(ng-model="params.reason" required placeholder="离职原因")
+                              md-option(value="辞职") 辞职
+                              md-option(value="辞退") 辞退
+                              md-option(value="工作调动") 工作调动
+                              md-option(value="劳动关系终止") 劳动关系终止
+
+            .md-actions
+                md-button(type="button" ng-click="dialog.close()") 取 消
+                md-button.md-primary.md-raised(type="submit") 确 定

@@ -21,6 +21,8 @@ Employee = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('employee:create:success', "新员工创建成功")
             'after-update': ->
                 $Evt.$send('employee:update:success', "员工信息更新成功")
+            'after-leave': ->
+                $Evt.$send('employee:leave:success', "员工已设置为离职状态")
         }
 
         $extend:
@@ -37,6 +39,20 @@ Employee = (restmod, RMUtils, $Evt) ->
 
                 update_skill_info: ()->
                     this.$save()
+
+                set_leave: (params)->
+                    self = this
+
+                    request = {
+                        url: "/api/employees/#{this.id}/set_leave"
+                        method: "POST"
+                        data: params
+                    }
+
+                    onSuccess = (res) ->
+                        self.$dispatch 'after-leave'
+
+                    this.$send(request, onSuccess)
 
             Collection:
                 search: (tableState) ->
