@@ -28,6 +28,16 @@ Employee = (restmod, RMUtils, $Evt) ->
                 leaders: () ->
                     restmod.model('/employees/simple_index').mix($config: jsonRoot: 'employees').$search()
 
+            Record:
+                update_basic_info: ()->
+                    this.$save()
+
+                update_position_info: ()->
+                    this.$save()
+
+                update_skill_info: ()->
+                    this.$save()
+
             Collection:
                 search: (tableState) ->
                     this.$refresh(tableState)

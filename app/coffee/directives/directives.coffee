@@ -336,7 +336,7 @@ angular.module 'nb.directives'
 
     # permission 支持单一权限与组合权限
     # 90%情况 单一权限能满足需求
-    # 基于性能考虑与实际业务， 不支持动态权限
+    # 基于性能考虑与实际业务，不支持动态权限
     # 所有权限使用较高优先级指令优先check, 如果不满足需求
     # <div has-permission="department_index"></div>
     # <div has-permission="['department_index','department_active']"></div>

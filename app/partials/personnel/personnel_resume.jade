@@ -4,7 +4,12 @@
     .resume-header
         span {{ resume.name }}
         | 个人履历
-    .resume-btn-group
+    //- 导出员工的简历
+    .resume-btn-group(has-permission="employees_export_resume")
+        md-button.md-icon-button.md-primary(ng-href="/api/employees/export_resume?employee_id={{resume.id}}" style="display: inline-block;")
+            md-icon(md-svg-src="/images/svg/ic_open_in_new_24px.svg")
+    //- 自己导出自己的简历
+    .resume-btn-group(ng-if="current.id == resume.id")
         md-button.md-icon-button.md-primary(ng-href="/api/employees/export_resume?employee_id={{resume.id}}" style="display: inline-block;")
             md-icon(md-svg-src="/images/svg/ic_open_in_new_24px.svg")
     .resume-body
