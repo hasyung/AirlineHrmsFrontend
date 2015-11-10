@@ -14,7 +14,7 @@ tabset(flex)
                             ng-disabled="ctrl.getSelected().length != 1"
                             nb-dialog
                             template-url="/partials/personnel/set_leave.html"
-                            locals="{employee: ctrl.getSelected()[0]}"
+                            locals="{employee: ctrl.getSelected()[0], list: ctrl.employees}"
                         ) 人员离职
 
                         md-button.md-primary.md-raised(

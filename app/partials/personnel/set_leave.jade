@@ -1,6 +1,6 @@
 md-dialog.punishment_new(style="min-width: 450px;")
-    md-content(ng-init="current=dialog.employee.$refresh();params={}")
-        form(flex ng-submit="current.set_leave(params);dialog.close();" name="newLeaveForm")
+    md-content(ng-init="current=dialog.employee.$refresh();list=dialog.list;params={}")
+        form(flex ng-submit="current.set_leave(params);list.$refresh();dialog.close();" name="newLeaveForm")
             md-toolbar.md-accent(md-theme="hrms")
                 .md-toolbar-tools
                     span 人员离职
