@@ -28,7 +28,7 @@
                         ) 导出
                     md-menu-content
                         md-menu-item()
-                            a.md-button(flex
+                            a.md-button(
                                 download
                                 ng-href="/api/social_records/export_declare?month={{ctrl.currentCalcTime()}}"
                                 href="javascript:;"
@@ -37,7 +37,6 @@
                             a.md-button(
                                 download
                                 ng-href="/api/employees/export_record?month={{ctrl.currentCalcTime()}}"
-                                href="javascript:;"
                             ) 成都社保明细
                         md-menu-item()
                             a.md-button(
