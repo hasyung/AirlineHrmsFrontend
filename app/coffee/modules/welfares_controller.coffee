@@ -1400,9 +1400,9 @@ class DinnerChangesController extends nb.Controller
                 field: '查看'
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents">
-                    <a nb-panel
+                    <a nb-dialog
                         template-url="partials/welfares/dinners/change_deal.html"
-                        locals="{change: row.entity}">
+                        locals="{change: row.entity, ctrl: grid.appScope.$parent.ctrl}">
                         查看
                     </a>
                 </div>
@@ -1413,6 +1413,7 @@ class DinnerChangesController extends nb.Controller
     loadInitialData: (options) ->
         args = options || {}
         @changes = @DinnerChange.$collection(args).$fetch()
+
 
     # search: (tableState) ->
     #     tableState = {} unless tableState
