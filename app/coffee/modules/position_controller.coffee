@@ -236,7 +236,6 @@ class AdjustPositionCtrl
                 })
 
 
-        console.log params
 
         @http.post("/api/position_change_records", params).success (data, status)->
             self.Evt.$send "data:create:success", "员工转岗成功"

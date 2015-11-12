@@ -2,25 +2,125 @@ md-dialog.employee_move(ng-controller="EditableResourceCtrl" style="min-width: 4
     md-toolbar.md-accent(md-theme="hrms")
         .md-toolbar-tools
             span 工作餐变动处理
-    form(ng-submit="save(current.$save(), change_deal_form); dialog.close();" name="change_deal_form")
-        md-content(ng-init="current = dialog.change.$refresh();")
-            fieldset(flex)
+    form(ng-submit="save(change.$save(), change_deal_form); dialog.close();" name="change_deal_form")
+        md-content(ng-init=" ctrl = dialog.ctrl; change = dialog.change.$refresh();")
+            fieldset
+                //- 基本信息部分：分类
+                div
+                    div(layout)
+                        md-input-container(flex)
+                            label 姓名
+                            input(ng-model="::change.employeeName" readonly)
+                        md-input-container(flex)
+                            label 员工编号
+                            input(ng-model="::change.employeeNo" readonly)
+                    div(layout)
+                        md-input-container(flex)
+                            label 机构
+                            input(ng-model="::change.employeeName" readonly)
+                        md-input-container(flex)
+                            label 岗位
+                            input(ng-model="::change.employeeNo" readonly)
+                    div(layout)
+                        md-input-container(flex)
+                            label 分类
+                            input(ng-model="::change.employeeName" readonly)
+                        md-input-container(flex)
+                            label 属地
+                            input(ng-model="::change.employeeNo" readonly)
+                //- 工作餐编辑部门
+                div()
+                    div(layout)
+                        md-input-container.row-has-value(flex)
+                            label 班制
+                            md-select(
+                                ng-model="change.shiftsType"
+                                required)
+                                md-option(value="行政班") 行政班
+                                md-option(value="两班倒") 两班倒
+                                md-option(value="三班倒") 三班倒
+                                md-option(value="四班倒") 四班倒
+                                md-option(value="空勤") 空勤
+                        md-input-container.row-has-value(flex)
+                            label 餐费区域
+                            md-select(
+                                ng-model="change.area"
+                                required)
+                                md-option(ng-value="area" ng-repeat="area in ctrl.areas") {{area}}
+
+                    div(layout)
+                        md-input-container(flex)
+                            label 卡金额
+                            input(ng-model="change.cardAmount" required type="number")
+                        md-input-container(flex)
+                            label 现金
+                            input(ng-model="change.workingFee" required type="number")
+
+                    div(layout)
+                        md-input-container(flex)
+                            label 早餐次数
+                            input(ng-model="change.breakfastNumber" required type="number")
+                        md-input-container(flex)
+                            label 午餐次数
+                            input(ng-model="change.lunchNumber" required type="number")
+                        md-input-container(flex)
+                            label 晚餐次数
+                            input(ng-model="change.dinnerNumber" required type="number")
+                //- 增加双区域按钮
                 div(layout)
-                    md-input-container(flex)
-                        label 姓名
-                        input(style="font-size: 14px;" ng-model="current.employeeName" readonly)
-                //- div(layout)
-                //-     md-input-container(flex)
-                //-         label 文件编号
-                //-         input(ng-model="current.fileNo" name="fileNo" required)
-                //- div(layout)
-                //-     md-input-container(flex)
-                //-         label 起始期限(不可修改)
-                //-         input(type="text" bs-datepicker ng-model="current.specialDateFrom" required ng-disabled="true")
-                //-     md-input-container(flex)
-                //-         label 结束期限
-                //-         input(type="text" bs-datepicker ng-model="current.specialDateTo" required)
+                    md-button.md-icon-button(
+                        type="button"
+                        ng-click="ctrl"
+                        )
+                        md-icon(md-svg-icon="../../images/svg/plus.svg")
+                //- 工作餐第二区域编辑部分
+                div()
+                    div(layout)
+                        md-input-container.row-has-value(flex)
+                            label 班制
+                            md-select(
+                                ng-model="change.shiftsType"
+                                required)
+                                md-option(value="行政班") 行政班
+                                md-option(value="两班倒") 两班倒
+                                md-option(value="三班倒") 三班倒
+                                md-option(value="四班倒") 四班倒
+                                md-option(value="空勤") 空勤
+                        md-input-container.row-has-value(flex)
+                            label 餐费区域
+                            md-select(
+                                ng-model="change.area"
+                                required)
+                                md-option(ng-value="area" ng-repeat="area in ctrl.areas") {{area}}
+
+                    div(layout)
+                        md-input-container(flex)
+                            label 卡金额
+                            input(ng-model="change.cardAmount" required type="number")
+                        md-input-container(flex)
+                            label 现金
+                            input(ng-model="change.workingFee" required type="number")
+
+                    div(layout)
+                        md-input-container(flex)
+                            label 早餐次数
+                            input(ng-model="change.breakfastNumber" required type="number")
+                        md-input-container(flex)
+                            label 午餐次数
+                            input(ng-model="change.lunchNumber" required type="number")
+                        md-input-container(flex)
+                            label 晚餐次数
+                            input(ng-model="change.dinnerNumber" required type="number")
 
         .md-actions
+            md-button.md-warn.md-raised(
+                type="button"
+                ng-disabled="dinner.isSuspend==true"
+                ng-click="ctrl.suspendDinner(change);dialog.close();"
+                ) 暂停发放
+            div(flex)
             md-button(type="button" ng-click="cancel(current, $event, change_deal_form);dialog.close()") 取 消
-            md-button.md-primary.md-raised(type="submit") 确 定
+            md-button.md-primary.md-raised(type="button") 不做处理
+            md-button.md-primary.md-raised(type="submit") 保存处理
+
+

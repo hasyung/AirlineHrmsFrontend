@@ -73,6 +73,12 @@
             span 元/小时
 
         .form-row(layout)
+            label 飞行学员
+            md-input-container(md-no-float)
+                input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.flyer_student_base")
+            span 元/小时
+
+        .form-row(layout)
             label 空中观察员
             md-input-container(md-no-float)
                 input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.observer")

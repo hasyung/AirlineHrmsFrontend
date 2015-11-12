@@ -1369,6 +1369,11 @@ class DinnerChangesController extends nb.Controller
                     displayName: '员工编号'
                     type: 'string'
                 }
+                {
+                    name: 'change_category'
+                    displayName: '信息种类'
+                    type: 'string'
+                }
             ]
         }
 
@@ -1400,9 +1405,9 @@ class DinnerChangesController extends nb.Controller
                 field: '查看'
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents">
-                    <a nb-panel
+                    <a nb-dialog
                         template-url="partials/welfares/dinners/change_deal.html"
-                        locals="{change: row.entity}">
+                        locals="{change: row.entity, ctrl: grid.appScope.$parent.ctrl}">
                         查看
                     </a>
                 </div>
@@ -1414,11 +1419,77 @@ class DinnerChangesController extends nb.Controller
         args = options || {}
         @changes = @DinnerChange.$collection(args).$fetch()
 
+    suspendDinner: (dinner) ->
+        self = @
+        dinner.isSuspend = true
+        dinner.shiftsType = null
+        dinner.area = null
+        dinner.cardAmount = 0
+        dinner.workingFee = 0
+        dinner.breakfastNumber = 0
+        dinner.lunchNumber = 0
+        dinner.dinnerNumber = 0
+        dinner.changeDate = new Date()
+
+        dinner.$save().$then () ->
+            self.changes.$refresh()
+
+
     # search: (tableState) ->
     #     tableState = {} unless tableState
     #     tableState['month'] = @currentCalcTime()
     #     tableState['per_page'] = @gridApi.grid.options.paginationPageSize
     #     @records.$refresh(tableState)
+
+class DinnerHistoriesController extends nb.Controller
+    @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerHistory', 'toaster','$q']
+
+    constructor: (@http, @scope, @Evt, @DinnerHistory, @toaster, @q) ->
+        @loadInitialData()
+
+        @filterOptions = {
+            name: 'dinnerChange'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '员工姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+            ]
+        }
+
+        @columnDef = [
+            {displayName: '员工编号', name: 'employeeNo'}
+            {
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+            }
+            {displayName: '班制', name: 'shiftsType'}
+            {displayName: '驻地', name: 'location'}
+        ]
+
+    loadInitialData: () ->
+        @histories = @DinnerHistory.$collection().$fetch()
 
 class BirthAllowanceController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'BirthAllowance', 'Employee', 'toaster']
@@ -1527,5 +1598,6 @@ app.controller 'dinnerPersonalCtrl', DinnerPersonalController
 app.controller 'dinnerFeeCtrl', DinnerFeeController
 app.controller 'dinnerSettleCtrl', DinnerSettleController
 app.controller 'dinnerChangesCtrl', DinnerChangesController
+app.controller 'dinnerHistoriesCtrl', DinnerHistoriesController
 
 app.controller 'birthAllowanceCtrl', BirthAllowanceController

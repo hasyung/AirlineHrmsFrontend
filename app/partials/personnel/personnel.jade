@@ -34,6 +34,7 @@ tabset(flex)
                         ) 人员奖励
 
                         md-button.md-primary.md-raised(
+                            has-permission="position_change_records_create"
                             ng-disabled="ctrl.getSelected().length != 1"
                             nb-dialog
                             template-url="/partials/personnel/adjust_position.html"
@@ -41,6 +42,7 @@ tabset(flex)
                         ) 员工调岗
 
                         md-button.md-primary.md-raised(
+                            has-permission="sort_index"
                             nb-panel
                             template-url="partials/personnel/org_pos_per_sort.html"
                         ) 排序
@@ -52,7 +54,7 @@ tabset(flex)
 
                             md-menu-content
                                 md-menu-item()
-                                    a.md-button(flex ng-href="/api/employees/export_to_xls") 导出全部人员
+                                    a.md-button(ng-href="/api/employees/export_to_xls") 导出全部人员
 
                                 md-menu-item(ng-if="selectedRows.length > 0")
                                     a.md-button(
