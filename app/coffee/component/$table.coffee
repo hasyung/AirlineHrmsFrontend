@@ -397,13 +397,13 @@ NbFilterDirective = ["$nbEvent", "$enum", ($Evt, $enum)->
                         <md-icon md-svg-src="md-toggle-arrow" ng-class="{'toggled': doorIsOpen}"></md-icon>
                     </button>
                     <input ng-click="doorIsOpen=!doorIsOpen" class="filter-view" type="text" ng-model="filterView" readonly flex />
-                    <md-button class="md-primary md-raised" nb-dialog template-url="partials/component/table/save_filter_dialog.html">保存</md-button>
+                    <md-button has-permission="search_conditions_create" class="md-primary md-raised" nb-dialog template-url="partials/component/table/save_filter_dialog.html">保存</md-button>
                     <md-select ng-model="filter.serializedFilter"
                     ng-if="filter.filters.length"
                     ng-change="filter.restoreFilter(filter.serializedFilter.parse());search(filter.serializedFilter.parse())" placeholder="请选择筛选条件">
                         <md-option ng-value="f" ng-repeat="f in filter.filters">
                             {{f.name}}
-                            <md-icon style="position: absolute; right: 10px;" ng-click="filter.removeFilter(f.id, $event)" md-svg-icon="../../images/svg/close.svg"></md-icon>
+                            <md-icon has-permission="search_conditions_destory" style="position: absolute; right: 10px;" ng-click="filter.removeFilter(f.id, $event)" md-svg-icon="../../images/svg/close.svg"></md-icon>
                         </md-option>
                     </md-select>
                 </div>
