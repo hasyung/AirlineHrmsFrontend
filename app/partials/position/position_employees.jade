@@ -1,10 +1,24 @@
-.position-manage(ng-if="currentPos.category.key != 'LingDao'" has-permission="positions_employees")
+.position-manage(ng-if="!history && currentPos.category.key != 'LingDao'" has-permission="positions_employees")
     .ui-grid-container
         md-toolbar(style="background-color: #fff;")
             .md-toolbar-tools(style="color: rgba(0, 0, 0, .54);")
                 span 在职员工信息
         div(nb-grid column-defs="panel.workingEmpColumnDef" safe-src="currentEmps")
-.position-manage(ng-if="currentPos.category.key == 'LingDao'" has-permission="positions_formerleaders")
+.position-manage(ng-if="!history && currentPos.category.key == 'LingDao'" has-permission="positions_formerleaders")
+    .ui-grid-container
+        md-toolbar(style="background-color: #fff;")
+            .md-toolbar-tools(style="color: rgba(0, 0, 0, .54);")
+                span 历任领导
+        div(nb-grid column-defs="panel.formerleadersColumnDef" safe-src="hisLeaders")
+
+//- 历史版本情况下
+.position-manage(ng-if="history && currentPos.category.key != 'LingDao'" has-permission="positions_employees_index")
+    .ui-grid-container
+        md-toolbar(style="background-color: #fff;")
+            .md-toolbar-tools(style="color: rgba(0, 0, 0, .54);")
+                span 在职员工信息
+        div(nb-grid column-defs="panel.workingEmpColumnDef" safe-src="currentEmps")
+.position-manage(ng-if="history && currentPos.category.key == 'LingDao'" has-permission="history/positions_formerleaders")
     .ui-grid-container
         md-toolbar(style="background-color: #fff;")
             .md-toolbar-tools(style="color: rgba(0, 0, 0, .54);")

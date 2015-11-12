@@ -16,9 +16,11 @@ class AuthService extends nb.Service
             permit = @permissions.indexOf(permission) != -1
         else
             try
+                # console.error permission
                 permission_array = JSON.parse(permission)
             catch e
                 # array格式错误
+                # console.erorr e
                 throw new Error('permission format error')
             permit = permission_array.every((perm)-> @permissions.indexOf(perm) != -1)
 
