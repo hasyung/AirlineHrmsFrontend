@@ -229,8 +229,6 @@ class SalaryController extends nb.Controller
         @backup_config = angular.copy(@dynamic_config)
         @editing = false
 
-        console.log @dynamic_config
-
     resetDynamicConfig: ()->
         @dynamic_config = {}
         @dynamic_config = angular.copy(@backup_config)
@@ -640,7 +638,7 @@ class SalaryGradeChangeController extends nb.Controller
                         href="javascript:void(0);"
                         nb-dialog
                         template-url="partials/salary/settings/changes/grade.html"
-                        locals="{change: row.entity}">
+                        locals="{change: row.entity, ctrl: grid.appScope.$parent.ctrl}">
                         查看
                     </a>
                 </div>
