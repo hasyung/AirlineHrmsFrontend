@@ -1062,13 +1062,6 @@ class DinnerPersonalController extends nb.Controller
     suspendDinner: (dinner) ->
         self = @
         dinner.isSuspend = true
-        dinner.shiftsType = null
-        dinner.area = null
-        dinner.cardAmount = 0
-        dinner.workingFee = 0
-        dinner.breakfastNumber = 0
-        dinner.lunchNumber = 0
-        dinner.dinnerNumber = 0
         dinner.changeDate = new Date()
         dinner.$save().$then () ->
             self.configurations.$refresh()
@@ -1353,6 +1346,7 @@ class DinnerChangesController extends nb.Controller
 
     constructor: (@http, @scope, @Evt, @DinnerChange, @toaster, @q) ->
         options = null
+        @areas = []
 
         @loadInitialData(options)
 
@@ -1416,23 +1410,11 @@ class DinnerChangesController extends nb.Controller
         ]
 
     loadInitialData: (options) ->
-        args = options || {}
-        @changes = @DinnerChange.$collection(args).$fetch()
-
-    suspendDinner: (dinner) ->
         self = @
-        dinner.isSuspend = true
-        dinner.shiftsType = null
-        dinner.area = null
-        dinner.cardAmount = 0
-        dinner.workingFee = 0
-        dinner.breakfastNumber = 0
-        dinner.lunchNumber = 0
-        dinner.dinnerNumber = 0
-        dinner.changeDate = new Date()
 
-        dinner.$save().$then () ->
-            self.changes.$refresh()
+        args = options || {}
+        @changes = @DinnerChange.$collection(args).$fetch().$then (response)->
+            self.areas = response.$response.data.areas
 
 
     # search: (tableState) ->
