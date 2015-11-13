@@ -130,9 +130,6 @@ routeConf = ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvide
                     AuthServ.logout()
 
                 if response.status == 403
-                    sweet.error('操作失败', response.data.messages || JSON.stringify(response.data))
-
-                if response.status == 400
                     data = response.data
 
                     if data.controller == "positions" && data.action == "index"
@@ -141,6 +138,9 @@ routeConf = ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvide
                     if data.controller == "specifications" && data.action == "show"
                         return
 
+                    sweet.error('操作失败', response.data.messages || JSON.stringify(response.data))
+
+                if response.status == 400
                     toaster.pop('error', '参数错误', data.messages || JSON.stringify(data) || response)
 
                 if /^5/.test(Number(response.status).toString()) # if server error
