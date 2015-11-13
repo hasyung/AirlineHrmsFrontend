@@ -1,5 +1,5 @@
 md-card.form-material-section.nb-card(ng-controller="EmployeeAttendanceCtrl as ctrl")
-    md-content(style="padding:20px; background-color: #fff;" ng-init="ctrl.loadAttendance()")
+    md-content(style="padding:20px; background-color: #fff;" ng-init="ctrl.loadAttendance(current)")
         div(ui-calendar="ctrl.uiConfig.calendar" ng-model="ctrl.eventSources" calendar="attendanceCalendar")
 
         .attendanceMarks
