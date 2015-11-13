@@ -338,7 +338,6 @@ class NbFilterCtrl extends nb.FilterController
                 .success (result) ->
                     self.filters.$refresh()
 
-
     restoreFilter: (queryParams) ->
         @.$clearAllCondition()
         self = @
@@ -403,7 +402,7 @@ NbFilterDirective = ["$nbEvent", "$enum", ($Evt, $enum)->
                     ng-change="filter.restoreFilter(filter.serializedFilter.parse());search(filter.serializedFilter.parse())" placeholder="请选择筛选条件">
                         <md-option ng-value="f" ng-repeat="f in filter.filters">
                             {{f.name}}
-                            <md-icon has-permission="search_conditions_destory" style="position: absolute; right: 10px;" ng-click="filter.removeFilter(f.id, $event)" md-svg-icon="../../images/svg/close.svg"></md-icon>
+                            <md-icon has-permission="search_conditions_destroy" style="position: absolute; right: 10px;" ng-click="filter.removeFilter(f.id, $event)" md-svg-icon="../../images/svg/close.svg"></md-icon>
                         </md-option>
                     </md-select>
                 </div>
