@@ -785,9 +785,8 @@ class EmployeeAttendanceCtrl extends nb.Controller
         @CURRENT_ROLES.indexOf('hr_payment_member') >= 0
 
     dayOnClick: ()->
-        alert('clicked')
+        #
 
-    # 因为没有数据，所以现在暂时用了当前人员的考勤数据
     loadAttendance: (employee)->
         self = @
 
@@ -829,7 +828,7 @@ class EmployeeAttendanceCtrl extends nb.Controller
             }
         }
 
-        @http.get('/api/me/attendance_records/').success (data)->
+        @http.get('/api/employees/' + employee.id + '/attendance_records/').success (data)->
             angular.forEach keys, (key)->
                 events = data.attendance_records[key]
 
