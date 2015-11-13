@@ -10,11 +10,12 @@ div.panel-bg-gray(ng-init = "current = panel.employee; current.$refresh();" ng-c
         .employee-info
             .employee-name() {{::current.name}}
                 md-button.md-fab.resume-button.md-warn(
+                    has-permission="employees_resume"
                     nb-dialog
                     template-url="partials/self/self_resume.html"
                     locals="{currentUser: current, ctrl: pdCtrl}"
                 )
-                    md-icon(has-permission="employees_resume" md-svg-src="/images/svg/resume_24px.svg" aria-label="简历")
+                    md-icon(md-svg-src="/images/svg/resume_24px.svg" aria-label="简历")
             .employee-others-info
                 div(ng-bind="current.employeeNo")
                 div(ng-bind="current.department.name")
