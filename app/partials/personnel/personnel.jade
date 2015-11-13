@@ -52,7 +52,7 @@ tabset(flex)
                                 ng-click="selectedRows = ctrl.getSelectsIds(); $mdOpenMenu($event)"
                                 ) 导出
 
-                            md-menu-content
+                            md-menu-content(has-permission="employees_export_to_xls")
                                 md-menu-item()
                                     a.md-button(ng-href="/api/employees/export_to_xls") 导出全部人员
 

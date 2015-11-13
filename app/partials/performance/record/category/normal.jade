@@ -7,6 +7,7 @@
                 div(flex)
 
                 md-button.md-primary.md-raised(
+                    has-permission="special_states_temporarily_train"
                     nb-dialog
                     ng-disabled="!ctrl.getSelected()"
                     template-url="/partials/performance/record/leave_to_train.html"

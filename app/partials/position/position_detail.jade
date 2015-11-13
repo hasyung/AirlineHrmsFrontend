@@ -2,19 +2,20 @@ div.panel-bg-gray.position-detail(
     ng-init="currentPos = panel.position;\
     currentEmps = currentPos.employees.$refresh();\
     hisLeaders = currentPos.formerleaders.$refresh();\
-    currentSpe = currentPos.specification.$refresh();")
+    currentSpe = currentPos.specification.$refresh();\
+    history = panel.history")
     md-toolbar.md-warn(md-theme="hrms")
         .md-toolbar-tools
             span 岗位详情
     .personnel-content
         section.personnel-info-section(ng-init= "current = panel.position; data = {}; data.selectedIndex = 0;")
             tabset(type="pills")
-                tab(heading="基本信息")
+                tab(heading="基本信息" has-permission="positions_show")
                     md-content
                         section.form-material-section
                             .md-subheader 基本信息
                             include position_basic
-                        section.form-material-section
+                        section.form-material-section(has-permission="specifications_show")
                             .md-subheader 岗位描述
                             include position_desc
 
