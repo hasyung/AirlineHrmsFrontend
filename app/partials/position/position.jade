@@ -11,9 +11,9 @@
                             ng-click="selectedRows = ctrl.getSelectsIds(); $mdOpenMenu($event)"
                             ) 导出
                         md-menu-content
-                            md-menu-item()
+                            md-menu-item(has-permission="positions_export_to_xls")
                                 a.md-button(ng-href="/api/positions/export_to_xls") 导出全部岗位
-                            md-menu-item(ng-if="selectedRows.length > 0")
+                            md-menu-item(ng-if="selectedRows.length > 0" has-permission="positions_export_to_xls")
                                 a.md-button(
                                     nb-download
                                     url-prefix="/api/positions/export_to_xls?position_ids=#param#"
@@ -21,9 +21,9 @@
                                     href="javascript:;"
                                     download
                                 ) 导出所选岗位
-                            md-menu-item()
+                            md-menu-item(has-permission="positions_export_specification_pdf")
                                 a.md-button(ng-href="/api/positions/export_specification_pdf") 导出全部岗位描述书
-                            md-menu-item(ng-if="selectedRows.length > 0")
+                            md-menu-item(ng-if="selectedRows.length > 0" has-permission="positions_export_specification_pdf")
                                 a.md-button(
                                     nb-download
                                     url-prefix="/api/positions/export_specification_pdf?position_ids=#param#"
