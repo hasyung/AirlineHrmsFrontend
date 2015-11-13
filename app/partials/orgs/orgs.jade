@@ -12,17 +12,17 @@ section(layout="row" flex)
                         template-url="partials/orgs/org_history.html"
                         locals="{'historyData': ctrl.initialHistoryData()}"
                         ) 时间轴
-                    md-menu.pull-right
+                    md-menu.pull-right(has-permission="departments_export_to_xls")
                         md-button.md-primary.md-raised(
                             aria-label="Open menu"
                             ng-click="$mdOpenMenu($event)"
                             ) 导出
                         md-menu-content
-                            md-menu-item(ng-hide="ctrl.isHistory" has-permission="departments_export_to_xls")
+                            md-menu-item(ng-hide="ctrl.isHistory")
                                 md-button(ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}") 导出Excel
-                            md-menu-item(ng-show="ctrl.isHistory" has-permission="departments_export_to_xls")
+                            md-menu-item(ng-show="ctrl.isHistory")
                                 md-button(ng-href="/api/departments/export_to_xls?department_id={{ctrl.treeRootOrg.id}}&version={{ctrl.orgs.$metadata.id}}") 导出Excel
-                            md-menu-item(has-permission="departments_export_to_xls")
+                            md-menu-item()
                                 md-button(ng-click="ctrl.print()" ) 导出PDF
                     md-button.md-primary.md-raised(ng-show="ctrl.treeRootOrg.xdepth != 1" ng-click="ctrl.backToSCAL()") 返回四川航空
                         //- md-icon(md-svg-src="/images/svg/home.svg")
