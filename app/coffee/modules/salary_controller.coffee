@@ -570,9 +570,9 @@ class SalaryChangeController extends nb.Controller
 
 
 class SalaryGradeChangeController extends nb.Controller
-    @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryGradeChange', 'SALARY_SETTING']
+    @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryGradeChange', 'SALARY_SETTING', 'toaster']
 
-    constructor: (@http, $scope, $Evt, $enum, @SalaryGradeChange, @SALARY_SETTING) ->
+    constructor: (@http, @scope, $Evt, $enum, @SalaryGradeChange, @SALARY_SETTING, @toaster) ->
         @loadInitialData()
 
         @filterOptions = {
@@ -621,7 +621,7 @@ class SalaryGradeChangeController extends nb.Controller
             }
             {
                 displayName: '所属部门'
-                name: 'departmentName'
+                name: 'department.name'
                 cellTooltip: (row) ->
                     return row.entity.departmentName
             }
@@ -638,7 +638,7 @@ class SalaryGradeChangeController extends nb.Controller
                         href="javascript:void(0);"
                         nb-dialog
                         template-url="partials/salary/settings/changes/grade.html"
-                        locals="{change: row.entity, ctrl: grid.appScope.$parent.ctrl}">
+                        locals="{gradeChange: row.entity, ctrl: grid.appScope.$parent.ctrl}">
                         查看
                     </a>
                 </div>
@@ -654,16 +654,23 @@ class SalaryGradeChangeController extends nb.Controller
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @salaryGradeChanges.$refresh(tableState)
 
-    loadSalarySetting: (employee_id)->
-        self = @
+    # loadSalarySetting: (employee_id)->
+    #     self = @
 
-        @http.get('/api/salary_person_setups/lookup?employee_id=' + employee_id)
-            .success (data)->
-                self.setting = data.salary_person_setup
-                self.flags = []
+    #     @http.get('/api/salary_person_setups/lookup?employee_id=' + employee_id)
+    #         .success (data)->
+    #             self.setting = data.salary_person_setup
+    #             self.flags = []
 
     checkUpdateChange: (type)->
-        #
+        params = new Object()
+        self = @
+        params.type = type
+
+        @http.get('/api/salary_person_setups/check_person_upgrade.json?type='+type)
+            .success (data)->
+                self.toaster.pop('success', '提示', '薪酬档级变动数据已更新')
+                self.salaryGradeChanges.$refresh()
 
 
 class SalaryExchangeController
@@ -696,6 +703,7 @@ class SalaryExchangeController
         Object.keys(setting.flags)
 
     normal: (current)->
+        console.log current
         return unless current.baseWage
         return unless current.baseFlag
 
