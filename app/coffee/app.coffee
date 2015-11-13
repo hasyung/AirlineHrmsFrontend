@@ -138,6 +138,9 @@ routeConf = ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvide
                     if data.controller == "specifications" && data.action == "show"
                         return
 
+                    if data.controller == "employees" && data.action == "show"
+                        return
+
                     sweet.error('操作失败', response.data.messages || JSON.stringify(response.data))
 
                 if response.status == 400
