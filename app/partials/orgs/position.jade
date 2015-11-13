@@ -22,14 +22,14 @@
                         template-url="partials/position/position_transfer.html"
                         ) 调整岗位
                 span
-                    md-menu(ng-init="selectedRows=[]")
+                    md-menu(ng-init="selectedRows=[]" has-permission="positions_export_to_xls|positions_export_specification_pdf")
                         md-button.md-primary.md-raised(
                             ng-click="selectedRows = ctrl.getSelectsIds(); $mdOpenMenu($event)"
                             ) 导出
                         md-menu-content
                             md-menu-item(has-permission="positions_export_to_xls")
                                 a.md-button(ng-href="/api/positions/export_to_xls?department_id={{currentOrg.id}}") 导出全部岗位
-                            md-menu-item(ng-if="selectedRows.length > 0")
+                            md-menu-item(ng-if="selectedRows.length > 0" has-permission="positions_export_to_xls")
                                 a.md-button(
                                     nb-download
                                     url-prefix="/api/positions/export_to_xls?position_ids=#param#"
@@ -39,7 +39,7 @@
                                 ) 导出所选岗位
                             md-menu-item(has-permission="positions_export_specification_pdf")
                                 a.md-button(ng-href="/api/positions/export_specification_pdf?department_id={{currentOrg.id}}") 导出全部岗位描述书
-                            md-menu-item(ng-if="selectedRows.length > 0")
+                            md-menu-item(ng-if="selectedRows.length > 0" has-permission="positions_export_specification_pdf")
                                 a.md-button(
                                     nb-download
                                     url-prefix="/api/positions/export_specification_pdf?position_ids=#param#"
