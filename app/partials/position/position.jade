@@ -6,7 +6,7 @@
                 h2 岗位信息列表
                 div(flex)
                 span
-                    md-menu(ng-init="selectedRows=[]")
+                    md-menu(ng-init="selectedRows=[]" has-permission="positions_export_to_xls|positions_export_specification_pdf")
                         md-button.md-primary.md-raised(
                             ng-click="selectedRows = ctrl.getSelectsIds(); $mdOpenMenu($event)"
                             ) 导出

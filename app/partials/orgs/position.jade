@@ -22,7 +22,7 @@
                         template-url="partials/position/position_transfer.html"
                         ) 调整岗位
                 span
-                    md-menu(ng-init="selectedRows=[]")
+                    md-menu(ng-init="selectedRows=[]" has-permission="positions_export_to_xls|positions_export_specification_pdf")
                         md-button.md-primary.md-raised(
                             ng-click="selectedRows = ctrl.getSelectsIds(); $mdOpenMenu($event)"
                             ) 导出
