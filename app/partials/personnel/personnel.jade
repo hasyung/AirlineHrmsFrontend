@@ -57,7 +57,8 @@ tabset(flex)
                                 md-menu-item(has-permission="employees_export_to_xls")
                                     a.md-button(flex ng-href="/api/employees/export_to_xls") 导出全部人员
 
-                                md-menu-item(ng-if="ctrl.getSelected().length > 0" has-permission="employees_export_to_xls")
+                                //- md-menu-item(ng-if="ctrl.getSelected().length > 0" has-permission="employees_export_to_xls")
+                                md-menu-item(has-permission="employees_export_to_xls")
                                     a.md-button(
                                         nb-download
                                         url-prefix="/api/employees/export_to_xls?employee_ids=#param#"
@@ -66,14 +67,15 @@ tabset(flex)
                                         download
                                     ) 导出所选人员
 
-                                md-menu-item(ng-if="ctrl.getSelected().length > 0" has-permission="employees_export_resume")
+                                //- md-menu-item(ng-if="ctrl.getSelected().length > 0" has-permission="employees_export_resume")
+                                md-menu-item(has-permission="employees_export_resume")
                                     a.md-button(
                                         nb-download
                                         url-prefix="/api/employees/export_resume?employee_ids=#param#"
                                         param-getter="ctrl.getSelectsIds()"
                                         href="javascript:;"
                                         download
-                                    ) 导出所选人员履历
+                                    ) 导出所选人员简历
 
                 div(nb-grid column-defs="ctrl.columnDef"
                     on-register-api="ctrl.exportGridApi(gridApi)"
