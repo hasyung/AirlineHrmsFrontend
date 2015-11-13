@@ -14,6 +14,7 @@ section(layout="row" flex)
                         ) 时间轴
                     md-menu.pull-right
                         md-button.md-primary.md-raised(
+                            has-permission="departments_export_to_xls"
                             aria-label="Open menu"
                             ng-click="$mdOpenMenu($event)"
                             ) 导出
