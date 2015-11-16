@@ -1,5 +1,8 @@
-md-dialog.welfare_personal_new(ng-init="ctrl=dialog.ctrl; current=dialog.gradeChange.$refresh();")
-    form(name="gradeChangeForm")
+md-dialog.welfare_personal_new(
+    ng-init="ctrl=dialog.ctrl; current=dialog.gradeChange.$refresh();"
+    ng-controller="EditableResourceCtrl"
+    )
+    form(name="gradeChangeForm" ng-submit="save(current.$save(), gradeChangeForm, ctrl.salaryGradeChanges)")
         md-toolbar.md-accent(md-theme="hrms")
                 .md-toolbar-tools
                     span 薪酬档级变动
@@ -7,93 +10,16 @@ md-dialog.welfare_personal_new(ng-init="ctrl=dialog.ctrl; current=dialog.gradeCh
         md-content.sticky-container
             .dialog-content(layout layout-align="center")
                 section.form-material-section(flex)
-                    fieldset
-                        div(style="display:none;")
-                            input(type="text" ng-model="current.employeeId")
+                    fieldset(ng-if="current.channelId != 4 && current.changeModule=='岗位工资'")
+                        include changes/normal
 
-                        div(layout)
-                            md-input-container(flex)
-                                label 姓名
-                                input(type="text" ng-model="::current.employeeName" readonly)
-                            md-input-container(flex)
-                                label 员工编号
-                                input(type="text" ng-model="::current.employeeNo" readonly)
+                    fieldset(ng-if="current.channelId == 4 && current.changeModule=='岗位工资'")
+                        include changes/flyer
 
-                        div(layout)
-                            md-input-container(flex)
-                                label 所在部门
-                                input(type="text" ng-model="::current.departmentName" readonly)
-                            md-input-container(flex)
-                                label 岗位
-                                input(type="text" ng-model="::current.positionName" readonly)
-
-                        div(layout)
-                            md-input-container.row-has-value(flex)
-                                label 用工性质
-                                md-select(ng-model="::current.laborRelationId" disabled readonly)
-                                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('labor_relations')") {{item.label}}
-                            md-input-container.row-has-value(flex)
-                                label 通道
-                                md-select(ng-model="::current.channelId" disabled readonly)
-                                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
-
-                        div(layout)
-                            md-input-container.row-has-value(flex)
-                                label 学历
-                                input(ng-model="::current.educationBackground" readonly type="text")
-                            md-input-container.row-has-value(flex)
-                                label 职称级别
-                                input(ng-model="::current.jobTitleDegree" readonly type="text")
-
-                        div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
-                            div(layout)
-                                md-input-container.row-has-value(flex)
-                                    label 原基本工资
-                                    md-select(ng-model="::current.formData.original.baseWage" disabled readonly)
-                                        md-option(value="leader_base") 干部
-                                        md-option(value="manager15_base") 管理15
-                                        md-option(value="manager12_base") 管理12
-                                        md-option(value="front_run_base") 前场运行监察
-                                        md-option(value="service_c_driving_base") 服务C-驾驶
-                                        md-option(value="service_c_base") 服务C
-                                        //- md-option(value="flyer_legend_base") 荣誉级飞行员
-                                        //- md-option(value="flyer_leader_base") 机长
-                                        //- md-option(value="flyer_copilot_base") 副驾
-                                        //- md-option(value="flyer_teacher_A_base") 教员A
-                                        //- md-option(value="flyer_teacher_B_base") 教员B
-                                        //- md-option(value="flyer_teacher_C_base") 教员C
-                                        //- md-option(value="flyer_student_base") 学员
-                                md-input-container.row-has-value(flex)
-                                    label 原薪酬通道
-                                    input(type="text" ng-model="::current.formData.original.baseChannel" readonly)
-                                md-input-container(flex)
-                                    label 原档级
-                                    input(type="text" ng-model="::current.formData.original.baseFlag" readonly)
-
-                            div(layout ng-init="exchangeCtrl.normal(current.formData.transferTo)")
-                                md-input-container.row-has-value(flex)
-                                    label 拟基本工资
-                                    md-select(
-                                        ng-model="current.formData.transferTo.baseWage"
-                                        placeholder="请选择"
-                                        ng-change="current.formData.transferTo.baseFlag=null;current.formData.transferTo.baseChannel=null;exchangeCtrl.normal(current.formData.transferTo);"
-                                        )
-                                        md-option(value="leader_base") 干部
-                                        md-option(value="manager15_base") 管理15
-                                        md-option(value="manager12_base") 管理12
-                                        md-option(value="front_run_base") 前场运行监察
-                                        md-option(value="service_c_driving_base") 服务C-驾驶
-                                        md-option(value="service_c_base") 服务C
-                                md-input-container.row-has-value(flex ng-if="current.baseWage != 'service_c_driving_base'")
-                                    label 拟薪酬通道
-                                    md-select(ng-model="current.formData.transferTo.baseChannel" placeholder="请选择" ng-change="exchangeCtrl.normal(current.formData.transferTo)")
-                                        md-option(ng-value="item" ng-repeat="item in exchangeCtrl.normal_channel_array(current.formData.transferTo)") {{item}}
-                                md-input-container.row-has-value(flex ng-if="current.baseWage != 'service_c_driving_base'")
-                                    label 拟档级
-                                    md-select(ng-model="current.formData.transferTo.baseFlag" placeholder="请选择" ng-change="exchangeCtrl.normal(current.formData.transferTo)")
-                                        md-option(ng-value="item" ng-repeat="item in exchangeCtrl.normal_flag_array(current.formData.transferTo)") {{item}}
+                    fieldset(ng-if="current.changeModule=='绩效工资'")
+                        include changes/performance
 
         .md-actions
             md-button(ng-click="dialog.close()" type="reset") 取消
-            md-button.md-warn.md-raised(ng-click="current.audit(false); dialog.close()") 驳回变动
-            md-button.md-primary.md-raised(ng-click="current.audit(true); submit(); dialog.close()") 通过变动
+            md-button.md-warn.md-raised(ng-click="current.result=false;" type="submit") 驳回变动
+            md-button.md-primary.md-raised(ng-click="current.result=true" type="submit") 通过变动
