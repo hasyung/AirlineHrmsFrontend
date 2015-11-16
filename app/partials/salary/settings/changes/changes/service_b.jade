@@ -35,40 +35,41 @@ div(layout)
         label 职称级别
         input(ng-model="::current.jobTitleDegree" readonly type="text")
 
-div(layout)
-    md-input-container(flex)
-        label 现通道入党时间
-        input(ng-model="::current.lastTransferDate" readonly type="text")
-    md-input-container(flex)
-        label 飞行小时累计
-        input(ng-model="::current.flyTotalTime" readonly type="text")
-
 div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
     div(layout)
         md-input-container.row-has-value(flex)
             label 原基本工资
             md-select(ng-model="::current.formData.original.baseWage" disabled readonly)
-                md-option(value="flyer_legend_base") 荣誉级飞行员
-                md-option(value="flyer_leader_base") 机长
-                md-option(value="flyer_copilot_base") 副驾
-                md-option(value="flyer_teacher_A_base") 教员A
-                md-option(value="flyer_teacher_B_base") 教员B
-                md-option(value="flyer_teacher_C_base") 教员C
-                md-option(value="flyer_student_base") 学员
+                md-option(value="service_b_normal_cleaner_base") 清洁工
+                md-option(value="service_b_parking_cleaner_base") 机坪清洁工
+                md-option(value="service_b_hotel_service_base") 宾馆服务员
+                md-option(value="service_b_green_base") 绿化
+                md-option(value="service_b_front_desk_base") 总台服务员
+                md-option(value="service_b_security_guard_base") 保安、空保装备保管员
+                md-option(value="service_b_input_base") 数据录入
+                md-option(value="service_b_guard_leader1_base") 保安队长（一类）
+                md-option(value="service_b_device_keeper_base") 保管（库房、培训设备、器械）
+                md-option(value="service_b_unloading_base") 外站装卸
+                md-option(value="service_b_making_water_base") 制水工
+                md-option(value="service_b_add_water_base") 加水工、排污工
+                md-option(value="service_b_guard_leader2_base") 保安队长（二类）
+                md-option(value="service_b_water_light_base") 水电维修
+                md-option(value="service_b_car_repair_base") 汽修工
+                md-option(value="service_b_airline_keeper_base") 机务工装设备/客舱供应库管
         md-input-container(flex)
             label 原档级
             input(type="text" ng-model="::current.formData.original.baseFlag" readonly)
 
     div(
         layout
-        ng-init="exchangeCtrl.fly(current.formData.transferTo)"
+        ng-init="exchangeCtrl.service_b(current.formData.transferTo)"
         )
         md-input-container.row-has-value(flex)
             label 拟基本工资
             md-select(
                 ng-model="current.formData.transferTo.baseWage"
                 placeholder="请选择"
-                ng-change="current.formData.transferTo.baseFlag=null;current.formData.transferTo.baseChannel=null;exchangeCtrl.fly(current.formData.transferTo);"
+                ng-change="current.formData.transferTo.baseFlag=null;current.formData.transferTo.baseChannel=null;exchangeCtrl.service_b(current.formData.transferTo);"
                 required
                 )
                 md-option(value="flyer_legend_base") 荣誉级飞行员
@@ -81,5 +82,5 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
 
         md-input-container.row-has-value(flex ng-if="current.baseWage != 'service_c_driving_base'")
             label 拟档级
-            md-select(ng-model="current.formData.transferTo.baseFlag" placeholder="请选择" ng-change="exchangeCtrl.fly(current.formData.transferTo)" required)
-                md-option(ng-value="item" ng-repeat="item in exchangeCtrl.fly_flag_array(current.formData.transferTo)") {{item}}
+            md-select(ng-model="current.formData.transferTo.baseFlag" placeholder="请选择" ng-change="exchangeCtrl.service_b(current.formData.transferTo)" required)
+                md-option(ng-value="item" ng-repeat="item in exchangeCtrl.service_b_flag_array(current.formData.transferTo)") {{item}}
