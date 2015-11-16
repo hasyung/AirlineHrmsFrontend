@@ -7,9 +7,8 @@
             .md-toolbar-tools
                 h2 离职人员花名册
                 div(flex)
-                md-menu(ng-init="selectedRows=[]")
+                md-menu(ng-init="selectedRows=[]" has-permission="leave_employees_export_to_xls")
                     md-button.md-primary.md-raised(
-                        has-permission="leave_employees_export_to_xls"
                         ng-click="selectedRows = ctrl.getSelectsIds(); $mdOpenMenu($event)"
                         ) 导出
                     md-menu-content
