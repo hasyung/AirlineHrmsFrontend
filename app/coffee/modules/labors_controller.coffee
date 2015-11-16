@@ -369,7 +369,6 @@ class AttendanceCtrl extends nb.Controller
         @initDate()
 
         scope.realFlow = (entity) ->
-            console.log '@@@'
             t = entity.type
             m = injector.get(t)
             return m.$find(entity.$pk)
