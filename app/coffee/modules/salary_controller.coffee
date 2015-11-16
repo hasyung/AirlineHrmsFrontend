@@ -1080,7 +1080,7 @@ class SalaryKeepController extends SalaryBaseController
 class SalaryPerformanceController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'PerformanceSalary', 'toaster']
 
-    constructor: ($http, $scope, $q, @Evt, @Employee, @PerformanceSalary, @toaster) ->
+    constructor: (@http, $scope, $q, @Evt, @Employee, @PerformanceSalary, @toaster) ->
         super(@PerformanceSalary, $scope, $q, false)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
@@ -1157,6 +1157,31 @@ class SalaryPerformanceController extends SalaryBaseController
                 self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
             else
                 self.toaster.pop('error', '提示', '导入成功')
+
+    getDateOptions: (type)->
+        date = new Date()
+        year = date.getFullYear()
+        month = date.getMonth()
+
+        return [year-1, year] if type == "year"
+
+        formatOption = (year, month)->
+            temp = []
+            temp.push("#{year}-#{item}") for item in [1..month]
+            return temp
+        dateOptions = [].concat formatOption(year-1, 12), formatOption(year, month+1)
+
+    uploadPerformance: (request, params)->
+        self = @
+
+        # 年度的时候 assessTime 是整数
+        request.assess_time = moment(new Date(new String(request.assessTime))).format "YYYY-MM-DD"
+        params.status = "uploading"
+
+        @http.post("/api/performance_salaries/import", request).success (response)->
+            self.scope.resRecord = response.messages
+            params.status = "finish"
+        .error ()->
 
 
 # 小时费

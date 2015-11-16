@@ -15,26 +15,6 @@
                     ) 离岗培训
 
                 md-button.md-primary.md-raised(
-                    href="/api/performances/temp_export"
-                ) 导出模板
-
-                md-menu()
-                    md-button.md-primary.md-raised(ng-click="$mdOpenMenu($event)") 上传绩效
-                    md-menu-content
-                        md-menu-item()
-                            a.md-button(
-                                nb-dialog
-                                template-url="/partials/performance/record/add.html"
-                                locals="{performanceType: 'month'}"
-                            ) 员工月度绩效
-                        md-menu-item()
-                            a.md-button(
-                                nb-dialog
-                                template-url="/partials/performance/record/add.html"
-                                locals="{performanceType: 'year'}"
-                            ) 员工年度绩效
-
-                md-button.md-primary.md-raised(
                     nb-dialog
                     ng-disabled="!ctrl.getSelected()"
                     template-url="/partials/performance/record/add_attachment.html"
