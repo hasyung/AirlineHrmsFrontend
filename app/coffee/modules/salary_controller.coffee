@@ -458,6 +458,9 @@ class SalaryPersonalController extends nb.Controller
     getSelected: () ->
         rows = @gridApi.selection.getSelectedGridRows()
 
+    currentCalcTime: ()->
+        @currentYear + "-" + @currentMonth
+
     delete: (isConfirm) ->
         if isConfirm
             @getSelected().forEach (record) ->
