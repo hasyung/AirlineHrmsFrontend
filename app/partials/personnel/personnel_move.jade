@@ -6,6 +6,7 @@
                 h2 员工异动信息列表
                 div(flex)
                 md-button.md-primary.md-raised(
+                    has-permission="special_states_update"
                     ng-disabled="!ctrl.getSelected()"
                     nb-dialog
                     template-url="partials/personnel/move/move_edit.html"
@@ -13,16 +14,19 @@
                 ) 异动修改
 
                 md-button.md-primary.md-raised(
+                    has-permission="special_states_temporarily_stop_air_duty"
                     nb-dialog
                     template-url="partials/personnel/move/stop_flight.html"
                 ) 空勤停飞设置
 
                 md-button.md-primary.md-raised(
+                    has-permission="special_states_temporarily_transfer"
                     nb-dialog
                     template-url="partials/personnel/move/borrow.html"
                 ) 借调设置
 
                 md-button.md-primary.md-raised(
+                    has-permission="special_states_temporarily_defend"
                     nb-dialog
                     template-url="partials/personnel/move/accredit.html"
                 ) 派驻设置

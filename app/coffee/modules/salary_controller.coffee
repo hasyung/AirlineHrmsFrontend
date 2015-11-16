@@ -570,9 +570,9 @@ class SalaryChangeController extends nb.Controller
 
 
 class SalaryGradeChangeController extends nb.Controller
-    @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryGradeChange', 'SALARY_SETTING']
+    @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryGradeChange', 'SALARY_SETTING', 'toaster']
 
-    constructor: (@http, $scope, $Evt, $enum, @SalaryGradeChange, @SALARY_SETTING) ->
+    constructor: (@http, @scope, $Evt, $enum, @SalaryGradeChange, @SALARY_SETTING, @toaster) ->
         @loadInitialData()
 
         @filterOptions = {
@@ -621,7 +621,7 @@ class SalaryGradeChangeController extends nb.Controller
             }
             {
                 displayName: '所属部门'
-                name: 'departmentName'
+                name: 'department.name'
                 cellTooltip: (row) ->
                     return row.entity.departmentName
             }
@@ -638,7 +638,7 @@ class SalaryGradeChangeController extends nb.Controller
                         href="javascript:void(0);"
                         nb-dialog
                         template-url="partials/salary/settings/changes/grade.html"
-                        locals="{change: row.entity, ctrl: grid.appScope.$parent.ctrl}">
+                        locals="{gradeChange: row.entity, ctrl: grid.appScope.$parent.ctrl}">
                         查看
                     </a>
                 </div>
@@ -654,16 +654,23 @@ class SalaryGradeChangeController extends nb.Controller
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @salaryGradeChanges.$refresh(tableState)
 
-    loadSalarySetting: (employee_id)->
-        self = @
+    # loadSalarySetting: (employee_id)->
+    #     self = @
 
-        @http.get('/api/salary_person_setups/lookup?employee_id=' + employee_id)
-            .success (data)->
-                self.setting = data.salary_person_setup
-                self.flags = []
+    #     @http.get('/api/salary_person_setups/lookup?employee_id=' + employee_id)
+    #         .success (data)->
+    #             self.setting = data.salary_person_setup
+    #             self.flags = []
 
     checkUpdateChange: (type)->
-        #
+        params = new Object()
+        self = @
+        params.type = type
+
+        @http.get('/api/salary_person_setups/check_person_upgrade.json?type='+type)
+            .success (data)->
+                self.toaster.pop('success', '提示', '薪酬档级变动数据已更新')
+                self.salaryGradeChanges.$refresh()
 
 
 class SalaryExchangeController
@@ -696,6 +703,7 @@ class SalaryExchangeController
         Object.keys(setting.flags)
 
     normal: (current)->
+        console.log current
         return unless current.baseWage
         return unless current.baseFlag
 
@@ -1072,7 +1080,7 @@ class SalaryKeepController extends SalaryBaseController
 class SalaryPerformanceController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'PerformanceSalary', 'toaster']
 
-    constructor: ($http, $scope, $q, @Evt, @Employee, @PerformanceSalary, @toaster) ->
+    constructor: (@http, $scope, $q, @Evt, @Employee, @PerformanceSalary, @toaster) ->
         super(@PerformanceSalary, $scope, $q, false)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
@@ -1149,6 +1157,31 @@ class SalaryPerformanceController extends SalaryBaseController
                 self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
             else
                 self.toaster.pop('error', '提示', '导入成功')
+
+    getDateOptions: (type)->
+        date = new Date()
+        year = date.getFullYear()
+        month = date.getMonth()
+
+        return [year-1, year] if type == "year"
+
+        formatOption = (year, month)->
+            temp = []
+            temp.push("#{year}-#{item}") for item in [1..month]
+            return temp
+        dateOptions = [].concat formatOption(year-1, 12), formatOption(year, month+1)
+
+    uploadPerformance: (request, params)->
+        self = @
+
+        # 年度的时候 assessTime 是整数
+        request.assess_time = moment(new Date(new String(request.assessTime))).format "YYYY-MM-DD"
+        params.status = "uploading"
+
+        @http.post("/api/performance_salaries/import", request).success (response)->
+            self.scope.resRecord = response.messages
+            params.status = "finish"
+        .error ()->
 
 
 # 小时费

@@ -40,7 +40,7 @@ Employee = (restmod, RMUtils, $Evt) ->
                 update_skill_info: ()->
                     this.$save()
 
-                set_leave: (params)->
+                set_leave: (params, list)->
                     self = this
 
                     request = {
@@ -51,6 +51,7 @@ Employee = (restmod, RMUtils, $Evt) ->
 
                     onSuccess = (res) ->
                         self.$dispatch 'after-leave'
+                        list.$refresh()
 
                     this.$send(request, onSuccess)
 

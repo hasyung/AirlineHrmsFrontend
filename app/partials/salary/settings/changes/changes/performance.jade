@@ -1,0 +1,87 @@
+div(style="display:none;")
+    input(type="text" ng-model="current.employeeId")
+
+div(layout)
+    md-input-container(flex)
+        label 姓名
+        input(type="text" ng-model="::current.employeeName" readonly)
+    md-input-container(flex)
+        label 员工编号
+        input(type="text" ng-model="::current.employeeNo" readonly)
+
+div(layout)
+    md-input-container(flex)
+        label 所在部门
+        input(type="text" ng-model="::current.departmentName" readonly)
+    md-input-container(flex)
+        label 岗位
+        input(type="text" ng-model="::current.positionName" readonly)
+
+div(layout)
+    md-input-container.row-has-value(flex)
+        label 用工性质
+        md-select(ng-model="::current.laborRelationId" disabled readonly)
+            md-option(ng-value="item.id" ng-repeat="item in $enum.get('labor_relations')") {{item.label}}
+    md-input-container.row-has-value(flex)
+        label 通道
+        md-select(ng-model="::current.channelId" disabled readonly)
+            md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
+
+div(layout)
+    md-input-container.row-has-value(flex)
+        label 学历
+        input(ng-model="::current.educationBackground" readonly type="text")
+    md-input-container.row-has-value(flex)
+        label 职称级别
+        input(ng-model="::current.jobTitleDegree" readonly type="text")
+
+div(layout)
+    md-input-container(flex)
+        label 入川航时间
+        input(ng-model="::current.lastTransferDate" readonly type="text")
+    md-input-container(flex)
+        label 年度考核结果
+        input(ng-model="::current.lastTransferDate" readonly type="text")
+
+div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
+    div(layout)
+        md-input-container.row-has-value(flex)
+            label 原绩效工资通道
+            md-select(ng-model="::current.formData.original.baseWage" disabled readonly)
+                md-option(value="information_perf") 信息通道
+                md-option(value="airline_business_perf") 航务航材
+                md-option(value="manage_market_perf") 管理营销
+                md-option(value="service_c_1_perf") 服务C1
+                md-option(value="service_c_2_perf") 服务C2
+                md-option(value="service_c_3_perf") 服务C3
+                md-option(value="service_c_driving_perf") 服务C-驾驶
+        md-input-container(flex)
+            label 原档级
+            input(type="text" ng-model="::current.formData.original.baseFlag" readonly)
+
+    div(
+        layout
+        ng-init="exchangeCtrl.perf(current.formData.transferTo)"
+        )
+        md-input-container.row-has-value(flex)
+            label 拟绩效工资通道
+            md-select(
+                ng-model="current.formData.transferTo.baseWage"
+                placeholder="请选择"
+                ng-change="current.formData.transferTo.baseFlag=null;current.formData.transferTo.baseChannel=null;exchangeCtrl.perf(current.formData.transferTo);"
+                required
+                )
+                md-option(value="information_perf") 信息通道
+                md-option(value="airline_business_perf") 航务航材
+                md-option(value="manage_market_perf") 管理营销
+                md-option(value="service_c_1_perf") 服务C1
+                md-option(value="service_c_2_perf") 服务C2
+                md-option(value="service_c_3_perf") 服务C3
+                md-option(value="service_c_driving_perf") 服务C-驾驶
+
+        md-input-container.row-has-value(flex ng-if="current.baseWage != 'service_c_driving_base'")
+            label 拟档级
+            md-select(ng-model="current.formData.transferTo.baseFlag" placeholder="请选择" ng-change="exchangeCtrl.perf(current.formData.transferTo)"
+            required
+            )
+                md-option(ng-value="item" ng-repeat="item in exchangeCtrl.perf_channel_array(current.formData.transferTo)") {{item}}

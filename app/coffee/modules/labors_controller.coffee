@@ -435,7 +435,7 @@ class AttendanceCtrl extends nb.Controller
                 name: 'type'
                 displayName: '详细'
                 cellTemplate: '''
-                <div class="ui-grid-cell-contents" ng-init="realFlow = grid.appScope.$parent.realFlow(row.entity)">
+                <div class="ui-grid-cell-contents" ng-mousedown="realFlow = grid.appScope.$parent.realFlow(row.entity)">
                     <a ng-if="!realFlow.processed" flow-handler="realFlow" flows="grid.options.data">
                         查看
                     </a>

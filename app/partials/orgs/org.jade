@@ -1,4 +1,4 @@
-section.org-detail(ng-controller="EditableResourceCtrl")
+section.org-detail(ng-controller="EditableResourceCtrl" has-permission="departments_show")
     .org-title.org-form-row
         span(ng-show="orgCtrl.state != 'newsub'") 机构信息
         span(ng-show="orgCtrl.state == 'newsub'") 新增子机构信息
@@ -86,17 +86,20 @@ section(ng-if="currentOrg.status !== 'destroy_inactive'")
                     td.org-post(ng-if="!ctrl.isHistory")
                         //- a(ui-sref=".position.detail({posId: position.id,id:currentOrg.id})") {{position.name}}
                         a(
+                            has-permission="positions_index"
+                            ng-if="!ctrl.isHistory"
                             nb-panel
                             template-url="partials/position/position_detail.html"
                             panel-controller="PositionDetailCtrl"
-                            locals="{'position': position}"
+                            locals="{'position': position, history: false}"
                         ) {{position.name}}
                     td.org-post(ng-if="ctrl.isHistory")
                         a(
+                            has-permission="history/positions_index"
                             nb-panel
                             template-url="partials/position/position_detail.html"
                             panel-controller="PositionDetailCtrl"
-                            locals="{'position': position}"
+                            locals="{'position': position, history: true}"
                             ) {{position.name}}
                     td  {{position.budgetedStaffing}}
                     td(ng-class="{'overstaffed': position.overstaffedNum > 0}")  {{position.staffing}}
