@@ -2,7 +2,7 @@ md-dialog.welfare_personal_new(
     ng-init="ctrl=dialog.ctrl; current=dialog.gradeChange.$refresh();"
     ng-controller="EditableResourceCtrl"
     )
-    form(name="gradeChangeForm" ng-submit="save(current.$save(), gradeChangeForm, ctrl.salaryGradeChanges)")
+    form(name="gradeChangeForm" ng-submit="save(current.$save(), gradeChangeForm, ctrl.salaryGradeChanges); dialog.close()")
         md-toolbar.md-accent(md-theme="hrms")
                 .md-toolbar-tools
                     span 薪酬档级变动
@@ -22,4 +22,4 @@ md-dialog.welfare_personal_new(
         .md-actions
             md-button(ng-click="dialog.close()" type="reset") 取消
             md-button.md-warn.md-raised(ng-click="current.result=false;" type="submit") 驳回变动
-            md-button.md-primary.md-raised(ng-click="current.result=true" type="submit") 通过变动
+            md-button.md-primary.md-raised(ng-disabled="gradeChangeForm.$invalid" ng-click="current.result=true" type="submit") 通过变动

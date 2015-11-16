@@ -36,14 +36,6 @@ div(layout)
         input(ng-model="::current.jobTitleDegree" readonly type="text")
 
 div(layout)
-    md-input-container.row-has-value(flex)
-        label 学历
-        input(ng-model="::current.educationBackground" readonly type="text")
-    md-input-container.row-has-value(flex)
-        label 职称级别
-        input(ng-model="::current.jobTitleDegree" readonly type="text")
-
-div(layout)
     md-input-container(flex)
         label 现档级入党时间
         input(ng-model="::current.lastTransferDate" readonly type="text")
@@ -84,6 +76,7 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
                 ng-model="current.formData.transferTo.baseWage"
                 placeholder="请选择"
                 ng-change="current.formData.transferTo.baseFlag=null;current.formData.transferTo.baseChannel=null;exchangeCtrl.normal(current.formData.transferTo);"
+                required
                 )
                 md-option(value="leader_base") 干部
                 md-option(value="manager15_base") 管理15
@@ -93,9 +86,9 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
                 md-option(value="service_c_base") 服务C
         md-input-container.row-has-value(flex ng-if="current.baseWage != 'service_c_driving_base'")
             label 拟薪酬通道
-            md-select(ng-model="current.formData.transferTo.baseChannel" placeholder="请选择" ng-change="exchangeCtrl.normal(current.formData.transferTo)")
+            md-select(ng-model="current.formData.transferTo.baseChannel" placeholder="请选择" ng-change="exchangeCtrl.normal(current.formData.transferTo)" required)
                 md-option(ng-value="item" ng-repeat="item in exchangeCtrl.normal_channel_array(current.formData.transferTo)") {{item}}
         md-input-container.row-has-value(flex ng-if="current.baseWage != 'service_c_driving_base'")
             label 拟档级
-            md-select(ng-model="current.formData.transferTo.baseFlag" placeholder="请选择" ng-change="exchangeCtrl.normal(current.formData.transferTo)")
+            md-select(ng-model="current.formData.transferTo.baseFlag" placeholder="请选择" ng-change="exchangeCtrl.normal(current.formData.transferTo)" required)
                 md-option(ng-value="item" ng-repeat="item in exchangeCtrl.normal_flag_array(current.formData.transferTo)") {{item}}

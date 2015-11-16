@@ -72,6 +72,7 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
                 ng-model="current.formData.transferTo.baseWage"
                 placeholder="请选择"
                 ng-change="current.formData.transferTo.baseFlag=null;current.formData.transferTo.baseChannel=null;exchangeCtrl.fly(current.formData.transferTo);"
+                required
                 )
                 md-option(value="flyer_legend_base") 荣誉级飞行员
                 md-option(value="flyer_leader_base") 机长
@@ -83,5 +84,5 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
 
         md-input-container.row-has-value(flex ng-if="current.baseWage != 'service_c_driving_base'")
             label 拟档级
-            md-select(ng-model="current.formData.transferTo.baseFlag" placeholder="请选择" ng-change="exchangeCtrl.fly(current.formData.transferTo)")
+            md-select(ng-model="current.formData.transferTo.baseFlag" placeholder="请选择" ng-change="exchangeCtrl.fly(current.formData.transferTo)" required)
                 md-option(ng-value="item" ng-repeat="item in exchangeCtrl.fly_flag_array(current.formData.transferTo)") {{item}}
