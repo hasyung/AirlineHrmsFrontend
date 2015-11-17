@@ -16,6 +16,9 @@ md-dialog.welfare_personal_new(
                     fieldset(ng-if="current.channelId == 4 && current.changeModule=='岗位工资'")
                         include changes/flyer
 
+                    fieldset(ng-if="current.channelId == 7 && current.changeModule=='岗位工资'")
+                        include changes/service_b
+
                     fieldset(ng-if="current.changeModule=='绩效工资'")
                         include changes/performance
 
