@@ -578,6 +578,8 @@ class SalaryGradeChangeController extends nb.Controller
     constructor: (@http, @scope, $Evt, $enum, @SalaryGradeChange, @SALARY_SETTING, @toaster) ->
         @loadInitialData()
 
+        @checking = false
+
         @filterOptions = {
             name: 'salaryPersonal'
             constraintDefs: [
@@ -669,11 +671,13 @@ class SalaryGradeChangeController extends nb.Controller
         params = new Object()
         self = @
         params.type = type
+        @checking = true
 
         @http.get('/api/salary_person_setups/check_person_upgrade.json?type='+type)
             .success (data)->
                 self.toaster.pop('success', '提示', '薪酬档级变动数据已更新')
                 self.salaryGradeChanges.$refresh()
+                self.checking = false
 
 
 class SalaryExchangeController
