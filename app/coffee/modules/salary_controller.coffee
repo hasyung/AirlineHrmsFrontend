@@ -1188,7 +1188,9 @@ class SalaryPerformanceController extends SalaryBaseController
         @http.post("/api/performance_salaries/import", request).success (response)->
             self.scope.resRecord = response.messages
             params.status = "finish"
-        .error ()->
+        .error (response)->
+            self.scope.resRecord = response.messages
+            params.status = "error"
 
 
 # 小时费
