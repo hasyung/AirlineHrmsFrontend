@@ -48,6 +48,22 @@
                                 md-button(flex flow-btn type="button") 长水机场值班数据
 
                 span
+                    md-button.md-raised.md-primary(
+                        ng-click="ctrl.exeCalc({type: '工作餐'})"
+                        ng-disabled="ctrl.calcing"
+                    ) 工作餐计算
+                span
+                    md-button.md-raised.md-primary(
+                        ng-click="ctrl.exeCalc({type: '误餐费'})"
+                        ng-disabled="ctrl.calcing"
+                    ) 误餐费计算
+                span
+                    md-button.md-raised.md-primary(
+                        ng-click="ctrl.exeCalc({type: '备份餐'})"
+                        ng-disabled="ctrl.calcing"
+                    ) 备份餐计算
+
+                span
                     md-menu(ng-init="selectedRows=[]")
                         md-button.md-primary.md-raised(
                             ng-click="$mdOpenMenu($event)"
@@ -138,22 +154,6 @@
                                     ng-href="/api/dinner_fees/export?type=备份餐打印表"
                                     href="javascript:"
                                 ) 备份餐打印表
-
-                span
-                    md-button.md-raised.md-primary(
-                        ng-click="ctrl.exeCalc({type: '工作餐'})"
-                        ng-disabled="ctrl.calcing"
-                    ) 工作餐计算
-                span
-                    md-button.md-raised.md-primary(
-                        ng-click="ctrl.exeCalc({type: '误餐费'})"
-                        ng-disabled="ctrl.calcing"
-                    ) 误餐费计算
-                span
-                    md-button.md-raised.md-primary(
-                        ng-click="ctrl.exeCalc({type: '备份餐'})"
-                        ng-disabled="ctrl.calcing"
-                    ) 备份餐计算
 
         div(nb-grid
             column-defs="ctrl.columnDef"

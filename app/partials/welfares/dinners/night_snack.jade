@@ -25,6 +25,12 @@
                     flow-btn type="button"
                     ng-disabled="ctrl.calcing"
                 ) 导入
+
+                md-button.md-primary.md-raised(
+                    ng-disabled="ctrl.calcing"
+
+                ) 夜餐费计算
+
                 md-menu(ng-init="selectedRows=[]")
                     md-button.md-primary.md-raised(
                         ng-click="$mdOpenMenu($event)"
@@ -52,11 +58,6 @@
                                 ng-href="/api/night_fees/export?type=北头食堂夜班费充值表"
                                 href="javascript:"
                             ) 北头食堂夜班费充值表
-
-                md-button.md-primary.md-raised(
-                    ng-disabled="ctrl.calcing"
-
-                ) 夜餐费计算
 
 
 

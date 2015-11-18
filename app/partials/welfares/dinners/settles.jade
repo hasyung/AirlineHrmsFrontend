@@ -60,6 +60,24 @@
                                 md-button(flex flow-btn type="button") 昆明食堂充值表
 
                 span
+                    md-menu(ng-init="selectedRows=[]")
+                        md-button.md-primary.md-raised(
+                            ng-click="$mdOpenMenu($event)"
+                            ng-disabled="ctrl.calcing"
+                            ) 计算
+                        md-menu-content
+                            md-menu-item()
+                                md-button(
+                                    ng-click="ctrl.exeCalc({type: '餐卡数据'})"
+                                    ng-disabled="ctrl.calcing"
+                                ) 餐卡数据
+                            md-menu-item()
+                                md-button(
+                                    ng-click="ctrl.exeCalc({type: '重庆和昆明食堂数据'})"
+                                    ng-disabled="ctrl.calcing"
+                                ) 重庆和昆明食堂数据
+
+                span
                     md-menu
                         md-button.md-primary.md-raised(
                             ng-click="$mdOpenMenu($event)"
@@ -90,24 +108,6 @@
                                     ng-href="/api/dinner_settles/export?type=昆明食堂拨付表"
                                     href="javascript:"
                                 ) 昆明食堂拨付表
-
-                span
-                    md-menu(ng-init="selectedRows=[]")
-                        md-button.md-primary.md-raised(
-                            ng-click="$mdOpenMenu($event)"
-                            ng-disabled="ctrl.calcing"
-                            ) 计算
-                        md-menu-content
-                            md-menu-item()
-                                md-button(
-                                    ng-click="ctrl.exeCalc({type: '餐卡数据'})"
-                                    ng-disabled="ctrl.calcing"
-                                ) 餐卡数据
-                            md-menu-item()
-                                md-button(
-                                    ng-click="ctrl.exeCalc({type: '重庆和昆明食堂数据'})"
-                                    ng-disabled="ctrl.calcing"
-                                ) 重庆和昆明食堂数据
 
         div(nb-grid
             column-defs="ctrl.columnDef"
