@@ -1133,6 +1133,7 @@ class DinnerFeeController extends nb.Controller
             {displayName: '卡次数', name: 'cardNumber'}
             {displayName: '误餐费', name: 'dinnerfee'}
             {displayName: '备份餐', name: 'beifencan'}
+            {displayName: '夜餐费', name: 'nightfee'}
         ]
 
     initialize: (gridApi) ->
@@ -1211,6 +1212,123 @@ class DinnerFeeController extends nb.Controller
             else
                 self.toaster.pop('error', '提示', '导入成功')
 
+class DinnerNightSnackController extends nb.Controller
+    @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerNightSnack', 'toaster']
+
+    constructor: (@http, @scope, @Evt, @DinnerNightSnack, @toaster) ->
+        @loadDateTime()
+        @loadInitialData()
+
+        @filterOptions = {
+            name: 'dinnerNightSnack'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '员工姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+            ]
+        }
+
+        @columnDef = [
+            {displayName: '员工编号', name: 'employeeNo', enableCellEdit: false}
+            {
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+                enableCellEdit: false
+            }
+            {
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+                enableCellEdit: false
+            }
+            {displayName: '班制', name: 'shiftsType', enableCellEdit: false}
+            {
+                displayName: '夜班次数'
+                name: 'yebancishu'
+                headerCellClass: 'editable_cell_header'
+            }
+            {displayName: '备注', name: 'beizhu', enableCellEdit: false}
+            {displayName: '实发金额', name: 'shifajine', enableCellEdit: false}
+            {displayName: '标识', name: 'biaozhi', enableCellEdit: false}
+        ]
+
+    loadDateTime: () ->
+        date = new Date()
+
+        @year_list = @$getYears()
+        @month_list = @$getMonths()
+
+        @currentYear = @year_list[@year_list.length - 1]
+        @currentMonth = @month_list[@month_list.length - 1]
+
+        if @currentMonth < 12
+            @month_list.push(parseInt(@currentMonth, 10)+1)
+
+    loadInitialData: (options) ->
+        args = {month: @currentCalcTime()}
+        angular.extend(args, options) if angular.isDefined(options)
+        @dinnerNightSnacks = @DinnerNightSnack.$collection(args).$fetch()
+
+    search: (tableState) ->
+        tableState = {} unless tableState
+        tableState['month'] = @currentCalcTime()
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+        @dinnerNightSnacks.$refresh(tableState)
+
+    currentCalcTime: ()->
+        @currentYear + "-" + @currentMonth
+
+    loadRecords: (options = null) ->
+        args = {month: @currentCalcTime()}
+        angular.extend(args, options) if angular.isDefined(options)
+        @dinnerNightSnacks.$refresh(args)
+
+    exeCalc: (options = null) ->
+        @calcing = true
+        self = @
+
+        args = {month: @currentCalcTime()}
+        angular.extend(args, options) if angular.isDefined(options)
+
+        @dinnerNightSnacks.compute(args).$asPromise().then (data)->
+            self.calcing = false
+            erorr_msg = data.$response.data.messages
+            # _.snakeCase('Foo Bar')
+            # @Model => String???
+            self.Evt.$send("dinner_fees:calc:error", erorr_msg) if erorr_msg
+            self.loadRecords()
+
+    uploadNightFee: (type, attachment_id)->
+        self = @
+        params = {type: type, attachment_id: attachment_id, month: @currentCalcTime()}
+        @show_error_names = false
+
+        @http.post("/api/night_fees/import", params).success (data, status) ->
+            if data.error_count > 0
+                self.show_error_names = true
+                self.error_names = data.error_names
+
+                self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
+            else
+                self.toaster.pop('error', '提示', '导入成功')
+
 class DinnerSettleController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerSettle', 'toaster','$q']
 
@@ -1264,6 +1382,7 @@ class DinnerSettleController extends nb.Controller
             {displayName: '卡次数', name: 'cardNumber'}
             {displayName: '误餐费', name: 'dinnerfee'}
             {displayName: '备份餐', name: 'beifencan'}
+            {displayName: '夜餐费', name: 'nightfee'}
             {displayName: '补贴', name: 'allowance'}
             {displayName: '总计', name: 'total'}
         ]
@@ -1400,6 +1519,7 @@ class DinnerChangesController extends nb.Controller
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents">
                     <a nb-dialog
+                        ng-click="grid.appScope.$parent.ctrl.secondCard=false"
                         template-url="partials/welfares/dinners/change_deal.html"
                         locals="{change: row.entity, ctrl: grid.appScope.$parent.ctrl}">
                         查看
@@ -1468,6 +1588,15 @@ class DinnerHistoriesController extends nb.Controller
             }
             {displayName: '班制', name: 'shiftsType'}
             {displayName: '驻地', name: 'location'}
+            {displayName: '餐费区域', name: 'area'}
+            {displayName: '月度', name: 'yuedu'}
+            {displayName: '上卡金额', name: 'shangkajine'}
+            {displayName: '上卡次数', name: 'shangkaceshu'}
+            {displayName: '公司补贴', name: 'gongsibutie'}
+            {displayName: '卡消费', name: 'kaxiaofei'}
+            {displayName: '误餐费', name: 'wucanfei'}
+            {displayName: '备份餐', name: 'beifencan'}
+            {displayName: '夜餐费', name: 'yecanfei'}
         ]
 
     loadInitialData: () ->
@@ -1578,6 +1707,7 @@ app.controller 'annuityChangesCtrl', AnnuityChangesController
 app.controller 'dinnerCtrl', DinnerController
 app.controller 'dinnerPersonalCtrl', DinnerPersonalController
 app.controller 'dinnerFeeCtrl', DinnerFeeController
+app.controller 'dinnerNightSnackCtrl', DinnerNightSnackController
 app.controller 'dinnerSettleCtrl', DinnerSettleController
 app.controller 'dinnerChangesCtrl', DinnerChangesController
 app.controller 'dinnerHistoriesCtrl', DinnerHistoriesController

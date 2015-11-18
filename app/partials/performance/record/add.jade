@@ -22,6 +22,9 @@ md-dialog.sample-dialog(ng-init="request = {};params = {status:'init'}; ctrl = d
                 .row 解析xls成功，一共{{total || 0}}条数据
                 .row 导入记录树：
                 .row 总计：总计导入{{::resRecord.success_count}}条,错误数据{{::resRecord.fail_count}}条。
+            .dialog-content.show-text(ng-if="params.status == 'error'")
+                .row 解析xls错误
+                .row(ng-repeat="msg in resRecord") {{msg}}
 
             .md-actions
                 md-button(type="button" ng-click='dialog.close()' ng-if="params.status == 'init'") 取 消
