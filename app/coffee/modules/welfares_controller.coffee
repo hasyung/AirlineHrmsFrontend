@@ -1236,7 +1236,7 @@ class DinnerNightSnackController extends nb.Controller
         }
 
         @columnDef = [
-            {displayName: '员工编号', name: 'employeeNo'}
+            {displayName: '员工编号', name: 'employeeNo', enableCellEdit: false}
             {
                 displayName: '姓名'
                 field: 'employeeName'
@@ -1249,18 +1249,24 @@ class DinnerNightSnackController extends nb.Controller
                     </a>
                 </div>
                 '''
+                enableCellEdit: false
             }
             {
                 displayName: '所属部门'
                 name: 'departmentName'
                 cellTooltip: (row) ->
                     return row.entity.departmentName
+                enableCellEdit: false
             }
-            {displayName: '班制', name: 'shiftsType'}
-            {displayName: '夜班次数', name: 'yebancishu'}
-            {displayName: '备注', name: 'beizhu'}
-            {displayName: '实发金额', name: 'shifajine'}
-            {displayName: '标识', name: 'biaozhi'}
+            {displayName: '班制', name: 'shiftsType', enableCellEdit: false}
+            {
+                displayName: '夜班次数'
+                name: 'yebancishu'
+                headerCellClass: 'editable_cell_header'
+            }
+            {displayName: '备注', name: 'beizhu', enableCellEdit: false}
+            {displayName: '实发金额', name: 'shifajine', enableCellEdit: false}
+            {displayName: '标识', name: 'biaozhi', enableCellEdit: false}
         ]
 
     loadDateTime: () ->
