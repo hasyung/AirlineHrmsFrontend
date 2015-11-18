@@ -85,6 +85,11 @@ md-dialog.punishment_new(
                         label 晚餐次数
                             span.require-tip *
                         input(ng-model="dinner.dinnerNumber" required type="number")
+                div(layout)
+                    md-input-container(flex)
+                        label 变动日期
+                            span.require-tip *
+                        input(ng-model="dinner.changeDate" required bs-datepicker)
 
 
         .md-actions

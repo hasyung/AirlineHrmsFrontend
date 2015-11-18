@@ -57,6 +57,14 @@ md-dialog.employee_move(ng-controller="EditableResourceCtrl" style="min-width: 4
                         md-input-container(flex)
                             label 晚餐次数
                             input(ng-model="change.dinnerPersonSetups[0].dinnerNumber" required type="number")
+                    div(layout)
+                        md-input-container(flex)
+                            label 变动日期
+                            input(
+                                ng-model="change.dinnerPersonSetups[0].changeDate"
+                                type="text"
+                                readonly
+                                )
                 //- 增加双区域按钮
                 div(
                     layout
@@ -106,6 +114,14 @@ md-dialog.employee_move(ng-controller="EditableResourceCtrl" style="min-width: 4
                         md-input-container(flex)
                             label 晚餐次数
                             input(ng-model="change.dinnerPersonSetups[1].dinnerNumber" required type="number")
+                    div(layout)
+                        md-input-container(flex)
+                            label 变动日期
+                            input(
+                                ng-model="change.dinnerPersonSetups[1].changeDate"
+                                type="text"
+                                readonly
+                                )
 
         .md-actions(style="padding-left: 0;")
             md-button.md-warn.md-raised(

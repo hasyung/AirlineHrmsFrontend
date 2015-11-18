@@ -1400,6 +1400,7 @@ class DinnerChangesController extends nb.Controller
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents">
                     <a nb-dialog
+                        ng-click="grid.appScope.$parent.ctrl.secondCard=false"
                         template-url="partials/welfares/dinners/change_deal.html"
                         locals="{change: row.entity, ctrl: grid.appScope.$parent.ctrl}">
                         查看
