@@ -1211,6 +1211,76 @@ class DinnerFeeController extends nb.Controller
             else
                 self.toaster.pop('error', '提示', '导入成功')
 
+class DinnerNightSnackController extends nb.Controller
+    @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerNightSnack', 'toaster']
+
+    constructor: (@http, @scope, @Evt, @DinnerNightSnack, @toaster) ->
+        @loadInitialData()
+
+        @filterOptions = {
+            name: 'dinnerNightSnack'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '员工姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+            ]
+        }
+
+        @columnDef = [
+            {displayName: '员工编号', name: 'employeeNo'}
+            {
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+            }
+            {displayName: '班制', name: 'shiftsType'}
+            {displayName: '驻地', name: 'location'}
+            {displayName: '餐费区域', name: 'area'}
+            {displayName: '卡金额', name: 'cardAmount'}
+            {displayName: '卡次数', name: 'cardNumber'}
+            {displayName: '误餐费', name: 'dinnerfee'}
+            {displayName: '备份餐', name: 'beifencan'}
+            {displayName: '补贴', name: 'allowance'}
+            {displayName: '总计', name: 'total'}
+        ]
+
+    loadInitialData: () ->
+        @dinnerNightSnacks = @DinnerNightSnack.$collection().$fetch()
+
+    exeCalc: (options = null) ->
+        @calcing = true
+        self = @
+
+        args = {}
+        angular.extend(args, options) if angular.isDefined(options)
+
+        @dinnerNightSnacks.compute(args).$asPromise().then (data)->
+            self.calcing = false
+            erorr_msg = data.$response.data.messages
+            self.Evt.$send("dinner_fees:calc:error", erorr_msg) if erorr_msg
+            self.dinnerNightSnacks.$refresh()
+
 class DinnerSettleController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerSettle', 'toaster','$q']
 
@@ -1579,6 +1649,7 @@ app.controller 'annuityChangesCtrl', AnnuityChangesController
 app.controller 'dinnerCtrl', DinnerController
 app.controller 'dinnerPersonalCtrl', DinnerPersonalController
 app.controller 'dinnerFeeCtrl', DinnerFeeController
+app.controller 'dinnerNightSnackCtrl', DinnerNightSnackController
 app.controller 'dinnerSettleCtrl', DinnerSettleController
 app.controller 'dinnerChangesCtrl', DinnerChangesController
 app.controller 'dinnerHistoriesCtrl', DinnerHistoriesController
