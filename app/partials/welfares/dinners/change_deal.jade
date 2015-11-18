@@ -125,18 +125,30 @@ md-dialog.employee_move(ng-controller="EditableResourceCtrl" style="min-width: 4
 
         .md-actions(style="padding-left: 0;")
             md-button.md-warn.md-raised(
-                ng-click="change.state='暂停发放'; change.isSuspend=true;"
+                ng-click="change.state='暂停发放'; change.isSuspend=true;/
+                    change.dinnerPersonSetups[0].changeDate = change.changeDate;/
+                    change.dinnerPersonSetups[1].changeDate = change.changeDate;/
+                "
                 type="submit"
                 ng-if="!dinner.isSuspend"
                 ) 暂停发放
             md-button.md-primary.md-raised(
-                ng-click="change.state='恢复发放'; change.isSuspend=false;"
+                ng-click="change.state='恢复发放'; change.isSuspend=false;/
+                    change.dinnerPersonSetups[0].changeDate = change.changeDate;/
+                    change.dinnerPersonSetups[1].changeDate = change.changeDate;/
+                "
                 type="submit"
                 ng-if="dinner.isSuspend"
                 ) 恢复发放
             div(flex)
             md-button(type="button" ng-click="cancel(current, $event, change_deal_form);dialog.close()") 取 消
             md-button.md-primary.md-raised(ng-click="change.state='不做处理'"  type="submit") 不做处理
-            md-button.md-primary.md-raised(ng-click="change.state='保存处理'" type="submit") 保存处理
+            md-button.md-primary.md-raised(
+                ng-click="change.state='保存处理';/
+                    change.dinnerPersonSetups[0].changeDate = change.changeDate;/
+                    change.dinnerPersonSetups[1].changeDate = change.changeDate;/
+                "
+                type="submit"
+                ) 保存处理
 
 
