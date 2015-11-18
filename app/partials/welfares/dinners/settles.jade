@@ -24,7 +24,7 @@
                         md-button.md-primary.md-raised(
                             ng-click="$mdOpenMenu($event)"
                             ng-disabled="ctrl.calcing || ctrl.upload_start"
-                            ) 导入备份餐数据
+                            ) 导入
                         md-menu-content()
                             md-menu-item(
                                 flow-init="{target: '/api/attachments/upload_file', testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
@@ -58,23 +58,6 @@
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
                                 flow-file-success="ctrl.upload_start=false;ctrl.upload_settles('昆明食堂充值表', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 昆明食堂充值表
-                span
-                    md-menu(ng-init="selectedRows=[]")
-                        md-button.md-primary.md-raised(
-                            ng-click="$mdOpenMenu($event)"
-                            ng-disabled="ctrl.calcing"
-                            ) 计算
-                        md-menu-content
-                            md-menu-item()
-                                md-button(
-                                    ng-click="ctrl.exeCalc({type: '餐卡数据'})"
-                                    ng-disabled="ctrl.calcing"
-                                ) 餐卡数据
-                            md-menu-item()
-                                md-button(
-                                    ng-click="ctrl.exeCalc({type: '重庆和昆明食堂数据'})"
-                                    ng-disabled="ctrl.calcing"
-                                ) 重庆和昆明食堂数据
 
                 span
                     md-menu
@@ -107,6 +90,24 @@
                                     ng-href="/api/dinner_settles/export?type=昆明食堂拨付表"
                                     href="javascript:"
                                 ) 昆明食堂拨付表
+
+                span
+                    md-menu(ng-init="selectedRows=[]")
+                        md-button.md-primary.md-raised(
+                            ng-click="$mdOpenMenu($event)"
+                            ng-disabled="ctrl.calcing"
+                            ) 计算
+                        md-menu-content
+                            md-menu-item()
+                                md-button(
+                                    ng-click="ctrl.exeCalc({type: '餐卡数据'})"
+                                    ng-disabled="ctrl.calcing"
+                                ) 餐卡数据
+                            md-menu-item()
+                                md-button(
+                                    ng-click="ctrl.exeCalc({type: '重庆和昆明食堂数据'})"
+                                    ng-disabled="ctrl.calcing"
+                                ) 重庆和昆明食堂数据
 
         div(nb-grid
             column-defs="ctrl.columnDef"

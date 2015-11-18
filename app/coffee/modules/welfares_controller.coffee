@@ -1133,6 +1133,7 @@ class DinnerFeeController extends nb.Controller
             {displayName: '卡次数', name: 'cardNumber'}
             {displayName: '误餐费', name: 'dinnerfee'}
             {displayName: '备份餐', name: 'beifencan'}
+            {displayName: '夜餐费', name: 'nightfee'}
         ]
 
     initialize: (gridApi) ->
@@ -1215,6 +1216,7 @@ class DinnerNightSnackController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerNightSnack', 'toaster']
 
     constructor: (@http, @scope, @Evt, @DinnerNightSnack, @toaster) ->
+        @loadDateTime()
         @loadInitialData()
 
         @filterOptions = {
@@ -1255,31 +1257,71 @@ class DinnerNightSnackController extends nb.Controller
                     return row.entity.departmentName
             }
             {displayName: '班制', name: 'shiftsType'}
-            {displayName: '驻地', name: 'location'}
-            {displayName: '餐费区域', name: 'area'}
-            {displayName: '卡金额', name: 'cardAmount'}
-            {displayName: '卡次数', name: 'cardNumber'}
-            {displayName: '误餐费', name: 'dinnerfee'}
-            {displayName: '备份餐', name: 'beifencan'}
-            {displayName: '补贴', name: 'allowance'}
-            {displayName: '总计', name: 'total'}
+            {displayName: '夜班次数', name: 'yebancishu'}
+            {displayName: '备注', name: 'beizhu'}
+            {displayName: '实发金额', name: 'shifajine'}
+            {displayName: '标识', name: 'biaozhi'}
         ]
 
-    loadInitialData: () ->
-        @dinnerNightSnacks = @DinnerNightSnack.$collection().$fetch()
+    loadDateTime: () ->
+        date = new Date()
+
+        @year_list = @$getYears()
+        @month_list = @$getMonths()
+
+        @currentYear = @year_list[@year_list.length - 1]
+        @currentMonth = @month_list[@month_list.length - 1]
+
+        if @currentMonth < 12
+            @month_list.push(parseInt(@currentMonth, 10)+1)
+
+    loadInitialData: (options) ->
+        args = {month: @currentCalcTime()}
+        angular.extend(args, options) if angular.isDefined(options)
+        @dinnerNightSnacks = @DinnerNightSnack.$collection(args).$fetch()
+
+    search: (tableState) ->
+        tableState = {} unless tableState
+        tableState['month'] = @currentCalcTime()
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+        @dinnerNightSnacks.$refresh(tableState)
+
+    currentCalcTime: ()->
+        @currentYear + "-" + @currentMonth
+
+    loadRecords: (options = null) ->
+        args = {month: @currentCalcTime()}
+        angular.extend(args, options) if angular.isDefined(options)
+        @dinnerNightSnacks.$refresh(args)
 
     exeCalc: (options = null) ->
         @calcing = true
         self = @
 
-        args = {}
+        args = {month: @currentCalcTime()}
         angular.extend(args, options) if angular.isDefined(options)
 
         @dinnerNightSnacks.compute(args).$asPromise().then (data)->
             self.calcing = false
             erorr_msg = data.$response.data.messages
+            # _.snakeCase('Foo Bar')
+            # @Model => String???
             self.Evt.$send("dinner_fees:calc:error", erorr_msg) if erorr_msg
-            self.dinnerNightSnacks.$refresh()
+            self.loadRecords()
+
+    uploadNightFee: (type, attachment_id)->
+        self = @
+        params = {type: type, attachment_id: attachment_id, month: @currentCalcTime()}
+        @show_error_names = false
+
+        @http.post("/api/night_fees/import", params).success (data, status) ->
+            if data.error_count > 0
+                self.show_error_names = true
+                self.error_names = data.error_names
+
+                self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
+            else
+                self.toaster.pop('error', '提示', '导入成功')
 
 class DinnerSettleController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerSettle', 'toaster','$q']
@@ -1334,6 +1376,7 @@ class DinnerSettleController extends nb.Controller
             {displayName: '卡次数', name: 'cardNumber'}
             {displayName: '误餐费', name: 'dinnerfee'}
             {displayName: '备份餐', name: 'beifencan'}
+            {displayName: '夜餐费', name: 'nightfee'}
             {displayName: '补贴', name: 'allowance'}
             {displayName: '总计', name: 'total'}
         ]
@@ -1539,6 +1582,15 @@ class DinnerHistoriesController extends nb.Controller
             }
             {displayName: '班制', name: 'shiftsType'}
             {displayName: '驻地', name: 'location'}
+            {displayName: '餐费区域', name: 'area'}
+            {displayName: '月度', name: 'yuedu'}
+            {displayName: '上卡金额', name: 'shangkajine'}
+            {displayName: '上卡次数', name: 'shangkaceshu'}
+            {displayName: '公司补贴', name: 'gongsibutie'}
+            {displayName: '卡消费', name: 'kaxiaofei'}
+            {displayName: '误餐费', name: 'wucanfei'}
+            {displayName: '备份餐', name: 'beifencan'}
+            {displayName: '夜餐费', name: 'yecanfei'}
         ]
 
     loadInitialData: () ->

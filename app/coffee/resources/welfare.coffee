@@ -67,10 +67,10 @@ DinnerRecord = (restmod, RMUtils, $Evt) ->
     }
 
 DinnerNightSnack = (restmod, RMUtils, $Evt) ->
-    restmod.model('/dinner_fees').mix 'nbRestApi', {
+    restmod.model('/night_fees').mix 'nbRestApi', {
         $config:
-            jsonRootSingle: 'dinner_fee'
-            jsonRootMany: 'dinner_fees'
+            jsonRootSingle: 'night_fee'
+            jsonRootMany: 'night_fees'
 
         owner: {belongsTo: 'Employee', key: 'employee_id'}
 
@@ -78,9 +78,9 @@ DinnerNightSnack = (restmod, RMUtils, $Evt) ->
             Scope:
                 # 计算(根据年月)
                 compute: (params)->
-                    restmod.model('/dinner_fees/compute').mix(
+                    restmod.model('/night_fees/compute').mix(
                         $config:
-                            jsonRoot: 'dinner_fees'
+                            jsonRoot: 'night_fees'
                     ).$search(params)
 
             Collection:
