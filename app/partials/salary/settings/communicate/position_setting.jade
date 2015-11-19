@@ -1,0 +1,28 @@
+.app-content-wrapper(flex ng-controller="salaryCtrl as ctrl" ng-init="ctrl.loadComPositions('communicate')" style="padding: 0;")
+    .salary-basic(style="padding: 0;")
+        md-toolbar
+            .md-toolbar-tools
+                h2 岗位通讯补贴设置
+                span(flex)
+
+        div(layout)
+            org-search(flex placeholder="部门" float-label search-text-change="selectDepIds=null" selected-item-change="selectDepIds = org.id;ctrl.loadComPositions(selectDepIds, keywords)")
+            md-input-container(flex)
+              label 关键词过滤
+              input(ng-model="keywords" placeholder="关键词" ng-change="ctrl.loadComPositions(selectDepIds, keywords)")
+
+        table.tablexx.table-default.table-bordered
+            thead
+                tr
+                    th 岗位
+                    th 标准
+
+            tbody
+                tr(ng-repeat="item in ctrl.comPositions track by $index")
+                    td {{::item.full_position_name}}
+                    td
+                        md-select(ng-model="item.communicate_allowance" ng-change="ctrl.updateComAmount(item.id, item.communicate_allowance)")
+                            md-option(value="0") 无
+                            md-option(value="400") 400
+                            md-option(value="300") 300
+                            md-option(value="200") 200

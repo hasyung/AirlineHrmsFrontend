@@ -291,7 +291,7 @@ class SalaryController extends nb.Controller
             '员工职级':              '%{job_title_degree}'
             '员工学历':              '%{education_background}'
             '去年年度绩效':          '%{last_year_perf}'
-            '本企业经历时间':         '%{join_scal_years}'
+            '本企业经历年限':         '%{join_scal_years}'
             '无人为飞行事故年限':      '%{no_subjective_accident_years}'
             '无安全严重差错年限':      '%{no_serious_security_error_years}'
             '高原特殊机场飞行资格':  '%{can_fly_highland_special}'
@@ -334,7 +334,37 @@ class SalaryController extends nb.Controller
             .success (data)->
                 self.toaster.pop('success', '提示', '更新成功')
             .error (data)->
+                self.toaster.pop('error', '提示', '更新失败')
+
+    # 通讯补贴 TODO: 和高温补贴合并
+    loadComPositions: (selectDepIds, keywords)->
+        self = @
+        return unless selectDepIds
+
+        @http.get('/api/salaries/communicate_allowance?department_ids=' + selectDepIds)
+            .success (data)->
+                self.comPositions = data.communicate_allowances
+
+                if !!keywords && keywords.length > 0
+                    self.comPositions = _.filter self.comPositions, (item)->
+                        item.full_position_name.indexOf(keywords) >= 0
+
+    listComPosition: (allowance)->
+        self = @
+
+        @http.get('/api/salaries/communicate_allowance?per_page=3000&communicate_allowance=' + allowance)
+            .success (data)->
+                self.currentComPositions = data.communicate_allowances
+
+    updateComAmount: (position_id, amount)->
+        self = @
+        params = {position_id: position_id, communicate_allowance: parseInt(amount)}
+
+        @http.put('/api/salaries/update_communicate_allowance', params)
+            .success (data)->
                 self.toaster.pop('success', '提示', '更新成功')
+            .error (data)->
+                self.toaster.pop('error', '提示', '更新失败')
 
     destroyCity: (cities, idx) ->
         cities.splice(idx, 1)
