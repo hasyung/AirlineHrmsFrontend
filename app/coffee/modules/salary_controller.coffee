@@ -291,7 +291,7 @@ class SalaryController extends nb.Controller
             '员工职级':              '%{job_title_degree}'
             '员工学历':              '%{education_background}'
             '去年年度绩效':          '%{last_year_perf}'
-            '本企业经历时间':         '%{join_scal_years}'
+            '本企业经历年限':         '%{join_scal_years}'
             '无人为飞行事故年限':      '%{no_subjective_accident_years}'
             '无安全严重差错年限':      '%{no_serious_security_error_years}'
             '高原特殊机场飞行资格':  '%{can_fly_highland_special}'
