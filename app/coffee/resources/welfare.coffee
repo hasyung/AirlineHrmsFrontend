@@ -67,7 +67,7 @@ DinnerRecord = (restmod, RMUtils, $Evt) ->
     }
 
 DinnerNightSnack = (restmod, RMUtils, $Evt) ->
-    restmod.model('/night_fees').mix 'nbRestApi', {
+    restmod.model('/night_fees').mix 'nbRestApi', 'DirtyModel', {
         $config:
             jsonRootSingle: 'night_fee'
             jsonRootMany: 'night_fees'
