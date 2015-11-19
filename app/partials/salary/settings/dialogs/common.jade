@@ -80,20 +80,20 @@ md-dialog.normal
 
       div(layout="row" layout-margin)
         md-input-container(flex ng-init="ctrl.searchText=input_expr")
-          //- label 输入数学公式
-          md-autocomplete(
-              md-selected-item="ctrl.selectedItem"
-              md-selected-item-change="input_expr=ctrl.selectedItem; current['expr']=ctrl.exchangeExpr(input_expr);"
-              md-search-text-change="input_expr=ctrl.searchText; current['expr']=ctrl.exchangeExpr(input_expr);"
-              md-search-text="ctrl.searchText"
-              md-items="item in ctrl.queryVariables(ctrl.searchText)"
-              md-min-length="0"
-              md-floating-label="输入数学公式"
-              md-input-name="Maths"
-              )
-              md-item-template
-                  span {{item}}
-          //- textarea(columns="1" ng-model="input_expr" ng-change="current['expr']=ctrl.exchangeExpr(input_expr)")
+          label 输入数学公式
+          //- md-autocomplete(
+          //-     md-selected-item="ctrl.selectedItem"
+          //-     md-selected-item-change="input_expr=ctrl.selectedItem; current['expr']=ctrl.exchangeExpr(input_expr);"
+          //-     md-search-text-change="input_expr=ctrl.searchText; current['expr']=ctrl.exchangeExpr(input_expr);"
+          //-     md-search-text="ctrl.searchText"
+          //-     md-items="item in ctrl.queryVariables(ctrl.searchText)"
+          //-     md-min-length="0"
+          //-     md-floating-label="输入数学公式"
+          //-     md-input-name="Maths"
+          //-     )
+          //-     md-item-template
+          //-         span {{item}}
+          textarea(columns="1" ng-model="input_expr" ng-change="current['expr']=ctrl.exchangeExpr(input_expr)")
 
     .md-actions
       md-button(type="button" ng-click="current['expr']=origin.expr;current['format_cell']=origin.desc;dialog.close()") 取消更改
