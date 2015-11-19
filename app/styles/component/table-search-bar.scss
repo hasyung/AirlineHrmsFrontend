@@ -184,6 +184,10 @@ md-content.search-container {
 
     .ui-grid {
         border: 0;
+
+        .warn-yellow {
+            background-color: #f58220;
+        }
     }
 
     .ui-grid-header-cell-row {

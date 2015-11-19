@@ -1213,9 +1213,9 @@ class DinnerFeeController extends nb.Controller
                 self.toaster.pop('error', '提示', '导入成功')
 
 class DinnerNightSnackController extends nb.Controller
-    @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerNightSnack', 'toaster']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'DinnerNightSnack', 'toaster', '$q']
 
-    constructor: (@http, @scope, @Evt, @DinnerNightSnack, @toaster) ->
+    constructor: (@http, @scope, @Evt, @DinnerNightSnack, @toaster, @q) ->
         @loadDateTime()
         @loadInitialData()
 
@@ -1236,12 +1236,21 @@ class DinnerNightSnackController extends nb.Controller
         }
 
         @columnDef = [
-            {displayName: '员工编号', name: 'employeeNo', enableCellEdit: false}
+            {
+                displayName: '员工编号'
+                field: 'employeeNo'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents" ng-class="{'warn-yellow': row.entity.isInvalid}">
+                    {{grid.getCellValue(row, col)}}
+                </div>
+                '''
+                enableCellEdit: false
+            }
             {
                 displayName: '姓名'
                 field: 'employeeName'
                 cellTemplate: '''
-                <div class="ui-grid-cell-contents">
+                <div class="ui-grid-cell-contents" ng-class="{'warn-yellow': row.entity.isInvalid}">
                     <a nb-panel
                         template-url="partials/personnel/info_basic.html"
                         locals="{employee: row.entity.owner}">
@@ -1253,21 +1262,84 @@ class DinnerNightSnackController extends nb.Controller
             }
             {
                 displayName: '所属部门'
-                name: 'departmentName'
+                field: 'departmentName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents" ng-class="{'warn-yellow': row.entity.isInvalid}">
+                    {{grid.getCellValue(row, col)}}
+                </div>
+                '''
                 cellTooltip: (row) ->
                     return row.entity.departmentName
                 enableCellEdit: false
             }
-            {displayName: '班制', name: 'shiftsType', enableCellEdit: false}
+            {
+                displayName: '班制'
+                field: 'shiftsType'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents" ng-class="{'warn-yellow': row.entity.isInvalid}">
+                    {{grid.getCellValue(row, col)}}
+                </div>
+                '''
+                enableCellEdit: false
+            }
             {
                 displayName: '夜班次数'
-                name: 'yebancishu'
+                field: 'nightNumber'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents" ng-class="{'warn-yellow': row.entity.isInvalid}">
+                    {{grid.getCellValue(row, col)}}
+                </div>
+                '''
                 headerCellClass: 'editable_cell_header'
+                type: 'number'
             }
-            {displayName: '备注', name: 'beizhu', enableCellEdit: false}
-            {displayName: '实发金额', name: 'shifajine', enableCellEdit: false}
-            {displayName: '标识', name: 'biaozhi', enableCellEdit: false}
+            {
+                displayName: '备注'
+                field: 'notes'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents" ng-class="{'warn-yellow': row.entity.isInvalid}">
+                    {{grid.getCellValue(row, col)}}
+                </div>
+                '''
+                enableCellEdit: false
+            }
+            {
+                displayName: '实发金额'
+                field: 'amount'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents" ng-class="{'warn-yellow': row.entity.isInvalid}">
+                    {{grid.getCellValue(row, col)}}
+                </div>
+                '''
+                enableCellEdit: false
+            }
+            {
+                displayName: '标识'
+                field: 'flag'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents" ng-class="{'warn-yellow': row.entity.isInvalid}">
+                    {{grid.getCellValue(row, col)}}
+                </div>
+                '''
+                enableCellEdit: false
+            }
         ]
+
+    initialize: (gridApi) ->
+        saveRow = (rowEntity) ->
+            dfd = @q.defer()
+
+            gridApi.rowEdit.setSavePromise(rowEntity, dfd.promise)
+
+            rowEntity.$save().$asPromise().then(
+                () -> dfd.resolve(),
+                () ->
+                    dfd.reject()
+                    rowEntity.$restore())
+
+        gridApi.rowEdit.on.saveRow(@scope, saveRow.bind(@))
+        @scope.$gridApi = gridApi
+        @gridApi = gridApi
 
     loadDateTime: () ->
         date = new Date()

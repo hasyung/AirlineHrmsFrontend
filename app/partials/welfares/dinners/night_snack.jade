@@ -28,7 +28,7 @@
 
                 md-button.md-primary.md-raised(
                     ng-disabled="ctrl.calcing"
-
+                    ng-click="ctrl.exeCalc()"
                 ) 夜餐费计算
 
                 md-menu(ng-init="selectedRows=[]")
@@ -67,4 +67,5 @@
             grid-edit
             grid-row-edit
             grid-cellNav
+            on-register-api="ctrl.initialize(gridApi)"
             safe-src="ctrl.dinnerNightSnacks")
