@@ -919,6 +919,7 @@ class DinnerPersonalController extends nb.Controller
 
     constructor: (@http, @scope, @Evt, @DinnerPersonSetup, @q, @state, @Employee) ->
         @areas = []
+        @areasCurrent = []
 
         @loadInitialData()
 
@@ -1078,6 +1079,14 @@ class DinnerPersonalController extends nb.Controller
                 dinner.breakfastNumber = data.breakfast_number
                 dinner.lunchNumber = data.lunch_number
                 dinner.dinnerNumber = data.dinner_number
+
+    areasFilter: (isMealCard) ->
+        if isMealCard
+            @areasCurrent = ['机关食堂', '空勤食堂', '北头食堂']
+        else
+            @areasCurrent = @areas
+            @areasCurrent = _.drop @areasCurrent, 3
+
 
 
 class DinnerFeeController extends nb.Controller
