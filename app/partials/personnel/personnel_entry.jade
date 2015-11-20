@@ -131,7 +131,12 @@
                             md-input-container.row-has-value(flex)
                                 label 通道
                                     span.require-tip *
-                                md-select(ng-model="newEmp.channelId" name="channel" placeholder="请选择")
+                                md-select(
+                                    ng-model="newEmp.channelId"
+                                    name="channel"
+                                    placeholder="请选择"
+                                    ng-change="ctrl.setProbationMonths(newEmp)"
+                                    )
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
 
                         div(layout)
@@ -144,7 +149,7 @@
                             //-         md-option(ng-value="item.id" ng-repeat="item in $enum.get('employment_status')") {{item.label}}
                             md-input-container.row-has-value(flex)
                                 label 试用时间
-                                md-select(ng-model="newEmp.probation_months")
+                                md-select(ng-model="newEmp.probationMonths")
                                     md-option(ng-value="item" ng-repeat="item in [1,2,3,4,5,6,7,8,9,10,11,12]") {{item}} 个月
                         //-ng-if="$enum.parseLabel(newEmp.employmentStatusId, 'employment_status') == '试用期员工'"
 
