@@ -1197,6 +1197,8 @@ class DinnerFeeController extends nb.Controller
             # @Model => String???
             self.Evt.$send("dinner_fees:calc:error", erorr_msg) if erorr_msg
             self.loadRecords()
+        , (data)->
+            self.calcing = false
 
     upload_copy: (type, attachment_id)->
         self = @
@@ -1382,10 +1384,10 @@ class DinnerNightSnackController extends nb.Controller
         @dinnerNightSnacks.compute(args).$asPromise().then (data)->
             self.calcing = false
             erorr_msg = data.$response.data.messages
-            # _.snakeCase('Foo Bar')
-            # @Model => String???
-            self.Evt.$send("dinner_fees:calc:error", erorr_msg) if erorr_msg
+            self.Evt.$send("night_fees:calc:error", erorr_msg) if erorr_msg
             self.loadRecords()
+        , (data)->
+            self.calcing = false
 
     uploadNightFee: (type, attachment_id)->
         self = @
