@@ -84,4 +84,4 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
             md-select(ng-model="current.formData.transferTo.performanceFlag" placeholder="请选择" ng-change="exchangeCtrl.perf(current.formData.transferTo)"
             required
             )
-                md-option(ng-value="item" ng-repeat="item in exchangeCtrl.perf_channel_array(current.formData.transferTo)") {{item}}
+                md-option(ng-value="item" ng-repeat="item in exchangeCtrl.perf_flag_array(current.formData.transferTo)") {{item}}
