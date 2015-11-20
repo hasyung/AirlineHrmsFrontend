@@ -20,6 +20,7 @@ md-dialog.sample-dialog(ng-init="request = {};params = {status:'init'}; ctrl = d
                  md-progress-circular.md-hue-2(md-mode="indeterminate")
             .dialog-content.show-text(ng-if="params.status == 'finish'")
                 .row 解析xls成功
+                .row(ng-repeat="msg in resRecord") {{msg}}
             .dialog-content.show-text(ng-if="params.status == 'error'")
                 .row 解析xls错误
                 .row(ng-repeat="msg in resRecord") {{msg}}

@@ -1216,7 +1216,7 @@ class SalaryPerformanceController extends SalaryBaseController
         params.status = "uploading"
 
         @http.post("/api/performance_salaries/import", request).success (response)->
-            self.scope.resRecord = response.messages
+            self.scope.resRecord = response.warnings
             params.status = "finish"
         .error (response)->
             self.scope.resRecord = response.messages
