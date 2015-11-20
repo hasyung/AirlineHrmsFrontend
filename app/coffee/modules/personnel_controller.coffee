@@ -305,6 +305,12 @@ class NewEmpsCtrl extends nb.Controller
                 if data.employees.length > 0
                     self.toaster.pop('error', '提示', '员工编号已经存在')
 
+    setProbationMonths: (newEmp) ->
+        if newEmp.channelId != 4
+            newEmp.probationMonths = 6
+        else
+            newEmp.probationMonths = ''
+
     getSelectsIds: () ->
         rows = @gridApi.selection.getSelectedGridRows()
         rows.map (row) -> return row.entity.$pk
