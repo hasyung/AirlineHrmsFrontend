@@ -708,6 +708,8 @@ class SalaryGradeChangeController extends nb.Controller
                 self.toaster.pop('success', '提示', '薪酬档级变动数据已更新')
                 self.salaryGradeChanges.$refresh()
                 self.checking = false
+            .error (data)->
+                self.checking = false
 
 
 class SalaryExchangeController
