@@ -50,13 +50,13 @@
                             ) 导入
                         md-menu-content()
                             md-menu-item(
-                                flow-init="{target: '/api/attachments/upload_file', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads=true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
                                 flow-file-success="ctrl.upload_start=false;ctrl.upload_hours_fee('文化传媒', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 文化传媒
 
                             md-menu-item(
-                                flow-init="{target: '/api/attachments/upload_file', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads=true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
                                 flow-file-success="ctrl.upload_start=false;ctrl.upload_hours_fee('校修中心', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 校修中心
