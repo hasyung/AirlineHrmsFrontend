@@ -698,7 +698,7 @@ class SalaryGradeChangeController extends nb.Controller
 
         # 检测后端推送的更新通知
         # 需要测试
-        @scope.$watch @rootScope.reloadFlagStr, (oldValue, newValue)->
+        @scope.$watch '@rootScope.reloadFlagStr', (oldValue, newValue)->
             try
                 if angular.isDefined(@salaryGradeChanges)
                     @salaryGradeChanges.$refresh()
