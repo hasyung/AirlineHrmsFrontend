@@ -39,14 +39,14 @@ class PersonnelCtrl extends nb.Controller
 
         @columnDef = [
             {
-                minWidth: 450
+                minWidth: 350
                 displayName: '所属部门'
                 name: 'department.name'
                 cellTooltip: (row) ->
                     return row.entity.department.name
             }
             {
-                minWidth: 150
+                minWidth: 120
                 displayName: '姓名'
                 field: 'name'
                 cellTemplate: '''
@@ -59,18 +59,18 @@ class PersonnelCtrl extends nb.Controller
                 </div>
                 '''
             }
-            {minWidth: 150, displayName: '员工编号', name: 'employeeNo'}
+            {minWidth: 120, displayName: '员工编号', name: 'employeeNo'}
             {
-                minWidth: 350
+                minWidth: 250
                 displayName: '岗位'
                 name: 'position.name'
                 cellTooltip: (row) ->
                     return row.entity.position.name
             }
-            {minWidth: 150, displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
-            {minWidth: 150, displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
-            {minWidth: 150, displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
-            {minWidth: 150, displayName: '到岗时间', name: 'joinScalDate'}
+            {minWidth: 120, displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
+            {minWidth: 120, displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
+            {minWidth: 120, displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
+            {minWidth: 120, displayName: '到岗时间', name: 'joinScalDate'}
         ]
 
         @constraints = [
@@ -126,14 +126,14 @@ class NewEmpsCtrl extends nb.Controller
 
         @columnDef = [
             {
-                minWidth: 450
+                minWidth: 350
                 displayName: '所属部门'
                 name: 'department.name'
                 cellTooltip: (row) ->
                     return row.entity.department.name
             }
             {
-                minWidth: 150
+                minWidth: 120
                 displayName: '姓名'
                 field: 'name'
                 cellTemplate: '''
@@ -146,18 +146,18 @@ class NewEmpsCtrl extends nb.Controller
                 </div>
                 '''
             }
-            {minWidth: 150, displayName: '员工编号', name: 'employeeNo'}
+            {minWidth: 120, displayName: '员工编号', name: 'employeeNo'}
             {
-                minWidth: 350
+                minWidth: 250
                 displayName: '岗位'
                 name: 'position.name'
                 cellTooltip: (row) ->
                     return row.entity.position.name
             }
-            {minWidth: 150, displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
-            {minWidth: 150, displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
-            {minWidth: 150, displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
-            {minWidth: 150, displayName: '到岗时间', name: 'joinScalDate'}
+            {minWidth: 120, displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
+            {minWidth: 120, displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
+            {minWidth: 120, displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
+            {minWidth: 120, displayName: '到岗时间', name: 'joinScalDate'}
         ]
 
         @filterOptions = {
@@ -344,14 +344,14 @@ class LeaveEmployeesCtrl extends nb.Controller
 
         @columnDef = [
             {
-                minWidth: 450
+                minWidth: 350
                 displayName: '所属部门'
                 name: 'department'
                 cellTooltip: (row) ->
                     return row.entity.department
             }
             {
-                minWidth: 150
+                minWidth: 120
                 displayName: '姓名'
                 field: 'name'
                 cellTemplate: '''
@@ -364,19 +364,19 @@ class LeaveEmployeesCtrl extends nb.Controller
                 </div>
                 '''
             }
-            {minWidth: 150, displayName: '员工编号', name: 'employeeNo'}
+            {minWidth: 120, displayName: '员工编号', name: 'employeeNo'}
             {
-                minWidth: 350
+                minWidth: 250
                 displayName: '岗位'
                 name: 'position'
                 cellTooltip: (row) ->
                     return row.entity.position
             }
-            {minWidth: 150, displayName: '性别', name: 'gender'}
-            {minWidth: 150, displayName: '通道', name: 'channel'}
-            {minWidth: 150, displayName: '用工性质', name: 'laborRelation'}
-            {minWidth: 150, displayName: '变动性质', name: 'employmentStatus'}
-            {minWidth: 150, displayName: '变动时间', name: 'changeDate'}
+            {minWidth: 120, displayName: '性别', name: 'gender'}
+            {minWidth: 120, displayName: '通道', name: 'channel'}
+            {minWidth: 120, displayName: '用工性质', name: 'laborRelation'}
+            {minWidth: 120, displayName: '变动性质', name: 'employmentStatus'}
+            {minWidth: 120, displayName: '变动时间', name: 'changeDate'}
         ]
 
         @filterOptions = {
@@ -443,12 +443,12 @@ class MoveEmployeesCtrl extends nb.Controller
 
         @columnDef = [
             {
-                minWidth: 150
+                minWidth: 120
                 displayName: '员工编号'
                 name: 'employeeNo'
             }
             {
-                minWidth: 150
+                minWidth: 120
                 displayName: '姓名'
                 field: 'employeeName'
                 cellTemplate: '''
@@ -462,37 +462,43 @@ class MoveEmployeesCtrl extends nb.Controller
                 '''
             }
             {
-                minWidth: 450
+                minWidth: 350
                 displayName: '所属部门'
                 name: 'department.name'
                 cellTooltip: (row) ->
                     return row.entity.departmentName
             }
             {
-                minWidth: 350
+                minWidth: 250
                 displayName: '岗位'
                 name: 'positionName'
                 cellTooltip: (row) ->
                     return row.entity.position
             }
             {
-                minWidth: 150
+                minWidth: 120
                 displayName: '异动性质'
                 name: 'specialCategory'
                 cellTooltip: (row) ->
                     return row.entity.specialCategory
             }
-            {minWidth: 150, displayName: '异动时间', name: 'specialTime'}
-            {minWidth: 150, displayName: '异动地点', name: 'specialLocation'}
+            {minWidth: 120, displayName: '异动时间', name: 'specialTime'}
             {
-                minWidth: 150
+                minWidth: 200
+                displayName: '异动地点'
+                name: 'specialLocation'
+                cellTooltip: (row) ->
+                    return row.entity.specialLocation
+            }
+            {
+                minWidth: 120
                 displayName: '文件编号'
                 name: 'fileNo'
                 cellTooltip: (row) ->
                     return row.entity.fileNo
             }
             {
-                minWidth: 250
+                minWidth: 200
                 displayName: '异动期限'
                 name: 'limitTime'
                 cellTooltip: (row) ->
@@ -618,11 +624,11 @@ class ReviewCtrl extends nb.Controller
         self = @
 
         @changeColumnDef = [
-            {minWidth: 450, name:"department.name", displayName:"所属部门"}
-            {minWidth: 150, name:"name", displayName:"姓名"}
-            {minWidth: 150, name:"employeeNo", displayName:"员工编号"}
+            {minWidth: 350, name:"department.name", displayName:"所属部门"}
+            {minWidth: 120, name:"name", displayName:"姓名"}
+            {minWidth: 120, name:"employeeNo", displayName:"员工编号"}
             {
-                minWidth: 200
+                minWidth: 150
                 displayName: '信息变更模块'
                 field: 'auditableType'
                 cellTemplate: '''
@@ -636,9 +642,9 @@ class ReviewCtrl extends nb.Controller
                 </div>
                 '''
             }
-            {minWidth: 150, name:"createdAt", displayName:"变更时间"}
+            {minWidth: 120, name:"createdAt", displayName:"变更时间"}
             {
-                minWidth: 200
+                minWidth: 150
                 displayName: '操作'
                 field: 'statusCd'
                 cellTemplate: '''
@@ -648,7 +654,7 @@ class ReviewCtrl extends nb.Controller
                 '''
             }
             {
-                minWidth: 250
+                minWidth: 200
                 name:"reason"
                 displayName:"理由"
                 cellTemplate: '''
@@ -669,11 +675,11 @@ class ReviewCtrl extends nb.Controller
         ]
 
         @recordColumnDef = [
-            {minWidth: 450, name:"department.name", displayName:"所属部门"}
-            {minWidth: 150, name:"name", displayName:"姓名"}
-            {minWidth: 150, name:"employeeNo", displayName:"员工编号"}
+            {minWidth: 350, name:"department.name", displayName:"所属部门"}
+            {minWidth: 120, name:"name", displayName:"姓名"}
+            {minWidth: 120, name:"employeeNo", displayName:"员工编号"}
             {
-                minWidth: 200
+                minWidth: 150
                 displayName: '信息变更模块'
                 field: 'auditableType'
                 cellTemplate: '''
@@ -687,11 +693,11 @@ class ReviewCtrl extends nb.Controller
                 </div>
                 '''
             }
-            {minWidth: 150, name:"createdAt", displayName:"变更时间"}
-            {minWidth: 150, name:"user.name", displayName:"操作者"}
-            {minWidth: 150, name:"statusCd", displayName:"状态", cellFilter: "dictmap:'personnel'"}
-            {minWidth: 150, name:"checkDate", displayName:"审核时间"}
-            {minWidth: 250, name:"reason", displayName:"理由"}
+            {minWidth: 120, name:"createdAt", displayName:"变更时间"}
+            {minWidth: 120, name:"user.name", displayName:"操作者"}
+            {minWidth: 120, name:"statusCd", displayName:"状态", cellFilter: "dictmap:'personnel'"}
+            {minWidth: 120, name:"checkDate", displayName:"审核时间"}
+            {minWidth: 200, name:"reason", displayName:"理由"}
         ]
 
         @filterOptions = {
