@@ -621,6 +621,8 @@ class SalaryGradeChangeController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryGradeChange', 'SALARY_SETTING', 'toaster', '$rootScope']
 
     constructor: (@http, @scope, $Evt, $enum, @SalaryGradeChange, @SALARY_SETTING, @toaster, @rootScope) ->
+        self = @
+
         @loadInitialData()
 
         @checking = false
@@ -698,7 +700,7 @@ class SalaryGradeChangeController extends nb.Controller
 
         # 检测后端推送的更新通知
         # 需要测试
-        @scope.$watch '@rootScope.reloadFlagStr', (oldValue, newValue)->
+        @scope.$watch 'self.rootScope.reloadFlagStr', (oldValue, newValue)->
             try
                 if angular.isDefined(@salaryGradeChanges)
                     @salaryGradeChanges.$refresh()
@@ -1258,6 +1260,8 @@ class SalaryHoursFeeController extends SalaryBaseController
             {displayName: '飞行时间', name: 'flyHours', enableCellEdit: false}
             {displayName: '小时费', name: 'flyFee', enableCellEdit: false}
             {displayName: '空勤灶', name: 'airlineFee', enableCellEdit: false}
+            {displayName: '生育津贴', name: 'fertilityAllowance', enableCellEdit: false}
+            {displayName: '地面兼职补贴', name: 'groundSubsidy', enableCellEdit: false}
             {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
                 name:"notes"
