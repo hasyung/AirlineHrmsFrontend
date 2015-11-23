@@ -4,8 +4,9 @@ app = @nb.app
 
 
 defaultFlowCol =    [
-        {displayName: '员工编号', name: 'receptor.employeeNo'}
+        {minWidth: 120, displayName: '员工编号', name: 'receptor.employeeNo'}
         {
+            minWidth: 120
             displayName: '姓名'
             field: 'receptor.name'
             cellTemplate: '''
@@ -19,12 +20,14 @@ defaultFlowCol =    [
             '''
         }
         {
+            minWidth: 350
             displayName: '所属部门'
             name: 'receptor.departmentName'
             cellTooltip: (row) ->
                 return row.entity.departmentName
         }
         {
+            minWidth: 250
             displayName: '岗位'
             name: 'receptor.positionName'
             cellTooltip: (row) ->
@@ -34,8 +37,9 @@ defaultFlowCol =    [
 
 
 defaultUserCol = [
-    {displayName: '员工编号', name: 'employeeNo'}
+    {minWidth: 120, displayName: '员工编号', name: 'employeeNo'}
     {
+        minWidth: 120
         displayName: '姓名'
         field: 'name'
         cellTemplate: '''
@@ -49,12 +53,14 @@ defaultUserCol = [
         '''
     }
     {
+        minWidth: 350
         displayName: '所属部门'
         name: 'department.name'
         cellTooltip: (row) ->
             return row.entity.department.name
     }
     {
+        minWidth: 250
         displayName: '岗位'
         name: 'position.name'
         cellTooltip: (row) ->
