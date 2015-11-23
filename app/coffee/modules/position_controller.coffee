@@ -33,7 +33,7 @@ class PositionCtrl extends nb.Controller
 
         @columnDef = [
             {
-                minWidth: 350
+                minWidth: 250
                 displayName: '岗位名称'
                 field: 'name'
                 cellTemplate: '''
@@ -46,22 +46,24 @@ class PositionCtrl extends nb.Controller
                     </a>
                 </div>
                 '''
+                cellTooltip: (row) ->
+                    return row.entity.name
             }
             {
-                minWidth: 450
+                minWidth: 350
                 displayName: '所属部门'
                 name: 'department.name'
                 cellTooltip: (row) ->
                     return row.entity.department.name
             }
             {
-                minWidth: 100
+                minWidth: 60
                 displayName: '通道'
                 name: 'channelId'
                 cellFilter: "enum:'channels'"
             }
             {
-                minWidth: 100
+                minWidth: 60
                 displayName: '编制数'
                 name: 'budgetedStaffing'
                 cellTemplate: '''
@@ -71,12 +73,12 @@ class PositionCtrl extends nb.Controller
                 '''
             }
             {
-                minWidth: 100
+                minWidth: 60
                 displayName: '在编'
                 name: 'staffing'
             }
             {
-                minWidth: 100
+                minWidth: 80
                 displayName: '超/缺编'
                 name: 'staffingStatus'
                 cellTemplate: '''
@@ -88,13 +90,13 @@ class PositionCtrl extends nb.Controller
                 '''
             }
             {
-                minWidth: 150
+                minWidth: 120
                 displayName: '工作时间'
                 name: 'scheduleId'
                 cellFilter: "enum:'position_schedules'"
             }
             {
-                minWidth: 100
+                minWidth: 120
                 displayName: 'OA文件编号'
                 name: 'oaFileNo'
             }
@@ -160,12 +162,24 @@ class PositionChangesCtrl extends nb.Controller
         @changes = @PositionChange.$collection().$refresh()
 
         @columnDef = [
-            {minWidth:350,name:"name", displayName:"岗位名称"}
-            {minWidth:450,name:"department.name", displayName:"所属部门"}
-            {minWidth:150,name:"user.name", displayName:"操作者"}
-            {minWidth:100,name:"action", displayName:"操作类型"}
             {
-                minWidth:150
+                minWidth:250
+                name:"name"
+                displayName:"岗位名称"
+                cellTooltip: (row) ->
+                    return row.entity.name
+            }
+            {
+                minWidth:350
+                name:"department.name"
+                displayName:"所属部门"
+                cellTooltip: (row) ->
+                    return row.entity.department.name
+            }
+            {minWidth:120,name:"user.name", displayName:"操作者"}
+            {minWidth:120,name:"action", displayName:"操作类型"}
+            {
+                minWidth:120
                 displayName: '信息变更模块'
                 field: 'auditableType'
                 cellTemplate: '''
@@ -179,8 +193,8 @@ class PositionChangesCtrl extends nb.Controller
                 </div>
                 '''
             }
-            {minWidth:150,name:"createdAt", displayName:"变更时间"}
-            {minWidth:250,name:"remark", displayName:"备注"}
+            {minWidth:120,name:"createdAt", displayName:"变更时间"}
+            {minWidth:200,name:"remark", displayName:"备注"}
         ]
 
         @filterOptions = {
