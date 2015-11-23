@@ -618,9 +618,9 @@ class SalaryChangeController extends nb.Controller
 
 
 class SalaryGradeChangeController extends nb.Controller
-    @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryGradeChange', 'SALARY_SETTING', 'toaster']
+    @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryGradeChange', 'SALARY_SETTING', 'toaster', '$rootScope']
 
-    constructor: (@http, @scope, $Evt, $enum, @SalaryGradeChange, @SALARY_SETTING, @toaster) ->
+    constructor: (@http, @scope, $Evt, $enum, @SalaryGradeChange, @SALARY_SETTING, @toaster, @rootScope) ->
         @loadInitialData()
 
         @checking = false
@@ -696,6 +696,16 @@ class SalaryGradeChangeController extends nb.Controller
             }
         ]
 
+        # 检测后端推送的更新通知
+        # 需要测试
+        @scope.$watch @rootScope.reloadFlagStr, (oldValue, newValue)->
+            try
+                if angular.isDefined(@salaryGradeChanges)
+                    @salaryGradeChanges.$refresh()
+            catch ex
+                console.error "检测reloadTableData数据发生异常", ex
+            finally
+
     loadInitialData: () ->
         @salaryGradeChanges = @SalaryGradeChange.$collection().$fetch()
 
@@ -703,14 +713,6 @@ class SalaryGradeChangeController extends nb.Controller
         tableState = tableState || {}
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @salaryGradeChanges.$refresh(tableState)
-
-    # loadSalarySetting: (employee_id)->
-    #     self = @
-
-    #     @http.get('/api/salary_person_setups/lookup?employee_id=' + employee_id)
-    #         .success (data)->
-    #             self.setting = data.salary_person_setup
-    #             self.flags = []
 
     checkUpdateChange: (type)->
         params = new Object()
