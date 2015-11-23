@@ -123,13 +123,7 @@
     }
 
     .logo__area {
-        height: 620px;
-        width: 659px;
-
-        img {
-            height: 100%;
-            width: 100%;
-        }
+        transform: scale(1);
     }
 
     .version {
@@ -269,13 +263,7 @@
         }
 
         .logo__area {
-            height: 558px;
-            width: 593px;
-
-            img {
-                height: 100%;
-                width: 100%;
-            }
+            transform: scale(.9);
         }
     }
 }
@@ -338,13 +326,7 @@
         }
 
         .logo__area {
-            height: 496px;
-            width: 527px;
-
-            img {
-                height: 100%;
-                width: 100%;
-            }
+            transform: scale(.8);
         }
     }
 }
