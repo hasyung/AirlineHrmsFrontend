@@ -18,8 +18,9 @@ userListFilterOptions = filterBuildUtils('laborsRetirement')
 
 
 USER_LIST_TABLE_DEFS = [
-    {displayName: '员工编号', name: 'employeeNo'}
+    {minWidth: 150, displayName: '员工编号', name: 'employeeNo'}
     {
+        minWidth: 150
         displayName: '姓名'
         field: 'name'
         cellTemplate: '''
@@ -33,40 +34,46 @@ USER_LIST_TABLE_DEFS = [
         '''
     }
     {
+        minWidth: 450
         displayName: '所属部门'
         name: 'department.name'
         cellTooltip: (row) ->
             return row.entity.department.name
     }
     {
+        minWidth: 350
         displayName: '岗位'
         name: 'position.name'
         cellTooltip: (row) ->
             return row.entity.position.name
     }
-    {displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
-    {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
-    {displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
-    {displayName: '到岗时间', name: 'joinScalDate'}
+    {minWidth: 150, displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
+    {minWidth: 150, displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
+    {minWidth: 150, displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
+    {minWidth: 150, displayName: '到岗时间', name: 'joinScalDate'}
 ]
 
 
 FLOW_HANDLE_TABLE_DEFS =  [
     {
+        minWidth: 150
         name: 'receptor.channelId'
         displayName: '通道'
         cellFilter: "enum:'channels'"
     }
     {
+        minWidth: 150
         name: 'workflowState'
         displayName: '状态'
     }
     {
+        minWidth: 150
         name: 'createdAt'
         displayName: '申请发起时间'
         cellFilter: "date:'yyyy-MM-dd'"
     }
     {
+        minWidth: 150
         name: 'type'
         displayName: '详细'
         cellTemplate: '''
@@ -82,25 +89,30 @@ FLOW_HANDLE_TABLE_DEFS =  [
 
 FLOW_HISTORY_TABLE_DEFS =  [
     {
+        minWidth: 150
         name: 'receptor.channelId'
         displayName: '通道'
         cellFilter: "enum:'channels'"
     }
     {
+        minWidth: 150
         name: 'workflowState'
         displayName: '状态'
     }
     {
+        minWidth: 150
         name: 'createdAt'
         displayName: '出生日期'
         cellFilter: "date:'yyyy-MM-dd'"
     }
     {
+        minWidth: 150
         name: 'createdAt'
         displayName: '申请发起时间'
         cellFilter: "date:'yyyy-MM-dd'"
     }
     {
+        minWidth: 150
         name: 'type'
         displayName: '详细'
         cellTemplate: '''
@@ -173,30 +185,36 @@ HANDLER_AND_HISTORY_FILTER_OPTIONS = {
 
 ATTENDANCE_BASE_TABLE_DEFS = [
     {
+        minWidth: 150
         name: 'name'
         displayName: '假别'
         cellTooltip: (row) ->
             return row.entity.name
     }
     {
+        minWidth: 150
         name: 'vacationDays'
         displayName: '天数'
     }
     {
+        minWidth: 150
         name: 'workflowState'
         displayName: '状态'
     }
     {
+        minWidth: 150
         name: 'createdAt'
         displayName: '发起时间'
         cellFilter: "date:'yyyy-MM-dd'"
     }
     {
+        minWidth: 150
         name: 'formData.startTime'
         displayName: '开始时间'
         cellFilter: "date:'yyyy-MM-dd'"
     }
     {
+        minWidth: 150
         name: 'formData.endTime'
         displayName: '结束时间'
         cellFilter: "date:'yyyy-MM-dd'"
@@ -432,6 +450,7 @@ class AttendanceCtrl extends nb.Controller
 
         checkBaseDef = ATTENDANCE_BASE_TABLE_DEFS.concat [
             {
+                minWidth: 150
                 name: 'type'
                 displayName: '详细'
                 cellTemplate: '''
@@ -447,6 +466,7 @@ class AttendanceCtrl extends nb.Controller
 
         recordsBaseDef = ATTENDANCE_BASE_TABLE_DEFS.concat [
             {
+                minWidth: 150
                 name: 'type'
                 displayName: '详细'
                 cellTemplate: '''
@@ -632,10 +652,10 @@ class AttendanceRecordCtrl extends nb.Controller
             .end()
 
         @columnDef = GridHelper.buildUserDefault [
-            {displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
-            {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
-            {displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
-            {displayName: '到岗时间', name: 'joinScalDate'}
+            {minWidth: 150, displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
+            {minWidth: 150, displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
+            {minWidth: 150, displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
+            {minWidth: 150, displayName: '到岗时间', name: 'joinScalDate'}
         ]
 
     loadInitialData: ()->
@@ -668,8 +688,9 @@ class AttendanceHisCtrl extends nb.Controller
             .end()
 
         @columnDef = [
-            {displayName: '员工编号', name: 'user.employeeNo'}
+            {minWidth: 150, displayName: '员工编号', name: 'user.employeeNo'}
             {
+                minWidth: 150
                 displayName: '姓名'
                 field: 'user.name'
                 cellTemplate: '''
@@ -683,6 +704,7 @@ class AttendanceHisCtrl extends nb.Controller
                 '''
             }
             {
+                minWidth: 450
                 displayName: '所属部门'
                 name: 'user.department.name'
                 cellTooltip: (row) ->
@@ -690,15 +712,16 @@ class AttendanceHisCtrl extends nb.Controller
             }
 
             {
+                minWidth: 350
                 displayName: '岗位'
                 name: 'user.position.name'
                 cellTooltip: (row) ->
                     return row.entity.user.position.name
             }
-            {displayName: '分类', name: 'user.categoryId', cellFilter: "enum:'categories'"}
-            {displayName: '通道', name: 'user.channelId', cellFilter: "enum:'channels'"}
-            {displayName: '考勤类别', name: 'recordType'}
-            {displayName: '记录时间', name: 'recordDate'}
+            {minWidth: 150, displayName: '分类', name: 'user.categoryId', cellFilter: "enum:'categories'"}
+            {minWidth: 150, displayName: '通道', name: 'user.channelId', cellFilter: "enum:'channels'"}
+            {minWidth: 150, displayName: '考勤类别', name: 'recordType'}
+            {minWidth: 150, displayName: '记录时间', name: 'recordDate'}
         ]
 
     loadInitialData: ()->
@@ -739,8 +762,9 @@ class ContractCtrl extends nb.Controller
             .end()
 
         @columnDef = [
-            {displayName: '员工编号', name: 'employeeNo'}
+            {minWidth: 150, displayName: '员工编号', name: 'employeeNo'}
             {
+                minWidth: 150
                 displayName: '姓名'
                 field: 'employeeName'
                 cellTemplate: '''
@@ -758,23 +782,26 @@ class ContractCtrl extends nb.Controller
                 '''
             }
             {
+                minWidth: 450
                 displayName: '所属部门'
                 name: 'departmentName'
                 cellTooltip: (row) ->
                     return row.entity.departmentName
             }
             {
+                minWidth: 350
                 displayName: '岗位'
                 name: 'positionName'
                 cellTooltip: (row) ->
                     return row.entity.positionName
             }
-            {displayName: '用工性质', name: 'applyType'}
-            {displayName: '变更标志', name: 'changeFlag'}
-            {displayName: '合同开始时间', name: 'startDate'}
-            {displayName: '合同结束时间', name: 'endDateStr'}
-            {displayName: '备注', name: 'notes', cellTooltip: (row) -> return row.entity.note}
+            {minWidth: 150, displayName: '用工性质', name: 'applyType'}
+            {minWidth: 150, displayName: '变更标志', name: 'changeFlag'}
+            {minWidth: 150, displayName: '合同开始时间', name: 'startDate'}
+            {minWidth: 150, displayName: '合同结束时间', name: 'endDateStr'}
+            {minWidth: 200, displayName: '备注', name: 'notes', cellTooltip: (row) -> return row.entity.note}
             {
+                minWidth: 150
                 displayName: '详细',
                 field: '详细',
                 cellTemplate: '''
@@ -795,8 +822,9 @@ class ContractCtrl extends nb.Controller
             .end()
 
         @hisColumnDef = [
-            {displayName: '员工编号', name: 'employeeNo'}
+            {minWidth: 150, displayName: '员工编号', name: 'employeeNo'}
             {
+                minWidth: 150
                 displayName: '姓名'
                 field: 'employeeName'
                 cellTemplate: '''
@@ -810,6 +838,7 @@ class ContractCtrl extends nb.Controller
                 '''
             }
             {
+                minWidth: 450
                 displayName: '所属部门'
                 name: 'departmentName'
                 cellTooltip: (row) ->
@@ -817,16 +846,18 @@ class ContractCtrl extends nb.Controller
             }
 
             {
+                minWidth: 350
                 displayName: '岗位'
                 name: 'positionName'
                 cellTooltip: (row) ->
                     return row.entity.positionName
             }
-            {displayName: '用工性质', name: 'applyType'}
-            {displayName: '变更标志', name: 'changeFlag'}
-            {displayName: '开始时间', name: 'startDate', cellFilter: "enum:'channels'"}
-            {displayName: '结束时间', name: 'endDate'}
+            {minWidth: 150, displayName: '用工性质', name: 'applyType'}
+            {minWidth: 150, displayName: '变更标志', name: 'changeFlag'}
+            {minWidth: 150, displayName: '开始时间', name: 'startDate', cellFilter: "enum:'channels'"}
+            {minWidth: 150, displayName: '结束时间', name: 'endDate'}
             {
+                minWidth: 150
                 displayName: '详细',
                 field: '详细',
                 cellTemplate: '''
@@ -970,12 +1001,14 @@ class UserListCtrl extends nb.Controller
 
         scope.columnDef = [
             {
+                minWidth: 450
                 displayName: '所属部门'
                 name: 'department.name'
                 cellTooltip: (row) ->
                     return row.entity.department.name
             }
             {
+                minWidth: 150
                 displayName: '姓名'
                 field: 'name'
                 cellTemplate: '''
@@ -988,17 +1021,18 @@ class UserListCtrl extends nb.Controller
                 </div>
                 '''
             }
-            {displayName: '员工编号', name: 'employeeNo'}
+            {minWidth: 150, displayName: '员工编号', name: 'employeeNo'}
             {
+                minWidth: 150
                 displayName: '岗位'
                 name: 'position.name'
                 cellTooltip: (row) ->
                     return row.entity.position.name
             }
-            {displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
-            {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
-            {displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
-            {displayName: '到岗时间', name: 'joinScalDate'}
+            {minWidth: 150, displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
+            {minWidth: 150, displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
+            {minWidth: 150, displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
+            {minWidth: 150, displayName: '到岗时间', name: 'joinScalDate'}
         ]
 
         scope.getSelected = () ->
