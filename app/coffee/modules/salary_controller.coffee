@@ -960,6 +960,8 @@ class SalaryBaseController extends nb.Controller
             # @Model => String???
             self.Evt.$send("salary_model:calc:error", erorr_msg) if erorr_msg
             self.loadRecords()
+        , (data)->
+            self.calcing = false
 
 
 # 基础工资
