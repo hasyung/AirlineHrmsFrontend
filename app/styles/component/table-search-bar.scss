@@ -1,6 +1,6 @@
 md-content.search-container {
     box-shadow: 0 0 5px #ccc;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     overflow: visible;
     padding: 0;
 
@@ -184,6 +184,10 @@ md-content.search-container {
 
     .ui-grid {
         border: 0;
+
+        .warn-yellow {
+            background-color: #f58220;
+        }
     }
 
     .ui-grid-header-cell-row {

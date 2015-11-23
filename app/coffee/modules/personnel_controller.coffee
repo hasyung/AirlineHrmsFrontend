@@ -305,6 +305,12 @@ class NewEmpsCtrl extends nb.Controller
                 if data.employees.length > 0
                     self.toaster.pop('error', '提示', '员工编号已经存在')
 
+    setProbationMonths: (newEmp) ->
+        if newEmp.channelId != 4
+            newEmp.probationMonths = 6
+        else
+            newEmp.probationMonths = ''
+
     getSelectsIds: () ->
         rows = @gridApi.selection.getSelectedGridRows()
         rows.map (row) -> return row.entity.$pk
@@ -326,13 +332,8 @@ class NewEmpsCtrl extends nb.Controller
         @show_error_names = false
 
         @http.post("/api/employees/import", params).success (data, status) ->
-            if data.error_count > 0
-                self.show_error_names = true
-                self.error_names = data.error_names
-
-                self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
-            else
-                self.toaster.pop('error', '提示', '导入成功')
+            self.toaster.pop('success', '提示', '导入成功')
+            self.employees.$refresh(self.collection_param)
 
 
 class LeaveEmployeesCtrl extends nb.Controller
@@ -785,9 +786,8 @@ class EmployeeAttendanceCtrl extends nb.Controller
         @CURRENT_ROLES.indexOf('hr_payment_member') >= 0
 
     dayOnClick: ()->
-        alert('clicked')
+        #
 
-    # 因为没有数据，所以现在暂时用了当前人员的考勤数据
     loadAttendance: (employee)->
         self = @
 
@@ -814,10 +814,10 @@ class EmployeeAttendanceCtrl extends nb.Controller
                 editable: false
 
                 header: {
-                  #left: 'month basicWeek basicDay agendaWeek agendaDay'
-                  left: 'month basicWeek'
-                  center: 'title'
-                  right: 'today prev,next'
+                    #left: 'month basicWeek basicDay agendaWeek agendaDay'
+                    left: 'month basicWeek'
+                    center: 'title'
+                    right: 'today prev,next'
                 }
 
                 #viewRender: (view, element)->
@@ -829,7 +829,7 @@ class EmployeeAttendanceCtrl extends nb.Controller
             }
         }
 
-        @http.get('/api/me/attendance_records/').success (data)->
+        @http.get('/api/employees/' + employee.id + '/attendance_records/').success (data)->
             angular.forEach keys, (key)->
                 events = data.attendance_records[key]
 

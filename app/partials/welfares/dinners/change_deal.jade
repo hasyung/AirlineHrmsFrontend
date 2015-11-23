@@ -2,39 +2,29 @@ md-dialog.employee_move(ng-controller="EditableResourceCtrl" style="min-width: 4
     md-toolbar.md-accent(md-theme="hrms")
         .md-toolbar-tools
             span 工作餐变动处理
-    form(ng-submit="save(change.$save(), change_deal_form); dialog.close();" name="change_deal_form")
+    form(ng-submit="save(change.$save(), change_deal_form, ctrl.changes); dialog.close();" name="change_deal_form")
         md-content(ng-init=" ctrl = dialog.ctrl; change = dialog.change.$refresh();")
             fieldset
                 //- 基本信息部分：分类
-                div
-                    div(layout)
-                        md-input-container(flex)
-                            label 姓名
-                            input(ng-model="::change.employeeName" readonly)
-                        md-input-container(flex)
-                            label 员工编号
-                            input(ng-model="::change.employeeNo" readonly)
-                    div(layout)
-                        md-input-container(flex)
-                            label 机构
-                            input(ng-model="::change.employeeName" readonly)
-                        md-input-container(flex)
-                            label 岗位
-                            input(ng-model="::change.employeeNo" readonly)
-                    div(layout)
-                        md-input-container(flex)
-                            label 分类
-                            input(ng-model="::change.employeeName" readonly)
-                        md-input-container(flex)
-                            label 属地
-                            input(ng-model="::change.employeeNo" readonly)
+                div(ng-if="change.changeCategory == '新进员工' || change.changeCategory == '岗位变动' || change.changeCategory == '属地变动'")
+                    include change_category/new_entry
+                div(ng-if="change.changeCategory == '长期请假'")
+                    include change_category/leave
+                div(ng-if="change.changeCategory == '长期离岗培训'")
+                    include change_category/train
+                div(ng-if="change.changeCategory == '空勤停飞'")
+                    include change_category/fly_stop
+                div(ng-if="change.changeCategory == '长期派驻' || change.changeCategory == '长期派驻回归'")
+                    include change_category/accredit
+                div(ng-if="change.changeCategory == '人员借调' || change.changeCategory == '人员借调回归'")
+                    include change_category/borrow
                 //- 工作餐编辑部门
                 div()
                     div(layout)
                         md-input-container.row-has-value(flex)
                             label 班制
                             md-select(
-                                ng-model="change.shiftsType"
+                                ng-model="change.dinnerPersonSetups[0].shiftsType"
                                 required)
                                 md-option(value="行政班") 行政班
                                 md-option(value="两班倒") 两班倒
@@ -44,42 +34,55 @@ md-dialog.employee_move(ng-controller="EditableResourceCtrl" style="min-width: 4
                         md-input-container.row-has-value(flex)
                             label 餐费区域
                             md-select(
-                                ng-model="change.area"
-                                required)
+                                ng-model="change.dinnerPersonSetups[0].area"
+                                required
+                                    )
                                 md-option(ng-value="area" ng-repeat="area in ctrl.areas") {{area}}
 
                     div(layout)
                         md-input-container(flex)
                             label 卡金额
-                            input(ng-model="change.cardAmount" required type="number")
+                            input(ng-model="change.dinnerPersonSetups[0].cardAmount" required type="number")
                         md-input-container(flex)
                             label 现金
-                            input(ng-model="change.workingFee" required type="number")
+                            input(ng-model="change.dinnerPersonSetups[0].workingFee" required type="number")
 
                     div(layout)
                         md-input-container(flex)
                             label 早餐次数
-                            input(ng-model="change.breakfastNumber" required type="number")
+                            input(ng-model="change.dinnerPersonSetups[0].breakfastNumber" required type="number")
                         md-input-container(flex)
                             label 午餐次数
-                            input(ng-model="change.lunchNumber" required type="number")
+                            input(ng-model="change.dinnerPersonSetups[0].lunchNumber" required type="number")
                         md-input-container(flex)
                             label 晚餐次数
-                            input(ng-model="change.dinnerNumber" required type="number")
+                            input(ng-model="change.dinnerPersonSetups[0].dinnerNumber" required type="number")
+                    div(layout)
+                        md-input-container(flex)
+                            label 变动日期
+                            input(
+                                ng-model="change.dinnerPersonSetups[0].changeDate"
+                                type="text"
+                                readonly
+                                )
                 //- 增加双区域按钮
-                div(layout)
+                div(
+                    layout
+                    ng-init="ctrl.secondCard = false"
+                    ng-if="!ctrl.secondCard && change.dinnerPersonSetups.length < 2"
+                    )
                     md-button.md-icon-button(
                         type="button"
-                        ng-click="ctrl"
+                        ng-click="ctrl.secondCard = true"
                         )
                         md-icon(md-svg-icon="../../images/svg/plus.svg")
                 //- 工作餐第二区域编辑部分
-                div()
+                div(ng-if="change.dinnerPersonSetups.length >= 2 || ctrl.secondCard")
                     div(layout)
                         md-input-container.row-has-value(flex)
                             label 班制
                             md-select(
-                                ng-model="change.shiftsType"
+                                ng-model="change.dinnerPersonSetups[1].shiftsType"
                                 required)
                                 md-option(value="行政班") 行政班
                                 md-option(value="两班倒") 两班倒
@@ -89,38 +92,54 @@ md-dialog.employee_move(ng-controller="EditableResourceCtrl" style="min-width: 4
                         md-input-container.row-has-value(flex)
                             label 餐费区域
                             md-select(
-                                ng-model="change.area"
+                                ng-model="change.dinnerPersonSetups[1].area"
                                 required)
                                 md-option(ng-value="area" ng-repeat="area in ctrl.areas") {{area}}
 
                     div(layout)
                         md-input-container(flex)
                             label 卡金额
-                            input(ng-model="change.cardAmount" required type="number")
+                            input(ng-model="change.dinnerPersonSetups[1].cardAmount" required type="number")
                         md-input-container(flex)
                             label 现金
-                            input(ng-model="change.workingFee" required type="number")
+                            input(ng-model="change.dinnerPersonSetups[1].workingFee" required type="number")
 
                     div(layout)
                         md-input-container(flex)
                             label 早餐次数
-                            input(ng-model="change.breakfastNumber" required type="number")
+                            input(ng-model="change.dinnerPersonSetups[1].breakfastNumber" required type="number")
                         md-input-container(flex)
                             label 午餐次数
-                            input(ng-model="change.lunchNumber" required type="number")
+                            input(ng-model="change.dinnerPersonSetups[1].lunchNumber" required type="number")
                         md-input-container(flex)
                             label 晚餐次数
-                            input(ng-model="change.dinnerNumber" required type="number")
+                            input(ng-model="change.dinnerPersonSetups[1].dinnerNumber" required type="number")
+                    div(layout)
+                        md-input-container(flex)
+                            label 变动日期
+                            input(
+                                ng-model="change.dinnerPersonSetups[1].changeDate"
+                                type="text"
+                                readonly
+                                )
 
-        .md-actions
+        .md-actions(style="padding-left: 0;")
             md-button.md-warn.md-raised(
-                type="button"
-                ng-disabled="dinner.isSuspend==true"
-                ng-click="ctrl.suspendDinner(change);dialog.close();"
+                ng-click="change.state='暂停发放'; change.isSuspend=true;change.dinnerPersonSetups[0].changeDate = change.changeDate;change.dinnerPersonSetups[1].changeDate = change.changeDate;"
+                type="submit"
+                ng-if="!dinner.isSuspend"
                 ) 暂停发放
+            md-button.md-primary.md-raised(
+                ng-click="change.state='恢复发放'; change.isSuspend=false;change.dinnerPersonSetups[0].changeDate = change.changeDate;change.dinnerPersonSetups[1].changeDate = change.changeDate;"
+                type="submit"
+                ng-if="dinner.isSuspend"
+                ) 恢复发放
             div(flex)
             md-button(type="button" ng-click="cancel(current, $event, change_deal_form);dialog.close()") 取 消
-            md-button.md-primary.md-raised(type="button") 不做处理
-            md-button.md-primary.md-raised(type="submit") 保存处理
+            md-button.md-primary.md-raised(ng-click="change.state='不做处理'"  type="submit") 不做处理
+            md-button.md-primary.md-raised(
+                ng-click="change.state='保存处理';change.dinnerPersonSetups[0].changeDate = change.changeDate;change.dinnerPersonSetups[1].changeDate = change.changeDate;"
+                type="submit"
+                ) 保存处理
 
 

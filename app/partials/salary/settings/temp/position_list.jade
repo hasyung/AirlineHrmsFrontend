@@ -18,6 +18,5 @@
                   th 岗位名称
 
           tbody
-              tr
-                  td
-                      span(style="color:#666" ng-repeat="item in ctrl.currentTempPositions") {{::item.full_position_name}} <br>
+              tr(ng-repeat="item in ctrl.currentTempPositions")
+                  td {{::item.full_position_name}}

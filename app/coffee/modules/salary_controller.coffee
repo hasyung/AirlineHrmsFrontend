@@ -19,8 +19,14 @@ SALARY_FILTER_DEFAULT = {
 }
 
 SALARY_COLUMNDEF_DEFAULT = [
-    {displayName: '员工编号', name: 'employeeNo', enableCellEdit: false}
     {
+        width: 100
+        displayName: '员工编号',
+        name: 'employeeNo',
+        enableCellEdit: false
+    }
+    {
+        width: 100
         displayName: '姓名'
         field: 'employeeName'
         enableCellEdit: false
@@ -35,6 +41,7 @@ SALARY_COLUMNDEF_DEFAULT = [
         '''
     }
     {
+        width: 250
         displayName: '所属部门'
         name: 'departmentName'
         enableCellEdit: false
@@ -42,17 +49,25 @@ SALARY_COLUMNDEF_DEFAULT = [
             return row.entity.departmentName
     }
     {
+        width: 200
         displayName: '岗位'
         name: 'positionName'
         enableCellEdit: false
         cellTooltip: (row) ->
             return row.entity.positionName
     }
-    {displayName: '通道', name: 'channelId', enableCellEdit: false, cellFilter: "enum:'channels'"}
+    {
+        width: 100
+        displayName: '通道'
+        name: 'channelId'
+        enableCellEdit: false
+        cellFilter: "enum:'channels'"
+    }
 ]
 
 CALC_STEP_COLUMN = [
     {
+        width: 120
         displayName: '计算过程'
         field: 'step'
         enableCellEdit: false
@@ -291,7 +306,7 @@ class SalaryController extends nb.Controller
             '员工职级':              '%{job_title_degree}'
             '员工学历':              '%{education_background}'
             '去年年度绩效':          '%{last_year_perf}'
-            '本企业经历时间':         '%{join_scal_years}'
+            '本企业经历年限':         '%{join_scal_years}'
             '无人为飞行事故年限':      '%{no_subjective_accident_years}'
             '无安全严重差错年限':      '%{no_serious_security_error_years}'
             '高原特殊机场飞行资格':  '%{can_fly_highland_special}'
@@ -334,7 +349,37 @@ class SalaryController extends nb.Controller
             .success (data)->
                 self.toaster.pop('success', '提示', '更新成功')
             .error (data)->
+                self.toaster.pop('error', '提示', '更新失败')
+
+    # 通讯补贴 TODO: 和高温补贴合并
+    loadComPositions: (selectDepIds, keywords)->
+        self = @
+        return unless selectDepIds
+
+        @http.get('/api/salaries/communicate_allowance?department_ids=' + selectDepIds)
+            .success (data)->
+                self.comPositions = data.communicate_allowances
+
+                if !!keywords && keywords.length > 0
+                    self.comPositions = _.filter self.comPositions, (item)->
+                        item.full_position_name.indexOf(keywords) >= 0
+
+    listComPosition: (allowance)->
+        self = @
+
+        @http.get('/api/salaries/communicate_allowance?per_page=3000&communicate_allowance=' + allowance)
+            .success (data)->
+                self.currentComPositions = data.communicate_allowances
+
+    updateComAmount: (position_id, amount)->
+        self = @
+        params = {position_id: position_id, communicate_allowance: parseInt(amount)}
+
+        @http.put('/api/salaries/update_communicate_allowance', params)
+            .success (data)->
                 self.toaster.pop('success', '提示', '更新成功')
+            .error (data)->
+                self.toaster.pop('error', '提示', '更新失败')
 
     destroyCity: (cities, idx) ->
         cities.splice(idx, 1)
@@ -458,6 +503,9 @@ class SalaryPersonalController extends nb.Controller
     getSelected: () ->
         rows = @gridApi.selection.getSelectedGridRows()
 
+    currentCalcTime: ()->
+        @currentYear + "-" + @currentMonth
+
     delete: (isConfirm) ->
         if isConfirm
             @getSelected().forEach (record) ->
@@ -570,10 +618,12 @@ class SalaryChangeController extends nb.Controller
 
 
 class SalaryGradeChangeController extends nb.Controller
-    @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryGradeChange', 'SALARY_SETTING']
+    @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryGradeChange', 'SALARY_SETTING', 'toaster', '$rootScope']
 
-    constructor: (@http, $scope, $Evt, $enum, @SalaryGradeChange, @SALARY_SETTING) ->
+    constructor: (@http, @scope, $Evt, $enum, @SalaryGradeChange, @SALARY_SETTING, @toaster, @rootScope) ->
         @loadInitialData()
+
+        @checking = false
 
         @filterOptions = {
             name: 'salaryPersonal'
@@ -621,7 +671,7 @@ class SalaryGradeChangeController extends nb.Controller
             }
             {
                 displayName: '所属部门'
-                name: 'departmentName'
+                name: 'department.name'
                 cellTooltip: (row) ->
                     return row.entity.departmentName
             }
@@ -638,13 +688,23 @@ class SalaryGradeChangeController extends nb.Controller
                         href="javascript:void(0);"
                         nb-dialog
                         template-url="partials/salary/settings/changes/grade.html"
-                        locals="{change: row.entity, ctrl: grid.appScope.$parent.ctrl}">
+                        locals="{gradeChange: row.entity, ctrl: grid.appScope.$parent.ctrl}">
                         查看
                     </a>
                 </div>
                 '''
             }
         ]
+
+        # 检测后端推送的更新通知
+        # 需要测试
+        @scope.$watch @rootScope.reloadFlagStr, (oldValue, newValue)->
+            try
+                if angular.isDefined(@salaryGradeChanges)
+                    @salaryGradeChanges.$refresh()
+            catch ex
+                console.error "检测reloadTableData数据发生异常", ex
+            finally
 
     loadInitialData: () ->
         @salaryGradeChanges = @SalaryGradeChange.$collection().$fetch()
@@ -654,16 +714,19 @@ class SalaryGradeChangeController extends nb.Controller
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @salaryGradeChanges.$refresh(tableState)
 
-    loadSalarySetting: (employee_id)->
-        self = @
-
-        @http.get('/api/salary_person_setups/lookup?employee_id=' + employee_id)
-            .success (data)->
-                self.setting = data.salary_person_setup
-                self.flags = []
-
     checkUpdateChange: (type)->
-        #
+        params = new Object()
+        self = @
+        params.type = type
+        @checking = true
+
+        @http.get('/api/salary_person_setups/check_person_upgrade.json?type='+type)
+            .success (data)->
+                self.toaster.pop('success', '提示', '薪酬档级变动数据已更新')
+                self.salaryGradeChanges.$refresh()
+                self.checking = false
+            .error (data)->
+                self.checking = false
 
 
 class SalaryExchangeController
@@ -696,6 +759,7 @@ class SalaryExchangeController
         Object.keys(setting.flags)
 
     normal: (current)->
+        console.log current
         return unless current.baseWage
         return unless current.baseFlag
 
@@ -913,6 +977,8 @@ class SalaryBaseController extends nb.Controller
             # @Model => String???
             self.Evt.$send("salary_model:calc:error", erorr_msg) if erorr_msg
             self.loadRecords()
+        , (data)->
+            self.calcing = false
 
 
 # 基础工资
@@ -1072,7 +1138,7 @@ class SalaryKeepController extends SalaryBaseController
 class SalaryPerformanceController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'PerformanceSalary', 'toaster']
 
-    constructor: ($http, $scope, $q, @Evt, @Employee, @PerformanceSalary, @toaster) ->
+    constructor: (@http, $scope, $q, @Evt, @Employee, @PerformanceSalary, @toaster) ->
         super(@PerformanceSalary, $scope, $q, false)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
@@ -1148,7 +1214,34 @@ class SalaryPerformanceController extends SalaryBaseController
             if data.error_count > 0
                 self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
             else
-                self.toaster.pop('error', '提示', '导入成功')
+                self.toaster.pop('success', '提示', '导入成功')
+
+    getDateOptions: (type)->
+        date = new Date()
+        year = date.getFullYear()
+        month = date.getMonth()
+
+        return [year-1, year] if type == "year"
+
+        formatOption = (year, month)->
+            temp = []
+            temp.push("#{year}-#{item}") for item in [1..month]
+            return temp
+        dateOptions = [].concat formatOption(year-1, 12), formatOption(year, month+1)
+
+    uploadPerformance: (request, params)->
+        self = @
+
+        # 年度的时候 assessTime 是整数
+        request.assess_time = moment(new Date(new String(request.assessTime))).format "YYYY-MM-DD"
+        params.status = "uploading"
+
+        @http.post("/api/performance_salaries/import", request).success (response)->
+            self.scope.resRecord = response.warnings
+            params.status = "finish"
+        .error (response)->
+            self.scope.resRecord = response.messages
+            params.status = "error"
 
 
 # 小时费
@@ -1433,27 +1526,28 @@ class SalaryRewardController extends SalaryBaseController
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
-            {displayName: '航班正常奖', name: 'flightBonus', enableCellEdit: false}
-            {displayName: '服务质量奖', name: 'serviceBonus', enableCellEdit: false}
-            {displayName: '航空安全奖', name: 'airlineSecurityBonus', enableCellEdit: false}
-            {displayName: '社会治安综合治理奖', name: 'compositeBonus', enableCellEdit: false}
-            {displayName: '电子航意险代理提成奖', name: 'insuranceProxy', enableCellEdit: false}
-            {displayName: '客舱升舱提成奖', name: 'cabinGrowUp', enableCellEdit: false}
-            {displayName: '全员促销奖', name: 'fullSalePromotion', enableCellEdit: false}
-            {displayName: '四川航空报稿费', name: 'articleFee', enableCellEdit: false}
-            {displayName: '无差错飞行中队奖', name: 'allRightFly', enableCellEdit: false}
-            {displayName: '年度综治奖', name: 'yearCompositeBonus', enableCellEdit: false}
-            {displayName: '运兵先进奖', name: 'movePerfect', enableCellEdit: false}
-            {displayName: '航空安全特殊贡献奖', name: 'securitySpecial', enableCellEdit: false}
-            {displayName: '部门安全管理目标承包奖', name: 'depSecurityUndertake', enableCellEdit: false}
-            {displayName: '飞行安全星级奖', name: 'flyStar', enableCellEdit: false}
-            {displayName: '年度无差错机务维修中队奖', name: 'yearAllRightFly', enableCellEdit: false}
-            {displayName: '网络联程奖', name: 'networkConnect', enableCellEdit: false}
-            {displayName: '季度奖', name: 'quarterFee', enableCellEdit: false}
-            {displayName: '收益奖励金', name: 'earningsFee', enableCellEdit: false}
-            {displayName: '预算外奖励', name: 'offBudgetFee', enableCellEdit: false}
-            {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {width: 100,displayName: '航班正常奖', name: 'flightBonus', enableCellEdit: false}
+            {width: 100,displayName: '服务质量奖', name: 'serviceBonus', enableCellEdit: false}
+            {width: 100,displayName: '航空安全奖', name: 'airlineSecurityBonus', enableCellEdit: false}
+            {width: 100,displayName: '社会治安综合治理奖', name: 'compositeBonus', enableCellEdit: false}
+            {width: 100,displayName: '电子航意险代理提成奖', name: 'insuranceProxy', enableCellEdit: false}
+            {width: 100,displayName: '客舱升舱提成奖', name: 'cabinGrowUp', enableCellEdit: false}
+            {width: 100,displayName: '全员促销奖', name: 'fullSalePromotion', enableCellEdit: false}
+            {width: 100,displayName: '四川航空报稿费', name: 'articleFee', enableCellEdit: false}
+            {width: 100,displayName: '无差错飞行中队奖', name: 'allRightFly', enableCellEdit: false}
+            {width: 100,displayName: '年度综治奖', name: 'yearCompositeBonus', enableCellEdit: false}
+            {width: 100,displayName: '运兵先进奖', name: 'movePerfect', enableCellEdit: false}
+            {width: 100,displayName: '航空安全特殊贡献奖', name: 'securitySpecial', enableCellEdit: false}
+            {width: 100,displayName: '部门安全管理目标承包奖', name: 'depSecurityUndertake', enableCellEdit: false}
+            {width: 100,displayName: '飞行安全星级奖', name: 'flyStar', enableCellEdit: false}
+            {width: 100,displayName: '年度无差错机务维修中队奖', name: 'yearAllRightFly', enableCellEdit: false}
+            {width: 100,displayName: '网络联程奖', name: 'networkConnect', enableCellEdit: false}
+            {width: 100,displayName: '季度奖', name: 'quarterFee', enableCellEdit: false}
+            {width: 100,displayName: '收益奖励金', name: 'earningsFee', enableCellEdit: false}
+            {width: 100,displayName: '预算外奖励', name: 'offBudgetFee', enableCellEdit: false}
+            {width: 100,displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
+                width: 100
                 name:"notes"
                 displayName:"说明"
                 enableCellEdit: false
@@ -1482,6 +1576,7 @@ class SalaryRewardController extends SalaryBaseController
                     return row.entity.notes
             }
             {
+                width: 100
                 name:"remark"
                 displayName:"备注"
                 headerCellClass: 'editable_cell_header'

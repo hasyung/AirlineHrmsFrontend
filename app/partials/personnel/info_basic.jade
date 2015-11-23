@@ -7,9 +7,10 @@ div.panel-bg-gray(ng-init = "current = panel.employee; current.$refresh();" ng-c
         .big-avator-area
             img(ng-src="{{current.favicon.middle}}" ng-if="current.favicon")
             img(src="http://www.placehold.it/110x110/EFEFEF/AAAAAA&text=no+image" ng-if="!current.favicon")
-        .employee-info
+        .employee-info(has-permission="employees_show")
             .employee-name() {{::current.name}}
                 md-button.md-fab.resume-button.md-warn(
+                    has-permission="employees_resume"
                     nb-dialog
                     template-url="partials/self/self_resume.html"
                     locals="{currentUser: current, ctrl: pdCtrl}"
@@ -42,7 +43,7 @@ div.panel-bg-gray(ng-init = "current = panel.employee; current.$refresh();" ng-c
                                 |职称信息
                             include info_basic/info_position_title
 
-                tab(heading="家庭成员")
+                tab(heading="家庭成员" has-permission="employees_family_members")
                     md-content.nb-card-container(flex layout="column" md-theme="hrms")
                         include family/family_member
 
@@ -56,7 +57,7 @@ div.panel-bg-gray(ng-init = "current = panel.employee; current.$refresh();" ng-c
                     md-content.nb-card-container(flex layout="column" md-theme="hrms")
                         include attendance/index
 
-                tab(heading="绩效考核")
+                tab(heading="绩效考核" has-permission="employees_performances")
                     md-content.nb-card-container(flex layout="column" md-theme="hrms")
                         include performance/index
 

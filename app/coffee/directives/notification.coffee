@@ -61,6 +61,9 @@ class NotificationCtrl
                 workflows[data.type] = data
                 ctrl.workflow_count = _.reduce(workflows, computeTotalUnreadCount, 0)
 
+        WebsocketClient.addListener 'system_config', (data) ->
+            ctrl.rootScope.reloadFlagStr = data.reload_flag_str
+
         @notifications = Notification.$collection().$fetch()
 
     redirectTo: (state) ->

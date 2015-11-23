@@ -1,0 +1,22 @@
+.app-content-wrapper(flex ng-controller="salaryCtrl as ctrl" ng-init="ctrl.loadConfigFromServer('communicate')" style="padding: 0;")
+    .salary-basic(style="padding: 0;")
+        md-toolbar
+            .md-toolbar-tools
+                h2 当前岗位发放列表
+                span(flex)
+
+        div(layout)
+            md-select(ng-model="communicateAllowance" placeholder="选择补贴标准" ng-change="ctrl.listComPosition(communicateAllowance)")
+                md-option(value="0") 无
+                md-option(value="400") 400
+                md-option(value="300") 300
+                md-option(value="200") 200
+
+        table.tablexx.table-default.table-bordered
+          thead
+              tr
+                  th 岗位名称
+
+          tbody
+              tr(ng-repeat="item in ctrl.currentComPositions")
+                  td {{::item.full_position_name}}
