@@ -27,34 +27,34 @@
                             ) 导入备份餐数据
                         md-menu-content()
                             md-menu-item(
-                                flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads=true, testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
+                                flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads: true, testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
                                 flow-file-success="ctrl.upload_start=false;ctrl.upload_settles('北头股份明细表', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 北头股份明细表
 
                             md-menu-item(
-                                flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads=true, testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
+                                flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads: true, testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
                                 flow-file-success="ctrl.upload_start=false;ctrl.upload_settles('北头股份总表', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 北头股份总表
                             md-menu-item(
-                                flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads=true, testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
+                                flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads: true, testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
                                 flow-file-success="ctrl.upload_start=false;ctrl.upload_settles('机关股份明细', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 机关股份明细
                             md-menu-item(
-                                flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads=true, testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
+                                flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads: true, testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
                                 flow-file-success="ctrl.upload_start=false;ctrl.upload_settles('机关股份总表', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 机关股份总表
 
                             md-menu-item(
-                                flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads=true, testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
+                                flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads: true, testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
                                 flow-file-success="ctrl.upload_start=false;ctrl.upload_settles('重庆食堂充值表', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 重庆食堂充值表
                             md-menu-item(
-                                flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads=true, testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
+                                flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads: true, testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
                                 flow-file-success="ctrl.upload_start=false;ctrl.upload_settles('昆明食堂充值表', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 昆明食堂充值表
