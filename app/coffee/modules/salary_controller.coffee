@@ -960,6 +960,8 @@ class SalaryBaseController extends nb.Controller
             # @Model => String???
             self.Evt.$send("salary_model:calc:error", erorr_msg) if erorr_msg
             self.loadRecords()
+        , (data)->
+            self.calcing = false
 
 
 # 基础工资
@@ -1195,7 +1197,7 @@ class SalaryPerformanceController extends SalaryBaseController
             if data.error_count > 0
                 self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
             else
-                self.toaster.pop('error', '提示', '导入成功')
+                self.toaster.pop('success', '提示', '导入成功')
 
     getDateOptions: (type)->
         date = new Date()
