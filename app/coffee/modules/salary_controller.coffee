@@ -526,11 +526,19 @@ class SalaryPersonalController extends nb.Controller
             else
                 self.loadEmp = params
 
-    upload_salary_set_book: (attachment_id)->
+    uploadSalarySetBook: (attachment_id)->
         self = @
         params = {attachment_id: attachment_id}
 
         @http.post("/api/salary_person_setups/upload_salary_set_book", params).success (data, status) ->
+            self.toaster.pop('success', '提示', '导入成功')
+            self.import_finish = true
+
+    uploadShareFund: (attachment_id)->
+        self = @
+        params = {attachment_id: attachment_id}
+
+        @http.post("/api/salary_person_setups/upload_share_fund", params).success (data, status) ->
             self.toaster.pop('success', '提示', '导入成功')
             self.import_finish = true
 
