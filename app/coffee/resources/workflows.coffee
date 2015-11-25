@@ -32,6 +32,7 @@ workflows = [
     "Flow::EmployeeLeaveJob"
     "Flow::Resignation"
     "Flow::PublicLeave"
+    "Flow::LactationLeave"
 ]
 
 
