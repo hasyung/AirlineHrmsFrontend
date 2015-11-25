@@ -376,7 +376,7 @@ class LeaveEmployeesCtrl extends nb.Controller
             {minWidth: 120, displayName: '通道', name: 'channel'}
             {minWidth: 120, displayName: '用工性质', name: 'laborRelation'}
             {minWidth: 120, displayName: '变动性质', name: 'employmentStatus'}
-            {minWidth: 120, displayName: '离职时间', name: 'approveLeaveJobDate'}
+            {minWidth: 120, displayName: '离职时间', name: 'changeDate', cellFilter: "date:'yyyy-MM-dd'"}
             {
                 minWidth: 120
                 displayName: '编辑'

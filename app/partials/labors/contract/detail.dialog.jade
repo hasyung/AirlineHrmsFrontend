@@ -1,6 +1,7 @@
 div(
     style="height: 100%; background-color: #f5f5f5;"
-    ng-init="contract=panel.contract; ctrl=panel.ctrl; ctrl.loadDueTime(contract);"
+    ng-init="contract=panel.contract; ctrl=panel.ctrl;"
+    ng-controller="EditableResourceCtrl"
     )
     md-toolbar.md-warn(md-theme="hrms")
         md-content.md-toolbar-tools(style="background-color: transparent;")
@@ -9,82 +10,83 @@ div(
     .personnel-content.personnel-control
         section.personnel-info-section
             md-content.nb-card-container(layout="column" md-theme="hrms")
-                md-card.form-material-section.nb-card
-                    .md-subheader
-                        | 合同信息
+                form(ng-submit="save(contract.$save(), editContractForm, ctrl.contracts);panel.close();" name="editContractForm")
+                    md-card.form-material-section.nb-card
+                        .md-subheader
+                            | 合同信息
 
-                    fieldset(md-theme="default")
-                        div(layout)
-                            md-input-container(flex)
-                                label 姓名
-                                input(ng-model="::contract.employeeName" readonly)
-                            md-input-container(flex)
-                                label 员工编号
-                                input(ng-model="::contract.employeeNo" readonly)
-                        div(layout)
-                            md-input-container(flex)
-                                label 部门
-                                input(ng-model="::contract.departmentName" readonly)
-                            md-input-container(flex)
-                                label 岗位
-                                input(ng-model="::contract.positionName" readonly)
-                        div(layout)
-                            md-input-container.row-has-value(flex)
-                                label 用工性质
-                                    span.require-tip *
-                                md-select(ng-model="contract.applyType" required)
-                                    md-option(value="合同") 合同
-                                    md-option(value="合同制") 合同制
-                            md-input-container.row-has-value(flex)
-                                label 变更标志
-                                    span.require-tip *
-                                md-select(ng-model="contract.changeFlag" required)
-                                    md-option(value="新签") 新签
-                                    md-option(value="续签") 续签
-                                    md-option(value="转制") 转制
-                        div(layout)
-                            md-checkbox(class="md-primary" ng-model="contract.isUnfix" ng-change="ctrl.clearData(contract)") 签署无固定期限合同
-                            md-input-container(flex)
+                        fieldset(md-theme="default")
+                            div(layout)
+                                md-input-container(flex)
+                                    label 姓名
+                                    input(ng-model="::contract.employeeName" readonly)
+                                md-input-container(flex)
+                                    label 员工编号
+                                    input(ng-model="::contract.employeeNo" readonly)
+                            div(layout)
+                                md-input-container(flex)
+                                    label 部门
+                                    input(ng-model="::contract.departmentName" readonly)
+                                md-input-container(flex)
+                                    label 岗位
+                                    input(ng-model="::contract.positionName" readonly)
+                            div(layout)
+                                md-input-container.row-has-value(flex)
+                                    label 用工性质
+                                        span.require-tip *
+                                    md-select(ng-model="contract.applyType" required)
+                                        md-option(value="合同") 合同
+                                        md-option(value="合同制") 合同制
+                                md-input-container.row-has-value(flex)
+                                    label 变更标志
+                                        span.require-tip *
+                                    md-select(ng-model="contract.changeFlag" required)
+                                        md-option(value="新签") 新签
+                                        md-option(value="续签") 续签
+                                        md-option(value="转制") 转制
+                            div(layout)
+                                md-checkbox(class="md-primary" ng-model="contract.isUnfix" ng-change="ctrl.clearData(contract)") 签署无固定期限合同
+                                md-input-container(flex)
 
-                        div(layout)
-                            md-input-container(flex)
-                                label 开始日期
-                                    span.require-tip *
-                                input(
-                                    name="startDate"
-                                    bs-datepicker
-                                    ng-model="contract.startDate"
-                                    required
-                                    ng-change="ctrl.dueTimeStr='';ctrl.loadDueTime(contract)"
+                            div(layout)
+                                md-input-container(flex)
+                                    label 开始日期
+                                        span.require-tip *
+                                    input(
+                                        name="startDate"
+                                        bs-datepicker
+                                        ng-model="contract.startDate"
+                                        required
+                                        ng-change="ctrl.dueTimeStr='';ctrl.loadDueTime(contract)"
+                                            )
+
+                                md-input-container(flex ng-if="!contract.isUnfix")
+                                    label 结束日期(大于开始日期)
+                                        span.require-tip *
+                                    input.has-placeholder(
+                                        bs-datepicker
+                                        ng-model="contract.endDate"
+                                        name="endDate"
+                                        ng-change="ctrl.dueTimeStr='';ctrl.loadDueTime(contract)"
                                         )
 
-                            md-input-container(flex ng-if="!contract.isUnfix")
-                                label 结束日期(大于开始日期)
-                                    span.require-tip *
-                                input.has-placeholder(
-                                    bs-datepicker
-                                    ng-model="contract.endDate"
-                                    name="endDate"
-                                    ng-change="ctrl.dueTimeStr='';ctrl.loadDueTime(contract)"
-                                    )
+                                md-input-container(flex md-no-float ng-if="!contract.isUnfix")
+                                    label 合同时长
+                                    input(
+                                        type="text"
+                                        ng-model="contract.dueTime"
+                                        name="dueTime"
+                                        readonly
+                                        )
 
-                            md-input-container(flex md-no-float ng-if="!contract.isUnfix")
-                                label 合同时长
-                                input(
-                                    type="text"
-                                    ng-model="contract.dueTime"
-                                    name="dueTime"
-                                    readonly
-                                    )
+                            div(layout)
+                                md-input-container(flex)
+                                    label 合同备注
+                                    input(type="text" ng-model="contract.notes")
 
-                        div(layout)
-                            md-input-container(flex)
-                                label 合同备注
-                                input(type="text" ng-model="contract.notes")
-
-                .form-bottom-group(layout style="margin-top: 20px;")
-                    span(flex)
-                    md-button.md-raised(type="button" ng-click="panel.close();") 取消
-                    md-button.md-primary.md-raised(
-                        type="submit"
-                        ng-disabled="newContractForm.$invalid || (!contract.isUnfix && !contract.endDate && !contract.dueTime) || (!contract.isUnfix && newContractForm.endDate.$modelValue <= newContractForm.startDate.$modelValue)") 提交
+                    .form-bottom-group(layout style="margin-top: 20px;")
+                        span(flex)
+                        md-button.md-raised(type="button" ng-click="cancel(contract, $event, editContractForm);panel.close();") 取消
+                        md-button.md-primary.md-raised(
+                            type="submit"
+                            ng-disabled="editContractForm.$invalid || (!contract.isUnfix && !contract.endDate && !contract.dueTime) || (!contract.isUnfix && newContractForm.endDate.$modelValue <= newContractForm.startDate.$modelValue)") 提交

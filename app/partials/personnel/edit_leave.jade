@@ -1,8 +1,8 @@
-md-dialog.punishment_new(style="min-width: 450px;")
-    md-toolbar.md-accent(md-theme="hrms" ng-controller="EditableResourceCtrl")
+md-dialog.punishment_new(style="min-width: 450px;" ng-controller="EditableResourceCtrl")
+    md-toolbar.md-accent(md-theme="hrms")
         .md-toolbar-tools
             span 人员离职
-    form(ng-submit="save(current.$save(), editLeaveForm, list);dialog.close();" name="editLeaveForm")
+    form(ng-submit="save(current.$save(), editLeaveForm);dialog.close();" name="editLeaveForm")
         md-content(ng-init="current=dialog.leave.$refresh();list=dialog.list;params={}")
             fieldset
                 div(layout)
@@ -15,27 +15,25 @@ md-dialog.punishment_new(style="min-width: 450px;")
                 div(layout)
                     md-input-container(flex)
                         label 部门
-                        input(ng-model="::current.department.name" readonly)
+                        input(ng-model="::current.department" readonly)
                     md-input-container(flex)
                         label 岗位
-                        input(ng-model="::current.position.name" readonly)
+                        input(ng-model="::current.position" readonly)
                 div(layout)
                     md-input-container.row-has-value(flex)
                         label 通道
-                        md-select(ng-model="::current.channelId" readonly disabled)
-                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
+                        input(ng-model="::current.channel" readonly)
                     md-input-container.row-has-value(flex)
                         label 用工性质
-                        md-select(ng-model="::current.laborRelationId" disabled readonly)
-                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('labor_relations')") {{item.label}}
+                        input(ng-model="::current.laborRelation" readonly)
                 div(layout)
                     md-input-container(flex)
                         label 离职时间
-                        input(ng-model="current.approveLeaveJobDate" name="date" bs-datepicker required)
+                        input(ng-model="current.changeDate" name="date" bs-datepicker required)
                 div(layout)
                     md-input-container.row-has-value(flex)
                         label 离职原因
-                        md-select(ng-model="current.reason" required placeholder="请选择")
+                        md-select(ng-model="current.employmentStatus" required placeholder="请选择")
                               md-option(value="辞职") 辞职
                               md-option(value="辞退") 辞退
                               md-option(value="工作调动") 工作调动
