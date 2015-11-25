@@ -1013,17 +1013,12 @@ class SalaryBasicController extends SalaryBaseController
                     <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
                         {{row.entity.notes || '无'}}
                         <popup-template
-                            style="padding:8px;border:1px solid #eee;"
+                            style="padding:8px;border:1px solid #ccc;"
                             class="nb-popup org-default-popup-template">
                             <div class="panel-body popup-body">
-                                <md-input-container>
-                                    <label>说明</label>
-                                    <textarea
-                                        ng-model="row.entity.notes"
-                                        style="resize:none;"
-                                        class="reason-input"
-                                        readonly></textarea>
-                                </md-input-container>
+                                <div class="salary-explain">
+                                    {{row.entity.notes || '无'}}
+                                </div>
                             </div>
                         </popup-template>
                     </a>
@@ -1042,7 +1037,7 @@ class SalaryBasicController extends SalaryBaseController
                     <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">
                         {{row.entity.remark || '请输入备注'}}
                         <popup-template
-                            style="padding:8px;border:1px solid #eee;"
+                            style="padding:8px;border:1px solid #ccc;"
                             class="nb-popup org-default-popup-template">
                             <div class="panel-body popup-body">
                                 <md-input-container>
@@ -1093,17 +1088,12 @@ class SalaryKeepController extends SalaryBaseController
                     <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
                         {{row.entity.notes || '无'}}
                         <popup-template
-                            style="padding:8px;border:1px solid #eee;"
+                            style="padding:8px;border:1px solid #ccc;"
                             class="nb-popup org-default-popup-template">
                             <div class="panel-body popup-body">
-                                <md-input-container>
-                                    <label>说明</label>
-                                    <textarea
-                                        ng-model="row.entity.notes"
-                                        style="resize:none;"
-                                        class="reason-input"
-                                        readonly></textarea>
-                                </md-input-container>
+                                <div class="salary-explain">
+                                    {{row.entity.notes || '无'}}
+                                </div>
                             </div>
                         </popup-template>
                     </a>
@@ -1122,7 +1112,7 @@ class SalaryKeepController extends SalaryBaseController
                     <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">
                         {{row.entity.remark || '请输入备注'}}
                         <popup-template
-                            style="padding:8px;border:1px solid #eee;"
+                            style="padding:8px;border:1px solid #ccc;"
                             class="nb-popup org-default-popup-template">
                             <div class="panel-body popup-body">
                                 <md-input-container>
@@ -1166,17 +1156,12 @@ class SalaryPerformanceController extends SalaryBaseController
                     <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
                         {{row.entity.notes || '无'}}
                         <popup-template
-                            style="padding:8px;border:1px solid #eee;"
+                            style="padding:8px;border:1px solid #ccc;"
                             class="nb-popup org-default-popup-template">
                             <div class="panel-body popup-body">
-                                <md-input-container>
-                                    <label>说明</label>
-                                    <textarea
-                                        ng-model="row.entity.notes"
-                                        style="resize:none;"
-                                        class="reason-input"
-                                        readonly></textarea>
-                                </md-input-container>
+                                <div class="salary-explain">
+                                    {{row.entity.notes || '无'}}
+                                </div>
                             </div>
                         </popup-template>
                     </a>
@@ -1195,7 +1180,7 @@ class SalaryPerformanceController extends SalaryBaseController
                     <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">
                         {{row.entity.remark || '请输入备注'}}
                         <popup-template
-                            style="padding:8px;border:1px solid #eee;"
+                            style="padding:8px;border:1px solid #ccc;"
                             class="nb-popup org-default-popup-template">
                             <div class="panel-body popup-body">
                                 <md-input-container>
@@ -1280,17 +1265,12 @@ class SalaryHoursFeeController extends SalaryBaseController
                     <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
                         {{row.entity.notes || '无'}}
                         <popup-template
-                            style="padding:8px;border:1px solid #eee;"
+                            style="padding:8px;border:1px solid #ccc;"
                             class="nb-popup org-default-popup-template">
                             <div class="panel-body popup-body">
-                                <md-input-container>
-                                    <label>说明</label>
-                                    <textarea
-                                        ng-model="row.entity.notes"
-                                        style="resize:none;"
-                                        class="reason-input"
-                                        readonly></textarea>
-                                </md-input-container>
+                                <div class="salary-explain">
+                                    {{row.entity.notes || '无'}}
+                                </div>
                             </div>
                         </popup-template>
                     </a>
@@ -1309,7 +1289,7 @@ class SalaryHoursFeeController extends SalaryBaseController
                     <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">
                         {{row.entity.remark || '请输入备注'}}
                         <popup-template
-                            style="padding:8px;border:1px solid #eee;"
+                            style="padding:8px;border:1px solid #ccc;"
                             class="nb-popup org-default-popup-template">
                             <div class="panel-body popup-body">
                                 <md-input-container>
@@ -1387,17 +1367,12 @@ class SalaryAllowanceController extends SalaryBaseController
                     <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
                         {{row.entity.notes || '无'}}
                         <popup-template
-                            style="padding:8px;border:1px solid #eee;"
+                            style="padding:8px;border:1px solid #ccc;"
                             class="nb-popup org-default-popup-template">
                             <div class="panel-body popup-body">
-                                <md-input-container>
-                                    <label>说明</label>
-                                    <textarea
-                                        ng-model="row.entity.notes"
-                                        style="resize:none;"
-                                        class="reason-input"
-                                        readonly></textarea>
-                                </md-input-container>
+                                <div class="salary-explain">
+                                    {{row.entity.notes || '无'}}
+                                </div>
                             </div>
                         </popup-template>
                     </a>
@@ -1416,7 +1391,7 @@ class SalaryAllowanceController extends SalaryBaseController
                     <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">
                         {{row.entity.remark || '请输入备注'}}
                         <popup-template
-                            style="padding:8px;border:1px solid #eee;"
+                            style="padding:8px;border:1px solid #ccc;"
                             class="nb-popup org-default-popup-template">
                             <div class="panel-body popup-body">
                                 <md-input-container>
@@ -1468,17 +1443,12 @@ class SalaryLandAllowanceController extends SalaryBaseController
                     <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
                         {{row.entity.notes || '无'}}
                         <popup-template
-                            style="padding:8px;border:1px solid #eee;"
+                            style="padding:8px;border:1px solid #ccc;"
                             class="nb-popup org-default-popup-template">
                             <div class="panel-body popup-body">
-                                <md-input-container>
-                                    <label>说明</label>
-                                    <textarea
-                                        ng-model="row.entity.notes"
-                                        style="resize:none;"
-                                        class="reason-input"
-                                        readonly></textarea>
-                                </md-input-container>
+                                <div class="salary-explain">
+                                    {{row.entity.notes || '无'}}
+                                </div>
                             </div>
                         </popup-template>
                     </a>
@@ -1497,7 +1467,7 @@ class SalaryLandAllowanceController extends SalaryBaseController
                     <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">
                         {{row.entity.remark || '请输入备注'}}
                         <popup-template
-                            style="padding:8px;border:1px solid #eee;"
+                            style="padding:8px;border:1px solid #ccc;"
                             class="nb-popup org-default-popup-template">
                             <div class="panel-body popup-body">
                                 <md-input-container>
@@ -1568,17 +1538,12 @@ class SalaryRewardController extends SalaryBaseController
                     <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
                         {{row.entity.notes || '无'}}
                         <popup-template
-                            style="padding:8px;border:1px solid #eee;"
+                            style="padding:8px;border:1px solid #ccc;"
                             class="nb-popup org-default-popup-template">
                             <div class="panel-body popup-body">
-                                <md-input-container>
-                                    <label>说明</label>
-                                    <textarea
-                                        ng-model="row.entity.notes"
-                                        style="resize:none;"
-                                        class="reason-input"
-                                        readonly></textarea>
-                                </md-input-container>
+                                <div class="salary-explain">
+                                    {{row.entity.notes || '无'}}
+                                </div>
                             </div>
                         </popup-template>
                     </a>
@@ -1598,7 +1563,7 @@ class SalaryRewardController extends SalaryBaseController
                     <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">
                         {{row.entity.remark || '请输入备注'}}
                         <popup-template
-                            style="padding:8px;border:1px solid #eee;"
+                            style="padding:8px;border:1px solid #ccc;"
                             class="nb-popup org-default-popup-template">
                             <div class="panel-body popup-body">
                                 <md-input-container>
@@ -1651,17 +1616,12 @@ class SalaryTransportFeeController extends SalaryBaseController
                     <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
                         {{row.entity.notes || '无'}}
                         <popup-template
-                            style="padding:8px;border:1px solid #eee;"
+                            style="padding:8px;border:1px solid #ccc;"
                             class="nb-popup org-default-popup-template">
                             <div class="panel-body popup-body">
-                                <md-input-container>
-                                    <label>说明</label>
-                                    <textarea
-                                        ng-model="row.entity.notes"
-                                        style="resize:none;"
-                                        class="reason-input"
-                                        readonly></textarea>
-                                </md-input-container>
+                                <div class="salary-explain">
+                                    {{row.entity.notes || '无'}}
+                                </div>
                             </div>
                         </popup-template>
                     </a>
@@ -1680,7 +1640,7 @@ class SalaryTransportFeeController extends SalaryBaseController
                     <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">
                         {{row.entity.remark || '请输入备注'}}
                         <popup-template
-                            style="padding:8px;border:1px solid #eee;"
+                            style="padding:8px;border:1px solid #ccc;"
                             class="nb-popup org-default-popup-template">
                             <div class="panel-body popup-body">
                                 <md-input-container>
@@ -1737,17 +1697,12 @@ class SalaryOverviewController extends SalaryBaseController
                     <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
                         {{row.entity.notes || '无'}}
                         <popup-template
-                            style="padding:8px;border:1px solid #eee;"
+                            style="padding:8px;border:1px solid #ccc;"
                             class="nb-popup org-default-popup-template">
                             <div class="panel-body popup-body">
-                                <md-input-container>
-                                    <label>说明</label>
-                                    <textarea
-                                        ng-model="row.entity.notes"
-                                        style="resize:none;"
-                                        class="reason-input"
-                                        readonly></textarea>
-                                </md-input-container>
+                                <div class="salary-explain">
+                                    {{row.entity.notes || '无'}}
+                                </div>
                             </div>
                         </popup-template>
                     </a>
@@ -1766,7 +1721,7 @@ class SalaryOverviewController extends SalaryBaseController
                     <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">
                         {{row.entity.remark || '请输入备注'}}
                         <popup-template
-                            style="padding:8px;border:1px solid #eee;"
+                            style="padding:8px;border:1px solid #ccc;"
                             class="nb-popup org-default-popup-template">
                             <div class="panel-body popup-body">
                                 <md-input-container>
