@@ -376,7 +376,21 @@ class LeaveEmployeesCtrl extends nb.Controller
             {minWidth: 120, displayName: '通道', name: 'channel'}
             {minWidth: 120, displayName: '用工性质', name: 'laborRelation'}
             {minWidth: 120, displayName: '变动性质', name: 'employmentStatus'}
-            {minWidth: 120, displayName: '变动时间', name: 'changeDate'}
+            {minWidth: 120, displayName: '离职时间', name: 'approveLeaveJobDate'}
+            {
+                minWidth: 120
+                displayName: '编辑'
+                field: 'edit'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-dialog
+                        template-url="/partials/personnel/edit_leave.html"
+                        locals="{leave: row.entity, list: grid.appScope.$parent.leaveEmployees}">
+                        编辑
+                    </a>
+                </div>
+                '''
+            }
         ]
 
         @filterOptions = {
@@ -408,9 +422,9 @@ class LeaveEmployeesCtrl extends nb.Controller
                     displayName: '变动性质'
                 }
                 {
-                    name: 'change_date'
+                    name: 'approve_leave_job_date'
                     type: 'date-range'
-                    displayName: '变动时间'
+                    displayName: '离职时间'
                 }
             ]
         }
