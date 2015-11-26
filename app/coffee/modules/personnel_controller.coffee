@@ -337,9 +337,9 @@ class NewEmpsCtrl extends nb.Controller
 
 
 class LeaveEmployeesCtrl extends nb.Controller
-    @.$inject = ['$scope', 'LeaveEmployees']
+    @.$inject = ['$scope', 'LeaveEmployees', 'toaster']
 
-    constructor: (@scope, @LeaveEmployees) ->
+    constructor: (@scope, @LeaveEmployees, @toaster) ->
         @loadInitialData()
 
         @columnDef = [
@@ -385,7 +385,7 @@ class LeaveEmployeesCtrl extends nb.Controller
                 <div class="ui-grid-cell-contents">
                     <a nb-dialog
                         template-url="/partials/personnel/edit_leave.html"
-                        locals="{leave: row.entity, list: grid.appScope.$parent.leaveEmployees}">
+                        locals="{leave: row.entity, ctrl:grid.appScope.$parent.ctrl}">
                         编辑
                     </a>
                 </div>
@@ -447,6 +447,13 @@ class LeaveEmployeesCtrl extends nb.Controller
 
     exportGridApi: (gridApi) ->
         @gridApi = gridApi
+
+    updateLeave: (model) ->
+        self = @
+
+        model.$save().$then (data) ->
+            self.toaster.pop('success', '更新成功', data.$response.data.messages)
+            self.leaveEmployees.$refresh()
 
 
 class MoveEmployeesCtrl extends nb.Controller
