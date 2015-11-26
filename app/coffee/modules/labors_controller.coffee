@@ -881,13 +881,16 @@ class ContractCtrl extends nb.Controller
             self.contracts.$refresh({'show_merged': self.show_merged})
 
     changeLoadRule: () ->
-        @contracts.$refresh({'show_merged': @show_merged})
+        tableState = @tableState || {}
+        tableState['show_merged'] = @show_merged
+        @contracts.$refresh(tableState)
 
     search: (tableState) ->
         tableState = tableState || {}
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         tableState['show_merged'] = @show_merged
         @contracts.$refresh(tableState)
+        @tableState = tableState
 
     getSelected: () ->
         rows = @gridApi.selection.getSelectedGridRows()
