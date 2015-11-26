@@ -31,11 +31,13 @@ app.config(Route)
 
 
 class PersonnelCtrl extends nb.Controller
-    @.$inject = ['$scope', 'sweet', 'Employee', 'CURRENT_ROLES']
+    @.$inject = ['$scope', 'sweet', 'Employee', 'CURRENT_ROLES', 'toaster']
 
-    constructor: (@scope, @sweet, @Employee, @CURRENT_ROLES) ->
+    constructor: (@scope, @sweet, @Employee, @CURRENT_ROLES, @toaster) ->
         @loadInitialData()
         @selectedIndex = 1
+
+        @importing = false
 
         @columnDef = [
             {
@@ -115,6 +117,16 @@ class PersonnelCtrl extends nb.Controller
 
     isDepartmentHr: ()->
         @CURRENT_ROLES.indexOf('department_hr') >= 0
+
+    uploadPositives: (type, attachment_id)->
+        self = @
+        params = {type: type, attachment_id: attachment_id}
+        @importing = true
+
+        @http.post("/api/employees/transfer_to_regular_worker", params).success (data, status) ->
+            self.toaster.pop('success', '提示', '导入成功')
+            self.employees.$refresh()
+            self.importing = false
 
 
 class NewEmpsCtrl extends nb.Controller
@@ -343,9 +355,9 @@ class NewEmpsCtrl extends nb.Controller
 
 
 class LeaveEmployeesCtrl extends nb.Controller
-    @.$inject = ['$scope', 'LeaveEmployees']
+    @.$inject = ['$scope', 'LeaveEmployees', 'toaster', 'PERMISSIONS']
 
-    constructor: (@scope, @LeaveEmployees) ->
+    constructor: (@scope, @LeaveEmployees, @toaster, @permissions) ->
         @loadInitialData()
 
         @columnDef = [
@@ -382,8 +394,29 @@ class LeaveEmployeesCtrl extends nb.Controller
             {minWidth: 120, displayName: '通道', name: 'channel'}
             {minWidth: 120, displayName: '用工性质', name: 'laborRelation'}
             {minWidth: 120, displayName: '变动性质', name: 'employmentStatus'}
-            {minWidth: 120, displayName: '离职时间', name: 'approveLeaveJobDate'}
+            {minWidth: 120, displayName: '离职时间', name: 'changeDate', cellFilter: "date:'yyyy-MM-dd'"}
         ]
+
+        # 根据权限 leave_employees_show 添加查看列
+        @editable = _.includes @permissions,'leave_employees_update'
+
+        if _.includes @permissions,'leave_employees_show'
+            @columnDef = @columnDef.concat [
+                {
+                    minWidth: 120
+                    displayName: '查看'
+                    field: 'edit'
+                    cellTemplate: '''
+                    <div class="ui-grid-cell-contents">
+                        <a nb-dialog
+                            template-url="/partials/personnel/edit_leave.html"
+                            locals="{leave: row.entity, ctrl:grid.appScope.$parent.ctrl}">
+                            查看
+                        </a>
+                    </div>
+                    '''
+                }
+            ]
 
         @filterOptions = {
             name: 'personnelLeave'
@@ -439,6 +472,13 @@ class LeaveEmployeesCtrl extends nb.Controller
 
     exportGridApi: (gridApi) ->
         @gridApi = gridApi
+
+    updateLeave: (model) ->
+        self = @
+
+        model.$save().$then (data) ->
+            self.toaster.pop('success', '更新成功', data.$response.data.messages)
+            self.leaveEmployees.$refresh()
 
 
 class MoveEmployeesCtrl extends nb.Controller

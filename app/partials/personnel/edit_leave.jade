@@ -1,0 +1,61 @@
+md-dialog.punishment_new(style="min-width: 450px;")
+    md-toolbar.md-accent(md-theme="hrms")
+        .md-toolbar-tools
+            span 人员离职
+    form(ng-controller="EditableResourceCtrl" ng-submit="ctrl.updateLeave(current);dialog.close();" name="editLeaveForm")
+        md-content(ng-init="current=dialog.leave.$refresh();ctrl=dialog.ctrl;")
+            fieldset
+                div(layout)
+                    md-input-container(flex)
+                        label 姓名
+                        input(ng-model="::current.name" readonly)
+                    md-input-container(flex)
+                        label 员工编号
+                        input(ng-model="::current.employeeNo" readonly)
+                div(layout)
+                    md-input-container(flex)
+                        label 部门
+                        input(ng-model="::current.department" readonly)
+                    md-input-container(flex)
+                        label 岗位
+                        input(ng-model="::current.position" readonly)
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 通道
+                        input(ng-model="::current.channel" readonly)
+                    md-input-container.row-has-value(flex)
+                        label 用工性质
+                        input(ng-model="::current.laborRelation" readonly)
+                div(layout)
+                    md-input-container(flex)
+                        label 离职时间
+                        input(
+                            ng-model="current.changeDate"
+                            name="date"
+                            bs-datepicker
+                            required
+                            ng-disabled="!ctrl.editable"
+                            style="color: rgba(0,0,0,0.87);"
+                            )
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 离职原因
+                        md-select(
+                            ng-model="current.employmentStatus"
+                            required
+                            placeholder="请选择"
+                            ng-disabled="!ctrl.editable"
+                            ng-readonly="!ctrl.editable"
+                            )
+                              md-option(value="辞职") 辞职
+                              md-option(value="辞退") 辞退
+                              md-option(value="工作调动") 工作调动
+                              md-option(value="劳动关系终止") 劳动关系终止
+                div(layout)
+                    md-input-container(flex)
+                        label 文件号
+                        input(ng-model="current.fileNo" ng-readonly="!ctrl.editable")
+
+        .md-actions
+            md-button(type="button" ng-click="cancel(current, $event, editLeaveForm);dialog.close()") 取 消
+            md-button.md-primary.md-raised(has-permission="leave_employees_update" type="submit" ng-disabled="editLeaveForm.$invalid") 确 定
