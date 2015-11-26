@@ -749,7 +749,7 @@ class ContractCtrl extends nb.Controller
     @.$inject = ['$scope', 'Contract', '$http', 'Employee', '$nbEvent', 'toaster', 'CURRENT_ROLES', 'PERMISSIONS']
 
     constructor: (@scope, @Contract, @http, @Employee, @Evt, @toaster, @CURRENT_ROLES, @permissions) ->
-        @show_merged = true
+        @show_merged = false
         @loadInitialData()
 
         @filterOptions = filterBuildUtils('contract')
@@ -884,6 +884,23 @@ class ContractCtrl extends nb.Controller
             self.contracts.$refresh({'show_merged': self.show_merged})
 
     changeLoadRule: () ->
+        if @show_merged
+            @columnDef.splice -1, 1
+        else
+            @columnDef.splice 10, 0, {
+                minWidth: 120
+                displayName: '详细',
+                field: '详细',
+                cellTemplate: '''
+                    <div class="ui-grid-cell-contents" ng-init="outerScope=grid.appScope.$parent">
+                        <a nb-panel
+                            template-url="partials/labors/contract/detail.dialog.html"
+                            locals="{contract: row.entity.$refresh(), ctrl: outerScope.ctrl}"> 详细
+                        </a>
+                    </div>
+                '''
+            }
+
         tableState = @tableState || {}
         tableState['show_merged'] = @show_merged
         @contracts.$refresh(tableState)
