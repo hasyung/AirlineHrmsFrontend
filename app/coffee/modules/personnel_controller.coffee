@@ -337,9 +337,9 @@ class NewEmpsCtrl extends nb.Controller
 
 
 class LeaveEmployeesCtrl extends nb.Controller
-    @.$inject = ['$scope', 'LeaveEmployees', 'toaster']
+    @.$inject = ['$scope', 'LeaveEmployees', 'toaster', 'PERMISSIONS']
 
-    constructor: (@scope, @LeaveEmployees, @toaster) ->
+    constructor: (@scope, @LeaveEmployees, @toaster, @permissions) ->
         @loadInitialData()
 
         @columnDef = [
@@ -377,21 +377,28 @@ class LeaveEmployeesCtrl extends nb.Controller
             {minWidth: 120, displayName: '用工性质', name: 'laborRelation'}
             {minWidth: 120, displayName: '变动性质', name: 'employmentStatus'}
             {minWidth: 120, displayName: '离职时间', name: 'changeDate', cellFilter: "date:'yyyy-MM-dd'"}
-            {
-                minWidth: 120
-                displayName: '编辑'
-                field: 'edit'
-                cellTemplate: '''
-                <div class="ui-grid-cell-contents">
-                    <a nb-dialog
-                        template-url="/partials/personnel/edit_leave.html"
-                        locals="{leave: row.entity, ctrl:grid.appScope.$parent.ctrl}">
-                        编辑
-                    </a>
-                </div>
-                '''
-            }
         ]
+
+        # 根据权限 leave_employees_show 添加查看列
+        @editable = _.includes @permissions,'leave_employees_update'
+
+        if _.includes @permissions,'leave_employees_show'
+            @columnDef = @columnDef.concat [
+                {
+                    minWidth: 120
+                    displayName: '查看'
+                    field: 'edit'
+                    cellTemplate: '''
+                    <div class="ui-grid-cell-contents">
+                        <a nb-dialog
+                            template-url="/partials/personnel/edit_leave.html"
+                            locals="{leave: row.entity, ctrl:grid.appScope.$parent.ctrl}">
+                            查看
+                        </a>
+                    </div>
+                    '''
+                }
+            ]
 
         @filterOptions = {
             name: 'personnelLeave'
