@@ -615,9 +615,19 @@ class SalaryChangeController extends nb.Controller
 
     loadPersonSettings: (change) ->
         self = @
-        return @SalaryPersonSetup.$collection().$fetch().$find(change.salaryPersonSetupId)
+        return @SalaryPersonSetup.$collection().$fetch().$find(change.salaryPersonSetupId) || {}
 
         # return @SalaryPersonSetup.$collection().$fetch(change.salaryPersonSetupId)
+
+    newPersonSettings: (change, settings, dialog) ->
+        self = @
+
+        settings.owner = change.owner
+        settings.recordDate = change.changeDate
+        @SalaryPersonSetup.$build(settings).$save().$then (data)->
+            change.state = '已处理'
+            change.$save().$then (data)->
+                self.salaryChanges.$refresh()
 
     search: (tableState) ->
         tableState = tableState || {}
