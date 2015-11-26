@@ -10,7 +10,7 @@ div(
     .personnel-content.personnel-control
         section.personnel-info-section
             md-content.nb-card-container(layout="column" md-theme="hrms")
-                form(ng-submit="save(contract.$save(), editContractForm, ctrl.contracts);panel.close();" name="editContractForm")
+                form(ng-submit="ctrl.updateContract(contract);panel.close();" name="editContractForm")
                     md-card.form-material-section.nb-card
                         .md-subheader
                             | 合同信息
@@ -97,7 +97,11 @@ div(
                             div(layout)
                                 md-input-container(flex)
                                     label 合同备注
-                                    input(type="text" ng-model="contract.notes" ng-readonly="!ctrl.editable")
+                                    input(
+                                        type="text"
+                                        ng-model="contract.notes"
+                                        ng-readonly="!ctrl.editable"
+                                        )
 
                     .form-bottom-group(layout style="margin-top: 20px;")
                         span(flex)

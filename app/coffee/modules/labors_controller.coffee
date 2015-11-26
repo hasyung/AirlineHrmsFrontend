@@ -797,8 +797,8 @@ class ContractCtrl extends nb.Controller
             }
             {minWidth: 120, displayName: '用工性质', name: 'applyType'}
             {minWidth: 120, displayName: '变更标志', name: 'changeFlag'}
-            {minWidth: 120, displayName: '合同开始时间', name: 'startDate'}
-            {minWidth: 120, displayName: '合同结束时间', name: 'endDateStr'}
+            {minWidth: 120, displayName: '合同开始时间', name: 'startDate', cellFilter: "date:'yyyy-MM-dd'"}
+            {minWidth: 120, displayName: '合同结束时间', name: 'endDateStr', cellFilter: "date:'yyyy-MM-dd'"}
             {minWidth: 200, displayName: '备注', name: 'notes', cellTooltip: (row) -> return row.entity.note}
             {
                 minWidth: 120
@@ -854,8 +854,8 @@ class ContractCtrl extends nb.Controller
             }
             {minWidth: 120, displayName: '用工性质', name: 'applyType'}
             {minWidth: 120, displayName: '变更标志', name: 'changeFlag'}
-            {minWidth: 120, displayName: '开始时间', name: 'startDate', cellFilter: "enum:'channels'"}
-            {minWidth: 120, displayName: '结束时间', name: 'endDate'}
+            {minWidth: 120, displayName: '开始时间', name: 'startDate', cellFilter: "date:'yyyy-MM-dd'"}
+            {minWidth: 120, displayName: '结束时间', name: 'endDate', cellFilter: "date:'yyyy-MM-dd'"}
             {
                 minWidth: 120
                 displayName: '详细',
@@ -888,6 +888,14 @@ class ContractCtrl extends nb.Controller
         tableState = @tableState || {}
         tableState['show_merged'] = @show_merged
         @contracts.$refresh(tableState)
+
+    updateContract: (model)->
+        tableState = @tableState || {}
+        tableState['show_merged'] = @show_merged
+
+        model.$save().$then (data) ->
+            self.toaster.pop('success', '更新成功', data.messages)
+            self.contracts.$refresh(tableState)
 
     search: (tableState) ->
         tableState = tableState || {}
