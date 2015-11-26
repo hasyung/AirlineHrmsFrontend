@@ -229,8 +229,6 @@ class SalaryController extends nb.Controller
         @backup_config = angular.copy(@dynamic_config)
         @editing = false
 
-        console.log @dynamic_config
-
     resetDynamicConfig: ()->
         @dynamic_config = {}
         @dynamic_config = angular.copy(@backup_config)

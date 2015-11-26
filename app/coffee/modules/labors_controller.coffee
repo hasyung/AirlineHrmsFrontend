@@ -873,7 +873,6 @@ class ContractCtrl extends nb.Controller
 
         #根据权限 contracts_update 控制是否可以编辑表单
         @editable = _.includes @permissions,'contracts_update'
-        console.log @editable
 
     isHrLaborRelationMember: ()->
         @CURRENT_ROLES.indexOf('department_hr') >= 0

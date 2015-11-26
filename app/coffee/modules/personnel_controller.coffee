@@ -31,11 +31,13 @@ app.config(Route)
 
 
 class PersonnelCtrl extends nb.Controller
-    @.$inject = ['$scope', 'sweet', 'Employee', 'CURRENT_ROLES']
+    @.$inject = ['$scope', 'sweet', 'Employee', 'CURRENT_ROLES', 'toaster']
 
-    constructor: (@scope, @sweet, @Employee, @CURRENT_ROLES) ->
+    constructor: (@scope, @sweet, @Employee, @CURRENT_ROLES, @toaster) ->
         @loadInitialData()
         @selectedIndex = 1
+
+        @importing = false
 
         @columnDef = [
             {
@@ -115,6 +117,16 @@ class PersonnelCtrl extends nb.Controller
 
     isDepartmentHr: ()->
         @CURRENT_ROLES.indexOf('department_hr') >= 0
+
+    uploadPositives: (type, attachment_id)->
+        self = @
+        params = {type: type, attachment_id: attachment_id}
+        @importing = true
+
+        @http.post("/api/employees/transfer_to_regular_worker", params).success (data, status) ->
+            self.toaster.pop('success', '提示', '导入成功')
+            self.employees.$refresh()
+            self.importing = false
 
 
 class NewEmpsCtrl extends nb.Controller
