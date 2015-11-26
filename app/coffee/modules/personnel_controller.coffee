@@ -127,6 +127,8 @@ class PersonnelCtrl extends nb.Controller
             self.toaster.pop('success', '提示', '导入成功')
             self.employees.$refresh()
             self.importing = false
+        .error (data) ->
+            self.importing = false
 
 
 class NewEmpsCtrl extends nb.Controller
