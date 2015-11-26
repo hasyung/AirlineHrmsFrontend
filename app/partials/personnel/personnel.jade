@@ -13,7 +13,7 @@ tabset(flex)
                             has-permission="employees_transfer_to_regular_worker"
                             flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads: true, testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
                             flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
-                            flow-file-success="ctrl.upload_start=false;ctrl.uploadNewEmployees('实习批量转正', ctrl.parseJSON($message).id);"
+                            flow-file-success="ctrl.upload_start=false;ctrl.uploadPositives('实习批量转正', ctrl.parseJSON($message).id);"
                             flow-btn
                             type="button"
                         ) 实习批量转正
