@@ -31,9 +31,9 @@ app.config(Route)
 
 
 class PersonnelCtrl extends nb.Controller
-    @.$inject = ['$scope', 'sweet', 'Employee', 'CURRENT_ROLES', 'toaster']
+    @.$inject = ['$scope', 'sweet', 'Employee', 'CURRENT_ROLES', 'toaster', '$http']
 
-    constructor: (@scope, @sweet, @Employee, @CURRENT_ROLES, @toaster) ->
+    constructor: (@scope, @sweet, @Employee, @CURRENT_ROLES, @toaster, @http) ->
         @loadInitialData()
         @selectedIndex = 1
 
