@@ -250,7 +250,7 @@ class AdjustPositionCtrl
 
     constructor: (scope, @http, @Evt) ->
 
-    adjustPosition: (employee) ->
+    adjustPosition: (employee, list) ->
         self = @
 
         params = {}
@@ -274,6 +274,7 @@ class AdjustPositionCtrl
 
         @http.post("/api/position_change_records", params).success (data, status)->
             self.Evt.$send "data:create:success", "员工转岗成功"
+            list.$refresh()
 
 
 app.controller 'PositionDetailCtrl', PositionDetailCtrl
