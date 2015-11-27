@@ -10,8 +10,18 @@ tabset(flex)
                         div(flex)
 
                         md-button.md-primary.md-raised(
+                            has-permission="employees_transfer_to_regular_worker"
+                            flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads: true, testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
+                            flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                            flow-file-success="ctrl.upload_start=false;ctrl.uploadPositives('实习批量转正', ctrl.parseJSON($message).id);"
+                            flow-btn
+                            type="button"
+                            ng-disabled="ctrl.importing"
+                        ) 实习批量转正
+
+                        md-button.md-primary.md-raised(
                             has-permission="employees_set_leave"
-                            ng-disabled="ctrl.getSelected().length != 1"
+                            ng-disabled="ctrl.getSelected().length != 1 || ctrl.importing"
                             nb-dialog
                             template-url="/partials/personnel/set_leave.html"
                             locals="{employee: ctrl.getSelected()[0], list: ctrl.employees}"
@@ -19,7 +29,7 @@ tabset(flex)
 
                         md-button.md-primary.md-raised(
                             has-permission="punishments_create"
-                            ng-disabled="ctrl.getSelected().length != 1"
+                            ng-disabled="ctrl.getSelected().length != 1 || ctrl.importing"
                             nb-dialog
                             template-url="/partials/personnel/punishment.html"
                             locals="{employee: ctrl.getSelected()[0], genre: '处分'}"
@@ -27,7 +37,7 @@ tabset(flex)
 
                         md-button.md-primary.md-raised(
                             has-permission="punishments_create"
-                            ng-disabled="ctrl.getSelected().length != 1"
+                            ng-disabled="ctrl.getSelected().length != 1 || ctrl.importing"
                             nb-dialog
                             template-url="/partials/personnel/punishment.html"
                             locals="{employee: ctrl.getSelected()[0], genre: '奖励'}"
@@ -35,13 +45,14 @@ tabset(flex)
 
                         md-button.md-primary.md-raised(
                             has-permission="position_change_records_create"
-                            ng-disabled="ctrl.getSelected().length != 1"
+                            ng-disabled="ctrl.getSelected().length != 1 || ctrl.importing"
                             nb-dialog
                             template-url="/partials/personnel/adjust_position.html"
                             locals="{employee: ctrl.getSelected()[0]}"
                         ) 员工调岗
 
                         md-button.md-primary.md-raised(
+                            ng-disabled="ctrl.importing"
                             has-permission="sort_index"
                             nb-panel
                             template-url="partials/personnel/org_pos_per_sort.html"
@@ -49,6 +60,7 @@ tabset(flex)
 
                         md-menu(ng-init="selectedRows=[]")
                             md-button.md-primary.md-raised(
+                                ng-disabled="ctrl.importing"
                                 has-permission="employees_export_to_xls|employees_export_resume"
                                 ng-click="selectedRows = ctrl.getSelectsIds(); $mdOpenMenu($event)"
                                 ) 导出

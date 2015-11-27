@@ -65,6 +65,12 @@
                             md-menu-item()
                                 a.md-button(flex
                                     download
+                                    ng-href="/api/allowances/export_temp?month={{ctrl.currentCalcTime()}}"
+                                    href="javascript:"
+                                ) 高温津贴表
+                            md-menu-item()
+                                a.md-button(flex
+                                    download
                                     ng-href="/api/allowances/export_nc?month={{ctrl.currentCalcTime()}}"
                                     href="javascript:"
                                 ) NC导入表
