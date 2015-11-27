@@ -1426,7 +1426,7 @@ class SalaryAllowanceController extends SalaryBaseController
 
     upload_allowance: (type, attachment_id)->
         self = @
-        params = {type: type, attachment_id: attachment_id, month: @currentMonth}
+        params = {type: type, attachment_id: attachment_id, month: @currentCalcTime()}
 
         @http.post("/api/allowances/import", params).success (data, status) ->
             if data.error_count > 0
