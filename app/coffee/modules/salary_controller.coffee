@@ -716,12 +716,15 @@ class SalaryGradeChangeController extends nb.Controller
             }
         ]
 
+        # WebsocketClient.addListener 'system_config', (data) ->
+        #     self.salaryGradeChanges.$refresh()
+
         # 检测后端推送的更新通知
         # 需要测试
-        @scope.$watch 'self.rootScope.reloadFlagStr', (oldValue, newValue)->
+        @rootScope.$watch 'reloadFlagStr', (oldValue, newValue)->
             try
-                if angular.isDefined(@salaryGradeChanges)
-                    @salaryGradeChanges.$refresh()
+                if angular.isDefined(self.salaryGradeChanges)
+                    self.salaryGradeChanges.$refresh()
             catch ex
                 console.error "检测reloadTableData数据发生异常", ex
             finally
