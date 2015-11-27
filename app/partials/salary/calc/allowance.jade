@@ -27,25 +27,25 @@
                             ) 导入
                         md-menu-content
                             md-menu-item(
-                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
                                 flow-file-success="ctrl.upload_start=false;ctrl.upload_allowance('航线实习补贴', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 航线实习补贴
 
                             md-menu-item(
-                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
                                 flow-file-success="ctrl.upload_start=false;ctrl.upload_allowance('随机补贴', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 随机补贴
 
                             md-menu-item(
-                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
                                 flow-file-success="ctrl.upload_start=false;ctrl.upload_allowance('签派放行补贴', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 签派放行补贴
 
                             md-menu-item(
-                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
                                 flow-file-success="ctrl.upload_start=false;ctrl.upload_allowance('梭班补贴', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 梭班补贴
