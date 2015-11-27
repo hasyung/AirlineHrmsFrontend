@@ -37,6 +37,8 @@ class PersonnelCtrl extends nb.Controller
         @loadInitialData()
         @selectedIndex = 1
 
+        @tableState = {}
+
         @importing = false
 
         @columnDef = [
@@ -102,6 +104,7 @@ class PersonnelCtrl extends nb.Controller
     search: (tableState) ->
         tableState = tableState || {}
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+        @tableState = tableState
         @employees.$refresh(tableState)
 
     getSelected: () ->

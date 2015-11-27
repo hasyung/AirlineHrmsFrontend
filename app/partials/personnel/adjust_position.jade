@@ -1,11 +1,11 @@
 md-dialog.punishment_new(
     style="min-width: 900px;"
-    ng-init="current = dialog.employee.$refresh();request={}; list=dialog.list"
+    ng-init="current = dialog.employee.$refresh();request={}; empCtrl=dialog.empCtrl"
     )
     md-toolbar.md-accent(md-theme="hrms")
         .md-toolbar-tools
             span 员工调岗
-    form(ng-controller="AdjustPositionCtrl as ctrl" ng-submit="ctrl.adjustPosition(current, list); dialog.close();" name="newPositionForm")
+    form(ng-controller="AdjustPositionCtrl as ctrl" ng-submit="ctrl.adjustPosition(current, empCtrl.employees, empCtrl.tableState); dialog.close();" name="newPositionForm")
         md-content
             fieldset(flex)
                 div(layout)
@@ -51,6 +51,6 @@ md-dialog.punishment_new(
                         input(ng-model="current.positionRemark")
 
         .md-actions
-            md-button(type="button" ng-click="dialog.close()") 取 消
+            md-button(type="button" ng-click="current.$restore();dialog.close()") 取 消
             md-button.md-primary.md-raised(type="submit" ng-disabled="!(current.probationDuration&&current.positionChangeDate)") 确 定
 
