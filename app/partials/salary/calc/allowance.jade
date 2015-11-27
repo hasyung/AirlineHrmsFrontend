@@ -62,13 +62,19 @@
                             ng-disabled="ctrl.calcing || ctrl.records.length==0"
                             ) 导出
                         md-menu-content
-                            md-menu-item()
+                            md-menu-item(has-permission="allowances_export_temp")
+                                a.md-button(flex
+                                    download
+                                    ng-href="/api/allowances/export_temp?month={{ctrl.currentCalcTime()}}"
+                                    href="javascript:"
+                                ) 高温津贴表
+                            md-menu-item(has-permission="allowances_export_nc")
                                 a.md-button(flex
                                     download
                                     ng-href="/api/allowances/export_nc?month={{ctrl.currentCalcTime()}}"
                                     href="javascript:"
                                 ) NC导入表
-                            md-menu-item()
+                            md-menu-item(has-permission="allowances_export_approval")
                                 a.md-button(
                                     download
                                     ng-href="/api/allowances/export_approval?month={{ctrl.currentCalcTime()}}"
