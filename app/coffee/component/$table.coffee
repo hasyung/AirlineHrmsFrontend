@@ -460,7 +460,7 @@ NbFilterDirective = ["$nbEvent", "$enum", ($Evt, $enum)->
 
             _.map scope.filter.constraints, (obj) ->
                 if obj.active && obj.exportData()
-                    if obj.type == 'string'||obj.type == 'month-list'||obj.type == 'year-list'||obj.type == 'perf_category_select'||obj.type == 'performance_select'||obj.type == 'vacation_select'||obj.type == 'salary_change_category_select'||obj.type == 'season-list'||obj.type == 'apply_type_select'||obj.type == 'move_select'
+                    if obj.type == 'string'||obj.type == 'month-list'||obj.type == 'year-list'||obj.type == 'perf_category_select'||obj.type == 'performance_select'||obj.type == 'vacation_select'||obj.type == 'salary_change_category_select'||obj.type == 'season-list'||obj.type == 'apply_type_select'||obj.type == 'move_select'||obj.type == 'review_category_select'
                         key = obj.displayName
                         val = obj.exportData() || ' '
                         filterView.push(key+' : '+val)
