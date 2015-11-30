@@ -1505,7 +1505,7 @@ class SalaryLandAllowanceController extends SalaryBaseController
 
     upload_land_allowance: (type, attachment_id)->
         self = @
-        params = {type: type, attachment_id: attachment_id}
+        params = {type: type, attachment_id: attachment_id, month: @currentCalcTime()}
 
         @http.post("/api/land_allowances/import", params).success (data, status) ->
             if data.error_count > 0
