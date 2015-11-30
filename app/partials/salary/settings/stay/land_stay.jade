@@ -97,9 +97,9 @@
                 tr
                     td 境外3
                     td
+                        span $
                         input(type="number" ng-model="ctrl.dynamic_config.overseas_3rd.amount")
                     td
-                        span $
                         span.city-chip(
                             ng-repeat="city in ctrl.dynamic_config.overseas_3rd.cities track by $index"
                             ) {{city}}
