@@ -62,7 +62,8 @@ class NotificationCtrl
                 ctrl.workflow_count = _.reduce(workflows, computeTotalUnreadCount, 0)
 
         WebsocketClient.addListener 'system_config', (data) ->
-            ctrl.rootScope.reloadFlagStr = data.reload_flag_str
+            scope.$apply ->
+                ctrl.rootScope.reloadFlagStr = data.reload_flag_str
 
         @notifications = Notification.$collection().$fetch()
 
