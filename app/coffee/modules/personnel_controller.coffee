@@ -767,6 +767,11 @@ class ReviewCtrl extends nb.Controller
                     type: 'date-range'
                     displayName: '变更时间'
                 }
+                {
+                    name: 'auditable_type'
+                    type: 'review_category_select'
+                    displayName: '信息变更模块'
+                }
             ]
         }
 
