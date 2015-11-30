@@ -69,6 +69,7 @@
                 tr
                     td 境外1
                     td
+                        span $
                         input(type="number" ng-model="ctrl.dynamic_config.overseas_1st.amount")
                     td
                         span.city-chip(
@@ -82,6 +83,7 @@
                 tr
                     td 境外2
                     td
+                        span $
                         input(type="number" ng-model="ctrl.dynamic_config.overseas_2nd.amount")
                     td
                         span.city-chip(
@@ -97,6 +99,7 @@
                     td
                         input(type="number" ng-model="ctrl.dynamic_config.overseas_3rd.amount")
                     td
+                        span $
                         span.city-chip(
                             ng-repeat="city in ctrl.dynamic_config.overseas_3rd.cities track by $index"
                             ) {{city}}
