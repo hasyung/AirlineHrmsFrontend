@@ -1505,13 +1505,13 @@ class SalaryLandAllowanceController extends SalaryBaseController
 
     upload_land_allowance: (type, attachment_id)->
         self = @
-        params = {type: type, attachment_id: attachment_id}
+        params = {type: type, attachment_id: attachment_id, month: @currentCalcTime()}
 
         @http.post("/api/land_allowances/import", params).success (data, status) ->
             if data.error_count > 0
                 self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
             else
-                self.toaster.pop('error', '提示', '导入成功')
+                self.toaster.pop('success', '提示', '导入成功')
 
 
 class SalaryRewardController extends SalaryBaseController
