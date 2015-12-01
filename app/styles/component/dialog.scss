@@ -52,7 +52,6 @@
     bottom: 0;
     font-family: $font-family-sans-serif;
     left: 0;
-    overflow: auto;
     -webkit-overflow-scrolling: touch;
     position: fixed;
     right: 0;
@@ -289,6 +288,7 @@
             font-family: $font-family-sans-serif;
             height: 100%;
             min-height: 100%;
+            overflow: auto;
             position: absolute;
             right: 0;
             top: 0;
