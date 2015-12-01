@@ -716,9 +716,6 @@ class SalaryGradeChangeController extends nb.Controller
             }
         ]
 
-        # WebsocketClient.addListener 'system_config', (data) ->
-        #     self.salaryGradeChanges.$refresh()
-
         # 检测后端推送的更新通知
         # 需要测试
         @rootScope.$watch 'reloadFlagStr', (oldValue, newValue)->
