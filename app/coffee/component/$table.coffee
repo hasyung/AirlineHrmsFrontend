@@ -180,6 +180,17 @@ class NbFilterCtrl extends nb.FilterController
                 <md-option value="空勤停飞" placeholder="异动性质">空勤停飞</md-option>
             </md-select>
         '''
+        'review_category_select':'''
+            <md-select placeholder="${ displayName }" ng-model="${ name }">
+                <md-option value="基本信息" placeholder="信息变更模块">基本信息</md-option>
+                <md-option value="联系方式" placeholder="信息变更模块">联系方式</md-option>
+                <md-option value="工作经历" placeholder="信息变更模块">工作经历</md-option>
+                <md-option value="教育经历" placeholder="信息变更模块">教育经历</md-option>
+                <md-option value="家庭成员" placeholder="信息变更模块">家庭成员</md-option>
+                <md-option value="员工岗位信息" placeholder="信息变更模块">员工岗位信息</md-option>
+                <md-option value="其它信息" placeholder="信息变更模块">其它信息</md-option>
+            </md-select>
+        '''
         'boolean': '''
             <md-select placeholder="${ displayName }" ng-model="${ name }">
                 <md-option value="true" selected)">是</md-option>
@@ -449,7 +460,7 @@ NbFilterDirective = ["$nbEvent", "$enum", ($Evt, $enum)->
 
             _.map scope.filter.constraints, (obj) ->
                 if obj.active && obj.exportData()
-                    if obj.type == 'string'||obj.type == 'month-list'||obj.type == 'year-list'||obj.type == 'perf_category_select'||obj.type == 'performance_select'||obj.type == 'vacation_select'||obj.type == 'salary_change_category_select'||obj.type == 'season-list'||obj.type == 'apply_type_select'||obj.type == 'move_select'
+                    if obj.type == 'string'||obj.type == 'month-list'||obj.type == 'year-list'||obj.type == 'perf_category_select'||obj.type == 'performance_select'||obj.type == 'vacation_select'||obj.type == 'salary_change_category_select'||obj.type == 'season-list'||obj.type == 'apply_type_select'||obj.type == 'move_select'||obj.type == 'review_category_select'
                         key = obj.displayName
                         val = obj.exportData() || ' '
                         filterView.push(key+' : '+val)

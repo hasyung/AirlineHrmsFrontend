@@ -37,6 +37,8 @@ class PersonnelCtrl extends nb.Controller
         @loadInitialData()
         @selectedIndex = 1
 
+        @tableState = {}
+
         @importing = false
 
         @columnDef = [
@@ -102,6 +104,7 @@ class PersonnelCtrl extends nb.Controller
     search: (tableState) ->
         tableState = tableState || {}
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+        @tableState = tableState
         @employees.$refresh(tableState)
 
     getSelected: () ->
@@ -772,6 +775,11 @@ class ReviewCtrl extends nb.Controller
                     name: 'created_at'
                     type: 'date-range'
                     displayName: '变更时间'
+                }
+                {
+                    name: 'auditable_type'
+                    type: 'review_category_select'
+                    displayName: '信息变更模块'
                 }
             ]
         }

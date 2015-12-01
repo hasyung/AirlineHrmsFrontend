@@ -48,7 +48,7 @@ tabset(flex)
                             ng-disabled="ctrl.getSelected().length != 1 || ctrl.importing"
                             nb-dialog
                             template-url="/partials/personnel/adjust_position.html"
-                            locals="{employee: ctrl.getSelected()[0]}"
+                            locals="{employee: ctrl.getSelected()[0], empCtrl: ctrl}"
                         ) 员工调岗
 
                         md-button.md-primary.md-raised(
