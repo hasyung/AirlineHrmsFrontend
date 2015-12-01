@@ -5,7 +5,7 @@ md-dialog.personal_number(ng-controller="calcStepCtrl as stepCtrl" ng-init="amou
 
     md-content.sticky-container
         .info-body(style="margin: 10px" ng-if="!stepCtrl.error_msg")
-            ul(style="margin: 0px" ng-repeat="text in stepCtrl.step_notes")
+            ul(style="margin: 0px" ng-repeat="text in stepCtrl.step_notes track by $index")
                 li.tcell(style="width: auto;")
                     .tbody(style="border: 0; height: auto; line-height: normal; text-align: left;") {{text}}
             ul(style="margin: 0px")
