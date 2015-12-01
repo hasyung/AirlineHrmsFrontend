@@ -85,6 +85,8 @@ class PersonnelCtrl extends nb.Controller
             .col 'name',                 '姓名',     'string'
             .col 'gender_id',            '性别',     'select', '', {type: 'genders'}
             .col 'employee_no',          '员工编号', 'string'
+            .col 'language_name',        '语种',     'language_select'
+            .col 'language_grade',       '语言等级', 'string'
             .col 'department_ids',       '机构',     'org-search'
             .col 'grade_id',             '机构职级', 'select',           '',    {type: 'department_grades'}
             .col 'position_name',        '岗位名称', 'string'
@@ -1053,6 +1055,16 @@ class PersonnelDataCtrl extends nb.Controller
             self.eduBefore = _.filter(resume.educationExperiences, _.matches({'category': 'before'}))
             self.eduAfter = _.filter resume.educationExperiences, _.matches({'category': 'after'})
 
+    removeLanguage: (employee, idx) ->
+        if angular.isDefined(employee.languages)
+            employee.languages.splice idx, 1
+
+    addLanguage: (employee) ->
+        if angular.isDefined(employee.languages)
+            employee.languages.push new Object()
+        else
+            employee.languages = []
+            employee.languages.push new Object()
 
 
 app.controller('PersonnelSort', PersonnelSort)
