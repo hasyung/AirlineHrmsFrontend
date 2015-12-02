@@ -143,6 +143,8 @@ class OrgsCtrl extends nb.Controller
         @orgs.active(data).$then ()->
             self.cancelLoading()
             self.rootScope.allOrgs.$refresh()
+        , () ->
+            self.cancelLoading()
 
         @resetData()
 
