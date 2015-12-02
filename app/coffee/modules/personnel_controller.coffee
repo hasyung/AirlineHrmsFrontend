@@ -324,7 +324,7 @@ class NewEmpsCtrl extends nb.Controller
 
         @http({
             method: 'GET'
-            url: '/api/employees/?employee_no=' + employeeNo
+            url: '/api/employees?employee_no=' + employeeNo
         })
             .success (data) ->
                 if data.employees.length > 0
@@ -353,6 +353,14 @@ class NewEmpsCtrl extends nb.Controller
         @http.post("/api/employees/import", params).success (data, status) ->
             self.toaster.pop('success', '提示', '导入成功')
             self.employees.$refresh(self.collection_param)
+
+    removeLanguage: (employee, idx) ->
+        if angular.isDefined(employee.languages)
+            employee.languages.splice idx, 1
+
+    addLanguage: (employee) ->
+        if angular.isDefined(employee.languages)
+            employee.languages.push new Object()
 
 
 class LeaveEmployeesCtrl extends nb.Controller
@@ -1061,9 +1069,6 @@ class PersonnelDataCtrl extends nb.Controller
 
     addLanguage: (employee) ->
         if angular.isDefined(employee.languages)
-            employee.languages.push new Object()
-        else
-            employee.languages = []
             employee.languages.push new Object()
 
 

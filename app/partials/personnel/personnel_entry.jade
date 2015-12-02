@@ -1,6 +1,6 @@
 .personnel-content(ng-controller="NewResourceCtrl")
     section.personnel-info-section(
-        ng-init= "params = {}"
+        ng-init= "params = {}; newEmp.languages = [{name: null, grade: null}];"
         style="background-color: rgb(245, 245, 245)"
         )
         md-toolbar.md-warn(md-theme="hrms")
@@ -65,19 +65,40 @@
 
                         div(layout)
                             md-input-container.row-has-value(flex)
-                                label 英语等级
-                                md-select(ng-model="newEmp.englishLevelId" placeholder="请选择")
-                                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('english_levels')") {{item.label}}
-                            md-input-container.row-has-value(flex)
                                 label 职称
                                 md-select(ng-model="newEmp.jobTitleId" placeholder="请选择")
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('job_titles')") {{item.label}}
-
-                        div(layout)
                             md-input-container.row-has-value(flex)
                                 label 职称级别
                                 md-select(ng-model="newEmp.jobTitleDegreeId" placeholder="请选择")
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('job_title_degrees')") {{item.label}}
+
+                        div.position-item(layout ng-repeat="language in newEmp.languages")
+                            md-input-container.row-has-value(flex)
+                                label 语种
+                                md-select(ng-model="language.name" placeholder="请选择")
+                                    //- md-option(ng-value="item.id" ng-repeat="item in $enum.get('english_levels')") {{item.label}}
+                                    md-option(value="无") 无
+                                    md-option(value="英语") 英语
+                                    md-option(value="法语") 法语
+                                    md-option(value="德语") 德语
+                                    md-option(value="俄语") 俄语
+                                    md-option(value="日语") 日语
+                                    md-option(value="韩语") 韩语
+                                    md-option(value="阿拉伯语") 阿拉伯语
+                                    md-option(value="西班牙语") 西班牙语
+                                    md-option(value="葡萄牙语") 葡萄牙语
+                                    md-option(value="其他语") 其他语
+                            md-input-container(flex)
+                                label 等级
+                                input(ng-model="language.grade")
+
+                            .item-action-container(flex="10")
+                                md-button.md-fab.md-raised(type="button" ng-click="ctrl.removeLanguage(newEmp, $index)" ng-disabled="newEmp.languages.length <= 1")
+                                    md-icon(md-svg-src="/images/svg/ic_remove_24px.svg" style="margin-top: -2px;"  aria-label="删除")
+                                md-button.md-fab.md-raised(type="button" ng-click="ctrl.addLanguage(newEmp)")
+                                    md-icon(md-svg-src="/images/svg/ic_add_24px.svg" style="margin-top: -2px;" aria-label="添加岗位")
+                        div(layout)
                             md-input-container(flex)
                                 label 电话号码
                                 input(type="text" ng-model="newEmp.contact.mobile")
@@ -150,7 +171,6 @@
                         div(layout)
                             md-input-container(flex)
                                 label 到岗时间
-                                    span.require-tip *
                                 input(ng-model="newEmp.joinScalDate" bs-datepicker name="joinScalDate")
                             md-input-container(flex)
                                 label 参工时间
@@ -159,7 +179,6 @@
                         div(layout)
                             md-input-container(flex)
                                 label 实习时间
-                                    span.require-tip *
                                 input(ng-model="newEmp.startInternshipDate" bs-datepicker name="startInternshipDate")
                             md-input-container(flex)
                                 label (注: 到岗时间和实习时间必须填1个)

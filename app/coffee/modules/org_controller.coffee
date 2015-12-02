@@ -127,13 +127,21 @@ class OrgsCtrl extends nb.Controller
             # 即撤销后，后端返回当前机构信息
             @resetData(self.currentOrg)
 
+    cancelLoading: () ->
+        @rootScope.loading = false
+
+    startLoading: () ->
+        @rootScope.loading = true
+
     active: (evt, data) ->
         self = @
 
+        @startLoading()
         #deparment_id 是否必要?
         data.department_id = @.treeRootOrg.id
 
         @orgs.active(data).$then ()->
+            self.cancelLoading()
             self.rootScope.allOrgs.$refresh()
 
         @resetData()
