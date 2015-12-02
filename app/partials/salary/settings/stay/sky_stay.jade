@@ -94,6 +94,7 @@
                             td
                                 label $
                                 input(type="number" ng-model="area.outland_subsidy")
+                                | /天
                             td
                                 md-button.md-icon-button(ng-click="ctrl.destroyCity(ctrl.dynamic_config.outland_areas,$index)")
                                     md-icon.md-warn(md-svg-src="/images/svg/close.svg")
@@ -105,6 +106,7 @@
                             td
                                 label $
                                 input(type="number" ng-model="cityForeign.outland_subsidy")
+                                | /天
                             td
                                 md-button.md-icon-button(ng-click="ctrl.addSkyCity(ctrl.dynamic_config.outland_areas , cityForeign)")
                                     md-icon.md-primary(md-svg-src="/images/svg/plus.svg")
