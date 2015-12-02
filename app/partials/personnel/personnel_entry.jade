@@ -76,7 +76,7 @@
                         div.position-item(layout ng-repeat="language in newEmp.languages")
                             md-input-container.row-has-value(flex)
                                 label 语种
-                                md-select(ng-model="language.name" placeholder="请选择")
+                                md-select(ng-model="language.name" ng-change="language.grade=null" placeholder="请选择")
                                     //- md-option(ng-value="item.id" ng-repeat="item in $enum.get('english_levels')") {{item.label}}
                                     md-option(value="无") 无
                                     md-option(value="英语") 英语

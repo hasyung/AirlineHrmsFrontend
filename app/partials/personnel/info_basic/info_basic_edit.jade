@@ -56,8 +56,7 @@ form(name="empEditForm" ng-submit="" ng-controller="EditableResourceCtrl")
         div.position-item(layout ng-if="current.languages" ng-repeat="language in current.languages")
             md-input-container.row-has-value(flex)
                 label 语种
-                md-select(ng-model="language.name" ng-disabled="!editing" placeholder="请选择")
-                    //- md-option(ng-value="item.id" ng-repeat="item in $enum.get('english_levels')") {{item.label}}
+                md-select(ng-model="language.name" ng-change="language.grade=null" ng-disabled="!editing" placeholder="请选择")
                     md-option(value="无") 无
                     md-option(value="英语") 英语
                     md-option(value="法语") 法语
