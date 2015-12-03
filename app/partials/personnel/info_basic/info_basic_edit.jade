@@ -72,7 +72,7 @@ form(name="empEditForm" ng-submit="" ng-controller="EditableResourceCtrl")
                     md-option(value="其他语") 其他语
             md-input-container(flex)
                 label 等级
-                input(ng-model="language.grade")
+                input(ng-model="language.grade" ng-disabled="!language.name")
 
             .item-action-container(flex="10" ng-if="editing")
                 md-button.md-fab.md-raised(type="button" ng-click="pdCtrl.removeLanguage(current, $index)" ng-disabled="current.languages.length <= 1")
