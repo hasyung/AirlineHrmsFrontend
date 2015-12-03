@@ -1,4 +1,3 @@
-//- form(name="empEditForm" ng-submit="save(current.$save(), empEditForm)" ng-controller="EditableResourceCtrl")
 form(name="empEditForm" ng-submit="" ng-controller="EditableResourceCtrl")
     .form-btn-group(ng-hide="editing" has-permission="employees_update")
         md-button.md-fab.md-primary(ng-click="edit($event)" has-permission="employees_update_basic_info")
@@ -47,16 +46,37 @@ form(name="empEditForm" ng-submit="" ng-controller="EditableResourceCtrl")
                 input(ng-model="current.startInternshipDate" bs-datepicker)
 
         div(layout)
-            md-input-container.row-has-value(flex)
-                label 英语等级
-                md-select(ng-model="current.englishLevelId" ng-disabled="!editing")
-                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('english_levels')") {{item.label}}
             md-input-container(flex)
                 label 毕业院校
                 input(type="text", ng-model="current.school")
             md-input-container(flex)
                 label 专业
                 input(type="text" placeholder="请输入专业" ng-model="current.major")
+
+        div.position-item(layout ng-if="current.languages" ng-repeat="language in current.languages")
+            md-input-container.row-has-value(flex)
+                label 语种
+                md-select(ng-model="language.name" ng-change="language.grade=null" ng-disabled="!editing" placeholder="请选择")
+                    md-option(value="无") 无
+                    md-option(value="英语") 英语
+                    md-option(value="法语") 法语
+                    md-option(value="德语") 德语
+                    md-option(value="俄语") 俄语
+                    md-option(value="日语") 日语
+                    md-option(value="韩语") 韩语
+                    md-option(value="阿拉伯语") 阿拉伯语
+                    md-option(value="西班牙语") 西班牙语
+                    md-option(value="葡萄牙语") 葡萄牙语
+                    md-option(value="其他语") 其他语
+            md-input-container(flex)
+                label 等级
+                input(ng-model="language.grade")
+
+            .item-action-container(flex="10" ng-if="editing")
+                md-button.md-fab.md-raised(type="button" ng-click="pdCtrl.removeLanguage(current, $index)" ng-disabled="current.languages.length <= 1")
+                    md-icon(md-svg-src="/images/svg/ic_remove_24px.svg" style="margin-top: -2px;"  aria-label="删除")
+                md-button.md-fab.md-raised(type="button" ng-click="pdCtrl.addLanguage(current)")
+                    md-icon(md-svg-src="/images/svg/ic_add_24px.svg" style="margin-top: -2px;" aria-label="添加岗位")
 
         div(layout)
             md-input-container.row-has-value(flex)

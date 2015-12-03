@@ -189,22 +189,25 @@ App
         i18nService.setCurrentLang('zh-cn')
         OrgStore.initialize() # 初始化OrgStore
 
-        cancelLoading = ->
-            $timeout(
-                ()-> $rootScope.loading = false
-                100
-            )
+        ################
+        ###全局loading###
+        ################
+        # cancelLoading = ->
+        #     $timeout(
+        #         ()-> $rootScope.loading = false
+        #         100
+        #     )
 
-        startLoading = ->
-            $rootScope.loading = true
+        # startLoading = ->
+        #     $rootScope.loading = true
 
-        $rootScope.$on '$stateChangeStart', (evt, _to , _toParam, _from, _fromParam) ->
-            startLoading()
+        # $rootScope.$on '$stateChangeStart', (evt, _to , _toParam, _from, _fromParam) ->
+        #     startLoading()
 
-        $rootScope.loading = true
+        # $rootScope.loading = true
 
         $rootScope.$on '$stateChangeSuccess', () ->
-            cancelLoading()
+            # cancelLoading()
 
             #console.error $state.current.url
 
@@ -227,14 +230,14 @@ App
             if $state.current.url.indexOf('/performance_') >= 0 || $state.current.url.indexOf('labors_attendance') >= 0
                 $rootScope.hide_menu = false
 
-        $rootScope.$on 'process', startLoading
+        # $rootScope.$on 'process', startLoading
 
         $rootScope.$on 'success', (code, info)->
             toaster.pop(code.name, "提示", info)
-            cancelLoading()
+            # cancelLoading()
 
         $rootScope.$on 'error', (code, info)->
-            $rootScope.loading = false
+            # $rootScope.loading = false
             toaster.pop(code.name, "提示", info)
 
         $rootScope.$state = $state
