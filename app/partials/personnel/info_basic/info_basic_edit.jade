@@ -52,12 +52,14 @@ form(name="empEditForm" ng-submit="" ng-controller="EditableResourceCtrl")
             md-input-container(flex)
                 label 专业
                 input(type="text" placeholder="请输入专业" ng-model="current.major")
+            md-input-container(flex)
+                label 毕业时间
+                input(bs-datepicker placeholder="请输入毕业时间" ng-model="current.graduateDate")
 
         div.position-item(layout ng-if="current.languages" ng-repeat="language in current.languages")
             md-input-container.row-has-value(flex)
                 label 语种
-                md-select(ng-model="language.name" ng-change="language.grade=null" ng-disabled="!editing" placeholder="请选择")
-                    md-option(value="无") 无
+                md-select(ng-model="language.name" ng-change="language.grade=null" ng-disabled="!editing")
                     md-option(value="英语") 英语
                     md-option(value="法语") 法语
                     md-option(value="德语") 德语

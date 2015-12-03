@@ -75,15 +75,16 @@ form(ng-controller="EditableResourceCtrl", ng-submit="save(currentUser.$save(), 
                     md-input-container(flex)
                         label 专业
                         input.single-ellipsis(ng-model="currentUser.major" name="major" disabled title="{{currentUser.major}}")
+                    md-input-container.row-has-value(flex)
+                        label 毕业时间
+                        input(ng-model="currentUser.graduateDate" name="graduateDate" disabled)
                 div(layout ng-repeat="language in currentUser.languages")
                     md-input-container.row-has-value(flex)
                         label 语种
                         md-select(
                             ng-model="language.name"
-                            placeholder="请选择"
                             disabled
                             )
-                            md-option(value="无") 无
                             md-option(value="英语") 英语
                             md-option(value="法语") 法语
                             md-option(value="德语") 德语
