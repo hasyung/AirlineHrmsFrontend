@@ -306,6 +306,9 @@ class NbFilterCtrl extends nb.FilterController
         return if @conditions.length == 1
         #先销毁constraint, 因为缓存了element, scope
         constraint = condition.selectedConstraint
+        #fixbug: #700 销毁condition的包裹容器
+        #提前手动销毁condition的包裹容器,以防constraint.destroy销毁失败（失败原因不明 ng-repeat?）
+        constraint.block.wrapper.remove()
         constraint.destroy()
 
         conditionIndex = @conditions.indexOf(condition)
@@ -333,6 +336,7 @@ class NbFilterCtrl extends nb.FilterController
         currentConstraint.block = {
             scope: scope
             element: $el
+            wrapper: parentElem.parent()
         }
 
     exportQueryParams: () ->
