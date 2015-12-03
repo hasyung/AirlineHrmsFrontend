@@ -574,7 +574,8 @@ NbFilterDirective = ["$nbEvent", "$enum", ($Evt, $enum)->
                         valArr = []
                         orgArr = scope.filter.OrgStore.getOrgsByIds(val)
                         _.map orgArr, (item) ->
-                            valArr.push item.fullName
+                            if angular.isDefined item
+                                valArr.push item.fullName
 
                         valStr = valArr.join ' , '
                         filterView.push(key+' : '+valStr)
