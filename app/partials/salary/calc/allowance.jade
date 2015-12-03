@@ -27,27 +27,27 @@
                             ) 导入
                         md-menu-content
                             md-menu-item(
-                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
-                                flow-file-success="upload_start=false;ctrl.upload_allowance('航线实习补贴', ctrl.parseJSON($message).id);")
+                                flow-file-success="ctrl.upload_start=false;ctrl.upload_allowance('航线实习补贴', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 航线实习补贴
 
                             md-menu-item(
-                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
-                                flow-file-success="upload_start=false;ctrl.upload_allowance('随机补贴', ctrl.parseJSON($message).id);")
+                                flow-file-success="ctrl.upload_start=false;ctrl.upload_allowance('随机补贴', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 随机补贴
 
                             md-menu-item(
-                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
-                                flow-file-success="upload_start=false;ctrl.upload_allowance('签派放行补贴', ctrl.parseJSON($message).id);")
+                                flow-file-success="ctrl.upload_start=false;ctrl.upload_allowance('签派放行补贴', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 签派放行补贴
 
                             md-menu-item(
-                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
-                                flow-file-success="upload_start=false;ctrl.upload_allowance('梭班补贴', ctrl.parseJSON($message).id);")
+                                flow-file-success="ctrl.upload_start=false;ctrl.upload_allowance('梭班补贴', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 梭班补贴
 
                 span
@@ -62,13 +62,19 @@
                             ng-disabled="ctrl.calcing || ctrl.records.length==0"
                             ) 导出
                         md-menu-content
-                            md-menu-item()
+                            md-menu-item(has-permission="allowances_export_temp")
+                                a.md-button(flex
+                                    download
+                                    ng-href="/api/allowances/export_temp?month={{ctrl.currentCalcTime()}}"
+                                    href="javascript:"
+                                ) 高温津贴表
+                            md-menu-item(has-permission="allowances_export_nc")
                                 a.md-button(flex
                                     download
                                     ng-href="/api/allowances/export_nc?month={{ctrl.currentCalcTime()}}"
                                     href="javascript:"
                                 ) NC导入表
-                            md-menu-item()
+                            md-menu-item(has-permission="allowances_export_approval")
                                 a.md-button(
                                     download
                                     ng-href="/api/allowances/export_approval?month={{ctrl.currentCalcTime()}}"

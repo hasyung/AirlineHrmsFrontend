@@ -31,11 +31,13 @@ app.config(Route)
 
 
 class PersonnelCtrl extends nb.Controller
-    @.$inject = ['$scope', 'sweet', 'Employee', 'CURRENT_ROLES', 'toaster']
+    @.$inject = ['$scope', 'sweet', 'Employee', 'CURRENT_ROLES', 'toaster', '$http']
 
-    constructor: (@scope, @sweet, @Employee, @CURRENT_ROLES, @toaster) ->
+    constructor: (@scope, @sweet, @Employee, @CURRENT_ROLES, @toaster, @http) ->
         @loadInitialData()
         @selectedIndex = 1
+
+        @tableState = {}
 
         @importing = false
 
@@ -83,6 +85,8 @@ class PersonnelCtrl extends nb.Controller
             .col 'name',                 '姓名',     'string'
             .col 'gender_id',            '性别',     'select', '', {type: 'genders'}
             .col 'employee_no',          '员工编号', 'string'
+            .col 'language_name',        '语种',     'language_select'
+            .col 'language_grade',       '语言等级', 'string'
             .col 'department_ids',       '机构',     'org-search'
             .col 'grade_id',             '机构职级', 'select',           '',    {type: 'department_grades'}
             .col 'position_name',        '岗位名称', 'string'
@@ -102,6 +106,7 @@ class PersonnelCtrl extends nb.Controller
     search: (tableState) ->
         tableState = tableState || {}
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+        @tableState = tableState
         @employees.$refresh(tableState)
 
     getSelected: () ->
@@ -126,6 +131,8 @@ class PersonnelCtrl extends nb.Controller
         @http.post("/api/employees/transfer_to_regular_worker", params).success (data, status) ->
             self.toaster.pop('success', '提示', '导入成功')
             self.employees.$refresh()
+            self.importing = false
+        .error (data) ->
             self.importing = false
 
 
@@ -317,7 +324,7 @@ class NewEmpsCtrl extends nb.Controller
 
         @http({
             method: 'GET'
-            url: '/api/employees/?employee_no=' + employeeNo
+            url: '/api/employees?employee_no=' + employeeNo
         })
             .success (data) ->
                 if data.employees.length > 0
@@ -352,6 +359,14 @@ class NewEmpsCtrl extends nb.Controller
         @http.post("/api/employees/import", params).success (data, status) ->
             self.toaster.pop('success', '提示', '导入成功')
             self.employees.$refresh(self.collection_param)
+
+    removeLanguage: (employee, idx) ->
+        if angular.isDefined(employee.languages)
+            employee.languages.splice idx, 1
+
+    addLanguage: (employee) ->
+        if angular.isDefined(employee.languages)
+            employee.languages.push new Object()
 
 
 class LeaveEmployeesCtrl extends nb.Controller
@@ -771,6 +786,11 @@ class ReviewCtrl extends nb.Controller
                     type: 'date-range'
                     displayName: '变更时间'
                 }
+                {
+                    name: 'auditable_type'
+                    type: 'review_category_select'
+                    displayName: '信息变更模块'
+                }
             ]
         }
 
@@ -1048,6 +1068,13 @@ class PersonnelDataCtrl extends nb.Controller
             self.eduBefore = _.filter(resume.educationExperiences, _.matches({'category': 'before'}))
             self.eduAfter = _.filter resume.educationExperiences, _.matches({'category': 'after'})
 
+    removeLanguage: (employee, idx) ->
+        if angular.isDefined(employee.languages)
+            employee.languages.splice idx, 1
+
+    addLanguage: (employee) ->
+        if angular.isDefined(employee.languages)
+            employee.languages.push new Object()
 
 
 app.controller('PersonnelSort', PersonnelSort)

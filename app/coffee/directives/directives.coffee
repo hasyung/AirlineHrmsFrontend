@@ -570,26 +570,25 @@ angular.module 'nb.directives'
         }
     ]
 
-    .directive 'progressValue', [ () ->
-        postLink = (scope, elem, attrs) ->
-            #console.error elem
-
-        return {
-            restrict: "EA"
-            link: postLink
-        }
-    ]
-
     # 在变更记录中使用
     .directive 'addCity', [()->
         postLink = (scope, elem, attrs) ->
+
+        class AddCityCtrl
+            @.$inject = ['$scope']
+
+            constructor: (@scope)->
+
+            addItem: (item)->
+                if angular.isDefined(item) && item.length > 0
+                    @scope.cities.push(item)
 
         return {
             restrict: 'E'
             link: postLink
             template: '''
             <span>
-                <input ng-show="adding" type="text" ng-model="city" ng-blur="cities.push(city); city=''; adding=false;" />
+                <input ng-show="adding" type="text" ng-model="city" ng-blur="ctrl.addItem(city); city=''; adding=false;" />
                 <span ng-click="adding=true" ng-hide="adding" class="add-chip">
                     <md-icon md-svg-src="/images/svg/plus.svg" class="md-primary"></md-icon>
                 </span>
@@ -602,6 +601,8 @@ angular.module 'nb.directives'
             }
             require: 'ngModel'
             replace: true
+            controller: AddCityCtrl
+            controllerAs: 'ctrl'
         }
     ]
 

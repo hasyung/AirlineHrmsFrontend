@@ -718,10 +718,10 @@ class SalaryGradeChangeController extends nb.Controller
 
         # 检测后端推送的更新通知
         # 需要测试
-        @scope.$watch 'self.rootScope.reloadFlagStr', (oldValue, newValue)->
+        @rootScope.$watch 'reloadFlagStr', (oldValue, newValue)->
             try
-                if angular.isDefined(@salaryGradeChanges)
-                    @salaryGradeChanges.$refresh()
+                if angular.isDefined(self.salaryGradeChanges)
+                    self.salaryGradeChanges.$refresh()
             catch ex
                 console.error "检测reloadTableData数据发生异常", ex
             finally
@@ -1347,7 +1347,7 @@ class SalaryHoursFeeController extends SalaryBaseController
 class SalaryAllowanceController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'Allowance', 'toaster']
 
-    constructor: ($http, $scope, $q, @Evt, @Employee, @Allowance, @toaster) ->
+    constructor: (@http, $scope, $q, @Evt, @Employee, @Allowance, @toaster) ->
         super(@Allowance, $scope, $q, false)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
@@ -1426,13 +1426,13 @@ class SalaryAllowanceController extends SalaryBaseController
 
     upload_allowance: (type, attachment_id)->
         self = @
-        params = {type: type, attachment_id: attachment_id}
+        params = {type: type, attachment_id: attachment_id, month: @currentCalcTime()}
 
         @http.post("/api/allowances/import", params).success (data, status) ->
             if data.error_count > 0
                 self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
             else
-                self.toaster.pop('error', '提示', '导入成功')
+                self.toaster.pop('success', '提示', '导入成功')
 
 
 class SalaryLandAllowanceController extends SalaryBaseController
@@ -1502,13 +1502,13 @@ class SalaryLandAllowanceController extends SalaryBaseController
 
     upload_land_allowance: (type, attachment_id)->
         self = @
-        params = {type: type, attachment_id: attachment_id}
+        params = {type: type, attachment_id: attachment_id, month: @currentCalcTime()}
 
         @http.post("/api/land_allowances/import", params).success (data, status) ->
             if data.error_count > 0
                 self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
             else
-                self.toaster.pop('error', '提示', '导入成功')
+                self.toaster.pop('success', '提示', '导入成功')
 
 
 class SalaryRewardController extends SalaryBaseController
@@ -1616,10 +1616,11 @@ class SalaryTransportFeeController extends SalaryBaseController
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
-            {displayName: '交通费', name: 'amount', enableCellEdit: false}
-            {displayName: '班车费扣除', name: 'busFee', enableCellEdit: false}
-            {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {minWidth: 100, displayName: '交通费', name: 'amount', enableCellEdit: false}
+            {minWidth: 100, displayName: '班车费扣除', name: 'busFee', enableCellEdit: false}
+            {minWidth: 100, displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
+                minWidth: 100
                 name:"notes"
                 displayName:"说明"
                 enableCellEdit: false
@@ -1643,6 +1644,7 @@ class SalaryTransportFeeController extends SalaryBaseController
                     return row.entity.notes
             }
             {
+                minWidth: 100
                 name:"remark"
                 displayName:"备注"
                 headerCellClass: 'editable_cell_header'
@@ -1693,14 +1695,15 @@ class SalaryOverviewController extends SalaryBaseController
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
-            {displayName: '基础工资', name: 'basic', enableCellEdit: false}
-            {displayName: '绩效工资', name: 'performance', enableCellEdit: false}
-            {displayName: '小时费', name: 'hoursFee', enableCellEdit: false}
-            {displayName: '津贴', name: 'subsidy', enableCellEdit: false}
-            {displayName: '驻站津贴', name: 'landSubsidy', enableCellEdit: false}
-            {displayName: '奖励', name: 'reward', enableCellEdit: false}
-            {displayName: '合计', name: 'total', enableCellEdit: false}
+            {minWidth: 100, displayName: '基础工资', name: 'basic', enableCellEdit: false}
+            {minWidth: 100, displayName: '绩效工资', name: 'performance', enableCellEdit: false}
+            {minWidth: 100, displayName: '小时费', name: 'hoursFee', enableCellEdit: false}
+            {minWidth: 100, displayName: '津贴', name: 'subsidy', enableCellEdit: false}
+            {minWidth: 100, displayName: '驻站津贴', name: 'landSubsidy', enableCellEdit: false}
+            {minWidth: 100, displayName: '奖励', name: 'reward', enableCellEdit: false}
+            {minWidth: 100, displayName: '合计', name: 'total', enableCellEdit: false}
             {
+                minWidth: 100
                 name:"notes"
                 displayName:"说明"
                 enableCellEdit: false
@@ -1724,6 +1727,84 @@ class SalaryOverviewController extends SalaryBaseController
                     return row.entity.notes
             }
             {
+                minWidth: 100
+                name:"remark"
+                displayName:"备注"
+                headerCellClass: 'editable_cell_header'
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">
+                        {{row.entity.remark || '请输入备注'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #ccc;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <md-input-container>
+                                    <label>备注</label>
+                                    <textarea
+                                        ng-blur="row.entity.$save()"
+                                        ng-model="row.entity.remark"
+                                        style="resize:none;"
+                                        class="reason-input"></textarea>
+                                </md-input-container>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.note
+            }
+        ]).concat(CALC_STEP_COLUMN)
+
+class BirthSalaryController extends SalaryBaseController
+    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'BirthSalary', 'toaster']
+
+    constructor: ($http, $scope, $q, @Evt, @Employee, @BirthSalary, @toaster) ->
+        super(@BirthSalary, $scope, $q, true)
+
+        @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
+
+        @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
+            {minWidth: 100, displayName: '基本工资', name: 'position', enableCellEdit: false}
+            {minWidth: 100, displayName: '川航工龄', name: 'performance', enableCellEdit: false}
+            {minWidth: 100, displayName: '保留工资', name: 'workingYears', enableCellEdit: false}
+            {minWidth: 100, displayName: '绩效薪酬', name: 'minimumGrowth', enableCellEdit: false}
+            {minWidth: 100, displayName: '小时费', name: 'landAllowance', enableCellEdit: false}
+            {minWidth: 120, displayName: '收支目标考核奖', name: 'lifeAllowance', enableCellEdit: false}
+            {minWidth: 100, displayName: '交通费', name: 'adjustment09', enableCellEdit: false}
+            {minWidth: 100, displayName: '高温津贴', name: 'bus14', enableCellEdit: false}
+            {minWidth: 120, displayName: '剩余抵扣金额', name: 'communication14', enableCellEdit: false}
+            {minWidth: 120, displayName: '生育保险冲抵', name: 'communication15', enableCellEdit: false}
+            {minWidth: 120, displayName: '当期抵扣后剩余', name: 'communication16', enableCellEdit: false}
+            {minWidth: 100, displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {
+                minWidth: 100
+                name:"notes"
+                displayName:"说明"
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
+                        {{row.entity.notes || '无'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #ccc;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <div class="salary-explain">
+                                    {{row.entity.notes || '无'}}
+                                </div>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.notes
+            }
+            {
+                minWidth: 100
                 name:"remark"
                 displayName:"备注"
                 headerCellClass: 'editable_cell_header'
@@ -1812,5 +1893,6 @@ app.controller 'salaryLandAllowanceCtrl', SalaryLandAllowanceController
 app.controller 'salaryRewardCtrl', SalaryRewardController
 app.controller 'salaryTransportFeeCtrl', SalaryTransportFeeController
 app.controller 'salaryOverviewCtrl', SalaryOverviewController
+app.controller 'birthSalaryCtrl', BirthSalaryController
 app.controller 'calcStepCtrl', CalcStepsController
 app.controller 'rewardsAllocationCtrl', RewardsAllocationController
