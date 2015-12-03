@@ -212,7 +212,6 @@ class NbFilterCtrl extends nb.FilterController
         '''
         'language_select': '''
             <md-select placeholder="${ displayName }" ng-model="${ name }">
-                <md-option value="无" placeholder="语种">无</md-option>
                 <md-option value="英语" placeholder="语种">英语</md-option>
                 <md-option value="法语" placeholder="语种">法语</md-option>
                 <md-option value="德语" placeholder="语种">德语</md-option>
