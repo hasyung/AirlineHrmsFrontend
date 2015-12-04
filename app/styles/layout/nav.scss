@@ -12,7 +12,7 @@
 .nav-wrapper {
     background: #fff;
     bottom: 0;
-    margin-left: -166px;
+    margin-left: -178px;
     position: absolute;
     top: 64px;
     transition: .25s cubic-bezier(.35, 0, .25, 1);
@@ -43,7 +43,7 @@
             height: 32px;
             transform: rotate(90deg) translateZ(0);
             transition: transform .25s cubic-bezier(.35, 0, .25, 1);
-            width: 32px;
+            width: 20px;
         }
     }
 }
