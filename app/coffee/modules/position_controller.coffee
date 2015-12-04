@@ -264,6 +264,7 @@ class AdjustPositionCtrl
         params.oa_file_no = employee.oaFileNo
         params.position_change_date = employee.positionChangeDate
         params.probation_duration = employee.probationDuration
+        params.classification = employee.classification
 
         employee.positions.map (position) ->
             params.positions.push({
