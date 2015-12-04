@@ -203,6 +203,18 @@ class NewEmpsCtrl extends nb.Controller
                     placeholder: '员工编号'
                 }
                 {
+                    name: 'language_name'
+                    displayName: '语种'
+                    type: 'language_select'
+                    placeholder: '语种'
+                }
+                {
+                    name: 'language_grade'
+                    displayName: '语言等级'
+                    type: 'string'
+                    placeholder: '语言等级'
+                }
+                {
                     name: 'department_ids'
                     displayName: '机构'
                     type: 'org-search'

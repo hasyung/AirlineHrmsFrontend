@@ -9,6 +9,9 @@ class RootController extends nb.Controller
 
         self = @
 
+        @rootScope.$watch 'hide_menu', (newVal, oldVal) ->
+            self.hide_menu = newVal
+
         @rootScope.$watch 'show_main', (newVal, oldVal) ->
             self.show_main = newVal
 
