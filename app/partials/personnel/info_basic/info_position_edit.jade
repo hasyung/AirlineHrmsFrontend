@@ -1,5 +1,12 @@
 //- form(name="positionEditForm" ng-submit="save(current.$save())" ng-controller="EditableResourceCtrl" ng-init="params = {}")
-form(name="positionEditForm" ng-submit="" ng-controller="EditableResourceCtrl" ng-init="params = {}")
+form(
+    name="positionEditForm"
+    ng-submit=""
+    ng-controller="EditableResourceCtrl"
+    ng-init="params = {};\
+        classificationArr = ['安全管理','安全质量管理','保安','保管','保洁','财务','采购','产权管理','出纳','飞行机械','飞行技术','服务员','供应','管理保障','行政辅助','行政管理','航材','航务','航站保障','合同管理','后勤保障','后勤维修','护士','货运市场','机务','基建管理','技术保障','驾驶','客运服务','客运业务','空保','空乘','空警','秘书','培训管理','配载','票务','汽车维修','人力资源管理','数据录入','调度','外事管理','信息技术','信息维护','业务管理','医生','运行管理','运输业务保障','战略规划','质量管理','助理','装卸','资料','无'];\
+    "
+    )
     .form-btn-group(ng-hide="editing" has-permission="employees_update")
         md-button.md-fab.md-primary(ng-click="edit($event)" has-permission="employees_update_position_info")
             md-icon(md-svg-src="/images/svg/edit_24px.svg" aria-label="修改")
@@ -22,10 +29,14 @@ form(name="positionEditForm" ng-submit="" ng-controller="EditableResourceCtrl" n
                 md-select(ng-model="current.channelId" ng-disabled="!editing")
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
             md-input-container.row-has-value(flex)
+                label 类别
+                md-select(ng-model="current.classification" ng-disabled="!editing")
+                    md-option(ng-value="item" ng-repeat="item in classificationArr") {{item}}
+        div(layout)
+            md-input-container.row-has-value(flex)
                 label 职务职级
                 md-select(ng-model="current.dutyRankId" ng-disabled="!editing")
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('duty_ranks')") {{item.label}}
-        div(layout)
             md-input-container.row-has-value(flex)
                 label 用工性质
                 md-select(ng-model="current.laborRelationId" ng-disabled="!editing")
@@ -34,10 +45,10 @@ form(name="positionEditForm" ng-submit="" ng-controller="EditableResourceCtrl" n
                 label 用工关系状态
                 md-select(ng-model="current.employmentStatusId" ng-disabled="!editing")
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('employment_status')") {{item.label}}
-            md-input-container.row-has-value(flex="33")
+        div(layout)
+            md-input-container.row-has-value(flex)
                 label 属地化地点
                 input(ng-model="current.location")
-
-        md-input-container.row-has-value
-            label 岗位备注
-            input(ng-model="current.positionRemark")
+            md-input-container(flex)
+                label 岗位备注
+                input(ng-model="current.positionRemark")
