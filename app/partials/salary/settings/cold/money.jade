@@ -1,0 +1,145 @@
+.app-content-wrapper(
+    flex
+    ng-controller="salaryCtrl as ctrl"
+    ng-init="ctrl.loadConfigFromServer('cold_subsidy'); newSubsidy = {};"
+    style="padding: 0;"
+    )
+    .salary-basic(style="padding: 0;")
+        md-toolbar
+            .md-toolbar-tools
+                h2 金额设置
+                span(flex)
+                md-button.md-raised.md-primary(style="margin-right: 0;" ng-click="ctrl.saveConfig('cold_subsidy', ctrl.dynamic_config)") 保存
+
+        div.mt20(layout)
+            div(flex style="margin-right: 40px;")
+                h4 寒冷补贴档级金额设置
+                table.tablexx.table-default.table-bordered(flex)
+                    thead
+                        tr
+                            th 人员类别
+                            th 一档（元/天）
+                            th 二档（元/天）
+                            th 三档（元/天）
+                    tbody
+                        tr
+                            td 甲类人员
+                            td
+                                input(ng-model="ctrl.dynamic_config.dang1" type="number")
+                            td
+                                input(ng-model="ctrl.dynamic_config.dang2" type="number")
+                            td
+                                input(ng-model="ctrl.dynamic_config.dang3" type="number")
+
+        div.mt20(layout)
+            div(flex style="margin-right: 40px;")
+                h4 寒冷补贴档级设置
+                table.tablexx.table-default.table-bordered(flex)
+                    thead
+                        tr
+                            th 城市名称
+                            th 10月
+                            th 11月
+                            th 12月
+                            th 1月
+                            th 2月
+                            th 3月
+                            th 4月
+                            th
+                    tbody
+                        tr(ng-repeat="area in ctrl.dynamic_config track by $index")
+                            td {{area.city}}
+                            td
+                                md-select(ng-model="area.subsidy10" placeholder="请选择")
+                                    md-option(value="一档") 无
+                                    md-option(value="一档") 一档
+                                    md-option(value="一档") 二档
+                                    md-option(value="一档") 三档
+                            td
+                                md-select(ng-model="area.subsidy10" placeholder="请选择")
+                                    md-option(value="一档") 无
+                                    md-option(value="一档") 一档
+                                    md-option(value="一档") 二档
+                                    md-option(value="一档") 三档
+                            td
+                                md-select(ng-model="area.subsidy10" placeholder="请选择")
+                                    md-option(value="一档") 无
+                                    md-option(value="一档") 一档
+                                    md-option(value="一档") 二档
+                                    md-option(value="一档") 三档
+                            td
+                                md-select(ng-model="area.subsidy10" placeholder="请选择")
+                                    md-option(value="一档") 无
+                                    md-option(value="一档") 一档
+                                    md-option(value="一档") 二档
+                                    md-option(value="一档") 三档
+                            td
+                                md-select(ng-model="area.subsidy10" placeholder="请选择")
+                                    md-option(value="一档") 无
+                                    md-option(value="一档") 一档
+                                    md-option(value="一档") 二档
+                                    md-option(value="一档") 三档
+                            td
+                                md-select(ng-model="area.subsidy10" placeholder="请选择")
+                                    md-option(value="一档") 无
+                                    md-option(value="一档") 一档
+                                    md-option(value="一档") 二档
+                                    md-option(value="一档") 三档
+                            td
+                                md-select(ng-model="area.subsidy10" placeholder="请选择")
+                                    md-option(value="一档") 无
+                                    md-option(value="一档") 一档
+                                    md-option(value="一档") 二档
+                                    md-option(value="一档") 三档
+                            td
+                                md-button.md-icon-button(ng-click="ctrl.destroyCity(ctrl.dynamic_config, $index)")
+                                    md-icon.md-warn(md-svg-src="/images/svg/close.svg")
+                        tr
+                            td
+                                input(type="text" ng-model="newSubsidy.city")
+                            td
+                                md-select(ng-model="newSubsidy.subsidy10" placeholder="请选择")
+                                    md-option(value="一档") 无
+                                    md-option(value="一档") 一档
+                                    md-option(value="一档") 二档
+                                    md-option(value="一档") 三档
+                            td
+                                md-select(ng-model="newSubsidy.subsidy10" placeholder="请选择")
+                                    md-option(value="一档") 无
+                                    md-option(value="一档") 一档
+                                    md-option(value="一档") 二档
+                                    md-option(value="一档") 三档
+                            td
+                                md-select(ng-model="newSubsidy.subsidy10" placeholder="请选择")
+                                    md-option(value="一档") 无
+                                    md-option(value="一档") 一档
+                                    md-option(value="一档") 二档
+                                    md-option(value="一档") 三档
+                            td
+                                md-select(ng-model="newSubsidy.subsidy10" placeholder="请选择")
+                                    md-option(value="一档") 无
+                                    md-option(value="一档") 一档
+                                    md-option(value="一档") 二档
+                                    md-option(value="一档") 三档
+                            td
+                                md-select(ng-model="newSubsidy.subsidy10" placeholder="请选择")
+                                    md-option(value="一档") 无
+                                    md-option(value="一档") 一档
+                                    md-option(value="一档") 二档
+                                    md-option(value="一档") 三档
+                            td
+                                md-select(ng-model="newSubsidy.subsidy10" placeholder="请选择")
+                                    md-option(value="一档") 无
+                                    md-option(value="一档") 一档
+                                    md-option(value="一档") 二档
+                                    md-option(value="一档") 三档
+                            td
+                                md-select(ng-model="newSubsidy.subsidy10" placeholder="请选择")
+                                    md-option(value="一档") 无
+                                    md-option(value="一档") 一档
+                                    md-option(value="一档") 二档
+                                    md-option(value="一档") 三档
+                            td
+                                md-button.md-icon-button(ng-click="ctrl.addSkyCity(ctrl.dynamic_config , newSubsidy)")
+                                    md-icon.md-primary(md-svg-src="/images/svg/plus.svg")
+
