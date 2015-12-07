@@ -1539,7 +1539,6 @@ class SalaryRewardController extends SalaryBaseController
             {width: 100,displayName: '季度奖', name: 'quarterFee', enableCellEdit: false}
             {width: 100,displayName: '收益奖励金', name: 'earningsFee', enableCellEdit: false}
             {width: 100,displayName: '预算外奖励', name: 'offBudgetFee', enableCellEdit: false}
-            {width: 100,displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
                 width: 100
                 name:"notes"
