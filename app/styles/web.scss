@@ -40,12 +40,12 @@
 @import 'modules/salary';
 @import 'modules/roles';
 
-// .bootstrap-tagsinput {
-//     width: 100%;
-// }
-
 .app-content-body.md-default-theme {
     background-color: #f0f3f4;
+
+    &.has-nav {
+        margin-left: 22px;
+    }
 }
 
 .navbar-fixed-top {
