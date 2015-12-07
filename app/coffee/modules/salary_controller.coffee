@@ -1593,30 +1593,6 @@ class SalaryRewardController extends SalaryBaseController
             {width: 100,displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
                 width: 100
-                name:"notes"
-                displayName:"说明"
-                enableCellEdit: false
-                cellTemplate: '''
-                <div class="ui-grid-cell-contents">
-                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
-                        {{row.entity.notes || '无'}}
-                        <popup-template
-                            style="padding:8px;border:1px solid #ccc;"
-                            class="nb-popup org-default-popup-template">
-                            <div class="panel-body popup-body">
-                                <div class="salary-explain">
-                                    {{row.entity.notes || '无'}}
-                                </div>
-                            </div>
-                        </popup-template>
-                    </a>
-                </div>
-                '''
-                cellTooltip: (row) ->
-                    return row.entity.notes
-            }
-            {
-                width: 100
                 name:"remark"
                 displayName:"备注"
                 headerCellClass: 'editable_cell_header'
@@ -1829,7 +1805,6 @@ class BirthSalaryController extends SalaryBaseController
             {minWidth: 120, displayName: '剩余抵扣金额', name: 'residueMoney', enableCellEdit: false}
             {minWidth: 120, displayName: '生育保险冲抵', name: 'birthResidueMoney', enableCellEdit: false}
             {minWidth: 120, displayName: '当期抵扣后剩余', name: 'afterResidueMoney', enableCellEdit: false}
-            {minWidth: 100, displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
                 minWidth: 100
                 name:"notes"
