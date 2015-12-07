@@ -1418,6 +1418,8 @@ class SalaryAllowanceController extends SalaryBaseController
             {minWidth: 120,displayName: '签派放行补贴', name: 'permitSign', enableCellEdit: false}
             {minWidth: 120,displayName: '梭班补贴', name: 'workOvertime', enableCellEdit: false}
             {minWidth: 120,displayName: '高温补贴', name: 'temp', enableCellEdit: false}
+            {minWidth: 120,displayName: '寒冷补贴', name: 'cold', enableCellEdit: false}
+            {minWidth: 120,displayName: '通讯补贴', name: 'communication', enableCellEdit: false}
             {minWidth: 120,displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
                 minWidth: 150
