@@ -25,11 +25,16 @@
                         tr
                             td 甲类人员
                             td
-                                input(ng-model="ctrl.dynamic_config.dang1" type="number")
+                                input(ng-model="ctrl.dynamic_config.personnel_amount_config.A.grade_1" type="number")
                             td
-                                input(ng-model="ctrl.dynamic_config.dang2" type="number")
+                                input(ng-model="ctrl.dynamic_config.personnel_amount_config.A.grade_2" type="number")
                             td
-                                input(ng-model="ctrl.dynamic_config.dang3" type="number")
+                                input(ng-model="ctrl.dynamic_config.personnel_amount_config.A.grade_3" type="number")
+                        tr
+                            td 乙类人员
+                            td(colspan="3")
+                                input(ng-model="ctrl.dynamic_config.personnel_amount_config.B" type="number")
+                                | 元/月
 
         div.mt20(layout)
             div(flex style="margin-right: 40px;")
@@ -47,99 +52,99 @@
                             th 4月
                             th
                     tbody
-                        tr(ng-repeat="area in ctrl.dynamic_config track by $index")
-                            td {{area.city}}
+                        tr(ng-repeat="area in ctrl.dynamic_config.city_config")
+                            td {{area.name}}
                             td
-                                md-select(ng-model="area.subsidy10" placeholder="请选择")
-                                    md-option(value="一档") 无
-                                    md-option(value="一档") 一档
-                                    md-option(value="一档") 二档
-                                    md-option(value="一档") 三档
+                                md-select(ng-model="area.M_10" placeholder="请选择")
+                                    md-option(value="grade_0") 无
+                                    md-option(value="grade_1") 一档
+                                    md-option(value="grade_2") 二档
+                                    md-option(value="grade_3") 三档
                             td
-                                md-select(ng-model="area.subsidy10" placeholder="请选择")
-                                    md-option(value="一档") 无
-                                    md-option(value="一档") 一档
-                                    md-option(value="一档") 二档
-                                    md-option(value="一档") 三档
+                                md-select(ng-model="area.M_11" placeholder="请选择")
+                                    md-option(value="grade_0") 无
+                                    md-option(value="grade_1") 一档
+                                    md-option(value="grade_2") 二档
+                                    md-option(value="grade_3") 三档
                             td
-                                md-select(ng-model="area.subsidy10" placeholder="请选择")
-                                    md-option(value="一档") 无
-                                    md-option(value="一档") 一档
-                                    md-option(value="一档") 二档
-                                    md-option(value="一档") 三档
+                                md-select(ng-model="area.M_12" placeholder="请选择")
+                                    md-option(value="grade_0") 无
+                                    md-option(value="grade_1") 一档
+                                    md-option(value="grade_2") 二档
+                                    md-option(value="grade_3") 三档
                             td
-                                md-select(ng-model="area.subsidy10" placeholder="请选择")
-                                    md-option(value="一档") 无
-                                    md-option(value="一档") 一档
-                                    md-option(value="一档") 二档
-                                    md-option(value="一档") 三档
+                                md-select(ng-model="area.M_1" placeholder="请选择")
+                                    md-option(value="grade_0") 无
+                                    md-option(value="grade_1") 一档
+                                    md-option(value="grade_2") 二档
+                                    md-option(value="grade_3") 三档
                             td
-                                md-select(ng-model="area.subsidy10" placeholder="请选择")
-                                    md-option(value="一档") 无
-                                    md-option(value="一档") 一档
-                                    md-option(value="一档") 二档
-                                    md-option(value="一档") 三档
+                                md-select(ng-model="area.M_2" placeholder="请选择")
+                                    md-option(value="grade_0") 无
+                                    md-option(value="grade_1") 一档
+                                    md-option(value="grade_2") 二档
+                                    md-option(value="grade_3") 三档
                             td
-                                md-select(ng-model="area.subsidy10" placeholder="请选择")
-                                    md-option(value="一档") 无
-                                    md-option(value="一档") 一档
-                                    md-option(value="一档") 二档
-                                    md-option(value="一档") 三档
+                                md-select(ng-model="area.M_3" placeholder="请选择")
+                                    md-option(value="grade_0") 无
+                                    md-option(value="grade_1") 一档
+                                    md-option(value="grade_2") 二档
+                                    md-option(value="grade_3") 三档
                             td
-                                md-select(ng-model="area.subsidy10" placeholder="请选择")
-                                    md-option(value="一档") 无
-                                    md-option(value="一档") 一档
-                                    md-option(value="一档") 二档
-                                    md-option(value="一档") 三档
+                                md-select(ng-model="area.M_4" placeholder="请选择")
+                                    md-option(value="grade_0") 无
+                                    md-option(value="grade_1") 一档
+                                    md-option(value="grade_2") 二档
+                                    md-option(value="grade_3") 三档
                             td
-                                md-button.md-icon-button(ng-click="ctrl.destroyCity(ctrl.dynamic_config, $index)")
+                                md-button.md-icon-button(ng-click="ctrl.destroyCity(ctrl.dynamic_config.city_config, $index)")
                                     md-icon.md-warn(md-svg-src="/images/svg/close.svg")
                         tr
                             td
-                                input(type="text" ng-model="newSubsidy.city")
+                                input(type="text" ng-model="newSubsidy.name")
                             td
-                                md-select(ng-model="newSubsidy.subsidy10" placeholder="请选择")
-                                    md-option(value="一档") 无
-                                    md-option(value="一档") 一档
-                                    md-option(value="一档") 二档
-                                    md-option(value="一档") 三档
+                                md-select(ng-model="newSubsidy.M_10" placeholder="请选择")
+                                    md-option(value="grade_0") 无
+                                    md-option(value="grade_1") 一档
+                                    md-option(value="grade_2") 二档
+                                    md-option(value="grade_3") 三档
                             td
-                                md-select(ng-model="newSubsidy.subsidy10" placeholder="请选择")
-                                    md-option(value="一档") 无
-                                    md-option(value="一档") 一档
-                                    md-option(value="一档") 二档
-                                    md-option(value="一档") 三档
+                                md-select(ng-model="newSubsidy.M_11" placeholder="请选择")
+                                    md-option(value="grade_0") 无
+                                    md-option(value="grade_1") 一档
+                                    md-option(value="grade_2") 二档
+                                    md-option(value="grade_3") 三档
                             td
-                                md-select(ng-model="newSubsidy.subsidy10" placeholder="请选择")
-                                    md-option(value="一档") 无
-                                    md-option(value="一档") 一档
-                                    md-option(value="一档") 二档
-                                    md-option(value="一档") 三档
+                                md-select(ng-model="newSubsidy.M_12" placeholder="请选择")
+                                    md-option(value="grade_0") 无
+                                    md-option(value="grade_1") 一档
+                                    md-option(value="grade_2") 二档
+                                    md-option(value="grade_3") 三档
                             td
-                                md-select(ng-model="newSubsidy.subsidy10" placeholder="请选择")
-                                    md-option(value="一档") 无
-                                    md-option(value="一档") 一档
-                                    md-option(value="一档") 二档
-                                    md-option(value="一档") 三档
+                                md-select(ng-model="newSubsidy.M_1" placeholder="请选择")
+                                    md-option(value="grade_0") 无
+                                    md-option(value="grade_1") 一档
+                                    md-option(value="grade_2") 二档
+                                    md-option(value="grade_3") 三档
                             td
-                                md-select(ng-model="newSubsidy.subsidy10" placeholder="请选择")
-                                    md-option(value="一档") 无
-                                    md-option(value="一档") 一档
-                                    md-option(value="一档") 二档
-                                    md-option(value="一档") 三档
+                                md-select(ng-model="newSubsidy.M_2" placeholder="请选择")
+                                    md-option(value="grade_0") 无
+                                    md-option(value="grade_1") 一档
+                                    md-option(value="grade_2") 二档
+                                    md-option(value="grade_3") 三档
                             td
-                                md-select(ng-model="newSubsidy.subsidy10" placeholder="请选择")
-                                    md-option(value="一档") 无
-                                    md-option(value="一档") 一档
-                                    md-option(value="一档") 二档
-                                    md-option(value="一档") 三档
+                                md-select(ng-model="newSubsidy.M_3" placeholder="请选择")
+                                    md-option(value="grade_0") 无
+                                    md-option(value="grade_1") 一档
+                                    md-option(value="grade_2") 二档
+                                    md-option(value="grade_3") 三档
                             td
-                                md-select(ng-model="newSubsidy.subsidy10" placeholder="请选择")
-                                    md-option(value="一档") 无
-                                    md-option(value="一档") 一档
-                                    md-option(value="一档") 二档
-                                    md-option(value="一档") 三档
+                                md-select(ng-model="newSubsidy.M_4" placeholder="请选择")
+                                    md-option(value="grade_0") 无
+                                    md-option(value="grade_1") 一档
+                                    md-option(value="grade_2") 二档
+                                    md-option(value="grade_3") 三档
                             td
-                                md-button.md-icon-button(ng-click="ctrl.addSkyCity(ctrl.dynamic_config , newSubsidy)")
+                                md-button.md-icon-button(ng-click="ctrl.addColdCity(ctrl.dynamic_config.city_config , newSubsidy)")
                                     md-icon.md-primary(md-svg-src="/images/svg/plus.svg")
 

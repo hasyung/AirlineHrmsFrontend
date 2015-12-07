@@ -198,6 +198,7 @@ class SalaryController extends nb.Controller
                           "land_subsidy",                       # 地面驻站补贴
                           "airline_subsidy",                    # 空勤驻站补贴
                           "temp"                                # 高温补贴
+                          "cold_subsidy"                        # 寒冷补贴
                          ]
 
         @year_list = @$getYears()
@@ -326,6 +327,8 @@ class SalaryController extends nb.Controller
         self = @
         return unless selectDepIds
 
+        @tempPositions = []
+
         @http.get('/api/salaries/temperature_amount?department_ids=' + selectDepIds)
             .success (data)->
                 self.tempPositions = data.temperature_amounts
@@ -356,6 +359,8 @@ class SalaryController extends nb.Controller
         self = @
         return unless selectDepIds
 
+        @comPositions = []
+
         @http.get('/api/salaries/communicate_allowance?department_ids=' + selectDepIds)
             .success (data)->
                 self.comPositions = data.communicate_allowances
@@ -381,6 +386,38 @@ class SalaryController extends nb.Controller
             .error (data)->
                 self.toaster.pop('error', '提示', '更新失败')
 
+    # 寒冷补贴 TODO: 和高温补贴合并
+    loadColdPositions: (selectDepIds, keywords)->
+        self = @
+        return unless selectDepIds
+
+        @coldPositions = []
+
+        @http.get('/api/salaries/position_cold_subsidy?department_ids=' + selectDepIds)
+            .success (data)->
+                self.coldPositions = data.position_cold_subsidy
+
+                if !!keywords && keywords.length > 0
+                    self.coldPositions = _.filter self.coldPositions, (item)->
+                        item.full_position_name.indexOf(keywords) >= 0
+
+    listColdPosition: (type)->
+        self = @
+
+        @http.get('/api/salaries/position_cold_subsidy?cold_subsidy_type=' + type)
+            .success (data)->
+                self.currentColdPositions = data.position_cold_subsidy
+
+    updateColdType: (position_id, type)->
+        self = @
+        params = {position_id: position_id, cold_subsidy_type: type}
+
+        @http.put('/api/salaries/set_position_cold_subsidy', params)
+            .success (data)->
+                self.toaster.pop('success', '提示', '更新成功')
+            .error (data)->
+                self.toaster.pop('error', '提示', '更新失败')
+
     destroyCity: (cities, idx) ->
         cities.splice(idx, 1)
 
@@ -391,6 +428,21 @@ class SalaryController extends nb.Controller
             cities.push(city)
             self.scope.cityForeign = {}
             self.scope.cityNation = {}
+            self.toaster.pop('success', '提示', '添加成功，点击“保存”按钮保存设置')
+
+        else
+            self.toaster.pop('error', '提示', '请填写城市名称及缩写名')
+
+    addColdCity: (cities, city) ->
+        self = @
+
+        if city.name
+            cities.push(city)
+            self.scope.newSubsidy = {}
+            self.toaster.pop('success', '提示', '添加成功，点击“保存”按钮保存设置')
+
+        else
+            self.toaster.pop('error', '提示', '请填写城市名称')
 
 
 class SalaryPersonalController extends nb.Controller
@@ -779,7 +831,6 @@ class SalaryExchangeController
         Object.keys(setting.flags)
 
     normal: (current)->
-        console.log current
         return unless current.baseWage
         return unless current.baseFlag
 
@@ -1367,6 +1418,8 @@ class SalaryAllowanceController extends SalaryBaseController
             {minWidth: 120,displayName: '签派放行补贴', name: 'permitSign', enableCellEdit: false}
             {minWidth: 120,displayName: '梭班补贴', name: 'workOvertime', enableCellEdit: false}
             {minWidth: 120,displayName: '高温补贴', name: 'temp', enableCellEdit: false}
+            {minWidth: 120,displayName: '寒冷补贴', name: 'cold', enableCellEdit: false}
+            {minWidth: 120,displayName: '通讯补贴', name: 'communication', enableCellEdit: false}
             {minWidth: 120,displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
                 minWidth: 150

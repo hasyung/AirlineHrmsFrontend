@@ -1,0 +1,21 @@
+.app-content-wrapper(flex ng-controller="salaryCtrl as ctrl" ng-init="ctrl.loadConfigFromServer('cold_subsidy')" style="padding: 0;")
+    .salary-basic(style="padding: 0;")
+        md-toolbar
+            .md-toolbar-tools
+                h2 当前岗位发放列表
+                span(flex)
+
+        div(layout)
+            md-select(ng-model="coldSubsidyType" placeholder="选择标准" ng-change="ctrl.listColdPosition(coldSubsidyType)")
+                md-option(value="") 无
+                md-option(value="A") 甲类
+                md-option(value="B") 乙类
+
+        table.tablexx.table-default.table-bordered
+          thead
+              tr
+                  th 岗位名称
+
+          tbody
+              tr(ng-repeat="item in ctrl.currentColdPositions")
+                  td {{::item.full_position_name}}
