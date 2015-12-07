@@ -199,7 +199,7 @@ Reward = (restmod, RMUtils, $Evt) ->
                 compute: (params)->
                     restmod.model('/rewards/compute').mix(
                         $config:
-                            jsonRoot: 'land_allowances'
+                            jsonRoot: 'rewards'
                     ).$search(params)
     }
 
