@@ -1767,17 +1767,17 @@ class BirthSalaryController extends SalaryBaseController
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
-            {minWidth: 100, displayName: '基本工资', name: 'position', enableCellEdit: false}
-            {minWidth: 100, displayName: '川航工龄', name: 'performance', enableCellEdit: false}
-            {minWidth: 100, displayName: '保留工资', name: 'workingYears', enableCellEdit: false}
-            {minWidth: 100, displayName: '绩效薪酬', name: 'minimumGrowth', enableCellEdit: false}
-            {minWidth: 100, displayName: '小时费', name: 'landAllowance', enableCellEdit: false}
-            {minWidth: 120, displayName: '收支目标考核奖', name: 'lifeAllowance', enableCellEdit: false}
-            {minWidth: 100, displayName: '交通费', name: 'adjustment09', enableCellEdit: false}
-            {minWidth: 100, displayName: '高温津贴', name: 'bus14', enableCellEdit: false}
-            {minWidth: 120, displayName: '剩余抵扣金额', name: 'communication14', enableCellEdit: false}
-            {minWidth: 120, displayName: '生育保险冲抵', name: 'communication15', enableCellEdit: false}
-            {minWidth: 120, displayName: '当期抵扣后剩余', name: 'communication16', enableCellEdit: false}
+            {minWidth: 100, displayName: '基本工资', name: 'basicSalary', enableCellEdit: false}
+            {minWidth: 100, displayName: '川航工龄工资', name: 'workingYearsSalary', enableCellEdit: false}
+            {minWidth: 100, displayName: '保留工资', name: 'keepSalary', enableCellEdit: false}
+            {minWidth: 100, displayName: '绩效薪酬', name: 'performanceSalary', enableCellEdit: false}
+            {minWidth: 100, displayName: '小时费', name: 'hoursFee', enableCellEdit: false}
+            {minWidth: 120, displayName: '收支目标考核奖', name: 'budgetReward', enableCellEdit: false}
+            {minWidth: 100, displayName: '交通费', name: 'transportFee', enableCellEdit: false}
+            {minWidth: 100, displayName: '高温津贴', name: 'tempAllowance', enableCellEdit: false}
+            {minWidth: 120, displayName: '剩余抵扣金额', name: 'residueMoney', enableCellEdit: false}
+            {minWidth: 120, displayName: '生育保险冲抵', name: 'birthResidueMoney', enableCellEdit: false}
+            {minWidth: 120, displayName: '当期抵扣后剩余', name: 'afterResidueMoney', enableCellEdit: false}
             {minWidth: 100, displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
                 minWidth: 100
