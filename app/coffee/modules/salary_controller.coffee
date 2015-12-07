@@ -1539,30 +1539,7 @@ class SalaryRewardController extends SalaryBaseController
             {width: 100,displayName: '季度奖', name: 'quarterFee', enableCellEdit: false}
             {width: 100,displayName: '收益奖励金', name: 'earningsFee', enableCellEdit: false}
             {width: 100,displayName: '预算外奖励', name: 'offBudgetFee', enableCellEdit: false}
-            {
-                width: 100
-                name:"notes"
-                displayName:"说明"
-                enableCellEdit: false
-                cellTemplate: '''
-                <div class="ui-grid-cell-contents">
-                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
-                        {{row.entity.notes || '无'}}
-                        <popup-template
-                            style="padding:8px;border:1px solid #ccc;"
-                            class="nb-popup org-default-popup-template">
-                            <div class="panel-body popup-body">
-                                <div class="salary-explain">
-                                    {{row.entity.notes || '无'}}
-                                </div>
-                            </div>
-                        </popup-template>
-                    </a>
-                </div>
-                '''
-                cellTooltip: (row) ->
-                    return row.entity.notes
-            }
+            {width: 100,displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
                 width: 100
                 name:"remark"
