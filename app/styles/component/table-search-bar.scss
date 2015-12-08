@@ -270,7 +270,7 @@ md-content.search-container {
 
             button {
                 background-color: #fff;
-                border: 1px solid $text-hint;
+                border: 1px solid $text-muted;
                 outline: none;
 
                 &:hover {
@@ -298,22 +298,22 @@ md-content.search-container {
                 }
 
                 .first-triangle {
-                    border-right-color: $text-hint;
+                    border-right-color: $text-muted;
 
                     .first-bar {
-                        border-left-color: $text-hint;
+                        border-left-color: $text-muted;
                     }
                 }
 
                 .last-triangle {
-                    border-left-color: $text-hint;
+                    border-left-color: $text-muted;
 
                     &.next-triangle {
                         margin-left: 3px;
                     }
 
                     .last-bar {
-                        border-left-color: $text-hint;
+                        border-left-color: $text-muted;
                     }
                 }
             }
@@ -338,7 +338,7 @@ md-content.search-container {
             min-height: 19px;
 
             span {
-                color: $text-hint;
+                color: $text-muted;
             }
         }
     }
