@@ -690,7 +690,7 @@ class AdjustPositionWaitingController extends nb.Controller
             name: 'positionChange'
             constraintDefs: [
                 {
-                    name: 'name'
+                    name: 'employee_name'
                     displayName: '姓名'
                     type: 'string'
                 }
@@ -777,6 +777,9 @@ class AdjustPositionWaitingController extends nb.Controller
         self = @
 
         @adjustPositionEmployees = @AdjustPositionWaiting.$collection().$fetch()
+
+    search: (tableState)->
+        @adjustPositionEmployees.$refresh(tableState)
 
 
 
