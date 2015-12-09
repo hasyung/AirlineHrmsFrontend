@@ -1633,7 +1633,10 @@ class SalaryRewardController extends SalaryBaseController
             if data.error_count > 0
                 self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
             else
-                self.toaster.pop('success', '提示', '导入成功')
+                if data.messages.indexOf("但是") >= 0
+                    self.toaster.pop('warning', '提示', data.messages || '导入成功')
+                else
+                    self.toaster.pop('success', '提示', data.messages || '导入成功')
 
 
 class SalaryTransportFeeController extends SalaryBaseController
