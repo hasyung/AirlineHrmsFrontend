@@ -59,7 +59,7 @@ form(name="empEditForm" ng-submit="" ng-controller="EditableResourceCtrl")
         div.position-item(layout ng-if="current.languages" ng-repeat="language in current.languages")
             md-input-container.row-has-value(flex)
                 label 语种
-                md-select(ng-model="language.name" ng-change="language.grade=null" ng-disabled="!editing")
+                md-select(ng-model="language.name" placeholder="请选择" ng-change="language.grade=null" ng-disabled="!editing")
                     md-option(value="英语") 英语
                     md-option(value="法语") 法语
                     md-option(value="德语") 德语
@@ -72,7 +72,7 @@ form(name="empEditForm" ng-submit="" ng-controller="EditableResourceCtrl")
                     md-option(value="其他语") 其他语
             md-input-container(flex)
                 label 等级
-                input(ng-model="language.grade")
+                input(ng-model="language.grade" ng-disabled="!language.name")
 
             .item-action-container(flex="10" ng-if="editing")
                 md-button.md-fab.md-raised(type="button" ng-click="pdCtrl.removeLanguage(current, $index)" ng-disabled="current.languages.length <= 1")

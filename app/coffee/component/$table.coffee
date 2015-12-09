@@ -212,7 +212,6 @@ class NbFilterCtrl extends nb.FilterController
         '''
         'language_select': '''
             <md-select placeholder="${ displayName }" ng-model="${ name }">
-                <md-option value="无" placeholder="语种">无</md-option>
                 <md-option value="英语" placeholder="语种">英语</md-option>
                 <md-option value="法语" placeholder="语种">法语</md-option>
                 <md-option value="德语" placeholder="语种">德语</md-option>
@@ -307,6 +306,9 @@ class NbFilterCtrl extends nb.FilterController
         return if @conditions.length == 1
         #先销毁constraint, 因为缓存了element, scope
         constraint = condition.selectedConstraint
+        #fixbug: #700 销毁condition的包裹容器
+        #提前手动销毁condition的包裹容器,以防constraint.destroy销毁失败（失败原因不明 ng-repeat?）
+        constraint.block.wrapper.remove()
         constraint.destroy()
 
         conditionIndex = @conditions.indexOf(condition)
@@ -334,6 +336,7 @@ class NbFilterCtrl extends nb.FilterController
         currentConstraint.block = {
             scope: scope
             element: $el
+            wrapper: parentElem.parent()
         }
 
     exportQueryParams: () ->
@@ -575,7 +578,8 @@ NbFilterDirective = ["$nbEvent", "$enum", ($Evt, $enum)->
                         valArr = []
                         orgArr = scope.filter.OrgStore.getOrgsByIds(val)
                         _.map orgArr, (item) ->
-                            valArr.push item.fullName
+                            if angular.isDefined item
+                                valArr.push item.fullName
 
                         valStr = valArr.join ' , '
                         filterView.push(key+' : '+valStr)

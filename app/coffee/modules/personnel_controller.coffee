@@ -203,6 +203,18 @@ class NewEmpsCtrl extends nb.Controller
                     placeholder: '员工编号'
                 }
                 {
+                    name: 'language_name'
+                    displayName: '语种'
+                    type: 'language_select'
+                    placeholder: '语种'
+                }
+                {
+                    name: 'language_grade'
+                    displayName: '语言等级'
+                    type: 'string'
+                    placeholder: '语言等级'
+                }
+                {
                     name: 'department_ids'
                     displayName: '机构'
                     type: 'org-search'
@@ -674,6 +686,108 @@ class MoveEmployeesCtrl extends nb.Controller
             else
                 self.loadEmp = params
 
+class AdjustPositionWaitingController extends nb.Controller
+    @.$inject = ['$scope', 'toaster', 'AdjustPositionWaiting']
+
+    constructor: (@scope, @toaster, @AdjustPositionWaiting) ->
+        @loadInitialData()
+
+        @filterOptions = {
+            name: 'positionChange'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+            ]
+        }
+
+        @columnDef = [
+            {
+                minWidth: 120
+                displayName: '员工编号'
+                name: 'employeeNo'
+            }
+            {
+                minWidth: 120
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {
+                minWidth: 350
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+            }
+            {
+                minWidth: 250
+                displayName: '岗位'
+                name: 'positionName'
+                cellTooltip: (row) ->
+                    return row.entity.positionName
+            }
+            {
+                minWidth: 120
+                displayName: '操作人'
+                name: 'operatorName'
+                cellTooltip: (row) ->
+                    return row.entity.operatorName
+            }
+            {
+                minWidth: 120
+                displayName: '操作时间'
+                name: 'createdAt'
+                cellFilter: "date:'yyyy-MM-dd'"
+            }
+            {
+                minWidth: 200
+                displayName: '生效时间'
+                name: 'positionChangeDate'
+                cellTooltip: (row) ->
+                    return row.entity.positionChangeDate
+            }
+            {
+                minWidth: 120
+                displayName: '查看'
+                field: 'edit'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-dialog
+                        template-url="/partials/personnel/adjust_waiting_view.html"
+                        locals="{adjust: row.entity, ctrl:grid.appScope.$parent.ctrl}">
+                        查看
+                    </a>
+                </div>
+                '''
+            }
+
+        ]
+
+    loadInitialData: () ->
+        self = @
+
+        @adjustPositionEmployees = @AdjustPositionWaiting.$collection().$fetch()
+
+    search: (tableState)->
+        @adjustPositionEmployees.$refresh(tableState)
+
+
 
 class ReviewCtrl extends nb.Controller
     @.$inject = ['$scope', 'Change', 'Record', '$mdDialog', 'toaster']
@@ -1080,6 +1194,7 @@ class PersonnelDataCtrl extends nb.Controller
 app.controller('PersonnelSort', PersonnelSort)
 app.controller('LeaveEmployeesCtrl', LeaveEmployeesCtrl)
 app.controller('MoveEmployeesCtrl', MoveEmployeesCtrl)
+app.controller('adjustPositionWaitingCtrl', AdjustPositionWaitingController)
 app.controller('EmployeeMemberCtrl', EmployeeMemberCtrl)
 app.controller('EmployeePerformanceCtrl', EmployeePerformanceCtrl)
 app.controller('EmployeeAttendanceCtrl', EmployeeAttendanceCtrl)

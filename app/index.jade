@@ -28,11 +28,25 @@ html
         //- .org-container.smooth(ui-view)
         div(layout="row" flex ng-if="!rootCtrl.show_main")
             include partials/role/index.jade
-        div(layout="row" flex ng-if="rootCtrl.show_main")
-            div.ola.md-whiteframe-z1(ng-if="rootCtrl.current_roles[0]")
+        div(layout="row" flex ng-if="rootCtrl.show_main" ng-init="navIsOpen=true;")
+            div.nav-wrapper.md-whiteframe-z1(
+                ng-hide="hide_menu"
+                ng-if="rootCtrl.current_roles[0]"
+                ng-class="{'open': navIsOpen}"
+                ng-mouseenter="navIsOpen=true"
+                ng-mouseleave="navIsOpen=false"
+                )
+                .nav-switch
+                    .switch-button(ng-click="navIsOpen = !navIsOpen")
+                        md-icon(md-svg-src="md-toggle-arrow")
                 include partials/shared/left_sidebar
             .butterbar(ui-butterbar)
-            md-content.app-content-body.smooth(ui-view flex layout="row")
+            md-content.app-content-body.smooth(
+                ui-view
+                flex
+                layout="row"
+                ng-class="{'has-nav': !rootCtrl.hide_menu}"
+                )
 
         if debugMode
             each script in libs

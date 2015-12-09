@@ -198,6 +198,7 @@ class SalaryController extends nb.Controller
                           "land_subsidy",                       # 地面驻站补贴
                           "airline_subsidy",                    # 空勤驻站补贴
                           "temp"                                # 高温补贴
+                          "cold_subsidy"                        # 寒冷补贴
                          ]
 
         @year_list = @$getYears()
@@ -326,6 +327,8 @@ class SalaryController extends nb.Controller
         self = @
         return unless selectDepIds
 
+        @tempPositions = []
+
         @http.get('/api/salaries/temperature_amount?department_ids=' + selectDepIds)
             .success (data)->
                 self.tempPositions = data.temperature_amounts
@@ -356,6 +359,8 @@ class SalaryController extends nb.Controller
         self = @
         return unless selectDepIds
 
+        @comPositions = []
+
         @http.get('/api/salaries/communicate_allowance?department_ids=' + selectDepIds)
             .success (data)->
                 self.comPositions = data.communicate_allowances
@@ -381,6 +386,38 @@ class SalaryController extends nb.Controller
             .error (data)->
                 self.toaster.pop('error', '提示', '更新失败')
 
+    # 寒冷补贴 TODO: 和高温补贴合并
+    loadColdPositions: (selectDepIds, keywords)->
+        self = @
+        return unless selectDepIds
+
+        @coldPositions = []
+
+        @http.get('/api/salaries/position_cold_subsidy?department_ids=' + selectDepIds)
+            .success (data)->
+                self.coldPositions = data.position_cold_subsidy
+
+                if !!keywords && keywords.length > 0
+                    self.coldPositions = _.filter self.coldPositions, (item)->
+                        item.full_position_name.indexOf(keywords) >= 0
+
+    listColdPosition: (type)->
+        self = @
+
+        @http.get('/api/salaries/position_cold_subsidy?cold_subsidy_type=' + type)
+            .success (data)->
+                self.currentColdPositions = data.position_cold_subsidy
+
+    updateColdType: (position_id, type)->
+        self = @
+        params = {position_id: position_id, cold_subsidy_type: type}
+
+        @http.put('/api/salaries/set_position_cold_subsidy', params)
+            .success (data)->
+                self.toaster.pop('success', '提示', '更新成功')
+            .error (data)->
+                self.toaster.pop('error', '提示', '更新失败')
+
     destroyCity: (cities, idx) ->
         cities.splice(idx, 1)
 
@@ -391,6 +428,21 @@ class SalaryController extends nb.Controller
             cities.push(city)
             self.scope.cityForeign = {}
             self.scope.cityNation = {}
+            self.toaster.pop('success', '提示', '添加成功，点击“保存”按钮保存设置')
+
+        else
+            self.toaster.pop('error', '提示', '请填写城市名称及缩写名')
+
+    addColdCity: (cities, city) ->
+        self = @
+
+        if city.name
+            cities.push(city)
+            self.scope.newSubsidy = {}
+            self.toaster.pop('success', '提示', '添加成功，点击“保存”按钮保存设置')
+
+        else
+            self.toaster.pop('error', '提示', '请填写城市名称')
 
 
 class SalaryPersonalController extends nb.Controller
@@ -779,7 +831,6 @@ class SalaryExchangeController
         Object.keys(setting.flags)
 
     normal: (current)->
-        console.log current
         return unless current.baseWage
         return unless current.baseFlag
 
@@ -1341,7 +1392,7 @@ class SalaryHoursFeeController extends SalaryBaseController
 
                 self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
             else
-                self.toaster.pop('error', '提示', '导入成功')
+                self.toaster.pop('success', '提示', '导入成功')
 
 
 class SalaryAllowanceController extends SalaryBaseController
@@ -1367,6 +1418,8 @@ class SalaryAllowanceController extends SalaryBaseController
             {minWidth: 120,displayName: '签派放行补贴', name: 'permitSign', enableCellEdit: false}
             {minWidth: 120,displayName: '梭班补贴', name: 'workOvertime', enableCellEdit: false}
             {minWidth: 120,displayName: '高温补贴', name: 'temp', enableCellEdit: false}
+            {minWidth: 120,displayName: '寒冷补贴', name: 'cold', enableCellEdit: false}
+            {minWidth: 120,displayName: '通讯补贴', name: 'communication', enableCellEdit: false}
             {minWidth: 120,displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
                 minWidth: 150
@@ -1514,7 +1567,7 @@ class SalaryLandAllowanceController extends SalaryBaseController
 class SalaryRewardController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'Reward', 'toaster']
 
-    constructor: ($http, $scope, $q, @Evt, @Employee, @Reward, @toaster) ->
+    constructor: (@http, $scope, $q, @Evt, @Employee, @Reward, @toaster) ->
         super(@Reward, $scope, $q, true)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
@@ -1540,30 +1593,6 @@ class SalaryRewardController extends SalaryBaseController
             {width: 100,displayName: '收益奖励金', name: 'earningsFee', enableCellEdit: false}
             {width: 100,displayName: '预算外奖励', name: 'offBudgetFee', enableCellEdit: false}
             {width: 100,displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
-            {
-                width: 100
-                name:"notes"
-                displayName:"说明"
-                enableCellEdit: false
-                cellTemplate: '''
-                <div class="ui-grid-cell-contents">
-                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
-                        {{row.entity.notes || '无'}}
-                        <popup-template
-                            style="padding:8px;border:1px solid #ccc;"
-                            class="nb-popup org-default-popup-template">
-                            <div class="panel-body popup-body">
-                                <div class="salary-explain">
-                                    {{row.entity.notes || '无'}}
-                                </div>
-                            </div>
-                        </popup-template>
-                    </a>
-                </div>
-                '''
-                cellTooltip: (row) ->
-                    return row.entity.notes
-            }
             {
                 width: 100
                 name:"remark"
@@ -1598,13 +1627,16 @@ class SalaryRewardController extends SalaryBaseController
 
     upload_reward: (type, attachment_id)->
         self = @
-        params = {type: type, attachment_id: attachment_id}
+        params = {type: type, attachment_id: attachment_id, month: @currentCalcTime()}
 
         @http.post("/api/rewards/import", params).success (data, status) ->
             if data.error_count > 0
                 self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
             else
-                self.toaster.pop('error', '提示', '导入成功')
+                if data.messages.indexOf("但是") >= 0
+                    self.toaster.pop('warning', '提示', data.messages || '导入成功')
+                else
+                    self.toaster.pop('success', '提示', data.messages || '导入成功')
 
 
 class SalaryTransportFeeController extends SalaryBaseController
@@ -1683,7 +1715,7 @@ class SalaryTransportFeeController extends SalaryBaseController
             if data.error_count > 0
                 self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
             else
-                self.toaster.pop('error', '提示', '导入成功')
+                self.toaster.pop('success', '提示', '导入成功')
 
 
 class SalaryOverviewController extends SalaryBaseController
@@ -1767,18 +1799,17 @@ class BirthSalaryController extends SalaryBaseController
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
-            {minWidth: 100, displayName: '基本工资', name: 'position', enableCellEdit: false}
-            {minWidth: 100, displayName: '川航工龄', name: 'performance', enableCellEdit: false}
-            {minWidth: 100, displayName: '保留工资', name: 'workingYears', enableCellEdit: false}
-            {minWidth: 100, displayName: '绩效薪酬', name: 'minimumGrowth', enableCellEdit: false}
-            {minWidth: 100, displayName: '小时费', name: 'landAllowance', enableCellEdit: false}
-            {minWidth: 120, displayName: '收支目标考核奖', name: 'lifeAllowance', enableCellEdit: false}
-            {minWidth: 100, displayName: '交通费', name: 'adjustment09', enableCellEdit: false}
-            {minWidth: 100, displayName: '高温津贴', name: 'bus14', enableCellEdit: false}
-            {minWidth: 120, displayName: '剩余抵扣金额', name: 'communication14', enableCellEdit: false}
-            {minWidth: 120, displayName: '生育保险冲抵', name: 'communication15', enableCellEdit: false}
-            {minWidth: 120, displayName: '当期抵扣后剩余', name: 'communication16', enableCellEdit: false}
-            {minWidth: 100, displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {minWidth: 100, displayName: '基本工资', name: 'basicSalary', enableCellEdit: false}
+            {minWidth: 100, displayName: '川航工龄工资', name: 'workingYearsSalary', enableCellEdit: false}
+            {minWidth: 100, displayName: '保留工资', name: 'keepSalary', enableCellEdit: false}
+            {minWidth: 100, displayName: '绩效薪酬', name: 'performanceSalary', enableCellEdit: false}
+            {minWidth: 100, displayName: '小时费', name: 'hoursFee', enableCellEdit: false}
+            {minWidth: 120, displayName: '收支目标考核奖', name: 'budgetReward', enableCellEdit: false}
+            {minWidth: 100, displayName: '交通费', name: 'transportFee', enableCellEdit: false}
+            {minWidth: 100, displayName: '高温津贴', name: 'tempAllowance', enableCellEdit: false}
+            {minWidth: 120, displayName: '剩余抵扣金额', name: 'residueMoney', enableCellEdit: false}
+            {minWidth: 120, displayName: '生育保险冲抵', name: 'birthResidueMoney', enableCellEdit: false}
+            {minWidth: 120, displayName: '当期抵扣后剩余', name: 'afterResidueMoney', enableCellEdit: false}
             {
                 minWidth: 100
                 name:"notes"

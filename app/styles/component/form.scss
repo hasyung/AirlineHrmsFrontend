@@ -233,6 +233,10 @@ fieldset[disabled] {
         .md-select-value {
             border: 0;
             padding-bottom: 0 !important;
+
+            &.md-select-placeholder {
+                opacity: 0;
+            }
         }
 
     }

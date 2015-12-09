@@ -1,0 +1,27 @@
+.app-content-wrapper(flex ng-controller="salaryCtrl as ctrl" ng-init="ctrl.loadColdPositions('cold_subsidy')" style="padding: 0;")
+    .salary-basic(style="padding: 0;")
+        md-toolbar
+            .md-toolbar-tools
+                h2 岗位寒冷补贴设置
+                span(flex)
+
+        div(layout)
+            org-search(flex placeholder="部门" float-label search-text-change="selectDepIds=null" selected-item-change="selectDepIds = org.id;ctrl.loadColdPositions(selectDepIds, keywords)")
+            md-input-container(flex)
+              label 关键词过滤
+              input(ng-model="keywords" placeholder="关键词" ng-change="ctrl.loadColdPositions(selectDepIds, keywords)")
+
+        table.tablexx.table-default.table-bordered
+            thead
+                tr
+                    th 岗位
+                    th 标准
+
+            tbody
+                tr(ng-repeat="item in ctrl.coldPositions track by $index")
+                    td {{::item.full_position_name}}
+                    td
+                        md-select(ng-model="item.cold_subsidy_type" ng-change="ctrl.updateColdType(item.id, item.cold_subsidy_type)")
+                            md-option(value="") 无
+                            md-option(value="A") 甲类
+                            md-option(value="B") 乙类
