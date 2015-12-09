@@ -13,6 +13,8 @@
     background: #fff;
     bottom: 0;
     margin-left: -178px;
+    overflow-x: hidden;
+    overflow-y: scroll;
     position: absolute;
     top: 64px;
     transition: .25s cubic-bezier(.35, 0, .25, 1);
