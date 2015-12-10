@@ -55,6 +55,9 @@ md-dialog.punishment_new(
 
                 div(layout)
                     md-input-container(flex)
+                        label 属地
+                        input(ng-model="current.location" required)
+                    md-input-container(flex)
                         label 岗位备注
                         input(ng-model="current.positionRemark")
 

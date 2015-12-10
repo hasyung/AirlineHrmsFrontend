@@ -265,6 +265,7 @@ class AdjustPositionCtrl
         params.position_change_date = employee.positionChangeDate
         params.probation_duration = employee.probationDuration
         params.classification = employee.classification
+        params.location = employee.location
 
         employee.positions.map (position) ->
             params.positions.push({
