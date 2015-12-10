@@ -9,8 +9,8 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
             md-content.form-material-section.form-table-container(ng-init="vm.children = currentUser.familymembers.$search({relation: 'children'}); newChildren = []")
                 .btngroup--top--right(style="padding-right: 0;")
                     span(flex)
-                    span(ng-hide="editing")
-                        md-button.md-raised.md-primary(ng-click="newChildren.push({})") 新增
+                    //- span(ng-hide="editing")
+                    //-     md-button.md-raised.md-primary(ng-click="newChildren.push({})") 新增
                 .subheader--center
                     .subheader__content
                         span.subheader__icon
@@ -67,8 +67,8 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
             md-content.form-material-section.form-table-container(ng-init="vm.other = currentUser.familymembers.$search({relation: 'other'}); newOther = []")
                 .btngroup--top--right(style="padding-right: 0;")
                     span(flex)
-                    span(ng-hide="editing")
-                        md-button.md-raised.md-primary(ng-click="newOther.push({})") 新增
+                    //- span(ng-hide="editing")
+                    //-     md-button.md-raised.md-primary(ng-click="newOther.push({})") 新增
                 .subheader--center
                     .subheader__content
                         span.subheader__icon
