@@ -43,6 +43,7 @@ block cust_page
                     ) 新建合同
 
                     md-button.md-raised.md-primary(
+                        has-permission="contracts_import"
                         flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
                         flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
                         flow-file-success="ctrl.upload_start=false;ctrl.uploadContract(ctrl.parseJSON($message).id);"
