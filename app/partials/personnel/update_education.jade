@@ -32,12 +32,12 @@ md-dialog.punishment_new(style="min-width: 450px;")
                 div(layout)
                     md-input-container(flex)
                         label 毕业院校
-                        input(ng-model="params.school_name")
+                        input(ng-model="params.school")
 
                 div(layout)
                     md-input-container(flex)
                         label 专业
-                        input(ng-model="params.major_name")
+                        input(ng-model="params.major")
 
                 div(layout)
                     md-input-container(flex)
@@ -47,7 +47,7 @@ md-dialog.punishment_new(style="min-width: 450px;")
                 div(layout)
                     md-input-container(flex)
                         label 变更时间
-                        input(ng-model="params.change_date" name="date" bs-datepicker default-today required)
+                        input(ng-model="params.change_education_date" name="date" bs-datepicker default-today required)
 
         .md-actions
             md-button(type="button" ng-click="dialog.close()") 取 消
