@@ -19,25 +19,36 @@ md-dialog.punishment_new(style="min-width: 450px;")
                     md-input-container(flex)
                         label 岗位
                         input(ng-model="::current.position.name" readonly)
+
                 div(layout)
                     md-input-container.row-has-value(flex)
-                        label 现学历
+                        label 原学历
                         md-select(ng-model="::current.educationBackgroundId" readonly disabled)
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('education_backgrounds')") {{item.label}}
                     md-input-container.row-has-value(flex)
-                        label 现学位
+                        label 原学位
                         md-select(ng-model="::current.degreeId" readonly disabled)
+                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('degrees')") {{item.label}}
+
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 现学历
+                        md-select(ng-model="params.education_background_id")
+                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('education_backgrounds')") {{item.label}}
+                    md-input-container.row-has-value(flex)
+                        label 现学位
+                        md-select(ng-model="params.degree_id")
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('degrees')") {{item.label}}
 
                 div(layout)
                     md-input-container(flex)
                         label 毕业院校
-                        input(ng-model="params.school")
+                        input(ng-model="params.school" required)
 
                 div(layout)
                     md-input-container(flex)
                         label 专业
-                        input(ng-model="params.major")
+                        input(ng-model="params.major" required)
 
                 div(layout)
                     md-input-container(flex)
