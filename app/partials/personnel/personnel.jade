@@ -24,7 +24,7 @@ tabset(flex)
                             ng-disabled="ctrl.getSelected().length != 1 || ctrl.importing"
                             nb-dialog
                             template-url="/partials/personnel/set_leave.html"
-                            locals="{employee: ctrl.getSelected()[0], list: ctrl.employees}"
+                            locals="{employee: ctrl.getSelected()[0], list: ctrl.employees, tableState: ctrl.tableState}"
                         ) 人员离职
 
                         md-button.md-primary.md-raised(
@@ -56,7 +56,7 @@ tabset(flex)
                             ng-disabled="ctrl.getSelected().length != 1 || ctrl.importing"
                             nb-dialog
                             template-url="/partials/personnel/update_education.html"
-                            locals="{employee: ctrl.getSelected()[0], list: ctrl.employees}"
+                            locals="{employee: ctrl.getSelected()[0], list: ctrl.employees, tableState: ctrl.tableState}"
                         ) 学历变更
 
                         md-button.md-primary.md-raised(

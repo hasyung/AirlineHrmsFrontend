@@ -85,6 +85,7 @@ class PersonnelCtrl extends nb.Controller
             .col 'name',                 '姓名',     'string'
             .col 'gender_id',            '性别',     'select', '', {type: 'genders'}
             .col 'employee_no',          '员工编号', 'string'
+            .col 'identity_no',          '身份证', 'string'
             .col 'language_name',        '语种',     'language_select'
             .col 'language_grade',       '语言等级', 'string'
             .col 'department_ids',       '机构',     'org-search'
