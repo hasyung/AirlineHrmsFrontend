@@ -23,6 +23,8 @@ Employee = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('employee:update:success', "员工信息更新成功")
             'after-leave': ->
                 $Evt.$send('employee:leave:success', "员工已设置为离职状态")
+            'after-change-education': ->
+                $Evt.$send('employee:change_education:success', "员工学历已更新")
         }
 
         $extend:
@@ -55,6 +57,21 @@ Employee = (restmod, RMUtils, $Evt) ->
 
                     this.$send(request, onSuccess)
 
+                update_education: (params, list)->
+                    self = this
+
+                    request = {
+                        url: "/api/employees/#{this.id}/change_education"
+                        method: "POST"
+                        data: params
+                    }
+
+                    onSuccess = (res) ->
+                        self.$dispatch 'after-change-education'
+                        list.$refresh()
+
+                    this.$send(request, onSuccess)
+
             Collection:
                 search: (tableState) ->
                     this.$refresh(tableState)
@@ -78,12 +95,30 @@ MoveEmployees = (restmod, RMUtils, $Evt) ->
 
         owner: {belongsTo: 'Employee', key: 'employee_id'}
 
+        $extend:
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+    }
+
+AdjustPositionWaiting = (restmod, RMUtils, $Evt) ->
+    MoveEmployees = restmod.model('/position_change_records').mix 'nbRestApi', {
+        $config:
+            jsonRootSingle: 'position_change_record'
+            jsonRootMany: 'position_change_records'
+
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
         $hooks: {
-            'after-update': ->
-                $Evt.$send('MoveEmployees:update:success', "修改成功")
+            'after-destroy': ->
+                $Evt.$send('position_change_record:destroy:success', "撤销成功")
         }
 
         $extend:
+            Record:
+                repeal: () ->
+                    this.$destroy()
+
             Collection:
                 search: (tableState) ->
                     this.$refresh(tableState)
@@ -108,5 +143,6 @@ Formerleaders = (restmod, RMUtils, $Evt) ->
 resources.factory 'Employee', ['restmod', 'RMUtils', '$nbEvent', Employee]
 resources.factory 'Formerleaders', ['restmod', 'RMUtils', '$nbEvent', Formerleaders]
 resources.factory 'LeaveEmployees', ['restmod', 'RMUtils', '$nbEvent', LeaveEmployees]
+resources.factory 'AdjustPositionWaiting', ['restmod', 'RMUtils', '$nbEvent', AdjustPositionWaiting]
 resources.factory 'MoveEmployees', ['restmod', 'RMUtils', '$nbEvent', MoveEmployees]
 

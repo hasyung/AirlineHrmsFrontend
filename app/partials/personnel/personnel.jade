@@ -52,6 +52,14 @@ tabset(flex)
                         ) 员工调岗
 
                         md-button.md-primary.md-raised(
+                            has-permission="employees_change_education"
+                            ng-disabled="ctrl.getSelected().length != 1 || ctrl.importing"
+                            nb-dialog
+                            template-url="/partials/personnel/update_education.html"
+                            locals="{employee: ctrl.getSelected()[0], list: ctrl.employees}"
+                        ) 学历变更
+
+                        md-button.md-primary.md-raised(
                             ng-disabled="ctrl.importing"
                             has-permission="sort_index"
                             nb-panel
@@ -99,3 +107,6 @@ tabset(flex)
 
     tab(heading="异动人员名册")
         include personnel_move
+
+    tab(heading="调岗待生效列表")
+        include adjust_position_waiting

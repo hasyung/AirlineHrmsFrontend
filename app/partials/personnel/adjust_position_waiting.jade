@@ -1,0 +1,13 @@
+.app-content-wrapper(flex ng-controller="adjustPositionWaitingCtrl as ctrl")
+
+    div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+
+    div.ui-grid-container
+        md-toolbar
+            .md-toolbar-tools
+                h2 调岗待生效列表
+
+        div(
+            nb-grid
+            column-defs="ctrl.columnDef"
+            safe-src="ctrl.adjustPositionEmployees")
