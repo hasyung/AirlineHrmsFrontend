@@ -42,7 +42,7 @@ Employee = (restmod, RMUtils, $Evt) ->
                 update_skill_info: ()->
                     this.$save()
 
-                set_leave: (params, list)->
+                set_leave: (params, list, tableState)->
                     self = this
 
                     request = {
@@ -53,11 +53,11 @@ Employee = (restmod, RMUtils, $Evt) ->
 
                     onSuccess = (res) ->
                         self.$dispatch 'after-leave'
-                        list.$refresh()
+                        list.$refresh(tableState)
 
                     this.$send(request, onSuccess)
 
-                update_education: (params, list)->
+                update_education: (params, list, tableState)->
                     self = this
 
                     request = {
@@ -68,7 +68,7 @@ Employee = (restmod, RMUtils, $Evt) ->
 
                     onSuccess = (res) ->
                         self.$dispatch 'after-change-education'
-                        list.$refresh()
+                        list.$refresh(tableState)
 
                     this.$send(request, onSuccess)
 
