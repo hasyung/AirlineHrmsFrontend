@@ -22,14 +22,14 @@ form(ng-controller="NewResourceCtrl", ng-submit="create(newExp,newEduBeforeForm)
     div(layout)
         md-input-container.row-has-value(flex)
             label 学历
-            md-select(ng-model="newExp.educationBackground")
+            md-select(ng-model="newExp.educationBackgroundId")
                 md-option(ng-value="item.id" ng-repeat="item in $enum.get('education_backgrounds')") {{item.label}}
             //- md-select(ng-model="newExp.educationBackground" md-on-open="loadEnum('education_backgrounds')")
             //-     md-select-label {{newExp.educationBackground.displayName || '无'}}
             //-     md-option(ng-value="edu" ng-repeat="edu in enums.education_backgrounds") {{edu.displayName}}
         md-input-container.row-has-value(flex)
             label 学位
-            md-select(ng-model="newExp.degree")
+            md-select(ng-model="newExp.degreeId")
                 md-option(ng-value="item.id" ng-repeat="item in $enum.get('degrees')") {{item.label}}
             //- md-select(ng-model="newExp.degree" md-on-open="loadEnum('degrees')")
             //-     md-select-label {{newExp.degree.displayName || '无'}}
