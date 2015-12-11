@@ -24,11 +24,12 @@ section.personnel-info-section(ng-init="educations = currentUser.educationExperi
                     include edu/exist_edu_exp_form
 
         .personnel-section-wrap()
-            .subheader--center.subheader--margin30
-                .subheader__content
-                    span.subheader__icon
-                        img(src="/images/personnel/subh-icon.png", alt="icon--plane")
-                    span 入司后
+            md-content
+                .subheader--center.subheader--margin30
+                    .subheader__content
+                        span.subheader__icon
+                            img(src="/images/personnel/subh-icon.png", alt="icon--plane")
+                        span 入司后
                 section.form-material-section(ng-controller="EditableResourceCtrl", ng-repeat="education in educations | filterBy: ['category']:'after'")
                     .sep-40
                     include edu/scal_edu_exp_form
