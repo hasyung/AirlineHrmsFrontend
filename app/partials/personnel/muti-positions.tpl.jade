@@ -10,7 +10,7 @@
                     ng-model="posItem.department"
                     float-label placeholder="所属部门"
                     search-text-change="posItem.position.id=null;posItem.category=null;itemParams.orgPos=null;"
-                    selected-item-change="itemParams.orgPos = org.positions.$fetch();posItem.position = null;"
+                    selected-item-change="itemParams.orgPos = org.positions.$refresh();posItem.position = null;"
                     )
 
             md-input-container.row-has-value(flex)
