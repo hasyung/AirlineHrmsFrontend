@@ -34,12 +34,15 @@ Employee = (restmod, RMUtils, $Evt) ->
 
             Record:
                 update_basic_info: ()->
+                    this.editType = 'basic'
                     this.$save()
 
                 update_position_info: ()->
+                    this.editType = 'position'
                     this.$save()
 
                 update_skill_info: ()->
+                    this.editType = 'skill'
                     this.$save()
 
                 set_leave: (params, list, tableState)->
