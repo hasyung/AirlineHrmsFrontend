@@ -875,7 +875,7 @@ class ContractCtrl extends nb.Controller
         @editable = _.includes @permissions,'contracts_update'
 
     isHrLaborRelationMember: ()->
-        @CURRENT_ROLES.indexOf('department_hr') >= 0
+        @CURRENT_ROLES.indexOf('hr_labor_relation_member') >= 0
 
     loadInitialData: () ->
         self = @
