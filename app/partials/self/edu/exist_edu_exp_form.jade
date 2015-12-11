@@ -37,14 +37,14 @@ form(ng-submit="save(education.$save(), eduForm)" name="eduForm")
                 //- md-select(ng-model="education.educationBackground", md-on-open="loadEnum('education_backgrounds')" ng-disabled="!editing")
                 //-     md-select-label {{education.educationBackground.displayName || '无'}}
                 //-     md-option(ng-value="edu" ng-repeat="edu in enums.education_backgrounds") {{edu.displayName}}
-                md-select(ng-model="education.educationBackground" ng-disabled="!editing")
+                md-select(ng-model="education.educationBackgroundId" ng-disabled="!editing")
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('education_backgrounds')") {{item.label}}
             md-input-container.row-has-value(flex)
                 label 学位
                 //- md-select(ng-model="education.degree" md-on-open="loadEnum('degrees')" ng-disabled="!editing")
                 //-     md-select-label {{education.degree.displayName || '无'}}
                 //-     md-option(ng-value="degree" ng-repeat="degree in enums.degrees") {{degree.displayName}}
-                md-select(ng-model="education.degree" ng-disabled="!editing")
+                md-select(ng-model="education.degreeId" ng-disabled="!editing")
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('degrees')") {{item.label}}
         //- md-input-container
         //-     label 证明人
