@@ -21,7 +21,7 @@ form(ng-submit="save(education.$save(), eduForm)" name="eduForm")
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('education_backgrounds')") {{item.label}}
             md-input-container.row-has-value(flex)
                 label 学位
-                md-select(ng-model="education.degreeId.")
+                md-select(ng-model="education.degreeId")
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('degrees')") {{item.label}}
         //- md-input-container
         //-     label 证明人
