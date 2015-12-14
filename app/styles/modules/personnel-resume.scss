@@ -82,7 +82,7 @@
         .resume-item {
             display: flex;
             flex: 1;
-            height: 36px;
+            min-height: 36px;
 
             &.auto-height {
                 height: auto;
