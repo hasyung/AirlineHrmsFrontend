@@ -74,7 +74,7 @@ class EditableResourceCtrl
             evt.preventDefault() if evt && evt.preventDefault
             scope.editing = true
 
-        scope.save = (promise, form, promises) ->
+        scope.save = (promise, form, collections) ->
             return if form && form.$invalid
             self = @
 
@@ -83,15 +83,15 @@ class EditableResourceCtrl
                     promise.then (data) ->
                         scope.editing = false
                         self.response_data = data
-                else if promise.$then && !promises
+                else if promise.$then && !collections
                     promise.$then (data) ->
                         scope.editing = false
                         self.response_data = data
-                else if promise.$then && promises
+                else if promise.$then && collections
                     promise.$then (data) ->
                         scope.editing = false
                         self.response_data = data
-                        promises.$refresh()
+                        collections.$refresh()
                 else
                     throw new Error('promise 参数错误')
 

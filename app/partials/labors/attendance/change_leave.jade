@@ -1,9 +1,9 @@
-md-dialog(ng-controller="EditableResourceCtrl" style="min-width: 500px;" ng-init="current = dialog.leave.$refresh();")
+md-dialog(ng-controller="EditableResourceCtrl" style="min-width: 500px;" ng-init="current = dialog.leave.$refresh(); ctrl = dialog.ctrl;")
     md-toolbar.md-accent(md-theme="hrms")
         .md-toolbar-tools
             span 假别修正
     md-content
-        form(ng-submit="save(current.$save(), change_leave_form);dialog.close();" name="change_leave_form")
+        form(ng-submit="save(current.$save(), change_leave_form, ctrl.tableData);dialog.close();" name="change_leave_form")
             div.mt20(layout style="padding: 0 20px; margin-bottom: 40px;")
                 label.mr10(style="line-height: 37px;") 假别
                 md-input-container(style="padding-bottom: 19px;" md-no-float)
