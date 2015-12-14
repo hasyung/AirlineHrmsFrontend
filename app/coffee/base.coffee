@@ -69,6 +69,7 @@ class EditableResourceCtrl
     constructor: (scope, $enum, @Evt) ->
         scope.editing = false
         scope.$enum = $enum
+        self = @
 
         scope.edit = (evt) ->
             evt.preventDefault() if evt && evt.preventDefault
@@ -76,28 +77,36 @@ class EditableResourceCtrl
 
         scope.save = (promise, form, collections) ->
             return if form && form.$invalid
-            self = @
 
             if promise
                 if promise.then
                     promise.then (data) ->
                         scope.editing = false
                         self.response_data = data
+
+                        if self.response_data
+                            msg = self.response_data.messages
+                            self.Evt.$send('model:save:success', msg || "保存成功")
                 else if promise.$then && !collections
                     promise.$then (data) ->
                         scope.editing = false
                         self.response_data = data
+
+                        if self.response_data
+                            msg = self.response_data.$response.data.messages
+                            self.Evt.$send('model:save:success', msg || "保存成功")
                 else if promise.$then && collections
                     promise.$then (data) ->
                         scope.editing = false
                         self.response_data = data
                         collections.$refresh()
+
+                        if self.response_data
+                            msg = self.response_data.$response.data.messages
+                            self.Evt.$send('model:save:success', msg || "保存成功")
                 else
                     throw new Error('promise 参数错误')
 
-                if self.response_data
-                    msg = self.response_data.messages
-                    @Evt.$send('model:save:success', msg || "保存成功")
             else
                 scope.editing = false
 
