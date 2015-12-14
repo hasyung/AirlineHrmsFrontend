@@ -12,7 +12,7 @@
                     ng-disabled="!ctrl.getSelected()"
                     nb-dialog
                     template-url="partials/labors/attendance/change_leave.html"
-                    locals="{leave: ctrl.getSelected()}"
+                    locals="{leave: ctrl.getSelected(), ctrl: ctrl}"
                 ) 假别修正
 
                 md-button.md-primary.md-raised(
