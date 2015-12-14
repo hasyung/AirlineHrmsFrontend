@@ -7,27 +7,28 @@ md-dialog(ng-controller="EditableResourceCtrl" style="min-width: 500px;" ng-init
             div.mt20(layout style="padding: 0 20px; margin-bottom: 40px;")
                 label.mr10(style="line-height: 37px;") 假别
                 md-input-container(style="padding-bottom: 19px;" md-no-float)
-                    md-select(style="width: 200px;" ng-model="current.name")
-                        md-option(value="事假") 事假
-                        md-option(value="病假") 病假
-                        md-option(value="年假") 年假
-                        md-option(value="派驻人员休假") 派驻人员休假
-                        md-option(value="病假(工伤待定)") 病假(工伤待定)
-                        md-option(value="病假(工伤待定)-工伤假") 病假(工伤待定)-工伤假
-                        md-option(value="婚假") 婚假
-                        md-option(value="丧假") 丧假
-                        md-option(value="探亲假") 探亲假
-                        md-option(value="病假(怀孕待产)") 病假(怀孕待产)
-                        md-option(value="产前孕期检查假") 产前孕期检查假
-                        md-option(value="产假") 产假
-                        md-option(value="产假(晚育)") 产假(晚育)
-                        md-option(value="产假(剖腹产、难产)") 产假(剖腹产、难产)
-                        md-option(value="产假(多胞胎)") 产假(多胞胎)
-                        md-option(value="产假(母乳喂养)") 产假(母乳喂养)
-                        md-option(value="产假(流产)") 产假(流产)
-                        md-option(value="产假(哺乳假)") 产假(哺乳假)
-                        md-option(value="女工假") 女工假
-                        md-option(value="公假") 公假
+                    md-select(style="width: 200px;" ng-model="current.type")
+                        md-option(value="Flow::PersonalLeave") 事假
+                        md-option(value="Flow::SickLeave") 病假
+                        md-option(value="Flow::AnnualLeave") 年假
+                        md-option(value="Flow::AccreditLeave") 派驻人员休假
+                        md-option(value="Flow::SickLeaveInjury") 病假(工伤待定)
+                        md-option(value="Flow::OccupationInjury") 病假(工伤待定)-工伤假
+                        md-option(value="Flow::MarriageLeave") 婚假
+                        md-option(value="Flow::FuneralLeave") 丧假
+                        md-option(value="Flow::HomeLeave") 探亲假
+                        md-option(value="Flow::SickLeaveNulliparous") 病假(怀孕待产)
+                        md-option(value="Flow::RearNurseLeave") 生育护理假
+                        md-option(value="Flow::PrenatalCheckLeave") 产前孕期检查假
+                        md-option(value="Flow::MaternityLeave") 产假
+                        md-option(value="Flow::MaternityLeaveLateBirth") 产假(晚育)
+                        md-option(value="Flow::MaternityLeaveDystocia") 产假(剖腹产、难产)
+                        md-option(value="Flow::MaternityLeaveMultipleBirth") 产假(多胞胎)
+                        md-option(value="Flow::MaternityLeaveBreastFeeding") 产假(母乳喂养)
+                        md-option(value="Flow::MiscarriageLeave") 产假(流产)
+                        md-option(value="Flow::LactationLeave") 产假(哺乳假)
+                        md-option(value="Flow::WomenLeave") 女工假
+                        md-option(value="Flow::PublicLeave") 公假
 
             .md-actions(style="border-top: 1px solid rgba(0, 0, 0, .12); padding: 0 20px;")
                 md-button.white.md-raised.pull-right(type="button" ng-click="cancel(current, $event, change_leave_form);dialog.close()") 取 消
