@@ -1,9 +1,9 @@
 form(ng-submit="save(education.$save(), eduForm)" name="eduForm")
     fieldset(ng-disabled="!editing")
         div(layout)
-            md-input-container(flex)
-                label 入学时间
-                input(bs-datepicker ng-model="education.admissionDate")
+            //- md-input-container(flex)
+            //-     label 入学时间
+            //-     input(bs-datepicker ng-model="education.admissionDate")
             md-input-container(flex)
                 label 毕业时间
                 input(bs-datepicker ng-model="education.graduationDate")
@@ -17,11 +17,11 @@ form(ng-submit="save(education.$save(), eduForm)" name="eduForm")
         div(layout)
             md-input-container.row-has-value(flex)
                 label 学历
-                md-select(ng-model="education.educationBackground")
+                md-select(ng-model="education.educationBackgroundId")
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('education_backgrounds')") {{item.label}}
             md-input-container.row-has-value(flex)
                 label 学位
-                md-select(ng-model="education.degree")
+                md-select(ng-model="education.degreeId")
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('degrees')") {{item.label}}
         //- md-input-container
         //-     label 证明人
