@@ -5,6 +5,10 @@
 
     .resume-cell {
         margin: 30px 0;
+
+        &:first-child {
+            margin-top: 0;
+        }
     }
 
     .resume-header {
@@ -82,7 +86,7 @@
         .resume-item {
             display: flex;
             flex: 1;
-            height: 36px;
+            min-height: 36px;
 
             &.auto-height {
                 height: auto;
