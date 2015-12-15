@@ -6,8 +6,8 @@ md-dialog(ng-controller="EditableResourceCtrl" style="min-width: 500px;" ng-init
         form(ng-submit="save(current.$save(), change_leave_form, ctrl.tableData);dialog.close();" name="change_leave_form")
             div.mt20(layout style="padding: 0 20px; margin-bottom: 40px;")
                 label.mr10(style="line-height: 37px;") 假别
-                md-input-container(style="padding-bottom: 19px;" md-no-float)
-                    md-select(style="width: 200px;" ng-model="current.type")
+                md-input-container(flex style="padding-bottom: 19px;" md-no-float)
+                    md-select(ng-model="current.type")
                         md-option(value="Flow::PersonalLeave") 事假
                         md-option(value="Flow::SickLeave") 病假
                         md-option(value="Flow::AnnualLeave") 年假
