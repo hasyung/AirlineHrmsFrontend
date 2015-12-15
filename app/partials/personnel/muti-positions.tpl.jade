@@ -20,7 +20,8 @@
             md-input-container.row-has-value(flex)
                 label 岗位性质
                 md-select(ng-model="posItem.category" ng-disabled="!editStatus" ng-click="ctrl.queryPrimary(positions)")
-                    md-option(aria-label="primary" value="主职" ng-hide="hasPrimary") 主职
+                    //- md-option(aria-label="primary" value="主职" ng-hide="hasPrimary") 主职
+                    md-option(aria-label="primary" value="主职") 主职
                     md-option(aria-label="part" value="兼职") 兼职
                     md-option(aria-label="proxy" value="代理") 代理
         .item-action-container(flex="10" ng-if="editStatus")

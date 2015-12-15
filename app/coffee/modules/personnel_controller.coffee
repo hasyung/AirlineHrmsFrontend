@@ -1138,6 +1138,7 @@ orgMutiPos = ($rootScope)->
             @scope.positions[index-1] = temp
 
         queryPrimary: (positions)->
+            # 业务变更: 可以拥有多个主职了
             self = @
 
             self.scope.hasPrimary = false
