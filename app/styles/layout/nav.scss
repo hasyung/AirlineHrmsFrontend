@@ -199,13 +199,14 @@
         }
 
         .avatar {
+            border-radius: 20px;
             height: 40px;
             margin-left: 10px;
             margin-top: -10px;
+            overflow: hidden;
             width: 40px;
 
             img {
-                height: 100%;
                 width: 100%;
             }
         }
@@ -325,12 +326,6 @@
         .nb-dropdown {
             .dropdown-toggle {
                 color: #fff;
-
-                .avatar {
-                    img {
-                        border-radius: 20px;
-                    }
-                }
             }
 
             .dropdown-menu {
