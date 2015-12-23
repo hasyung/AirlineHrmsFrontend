@@ -11,7 +11,7 @@ form(ng-submit="save(education.$save(), eduForm)" name="eduForm")
     .btngroup--single(ng-show="editing")
         span(flex)
         span
-            .btngroup__btn(ng-click="cancel(current,$event, eduForm)")
+            .btngroup__btn(ng-click="cancel(education, $event, eduForm);")
                 .btn__icon.btn__icon--cancel
         span
             button.btngroup__btn(type="submit")
