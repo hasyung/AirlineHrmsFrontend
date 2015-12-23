@@ -36,7 +36,7 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                             td(ng-bind="child.company")
                             td.control-td
                                 button.fa.fa-times(ng-click="child.$destroy()")
-                form.add-member(ng-repeat="nc in newChildren" ng-init="nc.relation='children';")
+                form.add-member(ng-hide="!newChildren.length" ng-repeat="nc in newChildren" ng-init="nc.relation='children';")
                     div(layout)
                         md-input-container(flex)
                             label 姓名
@@ -94,7 +94,7 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                             td(ng-bind="omg.company")
                             td.control-td
                                 button.fa.fa-times(ng-click="omg.$destroy()")
-                form.add-member(ng-repeat="no in newOther" ng-init="no.relation='other';")
+                form.add-member(ng-hide="!newOther.length" ng-repeat="no in newOther" ng-init="no.relation='other';")
                     div(layout)
                         md-input-container(flex)
                             label 姓名
