@@ -61,8 +61,8 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                         md-button.md-raised.white(type="button" ng-click="newChildren.splice($index, 1)") 取消
                         md-button.md-raised.md-primary(type="button" ng-click="vm.children.$create(nc);newChildren.splice($index, 1)") 提交
 
-                //- .add(ng-hide="newChildren.length")
-                //-     button.fa.fa-plus(ng-click="newChildren.push({})")
+                .add(ng-hide="newChildren.length")
+                    button.fa.fa-plus(ng-click="newChildren.push({})")
 
             md-content.form-material-section.form-table-container(ng-init="vm.other = currentUser.familymembers.$search({relation: 'other'}); newOther = []")
                 .btngroup--top--right(style="padding-right: 0;")
@@ -119,6 +119,6 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                         md-button.md-raised.white(type="button" ng-click="newOther.splice($index, 1)") 取消
                         md-button.md-raised.md-primary(type="button" ng-click="vm.other.$create(no);newOther.splice($index, 1)") 提交
 
-                //- .add(ng-hide="newOther.length")
-                //-     button.fa.fa-plus(ng-click="newOther.push({})")
+                .add(ng-hide="newOther.length")
+                    button.fa.fa-plus(ng-click="newOther.push({})")
 
