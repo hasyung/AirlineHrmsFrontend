@@ -1,12 +1,12 @@
 form(ng-submit="save(education.$save(), eduForm)" name="eduForm")
     .btngroup--single(ng-hide="editing")
         span(flex)
-        //- span
-        //-     .btngroup__btn(ng-click="edit($event)")
-        //-         .btn__icon.btn__icon--edit
-        //- span
-        //-     .btngroup__btn(type="button" ng-click="education.$destroy()")
-        //-         .btn__icon.btn__icon--del
+        span
+            .btngroup__btn(ng-click="edit($event)")
+                .btn__icon.btn__icon--edit
+        span
+            .btngroup__btn(type="button" ng-click="education.$destroy()")
+                .btn__icon.btn__icon--del
 
     .btngroup--single(ng-show="editing")
         span(flex)
