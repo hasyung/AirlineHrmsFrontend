@@ -113,7 +113,8 @@ paths =
         'compat/pomeloclient.js'
         'compat/datepicker-local.jquery.js'
         'compat/vendor/ng-material-dropmenu.js'
-        'deps/ng-flow/dist/ng-flow-standalone.js'
+        'compat/ng-flow.js'
+        # 'deps/ng-flow/dist/ng-flow-standalone.js'
         # 'deps/angular-ui-utils/ui-utils.js'
         # 'deps/jasny-bootstrap/dist/js/jasny-bootstrap.js' jasny bootstrap 增强版，提供一些好用组件
         'deps/ng-echarts/dist/ng-echarts.js'

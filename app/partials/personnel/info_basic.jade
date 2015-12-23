@@ -5,7 +5,7 @@ div.panel-bg-gray(ng-init = "current = panel.employee; current.$refresh();" ng-c
 
     .personnel-base-info(layout)
         .big-avator-area
-            img(ng-src="{{current.favicon.middle}}" ng-if="current.favicon")
+            img(ng-src="{{current.favicon.big}}" ng-if="current.favicon")
             img(src="http://www.placehold.it/110x110/EFEFEF/AAAAAA&text=no+image" ng-if="!current.favicon")
         .employee-info(has-permission="employees_show")
             .employee-name() {{::current.name}}
