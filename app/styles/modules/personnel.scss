@@ -39,7 +39,6 @@
                 width: 110px;
 
                 img {
-                    height: 100%;
                     width: 100%;
                 }
 
@@ -289,7 +288,6 @@
     width: 120px;
 
     img {
-        height: 100%;
         width: 100%;
     }
 }
@@ -576,7 +574,11 @@
 
         .avator-box {
             height: 360px;
-            width: 100%;
+            text-align: center;
+
+            img {
+                height: 100%;
+            }
         }
 
         .btn-avator-add {
@@ -604,7 +606,7 @@
         }
 
         .avator-preview-item {
-            margin-top: 25px;
+            margin: 25px auto 0;
 
             &.first {
                 margin-top: 0;
@@ -612,26 +614,35 @@
         }
 
         .big-avator {
+            border-radius: 55px;
+            height: 110px;
+            overflow: hidden;
+            width: 110px;
+
             img {
-                border-radius: 55px;
-                height: 110px;
-                width: 110px;
+                width: 100%;
             }
         }
 
         .mid-avator {
+            border-radius: 36px;
+            height: 72px;
+            overflow: hidden;
+            width: 72px;
+
             img {
-                border-radius: 36px;
-                height: 72px;
-                width: 72px;
+                width: 100%;
             }
         }
 
         .sml-avator {
+            border-radius: 20px;
+            height: 40px;
+            overflow: hidden;
+            width: 40px;
+
             img {
-                border-radius: 20px;
-                height: 40px;
-                width: 40px;
+                width: 100%;
             }
 
         }

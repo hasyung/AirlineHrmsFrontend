@@ -2,8 +2,8 @@ form(ng-controller="EditableResourceCtrl", ng-submit="save(currentUser.$save(), 
     //- 顶部按钮组 右上
     .btngroup--top--right
         span(flex)
-        //- span(ng-hide="editing")
-        //-     md-button.md-raised.md-primary(ng-click="edit($event)") 编辑
+        span(ng-hide="editing")
+            md-button.md-raised.md-primary(ng-click="edit($event)") 编辑
         span(ng-show="editing")
             md-button.md-raised.white(ng-click="cancel(currentUser, $event, infoForm, [currentUser.contact])") 取消
             md-button.md-raised.md-primary(type="submit" style="margin-left: 20px") 保存
