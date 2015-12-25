@@ -6,7 +6,7 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                     include self_info_lover_edit
                 section.form-material-section(ng-if="vm.lovers.length == 0" ng-init="wife = vm.lovers.$new(); wife.relation='lover';" style="padding-bottom: 0;")
                     include self_info_lover_edit
-            md-content.form-material-section.form-table-container(ng-init="vm.children = currentUser.familymembers.$search({relation: 'children'}); newChildren = []")
+            md-content.form-material-section.form-table-container(ng-init="vm.children = currentUser.familymembers.$search({relation: 'children'}); newChild = null")
                 .btngroup--top--right(style="padding-right: 0;")
                     span(flex)
                     //- span(ng-hide="editing")
@@ -22,6 +22,7 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                             th 姓名
                             th 关系
                             th 性别
+                            th 身份证
                             th 出生年月
                             th 常住户口所在地
                             th 学校或工作单位
@@ -31,40 +32,44 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                             td(ng-bind="child.name")
                             td(ng-bind="child.relationType")
                             td(ng-bind="child.gender")
+                            td(ng-bind="child.identityNo")
                             td(ng-bind="child.birthday | date:'yyyy-MM-dd'")
                             td(ng-bind="child.residenceBooklet")
                             td(ng-bind="child.company")
                             td.control-td
                                 button.fa.fa-times(ng-click="child.$destroy()")
-                form.add-member(ng-repeat="nc in newChildren" ng-init="nc.relation='children';")
+                form.add-member(ng-show="newChild")
                     div(layout)
                         md-input-container(flex)
                             label 姓名
-                            input(ng-model="nc.name" required)
+                            input(ng-model="newChild.name" required)
                         md-input-container(flex)
                             label 关系
-                            input(ng-model="nc.relationType" required)
+                            input(ng-model="newChild.relationType" required)
                     div(layout)
                         md-input-container(flex)
                             label 性别
-                            input(ng-model="nc.gender" required)
+                            input(ng-model="newChild.gender" required)
                         md-input-container(flex)
                             label 出生年月
-                            input(ng-model="nc.birthday" bs-datepicker)
+                            input(ng-model="newChild.birthday" bs-datepicker)
+                    md-input-container
+                        label 身份证
+                        input(ng-model="newChild.identityNo" columns="1")
                     md-input-container
                         label 常住户口所在地
-                        input(ng-model="nc.residenceBooklet" columns="1")
+                        input(ng-model="newChild.residenceBooklet" columns="1")
                     md-input-container
                         label 学校或工作单位
-                        input(ng-model="nc.company" columns="1")
+                        input(ng-model="newChild.company" columns="1")
                     .form-actions
-                        md-button.md-raised.white(type="button" ng-click="newChildren.splice($index, 1)") 取消
-                        md-button.md-raised.md-primary(type="button" ng-click="vm.children.$create(nc);newChildren.splice($index, 1)") 提交
+                        md-button.md-raised.white(type="button" ng-click="newChild = null") 取消
+                        md-button.md-raised.md-primary(type="button" ng-click="vm.children.$create(newChild); newChild = null") 提交
 
-                //- .add(ng-hide="newChildren.length")
-                //-     button.fa.fa-plus(ng-click="newChildren.push({})")
+                .add(ng-hide="newChild")
+                    button.fa.fa-plus(ng-click="newChild={relation:'children'}")
 
-            md-content.form-material-section.form-table-container(ng-init="vm.other = currentUser.familymembers.$search({relation: 'other'}); newOther = []")
+            md-content.form-material-section.form-table-container(ng-init="vm.other = currentUser.familymembers.$search({relation: 'other'}); newOther = null")
                 .btngroup--top--right(style="padding-right: 0;")
                     span(flex)
                     //- span(ng-hide="editing")
@@ -80,6 +85,7 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                             th 姓名
                             th 关系
                             th 性别
+                            th 身份证
                             th 出生年月
                             th 常住户口所在地
                             th 学校或工作单位
@@ -89,36 +95,40 @@ section.personnel-info-section(ng-init="vm.lovers = currentUser.familymembers.$s
                             td(ng-bind="omg.name")
                             td(ng-bind="omg.relationType")
                             td(ng-bind="omg.gender")
+                            td(ng-bind="omg.identityNo")
                             td(ng-bind="omg.birthday | date:'yyyy-MM-dd'")
                             td(ng-bind="omg.residenceBooklet")
                             td(ng-bind="omg.company")
                             td.control-td
                                 button.fa.fa-times(ng-click="omg.$destroy()")
-                form.add-member(ng-repeat="no in newOther" ng-init="no.relation='other';")
+                form.add-member(ng-show="newOther")
                     div(layout)
                         md-input-container(flex)
                             label 姓名
-                            input(ng-model="no.name" required)
+                            input(ng-model="newOther.name" required)
                         md-input-container(flex)
                             label 关系
-                            input(ng-model="no.relationType" required)
+                            input(ng-model="newOther.relationType" required)
                     div(layout)
                         md-input-container(flex)
                             label 性别
-                            input(ng-model="no.gender" required)
+                            input(ng-model="newOther.gender" required)
                         md-input-container(flex)
                             label 出生年月
-                            input(ng-model="no.birthday" bs-datepicker)
+                            input(ng-model="newOther.birthday" bs-datepicker)
+                    md-input-container
+                        label 身份证
+                        input(ng-model="newChild.identityNo")
                     md-input-container
                         label 常住户口所在地
-                        input(ng-model="no.residenceBooklet")
+                        input(ng-model="newOther.residenceBooklet")
                     md-input-container
                         label 学校或工作单位
-                        input(ng-model="no.company")
+                        input(ng-model="newOther.company")
                     .form-actions()
-                        md-button.md-raised.white(type="button" ng-click="newOther.splice($index, 1)") 取消
-                        md-button.md-raised.md-primary(type="button" ng-click="vm.other.$create(no);newOther.splice($index, 1)") 提交
+                        md-button.md-raised.white(type="button" ng-click="newOther = null;") 取消
+                        md-button.md-raised.md-primary(type="button" ng-click="vm.other.$create(newOther); newOther = null;") 提交
 
-                //- .add(ng-hide="newOther.length")
-                //-     button.fa.fa-plus(ng-click="newOther.push({})")
+                .add(ng-hide="newOther")
+                    button.fa.fa-plus(ng-click="newOther={relation:'other'}")
 
