@@ -4,6 +4,7 @@ class RootController extends nb.Controller
     @.$inject = ['$scope', '$rootScope', 'CURRENT_ROLES']
 
     constructor: (@scope, @rootScope, CURRENT_ROLES)->
+        @isIE = @rootScope.isIE
         @show_main = false
         @current_roles = CURRENT_ROLES
 
