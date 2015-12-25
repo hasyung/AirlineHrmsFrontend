@@ -31,30 +31,30 @@ form(name="empEditForm" ng-submit="" ng-controller="EditableResourceCtrl")
                 md-select(ng-model="current.politicalStatusId" ng-disabled="!editing")
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('political_status')") {{item.label}}
             md-input-container(flex)
-                label 联系方式
-                input(type="text", ng-model="current.contact.mobile", name="contact")
+                label 入党时间
+                input(ng-model="current.joinPartyDate" bs-datepicker disabled)
 
         div(layout)
+            md-input-container(flex)
+                label 联系方式
+                input(type="text", ng-model="current.contact.mobile", name="contact")
             md-input-container(flex)
                 label 参工时间
                 input(ng-model="current.startWorkDate" bs-datepicker)
             md-input-container(flex)
                 label 到岗时间
                 input(ng-model="current.joinScalDate" bs-datepicker)
+
+        div(layout)
             md-input-container(flex)
                 label 实习时间
                 input(ng-model="current.startInternshipDate" bs-datepicker)
-
-        div(layout)
             md-input-container(flex)
                 label 毕业院校
                 input(type="text", ng-model="current.school")
             md-input-container(flex)
                 label 专业
                 input(type="text" placeholder="请输入专业" ng-model="current.major")
-            md-input-container(flex)
-                label 毕业时间
-                input(bs-datepicker placeholder="请输入毕业时间" ng-model="current.graduateDate")
 
         div.position-item(layout ng-if="current.languages" ng-repeat="language in current.languages")
             md-input-container.row-has-value(flex)
@@ -81,6 +81,9 @@ form(name="empEditForm" ng-submit="" ng-controller="EditableResourceCtrl")
                     md-icon(md-svg-src="/images/svg/ic_add_24px.svg" style="margin-top: -2px;" aria-label="添加岗位")
 
         div(layout)
+            md-input-container(flex)
+                label 毕业时间
+                input(bs-datepicker placeholder="请输入毕业时间" ng-model="current.graduateDate")
             md-input-container.row-has-value(flex)
                 label 学历
                 md-select(ng-model="current.educationBackgroundId" ng-disabled="!editing")
@@ -89,6 +92,7 @@ form(name="empEditForm" ng-submit="" ng-controller="EditableResourceCtrl")
                 label 学位
                 md-select(ng-model="current.degreeId" ng-disabled="!editing")
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('degrees')") {{item.label}}
+        div(layout)
             md-input-container.row-has-value(flex)
                 label 试用时间(月)
                 input(type="number" ng-model="current.probationMonths" max="12" min="0")

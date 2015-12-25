@@ -15,7 +15,7 @@ md-dialog(flow-init="{target: '/api/me/upload_favicon', uploadMethod:'PUT', test
                         |选择图片
                     p 图片只支持JPG,PNG格式（建议上传一寸照片）
             .src-avator-container.avator-box(ng-show="$flow.files.length")
-                img(flow-img="$flow.files[0]" style="width:360px;height:360px;")
+                img(flow-img="$flow.files[0]")
         .avator-preview.avator-offset(style="width:132px;height:360px;")
             p 预览
             //- 110px

@@ -3,8 +3,8 @@ section.personnel-info-section(ng-init="educations = currentUser.educationExperi
         .personnel-section-wrap
             .btngroup--top--right(ng-hide="param.newExp")
                 span(flex)
-                //- span
-                //-     md-button.md-raised.md-primary(ng-click="param.newExp= educations.$build({category:'before'})") 新增
+                span
+                    md-button.md-raised.md-primary(ng-click="param.newExp= educations.$build({category:'before'})") 新增
             md-content.pt-30(ng-if="param.newExp && param.newExp.category == 'before'" ng-init="newExp = param.newExp")
                 .subheader--center.subheader--margin30
                     .subheader__content

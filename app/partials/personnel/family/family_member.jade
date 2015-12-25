@@ -59,6 +59,7 @@ div(ng-controller="EmployeeMemberCtrl as ctrl"
                     th 姓名
                     th 关系
                     th 性别
+                    th 身份证
                     th 出生年月
                     th 常住户口所在地
                     th 学校或工作单位
@@ -67,6 +68,7 @@ div(ng-controller="EmployeeMemberCtrl as ctrl"
                     td(ng-bind="child.name")
                     td(ng-bind="child.relationType")
                     td(ng-bind="child.gender")
+                    td(ng-bind="child.identityNo")
                     td(ng-bind="child.birthday | date:'yyyy-MM-dd'")
                     td(ng-bind="child.residenceBooklet")
                     td(ng-bind="child.company")
@@ -80,6 +82,7 @@ div(ng-controller="EmployeeMemberCtrl as ctrl"
                     th 姓名
                     th 关系
                     th 性别
+                    th 身份证
                     th 出生年月
                     th 常住户口所在地
                     th 学校或工作单位
@@ -88,6 +91,7 @@ div(ng-controller="EmployeeMemberCtrl as ctrl"
                     td(ng-bind="other.name")
                     td(ng-bind="other.relationType")
                     td(ng-bind="other.gender")
+                    td(ng-bind="child.identityNo")
                     td(ng-bind="other.birthday | date:'yyyy-MM-dd'")
                     td(ng-bind="other.residenceBooklet")
                     td(ng-bind="other.company")
