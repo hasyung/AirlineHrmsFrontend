@@ -18,6 +18,42 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
             label 金额
             input(type="number" min="0" max="100000" step="1" ng-model="current.baseMoney" readonly)
     div(layout)
+        md-input-container.row-has-value(flex)
+            label 干部岗位薪酬等级
+            md-select(ng-model="current.leaderGrade" placeholder="请选择")
+                md-option(value="B1") B1
+                md-option(value="B2") B2
+                md-option(value="C1") C1
+                md-option(value="C2") C2
+                md-option(value="C3") C3
+                md-option(value="C4") C4
+                md-option(value="C5") C5
+                md-option(value="D1") D1
+                md-option(value="D2") D2
+                md-option(value="D3") D3
+                md-option(value="D4") D4
+        md-input-container(flex)
+            label 干部补贴飞行时间
+            input(type="number" min="0" max="100000" step="1" ng-model="current.leaderSubsidyHour")
+    div(layout)
+        md-input-container.row-has-value(flex)
+            label 专业技术等级
+            md-select(ng-model="current.technicalGrade" placeholder="请选择")
+                md-option(value="公司级专业技术专家1") 公司级专业技术专家1
+                md-option(value="公司级专业技术专家2") 公司级专业技术专家2
+                md-option(value="公司级专业技术专家3") 公司级专业技术专家3
+                md-option(value="部门级专业技术专家1") 部门级专业技术专家1
+                md-option(value="部门级专业技术专家2") 部门级专业技术专家2
+                md-option(value="部门级专业技术专家3") 部门级专业技术专家3
+                md-option(value="部门级专业技术专家4") 部门级专业技术专家4
+                md-option(value="部门级专业技术专员1") 部门级专业技术专员1
+                md-option(value="部门级专业技术专员2") 部门级专业技术专员2
+                md-option(value="部门级专业技术专员3") 部门级专业技术专员3
+                md-option(value="部门级专业技术专员4") 部门级专业技术专员4
+        md-input-container(flex)
+            label 最低飞行时间
+            input(type="number" min="0" max="100000" step="1" ng-model="current.lowerLimitHour")
+    div(layout)
         md-input-container(flex)
             label 岗位工资保留
             input(type="number" min="0" max="100000" step="1" ng-model="current.keepPosition")
@@ -58,6 +94,7 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
         md-input-container.row-has-value(flex)
             label 工龄工资
             input(ng-model="current.workingYearsSalary")
+    div(layout)
         md-input-container.row-has-value(flex)
             label 小时费
             md-select(ng-model="current.flyHourFee" placeholder="请选择" ng-change="exchangeCtrl.fly_hour(current)")
