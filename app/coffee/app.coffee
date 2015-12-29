@@ -161,6 +161,19 @@ routeConf = ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvide
 secConf = ($sceDelegateProvider) ->
     $sceDelegateProvider.resourceUrlWhitelist(['self'])
 
+# 检测是否ie浏览器 采取相应措施
+ieKiller = () ->
+    Sys = {}
+    ua = navigator.userAgent.toLowerCase()
+
+    if (s = ua.match(/rv:([\d.]+)\) like gecko/))
+        Sys.ie = s[1]
+    else if (s = ua.match(/msie ([\d.]+)/))
+        Sys.ie = s[1]
+    else
+        Sys.ie = 0
+
+    return Sys
 
 App
     .config ['$provide', 'ngDialogProvider', appConf]
@@ -184,6 +197,10 @@ App
         '$timeout'
         'AuthService'
     (menu, $state, i18nService, $location, $rootScope, toaster, $http, Org, OrgStore, sweet, User, $enum, $timeout, AuthServ) ->
+        sys = ieKiller()
+
+        $rootScope.isIE = sys.ie
+
         $rootScope.menu = menu
 
         i18nService.setCurrentLang('zh-cn')
