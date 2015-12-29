@@ -998,8 +998,6 @@ class SalaryExchangeController
         setting = @$settingHash(current.performanceWage)
         flags = []
 
-        console.log setting
-
         angular.forEach setting.flags, (config, flag) ->
             return if !angular.isDefined(config)
             return if !angular.isDefined(config["X"])
@@ -1015,6 +1013,19 @@ class SalaryExchangeController
 
         setting = @$settingHash(current.baseWage)
         current.baseMoney = setting.flags[current.baseFlag]['amount']
+
+    flyPerf: (current) ->
+        return unless current.leaderGrade
+
+        setting = @$settingHash('market_leader_perf')
+
+        angular.forEach setting.flags, (config, flag) ->
+            return if !angular.isDefined(config)
+            return if !angular.isDefined(config["X"])
+
+            if config["X"]["format_cell"] == current.leaderGrade
+                current.performanceMoney = config['amount']
+                return
 
     fly_flag_array: (current)->
         return unless current.baseWage
