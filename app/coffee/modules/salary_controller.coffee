@@ -190,6 +190,10 @@ class SalaryController extends nb.Controller
                           "service_c_3_perf",                   # 绩效-服务C-3
                           "service_c_driving_base",             # 基础-服务C-驾驶，固定2100
                           "service_c_driving_perf",             # 绩效-服务C-驾驶
+                          "market_leader_perf",                 # 绩效-营销类Y/管理A类
+                          "material_leader_perf",               # 绩效-航务/航材技术类H
+                          "information_leader_perf",            # 绩效-信息技术类E
+                          "service_leader_perf",                # 绩效-机务维修技术类W
                           "flyer_hour",                         # 小时费-飞行员
                           "fly_attendant_hour",                 # 小时费-空乘
                           "air_security_hour",                  # 小时费-空保
@@ -835,8 +839,8 @@ class SalaryExchangeController
         return unless current.baseFlag
 
         if current.baseWage == 'service_c_driving_base'
-          current.baseMoney = 2100
-          return
+            current.baseMoney = 2100
+            return
 
         setting = @$settingHash(current.baseWage)
         flag = setting.flags[current.baseFlag]
@@ -861,14 +865,14 @@ class SalaryExchangeController
         flags = []
 
         if current.baseWage == 'service_c_driving_base'
-          return
+            return
 
         angular.forEach setting.flags, (config, flag)->
-          if Object.keys(config).indexOf(current.baseChannel) >= 0
-            format_cell = config[current.baseChannel]['format_cell']
+            if Object.keys(config).indexOf(current.baseChannel) >= 0
+                format_cell = config[current.baseChannel]['format_cell']
 
-            if format_cell && format_cell.length > 0
-              flags.push(flag)
+                if format_cell && format_cell.length > 0
+                    flags.push(flag)
 
         return flags
 
@@ -877,18 +881,43 @@ class SalaryExchangeController
         setting = @$settingHash(current.performanceWage)
 
         flag = setting.flags[current.performanceFlag]
+
         return current.performanceMoney = flag.amount if angular.isDefined(flag)
         return 0
 
-    perf_channel_array: (current)->
-      return unless current.performanceWage
+    changeBaseWage: (current) ->
+        if current.baseWage=='leader_base'
+            current.performanceWage = null
+            current.performanceChannel = null
+            current.performanceFlag = null
+            current.performanceMoney = null
 
-      setting = @$settingHash(current.performanceWage)
-      channels = []
-      angular.forEach setting.flag_list, (item)->
-          if item != 'rate' && !_.startsWith(item, 'amount')
-              channels.push(setting.flag_names[item])
-      _.uniq(channels)
+        current.baseChannel = null
+        current.baseFlag = null
+        current.baseMoney = null
+
+    changeBaseChannel: (current) ->
+        if current.baseWage=='leader_base'
+            current.performanceFlag = null
+            current.performanceMoney = null
+
+        current.baseFlag = null
+        current.baseMoney = null
+
+    changePerWage: (current) ->
+        current.performanceChannel = null
+        current.performanceFlag = null
+        current.performanceMoney = null
+
+    perf_channel_array: (current)->
+        return unless current.performanceWage
+
+        setting = @$settingHash(current.performanceWage)
+        channels = []
+        angular.forEach setting.flag_list, (item)->
+            if item != 'rate' && !_.startsWith(item, 'amount')
+                channels.push(setting.flag_names[item])
+        _.uniq(channels)
 
     perf_flag_array: (current)->
         return unless current.performanceWage
@@ -897,11 +926,28 @@ class SalaryExchangeController
         flags = []
 
         angular.forEach setting.flags, (config, flag)->
-          if Object.keys(config).indexOf(current.performanceChannel) >= 0
-            format_cell = config[current.performanceChannel]['format_cell']
+            if Object.keys(config).indexOf(current.performanceChannel) >= 0
+                format_cell = config[current.performanceChannel]['format_cell']
 
-            if format_cell && format_cell.length > 0
-              flags.push(flag)
+                if format_cell && format_cell.length > 0
+                    flags.push(flag)
+
+        return flags
+
+    leaderPerfFlagArray: (current) ->
+        return unless current.performanceWage
+
+        setting = @$settingHash(current.performanceWage)
+        flags = []
+
+        console.log setting
+
+        angular.forEach setting.flags, (config, flag) ->
+            return if !angular.isDefined(config)
+            return if !angular.isDefined(config["X"])
+
+            if config["X"]["format_cell"] == current.baseChannel
+                flags.push(flag)
 
         return flags
 

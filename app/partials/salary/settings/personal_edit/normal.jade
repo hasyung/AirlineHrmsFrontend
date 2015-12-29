@@ -2,7 +2,7 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
     div(layout)
         md-input-container.row-has-value(flex)
             label 基础工资
-            md-select(ng-model="current.baseWage" placeholder="请选择" ng-change="exchangeCtrl.normal(current)")
+            md-select(ng-model="current.baseWage" placeholder="请选择" ng-change="exchangeCtrl.normal(current); exchangeCtrl.changeBaseWage(current);")
                 md-option(value="leader_base") 干部
                 md-option(value="manager15_base") 管理15
                 md-option(value="manager12_base") 管理12
@@ -11,7 +11,7 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
                 md-option(value="service_c_base") 服务C
         md-input-container.row-has-value(flex ng-if="current.baseWage != 'service_c_driving_base'")
             label 薪酬通道
-            md-select(ng-model="current.baseChannel" placeholder="请选择" ng-change="exchangeCtrl.normal(current)")
+            md-select(ng-model="current.baseChannel" placeholder="请选择" ng-change="exchangeCtrl.normal(current); exchangeCtrl.changeBaseChannel(current)")
                 md-option(ng-value="item" ng-repeat="item in exchangeCtrl.normal_channel_array(current)") {{item}}
         md-input-container.row-has-value(flex ng-if="current.baseWage != 'service_c_driving_base'")
             label 档级
@@ -25,23 +25,32 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
     div(layout)
         md-input-container.row-has-value(flex)
             label 绩效工资
-            md-select(ng-model="current.performanceWage" placeholder="请选择" ng-change="exchangeCtrl.perf(current)")
-                md-option(value="information_perf") 信息通道
-                md-option(value="airline_business_perf") 航务航材
-                md-option(value="manage_market_perf") 管理营销
-                md-option(value="service_c_1_perf") 服务C1
-                md-option(value="service_c_2_perf") 服务C2
-                md-option(value="service_c_3_perf") 服务C3
-                md-option(value="service_c_driving_perf") 服务C-驾驶
+            md-select(ng-model="current.performanceWage" placeholder="请选择" ng-change="exchangeCtrl.perf(current); exchangeCtrl.changePerWage(current);")
+                md-option(ng-if="current.baseWage!='leader_base'" value="information_perf") 信息通道
+                md-option(ng-if="current.baseWage!='leader_base'" value="airline_business_perf") 航务航材
+                md-option(ng-if="current.baseWage!='leader_base'" value="manage_market_perf") 管理营销
+                md-option(ng-if="current.baseWage!='leader_base'" value="service_c_1_perf") 服务C1
+                md-option(ng-if="current.baseWage!='leader_base'" value="service_c_2_perf") 服务C2
+                md-option(ng-if="current.baseWage!='leader_base'" value="service_c_3_perf") 服务C3
+                md-option(ng-if="current.baseWage!='leader_base'" value="service_c_driving_perf") 服务C-驾驶
+                md-option(ng-if="current.baseWage=='leader_base'" value="market_leader_perf") 营销类Y/管理A类
+                md-option(ng-if="current.baseWage=='leader_base'" value="material_leader_perf") 航务/航材技术类H
+                md-option(ng-if="current.baseWage=='leader_base'" value="information_leader_perf") 信息技术类E
+                md-option(ng-if="current.baseWage=='leader_base'" value="service_leader_perf") 机务维修技术类W
                 //- md-option(value="service_c_base") 服务C
-        md-input-container.row-has-value(flex)
+        md-input-container.row-has-value(flex ng-if="current.baseWage!='leader_base'")
             label 绩效考核结果
             md-select(ng-model="current.performanceChannel" placeholder="请选择" ng-change="exchangeCtrl.perf(current)")
                 md-option(ng-value="item" ng-repeat="item in exchangeCtrl.perf_channel_array(current)") {{item}}
-        md-input-container.row-has-value(flex)
+        md-input-container.row-has-value(flex ng-if="current.baseWage!='leader_base'")
             label 档级
             md-select(ng-model="current.performanceFlag" placeholder="请选择" ng-change="exchangeCtrl.perf(current)")
                 md-option(ng-value="item" ng-repeat="item in exchangeCtrl.perf_flag_array(current)") {{item}}
+        md-input-container.row-has-value(flex ng-if="current.baseWage=='leader_base'")
+            label 档级
+            md-select(ng-model="current.performanceFlag" placeholder="请选择" ng-change="exchangeCtrl.perf(current)")
+                md-option(ng-value="item" ng-repeat="item in exchangeCtrl.leaderPerfFlagArray(current)") {{item}}
+
         md-input-container(flex)
             label 金额
             input(type="number" min="0" max="100000" step="1" ng-model="current.performanceMoney" readonly)
