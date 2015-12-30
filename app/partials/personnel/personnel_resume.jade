@@ -42,13 +42,16 @@
                     //- .resume-item
                     //-     label.control-label 出生年月
                     //-     .form-content(ng-bind="resume.birthday  | date:'yyyy-MM-dd'")
-                .resume-row
-                    .resume-item
-                        label.control-label 政治面貌
-                        .form-content() 党员
                     .resume-item
                         label.control-label 婚姻状况
                         .form-content(ng-bind="resume.maritalStatus.displayName")
+                .resume-row
+                    .resume-item
+                        label.control-label 政治面貌
+                        .form-content(ng-bind="$enum.parseLabel(resume.politicalStatusId, 'political_status')")
+                    .resume-item
+                        label.control-label 入党时间
+                        .form-content(ng-bind="resume.joinPartyDate | date:'yyyy-MM-dd'")
                 .resume-row
                     .resume-item
                         label.control-label 学历
