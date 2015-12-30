@@ -96,3 +96,11 @@ form(name="empEditForm" ng-submit="" ng-controller="EditableResourceCtrl")
             md-input-container.row-has-value(flex)
                 label 试用时间(月)
                 input(type="number" ng-model="current.probationMonths" max="12" min="0")
+            md-input-container(flex)
+                label 转合同时间
+                input(bs-datepicker ng-model="current.changeContractDate" disabled)
+            md-input-container(flex)
+                label 转合同制时间
+                input(bs-datepicker ng-model="current.changeContractSystemDate" disabled)
+
+
