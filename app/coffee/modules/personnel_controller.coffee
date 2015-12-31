@@ -469,7 +469,7 @@ class LeaveEmployeesCtrl extends nb.Controller
                     displayName: '变动性质'
                 }
                 {
-                    name: 'approve_leave_job_date'
+                    name: 'change_date'
                     type: 'date-range'
                     displayName: '离职时间'
                 }
