@@ -511,6 +511,16 @@ class AttendanceCtrl extends nb.Controller
         @year = @year_list[@year_list.length - 1]
         @month = @month_list[@month_list.length - 1]
 
+    loadMonthList: () ->
+        if @year == new Date().getFullYear()
+            months = [1..new Date().getMonth() + 1]
+        else
+            months = [1..12]
+
+        @month_list = _.map months, (item)->
+            item = '0' + item if item < 10
+            item + ''
+
     loadCheckList: ()->
         @tableData = @Leave.$collection().$fetch()
 

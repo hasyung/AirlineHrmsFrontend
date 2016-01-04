@@ -25,6 +25,8 @@ Employee = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('employee:leave:success', "员工已设置为离职状态")
             'after-change-education': ->
                 $Evt.$send('employee:change_education:success', "员工学历已更新")
+            'after-edit-technical': ->
+                $Evt.$send('employee:edit_technical:success', "员工技术通道等级已更新")
         }
 
         $extend:
@@ -56,6 +58,21 @@ Employee = (restmod, RMUtils, $Evt) ->
 
                     onSuccess = (res) ->
                         self.$dispatch 'after-leave'
+                        list.$refresh(tableState)
+
+                    this.$send(request, onSuccess)
+
+                edit_tech: (params, list, tableState)->
+                    self = this
+
+                    request = {
+                        url: "/api/employees/#{this.id}/edit_tech"
+                        method: "POST"
+                        data: params
+                    }
+
+                    onSuccess = (res) ->
+                        self.$dispatch 'after-edit-technical'
                         list.$refresh(tableState)
 
                     this.$send(request, onSuccess)
