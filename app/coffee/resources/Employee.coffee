@@ -60,6 +60,21 @@ Employee = (restmod, RMUtils, $Evt) ->
 
                     this.$send(request, onSuccess)
 
+                edit_tech: (params, list, tableState)->
+                    self = this
+
+                    request = {
+                        url: "/api/employees/#{this.id}/edit_tech"
+                        method: "POST"
+                        data: params
+                    }
+
+                    onSuccess = (res) ->
+                        self.$dispatch 'after-edit-technical'
+                        list.$refresh(tableState)
+
+                    this.$send(request, onSuccess)
+
                 update_education: (params, list, tableState)->
                     self = this
 

@@ -8,6 +8,13 @@ tabset(flex)
                     .md-toolbar-tools
                         h2 员工人事花名册
                         div(flex)
+                        md-button.md-primary.md-raised(
+                            has-permission="employees_transfer_to_regular_worker"
+                            ng-disabled="ctrl.getSelected().length != 1 || ctrl.importing"
+                            nb-dialog
+                            template-url="/partials/personnel/edit_tech.html"
+                            locals="{employee: ctrl.getSelected()[0], list: ctrl.employees, tableState: ctrl.tableState}"
+                        ) 技术通道等级变更
 
                         md-button.md-primary.md-raised(
                             has-permission="employees_transfer_to_regular_worker"
