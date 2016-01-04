@@ -249,6 +249,16 @@ class SocialComputeController extends nb.Controller
 
         ]
 
+    loadMonthList: () ->
+        if @currentYear == new Date().getFullYear()
+            months = [1..new Date().getMonth() + 1]
+        else
+            months = [1..12]
+
+        @month_list = _.map months, (item)->
+            item = '0' + item if item < 10
+            item + ''
+
     loadInitialData: ()->
         @upload_xls_id = 0
         @upload_result = ""
@@ -268,6 +278,7 @@ class SocialComputeController extends nb.Controller
         @currentYear + "-" + @currentMonth
 
     loadRecords: ()->
+        @loadMonthList()
         @socialRecords.$refresh({month: @currentCalcTime()})
 
     # 强制计算
@@ -676,6 +687,16 @@ class AnnuityComputeController extends nb.Controller
 
         ]
 
+    loadMonthList: () ->
+        if @currentYear == new Date().getFullYear()
+            months = [1..new Date().getMonth() + 1]
+        else
+            months = [1..12]
+
+        @month_list = _.map months, (item)->
+            item = '0' + item if item < 10
+            item + ''
+
     loadInitialData: () ->
         @year_list = @$getYears()
         @month_list = @$getMonths()
@@ -694,6 +715,7 @@ class AnnuityComputeController extends nb.Controller
         @currentYear + "-" + @currentMonth
 
     loadRecords: ()->
+        @loadMonthList()
         @annuityRecords.$refresh({date: @currentCalcTime()})
 
     exeCalc: ()->
@@ -1161,6 +1183,18 @@ class DinnerFeeController extends nb.Controller
         @scope.$gridApi = gridApi
         @gridApi = gridApi
 
+    loadMonthList: () ->
+        date = new Date()
+
+        if @currentYear == date.getFullYear() && date.getMonth() + 2 <= 12
+            months = [1..date.getMonth() + 2]
+        else
+            months = [1..12]
+
+        @month_list = _.map months, (item)->
+            item = '0' + item if item < 10
+            item + ''
+
     loadDateTime: () ->
         date = new Date()
 
@@ -1171,7 +1205,7 @@ class DinnerFeeController extends nb.Controller
         @currentMonth = @month_list[@month_list.length - 1]
 
         if @currentMonth < 12
-            @month_list.push(parseInt(@currentMonth, 10)+1)
+            @month_list.push('0' + (parseInt(@currentMonth, 10)+1))
 
     loadInitialData: (options) ->
         args = {month: @currentCalcTime()}
@@ -1188,6 +1222,7 @@ class DinnerFeeController extends nb.Controller
         @currentYear + "-" + @currentMonth
 
     loadRecords: (options = null) ->
+        @loadMonthList()
         args = {month: @currentCalcTime()}
         angular.extend(args, options) if angular.isDefined(options)
         @records.$refresh(args)
@@ -1352,6 +1387,18 @@ class DinnerNightSnackController extends nb.Controller
         @scope.$gridApi = gridApi
         @gridApi = gridApi
 
+    loadMonthList: () ->
+        date = new Date()
+
+        if @currentYear == date.getFullYear() && date.getMonth() + 2 <= 12
+            months = [1..date.getMonth() + 2]
+        else
+            months = [1..12]
+
+        @month_list = _.map months, (item)->
+            item = '0' + item if item < 10
+            item + ''
+
     loadDateTime: () ->
         date = new Date()
 
@@ -1362,7 +1409,7 @@ class DinnerNightSnackController extends nb.Controller
         @currentMonth = @month_list[@month_list.length - 1]
 
         if @currentMonth < 12
-            @month_list.push(parseInt(@currentMonth, 10)+1)
+            @month_list.push('0' + (parseInt(@currentMonth, 10)+1))
 
     loadInitialData: (options) ->
         args = {month: @currentCalcTime()}
@@ -1379,6 +1426,7 @@ class DinnerNightSnackController extends nb.Controller
         @currentYear + "-" + @currentMonth
 
     loadRecords: (options = null) ->
+        @loadMonthList()
         args = {month: @currentCalcTime()}
         angular.extend(args, options) if angular.isDefined(options)
         @dinnerNightSnacks.$refresh(args)
@@ -1486,6 +1534,16 @@ class DinnerSettleController extends nb.Controller
         @scope.$gridApi = gridApi
         @gridApi = gridApi
 
+    loadMonthList: () ->
+        if @currentYear == new Date().getFullYear()
+            months = [1..new Date().getMonth() + 1]
+        else
+            months = [1..12]
+
+        @month_list = _.map months, (item)->
+            item = '0' + item if item < 10
+            item + ''
+
     loadDateTime: () ->
         date = new Date()
 
@@ -1510,6 +1568,7 @@ class DinnerSettleController extends nb.Controller
         @currentYear + "-" + @currentMonth
 
     loadRecords: (options = null) ->
+        @loadMonthList()
         args = {month: @currentCalcTime()}
         angular.extend(args, options) if angular.isDefined(options)
         @records.$refresh(args)
