@@ -231,7 +231,18 @@ class SalaryController extends nb.Controller
     currentCalcTime: ()->
         @currentYear + "-" + @currentMonth
 
+    loadMonthList: () ->
+        if @currentYear == new Date().getFullYear()
+            months = [1..new Date().getMonth() + 1]
+        else
+            months = [1..12]
+
+        @month_list = _.map months, (item)->
+            item = '0' + item if item < 10
+            item + ''
+
     loadGlobalCoefficient: ()->
+        @loadMonthList()
         @$checkCoefficientDefault()
 
     loadGlobalReward: ()->
