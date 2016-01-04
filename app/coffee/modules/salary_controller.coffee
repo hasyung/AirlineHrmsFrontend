@@ -1089,6 +1089,16 @@ class SalaryBaseController extends nb.Controller
         @scope.$gridApi = gridApi
         @gridApi = gridApi
 
+    loadMonthList: () ->
+        if @currentYear == new Date().getFullYear()
+            months = [1..new Date().getMonth() + 1]
+        else
+            months = [1..12]
+
+        @month_list = _.map months, (item)->
+            item = '0' + item if item < 10
+            item + ''
+
     loadDateTime: ()->
         date = new Date()
 
@@ -1099,7 +1109,7 @@ class SalaryBaseController extends nb.Controller
             # 不是正扣倒发模式，看上个月的数据
             if date.getMonth() == 0
                 @year_list.pop()
-                @year_list.unshift(date.getFullYear() - 1)
+                # @year_list.unshift(date.getFullYear() - 1)
                 @month_list = _.map [1..12], (item)->
                     item = '0' + item if item < 10
                     item + '' # to string
@@ -1144,6 +1154,7 @@ class SalaryBaseController extends nb.Controller
         @currentYear + "-" + @currentMonth
 
     loadRecords: (options = null) ->
+        @loadMonthList()
         args = {month: @currentCalcTime()}
         angular.extend(args, options) if angular.isDefined(options)
         @records.$refresh(args)
