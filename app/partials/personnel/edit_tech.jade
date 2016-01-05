@@ -3,7 +3,7 @@ md-dialog.punishment_new(style="min-width: 450px;")
         .md-toolbar-tools
             span 技术通道等级变更
     form(ng-submit="current.edit_tech(params, list, dialog.tableState);dialog.close();" name="editTechForm")
-        md-content(ng-init="current=dialog.employee.$refresh();list=dialog.list;params={}")
+        md-content(ng-init="current=dialog.employee.$refresh();list=dialog.list;params={technical_grade: current.technicalGrade};")
             fieldset
                 div(layout)
                     md-input-container(flex)
@@ -37,11 +37,11 @@ md-dialog.punishment_new(style="min-width: 450px;")
                 div(layout)
                     md-input-container(flex)
                         label 变动时间
-                        input(ng-model="params.date" name="date" bs-datepicker required)
+                        input(ng-model="params.change_date" name="change_date" bs-datepicker required)
                 div(layout)
                     md-input-container(flex)
                         label 文件号
-                        input(ng-model="params.file_no")
+                        input(ng-model="params.oa_file_no")
 
         .md-actions
             md-button(type="button" ng-click="dialog.close()") 取 消

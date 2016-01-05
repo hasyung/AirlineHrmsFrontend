@@ -66,8 +66,8 @@ Employee = (restmod, RMUtils, $Evt) ->
                     self = this
 
                     request = {
-                        url: "/api/employees/#{this.id}/edit_tech"
-                        method: "POST"
+                        url: "/api/employees/#{this.id}/update_technical_grade"
+                        method: "PUT"
                         data: params
                     }
 

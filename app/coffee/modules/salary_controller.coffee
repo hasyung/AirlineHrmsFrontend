@@ -1458,7 +1458,7 @@ class SalaryHoursFeeController extends SalaryBaseController
             {minWidth: 150,displayName: '小时费', name: 'flyFee', enableCellEdit: false}
             {minWidth: 150,displayName: '空勤灶', name: 'airlineFee', enableCellEdit: false}
             {minWidth: 150,displayName: '生育津贴', name: 'fertilityAllowance', enableCellEdit: false}
-            {minWidth: 150,displayName: '地面兼职补贴', name: 'groundSubsidy', enableCellEdit: false}
+            # {minWidth: 150,displayName: '地面兼职补贴', name: 'groundSubsidy', enableCellEdit: false}
             {minWidth: 150,displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
                 minWidth: 150,
