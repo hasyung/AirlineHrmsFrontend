@@ -345,10 +345,17 @@ class ProfileCtrl extends nb.Controller
         self = @
 
         resume.$refresh().$then (resume) ->
-            self.workBefore = _.filter(resume.workExperiences, _.matches({'category': 'before'}))
-            self.workAfter = _.filter resume.workExperiences, _.matches({'category': 'after'})
-            self.eduBefore = _.filter(resume.educationExperiences, _.matches({'category': 'before'}))
+            workAfter = _.clone resume.workExperiences, true
+
+            workAfterEmployee = _.remove workAfter, (work)->
+                return work.employeeCategory == '员工'
+
+            self.workBefore = _.filter resume.workExperiences, _.matches({'category': 'before'})
+            self.eduBefore = _.filter resume.educationExperiences, _.matches({'category': 'before'})
             self.eduAfter = _.filter resume.educationExperiences, _.matches({'category': 'after'})
+
+            self.workAfterEmployee = workAfterEmployee
+            self.workAfterLeader = workAfter
 
 
 class MyRequestCtrl extends nb.Controller
