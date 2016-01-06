@@ -24,6 +24,7 @@ SALARY_COLUMNDEF_DEFAULT = [
         displayName: '员工编号'
         name: 'employeeNo'
         enableCellEdit: false
+        pinnedLeft: true
     }
     {
         minWidth: 120
@@ -39,6 +40,7 @@ SALARY_COLUMNDEF_DEFAULT = [
             </a>
         </div>
         '''
+        pinnedLeft: true
     }
     {
         minWidth: 350
@@ -1874,37 +1876,15 @@ class SalaryOverviewController extends SalaryBaseController
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
-            {minWidth: 150, displayName: '基础工资', name: 'basic', enableCellEdit: false}
-            {minWidth: 150, displayName: '绩效工资', name: 'performance', enableCellEdit: false}
-            {minWidth: 150, displayName: '小时费', name: 'hoursFee', enableCellEdit: false}
-            {minWidth: 150, displayName: '津贴', name: 'subsidy', enableCellEdit: false}
-            {minWidth: 150, displayName: '驻站津贴', name: 'landSubsidy', enableCellEdit: false}
-            {minWidth: 150, displayName: '奖励', name: 'reward', enableCellEdit: false}
-            {minWidth: 150, displayName: '合计', name: 'total', enableCellEdit: false}
-            {
-                minWidth: 150
-                name:"notes"
-                displayName:"说明"
-                enableCellEdit: false
-                cellTemplate: '''
-                <div class="ui-grid-cell-contents">
-                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
-                        {{row.entity.notes || '无'}}
-                        <popup-template
-                            style="padding:8px;border:1px solid #ccc;"
-                            class="nb-popup org-default-popup-template">
-                            <div class="panel-body popup-body">
-                                <div class="salary-explain">
-                                    {{row.entity.notes || '无'}}
-                                </div>
-                            </div>
-                        </popup-template>
-                    </a>
-                </div>
-                '''
-                cellTooltip: (row) ->
-                    return row.entity.notes
-            }
+            {minWidth: 100, displayName: '基础工资', name: 'basic', enableCellEdit: false}
+            {minWidth: 100, displayName: '保留工资', name: 'keep', enableCellEdit: false}
+            {minWidth: 100, displayName: '绩效工资', name: 'performance', enableCellEdit: false}
+            {minWidth: 100, displayName: '小时费', name: 'hoursFee', enableCellEdit: false}
+            {minWidth: 100, displayName: '津贴', name: 'subsidy', enableCellEdit: false}
+            {minWidth: 100, displayName: '驻站津贴', name: 'landSubsidy', enableCellEdit: false}
+            {minWidth: 100, displayName: '奖励', name: 'reward', enableCellEdit: false}
+            {minWidth: 100, displayName: '交通费', name: 'transportFee', enableCellEdit: false}
+            {minWidth: 100, displayName: '合计', name: 'total', enableCellEdit: false}
             {
                 minWidth: 100
                 name:"remark"
