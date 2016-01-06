@@ -24,6 +24,7 @@ SALARY_COLUMNDEF_DEFAULT = [
         displayName: '员工编号'
         name: 'employeeNo'
         enableCellEdit: false
+        pinnedLeft: true
     }
     {
         minWidth: 120
@@ -39,6 +40,7 @@ SALARY_COLUMNDEF_DEFAULT = [
             </a>
         </div>
         '''
+        pinnedLeft: true
     }
     {
         minWidth: 350
