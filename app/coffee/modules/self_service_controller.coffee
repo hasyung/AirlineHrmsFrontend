@@ -347,6 +347,9 @@ class ProfileCtrl extends nb.Controller
         resume.$refresh().$then (resume) ->
             workAfter = _.clone resume.workExperiences, true
 
+            _.remove workAfter, (work)->
+                return work.category == 'before'
+
             workAfterEmployee = _.remove workAfter, (work)->
                 return work.employeeCategory == '员工'
 
