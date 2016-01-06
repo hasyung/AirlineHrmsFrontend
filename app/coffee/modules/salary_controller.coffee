@@ -1728,11 +1728,13 @@ class SalaryOverviewController extends SalaryBaseController
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
             {minWidth: 100, displayName: '基础工资', name: 'basic', enableCellEdit: false}
+            {minWidth: 100, displayName: '保留工资', name: 'keep', enableCellEdit: false}
             {minWidth: 100, displayName: '绩效工资', name: 'performance', enableCellEdit: false}
             {minWidth: 100, displayName: '小时费', name: 'hoursFee', enableCellEdit: false}
             {minWidth: 100, displayName: '津贴', name: 'subsidy', enableCellEdit: false}
             {minWidth: 100, displayName: '驻站津贴', name: 'landSubsidy', enableCellEdit: false}
             {minWidth: 100, displayName: '奖励', name: 'reward', enableCellEdit: false}
+            {minWidth: 100, displayName: '交通费', name: 'transportFee', enableCellEdit: false}
             {minWidth: 100, displayName: '合计', name: 'total', enableCellEdit: false}
             {
                 minWidth: 100
