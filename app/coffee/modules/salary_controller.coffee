@@ -1886,30 +1886,6 @@ class SalaryOverviewController extends SalaryBaseController
             {minWidth: 100, displayName: '交通费', name: 'transportFee', enableCellEdit: false}
             {minWidth: 100, displayName: '合计', name: 'total', enableCellEdit: false}
             {
-                minWidth: 150
-                name:"notes"
-                displayName:"说明"
-                enableCellEdit: false
-                cellTemplate: '''
-                <div class="ui-grid-cell-contents">
-                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
-                        {{row.entity.notes || '无'}}
-                        <popup-template
-                            style="padding:8px;border:1px solid #ccc;"
-                            class="nb-popup org-default-popup-template">
-                            <div class="panel-body popup-body">
-                                <div class="salary-explain">
-                                    {{row.entity.notes || '无'}}
-                                </div>
-                            </div>
-                        </popup-template>
-                    </a>
-                </div>
-                '''
-                cellTooltip: (row) ->
-                    return row.entity.notes
-            }
-            {
                 minWidth: 100
                 name:"remark"
                 displayName:"备注"
