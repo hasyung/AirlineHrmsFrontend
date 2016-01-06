@@ -59,26 +59,29 @@ form(ng-controller="EditableResourceCtrl", ng-submit="save(currentUser.$save(), 
                         label 政治面貌
                         md-select(ng-model="currentUser.politicalStatusId" ng-disabled="!editing")
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('political_status')") {{item.label}}
+                    md-input-container(flex)
+                        label 入党时间
+                        input(ng-model="currentUser.joinPartyDate" bs-datepicker disabled)
+                div(layout)
                     md-input-container.row-has-value(flex)
                         label 学历
                         md-select(ng-model="currentUser.educationBackgroundId" disabled)
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('education_backgrounds')") {{item.label}}
-                div(layout disabled)
                     md-input-container.row-has-value(flex)
                         label 学位
                         md-select(ng-model="currentUser.degreeId" disabled)
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('degrees')") {{item.label}}
+                div(layout)
                     md-input-container(flex)
                         label 毕业院校
                         input(ng-model="currentUser.school" name="school" disabled)
-                div(layout disabled)
                     md-input-container(flex)
                         label 专业
                         input.single-ellipsis(ng-model="currentUser.major" name="major" disabled title="{{currentUser.major}}")
+                div(layout ng-repeat="language in currentUser.languages")
                     md-input-container.row-has-value(flex)
                         label 毕业时间
                         input(ng-model="currentUser.graduateDate" name="graduateDate" disabled)
-                div(layout ng-repeat="language in currentUser.languages")
                     md-input-container.row-has-value(flex)
                         label 语种
                         md-select(
@@ -95,16 +98,24 @@ form(ng-controller="EditableResourceCtrl", ng-submit="save(currentUser.$save(), 
                             md-option(value="西班牙语") 西班牙语
                             md-option(value="葡萄牙语") 葡萄牙语
                             md-option(value="其他") 其他
+                div(layout)
                     md-input-container(flex)
                         label 等级
                         input(ng-model="language.grade" disabled)
-                div(layout disabled)
                     md-input-container(flex)
                         label 到岗时间
                         input(ng-model="currentUser.joinScalDate" name="joinScalDate" disabled)
-                    md-input-container.row-has-value(flex)
+                div(layout)
+                    md-input-container(flex)
                         label 参工时间
                         input(ng-model="currentUser.startWorkDate" name="startWorkDate" disabled)
+                    md-input-container(flex)
+                        label 转合同时间
+                        input(bs-datepicker ng-model="current.changeContractDate" disabled)
+                div(layout)
+                    md-input-container(flex)
+                        label 转合同制时间
+                        input(bs-datepicker ng-model="current.changeContractSystemDate" disabled)
 
             .sep-40
             .subheader--center

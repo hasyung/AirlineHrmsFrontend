@@ -24,6 +24,8 @@ html
         ng-controller="RootCtrl as rootCtrl"
         ng-cloak
         )
+        div.not-supported(ng-if="rootCtrl.isIE")
+            include partials/shared/not_supported
         include partials/shared/top_menu
         toaster-container(toaster-options="{'time-out': 3000, 'close-button': true, 'animation-class': 'toast-top-right'}")
         nb-loading.nb-loading(ng-show="loading")

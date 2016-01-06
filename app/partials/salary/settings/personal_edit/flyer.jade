@@ -3,6 +3,7 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
         md-input-container.row-has-value(flex)
             label 基础工资
             md-select(ng-model="current.baseWage" placeholder="请选择" ng-change="exchangeCtrl.fly(current); current.baseMoney=0; current.baseFlag=null;")
+                md-option(value="flyer_duty_leader_base") 责任机长
                 md-option(value="flyer_legend_base") 荣誉级飞行员
                 md-option(value="flyer_leader_base") 机长
                 md-option(value="flyer_copilot_base") 副驾
@@ -17,6 +18,46 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
         md-input-container(flex)
             label 金额
             input(type="number" min="0" max="100000" step="1" ng-model="current.baseMoney" readonly)
+    div(layout)
+        md-input-container.row-has-value(
+            flex
+            ng-if="current.categoryId==2 || current.categoryId==1 || current.technicalGrade"
+            )
+            label 薪酬等级
+            md-select(ng-model="current.leaderGrade" placeholder="请选择" ng-change="exchangeCtrl.flyPerf(current)")
+                md-option(value="B1") B1
+                md-option(value="B2") B2
+                md-option(value="C1") C1
+                md-option(value="C2") C2
+                md-option(value="C3") C3
+                md-option(value="C4") C4
+                md-option(value="C5") C5
+                md-option(value="D1") D1
+                md-option(value="D2") D2
+                md-option(value="D3") D3
+                md-option(value="D4") D4
+        md-input-container(flex)
+            label 干部补贴飞行时间
+            input(type="number" min="0" max="100000" step="1" ng-model="current.leaderSubsidyHour")
+        //- md-input-container.row-has-value(flex)
+        //-     label 专业技术等级
+        //-     md-select(ng-model="current.technicalGrade" placeholder="请选择")
+        //-         md-option(value="公司级专业技术专家1") 公司级专业技术专家1
+        //-         md-option(value="公司级专业技术专家2") 公司级专业技术专家2
+        //-         md-option(value="公司级专业技术专家3") 公司级专业技术专家3
+        //-         md-option(value="部门级专业技术专家1") 部门级专业技术专家1
+        //-         md-option(value="部门级专业技术专家2") 部门级专业技术专家2
+        //-         md-option(value="部门级专业技术专家3") 部门级专业技术专家3
+        //-         md-option(value="部门级专业技术专家4") 部门级专业技术专家4
+        //-         md-option(value="部门级专业技术专员1") 部门级专业技术专员1
+        //-         md-option(value="部门级专业技术专员2") 部门级专业技术专员2
+        //-         md-option(value="部门级专业技术专员3") 部门级专业技术专员3
+        //-         md-option(value="部门级专业技术专员4") 部门级专业技术专员4
+        md-input-container(flex)
+            label 最低飞行时间
+            input(type="number" min="0" max="100000" step="1" ng-model="current.lowerLimitHour")
+    div(layout)
+        md-checkbox.md-primary(ng-model="current.isFlyerLandWork") 飞行地面行政班
     div(layout)
         md-input-container(flex)
             label 岗位工资保留
@@ -49,15 +90,16 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
             input(type="number" min="0" max="100000" step="1" ng-model="current.keepCommunication14")
 
     div(layout)
-        md-input-container.row-has-value(flex)
+        md-input-container(flex)
             label 到岗日期
             input(ng-model="current.joinScalDate" readonly)
-        md-input-container.row-has-value(flex)
+        md-input-container(flex)
             label 薪酬到岗日期
             input(bs-datepicker ng-model="current.joinSalaryScalDate")
-        md-input-container.row-has-value(flex)
+        md-input-container(flex)
             label 工龄工资
             input(ng-model="current.workingYearsSalary")
+    div(layout)
         md-input-container.row-has-value(flex)
             label 小时费
             md-select(ng-model="current.flyHourFee" placeholder="请选择" ng-change="exchangeCtrl.fly_hour(current)")
@@ -167,7 +209,7 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
             input(type="number" min="0" max="1000000" ng-model="current.officialCar")
 
     div(layout)
-        md-checkbox.md-primary(ng-model="current.limitLeader") 是否飞行受限干部
+        md-checkbox.md-primary(ng-model="current.limitLeader") 飞行受限干部
 
     div(layout)
         md-input-container(flex)

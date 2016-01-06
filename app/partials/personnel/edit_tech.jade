@@ -1,0 +1,66 @@
+md-dialog.punishment_new(style="min-width: 450px;")
+    md-toolbar.md-accent(md-theme="hrms")
+        .md-toolbar-tools
+            span 技术通道等级变更
+    form(ng-submit="current.edit_tech(params, list, dialog.tableState);dialog.close();" name="editTechForm")
+        md-content(ng-init="current=dialog.employee.$fetch(); list=dialog.list; params={};")
+            fieldset
+                div(layout)
+                    md-input-container(flex)
+                        label 姓名
+                        input(ng-model="::current.name" readonly)
+                    md-input-container(flex)
+                        label 员工编号
+                        input(ng-model="::current.employeeNo" readonly)
+                div(layout)
+                    md-input-container(flex)
+                        label 部门
+                        input(ng-model="::current.department.name" readonly)
+                    md-input-container(flex)
+                        label 岗位
+                        input(ng-model="::current.position.name" readonly)
+                div(
+                    layout
+                    ng-init="params.technical_grade = current.technicalGrade;"
+                        )
+                    md-input-container.row-has-value(flex)
+                        label 原技术通道等级
+                        md-select(ng-model="::current.technicalGrade" disabled readonly placeholder="无")
+                                md-option(value="公司级专业技术专家1") 公司级专业技术专家1
+                                md-option(value="公司级专业技术专家2") 公司级专业技术专家2
+                                md-option(value="公司级专业技术专家3") 公司级专业技术专家3
+                                md-option(value="部门级专业技术专家1") 部门级专业技术专家1
+                                md-option(value="部门级专业技术专家2") 部门级专业技术专家2
+                                md-option(value="部门级专业技术专家3") 部门级专业技术专家3
+                                md-option(value="部门级专业技术专家4") 部门级专业技术专家4
+                                md-option(value="部门级专业技术专员1") 部门级专业技术专员1
+                                md-option(value="部门级专业技术专员2") 部门级专业技术专员2
+                                md-option(value="部门级专业技术专员3") 部门级专业技术专员3
+                                md-option(value="部门级专业技术专员4") 部门级专业技术专员4
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 变更后技术通道等级
+                        md-select(ng-model="params.technical_grade" required placeholder="请选择")
+                                md-option(value="公司级专业技术专家1") 公司级专业技术专家1
+                                md-option(value="公司级专业技术专家2") 公司级专业技术专家2
+                                md-option(value="公司级专业技术专家3") 公司级专业技术专家3
+                                md-option(value="部门级专业技术专家1") 部门级专业技术专家1
+                                md-option(value="部门级专业技术专家2") 部门级专业技术专家2
+                                md-option(value="部门级专业技术专家3") 部门级专业技术专家3
+                                md-option(value="部门级专业技术专家4") 部门级专业技术专家4
+                                md-option(value="部门级专业技术专员1") 部门级专业技术专员1
+                                md-option(value="部门级专业技术专员2") 部门级专业技术专员2
+                                md-option(value="部门级专业技术专员3") 部门级专业技术专员3
+                                md-option(value="部门级专业技术专员4") 部门级专业技术专员4
+                div(layout)
+                    md-input-container(flex)
+                        label 变动时间
+                        input(ng-model="params.change_date" name="change_date" bs-datepicker required)
+                div(layout)
+                    md-input-container(flex)
+                        label 文件号
+                        input(ng-model="params.oa_file_no")
+
+        .md-actions
+            md-button(type="button" ng-click="dialog.close()") 取 消
+            md-button.md-primary.md-raised(type="submit" ng-disabled="editTechForm.$invalid") 确 定

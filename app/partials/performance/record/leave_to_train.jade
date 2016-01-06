@@ -1,5 +1,5 @@
 md-dialog.punishment_new(style="min-width: 400px;")
-    md-content(ng-init="current = dialog.current; trainEmployee={employee_id: dialog.current.employeeId}")
+    md-content(ng-init="current = dialog.current; trainEmployee={employee_id: dialog.current.owner.$pk}")
         form(flex ng-submit="ctrl.newTrainEmployee(trainEmployee);dialog.close();" name="newPunishmentForm")
             md-toolbar.md-accent(md-theme="hrms")
                 .md-toolbar-tools

@@ -20,13 +20,14 @@ SALARY_FILTER_DEFAULT = {
 
 SALARY_COLUMNDEF_DEFAULT = [
     {
-        width: 100
-        displayName: '员工编号',
-        name: 'employeeNo',
+        minWidth: 120
+        displayName: '员工编号'
+        name: 'employeeNo'
         enableCellEdit: false
+        pinnedLeft: true
     }
     {
-        width: 100
+        minWidth: 120
         displayName: '姓名'
         field: 'employeeName'
         enableCellEdit: false
@@ -39,9 +40,10 @@ SALARY_COLUMNDEF_DEFAULT = [
             </a>
         </div>
         '''
+        pinnedLeft: true
     }
     {
-        width: 250
+        minWidth: 350
         displayName: '所属部门'
         name: 'departmentName'
         enableCellEdit: false
@@ -49,25 +51,19 @@ SALARY_COLUMNDEF_DEFAULT = [
             return row.entity.departmentName
     }
     {
-        width: 200
+        minWidth: 250
         displayName: '岗位'
         name: 'positionName'
         enableCellEdit: false
         cellTooltip: (row) ->
             return row.entity.positionName
     }
-    {
-        width: 100
-        displayName: '通道'
-        name: 'channelId'
-        enableCellEdit: false
-        cellFilter: "enum:'channels'"
-    }
+    {minWidth: 120, displayName: '通道', name: 'channelId', enableCellEdit: false, cellFilter: "enum:'channels'"}
 ]
 
 CALC_STEP_COLUMN = [
     {
-        minWidth: 100
+        minWidth: 150
         displayName: '计算过程'
         field: 'step'
         enableCellEdit: false
@@ -190,6 +186,10 @@ class SalaryController extends nb.Controller
                           "service_c_3_perf",                   # 绩效-服务C-3
                           "service_c_driving_base",             # 基础-服务C-驾驶，固定2100
                           "service_c_driving_perf",             # 绩效-服务C-驾驶
+                          "market_leader_perf",                 # 绩效-营销类Y/管理A类
+                          "material_leader_perf",               # 绩效-航务/航材技术类H
+                          "information_leader_perf",            # 绩效-信息技术类E
+                          "service_leader_perf",                # 绩效-机务维修技术类W
                           "flyer_hour",                         # 小时费-飞行员
                           "fly_attendant_hour",                 # 小时费-空乘
                           "air_security_hour",                  # 小时费-空保
@@ -233,7 +233,18 @@ class SalaryController extends nb.Controller
     currentCalcTime: ()->
         @currentYear + "-" + @currentMonth
 
+    loadMonthList: () ->
+        if @currentYear == new Date().getFullYear()
+            months = [1..new Date().getMonth() + 1]
+        else
+            months = [1..12]
+
+        @month_list = _.map months, (item)->
+            item = '0' + item if item < 10
+            item + ''
+
     loadGlobalCoefficient: ()->
+        @loadMonthList()
         @$checkCoefficientDefault()
 
     loadGlobalReward: ()->
@@ -486,8 +497,13 @@ class SalaryPersonalController extends nb.Controller
         }
 
         @columnDef = [
-            {displayName: '员工编号', name: 'employeeNo'}
             {
+                minWidth: 120
+                displayName: '员工编号'
+                name: 'employeeNo'
+            }
+            {
+                minWidth: 120
                 displayName: '姓名'
                 field: 'employeeName'
                 cellTemplate: '''
@@ -501,25 +517,44 @@ class SalaryPersonalController extends nb.Controller
                 '''
             }
             {
+                minWidth: 350
                 displayName: '所属部门'
                 name: 'department.name'
                 cellTooltip: (row) ->
                     return row.entity.departmentName
             }
             {
+                minWidth: 250
                 displayName: '岗位'
                 name: 'positionName'
                 cellTooltip: (row) ->
                     return row.entity.positionName
             }
-            {displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
-            {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
-            {displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
             {
+                minWidth: 120
+                displayName: '分类'
+                name: 'categoryId'
+                cellFilter: "enum:'categories'"
+            }
+            {
+                minWidth: 120
+                displayName: '通道'
+                name: 'channelId'
+                cellFilter: "enum:'channels'"
+            }
+            {
+                minWidth: 120
+                displayName: '用工性质'
+                name: 'laborRelationId'
+                cellFilter: "enum:'labor_relations'"
+            }
+            {
+                minWidth: 120
                 displayName: '属地化'
                 name: 'location'
             }
             {
+                minWidth: 120
                 displayName: '设置'
                 field: 'setting'
                 cellTemplate: '''
@@ -623,8 +658,13 @@ class SalaryChangeController extends nb.Controller
         }
 
         @columnDef = [
-            {displayName: '员工编号', name: 'employeeNo'}
             {
+                minWidth: 120
+                displayName: '员工编号'
+                name: 'employeeNo'
+            }
+            {
+                minWidth: 120
                 displayName: '姓名'
                 field: 'employeeName'
                 cellTemplate: '''
@@ -638,14 +678,24 @@ class SalaryChangeController extends nb.Controller
                 '''
             }
             {
+                minWidth: 350
                 displayName: '所属部门'
                 name: 'departmentName'
                 cellTooltip: (row) ->
                     return row.entity.departmentName
             }
-            {displayName: '信息发生时间', name: 'changeDate'}
-            {displayName: '信息种类', name: 'category'}
             {
+                minWidth: 150
+                displayName: '信息发生时间'
+                name: 'changeDate'
+            }
+            {
+                minWidth: 150
+                displayName: '信息种类'
+                name: 'category'
+            }
+            {
+                minWidth: 120
                 displayName: '查看'
                 field: 'setting'
                 cellTemplate: '''
@@ -727,8 +777,13 @@ class SalaryGradeChangeController extends nb.Controller
         }
 
         @columnDef = [
-            {displayName: '员工编号', name: 'employeeNo'}
             {
+                minWidth: 120
+                displayName: '员工编号'
+                name: 'employeeNo'
+            }
+            {
+                minWidth: 120
                 displayName: '姓名'
                 field: 'employeeName'
                 cellTemplate: '''
@@ -742,16 +797,36 @@ class SalaryGradeChangeController extends nb.Controller
                 '''
             }
             {
+                minWidth: 350
                 displayName: '所属部门'
                 name: 'department.name'
                 cellTooltip: (row) ->
                     return row.entity.departmentName
             }
-            {displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
-            {displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
-            {displayName: '薪酬模块', name: 'changeModule'}
-            {displayName: '信息发生时间', name: 'recordDate'}
             {
+                minWidth: 120
+                displayName: '用工性质'
+                name: 'laborRelationId'
+                cellFilter: "enum:'labor_relations'"
+            }
+            {
+                minWidth: 120
+                displayName: '通道'
+                name: 'channelId'
+                cellFilter: "enum:'channels'"
+            }
+            {
+                minWidth: 150
+                displayName: '薪酬模块'
+                name: 'changeModule'
+            }
+            {
+                minWidth: 150
+                displayName: '信息发生时间'
+                name: 'recordDate'
+            }
+            {
+                minWidth: 120
                 displayName: '查看'
                 field: 'setting'
                 cellTemplate: '''
@@ -835,8 +910,8 @@ class SalaryExchangeController
         return unless current.baseFlag
 
         if current.baseWage == 'service_c_driving_base'
-          current.baseMoney = 2100
-          return
+            current.baseMoney = 2100
+            return
 
         setting = @$settingHash(current.baseWage)
         flag = setting.flags[current.baseFlag]
@@ -861,14 +936,14 @@ class SalaryExchangeController
         flags = []
 
         if current.baseWage == 'service_c_driving_base'
-          return
+            return
 
         angular.forEach setting.flags, (config, flag)->
-          if Object.keys(config).indexOf(current.baseChannel) >= 0
-            format_cell = config[current.baseChannel]['format_cell']
+            if Object.keys(config).indexOf(current.baseChannel) >= 0
+                format_cell = config[current.baseChannel]['format_cell']
 
-            if format_cell && format_cell.length > 0
-              flags.push(flag)
+                if format_cell && format_cell.length > 0
+                    flags.push(flag)
 
         return flags
 
@@ -877,18 +952,43 @@ class SalaryExchangeController
         setting = @$settingHash(current.performanceWage)
 
         flag = setting.flags[current.performanceFlag]
+
         return current.performanceMoney = flag.amount if angular.isDefined(flag)
         return 0
 
-    perf_channel_array: (current)->
-      return unless current.performanceWage
+    changeBaseWage: (current) ->
+        if current.baseWage=='leader_base'
+            current.performanceWage = null
+            current.performanceChannel = null
+            current.performanceFlag = null
+            current.performanceMoney = null
 
-      setting = @$settingHash(current.performanceWage)
-      channels = []
-      angular.forEach setting.flag_list, (item)->
-          if item != 'rate' && !_.startsWith(item, 'amount')
-              channels.push(setting.flag_names[item])
-      _.uniq(channels)
+        current.baseChannel = null
+        current.baseFlag = null
+        current.baseMoney = null
+
+    changeBaseChannel: (current) ->
+        if current.baseWage=='leader_base'
+            current.performanceFlag = null
+            current.performanceMoney = null
+
+        current.baseFlag = null
+        current.baseMoney = null
+
+    changePerWage: (current) ->
+        current.performanceChannel = null
+        current.performanceFlag = null
+        current.performanceMoney = null
+
+    perf_channel_array: (current)->
+        return unless current.performanceWage
+
+        setting = @$settingHash(current.performanceWage)
+        channels = []
+        angular.forEach setting.flag_list, (item)->
+            if item != 'rate' && !_.startsWith(item, 'amount')
+                channels.push(setting.flag_names[item])
+        _.uniq(channels)
 
     perf_flag_array: (current)->
         return unless current.performanceWage
@@ -897,11 +997,26 @@ class SalaryExchangeController
         flags = []
 
         angular.forEach setting.flags, (config, flag)->
-          if Object.keys(config).indexOf(current.performanceChannel) >= 0
-            format_cell = config[current.performanceChannel]['format_cell']
+            if Object.keys(config).indexOf(current.performanceChannel) >= 0
+                format_cell = config[current.performanceChannel]['format_cell']
 
-            if format_cell && format_cell.length > 0
-              flags.push(flag)
+                if format_cell && format_cell.length > 0
+                    flags.push(flag)
+
+        return flags
+
+    leaderPerfFlagArray: (current) ->
+        return unless current.performanceWage
+
+        setting = @$settingHash(current.performanceWage)
+        flags = []
+
+        angular.forEach setting.flags, (config, flag) ->
+            return if !angular.isDefined(config)
+            return if !angular.isDefined(config["X"])
+
+            if config["X"]["format_cell"] == current.baseChannel
+                flags.push(flag)
 
         return flags
 
@@ -911,6 +1026,19 @@ class SalaryExchangeController
 
         setting = @$settingHash(current.baseWage)
         current.baseMoney = setting.flags[current.baseFlag]['amount']
+
+    flyPerf: (current) ->
+        return unless current.leaderGrade
+
+        setting = @$settingHash('market_leader_perf')
+
+        angular.forEach setting.flags, (config, flag) ->
+            return if !angular.isDefined(config)
+            return if !angular.isDefined(config["X"])
+
+            if config["X"]["format_cell"] == current.leaderGrade
+                current.performanceMoney = config['amount']
+                return
 
     fly_flag_array: (current)->
         return unless current.baseWage
@@ -974,6 +1102,16 @@ class SalaryBaseController extends nb.Controller
         @scope.$gridApi = gridApi
         @gridApi = gridApi
 
+    loadMonthList: () ->
+        if @currentYear == new Date().getFullYear()
+            months = [1..new Date().getMonth() + 1]
+        else
+            months = [1..12]
+
+        @month_list = _.map months, (item)->
+            item = '0' + item if item < 10
+            item + ''
+
     loadDateTime: ()->
         date = new Date()
 
@@ -984,7 +1122,7 @@ class SalaryBaseController extends nb.Controller
             # 不是正扣倒发模式，看上个月的数据
             if date.getMonth() == 0
                 @year_list.pop()
-                @year_list.unshift(date.getFullYear() - 1)
+                # @year_list.unshift(date.getFullYear() - 1)
                 @month_list = _.map [1..12], (item)->
                     item = '0' + item if item < 10
                     item + '' # to string
@@ -1029,6 +1167,7 @@ class SalaryBaseController extends nb.Controller
         @currentYear + "-" + @currentMonth
 
     loadRecords: (options = null) ->
+        @loadMonthList()
         args = {month: @currentCalcTime()}
         angular.extend(args, options) if angular.isDefined(options)
         @records.$refresh(args)
@@ -1062,10 +1201,11 @@ class SalaryBasicController extends SalaryBaseController
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
-            {displayName: '岗位薪酬', name: 'positionSalary', enableCellEdit: false}
-            {displayName: '工龄工资', name: 'workingYearsSalary', enableCellEdit: false}
-            {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {minWidth: 150, displayName: '岗位薪酬', name: 'positionSalary', enableCellEdit: false}
+            {minWidth: 150, displayName: '工龄工资', name: 'workingYearsSalary', enableCellEdit: false}
+            {minWidth: 150, displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
+                minWidth: 150
                 name:"notes"
                 displayName:"说明"
                 enableCellEdit: false
@@ -1089,6 +1229,7 @@ class SalaryBasicController extends SalaryBaseController
                     return row.entity.notes
             }
             {
+                minWidth: 150
                 name:"remark"
                 displayName:"备注"
                 headerCellClass: 'editable_cell_header'
@@ -1130,17 +1271,18 @@ class SalaryKeepController extends SalaryBaseController
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
-            {displayName: '岗位工资保留', name: 'position', enableCellEdit: false}
-            {displayName: '业绩奖保留', name: 'performance', enableCellEdit: false}
-            {displayName: '工龄工资保留', name: 'workingYears', enableCellEdit: false}
-            {displayName: '保底增幅', name: 'minimumGrowth', enableCellEdit: false}
-            {displayName: '地勤补贴保留', name: 'landAllowance', enableCellEdit: false}
-            {displayName: '生活补贴保留', name: 'lifeAllowance', enableCellEdit: false}
-            {displayName: '09调资增加保留', name: 'adjustment09', enableCellEdit: false}
-            {displayName: '14公务用车保留', name: 'bus14', enableCellEdit: false}
-            {displayName: '14通信补贴保留', name: 'communication14', enableCellEdit: false}
-            {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {minWidth: 150, displayName: '岗位工资保留', name: 'position', enableCellEdit: false}
+            {minWidth: 150, displayName: '业绩奖保留', name: 'performance', enableCellEdit: false}
+            {minWidth: 150, displayName: '工龄工资保留', name: 'workingYears', enableCellEdit: false}
+            {minWidth: 150, displayName: '保底增幅', name: 'minimumGrowth', enableCellEdit: false}
+            {minWidth: 150, displayName: '地勤补贴保留', name: 'landAllowance', enableCellEdit: false}
+            {minWidth: 150, displayName: '生活补贴保留', name: 'lifeAllowance', enableCellEdit: false}
+            {minWidth: 150, displayName: '09调资增加保留', name: 'adjustment09', enableCellEdit: false}
+            {minWidth: 150, displayName: '14公务用车保留', name: 'bus14', enableCellEdit: false}
+            {minWidth: 150, displayName: '14通信补贴保留', name: 'communication14', enableCellEdit: false}
+            {minWidth: 150, displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
+                minWidth: 150,
                 name:"notes"
                 displayName:"说明"
                 enableCellEdit: false
@@ -1164,6 +1306,7 @@ class SalaryKeepController extends SalaryBaseController
                     return row.entity.notes
             }
             {
+                minWidth: 150,
                 name:"remark"
                 displayName:"备注"
                 headerCellClass: 'editable_cell_header'
@@ -1205,10 +1348,11 @@ class SalaryPerformanceController extends SalaryBaseController
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
-            {displayName: '当月绩效基数', name: 'baseSalary', enableCellEdit: false}
-            {displayName: '当月绩效薪酬', name: 'amount', enableCellEdit: false}
-            {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {minWidth: 150, displayName: '当月绩效基数', name: 'baseSalary', enableCellEdit: false}
+            {minWidth: 150, displayName: '当月绩效薪酬', name: 'amount', enableCellEdit: false}
+            {minWidth: 150, displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
+                minWidth: 150,
                 name:"notes"
                 displayName:"说明"
                 enableCellEdit: false
@@ -1232,6 +1376,7 @@ class SalaryPerformanceController extends SalaryBaseController
                     return row.entity.notes
             }
             {
+                minWidth: 150,
                 name:"remark"
                 displayName:"备注"
                 headerCellClass: 'editable_cell_header'
@@ -1311,13 +1456,14 @@ class SalaryHoursFeeController extends SalaryBaseController
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
-            {displayName: '飞行时间', name: 'flyHours', enableCellEdit: false}
-            {displayName: '小时费', name: 'flyFee', enableCellEdit: false}
-            {displayName: '空勤灶', name: 'airlineFee', enableCellEdit: false}
-            {displayName: '生育津贴', name: 'fertilityAllowance', enableCellEdit: false}
-            {displayName: '地面兼职补贴', name: 'groundSubsidy', enableCellEdit: false}
-            {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {minWidth: 150,displayName: '飞行时间', name: 'flyHours', enableCellEdit: false}
+            {minWidth: 150,displayName: '小时费', name: 'flyFee', enableCellEdit: false}
+            {minWidth: 150,displayName: '空勤灶', name: 'airlineFee', enableCellEdit: false}
+            {minWidth: 150,displayName: '生育津贴', name: 'fertilityAllowance', enableCellEdit: false}
+            # {minWidth: 150,displayName: '地面兼职补贴', name: 'groundSubsidy', enableCellEdit: false}
+            {minWidth: 150,displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
+                minWidth: 150,
                 name:"notes"
                 displayName:"说明"
                 enableCellEdit: false
@@ -1341,6 +1487,7 @@ class SalaryHoursFeeController extends SalaryBaseController
                     return row.entity.notes
             }
             {
+                minWidth: 150,
                 name:"remark"
                 displayName:"备注"
                 headerCellClass: 'editable_cell_header'
@@ -1404,23 +1551,23 @@ class SalaryAllowanceController extends SalaryBaseController
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
-            {minWidth: 120, displayName: '安检津贴', name: 'securityCheck', enableCellEdit: false}
-            {minWidth: 120,displayName: '安置津贴', name: 'resettlement', enableCellEdit: false}
-            {minWidth: 120,displayName: '班组长津贴', name: 'groupLeader', enableCellEdit: false}
-            {minWidth: 120,displayName: '航站管理津贴', name: 'airStationManage', enableCellEdit: false}
-            {minWidth: 120,displayName: '车勤补贴', name: 'carPresent', enableCellEdit: false}
-            {minWidth: 120,displayName: '地勤补贴', name: 'landPresent', enableCellEdit: false}
-            {minWidth: 120,displayName: '机务放行补贴', name: 'permitEntry', enableCellEdit: false}
-            {minWidth: 120,displayName: '试车津贴', name: 'tryDrive', enableCellEdit: false}
-            {minWidth: 120,displayName: '飞行荣誉津贴', name: 'flyHonor', enableCellEdit: false}
-            {minWidth: 120,displayName: '航线实习补贴', name: 'airlinePractice', enableCellEdit: false}
-            {minWidth: 120,displayName: '随机补贴', name: 'followPlane', enableCellEdit: false}
-            {minWidth: 120,displayName: '签派放行补贴', name: 'permitSign', enableCellEdit: false}
-            {minWidth: 120,displayName: '梭班补贴', name: 'workOvertime', enableCellEdit: false}
-            {minWidth: 120,displayName: '高温补贴', name: 'temp', enableCellEdit: false}
-            {minWidth: 120,displayName: '寒冷补贴', name: 'cold', enableCellEdit: false}
-            {minWidth: 120,displayName: '通讯补贴', name: 'communication', enableCellEdit: false}
-            {minWidth: 120,displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {minWidth: 150, displayName: '安检津贴', name: 'securityCheck', enableCellEdit: false}
+            {minWidth: 150,displayName: '安置津贴', name: 'resettlement', enableCellEdit: false}
+            {minWidth: 150,displayName: '班组长津贴', name: 'groupLeader', enableCellEdit: false}
+            {minWidth: 150,displayName: '航站管理津贴', name: 'airStationManage', enableCellEdit: false}
+            {minWidth: 150,displayName: '车勤补贴', name: 'carPresent', enableCellEdit: false}
+            {minWidth: 150,displayName: '地勤补贴', name: 'landPresent', enableCellEdit: false}
+            {minWidth: 150,displayName: '机务放行补贴', name: 'permitEntry', enableCellEdit: false}
+            {minWidth: 150,displayName: '试车津贴', name: 'tryDrive', enableCellEdit: false}
+            {minWidth: 150,displayName: '飞行荣誉津贴', name: 'flyHonor', enableCellEdit: false}
+            {minWidth: 150,displayName: '航线实习补贴', name: 'airlinePractice', enableCellEdit: false}
+            {minWidth: 150,displayName: '随机补贴', name: 'followPlane', enableCellEdit: false}
+            {minWidth: 150,displayName: '签派放行补贴', name: 'permitSign', enableCellEdit: false}
+            {minWidth: 150,displayName: '梭班补贴', name: 'workOvertime', enableCellEdit: false}
+            {minWidth: 150,displayName: '高温补贴', name: 'temp', enableCellEdit: false}
+            {minWidth: 150,displayName: '寒冷补贴', name: 'cold', enableCellEdit: false}
+            {minWidth: 150,displayName: '通讯补贴', name: 'communication', enableCellEdit: false}
+            {minWidth: 150,displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
                 minWidth: 150
                 name:"notes"
@@ -1446,7 +1593,7 @@ class SalaryAllowanceController extends SalaryBaseController
                     return row.entity.notes
             }
             {
-                minWidth: 200
+                minWidth: 150,
                 name:"remark"
                 displayName:"备注"
                 headerCellClass: 'editable_cell_header'
@@ -1497,9 +1644,10 @@ class SalaryLandAllowanceController extends SalaryBaseController
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
-            {displayName: '津贴', name: 'subsidy', enableCellEdit: false}
-            {displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {minWidth: 150, displayName: '津贴', name: 'subsidy', enableCellEdit: false}
+            {minWidth: 150, displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
+                minWidth: 150,
                 name:"notes"
                 displayName:"说明"
                 enableCellEdit: false
@@ -1523,6 +1671,7 @@ class SalaryLandAllowanceController extends SalaryBaseController
                     return row.entity.notes
             }
             {
+                minWidth: 150,
                 name:"remark"
                 displayName:"备注"
                 headerCellClass: 'editable_cell_header'
@@ -1573,28 +1722,28 @@ class SalaryRewardController extends SalaryBaseController
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
-            {width: 100,displayName: '航班正常奖', name: 'flightBonus', enableCellEdit: false}
-            {width: 100,displayName: '服务质量奖', name: 'serviceBonus', enableCellEdit: false}
-            {width: 100,displayName: '航空安全奖', name: 'airlineSecurityBonus', enableCellEdit: false}
-            {width: 100,displayName: '社会治安综合治理奖', name: 'compositeBonus', enableCellEdit: false}
-            {width: 100,displayName: '电子航意险代理提成奖', name: 'insuranceProxy', enableCellEdit: false}
-            {width: 100,displayName: '客舱升舱提成奖', name: 'cabinGrowUp', enableCellEdit: false}
-            {width: 100,displayName: '全员促销奖', name: 'fullSalePromotion', enableCellEdit: false}
-            {width: 100,displayName: '四川航空报稿费', name: 'articleFee', enableCellEdit: false}
-            {width: 100,displayName: '无差错飞行中队奖', name: 'allRightFly', enableCellEdit: false}
-            {width: 100,displayName: '年度综治奖', name: 'yearCompositeBonus', enableCellEdit: false}
-            {width: 100,displayName: '运兵先进奖', name: 'movePerfect', enableCellEdit: false}
-            {width: 100,displayName: '航空安全特殊贡献奖', name: 'securitySpecial', enableCellEdit: false}
-            {width: 100,displayName: '部门安全管理目标承包奖', name: 'depSecurityUndertake', enableCellEdit: false}
-            {width: 100,displayName: '飞行安全星级奖', name: 'flyStar', enableCellEdit: false}
-            {width: 100,displayName: '年度无差错机务维修中队奖', name: 'yearAllRightFly', enableCellEdit: false}
-            {width: 100,displayName: '网络联程奖', name: 'networkConnect', enableCellEdit: false}
-            {width: 100,displayName: '季度奖', name: 'quarterFee', enableCellEdit: false}
-            {width: 100,displayName: '收益奖励金', name: 'earningsFee', enableCellEdit: false}
-            {width: 100,displayName: '预算外奖励', name: 'offBudgetFee', enableCellEdit: false}
-            {width: 100,displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {minWidth: 150,displayName: '航班正常奖', name: 'flightBonus', enableCellEdit: false}
+            {minWidth: 150,displayName: '服务质量奖', name: 'serviceBonus', enableCellEdit: false}
+            {minWidth: 150,displayName: '航空安全奖', name: 'airlineSecurityBonus', enableCellEdit: false}
+            {minWidth: 150,displayName: '社会治安综合治理奖', name: 'compositeBonus', enableCellEdit: false}
+            {minWidth: 150,displayName: '电子航意险代理提成奖', name: 'insuranceProxy', enableCellEdit: false}
+            {minWidth: 150,displayName: '客舱升舱提成奖', name: 'cabinGrowUp', enableCellEdit: false}
+            {minWidth: 150,displayName: '全员促销奖', name: 'fullSalePromotion', enableCellEdit: false}
+            {minWidth: 150,displayName: '四川航空报稿费', name: 'articleFee', enableCellEdit: false}
+            {minWidth: 150,displayName: '无差错飞行中队奖', name: 'allRightFly', enableCellEdit: false}
+            {minWidth: 150,displayName: '年度综治奖', name: 'yearCompositeBonus', enableCellEdit: false}
+            {minWidth: 150,displayName: '运兵先进奖', name: 'movePerfect', enableCellEdit: false}
+            {minWidth: 150,displayName: '航空安全特殊贡献奖', name: 'securitySpecial', enableCellEdit: false}
+            {minWidth: 150,displayName: '部门安全管理目标承包奖', name: 'depSecurityUndertake', enableCellEdit: false}
+            {minWidth: 150,displayName: '飞行安全星级奖', name: 'flyStar', enableCellEdit: false}
+            {minWidth: 150,displayName: '年度无差错机务维修中队奖', name: 'yearAllRightFly', enableCellEdit: false}
+            {minWidth: 150,displayName: '网络联程奖', name: 'networkConnect', enableCellEdit: false}
+            {minWidth: 150,displayName: '季度奖', name: 'quarterFee', enableCellEdit: false}
+            {minWidth: 150,displayName: '收益奖励金', name: 'earningsFee', enableCellEdit: false}
+            {minWidth: 150,displayName: '预算外奖励', name: 'offBudgetFee', enableCellEdit: false}
+            {minWidth: 150,displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
-                width: 100
+                minWidth: 150
                 name:"remark"
                 displayName:"备注"
                 headerCellClass: 'editable_cell_header'
@@ -1648,11 +1797,11 @@ class SalaryTransportFeeController extends SalaryBaseController
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
-            {minWidth: 100, displayName: '交通费', name: 'amount', enableCellEdit: false}
-            {minWidth: 100, displayName: '班车费扣除', name: 'busFee', enableCellEdit: false}
-            {minWidth: 100, displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {minWidth: 150, displayName: '交通费', name: 'amount', enableCellEdit: false}
+            {minWidth: 150, displayName: '班车费扣除', name: 'busFee', enableCellEdit: false}
+            {minWidth: 150, displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
-                minWidth: 100
+                minWidth: 150
                 name:"notes"
                 displayName:"说明"
                 enableCellEdit: false
@@ -1676,7 +1825,7 @@ class SalaryTransportFeeController extends SalaryBaseController
                     return row.entity.notes
             }
             {
-                minWidth: 100
+                minWidth: 150
                 name:"remark"
                 displayName:"备注"
                 headerCellClass: 'editable_cell_header'
@@ -1737,7 +1886,7 @@ class SalaryOverviewController extends SalaryBaseController
             {minWidth: 100, displayName: '交通费', name: 'transportFee', enableCellEdit: false}
             {minWidth: 100, displayName: '合计', name: 'total', enableCellEdit: false}
             {
-                minWidth: 100
+                minWidth: 150
                 name:"notes"
                 displayName:"说明"
                 enableCellEdit: false
@@ -1837,7 +1986,7 @@ class BirthSalaryController extends SalaryBaseController
                     return row.entity.notes
             }
             {
-                minWidth: 100
+                minWidth: 150
                 name:"remark"
                 displayName:"备注"
                 headerCellClass: 'editable_cell_header'
