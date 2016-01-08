@@ -1,7 +1,7 @@
-md-dialog.position_changes
+md-dialog.position_changes(ng-init="changeReview = dialog.change.$refresh()")
     md-toolbar.md-accent(md-theme="hrms")
         .md-toolbar-tools
-            span {{::dialog.change.name}}的"{{::dialog.change.auditableType}}"修改记录
+            span {{::changeReview.name}}的"{{::changeReview.auditableType}}"修改记录
             div(flex)
             span
                 md-button.pull-right(ng-click="dialog.close()") 关 闭
@@ -11,7 +11,7 @@ md-dialog.position_changes
                 th() 字段
                 th() 修改前
                 th() 修改后
-            tr(ng-repeat="(field, val) in ::dialog.change.auditedChanges", ng-if="field != 'unused'")
+            tr(ng-repeat="(field, val) in ::changeReview.auditedChanges", ng-if="field != 'unused'")
                 td(ng-bind="::field")
                 td.overflow-text(ng-bind-html="val[0] || '无'", ng-attr-title="{{val[0]}}")
                 td.overflow-text(ng-bind-html="val[1] || '无'", ng-attr-title="{{val[1]}}")

@@ -558,7 +558,7 @@ class EarlyRetireEmployeesCtrl extends nb.Controller
                     <div class="ui-grid-cell-contents">
                         <a nb-dialog
                             template-url="/partials/personnel/edit_early_retire.html"
-                            locals="{leave: row.entity, ctrl:grid.appScope.$parent.ctrl}">
+                            locals="{earlyRetire: row.entity, ctrl:grid.appScope.$parent.ctrl}">
                             查看
                         </a>
                     </div>

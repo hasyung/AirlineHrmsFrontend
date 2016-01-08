@@ -11,7 +11,8 @@ Change = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('changes:check:success', "审核提交成功")
 
         $config:
-            jsonRoot: 'audits'
+            jsonRootSingle: 'audit'
+            jsonRootMany: 'audits'
 
         $extend:
             Collection:
@@ -41,7 +42,8 @@ Record = (restmod, RMUtils, $Evt) ->
         createdAt: {decode: 'date', param: 'yyyy-MM-dd', mask: 'CU'}
 
         $config:
-            jsonRoot: 'audits'
+            jsonRootSingle: 'audit'
+            jsonRootMany: 'audits'
     }
 
 
