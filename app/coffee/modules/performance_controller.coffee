@@ -347,7 +347,6 @@ class PerformanceSetting extends nb.Controller
             {
                 displayName: '绩效人员分类'
                 name: 'employee_category'
-                placeholder: '年度绩效'
                 type: 'perf_category_select'
             }
         ]

@@ -39,13 +39,13 @@ class NbFilterCtrl extends nb.FilterController
             <div class="md-input-container-row">
                 <md-input-container md-no-float>
                     <md-select placeholder="${ displayName }" ng-model="${ name }.from">
-                        <md-option ng-value="item" ng-repeat="item in $parent.month_list">{{item}}</md-option>
+                        <md-option ng-value="item" ng-repeat="item in $parent.month_list track by $index">{{item}}</md-option>
                     </md-select>
                 </md-input-container>
                 <div class="divide-text">到</div>
                 <md-input-container md-no-float>
                     <md-select placeholder="${ displayName }" ng-model="${ name }.to">
-                        <md-option ng-value="item" ng-repeat="item in $parent.month_list">{{item}}</md-option>
+                        <md-option ng-value="item" ng-repeat="item in $parent.month_list track by $index">{{item}}</md-option>
                     </md-select>
                 </md-input-container>
             </div>
@@ -53,7 +53,7 @@ class NbFilterCtrl extends nb.FilterController
         'month-list': '''
                 <md-input-container md-no-float>
                     <md-select placeholder="年份月份" ng-model="${ name }">
-                        <md-option ng-value="item" ng-repeat="item in $parent.month_list">{{item}}</md-option>
+                        <md-option ng-value="item" ng-repeat="item in $parent.month_list track by $index">{{item}}</md-option>
                     </md-select>
                 </md-input-container>
             </div>
@@ -61,7 +61,7 @@ class NbFilterCtrl extends nb.FilterController
         'year-list': '''
                 <md-input-container md-no-float>
                     <md-select placeholder="年份" ng-model="${ name }">
-                        <md-option ng-value="item" ng-repeat="item in $parent.year_list">{{item}}</md-option>
+                        <md-option ng-value="item" ng-repeat="item in $parent.year_list track by $index">{{item}}</md-option>
                     </md-select>
                 </md-input-container>
             </div>
@@ -390,7 +390,7 @@ conditionInputContainer = ($enum) ->
 
         angular.forEach year_list, (year) ->
             months = [1..12]
-            months = [1..date.getMonth() + 1] if year = date.getFullYear()
+            months = [1..date.getMonth() + 1] if year == date.getFullYear()
 
             angular.forEach months, (month)->
                 month = "0" + month if month < 10
