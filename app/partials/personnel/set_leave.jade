@@ -40,11 +40,11 @@ md-dialog.punishment_new(style="min-width: 450px;")
                               md-option(value="辞退") 辞退
                               md-option(value="工作调动") 工作调动
                               md-option(value="劳动关系终止") 劳动关系终止
-                              md-option(value="劳动关系终止") 劳务协议终止
+                              md-option(value="劳务协议终止") 劳务协议终止
                 div(layout)
                     md-input-container(flex)
                         label 文件号
-                        input(ng-model="params.file_no")
+                        input(ng-model="params.file_no" required)
 
         .md-actions
             md-button(type="button" ng-click="dialog.close()") 取 消
