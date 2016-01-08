@@ -1,0 +1,42 @@
+md-dialog.punishment_new(style="min-width: 450px;")
+    md-toolbar.md-accent(md-theme="hrms")
+        .md-toolbar-tools
+            span 人员退养
+    form(ng-submit="current.set_early_retire(params, list, dialog.tableState);dialog.close();" name="newRetireForm")
+        md-content(ng-init="current=dialog.employee.$refresh();list=dialog.list;params={}")
+            fieldset
+                div(layout)
+                    md-input-container(flex)
+                        label 姓名
+                        input(ng-model="::current.name" readonly)
+                    md-input-container(flex)
+                        label 员工编号
+                        input(ng-model="::current.employeeNo" readonly)
+                div(layout)
+                    md-input-container(flex)
+                        label 部门
+                        input(ng-model="::current.department.name" readonly)
+                    md-input-container(flex)
+                        label 岗位
+                        input(ng-model="::current.position.name" readonly)
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 通道
+                        md-select(ng-model="::current.channelId" readonly disabled)
+                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
+                    md-input-container.row-has-value(flex)
+                        label 用工性质
+                        md-select(ng-model="current.laborRelationId" disabled readonly)
+                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('labor_relations')") {{item.label}}
+                div(layout)
+                    md-input-container(flex)
+                        label 退养时间
+                        input(ng-model="params.date" name="date" bs-datepicker required)
+                div(layout)
+                    md-input-container(flex)
+                        label 文件号
+                        input(ng-model="params.file_no")
+
+        .md-actions
+            md-button(type="button" ng-click="dialog.close()") 取 消
+            md-button.md-primary.md-raised(type="submit" ng-disabled="newRetireForm.$invalid") 确 定
