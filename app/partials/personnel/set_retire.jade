@@ -1,7 +1,7 @@
 md-dialog.punishment_new(style="min-width: 450px;")
     md-toolbar.md-accent(md-theme="hrms")
         .md-toolbar-tools
-            span 人员离职
+            span 人员退养
     form(ng-submit="current.set_early_retire(params, list, dialog.tableState);dialog.close();" name="newRetireForm")
         md-content(ng-init="current=dialog.employee.$refresh();list=dialog.list;params={}")
             fieldset
@@ -30,7 +30,7 @@ md-dialog.punishment_new(style="min-width: 450px;")
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('labor_relations')") {{item.label}}
                 div(layout)
                     md-input-container(flex)
-                        label 离职时间
+                        label 退养时间
                         input(ng-model="params.date" name="date" bs-datepicker required)
                 div(layout)
                     md-input-container(flex)

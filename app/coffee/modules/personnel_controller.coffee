@@ -541,7 +541,6 @@ class EarlyRetireEmployeesCtrl extends nb.Controller
             {minWidth: 120, displayName: '性别', name: 'gender'}
             {minWidth: 120, displayName: '通道', name: 'channel'}
             {minWidth: 120, displayName: '用工性质', name: 'laborRelation'}
-            {minWidth: 120, displayName: '变动性质', name: 'employmentStatus'}
             {minWidth: 120, displayName: '退养时间', name: 'changeDate', cellFilter: "date:'yyyy-MM-dd'"}
         ]
 
@@ -588,11 +587,6 @@ class EarlyRetireEmployeesCtrl extends nb.Controller
                     name: 'position_name'
                     displayName: '岗位名称'
                     type: 'string'
-                }
-                {
-                    name: 'employment_status'
-                    type: 'string'
-                    displayName: '变动性质'
                 }
                 {
                     name: 'change_date'

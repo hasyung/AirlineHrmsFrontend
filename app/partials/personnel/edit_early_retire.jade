@@ -28,9 +28,9 @@ md-dialog.punishment_new(style="min-width: 450px;")
                         input(ng-model="::current.laborRelation" readonly)
                 div(layout)
                     md-input-container(flex)
-                        label 离职时间
+                        label 退养时间
                         input(
-                            ng-model="current.earlyRetireDate"
+                            ng-model="current.changeDate"
                             name="date"
                             bs-datepicker
                             required
@@ -43,5 +43,5 @@ md-dialog.punishment_new(style="min-width: 450px;")
                         input(ng-model="current.fileNo" ng-readonly="!ctrl.editable")
 
         .md-actions
-            md-button(type="button" ng-click="cancel(current, $event, editEarlyRetireForm);dialog.close()") 取 消
+            md-button(type="button" ng-click="cancel(current, $event, editEarlyRetireForm); ctrl.earlyRetireEmployees.$refresh();dialog.close()") 取 消
             md-button.md-primary.md-raised(has-permission="early_retire_employees_update" type="submit" ng-disabled="editEarlyRetireForm.$invalid") 确 定
