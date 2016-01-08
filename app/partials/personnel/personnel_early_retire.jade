@@ -12,7 +12,7 @@
                     ng-disabled="ctrl.getSelected().length != 1 || ctrl.importing"
                     nb-dialog
                     template-url="/partials/personnel/set_leave.html"
-                    locals="{employee: ctrl.getSelected()[0], list: ctrl.earlyRetireEmployees, tableState: ctrl.tableState}"
+                    locals="{employee: ctrl.getSelected()[0].owner, list: ctrl.earlyRetireEmployees, tableState: ctrl.tableState}"
                 ) 人员离职
 
                 md-menu(ng-init="selectedRows=[]" has-permission="early_retire_employees_export_to_xls")

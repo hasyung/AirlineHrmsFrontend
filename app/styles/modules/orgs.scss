@@ -273,12 +273,12 @@ md-dialog.effect_changes {
 
 //岗位变更记录 dialog
 md-dialog.position_changes {
-    width: 700px;
+    min-width: 700px;
 }
 
 //岗位删除记录 dialog
 md-dialog.position_delete {
-    width: 700px;
+    min-width: 700px;
 }
 
 //查询器保存 dialog
