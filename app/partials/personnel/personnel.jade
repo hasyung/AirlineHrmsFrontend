@@ -27,6 +27,14 @@ tabset(flex)
                         ) 实习批量转正
 
                         md-button.md-primary.md-raised(
+                            has-permission="employees_set_early_retire"
+                            ng-disabled="ctrl.getSelected().length != 1 || ctrl.importing"
+                            nb-dialog
+                            template-url="/partials/personnel/set_retire.html"
+                            locals="{employee: ctrl.getSelected()[0], list: ctrl.employees, tableState: ctrl.tableState}"
+                        ) 人员退养
+
+                        md-button.md-primary.md-raised(
                             has-permission="employees_set_leave"
                             ng-disabled="ctrl.getSelected().length != 1 || ctrl.importing"
                             nb-dialog
@@ -111,6 +119,9 @@ tabset(flex)
 
     tab(heading="离职人员花名册")
         include personnel_leave
+
+    tab(heading="退养人员花名册" has-permission="early_retire_employees_index")
+        include personnel_early_retire
 
     tab(heading="异动人员名册")
         include personnel_move
