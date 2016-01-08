@@ -502,6 +502,132 @@ class LeaveEmployeesCtrl extends nb.Controller
             self.toaster.pop('success', '更新成功', data.$response.data.messages)
             self.leaveEmployees.$refresh()
 
+class EarlyRetireEmployeesCtrl extends nb.Controller
+    @.$inject = ['$scope', 'EarlyRetireEmployees', 'toaster', 'PERMISSIONS']
+
+    constructor: (@scope, @EarlyRetireEmployees, @toaster, @permissions) ->
+        @loadInitialData()
+
+        @columnDef = [
+            {
+                minWidth: 350
+                displayName: '所属部门'
+                name: 'department'
+                cellTooltip: (row) ->
+                    return row.entity.department
+            }
+            {
+                minWidth: 120
+                displayName: '姓名'
+                field: 'name'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {minWidth: 120, displayName: '员工编号', name: 'employeeNo'}
+            {
+                minWidth: 250
+                displayName: '岗位'
+                name: 'position'
+                cellTooltip: (row) ->
+                    return row.entity.position
+            }
+            {minWidth: 120, displayName: '性别', name: 'gender'}
+            {minWidth: 120, displayName: '通道', name: 'channel'}
+            {minWidth: 120, displayName: '用工性质', name: 'laborRelation'}
+            {minWidth: 120, displayName: '变动性质', name: 'employmentStatus'}
+            {minWidth: 120, displayName: '退养时间', name: 'changeDate', cellFilter: "date:'yyyy-MM-dd'"}
+        ]
+
+        # 根据权限 early_retire_employees_show 添加查看列
+        @editable = _.includes @permissions,'early_retire_employees_update'
+
+        if _.includes @permissions,'early_retire_employees_show'
+            @columnDef = @columnDef.concat [
+                {
+                    minWidth: 120
+                    displayName: '查看'
+                    field: 'edit'
+                    cellTemplate: '''
+                    <div class="ui-grid-cell-contents">
+                        <a nb-dialog
+                            template-url="/partials/personnel/edit_early_retire.html"
+                            locals="{leave: row.entity, ctrl:grid.appScope.$parent.ctrl}">
+                            查看
+                        </a>
+                    </div>
+                    '''
+                }
+            ]
+
+        @filterOptions = {
+            name: 'personnelLeave'
+            constraintDefs: [
+                {
+                    name: 'name'
+                    displayName: '姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'channel'
+                    displayName: '通道'
+                    type: 'string'
+                }
+                {
+                    name: 'department'
+                    displayName: '机构'
+                    type: 'string'
+                }
+                {
+                    name: 'position_name'
+                    displayName: '岗位名称'
+                    type: 'string'
+                }
+                {
+                    name: 'employment_status'
+                    type: 'string'
+                    displayName: '变动性质'
+                }
+                {
+                    name: 'change_date'
+                    type: 'date-range'
+                    displayName: '退养时间'
+                }
+            ]
+        }
+
+    loadInitialData: () ->
+        @earlyRetireEmployees = @EarlyRetireEmployees.$collection().$fetch()
+
+    search: (tableState) ->
+        tableState = tableState || {}
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+        @earlyRetireEmployees.$refresh(tableState)
+
+    getSelected: () ->
+        rows = @gridApi.selection.getSelectedGridRows()
+        rows.map (row) -> return row.entity
+
+    getSelectsIds: () ->
+        rows = @gridApi.selection.getSelectedGridRows()
+        rows.map (row) -> return row.entity.$pk
+
+    exportGridApi: (gridApi) ->
+        @gridApi = gridApi
+
+    updateEarlyRetire: (model) ->
+        self = @
+
+        model.$save().$then (data) ->
+            self.toaster.pop('success', '更新成功', data.$response.data.messages)
+            self.earlyRetireEmployees.$refresh()
+
 
 class MoveEmployeesCtrl extends nb.Controller
     @.$inject = ['$scope', 'MoveEmployees', 'Employee', '$nbEvent', '$http']
@@ -1218,6 +1344,7 @@ class PersonnelDataCtrl extends nb.Controller
 
 app.controller('PersonnelSort', PersonnelSort)
 app.controller('LeaveEmployeesCtrl', LeaveEmployeesCtrl)
+app.controller('EarlyRetireEmployeesCtrl', EarlyRetireEmployeesCtrl)
 app.controller('MoveEmployeesCtrl', MoveEmployeesCtrl)
 app.controller('adjustPositionWaitingCtrl', AdjustPositionWaitingController)
 app.controller('EmployeeMemberCtrl', EmployeeMemberCtrl)

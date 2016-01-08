@@ -23,6 +23,8 @@ Employee = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('employee:update:success', "员工信息更新成功")
             'after-leave': ->
                 $Evt.$send('employee:leave:success', "员工已设置为离职状态")
+            'after-retire': ->
+                $Evt.$send('employee:retire:success', "员工已设置为退养状态")
             'after-change-education': ->
                 $Evt.$send('employee:change_education:success', "员工学历已更新")
         }
@@ -60,6 +62,21 @@ Employee = (restmod, RMUtils, $Evt) ->
 
                     this.$send(request, onSuccess)
 
+                set_early_retire: (params, list, tableState)->
+                    self = this
+
+                    request = {
+                        url: "/api/employees/#{this.id}/set_early_retire"
+                        method: "POST"
+                        data: params
+                    }
+
+                    onSuccess = (res) ->
+                        self.$dispatch 'after-retire'
+                        list.$refresh(tableState)
+
+                    this.$send(request, onSuccess)
+
                 update_education: (params, list, tableState)->
                     self = this
 
@@ -83,6 +100,15 @@ Employee = (restmod, RMUtils, $Evt) ->
 
 LeaveEmployees = (restmod, RMUtils, $Evt) ->
     LeaveEmployees = restmod.model('/leave_employees').mix 'nbRestApi', {
+        joinScalDate: {decode: 'date', param: 'yyyy-MM-dd'}
+        startWorkDate: {decode: 'date', param: 'yyyy-MM-dd'}
+        startDate: {decode: 'date', param: 'yyyy-MM-dd'}
+
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+    }
+
+EarlyRetireEmployees = (restmod, RMUtils, $Evt) ->
+    EarlyRetireEmployees = restmod.model('/early_retire_employees').mix 'nbRestApi', {
         joinScalDate: {decode: 'date', param: 'yyyy-MM-dd'}
         startWorkDate: {decode: 'date', param: 'yyyy-MM-dd'}
         startDate: {decode: 'date', param: 'yyyy-MM-dd'}
@@ -146,6 +172,7 @@ Formerleaders = (restmod, RMUtils, $Evt) ->
 resources.factory 'Employee', ['restmod', 'RMUtils', '$nbEvent', Employee]
 resources.factory 'Formerleaders', ['restmod', 'RMUtils', '$nbEvent', Formerleaders]
 resources.factory 'LeaveEmployees', ['restmod', 'RMUtils', '$nbEvent', LeaveEmployees]
+resources.factory 'EarlyRetireEmployees', ['restmod', 'RMUtils', '$nbEvent', EarlyRetireEmployees]
 resources.factory 'AdjustPositionWaiting', ['restmod', 'RMUtils', '$nbEvent', AdjustPositionWaiting]
 resources.factory 'MoveEmployees', ['restmod', 'RMUtils', '$nbEvent', MoveEmployees]
 
