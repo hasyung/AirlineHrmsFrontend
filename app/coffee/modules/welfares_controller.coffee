@@ -749,7 +749,7 @@ class AnnuityHistoryController extends nb.Controller
                     type: 'string'
                 }
                 {
-                    name: 'month'
+                    name: 'cal_date'
                     displayName: '缴费月度'
                     type: 'month-range'
                 }
