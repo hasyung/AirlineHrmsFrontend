@@ -136,6 +136,17 @@ class PersonnelCtrl extends nb.Controller
         .error (data) ->
             self.importing = false
 
+    uploadAttendance: (type, attachment_id)->
+        self = @
+        params = {type: type, attachment_id: attachment_id}
+        @importing = true
+
+        @http.post("/api/attendance_summaries/import", params).success (data, status) ->
+            self.toaster.pop('success', '提示', '导入成功')
+            self.importing = false
+        .error (data) ->
+            self.importing = false
+
 
 class NewEmpsCtrl extends nb.Controller
     @.$inject = ['$scope', 'Employee', 'Org', '$state', '$enum', '$http', 'toaster']
