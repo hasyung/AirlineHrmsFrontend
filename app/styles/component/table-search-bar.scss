@@ -138,8 +138,18 @@ md-content.search-container {
         }
 
         .md-input-container-row {
+            @include clearfix();
+
             md-input-container {
                 float: left;
+            }
+
+            .select-group {
+                float: left;
+
+                md-select {
+                    min-width: 60px;
+                }
             }
 
             .divide-text {

@@ -37,17 +37,9 @@ class NbFilterCtrl extends nb.FilterController
         '''
         'month-range': '''
             <div class="md-input-container-row">
-                <md-input-container md-no-float>
-                    <md-select placeholder="${ displayName }" ng-model="${ name }.from">
-                        <md-option ng-value="item" ng-repeat="item in $parent.month_list track by $index">{{item}}</md-option>
-                    </md-select>
-                </md-input-container>
+                <select-two-parts ng-model="${ name }.from"></select-two-parts>
                 <div class="divide-text">到</div>
-                <md-input-container md-no-float>
-                    <md-select placeholder="${ displayName }" ng-model="${ name }.to">
-                        <md-option ng-value="item" ng-repeat="item in $parent.month_list track by $index">{{item}}</md-option>
-                    </md-select>
-                </md-input-container>
+                <select-two-parts ng-model="${ name }.to"></select-two-parts>
             </div>
         '''
         'month-list': '''
