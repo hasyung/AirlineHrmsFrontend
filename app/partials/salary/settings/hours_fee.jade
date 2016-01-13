@@ -25,6 +25,14 @@
                         span(flex)
                         md-button.md-raised.md-primary(ng-click="ctrl.saveConfig('air_security_hour', ctrl.dynamic_config)") 保存
                     include ./hours/air_security.jade
+            tab.leader-base(heading="飞行驾驶技术津贴")
+                form.form-static(novalidate)
+                    md-toolbar
+                      .md-toolbar-tools
+                        h2 飞行驾驶技术津贴
+                        span(flex)
+                        md-button.md-raised.md-primary(ng-click="ctrl.saveConfig('flyer_science_subsidy', ctrl.dynamic_config)") 保存
+                    include ./hours/fly_tech_security.jade
             //- tab.leader-base(heading="未飞补贴")
             //-     form.form-static.has-sub(novalidate)
             //-         md-toolbar

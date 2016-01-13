@@ -919,6 +919,137 @@ class AdjustPositionWaitingController extends nb.Controller
     search: (tableState)->
         @adjustPositionEmployees.$refresh(tableState)
 
+class PositionRecordController extends nb.Controller
+    @.$inject = ['$scope', 'toaster', 'AdjustPositionRecord']
+
+    constructor: (@scope, @toaster, @AdjustPositionRecord) ->
+        @loadInitialData()
+
+        @filterOptions = {
+            name: 'positionRecord'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+                {
+                    name: 'labor_relation_ids'
+                    type: 'muti-enum-search'
+                    displayName: '用工性质'
+                    params: {
+                        type: 'labor_relations'
+                    }
+                }
+            ]
+        }
+
+        @columnDef = [
+            {
+                minWidth: 120
+                displayName: '员工编号'
+                name: 'employeeNo'
+            }
+            {
+                minWidth: 120
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {
+                minWidth: 120
+                displayName: '用工性质'
+                name: 'departmentName'
+            }
+            {
+                minWidth: 120
+                displayName: '变动日期'
+                name: 'changeDate'
+                cellFilter: "date:'yyyy-MM-dd'"
+            }
+            {
+                minWidth: 350
+                displayName: '原部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+            }
+            {
+                minWidth: 250
+                displayName: '原岗位'
+                name: 'positionName'
+                cellTooltip: (row) ->
+                    return row.entity.positionName
+            }
+            {
+                minWidth: 120
+                displayName: '原通道'
+                name: 'departmentName'
+            }
+            {
+                minWidth: 120
+                displayName: '原属地'
+                name: 'departmentName'
+            }
+            {
+                minWidth: 350
+                displayName: '现部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+            }
+            {
+                minWidth: 250
+                displayName: '现岗位'
+                name: 'positionName'
+                cellTooltip: (row) ->
+                    return row.entity.positionName
+            }
+            {
+                minWidth: 120
+                displayName: '现通道'
+                name: 'departmentName'
+            }
+            {
+                minWidth: 120
+                displayName: '现属地'
+                name: 'departmentName'
+            }
+            {
+                minWidth: 150
+                displayName: '文件号'
+                name: 'fileNo'
+                cellTooltip: (row) ->
+                    return row.entity.fileNo
+            }
+            {
+                minWidth: 150
+                displayName: '备注'
+                name: 'note'
+            }
+        ]
+
+    loadInitialData: () ->
+        self = @
+
+        @adjustPositionRecords = @AdjustPositionRecord.$collection().$fetch()
+
+    search: (tableState)->
+        @adjustPositionRecords.$refresh(tableState)
+
 
 
 class ReviewCtrl extends nb.Controller
@@ -1357,6 +1488,7 @@ app.controller('LeaveEmployeesCtrl', LeaveEmployeesCtrl)
 app.controller('EarlyRetireEmployeesCtrl', EarlyRetireEmployeesCtrl)
 app.controller('MoveEmployeesCtrl', MoveEmployeesCtrl)
 app.controller('adjustPositionWaitingCtrl', AdjustPositionWaitingController)
+app.controller('PositionRecordCtrl', PositionRecordController)
 app.controller('EmployeeMemberCtrl', EmployeeMemberCtrl)
 app.controller('EmployeePerformanceCtrl', EmployeePerformanceCtrl)
 app.controller('EmployeeAttendanceCtrl', EmployeeAttendanceCtrl)

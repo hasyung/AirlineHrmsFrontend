@@ -282,11 +282,6 @@ class AdjustPositionCtrl
                 'department': {'id': position.department.id}
                 })
 
-# <<<<<<< HEAD
-
-
-# =======
-# >>>>>>> online_hotfixes
         @http.post("/api/position_change_records", params).success (data, status)->
             self.Evt.$send "data:create:success", "员工转岗成功"
             list.$refresh(tableState)

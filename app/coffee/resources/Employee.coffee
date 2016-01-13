@@ -170,6 +170,20 @@ AdjustPositionWaiting = (restmod, RMUtils, $Evt) ->
                     this.$refresh(tableState)
     }
 
+AdjustPositionRecord = (restmod, RMUtils, $Evt) ->
+    MoveEmployees = restmod.model('/position_change_records').mix 'nbRestApi', {
+        $config:
+            jsonRootSingle: 'position_record'
+            jsonRootMany: 'position_records'
+
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+        $extend:
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+    }
+
 
 Formerleaders = (restmod, RMUtils, $Evt) ->
     Leader = restmod.model('/formerleaders').mix 'nbRestApi', {
@@ -191,5 +205,6 @@ resources.factory 'Formerleaders', ['restmod', 'RMUtils', '$nbEvent', Formerlead
 resources.factory 'LeaveEmployees', ['restmod', 'RMUtils', '$nbEvent', LeaveEmployees]
 resources.factory 'EarlyRetireEmployees', ['restmod', 'RMUtils', '$nbEvent', EarlyRetireEmployees]
 resources.factory 'AdjustPositionWaiting', ['restmod', 'RMUtils', '$nbEvent', AdjustPositionWaiting]
+resources.factory 'AdjustPositionRecord', ['restmod', 'RMUtils', '$nbEvent', AdjustPositionRecord]
 resources.factory 'MoveEmployees', ['restmod', 'RMUtils', '$nbEvent', MoveEmployees]
 
