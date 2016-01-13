@@ -929,6 +929,11 @@ class PositionRecordController extends nb.Controller
                         type: 'labor_relations'
                     }
                 }
+                {
+                    name: 'change_date'
+                    displayName: '变动时间'
+                    type: 'date-range'
+                }
             ]
         }
 
@@ -955,7 +960,8 @@ class PositionRecordController extends nb.Controller
             {
                 minWidth: 120
                 displayName: '用工性质'
-                name: 'departmentName'
+                name: 'laborRelationId'
+                cellFilter: "enum:'labor_relations'"
             }
             {
                 minWidth: 120
@@ -966,26 +972,26 @@ class PositionRecordController extends nb.Controller
             {
                 minWidth: 350
                 displayName: '原部门'
-                name: 'departmentName'
+                name: 'preDepartmentName'
                 cellTooltip: (row) ->
-                    return row.entity.departmentName
+                    return row.entity.preDepartmentName
             }
             {
                 minWidth: 250
                 displayName: '原岗位'
-                name: 'positionName'
+                name: 'prePositionName'
                 cellTooltip: (row) ->
-                    return row.entity.positionName
+                    return row.entity.prePositionName
             }
             {
                 minWidth: 120
                 displayName: '原通道'
-                name: 'departmentName'
+                name: 'preChannelName'
             }
             {
                 minWidth: 120
                 displayName: '原属地'
-                name: 'departmentName'
+                name: 'preLocation'
             }
             {
                 minWidth: 350
@@ -1004,17 +1010,17 @@ class PositionRecordController extends nb.Controller
             {
                 minWidth: 120
                 displayName: '现通道'
-                name: 'departmentName'
+                name: 'channelName'
             }
             {
                 minWidth: 120
                 displayName: '现属地'
-                name: 'departmentName'
+                name: 'location'
             }
             {
                 minWidth: 150
                 displayName: '文件号'
-                name: 'fileNo'
+                name: 'oaFileNo'
                 cellTooltip: (row) ->
                     return row.entity.fileNo
             }

@@ -154,7 +154,7 @@ AdjustPositionWaiting = (restmod, RMUtils, $Evt) ->
     }
 
 AdjustPositionRecord = (restmod, RMUtils, $Evt) ->
-    MoveEmployees = restmod.model('/position_change_records').mix 'nbRestApi', {
+    AdjustPositionEmployees = restmod.model('/position_records').mix 'nbRestApi', {
         $config:
             jsonRootSingle: 'position_record'
             jsonRootMany: 'position_records'
