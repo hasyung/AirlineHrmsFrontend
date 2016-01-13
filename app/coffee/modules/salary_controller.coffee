@@ -194,6 +194,7 @@ class SalaryController extends nb.Controller
                           "fly_attendant_hour",                 # 小时费-空乘
                           "air_security_hour",                  # 小时费-空保
                           "unfly_allowance_hour",               # 小时费-未飞补贴
+                          "flyer_science_subsidy",              # 小时费-飞行驾驶技术津贴
                           "allowance",                          # 津贴设置
                           "land_subsidy",                       # 地面驻站补贴
                           "airline_subsidy",                    # 空勤驻站补贴
@@ -1051,6 +1052,12 @@ class SalaryExchangeController
 
         setting = @$settingHash('flyer_hour')
         current.flyHourMoney = setting[current.flyHourFee]
+
+    flyer_science_subsidy: (current)->
+        return unless current.flyerScienceSubsidy
+
+        setting = @$settingHash('flyer_science_subsidy')
+        current.flyerScienceMoney = setting[current.flyerScienceSubsidy]
 
     airline: (current)->
         return unless current.baseWage

@@ -120,6 +120,24 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
         md-input-container(flex)
             label 标准
             input(type="number" min="0" max="100000" ng-model="current.flyHourMoney" readonly)
+    div(layout)
+        md-input-container.row-has-value(flex)
+            label 飞行驾驶技术津贴
+            md-select(ng-model="current.flyerScienceSubsidy" placeholder="请选择" ng-change="exchangeCtrl.flyer_science_subsidy(current)")
+                md-option(value="inspect_delegate") 局方检查代表
+                md-option(value="teacher") 教员
+                md-option(value="duty_leader") 责任机长
+                md-option(value="leader") 机长
+                md-option(value="copilot_special") 副驾驶特别档
+                md-option(value="copilot_1") 副驾驶Ⅰ
+                md-option(value="copilot_2") 副驾驶Ⅱ
+                md-option(value="copilot_3") 副驾驶Ⅲ
+                md-option(value="copilot_4") 副驾驶Ⅳ
+                md-option(value="copilot_5") 副驾驶Ⅴ
+                md-option(value="copilot_6") 副驾驶Ⅵ
+        md-input-container(flex)
+            label 金额
+            input(type="number" min="0" max="100000" ng-model="current.flyerScienceMoney" readonly)
 
     div(layout)
         md-input-container.row-has-value(flex)
