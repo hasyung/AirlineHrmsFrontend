@@ -1,0 +1,18 @@
+.app-content-wrapper(flex ng-controller="PositionRecordCtrl as ctrl")
+
+    div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+
+    div.ui-grid-container
+        md-toolbar
+            .md-toolbar-tools
+                h2 岗位变动列表
+                div(flex)
+                md-button.md-primary.md-raised(
+                    ng-href=""
+                    download
+                ) 导出
+
+        div(
+            nb-grid
+            column-defs="ctrl.columnDef"
+            safe-src="ctrl.adjustPositionRecords")
