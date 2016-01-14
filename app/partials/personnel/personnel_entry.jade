@@ -74,8 +74,7 @@
                         div(layout)
                             md-input-container.row-has-value(flex)
                                 label 职称
-                                md-select(ng-model="newEmp.jobTitleId" placeholder="请选择")
-                                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('job_titles')") {{item.label}}
+                                md-input(ng-model="newEmp.jobTitle")
                             md-input-container.row-has-value(flex)
                                 label 职称级别
                                 md-select(ng-model="newEmp.jobTitleDegreeId" placeholder="请选择")
