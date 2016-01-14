@@ -1,7 +1,7 @@
-md-dialog.position_delete()
+md-dialog.position_delete(ng-init="changeRecord = dialog.change.$refresh()")
     md-toolbar.md-accent(md-theme="hrms")
         .md-toolbar-tools
-            span {{::dialog.change.name}}{{::dialog.change.action}}"{{::dialog.change.auditableType}}"
+            span {{::changeRecord.name}}{{::changeRecord.action}}"{{::changeRecord.auditableType}}"
             div(flex)
             span
                 md-button.pull-right(ng-click="dialog.close()") 关闭
@@ -10,6 +10,6 @@ md-dialog.position_delete()
             tr
                 th() 字段
                 th() 值
-            tr(ng-repeat="(field, val) in dialog.change.auditedChanges", ng-if="field != 'unused'")
+            tr(ng-repeat="(field, val) in changeRecord.auditedChanges", ng-if="field != 'unused'")
                 td(ng-bind="field")
                 td.overflow-text(ng-bind="val || '无'", ng-attr-title="{{val}}")

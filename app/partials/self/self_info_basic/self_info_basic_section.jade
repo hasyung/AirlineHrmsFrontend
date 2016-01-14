@@ -111,11 +111,11 @@ form(ng-controller="EditableResourceCtrl", ng-submit="save(currentUser.$save(), 
                         input(ng-model="currentUser.startWorkDate" name="startWorkDate" disabled)
                     md-input-container(flex)
                         label 转合同时间
-                        input(bs-datepicker ng-model="current.changeContractDate" disabled)
+                        input(bs-datepicker ng-model="currentUser.changeContractDate" disabled)
                 div(layout)
                     md-input-container(flex)
                         label 转合同制时间
-                        input(bs-datepicker ng-model="current.changeContractSystemDate" disabled)
+                        input(bs-datepicker ng-model="currentUser.changeContractSystemDate" disabled)
 
             .sep-40
             .subheader--center

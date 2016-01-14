@@ -107,7 +107,8 @@ PositionChange = (restmod, RMUtils, $Evt) ->
         createdAt: {decode: 'date', param: 'yyyy-MM-dd', mask: 'CU'}
 
         $config:
-            jsonRoot: 'audits'
+            jsonRootSingle: 'audit'
+            jsonRootMany: 'audits'
     }
 
 

@@ -9,6 +9,16 @@ tabset(flex)
                         h2 员工人事花名册
                         div(flex)
                         md-button.md-primary.md-raised(
+                            has-permission="attendance_summaries_import"
+                            flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads: true, testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
+                            flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                            flow-file-success="ctrl.upload_start=false;ctrl.uploadAttendance('考勤导入', ctrl.parseJSON($message).id);"
+                            flow-btn
+                            type="button"
+                            ng-disabled="ctrl.importing"
+                        ) 考勤导入
+
+                        md-button.md-primary.md-raised(
                             has-permission="employees_transfer_to_regular_worker"
                             ng-disabled="ctrl.getSelected().length != 1 || ctrl.importing"
                             nb-dialog
@@ -25,6 +35,14 @@ tabset(flex)
                             type="button"
                             ng-disabled="ctrl.importing"
                         ) 实习批量转正
+
+                        md-button.md-primary.md-raised(
+                            has-permission="employees_set_early_retire"
+                            ng-disabled="ctrl.getSelected().length != 1 || ctrl.importing"
+                            nb-dialog
+                            template-url="/partials/personnel/set_retire.html"
+                            locals="{employee: ctrl.getSelected()[0], list: ctrl.employees, tableState: ctrl.tableState}"
+                        ) 人员退养
 
                         md-button.md-primary.md-raised(
                             has-permission="employees_set_leave"
@@ -112,8 +130,14 @@ tabset(flex)
     tab(heading="离职人员花名册")
         include personnel_leave
 
+    tab(heading="退养人员花名册" has-permission="early_retire_employees_index")
+        include personnel_early_retire
+
     tab(heading="异动人员名册")
         include personnel_move
 
     tab(heading="调岗待生效列表")
         include adjust_position_waiting
+
+    tab(heading="岗位调动记录")
+        include adjust_position_records

@@ -278,7 +278,7 @@
                 //-             .form-content 提高员工忠诚度，增强员工适应度，提高员工工作效率，提高员工归属感，企业文化与理念，发展目标与愿景，企业规章制度，工作职责与方式。
         section.resume-section(layout)
             .resume-section-left(style="flex: 0 0 150px;")
-                h4 工作经历
+                h4 到川航前工作经历
             .resume-section-right(flex)
                 div.resume-cell(ng-repeat="work in ctrl.workBefore")
                     .resume-row
@@ -299,33 +299,6 @@
                         .resume-item
                             label.control-label 担任职位
                             .form-content(ng-bind="work.position")
-                        .resume-item
-                            label.control-label 证明人
-                            .form-content(ng-bind="work.witness")
-                    .resume-row
-                        .resume-item.auto-height
-                            label.control-label 工作描述
-                            .form-content(ng-bind="work.jobDesc")
-        section.resume-section(layout)
-            .resume-section-left(style="flex: 0 0 150px;")
-                h4 到川航后任职记录
-            .resume-section-right(flex)
-                div.resume-cell(ng-repeat="work in ctrl.workAfterLeader")
-                    .resume-row
-                        .resume-item
-                            label.control-label 开始日期
-                            .form-content(ng-bind="work.startDate | date:'yyyy-MM-dd'")
-                        .resume-item
-                            label.control-label 结束日期
-                            .form-content(ng-bind="work.endDate | date:'yyyy-MM-dd'")
-                    .resume-rowworkAfterEmployee
-                        .resume-item
-                            label.control-label 任职部门
-                            .form-content(ng-bind="work.department")
-                        .resume-item
-                            label.control-label 担任职位
-                            .form-content(ng-bind="work.position")
-                    .resume-row
                         .resume-item
                             label.control-label 证明人
                             .form-content(ng-bind="work.witness")
@@ -362,3 +335,30 @@
                             label.control-label 工作描述
                             .form-content(ng-bind="work.jobDesc")
 
+        section.resume-section(layout)
+            .resume-section-left(style="flex: 0 0 150px;")
+                h4 到川航后任职记录
+            .resume-section-right(flex)
+                div.resume-cell(ng-repeat="work in ctrl.workAfterLeader")
+                    .resume-row
+                        .resume-item
+                            label.control-label 开始日期
+                            .form-content(ng-bind="work.startDate | date:'yyyy-MM-dd'")
+                        .resume-item
+                            label.control-label 结束日期
+                            .form-content(ng-bind="work.endDate | date:'yyyy-MM-dd'")
+                    .resume-rowworkAfterEmployee
+                        .resume-item
+                            label.control-label 任职部门
+                            .form-content(ng-bind="work.department")
+                        .resume-item
+                            label.control-label 担任职位
+                            .form-content(ng-bind="work.position")
+                    .resume-row
+                        .resume-item
+                            label.control-label 证明人
+                            .form-content(ng-bind="work.witness")
+                    .resume-row
+                        .resume-item.auto-height
+                            label.control-label 工作描述
+                            .form-content(ng-bind="work.jobDesc")

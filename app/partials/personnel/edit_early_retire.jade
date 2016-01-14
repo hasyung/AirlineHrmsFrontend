@@ -1,0 +1,47 @@
+md-dialog.punishment_new(style="min-width: 450px;")
+    md-toolbar.md-accent(md-theme="hrms")
+        .md-toolbar-tools
+            span 人员退养
+    form(ng-controller="EditableResourceCtrl" ng-submit="ctrl.updateEarlyRetire(current);dialog.close();" name="editEarlyRetireForm")
+        md-content(ng-init="current=dialog.earlyRetire.$refresh();ctrl=dialog.ctrl;")
+            fieldset
+                div(layout)
+                    md-input-container(flex)
+                        label 姓名
+                        input(ng-model="::current.name" readonly)
+                    md-input-container(flex)
+                        label 员工编号
+                        input(ng-model="::current.employeeNo" readonly)
+                div(layout)
+                    md-input-container(flex)
+                        label 部门
+                        input(ng-model="::current.department" readonly)
+                    md-input-container(flex)
+                        label 岗位
+                        input(ng-model="::current.position" readonly)
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 通道
+                        input(ng-model="::current.channel" readonly)
+                    md-input-container.row-has-value(flex)
+                        label 用工性质
+                        input(ng-model="::current.laborRelation" readonly)
+                div(layout)
+                    md-input-container(flex)
+                        label 退养时间
+                        input(
+                            ng-model="current.changeDate"
+                            name="date"
+                            bs-datepicker
+                            required
+                            ng-disabled="!ctrl.editable"
+                            style="color: rgba(0,0,0,0.87);"
+                            )
+                div(layout)
+                    md-input-container(flex)
+                        label 文件号
+                        input(ng-model="current.fileNo" ng-readonly="!ctrl.editable")
+
+        .md-actions
+            md-button(type="button" ng-click="cancel(current, $event, editEarlyRetireForm); ctrl.earlyRetireEmployees.$refresh();dialog.close()") 取 消
+            md-button.md-primary.md-raised(has-permission="early_retire_employees_update" type="submit" ng-disabled="editEarlyRetireForm.$invalid") 确 定

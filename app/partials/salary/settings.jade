@@ -1,19 +1,19 @@
 tabset(flex)
-    tab(heading="薪酬全局设置")
+    tab(heading="薪酬全局设置" has-permission="salaries_global")
         include settings/global.jade
-    tab(heading="基本工资设置")
+    tab(heading="基本工资设置" has-permission="salaries_basic")
         include settings/basic.jade
-    tab(heading="考核性收入设置")
+    tab(heading="考核性收入设置" has-permission="salaries_performance")
         include settings/performance.jade
-    tab(heading="小时费设置")
+    tab(heading="小时费设置" has-permission="salaries_hours_fee")
         include settings/hours_fee.jade
-    tab(heading="津贴设置")
+    tab(heading="津贴设置" has-permission="salaries_allowance")
         include settings/allowance.jade
-    tab(heading="驻站补贴设置")
+    tab(heading="驻站补贴设置" has-permission="salaries_land_allowance")
         include settings/stay_subsidy.jade
-    tab(heading="高温补贴设置")
+    tab(heading="高温补贴设置" has-permission="salaries_temp")
         include settings/temperature.jade
-    tab(heading="通讯补贴设置")
+    tab(heading="通讯补贴设置" has-permission="salaries_communicate_allowance")
         include settings/communicate.jade
-    tab(heading="寒冷补贴设置")
+    tab(heading="寒冷补贴设置" has-permission="salaries_cold_subsidy")
         include settings/cold_subsidy.jade

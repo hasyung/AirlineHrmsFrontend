@@ -183,11 +183,19 @@ class PositionChangesCtrl extends nb.Controller
                 displayName: '信息变更模块'
                 field: 'auditableType'
                 cellTemplate: '''
-                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                <div class="ui-grid-cell-contents">
                     <a
+                        ng-if="row.entity.action != '修改'"
                         href="javascript:void(0);"
                         nb-dialog
-                        template-url="partials/common/{{row.entity.action == '修改'? 'update_change_review.tpl.html': 'create_change_review.tpl.html'}}"
+                        template-url="partials/common/create_change_review.tpl.html"
+                        locals="{'change': row.entity}"> {{row.entity.auditableType}}
+                    </a>
+                    <a
+                        ng-if="row.entity.action == '修改'"
+                        href="javascript:void(0);"
+                        nb-dialog
+                        template-url="partials/common/update_change_review.tpl.html"
                         locals="{'change': row.entity}"> {{row.entity.auditableType}}
                     </a>
                 </div>
@@ -274,11 +282,6 @@ class AdjustPositionCtrl
                 'department': {'id': position.department.id}
                 })
 
-# <<<<<<< HEAD
-
-
-# =======
-# >>>>>>> online_hotfixes
         @http.post("/api/position_change_records", params).success (data, status)->
             self.Evt.$send "data:create:success", "员工转岗成功"
             list.$refresh(tableState)

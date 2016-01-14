@@ -315,7 +315,7 @@ class OrgCtrl extends nb.Controller
         # 过滤机构的职级
         # TODO 没有考虑编辑的事后节点的职级不能比子节点低的情况
         @dep_grade_array = _.filter @enum.get('department_grades'), (item)->
-            item.id > current_grade_id
+            item.id >= current_grade_id
 
 
     orgLink: (org)->

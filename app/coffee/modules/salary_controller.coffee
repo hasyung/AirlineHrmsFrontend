@@ -194,6 +194,7 @@ class SalaryController extends nb.Controller
                           "fly_attendant_hour",                 # 小时费-空乘
                           "air_security_hour",                  # 小时费-空保
                           "unfly_allowance_hour",               # 小时费-未飞补贴
+                          "flyer_science_subsidy",              # 小时费-飞行驾驶技术津贴
                           "allowance",                          # 津贴设置
                           "land_subsidy",                       # 地面驻站补贴
                           "airline_subsidy",                    # 空勤驻站补贴
@@ -1052,6 +1053,12 @@ class SalaryExchangeController
         setting = @$settingHash('flyer_hour')
         current.flyHourMoney = setting[current.flyHourFee]
 
+    flyer_science_subsidy: (current)->
+        return unless current.flyerScienceSubsidy
+
+        setting = @$settingHash('flyer_science_subsidy')
+        current.flyerScienceMoney = setting[current.flyerScienceSubsidy]
+
     airline: (current)->
         return unless current.baseWage
         return unless current.baseFlag
@@ -1079,7 +1086,7 @@ class SalaryExchangeController
 
 
 class SalaryBaseController extends nb.Controller
-    constructor: (@Model, @scope, @q, @right_hand_mode, options = null) ->
+    constructor: (@Model, @scope, @q, @right_hand_mode, options = null, @rootScope) ->
         @loadDateTime()
         @loadInitialData(options)
 
@@ -1172,8 +1179,15 @@ class SalaryBaseController extends nb.Controller
         angular.extend(args, options) if angular.isDefined(options)
         @records.$refresh(args)
 
+    cancelLoading: () ->
+        @rootScope.loading = false
+
+    startLoading: () ->
+        @rootScope.loading = true
+
     # 强制计算
     exeCalc: (options = null) ->
+        @startLoading()
         @calcing = true
         self = @
 
@@ -1181,22 +1195,24 @@ class SalaryBaseController extends nb.Controller
         angular.extend(args, options) if angular.isDefined(options)
 
         @Model.compute(args).$asPromise().then (data)->
+            self.cancelLoading()
             self.calcing = false
             erorr_msg = data.$response.data.messages
             # _.snakeCase('Foo Bar')
             # @Model => String???
             self.Evt.$send("salary_model:calc:error", erorr_msg) if erorr_msg
             self.loadRecords()
-        , (data)->
+        , ()->
+            self.cancelLoading()
             self.calcing = false
 
 
 # 基础工资
 class SalaryBasicController extends SalaryBaseController
-    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'BasicSalary', 'toaster']
+    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'BasicSalary', 'toaster', '$rootScope']
 
-    constructor: ($http, $scope, $q, @Evt, @Employee, @BasicSalary, @toaster) ->
-        super(@BasicSalary, $scope, $q, true)
+    constructor: ($http, $scope, $q, @Evt, @Employee, @BasicSalary, @toaster, @rootScope) ->
+        super(@BasicSalary, $scope, $q, true, null, @rootScope)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
@@ -1263,10 +1279,10 @@ class SalaryBasicController extends SalaryBaseController
 
 # 保留工资
 class SalaryKeepController extends SalaryBaseController
-    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'KeepSalary', 'toaster']
+    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'KeepSalary', 'toaster', '$rootScope']
 
-    constructor: ($http, $scope, $q, @Evt, @Employee, @KeepSalary, @toaster) ->
-        super(@KeepSalary, $scope, $q, true)
+    constructor: ($http, $scope, $q, @Evt, @Employee, @KeepSalary, @toaster, @rootScope) ->
+        super(@KeepSalary, $scope, $q, true, null, @rootScope)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
@@ -1340,10 +1356,10 @@ class SalaryKeepController extends SalaryBaseController
 
 # 绩效工资
 class SalaryPerformanceController extends SalaryBaseController
-    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'PerformanceSalary', 'toaster']
+    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'PerformanceSalary', 'toaster', '$rootScope']
 
-    constructor: (@http, $scope, $q, @Evt, @Employee, @PerformanceSalary, @toaster) ->
-        super(@PerformanceSalary, $scope, $q, false)
+    constructor: ($http, $scope, $q, @Evt, @Employee, @PerformanceSalary, @toaster, @rootScope) ->
+        super(@PerformanceSalary, $scope, $q, false, null, @rootScope)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
@@ -1447,11 +1463,11 @@ class SalaryPerformanceController extends SalaryBaseController
 
 # 小时费
 class SalaryHoursFeeController extends SalaryBaseController
-    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'HoursFee', 'toaster']
+    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'HoursFee', 'toaster', '$rootScope']
 
-    constructor: (@http, $scope, $q, @Evt, @Employee, @HoursFee, @toaster) ->
+    constructor: (@http, $scope, $q, @Evt, @Employee, @HoursFee, @toaster, @rootScope) ->
         @hours_fee_category = '飞行员'
-        super(@HoursFee, $scope, $q, false, {hours_fee_category: @hours_fee_category})
+        super(@HoursFee, $scope, $q, false, {hours_fee_category: @hours_fee_category}, @rootScope)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
@@ -1543,10 +1559,10 @@ class SalaryHoursFeeController extends SalaryBaseController
 
 
 class SalaryAllowanceController extends SalaryBaseController
-    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'Allowance', 'toaster']
+    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'Allowance', 'toaster', '$rootScope']
 
-    constructor: (@http, $scope, $q, @Evt, @Employee, @Allowance, @toaster) ->
-        super(@Allowance, $scope, $q, false)
+    constructor: ($http, $scope, $q, @Evt, @Employee, @Allowance, @toaster, @rootScope) ->
+        super(@Allowance, $scope, $q, true, null, @rootScope)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
@@ -1636,10 +1652,10 @@ class SalaryAllowanceController extends SalaryBaseController
 
 
 class SalaryLandAllowanceController extends SalaryBaseController
-    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'LandAllowance', 'toaster']
+    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'LandAllowance', 'toaster', '$rootScope']
 
-    constructor: (@http, $scope, $q, @Evt, @Employee, @LandAllowance, @toaster) ->
-        super(@LandAllowance, $scope, $q, false)
+    constructor: (@http, $scope, $q, @Evt, @Employee, @LandAllowance, @toaster, @rootScope) ->
+        super(@LandAllowance, $scope, $q, false, null, @rootScope)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
@@ -1714,10 +1730,10 @@ class SalaryLandAllowanceController extends SalaryBaseController
 
 
 class SalaryRewardController extends SalaryBaseController
-    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'Reward', 'toaster']
+    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'Reward', 'toaster', '$rootScope']
 
-    constructor: (@http, $scope, $q, @Evt, @Employee, @Reward, @toaster) ->
-        super(@Reward, $scope, $q, true)
+    constructor: ($http, $scope, $q, @Evt, @Employee, @Reward, @toaster, @rootScope) ->
+        super(@Reward, $scope, $q, true, null, @rootScope)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
@@ -1789,10 +1805,10 @@ class SalaryRewardController extends SalaryBaseController
 
 
 class SalaryTransportFeeController extends SalaryBaseController
-    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'TransportFee', 'toaster']
+    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'TransportFee', 'toaster', '$rootScope']
 
-    constructor: (@http, $scope, $q, @Evt, @Employee, @TransportFee, @toaster) ->
-        super(@TransportFee, $scope, $q, true)
+    constructor: (@http, $scope, $q, @Evt, @Employee, @TransportFee, @toaster, @rootScope) ->
+        super(@TransportFee, $scope, $q, true, null, @rootScope)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
@@ -1868,10 +1884,10 @@ class SalaryTransportFeeController extends SalaryBaseController
 
 
 class SalaryOverviewController extends SalaryBaseController
-    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'SalaryOverview', 'toaster']
+    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'SalaryOverview', 'toaster', '$rootScope']
 
-    constructor: ($http, $scope, $q, @Evt, @Employee, @SalaryOverview, @toaster) ->
-        super(@SalaryOverview, $scope, $http, true)
+    constructor: ($http, $scope, $q, @Evt, @Employee, @SalaryOverview, @toaster, @rootScope) ->
+        super(@SalaryOverview, $scope, $http, true, null, @rootScope)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 

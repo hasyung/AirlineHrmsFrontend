@@ -249,8 +249,8 @@ class SocialComputeController extends nb.Controller
 
         ]
 
-    loadMonthList: () ->
-        if @currentYear == new Date().getFullYear()
+    loadMonthList: (year) ->
+        if year == new Date().getFullYear()
             months = [1..new Date().getMonth() + 1]
         else
             months = [1..12]
@@ -278,7 +278,7 @@ class SocialComputeController extends nb.Controller
         @currentYear + "-" + @currentMonth
 
     loadRecords: ()->
-        @loadMonthList()
+        @loadMonthList(@currentYear)
         @socialRecords.$refresh({month: @currentCalcTime()})
 
     # 强制计算
@@ -749,7 +749,7 @@ class AnnuityHistoryController extends nb.Controller
                     type: 'string'
                 }
                 {
-                    name: 'month'
+                    name: 'cal_date'
                     displayName: '缴费月度'
                     type: 'month-range'
                 }
