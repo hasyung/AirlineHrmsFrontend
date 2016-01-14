@@ -109,8 +109,8 @@
                 thead
                     tr
                         th 城市
-                        th.mini 金额
-                        th.mini 月/天
+                        th.mini 金额/天
+                        //- th.mini 月/天
 
                 tbody
                     tr(ng-repeat="setting in configurations[2].others")
@@ -125,10 +125,10 @@
                             add-city(ng-model="setting.cities")
                         td
                             input(type="number" ng-model="setting.amount" min="0"  max="100000" step="1")
-                        td
-                            md-radio-group(ng-model="setting.unit" layout)
-                                md-radio-button.md-primary(style="margin-right: 30px;" value="month") 月
-                                md-radio-button.md-primary(value="day") 天
+                        //- td
+                        //-     md-radio-group(ng-model="setting.unit" layout)
+                        //-         md-radio-button.md-primary(style="margin-right: 30px;" value="month") 月
+                        //-         md-radio-button.md-primary(value="day") 天
 
 
 

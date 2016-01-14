@@ -570,26 +570,25 @@ angular.module 'nb.directives'
         }
     ]
 
-    .directive 'progressValue', [ () ->
-        postLink = (scope, elem, attrs) ->
-            #console.error elem
-
-        return {
-            restrict: "EA"
-            link: postLink
-        }
-    ]
-
     # 在变更记录中使用
     .directive 'addCity', [()->
         postLink = (scope, elem, attrs) ->
+
+        class AddCityCtrl
+            @.$inject = ['$scope']
+
+            constructor: (@scope)->
+
+            addItem: (item)->
+                if angular.isDefined(item) && item.length > 0
+                    @scope.cities.push(item)
 
         return {
             restrict: 'E'
             link: postLink
             template: '''
             <span>
-                <input ng-show="adding" type="text" ng-model="city" ng-blur="cities.push(city); city=''; adding=false;" />
+                <input ng-show="adding" type="text" ng-model="city" ng-blur="ctrl.addItem(city); city=''; adding=false;" />
                 <span ng-click="adding=true" ng-hide="adding" class="add-chip">
                     <md-icon md-svg-src="/images/svg/plus.svg" class="md-primary"></md-icon>
                 </span>
@@ -602,6 +601,8 @@ angular.module 'nb.directives'
             }
             require: 'ngModel'
             replace: true
+            controller: AddCityCtrl
+            controllerAs: 'ctrl'
         }
     ]
 
@@ -641,6 +642,38 @@ angular.module 'nb.directives'
         }
     ]
 
+    #下拉菜单 两部分合并的string
+    .directive 'selectTwoParts', [()->
+        postLink = (scope, elem, attrs) ->
+
+        return {
+            restrict: 'E'
+            link: postLink
+            template: '''
+            <div class="select-group">
+                <md-input-container md-no-float>
+                    <md-select placeholder="请选择" ng-model="ctrl.firstPart" ng-change="ctrl.concatVal()">
+                        <md-option ng-selected="$last" ng-value="item" ng-repeat="item in year_list track by $index">{{item}}</md-option>
+                    </md-select>
+                </md-input-container>
+                <div class="divide-text">—</div>
+                <md-input-container md-no-float>
+                    <md-select placeholder="请选择" ng-model="ctrl.secondPart" ng-change="ctrl.concatVal()">
+                        <md-option ng-selected="$last" ng-value="item" ng-repeat="item in month_list track by $index">{{item}}</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            '''
+            scope: {
+                value: "=ngModel"
+            }
+            require: 'ngModel'
+            replace: true
+            controller: SelectTwoPartsCtrl
+            controllerAs: 'ctrl'
+        }
+    ]
+
 class NbAutocompleteCtrl
     @.$inject = ['$scope', '$attrs']
 
@@ -653,6 +686,20 @@ class NbAutocompleteCtrl
         matched = _.filter self.values, (value)->
             _.includes value, text
         return matched
+
+class SelectTwoPartsCtrl
+    @.$inject = ['$scope', '$attrs']
+
+    constructor: (@scope, attrs) ->
+        @scope.year_list = [2015..new Date().getFullYear()]
+        @scope.month_list = _.map [1..12], (item) ->
+            item = "0" + item if item < 10
+            item + '' # to string
+
+    concatVal: () ->
+        @scope.value = @firstPart+'-'+@secondPart
+
+
 
 
 

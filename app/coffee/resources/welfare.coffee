@@ -44,7 +44,7 @@ DinnerPersonSetup = (restmod, RMUtils, $Evt) ->
                     this.$refresh(tableState)
     }
 
-dinnerRecord = (restmod, RMUtils, $Evt) ->
+DinnerRecord = (restmod, RMUtils, $Evt) ->
     restmod.model('/dinner_fees').mix 'nbRestApi', {
         $config:
             jsonRootSingle: 'dinner_fee'
@@ -66,7 +66,29 @@ dinnerRecord = (restmod, RMUtils, $Evt) ->
                     this.$refresh(tableState)
     }
 
-dinnerSettle = (restmod, RMUtils, $Evt) ->
+DinnerNightSnack = (restmod, RMUtils, $Evt) ->
+    restmod.model('/night_fees').mix 'nbRestApi', 'DirtyModel', {
+        $config:
+            jsonRootSingle: 'night_fee'
+            jsonRootMany: 'night_fees'
+
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+        $extend:
+            Scope:
+                # 计算(根据年月)
+                compute: (params)->
+                    restmod.model('/night_fees/compute').mix(
+                        $config:
+                            jsonRoot: 'night_fees'
+                    ).$search(params)
+
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+    }
+
+DinnerSettle = (restmod, RMUtils, $Evt) ->
     restmod.model('/dinner_settles').mix 'nbRestApi', {
         $config:
             jsonRootSingle: 'dinner_settle'
@@ -88,11 +110,25 @@ dinnerSettle = (restmod, RMUtils, $Evt) ->
                     this.$refresh(tableState)
     }
 
-dinnerChange = (restmod, RMUtils, $Evt) ->
+DinnerChange = (restmod, RMUtils, $Evt) ->
     restmod.model('/dinner_changes').mix 'nbRestApi', {
         $config:
             jsonRootSingle: 'dinner_change'
             jsonRootMany: 'dinner_changes'
+
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+        $extend:
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+    }
+
+DinnerHistory = (restmod, RMUtils, $Evt) ->
+    restmod.model('/dinner_settles/history_record').mix 'nbRestApi', {
+        $config:
+            jsonRootSingle: 'dinner_history'
+            jsonRootMany: 'dinner_histories'
 
         owner: {belongsTo: 'Employee', key: 'employee_id'}
 
@@ -239,7 +275,9 @@ resources.factory 'AnnuityChange', ['restmod', 'RMUtils', '$nbEvent', AnnuityCha
 
 #津贴
 resources.factory 'DinnerPersonSetup', ['restmod', 'RMUtils', '$nbEvent', DinnerPersonSetup]
-resources.factory 'DinnerRecord', ['restmod', 'RMUtils', '$nbEvent', dinnerRecord]
-resources.factory 'DinnerSettle', ['restmod', 'RMUtils', '$nbEvent', dinnerSettle]
-resources.factory 'DinnerChange', ['restmod', 'RMUtils', '$nbEvent', dinnerChange]
+resources.factory 'DinnerRecord', ['restmod', 'RMUtils', '$nbEvent', DinnerRecord]
+resources.factory 'DinnerNightSnack', ['restmod', 'RMUtils', '$nbEvent', DinnerNightSnack]
+resources.factory 'DinnerSettle', ['restmod', 'RMUtils', '$nbEvent', DinnerSettle]
+resources.factory 'DinnerChange', ['restmod', 'RMUtils', '$nbEvent', DinnerChange]
+resources.factory 'DinnerHistory', ['restmod', 'RMUtils', '$nbEvent', DinnerHistory]
 resources.factory 'BirthAllowance', ['restmod', 'RMUtils', '$nbEvent', BirthAllowance]

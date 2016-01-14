@@ -199,7 +199,7 @@ Reward = (restmod, RMUtils, $Evt) ->
                 compute: (params)->
                     restmod.model('/rewards/compute').mix(
                         $config:
-                            jsonRoot: 'land_allowances'
+                            jsonRoot: 'rewards'
                     ).$search(params)
     }
 
@@ -229,6 +229,34 @@ TransportFee = (restmod, RMUtils, $Evt) ->
                     restmod.model('/transport_fees/compute').mix(
                         $config:
                             jsonRoot: 'transport_fees'
+                    ).$search(params)
+    }
+
+BirthSalary = (restmod, RMUtils, $Evt) ->
+    restmod.model('/birth_salaries').mix 'nbRestApi', 'DirtyModel', {
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+        $hooks:
+            'after-create': ->
+                $Evt.$send('birth_salary:create:success', "生育保险创建成功")
+
+            'after-update': ->
+                $Evt.$send('birth_salary:update:success', "生育保险更新成功")
+
+        $config:
+            jsonRootSingle: 'birth_salary'
+            jsonRootMany: 'birth_salaries'
+
+        $extend:
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+            Scope:
+                # 计算(根据年月)
+                compute: (params)->
+                    restmod.model('/birth_salaries/compute').mix(
+                        $config:
+                            jsonRoot: 'birth_salaries'
                     ).$search(params)
     }
 
@@ -265,18 +293,18 @@ SalaryGradeChange = (restmod, RMUtils, $Evt) ->
             jsonRootSingle: 'salary_grade_change'
             jsonRootMany: 'salary_grade_changes'
 
-        $extend:
-            Record:
-                audit: (params)->
-                    self = this
+        # $extend:
+        #     Record:
+        #         audit: (params)->
+        #             self = this
 
-                    request = {
-                        url: "/api/salary_grade_changes/#{this.id}/audit"
-                        method: "PUT"
-                        params: params
-                    }
+        #             request = {
+        #                 url: "/api/salary_grade_changes/#{this.id}/audit"
+        #                 method: "PUT"
+        #                 params: params
+        #             }
 
-                    this.$send(request, onSuccess)
+        #             this.$send(request, onSuccess)
     }
 
 
@@ -317,6 +345,7 @@ resources.factory 'Allowance', ['restmod', 'RMUtils', '$nbEvent', Allowance]
 resources.factory 'LandAllowance', ['restmod', 'RMUtils', '$nbEvent', LandAllowance]
 resources.factory 'Reward', ['restmod', 'RMUtils', '$nbEvent', Reward]
 resources.factory 'TransportFee', ['restmod', 'RMUtils', '$nbEvent', TransportFee]
+resources.factory 'BirthSalary', ['restmod', 'RMUtils', '$nbEvent', BirthSalary]
 resources.factory 'SalaryChange', ['restmod', 'RMUtils', '$nbEvent', SalaryChange]
 resources.factory 'SalaryGradeChange', ['restmod', 'RMUtils', '$nbEvent', SalaryGradeChange]
 resources.factory 'SalaryOverview', ['restmod', 'RMUtils', '$nbEvent', SalaryOverview]

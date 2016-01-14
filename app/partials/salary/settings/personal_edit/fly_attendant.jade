@@ -13,6 +13,34 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
             input(type="number" min="0" max="100000" step="1" ng-model="current.baseMoney" readonly)
 
     div(layout)
+        md-input-container.row-has-value(
+            flex
+            ng-if="current.categoryId==2 || current.categoryId==1 || current.technicalGrade"
+            )
+            label 薪酬等级
+            md-select(ng-model="current.leaderGrade" placeholder="请选择" ng-change="exchangeCtrl.flyPerf(current)")
+                md-option(value="B1") B1
+                md-option(value="B2") B2
+                md-option(value="C1") C1
+                md-option(value="C2") C2
+                md-option(value="C3") C3
+                md-option(value="C4") C4
+                md-option(value="C5") C5
+                md-option(value="D1") D1
+                md-option(value="D2") D2
+                md-option(value="D3") D3
+                md-option(value="D4") D4
+        md-input-container(flex)
+            label 干部补贴飞行时间
+            input(type="number" min="0" max="100000" step="1" ng-model="current.leaderSubsidyHour")
+        md-input-container(flex)
+            label 最低飞行时间
+            input(type="number" min="0" max="100000" step="1" ng-model="current.lowerLimitHour")
+
+    div(layout)
+        md-checkbox.md-primary(ng-model="current.isFlyerLandWork") 空勤地面行政班
+
+    div(layout)
         md-input-container(flex)
             label 岗位工资保留
             input(type="number" min="0" step="1" ng-model="current.keepPosition")
@@ -92,11 +120,11 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
             label 标准
             input(type="number" min="0" max="100000" ng-model="current.securityHourMoney" readonly)
 
-    // 干部和领导才可以设置该值
-    div(layout ng-if="current.categoryId >= 2")
-        md-radio-group.horizontal.mb30(ng-model="current.airlineAttendantType")
-            md-radio-button.md-primary(value="fly") 空勤飞行
-            md-radio-button.md-primary(value="land") 空勤地面
+    //- 干部和领导才可以设置该值
+    //- div(layout ng-if="current.categoryId >= 2")
+    //-     md-radio-group.horizontal.mb30(ng-model="current.airlineAttendantType")
+    //-         md-radio-button.md-primary(value="fly") 空勤飞行
+    //-         md-radio-button.md-primary(value="land") 空勤地面
 
     div(layout)
         md-input-container.row-has-value(flex)

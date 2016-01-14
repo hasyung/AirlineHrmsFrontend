@@ -32,52 +32,123 @@
                             ) 导入
                         md-menu-content
                             md-menu-item(
-                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
                                 flow-file-success="upload_start=false;ctrl.upload_reward('航班正常奖', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 航班正常奖
 
                             md-menu-item(
-                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
                                 flow-file-success="upload_start=false;ctrl.upload_reward('服务质量奖', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 服务质量奖
 
                             md-menu-item(
-                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
                                 flow-file-success="upload_start=false;ctrl.upload_reward('航空安全奖', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 航空安全奖
 
                             md-menu-item(
-                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
                                 flow-file-success="upload_start=false;ctrl.upload_reward('社会治安综合治理奖', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 社会治安综合治理奖
 
                             md-menu-item(
-                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
-                                flow-file-success="upload_start=false;ctrl.upload_reward('收支目标考核奖', ctrl.parseJSON($message).id);")
-                                md-button(flex flow-btn type="button") 收支目标考核奖
+                                flow-file-success="upload_start=false;ctrl.upload_reward('电子航意险代理提成奖', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 电子航意险代理提成奖
 
                             md-menu-item(
-                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
-                                flow-file-success="upload_start=false;ctrl.upload_reward('精品奖励', ctrl.parseJSON($message).id);")
-                                md-button(flex flow-btn type="button") 精品奖励
+                                flow-file-success="upload_start=false;ctrl.upload_reward('客舱升舱提成奖', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 客舱升舱提成奖
 
                             md-menu-item(
-                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
-                                flow-file-success="upload_start=false;ctrl.upload_reward('精编奖励', ctrl.parseJSON($message).id);")
-                                md-button(flex flow-btn type="button") 精编奖励
+                                flow-file-success="upload_start=false;ctrl.upload_reward('全员促销奖', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 全员促销奖
 
                             md-menu-item(
-                                flow-init="{target: '/api/attachments/upload_xls', testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
-                                flow-file-success="upload_start=false;ctrl.upload_reward('奖2', ctrl.parseJSON($message).id);")
-                                md-button(flex flow-btn type="button") 奖2
+                                flow-file-success="upload_start=false;ctrl.upload_reward('四川航空报稿费', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 四川航空报稿费
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_reward('无差错飞行中队奖', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 无差错飞行中队奖
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_reward('年度综治奖', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 年度社会治安综合治理奖
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_reward('运兵先进奖', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 运兵先进奖
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_reward('航空安全特殊贡献奖', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 航空安全特殊贡献奖
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_reward('部门安全管理目标承包奖', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 部门安全管理目标承包奖
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_reward('飞行安全星级奖', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 飞行安全星级奖
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_reward('年度无差错机务维修中队奖', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 年度无差错机务维修中队奖
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_reward('网络联程奖', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 网络联程奖
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_reward('季度奖', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 季度奖
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_reward('收益奖励金', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 收益奖励金
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="upload_start=false;ctrl.upload_reward('预算外奖励', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 预算外奖励
+                span
+                    md-button.md-raised.md-primary(
+                        ng-click="ctrl.exeCalc()"
+                        ng-disabled="ctrl.calcing"
+                    ) 计算
 
                 span
                     md-menu(ng-init="selectedRows=[]")
@@ -105,4 +176,5 @@
             grid-selection
             grid-edit
             grid-row-edit
+            grid-pinning
             on-register-api="ctrl.initialize(gridApi)" safe-src="ctrl.records")

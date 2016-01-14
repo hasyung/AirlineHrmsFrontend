@@ -8,9 +8,6 @@ SUBSCRIBE_EVENT = "connector.entryHandler.enter"
 SEND_MSG_EVENT = "message.messageHandler.send"
 
 
-MESSAGE_KEYS = ['user_message', 'workflow_step_action']
-
-
 class WebsocketService extends nb.Service
     processMessage = (service, data) ->
         if data.message_key
@@ -43,7 +40,10 @@ class WebsocketService extends nb.Service
             if data.code == 'failed'
                 toaster.pop 'error', '错误', '推送服务初始化失败'
                 console.debug '推送服务初始化失败', data
-            self.pomelo.on 'Message', (data) -> processMessage(self, data)
+
+            self.pomelo.on 'Message', (data) ->
+                # console.error data
+                processMessage(self, data)
 
         initialize = () ->
             self.pomelo.request(SUBSCRIBE_EVENT, intial_params, callBack)

@@ -1,1 +1,15 @@
-h1 历史记录
+.app-content-wrapper(flex ng-controller="dinnerHistoriesCtrl as ctrl")
+    div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+
+    div.ui-grid-container.mt5
+        md-toolbar
+            .md-toolbar-tools
+                h2 历史记录
+                span(flex)
+                md-button.md-primary.md-raised(
+                ) 导出
+
+        div(nb-grid
+            column-defs="ctrl.columnDef"
+            export-api
+            safe-src="ctrl.histories")

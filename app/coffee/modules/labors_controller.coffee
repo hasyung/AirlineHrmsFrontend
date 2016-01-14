@@ -454,7 +454,7 @@ class AttendanceCtrl extends nb.Controller
                 name: 'type'
                 displayName: '详细'
                 cellTemplate: '''
-                <div class="ui-grid-cell-contents" ng-init="realFlow = grid.appScope.$parent.realFlow(row.entity)">
+                <div class="ui-grid-cell-contents" ng-mousedown="realFlow = grid.appScope.$parent.realFlow(row.entity)">
                     <a ng-if="!realFlow.processed" flow-handler="realFlow" flows="grid.options.data">
                         查看
                     </a>
@@ -510,6 +510,16 @@ class AttendanceCtrl extends nb.Controller
 
         @year = @year_list[@year_list.length - 1]
         @month = @month_list[@month_list.length - 1]
+
+    loadMonthList: () ->
+        if @year == new Date().getFullYear()
+            months = [1..new Date().getMonth() + 1]
+        else
+            months = [1..12]
+
+        @month_list = _.map months, (item)->
+            item = '0' + item if item < 10
+            item + ''
 
     loadCheckList: ()->
         @tableData = @Leave.$collection().$fetch()

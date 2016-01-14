@@ -24,19 +24,28 @@
                         md-button.md-primary.md-raised(
                             ng-click="$mdOpenMenu($event)"
                             ng-disabled="ctrl.calcing || ctrl.upload_start"
-                            ) 导入备份餐数据
-                        md-menu-content()
+                            ) 导入
+
+                        md-menu-content
                             md-menu-item(
                                 flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads: true, testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
-                                flow-file-success="ctrl.upload_start=false;ctrl.upload_copy('空勤备份餐', ctrl.parseJSON($message).id);")
+                                flow-file-success="ctrl.upload_start=false;ctrl.upload_copy('空勤备份餐', ctrl.parseJSON($message).id);"
+                                )
                                 md-button(flex flow-btn type="button") 空勤备份餐
 
                             md-menu-item(
                                 flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads: true, testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
-                                flow-file-success="ctrl.upload_start=false;ctrl.upload_copy('空保备份餐', ctrl.parseJSON($message).id);")
+                                flow-file-success="ctrl.upload_start=false;ctrl.upload_copy('空保备份餐', ctrl.parseJSON($message).id);"
+                                )
                                 md-button(flex flow-btn type="button") 空保备份餐
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_file', testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="ctrl.upload_start=false;ctrl.upload_copy('长水机场值班数据', ctrl.parseJSON($message).id);"
+                                )
+                                md-button(flex flow-btn type="button") 长水机场值班数据
 
                 span
                     md-button.md-raised.md-primary(
@@ -93,10 +102,16 @@
                                 a.md-button(
                                     flex
                                     download
+                                    ng-href="/api/dinner_fees/export?type=长水机场值班发放表"
+                                    href="javascript:"
+                                ) 长水机场值班发放表
+                            md-menu-item()
+                                a.md-button(
+                                    flex
+                                    download
                                     ng-href="/api/dinner_fees/export?type=其他现金区域发放表"
                                     href="javascript:"
                                 ) 其他现金区域发放表
-                            md-menu-content
                             md-menu-item()
                                 a.md-button(
                                     flex
@@ -143,8 +158,4 @@
         div(nb-grid
             column-defs="ctrl.columnDef"
             export-api
-            grid-selection
-            grid-edit
-            grid-row-edit
-            on-register-api="ctrl.initialize(gridApi)"
             safe-src="ctrl.records")

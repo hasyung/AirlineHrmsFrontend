@@ -19,6 +19,29 @@
                 h2 绩效薪酬
                 span(flex)
 
+                md-button.md-primary.md-raised(
+                    download
+                    ng-href="/api/performance_salaries/export_base_salary?month={{ctrl.currentCalcTime()}}"
+                    href="javascript:"
+                ) 导出模板
+
+                span
+                    md-menu
+                        md-button.md-primary.md-raised(ng-click="$mdOpenMenu($event)") 上传绩效
+                        md-menu-content
+                            md-menu-item()
+                                a.md-button(
+                                    nb-dialog
+                                    template-url="/partials/performance/record/add.html"
+                                    locals="{performanceType: 'month', ctrl: ctrl}"
+                                ) 员工月度绩效
+                            md-menu-item()
+                                a.md-button(
+                                    nb-dialog
+                                    template-url="/partials/performance/record/add.html"
+                                    locals="{performanceType: 'year', ctrl: ctrl}"
+                                ) 员工年度绩效
+
                 span
                     md-menu(ng-init="selectedRows=[]")
                         md-button.md-primary.md-raised(
@@ -74,12 +97,6 @@
                                     ng-href="/api/performance_salaries/export_approval?month={{ctrl.currentCalcTime()}}"
                                     href="javascript:"
                                 ) 审批表
-                            md-menu-item()
-                                a.md-button(
-                                    download
-                                    ng-href="/api/performance_salaries/export_base_salary?month={{ctrl.currentCalcTime()}}"
-                                    href="javascript:"
-                                ) 绩效基数
 
         div(nb-grid
             column-defs="ctrl.columnDef"
@@ -87,4 +104,5 @@
             grid-selection
             grid-edit
             grid-row-edit
+            grid-pinning
             on-register-api="ctrl.initialize(gridApi)" safe-src="ctrl.records")
