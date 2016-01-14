@@ -1036,6 +1036,13 @@ class PositionRecordController extends nb.Controller
 
         @adjustPositionRecords = @AdjustPositionRecord.$collection().$fetch()
 
+    getSelectsIds: () ->
+        rows = @gridApi.selection.getSelectedGridRows()
+        rows.map (row) -> return row.entity.$pk
+
+    exportGridApi: (gridApi) ->
+        @gridApi = gridApi
+
     search: (tableState)->
         @adjustPositionRecords.$refresh(tableState)
 
