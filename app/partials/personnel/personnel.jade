@@ -103,7 +103,7 @@ tabset(flex)
                                     a.md-button(flex ng-href="/api/employees/export_to_xls") 导出全部人员
 
                                 //- md-menu-item(ng-if="ctrl.getSelected().length > 0" has-permission="employees_export_to_xls")
-                                md-menu-item(has-permission="employees_export_to_xls")
+                                md-menu-item(has-permission="employees_export_to_xls" ng-if="ctrl.getSelected().length > 0")
                                     a.md-button(
                                         nb-download
                                         url-prefix="/api/employees/export_to_xls?employee_ids=#param#"
@@ -113,7 +113,7 @@ tabset(flex)
                                     ) 导出所选人员
 
                                 //- md-menu-item(ng-if="ctrl.getSelected().length > 0" has-permission="employees_export_resume")
-                                md-menu-item(has-permission="employees_export_resume")
+                                md-menu-item(has-permission="employees_export_resume" ng-if="ctrl.getSelected().length > 0")
                                     a.md-button(
                                         nb-download
                                         url-prefix="/api/employees/export_resume?employee_ids=#param#"

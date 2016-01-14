@@ -7,12 +7,29 @@
             .md-toolbar-tools
                 h2 岗位变动列表
                 div(flex)
-                md-button.md-primary.md-raised(
-                    ng-href=""
-                    download
-                ) 导出
+
+                md-menu(ng-init="selectedRows=[]" has-permission="position_records_export")
+                    md-button.md-primary.md-raised(
+                        ng-disabled="ctrl.importing"
+                        ng-click="selectedRows = ctrl.getSelectsIds(); $mdOpenMenu($event)"
+                        ) 导出
+
+                    md-menu-content
+                        md-menu-item
+                            a.md-button(flex ng-href="/api/position_records/export") 导出全部人员
+
+                        md-menu-item
+                            a.md-button(
+                                nb-download
+                                url-prefix="/api/position_records/export?record_ids=#param#"
+                                param-getter="ctrl.getSelectsIds()"
+                                href="javascript:;"
+                                download
+                            ) 导出所选人员
 
         div(
             nb-grid
             column-defs="ctrl.columnDef"
+            on-register-api="ctrl.exportGridApi(gridApi)"
+            grid-selection
             safe-src="ctrl.adjustPositionRecords")
