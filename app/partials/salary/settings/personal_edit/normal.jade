@@ -130,9 +130,7 @@ block performance_setting
         md-input-container(flex)
             label 费用化报销金额
             input(type="number" min="0" ng-model="current.refundFee" ng-disabled="!exchangeCtrl.editing")
-        md-input-container(flex)
-            label 高温补贴
-            input(type="number" min="0" max="1000000" ng-model="current.tempAllowance" ng-disabled="!exchangeCtrl.editing")
+        div(flex)
         div(flex)
     div(layout)
         md-checkbox(class="md-primary" ng-model="current.doubleDepartmentCheck" ng-change="current.secondDepartment=null" ng-disabled="!exchangeCtrl.editing") 双部门考核
@@ -221,6 +219,12 @@ block allowance_setting
                 md-option(value="silver") 银质
                 md-option(value="gold") 金质
                 md-option(value="exploit") 功勋
+    div(layout)
+        md-input-container(flex)
+            label 高温补贴
+            input(type="number" min="0" max="1000000" ng-model="current.tempAllowance" ng-disabled="!exchangeCtrl.editing")
+        div(flex)
+        div(flex)
 
 block communicate_setting
     div(layout)

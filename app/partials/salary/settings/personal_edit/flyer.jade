@@ -124,24 +124,24 @@ block hours_fee_setting
         md-input-container(flex)
             label 费用化报销金额
             input(type="number" min="0" max="1000000" ng-model="current.refundFee" ng-disabled="!exchangeCtrl.editing")
-    div(layout)
-        md-input-container(flex)
-            label 最低飞行时间
-            input(type="number" min="0" max="1000000" ng-model="current.lowestFlyTime" ng-disabled="!exchangeCtrl.editing")
-        md-input-container(flex)
-            label 最低计费时间
-            input(type="number" min="0" max="1000000" ng-model="current.lowestCalcTime" ng-disabled="!exchangeCtrl.editing")
-        md-input-container(flex)
-            label 干部补贴飞行时间
-            input(type="number" min="0" max="1000000" ng-model="current.leaderSubsidyTime" ng-disabled="!exchangeCtrl.editing")
-    div(layout)
-        md-input-container(flex style="margin-top:20px")
-            md-select(ng-model="current.flyCheckLifecycle" placeholder="飞行时限考核周期" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
-                md-option(value="无") 无
-                md-option(value="季度考核") 季度考核
-                md-option(value="月度考核") 月度考核
-        div(flex)
-        div(flex)
+    //- div(layout)
+    //-     md-input-container(flex)
+    //-         label 最低飞行时间
+    //-         input(type="number" min="0" max="1000000" ng-model="current.lowestFlyTime" ng-disabled="!exchangeCtrl.editing")
+    //-     md-input-container(flex)
+    //-         label 最低计费时间
+    //-         input(type="number" min="0" max="1000000" ng-model="current.lowestCalcTime" ng-disabled="!exchangeCtrl.editing")
+    //-     md-input-container(flex)
+    //-         label 干部补贴飞行时间
+    //-         input(type="number" min="0" max="1000000" ng-model="current.leaderSubsidyTime" ng-disabled="!exchangeCtrl.editing")
+    //- div(layout)
+    //-     md-input-container(flex style="margin-top:20px")
+    //-         md-select(ng-model="current.flyCheckLifecycle" placeholder="飞行时限考核周期" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+    //-             md-option(value="无") 无
+    //-             md-option(value="季度考核") 季度考核
+    //-             md-option(value="月度考核") 月度考核
+    //-     div(flex)
+    //-     div(flex)
     div(layout)
         md-checkbox.md-primary(ng-model="current.isFlyerLandWork" ng-disabled="!exchangeCtrl.editing") 飞行停飞地面行政班
         md-checkbox.md-primary(ng-model="current.limitLeader" ng-disabled="!exchangeCtrl.editing") 飞行受限干部
