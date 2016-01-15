@@ -3,7 +3,7 @@
 
 singleTemplate =  '''
         <md-autocomplete
-            ng-disabled="editStatus"
+            ng-disabled="!editStatus"
             md-items="org in ctrl.queryMatched(ctrl.searchText)"
             md-item-text="org.fullName"
             md-selected-item="ctrl.org"

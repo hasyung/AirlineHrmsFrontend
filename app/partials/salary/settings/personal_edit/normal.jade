@@ -137,7 +137,7 @@ block performance_setting
         md-checkbox(class="md-primary" ng-model="current.doubleDepartmentCheck" ng-change="current.secondDepartment=null" ng-disabled="!exchangeCtrl.editing") 双部门考核
     div(layout style="margin-bottom: 26px;")
         org-search(
-            editable="!exchangeCtrl.editing"
+            editable="exchangeCtrl.editing"
             ng-required="current.doubleDepartmentCheck"
             flex ng-model="current.secondDepartment"
             ng-if="current.doubleDepartmentCheck"
