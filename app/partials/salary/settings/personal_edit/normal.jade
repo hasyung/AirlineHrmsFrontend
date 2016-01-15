@@ -1,8 +1,18 @@
-div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
+extends ./channels_layout.jade
+
+block vars
+    - var hasBaseSetting = true
+    - var hasHoursFeeSetting = false
+    - var hasPerformanceSetting = true
+    - var hasAllowanceSetting = true
+    - var hasCommunicate = true
+    - var hasServiceCarSetting = true
+
+block base_setting
     div(layout)
         md-input-container.row-has-value(flex)
             label 基础工资
-            md-select(ng-model="current.baseWage" placeholder="请选择" ng-change="exchangeCtrl.normal(current); exchangeCtrl.changeBaseWage(current);")
+            md-select(ng-model="current.baseWage" placeholder="请选择" ng-change="exchangeCtrl.normal(current); exchangeCtrl.changeBaseWage(current);" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(value="leader_base") 干部
                 md-option(value="manager15_base") 管理15
                 md-option(value="manager12_base") 管理12
@@ -11,24 +21,68 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
                 md-option(value="service_c_base") 服务C
         md-input-container.row-has-value(flex ng-if="current.baseWage != 'service_c_driving_base'")
             label 薪酬通道
-            md-select(ng-model="current.baseChannel" placeholder="请选择" ng-change="exchangeCtrl.normal(current); exchangeCtrl.changeBaseChannel(current)")
+            md-select(ng-model="current.baseChannel" placeholder="请选择" ng-change="exchangeCtrl.normal(current); exchangeCtrl.changeBaseChannel(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(ng-value="item" ng-repeat="item in exchangeCtrl.normal_channel_array(current)") {{item}}
         md-input-container.row-has-value(flex ng-if="current.baseWage != 'service_c_driving_base'")
             label 档级
-            md-select(ng-model="current.baseFlag" placeholder="请选择" ng-change="exchangeCtrl.normal(current)")
+            md-select(ng-model="current.baseFlag" placeholder="请选择" ng-change="exchangeCtrl.normal(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(ng-value="item" ng-repeat="item in exchangeCtrl.normal_flag_array(current)") {{item}}
+    div(layout)
         md-input-container(flex)
             label 金额
             input(type="number" min="0" max="100000" step="1" ng-model="current.baseMoney" readonly)
+    div(layout)
+        md-checkbox(class="md-primary" ng-model="current.isSalarySpecial"  ng-disabled="!exchangeCtrl.editing") 薪酬特殊人员
 
+    div(layout)
+        md-input-container(flex)
+            label 岗位工资保留
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepPosition" ng-disabled="!exchangeCtrl.editing")
+        md-input-container(flex)
+            label 业绩奖保留
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepPerformance" ng-disabled="!exchangeCtrl.editing")
+        md-input-container(flex)
+            label 工龄工资保留
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepWorkingYears" ng-disabled="!exchangeCtrl.editing")
+    div(layout)
+        md-input-container(flex)
+            label 保底增幅
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepMinimumGrowth" ng-disabled="!exchangeCtrl.editing")
+        md-input-container(flex)
+            label 地勤补贴保留
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepLandAllowance" ng-disabled="!exchangeCtrl.editing")
+        md-input-container(flex)
+            label 生活补贴保留
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepLifeAllowance" ng-disabled="!exchangeCtrl.editing")
+    div(layout)
+        md-input-container(flex)
+            label 09调资增加保留
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepAdjustment09" ng-disabled="!exchangeCtrl.editing")
+        md-input-container(flex)
+            label 14公务用车保留
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepBus14" ng-disabled="!exchangeCtrl.editing")
+        md-input-container(flex)
+            label 14通信补贴保留
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepCommunication14" ng-disabled="!exchangeCtrl.editing")
+    div(layout)
+        md-input-container.row-has-value(flex)
+            label 到岗日期
+            input(ng-model="change.joinScalDate" readonly)
+        md-input-container.row-has-value(flex)
+            label 薪酬到岗日期
+            input(bs-datepicker ng-model="current.joinSalaryScalDate" ng-disabled="!exchangeCtrl.editing")
+        md-input-container.row-has-value(flex)
+            label 工龄工资
+            input(ng-model="current.workingYearsSalary" ng-disabled="!exchangeCtrl.editing")
 
+block performance_setting
     div(layout)
         md-input-container.row-has-value(
             flex
             ng-if="current.baseWage=='leader_base' || current.categoryId==2 || current.categoryId==1 || current.technicalGrade"
             )
             label 绩效工资
-            md-select(ng-model="current.performanceWage" placeholder="请选择" ng-change="exchangeCtrl.perf(current); exchangeCtrl.changePerWage(current);")
+            md-select(ng-model="current.performanceWage" placeholder="请选择" ng-change="exchangeCtrl.perf(current); exchangeCtrl.changePerWage(current);" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(value="market_leader_perf") 营销类Y/管理A类
                 md-option(value="material_leader_perf") 航务/航材技术类H
                 md-option(value="information_leader_perf") 信息技术类E
@@ -38,7 +92,7 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
             ng-if="!(current.baseWage=='leader_base' || current.categoryId==2 || current.categoryId==1 || current.technicalGrade)"
             )
             label 绩效工资
-            md-select(ng-model="current.performanceWage" placeholder="请选择" ng-change="exchangeCtrl.perf(current); exchangeCtrl.changePerWage(current);")
+            md-select(ng-model="current.performanceWage" placeholder="请选择" ng-change="exchangeCtrl.perf(current); exchangeCtrl.changePerWage(current);" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(value="information_perf") 信息通道
                 md-option(value="airline_business_perf") 航务航材
                 md-option(value="manage_market_perf") 管理营销
@@ -51,74 +105,52 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
             ng-if="!(current.baseWage=='leader_base' || current.categoryId==2 || current.categoryId==1 || current.technicalGrade)"
             )
             label 绩效考核结果
-            md-select(ng-model="current.performanceChannel" placeholder="请选择" ng-change="exchangeCtrl.perf(current)")
+            md-select(ng-model="current.performanceChannel" placeholder="请选择" ng-change="exchangeCtrl.perf(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(ng-value="item" ng-repeat="item in exchangeCtrl.perf_channel_array(current)") {{item}}
         md-input-container.row-has-value(
             flex
             ng-if="!(current.baseWage=='leader_base' || current.categoryId==2 || current.categoryId==1 || current.technicalGrade)"
             )
             label 档级
-            md-select(ng-model="current.performanceFlag" placeholder="请选择" ng-change="exchangeCtrl.perf(current)")
+            md-select(ng-model="current.performanceFlag" placeholder="请选择" ng-change="exchangeCtrl.perf(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(ng-value="item" ng-repeat="item in exchangeCtrl.perf_flag_array(current)") {{item}}
         md-input-container.row-has-value(
             flex
             ng-if="current.baseWage=='leader_base' || current.categoryId==2 || current.categoryId==1 || current.technicalGrade"
             )
             label 档级
-            md-select(ng-model="current.performanceFlag" placeholder="请选择" ng-change="exchangeCtrl.perf(current)")
+            md-select(ng-model="current.performanceFlag" placeholder="请选择" ng-change="exchangeCtrl.perf(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(ng-value="item" ng-repeat="item in exchangeCtrl.leaderPerfFlagArray(current)") {{item}}
 
         md-input-container(flex)
             label 金额
             input(type="number" min="0" max="100000" step="1" ng-model="current.performanceMoney" readonly)
-        //- md-input-container(flex)
-        //-     label 保留工资
-        //-     input(type="number" min="0" max="100000" step="1" ng-model="current.reserveWage")
     div(layout)
         md-input-container(flex)
-            label 岗位工资保留
-            input(type="number" min="0" max="100000" step="1" ng-model="current.keepPosition")
+            label 费用化报销金额
+            input(type="number" min="0" ng-model="current.refundFee" ng-disabled="!exchangeCtrl.editing")
         md-input-container(flex)
-            label 业绩奖保留
-            input(type="number" min="0" max="100000" step="1" ng-model="current.keepPerformance")
-        md-input-container(flex)
-            label 工龄工资保留
-            input(type="number" min="0" max="100000" step="1" ng-model="current.keepWorkingYears")
+            label 高温补贴
+            input(type="number" min="0" max="1000000" ng-model="current.tempAllowance" ng-disabled="!exchangeCtrl.editing")
+        div(flex)
     div(layout)
-        md-input-container(flex)
-            label 保底增幅
-            input(type="number" min="0" max="100000" step="1" ng-model="current.keepMinimumGrowth")
-        md-input-container(flex)
-            label 地勤补贴保留
-            input(type="number" min="0" max="100000" step="1" ng-model="current.keepLandAllowance")
-        md-input-container(flex)
-            label 生活补贴保留
-            input(type="number" min="0" max="100000" step="1" ng-model="current.keepLifeAllowance")
-    div(layout)
-        md-input-container(flex)
-            label 09调资增加保留
-            input(type="number" min="0" max="100000" step="1" ng-model="current.keepAdjustment09")
-        md-input-container(flex)
-            label 14公务用车保留
-            input(type="number" min="0" max="100000" step="1" ng-model="current.keepBus14")
-        md-input-container(flex)
-            label 14通信补贴保留
-            input(type="number" min="0" max="100000" step="1" ng-model="current.keepCommunication14")
-    div(layout)
-        md-input-container.row-has-value(flex)
-            label 到岗日期
-            input(ng-model="change.joinScalDate" readonly)
-        md-input-container.row-has-value(flex)
-            label 薪酬到岗日期
-            input(bs-datepicker ng-model="current.joinSalaryScalDate")
-        md-input-container.row-has-value(flex)
-            label 工龄工资
-            input(ng-model="current.workingYearsSalary")
+        md-checkbox(class="md-primary" ng-model="current.doubleDepartmentCheck" ng-change="current.secondDepartment=null" ng-disabled="!exchangeCtrl.editing") 双部门考核
+    div(layout style="margin-bottom: 26px;")
+        org-search(
+            disabled
+            ng-required="current.doubleDepartmentCheck"
+            flex ng-model="current.secondDepartment"
+            ng-if="current.doubleDepartmentCheck"
+            placeholder="第二考核部门"
+            float-label
+            ng-change="current.secondDepartmentId=null;current.secondDepartmentId = current.secondDepartment.id;"
+                )
 
+block allowance_setting
     div(layout)
         md-input-container.row-has-value(flex)
             label 安检津贴
-            md-select(ng-model="current.securitySubsidy" placeholder="请选择")
+            md-select(ng-model="current.securitySubsidy" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(value="none") 无
                 md-option(value="lower") 初级
                 md-option(value="middle") 中级
@@ -126,13 +158,13 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
 
         md-input-container.row-has-value(flex)
             label 安置补贴
-            md-select(ng-model="current.placementSubsidy" placeholder="请选择")
+            md-select(ng-model="current.placementSubsidy" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(value="false") 无
                 md-option(value="true") 有
 
         md-input-container.row-has-value(flex)
             label 班组长津贴
-            md-select(ng-model="current.leaderSubsidy" placeholder="请选择")
+            md-select(ng-model="current.leaderSubsidy" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(value="none") 无
                 md-option(value="line_A") 一线A类
                 md-option(value="line_B") 一线B类
@@ -140,22 +172,22 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
                 md-option(value="line_D") 一线D类
                 md-option(value="logistics_1") 后勤一类
                 md-option(value="logistics_2") 后勤二类
-        md-input-container.row-has-value(flex)
-            label 航站管理津贴
-            md-select(ng-model="current.terminalSubsidy" placeholder="请选择")
-                md-option(value="none") 无
-                md-option(value="first") 一类
-                md-option(value="second") 二类
 
     div(layout)
         md-input-container.row-has-value(flex)
+            label 航站管理津贴
+            md-select(ng-model="current.terminalSubsidy" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(value="none") 无
+                md-option(value="first") 一类
+                md-option(value="second") 二类
+        md-input-container.row-has-value(flex)
             label 车勤补贴
-            md-select(ng-model="current.carSubsidy" placeholder="请选择")
+            md-select(ng-model="current.carSubsidy" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(value="false") 无
                 md-option(value="true") 有
         md-input-container.row-has-value(flex)
             label 地勤补贴
-            md-select(ng-model="current.groundSubsidy" placeholder="请选择")
+            md-select(ng-model="current.groundSubsidy" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(value="none") 无
                 md-option(value="first") 一类
                 md-option(value="second") 二类
@@ -163,9 +195,11 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
                 md-option(value="fourth") 四类
                 md-option(value="fifth") 五类
                 md-option(value="sixth") 六类
+
+    div(layout)
         md-input-container.row-has-value(flex)
             label 机务放行补贴
-            md-select(ng-model="current.machineSubsidy" placeholder="请选择")
+            md-select(ng-model="current.machineSubsidy" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(value="none") 无
                 md-option(value="first") 一档
                 md-option(value="second") 二档
@@ -174,44 +208,27 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
                 md-option(value="fifth") 五档
         md-input-container.row-has-value(flex)
             label 试车津贴
-            md-select(ng-model="current.trialSubsidy" placeholder="请选择")
+            md-select(ng-model="current.trialSubsidy" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(value="none") 无
                 md-option(value="first") 一类
                 md-option(value="second") 二类
-
-    div(layout)
         md-input-container.row-has-value(flex)
             label 飞行安全荣誉津贴
-            md-select(ng-model="current.honorSubsidy" placeholder="请选择")
+            md-select(ng-model="current.honorSubsidy" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(value="none") 无
                 md-option(value="copper") 铜质
                 md-option(value="silver") 银质
                 md-option(value="gold") 金质
                 md-option(value="exploit") 功勋
-        md-input-container(flex)
-            label 高温补贴
-            input(type="number" min="0" max="1000000" ng-model="current.tempAllowance")
+
+block communicate_setting
+    div(layout)
         md-input-container(flex)
             label 通讯补贴
-            input(type="number" min="0" max="1000000" ng-model="current.communicateAllowance")
+            input(type="number" min="0" max="1000000" ng-model="current.communicateAllowance" ng-disabled="!exchangeCtrl.editing")
+
+block service_car_setting
+    div(layout)
         md-input-container(flex)
             label 公务车报销额度
-            input(type="number" min="0" max="1000000" ng-model="current.officialCar")
-    div(layout)
-        md-input-container(flex)
-            label 费用化报销金额
-            input(type="number" min="0" ng-model="current.refundFee")
-        div(flex)
-        div(flex)
-        div(flex)
-    div(layout)
-        md-checkbox(class="md-primary" ng-model="current.doubleDepartmentCheck" ng-change="current.secondDepartment=null") 双部门考核
-    div(layout)
-        org-search(
-            ng-required="current.doubleDepartmentCheck"
-            flex ng-model="current.secondDepartment"
-            ng-if="current.doubleDepartmentCheck"
-            placeholder="第二考核部门"
-            float-label
-            ng-change="current.secondDepartmentId=null;current.secondDepartmentId = current.secondDepartment.id;"
-                )
+            input(type="number" min="0" max="1000000" ng-model="current.officialCar" ng-disabled="!exchangeCtrl.editing")

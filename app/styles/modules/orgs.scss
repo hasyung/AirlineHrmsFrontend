@@ -311,6 +311,52 @@ md-dialog.welfare_personal_new {
         border-top: 1px solid rgba(0, 0, 0, .12);
     }
 }
+// 个人薪酬设置dialog
+md-dialog.salary_personal_setting {
+    min-width: 600px;
+
+    .form-btn-group {
+        padding-right: 10px;
+        text-align: right;
+
+        .md-button {
+            background-color: #fff;
+            margin-right: 10px;
+            margin-top: 10px;
+
+            md-icon {
+                margin-top: -3px;
+            }
+
+            &:hover {
+                background-color: #ddd;
+            }
+        }
+    }
+
+    [disabled] {
+        color: #000;
+    }
+
+    .cust-nav-justified {
+        border-bottom: 1px solid #ddd;
+        padding-left: 0;
+    }
+
+    .nb-nav-item {
+        width: 80px;
+
+        a {
+            font-size: 16px;
+            height: 34px;
+            line-height: 34px;
+        }
+    }
+
+    .md-actions {
+        border-top: 1px solid rgba(0, 0, 0, .12);
+    }
+}
 // 上传薪酬dialog
 md-dialog.performance_upload {
     min-width: 500px;

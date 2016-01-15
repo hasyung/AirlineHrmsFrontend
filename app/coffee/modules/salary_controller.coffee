@@ -563,7 +563,7 @@ class SalaryPersonalController extends nb.Controller
                     <a
                         href="javascript:void(0);"
                         nb-dialog
-                        template-url="partials/salary/settings/personal_edit.html"
+                        template-url="partials/salary/settings/personal_edit/personal_edit.html"
                         locals="{setup: row.entity}">
                         设置
                     </a>
