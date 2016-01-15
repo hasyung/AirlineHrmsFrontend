@@ -320,12 +320,15 @@ md-dialog.salary_personal_setting {
         text-align: right;
 
         .md-button {
-            background-color: #fff;
             margin-right: 10px;
             margin-top: 10px;
 
             md-icon {
                 margin-top: -3px;
+            }
+
+            &.white {
+                background-color: #fff;
             }
 
             &:hover {
