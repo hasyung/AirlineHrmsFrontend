@@ -31,8 +31,6 @@ block base_setting
         md-input-container(flex)
             label 金额
             input(type="number" min="0" max="100000" step="1" ng-model="current.baseMoney" readonly)
-    div(layout)
-        md-checkbox(class="md-primary" ng-model="current.isSalarySpecial"  ng-disabled="!exchangeCtrl.editing") 薪酬特殊人员
 
     div(layout)
         md-input-container(flex)
@@ -74,6 +72,9 @@ block base_setting
         md-input-container.row-has-value(flex)
             label 工龄工资
             input(ng-model="current.workingYearsSalary" ng-disabled="!exchangeCtrl.editing")
+
+    div(layout)
+        md-checkbox(class="md-primary" ng-model="current.isSalarySpecial"  ng-disabled="!exchangeCtrl.editing") 薪酬特殊人员
 
 block performance_setting
     div(layout)

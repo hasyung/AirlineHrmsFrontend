@@ -45,8 +45,7 @@ block base_setting
         md-input-container(flex)
             label 总和薪酬
             input(type="number" min="0" ng-model="current.basePerformanceMoney" readonly)
-    div(layout)
-        md-checkbox(class="md-primary" ng-model="current.isSalarySpecial"  ng-disabled="!exchangeCtrl.editing") 薪酬特殊人员
+
     div(layout)
         md-input-container(flex)
             label 岗位工资保留
@@ -77,6 +76,9 @@ block base_setting
         md-input-container(flex)
             label 14通信补贴保留
             input(type="number" min="0" step="1" ng-model="current.keepCommunication14" ng-disabled="!exchangeCtrl.editing")
+
+    div(layout)
+        md-checkbox(class="md-primary" ng-model="current.isSalarySpecial"  ng-disabled="!exchangeCtrl.editing") 薪酬特殊人员
 
 block allowance_setting
     div(layout)
