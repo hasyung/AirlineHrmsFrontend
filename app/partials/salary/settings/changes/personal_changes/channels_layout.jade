@@ -1,0 +1,54 @@
+mixin tabSection(heading, lookPermission, updatePermission)
+    tab(
+        heading=heading
+        has-permission=lookPermission
+        )
+        section.form-material-section(
+            ng-controller="salaryExchangeCtrl as exchangeCtrl"
+            ng-init="exchangeCtrl.editing=false"
+            )
+            div(
+                has-permission=updatePermission
+                )
+                .form-btn-group(ng-hide="exchangeCtrl.editing")
+                    md-button.md-fab.md-primary(type="button" ng-click="exchangeCtrl.editing=true")
+                        md-icon(md-svg-src="/images/svg/edit_24px.svg" aria-label="修改")
+                .form-btn-group(ng-show="exchangeCtrl.editing")
+                    md-button.md-fab.white(type="button" ng-click="cancel(current, $event, salaryPersonal); exchangeCtrl.editing=false")
+                        md-icon(md-svg-src="/images/svg/close.svg" aria-label="取消")
+                    md-button.md-fab.md-primary(ng-click="submit();exchangeCtrl.editing=false;")
+                        md-icon(md-svg-src="/images/svg/check.svg" aria-label="保存")
+            fieldset
+                include basic_info
+
+                block
+
+block vars
+
+if hasBaseSetting
+    +tabSection('基本', 'salary_person_setups_look_basic', 'salary_person_setups_update_basic')
+        block base_setting
+
+if hasHoursFeeSetting
+    +tabSection('小时费', 'salary_person_setups_look_hours_fee', 'salary_person_setups_update_hours_fee')
+        block hours_fee_setting
+
+if hasPerformanceSetting
+    +tabSection('绩效', 'salary_person_setups_look_performance', 'salary_person_setups_update_performance')
+        block performance_setting
+
+if hasAllowanceSetting
+    +tabSection('津贴', 'salary_person_setups_look_allowance', 'salary_person_setups_update_allowance')
+        block allowance_setting
+
+if hasCommunicate
+    +tabSection('通讯', 'salary_person_setups_look_communicate', 'salary_person_setups_update_communicate')
+        block communicate_setting
+
+if hasServiceCarSetting
+    +tabSection('公务车', 'salary_person_setups_look_service_car', 'salary_person_setups_update_service_car')
+        block service_car_setting
+
+if hasTempSetting
+    +tabSection('高温补贴', 'salary_person_setups_look_service_car', 'salary_person_setups_update_service_car')
+        block temp_setting

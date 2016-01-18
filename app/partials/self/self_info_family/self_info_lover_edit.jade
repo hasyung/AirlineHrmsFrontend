@@ -2,10 +2,11 @@ form(ng-controller="EditableResourceCtrl" ng-submit="save(wife.$save(),familymem
     .btngroup--top--right(style="padding-right: 0;")
         span(flex)
         span(ng-hide="editing")
-            md-button.md-primary.md-raised(type="button" ng-click="edit($event)") 编辑
+            md-button.md-warn.md-raised(type="button" ng-click="ctrl.clearLover(wife);") 删 除
+            md-button.md-primary.md-raised(type="button" ng-click="edit($event)") 编 辑
         span(ng-show="editing")
-            md-button.md-raised.white(type="button" ng-click="cancel(wife, $event, familymembersForm)" style="margin-right: 10px") 取消
-            md-button.md-primary.md-raised(type="submit") 保存
+            md-button.md-raised.white(type="button" ng-click="cancel(wife, $event, familymembersForm)" style="margin-right: 10px") 取 消
+            md-button.md-primary.md-raised(type="submit") 保 存
     .subheader--center
         .subheader__content
             span.subheader__icon

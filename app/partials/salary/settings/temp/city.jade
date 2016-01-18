@@ -4,7 +4,7 @@
             .md-toolbar-tools
                 h2 月份和城市设置
                 span(flex)
-                md-button.md-raised.md-primary(style="margin-right: 0;" ng-click="ctrl.saveConfig('temp', ctrl.dynamic_config)") 保存
+                md-button.md-raised.md-primary(has-permission="salaries_update_temp" style="margin-right: 0;" ng-click="ctrl.saveConfig('temp', ctrl.dynamic_config)") 保存
 
         table.tablexx.table-default.table-bordered
             thead

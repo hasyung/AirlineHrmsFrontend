@@ -3,6 +3,7 @@
 
 singleTemplate =  '''
         <md-autocomplete
+            ng-disabled="!editStatus"
             md-items="org in ctrl.queryMatched(ctrl.searchText)"
             md-item-text="org.fullName"
             md-selected-item="ctrl.org"
@@ -92,7 +93,8 @@ angular.module 'nb.directives'
             require: '?ngModel'
             scope: {
                 selectedItemChange: '&',
-                searchTextChange: '&'
+                searchTextChange: '&',
+                editStatus: '=editable'
             }
 
             template: template
@@ -107,6 +109,11 @@ class OrgSearchCtrl
 
     constructor: (scope, @OrgStore, attrs) ->
         @$orgs = [] if angular.isDefined(attrs.multiple)
+        #editStatus初始化
+        if angular.isDefined(attrs.editable)
+            scope.editStatus = attrs.editStatus
+        else
+            scope.editStatus = true
 
     queryMatched: (text) ->
         @OrgStore.queryMatchedOrgs(text)
