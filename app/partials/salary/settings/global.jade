@@ -8,7 +8,10 @@
                 .md-toolbar-tools
                     h2 薪酬全局设置
                     span(flex)
-                    md-button.md-raised.md-primary(ng-click="ctrl.saveConfig('global', ctrl.global_setting)") 保存
+                    md-button.md-raised.md-primary(
+                        ng-click="ctrl.saveConfig('global', ctrl.global_setting)"
+                        has-permission="salaries_update_global"
+                        ) 保存
         fieldset
             .global_part(ng-class="{'open': global_part1}")
                 .subheader--center

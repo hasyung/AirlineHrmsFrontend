@@ -109,6 +109,11 @@ class OrgSearchCtrl
 
     constructor: (scope, @OrgStore, attrs) ->
         @$orgs = [] if angular.isDefined(attrs.multiple)
+        #editStatus初始化
+        if angular.isDefined(attrs.editable)
+            scope.editStatus = attrs.editStatus
+        else
+            scope.editStatus = true
 
     queryMatched: (text) ->
         @OrgStore.queryMatchedOrgs(text)

@@ -4,7 +4,7 @@
             .md-toolbar-tools
                 h2 地面驻站
                 span(flex)
-                md-button.md-raised.md-primary(style="margin-right: 0;" ng-click="ctrl.saveConfig('land_subsidy', ctrl.dynamic_config)") 保存
+                md-button.md-raised.md-primary(has-permission="salaries_update_land_allowance" style="margin-right: 0;" ng-click="ctrl.saveConfig('land_subsidy', ctrl.dynamic_config)") 保存
 
         table.tablexx.table-default.table-bordered
             thead
