@@ -1,75 +1,113 @@
-md-dialog.welfare_personal_new(ng-controller="EditableResourceCtrl")
+md-dialog.salary_personal_setting(ng-controller="EditableResourceCtrl")
     form(
         ng-init="change=dialog.change.$refresh();\
             outerScope = dialog.outerScope;\
             current = {};\
-            current=outerScope.ctrl.loadPersonSettings(change);"
+            current=outerScope.ctrl.loadPersonSettings(change);\
+            "
         ng-submit="save(current.$save(), salaryPersonal); dialog.close();"
         name="salaryPersonal"
     )
         md-toolbar.md-accent(md-theme="hrms")
-                .md-toolbar-tools
-                    span 个人薪酬设置
+            .md-toolbar-tools
+                span 个人薪酬设置
         md-content.sticky-container
             .dialog-content(layout layout-align="center")
-                section.form-material-section(flex)
-                    fieldset
-                        div(style="display:none;")
-                            input(type="text" ng-model="::change.employeeId")
-                        div(layout)
-                            md-input-container(flex)
-                                label 姓名
-                                input(type="text" ng-model="::change.employeeName" readonly)
-                            md-input-container(flex)
-                                label 员工编号
-                                input(type="text" ng-model="::change.employeeNo" readonly)
-
-                        div(layout)
-                            md-input-container(flex)
-                                label 所在部门
-                                input(type="text" ng-model="::change.departmentName" readonly)
-                            md-input-container(flex)
-                                label 岗位
-                                input(type="text" ng-model="::change.positionName" readonly)
-
-                        div(layout)
-                            md-input-container.row-has-value(flex)
-                                label 分类
-                                md-select(ng-model="::change.categoryId" disabled readonly)
-                                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('categories')") {{item.label}}
-                            md-input-container.row-has-value(flex)
-                                label 通道
-                                md-select(ng-model="::change.channelId" disabled readonly)
-                                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
-                        div(layout)
-                            md-input-container.row-has-value(flex)
-                                label 用工性质
-                                md-select(ng-model="::change.laborRelationId" disabled readonly)
-                                    md-option(ng-value="item.id" ng-repeat="item in $enum.get('labor_relations')") {{item.label}}
-                            md-input-container(flex)
-                                label 属地化
-                                input(type="text" ng-model="::change.location" readonly)
-
-                        //- 通道非 服务B 飞行 空勤 服务A
-                        div(ng-if="change.channelId != 7 && change.channelId != 4 && change.channelId != 5 && change.channelId != 6")
-                            include ../personal_edit/normal
-                        //- 服务B
-                        div(ng-if="change.channelId == 7")
-                            include ../personal_edit/service_b
-                        //- 飞行
-                        div(ng-if="change.channelId == 4")
-                            include ../personal_edit/flyer
-                        //- 空勤
-                        div(ng-if="change.channelId == 5")
-                            include ../personal_edit/fly_attendant
-                        //- 服务A(说明无特别设置)
-                        div(ng-if="change.channelId == 6")
-                            include ../personal_edit/service_a
-
-                        div(layout)
-                            md-checkbox(class="md-primary" ng-model="current.isSalarySpecial") 薪酬特殊人员
+                //- 通道非 服务B 飞行 空勤 服务A
+                tabset(flex ng-if="current.channelId != 7 && current.channelId != 4 && current.channelId != 5 && current.channelId != 6")
+                    include ./personal_changes/normal
+                //- 服务B
+                tabset(flex ng-if="current.channelId == 7")
+                    include ./personal_changes/service_b
+                //- 飞行
+                tabset(flex ng-if="current.channelId == 4")
+                    include ./personal_changes/flyer
+                //- 空勤
+                tabset(flex ng-if="current.channelId == 5")
+                    include ./personal_changes/fly_attendant
+                //- 服务A(说明无特别设置)
+                tabset(flex ng-if="current.channelId == 6")
+                    include ./personal_changes/service_a
 
         .md-actions
-            md-button(ng-click="cancel(current, $event, salaryPersonal);dialog.close()") 取 消
-            md-button.md-primary.md-raised(ng-if="change.salaryPersonSetupId" ng-hide="change.channelId == 6" ng-click="submit();") 确 定
-            md-button.md-primary.md-raised(ng-if="!change.salaryPersonSetupId" ng-hide="change.channelId == 6" ng-click="outerScope.ctrl.newPersonSettings(change, current, dialog)") 确 定
+            md-button(ng-click="cancel(current, $event, salaryPersonal);dialog.close()") 关 闭
+
+
+
+
+
+//- md-dialog.welfare_personal_new(ng-controller="EditableResourceCtrl")
+//-     form(
+//-         ng-init="change=dialog.change.$refresh();\
+//-             outerScope = dialog.outerScope;\
+//-             current = {};\
+//-             current=outerScope.ctrl.loadPersonSettings(change);"
+//-         ng-submit="save(current.$save(), salaryPersonal); dialog.close();"
+//-         name="salaryPersonal"
+//-     )
+//-         md-toolbar.md-accent(md-theme="hrms")
+//-                 .md-toolbar-tools
+//-                     span 个人薪酬设置
+//-         md-content.sticky-container
+//-             .dialog-content(layout layout-align="center")
+//-                 section.form-material-section(flex)
+//-                     fieldset
+//-                         div(style="display:none;")
+//-                             input(type="text" ng-model="::change.employeeId")
+//-                         div(layout)
+//-                             md-input-container(flex)
+//-                                 label 姓名
+//-                                 input(type="text" ng-model="::change.employeeName" readonly)
+//-                             md-input-container(flex)
+//-                                 label 员工编号
+//-                                 input(type="text" ng-model="::change.employeeNo" readonly)
+
+//-                         div(layout)
+//-                             md-input-container(flex)
+//-                                 label 所在部门
+//-                                 input(type="text" ng-model="::change.departmentName" readonly)
+//-                             md-input-container(flex)
+//-                                 label 岗位
+//-                                 input(type="text" ng-model="::change.positionName" readonly)
+
+//-                         div(layout)
+//-                             md-input-container.row-has-value(flex)
+//-                                 label 分类
+//-                                 md-select(ng-model="::change.categoryId" disabled readonly)
+//-                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('categories')") {{item.label}}
+//-                             md-input-container.row-has-value(flex)
+//-                                 label 通道
+//-                                 md-select(ng-model="::change.channelId" disabled readonly)
+//-                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
+//-                         div(layout)
+//-                             md-input-container.row-has-value(flex)
+//-                                 label 用工性质
+//-                                 md-select(ng-model="::change.laborRelationId" disabled readonly)
+//-                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('labor_relations')") {{item.label}}
+//-                             md-input-container(flex)
+//-                                 label 属地化
+//-                                 input(type="text" ng-model="::change.location" readonly)
+
+//-                         //- 通道非 服务B 飞行 空勤 服务A
+//-                         div(ng-if="change.channelId != 7 && change.channelId != 4 && change.channelId != 5 && change.channelId != 6")
+//-                             include ../personal_edit/normal
+//-                         //- 服务B
+//-                         div(ng-if="change.channelId == 7")
+//-                             include ../personal_edit/service_b
+//-                         //- 飞行
+//-                         div(ng-if="change.channelId == 4")
+//-                             include ../personal_edit/flyer
+//-                         //- 空勤
+//-                         div(ng-if="change.channelId == 5")
+//-                             include ../personal_edit/fly_attendant
+//-                         //- 服务A(说明无特别设置)
+//-                         div(ng-if="change.channelId == 6")
+//-                             include ../personal_edit/service_a
+
+//-                         div(layout)
+//-                             md-checkbox(class="md-primary" ng-model="current.isSalarySpecial") 薪酬特殊人员
+
+//-         .md-actions
+//-             md-button(ng-click="cancel(current, $event, salaryPersonal);dialog.close()") 取 消
+//-             md-button.md-primary.md-raised(ng-if="change.salaryPersonSetupId" ng-hide="change.channelId == 6" ng-click="submit();") 确 定
+//-             md-button.md-primary.md-raised(ng-if="!change.salaryPersonSetupId" ng-hide="change.channelId == 6" ng-click="outerScope.ctrl.newPersonSettings(change, current, dialog)") 确 定

@@ -1,0 +1,28 @@
+extends ./channels_layout.jade
+
+block vars
+    - var hasBaseSetting = true
+    - var hasHoursFeeSetting = false
+    - var hasPerformanceSetting = false
+    - var hasAllowanceSetting = true
+    - var hasCommunicate = true
+    - var hasServiceCarSetting = false
+
+block base_setting
+    div(layout)
+        h4 服务A通道员工，无薪酬设置项
+    div(layout)
+        md-checkbox(class="md-primary" ng-model="current.isSalarySpecial"  ng-disabled="!exchangeCtrl.editing") 薪酬特殊人员
+
+block allowance_setting
+    div(layout)
+        md-input-container(flex)
+            label 高温补贴
+            input(type="number" min="0" max="1000000" ng-model="current.tempAllowance" ng-disabled="!exchangeCtrl.editing")
+
+block communicate_setting
+    div(layout)
+        md-input-container(flex)
+            label 通讯补贴
+            input(type="number" min="0" max="1000000" ng-model="current.communicateAllowance" ng-disabled="!exchangeCtrl.editing")
+

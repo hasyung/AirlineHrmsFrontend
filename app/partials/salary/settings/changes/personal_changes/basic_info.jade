@@ -1,0 +1,42 @@
+div(style="display:none;")
+    input(type="text" ng-model="change.employeeId")
+div(layout)
+    md-input-container(flex)
+        label 姓名
+        input(type="text" ng-model="::change.employeeName" readonly)
+    md-input-container(flex)
+        label 员工编号
+        input(type="text" ng-model="::change.employeeNo" readonly)
+
+div(layout)
+    md-input-container(flex)
+        label 所在部门
+        input(type="text" ng-model="::change.departmentName" readonly)
+    md-input-container(flex)
+        label 岗位
+        input(type="text" ng-model="::change.positionName" readonly)
+
+div(layout)
+    md-input-container.row-has-value(flex)
+        label 分类
+        md-select(ng-model="change.categoryId" disabled readonly)
+            md-option(ng-value="item.id" ng-repeat="item in $enum.get('categories')") {{item.label}}
+    md-input-container.row-has-value(flex)
+        label 通道
+        md-select(ng-model="change.channelId" disabled readonly)
+            md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
+div(layout)
+    md-input-container.row-has-value(flex)
+        label 用工性质
+        md-select(ng-model="change.laborRelationId" disabled readonly)
+            md-option(ng-value="item.id" ng-repeat="item in $enum.get('labor_relations')") {{item.label}}
+    md-input-container(flex)
+        label 属地化
+        input(type="text" ng-model="change.location" readonly)
+div(layout)
+    md-input-container(
+        flex
+        )
+        label 专业技术等级
+        input(type="text" ng-model="change.technicalGrade" readonly)
+    div(flex)
