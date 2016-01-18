@@ -338,6 +338,12 @@ class ProfileCtrl extends nb.Controller
             _.includes nation, text
         return nations
 
+    clearLover: (lover) ->
+        self = @
+
+        lover.$destroy()
+
+
     isImgObj: (obj)->
         return /jpg|jpeg|png|gif/.test(obj.type)
 
