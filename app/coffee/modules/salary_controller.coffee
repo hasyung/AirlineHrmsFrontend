@@ -312,7 +312,7 @@ class SalaryController extends nb.Controller
         expr = "" if !expr
 
         hash = {
-            '调档时间':             '%{transfer_years}'
+            '调档年限':             '%{transfer_years}'
             '驾驶经历年限':          '%{drive_work_years}'
             '教员经历年限':          '%{teacher_drive_years}'
             '飞行时间':              '%{fly_time_value}'
