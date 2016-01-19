@@ -1044,6 +1044,18 @@ class SalaryExchangeController
                 current.performanceMoney = config['amount']
                 return
 
+    fly_channel_array: (current)->
+        return unless current.baseWage
+
+        setting = @$settingHash(current.baseWage)
+
+        channels = []
+        angular.forEach setting.flag_list, (item)->
+            if item != 'rate' && !_.startsWith(item, 'amount')
+                channels.push(item)
+                current.baseChannel = item
+        _.uniq(channels)
+
     fly_flag_array: (current)->
         return unless current.baseWage
 
