@@ -259,6 +259,16 @@ class SocialComputeController extends nb.Controller
             item = '0' + item if item < 10
             item + ''
 
+    loadUpdateMonthList: (year) ->
+        if year == new Date().getFullYear()
+            months = [1..new Date().getMonth() + 1]
+        else
+            months = [1..12]
+
+        @update_month_list = _.map months, (item)->
+            item = '0' + item if item < 10
+            item + ''
+
     loadInitialData: ()->
         @upload_xls_id = 0
         @upload_result = ""

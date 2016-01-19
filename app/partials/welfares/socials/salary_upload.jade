@@ -8,11 +8,11 @@ md-dialog.performance_upload
             section.form-material-section(flex)
                 .upload-date(layout)
                     label 选择月份
-                    md-select(style="width: 100px;" ng-model="param.year" ng-change="ctrl.loadMonthList(param.year)" placeholder="请选择")
+                    md-select(style="width: 100px;" ng-model="param.year" ng-change="ctrl.loadUpdateMonthList(param.year)" placeholder="请选择")
                         md-option(ng-value="item" ng-repeat="item in ctrl.year_list track by $index" ng-bind="item")
                     label(flex-order="2") 年
                     md-select(style="width: 100px;" ng-model="param.month" ng-change="" placeholder="请选择")
-                        md-option(ng-value="item" ng-repeat="item in ctrl.month_list track by $index" ng-bind="item")
+                        md-option(ng-value="item" ng-repeat="item in ctrl.update_month_list track by $index" ng-bind="item")
                     label(flex-order="3") 月
 
                 .accessory-btn-group.ml30.mr30.mb20(
