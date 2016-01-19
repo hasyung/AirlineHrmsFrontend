@@ -7,7 +7,7 @@ block vars
     - var hasAllowanceSetting = true
     - var hasCommunicate = true
     - var hasServiceCarSetting = true
-
+    - var hasTempSetting = true
 
 block base_setting
     div(layout)
@@ -239,7 +239,7 @@ block allowance_setting
     div(layout)
         md-input-container(flex)
             label 高温补贴
-            input(type="number" min="0" max="1000000" ng-model="current.tempAllowance" ng-disabled="!exchangeCtrl.editing")
+            input(type="number" min="0" max="1000000" ng-model="current.coldSubsidy" ng-disabled="!exchangeCtrl.editing")
         div(flex)
         div(flex)
 
@@ -254,4 +254,11 @@ block service_car_setting
         md-input-container(flex)
             label 公务车报销额度
             input(type="number" min="0" max="1000000" ng-model="current.officialCar" ng-disabled="!exchangeCtrl.editing")
+
+block temp_setting
+    div(layout)
+        md-input-container(flex)
+            label 高温补贴
+            input(type="number" min="0" max="1000000" ng-model="current.tempAllowance" ng-disabled="!exchangeCtrl.editing")
+        div(flex)
 

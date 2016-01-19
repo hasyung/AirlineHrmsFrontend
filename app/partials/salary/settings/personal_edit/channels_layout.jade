@@ -48,3 +48,7 @@ if hasCommunicate
 if hasServiceCarSetting
     +tabSection('公务车', 'salary_person_setups_look_service_car', 'salary_person_setups_update_service_car')
         block service_car_setting
+
+if hasTempSetting
+    +tabSection('高温补贴', 'salary_person_setups_look_temp', 'salary_person_setups_update_temp')
+        block temp_setting

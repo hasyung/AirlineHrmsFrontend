@@ -5,7 +5,7 @@ md-dialog.salary_personal_setting(ng-controller="EditableResourceCtrl")
             current = {};\
             current=outerScope.ctrl.loadPersonSettings(change);\
             "
-        ng-submit="save(current.$save(), salaryPersonal); dialog.close();"
+        ng-submit="save(current.$save(), salaryPersonal);"
         name="salaryPersonal"
     )
         md-toolbar.md-accent(md-theme="hrms")

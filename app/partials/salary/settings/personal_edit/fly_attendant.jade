@@ -7,6 +7,7 @@ block vars
     - var hasAllowanceSetting = true
     - var hasCommunicate = true
     - var hasServiceCarSetting = true
+    - var hasTempSetting = true
 
 block base_setting
     div(layout)
@@ -208,8 +209,8 @@ block allowance_setting
                 md-option(value="exploit") 功勋
     div(layout)
         md-input-container(flex)
-            label 高温补贴
-            input(type="number" min="0" max="1000000" ng-model="current.tempAllowance" ng-disabled="!exchangeCtrl.editing")
+            label 寒冷补贴
+            input(type="number" min="0" max="1000000" ng-model="current.coldSubsidy" ng-disabled="!exchangeCtrl.editing")
         div(flex)
         div(flex)
 
@@ -225,6 +226,12 @@ block service_car_setting
             label 公务车报销额度
             input(type="number" min="0" max="1000000" ng-model="current.officialCar" ng-disabled="!exchangeCtrl.editing")
 
+block temp_setting
+    div(layout)
+        md-input-container(flex)
+            label 高温补贴
+            input(type="number" min="0" max="1000000" ng-model="current.tempAllowance" ng-disabled="!exchangeCtrl.editing")
+        div(flex)
     //- 干部和领导才可以设置该值
     //- div(layout ng-if="current.categoryId >= 2")
     //-     md-radio-group.horizontal.mb30(ng-model="current.airlineAttendantType")
