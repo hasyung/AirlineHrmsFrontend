@@ -23,6 +23,10 @@ block base_setting
                 md-option(value="flyer_teacher_C_base") 教员C
                 md-option(value="flyer_student_base") 学员
         md-input-container.row-has-value(flex)
+            label 薪酬通道
+            md-select(ng-model="current.baseChannel" placeholder="请选择" ng-change="exchangeCtrl.fly(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(ng-value="item" ng-repeat="item in exchangeCtrl.fly_channel_array(current)") {{item}}
+        md-input-container.row-has-value(flex)
             label 档级
             md-select(ng-model="current.baseFlag" placeholder="请选择" ng-change="exchangeCtrl.fly(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(ng-value="item" ng-repeat="item in exchangeCtrl.fly_flag_array(current)") {{item}}
@@ -39,7 +43,6 @@ block base_setting
         md-input-container(flex)
             label 工龄工资
             input(ng-model="current.workingYearsSalary" ng-disabled="!exchangeCtrl.editing")
-    div(layout)
         md-input-container.row-has-value(
             flex
             ng-if="current.categoryId==2 || current.categoryId==1 || current.technicalGrade"
