@@ -21,7 +21,7 @@
                 tr(ng-repeat="item in ctrl.coldPositions track by $index")
                     td {{::item.full_position_name}}
                     td
-                        md-select(ng-model="item.cold_subsidy_type" ng-change="ctrl.updateColdType(item.id, item.cold_subsidy_type)")
+                        md-select(ng-model="item.cold_subsidy_type" ng-change="ctrl.updateColdType(item.id, item.cold_subsidy_type)" ng-disabled="!ctrl.coldSubsidyUpdatable" ng-readonly="!ctrl.coldSubsidyUpdatable")
                             md-option(value="") 无
                             md-option(value="A") 甲类
                             md-option(value="B") 乙类

@@ -4,10 +4,10 @@ block vars
     - var hasBaseSetting = true
     - var hasHoursFeeSetting = false
     - var hasPerformanceSetting = false
-    - var hasAllowanceSetting = true
+    - var hasAllowanceSetting = false
     - var hasCommunicate = true
     - var hasServiceCarSetting = false
-    - var hasTempSetting = false
+    - var hasTempSetting = true
 
 block base_setting
     div(layout)
@@ -81,11 +81,11 @@ block base_setting
     div(layout)
         md-checkbox(class="md-primary" ng-model="current.isSalarySpecial"  ng-disabled="!exchangeCtrl.editing") 薪酬特殊人员
 
-block allowance_setting
-    div(layout)
-        md-input-container(flex)
-            label 寒冷补贴
-            input(type="number" min="0" max="1000000" ng-model="current.coldSubsidy" ng-disabled="!exchangeCtrl.editing")
+//- block allowance_setting
+//-     div(layout)
+//-         md-input-container(flex)
+//-             label 寒冷补贴
+//-             input(type="number" min="0" max="1000000" ng-model="current.coldSubsidy" ng-disabled="!exchangeCtrl.editing")
 
 block communicate_setting
     div(layout)
