@@ -894,14 +894,14 @@ class SalaryExchangeController
                 ()->
                     self.normal_channel_array($scope.$parent.$parent.current.formData.transferTo)
                     self.perf_channel_array($scope.$parent.$parent.current.formData.transferTo)
-                , 300
+                , 500
                 )
         else
             $timeout(
                 ()->
                     self.normal_channel_array($scope.$parent.$parent.current)
                     self.perf_channel_array($scope.$parent.$parent.current)
-                , 300
+                , 500
                 )
 
     $channelSettingStr: (channel)->
