@@ -892,6 +892,7 @@ class SalaryExchangeController
         $timeout(
             ()->
                 self.normal_channel_array($scope.$parent.$parent.current)
+                self.perf_channel_array($scope.$parent.$parent.current)
             , 500
             )
 
