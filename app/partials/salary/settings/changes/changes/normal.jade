@@ -68,19 +68,18 @@ div(ng-controller="salaryExchangeCtrl as exchangeCtrl")
             md-select(
                 ng-model="current.formData.transferTo.baseWage"
                 placeholder="请选择"
-                ng-change="current.formData.transferTo.baseFlag=null;current.formData.transferTo.baseChannel=null;exchangeCtrl.normal(current.formData.transferTo);"
+                ng-change="current.formData.transferTo.baseFlag=null;current.formData.transferTo.baseChannel=null;exchangeCtrl.normal(current.formData.transferTo); exchangeCtrl.normal_channel_array(current.formData.transferTo)"
                 required
                 )
                 md-option(value="leader_base") 干部
                 md-option(value="manager15_base") 管理15
                 md-option(value="manager12_base") 管理12
                 md-option(value="front_run_base") 前场运行监察
-                md-option(value="service_c_driving_base") 服务C-驾驶
                 md-option(value="service_c_base") 服务C
         md-input-container.row-has-value(flex ng-if="current.baseWage != 'service_c_driving_base'")
             label 拟薪酬通道
             md-select(ng-model="current.formData.transferTo.baseChannel" placeholder="请选择" ng-change="exchangeCtrl.normal(current.formData.transferTo)" required)
-                md-option(ng-value="item" ng-repeat="item in exchangeCtrl.normal_channel_array(current.formData.transferTo)") {{item}}
+                md-option(ng-value="item.grade" ng-repeat="item in exchangeCtrl.normalChannelArr") {{item.name}}
         md-input-container.row-has-value(flex ng-if="current.baseWage != 'service_c_driving_base'")
             label 拟档级
             md-select(ng-model="current.formData.transferTo.baseFlag" placeholder="请选择" ng-change="exchangeCtrl.normal(current.formData.transferTo)" required)

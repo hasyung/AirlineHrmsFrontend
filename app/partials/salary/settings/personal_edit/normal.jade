@@ -13,7 +13,7 @@ block base_setting
     div(layout)
         md-input-container.row-has-value(flex)
             label 基础工资
-            md-select(ng-model="current.baseWage" placeholder="请选择" ng-change="exchangeCtrl.normal(current); exchangeCtrl.changeBaseWage(current);" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+            md-select(ng-model="current.baseWage" placeholder="请选择" ng-change="exchangeCtrl.normal(current); exchangeCtrl.changeBaseWage(current); exchangeCtrl.normal_channel_array(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(value="leader_base") 干部
                 md-option(value="manager15_base") 管理15
                 md-option(value="manager12_base") 管理12
@@ -22,7 +22,7 @@ block base_setting
         md-input-container.row-has-value(flex ng-if="current.baseWage != 'service_c_driving_base'")
             label 薪酬通道
             md-select(ng-model="current.baseChannel" placeholder="请选择" ng-change="exchangeCtrl.normal(current); exchangeCtrl.changeBaseChannel(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
-                md-option(ng-value="item" ng-repeat="item in exchangeCtrl.normal_channel_array(current)") {{item}}
+                md-option(ng-value="item.grade" ng-repeat="item in exchangeCtrl.normalChannelArr") {{item.name}}
         md-input-container.row-has-value(flex ng-if="current.baseWage != 'service_c_driving_base'")
             label 档级
             md-select(ng-model="current.baseFlag" placeholder="请选择" ng-change="exchangeCtrl.normal(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
@@ -83,7 +83,7 @@ block performance_setting
             ng-if="current.baseWage=='leader_base' || current.categoryId==2 || current.categoryId==1 || current.technicalGrade"
             )
             label 绩效工资
-            md-select(ng-model="current.performanceWage" placeholder="请选择" ng-change="exchangeCtrl.perf(current); exchangeCtrl.changePerWage(current);" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+            md-select(ng-model="current.performanceWage" placeholder="请选择" ng-change="exchangeCtrl.perf(current); exchangeCtrl.changePerWage(current); exchangeCtrl.perf_channel_array(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(value="market_leader_perf") 营销类Y/管理A类
                 md-option(value="material_leader_perf") 航务/航材技术类H
                 md-option(value="information_leader_perf") 信息技术类E
@@ -93,7 +93,7 @@ block performance_setting
             ng-if="!(current.baseWage=='leader_base' || current.categoryId==2 || current.categoryId==1 || current.technicalGrade)"
             )
             label 绩效工资
-            md-select(ng-model="current.performanceWage" placeholder="请选择" ng-change="exchangeCtrl.perf(current); exchangeCtrl.changePerWage(current);" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+            md-select(ng-model="current.performanceWage" placeholder="请选择" ng-change="exchangeCtrl.perf(current); exchangeCtrl.changePerWage(current); exchangeCtrl.perf_channel_array(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(value="information_perf") 信息通道
                 md-option(value="airline_business_perf") 航务航材
                 md-option(value="manage_market_perf") 管理营销
@@ -107,7 +107,7 @@ block performance_setting
             )
             label 绩效考核结果
             md-select(ng-model="current.performanceChannel" placeholder="请选择" ng-change="exchangeCtrl.perf(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
-                md-option(ng-value="item" ng-repeat="item in exchangeCtrl.perf_channel_array(current)") {{item}}
+                md-option(ng-value="item.grade" ng-repeat="item in exchangeCtrl.normalPerfChannelArr") {{item.name}}
         md-input-container.row-has-value(
             flex
             ng-if="!(current.baseWage=='leader_base' || current.categoryId==2 || current.categoryId==1 || current.technicalGrade)"
