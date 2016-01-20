@@ -114,6 +114,7 @@ class SalaryController extends nb.Controller
         @variables = ['调档年限','驾驶经历年限','教员经历年限','飞行时间','员工学历','员工职级','去年年度绩效','本企业经历年限','无人为飞行事故年限','无安全严重差错年限', '高原特殊机场飞行资格']
 
         @tempUpdatable = _.includes @PERMISSIONS, 'salaries_update_temp'
+        @comunicateUpdatable = _.includes @PERMISSIONS, 'salaries_update_communicate_allowance'
         @coldSubsidyUpdatable = _.includes @PERMISSIONS, 'salaries_update_cold_subsidy'
 
     queryVariables: (text)->
