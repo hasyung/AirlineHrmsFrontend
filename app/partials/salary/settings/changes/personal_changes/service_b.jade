@@ -32,6 +32,11 @@ block base_setting
                 md-option(value="service_b_airline_keeper_base") 机务工装设备/客舱供应库管
 
         md-input-container.row-has-value(flex)
+            label 薪酬通道
+            md-select(ng-model="current.baseChannel" placeholder="请选择" ng-change="exchangeCtrl.fly(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(ng-value="item" ng-repeat="item in exchangeCtrl.service_b_channel_array(current)") {{item}}
+
+        md-input-container.row-has-value(flex)
             label 档级
             md-select(ng-model="current.baseFlag" placeholder="请选择" ng-change="exchangeCtrl.service_b(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(ng-value="item" ng-repeat="item in exchangeCtrl.service_b_flag_array(current)") {{item}}

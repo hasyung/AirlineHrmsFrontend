@@ -881,10 +881,19 @@ class SalaryGradeChangeController extends nb.Controller
 
 
 class SalaryExchangeController
-    @.$inject = ['$http', '$scope', '$nbEvent', 'SALARY_SETTING']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'SALARY_SETTING', '$timeout']
 
-    constructor: ($http, $scope, $Evt, @SALARY_SETTING) ->
-        #
+    constructor: ($http, $scope, $Evt, @SALARY_SETTING, $timeout) ->
+        self = @
+
+        @normalChannelArr = []
+        @normalPerfChannelArr = []
+
+        $timeout(
+            ()->
+                self.normal_channel_array($scope.$parent.$parent.current)
+            , 500
+            )
 
     $channelSettingStr: (channel)->
         channel + '_setting'
@@ -902,6 +911,19 @@ class SalaryExchangeController
         current.baseMoney = @SALARY_SETTING['global_setting']['minimum_wage']
         # 除开基本工资，剩下的就是绩效工资(service_b)
         current.performanceMoney = current.basePerformanceMoney - current.baseMoney
+
+    service_b_channel_array: (current)->
+        return unless current.baseWage
+
+        setting = @$settingHash(current.baseWage)
+
+        channels = []
+
+        angular.forEach setting.flag_list, (item)->
+            if item != 'rate' && !_.startsWith(item, 'amount')
+                channels.push(item)
+                current.baseChannel = item
+        _.uniq(channels)
 
     service_b_flag_array: (current)->
         return unless current.baseWage
@@ -924,14 +946,21 @@ class SalaryExchangeController
         return 0
 
     normal_channel_array: (current)->
-        return unless current.baseWage
+        self = @
 
+        return unless current.baseWage
         setting = @$settingHash(current.baseWage)
         channels = []
+
         angular.forEach setting.flag_list, (item)->
+            channel = {}
             if item != 'rate' && !_.startsWith(item, 'amount')
-                channels.push(setting.flag_names[item])
-        _.uniq(channels)
+                channel.grade = item
+                channel.name = setting.flag_names[item]
+
+                channels.push(channel)
+
+        @normalChannelArr = _.uniq(channels)
 
     normal_flag_array: (current)->
         return unless current.baseWage
@@ -939,8 +968,8 @@ class SalaryExchangeController
         setting = @$settingHash(current.baseWage)
         flags = []
 
-        if current.baseWage == 'service_c_driving_base'
-            return
+        # if current.baseWage == 'service_c_driving_base'
+        #     return
 
         angular.forEach setting.flags, (config, flag)->
             if Object.keys(config).indexOf(current.baseChannel) >= 0
@@ -990,9 +1019,12 @@ class SalaryExchangeController
         setting = @$settingHash(current.performanceWage)
         channels = []
         angular.forEach setting.flag_list, (item)->
+            channel = {}
             if item != 'rate' && !_.startsWith(item, 'amount')
-                channels.push(setting.flag_names[item])
-        _.uniq(channels)
+                channel.grade = item
+                channel.name = setting.flag_names[item]
+                channels.push(channel)
+        @normalPerfChannelArr = _.uniq(channels)
 
     perf_flag_array: (current)->
         return unless current.performanceWage
@@ -1080,6 +1112,19 @@ class SalaryExchangeController
 
         setting = @$settingHash(current.baseWage)
         current.baseMoney = setting.flags[current.baseFlag]['amount']
+
+    air_channel_array: (current)->
+        return unless current.baseWage
+
+        setting = @$settingHash(current.baseWage)
+
+        channels = []
+        console.log setting
+        angular.forEach setting.flag_list, (item)->
+            if item != 'rate' && !_.startsWith(item, 'amount')
+                channels.push(item)
+                current.baseChannel = item
+        _.uniq(channels)
 
     airline_flag_array: (current)->
         return unless current.baseWage
