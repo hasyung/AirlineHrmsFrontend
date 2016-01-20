@@ -889,12 +889,20 @@ class SalaryExchangeController
         @normalChannelArr = []
         @normalPerfChannelArr = []
 
-        $timeout(
-            ()->
-                self.normal_channel_array($scope.$parent.$parent.current)
-                self.perf_channel_array($scope.$parent.$parent.current)
-            , 500
-            )
+        if angular.isDefined $scope.$parent.$parent.current.formData
+            $timeout(
+                ()->
+                    self.normal_channel_array($scope.$parent.$parent.current.formData.transferTo)
+                    self.perf_channel_array($scope.$parent.$parent.current.formData.transferTo)
+                , 300
+                )
+        else
+            $timeout(
+                ()->
+                    self.normal_channel_array($scope.$parent.$parent.current)
+                    self.perf_channel_array($scope.$parent.$parent.current)
+                , 300
+                )
 
     $channelSettingStr: (channel)->
         channel + '_setting'
@@ -948,6 +956,7 @@ class SalaryExchangeController
 
     normal_channel_array: (current)->
         self = @
+        console.log current
 
         return unless current.baseWage
         setting = @$settingHash(current.baseWage)
@@ -962,6 +971,7 @@ class SalaryExchangeController
                 channels.push(channel)
 
         @normalChannelArr = _.uniq(channels)
+        console.log @normalChannelArr
 
     normal_flag_array: (current)->
         return unless current.baseWage
