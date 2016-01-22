@@ -15,8 +15,8 @@ block base_setting
             label 基础工资
             md-select(ng-model="current.baseWage" placeholder="请选择" ng-change="exchangeCtrl.normal(current); exchangeCtrl.changeBaseWage(current); exchangeCtrl.normal_channel_array(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(value="leader_base") 干部
-                md-option(value="manager15_base") 管理15
-                md-option(value="manager12_base") 管理12
+                md-option(value="manager15_base") 管理
+                //- md-option(value="manager12_base") 管理12
                 md-option(value="front_run_base") 前场运行监察
                 md-option(value="service_c_base") 服务C
         md-input-container.row-has-value(flex ng-if="current.baseWage != 'service_c_driving_base'")
