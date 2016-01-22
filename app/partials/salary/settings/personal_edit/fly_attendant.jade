@@ -16,6 +16,10 @@ block base_setting
             md-select(ng-model="current.baseWage" placeholder="请选择" ng-change="exchangeCtrl.airline(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(value="air_steward_base") 空乘空保
         md-input-container.row-has-value(flex)
+            label 薪酬通道
+            md-select(ng-model="current.baseChannel" placeholder="请选择" ng-change="exchangeCtrl.fly(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(ng-value="item" ng-repeat="item in exchangeCtrl.air_channel_array(current)") {{item}}
+        md-input-container.row-has-value(flex)
             label 档级
             md-select(ng-model="current.baseFlag" placeholder="请选择" ng-change="exchangeCtrl.airline(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(ng-value="item" ng-repeat="item in exchangeCtrl.airline_flag_array(current)") {{item}}
@@ -33,8 +37,6 @@ block base_setting
         md-input-container.row-has-value(flex)
             label 工龄工资
             input(ng-model="current.workingYearsSalary" ng-disabled="!exchangeCtrl.editing")
-
-    div(layout)
         md-input-container.row-has-value(
             flex
             ng-if="current.categoryId==2 || current.categoryId==1 || current.technicalGrade"
@@ -52,8 +54,6 @@ block base_setting
                 md-option(value="D2") D2
                 md-option(value="D3") D3
                 md-option(value="D4") D4
-        div(flex)
-        div(flex)
 
     div(layout)
         md-input-container(flex)
@@ -73,18 +73,24 @@ block base_setting
             label 地勤补贴保留
             input(type="number" min="0" step="1" ng-model="current.keepLandAllowance" ng-disabled="!exchangeCtrl.editing")
         md-input-container(flex)
-            label 生活补贴保留
-            input(type="number" min="0" step="1" ng-model="current.keepLifeAllowance" ng-disabled="!exchangeCtrl.editing")
+            label 生活补贴保留1
+            input(type="number" min="0" step="1" ng-model="current.keepLife1" ng-disabled="!exchangeCtrl.editing")
     div(layout)
+        md-input-container(flex)
+            label 生活补贴保留2
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepLife2" ng-disabled="!exchangeCtrl.editing")
         md-input-container(flex)
             label 09调资增加保留
             input(type="number" min="0" step="1" ng-model="current.keepAdjustment09" ng-disabled="!exchangeCtrl.editing")
         md-input-container(flex)
             label 14公务用车保留
             input(type="number" min="0" step="1" ng-model="current.keepBus14" ng-disabled="!exchangeCtrl.editing")
+    div(layout)
         md-input-container(flex)
             label 14通信补贴保留
             input(type="number" min="0" step="1" ng-model="current.keepCommunication14" ng-disabled="!exchangeCtrl.editing")
+        div(flex)
+        div(flex)
 
     div(layout)
         md-checkbox(class="md-primary" ng-model="current.isSalarySpecial"  ng-disabled="!exchangeCtrl.editing") 薪酬特殊人员

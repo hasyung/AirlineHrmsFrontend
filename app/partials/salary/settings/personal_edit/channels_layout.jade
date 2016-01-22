@@ -5,7 +5,7 @@ mixin tabSection(heading, lookPermission, updatePermission)
         )
         section.form-material-section(
             ng-controller="salaryExchangeCtrl as exchangeCtrl"
-            ng-init="exchangeCtrl.editing=false"
+            ng-init="exchangeCtrl.editing=false;"
             )
             div(
                 has-permission=updatePermission
