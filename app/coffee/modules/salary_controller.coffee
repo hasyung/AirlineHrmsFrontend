@@ -1364,7 +1364,8 @@ class SalaryKeepController extends SalaryBaseController
             {minWidth: 150, displayName: '工龄工资保留', name: 'workingYears', enableCellEdit: false}
             {minWidth: 150, displayName: '保底增幅', name: 'minimumGrowth', enableCellEdit: false}
             {minWidth: 150, displayName: '地勤补贴保留', name: 'landAllowance', enableCellEdit: false}
-            {minWidth: 150, displayName: '生活补贴保留', name: 'lifeAllowance', enableCellEdit: false}
+            {minWidth: 150, displayName: '生活补贴保留1', name: 'life1', enableCellEdit: false}
+            {minWidth: 150, displayName: '生活补贴保留2', name: 'life2', enableCellEdit: false}
             {minWidth: 150, displayName: '09调资增加保留', name: 'adjustment09', enableCellEdit: false}
             {minWidth: 150, displayName: '14公务用车保留', name: 'bus14', enableCellEdit: false}
             {minWidth: 150, displayName: '14通信补贴保留', name: 'communication14', enableCellEdit: false}
