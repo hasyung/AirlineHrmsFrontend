@@ -126,8 +126,8 @@ class NbFilterCtrl extends nb.FilterController
         '''
         'annuity_status_select': '''
             <md-select placeholder="${ displayName }" ng-model="${ name }">
-                <md-option ng-value="true" placeholder="缴费状态">在缴</md-option>
-                <md-option ng-value="false" placeholder="缴费状态">退出</md-option>
+                <md-option ng-value="'true'" placeholder="缴费状态">在缴</md-option>
+                <md-option ng-value="'false'" placeholder="缴费状态">退出</md-option>
             </md-select>
         '''
         'workflow_status_select': '''
@@ -147,14 +147,14 @@ class NbFilterCtrl extends nb.FilterController
         '''
         'leave_job_state_select':'''
             <md-select placeholder="${ displayName }" ng-model="${ name }">
-                <md-option ng-value="true" placeholder="离职发起">已发起</md-option>
-                <md-option ng-value="false" placeholder="离职发起">未发起</md-option>
+                <md-option ng-value="'true'" placeholder="离职发起">已发起</md-option>
+                <md-option ng-value="'false'" placeholder="离职发起">未发起</md-option>
             </md-select>
         '''
         'allege_result_select':'''
             <md-select placeholder="${ displayName }" ng-model="${ name }">
-                <md-option ng-value="true" placeholder="申诉结果">已处理</md-option>
-                <md-option ng-value="false" placeholder="申诉结果">未处理</md-option>
+                <md-option ng-value="'true'" placeholder="申诉结果">已处理</md-option>
+                <md-option ng-value="'false'" placeholder="申诉结果">未处理</md-option>
             </md-select>
         '''
         'budget_staffing_select':'''
