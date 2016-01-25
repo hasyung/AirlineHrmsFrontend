@@ -9,6 +9,8 @@ div(ng-switch="rootCtrl.current_roles[0]" flex layout)
         include roles_pages/department_hr
     div.ola(ng-switch-when="party_member" flex layout)
         include roles_pages/department_hr
+    div.ola(ng-switch-when="welfare_member" flex layout)
+        include roles_pages/department_hr
     div.ola(ng-switch-when="training_member" flex layout)
         include roles_pages/department_hr
     div.ola(ng-switch-when="hr_payment_member" flex layout)
