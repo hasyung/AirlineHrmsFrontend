@@ -80,9 +80,6 @@ form(ng-controller="EditableResourceCtrl", ng-submit="save(currentUser.$save(), 
                         input.single-ellipsis(ng-model="currentUser.major" name="major" disabled title="{{currentUser.major}}")
                 div(layout ng-repeat="language in currentUser.languages")
                     md-input-container.row-has-value(flex)
-                        label 毕业时间
-                        input(ng-model="currentUser.graduateDate" name="graduateDate" disabled)
-                    md-input-container.row-has-value(flex)
                         label 语种
                         md-select(
                             ng-model="language.name"
@@ -98,10 +95,13 @@ form(ng-controller="EditableResourceCtrl", ng-submit="save(currentUser.$save(), 
                             md-option(value="西班牙语") 西班牙语
                             md-option(value="葡萄牙语") 葡萄牙语
                             md-option(value="其他") 其他
-                div(layout)
                     md-input-container(flex)
                         label 等级
                         input(ng-model="language.grade" disabled)
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 毕业时间
+                        input(ng-model="currentUser.graduateDate" name="graduateDate" disabled)
                     md-input-container(flex)
                         label 到岗时间
                         input(ng-model="currentUser.joinScalDate" name="joinScalDate" disabled)
