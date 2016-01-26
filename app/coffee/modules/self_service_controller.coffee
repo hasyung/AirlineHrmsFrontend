@@ -37,6 +37,12 @@ class Route
                 controllerAs: 'ctrl'
                 templateUrl: 'partials/self/experience.html'
             }
+            .state 'self.leader_experience', {
+                url: '/leader_experience'
+                controller: ProfileCtrl
+                controllerAs: 'ctrl'
+                templateUrl: 'partials/self/leader_exp.html'
+            }
             .state 'self.attendance', {
                 url: '/attendance'
                 controller: ProfileCtrl
@@ -352,7 +358,6 @@ class ProfileCtrl extends nb.Controller
 
         resume.$refresh().$then (resume) ->
             workAfter = _.clone resume.workExperiences, true
-
             _.remove workAfter, (work)->
                 return work.category == 'before'
 
@@ -363,6 +368,21 @@ class ProfileCtrl extends nb.Controller
             self.eduBefore = _.filter resume.educationExperiences, _.matches({'category': 'before'})
             self.eduAfter = _.filter resume.educationExperiences, _.matches({'category': 'after'})
 
+            self.workAfterEmployee = workAfterEmployee
+            self.workAfterLeader = workAfter
+
+    distinguishExp: (currentUser) ->
+        self = @
+
+        currentUser.workExperiences.$refresh().$then (works) ->
+            workAfter = _.clone works, true
+            _.remove workAfter, (work)->
+                return work.category == 'before'
+
+            workAfterEmployee = _.remove workAfter, (work)->
+                return work.employeeCategory == '员工'
+
+            self.workBefore = _.filter works, _.matches({'category': 'before'})
             self.workAfterEmployee = workAfterEmployee
             self.workAfterLeader = workAfter
 

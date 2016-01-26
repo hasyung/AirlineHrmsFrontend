@@ -1,4 +1,4 @@
-section.personnel-info-section(ng-init="experiences = currentUser.workExperiences.$refresh();param= {}")
+section.personnel-info-section(ng-init="ctrl.distinguishExp(currentUser);param= {}")
     .personnel-content-body
         .personnel-section-wrap()
             .btngroup--top--right(ng-hide="param.newExp")
@@ -21,7 +21,7 @@ section.personnel-info-section(ng-init="experiences = currentUser.workExperience
                         span.subheader__icon
                             img(src="/images/personnel/subh-icon.png", alt="icon--plane")
                         span 入司前
-                section.form-material-section(ng-controller="EditableResourceCtrl", ng-repeat="work in experiences | filterBy: ['category']:'before'")
+                section.form-material-section(ng-controller="EditableResourceCtrl", ng-repeat="work in ctrl.workBefore")
                     include experience/exit_work_exp_form
         .personnel-section-wrap
             md-content
@@ -30,7 +30,7 @@ section.personnel-info-section(ng-init="experiences = currentUser.workExperience
                         span.subheader__icon
                             img(src="/images/personnel/subh-icon.png", alt="icon--plane")
                         span 入司后
-                section.form-material-section(ng-controller="EditableResourceCtrl", ng-repeat="work in experiences | filterBy: ['category']:'after'")
+                section.form-material-section(ng-controller="EditableResourceCtrl", ng-repeat="work in ctrl.workAfterEmployee")
                     .sep-40
                     include experience/scal_work_exp_form
                 .sep-40
