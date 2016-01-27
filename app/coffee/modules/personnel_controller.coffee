@@ -1476,9 +1476,7 @@ class PersonnelDataCtrl extends nb.Controller
                 return work.category == 'before'
 
             workAfterEmployee = _.remove workAfter, (work)->
-                return work.employeeCategory == '员工'
-
-            console.error workAfterEmployee
+                return work.employeeCategory == '员工' || work.employeeCategory == null
 
             self.workBefore = _.filter resume.workExperiences, _.matches({'category': 'before'})
             self.eduBefore = _.filter resume.educationExperiences, _.matches({'category': 'before'})
