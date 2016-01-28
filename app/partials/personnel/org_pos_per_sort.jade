@@ -24,12 +24,12 @@
                                 "
                             )
                                 .list-text(flex="70" ng-bind="org.label")
-                                .icon-container.up
-                                    i(ng-click="ctrl.setHeigher(ctrl.currentOrgs.children, $index, 'department')")
-                                .icon-container.down
-                                    i(ng-click="ctrl.setLower(ctrl.currentOrgs.children, $index, 'department')")
-                                .open-orgs
-                                    i.fa.fa-angle-right(ng-click="ctrl.showChildsOrg(org)" ng-if="org.children")
+                                .icon-container.up(ng-click="ctrl.setHeigher(ctrl.currentOrgs.children, $index, 'department')")
+                                    i
+                                .icon-container.down(ng-click="ctrl.setLower(ctrl.currentOrgs.children, $index, 'department')")
+                                    i
+                                .open-orgs(ng-if="org.children" ng-click="ctrl.showChildsOrg(org)")
+                                    i.fa.fa-angle-right
 
 
             section.pos-sort-container(flex)
@@ -44,10 +44,10 @@
                         )
                             .list-row(flex layout="row" ng-click="initData.selectPos = pos;")
                                 .list-text(flex="70" ng-bind="pos.name")
-                                .icon-container.up
-                                    i(ng-click="ctrl.setHeigher(initData.positions, $index, 'position')")
-                                .icon-container.down
-                                    i(ng-click="ctrl.setLower(initData.positions, $index, 'position')")
+                                .icon-container.up(ng-click="ctrl.setHeigher(initData.positions, $index, 'position')")
+                                    i
+                                .icon-container.down(ng-click="ctrl.setLower(initData.positions, $index, 'position')")
+                                    i
         div(flex)
             section.pb20
                 .cust-content-toolbar
@@ -73,8 +73,8 @@
                                 td(ng-bind="emp.position.name")
                                 td
                                     div(layout)
-                                        .icon-container.up
-                                            i(ng-click="ctrl.setHeigher(initData.employees, $index, 'employee')")
-                                        .icon-container.down
-                                            i(ng-click="ctrl.setLower(initData.employees, $index, 'employee')")
+                                        .icon-container.up(ng-click="ctrl.setHeigher(initData.employees, $index, 'employee')")
+                                            i
+                                        .icon-container.down(ng-click="ctrl.setLower(initData.employees, $index, 'employee')")
+                                            i
 
