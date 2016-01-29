@@ -1427,12 +1427,21 @@ orgMutiPos = ($rootScope)->
                     return self.scope.hasPrimary = true
 
 
-    postLink = (elem, attrs, ctrl)->
+    postLink = (scope, elem, attrs, ctrl)->
+
+        scope.$watch 'positions', (newVal, oldVal) ->
+            newVal.map (position) ->
+                if !position.category || !position.position.id
+                    scope.isValid = false
+                else
+                    scope.isValid = true
+        , true
 
     return {
         scope: {
             positions: "=ngModel"
             editStatus: "=editing"
+            isValid: "=isValid"
         }
 
         replace: true
