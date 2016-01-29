@@ -40,7 +40,7 @@ section.org-detail(ng-controller="EditableResourceCtrl" has-permission="departme
 
             .form-actions(ng-hide="!editing")
                 md-button.md-raised.white(type="button", ng-click="cancel(currentOrg, $event)") 取消
-                md-button.skyblue.md-raised(type="submit") 保存
+                md-button.md-primary.md-raised(type="submit") 保存
 
     //- new sub
     .org-info(ng-if="orgCtrl.state == 'newsub' " ng-init="neworg = {natureId: currentOrg.natureId}")
@@ -51,15 +51,15 @@ section.org-detail(ng-controller="EditableResourceCtrl" has-permission="departme
                     input(ng-model="neworg.name" required name="orgName")
                 md-input-container.row-has-value
                     label 机构性质
-                    md-select(ng-model="neworg.natureId" ng-disabled="currentOrg.serialNumber.length != 3")
+                    md-select(ng-model="neworg.natureId" ng-disabled="currentOrg.serialNumber.length != 3" name="orgNature")
                         md-option(ng-value="item.id" ng-repeat="item in $enum.get('department_natures')") {{item.label}}
                 md-input-container.row-has-value
                     label 职级
-                    md-select(ng-model="neworg.gradeId")
+                    md-select(ng-model="neworg.gradeId" name="orgGrade")
                         md-option(ng-value="item.id" ng-repeat="item in orgCtrl.dep_grade_array") {{item.label}}
                 .form-actions
                     md-button.md-raised.white(type="button" ng-click="orgCtrl.state = 'show'") 取消
-                    md-button.skyblue.md-raised(type="submit") 保存
+                    md-button.md-primary.md-raised(type="submit" ng-disabled="newsubForm.$invalid || !neworg.natureId || !neworg.gradeId") 保存
 
 
 section(ng-if="currentOrg.status !== 'destroy_inactive'")
