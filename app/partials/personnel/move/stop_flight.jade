@@ -32,7 +32,8 @@ md-dialog.employee_move
                         label 停飞种类
                         md-select(ng-model="stopEmployee.special_category" placeholder="请选择")
                             md-option(value="空勤停飞") 空勤停飞
-                            md-option(ng-if="ctrl.loadEmp.channelId != 4" value="空勤地面") 空勤地面
+                            md-option(value="空勤地面") 空勤地面
+                            //- md-option(ng-if="ctrl.loadEmp.channelId != 4" value="空勤地面") 空勤地面
                 div(layout ng-if="ctrl.loadEmp.channelId == 4")
                     md-radio-group(ng-model="stopEmployee.stop_fly_reason" layout)
                         md-radio-button.md-primary(
