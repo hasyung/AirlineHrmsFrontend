@@ -14,11 +14,11 @@ form(
     .form-btn-group.alive(ng-show="editing")
         md-button.md-raised.md-fab(ng-click="cancel(current, $event, positionEditForm)")
             md-icon(md-svg-src="/images/svg/close.svg" aria-label="取消")
-        md-button.md-raised.md-fab.md-primary(ng-click="current.update_position_info();editing=false;" ng-disabled="positionEditForm.$invalid")
+        md-button.md-raised.md-fab.md-primary(ng-click="current.update_position_info();editing=false;" ng-disabled="positionEditForm.$invalid || !positionsValid")
             md-icon(md-svg-src="/images/svg/check.svg" aria-label="保存")
     fieldset(ng-disabled="!editing" md-theme="default")
 
-        div(org-muti-pos ng-model="current.positions" editing="editing")
+        div(org-muti-pos ng-model="current.positions" editing="editing" is-valid="positionsValid")
 
         div(layout)
             md-input-container.row-has-value(flex)

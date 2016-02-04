@@ -362,7 +362,7 @@ class ProfileCtrl extends nb.Controller
                 return work.category == 'before'
 
             workAfterEmployee = _.remove workAfter, (work)->
-                return work.employeeCategory == '员工'
+                return work.employeeCategory == '员工' || work.employeeCategory == null
 
             self.workBefore = _.filter resume.workExperiences, _.matches({'category': 'before'})
             self.eduBefore = _.filter resume.educationExperiences, _.matches({'category': 'before'})
@@ -380,7 +380,7 @@ class ProfileCtrl extends nb.Controller
                 return work.category == 'before'
 
             workAfterEmployee = _.remove workAfter, (work)->
-                return work.employeeCategory == '员工'
+                return work.employeeCategory == '员工' || work.employeeCategory == null
 
             self.workBefore = _.filter works, _.matches({'category': 'before'})
             self.workAfterEmployee = workAfterEmployee

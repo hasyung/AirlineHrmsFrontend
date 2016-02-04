@@ -147,6 +147,9 @@ class PersonnelCtrl extends nb.Controller
         .error (data) ->
             self.importing = false
 
+    getCondition: ()->
+        @tableState
+
 
 class NewEmpsCtrl extends nb.Controller
     @.$inject = ['$scope', 'Employee', 'Org', '$state', '$enum', '$http', 'toaster']
@@ -1427,12 +1430,21 @@ orgMutiPos = ($rootScope)->
                     return self.scope.hasPrimary = true
 
 
-    postLink = (elem, attrs, ctrl)->
+    postLink = (scope, elem, attrs, ctrl)->
+
+        scope.$watch 'positions', (newVal, oldVal) ->
+            newVal.map (position) ->
+                if !position.category || !position.position.id
+                    scope.isValid = false
+                else
+                    scope.isValid = true
+        , true
 
     return {
         scope: {
             positions: "=ngModel"
             editStatus: "=editing"
+            isValid: "=isValid"
         }
 
         replace: true
@@ -1476,9 +1488,7 @@ class PersonnelDataCtrl extends nb.Controller
                 return work.category == 'before'
 
             workAfterEmployee = _.remove workAfter, (work)->
-                return work.employeeCategory == '员工'
-
-            console.error workAfterEmployee
+                return work.employeeCategory == '员工' || work.employeeCategory == null
 
             self.workBefore = _.filter resume.workExperiences, _.matches({'category': 'before'})
             self.eduBefore = _.filter resume.educationExperiences, _.matches({'category': 'before'})
