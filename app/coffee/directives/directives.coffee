@@ -4,8 +4,14 @@ angular.module 'nb.directives'
         postLink = (scope, elem, attrs)->
             elem.on 'click', ()->
                 selectedRows = scope.paramGetter()
-                paramString = selectedRows.join(',')
+
+                if angular.isArray(selectedRows)
+                    paramString = selectedRows.join(',')
+                else
+                    paramString = angular.element.param(selectedRows)
+
                 hrefString = attrs['urlPrefix'].replace(/#param#/, paramString)
+                #console.error hrefString
                 elem.attr('href', hrefString)
 
         return {
