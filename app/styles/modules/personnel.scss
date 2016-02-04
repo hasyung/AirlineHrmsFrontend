@@ -733,12 +733,21 @@
         margin: 0 10px;
 
         .open-orgs {
+            border: 1px solid #999;
             color: #777;
             font-size: 22px;
-            height: 40px;
-            line-height: 40px;
+            height: 32px;
+            line-height: 28px;
+            margin-top: 4px;
+            text-align: center;
+            width: 32px;
+
+            i {
+                margin-left: 2px;
+            }
 
             &:hover {
+                border-color: #3a98f0;
                 color: #3a98f0;
             }
         }
@@ -757,6 +766,7 @@
     }
 
     .icon-container {
+        border: 1px solid #999;
         cursor: pointer;
         font-size: 20px;
         height: 32px;
@@ -781,6 +791,8 @@
             }
 
             &:hover {
+                border-color: #3a98f0;
+
                 i {
                     border-bottom-color: #3a98f0;
                 }
@@ -788,7 +800,7 @@
         }
 
         &.down {
-            margin-right: 30px;
+            margin-right: 10px;
 
             i {
                 border-bottom: 8px solid transparent;
@@ -802,6 +814,8 @@
             }
 
             &:hover {
+                border-color: #3a98f0;
+
                 i {
                     border-top-color: #3a98f0;
                 }

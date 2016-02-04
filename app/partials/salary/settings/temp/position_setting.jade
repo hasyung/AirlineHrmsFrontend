@@ -21,7 +21,7 @@
                 tr(ng-repeat="item in ctrl.tempPositions track by $index")
                     td {{::item.full_position_name}}
                     td
-                        md-select(ng-model="item.temperature_amount" ng-change="ctrl.updateTempAmount(item.id, item.temperature_amount)")
+                        md-select(ng-model="item.temperature_amount" ng-change="ctrl.updateTempAmount(item.id, item.temperature_amount)" ng-disabled="!ctrl.tempUpdatable" ng-readonly="!ctrl.tempUpdatable")
                             md-option(value="0") 无
                             md-option(value="400") 400
                             md-option(value="300") 300
