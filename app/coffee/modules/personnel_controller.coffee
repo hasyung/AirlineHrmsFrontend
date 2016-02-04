@@ -147,6 +147,9 @@ class PersonnelCtrl extends nb.Controller
         .error (data) ->
             self.importing = false
 
+    getCondition: ()->
+        @tableState
+
 
 class NewEmpsCtrl extends nb.Controller
     @.$inject = ['$scope', 'Employee', 'Org', '$state', '$enum', '$http', 'toaster']
