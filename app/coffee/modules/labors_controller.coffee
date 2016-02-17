@@ -1091,7 +1091,7 @@ class ProtocolCtrl extends nb.Controller
             {minWidth: 120, displayName: '用工性质', name: 'applyType'}
             {minWidth: 120, displayName: '协议开始时间', name: 'startDate', cellFilter: "date:'yyyy-MM-dd'"}
             {minWidth: 120, displayName: '协议结束时间', name: 'endDate', cellFilter: "date:'yyyy-MM-dd'"}
-            {minWidth: 200, displayName: '备注', name: 'notes', cellTooltip: (row) -> return row.entity.note}
+            {minWidth: 200, displayName: '备注', name: 'note', cellTooltip: (row) -> return row.entity.note}
             {
                 minWidth: 120
                 displayName: '详细',
