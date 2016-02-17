@@ -1,0 +1,86 @@
+div(style="height: 100%; background-color: #f5f5f5;")
+    md-toolbar.md-warn(md-theme="hrms")
+        .md-toolbar-tools
+            span 新建协议
+
+    .personnel-content.personnel-control(ng-init="protocol = {}; ctrl.loadEmp = {}")
+        section.personnel-info-section
+            md-content.nb-card-container(layout="column" md-theme="hrms")
+                form(ng-submit="ctrl.newProtocol(protocol);panel.close();" name="newProtocolForm")
+                    md-card.form-material-section.nb-card
+                        .md-subheader
+                            | 协议信息
+
+                        fieldset(md-theme="default")
+                            div(style="display:none;")
+                                input(ng-model="protocol.employeeId")
+                            div(layout)
+                                md-input-container(flex)
+                                    label 姓名
+                                        span.require-tip *
+                                    input(ng-model="ctrl.loadEmp.name" name="name" required
+                                        ng-model-options="{debounce: {'default': 1000, 'blur': 0}}"
+                                        ng-change="ctrl.loadEmployee({name: ctrl.loadEmp.name}, protocol);"
+                                        )
+                                md-input-container(flex)
+                                    label 员工编号
+                                        span.require-tip *
+                                    input(ng-model="ctrl.loadEmp.employeeNo" required
+                                        ng-model-options="{debounce: {'default': 1000, 'blur': 0}}"
+                                        ng-change="ctrl.loadEmployee({employee_no: ctrl.loadEmp.employeeNo}, protocol);"
+                                        )
+
+                            div(layout)
+                                md-input-container.row-has-value(flex)
+                                    label 部门
+                                    input(ng-model="ctrl.loadEmp.department.name" readonly)
+                                md-input-container.row-has-value(flex)
+                                    label 岗位
+                                    input(ng-model="ctrl.loadEmp.position.name" readonly)
+
+                            div(layout)
+                                md-input-container.row-has-value(flex)
+                                    label 用工性质
+                                    md-select(ng-model="ctrl.loadEmp.laborRelationId" disabled readonly)
+                                        md-option(ng-value="item.id" ng-repeat="item in $enum.get('labor_relations')") {{item.label}}
+
+                            div(layout)
+                                md-input-container(flex)
+                                    label 开始日期
+                                        span.require-tip *
+                                    input(
+                                        name="startDate"
+                                        bs-datepicker
+                                        ng-model="protocol.startDate"
+                                        required
+                                        ng-change="ctrl.dueTimeStr='';ctrl.loadDueTime(protocol)"
+                                            )
+                                md-input-container(flex)
+                                    label 结束日期(大于开始日期)
+                                        span.require-tip *
+                                    input.has-placeholder(
+                                        bs-datepicker
+                                        ng-model="protocol.endDate"
+                                        name="endDate"
+                                        ng-change="ctrl.dueTimeStr='';ctrl.loadDueTime(protocol)"
+                                        )
+                                //- md-input-container(flex md-no-float)
+                                //-     label 协议时长
+                                //-     input(
+                                //-         type="text"
+                                //-         ng-model="protocol.dueTime"
+                                //-         name="dueTime"
+                                //-         readonly
+                                //-         )
+
+                            div(layout)
+                                md-input-container(flex)
+                                    label 合同备注
+                                    input(type="text" ng-model="protocol.notes")
+
+                    .form-bottom-group(layout style="margin-top: 20px;")
+                        span(flex)
+                        md-button.md-raised(type="button" ng-click="panel.close();") 取消
+                        md-button.md-primary.md-raised(
+                            type="submit"
+                            ng-disabled="newProtocolForm.$invalid || (!protocol.endDate && !protocol.dueTime) || (newProtocolForm.endDate.$modelValue <= newProtocolForm.startDate.$modelValue)") 提交
