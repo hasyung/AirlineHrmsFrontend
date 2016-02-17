@@ -1074,6 +1074,8 @@ class ReviewCtrl extends nb.Controller
     constructor: (@scope, @Change, @Record, @mdDialog, @toaster) ->
         @loadInitialData()
 
+        @tableState = null
+        @exportEduExpUrl = ''
         @enable_check = false
         self = @
 
@@ -1209,11 +1211,28 @@ class ReviewCtrl extends nb.Controller
             self.enable_check = checked.length
         , true
 
+    exportEducationExperiences: () ->
+        paramStr = ''
+
+        if @tableState
+            _.map @tableState, (value, key) ->
+                if angular.isString value
+                    paramStr = paramStr + (key + '=' + value) + '&'
+                if angular.isArray value
+                    paramStr = paramStr + (key + '=' + _.flatten value) + '&'
+                if angular.isObject value
+                    paramStr = paramStr + key + '%5Bfrom%5D=' + value.from.replace(/\+/g, '%2B') + '&'
+                    paramStr = paramStr + key + '%5Bto%5D=' + value.to.replace(/\+/g, '%2B') + '&'
+
+        @exportEduExpUrl = '/api/employee_changes/export_education_experiences?' + paramStr
+
+
     loadInitialData: () ->
         @records = @Record.$collection().$fetch()
 
     searchRecord: (tableState)->
         @records.$refresh(tableState)
+        @tableState = tableState
 
     checkChanges: ()->
         self = @

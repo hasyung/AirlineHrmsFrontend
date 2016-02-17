@@ -4,4 +4,10 @@
         md-toolbar
             .md-toolbar-tools
                 h2 变更记录列表
+                span(flex)
+                md-button.md-primary.md-raised(
+                    ng-mouseenter="ctrl.exportEducationExperiences()"
+                    ng-href="{{ ctrl.exportEduExpUrl }}"
+                    download
+                ) 导出学历变更
         div(nb-grid column-defs="ctrl.recordColumnDef" safe-src="ctrl.records")
