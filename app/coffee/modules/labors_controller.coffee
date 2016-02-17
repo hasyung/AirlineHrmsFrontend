@@ -1050,8 +1050,6 @@ class ProtocolCtrl extends nb.Controller
             .col 'employee_no',          '员工编号',     'string'
             .col 'department_ids',       '机构',        'org-search'
             .col 'end_date',             '协议到期时间',  'date-range'
-            .col 'apply_type',           '用工性质',     'apply_type_select'
-            .col 'notes',                '是否有备注',   'boolean'
             .end()
 
         @columnDef = [
