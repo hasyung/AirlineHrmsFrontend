@@ -1,12 +1,11 @@
 app = @nb.app
 
 class SideMenuController
-  @.$inject = ['$scope', '$http', 'menu', 'CURRENT_ROLES', 'ROLES_MENU_CONFIG', 'PERMISSIONS']
+  @.$inject = ['$scope', '$http', 'menu', 'CURRENT_ROLES', 'ROLES_MENU_CONFIG', 'PERMISSIONS', 'USER_META']
 
-  constructor: ($scope, $http, menu, CURRENT_ROLES, ROLES_MENU_CONFIG, PERMISSIONS) ->
+  constructor: ($scope, $http, menu, CURRENT_ROLES, ROLES_MENU_CONFIG, PERMISSIONS, USER_META) ->
     keys = Object.keys(ROLES_MENU_CONFIG)
     pages = []
-
 
     angular.forEach ROLES_MENU_CONFIG, (array, key)->
       angular.forEach array, (page)->
@@ -20,6 +19,9 @@ class SideMenuController
     menu.sections = angular.forEach menu.sections, (item)->
       item.pages = _.filter item.pages, (page)->
         str = item.name + '@' + page.name
+
+        if USER_META.name == 'administrator'
+          return true
 
         if str == "岗位管理@岗位异动记录" && PERMISSIONS.indexOf("position_changes_index") < 0
           return false
