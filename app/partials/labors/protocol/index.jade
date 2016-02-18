@@ -1,0 +1,22 @@
+.app-content-wrapper(flex style="height: 700px;" ng-controller="ProtocolCtrl as ctrl")
+    div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+    div.ui-grid-container
+        md-toolbar
+            .md-toolbar-tools
+                h2 协议列表
+
+                div(flex)
+
+                md-button.md-primary.md-raised(
+                    nb-panel
+                    template-url="/partials/labors/protocol/new.html"
+                ) 新建协议
+
+        div(
+            nb-grid
+            multi-select="false"
+            export-api
+            on-register-api="ctrl.exportGridApi(gridApi)"
+            grid-selection column-defs="ctrl.columnDef"
+            safe-src="ctrl.protocols"
+        )

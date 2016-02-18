@@ -305,6 +305,14 @@ class Route
                     'FlowName': -> 'Flow::RenewContract'
                 }
             }
+            .state 'protocol_management', {
+                url: '/protocol-management'
+                templateUrl: 'partials/labors/protocol/index.html'
+                controller: SbFlowHandlerCtrl
+                resolve: {
+                    'FlowName': -> 'Flow::RenewContract'
+                }
+            }
             .state 'labors_attendance', {
                 url: '/labors_attendance'
                 templateUrl: 'partials/labors/attendance/index.html'
@@ -1031,6 +1039,157 @@ class ContractCtrl extends nb.Controller
             else
                 self.toaster.pop('success', '提示', '导入成功')
 
+class ProtocolCtrl extends nb.Controller
+    @.$inject = ['$scope', 'Protocol', '$http', 'Employee', '$nbEvent', 'toaster', 'CURRENT_ROLES', 'PERMISSIONS']
+
+    constructor: (@scope, @Protocol, @http, @Employee, @Evt, @toaster, @CURRENT_ROLES, @permissions) ->
+        @loadInitialData()
+
+        @filterOptions = filterBuildUtils('contract')
+            .col 'employee_name',        '姓名',        'string',           '姓名'
+            .col 'employee_no',          '员工编号',     'string'
+            .col 'department_ids',       '机构',        'org-search'
+            .col 'end_date',             '协议到期时间',  'date-range'
+            .end()
+
+        @columnDef = [
+            {minWidth: 120, displayName: '员工编号', name: 'employeeNo'}
+            {
+                minWidth: 120
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-panel
+                        ng-if="row.entity.owner!=null"
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                    <span ng-if="row.entity.owner==null">
+                        {{grid.getCellValue(row, col)}}
+                    </span>
+                </div>
+                '''
+            }
+            {
+                minWidth: 350
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+            }
+            {
+                minWidth: 250
+                displayName: '岗位'
+                name: 'positionName'
+                cellTooltip: (row) ->
+                    return row.entity.positionName
+            }
+            {minWidth: 120, displayName: '用工性质', name: 'applyType'}
+            {minWidth: 120, displayName: '协议开始时间', name: 'startDate', cellFilter: "date:'yyyy-MM-dd'"}
+            {minWidth: 120, displayName: '协议结束时间', name: 'endDate', cellFilter: "date:'yyyy-MM-dd'"}
+            {minWidth: 200, displayName: '备注', name: 'note', cellTooltip: (row) -> return row.entity.note}
+            {
+                minWidth: 120
+                displayName: '详细',
+                field: '详细',
+                cellTemplate: '''
+                    <div class="ui-grid-cell-contents" ng-init="outerScope=grid.appScope.$parent">
+                        <a nb-panel
+                            template-url="partials/labors/protocol/detail.html"
+                            locals="{protocol: row.entity.$refresh(), ctrl: outerScope.ctrl}"> 详细
+                        </a>
+                    </div>
+                '''
+            }
+        ]
+
+        #根据权限 agreements_update 控制是否可以编辑表单
+        @editable = _.includes @permissions,'agreements_update'
+
+    isHrLaborRelationMember: ()->
+        @CURRENT_ROLES.indexOf('hr_labor_relation_member') >= 0
+
+    loadInitialData: () ->
+        self = @
+
+        @protocols = @Protocol.$collection().$fetch().$then () ->
+            self.protocols.$refresh()
+
+    updateProtocol: (model)->
+        self = @
+        tableState = @tableState || {}
+
+        model.$save().$then (data) ->
+            self.protocols.$refresh(tableState)
+
+    search: (tableState) ->
+        tableState = tableState || {}
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+        @protocols.$refresh(tableState)
+
+    loadDueTime: (protocol)->
+        self = @
+        s = protocol.startDate
+        e = protocol.endDate
+
+        unless protocol.isUnfix
+            if s && e && s <= e
+                d = moment.range(s, e).diff('days')
+                dueTimeStr = parseInt(d/365)+'年'+(d-parseInt(d/365)*365)+'天'
+                protocol.dueTime = dueTimeStr
+
+            else
+                self.toaster.pop('error', '提示', '开始时间、结束时间必填，且结束时间需大于开始时间')
+                return
+
+    showDueTime: (protocol)->
+        self = @
+        s = protocol.startDate
+        e = protocol.endDate
+
+        if s && e && s <= e
+            d = moment.range(s, e).diff('days')
+            dueTimeStr = parseInt(d/365)+'年'+(d-parseInt(d/365)*365)+'天'
+            return dueTimeStr
+        else if !e
+            return '无固定'
+
+    newProtocol: (protocol)->
+        self = @
+
+        if !protocol.endDate
+            self.toaster.pop('error', '提示', '协议结束时间必填')
+            return
+
+        if protocol.endDate <= protocol.startDate
+            self.toaster.pop('error', '提示', '协议结束时间不能小于等于开始时间')
+            return
+
+        @protocols.$build(protocol).$save().$then ()->
+            self.protocols.$refresh()
+
+    clearData: (protocol)->
+        if protocol.isUnfix
+            protocol.endDate = null
+            protocol.dueTime = null
+
+    loadEmployee: (params, protocol)->
+        self = @
+
+        @Employee.$collection().$refresh(params).$then (employees)->
+            args = _.mapKeys params, (value, key) ->
+                _.camelCase key
+
+            matched = _.find employees, args
+
+            if matched
+                self.loadEmp = matched
+                protocol.owner = matched
+            else
+                self.loadEmp = params
+
 class UserListCtrl extends nb.Controller
     @.$inject = ["$scope", "Employee"]
 
@@ -1270,6 +1429,7 @@ app.controller('AttendanceRecordCtrl', AttendanceRecordCtrl)
 app.controller('AttendanceHisCtrl', AttendanceHisCtrl)
 app.controller('UserListCtrl', UserListCtrl)
 app.controller('ContractCtrl', ContractCtrl)
+app.controller('ProtocolCtrl', ProtocolCtrl)
 app.controller('RetirementCtrl', RetirementCtrl)
 app.controller('SbFlowHandlerCtrl', SbFlowHandlerCtrl)
 
