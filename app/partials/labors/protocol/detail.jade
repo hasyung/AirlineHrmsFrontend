@@ -50,6 +50,7 @@ div(
                                         required
                                         ng-disabled="!ctrl.editable"
                                         ng-readonly="!ctrl.editable"
+                                        ng-change="ctrl.dueTimeStr='';ctrl.loadDueTime(protocol)"
                                             )
                                 md-input-container(flex)
                                     label 结束日期(大于开始日期)
@@ -60,6 +61,7 @@ div(
                                         name="endDate"
                                         ng-disabled="!ctrl.editable"
                                         ng-readonly="!ctrl.editable"
+                                        ng-change="ctrl.dueTimeStr='';ctrl.loadDueTime(protocol)"
                                         )
                                 //- md-input-container(flex md-no-float)
                                 //-     label 协议时长
@@ -82,5 +84,6 @@ div(
                         span(flex)
                         md-button.md-raised(type="button" ng-click="ctrl.protocols.$refresh(); panel.close();") 取消
                         md-button.md-primary.md-raised(
+                            ng-if="ctrl.editable"
                             type="submit"
-                            ng-disabled="newProtocolForm.$invalid || (newProtocolForm.endDate.$modelValue <= newProtocolForm.startDate.$modelValue)") 提交
+                            ng-disabled="newProtocolForm.$invalid || (editProtocolForm.endDate.$modelValue <= editProtocolForm.startDate.$modelValue)") 提交

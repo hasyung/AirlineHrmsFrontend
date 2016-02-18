@@ -1045,6 +1045,8 @@ class ProtocolCtrl extends nb.Controller
     constructor: (@scope, @Protocol, @http, @Employee, @Evt, @toaster, @CURRENT_ROLES, @permissions) ->
         @loadInitialData()
 
+        @tableState = null
+
         @filterOptions = filterBuildUtils('contract')
             .col 'employee_name',        '姓名',        'string',           '姓名'
             .col 'employee_no',          '员工编号',     'string'
@@ -1125,9 +1127,9 @@ class ProtocolCtrl extends nb.Controller
             self.protocols.$refresh(tableState)
 
     search: (tableState) ->
-        tableState = tableState || {}
+        @tableState = tableState || {}
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
-        @protocols.$refresh(tableState)
+        @protocols.$refresh(@tableState)
 
     loadDueTime: (protocol)->
         self = @
@@ -1136,9 +1138,9 @@ class ProtocolCtrl extends nb.Controller
 
         unless protocol.isUnfix
             if s && e && s <= e
-                d = moment.range(s, e).diff('days')
-                dueTimeStr = parseInt(d/365)+'年'+(d-parseInt(d/365)*365)+'天'
-                protocol.dueTime = dueTimeStr
+                # d = moment.range(s, e).diff('days')
+                # dueTimeStr = parseInt(d/365)+'年'+(d-parseInt(d/365)*365)+'天'
+                # protocol.dueTime = dueTimeStr
 
             else
                 self.toaster.pop('error', '提示', '开始时间、结束时间必填，且结束时间需大于开始时间')
