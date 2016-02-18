@@ -88,13 +88,13 @@ Org = (restmod, RMUtils, $Evt, DEPARTMENTS, $http) ->
             initalArr.join(">")
         else
             if ( parent.parentId || parent.parent_id ) && parent.xdepth > 2
-                parentDep = _.find DEPARTMENTS, 'id', parent.parentId || parent.parent_id
+                parentDep = _.find DEPARTMENTS, {'id': parent.parentId || parent.parent_id}
 
                 # 未生效的机构当前在DEPARTMENTS无法找到
                 # OrgStore依赖于Org，这里注入会出现循环依赖
                 if !parentDep
                     $http.get('/api/departments?edit_mode=true').success (data) ->
-                        parentDep = _.find data.departments, 'id', parent.parentId || parent.parent_id
+                        parentDep = _.find data.departments, {'id': parent.parentId || parent.parent_id}
 
                         if !parentDep
                             throw new Error("机构 #{parent.name}:#{parent.id}，找不到父级 #{parent.parentId}")
