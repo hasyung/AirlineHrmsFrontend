@@ -13,6 +13,10 @@ class SideMenuController
 
     # nodes
     menu.sections = _.filter menu.sections, (item)->
+      # 管理员显示所有的菜单
+      if USER_META.name == 'administrator'
+        return true
+
       keys.indexOf(item.name) >= 0
 
     # pages
@@ -20,6 +24,7 @@ class SideMenuController
       item.pages = _.filter item.pages, (page)->
         str = item.name + '@' + page.name
 
+        # 管理员显示所有的菜单
         if USER_META.name == 'administrator'
           return true
 
