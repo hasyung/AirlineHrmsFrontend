@@ -52,7 +52,7 @@ class NotificationCtrl
 
         WebsocketClient.addListener 'user_message', (data) ->
             msg = data.latest_message
-            msg_unread_count = data.total_unread_count
+            msg_unread_count = data.unread_count
             toaster.pop('success', msg.category, msg.body)
             scope.$apply -> ctrl.msg_unread_count = msg_unread_count
 
