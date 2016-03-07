@@ -137,17 +137,17 @@ class SalaryController extends nb.Controller
     $checkRewardDefault: ()->
         year = @currentYear
 
-        if !angular.isDefined(@global_setting.flight_bonus[year])
-            @global_setting.flight_bonus[year] = 100000000
+        # if !angular.isDefined(@global_setting.flight_bonus[year])
+        #     @global_setting.flight_bonus[year] = 100000000
 
-        if !angular.isDefined(@global_setting.service_bonus[year])
-            @global_setting.service_bonus[year] = 100000000
+        # if !angular.isDefined(@global_setting.service_bonus[year])
+        #     @global_setting.service_bonus[year] = 100000000
 
-        if !angular.isDefined(@global_setting.airline_security_bonus[year])
-            @global_setting.airline_security_bonus[year] = 100000000
+        # if !angular.isDefined(@global_setting.airline_security_bonus[year])
+        #     @global_setting.airline_security_bonus[year] = 100000000
 
-        if !angular.isDefined(@global_setting.composite_bonus[year])
-            @global_setting.composite_bonus[year] = 100000000
+        # if !angular.isDefined(@global_setting.composite_bonus[year])
+        #     @global_setting.composite_bonus[year] = 100000000
 
     initialize: () ->
         self = @
