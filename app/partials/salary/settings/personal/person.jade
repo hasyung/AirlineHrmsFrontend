@@ -5,8 +5,13 @@
         md-toolbar
             .md-toolbar-tools
                 h2 个人薪酬设置列表
-
                 span(flex)
+                md-button.md-primary.md-raised(
+                    ng-disabled="!ctrl.import_finish"
+                    ng-href="{{ ctrl.exportSSUrl }}"
+                    ng-mouseenter="ctrl.exportSalaryUrl()"
+                    download
+                ) 导 出    
                 span
                     md-button.md-raised.md-primary(
                         ng-disabled="!ctrl.import_finish"

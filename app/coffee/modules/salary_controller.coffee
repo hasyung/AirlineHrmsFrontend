@@ -465,6 +465,9 @@ class SalaryPersonalController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryPersonSetup', 'toaster']
 
     constructor: (@http, $scope, $Evt, $enum, @SalaryPersonSetup, @toaster) ->
+        @tableState = null
+        @exportSalarySettingUrl = ''
+
         @loadInitialData()
 
         @filterOptions = {
@@ -587,6 +590,20 @@ class SalaryPersonalController extends nb.Controller
         tableState = tableState || {}
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @salaryPersonSetups.$refresh(tableState)
+        @tableState = tableState
+
+    exportSalaryUrl: () ->
+        paramStr = ''
+
+        if @tableState
+            _.map @tableState, (value, key) ->
+                if angular.isString value
+                    paramStr = paramStr + (key + '=' + value) + '&'
+                if angular.isArray value
+                    value.forEach (item) ->
+                        paramStr = paramStr + (key + '%5B%5D' + '=' + item) + '&'
+
+        @exportSSUrl = 'api/salary_person_setups/export_to_xls?' + paramStr
 
     getSelectsIds: () ->
         rows = @gridApi.selection.getSelectedGridRows()
