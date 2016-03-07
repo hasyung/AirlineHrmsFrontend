@@ -11,7 +11,7 @@
                     ng-href="{{ ctrl.exportSSUrl }}"
                     ng-mouseenter="ctrl.exportSalaryUrl()"
                     download
-                ) 导 出    
+                ) 导出个人薪酬设置    
                 span
                     md-button.md-raised.md-primary(
                         ng-disabled="!ctrl.import_finish"
@@ -34,7 +34,6 @@
             column-defs="ctrl.columnDef"
             on-register-api="ctrl.exportGridApi(gridApi)"
             export-api
-            grid-selection
             multi-select="false"
             safe-src="ctrl.salaryPersonSetups"
         )
