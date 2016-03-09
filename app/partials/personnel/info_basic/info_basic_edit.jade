@@ -31,13 +31,12 @@ form(name="empEditForm" ng-submit="" ng-controller="EditableResourceCtrl")
                 md-select(ng-model="current.politicalStatusId" ng-disabled="!editing")
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('political_status')") {{item.label}}
             md-input-container(flex)
-                label 入党时间
-                input(ng-model="current.joinPartyDate" bs-datepicker disabled)
-
+                label 民族
+                input(type="text", ng-model="current.nation")
         div(layout)
             md-input-container(flex)
-                label 联系方式
-                input(type="text", ng-model="current.contact.mobile", name="contact")
+                label 入党时间
+                input(ng-model="current.joinPartyDate" bs-datepicker disabled)
             md-input-container(flex)
                 label 参工时间
                 input(ng-model="current.startWorkDate" bs-datepicker)
@@ -55,6 +54,14 @@ form(name="empEditForm" ng-submit="" ng-controller="EditableResourceCtrl")
             md-input-container(flex)
                 label 专业
                 input(type="text" placeholder="请输入专业" ng-model="current.major")
+                    
+        div(layout)
+            md-input-container(flex)
+                label 手机号码
+                input(type="text", ng-model="current.contact.mobile", name="contact")
+            md-input-container(flex)
+                label 固定电话
+                input(type="text", ng-model="current.contact.telephone", name="telephone")
 
         div.position-item(layout ng-if="current.languages" ng-repeat="language in current.languages")
             md-input-container.row-has-value(flex)

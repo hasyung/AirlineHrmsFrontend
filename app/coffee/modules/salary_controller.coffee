@@ -137,17 +137,17 @@ class SalaryController extends nb.Controller
     $checkRewardDefault: ()->
         year = @currentYear
 
-        if !angular.isDefined(@global_setting.flight_bonus[year])
-            @global_setting.flight_bonus[year] = 100000000
+        # if !angular.isDefined(@global_setting.flight_bonus[year])
+        #     @global_setting.flight_bonus[year] = 100000000
 
-        if !angular.isDefined(@global_setting.service_bonus[year])
-            @global_setting.service_bonus[year] = 100000000
+        # if !angular.isDefined(@global_setting.service_bonus[year])
+        #     @global_setting.service_bonus[year] = 100000000
 
-        if !angular.isDefined(@global_setting.airline_security_bonus[year])
-            @global_setting.airline_security_bonus[year] = 100000000
+        # if !angular.isDefined(@global_setting.airline_security_bonus[year])
+        #     @global_setting.airline_security_bonus[year] = 100000000
 
-        if !angular.isDefined(@global_setting.composite_bonus[year])
-            @global_setting.composite_bonus[year] = 100000000
+        # if !angular.isDefined(@global_setting.composite_bonus[year])
+        #     @global_setting.composite_bonus[year] = 100000000
 
     initialize: () ->
         self = @
@@ -465,6 +465,9 @@ class SalaryPersonalController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryPersonSetup', 'toaster']
 
     constructor: (@http, $scope, $Evt, $enum, @SalaryPersonSetup, @toaster) ->
+        @tableState = null
+        @exportSalarySettingUrl = ''
+
         @loadInitialData()
 
         @filterOptions = {
@@ -587,6 +590,20 @@ class SalaryPersonalController extends nb.Controller
         tableState = tableState || {}
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @salaryPersonSetups.$refresh(tableState)
+        @tableState = tableState
+
+    exportSalaryUrl: () ->
+        paramStr = ''
+
+        if @tableState
+            _.map @tableState, (value, key) ->
+                if angular.isString value
+                    paramStr = paramStr + (key + '=' + value) + '&'
+                if angular.isArray value
+                    value.forEach (item) ->
+                        paramStr = paramStr + (key + '%5B%5D' + '=' + item) + '&'
+
+        @exportSSUrl = 'api/salary_person_setups/export_to_xls?' + paramStr
 
     getSelectsIds: () ->
         rows = @gridApi.selection.getSelectedGridRows()
