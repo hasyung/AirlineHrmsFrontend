@@ -974,7 +974,6 @@ class SalaryExchangeController
 
     normal_channel_array: (current)->
         self = @
-        console.log current
 
         return unless current.baseWage
         setting = @$settingHash(current.baseWage)
@@ -989,7 +988,6 @@ class SalaryExchangeController
                 channels.push(channel)
 
         @normalChannelArr = _.uniq(channels)
-        console.log @normalChannelArr
 
     normal_flag_array: (current)->
         return unless current.baseWage
@@ -1080,7 +1078,7 @@ class SalaryExchangeController
             return if !angular.isDefined(config)
             return if !angular.isDefined(config["X"])
 
-            if config["X"]["format_cell"] == current.baseChannel
+            if config["X"]["format_cell"]
                 flags.push(flag)
 
         return flags
@@ -1148,7 +1146,6 @@ class SalaryExchangeController
         setting = @$settingHash(current.baseWage)
 
         channels = []
-        console.log setting
         angular.forEach setting.flag_list, (item)->
             if item != 'rate' && !_.startsWith(item, 'amount')
                 channels.push(item)

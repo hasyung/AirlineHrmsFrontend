@@ -111,7 +111,7 @@ class OrgSearchCtrl
         @$orgs = [] if angular.isDefined(attrs.multiple)
         #editStatus初始化
         if angular.isDefined(attrs.editable)
-            scope.editStatus = attrs.editStatus
+            scope.editStatus = attrs.editable
         else
             scope.editStatus = true
 
