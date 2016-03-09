@@ -1,6 +1,7 @@
 .personnel-content(ng-controller="NewResourceCtrl")
     section.personnel-info-section(
         ng-init= "params = {};\
+            orgEditable = true;\
             newEmp.languages = [{name: null, grade: null}];\
             classificationArr = ['安全管理','安全质量管理','保安','保管','保洁','财务','采购','产权管理','出纳','飞行机械','飞行技术','服务员','供应','管理保障','行政辅助','行政管理','航材','航务','航站保障','合同管理','后勤保障','后勤维修','护士','货运市场','机务','基建管理','技术保障','驾驶','客运服务','客运业务','空保','空乘','空警','秘书','培训管理','配载','票务','汽车维修','人力资源管理','数据录入','调度','外事管理','信息技术','信息维护','业务管理','医生','运行管理','运输业务保障','战略规划','质量管理','助理','装卸','资料','无'];\
         "
@@ -48,25 +49,28 @@
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('political_status')") {{item.label}}
 
                         div(layout)
+                            md-input-container(flex)
+                                label 民族
+                                input(type="text" ng-model="newEmp.nation")
                             md-input-container.row-has-value(flex)
                                 label 学历
                                     span.require-tip *
                                 md-select(ng-model="newEmp.educationBackgroundId" name="educationBackground" placeholder="请选择")
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('education_backgrounds')") {{item.label}}
+
+                        div(layout)
                             md-input-container.row-has-value(flex)
                                 label 学位
                                 md-select(ng-model="newEmp.degreeId" name="degree" placeholder="请选择")
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('degrees')") {{item.label}}
-
-                        div(layout)
                             md-input-container(flex)
                                 label 毕业院校
                                 input(type="text" ng-model="newEmp.school")
+
+                        div(layout)
                             md-input-container(flex)
                                 label 专业
                                 input(type="text" ng-model="newEmp.major")
-
-                        div(layout)
                             md-input-container(flex)
                                 label 毕业时间
                                 input(ng-model="newEmp.graduateDate" bs-datepicker name="graduateDate")
@@ -126,7 +130,7 @@
                         //- md-icon.form-icon(md-svg-src="/images/svg/positions_info_24.svg" alt="岗位信息")
                         | 岗位信息
                     div
-                        org-search(ng-model="newEmp.department" required float-label search-text-change="newEmp.position=null;params.orgPos=null;" selected-item-change="params.orgPos = org.positions.$refresh();newEmp.position = null;")
+                        org-search(ng-model="newEmp.department" required float-label search-text-change="newEmp.position=null;params.orgPos=null;" selected-item-change="params.orgPos = org.positions.$refresh();newEmp.position = null;" editable)
                         div(layout)
                             md-input-container.row-has-value(flex)
                                 label 岗位
@@ -188,6 +192,7 @@
                         div(layout)
                             md-input-container(flex)
                                 label 到岗时间
+                                    span.require-tip *
                                 input(ng-model="newEmp.joinScalDate" bs-datepicker name="joinScalDate")
                             md-input-container(flex)
                                 label 参工时间
