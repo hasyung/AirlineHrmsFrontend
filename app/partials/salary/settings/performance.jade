@@ -2,10 +2,10 @@
     .salary-basic
         form(name="configForm" ng-submit="ctrl.saveConfig()")
             tabset
-                tab.leader-base(heading="信息通道" ng-click="ctrl.loadDynamicConfig('information_perf')")
+                tab.leader-base(heading="管理营销" ng-click="ctrl.loadDynamicConfig('manage_market_perf')")
                     md-toolbar
                       .md-toolbar-tools
-                        h2 信息通道
+                        h2 管理营销
                         div(flex layout has-permission="salaries_update_performance")
                             include ./btn.jade
                     include ./common.jade
@@ -16,10 +16,10 @@
                         div(flex layout has-permission="salaries_update_performance")
                             include ./btn.jade
                     include ./common.jade
-                tab.leader-base(heading="管理营销" ng-click="ctrl.loadDynamicConfig('manage_market_perf')")
+                tab.leader-base(heading="信息通道" ng-click="ctrl.loadDynamicConfig('information_perf')")
                     md-toolbar
                       .md-toolbar-tools
-                        h2 管理营销
+                        h2 信息通道
                         div(flex layout has-permission="salaries_update_performance")
                             include ./btn.jade
                     include ./common.jade
