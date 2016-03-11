@@ -185,6 +185,8 @@ class SalaryController extends nb.Controller
                           "information_perf",                   # 绩效-信息通道
                           "airline_business_perf",              # 绩效-航务航材
                           "manage_market_perf",                 # 绩效-管理营销
+                          "service_normal_perf",                # 绩效-机务维修(普通员工)
+                          "service_tech_perf",                  # 绩效-机务维修(技术骨干)
                           "service_c_1_perf",                   # 绩效-服务C-1
                           "service_c_2_perf",                   # 绩效-服务C-2
                           "service_c_3_perf",                   # 绩效-服务C-3
