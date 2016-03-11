@@ -23,6 +23,7 @@ block base_setting
                 md-option(value="flyer_teacher_C_base") 教员C
                 md-option(value="flyer_student_base") 学员
                 md-option(value="air_observer_base") 空中观察员
+                md-option(value="manager15_base") 管理
         md-input-container.row-has-value(flex)
             label 薪酬通道
             md-select(ng-model="current.baseChannel" placeholder="请选择" ng-change="exchangeCtrl.fly(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
