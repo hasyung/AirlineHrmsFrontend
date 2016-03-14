@@ -13,7 +13,7 @@ block base_setting
     div(layout)
         md-input-container.row-has-value(flex)
             label 基本工资
-            md-select(ng-model="current.baseWage" placeholder="请选择" ng-change="current.baseChannel=null; current.baseFlag=null; current.baseMoney=0;exchangeCtrl.airline(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+            md-select(ng-model="current.baseWage" placeholder="请选择" ng-change="current.baseChannel=null; current.baseFlag=null; current.baseMoney=0; exchangeCtrl.airline(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(value="air_steward_base") 空乘空保
                 md-option(value="manager15_base") 管理
                 md-option(value="leader_base") 干部
