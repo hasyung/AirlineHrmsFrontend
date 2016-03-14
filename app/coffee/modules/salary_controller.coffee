@@ -906,6 +906,8 @@ class SalaryExchangeController
     constructor: ($http, $scope, $Evt, @SALARY_SETTING, $timeout) ->
         self = @
 
+        @isLegalFlagArr = []
+
         @normalChannelArr = []
         @normalPerfChannelArr = []
 
@@ -992,7 +994,11 @@ class SalaryExchangeController
         @normalChannelArr = _.uniq(channels)
 
     normal_flag_array: (current)->
+        self = @
+        @isLegalFlagArr = []
+
         return unless current.baseWage
+        return unless current.baseChannel
 
         setting = @$settingHash(current.baseWage)
         flags = []
@@ -1005,7 +1011,9 @@ class SalaryExchangeController
                 format_cell = config[current.baseChannel]['format_cell']
 
                 if format_cell && format_cell.length > 0
-                    flags.push(flag)
+                    self.isLegalFlagArr.push(flag)
+
+            flags.push(flag)
 
         return flags
 
@@ -1118,6 +1126,9 @@ class SalaryExchangeController
         _.uniq(channels)
 
     fly_flag_array: (current)->
+        self = @
+        @isLegalFlagArr = []
+        
         return unless current.baseWage
 
         setting = @$settingHash(current.baseWage)
