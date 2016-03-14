@@ -26,7 +26,7 @@ block base_setting
         md-input-container.row-has-value(flex ng-if="current.baseWage != 'service_c_driving_base'")
             label 档级
             md-select(ng-model="current.baseFlag" placeholder="请选择" ng-change="exchangeCtrl.normal(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
-                md-option(ng-value="item" ng-repeat="item in exchangeCtrl.normal_flag_array(current)") {{item}}
+                md-option(ng-value="item" ng-class="{ 'spec': exchangeCtrl.isLegalFlagArr.indexOf(item) < 0 }" ng-repeat="item in exchangeCtrl.normal_flag_array(current)") {{item}}
     div(layout)
         md-input-container(flex)
             label 金额
@@ -101,9 +101,11 @@ block performance_setting
             )
             label 绩效工资
             md-select(ng-model="current.performanceWage" placeholder="请选择" ng-change="exchangeCtrl.perf(current); exchangeCtrl.changePerWage(current); exchangeCtrl.perf_channel_array(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
-                md-option(value="information_perf") 信息通道
-                md-option(value="airline_business_perf") 航务航材
                 md-option(value="manage_market_perf") 管理营销
+                md-option(value="airline_business_perf") 航务航材
+                md-option(value="information_perf") 信息通道
+                md-option(value="service_normal_perf") 机务维修(普通员工)
+                md-option(value="service_tech_perf") 机务维修(技术骨干)
                 md-option(value="service_c_1_perf") 服务C1
                 md-option(value="service_c_2_perf") 服务C2
                 md-option(value="service_c_3_perf") 服务C3

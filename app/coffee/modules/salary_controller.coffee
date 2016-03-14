@@ -1046,9 +1046,9 @@ class SalaryExchangeController
         current.baseMoney = null
 
     changePerWage: (current) ->
-        current.performanceChannel = null
-        current.performanceFlag = null
-        current.performanceMoney = null
+        current.performanceChannel = null if current.performanceChannel
+        current.performanceFlag = null  if current.performanceFlag
+        current.performanceMoney = null  if current.performanceMoney
 
     perf_channel_array: (current)->
         return unless current.performanceWage
@@ -1122,7 +1122,7 @@ class SalaryExchangeController
         angular.forEach setting.flag_list, (item)->
             if item != 'rate' && !_.startsWith(item, 'amount')
                 channels.push(item)
-                current.baseChannel = item
+                # current.baseChannel = item
         _.uniq(channels)
 
     fly_flag_array: (current)->
@@ -1162,7 +1162,7 @@ class SalaryExchangeController
         angular.forEach setting.flag_list, (item)->
             if item != 'rate' && !_.startsWith(item, 'amount')
                 channels.push(item)
-                current.baseChannel = item
+
         _.uniq(channels)
 
     airline_flag_array: (current)->
