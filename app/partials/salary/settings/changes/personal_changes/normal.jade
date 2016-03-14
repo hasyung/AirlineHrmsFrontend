@@ -84,7 +84,7 @@ block base_setting
         md-checkbox(class="md-primary" ng-model="current.isSalarySpecial"  ng-disabled="!exchangeCtrl.editing") 薪酬特殊人员
 
 block performance_setting
-    div(layout)
+    div(layout ng-if="current.performanceWage != 'service_tech_perf'")
         md-input-container.row-has-value(
             flex
             ng-if="current.baseWage=='leader_base' || current.categoryId==2 || current.categoryId==1 || current.technicalGrade"
@@ -142,6 +142,42 @@ block performance_setting
         md-input-container(flex)
             label 金额
             input(type="number" min="0" max="100000" step="1" ng-model="current.performanceMoney" readonly)
+    
+    //- 绩效工资为 机务维修（技术骨干）的情况
+    div(layout ng-if="current.performanceWage == 'service_tech_perf'")
+        md-input-container.row-has-value(
+            flex
+            ng-if="!(current.baseWage=='leader_base' || current.categoryId==2 || current.categoryId==1 || current.technicalGrade)"
+            )
+            label 绩效工资
+            md-select(ng-model="current.performanceWage" placeholder="请选择" ng-change="exchangeCtrl.changePerWage(current); exchangeCtrl.perf(current);" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(value="manage_market_perf") 管理营销
+                md-option(value="airline_business_perf") 航务航材
+                md-option(value="information_perf") 信息通道
+                md-option(value="service_normal_perf") 机务维修(普通员工)
+                md-option(value="service_tech_perf") 机务维修(技术骨干)
+                md-option(value="service_c_1_perf") 服务C1
+                md-option(value="service_c_2_perf") 服务C2
+                md-option(value="service_c_3_perf") 服务C3
+                md-option(value="service_c_driving_perf") 服务C-驾驶
+        md-input-container.row-has-value(flex)
+            label 绩效通道
+            md-select(ng-model="current.technicalCategory" placeholder="请选择" ng-change="exchangeCtrl.techPerf(current);" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(value="airbus") 空客维修
+                md-option(value="maintain_145") 145维修
+                md-option(value="engineer") 工程师
+        md-input-container.row-has-value(flex)
+            label 绩效考核结果
+            md-select(ng-model="current.performanceChannel" placeholder="请选择" ng-change="exchangeCtrl.techPerf(current);" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(value="0") A
+                md-option(value="1") B
+                md-option(value="2") C
+        md-input-container(flex)
+            label 金额
+            input(type="number" min="0" step="1" ng-model="current.performanceMoney" readonly)
+
+
+
     div(layout)
         md-input-container(flex)
             label 费用化报销金额

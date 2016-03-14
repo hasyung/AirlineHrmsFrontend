@@ -1019,12 +1019,41 @@ class SalaryExchangeController
 
     perf: (current)->
         return unless current.performanceWage
+        return unless current.performanceWage != 'service_tech_perf'
         setting = @$settingHash(current.performanceWage)
 
         flag = setting.flags[current.performanceFlag]
 
         return current.performanceMoney = flag.amount if angular.isDefined(flag)
         return 0
+
+    techPerf: (current) ->
+        return unless current.performanceWage
+        return unless current.performanceChannel
+        return unless current.technicalCategory
+        return unless current.positionName
+
+        positionZn = current.positionName
+
+        if positionZn == '支援工程师'
+            positionEn = 'engineer'
+        else if positionZn = '分队长'
+            positionEn = 'captain'
+        else if positionZn = '副分队长'
+            positionEn = 'vice_captain'
+        else if positionZn = '机械师'
+            positionEn = 'machinist'
+        else
+            return
+
+        setting = @$settingHash(current.performanceWage)
+        
+        if current.technicalCategory == 'engineer' && positionEn == 'engineer'
+            current.performanceMoney = setting[current.technicalCategory][current.performanceChannel].amount
+        else if current.technicalCategory == 'airbus' || current.technicalCategory == 'maintain_145' 
+            current.performanceMoney = setting[current.technicalCategory][positionEn][current.performanceChannel].amount
+        else
+            current.performanceMoney = 0
 
     changeBaseWage: (current) ->
         if current.baseWage=='leader_base'
@@ -1049,9 +1078,11 @@ class SalaryExchangeController
         current.performanceChannel = null if current.performanceChannel
         current.performanceFlag = null  if current.performanceFlag
         current.performanceMoney = null  if current.performanceMoney
+        current.technicalCategory = null if current.technicalCategory
 
     perf_channel_array: (current)->
         return unless current.performanceWage
+        return unless current.performanceWage != 'service_tech_perf'
 
         setting = @$settingHash(current.performanceWage)
         channels = []
