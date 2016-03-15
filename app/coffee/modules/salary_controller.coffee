@@ -442,7 +442,7 @@ class SalaryController extends nb.Controller
     addSkyCity: (cities, city) ->
         self = @
 
-        if city.city && city.abbr
+        if city.city
             cities.push(city)
             self.scope.cityForeign = {}
             self.scope.cityNation = {}
