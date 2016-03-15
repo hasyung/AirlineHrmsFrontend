@@ -1031,27 +1031,13 @@ class SalaryExchangeController
         return unless current.performanceWage
         return unless current.performanceChannel
         return unless current.technicalCategory
-        return unless current.positionName
-
-        positionZn = current.positionName
-
-        if positionZn == '支援工程师'
-            positionEn = 'engineer'
-        else if positionZn = '分队长'
-            positionEn = 'captain'
-        else if positionZn = '副分队长'
-            positionEn = 'vice_captain'
-        else if positionZn = '机械师'
-            positionEn = 'machinist'
-        else
-            return
+        return unless current.performancePosition
 
         setting = @$settingHash(current.performanceWage)
+        console.log setting[current.technicalCategory][current.performancePosition]
         
-        if current.technicalCategory == 'engineer' && positionEn == 'engineer'
-            current.performanceMoney = setting[current.technicalCategory][current.performanceChannel].amount
-        else if current.technicalCategory == 'airbus' || current.technicalCategory == 'maintain_145' 
-            current.performanceMoney = setting[current.technicalCategory][positionEn][current.performanceChannel].amount
+        if angular.isDefined setting[current.technicalCategory][current.performancePosition]
+            current.performanceMoney = setting[current.technicalCategory][current.performancePosition][current.performanceChannel].amount
         else
             current.performanceMoney = 0
 
