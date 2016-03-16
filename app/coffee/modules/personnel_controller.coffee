@@ -1074,6 +1074,8 @@ class ReviewCtrl extends nb.Controller
     constructor: (@scope, @Change, @Record, @mdDialog, @toaster) ->
         @loadInitialData()
 
+        @tableState = null
+        @exportEduExpUrl = ''
         @enable_check = false
         self = @
 
@@ -1214,6 +1216,7 @@ class ReviewCtrl extends nb.Controller
 
     searchRecord: (tableState)->
         @records.$refresh(tableState)
+        @tableState = tableState
 
     checkChanges: ()->
         self = @
@@ -1240,6 +1243,163 @@ class ReviewCtrl extends nb.Controller
                 self.changes.$refresh()
         else
             self.toaster.pop('error', '提示','请勾选要处理的审核记录')
+
+class EducationExpRecordController extends nb.Controller
+    @.$inject = ['$scope', 'toaster', 'EducationExpRecord']
+
+    constructor: (@scope, @toaster, @EducationExpRecord) ->
+        @tableState = null
+        @exportEduExpUrl = ''
+
+        @loadInitialData()
+
+        @filterOptions = {
+            name: 'positionRecord'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+                {
+                    name: 'department_name'
+                    type: 'string'
+                    displayName: '机构'
+                }
+                {
+                    name: 'change_date'
+                    displayName: '变动时间'
+                    type: 'date-range'
+                }
+            ]
+        }
+
+        @columnDef = [
+            {
+                minWidth: 120
+                displayName: '员工编号'
+                name: 'employeeNo'
+            }
+            {
+                minWidth: 120
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {
+                minWidth: 350
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.department.name
+            }
+            {
+                minWidth: 250
+                displayName: '岗位'
+                name: 'positionName'
+                cellTooltip: (row) ->
+                    return row.entity.positionName
+            }
+            {
+                minWidth: 200
+                displayName: '身份证号码'
+                name: 'identityNo'
+                cellTooltip: (row) ->
+                    return row.entity.identityNo
+            }
+            {
+                minWidth: 120
+                displayName: '用工性质'
+                name: 'laborRelation'
+                cellTooltip: (row) ->
+                    return row.entity.laborRelation
+            }
+            {
+                minWidth: 120
+                displayName: '用工性质'
+                name: 'laborRelation'
+                cellTooltip: (row) ->
+                    return row.entity.laborRelation
+            }
+            {
+                minWidth: 150
+                displayName: '毕业院校'
+                name: 'school'
+                cellTooltip: (row) ->
+                    return row.entity.school
+            }
+            {
+                minWidth: 150
+                displayName: '专业'
+                name: 'major'
+                cellTooltip: (row) ->
+                    return row.entity.major
+            }
+            {
+                minWidth: 120
+                displayName: '学历'
+                name: 'educationBackground'
+                cellTooltip: (row) ->
+                    return row.entity.educationBackground
+            }
+            {
+                minWidth: 120
+                displayName: '学位'
+                name: 'degree'
+                cellTooltip: (row) ->
+                    return row.entity.degree
+            }
+            {
+                minWidth: 120
+                displayName: '变动日期'
+                name: 'changeDate'
+                cellFilter: "date:'yyyy-MM-dd'"
+            }
+        ]
+
+    loadInitialData: () ->
+        self = @
+
+        @educationExpRecords = @EducationExpRecord.$collection().$fetch()
+
+    getSelectsIds: () ->
+        rows = @gridApi.selection.getSelectedGridRows()
+        rows.map (row) -> return row.entity.$pk
+
+    exportGridApi: (gridApi) ->
+        @gridApi = gridApi
+
+    search: (tableState)->
+        @educationExpRecords.$refresh(tableState)
+        @tableState = tableState
+
+    exportEducationExperiences: () ->
+        paramStr = ''
+
+        if @tableState
+            _.map @tableState, (value, key) ->
+                if angular.isString value
+                    paramStr = paramStr + (key + '=' + value) + '&'
+                if angular.isArray value
+                    paramStr = paramStr + (key + '=' + _.flatten value) + '&'
+                if angular.isObject value
+                    paramStr = paramStr + key + '%5Bfrom%5D=' + value.from.replace(/\+/g, '%2B') + '&'
+                    paramStr = paramStr + key + '%5Bto%5D=' + value.to.replace(/\+/g, '%2B') + '&'
+
+        @exportEduExpUrl = '/api/education_experience_records/export_to_xls?' + paramStr
 
 class EmployeeMemberCtrl extends nb.Controller
     @.$inject = ['$scope', 'Employee']
@@ -1512,6 +1672,7 @@ app.controller('EarlyRetireEmployeesCtrl', EarlyRetireEmployeesCtrl)
 app.controller('MoveEmployeesCtrl', MoveEmployeesCtrl)
 app.controller('adjustPositionWaitingCtrl', AdjustPositionWaitingController)
 app.controller('PositionRecordCtrl', PositionRecordController)
+app.controller('EducationExpRecordCtrl', EducationExpRecordController)
 app.controller('EmployeeMemberCtrl', EmployeeMemberCtrl)
 app.controller('EmployeePerformanceCtrl', EmployeePerformanceCtrl)
 app.controller('EmployeeAttendanceCtrl', EmployeeAttendanceCtrl)

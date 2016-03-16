@@ -137,17 +137,17 @@ class SalaryController extends nb.Controller
     $checkRewardDefault: ()->
         year = @currentYear
 
-        if !angular.isDefined(@global_setting.flight_bonus[year])
-            @global_setting.flight_bonus[year] = 100000000
+        # if !angular.isDefined(@global_setting.flight_bonus[year])
+        #     @global_setting.flight_bonus[year] = 100000000
 
-        if !angular.isDefined(@global_setting.service_bonus[year])
-            @global_setting.service_bonus[year] = 100000000
+        # if !angular.isDefined(@global_setting.service_bonus[year])
+        #     @global_setting.service_bonus[year] = 100000000
 
-        if !angular.isDefined(@global_setting.airline_security_bonus[year])
-            @global_setting.airline_security_bonus[year] = 100000000
+        # if !angular.isDefined(@global_setting.airline_security_bonus[year])
+        #     @global_setting.airline_security_bonus[year] = 100000000
 
-        if !angular.isDefined(@global_setting.composite_bonus[year])
-            @global_setting.composite_bonus[year] = 100000000
+        # if !angular.isDefined(@global_setting.composite_bonus[year])
+        #     @global_setting.composite_bonus[year] = 100000000
 
     initialize: () ->
         self = @
@@ -185,6 +185,8 @@ class SalaryController extends nb.Controller
                           "information_perf",                   # 绩效-信息通道
                           "airline_business_perf",              # 绩效-航务航材
                           "manage_market_perf",                 # 绩效-管理营销
+                          "service_normal_perf",                # 绩效-机务维修(普通员工)
+                          "service_tech_perf",                  # 绩效-机务维修(技术骨干)
                           "service_c_1_perf",                   # 绩效-服务C-1
                           "service_c_2_perf",                   # 绩效-服务C-2
                           "service_c_3_perf",                   # 绩效-服务C-3
@@ -440,7 +442,7 @@ class SalaryController extends nb.Controller
     addSkyCity: (cities, city) ->
         self = @
 
-        if city.city && city.abbr
+        if city.city
             cities.push(city)
             self.scope.cityForeign = {}
             self.scope.cityNation = {}
@@ -465,6 +467,9 @@ class SalaryPersonalController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryPersonSetup', 'toaster']
 
     constructor: (@http, $scope, $Evt, $enum, @SalaryPersonSetup, @toaster) ->
+        @tableState = null
+        @exportSalarySettingUrl = ''
+
         @loadInitialData()
 
         @filterOptions = {
@@ -587,6 +592,20 @@ class SalaryPersonalController extends nb.Controller
         tableState = tableState || {}
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @salaryPersonSetups.$refresh(tableState)
+        @tableState = tableState
+
+    exportSalaryUrl: () ->
+        paramStr = ''
+
+        if @tableState
+            _.map @tableState, (value, key) ->
+                if angular.isString value
+                    paramStr = paramStr + (key + '=' + value) + '&'
+                if angular.isArray value
+                    value.forEach (item) ->
+                        paramStr = paramStr + (key + '%5B%5D' + '=' + item) + '&'
+
+        @exportSSUrl = 'api/salary_person_setups/export_to_xls?' + paramStr
 
     getSelectsIds: () ->
         rows = @gridApi.selection.getSelectedGridRows()
@@ -887,6 +906,8 @@ class SalaryExchangeController
     constructor: ($http, $scope, $Evt, @SALARY_SETTING, $timeout) ->
         self = @
 
+        @isLegalFlagArr = []
+
         @normalChannelArr = []
         @normalPerfChannelArr = []
 
@@ -957,7 +978,6 @@ class SalaryExchangeController
 
     normal_channel_array: (current)->
         self = @
-        console.log current
 
         return unless current.baseWage
         setting = @$settingHash(current.baseWage)
@@ -972,10 +992,13 @@ class SalaryExchangeController
                 channels.push(channel)
 
         @normalChannelArr = _.uniq(channels)
-        console.log @normalChannelArr
 
     normal_flag_array: (current)->
+        self = @
+        @isLegalFlagArr = []
+
         return unless current.baseWage
+        return unless current.baseChannel
 
         setting = @$settingHash(current.baseWage)
         flags = []
@@ -988,18 +1011,35 @@ class SalaryExchangeController
                 format_cell = config[current.baseChannel]['format_cell']
 
                 if format_cell && format_cell.length > 0
-                    flags.push(flag)
+                    self.isLegalFlagArr.push(flag)
+
+            flags.push(flag)
 
         return flags
 
     perf: (current)->
         return unless current.performanceWage
+        return unless current.performanceWage != 'service_tech_perf'
         setting = @$settingHash(current.performanceWage)
 
         flag = setting.flags[current.performanceFlag]
 
         return current.performanceMoney = flag.amount if angular.isDefined(flag)
         return 0
+
+    techPerf: (current) ->
+        return unless current.performanceWage
+        return unless current.performanceChannel
+        return unless current.technicalCategory
+        return unless current.performancePosition
+
+        setting = @$settingHash(current.performanceWage)
+        console.log setting[current.technicalCategory][current.performancePosition]
+        
+        if angular.isDefined setting[current.technicalCategory][current.performancePosition]
+            current.performanceMoney = setting[current.technicalCategory][current.performancePosition][current.performanceChannel].amount
+        else
+            current.performanceMoney = 0
 
     changeBaseWage: (current) ->
         if current.baseWage=='leader_base'
@@ -1021,12 +1061,14 @@ class SalaryExchangeController
         current.baseMoney = null
 
     changePerWage: (current) ->
-        current.performanceChannel = null
-        current.performanceFlag = null
-        current.performanceMoney = null
+        current.performanceChannel = null if current.performanceChannel
+        current.performanceFlag = null  if current.performanceFlag
+        current.performanceMoney = null  if current.performanceMoney
+        current.technicalCategory = null if current.technicalCategory
 
     perf_channel_array: (current)->
         return unless current.performanceWage
+        return unless current.performanceWage != 'service_tech_perf'
 
         setting = @$settingHash(current.performanceWage)
         channels = []
@@ -1063,7 +1105,7 @@ class SalaryExchangeController
             return if !angular.isDefined(config)
             return if !angular.isDefined(config["X"])
 
-            if config["X"]["format_cell"] == current.baseChannel
+            if config["X"]["format_cell"]
                 flags.push(flag)
 
         return flags
@@ -1097,10 +1139,13 @@ class SalaryExchangeController
         angular.forEach setting.flag_list, (item)->
             if item != 'rate' && !_.startsWith(item, 'amount')
                 channels.push(item)
-                current.baseChannel = item
+                # current.baseChannel = item
         _.uniq(channels)
 
     fly_flag_array: (current)->
+        self = @
+        @isLegalFlagArr = []
+        
         return unless current.baseWage
 
         setting = @$settingHash(current.baseWage)
@@ -1131,11 +1176,10 @@ class SalaryExchangeController
         setting = @$settingHash(current.baseWage)
 
         channels = []
-        console.log setting
         angular.forEach setting.flag_list, (item)->
             if item != 'rate' && !_.startsWith(item, 'amount')
                 channels.push(item)
-                current.baseChannel = item
+
         _.uniq(channels)
 
     airline_flag_array: (current)->

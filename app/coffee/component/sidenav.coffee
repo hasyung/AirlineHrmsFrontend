@@ -115,6 +115,11 @@ menuFactory = ($rootScope, $state)->
                 permission: ''
             }
             {
+                name: '协议管理'
+                state: 'protocol_management'
+                permission: ''
+            }
+            {
                 name: '员工辞职'
                 state: 'labors_resignation'
                 permission: ''

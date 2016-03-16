@@ -1,0 +1,152 @@
+table.table.table-mc-light-blue.table-bordered.service-tech
+	thead
+		th 技术骨干类别
+		th 岗位
+		th 考核结果
+		th 档级
+		th 系数
+		th 标准
+	tbody
+		//- 空客维修分队-分队长 考核性收入配置
+		tr
+			td(rowspan="3") 空客维修分队
+			td(rowspan="3") 分队长
+			td 合格
+			td(ng-bind="ctrl.dynamic_config.airbus.captain[0].grade")
+			td
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.airbus.captain[0].rate")
+				span(ng-if="ctrl.editing")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.airbus.captain[0].rate" ng-change="ctrl.dynamic_config.airbus.captain[0].amount = ctrl.calcAmount(ctrl.dynamic_config.airbus.captain[0].rate)")
+			td(ng-bind="ctrl.dynamic_config.airbus.captain[0].amount")
+		tr
+			td 良
+			td(ng-bind="ctrl.dynamic_config.airbus.captain[1].grade")
+			td
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.airbus.captain[1].rate") 
+				span(ng-if="ctrl.editing")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.airbus.captain[1].rate" ng-change="ctrl.dynamic_config.airbus.captain[1].amount = ctrl.calcAmount(ctrl.dynamic_config.airbus.captain[1].rate)")
+			td(ng-bind="ctrl.dynamic_config.airbus.captain[1].amount")
+		tr
+			td 优
+			td(ng-bind="ctrl.dynamic_config.airbus.captain[2].grade")
+			td
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.airbus.captain[2].rate")
+				span(ng-if="ctrl.editing")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.airbus.captain[2].rate" ng-change="ctrl.dynamic_config.airbus.captain[2].amount = ctrl.calcAmount(ctrl.dynamic_config.airbus.captain[2].rate)")
+			td(ng-bind="ctrl.dynamic_config.airbus.captain[2].amount")
+		//- 空客维修分队－副分队长
+		tr
+			td(rowspan="3") 空客维修分队
+			td(rowspan="3") 副分队长
+			td 合格
+			td(ng-bind="ctrl.dynamic_config.airbus.vice_captain[0].grade")
+			td
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.airbus.vice_captain[0].rate")
+				span(ng-if="ctrl.editing")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.airbus.vice_captain[0].rate" ng-change="ctrl.dynamic_config.airbus.vice_captain[0].amount = ctrl.calcAmount(ctrl.dynamic_config.airbus.vice_captain[0].rate)")
+			td(ng-bind="ctrl.dynamic_config.airbus.vice_captain[0].amount")
+		tr
+			td 良
+			td(ng-bind="ctrl.dynamic_config.airbus.vice_captain[1].grade")
+			td
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.airbus.vice_captain[1].rate")
+				span(ng-if="ctrl.editing")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.airbus.vice_captain[1].rate" ng-change="ctrl.dynamic_config.airbus.vice_captain[1].amount = ctrl.calcAmount(ctrl.dynamic_config.airbus.vice_captain[1].rate)")
+			td(ng-bind="ctrl.dynamic_config.airbus.vice_captain[1].amount")
+		tr
+			td 优
+			td(ng-bind="ctrl.dynamic_config.airbus.vice_captain[2].grade")
+			td
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.airbus.vice_captain[2].rate")
+				span(ng-if="ctrl.editing")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.airbus.vice_captain[2].rate" ng-change="ctrl.dynamic_config.airbus.vice_captain[2].amount = ctrl.calcAmount(ctrl.dynamic_config.airbus.vice_captain[2].rate)")
+			td(ng-bind="ctrl.dynamic_config.airbus.vice_captain[2].amount")
+
+		//- 空客维修分队－机械师
+		tr
+			td(rowspan="3") 空客维修分队
+			td(rowspan="3") 机械师
+			td 合格
+			td(ng-bind="ctrl.dynamic_config.airbus.machinist[0].grade")
+			td
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.airbus.machinist[0].rate")
+				span(ng-if="ctrl.editing")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.airbus.machinist[0].rate" ng-change="ctrl.dynamic_config.airbus.machinist[0].amount = ctrl.calcAmount(ctrl.dynamic_config.airbus.machinist[0].rate)")
+			td(ng-bind="ctrl.dynamic_config.airbus.machinist[0].amount")
+		tr
+			td 良
+			td(ng-bind="ctrl.dynamic_config.airbus.machinist[1].grade")
+			td
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.airbus.machinist[1].rate")
+				span(ng-if="ctrl.editing")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.airbus.machinist[1].rate" ng-change="ctrl.dynamic_config.airbus.machinist[1].amount = ctrl.calcAmount(ctrl.dynamic_config.airbus.machinist[1].rate)")
+			td(ng-bind="ctrl.dynamic_config.airbus.machinist[1].amount")
+		tr
+			td 优
+			td(ng-bind="ctrl.dynamic_config.airbus.machinist[2].grade")
+			td
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.airbus.machinist[2].rate")
+				span(ng-if="ctrl.editing")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.airbus.machinist[2].rate" ng-change="ctrl.dynamic_config.airbus.machinist[2].amount = ctrl.calcAmount(ctrl.dynamic_config.airbus.machinist[2].rate)")
+			td(ng-bind="ctrl.dynamic_config.airbus.machinist[2].amount")
+		//- 工程师
+		tr
+			td(rowspan="7") 工程师
+			td(rowspan="7") 工程师
+			td 合格
+			td(ng-bind="ctrl.dynamic_config.engineer[0].grade")
+			td
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.engineer[0].rate")
+				span(ng-if="ctrl.editing")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.engineer[0].rate" ng-change="ctrl.dynamic_config.engineer[0].amount = ctrl.calcAmount(ctrl.dynamic_config.engineer[0].rate)")
+			td(ng-bind="ctrl.dynamic_config.engineer[0].amount")
+		tr
+			td 良
+			td(ng-bind="ctrl.dynamic_config.engineer[1].grade")
+			td
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.engineer[1].rate")
+				span(ng-if="ctrl.editing")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.engineer[1].rate" ng-change="ctrl.dynamic_config.engineer[1].amount = ctrl.calcAmount(ctrl.dynamic_config.engineer[1].rate)")
+			td(ng-bind="ctrl.dynamic_config.engineer[1].amount")
+		tr
+			td 优
+			td(ng-bind="ctrl.dynamic_config.engineer[2].grade")
+			td
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.engineer[2].rate")
+				span(ng-if="ctrl.editing")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.engineer[2].rate" ng-change="ctrl.dynamic_config.engineer[2].amount = ctrl.calcAmount(ctrl.dynamic_config.engineer[2].rate)")
+			td(ng-bind="ctrl.dynamic_config.engineer[2].amount")
+		tr
+			td
+			td(ng-bind="ctrl.dynamic_config.engineer[3].grade")
+			td
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.engineer[3].rate")
+				span(ng-if="ctrl.editing")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.engineer[3].rate" ng-change="ctrl.dynamic_config.engineer[3].amount = ctrl.calcAmount(ctrl.dynamic_config.engineer[3].rate)")
+			td(ng-bind="ctrl.dynamic_config.engineer[3].amount")
+		tr
+			td
+			td(ng-bind="ctrl.dynamic_config.engineer[4].grade")
+			td
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.engineer[4].rate")
+				span(ng-if="ctrl.editing")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.engineer[4].rate" ng-change="ctrl.dynamic_config.engineer[4].amount = ctrl.calcAmount(ctrl.dynamic_config.engineer[4].rate)")
+			td(ng-bind="ctrl.dynamic_config.engineer[4].amount")
+		tr
+			td
+			td(ng-bind="ctrl.dynamic_config.engineer[5].grade")
+			td
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.engineer[5].rate")
+				span(ng-if="ctrl.editing")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.engineer[5].rate" ng-change="ctrl.dynamic_config.engineer[5].amount = ctrl.calcAmount(ctrl.dynamic_config.engineer[5].rate)")
+			td(ng-bind="ctrl.dynamic_config.engineer[5].amount")
+		tr
+			td
+			td(ng-bind="ctrl.dynamic_config.engineer[6].grade")
+			td
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.engineer[6].rate")
+				span(ng-if="ctrl.editing")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.engineer[6].rate" ng-change="ctrl.dynamic_config.engineer[6].amount = ctrl.calcAmount(ctrl.dynamic_config.engineer[6].rate)")
+			td(ng-bind="ctrl.dynamic_config.engineer[6].amount")
+
+

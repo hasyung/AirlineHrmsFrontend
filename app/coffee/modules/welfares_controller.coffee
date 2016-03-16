@@ -1754,6 +1754,144 @@ class DinnerHistoriesController extends nb.Controller
     loadInitialData: () ->
         @histories = @DinnerHistory.$collection().$fetch()
 
+class AirlineComputeController extends nb.Controller
+    @.$inject = ['$http', '$scope', '$nbEvent', 'AirlineRecord', 'toaster', '$q']
+
+    constructor: (@http, @scope, @Evt, @AirlineRecord, @toaster, @q) ->
+        @loadDateTime()
+        @loadInitialData()
+
+        @filterOptions = {
+            name: 'airlinefee'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '员工姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+            ]
+        }
+
+        @columnDef = [
+            {
+                displayName: '员工编号'
+                name: 'employeeNo'
+            }
+            {
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+            }
+            {
+                displayName: '空勤灶金额'
+                name: 'airlineNumber'
+            }
+            {
+                displayName: '境外餐补金额'
+                name: 'foreignNumber'
+            }
+            {
+                displayName: '合计金额'
+                name: 'total'
+            }
+            {
+                displayName: '备注'
+                name: 'notes'
+            }
+        ]
+
+    loadMonthList: () ->
+        date = new Date()
+
+        if @currentYear == date.getFullYear() && date.getMonth() + 2 <= 12
+            months = [1..date.getMonth() + 2]
+        else
+            months = [1..12]
+
+        @month_list = _.map months, (item)->
+            item = '0' + item if item < 10
+            item + ''
+
+    loadDateTime: () ->
+        date = new Date()
+
+        @year_list = @$getYears()
+        @month_list = @$getMonths()
+
+        @currentYear = @year_list[@year_list.length - 1]
+        @currentMonth = @month_list[@month_list.length - 1]
+
+        if @currentMonth < 12
+            @month_list.push('0' + (parseInt(@currentMonth, 10)+1))
+
+    loadInitialData: (options) ->
+        args = {month: @currentCalcTime()}
+        angular.extend(args, options) if angular.isDefined(options)
+        @airlineRecords = @AirlineRecord.$collection(args).$fetch()
+
+    search: (tableState) ->
+        tableState = {} unless tableState
+        tableState['month'] = @currentCalcTime()
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+        @airlineRecords.$refresh(tableState)
+
+    currentCalcTime: ()->
+        @currentYear + "-" + @currentMonth
+
+    loadRecords: (options = null) ->
+        @loadMonthList()
+        args = {month: @currentCalcTime()}
+        angular.extend(args, options) if angular.isDefined(options)
+        @airlineRecords.$refresh(args)
+
+    exeCalc: (options = null) ->
+        @calcing = true
+        self = @
+
+        args = {month: @currentCalcTime()}
+        angular.extend(args, options) if angular.isDefined(options)
+
+        @airlineRecords.compute(args).$asPromise().then (data)->
+            self.calcing = false
+            erorr_msg = data.$response.data.messages
+            self.Evt.$send("airline_fees:calc:error", erorr_msg) if erorr_msg
+            self.loadRecords()
+        , (data)->
+            self.calcing = false
+
+    uploadAirlineFee: (type, attachment_id)->
+        self = @
+        params = {type: type, attachment_id: attachment_id, month: @currentCalcTime()}
+        @show_error_names = false
+
+        @http.post("/api/airline_fees/import", params).success (data, status) ->
+            if data.error_count > 0
+                self.show_error_names = true
+                self.error_names = data.error_names
+
+                self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
+            else
+                self.toaster.pop('error', '提示', '导入成功')
+
 class BirthAllowanceController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'BirthAllowance', 'Employee', 'toaster']
 
@@ -1863,5 +2001,7 @@ app.controller 'dinnerNightSnackCtrl', DinnerNightSnackController
 app.controller 'dinnerSettleCtrl', DinnerSettleController
 app.controller 'dinnerChangesCtrl', DinnerChangesController
 app.controller 'dinnerHistoriesCtrl', DinnerHistoriesController
+
+app.controller 'airlineComputeCtrl', AirlineComputeController
 
 app.controller 'birthAllowanceCtrl', BirthAllowanceController
