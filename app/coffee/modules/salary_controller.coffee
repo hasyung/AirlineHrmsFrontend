@@ -923,7 +923,7 @@ class SalaryExchangeController
                 ()->
                     self.normal_channel_array($scope.$parent.$parent.current)
                     self.perf_channel_array($scope.$parent.$parent.current)
-                , 500
+                , 0
                 )
 
     $channelSettingStr: (channel)->
@@ -1540,6 +1540,29 @@ class SalaryPerformanceController extends SalaryBaseController
             }
         ]).concat(CALC_STEP_COLUMN)
 
+    # 由confirm控制是否执行 强制计算
+    exeConfirmCalc: (isConfirm, options = null) ->
+        if isConfirm
+            @startLoading()
+            @calcing = true
+            self = @
+
+            args = {month: @currentCalcTime()}
+            angular.extend(args, options) if angular.isDefined(options)
+
+            @Model.compute(args).$asPromise().then (data)->
+                self.cancelLoading()
+                self.calcing = false
+                erorr_msg = data.$response.data.messages
+                # _.snakeCase('Foo Bar')
+                # @Model => String???
+                self.Evt.$send("salary_model:calc:error", erorr_msg) if erorr_msg
+                self.loadRecords()
+            , ()->
+                self.cancelLoading()
+                self.calcing = false
+
+
     upload_performance: (type, attachment_id)->
         self = @
         params = {type: type, attachment_id: attachment_id}
@@ -1692,6 +1715,7 @@ class SalaryAllowanceController extends SalaryBaseController
             {minWidth: 150,displayName: '地勤补贴', name: 'landPresent', enableCellEdit: false}
             {minWidth: 150,displayName: '机务放行补贴', name: 'permitEntry', enableCellEdit: false}
             {minWidth: 150,displayName: '试车津贴', name: 'tryDrive', enableCellEdit: false}
+            {minWidth: 150,displayName: '飞行驾驶技术津贴', name: 'flyerScienceMoney', enableCellEdit: false}
             {minWidth: 150,displayName: '飞行荣誉津贴', name: 'flyHonor', enableCellEdit: false}
             {minWidth: 150,displayName: '航线实习补贴', name: 'airlinePractice', enableCellEdit: false}
             {minWidth: 150,displayName: '随机补贴', name: 'followPlane', enableCellEdit: false}
