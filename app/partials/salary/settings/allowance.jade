@@ -1,193 +1,205 @@
-.app-content-wrapper(flex ng-controller="salaryCtrl as ctrl" ng-init="ctrl.loadConfigFromServer('allowance')")
-    .salary-basic(style="padding: 0 20px;")
-        md-toolbar
-            .md-toolbar-tools
-                h2 津贴设置
-                span(flex)
-                md-button.md-raised.md-primary(has-permission="salaries_update_allowance" style="margin-right: 0;" ng-click="ctrl.saveConfig('allowance', ctrl.dynamic_config)") 保存
-    form.form-static.has-sub.md(novalidate)
-        fieldset
-            div(layout)
-                .subheader 安检津贴
-                .form-row(layout flex)
-                    .form-cell(layout)
-                        label 初级
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.security_subsidy.lower")
-                        span 元/月
-                    .form-cell(layout)
-                        label 中级
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.security_subsidy.middle")
-                        span 元/月
-                    .form-cell(layout)
-                        label 高级
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.security_subsidy.higher")
-                        span 元/月
-            div(layout)
-                .subheader 安置津贴
-                .form-row(layout flex)
-                    .form-cell(layout)
-                        label
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.placement_subsidy")
-                        span 元/月
+.app-content-wrapper(flex ng-controller="salaryCtrl as ctrl")
+    .salary-basic
+        tabset
+            tab.leader-base(heading="津贴设置")
+                div(flex ng-init="ctrl.loadConfigFromServer('allowance')")
+                    md-toolbar
+                        .md-toolbar-tools
+                            h2 津贴设置
+                            span(flex)
+                            md-button.md-raised.md-primary(has-permission="salaries_update_allowance" style="margin-right: 0;" ng-click="ctrl.saveConfig('allowance', ctrl.dynamic_config)") 保存
+                    form.form-static.has-sub.md(novalidate)
+                        fieldset
+                            div(layout)
+                                .subheader 安检津贴
+                                .form-row(layout flex)
+                                    .form-cell(layout)
+                                        label 初级
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.security_subsidy.lower")
+                                        span 元/月
+                                    .form-cell(layout)
+                                        label 中级
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.security_subsidy.middle")
+                                        span 元/月
+                                    .form-cell(layout)
+                                        label 高级
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.security_subsidy.higher")
+                                        span 元/月
+                            div(layout)
+                                .subheader 安置津贴
+                                .form-row(layout flex)
+                                    .form-cell(layout)
+                                        label
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.placement_subsidy")
+                                        span 元/月
 
-            div(layout)
-                .subheader 班组长津贴
-                .form-row(layout flex)
-                    .form-cell(layout)
-                        label 一线A类
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.leader_subsidy.line_A")
-                        span 元/月
-                    .form-cell(layout)
-                        label 一线B类
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.leader_subsidy.line_B")
-                        span 元/月
-                    .form-cell(layout)
-                        label 一线C类
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.leader_subsidy.line_C")
-                        span 元/月
-                    .form-cell(layout)
-                        label 一线D类
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.leader_subsidy.line_D")
-                        span 元/月
-                    .form-cell(layout)
-                        label 后勤一类
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.leader_subsidy.logistics_1")
-                        span 元/月
-                    .form-cell(layout)
-                        label 后勤二类
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.leader_subsidy.logistics_2")
-                        span 元/月
+                            div(layout)
+                                .subheader 班组长津贴
+                                .form-row(layout flex)
+                                    .form-cell(layout)
+                                        label 一线A类
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.leader_subsidy.line_A")
+                                        span 元/月
+                                    .form-cell(layout)
+                                        label 一线B类
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.leader_subsidy.line_B")
+                                        span 元/月
+                                    .form-cell(layout)
+                                        label 一线C类
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.leader_subsidy.line_C")
+                                        span 元/月
+                                    .form-cell(layout)
+                                        label 一线D类
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.leader_subsidy.line_D")
+                                        span 元/月
+                                    .form-cell(layout)
+                                        label 后勤一类
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.leader_subsidy.logistics_1")
+                                        span 元/月
+                                    .form-cell(layout)
+                                        label 后勤二类
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.leader_subsidy.logistics_2")
+                                        span 元/月
 
-            div(layout)
-                .subheader 航站管理津贴
-                .form-row(layout flex)
-                    .form-cell(layout)
-                        label 一类
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.terminal_subsidy.first")
-                        span 元/月
-                    .form-cell(layout)
-                        label 二类
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.terminal_subsidy.second")
-                        span 元/月
+                            div(layout)
+                                .subheader 航站管理津贴
+                                .form-row(layout flex)
+                                    .form-cell(layout)
+                                        label 一类
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.terminal_subsidy.first")
+                                        span 元/月
+                                    .form-cell(layout)
+                                        label 二类
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.terminal_subsidy.second")
+                                        span 元/月
 
-            div(layout)
-                .subheader 车勤补贴
-                .form-row(layout flex)
-                    .form-cell(layout)
-                        label
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.car_subsidy")
-                        span 元/月
+                            div(layout)
+                                .subheader 车勤补贴
+                                .form-row(layout flex)
+                                    .form-cell(layout)
+                                        label
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.car_subsidy")
+                                        span 元/月
 
-            div(layout)
-                .subheader 地勤补贴
-                .form-row(layout flex)
-                    .form-cell(layout)
-                        label 一类
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.ground_subsidy.first")
-                        span 元/月
-                    .form-cell(layout)
-                        label 二类
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.ground_subsidy.second")
-                        span 元/月
-                    .form-cell(layout)
-                        label 三类
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.ground_subsidy.third")
-                        span 元/月
-                    .form-cell(layout)
-                        label 四类
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.ground_subsidy.fourth")
-                        span 元/月
-                    .form-cell(layout)
-                        label 五类
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.ground_subsidy.fifth")
-                        span 元/月
-                    .form-cell(layout)
-                        label 六类
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.ground_subsidy.sixth")
-                        span 元/月
+                            div(layout)
+                                .subheader 地勤补贴
+                                .form-row(layout flex)
+                                    .form-cell(layout)
+                                        label 一类
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.ground_subsidy.first")
+                                        span 元/月
+                                    .form-cell(layout)
+                                        label 二类
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.ground_subsidy.second")
+                                        span 元/月
+                                    .form-cell(layout)
+                                        label 三类
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.ground_subsidy.third")
+                                        span 元/月
+                                    .form-cell(layout)
+                                        label 四类
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.ground_subsidy.fourth")
+                                        span 元/月
+                                    .form-cell(layout)
+                                        label 五类
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.ground_subsidy.fifth")
+                                        span 元/月
+                                    .form-cell(layout)
+                                        label 六类
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.ground_subsidy.sixth")
+                                        span 元/月
 
-            div(layout)
-                .subheader 机务放行补贴
-                .form-row(layout flex)
-                    .form-cell(layout)
-                        label 一档
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.machine_subsidy.first")
-                        span 元/月
-                    .form-cell(layout)
-                        label 二档
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.machine_subsidy.second")
-                        span 元/月
-                    .form-cell(layout)
-                        label 三档
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.machine_subsidy.third")
-                        span 元/月
-                    .form-cell(layout)
-                        label 四档
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.machine_subsidy.fourth")
-                        span 元/月
-                    .form-cell(layout)
-                        label 五档
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.machine_subsidy.fifth")
-                        span 元/月
+                            div(layout)
+                                .subheader 机务放行补贴
+                                .form-row(layout flex)
+                                    .form-cell(layout)
+                                        label 一档
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.machine_subsidy.first")
+                                        span 元/月
+                                    .form-cell(layout)
+                                        label 二档
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.machine_subsidy.second")
+                                        span 元/月
+                                    .form-cell(layout)
+                                        label 三档
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.machine_subsidy.third")
+                                        span 元/月
+                                    .form-cell(layout)
+                                        label 四档
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.machine_subsidy.fourth")
+                                        span 元/月
+                                    .form-cell(layout)
+                                        label 五档
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.machine_subsidy.fifth")
+                                        span 元/月
 
-            div(layout)
-                .subheader 试车津贴
-                .form-row(layout flex)
-                    .form-cell(layout)
-                        label 一类
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.trial_subsidy.first")
-                        span 元/月
-                    .form-cell(layout)
-                        label 二类
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.trial_subsidy.second")
-                        span 元/月
+                            div(layout)
+                                .subheader 试车津贴
+                                .form-row(layout flex)
+                                    .form-cell(layout)
+                                        label 一类
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.trial_subsidy.first")
+                                        span 元/月
+                                    .form-cell(layout)
+                                        label 二类
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.trial_subsidy.second")
+                                        span 元/月
 
-            div(layout)
-                .subheader 飞行安全荣誉津贴
-                .form-row(layout flex)
-                    .form-cell(layout)
-                        label 铜质
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.honor_subsidy.copper")
-                        span 元/月
-                    .form-cell(layout)
-                        label 银质
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.honor_subsidy.silver")
-                        span 元/月
-                    .form-cell(layout)
-                        label 金质
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.honor_subsidy.gold")
-                        span 元/月
-                    .form-cell(layout)
-                        label 功勋
-                        md-input-container(md-no-float)
-                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.honor_subsidy.exploit")
-                        span 元/月
+                            div(layout)
+                                .subheader 飞行安全荣誉津贴
+                                .form-row(layout flex)
+                                    .form-cell(layout)
+                                        label 铜质
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.honor_subsidy.copper")
+                                        span 元/月
+                                    .form-cell(layout)
+                                        label 银质
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.honor_subsidy.silver")
+                                        span 元/月
+                                    .form-cell(layout)
+                                        label 金质
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.honor_subsidy.gold")
+                                        span 元/月
+                                    .form-cell(layout)
+                                        label 功勋
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.honor_subsidy.exploit")
+                                        span 元/月
+
+            tab.leader-base(heading="飞行驾驶技术津贴")
+                form.form-static(novalidate)
+                    md-toolbar
+                      .md-toolbar-tools
+                        h2 飞行驾驶技术津贴
+                        span(flex)
+                        md-button.md-raised.md-primary(has-permission="salaries_update_hours_fee" ng-click="ctrl.saveConfig('flyer_science_subsidy', ctrl.dynamic_config)") 保存
+                    include ./hours/fly_tech_security.jade

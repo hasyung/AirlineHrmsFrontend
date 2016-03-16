@@ -1,9 +1,9 @@
-section(layout="row" flex)
+section(layout flex style="overflow: hidden;")
     md-content(layout="column" flex style="background-color: #f0f3f4;")
         .org-chart-top(ng-class="{'org-chart-history': ctrl.isHistory}")
             div(layout)
                 .org-chart-search(flex)
-                    org-search(selected-item-change="ctrl.selectOrgChart(org)")
+                    org-search(selected-item-change="ctrl.selectOrgChart(org)" editable)
                 .top-btn-group
                     //- 暂时使用的入口
                     md-button.md-raised.md-primary(

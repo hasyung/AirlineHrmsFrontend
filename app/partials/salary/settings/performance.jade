@@ -1,11 +1,11 @@
-.app-content-wrapper(flex ng-controller="salaryCtrl as ctrl" ng-init="ctrl.loadConfigFromServer('information_perf')")
+.app-content-wrapper(flex ng-controller="salaryCtrl as ctrl" ng-init="ctrl.loadConfigFromServer('manage_market_perf')")
     .salary-basic
         form(name="configForm" ng-submit="ctrl.saveConfig()")
             tabset
-                tab.leader-base(heading="信息通道" ng-click="ctrl.loadDynamicConfig('information_perf')")
+                tab.leader-base(heading="管理营销" ng-click="ctrl.loadDynamicConfig('manage_market_perf')")
                     md-toolbar
                       .md-toolbar-tools
-                        h2 信息通道
+                        h2 管理营销
                         div(flex layout has-permission="salaries_update_performance")
                             include ./btn.jade
                     include ./common.jade
@@ -16,13 +16,27 @@
                         div(flex layout has-permission="salaries_update_performance")
                             include ./btn.jade
                     include ./common.jade
-                tab.leader-base(heading="管理营销" ng-click="ctrl.loadDynamicConfig('manage_market_perf')")
+                tab.leader-base(heading="信息通道" ng-click="ctrl.loadDynamicConfig('information_perf')")
                     md-toolbar
                       .md-toolbar-tools
-                        h2 管理营销
+                        h2 信息通道
                         div(flex layout has-permission="salaries_update_performance")
                             include ./btn.jade
                     include ./common.jade
+                tab.leader-base(heading="机务维修(普通员工)" ng-click="ctrl.loadDynamicConfig('service_normal_perf')")
+                    md-toolbar
+                      .md-toolbar-tools
+                        h2 机务维修(普通员工)
+                        div(flex layout has-permission="salaries_update_performance")
+                            include ./btn.jade
+                    include ./common.jade
+                tab.leader-base(heading="机务维修(技术骨干)" ng-click="ctrl.loadDynamicConfig('service_tech_perf')")
+                    md-toolbar
+                      .md-toolbar-tools
+                        h2 机务维修(技术骨干)
+                        div(flex layout has-permission="salaries_update_performance")
+                            include ./btn.jade
+                    include ./service_tech.jade
                 tab.leader-base(heading="服务C1" ng-click="ctrl.loadDynamicConfig('service_c_1_perf')")
                     md-toolbar
                       .md-toolbar-tools
