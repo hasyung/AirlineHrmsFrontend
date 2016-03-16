@@ -1540,6 +1540,29 @@ class SalaryPerformanceController extends SalaryBaseController
             }
         ]).concat(CALC_STEP_COLUMN)
 
+    # 由confirm控制是否执行 强制计算
+    exeConfirmCalc: (isConfirm, options = null) ->
+        if isConfirm
+            @startLoading()
+            @calcing = true
+            self = @
+
+            args = {month: @currentCalcTime()}
+            angular.extend(args, options) if angular.isDefined(options)
+
+            @Model.compute(args).$asPromise().then (data)->
+                self.cancelLoading()
+                self.calcing = false
+                erorr_msg = data.$response.data.messages
+                # _.snakeCase('Foo Bar')
+                # @Model => String???
+                self.Evt.$send("salary_model:calc:error", erorr_msg) if erorr_msg
+                self.loadRecords()
+            , ()->
+                self.cancelLoading()
+                self.calcing = false
+
+
     upload_performance: (type, attachment_id)->
         self = @
         params = {type: type, attachment_id: attachment_id}

@@ -69,9 +69,11 @@
                             ) 计算
                         md-menu-content
                             md-menu-item()
-                                a.md-button(flex
-                                    ng-click="ctrl.exeCalc({type: 'base_salary'})"
+                                a.md-button(
                                     href="javascript:;"
+                                    nb-confirm="ctrl.exeConfirmCalc(isConfirm, {type: 'base_salary'})"
+                                    nb-title="是否需要计算绩效基数?"
+                                    nb-content="点击确定将会计算绩效基数。"
                                 ) 计算绩效基数
                             md-menu-item()
                                 a.md-button(
