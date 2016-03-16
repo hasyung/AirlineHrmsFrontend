@@ -6,7 +6,7 @@
                 span(flex)
 
         div(layout)
-            org-search(flex placeholder="部门" float-label search-text-change="selectDepIds=null" selected-item-change="selectDepIds = org.id;ctrl.loadPositions(selectDepIds, keywords)")
+            org-search(flex placeholder="部门" float-label search-text-change="selectDepIds=null" selected-item-change="selectDepIds = org.id;ctrl.loadPositions(selectDepIds, keywords)" editable)
             md-input-container(flex)
               label 关键词过滤
               input(ng-model="keywords" placeholder="关键词" ng-change="ctrl.loadPositions(selectDepIds, keywords)")

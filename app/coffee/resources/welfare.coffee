@@ -263,6 +263,28 @@ AnnuityChange = (restmod, RMUtils, $Evt) ->
                     this.state != "未处理"
     }
 
+AirlineRecord = (restmod, RMUtils, $Evt) ->
+    restmod.model('/airline_fees').mix 'nbRestApi', 'DirtyModel', {
+        $config:
+            jsonRootSingle: 'airline_fee'
+            jsonRootMany: 'airline_fees'
+
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+        $extend:
+            Scope:
+                # 计算(根据年月)
+                compute: (params)->
+                    restmod.model('/airline_fees/compute').mix(
+                        $config:
+                            jsonRoot: 'airline_fees'
+                    ).$search(params)
+
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+    }
+
 #社保
 resources.factory 'SocialPersonSetup', ['restmod', 'RMUtils', '$nbEvent', SocialPersonSetup]
 resources.factory 'SocialRecord', ['restmod', 'RMUtils', '$nbEvent', SocialRecord]
@@ -280,4 +302,5 @@ resources.factory 'DinnerNightSnack', ['restmod', 'RMUtils', '$nbEvent', DinnerN
 resources.factory 'DinnerSettle', ['restmod', 'RMUtils', '$nbEvent', DinnerSettle]
 resources.factory 'DinnerChange', ['restmod', 'RMUtils', '$nbEvent', DinnerChange]
 resources.factory 'DinnerHistory', ['restmod', 'RMUtils', '$nbEvent', DinnerHistory]
+resources.factory 'AirlineRecord', ['restmod', 'RMUtils', '$nbEvent', AirlineRecord]
 resources.factory 'BirthAllowance', ['restmod', 'RMUtils', '$nbEvent', BirthAllowance]
