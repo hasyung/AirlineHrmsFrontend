@@ -15,6 +15,11 @@ SALARY_FILTER_DEFAULT = {
             displayName: '员工编号'
             type: 'string'
         }
+        {
+            name: 'notes'
+            displayName: '是否有说明'
+            type: 'boolean'
+        }
     ]
 }
 
@@ -2032,6 +2037,8 @@ class SalaryOverviewController extends SalaryBaseController
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
+        @filterOptions.constraintDefs.pop()
+
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
             {minWidth: 100, displayName: '基础工资', name: 'basic', enableCellEdit: false}
             {minWidth: 100, displayName: '保留工资', name: 'keep', enableCellEdit: false}
@@ -2041,7 +2048,7 @@ class SalaryOverviewController extends SalaryBaseController
             {minWidth: 100, displayName: '驻站津贴', name: 'landSubsidy', enableCellEdit: false}
             {minWidth: 100, displayName: '奖励', name: 'reward', enableCellEdit: false}
             {minWidth: 100, displayName: '交通费', name: 'transportFee', enableCellEdit: false}
-            {minWidth: 100, displayName: '生育保险冲抵', name: 'birth', enableCellEdit: false}
+            {minWidth: 150, displayName: '生育保险冲抵', name: 'birth', enableCellEdit: false}
             {minWidth: 100, displayName: '合计', name: 'total', enableCellEdit: false}
             {
                 minWidth: 100

@@ -70,6 +70,7 @@
                         md-menu-content
                             md-menu-item()
                                 a.md-button(
+                                    ng-click="$mdMenu.hide()"
                                     href="javascript:;"
                                     nb-confirm="ctrl.exeConfirmCalc(isConfirm, {type: 'base_salary'})"
                                     nb-title="是否需要计算绩效基数?"
