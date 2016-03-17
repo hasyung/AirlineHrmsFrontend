@@ -352,7 +352,7 @@ class SalaryController extends nb.Controller
 
         @tempPositions = []
 
-        @http.get('/api/salaries/temperature_amount?department_ids=' + selectDepIds)
+        @http.get('/api/salaries/temperature_amount?department_ids=' + selectDepIds + '&per_page=10000')
             .success (data)->
                 self.tempPositions = data.temperature_amounts
 
@@ -416,7 +416,7 @@ class SalaryController extends nb.Controller
 
         @coldPositions = []
 
-        @http.get('/api/salaries/position_cold_subsidy?department_ids=' + selectDepIds)
+        @http.get('/api/salaries/position_cold_subsidy?department_ids=' + selectDepIds + '&per_page=10000')
             .success (data)->
                 self.coldPositions = data.position_cold_subsidy
 
