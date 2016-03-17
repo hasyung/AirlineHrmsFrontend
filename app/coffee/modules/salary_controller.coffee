@@ -377,7 +377,7 @@ class SalaryController extends nb.Controller
 
         @comPositions = []
 
-        @http.get('/api/salaries/communicate_allowance?department_ids=' + selectDepIds)
+        @http.get('/api/salaries/communicate_allowance?department_ids=' + selectDepIds + '&per_page=10000')
             .success (data)->
                 self.comPositions = data.communicate_allowances
 
