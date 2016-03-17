@@ -1679,8 +1679,12 @@ class SalaryHoursFeeController extends SalaryBaseController
             }
         ]).concat(CALC_STEP_COLUMN)
 
-    search: () ->
-        super({hours_fee_category: @hours_fee_category})
+    search: (tableState) ->
+        tableState = tableState || {}
+        tableState['hours_fee_category'] = @hours_fee_category
+        tableState['month'] = @currentCalcTime()
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+        @records.$refresh(tableState)
 
     loadRecords: () ->
         super({hours_fee_category: @hours_fee_category})
