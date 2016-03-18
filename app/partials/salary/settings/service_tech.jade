@@ -12,141 +12,141 @@ table.table.table-mc-light-blue.table-bordered.service-tech
 			td(rowspan="3") 空客维修分队
 			td(rowspan="3") 分队长
 			td 合格
-			td(ng-bind="ctrl.dynamic_config.airbus.captain[0].grade")
+			td(ng-bind="ctrl.dynamic_config.airbus.captain['A'].grade")
 			td
-				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.airbus.captain[0].rate")
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.airbus.captain['A'].rate")
 				span(ng-if="ctrl.editing")
-					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.airbus.captain[0].rate" ng-change="ctrl.dynamic_config.airbus.captain[0].amount = ctrl.calcAmount(ctrl.dynamic_config.airbus.captain[0].rate)")
-			td(ng-bind="ctrl.dynamic_config.airbus.captain[0].amount")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.airbus.captain['A'].rate" ng-change="ctrl.dynamic_config.airbus.captain['A'].amount = ctrl.calcAmount(ctrl.dynamic_config.airbus.captain['A'].rate)")
+			td(ng-bind="ctrl.dynamic_config.airbus.captain['A'].amount")
 		tr
 			td 良
-			td(ng-bind="ctrl.dynamic_config.airbus.captain[1].grade")
+			td(ng-bind="ctrl.dynamic_config.airbus.captain['B'].grade")
 			td
-				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.airbus.captain[1].rate") 
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.airbus.captain['B'].rate") 
 				span(ng-if="ctrl.editing")
-					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.airbus.captain[1].rate" ng-change="ctrl.dynamic_config.airbus.captain[1].amount = ctrl.calcAmount(ctrl.dynamic_config.airbus.captain[1].rate)")
-			td(ng-bind="ctrl.dynamic_config.airbus.captain[1].amount")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.airbus.captain['B'].rate" ng-change="ctrl.dynamic_config.airbus.captain['B'].amount = ctrl.calcAmount(ctrl.dynamic_config.airbus.captain['B'].rate)")
+			td(ng-bind="ctrl.dynamic_config.airbus.captain['B'].amount")
 		tr
 			td 优
-			td(ng-bind="ctrl.dynamic_config.airbus.captain[2].grade")
+			td(ng-bind="ctrl.dynamic_config.airbus.captain['C'].grade")
 			td
-				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.airbus.captain[2].rate")
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.airbus.captain['C'].rate")
 				span(ng-if="ctrl.editing")
-					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.airbus.captain[2].rate" ng-change="ctrl.dynamic_config.airbus.captain[2].amount = ctrl.calcAmount(ctrl.dynamic_config.airbus.captain[2].rate)")
-			td(ng-bind="ctrl.dynamic_config.airbus.captain[2].amount")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.airbus.captain['C'].rate" ng-change="ctrl.dynamic_config.airbus.captain['C'].amount = ctrl.calcAmount(ctrl.dynamic_config.airbus.captain['C'].rate)")
+			td(ng-bind="ctrl.dynamic_config.airbus.captain['C'].amount")
 		//- 空客维修分队－副分队长
 		tr
 			td(rowspan="3") 空客维修分队
 			td(rowspan="3") 副分队长
 			td 合格
-			td(ng-bind="ctrl.dynamic_config.airbus.vice_captain[0].grade")
+			td(ng-bind="ctrl.dynamic_config.airbus.vice_captain['A'].grade")
 			td
-				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.airbus.vice_captain[0].rate")
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.airbus.vice_captain['A'].rate")
 				span(ng-if="ctrl.editing")
-					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.airbus.vice_captain[0].rate" ng-change="ctrl.dynamic_config.airbus.vice_captain[0].amount = ctrl.calcAmount(ctrl.dynamic_config.airbus.vice_captain[0].rate)")
-			td(ng-bind="ctrl.dynamic_config.airbus.vice_captain[0].amount")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.airbus.vice_captain['A'].rate" ng-change="ctrl.dynamic_config.airbus.vice_captain['A'].amount = ctrl.calcAmount(ctrl.dynamic_config.airbus.vice_captain['A'].rate)")
+			td(ng-bind="ctrl.dynamic_config.airbus.vice_captain['A'].amount")
 		tr
 			td 良
-			td(ng-bind="ctrl.dynamic_config.airbus.vice_captain[1].grade")
+			td(ng-bind="ctrl.dynamic_config.airbus.vice_captain['B'].grade")
 			td
-				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.airbus.vice_captain[1].rate")
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.airbus.vice_captain['B'].rate")
 				span(ng-if="ctrl.editing")
-					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.airbus.vice_captain[1].rate" ng-change="ctrl.dynamic_config.airbus.vice_captain[1].amount = ctrl.calcAmount(ctrl.dynamic_config.airbus.vice_captain[1].rate)")
-			td(ng-bind="ctrl.dynamic_config.airbus.vice_captain[1].amount")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.airbus.vice_captain['B'].rate" ng-change="ctrl.dynamic_config.airbus.vice_captain['B'].amount = ctrl.calcAmount(ctrl.dynamic_config.airbus.vice_captain['B'].rate)")
+			td(ng-bind="ctrl.dynamic_config.airbus.vice_captain['B'].amount")
 		tr
 			td 优
-			td(ng-bind="ctrl.dynamic_config.airbus.vice_captain[2].grade")
+			td(ng-bind="ctrl.dynamic_config.airbus.vice_captain['C'].grade")
 			td
-				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.airbus.vice_captain[2].rate")
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.airbus.vice_captain['C'].rate")
 				span(ng-if="ctrl.editing")
-					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.airbus.vice_captain[2].rate" ng-change="ctrl.dynamic_config.airbus.vice_captain[2].amount = ctrl.calcAmount(ctrl.dynamic_config.airbus.vice_captain[2].rate)")
-			td(ng-bind="ctrl.dynamic_config.airbus.vice_captain[2].amount")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.airbus.vice_captain['C'].rate" ng-change="ctrl.dynamic_config.airbus.vice_captain['C'].amount = ctrl.calcAmount(ctrl.dynamic_config.airbus.vice_captain['C'].rate)")
+			td(ng-bind="ctrl.dynamic_config.airbus.vice_captain['C'].amount")
 
 		//- 空客维修分队－机械师
 		tr
 			td(rowspan="3") 空客维修分队
 			td(rowspan="3") 机械师
 			td 合格
-			td(ng-bind="ctrl.dynamic_config.airbus.machinist[0].grade")
+			td(ng-bind="ctrl.dynamic_config.airbus.machinist['A'].grade")
 			td
-				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.airbus.machinist[0].rate")
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.airbus.machinist['A'].rate")
 				span(ng-if="ctrl.editing")
-					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.airbus.machinist[0].rate" ng-change="ctrl.dynamic_config.airbus.machinist[0].amount = ctrl.calcAmount(ctrl.dynamic_config.airbus.machinist[0].rate)")
-			td(ng-bind="ctrl.dynamic_config.airbus.machinist[0].amount")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.airbus.machinist['A'].rate" ng-change="ctrl.dynamic_config.airbus.machinist['A'].amount = ctrl.calcAmount(ctrl.dynamic_config.airbus.machinist['A'].rate)")
+			td(ng-bind="ctrl.dynamic_config.airbus.machinist['A'].amount")
 		tr
 			td 良
-			td(ng-bind="ctrl.dynamic_config.airbus.machinist[1].grade")
+			td(ng-bind="ctrl.dynamic_config.airbus.machinist['B'].grade")
 			td
-				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.airbus.machinist[1].rate")
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.airbus.machinist['B'].rate")
 				span(ng-if="ctrl.editing")
-					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.airbus.machinist[1].rate" ng-change="ctrl.dynamic_config.airbus.machinist[1].amount = ctrl.calcAmount(ctrl.dynamic_config.airbus.machinist[1].rate)")
-			td(ng-bind="ctrl.dynamic_config.airbus.machinist[1].amount")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.airbus.machinist['B'].rate" ng-change="ctrl.dynamic_config.airbus.machinist['B'].amount = ctrl.calcAmount(ctrl.dynamic_config.airbus.machinist['B'].rate)")
+			td(ng-bind="ctrl.dynamic_config.airbus.machinist['B'].amount")
 		tr
 			td 优
-			td(ng-bind="ctrl.dynamic_config.airbus.machinist[2].grade")
+			td(ng-bind="ctrl.dynamic_config.airbus.machinist['C'].grade")
 			td
-				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.airbus.machinist[2].rate")
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.airbus.machinist['C'].rate")
 				span(ng-if="ctrl.editing")
-					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.airbus.machinist[2].rate" ng-change="ctrl.dynamic_config.airbus.machinist[2].amount = ctrl.calcAmount(ctrl.dynamic_config.airbus.machinist[2].rate)")
-			td(ng-bind="ctrl.dynamic_config.airbus.machinist[2].amount")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.airbus.machinist['C'].rate" ng-change="ctrl.dynamic_config.airbus.machinist['C'].amount = ctrl.calcAmount(ctrl.dynamic_config.airbus.machinist['C'].rate)")
+			td(ng-bind="ctrl.dynamic_config.airbus.machinist['C'].amount")
 		//- 工程师
 		tr
 			td(rowspan="7") 工程师
 			td(rowspan="7") 工程师
 			td 合格
-			td(ng-bind="ctrl.dynamic_config.engineer[0].grade")
+			td(ng-bind="ctrl.dynamic_config.engineer.engineer['A'].grade")
 			td
-				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.engineer[0].rate")
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.engineer.engineer['A'].rate")
 				span(ng-if="ctrl.editing")
-					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.engineer[0].rate" ng-change="ctrl.dynamic_config.engineer[0].amount = ctrl.calcAmount(ctrl.dynamic_config.engineer[0].rate)")
-			td(ng-bind="ctrl.dynamic_config.engineer[0].amount")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.engineer.engineer['A'].rate" ng-change="ctrl.dynamic_config.engineer.engineer['A'].amount = ctrl.calcAmount(ctrl.dynamic_config.engineer.engineer['A'].rate)")
+			td(ng-bind="ctrl.dynamic_config.engineer.engineer['A'].amount")
 		tr
 			td 良
-			td(ng-bind="ctrl.dynamic_config.engineer[1].grade")
+			td(ng-bind="ctrl.dynamic_config.engineer.engineer['B'].grade")
 			td
-				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.engineer[1].rate")
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.engineer.engineer['B'].rate")
 				span(ng-if="ctrl.editing")
-					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.engineer[1].rate" ng-change="ctrl.dynamic_config.engineer[1].amount = ctrl.calcAmount(ctrl.dynamic_config.engineer[1].rate)")
-			td(ng-bind="ctrl.dynamic_config.engineer[1].amount")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.engineer.engineer['B'].rate" ng-change="ctrl.dynamic_config.engineer.engineer['B'].amount = ctrl.calcAmount(ctrl.dynamic_config.engineer.engineer['B'].rate)")
+			td(ng-bind="ctrl.dynamic_config.engineer.engineer['B'].amount")
 		tr
 			td 优
-			td(ng-bind="ctrl.dynamic_config.engineer[2].grade")
+			td(ng-bind="ctrl.dynamic_config.engineer.engineer['C'].grade")
 			td
-				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.engineer[2].rate")
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.engineer.engineer['C'].rate")
 				span(ng-if="ctrl.editing")
-					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.engineer[2].rate" ng-change="ctrl.dynamic_config.engineer[2].amount = ctrl.calcAmount(ctrl.dynamic_config.engineer[2].rate)")
-			td(ng-bind="ctrl.dynamic_config.engineer[2].amount")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.engineer.engineer['C'].rate" ng-change="ctrl.dynamic_config.engineer.engineer['C'].amount = ctrl.calcAmount(ctrl.dynamic_config.engineer.engineer['C'].rate)")
+			td(ng-bind="ctrl.dynamic_config.engineer.engineer['C'].amount")
 		tr
 			td
-			td(ng-bind="ctrl.dynamic_config.engineer[3].grade")
+			td(ng-bind="ctrl.dynamic_config.engineer.engineer['D'].grade")
 			td
-				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.engineer[3].rate")
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.engineer.engineer['D'].rate")
 				span(ng-if="ctrl.editing")
-					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.engineer[3].rate" ng-change="ctrl.dynamic_config.engineer[3].amount = ctrl.calcAmount(ctrl.dynamic_config.engineer[3].rate)")
-			td(ng-bind="ctrl.dynamic_config.engineer[3].amount")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.engineer.engineer['D'].rate" ng-change="ctrl.dynamic_config.engineer.engineer['D'].amount = ctrl.calcAmount(ctrl.dynamic_config.engineer.engineer['D'].rate)")
+			td(ng-bind="ctrl.dynamic_config.engineer.engineer['D'].amount")
 		tr
 			td
-			td(ng-bind="ctrl.dynamic_config.engineer[4].grade")
+			td(ng-bind="ctrl.dynamic_config.engineer.engineer['E'].grade")
 			td
-				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.engineer[4].rate")
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.engineer.engineer['E'].rate")
 				span(ng-if="ctrl.editing")
-					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.engineer[4].rate" ng-change="ctrl.dynamic_config.engineer[4].amount = ctrl.calcAmount(ctrl.dynamic_config.engineer[4].rate)")
-			td(ng-bind="ctrl.dynamic_config.engineer[4].amount")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.engineer.engineer['E'].rate" ng-change="ctrl.dynamic_config.engineer.engineer['E'].amount = ctrl.calcAmount(ctrl.dynamic_config.engineer.engineer['E'].rate)")
+			td(ng-bind="ctrl.dynamic_config.engineer.engineer['E'].amount")
 		tr
 			td
-			td(ng-bind="ctrl.dynamic_config.engineer[5].grade")
+			td(ng-bind="ctrl.dynamic_config.engineer.engineer['F'].grade")
 			td
-				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.engineer[5].rate")
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.engineer.engineer['F'].rate")
 				span(ng-if="ctrl.editing")
-					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.engineer[5].rate" ng-change="ctrl.dynamic_config.engineer[5].amount = ctrl.calcAmount(ctrl.dynamic_config.engineer[5].rate)")
-			td(ng-bind="ctrl.dynamic_config.engineer[5].amount")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.engineer.engineer['F'].rate" ng-change="ctrl.dynamic_config.engineer.engineer['F'].amount = ctrl.calcAmount(ctrl.dynamic_config.engineer.engineer['F'].rate)")
+			td(ng-bind="ctrl.dynamic_config.engineer.engineer['F'].amount")
 		tr
 			td
-			td(ng-bind="ctrl.dynamic_config.engineer[6].grade")
+			td(ng-bind="ctrl.dynamic_config.engineer.engineer['G'].grade")
 			td
-				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.engineer[6].rate")
+				span(ng-if="!ctrl.editing" ng-bind="ctrl.dynamic_config.engineer.engineer['G'].rate")
 				span(ng-if="ctrl.editing")
-					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.engineer[6].rate" ng-change="ctrl.dynamic_config.engineer[6].amount = ctrl.calcAmount(ctrl.dynamic_config.engineer[6].rate)")
-			td(ng-bind="ctrl.dynamic_config.engineer[6].amount")
+					input(type="number" step="0.1" ng-model="ctrl.dynamic_config.engineer.engineer['G'].rate" ng-change="ctrl.dynamic_config.engineer.engineer['G'].amount = ctrl.calcAmount(ctrl.dynamic_config.engineer.engineer['G'].rate)")
+			td(ng-bind="ctrl.dynamic_config.engineer.engineer['G'].amount")
 
 
