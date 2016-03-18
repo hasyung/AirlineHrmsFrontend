@@ -129,14 +129,14 @@ block performance_setting
             )
             label 档级
             md-select(ng-model="current.performanceFlag" placeholder="请选择" ng-change="exchangeCtrl.perf(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
-                md-option(ng-value="item" ng-repeat="item in exchangeCtrl.perf_flag_array(current)") {{item}}
+                md-option(ng-value="item" ng-repeat="item in exchangeCtrl.perf_flag_array(current)" ng-class="{ 'spec': exchangeCtrl.isLegalPerfFlagArr.indexOf(item) < 0 }") {{item}}
         md-input-container.row-has-value(
             flex
             ng-if="current.baseWage=='leader_base' || current.categoryId==2 || current.categoryId==1 || current.technicalGrade"
             )
             label 档级
             md-select(ng-model="current.performanceFlag" placeholder="请选择" ng-change="exchangeCtrl.perf(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
-                md-option(ng-value="item" ng-repeat="item in exchangeCtrl.leaderPerfFlagArray(current)") {{item}}
+                md-option(ng-value="item" ng-repeat="item in exchangeCtrl.leaderPerfFlagArray(current)" ng-class="{ 'spec': exchangeCtrl.isLegalPerfFlagArr.indexOf(item) < 0 }") {{item}}
 
         md-input-container(flex)
             label 金额
