@@ -31,7 +31,7 @@
                     ng-click="ctrl.exeCalc()"
                 ) 境外餐补计算
 
-                md-menu(ng-init="selectedRows=[]")
+                md-menu(ng-init="selectedRows=[]" style="margin-right: 0;")
                     md-button.md-primary.md-raised(
                         ng-click="$mdOpenMenu($event)"
                         ng-disabled="ctrl.calcing || ctrl.airlineRecords.length==0"
@@ -41,11 +41,14 @@
                             a.md-button(
                                 flex
                                 download
-                                ng-href="/api/airline_fees/export?type=空勤灶审批表"
+                                ng-href="/api/airline_fees/export"
                                 href="javascript:"
-                            ) 夜班费审批表
+                            ) 空勤灶
 
         div(nb-grid
             column-defs="ctrl.columnDef"
+            grid-edit
+            grid-row-edit
             export-api
+            on-register-api="ctrl.initialize(gridApi)"
             safe-src="ctrl.airlineRecords")
