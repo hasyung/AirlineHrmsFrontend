@@ -1912,7 +1912,7 @@ class AirlineComputeController extends nb.Controller
         date = new Date()
 
         if @currentYear == date.getFullYear() && date.getMonth() + 2 <= 12
-            months = [1..date.getMonth() + 2]
+            months = [1..date.getMonth()]
         else
             months = [1..12]
 
@@ -1926,11 +1926,18 @@ class AirlineComputeController extends nb.Controller
         @year_list = @$getYears()
         @month_list = @$getMonths()
 
-        @currentYear = @year_list[@year_list.length - 1]
-        @currentMonth = @month_list[@month_list.length - 1]
+        if date.getMonth() == 0
+            @year_list.pop()
+            @month_list = _.map [1..12], (item)->
+                item = '0' + item if item < 10
+                item + '' # to string
 
-        if @currentMonth < 12
-            @month_list.push('0' + (parseInt(@currentMonth, 10)+1))
+            @currentYear = _.last(@year_list)
+            @currentMonth = _.last(@month_list)
+        else
+            @month_list.pop()
+            @currentYear = _.last(@year_list)
+            @currentMonth = _.last(@month_list)
 
     loadInitialData: (options) ->
         args = {month: @currentCalcTime()}
