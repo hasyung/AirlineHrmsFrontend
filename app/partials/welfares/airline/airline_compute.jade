@@ -19,14 +19,6 @@
                 h2 当期空勤灶
                 span(flex)
                 md-button.md-primary.md-raised(
-                    flow-init="{target: '/api/attachments/upload_file', testChunks: false, uploadMethod: 'POST', singleFile: true}"
-                    flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
-                    flow-file-success="ctrl.upload_start=false;ctrl.uploadAirlineFee('空勤灶', ctrl.parseJSON($message).id);"
-                    flow-btn type="button"
-                    ng-disabled="ctrl.calcing"
-                ) 导入
-
-                md-button.md-primary.md-raised(
                     ng-disabled="ctrl.calcing"
                     ng-click="ctrl.exeCalc()"
                 ) 境外餐补计算
