@@ -15,6 +15,11 @@ SALARY_FILTER_DEFAULT = {
             displayName: '员工编号'
             type: 'string'
         }
+        {
+            name: 'notes'
+            displayName: '是否有说明'
+            type: 'boolean'
+        }
     ]
 }
 
@@ -262,6 +267,7 @@ class SalaryController extends nb.Controller
         @dynamic_config = @settings[category + '_setting']
         @backup_config = angular.copy(@dynamic_config)
         @editing = false
+        console.log @dynamic_config
 
     resetDynamicConfig: ()->
         @dynamic_config = {}
@@ -347,7 +353,7 @@ class SalaryController extends nb.Controller
 
         @tempPositions = []
 
-        @http.get('/api/salaries/temperature_amount?department_ids=' + selectDepIds)
+        @http.get('/api/salaries/temperature_amount?department_ids=' + selectDepIds + '&per_page=10000')
             .success (data)->
                 self.tempPositions = data.temperature_amounts
 
@@ -379,7 +385,7 @@ class SalaryController extends nb.Controller
 
         @comPositions = []
 
-        @http.get('/api/salaries/communicate_allowance?department_ids=' + selectDepIds)
+        @http.get('/api/salaries/communicate_allowance?department_ids=' + selectDepIds + '&per_page=10000')
             .success (data)->
                 self.comPositions = data.communicate_allowances
 
@@ -411,7 +417,7 @@ class SalaryController extends nb.Controller
 
         @coldPositions = []
 
-        @http.get('/api/salaries/position_cold_subsidy?department_ids=' + selectDepIds)
+        @http.get('/api/salaries/position_cold_subsidy?department_ids=' + selectDepIds + '&per_page=10000')
             .success (data)->
                 self.coldPositions = data.position_cold_subsidy
 
@@ -907,6 +913,7 @@ class SalaryExchangeController
         self = @
 
         @isLegalFlagArr = []
+        @isLegalPerfFlagArr = []
 
         @normalChannelArr = []
         @normalPerfChannelArr = []
@@ -1027,6 +1034,7 @@ class SalaryExchangeController
         return current.performanceMoney = flag.amount if angular.isDefined(flag)
         return 0
 
+    # 机务维修通道 技术骨干 绩效个人设置数据读取
     techPerf: (current) ->
         return unless current.performanceWage
         return unless current.performanceChannel
@@ -1034,7 +1042,6 @@ class SalaryExchangeController
         return unless current.performancePosition
 
         setting = @$settingHash(current.performanceWage)
-        console.log setting[current.technicalCategory][current.performancePosition]
         
         if angular.isDefined setting[current.technicalCategory][current.performancePosition]
             current.performanceMoney = setting[current.technicalCategory][current.performancePosition][current.performanceChannel].amount
@@ -1081,6 +1088,9 @@ class SalaryExchangeController
         @normalPerfChannelArr = _.uniq(channels)
 
     perf_flag_array: (current)->
+        self = @
+        @isLegalPerfFlagArr = []
+
         return unless current.performanceWage
 
         setting = @$settingHash(current.performanceWage)
@@ -1091,11 +1101,16 @@ class SalaryExchangeController
                 format_cell = config[current.performanceChannel]['format_cell']
 
                 if format_cell && format_cell.length > 0
-                    flags.push(flag)
+                    self.isLegalPerfFlagArr.push(flag)
+
+            flags.push(flag)
 
         return flags
 
     leaderPerfFlagArray: (current) ->
+        self = @
+        @isLegalPerfFlagArr = []
+
         return unless current.performanceWage
 
         setting = @$settingHash(current.performanceWage)
@@ -1106,7 +1121,9 @@ class SalaryExchangeController
             return if !angular.isDefined(config["X"])
 
             if config["X"]["format_cell"]
-                flags.push(flag)
+                self.isLegalPerfFlagArr.push(flag)
+
+            flags.push(flag)
 
         return flags
 
@@ -1674,8 +1691,12 @@ class SalaryHoursFeeController extends SalaryBaseController
             }
         ]).concat(CALC_STEP_COLUMN)
 
-    search: () ->
-        super({hours_fee_category: @hours_fee_category})
+    search: (tableState) ->
+        tableState = tableState || {}
+        tableState['hours_fee_category'] = @hours_fee_category
+        tableState['month'] = @currentCalcTime()
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+        @records.$refresh(tableState)
 
     loadRecords: () ->
         super({hours_fee_category: @hours_fee_category})
@@ -2032,6 +2053,8 @@ class SalaryOverviewController extends SalaryBaseController
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
+        @filterOptions.constraintDefs.pop()
+
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
             {minWidth: 100, displayName: '基础工资', name: 'basic', enableCellEdit: false}
             {minWidth: 100, displayName: '保留工资', name: 'keep', enableCellEdit: false}
@@ -2041,7 +2064,7 @@ class SalaryOverviewController extends SalaryBaseController
             {minWidth: 100, displayName: '驻站津贴', name: 'landSubsidy', enableCellEdit: false}
             {minWidth: 100, displayName: '奖励', name: 'reward', enableCellEdit: false}
             {minWidth: 100, displayName: '交通费', name: 'transportFee', enableCellEdit: false}
-            {minWidth: 100, displayName: '生育保险冲抵', name: 'birth', enableCellEdit: false}
+            {minWidth: 150, displayName: '生育保险冲抵', name: 'birth', enableCellEdit: false}
             {minWidth: 100, displayName: '合计', name: 'total', enableCellEdit: false}
             {
                 minWidth: 100

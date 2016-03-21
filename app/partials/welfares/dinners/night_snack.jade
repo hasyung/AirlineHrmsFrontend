@@ -31,7 +31,7 @@
                     ng-click="ctrl.exeCalc()"
                 ) 夜餐费计算
 
-                md-menu(ng-init="selectedRows=[]")
+                md-menu(ng-init="selectedRows=[]" style="margin-right: 0;")
                     md-button.md-primary.md-raised(
                         ng-click="$mdOpenMenu($event)"
                         ng-disabled="ctrl.calcing || ctrl.dinnerNightSnacks.length==0"

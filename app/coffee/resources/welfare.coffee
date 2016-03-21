@@ -271,11 +271,16 @@ AirlineRecord = (restmod, RMUtils, $Evt) ->
 
         owner: {belongsTo: 'Employee', key: 'employee_id'}
 
+        $hooks: {
+            'after-save': ->
+                $Evt.$send('airline_fee:save:success',"保存成功")
+        }
+
         $extend:
             Scope:
                 # 计算(根据年月)
                 compute: (params)->
-                    restmod.model('/airline_fees/compute').mix(
+                    restmod.model('/airline_fees/compute_oversea_food_fee').mix(
                         $config:
                             jsonRoot: 'airline_fees'
                     ).$search(params)
