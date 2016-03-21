@@ -1779,10 +1779,13 @@ class AirlineComputeController extends nb.Controller
 
         @columnDef = [
             {
+                minWidth: 150
                 displayName: '员工编号'
                 name: 'employeeNo'
+                enableCellEdit: false
             }
             {
+                minWidth: 150
                 displayName: '姓名'
                 field: 'employeeName'
                 cellTemplate: '''
@@ -1794,30 +1797,116 @@ class AirlineComputeController extends nb.Controller
                     </a>
                 </div>
                 '''
+                enableCellEdit: false
             }
             {
+                minWidth: 250
                 displayName: '所属部门'
                 name: 'departmentName'
                 cellTooltip: (row) ->
                     return row.entity.departmentName
+                enableCellEdit: false
             }
             {
+                minWidth: 100
                 displayName: '空勤灶金额'
-                name: 'airlineNumber'
+                name: 'airlineFee'
+                enableCellEdit: false
             }
             {
+                minWidth: 100
                 displayName: '境外餐补金额'
-                name: 'foreignNumber'
+                name: 'overseaFoodFee'
+                enableCellEdit: false
             }
             {
-                displayName: '合计金额'
-                name: 'total'
+                minWidth: 100
+                displayName: '补扣发'
+                name: 'addGarnishee'
+                headerCellClass: 'editable_cell_header'
             }
             {
-                displayName: '备注'
-                name: 'notes'
+                minWidth: 100
+                displayName: '合计'
+                name: 'totalFee'
+                enableCellEdit: false
+            }
+            {
+                minWidth: 150
+                name:"note"
+                displayName:"说明"
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
+                        {{row.entity.notes || '无'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #ccc;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <div class="salary-explain">
+                                    {{row.entity.note || '无'}}
+                                </div>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.note
+            }
+            {
+                minWidth: 150
+                name:"remark"
+                displayName:"备注"
+                headerCellClass: 'editable_cell_header'
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">
+                        {{row.entity.remark || '请输入备注'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #ccc;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <md-input-container>
+                                    <label>备注</label>
+                                    <textarea
+                                        ng-blur="row.entity.$save()"
+                                        ng-model="row.entity.remark"
+                                        style="resize:none;"
+                                        class="reason-input"></textarea>
+                                </md-input-container>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.remark
             }
         ]
+
+    initialize: (gridApi) ->
+        self = @
+
+        saveRow = (rowEntity) ->
+            dfd = @q.defer()
+
+            gridApi.rowEdit.setSavePromise(rowEntity, dfd.promise)
+
+            rowEntity.$save().$asPromise().then(
+                () -> 
+                    dfd.resolve()
+                ,
+                () ->
+                    dfd.reject()
+                    rowEntity.$restore())
+
+        gridApi.rowEdit.on.saveRow(@scope, saveRow.bind(@))
+        @scope.$gridApi = gridApi
+        @gridApi = gridApi
+
 
     loadMonthList: () ->
         date = new Date()
