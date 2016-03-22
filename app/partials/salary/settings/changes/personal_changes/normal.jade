@@ -276,6 +276,24 @@ block allowance_setting
                 md-option(value="silver") 银质
                 md-option(value="gold") 金质
                 md-option(value="exploit") 功勋
+
+    div(layout)
+        md-input-container(flex)
+            label 大厦补贴
+            input(type="number" min="0" ng-model="current.buildingSubsidy" ng-disabled="!exchangeCtrl.editing")
+        md-input-container(flex)
+            label 执勤补贴
+            input(type="number" min="0" ng-model="current.onDutySubsidy" ng-disabled="!exchangeCtrl.editing")
+        md-input-container(flex)
+            label 退休人员清洁费
+            input(type="number" min="0" ng-model="current.retireeCleanFee" ng-disabled="!exchangeCtrl.editing")
+
+    div(layout)
+        md-input-container(flex)
+            label 维修补贴
+            input(type="number" min="0" ng-model="current.maintainSubsidy" ng-disabled="!exchangeCtrl.editing")
+        div(flex)
+        div(flex)
     //- div(layout)
     //-     md-input-container(flex)
     //-         label 寒冷补贴

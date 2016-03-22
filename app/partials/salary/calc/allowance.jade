@@ -50,6 +50,30 @@
                                 flow-file-success="ctrl.upload_start=false;ctrl.upload_allowance('梭班补贴', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 梭班补贴
 
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="ctrl.upload_start=false;ctrl.upload_allowance('物业补贴', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 物业补贴
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="ctrl.upload_start=false;ctrl.upload_allowance('执勤补贴', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 执勤补贴
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="ctrl.upload_start=false;ctrl.upload_allowance('代泊车补贴', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 代泊车补贴
+
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="ctrl.upload_start=false;ctrl.upload_allowance('年审补贴', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 年审补贴
+
                 span
                     md-button.md-raised.md-primary(
                         ng-click="ctrl.exeCalc()"

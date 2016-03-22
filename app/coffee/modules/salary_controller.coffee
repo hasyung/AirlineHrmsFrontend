@@ -1769,9 +1769,9 @@ class SalaryAllowanceController extends SalaryBaseController
             {minWidth: 150,displayName: '高温补贴', name: 'temp', enableCellEdit: false}
             {minWidth: 150,displayName: '寒冷补贴', name: 'cold', enableCellEdit: false}
             {minWidth: 150,displayName: '通讯补贴', name: 'communication', enableCellEdit: false}
-            {minWidth: 150,displayName: '后援补贴', name: 'houyuan', enableCellEdit: false}
-            {minWidth: 150,displayName: '年审补贴', name: 'nianshen', enableCellEdit: false}
-            {minWidth: 150,displayName: '维修补贴', name: 'weixiu', enableCellEdit: false}
+            {minWidth: 150,displayName: '后援补贴', name: 'backupSubsidy', enableCellEdit: false}
+            {minWidth: 150,displayName: '年审补贴', name: 'annualAuditSubsidy', enableCellEdit: false}
+            {minWidth: 150,displayName: '维修补贴', name: 'maintainSubsidy', enableCellEdit: false}
             {minWidth: 150,displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
                 minWidth: 150
@@ -1946,6 +1946,7 @@ class SalaryRewardController extends SalaryBaseController
             {minWidth: 150,displayName: '季度奖', name: 'quarterFee', enableCellEdit: false}
             {minWidth: 150,displayName: '收益奖励金', name: 'earningsFee', enableCellEdit: false}
             {minWidth: 150,displayName: '预算外奖励', name: 'offBudgetFee', enableCellEdit: false}
+            {minWidth: 150,displayName: '节油奖', name: 'saveOilFee', enableCellEdit: false}
             {minWidth: 150,displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
                 minWidth: 150
