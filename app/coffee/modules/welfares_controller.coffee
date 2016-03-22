@@ -1821,15 +1821,15 @@ class AirlineComputeController extends nb.Controller
             }
             {
                 minWidth: 100
-                displayName: '补扣发'
-                name: 'addGarnishee'
-                headerCellClass: 'editable_cell_header'
-            }
-            {
-                minWidth: 100
                 displayName: '合计'
                 name: 'totalFee'
                 enableCellEdit: false
+            }
+            {
+                minWidth: 100
+                displayName: '补扣发'
+                name: 'addGarnishee'
+                headerCellClass: 'editable_cell_header'
             }
             {
                 minWidth: 150
