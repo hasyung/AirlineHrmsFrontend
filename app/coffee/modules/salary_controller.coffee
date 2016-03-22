@@ -400,11 +400,30 @@ class SalaryController extends nb.Controller
             .success (data)->
                 self.currentComPositions = data.communicate_allowances
 
+    loadComDutyRank: () ->
+        self = @
+
+        @http.get('/api/salaries/communicate_of_duty_rank')
+            .success (data)->
+                console.log data
+                self.dutyRankAllowance = data.duty_ranks
+
+
     updateComAmount: (position_id, amount)->
         self = @
         params = {position_id: position_id, communicate_allowance: parseInt(amount)}
 
         @http.put('/api/salaries/update_communicate_allowance', params)
+            .success (data)->
+                self.toaster.pop('success', '提示', '更新成功')
+            .error (data)->
+                self.toaster.pop('error', '提示', '更新失败')
+
+    updateComRankAmount: (rank_id, amount)->
+        self = @
+        params = {id: rank_id, communicate_allowance: parseInt(amount)}
+
+        @http.put('/api/salaries/set_communicate_of_duty_rank', params)
             .success (data)->
                 self.toaster.pop('success', '提示', '更新成功')
             .error (data)->
