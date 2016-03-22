@@ -1839,7 +1839,7 @@ class AirlineComputeController extends nb.Controller
                 cellTemplate: '''
                 <div class="ui-grid-cell-contents">
                     <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
-                        {{row.entity.notes || '无'}}
+                        {{row.entity.note || '无'}}
                         <popup-template
                             style="padding:8px;border:1px solid #ccc;"
                             class="nb-popup org-default-popup-template">
