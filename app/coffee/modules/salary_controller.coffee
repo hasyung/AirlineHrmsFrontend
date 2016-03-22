@@ -267,7 +267,6 @@ class SalaryController extends nb.Controller
         @dynamic_config = @settings[category + '_setting']
         @backup_config = angular.copy(@dynamic_config)
         @editing = false
-        console.log @dynamic_config
 
     resetDynamicConfig: ()->
         @dynamic_config = {}
@@ -1262,14 +1261,20 @@ class SalaryBaseController extends nb.Controller
         @gridApi = gridApi
 
     loadMonthList: () ->
-        if @currentYear == new Date().getFullYear()
-            months = [1..new Date().getMonth() + 1]
+        unless !@right_hand_mode
+            if @currentYear == new Date().getFullYear()
+                months = [1..new Date().getMonth() + 1]
+            else
+                months = [1..12]
         else
-            months = [1..12]
+            if @currentYear == new Date().getFullYear()
+                months = [1..new Date().getMonth()]
+            else
+                months = [1..12]
 
         @month_list = _.map months, (item)->
-            item = '0' + item if item < 10
-            item + ''
+                item = '0' + item if item < 10
+                item + ''
 
     loadDateTime: ()->
         date = new Date()
@@ -1764,6 +1769,9 @@ class SalaryAllowanceController extends SalaryBaseController
             {minWidth: 150,displayName: '高温补贴', name: 'temp', enableCellEdit: false}
             {minWidth: 150,displayName: '寒冷补贴', name: 'cold', enableCellEdit: false}
             {minWidth: 150,displayName: '通讯补贴', name: 'communication', enableCellEdit: false}
+            {minWidth: 150,displayName: '后援补贴', name: 'houyuan', enableCellEdit: false}
+            {minWidth: 150,displayName: '年审补贴', name: 'nianshen', enableCellEdit: false}
+            {minWidth: 150,displayName: '维修补贴', name: 'weixiu', enableCellEdit: false}
             {minWidth: 150,displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
                 minWidth: 150
