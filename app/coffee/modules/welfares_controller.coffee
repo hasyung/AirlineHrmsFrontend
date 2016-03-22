@@ -1885,6 +1885,21 @@ class AirlineComputeController extends nb.Controller
                 cellTooltip: (row) ->
                     return row.entity.remark
             }
+            {
+                minWidth: 150
+                displayName: '计算过程'
+                field: 'step'
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-dialog
+                        template-url="partials/salary/calc/step.html"
+                        locals="{employee_id: row.entity.owner.$pk, employee_name: row.entity.employee_name, month: row.entity.month, category: row.entity.category}">
+                        显示过程
+                    </a>
+                </div>
+                '''
+            }
         ]
 
     initialize: (gridApi) ->
