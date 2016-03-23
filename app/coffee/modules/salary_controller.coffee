@@ -1921,7 +1921,7 @@ class SalaryLandAllowanceController extends SalaryBaseController
 class SalaryRewardController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'Reward', 'toaster', '$rootScope']
 
-    constructor: ($http, $scope, $q, @Evt, @Employee, @Reward, @toaster, @rootScope) ->
+    constructor: (@http, $scope, $q, @Evt, @Employee, @Reward, @toaster, @rootScope) ->
         super(@Reward, $scope, $q, true, null, @rootScope)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
@@ -1985,6 +1985,7 @@ class SalaryRewardController extends SalaryBaseController
         params = {type: type, attachment_id: attachment_id, month: @currentCalcTime()}
 
         @http.post("/api/rewards/import", params).success (data, status) ->
+
             if data.error_count > 0
                 self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
             else
