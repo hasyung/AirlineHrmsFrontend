@@ -1747,7 +1747,7 @@ class SalaryAllowanceController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'Allowance', 'toaster', '$rootScope']
 
     constructor: (@http, $scope, $q, @Evt, @Employee, @Allowance, @toaster, @rootScope) ->
-        super(@Allowance, $scope, $q, true, null, @rootScope)
+        super(@Allowance, $scope, $q, false, null, @rootScope)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
