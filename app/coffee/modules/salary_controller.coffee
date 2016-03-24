@@ -486,6 +486,20 @@ class SalaryController extends nb.Controller
         else
             self.toaster.pop('error', '提示', '请填写城市名称')
 
+class DepNumSettingController extends nb.Controller
+    @.$inject = ['$http', '$scope', '$nbEvent', 'Org', 'toaster']
+
+    constructor: (@http, $scope, $Evt, @Org, @toaster) ->
+        @orgTree = {}
+
+        @loadInitialData()        
+
+    loadInitialData: () ->
+        self = @
+        @Org.$search().$then (data)->
+            self.orgTree = data.jqTreeful()[0]
+            console.log self.orgTree
+
 
 class SalaryPersonalController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryPersonSetup', 'toaster']
@@ -2248,6 +2262,7 @@ class RewardsAllocationController
 
 
 app.controller 'salaryCtrl', SalaryController
+app.controller 'depNumSettingCtrl', DepNumSettingController
 app.controller 'salaryPersonalCtrl', SalaryPersonalController
 app.controller 'salaryChangeCtrl', SalaryChangeController
 app.controller 'salaryGradeChangeCtrl', SalaryGradeChangeController

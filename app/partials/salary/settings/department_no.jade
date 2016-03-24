@@ -1,0 +1,35 @@
+.app-content-wrapper.set-book-number(flex ng-controller="depNumSettingCtrl as ctrl")
+    .salary-basic(style="padding: 0 20px 30px;")
+        md-toolbar
+            .md-toolbar-tools
+                h2 部门编号设置
+                span(flex)
+
+        .top-dep(ng-repeat="topDep in ctrl.orgTree.children track by $index")
+            span {{::topDep.label}}
+            span
+                input(type="text" ng-model="topDep.setBookNober")
+            .mid-dep(ng-if="topDep.children.length > 0" ng-repeat="midDep in topDep.children track by $index")
+                span {{::midDep.label}}
+                span
+                    input(type="text" ng-model="midDep.setBookNober")
+                .bottom-dep(ng-if="midDep.children.length > 0" ng-repeat="bottomDep in midDep.children track by $index")
+                    span {{::bottomDep.label}}
+                    span
+                        input(type="text" ng-model="bottomDep.setBookNober")
+        //- table.tablexx.table-default.table-bordered
+        //-     thead
+        //-         tr
+        //-             th 部门
+        //-             th 编号
+
+        //-     tbody
+        //-         tr(ng-repeat="topDep in ctrl.orgTree.children track by $index")
+        //-             td {{::topDep.label}}
+        //-             td
+        //-                 input(type="text" ng-model="topDep.setBookNumber")
+
+        //-             div(ng-if="topDep.children" ng-repeat="midDep in topDep.children track by $index")
+        //-                 td.pl40 {{::midDep.label}}
+        //-                 td
+        //-                     input(type="text" ng-model="midDep.setBookNumber")
