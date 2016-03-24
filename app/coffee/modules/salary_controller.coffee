@@ -492,13 +492,18 @@ class DepNumSettingController extends nb.Controller
     constructor: (@http, $scope, $Evt, @Org, @toaster) ->
         @orgTree = {}
 
-        @loadInitialData()        
+        @loadInitialData()
 
     loadInitialData: () ->
         self = @
         @Org.$search().$then (data)->
             self.orgTree = data.jqTreeful()[0]
             console.log self.orgTree
+
+    saveDepNumber: (id, num) ->
+        # @http请求保存接口
+        # 保存部门编码
+
 
 
 class SalaryPersonalController extends nb.Controller
@@ -1074,7 +1079,7 @@ class SalaryExchangeController
         return unless current.performancePosition
 
         setting = @$settingHash(current.performanceWage)
-        
+
         if angular.isDefined setting[current.technicalCategory][current.performancePosition]
             current.performanceMoney = setting[current.technicalCategory][current.performancePosition][current.performanceChannel].amount
         else
@@ -1194,7 +1199,7 @@ class SalaryExchangeController
     fly_flag_array: (current)->
         self = @
         @isLegalFlagArr = []
-        
+
         return unless current.baseWage
 
         setting = @$settingHash(current.baseWage)
