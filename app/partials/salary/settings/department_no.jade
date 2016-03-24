@@ -6,30 +6,14 @@
                 span(flex)
 
         .top-dep(ng-repeat="topDep in ctrl.orgTree.children track by $index")
-            span {{::topDep.label}}
-            span
+            span.dname {{::topDep.label}}
+            span.dno
                 input(type="text" ng-model="topDep.setBookNober")
-            .mid-dep(ng-if="topDep.children.length > 0" ng-repeat="midDep in topDep.children track by $index")
-                span {{::midDep.label}}
-                span
+            .mid-dep(ng-if="topDep.children.length > 0" ng-class="{'border0': $last, 'bt1': $first}" ng-repeat="midDep in topDep.children track by $index")
+                span.dname {{::midDep.label}}
+                span.dno
                     input(type="text" ng-model="midDep.setBookNober")
-                .bottom-dep(ng-if="midDep.children.length > 0" ng-repeat="bottomDep in midDep.children track by $index")
-                    span {{::bottomDep.label}}
-                    span
+                .bottom-dep(ng-if="midDep.children.length > 0" ng-class="{'border0': $last, 'bt1': $first}" ng-repeat="bottomDep in midDep.children track by $index")
+                    span.dname {{::bottomDep.label}}
+                    span.dno
                         input(type="text" ng-model="bottomDep.setBookNober")
-        //- table.tablexx.table-default.table-bordered
-        //-     thead
-        //-         tr
-        //-             th 部门
-        //-             th 编号
-
-        //-     tbody
-        //-         tr(ng-repeat="topDep in ctrl.orgTree.children track by $index")
-        //-             td {{::topDep.label}}
-        //-             td
-        //-                 input(type="text" ng-model="topDep.setBookNumber")
-
-        //-             div(ng-if="topDep.children" ng-repeat="midDep in topDep.children track by $index")
-        //-                 td.pl40 {{::midDep.label}}
-        //-                 td
-        //-                     input(type="text" ng-model="midDep.setBookNumber")
