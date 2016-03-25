@@ -1506,7 +1506,7 @@ class EmployeeAttendanceCtrl extends nb.Controller
 
                 self.eventSources.push(source)
 
-                self.vacations = data.attendance_records.vacations
+            self.vacations = data.attendance_records.vacations
 
 
 
