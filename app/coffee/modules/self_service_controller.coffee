@@ -313,6 +313,13 @@ class ProfileCtrl extends nb.Controller
                   right: 'today prev,next'
                 }
 
+                buttonText: {
+                    today:    '今天',
+                    month:    '月',
+                    week:     '周',
+                    day:      '天'
+                }
+
                 #viewRender: (view, element)->
                    #console.error("View Changed: ", view.visStart, view.visEnd, view.start, view.end)
 
