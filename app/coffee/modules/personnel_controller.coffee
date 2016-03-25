@@ -1506,7 +1506,6 @@ class EmployeeAttendanceCtrl extends nb.Controller
 
                 self.eventSources.push(source)
 
-                console.error data
                 self.vacations = data.vacations
 
 
