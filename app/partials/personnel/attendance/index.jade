@@ -1,8 +1,11 @@
 md-card.form-material-section.nb-card(ng-controller="EmployeeAttendanceCtrl as ctrl")
     md-content(style="padding:20px; background-color: #fff;" ng-init="ctrl.loadAttendance(current)")
-        div(ng-if="hasVacation")
-          span 你
+        div
+          span 你&nbsp;
           span(ng-repeat="(key, value) in vacations.year") {{key}} 年年假剩余天数 {{value}} 天 {{$last ? '。' : '，' }}
+
+        div
+          span &nbsp;
 
         div(ui-calendar="ctrl.uiConfig.calendar" ng-model="ctrl.eventSources" calendar="attendanceCalendar")
 
