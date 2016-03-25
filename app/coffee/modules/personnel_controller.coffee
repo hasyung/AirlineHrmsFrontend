@@ -1507,7 +1507,7 @@ class EmployeeAttendanceCtrl extends nb.Controller
                 self.eventSources.push(source)
 
             self.vacations = data.attendance_records.vacations
-            self.hasVacation = Object.keys(self.vacations).length > 0
+            self.hasVacation = Object.keys(self.vacations.year).length > 0
 
 
 
