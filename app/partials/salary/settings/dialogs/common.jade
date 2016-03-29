@@ -1,8 +1,8 @@
 md-dialog.normal
   md-toolbar.md-accent(md-theme="hrms")
     .md-toolbar-tools
-      span 条件设置 {{::grade}}档
-  form(ng-init="current=dialog.current;ctrl=dialog.ctrl;grade=dialog.grade;origin={'expr': current['expr'], 'desc': current['format_cell']};input_expr=ctrl.exchangeExpr(current['expr'], true);" ng-submit="$event.preventDefault()")
+      span 条件设置 {{::grade}} 档
+  form(ng-init="current=dialog.current;ctrl=dialog.ctrl;grade=dialog.grade;origin={'expr': current['expr'], 'desc': current['format_cell']};input_expr=ctrl.exchangeExpr(current['expr'], true);" ng-submit="$event.preventDefault();")
     md-content.sticky-container
       div(layout="row" layout-margin)
         div()
@@ -96,5 +96,5 @@ md-dialog.normal
           textarea(columns="1" ng-model="input_expr" ng-change="current['expr']=ctrl.exchangeExpr(input_expr)")
 
     .md-actions
-      md-button(type="button" ng-click="current['expr']=origin.expr;current['format_cell']=origin.desc;dialog.close()") 取消更改
-      md-button.md-primary.md-raised(type="submit" ng-click="dialog.close()") 完成输入
+      md-button(type="reset" ng-click="current['expr']=origin.expr;current['format_cell']=origin.desc;dialog.close()") 取消更改
+      md-button.md-primary.md-raised(type="submit" ng-click="dialog.setting[dialog.column]=current;dialog.close()") 完成输入
