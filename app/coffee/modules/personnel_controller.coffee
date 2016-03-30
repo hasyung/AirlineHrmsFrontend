@@ -99,6 +99,7 @@ class PersonnelCtrl extends nb.Controller
             .col 'birthday',             '出生日期', 'date-range'
             .col 'join_scal_date',       '入职日期', 'date-range'
             .col 'start_work_date',      '参工日期', 'date-range'
+            .col 'category_ids',          '分类',     'muti-enum-search', '',    {type: 'categories'}
             .end()
 
     loadInitialData: () ->
