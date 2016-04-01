@@ -1,6 +1,7 @@
 extends ./channels_layout.jade
 
 block vars
+    - var hasBaseInfo = true
     - var hasBaseSetting = true
     - var hasHoursFeeSetting = false
     - var hasPerformanceSetting = true
@@ -8,6 +9,43 @@ block vars
     - var hasCommunicate = true
     - var hasServiceCarSetting = true
     - var hasTempSetting = true
+
+block base_info
+    div(layout)
+        md-input-container(flex)
+            label 员工部门编码
+            input(
+                type="text" name="current.setBookNo" ng-model="current.accountNumber" readonly)
+
+        md-input-container(flex)
+            label 员工账户
+            input(
+                type="text" ng-model="current.bankNo" ng-readonly="!exchangeCtrl.editing")
+
+    div(layout)
+        md-input-container.row-has-value(flex)
+            label 人员分类编码
+            md-select(ng-model="current.employeeCategory" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(value="空") 空
+                md-option(value="A001") A001
+                md-option(value="A002") A002
+                md-option(value="A003") A003
+                md-option(value="A004") A004
+                md-option(value="A005") A005
+                md-option(value="B001") B001
+                md-option(value="B002") B002
+                md-option(value="B003") B003
+                md-option(value="B004") B004
+                md-option(value="C001") C001
+
+        md-input-container.row-has-value(flex)
+            label 帐套
+            md-select(ng-model="current.salaryCategory" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(value="无") 无
+                md-option(value="合同工") 合同工
+                md-option(value="合同制") 合同制
+                md-option(value="重庆合同工") 重庆合同工
+                md-option(value="重庆合同制") 重庆合同制
 
 block base_setting
     div(layout)
