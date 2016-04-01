@@ -1754,6 +1754,255 @@ class DinnerHistoriesController extends nb.Controller
     loadInitialData: () ->
         @histories = @DinnerHistory.$collection().$fetch()
 
+class AirlineComputeController extends nb.Controller
+    @.$inject = ['$http', '$scope', '$nbEvent', 'AirlineRecord', 'toaster', '$q']
+
+    constructor: (@http, @scope, @Evt, @AirlineRecord, @toaster, @q) ->
+        @loadDateTime()
+        @loadInitialData()
+
+        @filterOptions = {
+            name: 'airlinefee'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '员工姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+            ]
+        }
+
+        @columnDef = [
+            {
+                minWidth: 150
+                displayName: '员工编号'
+                name: 'employeeNo'
+                enableCellEdit: false
+            }
+            {
+                minWidth: 150
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+                enableCellEdit: false
+            }
+            {
+                minWidth: 250
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+                enableCellEdit: false
+            }
+            {
+                minWidth: 100
+                displayName: '空勤灶金额'
+                name: 'airlineFee'
+                enableCellEdit: false
+            }
+            {
+                minWidth: 100
+                displayName: '境外餐补金额'
+                name: 'overseaFoodFee'
+                enableCellEdit: false
+            }
+            {
+                minWidth: 100
+                displayName: '合计'
+                name: 'totalFee'
+                enableCellEdit: false
+            }
+            {
+                minWidth: 100
+                displayName: '补扣发'
+                name: 'addGarnishee'
+                headerCellClass: 'editable_cell_header'
+            }
+            {
+                minWidth: 150
+                name:"note"
+                displayName:"说明"
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
+                        {{row.entity.note || '无'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #ccc;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <div class="salary-explain">
+                                    {{row.entity.note || '无'}}
+                                </div>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.note
+            }
+            {
+                minWidth: 150
+                name:"remark"
+                displayName:"备注"
+                headerCellClass: 'editable_cell_header'
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">
+                        {{row.entity.remark || '请输入备注'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #ccc;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <md-input-container>
+                                    <label>备注</label>
+                                    <textarea
+                                        ng-blur="row.entity.$save()"
+                                        ng-model="row.entity.remark"
+                                        style="resize:none;"
+                                        class="reason-input"></textarea>
+                                </md-input-container>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.remark
+            }
+            {
+                minWidth: 150
+                displayName: '计算过程'
+                field: 'step'
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-dialog
+                        template-url="partials/salary/calc/step.html"
+                        locals="{employee_id: row.entity.owner.$pk, employee_name: row.entity.employee_name, month: row.entity.month, category: row.entity.category}">
+                        显示过程
+                    </a>
+                </div>
+                '''
+            }
+        ]
+
+    initialize: (gridApi) ->
+        self = @
+
+        saveRow = (rowEntity) ->
+            dfd = @q.defer()
+
+            gridApi.rowEdit.setSavePromise(rowEntity, dfd.promise)
+
+            rowEntity.$save().$asPromise().then(
+                () -> 
+                    dfd.resolve()
+                ,
+                () ->
+                    dfd.reject()
+                    rowEntity.$restore())
+
+        gridApi.rowEdit.on.saveRow(@scope, saveRow.bind(@))
+        @scope.$gridApi = gridApi
+        @gridApi = gridApi
+
+
+    loadMonthList: () ->
+        date = new Date()
+
+        if @currentYear == date.getFullYear() && date.getMonth() + 2 <= 12
+            months = [1..date.getMonth()]
+        else
+            months = [1..12]
+
+        @month_list = _.map months, (item)->
+            item = '0' + item if item < 10
+            item + ''
+
+    loadDateTime: () ->
+        date = new Date()
+
+        @year_list = @$getYears()
+        @month_list = @$getMonths()
+
+        if date.getMonth() == 0
+            @year_list.pop()
+            @month_list = _.map [1..12], (item)->
+                item = '0' + item if item < 10
+                item + '' # to string
+
+            @currentYear = _.last(@year_list)
+            @currentMonth = _.last(@month_list)
+        else
+            @month_list.pop()
+            @currentYear = _.last(@year_list)
+            @currentMonth = _.last(@month_list)
+
+    loadInitialData: (options) ->
+        args = {month: @currentCalcTime()}
+        angular.extend(args, options) if angular.isDefined(options)
+        @airlineRecords = @AirlineRecord.$collection(args).$fetch()
+
+    search: (tableState) ->
+        tableState = {} unless tableState
+        tableState['month'] = @currentCalcTime()
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+        @airlineRecords.$refresh(tableState)
+
+    currentCalcTime: ()->
+        @currentYear + "-" + @currentMonth
+
+    loadRecords: (options = null) ->
+        @loadMonthList()
+        args = {month: @currentCalcTime()}
+        angular.extend(args, options) if angular.isDefined(options)
+        @airlineRecords.$refresh(args)
+
+    exeCalc: (options = null) ->
+        @calcing = true
+        self = @
+
+        args = {month: @currentCalcTime()}
+        angular.extend(args, options) if angular.isDefined(options)
+
+        @airlineRecords.compute(args).$asPromise().then (data)->
+            self.calcing = false
+            erorr_msg = data.$response.data.messages
+            self.Evt.$send("airline_fees:calc:error", erorr_msg) if erorr_msg
+            self.loadRecords()
+        , (data)->
+            self.calcing = false
+
+    uploadAirlineFee: (type, attachment_id)->
+        self = @
+        params = {type: type, attachment_id: attachment_id, month: @currentCalcTime()}
+        @show_error_names = false
+
+        @http.post("/api/airline_fees/import", params).success (data, status) ->
+            if data.error_count > 0
+                self.show_error_names = true
+                self.error_names = data.error_names
+
+                self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
+            else
+                self.toaster.pop('error', '提示', '导入成功')
+
 class BirthAllowanceController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'BirthAllowance', 'Employee', 'toaster']
 
@@ -1863,5 +2112,7 @@ app.controller 'dinnerNightSnackCtrl', DinnerNightSnackController
 app.controller 'dinnerSettleCtrl', DinnerSettleController
 app.controller 'dinnerChangesCtrl', DinnerChangesController
 app.controller 'dinnerHistoriesCtrl', DinnerHistoriesController
+
+app.controller 'airlineComputeCtrl', AirlineComputeController
 
 app.controller 'birthAllowanceCtrl', BirthAllowanceController

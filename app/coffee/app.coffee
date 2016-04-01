@@ -53,6 +53,7 @@ App.value 'USER_META', metadata.user || {}
 App.constant 'VACATIONS', metadata.vacation_summary || {}
 App.constant 'DEPARTMENTS', dep_info.departments || []
 App.constant 'nbConstants', metadata.resources || []
+App.constant 'ROUTE_INFO', metadata.route_info || {}
 
 # 服务器必须提供推送配置信息
 App.constant 'PUSH_SERVER_CONFIG', metadata.push_server
@@ -115,7 +116,7 @@ mdThemingConf = ($mdThemingProvider) ->
 
 routeConf = ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) ->
     $locationProvider.html5Mode(false)
-    $urlRouterProvider.otherwise('/todo')
+    $urlRouterProvider.otherwise(metadata.route_info.default_route || "/todo")
 
     $stateProvider
         .state 'home', {

@@ -10,8 +10,8 @@
                 span
                     md-button.md-raised.md-primary(type="submit") 保存
 
-        md-content.pl20.pr20(ng-show="!!currentSettingLocation")
-            .children-float-row.mt40.mb20
+        md-content.pl20.pr20.pb40(ng-show="!!currentSettingLocation")
+            .children-float-row.mt20.mb20
                 label.mr40 个人基数计算方式
                 md-radio-group(ng-model="setting.is_annual")
                     md-radio-button.md-primary(ng-value="true") 年度变化

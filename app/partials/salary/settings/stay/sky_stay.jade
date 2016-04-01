@@ -78,43 +78,4 @@
                                 input(type="number" ng-model="ctrl.dynamic_config.inland_subsidy.air_security.long_term")
                                 | /月
 
-            div(flex)
-                h4 国外驻站地点
-                table.tablexx.table-default.table-bordered(flex)
-                    thead
-                        tr
-                            th 城市名称
-                            //- th 简称
-                            th 餐食补助(美金)
-                            th
-                    tbody
-                        tr(ng-repeat="area in ctrl.dynamic_config.outland_areas track by $index")
-                            td {{area.city}}
-                            //- td {{area.abbr}}
-                            td
-                                label $
-                                input(type="number" ng-model="area.outland_subsidy")
-                                | /天
-                            td
-                                md-button.md-icon-button(ng-click="ctrl.destroyCity(ctrl.dynamic_config.outland_areas,$index)")
-                                    md-icon.md-warn(md-svg-src="/images/svg/close.svg")
-                        tr
-                            td
-                                input(type="text" ng-model="cityForeign.city")
-                            //- td
-                            //-     input(type="text" ng-model="cityForeign.abbr")
-                            td
-                                label $
-                                input(type="number" ng-model="cityForeign.outland_subsidy")
-                                | /天
-                            td
-                                md-button.md-icon-button(ng-click="ctrl.addSkyCity(ctrl.dynamic_config.outland_areas , cityForeign)")
-                                    md-icon.md-primary(md-svg-src="/images/svg/plus.svg")
-                //- .form-static.has-sub
-                //-     div(layout style="margin-left:-6px;margin-top:22px;")
-                //-         .subheader(style="width:120px;") 外国餐食补助标准
-                //-         .form-row(layout flex)
-                //-             .form-cell(layout)
-                //-                 md-input-container(md-no-float)
-                //-                     input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.outland_subsidy")
-                //-                 span 美元/月
+            

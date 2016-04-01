@@ -13,8 +13,10 @@ block base_setting
     div(layout)
         md-input-container.row-has-value(flex)
             label 基本工资
-            md-select(ng-model="current.baseWage" placeholder="请选择" ng-change="exchangeCtrl.airline(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+            md-select(ng-model="current.baseWage" placeholder="请选择" ng-change="current.baseChannel=null; current.baseFlag=null; current.baseMoney=0; exchangeCtrl.airline(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(value="air_steward_base") 空乘空保
+                md-option(value="manager15_base") 管理
+                md-option(value="leader_base") 干部
         md-input-container.row-has-value(flex)
             label 薪酬通道
             md-select(ng-model="current.baseChannel" placeholder="请选择" ng-change="exchangeCtrl.fly(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
@@ -217,6 +219,24 @@ block allowance_setting
                 md-option(value="silver") 银质
                 md-option(value="gold") 金质
                 md-option(value="exploit") 功勋
+
+    div(layout)
+        md-input-container(flex)
+            label 大厦补贴
+            input(type="number" min="0" ng-model="current.buildingSubsidy" ng-readonly="!exchangeCtrl.editing")
+        md-input-container(flex)
+            label 执勤补贴
+            input(type="number" min="0" ng-model="current.onDutySubsidy" ng-readonly="!exchangeCtrl.editing")
+        md-input-container(flex)
+            label 退休人员清洁费
+            input(type="number" min="0" ng-model="current.retireeCleanFee" ng-readonly="!exchangeCtrl.editing")
+
+    div(layout)
+        md-input-container(flex)
+            label 维修补贴
+            input(type="number" min="0" ng-model="current.maintainSubsidy" ng-readonly="!exchangeCtrl.editing")
+        div(flex)
+        div(flex)
     //- div(layout)
     //-     md-input-container(flex)
     //-         label 高温补贴

@@ -1,0 +1,57 @@
+.default-role.department_leader.role-bg(flex layout)
+    .container1440(layout="row")
+        .controls
+            a.controls__cell.mt0
+                .controls__cell__outline
+                .controls__cell__btn
+                    .icon.contact
+                .desc 通讯录
+
+            a.controls__cell.mt0
+                .controls__cell__outline
+                .controls__cell__btn
+                    .icon.news
+                .desc 新闻
+
+            a.controls__cell(
+                ng-click="rootCtrl.show_main=true"
+                ui-sref="my_requests"
+                )
+                .controls__cell__outline
+                .controls__cell__btn
+                    .icon.pen
+                .desc 员工自助
+
+            a.controls__cell(
+                ng-click="rootCtrl.show_main=true"
+                ui-sref="TODO"
+                )
+                .controls__cell__outline
+                .controls__cell__btn
+                    .icon.todo
+                .desc 待办事项
+
+            a.controls__cell(
+                ng-click="rootCtrl.show_main=true"
+                ui-sref="self.profile"
+                )
+                .controls__cell__outline
+                .controls__cell__btn
+                    .icon.people
+                .desc 个人信息
+
+            a.controls__cell(
+                ng-click="rootCtrl.show_main=true"
+                ui-sref="charts"
+                )
+                .controls__cell__outline
+                .controls__cell__btn
+                    .icon.chart
+                .desc 数据报表
+
+        div(flex)
+        .logo
+            .logo__area
+                img(src="/images/roles/default_role_logo2.png")
+
+        .version 四川航空人力资源管理系统 1.0

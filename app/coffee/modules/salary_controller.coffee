@@ -15,6 +15,11 @@ SALARY_FILTER_DEFAULT = {
             displayName: '员工编号'
             type: 'string'
         }
+        {
+            name: 'notes'
+            displayName: '是否有说明'
+            type: 'boolean'
+        }
     ]
 }
 
@@ -137,17 +142,17 @@ class SalaryController extends nb.Controller
     $checkRewardDefault: ()->
         year = @currentYear
 
-        if !angular.isDefined(@global_setting.flight_bonus[year])
-            @global_setting.flight_bonus[year] = 100000000
+        # if !angular.isDefined(@global_setting.flight_bonus[year])
+        #     @global_setting.flight_bonus[year] = 100000000
 
-        if !angular.isDefined(@global_setting.service_bonus[year])
-            @global_setting.service_bonus[year] = 100000000
+        # if !angular.isDefined(@global_setting.service_bonus[year])
+        #     @global_setting.service_bonus[year] = 100000000
 
-        if !angular.isDefined(@global_setting.airline_security_bonus[year])
-            @global_setting.airline_security_bonus[year] = 100000000
+        # if !angular.isDefined(@global_setting.airline_security_bonus[year])
+        #     @global_setting.airline_security_bonus[year] = 100000000
 
-        if !angular.isDefined(@global_setting.composite_bonus[year])
-            @global_setting.composite_bonus[year] = 100000000
+        # if !angular.isDefined(@global_setting.composite_bonus[year])
+        #     @global_setting.composite_bonus[year] = 100000000
 
     initialize: () ->
         self = @
@@ -185,6 +190,8 @@ class SalaryController extends nb.Controller
                           "information_perf",                   # 绩效-信息通道
                           "airline_business_perf",              # 绩效-航务航材
                           "manage_market_perf",                 # 绩效-管理营销
+                          "service_normal_perf",                # 绩效-机务维修(普通员工)
+                          "service_tech_perf",                  # 绩效-机务维修(技术骨干)
                           "service_c_1_perf",                   # 绩效-服务C-1
                           "service_c_2_perf",                   # 绩效-服务C-2
                           "service_c_3_perf",                   # 绩效-服务C-3
@@ -345,7 +352,7 @@ class SalaryController extends nb.Controller
 
         @tempPositions = []
 
-        @http.get('/api/salaries/temperature_amount?department_ids=' + selectDepIds)
+        @http.get('/api/salaries/temperature_amount?department_ids=' + selectDepIds + '&per_page=10000')
             .success (data)->
                 self.tempPositions = data.temperature_amounts
 
@@ -377,7 +384,7 @@ class SalaryController extends nb.Controller
 
         @comPositions = []
 
-        @http.get('/api/salaries/communicate_allowance?department_ids=' + selectDepIds)
+        @http.get('/api/salaries/communicate_allowance?department_ids=' + selectDepIds + '&per_page=10000')
             .success (data)->
                 self.comPositions = data.communicate_allowances
 
@@ -392,11 +399,30 @@ class SalaryController extends nb.Controller
             .success (data)->
                 self.currentComPositions = data.communicate_allowances
 
+    loadComDutyRank: () ->
+        self = @
+
+        @http.get('/api/salaries/communicate_of_duty_rank')
+            .success (data)->
+                console.log data
+                self.dutyRankAllowance = data.duty_ranks
+
+
     updateComAmount: (position_id, amount)->
         self = @
         params = {position_id: position_id, communicate_allowance: parseInt(amount)}
 
         @http.put('/api/salaries/update_communicate_allowance', params)
+            .success (data)->
+                self.toaster.pop('success', '提示', '更新成功')
+            .error (data)->
+                self.toaster.pop('error', '提示', '更新失败')
+
+    updateComRankAmount: (rank_id, amount)->
+        self = @
+        params = {id: rank_id, communicate_allowance: parseInt(amount)}
+
+        @http.put('/api/salaries/set_communicate_of_duty_rank', params)
             .success (data)->
                 self.toaster.pop('success', '提示', '更新成功')
             .error (data)->
@@ -409,7 +435,7 @@ class SalaryController extends nb.Controller
 
         @coldPositions = []
 
-        @http.get('/api/salaries/position_cold_subsidy?department_ids=' + selectDepIds)
+        @http.get('/api/salaries/position_cold_subsidy?department_ids=' + selectDepIds + '&per_page=10000')
             .success (data)->
                 self.coldPositions = data.position_cold_subsidy
 
@@ -440,7 +466,7 @@ class SalaryController extends nb.Controller
     addSkyCity: (cities, city) ->
         self = @
 
-        if city.city && city.abbr
+        if city.city
             cities.push(city)
             self.scope.cityForeign = {}
             self.scope.cityNation = {}
@@ -465,6 +491,9 @@ class SalaryPersonalController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryPersonSetup', 'toaster']
 
     constructor: (@http, $scope, $Evt, $enum, @SalaryPersonSetup, @toaster) ->
+        @tableState = null
+        @exportSalarySettingUrl = ''
+
         @loadInitialData()
 
         @filterOptions = {
@@ -587,6 +616,20 @@ class SalaryPersonalController extends nb.Controller
         tableState = tableState || {}
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
         @salaryPersonSetups.$refresh(tableState)
+        @tableState = tableState
+
+    exportSalaryUrl: () ->
+        paramStr = ''
+
+        if @tableState
+            _.map @tableState, (value, key) ->
+                if angular.isString value
+                    paramStr = paramStr + (key + '=' + value) + '&'
+                if angular.isArray value
+                    value.forEach (item) ->
+                        paramStr = paramStr + (key + '%5B%5D' + '=' + item) + '&'
+
+        @exportSSUrl = 'api/salary_person_setups/export_to_xls?' + paramStr
 
     getSelectsIds: () ->
         rows = @gridApi.selection.getSelectedGridRows()
@@ -887,6 +930,9 @@ class SalaryExchangeController
     constructor: ($http, $scope, $Evt, @SALARY_SETTING, $timeout) ->
         self = @
 
+        @isLegalFlagArr = []
+        @isLegalPerfFlagArr = []
+
         @normalChannelArr = []
         @normalPerfChannelArr = []
 
@@ -902,7 +948,7 @@ class SalaryExchangeController
                 ()->
                     self.normal_channel_array($scope.$parent.$parent.current)
                     self.perf_channel_array($scope.$parent.$parent.current)
-                , 500
+                , 0
                 )
 
     $channelSettingStr: (channel)->
@@ -957,7 +1003,6 @@ class SalaryExchangeController
 
     normal_channel_array: (current)->
         self = @
-        console.log current
 
         return unless current.baseWage
         setting = @$settingHash(current.baseWage)
@@ -972,10 +1017,13 @@ class SalaryExchangeController
                 channels.push(channel)
 
         @normalChannelArr = _.uniq(channels)
-        console.log @normalChannelArr
 
     normal_flag_array: (current)->
+        self = @
+        @isLegalFlagArr = []
+
         return unless current.baseWage
+        return unless current.baseChannel
 
         setting = @$settingHash(current.baseWage)
         flags = []
@@ -988,18 +1036,35 @@ class SalaryExchangeController
                 format_cell = config[current.baseChannel]['format_cell']
 
                 if format_cell && format_cell.length > 0
-                    flags.push(flag)
+                    self.isLegalFlagArr.push(flag)
+
+            flags.push(flag)
 
         return flags
 
     perf: (current)->
         return unless current.performanceWage
+        return unless current.performanceWage != 'service_tech_perf'
         setting = @$settingHash(current.performanceWage)
 
         flag = setting.flags[current.performanceFlag]
 
         return current.performanceMoney = flag.amount if angular.isDefined(flag)
         return 0
+
+    # 机务维修通道 技术骨干 绩效个人设置数据读取
+    techPerf: (current) ->
+        return unless current.performanceWage
+        return unless current.performanceChannel
+        return unless current.technicalCategory
+        return unless current.performancePosition
+
+        setting = @$settingHash(current.performanceWage)
+        
+        if angular.isDefined setting[current.technicalCategory][current.performancePosition]
+            current.performanceMoney = setting[current.technicalCategory][current.performancePosition][current.performanceChannel].amount
+        else
+            current.performanceMoney = 0
 
     changeBaseWage: (current) ->
         if current.baseWage=='leader_base'
@@ -1021,12 +1086,14 @@ class SalaryExchangeController
         current.baseMoney = null
 
     changePerWage: (current) ->
-        current.performanceChannel = null
-        current.performanceFlag = null
-        current.performanceMoney = null
+        current.performanceChannel = null if current.performanceChannel
+        current.performanceFlag = null  if current.performanceFlag
+        current.performanceMoney = null  if current.performanceMoney
+        current.technicalCategory = null if current.technicalCategory
 
     perf_channel_array: (current)->
         return unless current.performanceWage
+        return unless current.performanceWage != 'service_tech_perf'
 
         setting = @$settingHash(current.performanceWage)
         channels = []
@@ -1039,6 +1106,9 @@ class SalaryExchangeController
         @normalPerfChannelArr = _.uniq(channels)
 
     perf_flag_array: (current)->
+        self = @
+        @isLegalPerfFlagArr = []
+
         return unless current.performanceWage
 
         setting = @$settingHash(current.performanceWage)
@@ -1049,11 +1119,16 @@ class SalaryExchangeController
                 format_cell = config[current.performanceChannel]['format_cell']
 
                 if format_cell && format_cell.length > 0
-                    flags.push(flag)
+                    self.isLegalPerfFlagArr.push(flag)
+
+            flags.push(flag)
 
         return flags
 
     leaderPerfFlagArray: (current) ->
+        self = @
+        @isLegalPerfFlagArr = []
+
         return unless current.performanceWage
 
         setting = @$settingHash(current.performanceWage)
@@ -1063,8 +1138,10 @@ class SalaryExchangeController
             return if !angular.isDefined(config)
             return if !angular.isDefined(config["X"])
 
-            if config["X"]["format_cell"] == current.baseChannel
-                flags.push(flag)
+            if config["X"]["format_cell"]
+                self.isLegalPerfFlagArr.push(flag)
+
+            flags.push(flag)
 
         return flags
 
@@ -1097,10 +1174,13 @@ class SalaryExchangeController
         angular.forEach setting.flag_list, (item)->
             if item != 'rate' && !_.startsWith(item, 'amount')
                 channels.push(item)
-                current.baseChannel = item
+                # current.baseChannel = item
         _.uniq(channels)
 
     fly_flag_array: (current)->
+        self = @
+        @isLegalFlagArr = []
+        
         return unless current.baseWage
 
         setting = @$settingHash(current.baseWage)
@@ -1131,11 +1211,10 @@ class SalaryExchangeController
         setting = @$settingHash(current.baseWage)
 
         channels = []
-        console.log setting
         angular.forEach setting.flag_list, (item)->
             if item != 'rate' && !_.startsWith(item, 'amount')
                 channels.push(item)
-                current.baseChannel = item
+
         _.uniq(channels)
 
     airline_flag_array: (current)->
@@ -1182,14 +1261,20 @@ class SalaryBaseController extends nb.Controller
         @gridApi = gridApi
 
     loadMonthList: () ->
-        if @currentYear == new Date().getFullYear()
-            months = [1..new Date().getMonth() + 1]
+        unless !@right_hand_mode
+            if @currentYear == new Date().getFullYear()
+                months = [1..new Date().getMonth() + 1]
+            else
+                months = [1..12]
         else
-            months = [1..12]
+            if @currentYear == new Date().getFullYear()
+                months = [1..new Date().getMonth()]
+            else
+                months = [1..12]
 
         @month_list = _.map months, (item)->
-            item = '0' + item if item < 10
-            item + ''
+                item = '0' + item if item < 10
+                item + ''
 
     loadDateTime: ()->
         date = new Date()
@@ -1496,6 +1581,29 @@ class SalaryPerformanceController extends SalaryBaseController
             }
         ]).concat(CALC_STEP_COLUMN)
 
+    # 由confirm控制是否执行 强制计算
+    exeConfirmCalc: (isConfirm, options = null) ->
+        if isConfirm
+            @startLoading()
+            @calcing = true
+            self = @
+
+            args = {month: @currentCalcTime()}
+            angular.extend(args, options) if angular.isDefined(options)
+
+            @Model.compute(args).$asPromise().then (data)->
+                self.cancelLoading()
+                self.calcing = false
+                erorr_msg = data.$response.data.messages
+                # _.snakeCase('Foo Bar')
+                # @Model => String???
+                self.Evt.$send("salary_model:calc:error", erorr_msg) if erorr_msg
+                self.loadRecords()
+            , ()->
+                self.cancelLoading()
+                self.calcing = false
+
+
     upload_performance: (type, attachment_id)->
         self = @
         params = {type: type, attachment_id: attachment_id}
@@ -1607,8 +1715,12 @@ class SalaryHoursFeeController extends SalaryBaseController
             }
         ]).concat(CALC_STEP_COLUMN)
 
-    search: () ->
-        super({hours_fee_category: @hours_fee_category})
+    search: (tableState) ->
+        tableState = tableState || {}
+        tableState['hours_fee_category'] = @hours_fee_category
+        tableState['month'] = @currentCalcTime()
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+        @records.$refresh(tableState)
 
     loadRecords: () ->
         super({hours_fee_category: @hours_fee_category})
@@ -1634,8 +1746,8 @@ class SalaryHoursFeeController extends SalaryBaseController
 class SalaryAllowanceController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'Allowance', 'toaster', '$rootScope']
 
-    constructor: ($http, $scope, $q, @Evt, @Employee, @Allowance, @toaster, @rootScope) ->
-        super(@Allowance, $scope, $q, true, null, @rootScope)
+    constructor: (@http, $scope, $q, @Evt, @Employee, @Allowance, @toaster, @rootScope) ->
+        super(@Allowance, $scope, $q, false, null, @rootScope)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
@@ -1648,6 +1760,7 @@ class SalaryAllowanceController extends SalaryBaseController
             {minWidth: 150,displayName: '地勤补贴', name: 'landPresent', enableCellEdit: false}
             {minWidth: 150,displayName: '机务放行补贴', name: 'permitEntry', enableCellEdit: false}
             {minWidth: 150,displayName: '试车津贴', name: 'tryDrive', enableCellEdit: false}
+            {minWidth: 150,displayName: '飞行驾驶技术津贴', name: 'flyerScienceMoney', enableCellEdit: false}
             {minWidth: 150,displayName: '飞行荣誉津贴', name: 'flyHonor', enableCellEdit: false}
             {minWidth: 150,displayName: '航线实习补贴', name: 'airlinePractice', enableCellEdit: false}
             {minWidth: 150,displayName: '随机补贴', name: 'followPlane', enableCellEdit: false}
@@ -1656,6 +1769,9 @@ class SalaryAllowanceController extends SalaryBaseController
             {minWidth: 150,displayName: '高温补贴', name: 'temp', enableCellEdit: false}
             {minWidth: 150,displayName: '寒冷补贴', name: 'cold', enableCellEdit: false}
             {minWidth: 150,displayName: '通讯补贴', name: 'communication', enableCellEdit: false}
+            {minWidth: 150,displayName: '后援补贴', name: 'backupSubsidy', enableCellEdit: false}
+            {minWidth: 150,displayName: '年审补贴', name: 'annualAuditSubsidy', enableCellEdit: false}
+            {minWidth: 150,displayName: '维修补贴', name: 'maintainSubsidy', enableCellEdit: false}
             {minWidth: 150,displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
                 minWidth: 150
@@ -1805,7 +1921,7 @@ class SalaryLandAllowanceController extends SalaryBaseController
 class SalaryRewardController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'Reward', 'toaster', '$rootScope']
 
-    constructor: ($http, $scope, $q, @Evt, @Employee, @Reward, @toaster, @rootScope) ->
+    constructor: (@http, $scope, $q, @Evt, @Employee, @Reward, @toaster, @rootScope) ->
         super(@Reward, $scope, $q, true, null, @rootScope)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
@@ -1830,6 +1946,7 @@ class SalaryRewardController extends SalaryBaseController
             {minWidth: 150,displayName: '季度奖', name: 'quarterFee', enableCellEdit: false}
             {minWidth: 150,displayName: '收益奖励金', name: 'earningsFee', enableCellEdit: false}
             {minWidth: 150,displayName: '预算外奖励', name: 'offBudgetFee', enableCellEdit: false}
+            {minWidth: 150,displayName: '节油奖', name: 'saveOilFee', enableCellEdit: false}
             {minWidth: 150,displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
                 minWidth: 150
@@ -1868,6 +1985,7 @@ class SalaryRewardController extends SalaryBaseController
         params = {type: type, attachment_id: attachment_id, month: @currentCalcTime()}
 
         @http.post("/api/rewards/import", params).success (data, status) ->
+
             if data.error_count > 0
                 self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
             else
@@ -1964,6 +2082,8 @@ class SalaryOverviewController extends SalaryBaseController
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
+        @filterOptions.constraintDefs.pop()
+
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
             {minWidth: 100, displayName: '基础工资', name: 'basic', enableCellEdit: false}
             {minWidth: 100, displayName: '保留工资', name: 'keep', enableCellEdit: false}
@@ -1973,7 +2093,7 @@ class SalaryOverviewController extends SalaryBaseController
             {minWidth: 100, displayName: '驻站津贴', name: 'landSubsidy', enableCellEdit: false}
             {minWidth: 100, displayName: '奖励', name: 'reward', enableCellEdit: false}
             {minWidth: 100, displayName: '交通费', name: 'transportFee', enableCellEdit: false}
-            {minWidth: 100, displayName: '生育保险冲抵', name: 'birth', enableCellEdit: false}
+            {minWidth: 150, displayName: '生育保险冲抵', name: 'birth', enableCellEdit: false}
             {minWidth: 100, displayName: '合计', name: 'total', enableCellEdit: false}
             {
                 minWidth: 100

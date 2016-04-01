@@ -109,6 +109,10 @@ md-select {
 
 }
 
+md-option.spec {
+    color: rgb(239,83,80);
+} 
+
 // bugfix: 解决下拉框中双滚动条的bug
 .md-select-menu-container {
     md-select-menu {

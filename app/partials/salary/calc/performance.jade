@@ -50,12 +50,14 @@
                             ) 导入
                         md-menu-content()
                             md-menu-item(
+                                ng-click="$mdMenu.hide()"
                                 flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
                                 flow-file-success="ctrl.upload_start=false;ctrl.upload_hours_fee('文化传媒', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 文化传媒
 
                             md-menu-item(
+                                ng-click="$mdMenu.hide()"
                                 flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
                                 flow-file-success="ctrl.upload_start=false;ctrl.upload_hours_fee('校修中心', ctrl.parseJSON($message).id);")
@@ -69,9 +71,12 @@
                             ) 计算
                         md-menu-content
                             md-menu-item()
-                                a.md-button(flex
-                                    ng-click="ctrl.exeCalc({type: 'base_salary'})"
+                                a.md-button(
+                                    ng-click="$mdMenu.hide()"
                                     href="javascript:;"
+                                    nb-confirm="ctrl.exeConfirmCalc(isConfirm, {type: 'base_salary'})"
+                                    nb-title="是否需要计算绩效基数?"
+                                    nb-content="点击确定将会计算绩效基数。"
                                 ) 计算绩效基数
                             md-menu-item()
                                 a.md-button(

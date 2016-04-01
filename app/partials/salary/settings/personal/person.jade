@@ -5,8 +5,13 @@
         md-toolbar
             .md-toolbar-tools
                 h2 个人薪酬设置列表
-
                 span(flex)
+                md-button.md-primary.md-raised(
+                    ng-disabled="!ctrl.import_finish"
+                    ng-href="{{ ctrl.exportSSUrl }}"
+                    ng-mouseenter="ctrl.exportSalaryUrl()"
+                    download
+                ) 导出个人薪酬设置    
                 span
                     md-button.md-raised.md-primary(
                         ng-disabled="!ctrl.import_finish"
@@ -29,7 +34,6 @@
             column-defs="ctrl.columnDef"
             on-register-api="ctrl.exportGridApi(gridApi)"
             export-api
-            grid-selection
             multi-select="false"
             safe-src="ctrl.salaryPersonSetups"
         )

@@ -1,0 +1,22 @@
+.app-content-wrapper(flex ng-controller="EducationExpRecordCtrl as ctrl")
+
+    div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+
+    div.ui-grid-container
+        md-toolbar
+            .md-toolbar-tools
+                h2 学历变更列表
+                div(flex)
+
+                md-button.md-primary.md-raised(
+                    has-permission="education_experience_records_export_to_xls"
+                    ng-mouseenter="ctrl.exportEducationExperiences()"
+                    ng-href="{{ ctrl.exportEduExpUrl }}"
+                    download
+                ) 导出学历变更
+
+        div(
+            nb-grid
+            column-defs="ctrl.columnDef"
+            on-register-api="ctrl.exportGridApi(gridApi)"
+            safe-src="ctrl.educationExpRecords")

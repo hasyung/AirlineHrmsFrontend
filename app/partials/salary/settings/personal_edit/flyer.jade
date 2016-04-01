@@ -13,7 +13,7 @@ block base_setting
     div(layout)
         md-input-container.row-has-value(flex)
             label 基本工资
-            md-select(ng-model="current.baseWage" placeholder="请选择" ng-change="exchangeCtrl.fly(current); current.baseMoney=0; current.baseFlag=null;" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+            md-select(ng-model="current.baseWage" placeholder="请选择" ng-change="current.baseChannel=null ;current.baseMoney=0; current.baseFlag=null; exchangeCtrl.fly(current);" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(value="flyer_duty_leader_base") 责任机长
                 md-option(value="flyer_legend_base") 荣誉级飞行员
                 md-option(value="flyer_leader_base") 机长
@@ -22,7 +22,13 @@ block base_setting
                 md-option(value="flyer_teacher_B_base") 教员B
                 md-option(value="flyer_teacher_C_base") 教员C
                 md-option(value="flyer_student_base") 学员
-        md-input-container.row-has-value(flex)
+                md-option(value="air_observer_base") 空中观察员
+                md-option(value="manager15_base") 管理
+                md-option(value="leader_base") 干部
+
+        md-input-container.row-has-value(
+            flex
+            )
             label 薪酬通道
             md-select(ng-model="current.baseChannel" placeholder="请选择" ng-change="exchangeCtrl.fly(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(ng-value="item" ng-repeat="item in exchangeCtrl.fly_channel_array(current)") {{item}}
@@ -100,6 +106,7 @@ block base_setting
 
     div(layout)
         md-checkbox(class="md-primary" ng-model="current.isSalarySpecial"  ng-disabled="!exchangeCtrl.editing") 薪酬特殊人员
+        md-checkbox(class="md-primary" ng-model="current.stopPromotion"  ng-disabled="!exchangeCtrl.editing") 暂停岗工晋升
 
 block hours_fee_setting
     div(layout)
@@ -245,6 +252,24 @@ block allowance_setting
                 md-option(value="silver") 银质
                 md-option(value="gold") 金质
                 md-option(value="exploit") 功勋
+
+    div(layout)
+        md-input-container(flex)
+            label 大厦补贴
+            input(type="number" min="0" ng-model="current.buildingSubsidy" ng-readonly="!exchangeCtrl.editing")
+        md-input-container(flex)
+            label 执勤补贴
+            input(type="number" min="0" ng-model="current.onDutySubsidy" ng-readonly="!exchangeCtrl.editing")
+        md-input-container(flex)
+            label 退休人员清洁费
+            input(type="number" min="0" ng-model="current.retireeCleanFee" ng-readonly="!exchangeCtrl.editing")
+
+    div(layout)
+        md-input-container(flex)
+            label 维修补贴
+            input(type="number" min="0" ng-model="current.maintainSubsidy" ng-readonly="!exchangeCtrl.editing")
+        div(flex)
+        div(flex)
     //- div(layout)
     //-     md-input-container(flex)
     //-         label 寒冷补贴
