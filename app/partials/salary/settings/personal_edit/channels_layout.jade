@@ -16,7 +16,7 @@ mixin tabSection(heading, lookPermission, updatePermission)
                 .form-btn-group(ng-show="exchangeCtrl.editing")
                     md-button.md-fab.white(type="button" ng-click="cancel(current, $event, salaryPersonal); exchangeCtrl.editing=false")
                         md-icon(md-svg-src="/images/svg/close.svg" aria-label="取消")
-                    md-button.md-fab.md-primary(ng-click="submit();exchangeCtrl.editing=false;")
+                    md-button.md-fab.md-primary(ng-disabled="salaryPersonal.$invalid" ng-click="submit();exchangeCtrl.editing=false;")
                         md-icon(md-svg-src="/images/svg/check.svg" aria-label="保存")
             fieldset
                 include basic_info
@@ -24,6 +24,10 @@ mixin tabSection(heading, lookPermission, updatePermission)
                 block
 
 block vars
+
+if hasBaseInfo
+    +tabSection('员工信息', 'salary_person_setups_look_basic', 'salary_person_setups_update_basic')
+        block base_info
 
 if hasBaseSetting
     +tabSection('基本', 'salary_person_setups_look_basic', 'salary_person_setups_update_basic')

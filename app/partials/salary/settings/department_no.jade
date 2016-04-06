@@ -1,0 +1,19 @@
+.app-content-wrapper.set-book-number(flex ng-controller="depNumSettingCtrl as ctrl")
+    .salary-basic(style="padding: 0 20px 30px;")
+        md-toolbar
+            .md-toolbar-tools
+                h2 部门编号设置
+                span(flex)
+
+        .top-dep(ng-repeat="topDep in ctrl.orgTree.children track by $index")
+            span.dname {{::topDep.label}}
+            span.dno
+                input(type="text" ng-model="topDep.setBookNober")
+            .mid-dep(ng-if="topDep.children.length > 0" ng-class="{'border0': $last, 'bt1': $first}" ng-repeat="midDep in topDep.children track by $index")
+                span.dname {{::midDep.label}}
+                span.dno
+                    input(type="text" ng-model="midDep.setBookNober")
+                .bottom-dep(ng-if="midDep.children.length > 0" ng-class="{'border0': $last, 'bt1': $first}" ng-repeat="bottomDep in midDep.children track by $index")
+                    span.dname {{::bottomDep.label}}
+                    span.dno
+                        input(type="text" ng-model="bottomDep.setBookNober")
