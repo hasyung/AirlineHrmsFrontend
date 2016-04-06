@@ -1,18 +1,18 @@
 tabset(flex)
-    tab(heading="员工考勤")
+    tab(heading="员工考勤" has-permission="attendances_employees")
         include user_list
 
-    tab(heading="考勤历史记录")
+    tab(heading="考勤历史记录" has-permission="attendances_history")
         include history
 
-    tab(heading="请假审批" pending="true")
+    tab(heading="请假审批" pending="true" has-permission="attendances_approve")
         include check_list
 
-    tab(heading="请假记录")
+    tab(heading="请假记录" has-permission="attendances_leave_list")
         include records
 
-    tab(heading="考勤汇总审核")
+    tab(heading="考勤汇总审核" has-permission="attendances_summary")
         include summary_check
 
-    tab(heading="汇总历史查看")
+    tab(heading="汇总历史查看" has-permission="attendances_summary_history")
         include statistics
