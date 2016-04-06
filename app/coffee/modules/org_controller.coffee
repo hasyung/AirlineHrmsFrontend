@@ -193,13 +193,16 @@ class OrgsCtrl extends nb.Controller
         promise.then onSuccess
 
     initVisble: (changeLogs) ->
-        _.flatten(_.pluck(changeLogs, 'logs')).forEach (log) ->
+        # _.flatten(_.pluck(changeLogs, 'logs')).forEach (log) ->
+        _.flatten(_.map(changeLogs, 'logs')).forEach (log) ->
             log.visible = true
 
     pickLog: (date, referOrgName, changeLogs) ->
-        sortedLogs = _.flatten(_.pluck(changeLogs, 'logs'))
+        # sortedLogs = _.flatten(_.pluck(changeLogs, 'logs'))
+        sortedLogs = _.flatten(_.map(changeLogs, 'logs'))
 
-        _.flatten(_.pluck(changeLogs, 'logs')).forEach (log) ->
+        # _.flatten(_.pluck(changeLogs, 'logs')).forEach (log) ->
+        _.flatten(_.map(changeLogs, 'logs')).forEach (log) ->
                 log.visible = false
 
         if !referOrgName || angular.isUndefined(referOrgName) || referOrgName.length == 0
