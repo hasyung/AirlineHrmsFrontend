@@ -13,7 +13,21 @@
                         md-select.month(ng-model="ctrl.month" flex ng-change="ctrl.exeSearch()" placeholder="请选择月份")
                             md-option(ng-value="item" ng-repeat="item in ctrl.month_list" ng-bind="item")
 
+                    label.row-text 员工：
+                    .year-and-month(layout)
+                        md-input-container
+                            label 姓名
+                            input(type="text" ng-model="ctrl.employee_name")
+                        md-input-container
+                            label 工号
+                            input(type="text" ng-model="ctrl.employee_no")
+
                     span.row-text.last {{ctrl.tableData.$metadata.status}}
+
+                md-button.md-primary.md-raised(
+                    ng-click="ctrl.exeSearch()"
+                ) 查询
+
                 md-button.md-primary.md-raised(
                     has-permission="attendance_summaries_department_hr_confirm"
                     ng-disabled="ctrl.departmentHrChecked"
