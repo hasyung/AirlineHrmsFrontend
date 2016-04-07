@@ -36,6 +36,10 @@ Employee = (restmod, RMUtils, $Evt) ->
                 leaders: () ->
                     restmod.model('/employees/simple_index').mix($config: jsonRoot: 'employees').$search()
 
+                flow_leaders: () ->
+                    # 专门为流程发起的领导列表
+                    restmod.model('/employees/flow_leader_index').mix($config: jsonRoot: 'employees').$search()
+
             Record:
                 update_basic_info: ()->
                     this.editType = 'basic'
