@@ -1,9 +1,9 @@
 .my-requests(flex ng-init="showSalary = true")
-    .current-month
+    .current-month(style="display:none")
         md-icon.prev(md-svg-src="md-toggle-arrow")
         span.month 2015-8
         md-icon.next(md-svg-src="md-toggle-arrow")
-    .current-month-info
+    .current-month-info(style="display:none")
         .info-left
             .title
                 | 8月工资
@@ -38,7 +38,7 @@
                         span 天
 
 
-    .my-cell-cotainer
+    .my-cell-cotainer(style="margin-top:10%")
         a.my-requests-cell.ml0(ui-sref=".leave")
             .cell__btn.qingjia
             .desc 我要请假
