@@ -120,6 +120,9 @@ FlowHandlerDirective = (ngDialog)->
 
         openDialog = (evt)->
             promise = scope.flow.$refresh().$asPromise()
+
+            console.error scope.vacations
+
             promise.then(offeredExtra).then (template)->
                 ngDialog.open {
                     template: template
@@ -148,9 +151,9 @@ FlowHandlerDirective = (ngDialog)->
 
 
 class FlowController
-    @.$inject = ['$http','$scope', 'USER_META', 'OrgStore', 'Employee', '$nbEvent', '$state']
+    @.$inject = ['$http','$scope', 'USER_META', 'OrgStore', 'Employee', '$nbEvent', '$state', 'VACATIONS']
 
-    constructor: (http, scope, meta, OrgStore, Employee, Evt, @state) ->
+    constructor: (http, scope, meta, OrgStore, Employee, Evt, @state, vacations) ->
         FLOW_HTTP_PREFIX = "/api/workflows"
         scope.selectedOrgs = []
 
@@ -169,6 +172,10 @@ class FlowController
         scope.req = {
             opinion: true
         }
+
+        # console.error scope.vacations
+        # 查看请假流程的时候不显示年假信息
+        scope.vacations = vacations
 
         scope.reply = (userReply, form) ->
             try

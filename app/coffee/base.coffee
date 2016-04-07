@@ -161,6 +161,7 @@ class NewFlowCtrl
             return {}
 
         scope.createFlow = (request, receptor, list) ->
+            console.error request
             data = _.cloneDeep(request)
 
             if data.start_time && typeof(data.start_time) == 'object'
