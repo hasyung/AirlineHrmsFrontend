@@ -327,7 +327,13 @@ block allowance_setting
         md-input-container(flex)
             label 维修补贴
             input(type="number" min="0" ng-model="current.maintainSubsidy" ng-readonly="!exchangeCtrl.editing")
-        div(flex)
+        md-input-container.row-has-value(flex)
+            label 重庆兼职车辆维修班补贴
+            md-select(ng-model="current.cqPartTimeFixCarSubsidy" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(value="none") 无
+                md-option(value="first") 一档
+                md-option(value="second") 二档
+                md-option(value="third") 三档
         div(flex)
     //- div(layout)
     //-     md-input-container(flex)
@@ -335,6 +341,7 @@ block allowance_setting
     //-         input(type="number" min="0" max="1000000" ng-model="current.coldSubsidy" ng-disabled="!exchangeCtrl.editing")
     //-     div(flex)
     //-     div(flex)
+
 
 block communicate_setting
     div(layout)
