@@ -161,7 +161,15 @@ class NewFlowCtrl
             return {}
 
         scope.createFlow = (request, receptor, list) ->
-            # console.error request
+            if self.flow_type == "Flow::AnnualLeave"
+                # 两年年假就有 2 个 ng-repeat
+                # 指令 flowHandler 处理后再次会渲染 2 次
+                rd = request.relation_data
+                start = rd.indexOf("年假 (")
+                ng_code = "年假 (<span ng-repeat=\"(key, value) in vacations.year_days.year\">{{key}} 年年假剩余天数 {{value}} 天 </span>"
+                request.relation_data =  rd.substring(0, start) + ng_code + ")</span>" + "</div></div></div>"
+                # console.error request.relation_data
+
             data = _.cloneDeep(request)
 
             if data.start_time && typeof(data.start_time) == 'object'
