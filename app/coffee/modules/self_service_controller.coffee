@@ -422,7 +422,7 @@ class MyRequestCtrl extends nb.Controller
                 field: 'action'
                 displayName:"查看",
                 cellTemplate: '''
-                <div class="ui-grid-cell-contents" ng-init="realFlow = grid.appScope.$parent.realFlow(row.entity)">
+                <div class="ui-grid-cell-contents" ng-init="realFlow = grid.appScope.$parent.realFlow(row.entity);">
                     <a flow-handler="realFlow" flow-view="true">
                         查看
                     </a>

@@ -492,18 +492,20 @@ class AttendanceCtrl extends nb.Controller
 
     exeSearch: (departmentId)->
         date = moment(new Date("#{this.year}-#{this.month}")).format()
-        params = {summary_date: date}
+        params = {summary_date: date, employee_name: this.employee_name, employee_no: this.employee_no}
         params.department_id = departmentId if departmentId
 
         self = @
 
+        #console.error params
         @search(params).$asPromise().then (data)->
             summary_record = _.find data.$response.data.meta.attendance_summary_status, (item)->
                 item.department_id == departmentId
 
-            self.departmentHrChecked = summary_record.department_hr_checked
-            self.departmentLeaderChecked = summary_record.department_leader_checked
-            self.hrDepartmentLeaderChecked = summary_record.hr_department_leader_checked
+            if angular.isDefined(summary_record)
+                self.departmentHrChecked = summary_record.department_hr_checked
+                self.departmentLeaderChecked = summary_record.department_leader_checked
+                self.hrDepartmentLeaderChecked = summary_record.hr_department_leader_checked
 
             angular.forEach self.tableData, (item)->
                 item.departmentHrChecked = self.departmentHrChecked
@@ -571,9 +573,10 @@ class AttendanceCtrl extends nb.Controller
             summary_record = _.find data.$response.data.meta.attendance_summary_status, (item)->
                 item.department_id == data.$response.data.meta.department_id
 
-            self.departmentHrChecked = summary_record.department_hr_checked
-            self.departmentLeaderChecked = summary_record.department_leader_checked
-            self.hrDepartmentLeaderChecked = summary_record.hr_department_leader_checked
+            if angular.isDefined(summary_record)
+                self.departmentHrChecked = summary_record.department_hr_checked
+                self.departmentLeaderChecked = summary_record.department_leader_checked
+                self.hrDepartmentLeaderChecked = summary_record.hr_department_leader_checked
 
             angular.forEach self.tableData, (item)->
                 item.departmentHrChecked = self.departmentHrChecked
