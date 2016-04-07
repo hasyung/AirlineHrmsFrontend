@@ -471,7 +471,7 @@ class MyRequestCtrl extends nb.Controller
             leaves.$refresh()
 
     loadReviewer: () ->
-        @Employee.leaders()
+        @Employee.flow_leaders()
 
     myRequests: (FlowName) ->
         @loadAnnuities()
