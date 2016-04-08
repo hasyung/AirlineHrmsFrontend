@@ -457,7 +457,8 @@
     .my-cell-cotainer {
         @include clearfix();
         margin: 0 auto 100px;
-        width: 960px;
+        // width: 960px;
+        width: 800px;
     }
 
     .my-requests-cell {
