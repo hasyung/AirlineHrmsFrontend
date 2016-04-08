@@ -148,9 +148,9 @@ class NewResourceCtrl
 
 
 class NewFlowCtrl
-    @.$inject = ['$scope', '$http', '$state', 'USER_META', 'toaster']
+    @.$inject = ['$scope', '$http', '$state', 'USER_META', 'toaster', 'VACATIONS']
 
-    constructor: (scope, $http, @state, meta, @toaster) ->
+    constructor: (scope, $http, @state, meta, @toaster, vacations) ->
         self = @
 
         Moment = moment().constructor
@@ -166,9 +166,20 @@ class NewFlowCtrl
                 # 指令 flowHandler 处理后再次会渲染 2 次
                 rd = request.relation_data
                 start = rd.indexOf("年假 (")
-                ng_code = "年假 (<span ng-repeat=\"(key, value) in vacations.year_days.year\">{{key}} 年年假剩余天数 {{value}} 天 </span>"
-                request.relation_data =  rd.substring(0, start) + ng_code + ")</span>" + "</div></div></div>"
-                # console.error request.relation_data
+                # ng_code = "年假 (<span ng-repeat=\"(key, value) in vacations.year_days.year\">{{key}} 年年假剩余天数 {{value}} 天 </span>"
+                # request.relation_data =  rd.substring(0, start) + ng_code + ")</span>" + "</div></div></div>"
+
+                static_content = "<span>年假 ("
+
+                if angular.isDefined(vacations)
+                    angular.forEach vacations.year_days.year, (value, key)->
+                        static_content += "<span>" + key + " 年年假剩余天数 " + value + " 天</span>"
+
+                static_content += ")</span></div></div></div>"
+
+                request.relation_data =  rd.substring(0, start) + static_content
+                console.error static_content
+                console.error request.relation_data
 
             data = _.cloneDeep(request)
 
@@ -200,10 +211,10 @@ class NewFlowCtrl
 
 
 class NewMyRequestCtrl extends NewFlowCtrl
-    @.$inject = ['$scope', '$http', '$timeout', '$state', 'USER_META', 'toaster', '$nbEvent', 'Employee']
+    @.$inject = ['$scope', '$http', '$timeout', '$state', 'USER_META', 'toaster', '$nbEvent', 'Employee', 'VACATIONS']
 
-    constructor: (scope, $http, $timeout, $state, meta, toaster, @Evt, @Employee) ->
-        super(scope, $http, $state, meta, toaster) # 手动注入父类实例化参数
+    constructor: (scope, $http, $timeout, $state, meta, toaster, @Evt, @Employee, vacations) ->
+        super(scope, $http, $state, meta, toaster, vacations) # 手动注入父类实例化参数
         self = @
 
         scope.request = {}
