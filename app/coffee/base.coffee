@@ -178,8 +178,8 @@ class NewFlowCtrl
                 static_content += ")</span></div></div></div>"
 
                 request.relation_data =  rd.substring(0, start) + static_content
-                console.error static_content
-                console.error request.relation_data
+                #console.error static_content
+                #console.error request.relation_data
 
             data = _.cloneDeep(request)
 
