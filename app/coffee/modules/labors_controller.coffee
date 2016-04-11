@@ -767,9 +767,9 @@ class AttendanceHisCtrl extends nb.Controller
 
 
 class ContractCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Contract', '$http', 'Employee', '$nbEvent', 'toaster', 'CURRENT_ROLES', 'PERMISSIONS']
+    @.$inject = ['$scope', 'Contract', '$http', 'EmployeesHasEarlyRetire', '$nbEvent', 'toaster', 'CURRENT_ROLES', 'PERMISSIONS']
 
-    constructor: (@scope, @Contract, @http, @Employee, @Evt, @toaster, @CURRENT_ROLES, @permissions) ->
+    constructor: (@scope, @Contract, @http, @EmployeesHasEarlyRetire, @Evt, @toaster, @CURRENT_ROLES, @permissions) ->
         @show_merged = false
         @loadInitialData()
 
@@ -1020,7 +1020,7 @@ class ContractCtrl extends nb.Controller
     loadEmployee: (params, contract)->
         self = @
 
-        @Employee.$collection().$refresh(params).$then (employees)->
+        @EmployeesHasEarlyRetire.$collection().$refresh(params).$then (employees)->
             args = _.mapKeys params, (value, key) ->
                 _.camelCase key
 
