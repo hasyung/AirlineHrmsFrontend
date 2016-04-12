@@ -1,6 +1,5 @@
 resources = angular.module('resources')
 
-
 Employee = (restmod, RMUtils, $Evt) ->
     Employee = restmod.model('/employees').mix 'nbRestApi', 'NestedDirtyModel', {
         department: {belongsTo: 'Org', mask: 'CU'}
@@ -118,6 +117,20 @@ Employee = (restmod, RMUtils, $Evt) ->
                     this.$refresh(tableState)
     }
 
+EmployeesHasEarlyRetire = (restmod, RMUtils, $Evt) ->
+    EmployeesHasEarlyRetires = restmod.model('/employees/search').mix 'nbRestApi', {
+        department: {belongsTo: 'Org', mask: 'CU'}
+
+        joinScalDate: {decode: 'date', param: 'yyyy-MM-dd'}
+        startWorkDate: {decode: 'date', param: 'yyyy-MM-dd'}
+        startDate: {decode: 'date', param: 'yyyy-MM-dd'}
+
+        $config:
+            jsonRootSingle: 'employee'
+            jsonRootMany: 'employees'
+
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+    }
 
 LeaveEmployees = (restmod, RMUtils, $Evt) ->
     LeaveEmployees = restmod.model('/leave_employees').mix 'nbRestApi', {
@@ -219,6 +232,7 @@ Formerleaders = (restmod, RMUtils, $Evt) ->
 
 
 resources.factory 'Employee', ['restmod', 'RMUtils', '$nbEvent', Employee]
+resources.factory 'EmployeesHasEarlyRetire', ['restmod', 'RMUtils', '$nbEvent', EmployeesHasEarlyRetire]
 resources.factory 'Formerleaders', ['restmod', 'RMUtils', '$nbEvent', Formerleaders]
 resources.factory 'LeaveEmployees', ['restmod', 'RMUtils', '$nbEvent', LeaveEmployees]
 resources.factory 'EarlyRetireEmployees', ['restmod', 'RMUtils', '$nbEvent', EarlyRetireEmployees]
