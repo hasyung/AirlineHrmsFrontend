@@ -55,6 +55,8 @@ FlowHandlerDirective = (ngDialog)->
                                 </div>
                             </div>
                             <div style="margin-top:30px;" nb-annexs-box annexs="flow.attachments" ng-if="flow.attachments && flow.attachments.length >=1"></div>
+                            <md-subheader ng-if="flowView && (flow.name!='合同续签' || isHistory) && leaveFlows.indexOf(flow.type)" class="accessory-header md-background md-hue-1"></md-subheader> 附件补传
+                            <div ng-if="flowView && (flow.name!='合同续签' || isHistory) && leaveFlows.indexOf(flow.type)" flow-file-upload flow-type="#FlowType#" ng-model="supplementIds"></div>
                         </div>
                     </div>
                 </md-card>
@@ -100,6 +102,7 @@ FlowHandlerDirective = (ngDialog)->
                         >移交</md-button>
                 </div>
                 <div class="approval-buttons" ng-if="flowView && (flow.name!='合同续签' || isHistory)">
+                    <md-button ng-show="supplementIds.length > 0" class="md-raised md-primary" ng-click="supplementFlowFile(flow, supplementIds, dialog)">提交</md-button>
                     <md-button class="md-raised md-warn" ng-click="dialog.close()" type="button">关闭</md-button>
                 </div>
             </div>
@@ -117,11 +120,10 @@ FlowHandlerDirective = (ngDialog)->
             return template
                     .replace(/#flowRelationData#/, `flow.relationData ? flow.relationData : ''`)
                     .replace(/#extraFormLayout#/, `flow.$extraForm ? flow.$extraForm : ''`)
+                    .replace(/#FlowType#/, `flow.type? flow.type: ''`)
 
         openDialog = (evt)->
             promise = scope.flow.$refresh().$asPromise()
-
-            console.error scope.vacations
 
             promise.then(offeredExtra).then (template)->
                 ngDialog.open {
@@ -139,6 +141,7 @@ FlowHandlerDirective = (ngDialog)->
 
     comiple = () ->
 
+
     return {
         scope: {
             flow: "=flowHandler"
@@ -151,9 +154,28 @@ FlowHandlerDirective = (ngDialog)->
 
 
 class FlowController
-    @.$inject = ['$http','$scope', 'USER_META', 'OrgStore', 'Employee', '$nbEvent', '$state', 'VACATIONS']
+    @.$inject = ['$http','$scope', 'USER_META', 'OrgStore', 'Employee', '$nbEvent', '$state', 'VACATIONS', 'toaster']
 
-    constructor: (http, scope, meta, OrgStore, Employee, Evt, @state, vacations) ->
+    constructor: (http, scope, meta, OrgStore, Employee, Evt, @state, vacations, toaster) ->
+        scope.leaveFlows = [
+            "Flow::AccreditLeave"
+            "Flow::FuneralLeave"
+            "Flow::HomeLeave"
+            "Flow::MarriageLeave"
+            "Flow::MaternityLeave"
+            "Flow::MaternityLeaveBreastFeeding"
+            "Flow::MaternityLeaveDystocia"
+            "Flow::MaternityLeaveLateBirth"
+            "Flow::MaternityLeaveMultipleBirth"
+            "Flow::MiscarriageLeave"
+            "Flow::PrenatalCheckLeave"
+            "Flow::RearNurseLeave"
+            "Flow::SickLeave"
+            "Flow::SickLeaveInjury"
+            "Flow::SickLeaveNulliparous"
+            "Flow::LactationLeave"
+        ]
+
         FLOW_HTTP_PREFIX = "/api/workflows"
         scope.selectedOrgs = []
 
@@ -172,6 +194,8 @@ class FlowController
         scope.req = {
             opinion: true
         }
+
+        scope.supplementIds = []
 
         # console.error scope.vacations
         # 查看请假流程的时候不显示年假信息
@@ -201,6 +225,18 @@ class FlowController
                     # state.go(state.current.name, {}, {reload: true})
 
                 dialog.close()
+
+        # 补传附件 － new feature
+        scope.supplementFlowFile = (flow, attachments_ids, dialog) ->
+            url = joinUrl(FLOW_HTTP_PREFIX, flow.type, flow.id) + '/supplement'
+
+            params = { attachment_ids: attachments_ids }
+
+            http.put url, params
+                .success (data) ->
+                    toaster.pop 'success', '提示', '补传附件成功'
+                    dialog.close()
+
 
         parseParams = (params)->
             if params.type == "departments"
