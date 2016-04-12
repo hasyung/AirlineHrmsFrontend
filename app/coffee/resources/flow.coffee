@@ -55,7 +55,7 @@ FlowHandlerDirective = (ngDialog)->
                                 </div>
                             </div>
                             <div style="margin-top:30px;" nb-annexs-box annexs="flow.attachments" ng-if="flow.attachments && flow.attachments.length >=1"></div>
-                            <md-subheader ng-if="flowView && (flow.name!='合同续签' || isHistory) && leaveFlows.indexOf(flow.type) >= 0" class="accessory-header md-background md-hue-1"></md-subheader> 附件补传
+                            <md-subheader ng-if="flowView && (flow.name!='合同续签' || isHistory) && leaveFlows.indexOf(flow.type) >= 0" class="accessory-header md-background md-hue-1">附件补传</md-subheader>
                             <div ng-if="flowView && (flow.name!='合同续签' || isHistory) && leaveFlows.indexOf(flow.type) >= 0" flow-file-upload flow-type="#FlowType#" ng-model="supplementIds"></div>
                         </div>
                     </div>
