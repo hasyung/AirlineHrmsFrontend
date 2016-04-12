@@ -15,17 +15,17 @@ block base_info
         md-input-container(flex)
             label 员工部门编码
             input(
-                type="text" name="current.setBookNo" ng-model="current.accountNumber" readonly)
+                type="text" ng-model="exchangeCtrl.setBookData.dep_set_book_no" readonly)
 
         md-input-container(flex)
             label 员工账户
             input(
-                type="text" ng-model="current.bankNo" ng-readonly="!exchangeCtrl.editing")
+                type="text" ng-model="exchangeCtrl.setBookData.bank_no" ng-readonly="!exchangeCtrl.editing")
 
     div(layout)
         md-input-container.row-has-value(flex)
             label 人员分类编码
-            md-select(ng-model="current.employeeCategory" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+            md-select(ng-model="exchangeCtrl.setBookData.employee_category" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(value="空") 空
                 md-option(value="A001") A001
                 md-option(value="A002") A002
@@ -40,7 +40,7 @@ block base_info
 
         md-input-container.row-has-value(flex)
             label 帐套
-            md-select(ng-model="current.salaryCategory" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+            md-select(ng-model="exchangeCtrl.setBookData.salary_category" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(value="无") 无
                 md-option(value="合同工") 合同工
                 md-option(value="合同制") 合同制

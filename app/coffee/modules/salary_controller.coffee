@@ -503,6 +503,14 @@ class DepNumSettingController extends nb.Controller
     saveDepNumber: (id, num) ->
         # @http请求保存接口
         # 保存部门编码
+        self = @
+        params = { id: id, set_book_no: num }
+
+        @http.post('/api/departments/update_set_book_no', params)
+            .success (data) ->
+                self.toaster.pop 'success', '提示', data.messages
+            .error (data) ->
+                self.toaster.pop 'error', '提示', data.messages
 
 
 
@@ -944,10 +952,13 @@ class SalaryGradeChangeController extends nb.Controller
 
 
 class SalaryExchangeController
-    @.$inject = ['$http', '$scope', '$nbEvent', 'SALARY_SETTING', '$timeout']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'SALARY_SETTING', '$timeout', 'toaster', '$q']
 
-    constructor: ($http, $scope, $Evt, @SALARY_SETTING, $timeout) ->
+    constructor: (@http, $scope, $Evt, @SALARY_SETTING, $timeout, @toaster, @q) ->
         self = @
+
+        @setBookData = null
+        @alreadyHasSetBook = true
 
         @isLegalFlagArr = []
         @isLegalPerfFlagArr = []
@@ -1253,6 +1264,41 @@ class SalaryExchangeController
 
         setting = @$settingHash('air_security_hour')
         current.securityHourMoney = setting[current.securityHourFee]
+
+    loadPersonalSetBook: (current) ->
+        self = @
+
+        employeeId = current.owner.$pk
+
+        @http.get('/api/set_books/info?employee_id=' + employeeId)
+            .success (data) ->
+                if data.messages == '该员工套账信息为空'
+                    self.alreadyHasSetBook = false
+                else
+                    self.setBookData = data.set_book_info
+                    self.alreadyHasSetBook = true
+
+    savePersonalSetBook: (setBookData, current) ->
+        self = @
+
+        params = setBookData
+        params.employee_id = current.owner.$pk
+
+        if @alreadyHasSetBook
+            @http.put '/api/set_books/' + params.employee_id, params
+                .success (msg) ->
+                    self.toaster.pop 'success', '提示', '套账信息保存成功'
+                .error (msg) ->
+                    self.toaster.pop 'error', '提示', msg.messages
+
+        else if !@alreadyHasSetBook
+            @http.post '/api/set_books', params
+                .success (data) ->
+                    self.setBookData = data.set_book_info
+                    self.toaster.pop 'success', '提示', '套账信息创建成功'
+                    self.alreadyHasSetBook = true
+                .error (msg) ->
+                    self.toaster.pop 'error', '提示', msg.messages
 
 
 class SalaryBaseController extends nb.Controller

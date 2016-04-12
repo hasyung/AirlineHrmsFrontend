@@ -8,12 +8,12 @@
         .top-dep(ng-repeat="topDep in ctrl.orgTree.children track by $index")
             span.dname {{::topDep.label}}
             span.dno
-                input(type="text" ng-model="topDep.setBookNober")
+                input(type="text" ng-model="topDep.set_book_no" ng-blur="ctrl.saveDepNumber(topDep.id, topDep.set_book_no)")
             .mid-dep(ng-if="topDep.children.length > 0" ng-class="{'border0': $last, 'bt1': $first}" ng-repeat="midDep in topDep.children track by $index")
                 span.dname {{::midDep.label}}
                 span.dno
-                    input(type="text" ng-model="midDep.setBookNober")
+                    input(type="text" ng-model="midDep.set_book_no" ng-blur="ctrl.saveDepNumber(midDep.id, midDep.set_book_no)")
                 .bottom-dep(ng-if="midDep.children.length > 0" ng-class="{'border0': $last, 'bt1': $first}" ng-repeat="bottomDep in midDep.children track by $index")
                     span.dname {{::bottomDep.label}}
                     span.dno
-                        input(type="text" ng-model="bottomDep.setBookNober")
+                        input(type="text" ng-model="bottomDep.set_book_no" ng-blur="ctrl.saveDepNumber(bottomDep.id, bottomDep.set_book_no)")
