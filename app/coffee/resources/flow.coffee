@@ -55,8 +55,8 @@ FlowHandlerDirective = (ngDialog)->
                                 </div>
                             </div>
                             <div style="margin-top:30px;" nb-annexs-box annexs="flow.attachments" ng-if="flow.attachments && flow.attachments.length >=1"></div>
-                            <md-subheader ng-if="flowView && (flow.name!='合同续签' || isHistory) && leaveFlows.indexOf(flow.type) >= 0" class="accessory-header md-background md-hue-1">附件补传</md-subheader>
-                            <div ng-if="flowView && (flow.name!='合同续签' || isHistory) && leaveFlows.indexOf(flow.type) >= 0" flow-file-upload flow-type="#FlowType#" ng-model="supplementIds"></div>
+                            <div ng-show="flowView && (flow.name !='合同续签' || isHistory) && leaveFlows.indexOf(flow.type) >= 0" class="accessory-header">附件补传</div>
+                            <div ng-show="flowView && (flow.name !='合同续签' || isHistory) && leaveFlows.indexOf(flow.type) >= 0" flow-file-upload flow-type="#FlowType#" ng-model="supplementIds"></div>
                         </div>
                     </div>
                 </md-card>
@@ -120,7 +120,7 @@ FlowHandlerDirective = (ngDialog)->
             return template
                     .replace(/#flowRelationData#/, `flow.relationData ? flow.relationData : ''`)
                     .replace(/#extraFormLayout#/, `flow.$extraForm ? flow.$extraForm : ''`)
-                    .replace(/#FlowType#/, `flow.type? flow.type: ''`)
+                    .replace(/#FlowType#/, `flow.type? flow.type : ''`)
 
         openDialog = (evt)->
             promise = scope.flow.$refresh().$asPromise()
@@ -229,6 +229,8 @@ class FlowController
         # 补传附件 － new feature
         scope.supplementFlowFile = (flow, attachments_ids, dialog) ->
             url = joinUrl(FLOW_HTTP_PREFIX, flow.type, flow.id) + '/supplement'
+
+            console.log attachments_ids
 
             params = { attachment_ids: attachments_ids }
 
