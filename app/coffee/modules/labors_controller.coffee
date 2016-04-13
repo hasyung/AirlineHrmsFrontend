@@ -653,6 +653,18 @@ class AttendanceCtrl extends nb.Controller
     isDepartmentHr: ()->
         @CURRENT_ROLES.indexOf('department_hr') >= 0
 
+    getCheckInfo: (tableData) ->
+        self = @
+
+        currentDepId = tableData.$metadata.department_id
+
+        _.map tableData.$metadata.attendance_summary_status, (dep) ->
+            if dep.department_id == currentDepId
+                self.depCheckInfo = dep
+                return
+
+
+
     finishVacation: ()->
         # 销假的逻辑目前没有实际的数据影响
 

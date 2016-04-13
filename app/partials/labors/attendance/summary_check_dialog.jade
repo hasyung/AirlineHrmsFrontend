@@ -1,0 +1,46 @@
+md-dialog.summary-state-pop(
+    ng-init=" ctrl = dialog.ctrl; tableData = dialog.tableData.$refresh(); ctrl.getCheckInfo(tableData);"
+    )
+    md-content
+        .pop-row
+            label HR汇总确认：
+            input(
+                type="text"
+                ng-model="ctrl.depCheckInfo.hr_name"
+                placeholder="操作人"
+                readonly
+                )
+            input(
+                type="text"
+                ng-model="ctrl.depCheckInfo.hr_confirmed_at"
+                placeholder="操作时间"
+                readonly
+                )
+        .pop-row
+            label 部门审核：
+            input(
+                type="text"
+                ng-model="ctrl.depCheckInfo.department_leader_name"
+                placeholder="操作人"
+                readonly
+                )
+            input(
+                type="text"
+                ng-model="ctrl.depCheckInfo.department_leader_confirm_at"
+                placeholder="操作时间"
+                readonly
+                )
+        .pop-row
+            label 领导审核：
+            input(
+                type="text"
+                ng-model="ctrl.depCheckInfo.hr_leader_name"
+                placeholder="操作人"
+                readonly
+                )
+            input(
+                type="text"
+                ng-model="ctrl.depCheckInfo.hr_leader_confirmed_at"
+                placeholder="操作时间"
+                readonly
+                )
