@@ -292,8 +292,12 @@ block allowance_setting
         md-input-container(flex)
             label 维修补贴
             input(type="number" min="0" ng-model="current.maintainSubsidy" ng-readonly="!exchangeCtrl.editing")
-        div(flex)
-        div(flex)
+        md-input-container(flex)
+            label 后勤保障部补贴
+            input(type="number" min="0" ng-model="current.logisticalSupportSubsidy" ng-readonly="!exchangeCtrl.editing")
+        md-input-container(flex)
+            label 值班工资
+            input(type="number" min="0" ng-model="current.watchSubsidy" ng-readonly="!exchangeCtrl.editing")
     //- div(layout)
     //-     md-input-container(flex)
     //-         label 寒冷补贴
