@@ -54,9 +54,13 @@ FlowHandlerDirective = (ngDialog)->
                                     <span class="cell-content">{{entity.value}}</span>
                                 </div>
                             </div>
+                            <p ng-show="AllLeaveFlows.indexOf(flow.type) >= 0 && !flowView && flow.type != 'Flow::PersonalLeave' && leaveDays >= 2.5 && leaveDays < 5" class="approval-relation-tip">请假天数大于等于2.5天，需部门分管领导批准</p>
+                            <p ng-show="AllLeaveFlows.indexOf(flow.type) >= 0 && !flowView && flow.type != 'Flow::PersonalLeave' && leaveDays >= 5" class="approval-relation-tip">请假天数大于等于5天，需部门分管领导及主官批准</p>
+                            <p ng-show="AllLeaveFlows.indexOf(flow.type) >= 0 && !flowView && flow.type == 'Flow::PersonalLeave' && leaveDays <= 3" class="approval-relation-tip">请假天数小于等于3天，需部门主官批准</p>
+                            <p ng-show="AllLeaveFlows.indexOf(flow.type) >= 0 && !flowView && flow.type == 'Flow::PersonalLeave' && leaveDays > 3" class="approval-relation-tip">请假天数大于3天，需部门主官及人力资源部总经理批准</p>
                             <div style="margin-top:30px;" nb-annexs-box annexs="flow.attachments" ng-if="flow.attachments && flow.attachments.length >=1"></div>
-                            <div ng-show="flowView && (flow.name !='合同续签' || isHistory) && leaveFlows.indexOf(flow.type) >= 0" class="accessory-header">附件补传</div>
-                            <div ng-show="flowView && (flow.name !='合同续签' || isHistory) && leaveFlows.indexOf(flow.type) >= 0" flow-file-upload flow-type="#FlowType#" ng-model="supplementIds"></div>
+                            <div ng-show="flowView && (flow.name !='合同续签' || isHistory) && leaveFlowsNeedAttachment.indexOf(flow.type) >= 0" class="accessory-header">附件补传</div>
+                            <div ng-show="flowView && (flow.name !='合同续签' || isHistory) && leaveFlowsNeedAttachment.indexOf(flow.type) >= 0" flow-file-upload flow-type="#FlowType#" ng-model="supplementIds"></div>
                         </div>
                     </div>
                 </md-card>
@@ -157,7 +161,7 @@ class FlowController
     @.$inject = ['$http','$scope', 'USER_META', 'OrgStore', 'Employee', '$nbEvent', '$state', 'VACATIONS', 'toaster']
 
     constructor: (http, scope, meta, OrgStore, Employee, Evt, @state, vacations, toaster) ->
-        scope.leaveFlows = [
+        scope.leaveFlowsNeedAttachment = [
             "Flow::AccreditLeave"
             "Flow::FuneralLeave"
             "Flow::HomeLeave"
@@ -173,6 +177,30 @@ class FlowController
             "Flow::SickLeave"
             "Flow::SickLeaveInjury"
             "Flow::SickLeaveNulliparous"
+            "Flow::LactationLeave"
+        ]
+
+        scope.AllLeaveFlows = [
+            "Flow::AccreditLeave"
+            "Flow::AnnualLeave"
+            "Flow::FuneralLeave"
+            "Flow::HomeLeave"
+            "Flow::MarriageLeave"
+            "Flow::MaternityLeave"
+            "Flow::MaternityLeaveBreastFeeding"
+            "Flow::MaternityLeaveDystocia"
+            "Flow::MaternityLeaveLateBirth"
+            "Flow::MaternityLeaveMultipleBirth"
+            "Flow::MiscarriageLeave"
+            "Flow::PersonalLeave"
+            "Flow::PrenatalCheckLeave"
+            "Flow::RearNurseLeave"
+            "Flow::SickLeave"
+            "Flow::SickLeaveInjury"
+            "Flow::SickLeaveNulliparous"
+            "Flow::OccupationInjury"
+            "Flow::WomenLeave"
+            "Flow::PublicLeave"
             "Flow::LactationLeave"
         ]
 
@@ -196,6 +224,9 @@ class FlowController
         }
 
         scope.supplementIds = []
+        scope.leaveDays = 0
+
+        @getFlowDays(scope)
 
         # console.error scope.vacations
         # 查看请假流程的时候不显示年假信息
@@ -229,8 +260,6 @@ class FlowController
         # 补传附件 － new feature
         scope.supplementFlowFile = (flow, attachments_ids, dialog) ->
             url = joinUrl(FLOW_HTTP_PREFIX, flow.type, flow.id) + '/supplement'
-
-            console.log attachments_ids
 
             params = { attachment_ids: attachments_ids }
 
@@ -289,6 +318,13 @@ class FlowController
             http.get('/api/me/auditor_list?&name='+param)
                 .success (result) ->
                     scope.leaders = result.employees
+
+    #获取请假流程天数
+    getFlowDays: (scope) ->
+        _.map scope.flow.formData, (item) ->
+            if item.name == '请假天数'
+                scope.leaveDays = item.value
+                return
 
 
 app.controller 'FlowController', FlowController
