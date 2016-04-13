@@ -13,11 +13,14 @@
                         md-select.month(ng-model="ctrl.month" flex ng-change="ctrl.exeSearch()" placeholder="请选择月份")
                             md-option(ng-value="item" ng-repeat="item in ctrl.month_list" ng-bind="item")
 
+                    span.row-text.last {{ctrl.tableData.$metadata.status}}
+                
                     a.row-text.last(
+                        style="font-size: 14px; color: rgb(33,150,243);"
                         nb-dialog
                         template-url="/partials/labors/attendance/summary_check_dialog.html"
                         locals="{tableData: ctrl.tableData, ctrl:ctrl}"
-                        ) {{ctrl.tableData.$metadata.status}}
+                        ) 审核信息
                 
                 div.grid-toolbar-search-row(flex layout)
                     label.row-text 员工：
