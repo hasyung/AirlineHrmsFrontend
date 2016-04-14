@@ -557,3 +557,25 @@ md-dialog.punishment_new {
     width: 36px;
 }
 
+// 考勤汇总审核 查看审核人和审核时间的dialog
+.summary-state-pop {
+    padding: 20px;
+
+    .pop-row {
+        margin-bottom: 10px;
+
+        input:last-child {
+            margin-left: 10px;
+        }
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input {
+        border: 0;
+    }
+}
+

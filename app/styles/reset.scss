@@ -281,12 +281,22 @@ md-drop-option {
 }
 
 .grid-toolbar-row {
-
     padding: 5px 0 0 30px;
 }
 
-.year-and-month-container {
+.grid-toolbar-search-row {
+    label {
+        font-size: $font-size-sm;
+        line-height: 58px;
+    }
 
+    md-input-container {
+        padding-bottom: 0;
+        padding-top: 12px;
+    }
+}
+
+.year-and-month-container {
     .row-text {
         display: inline-block;
         font-size: 14px;
@@ -294,14 +304,17 @@ md-drop-option {
         padding-top: 8px;
 
         &.last {
+            position: relative;
             margin-left: 20px;
         }
     }
 
     .year-and-month {
-
         width: 200px;
 
+        md-input-container {
+            padding-bottom: 0;
+        }
     }
 }
 

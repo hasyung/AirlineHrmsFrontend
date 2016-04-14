@@ -1475,6 +1475,8 @@ class EmployeeAttendanceCtrl extends nb.Controller
                     right: 'today prev,next'
                 }
 
+                displayEventTime: false
+
                 buttonText: {
                     today:    '今天',
                     month:    '月',
