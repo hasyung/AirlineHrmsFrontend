@@ -87,6 +87,12 @@
                             ng-disabled="ctrl.calcing || ctrl.records.length==0"
                             ) 导出
                         md-menu-content
+                            md-menu-item(has-permission="allowances_export_nc")
+                                a.md-button(
+                                    download
+                                    ng-href="/api/allowances/export_nc?month={{ctrl.currentCalcTime()}}"
+                                    href="javascript:"
+                                ) NC表
                             md-menu-item(has-permission="allowances_export_temp")
                                 a.md-button(flex
                                     download
