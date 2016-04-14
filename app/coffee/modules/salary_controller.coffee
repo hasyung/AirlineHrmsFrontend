@@ -1838,6 +1838,7 @@ class SalaryAllowanceController extends SalaryBaseController
             {minWidth: 150,displayName: '年审补贴', name: 'annualAuditSubsidy', enableCellEdit: false}
             {minWidth: 150,displayName: '维修补贴', name: 'maintainSubsidy', enableCellEdit: false}
             {minWidth: 150,displayName: '重庆兼职车辆维修班补贴', name: 'cqPartTimeFixCarSubsidy', enableCellEdit: false}
+            {minWidth: 150,displayName: '部件放行补贴', name: 'partPermitEntry', enableCellEdit: false}
             {minWidth: 150,displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
                 minWidth: 150
