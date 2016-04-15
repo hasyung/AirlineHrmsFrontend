@@ -247,6 +247,10 @@ class NewMyRequestCtrl extends NewFlowCtrl
         # 计算请假天数
         scope.calculateTotalDays = (data, vacation_type, sync_end_time) ->
             data.end_time = data.start_time if sync_end_time
+            # 女工假特殊处理
+            if vacation_type == '女工假'
+                scope.vacation_days = 1
+                data.end_time = moment(data.start_time).add(1, 'd').format()
 
             if data.start_time && data.end_time
                 start = moment(data.start_time)

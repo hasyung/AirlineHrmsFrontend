@@ -383,6 +383,12 @@ class Route
                     'FlowName': -> 'Flow::Resignation'
                 }
             }
+            # .state 'cabin_management', {
+            #     url: '/cabin_management'
+            #     templateUrl: 'partials/labors/cabin/index.html'
+            #     # controller: cabinManagementCtrl
+            #     controllerAs: 'ctrl'
+            # }
 
 
 app.config(Route)
@@ -676,7 +682,7 @@ class AttendanceRecordCtrl extends nb.Controller
         @loadInitialData()
 
         @scope.$enum = $enum
-        @reviewers = @Employee.leaders()
+        @reviewers = null
 
         @filterOptions = filterBuildUtils('attendanceRecord')
             .col 'name',                 '姓名',    'string',           '姓名'
@@ -690,6 +696,13 @@ class AttendanceRecordCtrl extends nb.Controller
             {minWidth: 120, displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
             {minWidth: 120, displayName: '到岗时间', name: 'joinScalDate'}
         ]
+
+    getReviewers: (employee) ->
+        console.log employee
+        self = @
+
+        @Employee.flow_leaders(employee.id).$asPromise().then (data) ->
+            self.reviewers = data
 
     loadInitialData: ()->
         @employees = @Employee.$collection().$fetch()
@@ -1446,6 +1459,27 @@ class SbFlowHandlerCtrl
     isHrLaborRelationMember: ()->
         @CURRENT_ROLES.indexOf('hr_labor_relation_member') >= 0
 
+# class cabinManagementCtrl extends nb.Controller
+#     @.$inject = ['$http', '$scope']
+
+#     constructor: ($http, scope) ->
+#         @filterOptions = {
+#             name: 'cabinManagement'
+#             constraintDefs: [
+#                 {
+#                     name: 'employee_name'
+#                     displayName: '姓名'
+#                     type: 'string'
+#                 }
+#             ]
+#         }
+
+#     search: (tableState)->
+#         tableState = tableState || {}
+#         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+#         @xxx.$refresh(tableState)
+
+
 app.controller('AttendanceRecordCtrl', AttendanceRecordCtrl)
 app.controller('AttendanceHisCtrl', AttendanceHisCtrl)
 app.controller('UserListCtrl', UserListCtrl)
@@ -1453,5 +1487,7 @@ app.controller('ContractCtrl', ContractCtrl)
 app.controller('ProtocolCtrl', ProtocolCtrl)
 app.controller('RetirementCtrl', RetirementCtrl)
 app.controller('SbFlowHandlerCtrl', SbFlowHandlerCtrl)
+
+# app.controller('cabinManagementCtrl', cabinManagementCtrl)
 
 app.constant('ColumnDef', [])

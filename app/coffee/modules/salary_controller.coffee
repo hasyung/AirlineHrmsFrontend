@@ -1761,7 +1761,7 @@ class SalaryAllowanceController extends SalaryBaseController
             {minWidth: 150,displayName: '机务放行补贴', name: 'permitEntry', enableCellEdit: false}
             {minWidth: 150,displayName: '试车津贴', name: 'tryDrive', enableCellEdit: false}
             {minWidth: 150,displayName: '飞行驾驶技术津贴', name: 'flyerScienceMoney', enableCellEdit: false}
-            {minWidth: 150,displayName: '飞行荣誉津贴', name: 'flyHonor', enableCellEdit: false}
+            {minWidth: 150,displayName: '飞行安全荣誉津贴', name: 'flyHonor', enableCellEdit: false}
             {minWidth: 150,displayName: '航线实习补贴', name: 'airlinePractice', enableCellEdit: false}
             {minWidth: 150,displayName: '随机补贴', name: 'followPlane', enableCellEdit: false}
             {minWidth: 150,displayName: '签派放行补贴', name: 'permitSign', enableCellEdit: false}
