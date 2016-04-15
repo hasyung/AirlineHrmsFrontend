@@ -39,37 +39,37 @@
                                     nb-panel
                                     locals="{receptor: ctrl.getSelected()}"
                                     template-url="partials/self/my_requests/leave/dead_leave.html") 丧假
-                            md-menu-item()
+                            md-menu-item(ng-if="$enum.parseLabel(ctrl.getSelected().genderId, 'genders') == '女'")
                                 a.md-button(
                                     ng-click="$mdMenu.hide()"
                                     nb-panel
                                     locals="{receptor: ctrl.getSelected()}"
                                     template-url="partials/self/my_requests/leave/abortion_leave.html") 产假
-                            md-menu-item()
+                            md-menu-item(ng-if="$enum.parseLabel(ctrl.getSelected().genderId, 'genders') == '女'")
                                 a.md-button(
                                     ng-click="$mdMenu.hide()"
                                     nb-panel
                                     locals="{receptor: ctrl.getSelected()}"
                                     template-url="partials/self/my_requests/leave/abortion_leave1.html") 产假(母乳喂养)
-                            md-menu-item()
+                            md-menu-item(ng-if="$enum.parseLabel(ctrl.getSelected().genderId, 'genders') == '女'")
                                 a.md-button(
                                     ng-click="$mdMenu.hide()"
                                     nb-panel
                                     locals="{receptor: ctrl.getSelected()}"
                                     template-url="partials/self/my_requests/leave/abortion_leave2.html") 产假(剖腹产、难产)
-                            md-menu-item()
+                            md-menu-item(ng-if="$enum.parseLabel(ctrl.getSelected().genderId, 'genders') == '女'")
                                 a.md-button(
                                     ng-click="$mdMenu.hide()"
                                     nb-panel
                                     locals="{receptor: ctrl.getSelected()}"
                                     template-url="partials/self/my_requests/leave/abortion_leave3.html") 产假(晚育)
-                            md-menu-item()
+                            md-menu-item(ng-if="$enum.parseLabel(ctrl.getSelected().genderId, 'genders') == '女'")
                                 a.md-button(
                                     ng-click="$mdMenu.hide()"
                                     nb-panel
                                     locals="{receptor: ctrl.getSelected()}"
                                     template-url="partials/self/my_requests/leave/abortion_leave4.html") 产假(多胞胎)
-                            md-menu-item()
+                            md-menu-item(ng-if="$enum.parseLabel(ctrl.getSelected().genderId, 'genders') == '女'")
                                 a.md-button(
                                     ng-click="$mdMenu.hide()"
                                     nb-panel
