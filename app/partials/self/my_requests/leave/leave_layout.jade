@@ -7,7 +7,7 @@ div.workflow.md-background(md-theme="hrms")
     .personnel-content.personnel-control
         section.personnel-info-section
             md-content.nb-card-container(layout="column" md-theme="hrms")
-                form(ng-controller="NewMyRequestCtrl" ng-submit="createFlow(request, receptor, list);" name="leave_form" ng-init="receptor = panel.receptor; list = panel.list; receptor.$fetch(); request = initialFlow('#{flowType}');")
+                form(ng-controller="NewMyRequestCtrl" ng-submit="createFlow(request, receptor, list);" name="leave_form" ng-init="receptor = panel.receptor.$fetch(); list = panel.list; request = initialFlow('#{flowType}'); ctrl.getReviewers(receptor)")
                     md-card.form-material-section.nb-card
                         md-subheader.md-background.md-hue-1
                         flow-user-info(receptor="receptor")
@@ -128,7 +128,7 @@ div.workflow.md-background(md-theme="hrms")
                         .superior-container
                             md-radio-group(ng-model="request.reviewer_id" md-theme="default")
                                 md-radio-button.md-primary(
-                                    ng-repeat="reviewer in ::ctrl.reviewers track by reviewer.id"
+                                    ng-repeat="reviewer in ctrl.reviewers track by reviewer.id"
                                     ng-value="reviewer.id") {{ reviewer.name }}
                                     div {{reviewer.department.name}} / {{reviewer.position.name}}
 
