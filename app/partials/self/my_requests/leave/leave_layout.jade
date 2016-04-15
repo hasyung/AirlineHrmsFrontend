@@ -122,6 +122,29 @@ div.workflow.md-background(md-theme="hrms")
                                             md-subheader.accessory-header.md-background.md-hue-1 附件
                                             div(flow-file-upload flow-type="#{flowType}" ng-model="request.attachment_ids")
                                             block attachment_tip
+                                    when 3
+                                        block additional_form
+
+                                        div(layout)
+                                            md-input-container(flex)
+                                                label 开始日期
+                                                input(ng-model="request.start_time" ng-change="calculateTotalDays(request, '#{flowName}')" name="start_time" bs-datepicker required)
+
+                                        div(layout)
+                                            .without-edit
+                                                div.progress-wrapper(ng-if="calculating")
+                                                    md-progress-circular(md-mode="indeterminate")
+                                                div(ng-if="!calculating")
+                                                    div.without-edit-title 天数
+                                                    div.without-edit-content {{ vacation_days }}
+                                        div(layout)
+                                            md-input-container(flex)
+                                                label 申请理由
+                                                textarea(ng-model="request.reason" columns="1" md-maxlength="150")
+                                        if need_attachment
+                                            md-subheader.accessory-header.md-background.md-hue-1 附件
+                                            div(flow-file-upload flow-type="#{flowType}" ng-model="request.attachment_ids")
+                                            block attachment_tip
 
                     md-card.form-material-section.nb-card
                         md-subheader.superior-header.md-background.md-hue-1 提交上级

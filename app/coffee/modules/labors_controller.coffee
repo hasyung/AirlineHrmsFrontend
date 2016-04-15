@@ -698,6 +698,7 @@ class AttendanceRecordCtrl extends nb.Controller
         ]
 
     getReviewers: (employee) ->
+        console.log employee
         self = @
 
         @Employee.flow_leaders(employee.id).$asPromise().then (data) ->
