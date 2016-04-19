@@ -1,14 +1,15 @@
-mixin tabSection(heading, lookPermission, updatePermission)
+mixin tabSection(heading, lookPermission, updatePermission, preLoadHandlers, saveHandlers)
     tab(
         heading=heading
         has-permission=lookPermission
         )
         section.form-material-section(
             ng-controller="salaryExchangeCtrl as exchangeCtrl"
-            ng-init="exchangeCtrl.editing=false"
+            ng-init="exchangeCtrl.editing=false;"
             )
             div(
                 has-permission=updatePermission
+                ng-init=preLoadHandlers
                 )
                 .form-btn-group(ng-hide="exchangeCtrl.editing")
                     md-button.md-fab.md-primary(type="button" ng-click="exchangeCtrl.editing=true")
@@ -16,7 +17,7 @@ mixin tabSection(heading, lookPermission, updatePermission)
                 .form-btn-group(ng-show="exchangeCtrl.editing")
                     md-button.md-fab.white(type="button" ng-click="cancel(current, $event, salaryPersonal); exchangeCtrl.editing=false")
                         md-icon(md-svg-src="/images/svg/close.svg" aria-label="取消")
-                    md-button.md-fab.md-primary(ng-click="submit();exchangeCtrl.editing=false;")
+                    md-button.md-fab.md-primary(ng-disabled="salaryPersonal.$invalid" ng-click=saveHandlers)
                         md-icon(md-svg-src="/images/svg/check.svg" aria-label="保存")
             fieldset
                 include basic_info
@@ -25,30 +26,34 @@ mixin tabSection(heading, lookPermission, updatePermission)
 
 block vars
 
+if hasBaseInfo
+    +tabSection('员工信息', 'salary_person_setups_look_basic', 'salary_person_setups_update_basic', 'exchangeCtrl.loadPersonalSetBook(current)', 'exchangeCtrl.savePersonalSetBook(exchangeCtrl.setBookData, current);exchangeCtrl.editing=false;')
+        block base_info
+
 if hasBaseSetting
-    +tabSection('基本', 'salary_person_setups_look_basic', 'salary_person_setups_update_basic')
+    +tabSection('基本', 'salary_person_setups_look_basic', 'salary_person_setups_update_basic', '', 'submit();exchangeCtrl.editing=false;')
         block base_setting
 
 if hasHoursFeeSetting
-    +tabSection('小时费', 'salary_person_setups_look_hours_fee', 'salary_person_setups_update_hours_fee')
+    +tabSection('小时费', 'salary_person_setups_look_hours_fee', 'salary_person_setups_update_hours_fee', '', 'submit();exchangeCtrl.editing=false;')
         block hours_fee_setting
 
 if hasPerformanceSetting
-    +tabSection('绩效', 'salary_person_setups_look_performance', 'salary_person_setups_update_performance')
+    +tabSection('绩效', 'salary_person_setups_look_performance', 'salary_person_setups_update_performance', '', 'submit();exchangeCtrl.editing=false;')
         block performance_setting
 
 if hasAllowanceSetting
-    +tabSection('津贴', 'salary_person_setups_look_allowance', 'salary_person_setups_update_allowance')
+    +tabSection('津贴', 'salary_person_setups_look_allowance', 'salary_person_setups_update_allowance', '', 'submit();exchangeCtrl.editing=false;')
         block allowance_setting
 
 if hasCommunicate
-    +tabSection('通讯', 'salary_person_setups_look_communicate', 'salary_person_setups_update_communicate')
+    +tabSection('通讯', 'salary_person_setups_look_communicate', 'salary_person_setups_update_communicate', '', 'submit();exchangeCtrl.editing=false;')
         block communicate_setting
 
 if hasServiceCarSetting
-    +tabSection('公务车', 'salary_person_setups_look_service_car', 'salary_person_setups_update_service_car')
+    +tabSection('公务车', 'salary_person_setups_look_service_car', 'salary_person_setups_update_service_car', '', 'submit();exchangeCtrl.editing=false;')
         block service_car_setting
 
 if hasTempSetting
-    +tabSection('高温补贴', 'salary_person_setups_look_service_car', 'salary_person_setups_update_service_car')
+    +tabSection('高温补贴', 'salary_person_setups_look_temp', 'salary_person_setups_update_temp', '', 'submit();exchangeCtrl.editing=false;')
         block temp_setting
