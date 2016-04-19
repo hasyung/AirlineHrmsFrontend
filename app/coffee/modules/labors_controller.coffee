@@ -1456,7 +1456,6 @@ class SbFlowHandlerCtrl
     isHrLaborRelationMember: ()->
         @CURRENT_ROLES.indexOf('hr_labor_relation_member') >= 0
 
-<<<<<<< HEAD
 # 客舱服务部管理
 class VacationManagementCtrl extends nb.Controller
     @.$inject = ['$http', '$scope', 'VacationDistribute', 'toaster']
@@ -1581,7 +1580,7 @@ class VacationManagementCtrl extends nb.Controller
             self.importing = false
         .error (data) ->
             self.importing = false        
-            
+
 
 app.controller('AttendanceRecordCtrl', AttendanceRecordCtrl)
 app.controller('AttendanceHisCtrl', AttendanceHisCtrl)
