@@ -383,7 +383,10 @@ class Route
                     'FlowName': -> 'Flow::Resignation'
                 }
             }
-
+            .state 'cabin_management', {
+                url: '/cabin_management'
+                templateUrl: 'partials/labors/cabin/index.html'
+            }
 
 app.config(Route)
 
@@ -676,7 +679,7 @@ class AttendanceRecordCtrl extends nb.Controller
         @loadInitialData()
 
         @scope.$enum = $enum
-        @reviewers = @Employee.leaders()
+        @reviewers = null
 
         @filterOptions = filterBuildUtils('attendanceRecord')
             .col 'name',                 '姓名',    'string',           '姓名'
@@ -690,6 +693,13 @@ class AttendanceRecordCtrl extends nb.Controller
             {minWidth: 120, displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
             {minWidth: 120, displayName: '到岗时间', name: 'joinScalDate'}
         ]
+
+    getReviewers: (employee) ->
+        console.log employee
+        self = @
+
+        @Employee.flow_leaders(employee.id).$asPromise().then (data) ->
+            self.reviewers = data
 
     loadInitialData: ()->
         @employees = @Employee.$collection().$fetch()
@@ -1446,6 +1456,132 @@ class SbFlowHandlerCtrl
     isHrLaborRelationMember: ()->
         @CURRENT_ROLES.indexOf('hr_labor_relation_member') >= 0
 
+# 客舱服务部管理
+class VacationManagementCtrl extends nb.Controller
+    @.$inject = ['$http', '$scope', 'VacationDistribute', 'toaster']
+
+    constructor: (@http, scope, @VacationDistribute, @toaster) ->
+        @importing = false
+
+        @loadDateTime()
+        @loadInitialData()
+
+        @filterOptions = {
+            name: 'cabinManagement'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '姓名'
+                    type: 'string'
+                }
+            ]
+        }
+
+        @columnDef = [
+            {
+                minWidth: 120
+                displayName: '员工编号'
+                name: 'employeeNo'
+            }
+            {
+                minWidth: 120
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {
+                minWidth: 350
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+            }
+            {
+                minWidth: 250
+                displayName: '岗位'
+                name: 'positionName'
+                cellTooltip: (row) ->
+                    return row.entity.positionName
+            }
+            {minWidth: 150, displayName: '休假时间', name: 'vacationDates'}
+            {minWidth: 120, displayName: '天数', name: 'vacationDays'}
+            {minWidth: 120, displayName: '假别', name: 'flow.name'}
+            {minWidth: 120, displayName: '状态', name: 'flow.tCurrentState'}
+        ]
+
+    exportGridApi: (gridApi) ->
+        @gridApi = gridApi
+
+    loadMonthList: () ->
+        if @currentYear == new Date().getFullYear()
+            months = [1..new Date().getMonth() + 1]
+        else
+            months = [1..12]
+
+        @month_list = _.map months, (item)->
+            item = '0' + item if item < 10
+            item + ''
+
+    loadDateTime: ()->
+        @year_list = @$getYears()
+        @month_list = @$getMonths()
+
+        @currentYear = _.last(@year_list)
+        @currentMonth = _.last(@month_list)
+
+    currentCalcTime: ()->
+        @currentYear + "-" + @currentMonth
+
+    loadInitialData: () ->
+        args = {month: @currentCalcTime()}
+        @records = @VacationDistribute.$collection().$fetch()
+        @records.$refresh(args)
+
+    loadRecords: (tableState) ->
+        tableState = tableState || {}
+        @loadMonthList()
+        args = {month: @currentCalcTime()}
+        angular.extend(args, tableState) if angular.isDefined(tableState)
+        @records.$refresh(args)
+
+    search: (tableState)->
+        tableState = tableState || {}
+        tableState['month'] = @currentCalcTime()
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+        @records.$refresh(tableState)
+
+    uploadCabinVacation: (type, attachment_id)->
+        self = @
+        params = {type: type, attachment_id: attachment_id}
+        @importing = true
+
+        @http.post("/api/workflows/cabin_vacation_import", params).success (data, status) ->
+            self.toaster.pop('success', '提示', '导入成功')
+            self.importing = false
+        .error (data) ->
+            self.importing = false
+
+    approveVacations: () ->
+        self = @
+        params = {month: @currentCalcTime()}
+        @importing = true
+
+        @http.put("/api/workflows/approve_vacation_list", params).success (data) ->
+            self.toaster.pop('success', '提示', '审批已完成')
+            self.records.refresh(params)
+            self.importing = false
+        .error (data) ->
+            self.importing = false        
+
+
 app.controller('AttendanceRecordCtrl', AttendanceRecordCtrl)
 app.controller('AttendanceHisCtrl', AttendanceHisCtrl)
 app.controller('UserListCtrl', UserListCtrl)
@@ -1453,5 +1589,8 @@ app.controller('ContractCtrl', ContractCtrl)
 app.controller('ProtocolCtrl', ProtocolCtrl)
 app.controller('RetirementCtrl', RetirementCtrl)
 app.controller('SbFlowHandlerCtrl', SbFlowHandlerCtrl)
+app.controller('VacationManagementCtrl', VacationManagementCtrl)
+
+# app.controller('cabinManagementCtrl', cabinManagementCtrl)
 
 app.constant('ColumnDef', [])

@@ -1,0 +1,41 @@
+.app-content-wrapper(flex ng-controller="VacationManagementCtrl as ctrl")
+    md-toolbar.toolbar--welfare
+        .md-toolbar-tools
+            span(layout)
+                label 月度
+                md-select(style="width:100px;" ng-model="ctrl.currentYear" ng-change="ctrl.loadRecords()" placeholder="请选择年份")
+                    md-option(ng-value="item" ng-repeat="item in ctrl.year_list track by $index" ng-bind="item")
+                label(flex-order="2") 年
+                md-select(ng-model="ctrl.currentMonth" ng-change="ctrl.loadRecords()" placeholder="请选择月份")
+                    md-option(ng-value="item" ng-repeat="item in ctrl.month_list track by $index" ng-bind="item")
+                label(flex-order="3") 月
+            span(flex)
+
+    div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+
+    div.ui-grid-container.mt5
+        md-toolbar
+            .md-toolbar-tools
+                h2 假期分配
+                span(flex)
+                md-button.md-primary.md-raised(
+                    flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads: true, testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
+                    flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                    flow-file-success="ctrl.upload_start=false;ctrl.uploadCabinVacation('假期分配导入', ctrl.parseJSON($message).id);"
+                    flow-btn
+                    type="button"
+                    ng-disabled="ctrl.importing"
+                ) 导入
+                md-button.md-primary.md-raised(
+                    type="button"
+                    ng-disabled="ctrl.importing"
+                    ng-click="ctrl.approveVacations()"
+                ) 审批生效
+        div(
+            nb-grid
+            column-defs="ctrl.columnDef"
+            export-api
+            grid-pinning
+            on-register-api="ctrl.exportGridApi(gridApi)"
+            safe-src="ctrl.records"
+            )
