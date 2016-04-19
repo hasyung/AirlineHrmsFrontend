@@ -1293,6 +1293,11 @@ class SalaryExchangeController
                 .error (msg) ->
                     self.toaster.pop 'error', '提示', msg.messages
 
+    checkRegBankNo: (backNo, form) ->
+        reg = /^\d{19}$/
+
+        form.$invalid = !reg.test(backNo)
+
 
 class SalaryBaseController extends nb.Controller
     constructor: (@Model, @scope, @q, @right_hand_mode, options = null, @rootScope) ->

@@ -20,7 +20,7 @@ block base_info
         md-input-container(flex)
             label 员工账户
             input(
-                type="text" ng-model="exchangeCtrl.setBookData.bank_no" ng-readonly="!exchangeCtrl.editing")
+                type="text" ng-model="exchangeCtrl.setBookData.bank_no" name="bankNoInput" ng-change="exchangeCtrl.checkRegBankNo(exchangeCtrl.setBookData.bank_no, salaryPersonal)" maxLength="19" ng-readonly="!exchangeCtrl.editing")
 
     div(layout)
         md-input-container.row-has-value(flex)
