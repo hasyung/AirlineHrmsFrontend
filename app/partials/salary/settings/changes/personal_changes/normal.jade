@@ -19,6 +19,7 @@ block base_setting
                 //- md-option(value="manager12_base") 管理12
                 md-option(value="front_run_base") 前场运行监察
                 md-option(value="service_c_base") 服务C
+                md-option(value="service_c_driving_base") 服务C－驾驶
         md-input-container.row-has-value(flex ng-if="current.baseWage != 'service_c_driving_base'")
             label 薪酬通道
             md-select(ng-model="current.baseChannel" placeholder="请选择" ng-change="exchangeCtrl.normal(current); exchangeCtrl.changeBaseChannel(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
