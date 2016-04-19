@@ -8,6 +8,11 @@
                 span(flex)
                 md-button.md-primary.md-raised(
                     ng-disabled="!ctrl.import_finish"
+                    href="/api/set_books/export_change_record"
+                    download
+                ) 导出人员变动信息 
+                md-button.md-primary.md-raised(
+                    ng-disabled="!ctrl.import_finish"
                     ng-href="{{ ctrl.exportSSUrl }}"
                     ng-mouseenter="ctrl.exportSalaryUrl()"
                     download

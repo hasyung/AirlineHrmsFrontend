@@ -19,6 +19,7 @@ block base_setting
                 //- md-option(value="manager12_base") 管理12
                 md-option(value="front_run_base") 前场运行监察
                 md-option(value="service_c_base") 服务C
+                md-option(value="service_c_driving_base") 服务C－驾驶
         md-input-container.row-has-value(flex ng-if="current.baseWage != 'service_c_driving_base'")
             label 薪酬通道
             md-select(ng-model="current.baseChannel" placeholder="请选择" ng-change="exchangeCtrl.normal(current); exchangeCtrl.changeBaseChannel(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
@@ -292,12 +293,16 @@ block allowance_setting
         md-input-container(flex)
             label 维修补贴
             input(type="number" min="0" ng-model="current.maintainSubsidy" ng-readonly="!exchangeCtrl.editing")
-        md-input-container(flex)
+        md-input-container.row-has-value(flex)
             label 后勤保障部补贴
-            input(type="number" min="0" ng-model="current.logisticalSupportSubsidy" ng-readonly="!exchangeCtrl.editing")
-        md-input-container(flex)
+            md-select(ng-model="current.logisticalSupportSubsidy" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(value="false") 无
+                md-option(value="true") 有
+        md-input-container.row-has-value(flex)
             label 值班工资
-            input(type="number" min="0" ng-model="current.watchSubsidy" ng-readonly="!exchangeCtrl.editing")
+            md-select(ng-model="current.watchSubsidy" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(value="false") 无
+                md-option(value="true") 有
 
     div(layout)
         md-input-container.row-has-value(flex)

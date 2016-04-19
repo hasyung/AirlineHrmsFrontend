@@ -212,6 +212,24 @@
                                         md-input-container(md-no-float)
                                             input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.cq_part_time_fix_car_subsidy.third")
                                         span 元/月
+                            
+                            div(layout)
+                                .subheader 后勤保障部补贴
+                                .form-row(layout flex)
+                                    .form-cell(layout)
+                                        label
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.logistical_support_subsidy")
+                                        span 元/月
+
+                            div(layout)
+                                .subheader 值班工资
+                                .form-row(layout flex)
+                                    .form-cell(layout)
+                                        label
+                                        md-input-container(md-no-float)
+                                            input(type="number" min="0" max="100000" step="1" ng-model="ctrl.dynamic_config.watch_subsidy")
+                                        span 元/月
 
                             div(layout)
                                 .subheader 部件放行补贴
