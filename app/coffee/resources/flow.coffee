@@ -84,14 +84,13 @@ FlowHandlerDirective = (ngDialog)->
                             </div>
                         </div>
                         <div class="approval-opinions" ng-if="!flowView || (!isHistory && flow.name=='合同续签')">
-                            <form name="flowReplyForm" ng-submit="reply(userReply, flowReplyForm);">
+                            <form name="flowReplyForm">
                                 <div layout>
                                     <md-input-container flex>
                                         <label>审批意见</label>
-                                        <textarea ng-model="userReply" required columns="1" md-maxlength="150"></textarea>
+                                        <textarea ng-blur="reply(userReply, flowReplyForm)" ng-model="userReply" required columns="1" md-maxlength="150"></textarea>
                                     </md-input-container>
                                 </div>
-                                <md-button class="md-raised md-primary" type="submit">保存意见</md-button>
                             </form>
                         </div>
                     </div>

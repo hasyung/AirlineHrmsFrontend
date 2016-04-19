@@ -388,7 +388,6 @@ class Route
                 templateUrl: 'partials/labors/cabin/index.html'
             }
 
-
 app.config(Route)
 
 
@@ -680,7 +679,7 @@ class AttendanceRecordCtrl extends nb.Controller
         @loadInitialData()
 
         @scope.$enum = $enum
-        @reviewers = @Employee.leaders()
+        @reviewers = null
 
         @filterOptions = filterBuildUtils('attendanceRecord')
             .col 'name',                 '姓名',    'string',           '姓名'
@@ -694,6 +693,13 @@ class AttendanceRecordCtrl extends nb.Controller
             {minWidth: 120, displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
             {minWidth: 120, displayName: '到岗时间', name: 'joinScalDate'}
         ]
+
+    getReviewers: (employee) ->
+        console.log employee
+        self = @
+
+        @Employee.flow_leaders(employee.id).$asPromise().then (data) ->
+            self.reviewers = data
 
     loadInitialData: ()->
         @employees = @Employee.$collection().$fetch()
@@ -1450,6 +1456,7 @@ class SbFlowHandlerCtrl
     isHrLaborRelationMember: ()->
         @CURRENT_ROLES.indexOf('hr_labor_relation_member') >= 0
 
+<<<<<<< HEAD
 # 客舱服务部管理
 class VacationManagementCtrl extends nb.Controller
     @.$inject = ['$http', '$scope', 'VacationDistribute', 'toaster']
@@ -1574,6 +1581,7 @@ class VacationManagementCtrl extends nb.Controller
             self.importing = false
         .error (data) ->
             self.importing = false        
+            
 
 app.controller('AttendanceRecordCtrl', AttendanceRecordCtrl)
 app.controller('AttendanceHisCtrl', AttendanceHisCtrl)
@@ -1583,5 +1591,7 @@ app.controller('ProtocolCtrl', ProtocolCtrl)
 app.controller('RetirementCtrl', RetirementCtrl)
 app.controller('SbFlowHandlerCtrl', SbFlowHandlerCtrl)
 app.controller('VacationManagementCtrl', VacationManagementCtrl)
+
+# app.controller('cabinManagementCtrl', cabinManagementCtrl)
 
 app.constant('ColumnDef', [])
