@@ -185,6 +185,7 @@ class SalaryController extends nb.Controller
                           "service_b_car_repair_base",          # 基础-服务B-汽修工
                           "service_b_airline_keeper_base",      # 基础-服务B-机务工装设备/客舱供应库管
                           "service_c_base",                     # 基础-服务C
+                          "service_c_driving_base",             # 基础-服务C-驾驶
                           "air_observer_base",                  # 基础-空中观察员
                           "front_run_base",                     # 基础-前场运行监察
                           "information_perf",                   # 绩效-信息通道
