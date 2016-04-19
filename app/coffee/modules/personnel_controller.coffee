@@ -1305,7 +1305,7 @@ class EducationExpRecordController extends nb.Controller
                 displayName: '所属部门'
                 name: 'departmentName'
                 cellTooltip: (row) ->
-                    return row.entity.department.name
+                    return row.entity.departmentName
             }
             {
                 minWidth: 250

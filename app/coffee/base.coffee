@@ -233,14 +233,14 @@ class NewMyRequestCtrl extends NewFlowCtrl
 
             scope.start_times = [
                 startOfDay.clone().add(9, 'hours')
-                startOfDay.clone().add(13, 'hours')
+                startOfDay.clone().add(13, 'hours').add('30', 'm')
             ]
 
         scope.loadEndTime = () ->
             startOfDay = moment(scope.request.end_time).startOf('day')
 
             scope.end_times = [
-                startOfDay.clone().add(13, 'hours')
+                startOfDay.clone().add(13, 'hours').add('30', 'm')
                 startOfDay.clone().add(17, 'hours')
             ]
 

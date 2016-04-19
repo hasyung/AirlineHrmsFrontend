@@ -1459,26 +1459,6 @@ class SbFlowHandlerCtrl
     isHrLaborRelationMember: ()->
         @CURRENT_ROLES.indexOf('hr_labor_relation_member') >= 0
 
-# class cabinManagementCtrl extends nb.Controller
-#     @.$inject = ['$http', '$scope']
-
-#     constructor: ($http, scope) ->
-#         @filterOptions = {
-#             name: 'cabinManagement'
-#             constraintDefs: [
-#                 {
-#                     name: 'employee_name'
-#                     displayName: '姓名'
-#                     type: 'string'
-#                 }
-#             ]
-#         }
-
-#     search: (tableState)->
-#         tableState = tableState || {}
-#         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
-#         @xxx.$refresh(tableState)
-
 
 app.controller('AttendanceRecordCtrl', AttendanceRecordCtrl)
 app.controller('AttendanceHisCtrl', AttendanceHisCtrl)
