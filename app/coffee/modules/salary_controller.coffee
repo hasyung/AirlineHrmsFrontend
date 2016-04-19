@@ -196,7 +196,6 @@ class SalaryController extends nb.Controller
                           "service_c_1_perf",                   # 绩效-服务C-1
                           "service_c_2_perf",                   # 绩效-服务C-2
                           "service_c_3_perf",                   # 绩效-服务C-3
-                          "service_c_driving_base",             # 基础-服务C-驾驶，固定2100
                           "service_c_driving_perf",             # 绩效-服务C-驾驶
                           "market_leader_perf",                 # 绩效-营销类Y/管理A类
                           "material_leader_perf",               # 绩效-航务/航材技术类H
@@ -1022,10 +1021,6 @@ class SalaryExchangeController
         return unless current.baseWage
         return unless current.baseFlag
 
-        if current.baseWage == 'service_c_driving_base'
-            current.baseMoney = 2100
-            return
-
         setting = @$settingHash(current.baseWage)
         flag = setting.flags[current.baseFlag]
 
@@ -1058,9 +1053,6 @@ class SalaryExchangeController
 
         setting = @$settingHash(current.baseWage)
         flags = []
-
-        # if current.baseWage == 'service_c_driving_base'
-        #     return
 
         angular.forEach setting.flags, (config, flag)->
             if Object.keys(config).indexOf(current.baseChannel) >= 0

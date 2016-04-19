@@ -20,11 +20,11 @@ block base_setting
                 md-option(value="front_run_base") 前场运行监察
                 md-option(value="service_c_base") 服务C
                 md-option(value="service_c_driving_base") 服务C－驾驶
-        md-input-container.row-has-value(flex ng-if="current.baseWage != 'service_c_driving_base'")
+        md-input-container.row-has-value(flex)
             label 薪酬通道
             md-select(ng-model="current.baseChannel" placeholder="请选择" ng-change="exchangeCtrl.normal(current); exchangeCtrl.changeBaseChannel(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(ng-value="item.grade" ng-repeat="item in exchangeCtrl.normalChannelArr") {{item.name}}
-        md-input-container.row-has-value(flex ng-if="current.baseWage != 'service_c_driving_base'")
+        md-input-container.row-has-value(flex)
             label 档级
             md-select(ng-model="current.baseFlag" placeholder="请选择" ng-change="exchangeCtrl.normal(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
                 md-option(ng-value="item" ng-class="{ 'spec': exchangeCtrl.isLegalFlagArr.indexOf(item) < 0 }" ng-repeat="item in exchangeCtrl.normal_flag_array(current)") {{item}}
