@@ -521,62 +521,13 @@ class ChartsMainController extends nb.Controller
         @current_roles = CURRENT_ROLES
 
 class CompanyLeaderChartsController extends nb.Controller
-    @.$inject = ['$scope']
+    @.$inject = ['$scope', '$http']
 
-    constructor: (@scope) ->
-        @areaConfig = {
-            theme:'red'
-            dataLoaded:true
-        }
+    constructor: (@scope, @http) ->
+        @initialDataCompleted = false
 
-        @areaOption = {
-            title : {
-                text: '绩效系数变动'
-            },
-            tooltip : {
-                trigger: 'axis'
-            },
-            legend: {
-                data:['A','B','C']
-            },
-            calculable : true,
-            xAxis : [
-                {
-                    type : 'category',
-                    boundaryGap : false,
-                    data : ['一月','二月','三月','四月','五月','六月','七月']
-                }
-            ],
-            yAxis : [
-                {
-                    type : 'value'
-                }
-            ],
-            series : [
-                {
-                    name:'A',
-                    type:'line',
-                    smooth:true,
-                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                    data:[10, 12, 21, 54, 260, 830, 710]
-                },
-                {
-                    name:'B',
-                    type:'line',
-                    smooth:true,
-                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                    data:[30, 182, 434, 791, 390, 30, 10]
-                },
-                {
-                    name:'C',
-                    type:'line',
-                    smooth:true,
-                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                    data:[1320, 1132, 601, 234, 120, 90, 20]
-                }
-            ]
-        }
-
+        @loadDateTime()
+        @loadChartData()
 
         @barConfig = {
             theme:'red'
@@ -585,19 +536,22 @@ class CompanyLeaderChartsController extends nb.Controller
 
         @barOption = {
             title : {
-                text: '各部门人力成本分布'
+                left: 50
+                text: '新进/离职人员分布'
             },
             tooltip : {
                 trigger: 'axis'
             },
             legend: {
-                data:['A','B']
+                data:['新进人员','离职人员']
             },
             calculable : true,
             xAxis : [
                 {
-                    type : 'category',
-                    data : ['人力资源部','专家委员会','企业文化部','标准管理部','保卫部','计划财务部','飞行部','商旅公司','校修中心','党委','机务工程部','物流部']
+                    type: 'category'
+                    axisLabel: { 'interval':0 }
+                    splitLine: { show: false }
+                    data: []
                 }
             ],
             yAxis : [
@@ -607,39 +561,89 @@ class CompanyLeaderChartsController extends nb.Controller
             ],
             series : [
                 {
-                    name:'A',
+                    name:'新进人员',
                     type:'bar',
-                    data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
+                    data:[],
                     markPoint : {
                         data : [
                             {type : 'max', name: '最大值'},
                             {type : 'min', name: '最小值'}
                         ]
                     },
-                    markLine : {
-                        data : [
-                            {type : 'average', name: '平均值'}
-                        ]
-                    }
                 },
                 {
-                    name:'B',
+                    name:'离职人员',
                     type:'bar',
-                    data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
+                    data:[],
                     markPoint : {
                         data : [
-                            {name : '年最高', value : 182.2, xAxis: 7, yAxis: 183, symbolSize:18},
-                            {name : '年最低', value : 2.3, xAxis: 11, yAxis: 3}
+                            {type : 'max', name: '最大值'},
+                            {type : 'min', name: '最小值'}
                         ]
                     },
-                    markLine : {
-                        data : [
-                            {type : 'average', name : '平均值'}
-                        ]
-                    }
                 }
             ]
         }
+
+    loadChartData: () ->
+        self = @
+
+        # @initialDataCompleted = false
+
+        @loadMonthList()
+
+        month = @currentCalcTime()
+
+        @http.get('/api/statements/new_leave_employee_summary?month='+month)
+            .success (data) ->
+                self.barSrc = self.dataFormatForBar(data.new_leave_employee_summary)
+                self.barOption.xAxis[0].data = self.barSrc['xAxisData']
+                self.barOption.series[0].data = self.barSrc['seriesA']
+                self.barOption.series[1].data = self.barSrc['seriesB']
+
+                self.initialDataCompleted = true
+            .error (msg) ->
+
+    loadMonthList: () ->
+        if @currentYear == new Date().getFullYear()
+            months = [1..new Date().getMonth() + 1]
+        else
+            months = [1..12]
+
+        @month_list = _.map months, (item)->
+            item = '0' + item if item < 10
+            item + ''
+
+    loadDateTime: ()->
+        @year_list = @$getYears()
+        @month_list = @$getMonths()
+
+        @currentYear = _.last(@year_list)
+        @currentMonth = _.last(@month_list)
+
+    currentCalcTime: ()->
+        @currentYear + "-" + @currentMonth
+
+    dataFormatForBar: (data) ->
+        config = {}
+        config['xAxisData'] = []
+        config['seriesA'] = []
+        config['seriesB'] = []
+
+        index = 0
+
+        _.forEach data, (val, key) ->
+            if index %2 != 0
+                config['xAxisData'].push('\n' + key)
+            else
+                config['xAxisData'].push(key)
+
+            config['seriesA'].push(val.new | 0)
+            config['seriesB'].push(val.leave | 0)
+
+            index++
+        
+        return config
 
 class DepartmentHrChartsController extends nb.Controller
     @.$inject = ['$scope']

@@ -12,13 +12,17 @@
         .value 23
         .title 离职人数
 //- area chart
-div.echarts-wrapper.md-whiteframe-z1
-    ng-echarts.echarts-bar(
-        ec-config="ctrl.areaConfig"
-        ec-option="ctrl.areaOption"
-    )
+div.echarts-wrapper.md-whiteframe-z1(ng-if="ctrl.initialDataCompleted")
+    div.charts-toolbar(layout)
+        span(flex)
+        .date-selector(layout)
+            md-select(ng-model="ctrl.currentYear" ng-change="ctrl.loadChartData()" placeholder="请选择")
+                md-option(ng-value="item" ng-repeat="item in ctrl.year_list track by $index" ng-bind="item")
+            label(flex-order="2") 年
+            md-select(ng-model="ctrl.currentMonth" ng-change="ctrl.loadChartData()" placeholder="请选择")
+                md-option(ng-value="item" ng-repeat="item in ctrl.month_list track by $index" ng-bind="item")
+            label(flex-order="3") 月
 
-div.echarts-wrapper.md-whiteframe-z1
     ng-echarts.echarts-bar(
         ec-config="ctrl.barConfig"
         ec-option="ctrl.barOption"
