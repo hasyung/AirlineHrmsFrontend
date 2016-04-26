@@ -170,3 +170,33 @@ resources.factory 'Workflow', ['restmod', (restmod) ->
             if hasExtraForm(_raw)
                 this.$extraForm = CustomConfig[_raw.type][_raw.workflow_state]
     ]
+
+# 客舱服务部管理的 resource
+VacationDistribute = (restmod, RMUtils, $Evt) ->
+    restmod.model('/workflows/vacation_distribute_list').mix 'nbRestApi', 'DirtyModel', {
+        $config:
+            jsonRootSingle: 'workflow'
+            jsonRootMany: 'workflows'
+
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+        $hooks: {
+            'after-destroy': ->
+                $Evt.$send('dinnerPersonSetups:destroy:success',"删除成功")
+            'after-save': ->
+                $Evt.$send('dinnerPersonSetups:save:success',"保存成功")
+        }
+
+        $extend:
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+    }
+
+resources.factory 'VacationDistribute', ['restmod', 'RMUtils', '$nbEvent', VacationDistribute]
+
+
+
+
+
+

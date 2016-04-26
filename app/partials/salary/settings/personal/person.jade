@@ -8,6 +8,11 @@
                 span(flex)
                 md-button.md-primary.md-raised(
                     ng-disabled="!ctrl.import_finish"
+                    href="/api/set_books/export_change_record"
+                    download
+                ) 导出人员变动信息 
+                md-button.md-primary.md-raised(
+                    ng-disabled="!ctrl.import_finish"
                     ng-href="{{ ctrl.exportSSUrl }}"
                     ng-mouseenter="ctrl.exportSalaryUrl()"
                     download
@@ -20,14 +25,6 @@
                         flow-file-success="ctrl.uploadShareFund(ctrl.parseJSON($message).id);"
                         flex flow-btn
                     ) 导入当前公积金
-                span
-                    md-button.md-raised.md-primary(
-                        ng-disabled="!ctrl.import_finish"
-                        flow-init="{target: '/api/attachments/upload_file', chunkSize: 10*1024*1024, allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
-                        flow-files-submitted="ctrl.import_finish=false;$flow.upload();"
-                        flow-file-success="ctrl.uploadSalarySetBook(ctrl.parseJSON($message).id);"
-                        flex flow-btn
-                    ) 导入当前帐套
 
         div(
             nb-grid

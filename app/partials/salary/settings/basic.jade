@@ -94,6 +94,13 @@
                         div(flex layout has-permission="salaries_update_basic")
                             include ./btn.jade
                     include ./common.jade
+                tab(heading="服务C－驾驶" ng-click="ctrl.loadDynamicConfig('service_c_driving_base')")
+                    md-toolbar
+                      .md-toolbar-tools
+                        h2 服务C－驾驶
+                        div(flex layout has-permission="salaries_update_basic")
+                            include ./btn.jade
+                    include ./common.jade
                 tab(heading="空中观察员" ng-click="ctrl.loadDynamicConfig('air_observer_base')")
                     md-toolbar
                       .md-toolbar-tools

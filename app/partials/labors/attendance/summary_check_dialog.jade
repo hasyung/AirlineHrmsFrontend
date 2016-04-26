@@ -10,7 +10,7 @@ md-dialog.summary-state-pop(
                 placeholder="操作人"
                 readonly
                 )
-            input(
+            input.ml10(
                 type="text"
                 ng-model="ctrl.depCheckInfo.hr_confirmed_at"
                 placeholder="操作时间"
@@ -24,12 +24,40 @@ md-dialog.summary-state-pop(
                 placeholder="操作人"
                 readonly
                 )
-            input(
+            input.ml10(
                 type="text"
                 ng-model="ctrl.depCheckInfo.department_leader_confirmed_at"
                 placeholder="操作时间"
                 readonly
                 )
+            input.ml10(
+                type="text"
+                ng-model="ctrl.depCheckInfo.department_leader_opinion"
+                placeholder="部门领导意见"
+                readonly
+                )
+
+        .pop-row
+            label 汇总审核：
+            input(
+                type="text"
+                ng-model="ctrl.depCheckInfo.hr_labor_relation_member_name"
+                placeholder="操作人"
+                readonly
+                )
+            input.ml10(
+                type="text"
+                ng-model="ctrl.depCheckInfo.hr_labor_relation_member_confirmed_at"
+                placeholder="操作时间"
+                readonly
+                )
+            input.ml10(
+                type="text"
+                ng-model="ctrl.depCheckInfo.hr_labor_relation_member_opinion"
+                placeholder="部门领导意见"
+                readonly
+                )
+
         .pop-row
             label 领导审核：
             input(
@@ -38,9 +66,16 @@ md-dialog.summary-state-pop(
                 placeholder="操作人"
                 readonly
                 )
-            input(
+            input.ml10(
                 type="text"
                 ng-model="ctrl.depCheckInfo.hr_leader_confirmed_at"
                 placeholder="操作时间"
                 readonly
                 )
+            input.ml10(
+                type="text"
+                ng-model="ctrl.depCheckInfo.hr_department_leader_opinion"
+                placeholder="HR领导意见"
+                readonly
+                )
+            

@@ -4,13 +4,13 @@
         md-toolbar
             .md-toolbar-tools
                 h2 考勤汇总表
-                div.grid-toolbar-row.year-and-month-container(flex layout)
+                div.grid-toolbar-row.year-and-month-container(layout)
                     label.row-text 月度：
-                    .year-and-month(layout)
-                        md-select.year(ng-model="ctrl.year" flex ng-change="ctrl.exeSearch(); ctrl.loadMonthList()")
+                    .year-and-month(layout style="width: 120px;")
+                        md-select.year(ng-model="ctrl.year" ng-change="ctrl.exeSearch(); ctrl.loadMonthList()")
                             md-option(ng-value="item" ng-repeat="item in ctrl.year_list" ng-bind="item")
 
-                        md-select.month(ng-model="ctrl.month" flex ng-change="ctrl.exeSearch()" placeholder="请选择月份")
+                        md-select.month(ng-model="ctrl.month" ng-change="ctrl.exeSearch()" placeholder="请选择月份")
                             md-option(ng-value="item" ng-repeat="item in ctrl.month_list" ng-bind="item")
 
                     span.row-text.last {{ctrl.tableData.$metadata.status}}
@@ -21,11 +21,14 @@
                         template-url="/partials/labors/attendance/summary_check_dialog.html"
                         locals="{tableData: ctrl.tableData, ctrl:ctrl}"
                         ) 审核信息
+
+                span(flex)
                 
-                div.grid-toolbar-search-row(flex layout)
+                div.grid-toolbar-search-row(layout)
                     label.row-text 员工：
                     md-input-container(md-no-float)
                         input(
+                            style="width: 80px"
                             type="text"
                             ng-model="ctrl.employee_name"
                             placeholder="姓名"
@@ -34,12 +37,14 @@
                             )
                     md-input-container(md-no-float)
                         input(
+                            style="width: 80px"
                             type="text"
                             ng-model="ctrl.employee_no"
                             placeholder="工号"
                             ng-model-options="{debounce: {'default': 1500}}"
                             ng-change="ctrl.exeSearch()"
                             )
+                span(flex)
 
                 md-button.md-primary.md-raised(
                     has-permission="attendance_summaries_department_hr_confirm"
@@ -52,17 +57,25 @@
                 md-button.md-primary.md-raised(
                     has-permission="attendance_summaries_department_leader_check"
                     ng-disabled="!ctrl.departmentHrChecked || ctrl.departmentLeaderChecked"
-                    nb-confirm="ctrl.departmentLeaderCheck()"
-                    nb-title="考勤汇总审核"
-                    nb-content="确认本部门{{ctrl.year}}-{{ctrl.month}}考勤汇总通过审核，提交至人力资源部门。"
+                    nb-dialog
+                    template-url="/partials/labors/attendance/summary_check_dep_leader.html"
+                    locals="{ctrl: ctrl}"
                 ) 部门审核
 
                 md-button.md-primary.md-raised(
+                    has-permission="attendance_summaries_hr_labor_relation_member_check"
+                    ng-disabled="!ctrl.departmentHrChecked || ctrl.hrLaborRelationMemberChecked"
+                    nb-dialog
+                    template-url="/partials/labors/attendance/summary_check_labor.html"
+                    locals="{ctrl: ctrl}"
+                ) 汇总审核
+
+                md-button.md-primary.md-raised(
                     has-permission="attendance_summaries_hr_leader_check"
-                    ng-disabled="!ctrl.departmentHrChecked"
-                    nb-confirm="ctrl.hrLeaderCheck()"
-                    nb-title="考勤汇总审核"
-                    nb-content="确认对该部门{{ctrl.year}}-{{ctrl.month}}考勤汇总通过审核。"
+                    ng-disabled="!ctrl.hrLaborRelationMemberChecked"
+                    nb-dialog
+                    template-url="/partials/labors/attendance/summary_check_confirm.html"
+                    locals="{ctrl: ctrl}"
                 ) 领导审核
 
                 md-button.md-primary.md-raised(
@@ -71,6 +84,18 @@
                 ) 导出
 
         md-toolbar(has-permission="attendance_summaries_hr_leader_check")
+            .summary-org-menu
+                span.org-item(
+                    ng-repeat="item in ctrl.tableData.$metadata.attendance_summary_status"
+                    ng-bind="item.department_name"
+                    ng-class="{'green': item.hr_department_leader_checked,\
+                    'yellow': (!item.hr_department_leader_checked) && item.department_leader_checked && item.department_hr_checked, \
+                    'purple': (!item.hr_department_leader_checked) && (!item.department_leader_checked) && item.department_hr_checked, \
+                    'active': item.department_id == ctrl.tableData.$metadata.department_id}"
+                    ng-click="ctrl.exeSearch(item.department_id)"
+                )
+
+        md-toolbar(has-permission="attendance_summaries_hr_labor_relation_member_check")
             .summary-org-menu
                 span.org-item(
                     ng-repeat="item in ctrl.tableData.$metadata.attendance_summary_status"

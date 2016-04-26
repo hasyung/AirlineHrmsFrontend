@@ -383,13 +383,10 @@ class Route
                     'FlowName': -> 'Flow::Resignation'
                 }
             }
-            # .state 'cabin_management', {
-            #     url: '/cabin_management'
-            #     templateUrl: 'partials/labors/cabin/index.html'
-            #     # controller: cabinManagementCtrl
-            #     controllerAs: 'ctrl'
-            # }
-
+            .state 'cabin_management', {
+                url: '/cabin_management'
+                templateUrl: 'partials/labors/cabin/index.html'
+            }
 
 app.config(Route)
 
@@ -484,7 +481,7 @@ class AttendanceCtrl extends nb.Controller
                 name: 'type'
                 displayName: '详细'
                 cellTemplate: '''
-                <div class="ui-grid-cell-contents" ng-init="realFlow = grid.appScope.$parent.realFlow(row.entity)">
+                <div class="ui-grid-cell-contents" ng-mousedown="realFlow = grid.appScope.$parent.realFlow(row.entity)">
                     <a flow-handler="realFlow" flow-view="true">
                         查看
                     </a>
@@ -511,11 +508,13 @@ class AttendanceCtrl extends nb.Controller
             if angular.isDefined(summary_record)
                 self.departmentHrChecked = summary_record.department_hr_checked
                 self.departmentLeaderChecked = summary_record.department_leader_checked
+                self.hrLaborRelationMemberChecked = summary_record.hr_labor_relation_member_checked
                 self.hrDepartmentLeaderChecked = summary_record.hr_department_leader_checked
 
             angular.forEach self.tableData, (item)->
                 item.departmentHrChecked = self.departmentHrChecked
                 item.departmentLeaderChecked = self.departmentLeaderChecked
+                item.hrLaborRelationMemberChecked = self.hrLaborRelationMemberChecked
                 item.hrDepartmentLeaderChecked = self.hrDepartmentLeaderChecked
 
     initDate: ()->
@@ -582,11 +581,13 @@ class AttendanceCtrl extends nb.Controller
             if angular.isDefined(summary_record)
                 self.departmentHrChecked = summary_record.department_hr_checked
                 self.departmentLeaderChecked = summary_record.department_leader_checked
+                self.hrLaborRelationMemberChecked = summary_record.hr_labor_relation_member_checked
                 self.hrDepartmentLeaderChecked = summary_record.hr_department_leader_checked
 
             angular.forEach self.tableData, (item)->
                 item.departmentHrChecked = self.departmentHrChecked
                 item.departmentLeaderChecked = self.departmentLeaderChecked
+                item.hrLaborRelationMemberChecked = self.hrLaborRelationMemberChecked
                 item.hrDepartmentLeaderChecked = self.hrDepartmentLeaderChecked
 
     getDate: ()->
@@ -606,9 +607,9 @@ class AttendanceCtrl extends nb.Controller
             angular.forEach self.tableData, (item)->
                 item.departmentHrChecked = true
 
-    departmentLeaderCheck: ()->
+    departmentLeaderCheck: (opinion)->
         self = @
-        params = {summary_date: @getDate()}
+        params = {summary_date: @getDate(), department_leader_opinion: opinion}
 
         @http.put('/api/attendance_summaries/department_leader_check', params).then (data)->
             self.tableData.$refresh()
@@ -619,9 +620,22 @@ class AttendanceCtrl extends nb.Controller
             angular.forEach self.tableData, (item)->
                 item.departmentLeaderChecked = true
 
-    hrLeaderCheck: ()->
+    laborManagerCheck: (opinion)->
         self = @
-        params = {summary_date: @getDate()}
+        params = {summary_date: @getDate(), hr_labor_relation_member_opinion: opinion}
+
+        @http.put('/api/attendance_summaries/hr_labor_relation_member_check', params).then (data)->
+            self.tableData.$refresh()
+            erorr_msg = data.$response.data.messages
+            toaster.pop('info', '提示', erorr_msg || "审核成功")
+            self.hrLaborRelationMemberChecked = true
+
+            angular.forEach self.tableData, (item)->
+                item.hrLaborRelationMemberChecked = true
+
+    hrLeaderCheck: (opinion)->
+        self = @
+        params = {summary_date: @getDate(), hr_department_leader_opinion: opinion}
 
         @http.put('/api/attendance_summaries/hr_leader_check', params).then (data)->
             self.tableData.$refresh()
@@ -1459,6 +1473,131 @@ class SbFlowHandlerCtrl
     isHrLaborRelationMember: ()->
         @CURRENT_ROLES.indexOf('hr_labor_relation_member') >= 0
 
+# 客舱服务部管理
+class VacationManagementCtrl extends nb.Controller
+    @.$inject = ['$http', '$scope', 'VacationDistribute', 'toaster']
+
+    constructor: (@http, scope, @VacationDistribute, @toaster) ->
+        @importing = false
+
+        @loadDateTime()
+        @loadInitialData()
+
+        @filterOptions = {
+            name: 'cabinManagement'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '姓名'
+                    type: 'string'
+                }
+            ]
+        }
+
+        @columnDef = [
+            {
+                minWidth: 120
+                displayName: '员工编号'
+                name: 'employeeNo'
+            }
+            {
+                minWidth: 120
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {
+                minWidth: 350
+                displayName: '所属部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+            }
+            {
+                minWidth: 250
+                displayName: '岗位'
+                name: 'positionName'
+                cellTooltip: (row) ->
+                    return row.entity.positionName
+            }
+            {minWidth: 150, displayName: '休假时间', name: 'vacationDates'}
+            {minWidth: 120, displayName: '天数', name: 'vacationDays'}
+            {minWidth: 120, displayName: '假别', name: 'flow.name'}
+            {minWidth: 120, displayName: '状态', name: 'flow.tCurrentState'}
+        ]
+
+    exportGridApi: (gridApi) ->
+        @gridApi = gridApi
+
+    loadMonthList: () ->
+        if @currentYear == new Date().getFullYear()
+            months = [1..new Date().getMonth() + 1]
+        else
+            months = [1..12]
+
+        @month_list = _.map months, (item)->
+            item = '0' + item if item < 10
+            item + ''
+
+    loadDateTime: ()->
+        @year_list = @$getYears()
+        @month_list = @$getMonths()
+
+        @currentYear = _.last(@year_list)
+        @currentMonth = _.last(@month_list)
+
+    currentCalcTime: ()->
+        @currentYear + "-" + @currentMonth
+
+    loadInitialData: () ->
+        args = {month: @currentCalcTime()}
+        @records = @VacationDistribute.$collection().$fetch()
+        @records.$refresh(args)
+
+    loadRecords: (tableState) ->
+        tableState = tableState || {}
+        @loadMonthList()
+        args = {month: @currentCalcTime()}
+        angular.extend(args, tableState) if angular.isDefined(tableState)
+        @records.$refresh(args)
+
+    search: (tableState)->
+        tableState = tableState || {}
+        tableState['month'] = @currentCalcTime()
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+        @records.$refresh(tableState)
+
+    uploadCabinVacation: (type, attachment_id)->
+        self = @
+        params = {type: type, attachment_id: attachment_id}
+        @importing = true
+
+        @http.post("/api/workflows/cabin_vacation_import", params).success (data, status) ->
+            self.toaster.pop('success', '提示', '导入成功')
+            self.importing = false
+        .error (data) ->
+            self.importing = false
+
+    approveVacations: () ->
+        self = @
+        params = {month: @currentCalcTime()}
+        @importing = true
+
+        @http.put("/api/workflows/approve_vacation_list", params).success (data) ->
+            self.toaster.pop('success', '提示', '审批已完成')
+            self.records.refresh(params)
+            self.importing = false
+        .error (data) ->
+            self.importing = false        
+
 
 app.controller('AttendanceRecordCtrl', AttendanceRecordCtrl)
 app.controller('AttendanceHisCtrl', AttendanceHisCtrl)
@@ -1467,6 +1606,7 @@ app.controller('ContractCtrl', ContractCtrl)
 app.controller('ProtocolCtrl', ProtocolCtrl)
 app.controller('RetirementCtrl', RetirementCtrl)
 app.controller('SbFlowHandlerCtrl', SbFlowHandlerCtrl)
+app.controller('VacationManagementCtrl', VacationManagementCtrl)
 
 # app.controller('cabinManagementCtrl', cabinManagementCtrl)
 

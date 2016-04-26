@@ -185,6 +185,7 @@ class SalaryController extends nb.Controller
                           "service_b_car_repair_base",          # 基础-服务B-汽修工
                           "service_b_airline_keeper_base",      # 基础-服务B-机务工装设备/客舱供应库管
                           "service_c_base",                     # 基础-服务C
+                          "service_c_driving_base",             # 基础-服务C-驾驶
                           "air_observer_base",                  # 基础-空中观察员
                           "front_run_base",                     # 基础-前场运行监察
                           "information_perf",                   # 绩效-信息通道
@@ -195,7 +196,6 @@ class SalaryController extends nb.Controller
                           "service_c_1_perf",                   # 绩效-服务C-1
                           "service_c_2_perf",                   # 绩效-服务C-2
                           "service_c_3_perf",                   # 绩效-服务C-3
-                          "service_c_driving_base",             # 基础-服务C-驾驶，固定2100
                           "service_c_driving_perf",             # 绩效-服务C-驾驶
                           "market_leader_perf",                 # 绩效-营销类Y/管理A类
                           "material_leader_perf",               # 绩效-航务/航材技术类H
@@ -485,6 +485,33 @@ class SalaryController extends nb.Controller
 
         else
             self.toaster.pop('error', '提示', '请填写城市名称')
+
+class DepNumSettingController extends nb.Controller
+    @.$inject = ['$http', '$scope', '$nbEvent', 'Org', 'toaster']
+
+    constructor: (@http, $scope, $Evt, @Org, @toaster) ->
+        @orgTree = {}
+
+        @loadInitialData()
+
+    loadInitialData: () ->
+        self = @
+        @Org.$search().$then (data)->
+            self.orgTree = data.jqTreeful()[0]
+            console.log self.orgTree
+
+    saveDepNumber: (id, num) ->
+        # @http请求保存接口
+        # 保存部门编码
+        self = @
+        params = { id: id, set_book_no: num }
+
+        @http.post('/api/departments/update_set_book_no', params)
+            .success (data) ->
+                self.toaster.pop 'success', '提示', data.messages
+            .error (data) ->
+                self.toaster.pop 'error', '提示', data.messages
+
 
 
 class SalaryPersonalController extends nb.Controller
@@ -925,10 +952,13 @@ class SalaryGradeChangeController extends nb.Controller
 
 
 class SalaryExchangeController
-    @.$inject = ['$http', '$scope', '$nbEvent', 'SALARY_SETTING', '$timeout']
+    @.$inject = ['$http', '$scope', '$nbEvent', 'SALARY_SETTING', '$timeout', 'toaster', '$q']
 
-    constructor: ($http, $scope, $Evt, @SALARY_SETTING, $timeout) ->
+    constructor: (@http, $scope, $Evt, @SALARY_SETTING, $timeout, @toaster, @q) ->
         self = @
+
+        @setBookData = null
+        @alreadyHasSetBook = true
 
         @isLegalFlagArr = []
         @isLegalPerfFlagArr = []
@@ -991,10 +1021,6 @@ class SalaryExchangeController
         return unless current.baseWage
         return unless current.baseFlag
 
-        if current.baseWage == 'service_c_driving_base'
-            current.baseMoney = 2100
-            return
-
         setting = @$settingHash(current.baseWage)
         flag = setting.flags[current.baseFlag]
 
@@ -1028,9 +1054,6 @@ class SalaryExchangeController
         setting = @$settingHash(current.baseWage)
         flags = []
 
-        # if current.baseWage == 'service_c_driving_base'
-        #     return
-
         angular.forEach setting.flags, (config, flag)->
             if Object.keys(config).indexOf(current.baseChannel) >= 0
                 format_cell = config[current.baseChannel]['format_cell']
@@ -1060,7 +1083,7 @@ class SalaryExchangeController
         return unless current.performancePosition
 
         setting = @$settingHash(current.performanceWage)
-        
+
         if angular.isDefined setting[current.technicalCategory][current.performancePosition]
             current.performanceMoney = setting[current.technicalCategory][current.performancePosition][current.performanceChannel].amount
         else
@@ -1180,7 +1203,7 @@ class SalaryExchangeController
     fly_flag_array: (current)->
         self = @
         @isLegalFlagArr = []
-        
+
         return unless current.baseWage
 
         setting = @$settingHash(current.baseWage)
@@ -1234,6 +1257,46 @@ class SalaryExchangeController
 
         setting = @$settingHash('air_security_hour')
         current.securityHourMoney = setting[current.securityHourFee]
+
+    loadPersonalSetBook: (current) ->
+        self = @
+
+        employeeId = current.owner.$pk
+
+        @http.get('/api/set_books/info?employee_id=' + employeeId)
+            .success (data) ->
+                if data.messages == '该员工套账信息为空'
+                    self.alreadyHasSetBook = false
+                else
+                    self.setBookData = data.set_book_info
+                    self.alreadyHasSetBook = true
+
+    savePersonalSetBook: (setBookData, current) ->
+        self = @
+
+        params = setBookData
+        params.employee_id = current.owner.$pk
+
+        if @alreadyHasSetBook
+            @http.put '/api/set_books/' + params.employee_id, params
+                .success (msg) ->
+                    self.toaster.pop 'success', '提示', '套账信息保存成功'
+                .error (msg) ->
+                    self.toaster.pop 'error', '提示', msg.messages
+
+        else if !@alreadyHasSetBook
+            @http.post '/api/set_books', params
+                .success (data) ->
+                    self.setBookData = data.set_book_info
+                    self.toaster.pop 'success', '提示', '套账信息创建成功'
+                    self.alreadyHasSetBook = true
+                .error (msg) ->
+                    self.toaster.pop 'error', '提示', msg.messages
+
+    checkRegBankNo: (backNo, form) ->
+        reg = /^\d{19}$/
+
+        form.$invalid = !reg.test(backNo)
 
 
 class SalaryBaseController extends nb.Controller
@@ -1516,7 +1579,7 @@ class SalaryKeepController extends SalaryBaseController
 class SalaryPerformanceController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'PerformanceSalary', 'toaster', '$rootScope']
 
-    constructor: ($http, $scope, $q, @Evt, @Employee, @PerformanceSalary, @toaster, @rootScope) ->
+    constructor: (@http, $scope, $q, @Evt, @Employee, @PerformanceSalary, @toaster, @rootScope) ->
         super(@PerformanceSalary, $scope, $q, false, null, @rootScope)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
@@ -1634,12 +1697,13 @@ class SalaryPerformanceController extends SalaryBaseController
         request.assess_time = moment(new Date(new String(request.assessTime))).format "YYYY-MM-DD"
         params.status = "uploading"
 
-        @http.post("/api/performance_salaries/import", request).success (response)->
-            self.scope.resRecord = response.warnings
-            params.status = "finish"
-        .error (response)->
-            self.scope.resRecord = response.messages
-            params.status = "error"
+        @http.post("/api/performance_salaries/import", request)
+            .success (response)->
+                self.scope.resRecord = response.warnings
+                params.status = "finish"
+            .error (response)->
+                self.scope.resRecord = response.messages
+                params.status = "error"
 
 
 # 小时费
@@ -1772,6 +1836,10 @@ class SalaryAllowanceController extends SalaryBaseController
             {minWidth: 150,displayName: '后援补贴', name: 'backupSubsidy', enableCellEdit: false}
             {minWidth: 150,displayName: '年审补贴', name: 'annualAuditSubsidy', enableCellEdit: false}
             {minWidth: 150,displayName: '维修补贴', name: 'maintainSubsidy', enableCellEdit: false}
+            {minWidth: 150,displayName: '后勤保障部补贴', name: 'logisticalSupportSubsidy', enableCellEdit: false}
+            {minWidth: 150,displayName: '值班工资', name: 'watchSubsidy', enableCellEdit: false}
+            {minWidth: 150,displayName: '重庆兼职车辆维修班补贴', name: 'cqPartTimeFixCarSubsidy', enableCellEdit: false}
+            {minWidth: 150,displayName: '部件放行补贴', name: 'partPermitEntry', enableCellEdit: false}
             {minWidth: 150,displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
                 minWidth: 150
@@ -2067,11 +2135,12 @@ class SalaryTransportFeeController extends SalaryBaseController
         self = @
         params = {type: type, attachment_id: attachment_id}
 
-        @http.post("/api/transport_fees/import", params).success (data, status) ->
-            if data.error_count > 0
-                self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
-            else
-                self.toaster.pop('success', '提示', '导入成功')
+        @http.post("/api/transport_fees/import", params)
+            .success (data, status) ->
+                if data.error_count > 0
+                    self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败。'+ '员工编号:' + data.error_names)
+                else
+                    self.toaster.pop('success', '提示', '导入成功')
 
 
 class SalaryOverviewController extends SalaryBaseController
@@ -2128,10 +2197,10 @@ class SalaryOverviewController extends SalaryBaseController
         ]).concat(CALC_STEP_COLUMN)
 
 class BirthSalaryController extends SalaryBaseController
-    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'BirthSalary', 'toaster']
+    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'BirthSalary', 'toaster', '$rootScope']
 
-    constructor: ($http, $scope, $q, @Evt, @Employee, @BirthSalary, @toaster) ->
-        super(@BirthSalary, $scope, $q, true)
+    constructor: ($http, $scope, $q, @Evt, @Employee, @BirthSalary, @toaster, @rootScope) ->
+        super(@BirthSalary, $scope, $q, true, null, @rootScope)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
@@ -2248,6 +2317,7 @@ class RewardsAllocationController
 
 
 app.controller 'salaryCtrl', SalaryController
+app.controller 'depNumSettingCtrl', DepNumSettingController
 app.controller 'salaryPersonalCtrl', SalaryPersonalController
 app.controller 'salaryChangeCtrl', SalaryChangeController
 app.controller 'salaryGradeChangeCtrl', SalaryGradeChangeController

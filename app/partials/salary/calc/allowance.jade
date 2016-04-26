@@ -87,25 +87,72 @@
                             ng-disabled="ctrl.calcing || ctrl.records.length==0"
                             ) 导出
                         md-menu-content
+                            md-menu-item(has-permission="allowances_export_nc")
+                                a.md-button(
+                                    download
+                                    ng-href="/api/allowances/export_nc?month={{ctrl.currentCalcTime()}}"
+                                    href="javascript:"
+                                ) NC表
                             md-menu-item(has-permission="allowances_export_temp")
                                 a.md-button(flex
                                     download
                                     ng-href="/api/allowances/export_temp?month={{ctrl.currentCalcTime()}}"
                                     href="javascript:"
                                 ) 高温津贴表
-                            md-menu-item(has-permission="allowances_export_nc")
-                                a.md-button(flex
-                                    download
-                                    ng-href="/api/allowances/export_nc?month={{ctrl.currentCalcTime()}}"
-                                    href="javascript:"
-                                ) NC导入表
-                            md-menu-item(has-permission="allowances_export_approval")
+                            md-menu-item(has-permission="allowances_export_land_present")
                                 a.md-button(
                                     download
-                                    ng-href="/api/allowances/export_approval?month={{ctrl.currentCalcTime()}}"
+                                    ng-href="/api/allowances/export_land_present?month={{ctrl.currentCalcTime()}}"
                                     href="javascript:"
-                                ) 审批表
-
+                                ) 地勤津贴
+                            md-menu-item(has-permission="allowances_export_car_present")
+                                a.md-button(
+                                    download
+                                    ng-href="/api/allowances/export_car_present?month={{ctrl.currentCalcTime()}}"
+                                    href="javascript:"
+                                ) 车勤补贴
+                            md-menu-item(has-permission="allowances_export_permit_entry")
+                                a.md-button(
+                                    download
+                                    ng-href="/api/allowances/export_permit_entry?month={{ctrl.currentCalcTime()}}"
+                                    href="javascript:"
+                                ) 机务放行补贴
+                            md-menu-item(has-permission="allowances_export_security_check")
+                                a.md-button(
+                                    download
+                                    ng-href="/api/allowances/export_security_check?month={{ctrl.currentCalcTime()}}"
+                                    href="javascript:"
+                                ) 安检津贴
+                            md-menu-item(has-permission="allowances_export_fly_honor")
+                                a.md-button(
+                                    download
+                                    ng-href="/api/allowances/export_fly_honor?month={{ctrl.currentCalcTime()}}"
+                                    href="javascript:"
+                                ) 飞行安全荣誉津贴
+                            md-menu-item(has-permission="allowances_export_resettlement")
+                                a.md-button(
+                                    download
+                                    ng-href="/api/allowances/export_resettlement?month={{ctrl.currentCalcTime()}}"
+                                    href="javascript:"
+                                ) 安置补贴
+                            md-menu-item(has-permission="allowances_export_communication")
+                                a.md-button(
+                                    download
+                                    ng-href="/api/allowances/export_communication?month={{ctrl.currentCalcTime()}}"
+                                    href="javascript:"
+                                ) 通讯补贴
+                            md-menu-item(has-permission="allowances_export_communication_nc")
+                                a.md-button(
+                                    download
+                                    ng-href="/api/allowances/export_communication_nc?month={{ctrl.currentCalcTime()}}"
+                                    href="javascript:"
+                                ) 通讯补贴NC表
+                            md-menu-item(has-permission="allowances_export_group_leader")
+                                a.md-button(
+                                    download
+                                    ng-href="/api/allowances/export_group_leader?month={{ctrl.currentCalcTime()}}"
+                                    href="javascript:"
+                                ) 班组长津贴
         div(nb-grid
             column-defs="ctrl.columnDef"
             export-api

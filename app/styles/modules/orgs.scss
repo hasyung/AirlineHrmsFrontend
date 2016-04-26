@@ -564,7 +564,7 @@ md-dialog.punishment_new {
     .pop-row {
         margin-bottom: 10px;
 
-        input:last-child {
+        .ml10 {
             margin-left: 10px;
         }
     }
@@ -576,6 +576,35 @@ md-dialog.punishment_new {
 
     input {
         border: 0;
+    }
+}
+
+.attendance-check {
+    padding: 20px 20px 10px;
+    max-width: 300px;
+
+    h3 {
+        font-size: 20px;
+        font-weight: 500;
+        letter-spacing: 0.005em;
+    }
+
+    p {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    input {
+        border: 0;
+        border-bottom: 1px solid #aaa;
+        font-size: 14px;
+        padding: 2px 4px;
+        width: 80%;
+    }
+
+    .md-actions {
+        margin-top: 20px;
+        padding-right: 0;
     }
 }
 
