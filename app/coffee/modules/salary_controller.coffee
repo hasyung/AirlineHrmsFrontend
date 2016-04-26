@@ -2134,11 +2134,12 @@ class SalaryTransportFeeController extends SalaryBaseController
         self = @
         params = {type: type, attachment_id: attachment_id}
 
-        @http.post("/api/transport_fees/import", params).success (data, status) ->
-            if data.error_count > 0
-                self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
-            else
-                self.toaster.pop('success', '提示', '导入成功')
+        @http.post("/api/transport_fees/import", params)
+            .success (data, status) ->
+                if data.error_count > 0
+                    self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败。'+ '员工编号:' + data.error_names)
+                else
+                    self.toaster.pop('success', '提示', '导入成功')
 
 
 class SalaryOverviewController extends SalaryBaseController
