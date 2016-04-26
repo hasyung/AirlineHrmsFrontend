@@ -94,6 +94,18 @@
                     'active': item.department_id == ctrl.tableData.$metadata.department_id}"
                     ng-click="ctrl.exeSearch(item.department_id)"
                 )
+
+        md-toolbar(has-permission="attendance_summaries_hr_labor_relation_member_check")
+            .summary-org-menu
+                span.org-item(
+                    ng-repeat="item in ctrl.tableData.$metadata.attendance_summary_status"
+                    ng-bind="item.department_name"
+                    ng-class="{'green': item.hr_department_leader_checked,\
+                    'yellow': (!item.hr_department_leader_checked) && item.department_leader_checked && item.department_hr_checked, \
+                    'purple': (!item.hr_department_leader_checked) && (!item.department_leader_checked) && item.department_hr_checked, \
+                    'active': item.department_id == ctrl.tableData.$metadata.department_id}"
+                    ng-click="ctrl.exeSearch(item.department_id)"
+                )
         div(
             nb-grid
             column-defs="ctrl.summaryListCol"
