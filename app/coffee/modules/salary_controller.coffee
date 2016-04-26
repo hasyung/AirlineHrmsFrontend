@@ -2195,10 +2195,10 @@ class SalaryOverviewController extends SalaryBaseController
         ]).concat(CALC_STEP_COLUMN)
 
 class BirthSalaryController extends SalaryBaseController
-    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'BirthSalary', 'toaster']
+    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'BirthSalary', 'toaster', '$rootScope']
 
-    constructor: ($http, $scope, $q, @Evt, @Employee, @BirthSalary, @toaster) ->
-        super(@BirthSalary, $scope, $q, true)
+    constructor: ($http, $scope, $q, @Evt, @Employee, @BirthSalary, @toaster, @rootScope) ->
+        super(@BirthSalary, $scope, $q, true, null, @rootScope)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
