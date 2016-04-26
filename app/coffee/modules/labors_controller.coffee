@@ -508,11 +508,13 @@ class AttendanceCtrl extends nb.Controller
             if angular.isDefined(summary_record)
                 self.departmentHrChecked = summary_record.department_hr_checked
                 self.departmentLeaderChecked = summary_record.department_leader_checked
+                self.hrLaborRelationMemberChecked = summary_record.hr_labor_relation_member_checked
                 self.hrDepartmentLeaderChecked = summary_record.hr_department_leader_checked
 
             angular.forEach self.tableData, (item)->
                 item.departmentHrChecked = self.departmentHrChecked
                 item.departmentLeaderChecked = self.departmentLeaderChecked
+                item.hrLaborRelationMemberChecked = self.hrLaborRelationMemberChecked
                 item.hrDepartmentLeaderChecked = self.hrDepartmentLeaderChecked
 
     initDate: ()->
@@ -579,11 +581,13 @@ class AttendanceCtrl extends nb.Controller
             if angular.isDefined(summary_record)
                 self.departmentHrChecked = summary_record.department_hr_checked
                 self.departmentLeaderChecked = summary_record.department_leader_checked
+                self.hrLaborRelationMemberChecked = summary_record.hr_labor_relation_member_checked
                 self.hrDepartmentLeaderChecked = summary_record.hr_department_leader_checked
 
             angular.forEach self.tableData, (item)->
                 item.departmentHrChecked = self.departmentHrChecked
                 item.departmentLeaderChecked = self.departmentLeaderChecked
+                item.hrLaborRelationMemberChecked = self.hrLaborRelationMemberChecked
                 item.hrDepartmentLeaderChecked = self.hrDepartmentLeaderChecked
 
     getDate: ()->
@@ -603,9 +607,9 @@ class AttendanceCtrl extends nb.Controller
             angular.forEach self.tableData, (item)->
                 item.departmentHrChecked = true
 
-    departmentLeaderCheck: ()->
+    departmentLeaderCheck: (opinion)->
         self = @
-        params = {summary_date: @getDate()}
+        params = {summary_date: @getDate(), department_leader_opinion: opinion}
 
         @http.put('/api/attendance_summaries/department_leader_check', params).then (data)->
             self.tableData.$refresh()
@@ -616,9 +620,22 @@ class AttendanceCtrl extends nb.Controller
             angular.forEach self.tableData, (item)->
                 item.departmentLeaderChecked = true
 
-    hrLeaderCheck: ()->
+    laborManagerCheck: (opinion)->
         self = @
-        params = {summary_date: @getDate()}
+        params = {summary_date: @getDate(), hr_labor_relation_member_opinion: opinion}
+
+        @http.put('/api/attendance_summaries/hr_labor_relation_member_check', params).then (data)->
+            self.tableData.$refresh()
+            erorr_msg = data.$response.data.messages
+            toaster.pop('info', '提示', erorr_msg || "审核成功")
+            self.hrLaborRelationMemberChecked = true
+
+            angular.forEach self.tableData, (item)->
+                item.hrLaborRelationMemberChecked = true
+
+    hrLeaderCheck: (opinion)->
+        self = @
+        params = {summary_date: @getDate(), hr_department_leader_opinion: opinion}
 
         @http.put('/api/attendance_summaries/hr_leader_check', params).then (data)->
             self.tableData.$refresh()
