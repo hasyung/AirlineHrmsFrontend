@@ -250,7 +250,7 @@ class NewMyRequestCtrl extends NewFlowCtrl
             # 女工假特殊处理
             if vacation_type == '女工假'
                 scope.vacation_days = 1
-                data.end_time = moment(data.start_time).add(1, 'd').format()
+                data.end_time = moment(data.start_time).format()
 
             if data.start_time && data.end_time
                 start = moment(data.start_time)
