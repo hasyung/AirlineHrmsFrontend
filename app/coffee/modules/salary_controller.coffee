@@ -1579,7 +1579,7 @@ class SalaryKeepController extends SalaryBaseController
 class SalaryPerformanceController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'PerformanceSalary', 'toaster', '$rootScope']
 
-    constructor: ($http, $scope, $q, @Evt, @Employee, @PerformanceSalary, @toaster, @rootScope) ->
+    constructor: (@http, $scope, $q, @Evt, @Employee, @PerformanceSalary, @toaster, @rootScope) ->
         super(@PerformanceSalary, $scope, $q, false, null, @rootScope)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
@@ -1697,12 +1697,13 @@ class SalaryPerformanceController extends SalaryBaseController
         request.assess_time = moment(new Date(new String(request.assessTime))).format "YYYY-MM-DD"
         params.status = "uploading"
 
-        @http.post("/api/performance_salaries/import", request).success (response)->
-            self.scope.resRecord = response.warnings
-            params.status = "finish"
-        .error (response)->
-            self.scope.resRecord = response.messages
-            params.status = "error"
+        @http.post("/api/performance_salaries/import", request)
+            .success (response)->
+                self.scope.resRecord = response.warnings
+                params.status = "finish"
+            .error (response)->
+                self.scope.resRecord = response.messages
+                params.status = "error"
 
 
 # 小时费
