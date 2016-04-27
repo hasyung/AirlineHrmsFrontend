@@ -530,7 +530,7 @@ class CompanyLeaderChartsController extends nb.Controller
         @loadChartData()
 
         @barConfig = {
-            theme:'red'
+            theme:''
             dataLoaded:true
         }
 
@@ -541,12 +541,20 @@ class CompanyLeaderChartsController extends nb.Controller
             },
             tooltip : {
                 trigger: 'axis'
+                axisPointer: {
+                    type: 'shadow'
+                }
             },
             legend: {
                 data:['新进人员','离职人员']
             },
-            calculable : true,
+            calculable : true
             xAxis : [
+                {
+                    type: 'value'
+                }
+            ],
+            yAxis : [
                 {
                     type: 'category'
                     axisLabel: { 'interval':0 }
@@ -554,31 +562,24 @@ class CompanyLeaderChartsController extends nb.Controller
                     data: []
                 }
             ],
-            yAxis : [
-                {
-                    type : 'value'
-                }
-            ],
             series : [
                 {
-                    name:'新进人员',
-                    type:'bar',
-                    data:[],
+                    name:'新进人员'
+                    type:'bar'
+                    data:[]
                     markPoint : {
                         data : [
-                            {type : 'max', name: '最大值'},
-                            {type : 'min', name: '最小值'}
+                            {type : 'max', name: '最大值'}
                         ]
                     },
                 },
                 {
-                    name:'离职人员',
-                    type:'bar',
-                    data:[],
+                    name:'离职人员'
+                    type:'bar'
+                    data:[]
                     markPoint : {
                         data : [
-                            {type : 'max', name: '最大值'},
-                            {type : 'min', name: '最小值'}
+                            {type : 'max', name: '最大值'}
                         ]
                     },
                 }
@@ -597,7 +598,7 @@ class CompanyLeaderChartsController extends nb.Controller
         @http.get('/api/statements/new_leave_employee_summary?month='+month)
             .success (data) ->
                 self.barSrc = self.dataFormatForBar(data.new_leave_employee_summary)
-                self.barOption.xAxis[0].data = self.barSrc['xAxisData']
+                self.barOption.yAxis[0].data = self.barSrc['yAxisData']
                 self.barOption.series[0].data = self.barSrc['seriesA']
                 self.barOption.series[1].data = self.barSrc['seriesB']
 
@@ -626,7 +627,7 @@ class CompanyLeaderChartsController extends nb.Controller
 
     dataFormatForBar: (data) ->
         config = {}
-        config['xAxisData'] = []
+        config['yAxisData'] = []
         config['seriesA'] = []
         config['seriesB'] = []
 
@@ -634,9 +635,9 @@ class CompanyLeaderChartsController extends nb.Controller
 
         _.forEach data, (val, key) ->
             if index %2 != 0
-                config['xAxisData'].push('\n' + key)
+                config['yAxisData'].push('\n' + key)
             else
-                config['xAxisData'].push(key)
+                config['yAxisData'].push(key)
 
             config['seriesA'].push(val.new | 0)
             config['seriesB'].push(val.leave | 0)
