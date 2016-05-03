@@ -184,6 +184,20 @@
         }
     }
 
+    .charts-toolbar {
+        padding: 0 30px;
+
+        .date-selector {
+            label {
+                line-height: 34px;
+            }
+
+            md-select {
+                margin: 0;
+            }
+        }
+    }
+
     .echarts-wrapper {
         background-color: #fff;
         margin-bottom: 20px;
@@ -193,7 +207,8 @@
 
 .echarts-bar {
     display: block;
-    height: 400px;
+    height: 600px;
+    padding: 0 20px;
 }
 
 @keyframes outlineRotate {

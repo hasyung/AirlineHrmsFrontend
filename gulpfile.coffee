@@ -118,7 +118,7 @@ paths =
         # 'deps/angular-ui-utils/ui-utils.js'
         # 'deps/jasny-bootstrap/dist/js/jasny-bootstrap.js' jasny bootstrap 增强版，提供一些好用组件
         'deps/ng-echarts/dist/ng-echarts.js'
-        'deps/echarts/build/dist/echarts-all.js'
+        'deps/echarts/dist/echarts.js'
         'deps/angular-ui-calendar/src/calendar.js'
         'deps/fullcalendar/dist/fullcalendar.min.js'
         'deps/fullcalendar/dist/gcal.js'
