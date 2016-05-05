@@ -1633,9 +1633,9 @@ app.directive('orgMutiPos',[orgMutiPos])
 
 
 class PersonnelDataCtrl extends nb.Controller
-    @.$inject = ['$scope', 'CURRENT_ROLES']
+    @.$inject = ['$scope', 'CURRENT_ROLES', 'USER_META']
 
-    constructor: (@scope, @CURRENT_ROLES) ->
+    constructor: (@scope, @CURRENT_ROLES, @USER_META) ->
         @year_list = @$getYears()
         @month_list = @$getMonths()
 
@@ -1647,6 +1647,9 @@ class PersonnelDataCtrl extends nb.Controller
 
     isHrPaymentMember: ()->
         @CURRENT_ROLES.indexOf('hr_payment_member') >= 0
+
+    isAdministrator: () ->
+        return @USER_META.name == 'administrator'
 
     loadSalary: ()->
         console.error '载入' + @calcTime() + '薪酬'
