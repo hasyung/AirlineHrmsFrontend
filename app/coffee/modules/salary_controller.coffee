@@ -791,10 +791,7 @@ class SalaryChangeController extends nb.Controller
         @salaryChanges = @SalaryChange.$collection().$fetch()
 
     loadPersonSettings: (change) ->
-        self = @
         return @SalaryPersonSetup.$collection().$fetch().$find(change.salaryPersonSetupId) || {}
-
-        # return @SalaryPersonSetup.$collection().$fetch(change.salaryPersonSetupId)
 
     newPersonSettings: (change, settings, dialog) ->
         self = @
@@ -1258,10 +1255,10 @@ class SalaryExchangeController
         setting = @$settingHash('air_security_hour')
         current.securityHourMoney = setting[current.securityHourFee]
 
-    loadPersonalSetBook: (current) ->
+    loadPersonalSetBook: (current, empId) ->
         self = @
 
-        employeeId = current.owner.$pk
+        employeeId = empId || current.owner.$pk
 
         @http.get('/api/set_books/info?employee_id=' + employeeId)
             .success (data) ->
@@ -1271,11 +1268,11 @@ class SalaryExchangeController
                     self.setBookData = data.set_book_info
                     self.alreadyHasSetBook = true
 
-    savePersonalSetBook: (setBookData, current) ->
+    savePersonalSetBook: (setBookData, current, empId) ->
         self = @
 
-        params = setBookData
-        params.employee_id = current.owner.$pk
+        params = setBookData || {}
+        params.employee_id = empId || current.owner.$pk
 
         if @alreadyHasSetBook
             @http.put '/api/set_books/' + params.employee_id, params

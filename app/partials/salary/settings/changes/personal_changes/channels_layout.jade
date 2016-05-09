@@ -27,7 +27,7 @@ mixin tabSection(heading, lookPermission, updatePermission, preLoadHandlers, sav
 block vars
 
 if hasBaseInfo
-    +tabSection('员工信息', 'salary_person_setups_look_basic', 'salary_person_setups_update_basic', 'exchangeCtrl.loadPersonalSetBook(current)', 'exchangeCtrl.savePersonalSetBook(exchangeCtrl.setBookData, current);exchangeCtrl.editing=false;')
+    +tabSection('员工信息', 'salary_person_setups_look_basic', 'salary_person_setups_update_basic', 'exchangeCtrl.loadPersonalSetBook(current, change.owner.$pk);', 'exchangeCtrl.savePersonalSetBook(exchangeCtrl.setBookData, current, change.owner.$pk); exchangeCtrl.editing=false;')
         block base_info
 
 if hasBaseSetting
