@@ -243,16 +243,17 @@ class FlowController
         scope.vacations = vacations
 
         scope.reply = (userReply, form) ->
-            try
-                last_msg = _.last(scope.flow.flowNodes)
+            if userReply != '' && userReply != null
+                try
+                    last_msg = _.last(scope.flow.flowNodes)
 
-                if last_msg && last_msg.reviewerId == meta.id
-                    last_msg.$update({body: userReply})
-                else
-                    scope.flow.flowNodes.$create({body: userReply})
-            finally
-                scope.userReply = ""
-                resetForm(form)
+                    if last_msg && last_msg.reviewerId == meta.id
+                        last_msg.$update({body: userReply})
+                    else
+                        scope.flow.flowNodes.$create({body: userReply})
+                finally
+                    scope.userReply = ""
+                    resetForm(form)
 
         scope.submitFlow = (req, flow, dialog, state) ->
             url = joinUrl(FLOW_HTTP_PREFIX, flow.type, flow.id)
