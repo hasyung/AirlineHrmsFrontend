@@ -193,7 +193,27 @@ VacationDistribute = (restmod, RMUtils, $Evt) ->
                     this.$refresh(tableState)
     }
 
+# 审批人常用意见的 resource
+FavNote = (restmod, RMUtils, $Evt) ->
+    restmod.model('/fav_notes').mix 'nbRestApi', 'DirtyModel', {
+        $config:
+            jsonRootSingle: 'fav_note'
+            jsonRootMany: 'fav_notes'
+
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+        $extend:
+            Record:
+                createHabit: () ->
+
+                destroyHabit: () ->
+
+
+            
+    }
+
 resources.factory 'VacationDistribute', ['restmod', 'RMUtils', '$nbEvent', VacationDistribute]
+resources.factory 'FavNote', ['restmod', 'RMUtils', '$nbEvent', FavNote]
 
 
 

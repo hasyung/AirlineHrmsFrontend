@@ -90,7 +90,17 @@ FlowHandlerDirective = (ngDialog)->
                                         <label>审批意见</label>
                                         <textarea ng-blur="reply(userReply, flowReplyForm)" ng-model="userReply" required columns="1" md-maxlength="150"></textarea>
                                     </md-input-container>
+                                    <button class="add-habit" ng-click="createFavNote(userReply)" aria-label="添加常用意见">
+                                        添加为常用意见
+                                    </button>
                                 </div>
+                                <div class="habit-opinions" layout>
+                                    <span class="habit-opinion" ng-click="userReply = favNote.note; reply(userReply, flowReplyForm)" ng-repeat="favNote in favNotes">
+                                        {{ favNote.note }}
+                                        <md-icon class="del-habit" ng-click="destroyFavNote($event, favNote.id)" md-svg-src="/images/svg/close.svg" aria-label="删除"></md-icon>
+                                    </span>
+                                </div>
+
                             </form>
                         </div>
                     </div>
@@ -157,9 +167,9 @@ FlowHandlerDirective = (ngDialog)->
 
 
 class FlowController
-    @.$inject = ['$http','$scope', 'USER_META', 'OrgStore', 'Employee', '$nbEvent', '$state', 'VACATIONS', 'toaster']
+    @.$inject = ['$http','$scope', 'USER_META', 'OrgStore', 'Employee', '$nbEvent', '$state', 'VACATIONS', 'FavNote', 'toaster']
 
-    constructor: (http, scope, meta, OrgStore, Employee, Evt, @state, vacations, toaster) ->
+    constructor: (http, scope, meta, OrgStore, Employee, Evt, @state, vacations, FavNote, toaster) ->
         scope.leaveFlowsNeedAttachment = [
             "Flow::AccreditLeave"
             "Flow::FuneralLeave"
@@ -212,6 +222,7 @@ class FlowController
         scope.reviewOrgs = OrgStore.getPrimaryOrgs()
         scope.userReply = ""
         scope.state = @state
+        scope.favNotes = FavNote.$collection().$fetch()
 
         scope.CHOICE = {
             ACCEPT: true
@@ -317,6 +328,20 @@ class FlowController
             http.get('/api/me/auditor_list?&name='+param)
                 .success (result) ->
                     scope.leaders = result.employees
+
+        scope.createFavNote = (param) ->
+            if param != '' && param != null
+                http.post('/api/fav_notes', { note: param })
+                    .success (result) ->
+                        scope.favNotes.$refresh()
+
+        scope.destroyFavNote = (e, noteId) ->
+            e.stopPropagation()
+
+            if angular.isDefined noteId
+                http.delete('/api/fav_notes/' + noteId)
+                    .success (result) ->
+                        scope.favNotes.$refresh()
 
     #获取请假流程天数
     getFlowDays: (scope) ->

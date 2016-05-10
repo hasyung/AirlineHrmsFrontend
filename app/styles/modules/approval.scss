@@ -131,6 +131,57 @@
 .approval-opinions {
     margin-top: 20px;
 
+    .add-habit {
+        background: rgb(33,150,243);
+        border: 0;
+        border-radius: 2px;
+        color: #fff;
+        height: 28px;
+        margin-top: 20px;
+        min-width: 0;
+        transition: opacity .25s linear;
+
+        &:hover {
+            opacity: .8;
+        }
+    }
+
+    .del-habit {
+        background: rgb(239,83,80);
+        border-radius: 50%;
+        color: #fff;
+        display: none;
+        height: 16px;
+        position: absolute;
+        right: -5px;
+        width: 16px;
+        top: -5px;
+    }
+
+    .habit-opinions {
+        flex-wrap: wrap;
+    }
+
+    .habit-opinion {
+        background: rgb(33,150,243);
+        border-radius: 2px;
+        cursor: pointer;
+        color: #fff;
+        display: block;
+        margin-bottom: 10px;
+        margin-right: 10px;
+        padding: 4px 10px;
+        position: relative;
+
+        &:hover {
+            opacity: .9;
+
+            .del-habit {
+                display: block;
+            }
+        }
+    }
+
 }
 
 .approval-buttons {
