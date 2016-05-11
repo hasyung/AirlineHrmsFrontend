@@ -173,8 +173,8 @@ block hours_fee_setting
             label 最低飞行时间
             input(type="number" min="0" max="100000" step="1" ng-model="current.lowerLimitHour" ng-disabled="!exchangeCtrl.editing")
         md-input-container(flex)
-            label 费用化报销金额
-            input(type="number" min="0" max="1000000" ng-model="current.refundFee" ng-disabled="!exchangeCtrl.editing")
+            label 费用化报销留存
+            input(type="number" min="0" max="1000000" ng-model="current.refundFee" readonly)
     //- div(layout)
     //-     md-input-container(flex)
     //-         label 最低飞行时间
