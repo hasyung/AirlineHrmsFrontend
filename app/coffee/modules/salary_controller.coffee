@@ -1803,6 +1803,35 @@ class SalaryHoursFeeController extends SalaryBaseController
             else
                 self.toaster.pop('success', '提示', '导入成功')
 
+    uploadAddGarnishee: (category, attachment_id) ->
+        self = @
+        params = {hours_fee_category: category, attachment_id: attachment_id, month: @currentCalcTime()}
+        @show_error_names = false
+
+        @http.post("/api/hours_fees/import_add_garnishee", params).success (data, status) ->
+            if data.error_count > 0
+                self.show_error_names = true
+                self.error_names = data.error_names
+
+                self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
+            else
+                self.toaster.pop('success', '提示', '导入成功')
+
+    uploadRefundFee: (category, attachment_id) ->
+        self = @
+        params = {hours_fee_category: category, attachment_id: attachment_id, month: @currentCalcTime()}
+        @show_error_names = false
+
+        @http.post("/api/hours_fees/import_refund_fee", params).success (data, status) ->
+            if data.error_count > 0
+                self.show_error_names = true
+                self.error_names = data.error_names
+
+                self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
+            else
+                self.toaster.pop('success', '提示', '导入成功')
+
+
 
 class SalaryAllowanceController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'Allowance', 'toaster', '$rootScope']
