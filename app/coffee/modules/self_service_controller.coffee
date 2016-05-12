@@ -619,7 +619,9 @@ class CompanyLeaderChartsController extends nb.Controller
                 cellTooltip: (row) ->
                     return row.entity.position.name
             }
-            {minWidth: 120, displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
+            {minWidth: 120, displayName: '性别', name: 'genderId', cellFilter: "enum:'genders'"}
+            {minWidth: 120, displayName: '到岗时间', name: 'joinScalDate', cellFilter: "date:'yyyy-MM-dd'"}
+            {minWidth: 120, displayName: '实习时间', name: 'startInternShip', cellFilter: "date:'yyyy-MM-dd'"}
             {minWidth: 120, displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
         ]
 
@@ -653,7 +655,8 @@ class CompanyLeaderChartsController extends nb.Controller
                 cellTooltip: (row) ->
                     return row.entity.position
             }
-            {minWidth: 120, displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
+            {minWidth: 120, displayName: '性别', name: 'gender'}
+            {minWidth: 120, displayName: '离职时间', name: 'changeDate', cellFilter: "date:'yyyy-MM-dd'"}
             {minWidth: 120, displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
         ]
 
@@ -1107,7 +1110,9 @@ class HrLeaderChartsController extends nb.Controller
                 cellTooltip: (row) ->
                     return row.entity.position.name
             }
-            {minWidth: 120, displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
+            {minWidth: 120, displayName: '性别', name: 'genderId', cellFilter: "enum:'genders'"}
+            {minWidth: 120, displayName: '到岗时间', name: 'joinScalDate', cellFilter: "date:'yyyy-MM-dd'"}
+            {minWidth: 120, displayName: '实习时间', name: 'startInternShip', cellFilter: "date:'yyyy-MM-dd'"}
             {minWidth: 120, displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
         ]
 
@@ -1141,7 +1146,8 @@ class HrLeaderChartsController extends nb.Controller
                 cellTooltip: (row) ->
                     return row.entity.position
             }
-            {minWidth: 120, displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
+            {minWidth: 120, displayName: '性别', name: 'gender'}
+            {minWidth: 120, displayName: '离职时间', name: 'changeDate', cellFilter: "date:'yyyy-MM-dd'"}
             {minWidth: 120, displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
         ]
 
