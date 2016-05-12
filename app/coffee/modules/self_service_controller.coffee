@@ -521,12 +521,15 @@ class ChartsMainController extends nb.Controller
         @current_roles = CURRENT_ROLES
 
 class CompanyLeaderChartsController extends nb.Controller
-    @.$inject = ['$scope', '$http']
+    @.$inject = ['$scope', '$http', 'Employee', 'LeaveEmployees']
 
-    constructor: (@scope, @http) ->
+    constructor: (@scope, @http, @Employee, @LeaveEmployees) ->
         @initialDataCompleted = false
+        @showChart = true
+        @tableType = '新进员工'
 
         @loadDateTime()
+        @loadInitialData()
         @loadChartData()
 
         @barConfig = {
@@ -586,14 +589,95 @@ class CompanyLeaderChartsController extends nb.Controller
             ]
         }
 
+        @columnDefNew = [
+            {
+                minWidth: 350
+                displayName: '所属部门'
+                name: 'department.name'
+                cellTooltip: (row) ->
+                    return row.entity.department.name
+            }
+            {
+                minWidth: 120
+                displayName: '姓名'
+                field: 'name'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {minWidth: 120, displayName: '员工编号', name: 'employeeNo'}
+            {
+                minWidth: 250
+                displayName: '岗位'
+                name: 'position.name'
+                cellTooltip: (row) ->
+                    return row.entity.position.name
+            }
+            {minWidth: 120, displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
+            {minWidth: 120, displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
+        ]
+
+        @columnDefLeave = [
+            {
+                minWidth: 350
+                displayName: '所属部门'
+                name: 'department'
+                cellTooltip: (row) ->
+                    return row.entity.department
+            }
+            {
+                minWidth: 120
+                displayName: '姓名'
+                field: 'name'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {minWidth: 120, displayName: '员工编号', name: 'employeeNo'}
+            {
+                minWidth: 250
+                displayName: '岗位'
+                name: 'position'
+                cellTooltip: (row) ->
+                    return row.entity.position
+            }
+            {minWidth: 120, displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
+            {minWidth: 120, displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
+        ]
+
+    loadInitialData: () ->
+        month = @currentCalcTime()
+
+        tableParam = {
+            month: month
+        }
+
+        @newEmployees = @Employee.$collection().$fetch(tableParam)
+        @LeaveEmployees = @LeaveEmployees.$collection().$fetch(tableParam)
+
     loadChartData: () ->
         self = @
 
         # @initialDataCompleted = false
-
         @loadMonthList()
 
         month = @currentCalcTime()
+
+        tableParam = {
+            month: month
+        }
 
         @http.get('/api/statements/new_leave_employee_summary?month='+month)
             .success (data) ->
@@ -604,6 +688,9 @@ class CompanyLeaderChartsController extends nb.Controller
 
                 self.initialDataCompleted = true
             .error (msg) ->
+
+        @newEmployees.$refresh(tableParam)
+        @LeaveEmployees.$refresh(tableParam)
 
     loadMonthList: () ->
         if @currentYear == new Date().getFullYear()

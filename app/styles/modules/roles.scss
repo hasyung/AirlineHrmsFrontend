@@ -196,12 +196,33 @@
                 margin: 0;
             }
         }
+
+        svg {
+            fill: #666;
+        }
     }
 
     .echarts-wrapper {
         background-color: #fff;
         margin-bottom: 20px;
         padding: 20px 0;
+
+        .chart-detail {
+            padding: 0 30px;
+
+            .chart-detail-toolbar {
+                border-bottom: 1px solid $text-color;
+                padding-bottom: 10px;
+
+                md-select {
+                    margin: 0;
+                }
+            }
+
+            .grid-item {
+                margin-bottom: 50px;
+            }
+        }
     }
 }
 
