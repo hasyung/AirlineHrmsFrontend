@@ -88,14 +88,14 @@ FlowHandlerDirective = (ngDialog)->
                                 <div layout>
                                     <md-input-container flex>
                                         <label>审批意见</label>
-                                        <textarea ng-blur="reply(userReply, flowReplyForm)" ng-model="userReply" required columns="1" md-maxlength="150"></textarea>
+                                        <textarea ng-blur="reply(dialog.userReply, flowReplyForm)" ng-model="dialog.userReply" required columns="1" md-maxlength="150"></textarea>
                                     </md-input-container>
-                                    <button class="add-habit" ng-click="createFavNote(userReply)" aria-label="添加常用意见">
+                                    <button class="add-habit" ng-click="createFavNote(dialog.userReply)" aria-label="添加常用意见">
                                         添加为常用意见
                                     </button>
                                 </div>
                                 <div class="habit-opinions" layout>
-                                    <span class="habit-opinion" ng-click="userReply = favNote.note; reply(userReply, flowReplyForm)" ng-repeat="favNote in favNotes">
+                                    <span class="habit-opinion" ng-click="dialog.userReply = favNote.note; reply(dialog.userReply, flowReplyForm)" ng-repeat="favNote in favNotes">
                                         {{ favNote.note }}
                                         <md-icon class="del-habit" ng-click="destroyFavNote($event, favNote.id)" md-svg-src="/images/svg/close.svg" aria-label="删除"></md-icon>
                                     </span>
@@ -216,6 +216,7 @@ class FlowController
         FLOW_HTTP_PREFIX = "/api/workflows"
         scope.selectedOrgs = []
 
+        @userReply = ""
         #加载分类为领导和干部的人员
         scope.reviewers = []
         scope.leaders = []
