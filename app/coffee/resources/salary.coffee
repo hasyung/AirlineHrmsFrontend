@@ -232,6 +232,34 @@ TransportFee = (restmod, RMUtils, $Evt) ->
                     ).$search(params)
     }
 
+BusFee = (restmod, RMUtils, $Evt) ->
+    restmod.model('/bus_fees').mix 'nbRestApi', 'DirtyModel', {
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+        $hooks:
+            'after-create': ->
+                $Evt.$send('bus_fees:create:success', "班车费创建成功")
+
+            'after-update': ->
+                $Evt.$send('bus_fee:update:success', "班车费更新成功")
+
+        $config:
+            jsonRootSingle: 'bus_fee'
+            jsonRootMany: 'bus_fees'
+
+        $extend:
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+            Scope:
+                # 计算(根据年月)
+                compute: (params)->
+                    restmod.model('/bus_fees/compute').mix(
+                        $config:
+                            jsonRoot: 'transport_fees'
+                    ).$search(params)
+    }
+
 BirthSalary = (restmod, RMUtils, $Evt) ->
     restmod.model('/birth_salaries').mix 'nbRestApi', 'DirtyModel', {
         owner: {belongsTo: 'Employee', key: 'employee_id'}
@@ -345,6 +373,7 @@ resources.factory 'Allowance', ['restmod', 'RMUtils', '$nbEvent', Allowance]
 resources.factory 'LandAllowance', ['restmod', 'RMUtils', '$nbEvent', LandAllowance]
 resources.factory 'Reward', ['restmod', 'RMUtils', '$nbEvent', Reward]
 resources.factory 'TransportFee', ['restmod', 'RMUtils', '$nbEvent', TransportFee]
+resources.factory 'BusFee', ['restmod', 'RMUtils', '$nbEvent', BusFee]
 resources.factory 'BirthSalary', ['restmod', 'RMUtils', '$nbEvent', BirthSalary]
 resources.factory 'SalaryChange', ['restmod', 'RMUtils', '$nbEvent', SalaryChange]
 resources.factory 'SalaryGradeChange', ['restmod', 'RMUtils', '$nbEvent', SalaryGradeChange]

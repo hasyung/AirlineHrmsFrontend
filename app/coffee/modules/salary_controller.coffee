@@ -2099,7 +2099,73 @@ class SalaryTransportFeeController extends SalaryBaseController
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
             {minWidth: 150, displayName: '交通费', name: 'amount', enableCellEdit: false}
-            {minWidth: 150, displayName: '班车费扣除', name: 'busFee', enableCellEdit: false}
+            {minWidth: 150, displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {
+                minWidth: 150
+                name:"notes"
+                displayName:"说明"
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
+                        {{row.entity.notes || '无'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #ccc;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <div class="salary-explain">
+                                    {{row.entity.notes || '无'}}
+                                </div>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.notes
+            }
+            {
+                minWidth: 150
+                name:"remark"
+                displayName:"备注"
+                headerCellClass: 'editable_cell_header'
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">
+                        {{row.entity.remark || '请输入备注'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #ccc;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <md-input-container>
+                                    <label>备注</label>
+                                    <textarea
+                                        ng-blur="row.entity.$save()"
+                                        ng-model="row.entity.remark"
+                                        style="resize:none;"
+                                        class="reason-input"></textarea>
+                                </md-input-container>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.note
+            }
+        ]).concat(CALC_STEP_COLUMN)
+
+class SalaryBusFeeController extends SalaryBaseController
+    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'BusFee', 'toaster', '$rootScope']
+
+    constructor: (@http, $scope, $q, @Evt, @Employee, @BusFee, @toaster, @rootScope) ->
+        super(@BusFee, $scope, $q, true, null, @rootScope)
+
+        @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
+
+        @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
+            {minWidth: 150, displayName: '班车费', name: 'busFee', enableCellEdit: false}
             {minWidth: 150, displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
                 minWidth: 150
@@ -2161,7 +2227,7 @@ class SalaryTransportFeeController extends SalaryBaseController
         self = @
         params = {type: type, attachment_id: attachment_id}
 
-        @http.post("/api/transport_fees/import", params)
+        @http.post("/api/bus_fees/import", params)
             .success (data, status) ->
                 if data.error_count > 0
                     self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败。'+ '员工编号:' + data.error_names)
@@ -2356,6 +2422,7 @@ app.controller 'salaryAllowanceCtrl', SalaryAllowanceController
 app.controller 'salaryLandAllowanceCtrl', SalaryLandAllowanceController
 app.controller 'salaryRewardCtrl', SalaryRewardController
 app.controller 'salaryTransportFeeCtrl', SalaryTransportFeeController
+app.controller 'salaryBusFeeCtrl', SalaryBusFeeController
 app.controller 'salaryOverviewCtrl', SalaryOverviewController
 app.controller 'birthSalaryCtrl', BirthSalaryController
 app.controller 'calcStepCtrl', CalcStepsController
