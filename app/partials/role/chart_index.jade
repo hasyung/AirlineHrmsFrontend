@@ -23,3 +23,8 @@ div.charts-container(
         ng-switch-when="company_leader"
         )
         include charts/company_leader
+    .container960(
+        ng-controller="CountyLeaderChartsCtrl as ctrl"
+        ng-switch-when="county_leader"
+        )
+        include charts/county_leader
