@@ -2165,7 +2165,7 @@ class SalaryBusFeeController extends SalaryBaseController
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
-            {minWidth: 150, displayName: '班车费', name: 'busFee', enableCellEdit: false}
+            {minWidth: 150, displayName: '班车费', name: 'fee', enableCellEdit: false}
             {minWidth: 150, displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
                 minWidth: 150
@@ -2254,6 +2254,7 @@ class SalaryOverviewController extends SalaryBaseController
             {minWidth: 100, displayName: '驻站津贴', name: 'landSubsidy', enableCellEdit: false}
             {minWidth: 100, displayName: '奖励', name: 'reward', enableCellEdit: false}
             {minWidth: 100, displayName: '交通费', name: 'transportFee', enableCellEdit: false}
+            {minWidth: 100, displayName: '班车费', name: 'busFee', enableCellEdit: false}
             {minWidth: 150, displayName: '生育保险冲抵', name: 'birth', enableCellEdit: false}
             {minWidth: 100, displayName: '合计', name: 'total', enableCellEdit: false}
             {
@@ -2304,6 +2305,7 @@ class BirthSalaryController extends SalaryBaseController
             {minWidth: 100, displayName: '小时费', name: 'hoursFee', enableCellEdit: false}
             {minWidth: 120, displayName: '收支目标考核奖', name: 'budgetReward', enableCellEdit: false}
             {minWidth: 100, displayName: '交通费', name: 'transportFee', enableCellEdit: false}
+            {minWidth: 100, displayName: '班车费', name: 'busFee', enableCellEdit: false}
             {minWidth: 100, displayName: '高温津贴', name: 'tempAllowance', enableCellEdit: false}
             {minWidth: 120, displayName: '剩余抵扣金额', name: 'residueMoney', enableCellEdit: false}
             {minWidth: 120, displayName: '生育保险冲抵', name: 'birthResidueMoney', enableCellEdit: false}
