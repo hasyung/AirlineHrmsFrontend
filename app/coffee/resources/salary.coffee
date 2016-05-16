@@ -256,7 +256,7 @@ BusFee = (restmod, RMUtils, $Evt) ->
                 compute: (params)->
                     restmod.model('/bus_fees/compute').mix(
                         $config:
-                            jsonRoot: 'transport_fees'
+                            jsonRoot: 'bus_fees'
                     ).$search(params)
     }
 
