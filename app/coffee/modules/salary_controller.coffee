@@ -2022,8 +2022,8 @@ class SalaryRewardController extends SalaryBaseController
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
             {minWidth: 150,displayName: '航班正常奖', name: 'flightBonus', enableCellEdit: false}
-            {minWidth: 150,displayName: '服务质量奖', name: 'serviceBonus', enableCellEdit: false}
-            {minWidth: 150,displayName: '航空安全奖', name: 'airlineSecurityBonus', enableCellEdit: false}
+            {minWidth: 150,displayName: '月度服务质量奖', name: 'serviceBonus', enableCellEdit: false}
+            {minWidth: 150,displayName: '日常航空安全奖', name: 'airlineSecurityBonus', enableCellEdit: false}
             {minWidth: 150,displayName: '社会治安综合治理奖', name: 'compositeBonus', enableCellEdit: false}
             {minWidth: 150,displayName: '电子航意险代理提成奖', name: 'insuranceProxy', enableCellEdit: false}
             {minWidth: 150,displayName: '客舱升舱提成奖', name: 'cabinGrowUp', enableCellEdit: false}
@@ -2036,7 +2036,7 @@ class SalaryRewardController extends SalaryBaseController
             {minWidth: 150,displayName: '部门安全管理目标承包奖', name: 'depSecurityUndertake', enableCellEdit: false}
             {minWidth: 150,displayName: '飞行安全星级奖', name: 'flyStar', enableCellEdit: false}
             {minWidth: 150,displayName: '年度无差错机务维修中队奖', name: 'yearAllRightFly', enableCellEdit: false}
-            {minWidth: 150,displayName: '网络联程奖', name: 'networkConnect', enableCellEdit: false}
+            # {minWidth: 150,displayName: '网络联程奖', name: 'networkConnect', enableCellEdit: false}
             {minWidth: 150,displayName: '季度奖', name: 'quarterFee', enableCellEdit: false}
             {minWidth: 150,displayName: '收益奖励金', name: 'earningsFee', enableCellEdit: false}
             {minWidth: 150,displayName: '预算外奖励', name: 'offBudgetFee', enableCellEdit: false}
