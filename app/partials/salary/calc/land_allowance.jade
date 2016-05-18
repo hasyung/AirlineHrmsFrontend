@@ -9,6 +9,12 @@
                 md-select(ng-model="ctrl.currentMonth" ng-change="ctrl.loadRecords()" placeholder="请选择月份")
                     md-option(ng-value="item" ng-repeat="item in ctrl.month_list track by $index" ng-bind="item")
                 label(flex-order="3") 月
+
+                label(flex-order="4") 驻站津贴类型
+                md-select(flex-order="5" ng-model="ctrl.allowanceType" style="width:250px" ng-change="ctrl.loadRecords()")
+                    md-option(value="空勤") 空勤
+                    md-option(value="地面") 地面
+            
             span(flex)
 
     div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")

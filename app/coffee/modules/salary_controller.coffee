@@ -1938,11 +1938,13 @@ class SalaryLandAllowanceController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'LandAllowance', 'toaster', '$rootScope']
 
     constructor: (@http, $scope, $q, @Evt, @Employee, @LandAllowance, @toaster, @rootScope) ->
-        super(@LandAllowance, $scope, $q, false, null, @rootScope)
+        @allowanceType = '空勤'
+        super(@LandAllowance, $scope, $q, false, {type: @allowanceType}, @rootScope)
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
+            {minWidth: 150, displayName: '驻站津贴类型', name: 'type', enableCellEdit: false}
             {minWidth: 150, displayName: '津贴', name: 'subsidy', enableCellEdit: false}
             {minWidth: 150, displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
@@ -2000,6 +2002,19 @@ class SalaryLandAllowanceController extends SalaryBaseController
                     return row.entity.note
             }
         ]).concat(CALC_STEP_COLUMN)
+
+    search: (tableState) ->
+        tableState = tableState || {}
+        tableState['type'] = @allowanceType
+        tableState['month'] = @currentCalcTime()
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+        @records.$refresh(tableState)
+
+    loadRecords: () ->
+        super({type: @allowanceType})
+
+    exeCalc: ()->
+        super({type: @allowanceType})
 
     upload_land_allowance: (type, attachment_id)->
         self = @
