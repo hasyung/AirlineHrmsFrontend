@@ -2033,6 +2033,8 @@ class SalaryRewardController extends SalaryBaseController
     constructor: (@http, $scope, $q, @Evt, @Employee, @Reward, @toaster, @rootScope) ->
         super(@Reward, $scope, $q, true, null, @rootScope)
 
+        @showErrorDialog = false;
+
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
@@ -2094,14 +2096,17 @@ class SalaryRewardController extends SalaryBaseController
         params = {type: type, attachment_id: attachment_id, month: @currentCalcTime()}
 
         @http.post("/api/rewards/import", params).success (data, status) ->
-
+            self.records.$refresh({month: self.currentCalcTime()})
+            self.toaster.pop('success', '提示', data.messages || '导入成功')
+        .error (data) ->
             if data.error_count > 0
-                self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
+                self.showErrorDialog = true
+                self.error_names = data.error_names
+                self.error_msg = data.desc
             else
-                if data.messages.indexOf("但是") >= 0
-                    self.toaster.pop('warning', '提示', data.messages || '导入成功')
-                else
-                    self.toaster.pop('success', '提示', data.messages || '导入成功')
+                self.showErrorDialog = true
+                self.error_names = []
+                self.error_msg = data.desc
 
 
 class SalaryTransportFeeController extends SalaryBaseController

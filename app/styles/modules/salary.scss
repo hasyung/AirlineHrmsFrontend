@@ -224,6 +224,11 @@
     top: 0;
     width: 100%;
     z-index: 80;
+
+    .info-header {
+        font-size: $font-size-md;
+        padding: 20px 50px 0;
+    }
 }
 
 .hoursFee-dialog {

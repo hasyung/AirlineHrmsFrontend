@@ -13,6 +13,23 @@
 
     div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
 
+    //- 数据导入错误提示
+    .hoursFee-dialog-container(ng-if="ctrl.showErrorDialog")
+        .hoursFee-dialog()
+            md-toolbar.md-accent(md-theme="hrms")
+                .md-toolbar-tools
+                    span 数据导入提示
+            md-content.sticky-container(style="padding-bottom: 20px")
+                .info-header {{ctrl.error_msg}}
+                .info-body(ng-if="ctrl.error_names.length > 0")
+                    ul
+                        li.tcell(style="border-top: 1px solid #ddd;" ng-repeat="item in ctrl.error_names")
+                            .tbody {{item}}
+
+            .md-actions
+                md-button(ng-click="ctrl.showErrorDialog=false") 关闭
+    //- 数据导入错误提示框 end
+
     div.ui-grid-container.mt5
         md-toolbar
             .md-toolbar-tools
