@@ -1944,7 +1944,6 @@ class SalaryLandAllowanceController extends SalaryBaseController
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
-            {minWidth: 150, displayName: '驻站津贴类型', name: 'type', enableCellEdit: false}
             {minWidth: 150, displayName: '津贴', name: 'subsidy', enableCellEdit: false}
             {minWidth: 150, displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
