@@ -2053,9 +2053,9 @@ class SalaryRewardController extends SalaryBaseController
             {minWidth: 150,displayName: '部门安全管理目标承包奖', name: 'depSecurityUndertake', enableCellEdit: false}
             {minWidth: 150,displayName: '飞行安全星级奖', name: 'flyStar', enableCellEdit: false}
             {minWidth: 150,displayName: '年度无差错机务维修中队奖', name: 'yearAllRightFly', enableCellEdit: false}
-            # {minWidth: 150,displayName: '网络联程奖', name: 'networkConnect', enableCellEdit: false}
             {minWidth: 150,displayName: '季度奖', name: 'quarterFee', enableCellEdit: false}
             {minWidth: 150,displayName: '收益奖励金', name: 'earningsFee', enableCellEdit: false}
+            {minWidth: 150,displayName: '品牌质量考核奖', name: 'brandQualityFee', enableCellEdit: false}
             {minWidth: 150,displayName: '预算外奖励', name: 'offBudgetFee', enableCellEdit: false}
             {minWidth: 150,displayName: '节油奖', name: 'saveOilFee', enableCellEdit: false}
             {minWidth: 150,displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
