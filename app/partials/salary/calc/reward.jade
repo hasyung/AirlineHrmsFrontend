@@ -115,7 +115,7 @@
                                 ng-click="$mdMenu.hide()"
                                 flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
-                                flow-file-success="upload_start=false;ctrl.upload_reward('年度综治奖', ctrl.parseJSON($message).id);")
+                                flow-file-success="upload_start=false;ctrl.upload_reward('年度社会治安综合治理奖', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 年度社会治安综合治理奖
 
                             md-menu-item(
