@@ -160,13 +160,6 @@
                                 flow-file-success="upload_start=false;ctrl.upload_reward('品牌质量考核奖', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 品牌质量考核奖
 
-                            //- md-menu-item(
-                            //-     ng-click="$mdMenu.hide()"
-                            //-     flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
-                            //-     flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
-                            //-     flow-file-success="upload_start=false;ctrl.upload_reward('网络联程奖', ctrl.parseJSON($message).id);")
-                            //-     md-button(flex flow-btn type="button") 网络联程奖
-
                             md-menu-item(
                                 ng-click="$mdMenu.hide()"
                                 flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
