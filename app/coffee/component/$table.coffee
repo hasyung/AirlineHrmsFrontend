@@ -96,7 +96,6 @@ class NbFilterCtrl extends nb.FilterController
                 <md-option value="哺乳假" placeholder="假别">哺乳假</md-option>
                 <md-option value="产假(母乳喂养)" placeholder="假别">产假(母乳喂养)</md-option>
                 <md-option value="产假(剖腹产、难产)" placeholder="假别">产假(剖腹产、难产)</md-option>
-                <md-option value="产假(晚育)" placeholder="假别">产假(晚育)</md-option>
                 <md-option value="产假(多胞胎)" placeholder="假别">产假(多胞胎)</md-option>
                 <md-option value="产假(流产)" placeholder="假别">产假(流产)</md-option>
                 <md-option value="事假" placeholder="假别">事假</md-option>
