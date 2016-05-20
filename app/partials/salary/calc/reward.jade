@@ -59,14 +59,14 @@
                                 ng-click="$mdMenu.hide()"
                                 flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
-                                flow-file-success="upload_start=false;ctrl.upload_reward('服务质量奖', ctrl.parseJSON($message).id);")
+                                flow-file-success="upload_start=false;ctrl.upload_reward('月度服务质量奖', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 月度服务质量奖
 
                             md-menu-item(
                                 ng-click="$mdMenu.hide()"
                                 flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
-                                flow-file-success="upload_start=false;ctrl.upload_reward('航空安全奖', ctrl.parseJSON($message).id);")
+                                flow-file-success="upload_start=false;ctrl.upload_reward('日常航空安全奖', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 日常航空安全奖
 
                             md-menu-item(
