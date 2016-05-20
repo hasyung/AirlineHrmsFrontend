@@ -146,7 +146,7 @@ routeConf = ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvide
 
                 if response.status == 400
                     data = response.data
-                    toaster.pop('error', '参数错误', data.messages || JSON.stringify(data) || response)
+                    toaster.pop('error', data.type || '参数错误', data.messages || JSON.stringify(data) || response)
 
                 if /^5/.test(Number(response.status).toString()) # if server error
                     data = response.data
