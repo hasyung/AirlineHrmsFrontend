@@ -680,6 +680,42 @@ angular.module 'nb.directives'
         }
     ]
 
+    # BOSS页面的待办事项（不考虑重用）
+    .directive 'bossTodo', [ () ->
+        postLink = (scope, elem, attrs) ->
+            $boards = elem.find '.todos__board'
+
+            $boards.on 'click', () ->
+                if(!$(this).hasClass('active'))
+                    $(this).removeClass('outlier')
+                    
+                    prev = elem.find '.active'
+                    outlier = elem.find '.outlier'
+
+                    prev.removeClass('active')
+                    $(this).addClass('active')
+
+                    $(this).animate({
+                        top: 0
+                        }, 500, false)
+
+                    outlier.animate({
+                        top: '501px'
+                        }, 500, false)
+
+                    prev.animate({
+                        top: '591px'
+                        }, 500, ()->
+                            prev.addClass('outlier')
+                            )
+                    
+
+        return {
+            restrict: "EA"
+            link: postLink
+        }
+    ]
+
 class NbAutocompleteCtrl
     @.$inject = ['$scope', '$attrs']
 
