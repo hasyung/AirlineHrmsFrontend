@@ -7,7 +7,7 @@
     position: fixed;
     right: 0;
     top: 0;
-    z-index: 9900;
+    z-index: 60;
 }
 
 .boss__wrapper--1200 {
@@ -74,6 +74,7 @@
 
 .todos__board {
 	position: absolute;
+	width: 100%;
 
 	&.active {
 		z-index: 10;
@@ -223,31 +224,50 @@
 }
 
 .datas__tabs {
-	position: relative;
+	@include clearfix();
+	border-top-left-radius: 50px;
+	border-top-right-radius: 50px;
 	height: 50px;
+	position: relative;
 }
 
-@for $i from 1 through 7 {
-    .datas__tab:nth-child(#{$i}) {
-        left: #{130*($i - 1)}px;
-        margin-left: -#{46.66*($i - 1)}px;
-        z-index: 10 - $i;
-    }
+.datas__slider {
+	background: -webkit-linear-gradient(left, #eb932d 0%,#dc351b 100%);
+	box-shadow: 1px -2px 5px #666;
+	border-top-left-radius: 105px;
+	border-bottom-right-radius: 105px;
+	height: 50px;
+	left: 0;
+	position: absolute;
+	width: 115px;
+	z-index: -1;
+	transform: translateZ(0);
+	transition: left .5s cubic-bezier(.25,.1,.38,1.2);
 }
 
 .datas__tab {
-	background: -webkit-linear-gradient(left, #eb932d 0%,#dc351b 100%);
-	box-shadow: 1px -2px 5px #666;
-	border-top-left-radius: 50px;
-	border-top-right-radius: 50px;
+	background-color: rgba(0, 0, 0, .3);
+	box-sizing: border-box;
 	color: #fff;
-	font-size: $font-size-md;
+	cursor: pointer;
+	font-size: $font-size-sm;
+	float: left;
 	height: 50px;
 	line-height: 50px;
-	position: absolute;
-	top: 0;
 	text-align: center;
-	width: 130px;
+	width: 84px;
+
+	&:nth-child(1) {
+		border-top-left-radius: 50px;
+		padding-left: 10px;
+		width: 105px;
+	}
+
+	&:nth-child(7) {
+		border-top-right-radius: 50px;
+		padding-right: 10px;
+		width: 105px;
+	}
 }
 
 .datas__content {
@@ -255,6 +275,7 @@
 	box-shadow: 0 2px 8px #666;
 	border-bottom-left-radius: 100px;
 	height: 615px;
+	overflow: hidden;
 }
 
 /***************
@@ -291,6 +312,7 @@
 	border-top-left-radius: 50px;
 	border-top-right-radius: 50px;
 	color: #fff;
+	cursor: pointer;
 	font-size: $font-size-md;
 	height: 50px;
 	line-height: 50px;
@@ -333,6 +355,7 @@
 	border-top-left-radius: 50px;
 	border-top-right-radius: 50px;
 	color: #fff;
+	cursor: pointer;
 	font-size: $font-size-md;
 	height: 50px;
 	line-height: 50px;

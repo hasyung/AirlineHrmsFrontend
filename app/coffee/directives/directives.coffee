@@ -716,6 +716,51 @@ angular.module 'nb.directives'
         }
     ]
 
+    # BOSS页面的数据块 tab滑动菜单（不考虑重用）
+    .directive 'bossDataSlider', [ () ->
+        postLink = (scope, elem, attrs) ->
+            $tabs = elem.find '.datas__tab'
+
+            $slider = elem.find '.datas__slider'
+
+            $tabs.on 'click', () ->
+                activeIndex = $tabs.index($(this))
+
+                disdance = if activeIndex > 0 then 95+84*(activeIndex - 1) else 0
+
+                if activeIndex == 6
+                    $slider.animate({
+                        width: '115px'
+                        borderBottomLeftRadius: '50px'
+                        borderTopRightRadius: '50px'
+                        borderTopLeftRadius: '0'
+                        borderBottomRightRadius: '0'
+                        }, 500, false)
+
+                else if activeIndex == 0
+                    $slider.animate({
+                        width: '115px'
+                        borderBottomLeftRadius: '0'
+                        borderTopRightRadius: '0'
+                        borderTopLeftRadius: '50px'
+                        borderBottomRightRadius: '50px'
+                        }, 500, false)
+
+                else
+                    $slider.animate({
+                        width: '105px'
+                        }, 500, false)
+
+                $slider.css({
+                    left: disdance + 'px'
+                    })
+                    
+        return {
+            restrict: "EA"
+            link: postLink
+        }
+    ]
+
 class NbAutocompleteCtrl
     @.$inject = ['$scope', '$attrs']
 

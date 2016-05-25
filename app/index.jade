@@ -26,7 +26,7 @@ html
         )
         div.not-supported(ng-if="rootCtrl.isIE")
             include partials/shared/not_supported
-        div.boss-dashboard()
+        div.boss-dashboard(ng-if="!rootCtrl.show_main")
             include partials/shared/boss_dashboard
 
         include partials/shared/top_menu
