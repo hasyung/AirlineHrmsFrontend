@@ -382,6 +382,10 @@
 				color: $text-muted;
 				border-right: 1px solid $text-hint;
 				padding: 0 15px;
+
+				&.active {
+					color: #b71c24;
+				}
 			}
 
 			&:last-child {
@@ -461,6 +465,7 @@
 
 .datas__container--charts {
 	.charts-toolbar {
+		align-items: center;
         padding: 0 30px;
 
         .date-selector {
@@ -487,6 +492,7 @@
         }
 
         .chart-detail {
+        	background-color: transparent;
             padding: 0 30px;
 
             .chart-detail-toolbar {

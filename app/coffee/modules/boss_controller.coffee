@@ -40,6 +40,7 @@ class BossLaborsController extends nb.Controller
 
     constructor: (@scope, @http, @Employee, @LeaveEmployees) ->
         @initialDataCompleted = false
+        @datasType = '公司人员进出'
         @showChart = true
         @tableType = '新进员工'
 
