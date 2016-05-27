@@ -192,6 +192,21 @@ angular.module 'nb.directives'
         }
     ]
 
+    # 在变更记录中使用
+    .directive 'roundNumber', [()->
+        postLink = (scope, elem, attrs, ctrl) ->
+            elem.on 'change', () ->
+                scope.val = Math.round(scope.val*100)/100
+
+        return {
+            restrict: 'A'
+            link: postLink
+            scope: {
+                val: "=ngModel"
+            }
+        }
+    ]
+
     # 流程分支节点图，现在已废弃，花了较多精力，暂时保留
     .directive 'columnChart', [ () ->
         postLink = (scope, elem, attrs) ->
