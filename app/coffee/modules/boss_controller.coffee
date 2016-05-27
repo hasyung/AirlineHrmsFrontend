@@ -15,14 +15,33 @@ class Route
                         controller: BossLaborsController
                         controllerAs: 'ctrl'
                     }
+                    boss_messages: {
+                        templateUrl: '/partials/shared/boss_messages/contact.html'
+                        controller: BossContactController
+                        controllerAs: 'ctrl'
+                    }
                 }
             }
-            # .state 'boss.profile', {
-            #     url: '/profile'
-            #     controller: ProfileCtrl
-            #     controllerAs: 'ctrl'
-            #     templateUrl: 'partials/self/self_info_basic/self_info_basic.html'
-            # }
+            .state 'boss_labors', {
+                url: '/labors'
+                views: {
+                    boss_datas: {
+                        templateUrl: '/partials/shared/boss_datas/labors.html'
+                        controller: BossLaborsController
+                        controllerAs: 'ctrl'
+                    }
+                }
+            }
+            .state 'boss_contact', {
+                url: '/dashboard/labors'
+                views: {
+                    boss_messages: {
+                        templateUrl: '/partials/shared/boss_messages/contact.html'
+                        controller: BossContactController
+                        controllerAs: 'ctrl'
+                    }
+                }
+            }
             
             
 
@@ -261,8 +280,10 @@ class BossLaborsController extends nb.Controller
         
         return config
         
+class BossContactController extends nb.Controller
+    @.$inject = ['$scope', '$http']
 
-
+    constructor: (@scope, @http) ->
 
 app.controller 'BossCtrl', BossDashBoardController
 

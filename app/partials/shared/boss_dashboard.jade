@@ -72,7 +72,7 @@
 
 		.boss__datas
 			.datas__tabs(boss-data-slider)
-				.datas__tab(ui-sref="boss") 劳动关系
+				.datas__tab(ui-sref="boss_labors") 劳动关系
 				.datas__tab 人事调配
 				.datas__tab 薪酬室
 				.datas__tab 福利室
@@ -91,7 +91,7 @@
 				.messages__tab 交流分享
 				.messages__tab 私信
 			
-			.messages__content
+			.messages__content(ui-view="boss_messages")
 
 .boss__footmenu
 	.boss__wrapper--1200
