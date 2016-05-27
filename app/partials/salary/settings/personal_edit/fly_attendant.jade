@@ -181,9 +181,6 @@ block hours_fee_setting
             label 最低飞行时间
             input(type="number" min="0" max="100000" step="1" ng-model="current.lowerLimitHour" ng-disabled="!exchangeCtrl.editing")
 
-    div(layout)
-        md-checkbox.md-primary(ng-model="current.isFlyerLandWork" ng-disabled="!exchangeCtrl.editing") 空勤地面行政班
-
 block allowance_setting
     div(layout)
         md-input-container.row-has-value(flex)
