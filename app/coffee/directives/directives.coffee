@@ -728,6 +728,8 @@ angular.module 'nb.directives'
 
                 disdance = if activeIndex > 0 then 95+84*(activeIndex - 1) else 0
 
+                $slider.stop(true, false)
+
                 if activeIndex == 6
                     $slider.animate({
                         width: '115px'
@@ -759,6 +761,66 @@ angular.module 'nb.directives'
             restrict: "EA"
             link: postLink
         }
+    ]
+
+    # BOSS页面的数据块 datas_picker（不考虑重用）
+    .directive 'bossDataPicker', [ () ->
+        postLink = (scope, elem, attrs) ->
+            listWidth = 0
+            startIndex = 0
+            $listObj = elem.find '.picker__list'
+            $items = elem.find '.picker__items'
+            $prev = elem.find '.picker__prev'
+            $next = elem.find '.picker__next'
+            animating = false
+            dueTime = 300
+
+            $items.each () ->
+                listWidth += $(this).width()
+
+            $listObj.css('width', listWidth)
+
+            $prev.on 'click', () ->
+                d = $items.eq(startIndex - 1).width()
+                s = parseInt($listObj.css('transform').toString().split(',')[4])
+                f = s + d
+
+                if startIndex > 0 && !animating
+                    animating = true
+
+                    $listObj.css {
+                        transform: 'translate3d('+ f + 'px, 0, 0)'
+                    }
+
+                    startIndex--
+
+                    setTimeout(()-> animating = false
+                    dueTime
+                    )
+                
+            $next.on 'click', () ->
+                d = $items.eq(startIndex).width()
+                s = parseInt($listObj.css('transform').toString().split(',')[4])
+                f = s - d
+
+                if startIndex < $items.length - 1 && !animating
+                    animating = true
+
+                    $listObj.css {
+                        transform: 'translate3d('+ f + 'px, 0, 0)'
+                    }
+
+                    startIndex++
+                    setTimeout(()-> animating = false
+                    dueTime
+                    )
+
+
+        return {
+            restrict: 'EA'
+            link: postLink
+        }
+
     ]
 
 class NbAutocompleteCtrl

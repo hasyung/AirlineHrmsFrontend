@@ -3,6 +3,20 @@
 		.boss__logo
 			img(src="/images/login-avator.png", alt="")
 		span(flex)
+		
+		div(ng-controller="notificationCtrl as notify")
+			md-button.notify-button(
+				nb-panel
+				template-url="partials/shared/notification_center.html"
+				pre-close="notify.markToReaded()"
+			)
+				md-icon(md-svg-icon="/images/svg/email-outline.svg")
+			.ms-count(ng-if="notify.msg_unread_count" ng-bind="notify.msg_unread_count")
+
+		ul.user-menu(ng-controller="AuthController as ctrl")
+			.nb-dropdown(user-info-dropdown)
+				li
+					a(ng-click="logout()") 退出
 
 .boss__mainbody(ng-controller="BossCtrl as ctrl")
 	.boss__wrapper--1200(layout="row")
@@ -41,57 +55,12 @@
 
 							.todo__content.single-ellipsis 申请休2015-2016年假8天
 
-						.todos__todo
-							.todo__icon
-							.todo__header
-								span 年假申请
-								span 2016/4/17 10:00
-								span 金焕成
-
-							.todo__content.single-ellipsis 申请休2015-2016年假8天
-
-						.todos__todo
-							.todo__icon
-							.todo__header
-								span 年假申请
-								span 2016/4/17 10:00
-								span 金焕成
-
-							.todo__content.single-ellipsis 申请休2015-2016年假8天
-
 			.todos__board#task.outlier
 				.todos__title
 					span.todos__count 5
 					| 任务查看
 				.todos__content
 					.todos__window(slimscroll height="389")
-						.todos__todo
-							.todo__icon
-							.todo__header
-								span 年假申请
-								span 2016/4/17 10:00
-								span 金焕成
-
-							.todo__content.single-ellipsis 申请休2015-2016年假8天
-
-						.todos__todo
-							.todo__icon
-							.todo__header
-								span 年假申请
-								span 2016/4/17 10:00
-								span 金焕成
-
-							.todo__content.single-ellipsis 申请休2015-2016年假8天fdsfdsfdsfdsfsdfsdfdsf
-
-						.todos__todo
-							.todo__icon
-							.todo__header
-								span 年假申请
-								span 2016/4/17 10:00
-								span 金焕成
-
-							.todo__content.single-ellipsis 申请休2015-2016年假8天
-
 						.todos__todo
 							.todo__icon
 							.todo__header
@@ -110,6 +79,7 @@
 				.datas__tab 培训管理
 				.datas__tab 招飞办公
 				.datas__tab 员工服务
+				
 				.datas__slider 
 			
 			.datas__content(ui-view="boss_datas")

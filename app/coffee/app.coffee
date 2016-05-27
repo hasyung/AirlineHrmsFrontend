@@ -116,7 +116,8 @@ mdThemingConf = ($mdThemingProvider) ->
 
 routeConf = ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) ->
     $locationProvider.html5Mode(false)
-    $urlRouterProvider.otherwise(metadata.route_info.default_route || "/todo")
+    console.log metadata.route_info.default_route
+    $urlRouterProvider.otherwise(metadata.route_info.default_route || "/dashboard")
 
     $stateProvider
         .state 'home', {
