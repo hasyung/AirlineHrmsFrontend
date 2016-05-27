@@ -254,7 +254,7 @@
                     .leave {{ctrl.global_setting.year_all_right_fly[ctrl.currentYear].budget - ctrl.global_setting.year_all_right_fly[ctrl.currentYear].sent | number: 2}}
 
                 .form-row(layout ng-class="{'yellow': ctrl.global_setting.passenger_quarter_fee[ctrl.currentYear].sent/ctrl.global_setting.passenger_quarter_fee[ctrl.currentYear].budget>=0.8, 'red': ctrl.global_setting.passenger_quarter_fee[ctrl.currentYear].sent/ctrl.global_setting.passenger_quarter_fee[ctrl.currentYear].budget>=1}")
-                    label 客运目标责任书季度奖励
+                    label 客运目标责任书季度奖
                     md-input-container(md-no-float)
                         input(type="number" min="0" step="1" ng-model="ctrl.global_setting.passenger_quarter_fee[ctrl.currentYear].budget")
                     label 已发

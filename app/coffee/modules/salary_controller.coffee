@@ -2052,7 +2052,7 @@ class SalaryRewardController extends SalaryBaseController
             {minWidth: 150,displayName: '部门安全管理目标承包奖', name: 'depSecurityUndertake', enableCellEdit: false}
             {minWidth: 150,displayName: '飞行安全星级奖', name: 'flyStar', enableCellEdit: false}
             {minWidth: 150,displayName: '年度无差错机务维修中队奖', name: 'yearAllRightFly', enableCellEdit: false}
-            {minWidth: 150,displayName: '客运目标责任书季度奖励', name: 'passengerQuarterFee', enableCellEdit: false}
+            {minWidth: 150,displayName: '客运目标责任书季度奖', name: 'passengerQuarterFee', enableCellEdit: false}
             {minWidth: 150,displayName: '货运目标责任书季度奖', name: 'freightQualityFee', enableCellEdit: false}
             {minWidth: 150,displayName: '收益奖励金', name: 'earningsFee', enableCellEdit: false}
             {minWidth: 150,displayName: '品牌质量考核奖', name: 'brandQualityFee', enableCellEdit: false}
@@ -2254,6 +2254,73 @@ class SalaryBusFeeController extends SalaryBaseController
                 else
                     self.toaster.pop('success', '提示', '导入成功')
 
+class SalaryOfficialCarController extends SalaryBaseController
+    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'OfficialCar', 'toaster', '$rootScope']
+
+    constructor: (@http, $scope, $q, @Evt, @Employee, @OfficialCar, @toaster, @rootScope) ->
+        super(@OfficialCar, $scope, $q, true, null, @rootScope)
+
+        @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
+
+        @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
+            {minWidth: 150, displayName: '公务车', name: 'fee', enableCellEdit: false}
+            {minWidth: 150, displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {
+                minWidth: 150
+                name:"notes"
+                displayName:"说明"
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
+                        {{row.entity.notes || '无'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #ccc;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <div class="salary-explain">
+                                    {{row.entity.notes || '无'}}
+                                </div>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.notes
+            }
+            {
+                minWidth: 150
+                name:"remark"
+                displayName:"备注"
+                headerCellClass: 'editable_cell_header'
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">
+                        {{row.entity.remark || '请输入备注'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #ccc;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <md-input-container>
+                                    <label>备注</label>
+                                    <textarea
+                                        ng-blur="row.entity.$save()"
+                                        ng-model="row.entity.remark"
+                                        style="resize:none;"
+                                        class="reason-input"></textarea>
+                                </md-input-container>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.note
+            }
+        ]).concat(CALC_STEP_COLUMN)
+
 
 class SalaryOverviewController extends SalaryBaseController
     @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'SalaryOverview', 'toaster', '$rootScope']
@@ -2445,6 +2512,7 @@ app.controller 'salaryLandAllowanceCtrl', SalaryLandAllowanceController
 app.controller 'salaryRewardCtrl', SalaryRewardController
 app.controller 'salaryTransportFeeCtrl', SalaryTransportFeeController
 app.controller 'salaryBusFeeCtrl', SalaryBusFeeController
+app.controller 'salaryOfficialCarCtrl', SalaryOfficialCarController
 app.controller 'salaryOverviewCtrl', SalaryOverviewController
 app.controller 'birthSalaryCtrl', BirthSalaryController
 app.controller 'calcStepCtrl', CalcStepsController
