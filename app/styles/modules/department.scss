@@ -1,0 +1,41 @@
+.department-chart {
+	.md-button.md-fab:not([disabled]):hover {
+		background-color: transparent;
+	}
+}
+
+.dep__reports {
+	margin: 0;
+	padding: 0;
+}
+
+.dep__report {
+	background: #fff;
+	max-height: 80px;
+	overflow: hidden;
+	transition: max-height 1s linear;
+	transform: translateZ(0);
+
+	fieldset {
+		padding: 20px 40px;
+	}
+
+	.dep__btn-group {
+		margin-top: 5px;
+	}
+
+	&.editing {
+		max-height: 2000px;
+	}
+}
+
+.dep__title {
+	.md-button {
+		background: #fff;
+		margin-left: 10px;
+
+		md-icon {
+			margin-top: -2px;
+		}
+	}
+}

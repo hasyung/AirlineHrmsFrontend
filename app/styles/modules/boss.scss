@@ -24,6 +24,23 @@
 		align-items: center;
 	}
 
+	.boss__notify {
+		position: relative;
+
+		.ms-count {
+			background: #dc341b;
+			border-radius: 50%;
+			color: #fff;
+			text-align: center;
+			height: 16px;
+			line-height: 16px;
+			width: 16px;
+			top: 22px;
+			left: 16px;
+			position: absolute;
+		}
+	}
+
 	.notify-button {
 		height: 80px;
 
@@ -31,7 +48,7 @@
 			height: 30px;
 			width: 30px;
 		}
-	}	
+	}
 
 	.user-menu {
         height: 80px;
@@ -554,6 +571,10 @@
 	top: 0;
 	text-align: center;
 	width: 183px;
+
+	&.active {
+		z-index: 3;
+	}
 }
 
 .messages__content {

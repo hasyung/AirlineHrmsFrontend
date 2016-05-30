@@ -23,21 +23,11 @@ class Route
                 }
             }
             .state 'boss_labors', {
-                url: '/labors'
+                url: '/dashboard/labors'
                 views: {
                     boss_datas: {
                         templateUrl: '/partials/shared/boss_datas/labors.html'
                         controller: BossLaborsController
-                        controllerAs: 'ctrl'
-                    }
-                }
-            }
-            .state 'boss_contact', {
-                url: '/dashboard/labors'
-                views: {
-                    boss_messages: {
-                        templateUrl: '/partials/shared/boss_messages/contact.html'
-                        controller: BossContactController
                         controllerAs: 'ctrl'
                     }
                 }
@@ -51,6 +41,8 @@ class BossDashBoardController extends nb.Controller
 
     constructor: (@scope, Todo, @state) ->
         @state.go 'boss'
+        @messagesType='交流分享'
+
 
         @todos = Todo.$collection().$fetch()
 
