@@ -680,6 +680,87 @@ angular.module 'nb.directives'
         }
     ]
 
+    # 复选框容器 内部配合md-checkbox data-val表示选中值
+    # ng-model绑定值 返回被复选中的数组 
+    .directive 'checkboxGroup', [ () ->
+        postLink = (scope, elem, attrs) ->
+            existed = (item)->
+                return scope.list.indexOf(item) > -1
+
+            toggled = (item)->
+                idx = scope.list.indexOf(item);
+
+                if idx > -1
+                    scope.list.splice(idx, 1);
+                else
+                    scope.list.push(item);
+
+            $checkboxes = elem.find 'md-checkbox'
+
+            $checkboxes.each ()->
+                thisVal = parseInt($(this).attr('data-val'))
+                if existed(thisVal)
+                    $(this).attr('checked', 'true')
+                    $(this).addClass('md-checked')
+
+            $checkboxes.on 'click', ()->
+                thisVal = parseInt($(this).attr('data-val'))
+                
+                toggled(thisVal)
+
+                if existed(thisVal)
+                    $(this).attr('checked', 'true')
+                    $(this).addClass('md-checked')
+                else
+                    $(this).attr('checked', 'false')
+                    $(this).removeClass('md-checked')
+                    
+
+        return {
+            scope: {
+                list: "=ngModel"
+            }
+            restrict: "EA"
+            link: postLink
+        }
+    ]
+
+    # BOSS页面的待办事项（不考虑重用）
+    .directive 'bossTodo', [ () ->
+        postLink = (scope, elem, attrs) ->
+            $boards = elem.find '.todos__board'
+
+            $boards.on 'click', () ->
+                if(!$(this).hasClass('active'))
+                    $(this).removeClass('outlier')
+                    
+                    prev = elem.find '.active'
+                    outlier = elem.find '.outlier'
+
+                    prev.removeClass('active')
+                    $(this).addClass('active')
+
+                    $(this).animate({
+                        top: 0
+                        }, 500, false)
+
+                    outlier.animate({
+                        top: '501px'
+                        }, 500, false)
+
+                    prev.animate({
+                        top: '591px'
+                        }, 500, ()->
+                            prev.addClass('outlier')
+                            )
+                    
+
+        return {
+            restrict: "EA"
+            link: postLink
+        }
+    ]
+
     # BOSS页面的待办事项（不考虑重用）
     .directive 'bossTodo', [ () ->
         postLink = (scope, elem, attrs) ->

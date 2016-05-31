@@ -4,6 +4,19 @@
 	}
 }
 
+.dep__report--add {
+	// background: transparent;
+	box-sizing: border-box;
+	height: 50px;
+	margin-bottom: 10px;
+	width: 100%;
+
+	md-icon {
+		height: 30px;
+		width: 200px;
+	}
+}
+
 .dep__reports {
 	margin: 0;
 	padding: 0;
@@ -12,8 +25,8 @@
 .dep__report {
 	background: #fff;
 	max-height: 80px;
+	margin-bottom: 10px;
 	overflow: hidden;
-	transition: max-height 1s linear;
 	transform: translateZ(0);
 
 	fieldset {
