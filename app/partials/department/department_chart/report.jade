@@ -22,7 +22,7 @@
 							md-icon(md-svg-src="/images/svg/close.svg" aria-label="取消")
 						md-button.md-fab.white(ng-click="ctrl.removeReport(report)")
 							md-icon(md-svg-src="/images/svg/destroy.svg" aria-label="删除")
-					.dep__btn-group(ng-show="!editing")
+					.dep__btn-group(ng-hide="editing")
 						md-button.md-fab.white(ng-click="editing=true")
 							md-icon(md-svg-src="/images/svg/edit_24px.svg" aria-label="修改")
 						md-button.md-fab.white(ng-click="ctrl.removeReport(report)")
@@ -60,7 +60,7 @@
 
 				md-subheader.mt40 发送至：
 				div(layout checkbox-group ng-disabled="!editing" ng-model="report.checker")
-					md-checkbox.md-primary(data-val="1") 总经理
-					md-checkbox.md-primary(data-val="2") 副总经理
-					md-checkbox.md-primary(data-val="3") 党委书记
+					md-checkbox.md-primary(data-val="9031") 副总经理
+					md-checkbox.md-primary(data-val="9032") 副总经理
+					md-checkbox.md-primary(data-val="9034") 副总经理
 

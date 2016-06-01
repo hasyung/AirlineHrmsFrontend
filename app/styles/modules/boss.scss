@@ -529,6 +529,19 @@
 }
 
 
+.datas__container--reports {
+	padding: 20px;
+
+	.datas__report {
+		background: #fff;
+		border-left: 4px solid #e94b3c;
+		border-top-left-radius: 4px;
+		border-bottom-left-radius: 4px;
+		height: 80px;
+		margin-bottom: 10px;
+	}
+}
+
 /***************
 ** 数据图表  end*
 ***************/
