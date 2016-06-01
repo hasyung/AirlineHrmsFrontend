@@ -1184,8 +1184,7 @@ class SalaryExchangeController
             return if !angular.isDefined(config["X"])
 
             if config["X"]["format_cell"] == current.leaderGrade
-                console.log config
-                current.performanceFlag = config['rate']
+                current.performanceFlag = config['grade']
                 current.performanceMoney = config['amount']
                 return
 
