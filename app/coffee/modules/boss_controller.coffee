@@ -47,11 +47,11 @@ class BossDashBoardController extends nb.Controller
         @todos = Todo.$collection().$fetch()
 
 class BossLaborsController extends nb.Controller
-    @.$inject = ['$scope', '$http', 'Employee', 'LeaveEmployees']
+    @.$inject = ['$scope', '$http', 'Employee', 'LeaveEmployees', 'ReportNeedToKnow', 'REPORT_CHECKER']
 
-    constructor: (@scope, @http, @Employee, @LeaveEmployees) ->
+    constructor: (@scope, @http, @Employee, @LeaveEmployees, @ReportNeedToKnow, @reportCheckers) ->
         @initialDataCompleted = false
-        @datasType = '公司人员进出'
+        @datasType = '汇报'
         @showChart = true
         @tableType = '新进员工'
 
@@ -205,6 +205,7 @@ class BossLaborsController extends nb.Controller
 
         @newEmployees = @Employee.$collection().$fetch(tableParam)
         @LeaveEmployees = @LeaveEmployees.$collection().$fetch(tableParam)
+        @reports = @ReportNeedToKnow.$collection().$fetch()
 
     loadChartData: () ->
         self = @

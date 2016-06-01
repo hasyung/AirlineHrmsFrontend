@@ -50,6 +50,7 @@ moment.locale('zh-cn')
 #初始化在<head> <script> 标签中, 如果不存在， 系统行为待定
 App.constant 'PERMISSIONS', metadata.permissions || []
 App.value 'USER_META', metadata.user || {}
+App.value 'REPORT_CHECKER', metadata.report_checker || {}
 App.constant 'VACATIONS', metadata.vacation_summary || {}
 App.constant 'DEPARTMENTS', dep_info.departments || []
 App.constant 'nbConstants', metadata.resources || []

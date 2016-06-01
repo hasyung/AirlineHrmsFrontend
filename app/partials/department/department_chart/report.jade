@@ -59,8 +59,5 @@
 					md-button.md-primary.md-raised(flow-btn type="button") 文件上传
 
 				md-subheader.mt40 发送至：
-				div(layout checkbox-group ng-disabled="!editing" ng-model="report.checker")
-					md-checkbox.md-primary(data-val="9031") 副总经理
-					md-checkbox.md-primary(data-val="9032") 副总经理
-					md-checkbox.md-primary(data-val="9034") 副总经理
+				div(layout checkbox-group ng-disabled="!editing" checkboxes="ctrl.reportCheckers" ng-model="report.checker")
 

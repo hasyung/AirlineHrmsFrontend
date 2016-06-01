@@ -684,41 +684,23 @@ angular.module 'nb.directives'
     # ng-model绑定值 返回被复选中的数组 
     .directive 'checkboxGroup', [ () ->
         postLink = (scope, elem, attrs) ->
-            existed = (item)->
+            scope.existed = (item)->
                 return scope.list.indexOf(item) > -1
 
-            toggled = (item)->
+            scope.toggled = (item)->
                 idx = scope.list.indexOf(item);
 
                 if idx > -1
                     scope.list.splice(idx, 1);
                 else
                     scope.list.push(item);
-
-            $checkboxes = elem.find 'md-checkbox'
-
-            $checkboxes.each ()->
-                thisVal = parseInt($(this).attr('data-val'))
-                if existed(thisVal)
-                    $(this).attr('checked', 'true')
-                    $(this).addClass('md-checked')
-
-            $checkboxes.on 'click', ()->
-                thisVal = parseInt($(this).attr('data-val'))
-                
-                toggled(thisVal)
-
-                if existed(thisVal)
-                    $(this).attr('checked', 'true')
-                    $(this).addClass('md-checked')
-                else
-                    $(this).attr('checked', 'false')
-                    $(this).removeClass('md-checked')
                     
 
         return {
+            template: '<md-checkbox ng-checked="existed(val)" ng-click="toggled(val)" class="md-primary" ng-repeat="(key, val) in checkboxes" data-val="{{val}}">{{key}}</md-checkbox>'
             scope: {
                 list: "=ngModel"
+                checkboxes: "=checkboxes"
             }
             restrict: "EA"
             link: postLink

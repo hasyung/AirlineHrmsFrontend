@@ -17,9 +17,9 @@ class Route
             
         
 class DepartmentChartController extends nb.Controller
-    @.$inject = ['$scope', '$http', 'Reports', 'toaster']
+    @.$inject = ['$scope', '$http', 'Reports', 'toaster', 'REPORT_CHECKER']
 
-    constructor: (@scope, @http, @Reports, @toaster) ->
+    constructor: (@scope, @http, @Reports, @toaster, @reportCheckers) ->
         @loadInitialData()
 
     loadInitialData: () ->
