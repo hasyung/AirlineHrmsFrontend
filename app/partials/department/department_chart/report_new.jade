@@ -44,10 +44,7 @@ md-dialog.report-new(
                         md-button.md-primary.md-raised(flow-btn type="button") 文件上传
 
                     md-subheader.mt40 发送至：
-                    div(layout checkbox-group ng-model="report.checker")
-                        md-checkbox.md-primary(data-val="1") 总经理
-                        md-checkbox.md-primary(data-val="2") 副总经理
-                        md-checkbox.md-primary(data-val="3") 党委书记
+                    div(layout checkbox-group ng-model="report.checker" checkboxes="ctrl.reportCheckers")
 
         .md-actions
             md-button(type='button',ng-click="dialog.close()") 取消

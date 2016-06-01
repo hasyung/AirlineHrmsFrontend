@@ -13,13 +13,15 @@ Report = (restmod, RMUtils, $Evt) ->
 
     }
 
+ReportNeedToKnow = (restmod, RMUtils, $Evt) ->
+	ReportNeedToKnow = restmod.model('/reports/need_to_know').mix 'nbRestApi', {
+        # updateDate: {decode: 'date', param: 'yyyy-MM-dd HH:mm'}
 
+        $config:
+            jsonRootSingle: 'report'
+            jsonRootMany: 'reports'
 
-
-
-
-
-
+    }
 
 
 
@@ -28,3 +30,4 @@ Report = (restmod, RMUtils, $Evt) ->
 
 
 resources.factory 'Reports', ['restmod', 'RMUtils', '$nbEvent', Report]
+resources.factory 'ReportNeedToKnow', ['restmod', 'RMUtils', '$nbEvent', ReportNeedToKnow]

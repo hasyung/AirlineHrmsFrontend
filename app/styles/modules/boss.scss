@@ -537,8 +537,36 @@
 		border-left: 4px solid #e94b3c;
 		border-top-left-radius: 4px;
 		border-bottom-left-radius: 4px;
-		height: 80px;
+		cursor: pointer;
+		min-height: 80px;
+		max-height: 80px;
 		margin-bottom: 10px;
+		overflow: hidden;
+
+		&:hover {
+			max-height: 2000px;
+		}
+
+		&.active {
+			max-height: 2000px;
+		}
+	}
+
+	.report__title {
+		font-size: $font-size-md;
+		height: 80px;
+		line-height: 80px;
+		padding: 0 20px;
+	}
+
+	.report__date {
+		color: $text-muted;
+		text-align: right;
+		width: 160px;
+	}
+
+	.report__content {
+		padding: 0 30px 20px;
 	}
 }
 
