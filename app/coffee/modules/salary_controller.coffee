@@ -1175,6 +1175,8 @@ class SalaryExchangeController
     flyPerf: (current) ->
         return unless current.leaderGrade
 
+        current.performanceWage = 'market_leader_perf'
+
         setting = @$settingHash('market_leader_perf')
 
         angular.forEach setting.flags, (config, flag) ->
@@ -1182,6 +1184,8 @@ class SalaryExchangeController
             return if !angular.isDefined(config["X"])
 
             if config["X"]["format_cell"] == current.leaderGrade
+                console.log config
+                current.performanceFlag = config['rate']
                 current.performanceMoney = config['amount']
                 return
 

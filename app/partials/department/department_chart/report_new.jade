@@ -1,0 +1,54 @@
+md-dialog.report-new(
+    ng-init="report={}; report.checker=[]; report.attachment_ids=[]; attachments=[]; reports=dialog.reports.$refresh()"
+    )
+    md-toolbar.md-accent(md-theme="hrms")
+        .md-toolbar-tools
+            span 新增汇报
+    form(novalidate, name="reportNewForm", ng-submit="ctrl.createReport(report, reports); dialog.close()")
+        md-content.sticky-container
+            .dialog-content
+                fieldset
+                    div(layout)
+                        md-input-container(flex)
+                            label 标题
+                            input(ng-model="report.title")
+
+                    div(layout)
+                        md-input-container(flex)
+                            label 正文内容
+                            textarea(ng-model="report.content" md-maxlength="150" rows="1" md-select-on-focus)
+
+                    md-subheader.accessory-header.mt10 附件
+                    .accessory-container
+                        .accessory-cell(style="display: block;" ng-repeat="attachment in attachments")
+                            div(ng-if="ctrl.isImgObj(attachment)" nb-gallery img-obj="attachment" style="cursor: pointer;")
+                                .accessory-name() {{attachment.name}}
+                                .accessory-size() {{attachment.size | byteFmt:2}}
+
+                            div(ng-if="!ctrl.isImgObj(attachment)" style="cursor: pointer;")
+                                a(
+                                    style="display: block; color: rgba(0,0,0,0.87)"
+                                    ng-href="{{attachment.default}}"
+                                    download
+                                    )
+                                    .accessory-name() {{attachment.name}}
+                                    .accessory-size() {{attachment.size | byteFmt:2}}
+                            .accessory-switch(style="top: 6px")
+                                md-button.md-icon-button(type="button" ng-click="ctrl.attachmentDestroyInNewReport(report, attachments, attachment)")
+                                    md-icon.md-warn(md-svg-src="/images/svg/close.svg")
+                    .accessory-btn-group(
+                        flow-init="{target: '/api/attachments/report_upload_file', allowDuplicateUploads: true, testChunks:false, uploadMethod:'POST', singleFile:true}"
+                        flow-files-submitted="$flow.upload()"
+                        flow-file-success="ctrl.uploadInNewReport(report, attachments, $message);"
+                        )
+                        md-button.md-primary.md-raised(flow-btn type="button") 文件上传
+
+                    md-subheader.mt40 发送至：
+                    div(layout checkbox-group ng-model="report.checker")
+                        md-checkbox.md-primary(data-val="1") 总经理
+                        md-checkbox.md-primary(data-val="2") 副总经理
+                        md-checkbox.md-primary(data-val="3") 党委书记
+
+        .md-actions
+            md-button(type='button',ng-click="dialog.close()") 取消
+            md-button.md-primary(ng-disabled="reportNewForm.$invalid" type="submit") 确定

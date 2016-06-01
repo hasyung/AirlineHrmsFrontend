@@ -695,6 +695,51 @@ angular.module 'nb.directives'
         }
     ]
 
+    # 复选框容器 内部配合md-checkbox data-val表示选中值
+    # ng-model绑定值 返回被复选中的数组 
+    .directive 'checkboxGroup', [ () ->
+        postLink = (scope, elem, attrs) ->
+            existed = (item)->
+                return scope.list.indexOf(item) > -1
+
+            toggled = (item)->
+                idx = scope.list.indexOf(item);
+
+                if idx > -1
+                    scope.list.splice(idx, 1);
+                else
+                    scope.list.push(item);
+
+            $checkboxes = elem.find 'md-checkbox'
+
+            $checkboxes.each ()->
+                thisVal = parseInt($(this).attr('data-val'))
+                if existed(thisVal)
+                    $(this).attr('checked', 'true')
+                    $(this).addClass('md-checked')
+
+            $checkboxes.on 'click', ()->
+                thisVal = parseInt($(this).attr('data-val'))
+                
+                toggled(thisVal)
+
+                if existed(thisVal)
+                    $(this).attr('checked', 'true')
+                    $(this).addClass('md-checked')
+                else
+                    $(this).attr('checked', 'false')
+                    $(this).removeClass('md-checked')
+                    
+
+        return {
+            scope: {
+                list: "=ngModel"
+            }
+            restrict: "EA"
+            link: postLink
+        }
+    ]
+
     # BOSS页面的待办事项（不考虑重用）
     .directive 'bossTodo', [ () ->
         postLink = (scope, elem, attrs) ->
@@ -729,6 +774,149 @@ angular.module 'nb.directives'
             restrict: "EA"
             link: postLink
         }
+    ]
+
+    # BOSS页面的待办事项（不考虑重用）
+    .directive 'bossTodo', [ () ->
+        postLink = (scope, elem, attrs) ->
+            $boards = elem.find '.todos__board'
+
+            $boards.on 'click', () ->
+                if(!$(this).hasClass('active'))
+                    $(this).removeClass('outlier')
+                    
+                    prev = elem.find '.active'
+                    outlier = elem.find '.outlier'
+
+                    prev.removeClass('active')
+                    $(this).addClass('active')
+
+                    $(this).animate({
+                        top: 0
+                        }, 500, false)
+
+                    outlier.animate({
+                        top: '501px'
+                        }, 500, false)
+
+                    prev.animate({
+                        top: '591px'
+                        }, 500, ()->
+                            prev.addClass('outlier')
+                            )
+                    
+
+        return {
+            restrict: "EA"
+            link: postLink
+        }
+    ]
+
+    # BOSS页面的数据块 tab滑动菜单（不考虑重用）
+    .directive 'bossDataSlider', [ () ->
+        postLink = (scope, elem, attrs) ->
+            $tabs = elem.find '.datas__tab'
+
+            $slider = elem.find '.datas__slider'
+
+            $tabs.on 'click', () ->
+                activeIndex = $tabs.index($(this))
+
+                disdance = if activeIndex > 0 then 95+84*(activeIndex - 1) else 0
+
+                $slider.stop(true, false)
+
+                if activeIndex == 6
+                    $slider.animate({
+                        width: '115px'
+                        borderBottomLeftRadius: '50px'
+                        borderTopRightRadius: '50px'
+                        borderTopLeftRadius: '0'
+                        borderBottomRightRadius: '0'
+                        }, 500, false)
+
+                else if activeIndex == 0
+                    $slider.animate({
+                        width: '115px'
+                        borderBottomLeftRadius: '0'
+                        borderTopRightRadius: '0'
+                        borderTopLeftRadius: '50px'
+                        borderBottomRightRadius: '50px'
+                        }, 500, false)
+
+                else
+                    $slider.animate({
+                        width: '105px'
+                        }, 500, false)
+
+                $slider.css({
+                    left: disdance + 'px'
+                    })
+                    
+        return {
+            restrict: "EA"
+            link: postLink
+        }
+    ]
+
+    # BOSS页面的数据块 datas_picker（不考虑重用）
+    .directive 'bossDataPicker', [ () ->
+        postLink = (scope, elem, attrs) ->
+            listWidth = 0
+            startIndex = 0
+            $listObj = elem.find '.picker__list'
+            $items = elem.find '.picker__items'
+            $prev = elem.find '.picker__prev'
+            $next = elem.find '.picker__next'
+            animating = false
+            dueTime = 300
+
+            $items.each () ->
+                listWidth += $(this).width()
+
+            $listObj.css('width', listWidth)
+
+            $prev.on 'click', () ->
+                d = $items.eq(startIndex - 1).width()
+                s = parseInt($listObj.css('transform').toString().split(',')[4])
+                f = s + d
+
+                if startIndex > 0 && !animating
+                    animating = true
+
+                    $listObj.css {
+                        transform: 'translate3d('+ f + 'px, 0, 0)'
+                    }
+
+                    startIndex--
+
+                    setTimeout(()-> animating = false
+                    dueTime
+                    )
+                
+            $next.on 'click', () ->
+                d = $items.eq(startIndex).width()
+                s = parseInt($listObj.css('transform').toString().split(',')[4])
+                f = s - d
+
+                if startIndex < $items.length - 1 && !animating
+                    animating = true
+
+                    $listObj.css {
+                        transform: 'translate3d('+ f + 'px, 0, 0)'
+                    }
+
+                    startIndex++
+                    setTimeout(()-> animating = false
+                    dueTime
+                    )
+
+
+        return {
+            restrict: 'EA'
+            link: postLink
+        }
+
     ]
 
 class NbAutocompleteCtrl
