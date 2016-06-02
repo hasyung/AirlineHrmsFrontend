@@ -1,0 +1,29 @@
+mixin pickerItems(name)
+	li.picker__items
+		a(
+			ng-click="ctrl.datasType='#{name}'"
+			ng-class="{'active': ctrl.datasType=='#{name}'}"
+		) #{name}
+
+block vars
+
+- var pickerItems = pickers || []
+
+.datas__content__wrapper
+	.datas__picker(boss-data-picker)
+		.picker__viewport
+			ul.picker__list
+				each val in pickerItems
+					+pickerItems(val)
+
+		.picker__prev
+			md-icon(md-svg-src="md-toggle-arrow")
+		.picker__next
+			md-icon(md-svg-src="md-toggle-arrow")
+
+	.datas__window(slimscroll height="500")
+		
+		block datas_content
+		
+
+

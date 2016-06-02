@@ -11,13 +11,8 @@ class Route
                 url: '/dashboard'
                 views: {
                     boss_datas: {
-                        templateUrl: '/partials/shared/boss_datas/labors.html'
+                        templateUrl: '/partials/shared/boss_datas/labors/labors.html'
                         controller: BossLaborsController
-                        controllerAs: 'ctrl'
-                    }
-                    boss_messages: {
-                        templateUrl: '/partials/shared/boss_messages/contact.html'
-                        controller: BossContactController
                         controllerAs: 'ctrl'
                     }
                 }
@@ -26,22 +21,32 @@ class Route
                 url: '/dashboard/labors'
                 views: {
                     boss_datas: {
-                        templateUrl: '/partials/shared/boss_datas/labors.html'
+                        templateUrl: '/partials/shared/boss_datas/labors/labors.html'
                         controller: BossLaborsController
                         controllerAs: 'ctrl'
                     }
                 }
             }
-            # .state 'boss_labors', {
-            #     url: '/dashboard/labors'
-            #     views: {
-            #         boss_datas: {
-            #             templateUrl: '/partials/shared/boss_datas/labors.html'
-            #             controller: BossLaborsController
-            #             controllerAs: 'ctrl'
-            #         }
-            #     }
-            # }
+            .state 'boss_human', {
+                url: '/dashboard/human'
+                views: {
+                    boss_datas: {
+                        templateUrl: '/partials/shared/boss_datas/human/human.html'
+                        controller: BossLaborsController
+                        controllerAs: 'ctrl'
+                    }
+                }
+            }
+            .state 'boss_salary', {
+                url: '/dashboard/salary'
+                views: {
+                    boss_datas: {
+                        templateUrl: '/partials/shared/boss_datas/salary/salary.html'
+                        controller: BossLaborsController
+                        controllerAs: 'ctrl'
+                    }
+                }
+            }
             
             
 
