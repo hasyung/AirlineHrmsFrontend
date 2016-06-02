@@ -49,9 +49,6 @@
 									.accessory-name() {{attachment.name}}
 									.accessory-size() {{attachment.size | byteFmt:2}}
 
-					md-subheader.mt40 发送至：
-						div(layout checkbox-group readonly ng-model="report.checker" checkboxes="ctrl.reportCheckers")
-
 
 		//- 新进离职图标和表格 start
 		.datas__container--charts(ng-if="ctrl.datasType == '公司人员进出'")

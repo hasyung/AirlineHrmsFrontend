@@ -253,6 +253,9 @@ class BossLaborsController extends nb.Controller
         @newEmployees.$refresh(tableParam)
         @LeaveEmployees.$refresh(tableParam)
 
+    isImgObj: (obj)->
+        return /jpg|jpeg|png|gif/.test(obj.type)
+
     loadMonthList: () ->
         if @currentYear == new Date().getFullYear()
             months = [1..new Date().getMonth() + 1]
