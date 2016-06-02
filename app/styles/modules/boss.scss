@@ -320,7 +320,7 @@
 	width: 115px;
 	z-index: 0;
 	transform: translateZ(0);
-	transition: left .5s cubic-bezier(.25,.1,.38,1.2);
+	transition: left .5s .5s cubic-bezier(.25,.1,.38,1.2);
 }
 
 @for $i from 2 through 7 {

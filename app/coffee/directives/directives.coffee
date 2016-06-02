@@ -758,42 +758,6 @@ angular.module 'nb.directives'
         }
     ]
 
-    # BOSS页面的待办事项（不考虑重用）
-    .directive 'bossTodo', [ () ->
-        postLink = (scope, elem, attrs) ->
-            $boards = elem.find '.todos__board'
-
-            $boards.on 'click', () ->
-                if(!$(this).hasClass('active'))
-                    $(this).removeClass('outlier')
-                    
-                    prev = elem.find '.active'
-                    outlier = elem.find '.outlier'
-
-                    prev.removeClass('active')
-                    $(this).addClass('active')
-
-                    $(this).animate({
-                        top: 0
-                        }, 500, false)
-
-                    outlier.animate({
-                        top: '501px'
-                        }, 500, false)
-
-                    prev.animate({
-                        top: '591px'
-                        }, 500, ()->
-                            prev.addClass('outlier')
-                            )
-                    
-
-        return {
-            restrict: "EA"
-            link: postLink
-        }
-    ]
-
     # BOSS页面的数据块 tab滑动菜单（不考虑重用）
     .directive 'bossDataSlider', [ () ->
         postLink = (scope, elem, attrs) ->
@@ -809,7 +773,7 @@ angular.module 'nb.directives'
                 $slider.stop(true, false)
 
                 if activeIndex == 6
-                    $slider.animate({
+                    $slider.delay(500).animate({
                         width: '115px'
                         borderBottomLeftRadius: '50px'
                         borderTopRightRadius: '50px'
@@ -818,7 +782,7 @@ angular.module 'nb.directives'
                         }, 500, false)
 
                 else if activeIndex == 0
-                    $slider.animate({
+                    $slider.delay(500).animate({
                         width: '115px'
                         borderBottomLeftRadius: '0'
                         borderTopRightRadius: '0'
@@ -827,7 +791,7 @@ angular.module 'nb.directives'
                         }, 500, false)
 
                 else
-                    $slider.animate({
+                    $slider.delay(500).animate({
                         width: '105px'
                         }, 500, false)
 
