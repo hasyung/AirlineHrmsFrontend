@@ -26,9 +26,13 @@ html
         )
         div.not-supported(ng-if="rootCtrl.isIE")
             include partials/shared/not_supported
-
-        div.boss-dashboard(ng-if="!rootCtrl.show_main && rootCtrl.show_boss")
+        
+        div.boss-dashboard(ng-if="!rootCtrl.show_main && rootCtrl.isHrGeneralManager")
             include partials/shared/boss_dashboard
+        div.boss-dashboard(ng-if="!rootCtrl.show_main && rootCtrl.isHrDeputyManager")
+            include partials/shared/boss_dashboard_hrdeputy
+        div.boss-dashboard(ng-if="!rootCtrl.show_main && rootCtrl.isServiceDeputyManager")
+            include partials/shared/boss_dashboard_service
 
         include partials/shared/top_menu
         toaster-container(toaster-options="{'time-out': 3000, 'close-button': true, 'animation-class': 'toast-top-right'}")

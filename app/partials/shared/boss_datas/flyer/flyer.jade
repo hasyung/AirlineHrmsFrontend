@@ -1,0 +1,11 @@
+extends ./../datas_layout.jade
+
+block vars
+	- var pickers = ['汇报', '公司人员进出'] 
+
+block datas_content
+	.datas__container--reports(ng-if="ctrl.datasType == '汇报'")
+		include ./flyer_reports
+
+	.datas__container--charts(ng-if="ctrl.datasType == '公司人员进出'")
+		include ./flyer_new_leave
