@@ -32,19 +32,40 @@ class Route
                     }
                 }
             }
+            # .state 'boss_labors', {
+            #     url: '/dashboard/labors'
+            #     views: {
+            #         boss_datas: {
+            #             templateUrl: '/partials/shared/boss_datas/labors.html'
+            #             controller: BossLaborsController
+            #             controllerAs: 'ctrl'
+            #         }
+            #     }
+            # }
             
             
 
 
 class BossDashBoardController extends nb.Controller
-    @.$inject = ['$scope', 'Todo', '$state']
+    @.$inject = ['$scope', '$rootScope', 'Todo', '$state', '$timeout']
 
-    constructor: (@scope, Todo, @state) ->
+    constructor: (@scope, @rootScope, Todo, @state, @timeout) ->
         @state.go 'boss'
         @messagesType='交流分享'
 
 
         @todos = Todo.$collection().$fetch()
+
+    redirectTo: (state) ->
+        self = @
+
+        # 切换状态
+        @state.go(state)
+
+        @timeout ()->
+            self.rootScope.show_main = true
+            self.rootScope.selectPending = true
+        , 800
 
 class BossLaborsController extends nb.Controller
     @.$inject = ['$scope', '$http', 'Employee', 'LeaveEmployees', 'ReportNeedToKnow', 'REPORT_CHECKER']

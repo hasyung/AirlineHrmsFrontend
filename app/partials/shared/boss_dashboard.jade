@@ -103,13 +103,13 @@
 				div(ng-if="ctrl.messagesType == '私信'")
 					h3 此模块还在建设中，敬请期待111！
 				
-.boss__footmenu
+.boss__footmenu(ng-controller="BossCtrl as ctrl")
 	.boss__wrapper--1200
 		.footmenu__tabs
 			.footmenu__tab(ui-sref="personnel_list" ng-click="rootCtrl.show_main=true") 员工信息
-			.footmenu__tab(ui-sref="TODO" ng-click="rootCtrl.show_main=true") 功能菜单
 			.footmenu__tab(ui-sref="org" ng-click="rootCtrl.show_main=true") 组织架构
-			.footmenu__tab(ui-sref="my_requests.leave" ng-click="rootCtrl.show_main=true") 请假列表
+			.footmenu__tab(ng-click="ctrl.redirectTo('labors_attendance')") 请假列表
 			.footmenu__tab(ui-sref="self.profile" ng-click="rootCtrl.show_main=true") 个人信息
+			.footmenu__tab(ui-sref="my_requests" ng-click="rootCtrl.show_main=true") 员工自助
 
 
