@@ -251,22 +251,17 @@
 		&:nth-child(1) {
 			color: #c30d23;
 			font-size: 18px;
+			width: 100%;
 		}
 
 		&:nth-child(2) {
-			color: #c30d23;
-			font-size: 14px;
-			padding-top: 5px;
-		}
-
-		&:nth-child(3) {
 			color: $text-color;
 			font-size: 16px;
 			padding-top: 3px;
 		}
 
-		&:nth-child(4) {
-			color: $text-color;
+		&:nth-child(3) {
+			color: #c30d23;
 			font-size: 14px;
 			padding-top: 5px;
 		}

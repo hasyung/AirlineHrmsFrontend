@@ -117,6 +117,18 @@ class BossDashBoardController extends nb.Controller
             self.rootScope.selectPending = true
         , 800 
 
+class BossBaseController extends nb.Controller
+    constructor: (@scope, @http, @ReportNeedToKnow, depName) ->
+        @initialDataCompleted = false
+        @datasType = '汇报'
+        @showChart = true
+
+        @loadReports(depName)
+
+    loadReports: (name) ->
+        @reports = @ReportNeedToKnow.$collection().$fetch({department_name: name})
+
+
 class BossLaborsController extends nb.Controller
     @.$inject = ['$scope', '$http', 'Employee', 'LeaveEmployees', 'ReportNeedToKnow', 'REPORT_CHECKER']
 
