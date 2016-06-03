@@ -99,10 +99,11 @@ class BossDashBoardController extends nb.Controller
         @isHrDeputyManager = false
         @isServiceDeputyManager = false
 
-        @state.go 'boss'
         @messagesType='交流分享'
         @user = USER_META
         @reportCheckers = REPORT_CHECKER
+
+        @checkBossType()
 
         @todos = Todo.$collection().$fetch()
 
@@ -116,6 +117,28 @@ class BossDashBoardController extends nb.Controller
             self.rootScope.show_main = true
             self.rootScope.selectPendingAnother = true
         , 800 
+
+    checkBossType: () ->
+        self = @
+        userPositionIds = []
+
+        @user.positions.forEach (current)->
+            userPositionIds.push current.position.id
+
+        if userPositionIds.indexOf(@reportCheckers['人力资源部总经理']) > -1
+            self.isHrGeneralManager = true
+            self.state.go('boss')
+
+        else if userPositionIds.indexOf(@reportCheckers['副总经理（人事、劳动关系、招飞）']) > -1
+            self.isHrDeputyManager = true
+            self.state.go('boss')
+
+        else if userPositionIds.indexOf(@reportCheckers['副总经理（培训、员工服务）']) > -1
+            self.isServiceDeputyManager = true
+            self.timeout ()->
+                self.state.go('boss_practice')
+            ,100
+
 
 class BossBaseController extends nb.Controller
     constructor: (@scope, @http, @ReportNeedToKnow, depName) ->
