@@ -15,6 +15,7 @@
 				.dep__title(layout)
 					md-input-container(flex md-no-float)
 						input(type='text', placeholder='标题', ng-model="report.title" ng-readonly="!editing")
+					.dep__report__date {{report.createdAt | date:'yyyy-MM-dd'}} {{report.createdAt | date:'HH:mm'}}
 					.dep__btn-group(ng-show="editing")
 						md-button.md-fab.white(ng-click="editing=false; ctrl.editReport(report);")
 							md-icon(md-svg-src="/images/svg/check.svg" aria-label="保存")
