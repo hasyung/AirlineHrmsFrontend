@@ -404,7 +404,6 @@ class SalaryController extends nb.Controller
 
         @http.get('/api/salaries/communicate_of_duty_rank')
             .success (data)->
-                console.log data
                 self.dutyRankAllowance = data.duty_ranks
 
 
@@ -498,7 +497,6 @@ class DepNumSettingController extends nb.Controller
         self = @
         @Org.$search().$then (data)->
             self.orgTree = data.jqTreeful()[0]
-            console.log self.orgTree
 
     saveDepNumber: (id, num) ->
         # @http请求保存接口

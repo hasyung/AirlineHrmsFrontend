@@ -42,33 +42,17 @@
 
 			.todos__board#metting.outlier
 				.todos__title
-					span.todos__count 7
+					span.todos__count 0
 					| 近期会议
-				.todos__content
+				.todos__content.building
 					.todos__window(slimscroll height="389")
-						.todos__todo
-							.todo__icon
-							.todo__header
-								span 年假申请
-								span 2016/4/17 10:00
-								span 金焕成
-
-							.todo__content.single-ellipsis 申请休2015-2016年假8天
 
 			.todos__board#task.outlier
 				.todos__title
-					span.todos__count 5
+					span.todos__count 0
 					| 任务查看
-				.todos__content
+				.todos__content.building
 					.todos__window(slimscroll height="389")
-						.todos__todo
-							.todo__icon
-							.todo__header
-								span 年假申请
-								span 2016/4/17 10:00
-								span 金焕成
-
-							.todo__content.single-ellipsis 申请休2015-2016年假8天
 
 		.boss__datas
 			.datas__tabs(boss-data-slider)
@@ -92,7 +76,7 @@
 					ng-class="{'active': ctrl.messagesType=='私信'}"
 				) 私信
 			
-			.messages__content
+			.messages__content.building
 				div(ng-if="ctrl.messagesType == '交流分享'")
 					include boss_messages/contact.jade
 				div(ng-if="ctrl.messagesType == '私信'")

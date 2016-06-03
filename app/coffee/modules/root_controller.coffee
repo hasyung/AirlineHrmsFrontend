@@ -32,7 +32,6 @@ class RootController extends nb.Controller
     checkBossType: () ->
         self = @
         userPositionIds = []
-        console.log @reportCheckers
 
         @user.positions.forEach (current)->
             userPositionIds.push current.position.id
