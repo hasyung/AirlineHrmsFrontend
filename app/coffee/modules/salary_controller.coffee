@@ -2343,6 +2343,7 @@ class SalaryOverviewController extends SalaryBaseController
             {minWidth: 100, displayName: '奖励', name: 'reward', enableCellEdit: false}
             {minWidth: 100, displayName: '交通费', name: 'transportFee', enableCellEdit: false}
             {minWidth: 100, displayName: '班车费', name: 'busFee', enableCellEdit: false}
+            {minWidth: 100, displayName: '公务车', name: 'officialCar', enableCellEdit: false}
             {minWidth: 150, displayName: '生育保险冲抵', name: 'birth', enableCellEdit: false}
             {minWidth: 100, displayName: '合计', name: 'total', enableCellEdit: false}
             {
