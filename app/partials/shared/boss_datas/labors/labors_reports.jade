@@ -1,4 +1,9 @@
-.datas__report(ng-repeat="report in ctrl.reports")
+.datas__report(
+	ng-repeat="report in ctrl.reports"
+	ng-init="isOpen=false"
+	ng-class="{'active': isOpen}"
+	)
+	.report__button(ng-click="isOpen = !isOpen")
 	.report__title(layout)
 		.single-ellipsis(flex)
 			| {{report.title}}
