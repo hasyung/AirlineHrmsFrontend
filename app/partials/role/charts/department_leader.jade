@@ -13,6 +13,8 @@
         .title 今日缺席人数
 
 div.echarts-wrapper.md-whiteframe-z1
+    button(ng-click="ctrl.loadOptions()")
+
     ng-echarts.echarts-bar(
         ec-config="ctrl.barConfig"
         ec-option="ctrl.barOption"

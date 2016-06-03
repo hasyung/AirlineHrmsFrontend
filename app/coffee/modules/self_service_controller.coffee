@@ -1083,9 +1083,9 @@ class DepartmentHrChartsController extends nb.Controller
         }
 
 class DepartmentLeaderChartsController extends nb.Controller
-    @.$inject = ['$scope']
+    @.$inject = ['$http','$scope']
 
-    constructor: (@scope) ->
+    constructor: (@http, @scope) ->
         @barConfig = {
             theme:'red'
             dataLoaded:true
@@ -1148,6 +1148,9 @@ class DepartmentLeaderChartsController extends nb.Controller
                 }
             ]
         }
+
+    loadOptions: (params) ->
+        @barOption.series[0].data = [2.0, 2.9, 2.0, 2.2, 2.6, 2.7, 2.6, 2.2, 2.6, 2.0, 2.4, 2.3]
 
 class HrLeaderChartsController extends nb.Controller
     @.$inject = ['$scope', '$http']
