@@ -113,7 +113,6 @@ class BossDashBoardController extends nb.Controller
         @state.go(state)
 
         @timeout ()->
-            console.log '@@@'
             self.rootScope.show_main = true
             self.rootScope.selectPendingAnother = true
         , 800 

@@ -40,7 +40,6 @@ class TabsetCtrl
     selectPendingAnotherTab: () ->
         self = @
 
-        console.log @tabs
         angular.forEach @tabs, (tab) ->
             # 如果是待处理类型的tab标签
             if tab.pendingAnother
