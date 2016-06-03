@@ -1,0 +1,31 @@
+.datas__report(
+	ng-repeat="report in ctrl.reports"
+	ng-init="isOpen=false"
+	ng-class="{'active': isOpen}"
+	)
+	.report__button(ng-click="isOpen = !isOpen")
+	.report__title(layout)
+		.single-ellipsis(flex)
+			| {{report.title}}
+		.report__date
+			| {{::report.createdAt | date:'yyyy-MM-dd'}} {{::report.createdAt | date:'HH:mm'}}
+	.report__content
+		md-input-container.md-block
+			label 正文内容
+			textarea(ng-model="report.content" md-maxlength="150" rows="1" readonly)
+
+		md-subheader.accessory-header.mt10 附件
+		.accessory-container
+			.accessory-cell(ng-repeat="attachment in report.attachments")
+				div(ng-if="ctrl.isImgObj(attachment)" nb-gallery img-obj="attachment" style="cursor: pointer;")
+					.accessory-name() {{attachment.name}}
+					.accessory-size() {{attachment.size | byteFmt:2}}
+
+				div(ng-if="!ctrl.isImgObj(attachment)" style="cursor: pointer;")
+					a(
+						style="display: block; color: rgba(0,0,0,0.87)"
+						ng-href="{{attachment.default}}"
+						download
+						)
+						.accessory-name() {{attachment.name}}
+						.accessory-size() {{attachment.size | byteFmt:2}}

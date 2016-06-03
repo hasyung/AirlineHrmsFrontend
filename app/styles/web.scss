@@ -27,6 +27,7 @@
 @import 'compat/jqtree';
 
 //modules
+@import 'modules/boss';
 @import 'modules/personnel';
 @import 'modules/position-manage';
 @import 'modules/orgs';
@@ -39,6 +40,7 @@
 @import 'modules/welfare';
 @import 'modules/salary';
 @import 'modules/roles';
+@import 'modules/department';
 
 .app-content-body.md-default-theme {
     background-color: #f0f3f4;
@@ -190,4 +192,11 @@
 }
 
 /* not supported page end */
+
+/* 正在建设的模块的背景图片 川航logo */ 
+.building {
+    background-image: url('/images/building.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+}
 

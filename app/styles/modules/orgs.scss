@@ -608,3 +608,20 @@ md-dialog.punishment_new {
     }
 }
 
+// 科室 新增汇报dialog
+md-dialog.report-new {
+    min-width: 600px;
+
+    fieldset {
+        margin: 0;
+        overflow: hidden;
+    }
+
+    .accessory-cell {
+        float: none;
+    }
+
+    .md-actions {
+        border-top: 1px solid rgba(0, 0, 0, .12);
+    }
+}

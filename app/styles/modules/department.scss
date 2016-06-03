@@ -1,0 +1,59 @@
+.department-chart {
+	.md-button.md-fab:not([disabled]):hover {
+		background-color: transparent;
+	}
+}
+
+.dep__report--add {
+	// background: transparent;
+	box-sizing: border-box;
+	height: 50px;
+	margin-bottom: 10px;
+	width: 100%;
+
+	md-icon {
+		height: 30px;
+		width: 200px;
+	}
+}
+
+.dep__reports {
+	margin: 0;
+	padding: 0;
+}
+
+.dep__report {
+	background: #fff;
+	max-height: 80px;
+	margin-bottom: 10px;
+	overflow: hidden;
+	transform: translateZ(0);
+
+	fieldset {
+		padding: 20px 40px;
+	}
+
+	.dep__btn-group {
+		margin-top: 5px;
+	}
+
+	&.editing {
+		max-height: 2000px;
+	}
+}
+
+.dep__title {
+	.md-button {
+		background: #fff;
+		margin-left: 10px;
+
+		md-icon {
+			margin-top: -2px;
+		}
+	}
+}
+
+.dep__report__date {
+	color: $text-muted;
+	margin: 12px 50px 0;
+}

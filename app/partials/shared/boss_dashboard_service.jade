@@ -1,0 +1,94 @@
+.boss__topmenu
+	.boss__wrapper--1200(layout="row")
+		.boss__logo
+			img(src="/images/login-avator.png", alt="")
+		span(flex)
+		
+		.boss__notify(ng-controller="notificationCtrl as notify")
+			md-button.notify-button(
+				nb-panel
+				template-url="partials/shared/notification_center.html"
+				pre-close="notify.markToReaded()"
+			)
+				md-icon(md-svg-icon="/images/svg/email-outline.svg")
+			.ms-count(ng-if="notify.msg_unread_count" ng-bind="notify.msg_unread_count")
+
+		ul.user-menu(ng-controller="AuthController as ctrl")
+			.nb-dropdown(user-info-dropdown)
+				li
+					a(ng-click="logout()") 退出
+
+.boss__mainbody(ng-controller="BossCtrl as ctrl")
+	.boss__wrapper--1200(layout="row")
+		.boss__todos(boss-todo)
+			.todos__board#todo.active
+				.todos__title
+					span.todos__count {{ctrl.todos.length}}
+					| 审批待办
+				.todos__content
+					.todos__window(slimscroll height="389")
+						.todos__todo(
+							flow-handler="todo"
+							flows="ctrl.todos"
+							ng-repeat="todo in ctrl.todos track by todo.id"
+							)
+							.todo__icon
+							.todo__header
+								span {{::todo.name}}
+								span {{::todo.updatedAt | date:'yyyy-MM-dd'}} {{::todo.updatedAt | date:'HH:mm'}}
+								span {{::todo.receptor.name}}
+
+							.todo__content.single-ellipsis {{::todo.desc}}
+
+			.todos__board#metting.outlier
+				.todos__title
+					span.todos__count 0
+					| 近期会议
+				.todos__content.building
+					.todos__window(slimscroll height="389")
+
+			.todos__board#task.outlier
+				.todos__title
+					span.todos__count 0
+					| 任务查看
+				.todos__content.building
+					.todos__window(slimscroll height="389")
+
+		.boss__datas
+			.datas__tabs(boss-data-slider)
+				.datas__tab(ui-sref="boss_practice") 培训管理
+				.datas__tab(ui-sref="boss_service") 员工服务
+				
+				.datas__slider 
+			
+			.datas__content(ui-view="boss_datas")
+				
+			
+
+		.boss__messages
+			.messages__tabs
+				.messages__tab(
+					ng-click="ctrl.messagesType='交流分享'"
+					ng-class="{'active': ctrl.messagesType=='交流分享'}"
+				) 交流分享
+				.messages__tab(
+					ng-click="ctrl.messagesType='私信'"
+					ng-class="{'active': ctrl.messagesType=='私信'}"
+				) 私信
+			
+			.messages__content.building
+				div(ng-if="ctrl.messagesType == '交流分享'")
+					include boss_messages/contact.jade
+				div(ng-if="ctrl.messagesType == '私信'")
+					h3 此模块还在建设中，敬请期待111！
+				
+.boss__footmenu(ng-controller="BossCtrl as ctrl")
+	.boss__wrapper--1200
+		.footmenu__tabs
+			.footmenu__tab(ui-sref="personnel_list" ng-click="rootCtrl.show_main=true") 员工信息
+			.footmenu__tab(ui-sref="org" ng-click="rootCtrl.show_main=true") 组织架构
+			.footmenu__tab(ng-click="ctrl.redirectTo('labors_attendance')") 请假列表
+			.footmenu__tab(ui-sref="self.profile" ng-click="rootCtrl.show_main=true") 个人信息
+			.footmenu__tab(ui-sref="my_requests" ng-click="rootCtrl.show_main=true") 员工自助
+
+

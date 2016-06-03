@@ -27,7 +27,7 @@ div.panel-bg-gray(ng-init = "current = panel.employee; current.$refresh();" ng-c
                     md-content.nb-card-container(
                         layout="column"
                         md-theme="hrms"
-                        ng-init="current.ignore_audit = pdCtrl.isAdministrator() ? 1 : 0;"
+                        ng-init="current.ignore_audit = pdCtrl.isAdministrator() ? 1 : 1;"
                         )
                         md-card.form-material-section.nb-card(has-permission="employees_show_basic_info")
                             .md-subheader

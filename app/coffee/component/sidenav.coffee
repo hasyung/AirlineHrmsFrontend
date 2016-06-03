@@ -129,11 +129,11 @@ menuFactory = ($rootScope, $state)->
                 state: 'labors_leave_job'
                 permission: ''
             }
-            {
-                name: '客舱管理'
-                state: 'cabin_management'
-                permission: ''
-            }
+            # {
+            #     name: '客舱管理'
+            #     state: 'cabin_management'
+            #     permission: ''
+            # }
         ]
     }
 
@@ -206,6 +206,17 @@ menuFactory = ($rootScope, $state)->
                 name: '绩效设置'
                 state: 'performance_setting'
                 permission: ''
+            }
+        ]
+    }
+
+    sections.push {
+        name: '科室管理'
+        icon_src: '/images/svg/left-side-svg/left_icon_8.svg'
+        pages: [
+            {
+                name: '报表管理'
+                state: 'department_chart'
             }
         ]
     }

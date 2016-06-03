@@ -53,21 +53,21 @@
                                 ng-click="ctrl.destroyCity(ctrl.dynamic_config.highland_2nd.cities, $index)"
                                 )
                         add-city(ng-model="ctrl.dynamic_config.highland_2nd.cities")
+                //- tr
+                //-     td 高寒(11月到次年3月在基础标准上额外补助)
+                //-     td
+                //-         input(type="number" ng-model="ctrl.dynamic_config.high_cold.amount")
+                //-     td
+                //-         span.city-chip(
+                //-             ng-repeat="city in ctrl.dynamic_config.high_cold.cities track by $index"
+                //-             ) {{city}}
+                //-             md-icon.md-warn(
+                //-                 md-svg-src="/images/svg/close.svg"
+                //-                 ng-click="ctrl.destroyCity(ctrl.dynamic_config.high_cold.cities, $index)"
+                //-                 )
+                //-         add-city(ng-model="ctrl.dynamic_config.high_cold.cities")
                 tr
-                    td 高寒(11月到次年3月在基础标准上额外补助)
-                    td
-                        input(type="number" ng-model="ctrl.dynamic_config.high_cold.amount")
-                    td
-                        span.city-chip(
-                            ng-repeat="city in ctrl.dynamic_config.high_cold.cities track by $index"
-                            ) {{city}}
-                            md-icon.md-warn(
-                                md-svg-src="/images/svg/close.svg"
-                                ng-click="ctrl.destroyCity(ctrl.dynamic_config.high_cold.cities, $index)"
-                                )
-                        add-city(ng-model="ctrl.dynamic_config.high_cold.cities")
-                tr
-                    td 境外1 ($)
+                    td 境外1
                     td
                         input(type="number" ng-model="ctrl.dynamic_config.overseas_1st.amount")
                     td
@@ -80,7 +80,7 @@
                                 )
                         add-city(ng-model="ctrl.dynamic_config.overseas_1st.cities")
                 tr
-                    td 境外2 ($)
+                    td 境外2
                     td
                         input(type="number" ng-model="ctrl.dynamic_config.overseas_2nd.amount")
                     td
@@ -93,7 +93,7 @@
                                 )
                         add-city(ng-model="ctrl.dynamic_config.overseas_2nd.cities")
                 tr
-                    td 境外3 ($)
+                    td 境外3
                     td
                         input(type="number" ng-model="ctrl.dynamic_config.overseas_3rd.amount")
                     td

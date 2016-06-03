@@ -50,6 +50,7 @@ moment.locale('zh-cn')
 #初始化在<head> <script> 标签中, 如果不存在， 系统行为待定
 App.constant 'PERMISSIONS', metadata.permissions || []
 App.value 'USER_META', metadata.user || {}
+App.value 'REPORT_CHECKER', metadata.report_checker || {}
 App.constant 'VACATIONS', metadata.vacation_summary || {}
 App.constant 'DEPARTMENTS', dep_info.departments || []
 App.constant 'nbConstants', metadata.resources || []
@@ -116,7 +117,7 @@ mdThemingConf = ($mdThemingProvider) ->
 
 routeConf = ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) ->
     $locationProvider.html5Mode(false)
-    $urlRouterProvider.otherwise(metadata.route_info.default_route || "/todo")
+    $urlRouterProvider.otherwise(metadata.route_info.default_route || "/dashboard")
 
     $stateProvider
         .state 'home', {
@@ -146,7 +147,7 @@ routeConf = ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvide
 
                 if response.status == 400
                     data = response.data
-                    toaster.pop('error', '参数错误', data.messages || JSON.stringify(data) || response)
+                    toaster.pop('error', data.type || '参数错误', data.messages || JSON.stringify(data) || response)
 
                 if /^5/.test(Number(response.status).toString()) # if server error
                     data = response.data
