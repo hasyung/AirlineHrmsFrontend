@@ -8,7 +8,7 @@ tabset(flex)
     tab(heading="请假审批" pending="true" has-permission="attendances_approve")
         include check_list
 
-    tab(heading="请假记录" has-permission="attendances_leave_list")
+    tab(heading="请假记录" pending-another="true" has-permission="attendances_leave_list")
         include records
 
     tab(heading="考勤汇总审核" has-permission="attendances_summary")

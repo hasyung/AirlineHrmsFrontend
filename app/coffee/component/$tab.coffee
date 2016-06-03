@@ -15,6 +15,9 @@ class TabsetCtrl
         @rootScope.$watch 'selectPending', (newVal, oldVal) ->
             self.selectPendingTab() if newVal
 
+        @rootScope.$watch 'selectPendingAnother', (newVal, oldVal) ->
+            self.selectPendingAnotherTab() if newVal
+
     select: (selectedTab) ->
         angular.forEach @tabs, (tab) ->
             if tab.active && tab != selectedTab
@@ -33,6 +36,16 @@ class TabsetCtrl
             if tab.pending
                 self.rootScope.selectPending = false
                 self.select(tab)
+
+    selectPendingAnotherTab: () ->
+        self = @
+
+        console.log @tabs
+        angular.forEach @tabs, (tab) ->
+            # 如果是待处理类型的tab标签
+            if tab.pendingAnother
+                self.rootScope.selectPendingAnother = false
+                self.select(tab)    
 
     addTab: (tab) ->
         # 该tab是个scope类型的数据结构
@@ -79,6 +92,7 @@ tabDirective = ($parse) ->
         scope: {
             active: '=?'
             pending: '=?'
+            pendingAnother: '=?'
             heading: '@'
             onSelect: '&select'
             onDeselect: '&deselect'

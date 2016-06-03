@@ -40,7 +40,7 @@ html
         
         div(layout="row" flex ng-if="!rootCtrl.show_main && !rootCtrl.show_boss")
             include partials/role/index.jade
-        div(layout="row" flex ng-if="rootCtrl.show_main" ng-init="navIsOpen=true;")
+        div(layout="row" flex ng-if="rootCtrl.show_main" ng-init="navIsOpen=false;")
             div.nav-wrapper.md-whiteframe-z1(
                 ng-hide="hide_menu"
                 ng-if="rootCtrl.current_roles[0]"
