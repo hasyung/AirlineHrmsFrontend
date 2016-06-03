@@ -18,7 +18,7 @@
 }
 
 .boss__topmenu {
-	height: 80px;
+	height: 50px;
 
 	.boss__wrapper--1200 {
 		align-items: center;
@@ -42,23 +42,24 @@
 	}
 
 	.notify-button {
-		height: 80px;
+		height: 50px;
+		min-width: 50px;
 
 		md-icon {
-			height: 30px;
-			width: 30px;
+			height: 24px;
+			width: 24px;
 		}
 	}
 
 	.user-menu {
-        height: 80px;
+        height: 50px;
         position: relative;
 
         .nb-dropdown {
             .dropdown-toggle {
                 color: #fff;
                 font-size: $font-size-lg;
-                line-height: 80px;
+                line-height: 50px;
             }
 
             .avatar img {
@@ -74,7 +75,7 @@
                 padding: 10px 0;
                 position: absolute;
                 text-align: left;
-                top: 64px;
+                top:45px;
                 width: 100%;
                 z-index: 50;
 
@@ -109,7 +110,7 @@
 }
 
 .boss__footmenu {
-	height: 50px;
+	height: 40px;
 	width: 100%;
 }
 
@@ -117,7 +118,7 @@
 /* 待办事项start*/
 /***************/
 .boss__todos {
-	height: 680px;
+	height: 630px;
 	width: 284px;
 	margin-right: 10px;
 	position: relative;
@@ -134,7 +135,7 @@
 
 #metting {
 	transform: translateZ(0);
-	top: 501px;
+	top: 491px;
 
 	.todos__title {
 		background: -webkit-linear-gradient(left, #efa53b 0%,#e35d25 100%);
@@ -143,7 +144,7 @@
 
 #task {
 	transform: translateZ(0);
-	top: 591px;
+	top: 566px;
 
 	.todos__title {
 		background: -webkit-linear-gradient(left, #e77629 0%,#de361f 90%);
@@ -168,10 +169,10 @@
 		}
 
 		.todos__title {
-			height: 50px;
-			line-height: 50px;
-			border-top-left-radius: 50px;
-			border-top-right-radius: 50px;
+			height: 40px;
+			line-height: 40px;
+			border-top-left-radius: 40px;
+			border-top-right-radius: 40px;
 			border-bottom-left-radius: 0;
 			border-bottom-right-radius: 0;
 		}
@@ -199,8 +200,8 @@
 	color: #fff;
 	cursor: pointer;
 	font-size: 20px;
-	height: 75px;
-	line-height: 75px;
+	height: 60px;
+	line-height: 60px;
 	text-align: center;
 	transition: border-radius 1s linear;
 
@@ -295,7 +296,7 @@
 	border-top-left-radius: 50px;
 	border-top-right-radius: 50px; 
 	border-bottom-left-radius: 100px;
-	height: 665px;
+	height: 630px;
 	margin-right: 10px;
 	width: 630px;
 }
@@ -303,9 +304,9 @@
 .datas__tabs {
 	@include clearfix();
 	background-color: rgba(0, 0, 0, .3);
-	border-top-left-radius: 50px;
-	border-top-right-radius: 50px;
-	height: 50px;
+	border-top-left-radius: 40px;
+	border-top-right-radius: 40px;
+	height: 40px;
 	position: relative;
 }
 
@@ -314,7 +315,7 @@
 	box-shadow: 1px -2px 5px #666;
 	border-top-left-radius: 105px;
 	border-bottom-right-radius: 105px;
-	height: 50px;
+	height: 40px;
 	left: 0;
 	position: absolute;
 	width: 115px;
@@ -335,8 +336,8 @@
 	cursor: pointer;
 	font-size: $font-size-sm;
 	position: absolute;
-	height: 50px;
-	line-height: 50px;
+	height: 40px;
+	line-height: 40px;
 	text-align: center;
 	top: 0;
 	width: 84px;
@@ -359,7 +360,7 @@
 	background: #fcf2d7;
 	box-shadow: 0 2px 8px #666;
 	border-bottom-left-radius: 100px;
-	height: 615px;
+	height: 590px;
 	overflow: hidden;
 }
 
@@ -476,6 +477,7 @@
 
 .datas__window {
 	background: #f6efda;
+	border-bottom-left-radius: 110px;
 	height: 500px;
 	margin-top: 10px;
 }
@@ -581,13 +583,13 @@
 	border-top-left-radius: 50px;
 	border-top-right-radius: 50px; 
 	border-bottom-right-radius: 100px;
-	height: 665px;
+	height: 630px;
 	width: 283px;
 }
 
 .messages__tabs {
 	position: relative;
-	height: 50px;
+	height: 40px;
 }
 
 @for $i from 1 through 2 {
@@ -601,13 +603,13 @@
 .messages__tab {
 	background: -webkit-linear-gradient(left, #eb942d 0%,#dc321b 100%);
 	box-shadow: 3px -1px 3px #666;
-	border-top-left-radius: 50px;
-	border-top-right-radius: 50px;
+	border-top-left-radius: 40px;
+	border-top-right-radius: 40px;
 	color: #fff;
 	cursor: pointer;
 	font-size: $font-size-md;
-	height: 50px;
-	line-height: 50px;
+	height: 40px;
+	line-height: 40px;
 	position: absolute;
 	top: 0;
 	text-align: center;
@@ -622,7 +624,7 @@
 	background: #fcf2d7;
 	box-shadow: 0 2px 8px #666;
 	border-bottom-right-radius: 100px;
-	height: 615px;
+	height: 590px;
 }
 
 /***************
@@ -634,7 +636,7 @@
 ***************/
 .footmenu__tabs {
 	position: relative;
-	height: 50px;
+	height: 40px;
 }
 
 @for $i from 1 through 5 {
@@ -648,13 +650,13 @@
 .footmenu__tab {
 	background: -webkit-linear-gradient(left, #eb972d 0%,#dc341b 100%);
 	box-shadow: 1px -3px 3px #666;
-	border-top-left-radius: 50px;
-	border-top-right-radius: 50px;
+	border-top-left-radius: 40px;
+	border-top-right-radius: 40px;
 	color: #fff;
 	cursor: pointer;
 	font-size: $font-size-md;
-	height: 50px;
-	line-height: 50px;
+	height: 40px;
+	line-height: 40px;
 	position: absolute;
 	top: 0;
 	text-align: center;

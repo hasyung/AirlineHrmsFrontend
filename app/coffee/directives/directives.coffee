@@ -742,11 +742,11 @@ angular.module 'nb.directives'
                         }, 500, false)
 
                     outlier.animate({
-                        top: '501px'
+                        top: '491px'
                         }, 500, false)
 
                     prev.animate({
-                        top: '591px'
+                        top: '566px'
                         }, 500, ()->
                             prev.addClass('outlier')
                             )
