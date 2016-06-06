@@ -1,36 +1,36 @@
 tabset(flex)
-    tab(heading="保留工资")
+    tab(heading="保留工资" has-permission="keep_salaries_compute")
         include calc/keep.jade
 
-    tab(heading="基础薪酬计算")
+    tab(heading="基础薪酬计算" has-permission="base_salaries_compute")
         include calc/basic.jade
 
-    tab(heading="绩效薪酬计算")
+    tab(heading="绩效薪酬计算" has-permission="performance_salaries_compute")
         include calc/performance.jade
 
-    tab(heading="小时费计算")
+    tab(heading="小时费计算" has-permission="hours_fees_compute")
         include calc/hours_fee.jade
 
-    tab(heading="津贴计算")
+    tab(heading="津贴计算" has-permission="allowances_compute")
         include calc/allowance.jade
 
-    tab(heading="驻站津贴计算")
+    tab(heading="驻站津贴计算" has-permission="land_allowances_compute")
         include calc/land_allowance.jade
 
-    tab(heading="奖励发放")
+    tab(heading="奖励发放" has-permission="rewards_compute")
         include calc/reward.jade
 
-    tab(heading="交通费")
+    tab(heading="交通费" has-permission="transport_fees_compute")
         include calc/transport.jade
 
-    tab(heading="班车费")
+    tab(heading="班车费" has-permission="bus_fees_compute")
         include calc/bus_fee.jade
 
-    tab(heading="公务车")
+    tab(heading="公务车" has-permission="official_cars_compute")
         include calc/official_car.jade
 
-    tab(heading="生育保险抵扣")
+    tab(heading="生育保险抵扣" has-permission="birth_salaries_compute")
         include calc/birth_salary
 
-    tab(heading="薪酬合计")
+    tab(heading="薪酬合计" has-permission="salary_overviews_compute")
         include calc/salary_overview.jade
