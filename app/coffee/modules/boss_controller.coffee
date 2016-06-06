@@ -370,10 +370,7 @@ class BossLaborsController extends nb.Controller
         index = 0
 
         _.forEach data, (val, key) ->
-            if index %2 != 0
-                config['yAxisData'].push('\n' + key)
-            else
-                config['yAxisData'].push(key)
+            config['yAxisData'].push(key)
 
             config['seriesA'].push(val.new | 0)
             config['seriesB'].push(val.leave | 0)
