@@ -10,6 +10,11 @@
 		.report__date
 			| {{::report.createdAt | date:'yyyy-MM-dd'}} {{::report.createdAt | date:'HH:mm'}}
 	.report__content
+		div(layout)
+			md-input-container
+				label 汇报人
+				input(type="text" ng-model="report.reporterName" readonly)
+					
 		md-input-container.md-block
 			label 正文内容
 			textarea(ng-model="report.content" md-maxlength="300" rows="1" readonly)
