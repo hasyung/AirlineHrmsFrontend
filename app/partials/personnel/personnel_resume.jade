@@ -39,19 +39,16 @@
                     .resume-item
                         label.control-label 出生地点
                         .form-content(ng-bind="resume.birthPlace")
-                    //- .resume-item
-                    //-     label.control-label 出生年月
-                    //-     .form-content(ng-bind="resume.birthday  | date:'yyyy-MM-dd'")
+                    .resume-item
+                        label.control-label 出生日期
+                        .form-content(ng-bind="resume.birthday | date:'yyyy-MM-dd'")
+                .resume-row
                     .resume-item
                         label.control-label 婚姻状况
                         .form-content(ng-bind="resume.maritalStatus.displayName")
-                .resume-row
                     .resume-item
                         label.control-label 政治面貌
                         .form-content(ng-bind="$enum.parseLabel(resume.politicalStatusId, 'political_status')")
-                    .resume-item
-                        label.control-label 入党时间
-                        .form-content(ng-bind="resume.joinPartyDate | date:'yyyy-MM-dd'")
                 .resume-row
                     .resume-item
                         label.control-label 学历
@@ -68,8 +65,11 @@
                         .form-content(ng-bind="resume.major")
                 .resume-row
                     .resume-item
+                        label.control-label 入党时间
+                        .form-content(ng-bind="resume.joinPartyDate | date:'yyyy-MM-dd'")
+                    .resume-item
                         label.control-label 毕业时间
-                        .form-content(ng-bind="resume.graduateDate")
+                        .form-content(ng-bind="resume.graduateDate | date:'yyyy-MM-dd'")
                 .resume-row(ng-repeat="language in resume.languages")
                     .resume-item
                         label.control-label 语种

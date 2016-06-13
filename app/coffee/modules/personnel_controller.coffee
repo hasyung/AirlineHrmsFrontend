@@ -71,10 +71,10 @@ class PersonnelCtrl extends nb.Controller
                 cellTooltip: (row) ->
                     return row.entity.position.name
             }
-            {minWidth: 120, displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
             {minWidth: 120, displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
             {minWidth: 120, displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
-            {minWidth: 120, displayName: '到岗时间', name: 'joinScalDate'}
+            {minWidth: 120, displayName: '出生日期', name: 'birthday', cellFilter: "date:'yyyy-MM-dd'"}
+            {minWidth: 120, displayName: '到岗时间', name: 'joinScalDate', cellFilter: "date:'yyyy-MM-dd'"}
         ]
 
         @constraints = [
