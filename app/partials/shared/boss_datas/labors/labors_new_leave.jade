@@ -3,7 +3,7 @@ div.echarts-wrapper(ng-if="ctrl.initialDataCompleted")
 
 		span(flex)
 		.date-selector(layout)
-			md-select(ng-model="ctrl.currentYear" ng-change="ctrl.loadChartData()" placeholder="请选择")
+			md-select(style="width: 150px;" ng-model="ctrl.currentYear" ng-change="ctrl.loadChartData()" placeholder="请选择")
 				md-option(ng-value="item" ng-repeat="item in ctrl.year_list track by $index" ng-bind="item")
 			label(flex-order="2") 年
 			md-select(ng-model="ctrl.currentMonth" ng-change="ctrl.loadChartData()" placeholder="请选择")
