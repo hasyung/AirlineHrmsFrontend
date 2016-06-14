@@ -37,7 +37,7 @@ defaultFlowCol =    [
 
 
 defaultUserCol = [
-    {minWidth: 120, displayName: '员工编号', name: 'employeeNo'}
+    {minWidth: 120, displayName: '员工编号', name: 'employeeNo', enableCellEdit: false}
     {
         minWidth: 120
         displayName: '姓名'
@@ -51,6 +51,7 @@ defaultUserCol = [
             </a>
         </div>
         '''
+        enableCellEdit: false
     }
     {
         minWidth: 350
@@ -58,6 +59,7 @@ defaultUserCol = [
         name: 'department.name'
         cellTooltip: (row) ->
             return row.entity.department.name
+        enableCellEdit: false
     }
     {
         minWidth: 250
@@ -65,6 +67,7 @@ defaultUserCol = [
         name: 'position.name'
         cellTooltip: (row) ->
             return row.entity.position.name
+        enableCellEdit: false
     }
 ]
 

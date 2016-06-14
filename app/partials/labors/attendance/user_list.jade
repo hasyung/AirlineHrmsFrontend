@@ -84,4 +84,19 @@
                     locals="{current: ctrl.getSelected()}"
                 ) 新增考勤
 
-        div(nb-grid column-defs="ctrl.columnDef" multi-select="false" export-api on-register-api="ctrl.exportGridApi(gridApi)" grid-selection safe-src="ctrl.employees")
+        div(
+            nb-grid
+            column-defs="ctrl.columnDef"
+            multi-select="false"
+            export-api
+            on-register-api="ctrl.exportGridApi(gridApi); ctrl.initialize(gridApi)"
+            grid-selection
+            safe-src="ctrl.employees"
+            grid-edit
+            grid-row-edit
+            grid-cellNav
+            )
+
+
+
+

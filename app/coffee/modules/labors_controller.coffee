@@ -690,9 +690,9 @@ class AttendanceCtrl extends nb.Controller
 
 
 class AttendanceRecordCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Attendance', 'Employee', 'GridHelper', '$enum', 'CURRENT_ROLES']
+    @.$inject = ['$scope', 'Attendance', 'Employee', 'GridHelper', '$enum', 'CURRENT_ROLES', '$q', '$http', 'toaster']
 
-    constructor: (@scope, @Attendance, @Employee, GridHelper, $enum, @CURRENT_ROLES) ->
+    constructor: (@scope, @Attendance, @Employee, GridHelper, $enum, @CURRENT_ROLES, @q, @http, @toaster) ->
         @loadInitialData()
 
         @scope.$enum = $enum
@@ -705,11 +705,38 @@ class AttendanceRecordCtrl extends nb.Controller
             .end()
 
         @columnDef = GridHelper.buildUserDefault [
-            {minWidth: 120, displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'"}
-            {minWidth: 120, displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
-            {minWidth: 120, displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'"}
-            {minWidth: 120, displayName: '到岗时间', name: 'joinScalDate'}
+            {minWidth: 120, displayName: '分类', name: 'categoryId', cellFilter: "enum:'categories'", enableCellEdit: false}
+            {minWidth: 120, displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'", enableCellEdit: false}
+            {minWidth: 120, displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'", enableCellEdit: false}
+            {minWidth: 120, displayName: '到岗时间', name: 'joinScalDate', enableCellEdit: false}
+            {minWidth: 120, displayName: '补休假天数', name: 'offsetDays', headerCellClass: 'editable_cell_header', enableCellEdit: true, type: 'number'}
         ]
+
+    initialize: (gridApi) ->
+        self = @
+
+        saveRow = (rowEntity) ->
+            dfd = @q.defer()
+
+            gridApi.rowEdit.setSavePromise(rowEntity, dfd.promise)
+
+            @http({
+                method: 'POST'
+                url: '/api/employees/' + rowEntity.id + '/set_offset_days'
+                data: {
+                    id: rowEntity.id
+                    days: rowEntity.offsetDays
+                }
+            })
+            .success (data) ->
+                dfd.resolve()
+                self.toaster.pop('success', '提示', '修改补休假天数成功')
+            .error () ->
+                dfd.reject()
+                rowEntity.$restore()
+
+        gridApi.rowEdit.on.saveRow(@scope, saveRow.bind(@))
+        @scope.$gridApi = gridApi
 
     getReviewers: (employee) ->
         self = @
