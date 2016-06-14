@@ -23,6 +23,15 @@
                                 (ctrl.getSelected().type == 'Flow::PersonalLeave' || ctrl.getSelected().type == 'Flow::SickLeave')\
                                 && ctrl.getSelected().workflowState == '已生效')"
                             nb-dialog
+                            template-url="/partials/self/my_requests/leave/offset_charge.html"
+                            locals="{leave: ctrl.getSelected(), leaves: leaves}"
+                            title="只有病假和事假才可以抵扣"
+                        ) 补休假抵扣
+                        md-button.md-primary.md-raised(
+                            ng-disabled="!(ctrl.getSelected() &&\
+                                (ctrl.getSelected().type == 'Flow::PersonalLeave' || ctrl.getSelected().type == 'Flow::SickLeave')\
+                                && ctrl.getSelected().workflowState == '已生效')"
+                            nb-dialog
                             template-url="/partials/self/my_requests/leave/charge.html"
                             locals="{leave: ctrl.getSelected(), leaves: leaves}"
                             title="只有病假和事假才可以抵扣"
