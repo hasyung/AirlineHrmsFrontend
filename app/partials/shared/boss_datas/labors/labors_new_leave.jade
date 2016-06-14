@@ -18,6 +18,9 @@ div.echarts-wrapper(ng-if="ctrl.initialDataCompleted")
 		ng-if="ctrl.showChart"
 		ec-config="ctrl.barConfig"
 		ec-option="ctrl.barOption"
+		nb-dialog
+		template-url="partials/shared/boss_datas/labors/labors_new_leave_dialog.html"
+		locals="{}"
 	)
 
 	div.chart-detail.ui-grid-container(ng-if="!ctrl.showChart")
