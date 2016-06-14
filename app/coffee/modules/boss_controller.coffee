@@ -158,9 +158,7 @@ class BossLaborsController extends nb.Controller
     constructor: (@scope, @http, @Employee, @LeaveEmployees, @ReportNeedToKnow, @reportCheckers) ->
         @initialDataCompleted = false
         @datasType = '汇报'
-        @showChart = true
         @showChartInDialog = true
-        @tableType = '新进员工'
         @tableTypeInDialog = '新进员工'
 
         @loadDateTime()
