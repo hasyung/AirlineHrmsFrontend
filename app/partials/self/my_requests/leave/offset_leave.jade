@@ -1,0 +1,17 @@
+extends leave_layout
+
+block vars
+    - var flowType = "Flow::OffsetLeave"
+    - var formType = 2
+    - var flowName = '补休假'
+
+block relation_data
+    div.flow-info-row(layout)
+        .flow-info-cell(flex)
+            .flow-cell-title 川航工作年限
+            .flow-cell-content {{ meta.join_scal_date | fromNow}}
+    div.flow-info-row(layout)
+        .flow-info-cell(flex)
+            .flow-cell-title 假别
+            .flow-cell-content 补休假
+                span ( 补休假剩余天数 {{ vacations.offset_days }} 天 )
