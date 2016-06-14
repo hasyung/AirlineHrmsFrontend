@@ -8,6 +8,7 @@ class RootController extends nb.Controller
         @show_main = false
 
         #用于定位当前用户的大领导身份
+        @show_boss = false
         @isHrDeputyManager = false
         @isServiceDeputyManager = false
         @isHrGeneralManager = false
@@ -38,12 +39,15 @@ class RootController extends nb.Controller
 
         if userPositionIds.indexOf(@reportCheckers['副总经理（人事、劳动关系、招飞）']) > -1
             self.isHrDeputyManager = true
+            self.show_boss = true
 
         if userPositionIds.indexOf(@reportCheckers['副总经理（培训、员工服务）']) > -1
             self.isServiceDeputyManager = true
+            self.show_boss = true
 
         if userPositionIds.indexOf(@reportCheckers['人力资源部总经理']) > -1
             self.isHrGeneralManager = true
+            self.show_boss = true
 
     # isBoss: () ->
     #     self = @

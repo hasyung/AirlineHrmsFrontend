@@ -18,6 +18,7 @@
 }
 
 .boss__topmenu {
+	background: -webkit-linear-gradient(top, #e87929 0%,#db2e11 100%);
 	height: 50px;
 
 	.boss__wrapper--1200 {
@@ -92,16 +93,6 @@
     }
 }
 
-.boss__logo {
-	height: 48px;
-	width: 182px;
-
-	img {
-		height: 100%;
-		width: 100%;
-	}
-}
-
 .boss__mainbody {
 	flex: 1;
 	width: 100%;
@@ -109,9 +100,24 @@
 	align-items: center;
 }
 
-.boss__footmenu {
-	height: 40px;
-	width: 100%;
+.boss__menu {
+	@include clearfix();
+	height: 50px;
+
+	li {
+		color: #fff;
+		cursor: pointer;
+		font-size: $font-size-lg;
+		float: left;
+		height: 50px;
+		line-height: 50px;
+		text-align: center;
+		width: 135px;
+
+		&:hover {
+			background-color: rgba(0, 0, 0, .2);
+		}
+	}
 }
 
 /***************/

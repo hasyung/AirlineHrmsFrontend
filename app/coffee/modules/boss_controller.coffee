@@ -165,6 +165,8 @@ class BossLaborsController extends nb.Controller
         @loadInitialData()
         @loadChartData()
 
+        @barOptionInDialog = {}
+
         @barConfig = {
             theme:''
             dataLoaded:true
@@ -226,6 +228,106 @@ class BossLaborsController extends nb.Controller
                         data : [
                             {type : 'max', name: '最大值'}
                         ]
+                    },
+                }
+            ]
+        }
+
+        @barOptionInDialog = {
+            title : {
+                left: 20
+                text: '新进/离职人员分布'
+                textStyle: {
+                    fontSize: 18
+                }
+            },
+            tooltip : {
+                trigger: 'axis'
+                axisPointer: {
+                    type: 'shadow'
+                }
+                textStyle: {
+                    fontSize: 16
+                }
+            },
+            legend: {
+                data:['新进人员','离职人员']
+                textStyle: {
+                    fontSize: 16
+                }
+            },
+            calculable : true
+            xAxis : [
+                {
+                    type: 'value'
+                    axisLabel: { 
+                        'interval': 0
+                        textStyle: {
+                            fontSize: 16
+                        }
+                    }
+                }
+            ],
+            yAxis : [
+                {
+                    type: 'category'
+                    axisLabel: { 
+                        'interval': 0
+                        textStyle: {
+                            fontSize: 16
+                        }
+                    }
+                    splitLine: { show: false }
+                    data: []
+                }
+            ],
+            grid : {
+                left: '20%'
+                right: '5%'
+            },
+            series : [
+                {
+                    name:'新进人员'
+                    type:'bar'
+                    data:[]
+                    markPoint : {
+                        data : [
+                            {type : 'max', name: '最大值'}
+                        ]
+                        label: {
+                            normal: {
+                                textStyle: {
+                                    fontSize: 16
+                                }
+                            }
+                            emphasis: {
+                                textStyle: {
+                                    fontSize: 16
+                                }
+                            }
+                        }
+                    },
+                },
+                {
+                    name:'离职人员'
+                    type:'bar'
+                    data:[]
+                    markPoint : {
+                        data : [
+                            {type : 'max', name: '最大值'}
+                        ]
+                        label: {
+                            normal: {
+                                textStyle: {
+                                    fontSize: 16
+                                }
+                            }
+                            emphasis: {
+                                textStyle: {
+                                    fontSize: 16
+                                }
+                            }
+                        }
                     },
                 }
             ]
@@ -331,6 +433,10 @@ class BossLaborsController extends nb.Controller
                 self.barOption.yAxis[0].data = self.barSrc['yAxisData']
                 self.barOption.series[0].data = self.barSrc['seriesA']
                 self.barOption.series[1].data = self.barSrc['seriesB']
+
+                self.barOptionInDialog.yAxis[0].data = self.barSrc['yAxisData']
+                self.barOptionInDialog.series[0].data = self.barSrc['seriesA']
+                self.barOptionInDialog.series[1].data = self.barSrc['seriesB']
 
                 self.initialDataCompleted = true
             .error (msg) ->

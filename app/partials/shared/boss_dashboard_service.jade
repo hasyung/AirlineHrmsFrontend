@@ -2,6 +2,14 @@
 	.boss__wrapper--1200(layout="row")
 		.boss__logo
 			img(src="/images/login-avator.png", alt="")
+
+		ul.boss__menu(ng-controller="BossCtrl as ctrl")
+			li(ui-sref="personnel_list" ng-click="rootCtrl.show_main=true") 员工信息
+			li(ui-sref="org" ng-click="rootCtrl.show_main=true") 组织架构
+			li(ng-click="ctrl.redirectTo('labors_attendance')") 请假列表
+			li(ui-sref="self.profile" ng-click="rootCtrl.show_main=true") 个人信息
+			li(ui-sref="my_requests" ng-click="rootCtrl.show_main=true") 员工自助
+
 		span(flex)
 		
 		.boss__notify(ng-controller="notificationCtrl as notify")
@@ -80,14 +88,4 @@
 				div(ng-if="ctrl.messagesType == '交流分享'")
 
 				div(ng-if="ctrl.messagesType == '私信'")
-				
-.boss__footmenu(ng-controller="BossCtrl as ctrl")
-	.boss__wrapper--1200
-		.footmenu__tabs
-			.footmenu__tab(ui-sref="personnel_list" ng-click="rootCtrl.show_main=true") 员工信息
-			.footmenu__tab(ui-sref="org" ng-click="rootCtrl.show_main=true") 组织架构
-			.footmenu__tab(ng-click="ctrl.redirectTo('labors_attendance')") 请假列表
-			.footmenu__tab(ui-sref="self.profile" ng-click="rootCtrl.show_main=true") 个人信息
-			.footmenu__tab(ui-sref="my_requests" ng-click="rootCtrl.show_main=true") 员工自助
-
 
