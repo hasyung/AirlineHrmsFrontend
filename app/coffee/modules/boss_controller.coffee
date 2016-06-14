@@ -159,7 +159,9 @@ class BossLaborsController extends nb.Controller
         @initialDataCompleted = false
         @datasType = '汇报'
         @showChart = true
+        @showChartInDialog = true
         @tableType = '新进员工'
+        @tableTypeInDialog = '新进员工'
 
         @loadDateTime()
         @loadInitialData()
