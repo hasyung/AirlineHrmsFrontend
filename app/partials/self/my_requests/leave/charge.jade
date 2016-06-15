@@ -1,6 +1,6 @@
 //- 假别冲抵
 md-dialog
-    md-content(ng-init="params={};")
+    md-content(ng-init="params={deduct_type: 'annual'};")
         form(flex ng-submit="ctrl.charge(dialog.leave, params, dialog.leaves);dialog.close();")
             md-toolbar.md-accent(md-theme="hrms")
                 .md-toolbar-tools
