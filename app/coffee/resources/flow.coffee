@@ -95,10 +95,10 @@ FlowHandlerDirective = (ngDialog)->
                                     </button>
                                 </div>
                                 <div class="habit-opinions" layout>
-                                    <span class="habit-opinion" ng-click="dialog.userReply = favNote.note; reply(dialog.userReply, flowReplyForm)" ng-repeat="favNote in favNotes">
+                                    <button ng-disabled="dialog.userReply" class="habit-opinion" ng-click="dialog.userReply = favNote.note; reply(dialog.userReply, flowReplyForm)" ng-repeat="favNote in favNotes">
                                         {{ favNote.note }}
                                         <md-icon class="del-habit" ng-click="destroyFavNote($event, favNote.id)" md-svg-src="/images/svg/close.svg" aria-label="删除"></md-icon>
-                                    </span>
+                                    </button>
                                 </div>
 
                             </form>
@@ -245,7 +245,7 @@ class FlowController
         scope.vacations = vacations
 
         scope.reply = (userReply, form) ->
-            if userReply != '' && userReply != null
+            if userReply != '' && userReply != null && angular.isDefined(userReply)
                 try
                     last_msg = _.last(scope.flow.flowNodes)
 
