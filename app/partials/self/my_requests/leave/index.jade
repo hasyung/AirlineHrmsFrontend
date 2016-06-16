@@ -11,22 +11,22 @@
                 | 点击请假申请，可发起请假流程。列表中选择未生效的申请，可撤销请假申请。
                 | 你 
                 span(ng-repeat="(key, value) in vacations.year_days.year") {{key}} 年年假剩余天数 {{value}} 天 {{$last ? '。' : '，' }}
-                span 补休假剩余天数 {{ vacations.offset_days }} 天。
+                //- span 补休假剩余天数 {{ vacations.offset_days }} 天。
 
             md-toolbar
                 .md-toolbar-tools
                     span 请假列表
                     span(flex)
                     span
-                        md-button.md-primary.md-raised(
-                            ng-disabled="!(ctrl.getSelected() &&\
-                                (ctrl.getSelected().type == 'Flow::PersonalLeave' || ctrl.getSelected().type == 'Flow::SickLeave')\
-                                && ctrl.getSelected().workflowState == '已生效')"
-                            nb-dialog
-                            template-url="/partials/self/my_requests/leave/offset_charge.html"
-                            locals="{leave: ctrl.getSelected(), leaves: leaves}"
-                            title="只有病假和事假才可以抵扣"
-                        ) 补休假抵扣
+                        //- md-button.md-primary.md-raised(
+                        //-     ng-disabled="!(ctrl.getSelected() &&\
+                        //-         (ctrl.getSelected().type == 'Flow::PersonalLeave' || ctrl.getSelected().type == 'Flow::SickLeave')\
+                        //-         && ctrl.getSelected().workflowState == '已生效')"
+                        //-     nb-dialog
+                        //-     template-url="/partials/self/my_requests/leave/offset_charge.html"
+                        //-     locals="{leave: ctrl.getSelected(), leaves: leaves}"
+                        //-     title="只有病假和事假才可以抵扣"
+                        //- ) 补休假抵扣
                         md-button.md-primary.md-raised(
                             ng-disabled="!(ctrl.getSelected() &&\
                                 (ctrl.getSelected().type == 'Flow::PersonalLeave' || ctrl.getSelected().type == 'Flow::SickLeave')\
@@ -161,12 +161,12 @@
                                         nb-panel
                                         locals="{list: leaves}"
                                         template-url="partials/self/my_requests/leave/female_leave.html") 女工假
-                                md-menu-item(ng-if="ctrl.hasVacation('补休假')")
-                                    a.md-button(
-                                        ng-click="$mdMenu.hide()"
-                                        nb-panel
-                                        locals="{list: leaves}"
-                                        template-url="partials/self/my_requests/leave/offset_leave.html") 补休假
+                                //- md-menu-item(ng-if="ctrl.hasVacation('补休假')")
+                                //-     a.md-button(
+                                //-         ng-click="$mdMenu.hide()"
+                                //-         nb-panel
+                                //-         locals="{list: leaves}"
+                                //-         template-url="partials/self/my_requests/leave/offset_leave.html") 补休假
 
 
             div(nb-grid column-defs="ctrl.leaveCol" multi-select="false" export-api on-register-api="ctrl.exportGridApi(gridApi)" grid-selection safe-src="leaves")

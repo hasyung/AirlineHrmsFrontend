@@ -711,7 +711,7 @@ class AttendanceRecordCtrl extends nb.Controller
             {minWidth: 120, displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'", enableCellEdit: false}
             {minWidth: 120, displayName: '用工性质', name: 'laborRelationId', cellFilter: "enum:'labor_relations'", enableCellEdit: false}
             {minWidth: 120, displayName: '到岗时间', name: 'joinScalDate', enableCellEdit: false}
-            {minWidth: 120, displayName: '补休假天数', name: 'offsetDays', headerCellClass: 'editable_cell_header', enableCellEdit: true, type: 'number'}
+            # {minWidth: 120, displayName: '补休假天数', name: 'offsetDays', headerCellClass: 'editable_cell_header', enableCellEdit: true, type: 'number'}
         ]
 
     initialize: (gridApi) ->
