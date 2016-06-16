@@ -2,7 +2,7 @@ md-card.form-material-section.nb-card(ng-controller="EmployeeAttendanceCtrl as c
     md-content(style="padding:20px; background-color: #fff;" ng-init="ctrl.loadAttendance(current)")
         div
           span(ng-repeat="(key, value) in vacations.year") {{key}} 年年假剩余天数 {{value}} 天 {{$last ? '。' : '，' }}
-          //- span 补休假剩余天数 {{ vacations.offset_days }} 天。
+          span 补休假剩余天数 {{ vacations.offset_days }} 天。
 
         div
           span &nbsp;
