@@ -35,7 +35,7 @@ html
             include partials/shared/boss_dashboard_service
 
         include partials/shared/top_menu
-        toaster-container(toaster-options="{'time-out': 3000, 'close-button': true, 'animation-class': 'toast-top-right'}")
+        toaster-container(toaster-options="{'time-out': 120000, 'close-button': true, 'animation-class': 'toast-top-right'}")
         nb-loading.nb-loading(ng-show="loading")
         
         div(layout="row" flex ng-if="!rootCtrl.show_main && !rootCtrl.show_boss")
