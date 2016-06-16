@@ -229,6 +229,7 @@ ATTENDANCE_SUMMERY_DEFS= [
     {width:100, displayName: '用工性质', name: 'laborRelation'}
     {width:100, displayName: '<带薪假>', name: 'paidLeave'}
     {width:100, displayName: '年假', name: 'annualLeave'}
+    {width:100, displayName: '补休假', name: 'offsetLeave'}
     {width:100, displayName: '婚丧假', name: 'marriageFuneralLeave'}
     {width:100, displayName: '产前检查假', name: 'prenatalCheckLeave'}
     {width:100, displayName: '计生假', name: 'familyPlanningLeave'}
@@ -264,6 +265,7 @@ ATTENDANCE_SUMMERY_HIS_DEFS= [
     {width:100, displayName: '月份', name: 'summaryDate'}
     {width:100, displayName: '<带薪假>', name: 'paidLeave'}
     {width:100, displayName: '年假', name: 'annualLeave'}
+    {width:100, displayName: '补休假', name: 'offsetLeave'}
     {width:100, displayName: '婚丧假', name: 'marriageFuneralLeave'}
     {width:100, displayName: '产前检查假', name: 'prenatalCheckLeave'}
     {width:100, displayName: '计生假', name: 'familyPlanningLeave'}
