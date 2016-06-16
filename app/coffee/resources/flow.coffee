@@ -106,9 +106,10 @@ FlowHandlerDirective = (ngDialog)->
                     </div>
                 </md-card>
                 <div class="approval-buttons" ng-if="!flowView || (!isHistory && flow.name=='合同续签')">
-                    <md-button class="md-raised md-warn" ng-click="submitFlow({opinion: true}, flow, dialog, state)" type="button">通过</md-button>
-                    <md-button class="md-raised md-warn" ng-click="submitFlow({opinion: false}, flow, dialog, state)" type="button">驳回</md-button>
+                    <md-button ng-disabled="!dialog.userReply" class="md-raised md-warn" ng-click="submitFlow({opinion: true}, flow, dialog, state)" type="button">通过</md-button>
+                    <md-button ng-disabled="!dialog.userReply" class="md-raised md-warn" ng-click="submitFlow({opinion: false}, flow, dialog, state)" type="button">驳回</md-button>
                     <md-button class="md-raised md-primary"
+                        ng-disabled="!dialog.userReply"
                         nb-dialog
                         template-url="partials/component/workflow/hand_over.html"
                         locals="{flow:flow}"
