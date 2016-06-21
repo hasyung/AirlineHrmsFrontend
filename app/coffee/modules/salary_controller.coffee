@@ -16,6 +16,16 @@ SALARY_FILTER_DEFAULT = {
             type: 'string'
         }
         {
+            name: 'department_name'
+            displayName: '机构'
+            type: 'string'
+        }
+        {
+            name: 'position_name'
+            displayName: '岗位'
+            type: 'string'
+        }
+        {
             name: 'notes'
             displayName: '是否有说明'
             type: 'boolean'
@@ -1832,6 +1842,73 @@ class SalaryHoursFeeController extends SalaryBaseController
             else
                 self.toaster.pop('success', '提示', '导入成功')
 
+# 安飞奖
+class SalarySecurityController extends SalaryBaseController
+    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'SecurityFee', 'toaster', '$rootScope']
+
+    constructor: ($http, $scope, $q, @Evt, @Employee, @SecurityFee, @toaster, @rootScope) ->
+        super(@SecurityFee, $scope, $q, false, null, @rootScope)
+
+        @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
+
+        @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
+            {minWidth: 150, displayName: '安飞奖', name: 'fee', enableCellEdit: false}
+            {minWidth: 150, displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
+            {
+                minWidth: 150
+                name:"notes"
+                displayName:"说明"
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5" style="color: rgba(0,0,0,0.87);">
+                        {{row.entity.notes || '无'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #ccc;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <div class="salary-explain">
+                                    {{row.entity.notes || '无'}}
+                                </div>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.notes
+            }
+            {
+                minWidth: 150
+                name:"remark"
+                displayName:"备注"
+                headerCellClass: 'editable_cell_header'
+                enableCellEdit: false
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a href="javascript:;" nb-popup-plus="nb-popup-plus" position="left-bottom" offset="0.5">
+                        {{row.entity.remark || '请输入备注'}}
+                        <popup-template
+                            style="padding:8px;border:1px solid #ccc;"
+                            class="nb-popup org-default-popup-template">
+                            <div class="panel-body popup-body">
+                                <md-input-container>
+                                    <label>备注</label>
+                                    <textarea
+                                        ng-blur="row.entity.$save()"
+                                        ng-model="row.entity.remark"
+                                        style="resize:none;"
+                                        class="reason-input"></textarea>
+                                </md-input-container>
+                            </div>
+                        </popup-template>
+                    </a>
+                </div>
+                '''
+                cellTooltip: (row) ->
+                    return row.entity.note
+            }
+        ]).concat(CALC_STEP_COLUMN)
 
 
 class SalaryAllowanceController extends SalaryBaseController
@@ -2509,6 +2586,7 @@ app.controller 'salaryBasicCtrl', SalaryBasicController
 app.controller 'salaryKeepCtrl', SalaryKeepController
 app.controller 'salaryPerformanceCtrl', SalaryPerformanceController
 app.controller 'salaryHoursFeeCtrl', SalaryHoursFeeController
+app.controller 'salarySecurityCtrl', SalarySecurityController
 app.controller 'salaryAllowanceCtrl', SalaryAllowanceController
 app.controller 'salaryLandAllowanceCtrl', SalaryLandAllowanceController
 app.controller 'salaryRewardCtrl', SalaryRewardController

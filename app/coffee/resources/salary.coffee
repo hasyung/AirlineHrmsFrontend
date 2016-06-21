@@ -117,6 +117,35 @@ HoursFee = (restmod, RMUtils, $Evt) ->
     }
 
 
+SecurityFee = (restmod, RMUtils, $Evt) ->
+    restmod.model('/security_fees').mix 'nbRestApi', 'DirtyModel', {
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+        $hooks:
+            'after-create': ->
+                $Evt.$send('security_fees:create:success', "安飞奖创建成功")
+
+            'after-update': ->
+                $Evt.$send('security_fees:update:success', "安飞奖更新成功")
+
+        $config:
+            jsonRootSingle: 'security_fee'
+            jsonRootMany: 'security_fees'
+
+        $extend:
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+            Scope:
+                # 计算(根据年月)
+                compute: (params)->
+                    restmod.model('/security_fees/compute').mix(
+                        $config:
+                            jsonRoot: 'security_fees'
+                    ).$search(params)
+    }
+
+
 Allowance = (restmod, RMUtils, $Evt) ->
     restmod.model('/allowances').mix 'nbRestApi', 'DirtyModel', {
         owner: {belongsTo: 'Employee', key: 'employee_id'}
@@ -398,6 +427,7 @@ resources.factory 'BasicSalary', ['restmod', 'RMUtils', '$nbEvent', BasicSalary]
 resources.factory 'KeepSalary', ['restmod', 'RMUtils', '$nbEvent', KeepSalary]
 resources.factory 'PerformanceSalary', ['restmod', 'RMUtils', '$nbEvent', PerformanceSalary]
 resources.factory 'HoursFee', ['restmod', 'RMUtils', '$nbEvent', HoursFee]
+resources.factory 'SecurityFee', ['restmod', 'RMUtils', '$nbEvent', SecurityFee]
 resources.factory 'Allowance', ['restmod', 'RMUtils', '$nbEvent', Allowance]
 resources.factory 'LandAllowance', ['restmod', 'RMUtils', '$nbEvent', LandAllowance]
 resources.factory 'Reward', ['restmod', 'RMUtils', '$nbEvent', Reward]

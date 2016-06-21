@@ -87,23 +87,6 @@ block base_setting
         md-input-container(flex)
             label 工龄工资
             input(ng-model="current.workingYearsSalary" ng-disabled="!exchangeCtrl.editing")
-        md-input-container.row-has-value(
-            flex
-            ng-if="current.categoryId==2 || current.categoryId==1 || current.technicalGrade"
-            )
-            label 薪酬等级
-            md-select(ng-model="current.leaderGrade" placeholder="请选择" ng-change="exchangeCtrl.flyPerf(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
-                md-option(value="B1") B1
-                md-option(value="B2") B2
-                md-option(value="C1") C1
-                md-option(value="C2") C2
-                md-option(value="C3") C3
-                md-option(value="C4") C4
-                md-option(value="C5") C5
-                md-option(value="D1") D1
-                md-option(value="D2") D2
-                md-option(value="D3") D3
-                md-option(value="D4") D4
 
     div(layout)
         md-input-container(flex)
@@ -168,6 +151,27 @@ block hours_fee_setting
         md-input-container(flex)
             label 标准
             input(type="number" min="0" max="100000" ng-model="current.flyHourMoney" readonly)
+
+    div(layout)
+        md-input-container.row-has-value(
+            flex
+            ng-if="current.categoryId==2 || current.categoryId==1 || current.technicalGrade"
+            )
+            label 薪酬等级
+            md-select(ng-model="current.leaderGrade" placeholder="请选择" ng-change="exchangeCtrl.flyPerf(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(value="B1") B1
+                md-option(value="B2") B2
+                md-option(value="C1") C1
+                md-option(value="C2") C2
+                md-option(value="C3") C3
+                md-option(value="C4") C4
+                md-option(value="C5") C5
+                md-option(value="D1") D1
+                md-option(value="D2") D2
+                md-option(value="D3") D3
+                md-option(value="D4") D4
+        div(flex)
+
     div(layout)
         md-input-container(flex)
             label 干部补贴飞行时间

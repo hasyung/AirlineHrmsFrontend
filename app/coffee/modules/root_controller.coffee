@@ -6,6 +6,7 @@ class RootController extends nb.Controller
     constructor: (@scope, @rootScope, CURRENT_ROLES, $timeout, $state, ROUTE_INFO, REPORT_CHECKER, USER_META)->
         @isIE = false
         @show_main = false
+        @downloadUrl = 'http://www.baidu.com'
 
         #用于定位当前用户的大领导身份
         @show_boss = false
@@ -30,6 +31,11 @@ class RootController extends nb.Controller
         @rootScope.$watch 'show_main', (newVal, oldVal) ->
             self.show_main = newVal || self.show_main
 
+        @rootScope.$watch 'downloadUrl', (newVal, oldVal) ->
+            if angular.isDefined newVal
+                self.downloadUrl = newVal
+                document.getElementById('download-file').src = self.downloadUrl
+
     checkBossType: () ->
         self = @
         userPositionIds = []
@@ -48,23 +54,6 @@ class RootController extends nb.Controller
         if userPositionIds.indexOf(@reportCheckers['人力资源部总经理']) > -1
             self.isHrGeneralManager = true
             self.show_boss = true
-
-    # isBoss: () ->
-    #     self = @
-
-    #     userPositionIds = []
-    #     bossPositionIds = []
-
-    #     @user.positions.forEach (current)->
-    #         userPositionIds.push current.position.id
-
-    #     _.forEach @reportCheckers, (val, key) ->
-    #         bossPositionIds.push val
-
-    #     userPositionIds.forEach (current)->
-    #         if bossPositionIds.indexOf(current) > -1
-    #             self.show_boss = true
-
 
     backToHome: () ->
       @show_main = false

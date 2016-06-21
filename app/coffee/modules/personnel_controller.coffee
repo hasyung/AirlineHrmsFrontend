@@ -31,9 +31,9 @@ app.config(Route)
 
 
 class PersonnelCtrl extends nb.Controller
-    @.$inject = ['$scope', 'sweet', 'Employee', 'CURRENT_ROLES', 'toaster', '$http']
+    @.$inject = ['$scope', 'sweet', 'Employee', 'CURRENT_ROLES', 'toaster', '$http', '$rootScope']
 
-    constructor: (@scope, @sweet, @Employee, @CURRENT_ROLES, @toaster, @http) ->
+    constructor: (@scope, @sweet, @Employee, @CURRENT_ROLES, @toaster, @http, @rootScope) ->
         @loadInitialData()
         @selectedIndex = 1
 
@@ -145,11 +145,10 @@ class PersonnelCtrl extends nb.Controller
         @http.post("/api/attendance_summaries/import", params).success (data, status) ->
             self.toaster.pop('success', '提示', '导入成功')
             self.importing = false
+            self.rootScope.downloadUrl = data.path
         .error (data) ->
+            self.toaster.pop('error', '提示', '导入失败')
             self.importing = false
-
-    getCondition: ()->
-        @tableState
 
 
 class NewEmpsCtrl extends nb.Controller

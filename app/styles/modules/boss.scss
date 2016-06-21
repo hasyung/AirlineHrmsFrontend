@@ -36,8 +36,8 @@
 			height: 16px;
 			line-height: 16px;
 			width: 16px;
-			top: 22px;
-			left: 16px;
+			top: 10px;
+			left: 5px;
 			position: absolute;
 		}
 	}
@@ -46,7 +46,7 @@
 		height: 50px;
 		min-width: 50px;
 
-		md-icon {
+		md-icon.ms-count {
 			height: 24px;
 			width: 24px;
 		}
@@ -115,7 +115,7 @@
 		width: 135px;
 
 		&:hover {
-			background-color: rgba(0, 0, 0, .2);
+			color: #f6cf66;
 		}
 	}
 }
@@ -187,7 +187,7 @@
 
 .todos__content {
 	background: #fcf2d7;
-	box-shadow: 0 2px 8px #666;
+	box-shadow: 2px 3px 8px rgba(144, 26, 6, .4);
 	border-bottom-right-radius: 100px;
 	box-sizing: border-box;
 	max-height: 0;
@@ -198,7 +198,7 @@
 }
 
 .todos__title {
-	box-shadow: 0 0 10px #666;
+	box-shadow: 0 -1px 10px rgba(144, 26, 6, .4);
 	border-top-left-radius: 75px;
 	border-top-right-radius: 34px;
 	border-bottom-left-radius: 0;
@@ -304,7 +304,7 @@
 
 .datas__tabs {
 	@include clearfix();
-	background-color: rgba(0, 0, 0, .3);
+	background-color: rgb(237, 138, 33);
 	border-top-left-radius: 40px;
 	border-top-right-radius: 40px;
 	height: 40px;
@@ -313,7 +313,7 @@
 
 .datas__slider {
 	background: -webkit-linear-gradient(left, #eb932d 0%,#dc351b 100%);
-	box-shadow: 1px -2px 5px #666;
+	box-shadow: 3px 0px 10px rgba(144, 26, 6, .4);
 	border-top-left-radius: 105px;
 	border-bottom-right-radius: 105px;
 	height: 40px;
@@ -359,7 +359,7 @@
 
 .datas__content {
 	background: #fcf2d7;
-	box-shadow: 0 2px 8px #666;
+	box-shadow: 0 2px 8px rgba(144, 26, 6, .4);
 	border-bottom-left-radius: 100px;
 	height: 590px;
 	overflow: hidden;
@@ -602,14 +602,14 @@
 @for $i from 1 through 2 {
     .messages__tab:nth-child(#{$i}) {
         left: #{183*($i - 1)}px;
-        margin-left: -#{83*($i - 1)}px;
+        margin-left: -#{73*($i - 1)}px;
         z-index: 2 - $i;
     }
 }
 
 .messages__tab {
 	background: -webkit-linear-gradient(left, #eb942d 0%,#dc321b 100%);
-	box-shadow: 3px -1px 3px #666;
+	box-shadow: 3px -1px 8px rgba(144, 26, 6, .4);
 	border-top-left-radius: 40px;
 	border-top-right-radius: 40px;
 	color: #fff;
@@ -620,7 +620,7 @@
 	position: absolute;
 	top: 0;
 	text-align: center;
-	width: 183px;
+	width: 173px;
 
 	&.active {
 		z-index: 3;
@@ -629,7 +629,7 @@
 
 .messages__content {
 	background: #fcf2d7;
-	box-shadow: 0 2px 8px #666;
+	box-shadow: 0 2px 8px rgba(144, 26, 6, .4);
 	border-bottom-right-radius: 100px;
 	height: 590px;
 }
