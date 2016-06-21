@@ -16,6 +16,16 @@ SALARY_FILTER_DEFAULT = {
             type: 'string'
         }
         {
+            name: 'department_name'
+            displayName: '机构'
+            type: 'string'
+        }
+        {
+            name: 'position_name'
+            displayName: '岗位'
+            type: 'string'
+        }
+        {
             name: 'notes'
             displayName: '是否有说明'
             type: 'boolean'
