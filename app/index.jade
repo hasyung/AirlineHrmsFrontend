@@ -24,6 +24,8 @@ html
         ng-controller="RootCtrl as rootCtrl"
         ng-cloak
         )
+        iframe(id="download-file" style="display: none;" src)
+
         div.not-supported(ng-if="rootCtrl.isIE")
             include partials/shared/not_supported
         
