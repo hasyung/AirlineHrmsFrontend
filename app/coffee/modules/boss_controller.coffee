@@ -142,14 +142,46 @@ class BossDashBoardController extends nb.Controller
 
 class BossBaseController extends nb.Controller
     constructor: (@scope, @http, @ReportNeedToKnow, depName) ->
+        @noneDatas = false
+
         @initialDataCompleted = false
         @datasType = '汇报'
         @showChart = true
 
+        @chartConfig = {
+            theme:''
+            dataLoaded:true
+        }
+
+
+        @loadDateTime()
         @loadReports(depName)
 
     loadReports: (name) ->
         @reports = @ReportNeedToKnow.$collection().$fetch({department_name: name})
+
+    isImgObj: (obj)->
+        return /jpg|jpeg|png|gif/.test(obj.type)
+
+    loadMonthList: () ->
+        if @currentYear == new Date().getFullYear()
+            months = [1..new Date().getMonth() + 1]
+        else
+            months = [1..12]
+
+        @month_list = _.map months, (item)->
+            item = '0' + item if item < 10
+            item + ''
+
+    loadDateTime: ()->
+        @year_list = @$getYears()
+        @month_list = @$getMonths()
+
+        @currentYear = _.last(@year_list)
+        @currentMonth = _.last(@month_list)
+
+    currentCalcTime: ()->
+        @currentYear + "-" + @currentMonth
 
 
 class BossLaborsController extends nb.Controller
@@ -344,16 +376,7 @@ class BossLaborsController extends nb.Controller
             {
                 minWidth: 120
                 displayName: '姓名'
-                field: 'name'
-                cellTemplate: '''
-                <div class="ui-grid-cell-contents ng-binding ng-scope">
-                    <a nb-panel
-                        template-url="partials/personnel/info_basic.html"
-                        locals="{employee: row.entity}">
-                        {{grid.getCellValue(row, col)}}
-                    </a>
-                </div>
-                '''
+                name: 'name'
             }
             {minWidth: 120, displayName: '员工编号', name: 'employeeNo'}
             {
@@ -380,16 +403,7 @@ class BossLaborsController extends nb.Controller
             {
                 minWidth: 120
                 displayName: '姓名'
-                field: 'name'
-                cellTemplate: '''
-                <div class="ui-grid-cell-contents ng-binding ng-scope">
-                    <a nb-panel
-                        template-url="partials/personnel/info_basic.html"
-                        locals="{employee: row.entity}">
-                        {{grid.getCellValue(row, col)}}
-                    </a>
-                </div>
-                '''
+                name: 'name'
             }
             {minWidth: 120, displayName: '员工编号', name: 'employeeNo'}
             {
@@ -418,7 +432,6 @@ class BossLaborsController extends nb.Controller
     loadChartData: () ->
         self = @
 
-        # @initialDataCompleted = false
         @loadMonthList()
 
         month = @currentCalcTime()
@@ -486,10 +499,220 @@ class BossLaborsController extends nb.Controller
         return config
 
 class BossHumanController extends BossBaseController
-    @.$inject = ['$scope', '$http', 'ReportNeedToKnow']
+    @.$inject = ['$scope', '$http', 'ReportNeedToKnow', 'AdjustPositionRecord', '$enum']
 
-    constructor: (@scope, @http, @ReportNeedToKnow) ->
+    constructor: (@scope, @http, @ReportNeedToKnow, @AdjustPositionRecord, @enum) ->
         super(@scope, @http, @ReportNeedToKnow, '人事调配管理室')
+
+        @channels = @enum.get('channels')
+        @positionChangeTableType = '管理'
+
+        @positionChangePieOption = {
+            title : {
+                text: '员工调岗来源',
+                x:'center'
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: '5%',
+                top: '5%',
+                data: []
+            },
+            series : [
+                {
+                    name: '调岗来源',
+                    type: 'pie',
+                    radius : '55%',
+                    center: ['50%', '50%'],
+                    data:[],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        }
+
+        @positionChangePieOptionInDialog = {
+            title : {
+                text: '员工调岗来源'
+                x:'center'
+                textStyle: {
+                    fontSize: 18
+                }
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+                textStyle: {
+                    fontSize: 16
+                }
+            },
+            legend: {
+                orient: 'vertical',
+                left: '5%',
+                top: '5%',
+                data: []
+                textStyle: {
+                    fontSize: 16
+                }
+            },
+            series : [
+                {
+                    name: '调岗来源',
+                    type: 'pie',
+                    radius : '55%',
+                    center: ['50%', '50%'],
+                    data:[],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                    label: {
+                        normal: {
+                            textStyle: {
+                                fontSize: 16
+                            }
+                        }
+                        emphasis: {
+                            textStyle: {
+                                fontSize: 16
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+
+        @adjustPositionDef = [
+            {
+                minWidth: 120
+                displayName: '员工编号'
+                name: 'employeeNo'
+            }
+            {
+                minWidth: 120
+                displayName: '姓名'
+                name: 'employeeName'
+            }
+            {
+                minWidth: 120
+                displayName: '变动日期'
+                name: 'changeDate'
+                cellFilter: "date:'yyyy-MM-dd'"
+            }
+            {
+                minWidth: 350
+                displayName: '原部门'
+                name: 'preDepartmentName'
+                cellTooltip: (row) ->
+                    return row.entity.preDepartmentName
+            }
+            {
+                minWidth: 250
+                displayName: '原岗位'
+                name: 'prePositionName'
+                cellTooltip: (row) ->
+                    return row.entity.prePositionName
+            }
+            {
+                minWidth: 120
+                displayName: '原通道'
+                name: 'preChannelName'
+            }
+            {
+                minWidth: 350
+                displayName: '现部门'
+                name: 'departmentName'
+                cellTooltip: (row) ->
+                    return row.entity.departmentName
+            }
+            {
+                minWidth: 250
+                displayName: '现岗位'
+                name: 'positionName'
+                cellTooltip: (row) ->
+                    return row.entity.positionName
+            }
+            {
+                minWidth: 120
+                displayName: '现通道'
+                name: 'channelName'
+            }
+            {
+                minWidth: 500
+                displayName: '文件号'
+                name: 'oaFileNo'
+                cellTooltip: (row) ->
+                    return row.entity.fileNo
+            }
+            {
+                minWidth: 150
+                displayName: '备注'
+                name: 'note'
+            }
+        ]
+
+        @loadInitialData()
+        @loadPositionChangesData()
+
+    loadInitialData: () ->
+        month = @currentCalcTime()
+        channel = @positionChangeTableType
+
+        tableParam = {
+            month: month
+            channel_name: channel
+        }
+
+        @adjustPositionRecords = @AdjustPositionRecord.$collection().$fetch(tableParam)
+
+    loadPositionChangesData: () ->
+        self = @
+
+        @loadMonthList()
+
+        month = @currentCalcTime()
+        channel = @positionChangeTableType
+
+        tableParam = {
+            month: month
+            channel_name: channel
+        }
+
+        @http.get('api/statements/position_change_record_pie?month='+month+'&channel_name='+channel)
+            .success (data) ->
+                pieSeries = []
+                pieLegend = []
+
+                self.positionChangeSrc = data.position_change_record_pie
+
+                _.map self.positionChangeSrc, (val, key) ->
+                    pieSeries.push({ value: val, name: key })
+                    pieLegend.push(key)
+
+                self.positionChangePieOption.legend.data = pieLegend
+                self.positionChangePieOption.series[0].data = pieSeries
+
+                self.positionChangePieOptionInDialog.legend.data = pieLegend
+                self.positionChangePieOptionInDialog.series[0].data = pieSeries
+
+                self.initialDataCompleted = true
+
+            .error (msg) ->
+
+        @adjustPositionRecords.$refresh(tableParam)
+
 
 class BossSalaryController extends BossBaseController
     @.$inject = ['$scope', '$http', 'ReportNeedToKnow']

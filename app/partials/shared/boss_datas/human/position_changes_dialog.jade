@@ -1,5 +1,5 @@
 md-dialog.labors-new-leave.datas__container--charts
-	.dialog-content(ng-init="ctrl.showChartInDialog = true")
+	.dialog-content(ng-init="ctrl.showChartInDialog = true;")
 		div.echarts-wrapper(ng-if="ctrl.initialDataCompleted")
 			div.charts-toolbar(layout)
 				//- 切换图标和表格
@@ -9,25 +9,21 @@ md-dialog.labors-new-leave.datas__container--charts
 					md-icon(md-svg-src="/images/svg/view_list.svg")
 				span(flex)
 				.date-selector(layout)
-					md-select(style="width: 150px;" ng-model="ctrl.currentYear" ng-change="ctrl.loadChartData()" placeholder="请选择")
+					md-select(ng-model="ctrl.positionChangeTableType" placeholder="请选择" flex-order="0" ng-change="ctrl.loadPositionChangesData()")
+						md-option(ng-repeat="channel in ctrl.channels track by channel.id" ng-value="channel.label") {{channel.label}}
+
+					md-select(style="width: 150px;" ng-model="ctrl.currentYear" ng-change="ctrl.loadPositionChangesData()" placeholder="请选择")
 						md-option(ng-value="item" ng-repeat="item in ctrl.year_list track by $index" ng-bind="item")
 					label(flex-order="2") 年
-					md-select(ng-model="ctrl.currentMonth" ng-change="ctrl.loadChartData()" placeholder="请选择")
+					md-select(ng-model="ctrl.currentMonth" ng-change="ctrl.loadPositionChangesData()" placeholder="请选择")
 						md-option(ng-value="item" ng-repeat="item in ctrl.month_list track by $index" ng-bind="item")
 					label(flex-order="3") 月
 
 			ng-echarts.echarts-bar(
 				ng-if="ctrl.showChartInDialog"
-				ec-config="ctrl.barConfig"
-				ec-option="ctrl.barOptionInDialog"
+				ec-config="ctrl.chartConfig"
+				ec-option="ctrl.positionChangePieOptionInDialog"
 			)
 
 			div.chart-detail.ui-grid-container(ng-if="!ctrl.showChartInDialog")
-				div.chart-detail-toolbar
-					md-select(style="width: 150px;" ng-model="ctrl.tableTypeInDialog" placeholder="请选择")
-						md-option(value="新进员工") 新进员工
-						md-option(value="离职员工") 离职员工
-
-				div.grid-item(ng-show="ctrl.tableTypeInDialog=='新进员工'" nb-grid column-defs="ctrl.columnDefNew" safe-src="ctrl.newEmployees")
-
-				div.grid-item(ng-show="ctrl.tableTypeInDialog=='离职员工'" nb-grid column-defs="ctrl.columnDefLeave" safe-src="ctrl.LeaveEmployees")
+				div.grid-item(nb-grid column-defs="ctrl.adjustPositionDef" safe-src="ctrl.adjustPositionRecords")
