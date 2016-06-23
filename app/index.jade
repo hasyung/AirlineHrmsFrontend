@@ -24,6 +24,7 @@ html
         ng-controller="RootCtrl as rootCtrl"
         ng-cloak
         )
+        //- 异步请求成功，下载文件的隐藏iframe
         iframe(id="download-file" style="display: none;" src)
 
         div.not-supported(ng-if="rootCtrl.isIE")

@@ -2415,6 +2415,7 @@ class SalaryOverviewController extends SalaryBaseController
             {minWidth: 100, displayName: '保留工资', name: 'keep', enableCellEdit: false}
             {minWidth: 100, displayName: '绩效工资', name: 'performance', enableCellEdit: false}
             {minWidth: 100, displayName: '小时费', name: 'hoursFee', enableCellEdit: false}
+            {minWidth: 100, displayName: '安飞奖', name: 'securityFee', enableCellEdit: false}
             {minWidth: 100, displayName: '津贴', name: 'subsidy', enableCellEdit: false}
             {minWidth: 100, displayName: '驻站津贴', name: 'landSubsidy', enableCellEdit: false}
             {minWidth: 100, displayName: '奖励', name: 'reward', enableCellEdit: false}
@@ -2469,6 +2470,7 @@ class BirthSalaryController extends SalaryBaseController
             {minWidth: 100, displayName: '保留工资', name: 'keepSalary', enableCellEdit: false}
             {minWidth: 100, displayName: '绩效薪酬', name: 'performanceSalary', enableCellEdit: false}
             {minWidth: 100, displayName: '小时费', name: 'hoursFee', enableCellEdit: false}
+            {minWidth: 100, displayName: '安飞奖', name: 'securityFee', enableCellEdit: false}
             {minWidth: 120, displayName: '收支目标考核奖', name: 'budgetReward', enableCellEdit: false}
             {minWidth: 100, displayName: '交通费', name: 'transportFee', enableCellEdit: false}
             {minWidth: 100, displayName: '班车费', name: 'busFee', enableCellEdit: false}
