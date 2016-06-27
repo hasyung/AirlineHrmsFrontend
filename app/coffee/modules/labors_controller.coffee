@@ -1619,7 +1619,7 @@ class VacationManagementCtrl extends nb.Controller
         params = {month: @currentCalcTime()}
         @importing = true
 
-        @http.put("/api/workflows/approve_vacation_list", params).success (data) ->
+        @http.put("/api/workflows/vacation/approve_vacation_list", params).success (data) ->
             self.toaster.pop('success', '提示', '审批已完成')
             self.records.refresh(params)
             self.importing = false
