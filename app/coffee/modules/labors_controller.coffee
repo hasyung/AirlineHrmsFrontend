@@ -1608,7 +1608,7 @@ class VacationManagementCtrl extends nb.Controller
         params = {type: type, attachment_id: attachment_id}
         @importing = true
 
-        @http.post("/api/workflows/cabin_vacation_import", params).success (data, status) ->
+        @http.post("/api/workflows/vacation/cabin_vacation_import", params).success (data, status) ->
             self.toaster.pop('success', '提示', '导入成功')
             self.importing = false
         .error (data) ->
@@ -1619,7 +1619,7 @@ class VacationManagementCtrl extends nb.Controller
         params = {month: @currentCalcTime()}
         @importing = true
 
-        @http.put("/api/workflows/vacation/approve_vacation_list", params).success (data) ->
+        @http.put("/api/workflows/approve_vacation_list", params).success (data) ->
             self.toaster.pop('success', '提示', '审批已完成')
             self.records.refresh(params)
             self.importing = false
