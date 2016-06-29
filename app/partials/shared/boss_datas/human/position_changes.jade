@@ -13,11 +13,8 @@ div.echarts-wrapper(ng-if="ctrl.initialDataCompleted")
 			label(flex-order="3") 月
 
 	ng-echarts.echarts-bar(
-		ng-if="!ctrl.noneDatas"
 		ec-config="ctrl.chartConfig"
 		ec-option="ctrl.positionChangePieOption"
 		nb-dialog
 		template-url="partials/shared/boss_datas/human/position_changes_dialog.html"
 	)
-
-	.none-datas(ng-if="ctrl.noneDatas") 没有可显示的数据
