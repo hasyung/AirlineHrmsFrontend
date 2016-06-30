@@ -142,8 +142,6 @@ class BossDashBoardController extends nb.Controller
 
 class BossBaseController extends nb.Controller
     constructor: (@scope, @http, @ReportNeedToKnow, depName) ->
-        @noneDatas = false
-
         @initialDataCompleted = false
         @datasType = '汇报'
         @showChart = true

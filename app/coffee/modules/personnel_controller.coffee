@@ -150,6 +150,9 @@ class PersonnelCtrl extends nb.Controller
             self.toaster.pop('error', '提示', '导入失败')
             self.importing = false
 
+    getCondition: ()->
+        @tableState
+
 
 class NewEmpsCtrl extends nb.Controller
     @.$inject = ['$scope', 'Employee', 'Org', '$state', '$enum', '$http', 'toaster']

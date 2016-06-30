@@ -1,0 +1,79 @@
+md-dialog.punishment_new(
+    style="min-width: 900px;"
+    ng-init="employeeIds = dialog.employeeIds;\
+        request={ position: { category: '主职' } };\
+        empCtrl=dialog.empCtrl;\
+        classificationArr = ['安全管理','安全质量管理','保安','保管','保洁','财务','采购','产权管理','出纳','飞行机械','飞行技术','服务员','供应','管理保障','行政辅助','行政管理','航材','航务','航站保障','合同管理','后勤保障','后勤维修','护士','货运市场','机务','基建管理','技术保障','驾驶','客运服务','客运业务','空保','空乘','空警','秘书','培训管理','配载','票务','汽车维修','人力资源管理','数据录入','调度','外事管理','信息技术','信息维护','业务管理','医生','运行管理','运输业务保障','战略规划','质量管理','助理','装卸','资料','无'];\
+    "
+    )
+    md-toolbar.md-accent(md-theme="hrms")
+        .md-toolbar-tools
+            span 员工批量调岗
+    form(ng-controller="AdjustPositionCtrl as ctrl" ng-submit="ctrl.adjustPositionMany(request, employeeIds, empCtrl.tableState, empCtrl.employees); dialog.close();" name="newPositionManyForm")
+        md-content
+            fieldset(flex)
+                div(layout)
+                    org-search(
+                        flex
+                        ng-model="request.department"
+                        float-label
+                        placeholder="所属部门"
+                        search-text-change="request.position.id=null; ctrl.positions=null;"
+                        selected-item-change="ctrl.getPositions(request.department); request.position.id=null;"
+                        editable
+                        )
+
+                    md-input-container.row-has-value(flex)
+                        label 岗位
+                        md-select(ng-model="request.position.id")
+                            md-option(ng-value="pos.id" ng-repeat="pos in ctrl.positions") {{::pos.name}}
+                    md-input-container.row-has-value(flex)
+                        label 岗位性质
+                        md-select(ng-model="request.position.category" disabled readonly)
+                            md-option(aria-label="primary" value="主职") 主职
+                            md-option(aria-label="part" value="兼职") 兼职
+                            md-option(aria-label="proxy" value="代理") 代理
+
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 分类
+                        md-select(ng-model="request.categoryId")
+                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('categories')") {{item.label}}
+                    md-input-container.row-has-value(flex)
+                        label 通道
+                        md-select(ng-model="request.channelId")
+                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
+                    md-input-container.row-has-value(flex)
+                        label 类别
+                        md-select(ng-model="request.classification")
+                            md-option(ng-value="item" ng-repeat="item in classificationArr") {{item}}
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 职务职级
+                        md-select(ng-model="request.dutyRankId")
+                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('duty_ranks')") {{item.label}}
+                    md-input-container(flex)
+                        label 调岗日期
+                        input(ng-model="request.positionChangeDate" bs-datepicker)
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 试岗期
+                        md-select(ng-model="request.probationDuration" placeholder="请选择")
+                            md-option(value="0") 无
+                            md-option(ng-value="item" ng-repeat="item in [1,2,3,4,5,6]") {{item}}月
+                    md-input-container(flex)
+                        label 调岗文件
+                        input(ng-model="request.oaFileNo" required)
+
+                div(layout)
+                    md-input-container(flex)
+                        label 属地
+                        input(ng-model="request.location" required)
+                    md-input-container(flex)
+                        label 岗位备注
+                        input(ng-model="request.positionRemark")
+
+        .md-actions
+            md-button(type="button" ng-click="dialog.close()") 取 消
+            md-button.md-primary.md-raised(type="submit" ng-disabled="!(request.probationDuration&&request.positionChangeDate)") 确 定
+

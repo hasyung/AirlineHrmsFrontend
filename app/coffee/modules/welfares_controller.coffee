@@ -1809,6 +1809,18 @@ class AirlineComputeController extends nb.Controller
             }
             {
                 minWidth: 100
+                displayName: '空勤灶现金'
+                name: 'airlineFeeCash'
+                enableCellEdit: false
+            }
+            {
+                minWidth: 100
+                displayName: '空勤灶饭卡'
+                name: 'airlineFeeCard'
+                enableCellEdit: false
+            }
+            {
+                minWidth: 100
                 displayName: '空勤灶金额'
                 name: 'airlineFee'
                 enableCellEdit: false

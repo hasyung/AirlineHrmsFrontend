@@ -77,6 +77,13 @@ tabset(flex)
                         ) 员工调岗
 
                         md-button.md-primary.md-raised(
+                            ng-disabled="ctrl.importing || ctrl.getSelectsIds().length < 1"
+                            nb-dialog
+                            template-url="/partials/personnel/adjust_position_many.html"
+                            locals="{employeeIds: ctrl.getSelectsIds(), empCtrl: ctrl}"
+                        ) 员工批量调岗
+
+                        md-button.md-primary.md-raised(
                             has-permission="employees_change_education"
                             ng-disabled="ctrl.getSelected().length != 1 || ctrl.importing"
                             nb-dialog
