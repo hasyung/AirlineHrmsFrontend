@@ -174,7 +174,7 @@ resources.factory 'Workflow', ['restmod', (restmod) ->
 
 # 客舱服务部管理的 resource
 VacationDistribute = (restmod, RMUtils, $Evt) ->
-    restmod.model('/workflows/vacation_distribute_list').mix 'nbRestApi', 'DirtyModel', {
+    restmod.model('/workflows/vacation/distribute/vacation_distribute_list').mix 'nbRestApi', 'DirtyModel', {
         $config:
             jsonRootSingle: 'workflow'
             jsonRootMany: 'workflows'
