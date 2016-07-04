@@ -1610,11 +1610,13 @@ class VacationManagementCtrl extends nb.Controller
 
     uploadCabinVacation: (type, attachment_id)->
         self = @
+        moth = @currentCalcTime()
+
         params = {type: type, attachment_id: attachment_id}
         @importing = true
 
         @http.post("/api/workflows/vacation/cabin_vacation_import", params).success (data, status) ->
-            self.records.$refresh()
+            self.records.$refresh(moth)
             self.toaster.pop('success', '提示', '导入成功')
             self.importing = false
         .error (data) ->
