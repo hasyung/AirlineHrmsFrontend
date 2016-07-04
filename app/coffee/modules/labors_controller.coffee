@@ -1642,6 +1642,4 @@ app.controller('RetirementCtrl', RetirementCtrl)
 app.controller('SbFlowHandlerCtrl', SbFlowHandlerCtrl)
 app.controller('VacationManagementCtrl', VacationManagementCtrl)
 
-# app.controller('cabinManagementCtrl', cabinManagementCtrl)
-
 app.constant('ColumnDef', [])
