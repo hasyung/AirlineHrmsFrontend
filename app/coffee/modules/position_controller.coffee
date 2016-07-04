@@ -293,11 +293,9 @@ class AdjustPositionCtrl
         self = @
 
         params = {}
-        params.position = {}
+        params.positions = []
 
         params.employee_ids = employeeIds
-        params.position.id = request.positionId
-        params.position.category = request.positionCategory
         params.channel_id = request.channelId
         params.category_id = request.categoryId
         params.duty_rank_id = request.dutyRankId
@@ -307,6 +305,12 @@ class AdjustPositionCtrl
         params.probation_duration = request.probationDuration
         params.classification = request.classification
         params.location = request.location
+
+        params.positions.push({
+            'position': {'id': request.position.id},
+            'category': request.position.category
+            'department': {'id': request.department.id}
+            })
 
         @http.post("/api/position_change_records/batch_create", params).success (data, status)->
             self.Evt.$send "data:create:success", "员工批量转岗成功"
