@@ -1519,6 +1519,11 @@ class VacationManagementCtrl extends nb.Controller
                     displayName: '姓名'
                     type: 'string'
                 }
+                {
+                    name: 'name'
+                    displayName: '假别'
+                    type: 'string'
+                }
             ]
         }
 
@@ -1558,8 +1563,8 @@ class VacationManagementCtrl extends nb.Controller
             }
             {minWidth: 150, displayName: '休假时间', name: 'vacationDates'}
             {minWidth: 120, displayName: '天数', name: 'vacationDays'}
-            {minWidth: 120, displayName: '假别', name: 'flow.name'}
-            {minWidth: 120, displayName: '状态', name: 'flow.tCurrentState'}
+            {minWidth: 120, displayName: '假别', name: 'name'}
+            {minWidth: 120, displayName: '状态', name: 'state'}
         ]
 
     exportGridApi: (gridApi) ->
@@ -1609,6 +1614,7 @@ class VacationManagementCtrl extends nb.Controller
         @importing = true
 
         @http.post("/api/workflows/vacation/cabin_vacation_import", params).success (data, status) ->
+            self.records.$refresh()
             self.toaster.pop('success', '提示', '导入成功')
             self.importing = false
         .error (data) ->
@@ -1621,7 +1627,7 @@ class VacationManagementCtrl extends nb.Controller
 
         @http.put("/api/workflows/approve_vacation_list", params).success (data) ->
             self.toaster.pop('success', '提示', '审批已完成')
-            self.records.refresh(params)
+            self.records.$refresh(params)
             self.importing = false
         .error (data) ->
             self.importing = false        

@@ -183,9 +183,9 @@ VacationDistribute = (restmod, RMUtils, $Evt) ->
 
         $hooks: {
             'after-destroy': ->
-                $Evt.$send('dinnerPersonSetups:destroy:success',"删除成功")
+                $Evt.$send('workflows:destroy:success',"删除成功")
             'after-save': ->
-                $Evt.$send('dinnerPersonSetups:save:success',"保存成功")
+                $Evt.$send('workflows:save:success',"保存成功")
         }
 
         $extend:
