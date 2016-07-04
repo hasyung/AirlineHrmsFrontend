@@ -196,7 +196,8 @@
                                 input(ng-model="newEmp.joinScalDate" bs-datepicker name="joinScalDate")
                             md-input-container(flex)
                                 label 参工时间
-                                input(ng-model="newEmp.startWorkDate" bs-datepicker)
+                                    span.require-tip *
+                                input(ng-model="newEmp.startWorkDate" name="startWorkDate" bs-datepicker)
 
                         div(layout)
                             md-input-container(flex)
@@ -209,6 +210,6 @@
                 md-button.md-raised.white(type="button" ng-click="panel.close()") 取消
                 md-button.md-primary.md-raised(
                     type="submit"
-                    ng-disabled="!newEmpForm.politicalStatus.$modelValue || !newEmpForm.laborRelation.$modelValue || !newEmpForm.position.$modelValue || !newEmpForm.category.$modelValue || !newEmpForm.channel.$modelValue || !newEmpForm.educationBackground.$modelValue || (!newEmpForm.joinScalDate.$modelValue && !newEmpForm.startInternshipDate.$modelValue)"
+                    ng-disabled="!newEmpForm.politicalStatus.$modelValue || !newEmpForm.laborRelation.$modelValue || !newEmpForm.position.$modelValue || !newEmpForm.category.$modelValue || !newEmpForm.channel.$modelValue || !newEmpForm.educationBackground.$modelValue || (!newEmpForm.joinScalDate.$modelValue && !newEmpForm.startInternshipDate.$modelValue) || !newEmpForm.startWorkDate.$modelValue"
                     ) 保存
 
