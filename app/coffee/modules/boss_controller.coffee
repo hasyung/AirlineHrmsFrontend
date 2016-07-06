@@ -671,7 +671,6 @@ class BossHumanController extends BossBaseController
 
         @http.get('/api/statements/position_change_record_channel?month='+month)
             .success (data) ->
-                self.channels = []
                 self.channels = data.channels
 
 
