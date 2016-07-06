@@ -129,11 +129,11 @@ menuFactory = ($rootScope, $state)->
                 state: 'labors_leave_job'
                 permission: ''
             }
-            # {
-            #     name: '客舱管理'
-            #     state: 'cabin_management'
-            #     permission: ''
-            # }
+            {
+                name: '客舱管理'
+                state: 'cabin_management'
+                permission: ''
+            }
         ]
     }
 
