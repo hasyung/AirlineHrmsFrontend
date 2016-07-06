@@ -1,0 +1,27 @@
+.app-content-wrapper(flex ng-controller="salaryCtrl as ctrl" ng-init="ctrl.loadOfficialDutyRank()" style="padding: 0;")
+    .salary-basic(style="padding: 0;")
+        md-toolbar
+            .md-toolbar-tools
+                h2 职级设置
+                span(flex)
+
+        table.tablexx.table-default.table-bordered
+            thead
+                tr
+                    th 职务职级
+                    th 标准
+
+            tbody
+                tr(ng-repeat="item in ctrl.dutyRankAllowance track by $index")
+                    td {{::item.display_name}}
+                    td
+                        md-select(ng-model="item.official_car_allowance" ng-change="ctrl.updateOfficialRankAmount(item.id, item.official_car_allowance)" ng-disabled="!ctrl.officialCarUpdatable" ng-readonly="!ctrl.officialCarUpdatable")
+                            md-option(value="0") 无
+                            md-option(value="800") 800
+                            md-option(value="550") 550
+                            md-option(value="500") 500
+                            md-option(value="400") 400
+                            md-option(value="300") 300
+                            md-option(value="200") 200
+                            md-option(value="150") 150
+                            md-option(value="100") 100

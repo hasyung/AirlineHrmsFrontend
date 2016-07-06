@@ -15,6 +15,7 @@ workflows = [
     "Flow::MaternityLeaveMultipleBirth"
     "Flow::MiscarriageLeave"
     "Flow::PersonalLeave"
+    "Flow::RecuperateLeave"
     "Flow::PrenatalCheckLeave"
     "Flow::RearNurseLeave"
     "Flow::SickLeave"

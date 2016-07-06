@@ -131,6 +131,7 @@ class SalaryController extends nb.Controller
         @tempUpdatable = _.includes @PERMISSIONS, 'salaries_update_temp'
         @comunicateUpdatable = _.includes @PERMISSIONS, 'salaries_update_communicate_allowance'
         @coldSubsidyUpdatable = _.includes @PERMISSIONS, 'salaries_update_cold_subsidy'
+        @officialCarUpdatable = _.includes @PERMISSIONS, 'salaries_update_official_car_allowance'
 
     queryVariables: (text)->
         self = @
@@ -494,6 +495,26 @@ class SalaryController extends nb.Controller
 
         else
             self.toaster.pop('error', '提示', '请填写城市名称')
+
+    # 公务车补贴
+    loadOfficialDutyRank: () ->
+        self = @
+
+        @http.get('/api/salaries/official_car_of_duty_rank')
+            .success (data)->
+                self.dutyRankAllowance = data.duty_ranks
+
+    updateOfficialRankAmount: (rank_id, amount)->
+        self = @
+        params = {id: rank_id, communicate_allowance: parseInt(amount)}
+
+        @http.put('/api/salaries/set_official_car_of_duty_rank', params)
+            .success (data)->
+                self.toaster.pop('success', '提示', '更新成功')
+            .error (data)->
+                self.toaster.pop('error', '提示', '更新失败')
+
+
 
 class DepNumSettingController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'Org', 'toaster']
@@ -1811,8 +1832,10 @@ class SalaryHoursFeeController extends SalaryBaseController
                 self.error_names = data.error_names
 
                 self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
+                self.records.$refresh()
             else
                 self.toaster.pop('success', '提示', '导入成功')
+                self.records.$refresh()
 
     uploadAddGarnishee: (category, attachment_id) ->
         self = @
