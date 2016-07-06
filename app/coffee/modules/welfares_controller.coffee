@@ -64,10 +64,11 @@ class WelfareController
 
             angular.extend configs[current_setting_index], setting
 
-            $http.put('/api/welfares/socials', {
+            $http.post('/api/welfares/update_socials', {
+                category: 'socials'
                 socials: configs
             }).success ()->
-                $Evt.$send('wselfate:save:success', '社保配置保存成功')
+                $Evt.$send('welfares:save:success', '社保配置保存成功')
 
 
 class WelfarePersonalController extends nb.Controller
@@ -936,7 +937,8 @@ class DinnerController
 
         #保存社保配置信息
         $scope.saveConfig = (settings)->
-            $http.put('/api/welfares/dinners', {
+            $http.post('/api/welfares/update_dinners', {
+                category: 'dinners'
                 dinners: settings
             }).success ()->
                 $Evt.$send('dinners:update:success', '工作餐配置保存成功')
