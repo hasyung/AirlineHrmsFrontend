@@ -501,9 +501,10 @@ class BossHumanController extends BossBaseController
 
     constructor: (@scope, @http, @ReportNeedToKnow, @AdjustPositionRecord, @enum) ->
         super(@scope, @http, @ReportNeedToKnow, '人事调配管理室')
+        @channels = []
 
-        @channels = @enum.get('channels')
-        @positionChangeTableType = '管理'
+        @getChannels()
+        @positionChangeTableType = _.last(@channels)
 
         @positionChangePieOption = {
             title : {
@@ -663,6 +664,16 @@ class BossHumanController extends BossBaseController
 
         @loadInitialData()
         @loadPositionChangesData()
+
+    getChannels: () ->
+        self = @
+        month = @currentCalcTime()
+
+        @http.get('/api/statements/position_change_record_channel?month='+month)
+            .success (data) ->
+                self.channels = []
+                self.channels = data.channels
+
 
     loadInitialData: () ->
         month = @currentCalcTime()
