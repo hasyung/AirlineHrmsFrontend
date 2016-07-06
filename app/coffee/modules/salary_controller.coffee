@@ -131,7 +131,7 @@ class SalaryController extends nb.Controller
         @tempUpdatable = _.includes @PERMISSIONS, 'salaries_update_temp'
         @comunicateUpdatable = _.includes @PERMISSIONS, 'salaries_update_communicate_allowance'
         @coldSubsidyUpdatable = _.includes @PERMISSIONS, 'salaries_update_cold_subsidy'
-        @officialCarUpdatable = _.includes @PERMISSIONS, 'salaries_update_official_car_allowance'
+        @officialCarUpdatable = _.includes @PERMISSIONS, 'salaries_set_official_car_of_duty_rank'
 
     queryVariables: (text)->
         self = @
@@ -506,7 +506,7 @@ class SalaryController extends nb.Controller
 
     updateOfficialRankAmount: (rank_id, amount)->
         self = @
-        params = {id: rank_id, communicate_allowance: parseInt(amount)}
+        params = {id: rank_id, official_car_allowance: parseInt(amount)}
 
         @http.put('/api/salaries/set_official_car_of_duty_rank', params)
             .success (data)->
