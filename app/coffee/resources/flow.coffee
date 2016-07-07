@@ -54,8 +54,8 @@ FlowHandlerDirective = (ngDialog)->
                                     <span class="cell-content">{{entity.value}}</span>
                                 </div>
                             </div>
-                            <p ng-show="AllLeaveFlows.indexOf(flow.type) >= 0 && !flowView && flow.type != 'Flow::PersonalLeave' && leaveDays >= 2.5 && leaveDays < 5" class="approval-relation-tip">请假天数大于等于2.5天，需部门分管领导批准</p>
-                            <p ng-show="AllLeaveFlows.indexOf(flow.type) >= 0 && !flowView && flow.type != 'Flow::PersonalLeave' && leaveDays >= 5" class="approval-relation-tip">请假天数大于等于5天，需部门分管领导及主官批准</p>
+                            <p ng-show="AllLeaveFlows.indexOf(flow.type) >= 0 && !flowView && flow.type != 'Flow::PersonalLeave' && flow.type != 'Flow::AccreditLeave' && leaveDays >= 2.5 && leaveDays < 5" class="approval-relation-tip">请假天数大于等于2.5天，需部门分管领导批准</p>
+                            <p ng-show="AllLeaveFlows.indexOf(flow.type) >= 0 && !flowView && flow.type != 'Flow::PersonalLeave' && flow.type != 'Flow::AccreditLeave' && leaveDays >= 5" class="approval-relation-tip">请假天数大于等于5天，需部门分管领导及主官批准</p>
                             <p ng-show="AllLeaveFlows.indexOf(flow.type) >= 0 && !flowView && flow.type == 'Flow::PersonalLeave' && leaveDays <= 3" class="approval-relation-tip">请假天数小于等于3天，需部门主官批准</p>
                             <p ng-show="AllLeaveFlows.indexOf(flow.type) >= 0 && !flowView && flow.type == 'Flow::PersonalLeave' && leaveDays > 3" class="approval-relation-tip">请假天数大于3天，需部门主官及人力资源部总经理批准</p>
                             <p ng-show="AllLeaveFlows.indexOf(flow.type) >= 0 && !flowView && flow.type == 'Flow::AccreditLeave' && leaveDays >= 2" class="approval-relation-tip">请假天数大于等于2天，需部门领导及代管领导批准</p>
