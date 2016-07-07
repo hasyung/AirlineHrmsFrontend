@@ -153,6 +153,26 @@ class PersonnelCtrl extends nb.Controller
     getCondition: ()->
         @tableState
 
+    # 修改工作年限初始化params
+    initialEmployeeDate: (current, params)->
+        self = @
+
+        current.$refresh().$asPromise().then (model) ->
+            params.join_scal_date = model.joinScalDate
+            params.start_work_date = model.startWorkDate
+            params.leave_days = model.leaveDays
+            params.actual_work_years = self.calcActualWorkYears(params)
+
+    calcActualWorkYears: (params) ->
+        s = params.start_work_date
+        e = moment().format('YYYY-MM-DD')
+
+        if s && e && s <= e
+            d = moment.range(s, e).diff('days')
+            actualWorkYears = Math.round((d - params.leave_days)*10/365)/10+'年'
+            params.actual_work_years = actualWorkYears
+        return actualWorkYears
+
 
 class NewEmpsCtrl extends nb.Controller
     @.$inject = ['$scope', 'Employee', 'Org', '$state', '$enum', '$http', 'toaster']
