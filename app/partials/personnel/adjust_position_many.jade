@@ -25,7 +25,7 @@ md-dialog.punishment_new(
 
                     md-input-container.row-has-value(flex)
                         label 岗位
-                        md-select(ng-model="request.position.id")
+                        md-select(ng-model="request.position.id" required)
                             md-option(ng-value="pos.id" ng-repeat="pos in ctrl.positions") {{::pos.name}}
                     md-input-container.row-has-value(flex)
                         label 岗位性质
@@ -37,28 +37,28 @@ md-dialog.punishment_new(
                 div(layout)
                     md-input-container.row-has-value(flex)
                         label 分类
-                        md-select(ng-model="request.categoryId")
+                        md-select(ng-model="request.categoryId" required)
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('categories')") {{item.label}}
                     md-input-container.row-has-value(flex)
                         label 通道
-                        md-select(ng-model="request.channelId")
+                        md-select(ng-model="request.channelId" required)
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
                     md-input-container.row-has-value(flex)
                         label 类别
-                        md-select(ng-model="request.classification")
+                        md-select(ng-model="request.classification" required)
                             md-option(ng-value="item" ng-repeat="item in classificationArr") {{item}}
                 div(layout)
                     md-input-container.row-has-value(flex)
                         label 职务职级
-                        md-select(ng-model="request.dutyRankId")
+                        md-select(ng-model="request.dutyRankId" required)
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('duty_ranks')") {{item.label}}
                     md-input-container(flex)
                         label 调岗日期
-                        input(ng-model="request.positionChangeDate" bs-datepicker)
+                        input(ng-model="request.positionChangeDate" bs-datepicker required)
                 div(layout)
                     md-input-container.row-has-value(flex)
                         label 试岗期
-                        md-select(ng-model="request.probationDuration" placeholder="请选择")
+                        md-select(ng-model="request.probationDuration" placeholder="请选择" required)
                             md-option(value="0") 无
                             md-option(ng-value="item" ng-repeat="item in [1,2,3,4,5,6]") {{item}}月
                     md-input-container(flex)
@@ -75,5 +75,5 @@ md-dialog.punishment_new(
 
         .md-actions
             md-button(type="button" ng-click="dialog.close()") 取 消
-            md-button.md-primary.md-raised(type="submit" ng-disabled="!(request.probationDuration&&request.positionChangeDate&&request.classification)") 确 定
+            md-button.md-primary.md-raised(type="submit" ng-disabled="newPositionManyForm.$invalid") 确 定
 
