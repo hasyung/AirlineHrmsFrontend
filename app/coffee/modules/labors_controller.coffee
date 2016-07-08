@@ -1612,7 +1612,7 @@ class VacationManagementCtrl extends nb.Controller
         self = @
         month = @currentCalcTime()
 
-        params = {type: type, attachment_id: attachment_id}
+        params = {type: type, attachment_id: attachment_id, month: month}
         @importing = true
 
         @http.post("/api/workflows/vacation/cabin_vacation_import", params).success (data, status) ->

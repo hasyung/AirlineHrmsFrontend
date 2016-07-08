@@ -820,6 +820,27 @@ class MoveEmployeesCtrl extends nb.Controller
             else
                 $Evt.$send('special_state:save:error', msg || "创建失败")
 
+    newBusinessEmployee: (moveEmployee)->
+        self = @
+
+        params = {}
+        moveEmployee.department_id = moveEmployee.department.$pk if moveEmployee.department
+        params.department_id = moveEmployee.department_id
+        params.out_company = moveEmployee.out_company
+        params.employee_id = moveEmployee.employee_id
+        params.special_date_from = moveEmployee.special_date_from
+        params.special_date_to = moveEmployee.special_date_to
+        params.file_no = moveEmployee.file_no
+
+        @http.post('/api/special_states/temporarily_business_trip', params).then (data)->
+            self.moveEmployees.$refresh()
+            msg = data.messages
+
+            if data.status == 200
+                self.Evt.$send("special_state:save:success", msg || "创建成功")
+            else
+                self.Evt.$send('special_state:save:error', msg || "创建失败")    
+
     search: (tableState) ->
         tableState = tableState || {}
         # tableState['per_page'] = @gridApi.grid.options.paginationPageSize
