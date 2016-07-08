@@ -15,6 +15,7 @@ workflows = [
     "Flow::MaternityLeaveMultipleBirth"
     "Flow::MiscarriageLeave"
     "Flow::PersonalLeave"
+    "Flow::RecuperateLeave"
     "Flow::PrenatalCheckLeave"
     "Flow::RearNurseLeave"
     "Flow::SickLeave"
@@ -174,7 +175,7 @@ resources.factory 'Workflow', ['restmod', (restmod) ->
 
 # 客舱服务部管理的 resource
 VacationDistribute = (restmod, RMUtils, $Evt) ->
-    restmod.model('/workflows/vacation_distribute_list').mix 'nbRestApi', 'DirtyModel', {
+    restmod.model('/workflows/vacation/distribute/vacation_distribute_list').mix 'nbRestApi', 'DirtyModel', {
         $config:
             jsonRootSingle: 'workflow'
             jsonRootMany: 'workflows'
@@ -183,9 +184,9 @@ VacationDistribute = (restmod, RMUtils, $Evt) ->
 
         $hooks: {
             'after-destroy': ->
-                $Evt.$send('dinnerPersonSetups:destroy:success',"删除成功")
+                $Evt.$send('workflows:destroy:success',"删除成功")
             'after-save': ->
-                $Evt.$send('dinnerPersonSetups:save:success',"保存成功")
+                $Evt.$send('workflows:save:success',"保存成功")
         }
 
         $extend:

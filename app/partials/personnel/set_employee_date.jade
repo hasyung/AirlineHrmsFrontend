@@ -1,0 +1,55 @@
+md-dialog.punishment_new(style="min-width: 450px;")
+    md-toolbar.md-accent(md-theme="hrms")
+        .md-toolbar-tools
+            span 人员退养
+    form(ng-submit="current.set_employee_date(params, list, dialog.tableState); dialog.close();" name="setEmployeeDateForm")
+        md-content(ng-init="current=dialog.employee.$refresh();\
+                list=dialog.list;\
+                params={};\
+                ctrl.initialEmployeeDate(dialog.employee, params);\
+                "
+                )
+            fieldset
+                div(layout)
+                    md-input-container(flex)
+                        label 姓名
+                        input(ng-model="::current.name" readonly)
+                    md-input-container(flex)
+                        label 员工编号
+                        input(ng-model="::current.employeeNo" readonly)
+                div(layout)
+                    md-input-container(flex)
+                        label 部门
+                        input(ng-model="::current.department.name" readonly)
+                    md-input-container(flex)
+                        label 岗位
+                        input(ng-model="::current.position.name" readonly)
+                //- div(layout)
+                //-     md-input-container.row-has-value(flex)
+                //-         label 通道
+                //-         md-select(ng-model="::current.channelId" readonly disabled)
+                //-             md-option(ng-value="item.id" ng-repeat="item in $enum.get('channels')") {{item.label}}
+                //-     md-input-container.row-has-value(flex)
+                //-         label 用工性质
+                //-         md-select(ng-model="current.laborRelationId" disabled readonly)
+                //-             md-option(ng-value="item.id" ng-repeat="item in $enum.get('labor_relations')") {{item.label}}
+                div(layout)
+                    md-input-container(flex)
+                        label 到岗时间
+                        input(ng-model="params.join_scal_date" bs-datepicker required)
+                div(layout)
+                    md-input-container(flex)
+                        label 参工时间
+                        input(ng-model="params.start_work_date" ng-change="ctrl.calcActualWorkYears(params)" bs-datepicker required)
+                div(layout)
+                    md-input-container(flex)
+                        label 未工作时间(天)
+                        input(type="number" ng-model="params.leave_days" ng-change="ctrl.calcActualWorkYears(params)" required)
+                div(layout)
+                    md-input-container(flex)
+                        label 实际工作年限
+                        input(type="text" ng-model="params.actual_work_years" readonly)
+
+        .md-actions
+            md-button(type="button" ng-click="dialog.close()") 取 消
+            md-button.md-primary.md-raised(type="submit" ng-disabled="setEmployeeDateForm.$invalid") 确 定

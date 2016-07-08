@@ -254,9 +254,12 @@ class PositionDetailCtrl
         ]
 
 class AdjustPositionCtrl
-    @.$inject = ['$scope', '$http', '$nbEvent']
+    @.$inject = ['$scope', '$http', '$nbEvent', 'Position']
 
-    constructor: (scope, @http, @Evt) ->
+    constructor: (scope, @http, @Evt, @Position) ->
+
+    getPositions: (department) ->
+        @positions = @Position.$collection({department_id: department.id}).$refresh();
 
     adjustPosition: (employee, list, tableState) ->
         self = @
@@ -284,6 +287,33 @@ class AdjustPositionCtrl
 
         @http.post("/api/position_change_records", params).success (data, status)->
             self.Evt.$send "data:create:success", "员工转岗成功"
+            list.$refresh(tableState)
+
+    adjustPositionMany: (request, employeeIds, tableState, list) ->
+        self = @
+
+        params = {}
+        params.positions = []
+
+        params.employee_ids = employeeIds
+        params.channel_id = request.channelId
+        params.category_id = request.categoryId
+        params.duty_rank_id = request.dutyRankId
+        params.position_remark = request.positionRemark
+        params.oa_file_no = request.oaFileNo
+        params.position_change_date = request.positionChangeDate
+        params.probation_duration = request.probationDuration
+        params.classification = request.classification
+        params.location = request.location
+
+        params.positions.push({
+            'position': {'id': request.position.id},
+            'category': request.position.category
+            'department': {'id': request.department.id}
+            })
+
+        @http.post("/api/position_change_records/batch_create", params).success (data, status)->
+            self.Evt.$send "data:create:success", "员工批量转岗成功"
             list.$refresh(tableState)
 
 

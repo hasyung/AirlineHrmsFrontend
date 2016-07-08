@@ -9,6 +9,14 @@ tabset(flex)
                         h2 员工人事花名册
                         div(flex)
                         md-button.md-primary.md-raised(
+                            has-permission="employees_set_employee_date"
+                            ng-disabled="ctrl.getSelected().length != 1 || ctrl.importing"
+                            nb-dialog
+                            template-url="/partials/personnel/set_employee_date.html"
+                            locals="{employee: ctrl.getSelected()[0], list: ctrl.employees, tableState: ctrl.tableState}"
+                        ) 修改工作年限
+
+                        md-button.md-primary.md-raised(
                             has-permission="attendance_summaries_import"
                             flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads: true, testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
                             flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
@@ -75,6 +83,14 @@ tabset(flex)
                             template-url="/partials/personnel/adjust_position.html"
                             locals="{employee: ctrl.getSelected()[0], empCtrl: ctrl}"
                         ) 员工调岗
+
+                        md-button.md-primary.md-raised(
+                            has-permission="position_change_records_batch_create"
+                            ng-disabled="ctrl.importing || ctrl.getSelectsIds().length < 1"
+                            nb-dialog
+                            template-url="/partials/personnel/adjust_position_many.html"
+                            locals="{employeeIds: ctrl.getSelectsIds(), empCtrl: ctrl}"
+                        ) 员工批量调岗
 
                         md-button.md-primary.md-raised(
                             has-permission="employees_change_education"

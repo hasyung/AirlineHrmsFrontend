@@ -1,0 +1,5 @@
+.app-content-wrapper(flex ng-controller="salaryCtrl as ctrl" ng-init="ctrl.loadConfigFromServer('')")
+    .salary-basic
+        tabset
+            tab.leader-base(heading="职级设置" ng-click="ctrl.loadDynamicConfig('')")
+                include official_car/post_rank

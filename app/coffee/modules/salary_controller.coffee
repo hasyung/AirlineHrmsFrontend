@@ -131,6 +131,7 @@ class SalaryController extends nb.Controller
         @tempUpdatable = _.includes @PERMISSIONS, 'salaries_update_temp'
         @comunicateUpdatable = _.includes @PERMISSIONS, 'salaries_update_communicate_allowance'
         @coldSubsidyUpdatable = _.includes @PERMISSIONS, 'salaries_update_cold_subsidy'
+        @officialCarUpdatable = _.includes @PERMISSIONS, 'salaries_set_official_car_of_duty_rank'
 
     queryVariables: (text)->
         self = @
@@ -494,6 +495,26 @@ class SalaryController extends nb.Controller
 
         else
             self.toaster.pop('error', '提示', '请填写城市名称')
+
+    # 公务车补贴
+    loadOfficialDutyRank: () ->
+        self = @
+
+        @http.get('/api/salaries/official_car_of_duty_rank')
+            .success (data)->
+                self.dutyRankAllowance = data.duty_ranks
+
+    updateOfficialRankAmount: (rank_id, amount)->
+        self = @
+        params = {id: rank_id, official_car_allowance: parseInt(amount)}
+
+        @http.put('/api/salaries/set_official_car_of_duty_rank', params)
+            .success (data)->
+                self.toaster.pop('success', '提示', '更新成功')
+            .error (data)->
+                self.toaster.pop('error', '提示', '更新失败')
+
+
 
 class DepNumSettingController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', 'Org', 'toaster']
@@ -1804,6 +1825,10 @@ class SalaryHoursFeeController extends SalaryBaseController
         self = @
         params = {type: type, attachment_id: attachment_id, month: @currentCalcTime()}
         @show_error_names = false
+        tableState = {}
+        tableState['hours_fee_category'] = @hours_fee_category
+        tableState['month'] = @currentCalcTime()
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
 
         @http.post("/api/hours_fees/import", params).success (data, status) ->
             if data.error_count > 0
@@ -1811,13 +1836,20 @@ class SalaryHoursFeeController extends SalaryBaseController
                 self.error_names = data.error_names
 
                 self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
+                self.records.$refresh(tableState)
             else
                 self.toaster.pop('success', '提示', '导入成功')
+                self.records.$refresh(tableState)
+                
 
     uploadAddGarnishee: (category, attachment_id) ->
         self = @
         params = {hours_fee_category: category, attachment_id: attachment_id, month: @currentCalcTime()}
         @show_error_names = false
+        tableState = {}
+        tableState['hours_fee_category'] = @hours_fee_category
+        tableState['month'] = @currentCalcTime()
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
 
         @http.post("/api/hours_fees/import_add_garnishee", params).success (data, status) ->
             if data.error_count > 0
@@ -1825,8 +1857,10 @@ class SalaryHoursFeeController extends SalaryBaseController
                 self.error_names = data.error_names
 
                 self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
+                self.records.$refresh(tableState)
             else
                 self.toaster.pop('success', '提示', '导入成功')
+                self.records.$refresh(tableState)
 
     uploadRefundFee: (category, attachment_id) ->
         self = @
@@ -2136,6 +2170,7 @@ class SalaryRewardController extends SalaryBaseController
             {minWidth: 150,displayName: '品牌质量考核奖', name: 'brandQualityFee', enableCellEdit: false}
             {minWidth: 150,displayName: '预算外奖励', name: 'offBudgetFee', enableCellEdit: false}
             {minWidth: 150,displayName: '节油奖', name: 'saveOilFee', enableCellEdit: false}
+            {minWidth: 150,displayName: '经济型扣罚', name: 'cashFineFee', enableCellEdit: false}
             {minWidth: 150,displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
                 minWidth: 150

@@ -1,0 +1,63 @@
+md-dialog.employee_move
+    md-toolbar.md-accent(md-theme="hrms")
+        .md-toolbar-tools
+            span 新增出差
+    form(ng-submit="ctrl.newBusinessEmployee(businessEmployee); dialog.close();" name="newBorrowForm")
+        md-content(ng-init="businessEmployee = {out_company: false}; ctrl.loadEmp = {};")
+            fieldset(flex)
+                div(style="display:none;")
+                    input(ng-model="businessEmployee.employee_id")
+                div(layout)
+                    md-input-container(flex)
+                        label 姓名
+                        input(ng-model="ctrl.loadEmp.name"
+                            name="employeeName"
+                            ng-model-options="{debounce: {'default': 1000, 'blur': 0}}"
+                            ng-change="ctrl.loadEmployee({name: ctrl.loadEmp.name}, businessEmployee);"
+                            required)
+                    div(flex)
+                div(layout)
+                    md-input-container(flex)
+                        label 部门
+                        input(
+                            ng-model="ctrl.loadEmp.department.name"
+                            name="department"
+                            readonly
+                            )
+                    md-input-container(flex)
+                        label 岗位
+                        input(ng-model="ctrl.loadEmp.position.name" name="position" readonly)
+                div(layout)
+                    div(flex ng-if="!businessEmployee.out_company")
+                        org-search(
+                            ng-model="businessEmployee.department"
+                            float-label
+                            placeholder="出差部门"
+                            search-text-change="businessEmployee.department_id=null"
+                            selected-item-change="businessEmployee.department_id=org.id"
+                            editable
+                            )
+                    div(flex ng-if="businessEmployee.out_company")
+                        md-input-container(flex)
+                            label 出差地点
+                            input(ng-model="businessEmployee.special_location" name="specialLocation")
+                    div(flex)
+                        md-checkbox.md-primary(
+                            ng-model="businessEmployee.out_company"
+                            ng-change="businessEmployee.department_id=null;"
+                            ) 公司外
+                div(layout)
+                    md-input-container(flex)
+                        label 出差开始时间
+                        input(ng-model="businessEmployee.special_date_from" name="startDate" bs-datepicker default-today required)
+                    md-input-container(flex)
+                        label 出差结束时间(大于等于开始时间)
+                        input(ng-model="businessEmployee.special_date_to" name="endDate" bs-datepicker)
+                div(layout)
+                    md-input-container(flex)
+                        label 文件编号
+                        input(ng-model="businessEmployee.file_no" name="fileNo")
+
+        .md-actions
+            md-button(type="button" ng-click="cancel(businessEmployee, $event, newBorrowForm);dialog.close()") 取 消
+            md-button.md-primary.md-raised(type="submit" ng-disabled="newBorrowForm.$invalid || newBorrowForm.endDate.$modelValue < newBorrowForm.startDate.$modelValue") 确 定

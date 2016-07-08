@@ -189,7 +189,7 @@ class NbFilterCtrl extends nb.FilterController
             </md-select>
         '''
         'org-search': '''
-            <org-search multiple ng-model="${ name }"></org-search>
+            <org-search editable="editable" multiple ng-model="${ name }"></org-search>
         '''
         'muti-enum-search': '''
             <muti-enum-search ng-model="${ name }" enum-key="${params.type}"></muti-enum-search>

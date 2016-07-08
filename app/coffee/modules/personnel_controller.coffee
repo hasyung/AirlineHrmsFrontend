@@ -150,6 +150,29 @@ class PersonnelCtrl extends nb.Controller
             self.toaster.pop('error', '提示', '导入失败')
             self.importing = false
 
+    getCondition: ()->
+        @tableState
+
+    # 修改工作年限初始化params
+    initialEmployeeDate: (current, params)->
+        self = @
+
+        current.$refresh().$asPromise().then (model) ->
+            params.join_scal_date = model.joinScalDate
+            params.start_work_date = model.startWorkDate
+            params.leave_days = model.leaveDays
+            params.actual_work_years = self.calcActualWorkYears(params)
+
+    calcActualWorkYears: (params) ->
+        s = params.start_work_date
+        e = moment().format('YYYY-MM-DD')
+
+        if s && e && s <= e
+            d = moment.range(s, e).diff('days')
+            actualWorkYears = Math.round((d - params.leave_days)*10/365)/10+'年'
+            params.actual_work_years = actualWorkYears
+        return actualWorkYears
+
 
 class NewEmpsCtrl extends nb.Controller
     @.$inject = ['$scope', 'Employee', 'Org', '$state', '$enum', '$http', 'toaster']
@@ -796,6 +819,27 @@ class MoveEmployeesCtrl extends nb.Controller
                 self.Evt.$send("special_state:save:success", msg || "创建成功")
             else
                 $Evt.$send('special_state:save:error', msg || "创建失败")
+
+    newBusinessEmployee: (moveEmployee)->
+        self = @
+
+        params = {}
+        moveEmployee.department_id = moveEmployee.department.$pk if moveEmployee.department
+        params.department_id = moveEmployee.department_id
+        params.out_company = moveEmployee.out_company
+        params.employee_id = moveEmployee.employee_id
+        params.special_date_from = moveEmployee.special_date_from
+        params.special_date_to = moveEmployee.special_date_to
+        params.file_no = moveEmployee.file_no
+
+        @http.post('/api/special_states/temporarily_business_trip', params).then (data)->
+            self.moveEmployees.$refresh()
+            msg = data.messages
+
+            if data.status == 200
+                self.Evt.$send("special_state:save:success", msg || "创建成功")
+            else
+                self.Evt.$send('special_state:save:error', msg || "创建失败")    
 
     search: (tableState) ->
         tableState = tableState || {}
