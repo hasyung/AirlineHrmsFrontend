@@ -187,7 +187,7 @@ class BossLaborsController extends nb.Controller
 
     constructor: (@scope, @http, @Employee, @LeaveEmployees, @ReportNeedToKnow, @reportCheckers) ->
         @initialDataCompleted = false
-        @datasType = '汇报'
+        @datasType = '公司人员进出'
         @showChartInDialog = true
         @tableTypeInDialog = '新进员工'
 
@@ -497,14 +497,13 @@ class BossLaborsController extends nb.Controller
         return config
 
 class BossHumanController extends BossBaseController
-    @.$inject = ['$scope', '$http', 'ReportNeedToKnow', 'AdjustPositionRecord', '$enum']
+    @.$inject = ['$scope', '$http', 'ReportNeedToKnow', 'AdjustPositionRecord', '$enum', '$q']
 
-    constructor: (@scope, @http, @ReportNeedToKnow, @AdjustPositionRecord, @enum) ->
+    constructor: (@scope, @http, @ReportNeedToKnow, @AdjustPositionRecord, @enum, @q) ->
         super(@scope, @http, @ReportNeedToKnow, '人事调配管理室')
+        self = @
+        @datasType = '调岗记录'
         @channels = []
-
-        @getChannels()
-        @positionChangeTableType = _.last(@channels)
 
         @positionChangePieOption = {
             title : {
@@ -663,15 +662,22 @@ class BossHumanController extends BossBaseController
         ]
 
         @loadInitialData()
-        @loadPositionChangesData()
+        @loadPositionChangesData(true)
 
     getChannels: () ->
         self = @
         month = @currentCalcTime()
+        
+        deferred = @q.defer()
 
         @http.get('/api/statements/position_change_record_channel?month='+month)
             .success (data) ->
                 self.channels = data.channels
+                deferred.resolve()
+            .error (msg) ->
+                deferred.reject()
+
+        return deferred.promise;
 
 
     loadInitialData: () ->
@@ -685,41 +691,45 @@ class BossHumanController extends BossBaseController
 
         @adjustPositionRecords = @AdjustPositionRecord.$collection().$fetch(tableParam)
 
-    loadPositionChangesData: () ->
+    loadPositionChangesData: (needResetChannel) ->
         self = @
 
         @loadMonthList()
 
-        month = @currentCalcTime()
-        channel = @positionChangeTableType
+        @getChannels().then () ->
+            if angular.isDefined(needResetChannel)
+                self.positionChangeTableType = _.head self.channels
+            
+            month = self.currentCalcTime()
+            channel = self.positionChangeTableType
 
-        tableParam = {
-            month: month
-            channel_name: channel
-        }
+            tableParam = {
+                month: month
+                channel_name: channel
+            }
 
-        @http.get('api/statements/position_change_record_pie?month='+month+'&channel_name='+channel)
-            .success (data) ->
-                pieSeries = []
-                pieLegend = []
+            self.http.get('api/statements/position_change_record_pie?month='+month+'&channel_name='+channel)
+                .success (data) ->
+                    pieSeries = []
+                    pieLegend = []
 
-                self.positionChangeSrc = data.position_change_record_pie
+                    self.positionChangeSrc = data.position_change_record_pie
 
-                _.map self.positionChangeSrc, (val, key) ->
-                    pieSeries.push({ value: val, name: key })
-                    pieLegend.push(key)
+                    _.map self.positionChangeSrc, (val, key) ->
+                        pieSeries.push({ value: val, name: key })
+                        pieLegend.push(key)
 
-                self.positionChangePieOption.legend.data = pieLegend
-                self.positionChangePieOption.series[0].data = pieSeries
+                    self.positionChangePieOption.legend.data = pieLegend
+                    self.positionChangePieOption.series[0].data = pieSeries
 
-                self.positionChangePieOptionInDialog.legend.data = pieLegend
-                self.positionChangePieOptionInDialog.series[0].data = pieSeries
+                    self.positionChangePieOptionInDialog.legend.data = pieLegend
+                    self.positionChangePieOptionInDialog.series[0].data = pieSeries
 
-                self.initialDataCompleted = true
+                    self.initialDataCompleted = true
 
-            .error (msg) ->
+                .error (msg) ->
 
-        @adjustPositionRecords.$refresh(tableParam)
+            self.adjustPositionRecords.$refresh(tableParam)
 
 
 class BossSalaryController extends BossBaseController

@@ -28,6 +28,8 @@ Employee = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('employee:change_education:success', "员工学历已更新")
             'after-edit-technical': ->
                 $Evt.$send('employee:edit_technical:success', "员工技术通道等级已更新")
+            'after-change-employee-date': ->
+                $Evt.$send('employee:change_employee_date:success', "员工工作年限已更新")
         }
 
         $extend:
@@ -93,6 +95,22 @@ Employee = (restmod, RMUtils, $Evt) ->
 
                     onSuccess = (res) ->
                         self.$dispatch 'after-retire'
+                        list.$refresh(tableState)
+
+                    this.$send(request, onSuccess)
+
+                # 设置员工工作年限相关
+                set_employee_date: (params, list, tableState)->
+                    self = this
+
+                    request = {
+                        url: "/api/employees/#{this.id}/set_employee_date"
+                        method: "POST"
+                        data: params
+                    }
+
+                    onSuccess = (res) ->
+                        self.$dispatch 'after-change-employee-date'
                         list.$refresh(tableState)
 
                     this.$send(request, onSuccess)

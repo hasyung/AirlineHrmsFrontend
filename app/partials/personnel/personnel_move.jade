@@ -31,6 +31,12 @@
                     template-url="partials/personnel/move/accredit.html"
                 ) 派驻设置
 
+                md-button.md-primary.md-raised(
+                    has-permission="special_states_temporarily_business_trip"
+                    nb-dialog
+                    template-url="partials/personnel/move/on_business.html"
+                ) 新增出差
+
         div(
             nb-grid
             column-defs="ctrl.columnDef"
