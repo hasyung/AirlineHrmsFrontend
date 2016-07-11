@@ -91,7 +91,7 @@ FlowHandlerDirective = (ngDialog)->
                                         <label>审批意见</label>
                                         <textarea ng-model="dialog.userReply" required columns="1" md-maxlength="150"></textarea>
                                     </md-input-container>
-                                    <button type="button" class="add-habit" ng-click="createFavNote(dialog.userReply)" aria-label="添加常用意见">
+                                    <button type="button" ng-disabled="dialog.deleting" class="add-habit" ng-click="createFavNote(dialog.userReply)" aria-label="添加常用意见">
                                         添加为常用意见
                                     </button>
                                     <button type="button" class="delete-habit" ng-click="dialog.deleting=!dialog.deleting" aria-label="删除常用意见">

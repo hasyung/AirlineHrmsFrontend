@@ -145,6 +145,11 @@
         &:hover {
             opacity: .8;
         }
+
+        &[disabled] {
+            background: $text-hint;
+            cursor: not-allowed;
+        }
     }
 
     .delete-habit {
