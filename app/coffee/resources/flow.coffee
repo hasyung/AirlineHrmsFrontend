@@ -91,12 +91,16 @@ FlowHandlerDirective = (ngDialog)->
                                         <label>审批意见</label>
                                         <textarea ng-model="dialog.userReply" required columns="1" md-maxlength="150"></textarea>
                                     </md-input-container>
-                                    <button class="add-habit" ng-click="createFavNote(dialog.userReply)" aria-label="添加常用意见">
+                                    <button type="button" class="add-habit" ng-click="createFavNote(dialog.userReply)" aria-label="添加常用意见">
                                         添加为常用意见
+                                    </button>
+                                    <button type="button" class="delete-habit" ng-click="dialog.deleting=!dialog.deleting" aria-label="删除常用意见">
+                                        <span ng-hide="dialog.deleting">删除</span>
+                                        <span ng-show="dialog.deleting">返回</span>
                                     </button>
                                 </div>
                                 <div class="habit-opinions" layout>
-                                    <button ng-disabled="dialog.userReply" class="habit-opinion" ng-click="dialog.userReply = favNote.note;" ng-repeat="favNote in favNotes">
+                                    <button ng-class="{'deleting': dialog.deleting}" ng-disabled="dialog.userReply || dialog.deleting" class="habit-opinion" ng-click="dialog.userReply = favNote.note;" ng-repeat="favNote in favNotes track by favNote.id">
                                         {{ favNote.note }}
                                         <md-icon class="del-habit" ng-click="destroyFavNote($event, favNote.id)" md-svg-src="/images/svg/close.svg" aria-label="删除"></md-icon>
                                     </button>
@@ -220,6 +224,7 @@ class FlowController
         scope.selectedOrgs = []
 
         @userReply = ""
+        @deleting = false
         #加载分类为领导和干部的人员
         scope.reviewers = []
         scope.leaders = []
