@@ -85,18 +85,18 @@ FlowHandlerDirective = (ngDialog)->
                             </div>
                         </div>
                         <div class="approval-opinions" ng-if="!flowView || (!isHistory && flow.name=='合同续签')">
-                            <form name="flowReplyForm">
+                            <form name="flowReplyForm" ng-init="replyForm = flowReplyForm">
                                 <div layout>
                                     <md-input-container flex>
                                         <label>审批意见</label>
-                                        <textarea ng-blur="reply(dialog.userReply, flowReplyForm)" ng-model="dialog.userReply" required columns="1" md-maxlength="150"></textarea>
+                                        <textarea ng-model="dialog.userReply" required columns="1" md-maxlength="150"></textarea>
                                     </md-input-container>
                                     <button class="add-habit" ng-click="createFavNote(dialog.userReply)" aria-label="添加常用意见">
                                         添加为常用意见
                                     </button>
                                 </div>
                                 <div class="habit-opinions" layout>
-                                    <button ng-disabled="dialog.userReply" class="habit-opinion" ng-click="dialog.userReply = favNote.note; reply(dialog.userReply, flowReplyForm)" ng-repeat="favNote in favNotes">
+                                    <button ng-disabled="dialog.userReply" class="habit-opinion" ng-click="dialog.userReply = favNote.note;" ng-repeat="favNote in favNotes">
                                         {{ favNote.note }}
                                         <md-icon class="del-habit" ng-click="destroyFavNote($event, favNote.id)" md-svg-src="/images/svg/close.svg" aria-label="删除"></md-icon>
                                     </button>
@@ -107,8 +107,8 @@ FlowHandlerDirective = (ngDialog)->
                     </div>
                 </md-card>
                 <div class="approval-buttons" ng-if="!flowView || (!isHistory && flow.name=='合同续签')">
-                    <md-button ng-disabled="!dialog.userReply" class="md-raised md-warn" ng-click="submitFlow({opinion: true}, flow, dialog, state)" type="button">通过</md-button>
-                    <md-button ng-disabled="!dialog.userReply" class="md-raised md-warn" ng-click="submitFlow({opinion: false}, flow, dialog, state)" type="button">驳回</md-button>
+                    <md-button ng-disabled="!dialog.userReply" class="md-raised md-warn" ng-click="reply(dialog.userReply, $$prevSibling.flowReplyForm); submitFlow({opinion: true}, flow, dialog, state)" type="button">通过</md-button>
+                    <md-button ng-disabled="!dialog.userReply" class="md-raised md-warn" ng-click="reply(dialog.userReply, $$prevSibling.flowReplyForm); submitFlow({opinion: false}, flow, dialog, state)" type="button">驳回</md-button>
                     <md-button class="md-raised md-primary"
                         ng-disabled="!dialog.userReply"
                         nb-dialog
