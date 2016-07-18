@@ -1,9 +1,10 @@
 md-dialog.salary_personal_setting(ng-controller="EditableResourceCtrl")
     form(
-        ng-init="change=dialog.change.$refresh();\
+        ng-init="change = dialog.change.$refresh();\
             outerScope = dialog.outerScope;\
             current = {};\
-            current=outerScope.ctrl.loadPersonSettings(change);\
+            current = outerScope.ctrl.loadPersonSettings(change);\
+            currentComing = outerScope.ctrl.setComingChanges(change, current);\
             "
         ng-submit="save(current.$save(), salaryPersonal);"
         name="salaryPersonal"
@@ -14,20 +15,36 @@ md-dialog.salary_personal_setting(ng-controller="EditableResourceCtrl")
         md-content.sticky-container
             .dialog-content(layout layout-align="center")
                 //- 通道非 服务B 飞行 空勤 服务A
-                tabset(flex ng-if="current.channelId != 7 && current.channelId != 4 && current.channelId != 5 && current.channelId != 6")
+                tabset(flex ng-if="change.prevChannelId != 7 && change.prevChannelId != 4 && change.prevChannelId != 5 && change.prevChannelId != 6")
                     include ./personal_changes/normal
                 //- 服务B
-                tabset(flex ng-if="current.channelId == 7")
+                tabset(flex ng-if="change.prevChannelId == 7")
                     include ./personal_changes/service_b
                 //- 飞行
-                tabset(flex ng-if="current.channelId == 4")
+                tabset(flex ng-if="change.prevChannelId == 4")
                     include ./personal_changes/flyer
                 //- 空勤
-                tabset(flex ng-if="current.channelId == 5")
+                tabset(flex ng-if="change.prevChannelId == 5")
                     include ./personal_changes/fly_attendant
                 //- 服务A(说明无特别设置)
-                tabset(flex ng-if="current.channelId == 6")
+                tabset(flex ng-if="change.prevChannelId == 6")
                     include ./personal_changes/service_a
+
+                //- 通道非 服务B 飞行 空勤 服务A
+                tabset(flex ng-if="current.channelId != 7 && current.channelId != 4 && current.channelId != 5 && current.channelId != 6")
+                    include ./personal_changes_future/normal
+                //- 服务B
+                tabset(flex ng-if="current.channelId == 7")
+                    include ./personal_changes_future/service_b
+                //- 飞行
+                tabset(flex ng-if="current.channelId == 4")
+                    include ./personal_changes_future/flyer
+                //- 空勤
+                tabset(flex ng-if="current.channelId == 5")
+                    include ./personal_changes_future/fly_attendant
+                //- 服务A(说明无特别设置)
+                tabset(flex ng-if="current.channelId == 6")
+                    include ./personal_changes_future/service_a
 
         .md-actions
             md-button(ng-click="cancel(current, $event, salaryPersonal);dialog.close()") 关 闭
