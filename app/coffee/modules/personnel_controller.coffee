@@ -139,7 +139,24 @@ class PersonnelCtrl extends nb.Controller
 
     uploadAttendance: (type, attachment_id)->
         self = @
-        params = {type: type, attachment_id: attachment_id}
+        monthStr = ''
+
+        now = moment()
+        year = now.get('year')
+        month = now.get('month') + 1
+        date = now.get('date')
+
+        if date > 15
+            month = now.get('month') + 1
+        else
+            month =  now.get('month')
+
+        if month < 10
+            month = '0' + month
+
+        monthStr = year + '-' + month
+
+        params = {type: type, attachment_id: attachment_id, month: monthStr}
         @importing = true
 
         @http.post("/api/attendance_summaries/import", params).success (data, status) ->
