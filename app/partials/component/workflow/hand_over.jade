@@ -61,4 +61,4 @@ md-dialog.hand_over(ng-init="params = {type:'departments'}; selectedOrgs = [];")
 
         .md-actions
             md-button.md-raised.white(type='button',ng-click='dialog.cancel()') 取消
-            md-button.md-primary.md-raised(type='submit' ng-disabled="trans_form.$invalid") 确定
+            md-button.md-primary.md-raised(type='submit' ng-click="reply($parent.dialog.userReply, $parent.$$prevSibling.flowReplyForm)" ng-disabled="trans_form.$invalid") 确定
