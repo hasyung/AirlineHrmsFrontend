@@ -80,6 +80,23 @@ FamilyMember = (restmod, RMUtils, $Evt) ->
             jsonRootMany: 'family_members'
     }
 
+TechnicalRecords = (restmod, RMUtils, $Evt) ->
+    TechnicalRecords = restmod.model().mix 'nbRestApi', 'DirtyModel', {
+        birthday: {decode: 'date', param: 'yyyy-MM-dd'}
+
+        $hooks:
+            'after-create': ->
+                $Evt.$send('TechnicalRecords:create:success', "家庭成员创建成功")
+            'after-update': ->
+                $Evt.$send('TechnicalRecords:update:success', "家庭成员更新成功")
+            'after-destroy': ->
+                $Evt.$send('TechnicalRecords:update:success', "家庭成员删除成功")
+
+        $config:
+            jsonRootSingle: 'technical_record'
+            jsonRootMany: 'technical_records'
+    }
+
 
 Resume = (restmod, RMUtils, $Evt) ->
     Resume = restmod.model().mix 'nbRestApi', 'DirtyModel', {
@@ -143,11 +160,17 @@ UserAllege = (restmod, RMUtils, $Evt)->
             jsonRootMany: 'alleges'
     }
 
+UserTechnicalRecords = (restmod, RMUtils, $Evt)->
+    restmod.model('/me/technical_records').mix 'nbRestApi', {
+
+    }
+
 
 resources.factory 'User', ['restmod', 'RMUtils', '$nbEvent', User]
 resources.factory 'Education', ['restmod', 'RMUtils', '$nbEvent', Education]
 resources.factory 'Experience', ['restmod', 'RMUtils', '$nbEvent', Experience]
 resources.factory 'FamilyMember', ['restmod', 'RMUtils', '$nbEvent', FamilyMember]
+resources.factory 'TechnicalRecords', ['restmod', 'RMUtils', '$nbEvent', TechnicalRecords]
 resources.factory 'Resume', ['restmod', 'RMUtils', '$nbEvent', Resume]
 resources.factory 'Contact', ['restmod', 'RMUtils', '$nbEvent', Contact]
 resources.factory 'UserPerformance', ['restmod', 'RMUtils', '$nbEvent', UserPerformance]
@@ -155,3 +178,4 @@ resources.factory 'UserReward', ['restmod', 'RMUtils', '$nbEvent', UserReward]
 resources.factory 'UserPunishment', ['restmod', 'RMUtils', '$nbEvent', UserPunishment]
 resources.factory 'UserAnnuity', ['restmod', 'RMUtils', '$nbEvent', UserAnnuity]
 resources.factory 'UserAllege', ['restmod', 'RMUtils', '$nbEvent', UserAllege]
+resources.factory 'UserTechnicalRecords', ['restmod', 'RMUtils', '$nbEvent', UserTechnicalRecords]

@@ -1572,6 +1572,14 @@ class EmployeeAttendanceCtrl extends nb.Controller
             self.scope.vacations = data.attendance_records.vacations
             self.scope.hasVacation = Object.keys(self.scope.vacations.year).length > 0
 
+class EmployeeTechnicalRecordsCtrl extends nb.Controller
+    @.$inject = ['$scope', 'Employee']
+
+    constructor: (@scope, @Employee)->
+
+    loadRecords: (employee)->
+        @scope.records = employee.technicalRecords.$fetch()
+
 
 
 class PersonnelSort extends nb.Controller
@@ -1750,6 +1758,7 @@ app.controller('adjustPositionWaitingCtrl', AdjustPositionWaitingController)
 app.controller('PositionRecordCtrl', PositionRecordController)
 app.controller('EducationExpRecordCtrl', EducationExpRecordController)
 app.controller('EmployeeMemberCtrl', EmployeeMemberCtrl)
+app.controller('EmployeeTechnicalRecordsCtrl', EmployeeTechnicalRecordsCtrl)
 app.controller('EmployeePerformanceCtrl', EmployeePerformanceCtrl)
 app.controller('EmployeeAttendanceCtrl', EmployeeAttendanceCtrl)
 app.controller('EmployeeRewardPunishmentCtrl', EmployeeRewardPunishmentCtrl)

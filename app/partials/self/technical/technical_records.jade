@@ -1,0 +1,21 @@
+section.personnel-info-section(ng-init="ctrl.loadTechnicalRecords()")
+	.personnel-content-body
+		.personnel-section-wrap
+			md-content(style="padding: 30px;")
+				.sep-40
+				.subheader--center
+					.subheader__content
+						span.subheader__icon
+						img(src="/images/personnel/subh-icon.png", alt="icon--plane")
+						span 技术等级变更记录
+				table.table.table-hover.table-mc-light-blue.table-bordered
+					thead
+						tr
+							th 技术等级
+							th 变更日起
+							th 文件编号
+					tbody
+						tr(ng-repeat="record in ctrl.technicalRecords")
+							td(ng-bind="record.technical")
+							td(ng-bind="record.changeDate")
+							td(ng-bind="record.fileNo")
