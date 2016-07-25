@@ -58,8 +58,7 @@ module
     .filter 'big2small', [()->
         (input) ->
             _.sortBy input, (item)->
-                this.sin item.$key
-            , Math
+                Math.sin item.$key
     ]
 
     .filter 'breakit', ['$sce', ($sce) ->
