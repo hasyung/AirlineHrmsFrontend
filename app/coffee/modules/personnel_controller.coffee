@@ -139,7 +139,24 @@ class PersonnelCtrl extends nb.Controller
 
     uploadAttendance: (type, attachment_id)->
         self = @
-        params = {type: type, attachment_id: attachment_id}
+        monthStr = ''
+
+        now = moment()
+        year = now.get('year')
+        month = now.get('month') + 1
+        date = now.get('date')
+
+        if date > 15
+            month = now.get('month') + 1
+        else
+            month =  now.get('month')
+
+        if month < 10
+            month = '0' + month
+
+        monthStr = year + '-' + month
+
+        params = {type: type, attachment_id: attachment_id, month: monthStr}
         @importing = true
 
         @http.post("/api/attendance_summaries/import", params).success (data, status) ->
@@ -1555,6 +1572,14 @@ class EmployeeAttendanceCtrl extends nb.Controller
             self.scope.vacations = data.attendance_records.vacations
             self.scope.hasVacation = Object.keys(self.scope.vacations.year).length > 0
 
+class EmployeeTechnicalRecordsCtrl extends nb.Controller
+    @.$inject = ['$scope', 'Employee']
+
+    constructor: (@scope, @Employee)->
+
+    loadRecords: (employee)->
+        @scope.records = employee.technicalRecords.$fetch()
+
 
 
 class PersonnelSort extends nb.Controller
@@ -1733,6 +1758,7 @@ app.controller('adjustPositionWaitingCtrl', AdjustPositionWaitingController)
 app.controller('PositionRecordCtrl', PositionRecordController)
 app.controller('EducationExpRecordCtrl', EducationExpRecordController)
 app.controller('EmployeeMemberCtrl', EmployeeMemberCtrl)
+app.controller('EmployeeTechnicalRecordsCtrl', EmployeeTechnicalRecordsCtrl)
 app.controller('EmployeePerformanceCtrl', EmployeePerformanceCtrl)
 app.controller('EmployeeAttendanceCtrl', EmployeeAttendanceCtrl)
 app.controller('EmployeeRewardPunishmentCtrl', EmployeeRewardPunishmentCtrl)

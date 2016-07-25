@@ -55,6 +55,12 @@ class Route
                 controllerAs: 'ctrl'
                 templateUrl: 'partials/self/performance/performance.html'
             }
+            .state 'self.technical', {
+                url: '/technical'
+                controller: ProfileCtrl
+                controllerAs: 'ctrl'
+                templateUrl: 'partials/self/technical/technical_records.html'
+            }
             .state 'self.reward_punishment', {
                 url: '/reward_punishment'
                 controller: ProfileCtrl
@@ -230,9 +236,9 @@ class Route
 
 
 class ProfileCtrl extends nb.Controller
-    @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope', 'User', 'USER_META', 'UserPerformance', 'Performance', '$filter', 'UserReward', 'UserPunishment', '$http', '$nbEvent']
+    @.$inject = ['$scope', 'sweet', 'Employee', '$rootScope', 'User', 'USER_META', 'UserPerformance', 'Performance', '$filter', 'UserReward', 'UserPunishment', 'UserTechnicalRecords', '$http', '$nbEvent']
 
-    constructor: (@scope, @sweet, @Employee, @rootScope, @User, @USER_META, @UserPerformance, @Performance, @filter, @UserReward, @UserPunishment, @http, @Evt) ->
+    constructor: (@scope, @sweet, @Employee, @rootScope, @User, @USER_META, @UserPerformance, @Performance, @filter, @UserReward, @UserPunishment, @UserTechnicalRecords, @http, @Evt) ->
         @loadInitialData()
         @status = 'show'
 
@@ -274,6 +280,9 @@ class ProfileCtrl extends nb.Controller
 
     loadRewards: ()->
         @rewards = @UserReward.$collection().$fetch()
+
+    loadTechnicalRecords: ()->
+        @technicalRecords = @UserTechnicalRecords.$collection().$fetch()
 
     loadPunishments: ()->
         @punishments = @UserPunishment.$collection().$fetch()
