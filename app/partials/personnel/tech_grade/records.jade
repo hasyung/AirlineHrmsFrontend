@@ -13,7 +13,7 @@ div(ng-controller="EmployeeTechnicalRecordsCtrl as ctrl"
                     th 变更时间
                     th 文件编号
             tbody
-                tr(ng-repeat="record in records")
+                tr(ng-repeat="record in ctrl.records track by record.id")
                     td(ng-bind="record.technical")
                     td(ng-bind="record.changeDate")
                     td(ng-bind="record.fileNo")

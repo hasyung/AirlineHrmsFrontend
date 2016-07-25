@@ -8,7 +8,7 @@ div.personnel-reward(ng-controller="EmployeeRewardPunishmentCtrl as ctrl")
                 .punishItem(ng-repeat="item in ctrl.rewards")
                     .punishItem__row(layout)
                         .punishItem__row__key 奖励时间
-                        .punishItem__row__val {{item.createdAt}}
+                        .punishItem__row__val {{item.createdAt | date:'yyyy-MM-dd'}}
                     .punishItem__row(layout)
                         .punishItem__row__key 奖励类别
                         .punishItem__row__val {{item.category}}
@@ -29,7 +29,7 @@ div.personnel-reward(ng-controller="EmployeeRewardPunishmentCtrl as ctrl")
                 .punishItem(ng-repeat="item in ctrl.punishments")
                     .punishItem__row(layout)
                         .punishItem__row__key 处分时间
-                        .punishItem__row__val {{item.createdAt}}
+                        .punishItem__row__val {{item.createdAt | date:'yyyy-MM-dd'}}
                     .punishItem__row(layout)
                         .punishItem__row__key 处分类别
                         .punishItem__row__val {{item.category}}

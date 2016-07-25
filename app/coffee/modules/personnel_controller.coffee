@@ -1578,7 +1578,7 @@ class EmployeeTechnicalRecordsCtrl extends nb.Controller
     constructor: (@scope, @Employee)->
 
     loadRecords: (employee)->
-        @scope.records = employee.technicalRecords.$fetch()
+        @records = employee.technicalRecords.$refresh()
 
 
 
