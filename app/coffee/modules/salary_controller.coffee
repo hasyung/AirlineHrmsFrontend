@@ -2168,9 +2168,9 @@ class SalaryRewardController extends SalaryBaseController
             {minWidth: 150,displayName: '货运目标责任书季度奖', name: 'freightQualityFee', enableCellEdit: false}
             {minWidth: 150,displayName: '收益奖励金', name: 'earningsFee', enableCellEdit: false}
             {minWidth: 150,displayName: '品牌质量考核奖', name: 'brandQualityFee', enableCellEdit: false}
-            {minWidth: 150,displayName: '预算外奖励', name: 'offBudgetFee', enableCellEdit: false}
+            {minWidth: 150,displayName: '内部奖惩', name: 'offBudgetFee', enableCellEdit: false}
             {minWidth: 150,displayName: '节油奖', name: 'saveOilFee', enableCellEdit: false}
-            {minWidth: 150,displayName: '经济型扣罚', name: 'cashFineFee', enableCellEdit: false}
+            {minWidth: 150,displayName: '其他事件性奖惩', name: 'cashFineFee', enableCellEdit: false}
             {minWidth: 150,displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
                 minWidth: 150
