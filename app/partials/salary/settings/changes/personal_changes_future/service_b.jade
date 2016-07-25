@@ -1,0 +1,151 @@
+extends ./channels_layout.jade
+
+block vars
+    - var hasBaseInfo = true
+    - var hasBaseSetting = true
+    - var hasHoursFeeSetting = false
+    - var hasPerformanceSetting = false
+    - var hasAllowanceSetting = false
+    - var hasCommunicate = true
+    - var hasServiceCarSetting = false
+    - var hasTempSetting = true
+
+block base_info
+    div(layout)
+        md-input-container(flex)
+            label 员工部门编码
+            input(
+                type="text" ng-model="exchangeCtrl.setBookData.dep_set_book_no" readonly)
+
+        md-input-container(flex)
+            label 员工账户
+            input(
+                type="text" ng-model="exchangeCtrl.setBookData.bank_no" name="bankNoInput" ng-change="exchangeCtrl.checkRegBankNo(exchangeCtrl.setBookData.bank_no, salaryPersonal)" maxLength="19" ng-readonly="!exchangeCtrl.editing")
+
+    div(layout)
+        md-input-container.row-has-value(flex)
+            label 人员分类编码
+            md-select(ng-model="exchangeCtrl.setBookData.employee_category" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(value="空") 空
+                md-option(value="A001") A001
+                md-option(value="A002") A002
+                md-option(value="A003") A003
+                md-option(value="A004") A004
+                md-option(value="A005") A005
+                md-option(value="B001") B001
+                md-option(value="B002") B002
+                md-option(value="B003") B003
+                md-option(value="B004") B004
+                md-option(value="C001") C001
+
+        md-input-container.row-has-value(flex)
+            label 帐套
+            md-select(ng-model="exchangeCtrl.setBookData.salary_category" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(value="无") 无
+                md-option(value="合同工") 合同工
+                md-option(value="合同制") 合同制
+                md-option(value="重庆合同工") 重庆合同工
+                md-option(value="重庆合同制") 重庆合同制
+
+block base_setting
+    div(layout)
+        md-input-container.row-has-value(flex)
+            label 基础工资
+            md-select(ng-model="current.baseWage" placeholder="请选择" ng-change="exchangeCtrl.service_b(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(value="service_b_normal_cleaner_base") 清洁工
+                md-option(value="service_b_parking_cleaner_base") 机坪清洁工
+                md-option(value="service_b_hotel_service_base") 宾馆服务员
+                md-option(value="service_b_green_base") 绿化
+                md-option(value="service_b_front_desk_base") 总台服务员
+                md-option(value="service_b_security_guard_base") 保安、空保装备保管员
+                md-option(value="service_b_input_base") 数据录入
+                md-option(value="service_b_guard_leader1_base") 保安队长（一类）
+                md-option(value="service_b_device_keeper_base") 保管（库房、培训设备、器械）
+                md-option(value="service_b_unloading_base") 外站装卸
+                md-option(value="service_b_making_water_base") 制水工
+                md-option(value="service_b_add_water_base") 加水工、排污工
+                md-option(value="service_b_guard_leader2_base") 保安队长（二类）
+                md-option(value="service_b_water_light_base") 水电维修
+                md-option(value="service_b_car_repair_base") 汽修工
+                md-option(value="service_b_airline_keeper_base") 机务工装设备/客舱供应库管
+
+        md-input-container.row-has-value(flex)
+            label 薪酬通道
+            md-select(ng-model="current.baseChannel" placeholder="请选择" ng-change="exchangeCtrl.fly(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(ng-value="item" ng-repeat="item in exchangeCtrl.service_b_channel_array(current)") {{item}}
+
+        md-input-container.row-has-value(flex)
+            label 档级
+            md-select(ng-model="current.baseFlag" placeholder="请选择" ng-change="exchangeCtrl.service_b(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(ng-value="item" ng-repeat="item in exchangeCtrl.service_b_flag_array(current)") {{item}}
+
+    div(layout)
+        md-input-container(flex)
+            label 基础薪酬
+            input(type="number" min="0" ng-model="current.baseMoney" readonly)
+        md-input-container(flex)
+            label 绩效薪酬
+            input(type="number" min="0" ng-model="current.performanceMoney" readonly)
+        md-input-container(flex)
+            label 总和薪酬
+            input(type="number" min="0" ng-model="current.basePerformanceMoney" readonly)
+
+    div(layout)
+        md-input-container(flex)
+            label 岗位工资保留
+            input(type="number" min="0" step="1" ng-model="current.keepPosition" ng-disabled="!exchangeCtrl.editing")
+        md-input-container(flex)
+            label 业绩奖保留
+            input(type="number" min="0" step="1" ng-model="current.keepPerformance" ng-disabled="!exchangeCtrl.editing")
+        md-input-container(flex)
+            label 工龄工资保留
+            input(type="number" min="0" step="1" ng-model="current.keepWorkingYears" ng-disabled="!exchangeCtrl.editing")
+    div(layout)
+        md-input-container(flex)
+            label 保底增幅
+            input(type="number" min="0" step="1" ng-model="current.keepMinimumGrowth" ng-disabled="!exchangeCtrl.editing")
+        md-input-container(flex)
+            label 地勤补贴保留
+            input(type="number" min="0" step="1" ng-model="current.keepLandAllowance" ng-disabled="!exchangeCtrl.editing")
+        md-input-container(flex)
+            label 生活补贴保留1
+            input(type="number" min="0" step="1" ng-model="current.keepLife1" ng-disabled="!exchangeCtrl.editing")
+    div(layout)
+        md-input-container(flex)
+            label 生活补贴保留2
+            input(type="number" min="0" max="100000" step="1" ng-model="current.keepLife2" ng-disabled="!exchangeCtrl.editing")
+        md-input-container(flex)
+            label 09调资增加保留
+            input(type="number" min="0" step="1" ng-model="current.keepAdjustment09" ng-disabled="!exchangeCtrl.editing")
+        md-input-container(flex)
+            label 14公务用车保留
+            input(type="number" min="0" step="1" ng-model="current.keepBus14" ng-disabled="!exchangeCtrl.editing")
+    div(layout)
+        md-input-container(flex)
+            label 14通信补贴保留
+            input(type="number" min="0" step="1" ng-model="current.keepCommunication14" ng-disabled="!exchangeCtrl.editing")
+        div(flex)
+        div(flex)
+
+    div(layout)
+        md-checkbox(class="md-primary" ng-model="current.isSalarySpecial"  ng-disabled="!exchangeCtrl.editing") 薪酬特殊人员
+
+//- block allowance_setting
+//-     div(layout)
+//-         md-input-container(flex)
+//-             label 寒冷补贴
+//-             input(type="number" min="0" max="1000000" ng-model="current.coldSubsidy" ng-disabled="!exchangeCtrl.editing")
+
+block communicate_setting
+    div(layout)
+        md-input-container(flex)
+            label 通讯补贴
+            input(type="number" min="0" max="1000000" ng-model="current.communicateAllowance" ng-disabled="!exchangeCtrl.editing")
+
+block temp_setting
+    div(layout)
+        md-input-container(flex)
+            label 高温补贴
+            input(type="number" min="0" max="1000000" ng-model="current.tempAllowance" ng-disabled="!exchangeCtrl.editing")
+        div(flex)
+

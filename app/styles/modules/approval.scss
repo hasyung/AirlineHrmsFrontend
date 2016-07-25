@@ -134,7 +134,28 @@
     .add-habit {
         background: rgb(33,150,243);
         border: 0;
-        border-radius: 2px;
+        border-radius: 2px 0 0 2px;
+        color: #fff;
+        font-family: $font-family-sans-serif;
+        height: 28px;
+        margin-top: 20px;
+        min-width: 0;
+        transition: opacity .25s linear;
+
+        &:hover {
+            opacity: .8;
+        }
+
+        &[disabled] {
+            background: $text-hint;
+            cursor: not-allowed;
+        }
+    }
+
+    .delete-habit {
+        background: rgb(244, 67, 54);
+        border: 0;
+        border-radius: 0 2px 2px 0;
         color: #fff;
         font-family: $font-family-sans-serif;
         height: 28px;
@@ -177,6 +198,15 @@
 
         &:hover {
             opacity: .9;
+        }
+
+        &.deleting {
+            animation-name: shakeButton;
+            animation-duration: 1.2s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+            cursor: pointer !important;
+            transform-origin:50% 50%;
 
             .del-habit {
                 display: block;
@@ -411,7 +441,20 @@
     }
 }
 
-
+/****** CSS3动画 抖动 ******/ 
+@keyframes shakeButton {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -1px) rotate(-1deg); }
+    20% { transform: translate(-1px, 0px) rotate(1deg); }
+    30% { transform: translate(0px, 1px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 1px) rotate(-1deg); }
+    60% { transform: translate(-1px, 1px) rotate(0deg); }
+    70% { transform: translate(1px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 1px) rotate(0deg); }
+    100% { transform: translate(1px, -1px) rotate(-1deg); }
+}
 
 
 

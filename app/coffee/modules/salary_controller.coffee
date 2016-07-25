@@ -832,6 +832,13 @@ class SalaryChangeController extends nb.Controller
             change.$save().$then (data)->
                 self.salaryChanges.$refresh()
 
+    setComingChanges: (change, setups) ->
+        self = @
+
+        changes = change.salarySetupCache
+        setups = _.assignIn setups, changes
+
+
     search: (tableState) ->
         tableState = tableState || {}
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize

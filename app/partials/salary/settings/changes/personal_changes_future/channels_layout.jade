@@ -12,6 +12,18 @@ mixin tabSection(heading, lookPermission, updatePermission, preLoadHandlers, sav
                 ng-init=preLoadHandlers
                 )
                 div(style="height: 38px;")
+            //- div(
+            //-     has-permission=updatePermission
+            //-     ng-init=preLoadHandlers
+            //-     )
+            //-     .form-btn-group(ng-hide="exchangeCtrl.editing")
+            //-         md-button.md-fab.md-primary(type="button" ng-click="exchangeCtrl.editing=true")
+            //-             md-icon(md-svg-src="/images/svg/edit_24px.svg" aria-label="修改")
+            //-     .form-btn-group(ng-show="exchangeCtrl.editing")
+            //-         md-button.md-fab.white(type="button" ng-click="cancel(current, $event, salaryPersonal); exchangeCtrl.editing=false")
+            //-             md-icon(md-svg-src="/images/svg/close.svg" aria-label="取消")
+            //-         md-button.md-fab.md-primary(ng-disabled="salaryPersonal.$invalid" ng-click=saveHandlers)
+            //-             md-icon(md-svg-src="/images/svg/check.svg" aria-label="保存")
             fieldset
                 include basic_info
 
