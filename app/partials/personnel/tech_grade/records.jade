@@ -1,0 +1,19 @@
+div(ng-controller="EmployeeTechnicalRecordsCtrl as ctrl"
+    ng-init="current = panel.employee;\
+        ctrl.loadRecords(current);\
+    "
+    )
+    md-card.form-material-section.nb-card
+        md-subheader.md-background.md-hue-1
+            | 技术等级变更记录
+        table.table.table-hover.table-mc-light-blue.table-bordered
+            thead
+                tr
+                    th 技术等级
+                    th 变更时间
+                    th 文件编号
+            tbody
+                tr(ng-repeat="record in records")
+                    td(ng-bind="record.technical")
+                    td(ng-bind="record.changeDate")
+                    td(ng-bind="record.fileNo")

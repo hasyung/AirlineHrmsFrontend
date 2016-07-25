@@ -1,0 +1,41 @@
+md-dialog.punishment_new(style="min-width: 450px;")
+    md-toolbar.md-accent(md-theme="hrms")
+        .md-toolbar-tools
+            span 修改技术等级
+    form(ng-submit="current.set_tech_grade(params, list, dialog.tableState); dialog.close();" name="editTechGrade")
+        md-content(ng-init="current=dialog.employee.$refresh();\
+                list=dialog.list;\
+                params={};\
+                "
+                )
+            fieldset
+                div(layout)
+                    md-input-container(flex)
+                        label 姓名
+                        input(ng-model="::current.name" readonly)
+                    md-input-container(flex)
+                        label 员工编号
+                        input(ng-model="::current.employeeNo" readonly)
+                div(layout)
+                    md-input-container(flex)
+                        label 部门
+                        input(ng-model="::current.department.name" readonly)
+                    md-input-container(flex)
+                        label 岗位
+                        input(ng-model="::current.position.name" readonly)
+                div(layout)
+                    md-input-container(flex)
+                        label 技术等级
+                        input(type="text" ng-model="params.technical" required)
+                div(layout)
+                    md-input-container(flex)
+                        label 变更日期
+                        input(ng-model="params.change_date" bs-datepicker required)
+
+                    md-input-container(flex)
+                        label 文件编号
+                        input(type="text" ng-model="params.file_no" required)
+
+        .md-actions
+            md-button(type="button" ng-click="dialog.close()") 取 消
+            md-button.md-primary.md-raised(type="submit" ng-disabled="editTechGrade.$invalid") 确 定

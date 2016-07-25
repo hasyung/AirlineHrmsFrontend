@@ -1,7 +1,7 @@
 md-dialog.punishment_new(style="min-width: 450px;")
     md-toolbar.md-accent(md-theme="hrms")
         .md-toolbar-tools
-            span 人员退养
+            span 修改工作年限
     form(ng-submit="current.set_employee_date(params, list, dialog.tableState); dialog.close();" name="setEmployeeDateForm")
         md-content(ng-init="current=dialog.employee.$refresh();\
                 list=dialog.list;\

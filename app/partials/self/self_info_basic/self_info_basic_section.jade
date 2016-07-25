@@ -186,3 +186,7 @@ form(ng-controller="EditableResourceCtrl", ng-submit="save(currentUser.$save(), 
                         label 用工性质
                         md-select(ng-model="currentUser.laborRelationId" disabled)
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('labor_relations')") {{item.label}}
+
+                    md-input-container.row-has-value(flex)
+                        label 技术等级
+                        input(ng-model="currentUser.technical" disabled)

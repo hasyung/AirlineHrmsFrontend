@@ -14,6 +14,7 @@ Employee = (restmod, RMUtils, $Evt) ->
         performances: {hasMany: 'Performance', mask: 'CU'}
         rewards: {hasMany: 'Reward', mask: 'CU'}
         punishments: {hasMany: 'Punishment', mask: 'CU'}
+        technicalRecords: {hasMany: 'TechnicalRecords', mask: 'CU'}
 
         $hooks: {
             'after-create': ->
@@ -30,6 +31,8 @@ Employee = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('employee:edit_technical:success', "员工技术通道等级已更新")
             'after-change-employee-date': ->
                 $Evt.$send('employee:change_employee_date:success', "员工工作年限已更新")
+            'after-change-employee-tech-grade': ->
+                $Evt.$send('employee:change_employee_tech_grade:success', "员工技术等级已更新")
         }
 
         $extend:
@@ -114,6 +117,23 @@ Employee = (restmod, RMUtils, $Evt) ->
                         list.$refresh(tableState)
 
                     this.$send(request, onSuccess)
+
+                # 设置员工技术等级
+                set_tech_grade: (params, list, tableState)->
+                    self = this
+
+                    request = {
+                        url: "/api/employees/#{this.id}/change_technical"
+                        method: "POST"
+                        data: params
+                    }
+
+                    onSuccess = (res) ->
+                        self.$dispatch 'after-change-employee-tech-grade'
+                        list.$refresh(tableState)
+
+                    this.$send(request, onSuccess)
+
 
                 update_education: (params, list, tableState)->
                     self = this
