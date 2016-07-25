@@ -692,9 +692,9 @@ class AttendanceCtrl extends nb.Controller
 
 
 class AttendanceRecordCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Attendance', 'Employee', 'GridHelper', '$enum', 'CURRENT_ROLES', '$q', '$http', 'toaster']
+    @.$inject = ['$scope', 'Attendance', 'Employee', 'GridHelper', '$enum', 'CURRENT_ROLES', '$q', '$http', 'toaster', '$nbEvent']
 
-    constructor: (@scope, @Attendance, @Employee, GridHelper, $enum, @CURRENT_ROLES, @q, @http, @toaster) ->
+    constructor: (@scope, @Attendance, @Employee, GridHelper, $enum, @CURRENT_ROLES, @q, @http, @toaster, @Evt) ->
         @loadInitialData()
 
         @scope.$enum = $enum
@@ -760,6 +760,86 @@ class AttendanceRecordCtrl extends nb.Controller
 
     isDepartmentHr: ()->
         @CURRENT_ROLES.indexOf('department_hr') >= 0
+
+    # 员工异动创建的各方法 from 员工异动 此处的方法没有对异动员工信息列表刷新
+    loadEmployee: (params, moveEmployee)->
+        self = @
+
+        @Employee.$collection().$refresh(params).$then (employees)->
+            args = _.mapKeys params, (value, key) ->
+                _.camelCase key
+
+            matched = _.find employees, args
+
+            if matched
+                self.loadEmp = matched
+                moveEmployee.employee_id = matched.$pk
+            else
+                self.loadEmp = params
+
+    newStopEmployee: (moveEmployee)->
+        self = @
+        # moveEmployee.department_id = moveEmployee.department_id.$pk if moveEmployee.department_id
+
+        @http.post('/api/special_states/temporarily_stop_air_duty', moveEmployee).then (data)->
+            msg = data.messages
+
+            if data.status == 200
+                self.Evt.$send("special_state:save:success", msg || "创建成功")
+            else
+                self.Evt.$send('special_state:save:error', msg || "创建失败")
+
+
+    newBorrowEmployee: (moveEmployee)->
+        self = @
+
+        params = {}
+        moveEmployee.department_id = moveEmployee.department.$pk if moveEmployee.department
+        params.department_id = moveEmployee.department_id
+        params.out_company = moveEmployee.out_company
+        params.employee_id = moveEmployee.employee_id
+        params.special_date_from = moveEmployee.special_date_from
+        params.special_date_to = moveEmployee.special_date_to
+        params.file_no = moveEmployee.file_no
+
+        @http.post('/api/special_states/temporarily_transfer', params).then (data)->
+            msg = data.messages
+
+            if data.status == 200
+                self.Evt.$send("special_state:save:success", msg || "创建成功")
+            else
+                self.Evt.$send('special_state:save:error', msg || "创建失败")
+
+    newAccreditEmployee: (moveEmployee)->
+        self = @
+
+        @http.post('/api/special_states/temporarily_defend', moveEmployee).then (data)->
+            msg = data.messages
+
+            if data.status == 200
+                self.Evt.$send("special_state:save:success", msg || "创建成功")
+            else
+                self.Evt.$send('special_state:save:error', msg || "创建失败")
+
+    newBusinessEmployee: (moveEmployee)->
+        self = @
+
+        params = {}
+        moveEmployee.department_id = moveEmployee.department.$pk if moveEmployee.department
+        params.department_id = moveEmployee.department_id
+        params.out_company = moveEmployee.out_company
+        params.employee_id = moveEmployee.employee_id
+        params.special_date_from = moveEmployee.special_date_from
+        params.special_date_to = moveEmployee.special_date_to
+        params.file_no = moveEmployee.file_no
+
+        @http.post('/api/special_states/temporarily_business_trip', params).then (data)->
+            msg = data.messages
+
+            if data.status == 200
+                self.Evt.$send("special_state:save:success", msg || "创建成功")
+            else
+                self.Evt.$send('special_state:save:error', msg || "创建失败")
 
 
 class AttendanceHisCtrl extends nb.Controller

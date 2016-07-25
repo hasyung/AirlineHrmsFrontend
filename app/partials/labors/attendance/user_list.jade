@@ -84,6 +84,30 @@
                     locals="{current: ctrl.getSelected()}"
                 ) 新增考勤
 
+                md-button.md-primary.md-raised(
+                    has-permission="special_states_temporarily_stop_air_duty"
+                    nb-dialog
+                    template-url="partials/personnel/move/stop_flight.html"
+                ) 空勤停飞设置
+
+                md-button.md-primary.md-raised(
+                    has-permission="special_states_temporarily_transfer"
+                    nb-dialog
+                    template-url="partials/personnel/move/borrow.html"
+                ) 借调设置
+
+                md-button.md-primary.md-raised(
+                    has-permission="special_states_temporarily_defend"
+                    nb-dialog
+                    template-url="partials/personnel/move/accredit.html"
+                ) 派驻设置
+
+                md-button.md-primary.md-raised(
+                    has-permission="special_states_temporarily_business_trip"
+                    nb-dialog
+                    template-url="partials/personnel/move/on_business.html"
+                ) 新增出差
+
         div(
             nb-grid
             column-defs="ctrl.columnDef"
