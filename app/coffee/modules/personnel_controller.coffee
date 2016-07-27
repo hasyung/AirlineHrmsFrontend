@@ -1508,14 +1508,14 @@ class EmployeeAttendanceCtrl extends nb.Controller
         self = @
 
         @eventSources = []
-        keys = ["leaves", "late_or_early_leaves", "absences", "lands", "off_post_trains", "filigt_groundeds", "flight_ground_works"]
+        keys = ["leaves", "late_or_early_leaves", "absences", "lands", "off_post_trains", "flight_groundeds", "flight_ground_works"]
         colors = {
             "leaves": "#006600"
             "late_or_early_leaves": "#ffff66"
             "absences": "#ff0033"
             "lands": "#9933ff"
             "off_post_trains": "#0066ff"
-            "filigt_groundeds": "#ff6633"
+            "flight_groundeds": "#ff6633"
             "flight_ground_works": "#33ff00"
         }
 
@@ -1570,7 +1570,7 @@ class EmployeeAttendanceCtrl extends nb.Controller
                 self.eventSources.push(source)
 
             self.scope.vacations = data.attendance_records.vacations
-            self.scope.hasVacation = Object.keys(self.scope.vacations.year).length > 0
+            # self.scope.hasVacation = Object.keys(self.scope.vacations.year).length > 0
 
 class EmployeeTechnicalRecordsCtrl extends nb.Controller
     @.$inject = ['$scope', 'Employee']
