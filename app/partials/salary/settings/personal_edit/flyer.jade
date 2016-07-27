@@ -207,6 +207,8 @@ block hours_fee_setting
 
 block allowance_setting
     div(layout)
+        md-checkbox.md-primary(ng-model="current.isSendFlyerScience" ng-disabled="!exchangeCtrl.editing") 是否发放飞行驾驶技术津贴
+    div(layout ng-if="current.isSendFlyerScience")
         md-input-container.row-has-value(flex)
             label 飞行驾驶技术津贴
             md-select(ng-model="current.flyerScienceSubsidy" placeholder="请选择" ng-change="exchangeCtrl.flyer_science_subsidy(current)" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
