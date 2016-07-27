@@ -397,6 +397,8 @@ class PerformanceSetting extends nb.Controller
         @performanceTemps = @PerformanceTemp.$collection().$fetch()
 
     initialize: (gridApi) ->
+        self = @
+
         saveRow = (rowEntity) ->
             dfd = @q.defer()
 
@@ -413,6 +415,7 @@ class PerformanceSetting extends nb.Controller
             })
             .success () ->
                 dfd.resolve()
+                self.toaster.pop('success', '提示', '修改成功')
             .error () ->
                 dfd.reject()
                 rowEntity.$restore()
