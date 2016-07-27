@@ -20,13 +20,13 @@ div(ng-controller="EmployeePerformanceCtrl as ctrl")
                                 tr
                                     th 考核时段
                                     th 绩效
-                                    th(ng-if="!(currentUser.pcategory=='员工')") 排名
+                                    th(ng-if="!(current.pcategory=='员工')") 排名
                                     th 附件
                             tbody
                                 tr(ng-repeat="performance in group track by $index")
                                     td(ng-bind="performance.assessTime")
                                     td(ng-bind="performance.result")
-                                    td(ng-bind="performance.sortNo" ng-if="!(currentUser.pcategory=='员工')")
+                                    td(ng-bind="performance.sortNo" ng-if="!(current.pcategory=='员工')")
                                     td
                                         a(
                                             ng-if="performance.attachmentStatus"
