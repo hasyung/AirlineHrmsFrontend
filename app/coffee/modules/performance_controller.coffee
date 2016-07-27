@@ -389,6 +389,7 @@ class PerformanceSetting extends nb.Controller
                     {key: '员工', value: '员工'}
                     {key: '基层干部', value: '基层干部'}
                     {key: '中层干部', value: '中层干部'}
+                    {key: '高层干部', value: '高层干部'}
                     {key: '主官', value: '主官'}
                 ]
             }
