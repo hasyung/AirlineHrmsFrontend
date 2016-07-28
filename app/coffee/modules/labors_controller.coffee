@@ -841,6 +841,20 @@ class AttendanceRecordCtrl extends nb.Controller
             else
                 self.Evt.$send('special_state:save:error', msg || "创建失败")
 
+    uploadAnnualDays: (type, attachment_id)->
+        self = @
+
+        params = {type: type, attachment_id: attachment_id}
+        @importing = true
+
+        @http.post("/api/vacations/import_annual_days", params).success (data, status) ->
+            self.toaster.pop('success', '提示', '导入成功')
+            self.importing = false
+        .error (data) ->
+            self.toaster.pop('error', '提示', '导入失败')
+            self.importing = false
+
+
 
 class AttendanceHisCtrl extends nb.Controller
     @.$inject = ['$scope', 'Attendance', 'CURRENT_ROLES']
