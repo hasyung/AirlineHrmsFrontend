@@ -186,6 +186,8 @@ block hours_fee_setting
 
 block allowance_setting
     div(layout)
+        md-checkbox.md-primary(ng-model="current.isSendAirlineFee" ng-disabled="!exchangeCtrl.editing") 是否发放空勤灶
+    div(layout)
         md-input-container.row-has-value(flex)
             label 安检津贴
             md-select(ng-model="current.securitySubsidy" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
@@ -304,6 +306,8 @@ block communicate_setting
             input(type="number" min="0" max="1000000" ng-model="current.communicateAllowance" ng-disabled="!exchangeCtrl.editing")
 
 block service_car_setting
+    div(layout)
+        md-checkbox.md-primary(ng-model="current.isSendTransportFee" ng-disabled="!exchangeCtrl.editing") 是否发放交通费
     div(layout)
         md-input-container(flex)
             label 公务车报销额度
