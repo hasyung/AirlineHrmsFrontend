@@ -19,13 +19,10 @@ md-dialog.punishment_new(style="min-width: 450px;")
                     md-input-container(flex)
                         label 岗位
                         input(ng-model="::current.position.name" readonly)
-                div(
-                    layout
-                    ng-init="params.technical_grade = current.technicalGrade;"
-                        )
+                div(layout)
                     md-input-container.row-has-value(flex)
                         label 原技术通道等级
-                        input(type="text" ng-model="params.technicalGrade" readonly placeholder="无")
+                        input(type="text" ng-model="::current.technicalGrade" readonly placeholder="无")
                         //- md-select(ng-model="::current.technicalGrade" disabled readonly placeholder="无")
                         //-         md-option(value="公司级专业技术专家-1") 公司级专业技术专家-1
                         //-         md-option(value="公司级专业技术专家-2") 公司级专业技术专家-2
