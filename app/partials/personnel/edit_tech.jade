@@ -25,59 +25,61 @@ md-dialog.punishment_new(style="min-width: 450px;")
                         )
                     md-input-container.row-has-value(flex)
                         label 原技术通道等级
-                        md-select(ng-model="::current.technicalGrade" disabled readonly placeholder="无")
-                                md-option(value="公司级专业技术专家-1") 公司级专业技术专家-1
-                                md-option(value="公司级专业技术专家-2") 公司级专业技术专家-2
-                                md-option(value="公司级专业技术专家-3") 公司级专业技术专家-3
-                                md-option(value="部门级专业技术专家-1") 部门级专业技术专家-1
-                                md-option(value="部门级专业技术专家-2") 部门级专业技术专家-2
-                                md-option(value="部门级专业技术专家-3") 部门级专业技术专家-3
-                                md-option(value="部门级专业技术专家-4") 部门级专业技术专家-4
-                                md-option(value="部门级专业技术专员-1") 部门级专业技术专员-1
-                                md-option(value="部门级专业技术专员-2") 部门级专业技术专员-2
-                                md-option(value="部门级专业技术专员-3") 部门级专业技术专员-3
-                                md-option(value="部门级专业技术专员-4") 部门级专业技术专员-4
-                                md-option(value="部门级专业技术专员-4") 部门级专业技术专员-4
-                                md-option(value="部门级飞行技术专家-1") 部门级飞行技术专家-1
-                                md-option(value="部门级飞行技术专家-2") 部门级飞行技术专家-2
-                                md-option(value="部门级飞行技术专家-3") 部门级飞行技术专家-3
-                                md-option(value="部门级飞行技术专家-4") 部门级飞行技术专家-4
-                                md-option(value="部门级飞行技术专员-1") 部门级专业技术专员-1
-                                md-option(value="部门级飞行技术专员-2") 部门级专业技术专员-2
-                                md-option(value="部门级飞行技术专员-3") 部门级专业技术专员-3
-                                md-option(value="部门级飞行技术专员-4") 部门级专业技术专员-4
-                                md-option(value="部门级空服专员-1") 部门级空服专员-1
-                                md-option(value="部门级空服专员-2") 部门级空服专员-2
-                                md-option(value="部门级空服专员-3") 部门级空服专员-3
-                                md-option(value="部门级空服专员-4") 部门级空服专员-4
+                        input(type="text" ng-model="params.technicalGrade" readonly placeholder="无")
+                        //- md-select(ng-model="::current.technicalGrade" disabled readonly placeholder="无")
+                        //-         md-option(value="公司级专业技术专家-1") 公司级专业技术专家-1
+                        //-         md-option(value="公司级专业技术专家-2") 公司级专业技术专家-2
+                        //-         md-option(value="公司级专业技术专家-3") 公司级专业技术专家-3
+                        //-         md-option(value="部门级专业技术专家-1") 部门级专业技术专家-1
+                        //-         md-option(value="部门级专业技术专家-2") 部门级专业技术专家-2
+                        //-         md-option(value="部门级专业技术专家-3") 部门级专业技术专家-3
+                        //-         md-option(value="部门级专业技术专家-4") 部门级专业技术专家-4
+                        //-         md-option(value="部门级专业技术专员-1") 部门级专业技术专员-1
+                        //-         md-option(value="部门级专业技术专员-2") 部门级专业技术专员-2
+                        //-         md-option(value="部门级专业技术专员-3") 部门级专业技术专员-3
+                        //-         md-option(value="部门级专业技术专员-4") 部门级专业技术专员-4
+                        //-         md-option(value="部门级专业技术专员-4") 部门级专业技术专员-4
+                        //-         md-option(value="部门级飞行技术专家-1") 部门级飞行技术专家-1
+                        //-         md-option(value="部门级飞行技术专家-2") 部门级飞行技术专家-2
+                        //-         md-option(value="部门级飞行技术专家-3") 部门级飞行技术专家-3
+                        //-         md-option(value="部门级飞行技术专家-4") 部门级飞行技术专家-4
+                        //-         md-option(value="部门级飞行技术专员-1") 部门级专业技术专员-1
+                        //-         md-option(value="部门级飞行技术专员-2") 部门级专业技术专员-2
+                        //-         md-option(value="部门级飞行技术专员-3") 部门级专业技术专员-3
+                        //-         md-option(value="部门级飞行技术专员-4") 部门级专业技术专员-4
+                        //-         md-option(value="部门级空服专员-1") 部门级空服专员-1
+                        //-         md-option(value="部门级空服专员-2") 部门级空服专员-2
+                        //-         md-option(value="部门级空服专员-3") 部门级空服专员-3
+                        //-         md-option(value="部门级空服专员-4") 部门级空服专员-4
                 div(layout)
                     md-input-container.row-has-value(flex)
                         label 变更后技术通道等级
-                        md-select(ng-model="params.technical_grade" required placeholder="请选择")
-                                md-option(value="公司级专业技术专家-1") 公司级专业技术专家-1
-                                md-option(value="公司级专业技术专家-2") 公司级专业技术专家-2
-                                md-option(value="公司级专业技术专家-3") 公司级专业技术专家-3
-                                md-option(value="部门级专业技术专家-1") 部门级专业技术专家-1
-                                md-option(value="部门级专业技术专家-2") 部门级专业技术专家-2
-                                md-option(value="部门级专业技术专家-3") 部门级专业技术专家-3
-                                md-option(value="部门级专业技术专家-4") 部门级专业技术专家-4
-                                md-option(value="部门级专业技术专员-1") 部门级专业技术专员-1
-                                md-option(value="部门级专业技术专员-2") 部门级专业技术专员-2
-                                md-option(value="部门级专业技术专员-3") 部门级专业技术专员-3
-                                md-option(value="部门级专业技术专员-4") 部门级专业技术专员-4
-                                md-option(value="部门级专业技术专员-4") 部门级专业技术专员-4
-                                md-option(value="部门级飞行技术专家-1") 部门级飞行技术专家-1
-                                md-option(value="部门级飞行技术专家-2") 部门级飞行技术专家-2
-                                md-option(value="部门级飞行技术专家-3") 部门级飞行技术专家-3
-                                md-option(value="部门级飞行技术专家-4") 部门级飞行技术专家-4
-                                md-option(value="部门级飞行技术专员-1") 部门级专业技术专员-1
-                                md-option(value="部门级飞行技术专员-2") 部门级专业技术专员-2
-                                md-option(value="部门级飞行技术专员-3") 部门级专业技术专员-3
-                                md-option(value="部门级飞行技术专员-4") 部门级专业技术专员-4
-                                md-option(value="部门级空服专员-1") 部门级空服专员-1
-                                md-option(value="部门级空服专员-2") 部门级空服专员-2
-                                md-option(value="部门级空服专员-3") 部门级空服专员-3
-                                md-option(value="部门级空服专员-4") 部门级空服专员-4
+                        input(type="text" ng-model="params.technical_grade" required placeholder="无")
+                        //- md-select(ng-model="params.technical_grade" required placeholder="请选择")
+                        //-         md-option(value="公司级专业技术专家-1") 公司级专业技术专家-1
+                        //-         md-option(value="公司级专业技术专家-2") 公司级专业技术专家-2
+                        //-         md-option(value="公司级专业技术专家-3") 公司级专业技术专家-3
+                        //-         md-option(value="部门级专业技术专家-1") 部门级专业技术专家-1
+                        //-         md-option(value="部门级专业技术专家-2") 部门级专业技术专家-2
+                        //-         md-option(value="部门级专业技术专家-3") 部门级专业技术专家-3
+                        //-         md-option(value="部门级专业技术专家-4") 部门级专业技术专家-4
+                        //-         md-option(value="部门级专业技术专员-1") 部门级专业技术专员-1
+                        //-         md-option(value="部门级专业技术专员-2") 部门级专业技术专员-2
+                        //-         md-option(value="部门级专业技术专员-3") 部门级专业技术专员-3
+                        //-         md-option(value="部门级专业技术专员-4") 部门级专业技术专员-4
+                        //-         md-option(value="部门级专业技术专员-4") 部门级专业技术专员-4
+                        //-         md-option(value="部门级飞行技术专家-1") 部门级飞行技术专家-1
+                        //-         md-option(value="部门级飞行技术专家-2") 部门级飞行技术专家-2
+                        //-         md-option(value="部门级飞行技术专家-3") 部门级飞行技术专家-3
+                        //-         md-option(value="部门级飞行技术专家-4") 部门级飞行技术专家-4
+                        //-         md-option(value="部门级飞行技术专员-1") 部门级专业技术专员-1
+                        //-         md-option(value="部门级飞行技术专员-2") 部门级专业技术专员-2
+                        //-         md-option(value="部门级飞行技术专员-3") 部门级专业技术专员-3
+                        //-         md-option(value="部门级飞行技术专员-4") 部门级专业技术专员-4
+                        //-         md-option(value="部门级空服专员-1") 部门级空服专员-1
+                        //-         md-option(value="部门级空服专员-2") 部门级空服专员-2
+                        //-         md-option(value="部门级空服专员-3") 部门级空服专员-3
+                        //-         md-option(value="部门级空服专员-4") 部门级空服专员-4
                 div(layout)
                     md-input-container(flex)
                         label 变动时间
