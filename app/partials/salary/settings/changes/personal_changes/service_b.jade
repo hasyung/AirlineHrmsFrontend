@@ -5,7 +5,7 @@ block vars
     - var hasBaseSetting = true
     - var hasHoursFeeSetting = false
     - var hasPerformanceSetting = false
-    - var hasAllowanceSetting = false
+    - var hasAllowanceSetting = true
     - var hasCommunicate = true
     - var hasServiceCarSetting = false
     - var hasTempSetting = true
@@ -135,6 +135,121 @@ block base_setting
 //-         md-input-container(flex)
 //-             label 寒冷补贴
 //-             input(type="number" min="0" max="1000000" ng-model="current.coldSubsidy" ng-disabled="!exchangeCtrl.editing")
+block allowance_setting
+    div(layout)
+        md-input-container.row-has-value(flex)
+            label 安检津贴
+            md-select(ng-model="current.securitySubsidy" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(value="none") 无
+                md-option(value="lower") 初级
+                md-option(value="middle") 中级
+                md-option(value="higher") 高级
+
+        md-input-container.row-has-value(flex)
+            label 安置补贴
+            md-select(ng-model="current.placementSubsidy" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(value="false") 无
+                md-option(value="true") 有
+
+        md-input-container.row-has-value(flex)
+            label 班组长津贴
+            md-select(ng-model="current.leaderSubsidy" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(value="none") 无
+                md-option(value="line_A") 一线A类
+                md-option(value="line_B") 一线B类
+                md-option(value="line_C") 一线C类
+                md-option(value="line_D") 一线D类
+                md-option(value="logistics_1") 后勤一类
+                md-option(value="logistics_2") 后勤二类
+
+    div(layout)
+        md-input-container.row-has-value(flex)
+            label 航站管理津贴
+            md-select(ng-model="current.terminalSubsidy" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(value="none") 无
+                md-option(value="first") 一类
+                md-option(value="second") 二类
+        md-input-container.row-has-value(flex)
+            label 车勤补贴
+            md-select(ng-model="current.carSubsidy" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(value="false") 无
+                md-option(value="true") 有
+        md-input-container.row-has-value(flex)
+            label 地勤补贴
+            md-select(ng-model="current.groundSubsidy" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(value="none") 无
+                md-option(value="first") 一类
+                md-option(value="second") 二类
+                md-option(value="third") 三类
+                md-option(value="fourth") 四类
+                md-option(value="fifth") 五类
+                md-option(value="sixth") 六类
+
+    div(layout)
+        md-input-container.row-has-value(flex)
+            label 机务放行补贴
+            md-select(ng-model="current.machineSubsidy" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(value="none") 无
+                md-option(value="first") 一档
+                md-option(value="second") 二档
+                md-option(value="third") 三档
+                md-option(value="fourth") 四档
+                md-option(value="fifth") 五档
+        md-input-container.row-has-value(flex)
+            label 试车津贴
+            md-select(ng-model="current.trialSubsidy" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(value="none") 无
+                md-option(value="first") 一类
+                md-option(value="second") 二类
+        md-input-container.row-has-value(flex)
+            label 飞行安全荣誉津贴
+            md-select(ng-model="current.honorSubsidy" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(value="none") 无
+                md-option(value="copper") 铜质
+                md-option(value="silver") 银质
+                md-option(value="gold") 金质
+                md-option(value="exploit") 功勋
+
+    div(layout)
+        md-input-container(flex)
+            label 大厦补贴
+            input(type="number" min="0" ng-model="current.buildingSubsidy" ng-readonly="!exchangeCtrl.editing")
+        md-input-container(flex)
+            label 执勤补贴
+            input(type="number" min="0" ng-model="current.onDutySubsidy" ng-readonly="!exchangeCtrl.editing")
+        md-input-container(flex)
+            label 退休人员清洁费
+            input(type="number" min="0" ng-model="current.retireeCleanFee" ng-readonly="!exchangeCtrl.editing")
+
+    div(layout)
+        md-input-container(flex)
+            label 维修补贴
+            input(type="number" min="0" ng-model="current.maintainSubsidy" ng-readonly="!exchangeCtrl.editing")
+        md-input-container.row-has-value(flex)
+            label 后勤保障部补贴
+            md-select(ng-model="current.logisticalSupportSubsidy" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(value="false") 无
+                md-option(value="true") 有
+        md-input-container.row-has-value(flex)
+            label 值班工资
+            md-select(ng-model="current.watchSubsidy" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(value="false") 无
+                md-option(value="true") 有
+
+    div(layout)
+        md-input-container.row-has-value(flex)
+            label 重庆兼职车辆维修班补贴
+            md-select(ng-model="current.cqPartTimeFixCarSubsidy" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(value="none") 无
+                md-option(value="first") 一档
+                md-option(value="second") 二档
+                md-option(value="third") 三档
+        md-input-container.row-has-value(flex)
+            label 部件放行补贴
+            md-select(ng-model="current.partPermitEntry" placeholder="请选择" ng-disabled="!exchangeCtrl.editing" ng-readonly="!exchangeCtrl.editing")
+                md-option(value="false") 无
+                md-option(value="true") 有
+        div(flex)
 
 block communicate_setting
     div(layout)
