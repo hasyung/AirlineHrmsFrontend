@@ -459,7 +459,7 @@ class AttendanceCtrl extends nb.Controller
                     type: 'vacation_select'
                 }
                 {
-                    name: 'workflow_state'
+                    name: 'state'
                     displayName: '状态'
                     type: 'muti-enum-search'
                     params: {
