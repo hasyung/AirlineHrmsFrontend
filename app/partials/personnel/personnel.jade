@@ -17,6 +17,7 @@ tabset(flex)
                         ) 修改工作年限
 
                         md-button.md-primary.md-raised(
+                            has-permission="employees_change_technical"
                             ng-disabled="ctrl.getSelected().length != 1 || ctrl.importing"
                             nb-dialog
                             template-url="/partials/personnel/edit_tech_grade.html"
