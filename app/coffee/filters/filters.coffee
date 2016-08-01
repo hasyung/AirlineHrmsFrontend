@@ -83,8 +83,8 @@ module
 
     .filter 'salaryChannelMapId2Name', [()->
         (input) ->
-            if input == '35'
-                out = '清洁工'
+            switch input
+                when "35" then out = '清洁工'
 
             return out
     ]

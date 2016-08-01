@@ -463,7 +463,7 @@ class AttendanceCtrl extends nb.Controller
                     displayName: '状态'
                     type: 'muti-enum-search'
                     params: {
-                        type: 'workflow_states'
+                        type: 'workflow_state'
                     }
                 }
             ]
