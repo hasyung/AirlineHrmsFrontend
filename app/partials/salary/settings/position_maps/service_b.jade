@@ -1,0 +1,46 @@
+.app-content-wrapper(flex style="padding: 0;")
+    .salary-basic(style="padding: 0;")
+        md-toolbar
+            .md-toolbar-tools
+                h2 服务b
+                span(flex)
+                md-button.md-raised.md-primary(ng-disabled="!ctrl.initialComplete" style="margin-right: 0;") 保存
+
+        table.tablexx.table-default.table-bordered
+            thead
+                tr
+                    th.sm 薪酬岗位
+                    th 岗位
+            tbody
+                tr(ng-repeat="(salaryType, positions) in ctrl.initialPositions")
+                    td.sm {{salaryType}}
+                    td
+                        span.city-chip(
+                            style="padding: 0 10px;"
+                            ng-repeat="position in positions track by position.id"
+                            ) {{position.department.name}}-{{position.name}}
+                            md-icon.md-warn(
+                                md-svg-src="/images/svg/close.svg"
+                                ng-click="ctrl.removeSalaryPosition(position, positions)"
+                                )
+
+                        span(ng-click="adding=true" ng-hide="adding" class="add-chip" style="margin-left: 10px;")
+                            md-icon(md-svg-src="/images/svg/plus.svg" class="md-primary")
+
+                        md-autocomplete(
+                            ng-disabled="!ctrl.initialComplete"
+                            style="margin:5px;"
+                            ng-show="adding"
+                            md-no-cache=true
+                            md-selected-item="selectedItem"
+                            md-search-text="searchText"
+                            md-selected-item-change="ctrl.addSalaryPosition(item, positions);  searchText=null; selectedItem=null; adding=false;"
+                            md-items="item in ctrl.queryPositions(searchText)"
+                            md-item-text="ctrl.compatFullName(item.department.name, item.name)"
+                            md-min-length="0"
+                            placeholder="请输入岗位"
+                        )
+                            md-item-template
+                                span(ng-value="item.id") {{item.department.name}}-{{item.name}}
+                            md-not-found
+                                | 没有可以匹配的岗位

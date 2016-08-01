@@ -2612,6 +2612,67 @@ class RewardsAllocationController
         @http.put('/api/departments/reward_update', param).success (data)->
             self.toaster.pop('success', '提示', '修改成功')
 
+class PositionMapsController extends nb.Controller
+    @.$inject = ['$http', '$scope', 'toaster', 'Position']
+
+    constructor: (@http, @scope, @toaster, @Position)->
+        @initialComplete = false
+
+        @initialPositions = {
+            '清洁工': [
+                {
+                    id: 99999
+                    name: '机坪清洁工'
+                    department: {
+                        name: '机务管理部－技术办公室'
+                    }
+                }
+                {
+                    id: 99998
+                    name: '跑道清洁工'
+                    department: {
+                        name: '机务管理部－运营办公室'
+                    }
+                }
+            ]
+        }
+
+        @loadPositions()
+
+    loadPositions: () ->
+        self = @
+
+        @Position.$collection().$fetch({'per_page': 10000}).$asPromise().then (data) ->
+            self.positions = data
+            self.initialComplete = true
+
+    queryPositions: (text) ->
+        self = @
+
+        result = _.filter @positions, (position)->
+            _.includes position.name, text
+
+        return result
+
+    addSalaryPosition: (newPosition, positions) ->
+        if angular.isDefined newPosition
+            position = {
+                id: newPosition.id
+                name: newPosition.name
+                department: {
+                    name: newPosition.department.name
+                }
+            }
+
+            positions.push position
+
+    removeSalaryPosition: (remove, positions) ->
+        _.remove positions, (position)->
+            position.id == remove.id
+
+    compatFullName: (prefix, name) ->
+        return prefix + '-' + name
+
 
 app.controller 'salaryCtrl', SalaryController
 app.controller 'depNumSettingCtrl', DepNumSettingController
@@ -2634,3 +2695,4 @@ app.controller 'salaryOverviewCtrl', SalaryOverviewController
 app.controller 'birthSalaryCtrl', BirthSalaryController
 app.controller 'calcStepCtrl', CalcStepsController
 app.controller 'rewardsAllocationCtrl', RewardsAllocationController
+app.controller 'positionMapsCtrl', PositionMapsController
