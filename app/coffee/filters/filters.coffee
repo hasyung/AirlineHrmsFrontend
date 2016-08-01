@@ -80,3 +80,11 @@ module
             _.sortBy result, (item) ->
                 -item[key_name]
     ]
+
+    .filter 'salaryChannelMapId2Name', [()->
+        (input) ->
+            if input == '35'
+                out = '清洁工'
+
+            return out
+    ]

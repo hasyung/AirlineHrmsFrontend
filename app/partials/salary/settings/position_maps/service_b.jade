@@ -13,7 +13,7 @@
                     th 岗位
             tbody
                 tr(ng-repeat="(salaryType, positions) in ctrl.initialPositions")
-                    td.sm {{salaryType}}
+                    td.sm {{salaryType | salaryChannelMapId2Name}}
                     td
                         span.city-chip(
                             style="padding: 0 10px;"

@@ -2619,7 +2619,7 @@ class PositionMapsController extends nb.Controller
         @initialComplete = false
 
         @initialPositions = {
-            '清洁工': [
+            '35': [
                 {
                     id: 99999
                     name: '机坪清洁工'
