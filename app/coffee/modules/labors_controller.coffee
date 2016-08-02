@@ -649,6 +649,7 @@ class AttendanceCtrl extends nb.Controller
         params = {summary_date: @getDate(), hr_labor_relation_member_opinion: opinion}
 
         @http.put('/api/attendance_summaries/hr_labor_relation_member_check', params).then (data)->
+            console.log data
             self.tableData.$refresh()
             erorr_msg = data.$response.data.messages
             toaster.pop('info', '提示', erorr_msg || "审核成功")
