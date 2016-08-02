@@ -1,6 +1,21 @@
 .app-content-wrapper(flex ng-controller="salaryPersonalCtrl as ctrl" ng-init="ctrl.import_finish=true;")
     div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
 
+    //- 数据导入提示
+    .hoursFee-dialog-container(ng-if="ctrl.show_error_names")
+        .hoursFee-dialog()
+            md-toolbar.md-accent(md-theme="hrms")
+                .md-toolbar-tools
+                    span 数据导入提示(失败名单)
+            md-content.sticky-container
+                .info-body
+                    ul
+                        li.tcell(style="border-top: 1px solid #ddd;" ng-repeat="item in ctrl.error_names")
+                            .tbody {{item}}
+
+            .md-actions
+                md-button(ng-click="ctrl.show_error_names=false") 关闭
+
     div.ui-grid-container
         md-toolbar
             .md-toolbar-tools
@@ -23,8 +38,15 @@
                         flow-init="{target: '/api/attachments/upload_file', chunkSize: 10*1024*1024, allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
                         flow-files-submitted="ctrl.import_finish=false;$flow.upload();"
                         flow-file-success="ctrl.uploadShareFund(ctrl.parseJSON($message).id);"
-                        flex flow-btn
+                        flow-btn
                     ) 导入当前公积金
+                md-button.md-raised.md-primary(
+                    ng-disabled="!ctrl.import_finish"
+                    flow-init="{target: '/api/attachments/upload_file', chunkSize: 10*1024*1024, allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                    flow-files-submitted="ctrl.import_finish=false;$flow.upload();"
+                    flow-file-success="ctrl.uploadHoursFeeSetup(ctrl.parseJSON($message).id);"
+                    flow-btn
+                ) 导入小时费等级
 
         div(
             nb-grid

@@ -547,6 +547,8 @@ class SalaryPersonalController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryPersonSetup', 'toaster']
 
     constructor: (@http, $scope, $Evt, $enum, @SalaryPersonSetup, @toaster) ->
+        @show_error_names = false
+
         @tableState = null
         @exportSalarySettingUrl = ''
 
@@ -731,6 +733,24 @@ class SalaryPersonalController extends nb.Controller
 
         @http.post("/api/salary_person_setups/upload_share_fund", params).success (data, status) ->
             self.toaster.pop('success', '提示', '导入成功')
+            self.import_finish = true
+
+    uploadHoursFeeSetup: (attachment_id) ->
+        self = @
+        @show_error_names = false
+        params = {attachment_id: attachment_id}
+
+        @http.post("/api/salary_person_setups/import_hours_fee_setup", params).success (data, status) ->
+            if data.error_count > 0
+                self.show_error_names = true
+                self.error_names = data.error_names
+
+                self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
+                self.records.$refresh(tableState)
+            else
+                self.toaster.pop('success', '提示', '导入成功')
+                self.records.$refresh(tableState)
+
             self.import_finish = true
 
 
