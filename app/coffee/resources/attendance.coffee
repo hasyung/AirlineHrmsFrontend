@@ -13,6 +13,14 @@ Attendance = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('attendance:update:success', "考勤更新成功")
     }
 
+AttendanceDepartment = (restmod, RMUtils, $Evt) ->
+    AttendanceDepartment = restmod.model('/attendance_summaries/attendance_summary_department_list').mix 'nbRestApi', 'DirtyModel', {
+
+        $config:
+            jsonRootSingle: 'message'
+            jsonRootMany: 'messages'
+    }
+
 
 AttendanceSummary = (restmod, RMUtils, $Evt) ->
     AttendanceSummary = restmod.model('/attendance_summaries').mix 'nbRestApi', {
@@ -31,5 +39,8 @@ AttendanceSummary = (restmod, RMUtils, $Evt) ->
     }
 
 
+
+
 resources.factory 'Attendance', ['restmod', 'RMUtils', '$nbEvent', Attendance]
 resources.factory 'AttendanceSummary', ['restmod', 'RMUtils', '$nbEvent', AttendanceSummary]
+resources.factory 'AttendanceDepartment', ['restmod', 'RMUtils', '$nbEvent', AttendanceDepartment]

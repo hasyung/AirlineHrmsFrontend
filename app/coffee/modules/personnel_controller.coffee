@@ -31,11 +31,15 @@ app.config(Route)
 
 
 class PersonnelCtrl extends nb.Controller
-    @.$inject = ['$scope', 'sweet', 'Employee', 'CURRENT_ROLES', 'toaster', '$http', '$rootScope']
+    @.$inject = ['$scope', 'sweet', 'Employee', 'CURRENT_ROLES', 'toaster', '$http', '$rootScope', 'AttendanceDepartment']
 
-    constructor: (@scope, @sweet, @Employee, @CURRENT_ROLES, @toaster, @http, @rootScope) ->
+    constructor: (@scope, @sweet, @Employee, @CURRENT_ROLES, @toaster, @http, @rootScope, @AttendanceDepartment) ->
         @loadInitialData()
+        @loadAttendanceDepartments()
+
         @selectedIndex = 1
+
+        @attendanceImportDepartmentId = null
 
         @tableState = {}
 
@@ -105,6 +109,26 @@ class PersonnelCtrl extends nb.Controller
     loadInitialData: () ->
         @employees = @Employee.$collection().$fetch()
 
+    loadAttendanceDepartments: () ->
+        monthStr = ''
+
+        now = moment()
+        year = now.get('year')
+        month = now.get('month') + 1
+        date = now.get('date')
+
+        if date > 15
+            month = now.get('month') + 1
+        else
+            month =  now.get('month')
+
+        if month < 10
+            month = '0' + month
+
+        monthStr = year + '-' + month
+
+        @departments = @AttendanceDepartment.$collection().$fetch({summary_date: monthStr})
+
     search: (tableState) ->
         tableState = tableState || {}
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
@@ -137,7 +161,7 @@ class PersonnelCtrl extends nb.Controller
         .error (data) ->
             self.importing = false
 
-    uploadAttendance: (type, attachment_id)->
+    uploadAttendance: (type, attachment_id, departmentId, dialog)->
         self = @
         monthStr = ''
 
@@ -156,13 +180,14 @@ class PersonnelCtrl extends nb.Controller
 
         monthStr = year + '-' + month
 
-        params = {type: type, attachment_id: attachment_id, month: monthStr}
+        params = {type: type, attachment_id: attachment_id, month: monthStr, department_id: departmentId}
         @importing = true
 
         @http.post("/api/attendance_summaries/import", params).success (data, status) ->
             self.toaster.pop('success', '提示', '导入成功')
             self.importing = false
             self.rootScope.downloadUrl = data.path
+            dialog.close()
         .error (data) ->
             self.toaster.pop('error', '提示', '导入失败')
             self.importing = false
