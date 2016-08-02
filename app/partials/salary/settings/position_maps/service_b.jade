@@ -2,26 +2,26 @@
     .salary-basic(style="padding: 0;")
         md-toolbar
             .md-toolbar-tools
-                h2 服务b
+                h2 服务B
                 span(flex)
-                md-button.md-raised.md-primary(ng-disabled="!ctrl.initialComplete" style="margin-right: 0;") 保存
 
         table.tablexx.table-default.table-bordered
             thead
                 tr
                     th.sm 薪酬岗位
                     th 岗位
+                    th.mini
             tbody
-                tr(ng-repeat="(salaryType, positions) in ctrl.initialPositions")
-                    td.sm {{salaryType | salaryChannelMapId2Name}}
+                tr(ng-repeat="salaryChannel in ctrl.initialPositions track by salaryChannel.salaryId")
+                    td.sm {{salaryChannel.salaryCategory | salaryChannelMapId2Name}}
                     td
                         span.city-chip(
                             style="padding: 0 10px;"
-                            ng-repeat="position in positions track by position.id"
+                            ng-repeat="position in salaryChannel.positions track by position.id"
                             ) {{position.department.name}}-{{position.name}}
                             md-icon.md-warn(
                                 md-svg-src="/images/svg/close.svg"
-                                ng-click="ctrl.removeSalaryPosition(position, positions)"
+                                ng-click="ctrl.removeSalaryPosition(position, salaryChannel.positions); changed = true;"
                                 )
 
                         span(ng-click="adding=true" ng-hide="adding" class="add-chip" style="margin-left: 10px;")
@@ -34,7 +34,7 @@
                             md-no-cache=true
                             md-selected-item="selectedItem"
                             md-search-text="searchText"
-                            md-selected-item-change="ctrl.addSalaryPosition(item, positions);  searchText=null; selectedItem=null; adding=false;"
+                            md-selected-item-change="ctrl.addSalaryPosition(item, salaryChannel.positions);  searchText=null; selectedItem=null; adding=false; changed = true;"
                             md-items="item in ctrl.queryPositions(searchText)"
                             md-item-text="ctrl.compatFullName(item.department.name, item.name)"
                             md-min-length="0"
@@ -44,3 +44,11 @@
                                 span(ng-value="item.id") {{item.department.name}}-{{item.name}}
                             md-not-found
                                 | 没有可以匹配的岗位
+
+                    td
+                        md-button.md-raised.md-primary(
+                            ng-show="changed"
+                            ng-disabled="!ctrl.initialComplete"
+                            style="margin-right: 0;"
+                            ng-click="ctrl.saveServiceBRow(salaryChannel, salaryChannel.positions); changed = false;"
+                            ) 保存

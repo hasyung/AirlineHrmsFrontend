@@ -2612,10 +2612,11 @@ class RewardsAllocationController
         @http.put('/api/departments/reward_update', param).success (data)->
             self.toaster.pop('success', '提示', '修改成功')
 
-class PositionMapsController extends nb.Controller
-    @.$inject = ['$http', '$scope', 'toaster', 'Position']
 
-    constructor: (@http, @scope, @toaster, @Position)->
+class PositionMapsController extends nb.Controller
+    @.$inject = ['$http', '$scope', 'toaster', 'Position', 'SalaryPositionRelation']
+
+    constructor: (@http, @scope, @toaster, @Position, @SalaryPositionRelation)->
         @initialComplete = false
 
         @initialPositions = {
@@ -2637,7 +2638,12 @@ class PositionMapsController extends nb.Controller
             ]
         }
 
+        @initialData()
         @loadPositions()
+
+    initialData: () ->
+        @initialPositions = @SalaryPositionRelation.$collection().$fetch()
+
 
     loadPositions: () ->
         self = @
@@ -2655,6 +2661,8 @@ class PositionMapsController extends nb.Controller
         return result
 
     addSalaryPosition: (newPosition, positions) ->
+        isPositionExist = false
+
         if angular.isDefined newPosition
             position = {
                 id: newPosition.id
@@ -2664,7 +2672,15 @@ class PositionMapsController extends nb.Controller
                 }
             }
 
-            positions.push position
+            _.forEach positions, (item)->
+                if item.id == newPosition.id
+                    isPositionExist = true
+                    return
+
+            if !isPositionExist
+                positions.push position
+            else
+                @toaster.pop 'error', '警告', '所选岗位已存在'
 
     removeSalaryPosition: (remove, positions) ->
         _.remove positions, (position)->
@@ -2672,6 +2688,27 @@ class PositionMapsController extends nb.Controller
 
     compatFullName: (prefix, name) ->
         return prefix + '-' + name
+
+    saveServiceBRow: (salaryChannel, positions) ->
+        self = @
+
+        params = {}
+        positionIds = []
+
+        _.forEach positions, (item)->
+            positionIds.push item.id
+
+        params.salary_id = salaryChannel.salaryId
+        params.position_ids = positionIds
+
+        @http.put('/api/salary_position_relations/'+ salaryChannel.id, params).then (data)->
+            self.toaster.pop('success', '提示', "本行修改保存成功")
+
+
+
+
+
+
 
 
 app.controller 'salaryCtrl', SalaryController

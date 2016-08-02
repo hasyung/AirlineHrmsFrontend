@@ -1,5 +1,22 @@
 resources = angular.module('resources')
 
+SalaryPositionRelation = (restmod, RMUtils, $Evt) ->
+    restmod.model('/salary_position_relations').mix 'nbRestApi', 'DirtyModel', {
+
+        $hooks:
+            'after-update': ->
+                $Evt.$send('basic_salary:update:success', "更新成功")
+
+        $config:
+            jsonRootSingle: 'salary_position_relation'
+            jsonRootMany: 'salary_position_relations'
+
+        $extend:
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+    }
+
 
 BasicSalary = (restmod, RMUtils, $Evt) ->
     restmod.model('/basic_salaries').mix 'nbRestApi', 'DirtyModel', {
@@ -423,6 +440,7 @@ SalaryOverview = (restmod, RMUtils, $Evt) ->
     }
 
 
+resources.factory 'SalaryPositionRelation', ['restmod', 'RMUtils', '$nbEvent', SalaryPositionRelation]
 resources.factory 'BasicSalary', ['restmod', 'RMUtils', '$nbEvent', BasicSalary]
 resources.factory 'KeepSalary', ['restmod', 'RMUtils', '$nbEvent', KeepSalary]
 resources.factory 'PerformanceSalary', ['restmod', 'RMUtils', '$nbEvent', PerformanceSalary]
