@@ -617,6 +617,20 @@ class AttendanceCtrl extends nb.Controller
             angular.forEach self.tableData, (item)->
                 item.departmentHrChecked = true
 
+    administratorConfirm: (isConfirm)->
+        self = @
+
+        params = {summary_date: @getDate()}
+
+        @http.put('/api/attendance_summaries/administrator_check', params).then (data)->
+            self.tableData.$refresh()
+            erorr_msg = data.$response.data.messages
+            toaster.pop('info', '提示', erorr_msg || "确认成功")
+            item.hrDepartmentLeaderChecked = true
+
+            angular.forEach self.tableData, (item)->
+                item.hrDepartmentLeaderChecked = true
+
     departmentLeaderCheck: (opinion)->
         self = @
         params = {summary_date: @getDate(), department_leader_opinion: opinion}
