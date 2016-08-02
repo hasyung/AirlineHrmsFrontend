@@ -203,12 +203,12 @@ block hours_fee_setting
     div(layout)
         //- md-checkbox.md-primary(ng-model="current.isFlyerLandWork" ng-disabled="!exchangeCtrl.editing") 飞行停飞地面行政班
         md-checkbox.md-primary(ng-model="current.limitLeader" ng-disabled="!exchangeCtrl.editing") 飞行受限干部
-        md-checkbox.md-primary(ng-model="current.flyerStudentTrain" ng-disabled="!exchangeCtrl.editing") 飞行学员训练
 
 block allowance_setting
     div(layout)
         md-checkbox.md-primary(ng-model="current.isSendFlyerScience" ng-disabled="!exchangeCtrl.editing") 是否发放飞行驾驶技术津贴
         md-checkbox.md-primary(ng-model="current.isSendAirlineFee" ng-disabled="!exchangeCtrl.editing") 是否发放空勤灶
+        md-checkbox.md-primary(ng-model="current.flyerStudentTrain" ng-disabled="!exchangeCtrl.editing") 飞行学员训练
     div(layout ng-if="current.isSendFlyerScience")
         md-input-container.row-has-value(flex)
             label 飞行驾驶技术津贴
