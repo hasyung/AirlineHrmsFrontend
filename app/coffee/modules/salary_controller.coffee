@@ -746,11 +746,10 @@ class SalaryPersonalController extends nb.Controller
                 self.error_names = data.error_names
 
                 self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
-                self.records.$refresh(tableState)
+                self.salaryPersonSetups.$refresh()
             else
                 self.toaster.pop('success', '提示', '导入成功')
-                self.records.$refresh(tableState)
-
+                self.salaryPersonSetups.$refresh()
             self.import_finish = true
 
 
