@@ -610,12 +610,13 @@ class AttendanceCtrl extends nb.Controller
 
         @http.put('/api/attendance_summaries/department_hr_confirm', params).then (data)->
             self.tableData.$refresh()
-            erorr_msg = data.$response.data.messages if angular.isDefined data.$response
-            toaster.pop('info', '提示', erorr_msg || "确认成功")
             self.departmentHrChecked = true
 
             angular.forEach self.tableData, (item)->
                 item.departmentHrChecked = true
+
+            erorr_msg = data.$response.data.messages if angular.isDefined data.$response
+            self.toaster.pop('info', '提示', erorr_msg || "确认成功")
 
     administratorConfirm: (isConfirm)->
         self = @
@@ -624,12 +625,13 @@ class AttendanceCtrl extends nb.Controller
 
         @http.put('/api/attendance_summaries/administrator_check', params).then (data)->
             self.tableData.$refresh()
-            erorr_msg = data.$response.data.messages if angular.isDefined data.$response if angular.isDefined data.$response
-            toaster.pop('info', '提示', erorr_msg || "确认成功")
             item.hrDepartmentLeaderChecked = true
 
             angular.forEach self.tableData, (item)->
                 item.hrDepartmentLeaderChecked = true
+
+            erorr_msg = data.$response.data.messages if angular.isDefined data.$response
+            self.toaster.pop('info', '提示', erorr_msg || "确认成功")
 
     departmentLeaderCheck: (opinion)->
         self = @
@@ -637,12 +639,13 @@ class AttendanceCtrl extends nb.Controller
 
         @http.put('/api/attendance_summaries/department_leader_check', params).then (data)->
             self.tableData.$refresh()
-            erorr_msg = data.$response.data.messages if angular.isDefined data.$response
-            toaster.pop('info', '提示', erorr_msg || "审核成功")
             self.departmentLeaderChecked = true
 
             angular.forEach self.tableData, (item)->
                 item.departmentLeaderChecked = true
+
+            erorr_msg = data.$response.data.messages if angular.isDefined data.$response
+            self.toaster.pop('info', '提示', erorr_msg || "审核成功")
 
     laborManagerCheck: (opinion)->
         self = @
@@ -650,12 +653,13 @@ class AttendanceCtrl extends nb.Controller
 
         @http.put('/api/attendance_summaries/hr_labor_relation_member_check', params).then (data)->
             self.tableData.$refresh()
-            erorr_msg = data.$response.data.messages if angular.isDefined data.$response
-            toaster.pop('info', '提示', erorr_msg || "审核成功")
             self.hrLaborRelationMemberChecked = true
 
             angular.forEach self.tableData, (item)->
                 item.hrLaborRelationMemberChecked = true
+
+            erorr_msg = data.$response.data.messages if angular.isDefined data.$response
+            self.toaster.pop('info', '提示', erorr_msg || "审核成功")
 
     hrLeaderCheck: (opinion)->
         self = @
@@ -663,12 +667,13 @@ class AttendanceCtrl extends nb.Controller
 
         @http.put('/api/attendance_summaries/hr_leader_check', params).then (data)->
             self.tableData.$refresh()
-            erorr_msg = data.$response.data.messages if angular.isDefined data.$response
-            toaster.pop('info', '提示', erorr_msg || "审核成功")
             self.hrDepartmentLeaderChecked = true
 
             angular.forEach self.tableData, (item)->
                 item.hrDepartmentLeaderChecked = true
+
+            erorr_msg = data.$response.data.messages if angular.isDefined data.$response
+            self.toaster.pop('info', '提示', erorr_msg || "审核成功")
 
     search: (tableState)->
         tableState = tableState || {}
