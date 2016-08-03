@@ -625,7 +625,7 @@ class AttendanceCtrl extends nb.Controller
 
         @http.put('/api/attendance_summaries/administrator_check', params).then (data)->
             self.tableData.$refresh()
-            item.hrDepartmentLeaderChecked = true
+            self.hrDepartmentLeaderChecked = true
 
             angular.forEach self.tableData, (item)->
                 item.hrDepartmentLeaderChecked = true
