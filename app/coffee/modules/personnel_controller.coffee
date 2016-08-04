@@ -35,11 +35,11 @@ class PersonnelCtrl extends nb.Controller
 
     constructor: (@scope, @sweet, @Employee, @CURRENT_ROLES, @toaster, @http, @rootScope, @AttendanceDepartment) ->
         @loadInitialData()
-        @loadAttendanceDepartments()
 
         @selectedIndex = 1
 
         @attendanceImportDepartmentId = null
+        @attendanceImportMonth = null
 
         @tableState = {}
 
@@ -109,25 +109,11 @@ class PersonnelCtrl extends nb.Controller
     loadInitialData: () ->
         @employees = @Employee.$collection().$fetch()
 
+    loadMonthList: () ->
+        @$getFilterMonths()
+
     loadAttendanceDepartments: () ->
-        monthStr = ''
-
-        now = moment()
-        year = now.get('year')
-        month = now.get('month') + 1
-        date = now.get('date')
-
-        if date > 15
-            month = now.get('month') + 1
-        else
-            month =  now.get('month')
-
-        if month < 10
-            month = '0' + month
-
-        monthStr = year + '-' + month
-
-        @departments = @AttendanceDepartment.$collection().$fetch({summary_date: monthStr})
+        @departments = @AttendanceDepartment.$collection().$refresh({summary_date: @attendanceImportMonth})
 
     search: (tableState) ->
         tableState = tableState || {}
@@ -161,26 +147,26 @@ class PersonnelCtrl extends nb.Controller
         .error (data) ->
             self.importing = false
 
-    uploadAttendance: (type, attachment_id, departmentId, dialog)->
+    uploadAttendance: (type, attachment_id, departmentId, month, dialog)->
         self = @
-        monthStr = ''
+        # monthStr = ''
 
-        now = moment()
-        year = now.get('year')
-        month = now.get('month') + 1
-        date = now.get('date')
+        # now = moment()
+        # year = now.get('year')
+        # month = now.get('month') + 1
+        # date = now.get('date')
 
-        if date > 15
-            month = now.get('month') + 1
-        else
-            month =  now.get('month')
+        # if date > 15
+        #     month = now.get('month') + 1
+        # else
+        #     month =  now.get('month')
 
-        if month < 10
-            month = '0' + month
+        # if month < 10
+        #     month = '0' + month
 
-        monthStr = year + '-' + month
+        # monthStr = year + '-' + month
 
-        params = {type: type, attachment_id: attachment_id, month: monthStr, department_id: departmentId}
+        params = {type: type, attachment_id: attachment_id, month: month, department_id: departmentId}
         @importing = true
 
         @http.post("/api/attendance_summaries/import", params).success (data, status) ->

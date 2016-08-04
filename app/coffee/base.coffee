@@ -57,6 +57,21 @@ class Controller extends Base
     parseJSON: (data) ->
         angular.fromJson(data)
 
+    $multiply: (multiplier, multiplicand) ->
+        m = 0
+        s1 = multiplier.toString()
+        s2 = multiplicand.toString()
+
+        try
+            m += s1.split(".")[1].length
+        catch error
+        
+        try
+            m += s2.split(".")[1].length
+        catch error
+        
+        return Number(s1.replace(".", "")) * Number(s2.replace(".","")) / Math.pow(10,m)
+        
 
 class FilterController extends Controller
     onConditionInValid: ($Evt, invalid) ->

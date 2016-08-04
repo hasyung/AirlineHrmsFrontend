@@ -299,7 +299,7 @@ class SalaryController extends nb.Controller
                 self.toaster.pop('success', '提示', '配置已更新')
 
     calcAmount: (rate)->
-        parseInt(@basic_cardinality * parseFloat(rate))
+        @$multiply(@basic_cardinality, parseFloat(rate))
 
     calcRate: (amount)->
         if !@basic_cardinality || @basic_cardinality == 0
