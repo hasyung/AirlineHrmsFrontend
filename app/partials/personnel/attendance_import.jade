@@ -3,13 +3,19 @@ md-dialog.punishment_new(style="min-width: 450px;")
         .md-toolbar-tools
             span 考勤导入
     form(name="attendanceImportForm")
-        md-content(ng-init="departments = dialog.departments")
+        md-content
             fieldset
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 月份
+                        md-select.md-primary(ng-change="ctrl.loadAttendanceDepartments()" ng-model="ctrl.attendanceImportMonth" required placeholder="请选择月份")
+                            md-option(ng-repeat="month in ctrl.loadMonthList()" ng-value="month") {{month}}
+
                 div(layout)
                     md-input-container.row-has-value(flex)
                         label 部门
                         md-select.md-primary(ng-model="ctrl.attendanceImportDepartmentId" required placeholder="请选择部门")
-                            md-option(ng-value="department.departmentId" ng-repeat="department in departments track by department.departmentId") {{department.departmentName}}
+                            md-option(ng-value="department.departmentId" ng-repeat="department in ctrl.departments track by department.departmentId") {{department.departmentName}}
 
         .md-actions
             md-button(type="button" ng-click="dialog.close()") 取 消
@@ -17,7 +23,7 @@ md-dialog.punishment_new(style="min-width: 450px;")
                 ng-disabled="attendanceImportForm.$invalid || ctrl.importing"
                 flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads: true, testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
-                flow-file-success="ctrl.upload_start=false;ctrl.uploadAttendance('考勤导入', ctrl.parseJSON($message).id, ctrl.attendanceImportDepartmentId, dialog)"
+                flow-file-success="ctrl.upload_start=false;ctrl.uploadAttendance('考勤导入', ctrl.parseJSON($message).id, ctrl.attendanceImportDepartmentId, ctrl.attendanceImportMonth, dialog)"
                 flow-btn
                 type="button"
             ) 上传文件
