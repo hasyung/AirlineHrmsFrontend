@@ -16,7 +16,7 @@ md-dialog.punishment_new(style="min-width: 450px;")
             md-button.md-primary.md-raised(
                 ng-disabled=""
                 download
-                ng-href="/api/performance_salaries/export_point_base_salary?department_id={{ctrl.exportDepartmentId}}"
+                ng-href="/api/performance_salaries/export_point_base_salary?department_id={{ctrl.exportDepartmentId}}&month={{ctrl.currentCalcTime()}}"
                 href="javascript:"
                 ng-click="dialog.close()"
             ) 确定
