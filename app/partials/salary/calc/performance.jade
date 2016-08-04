@@ -20,6 +20,12 @@
                 span(flex)
 
                 md-button.md-primary.md-raised(
+                    nb-dialog
+                    template-url="/partials/salary/calc/export_performance.html"
+                    locals="{departments: ctrl.departmentsGradeOne}"
+                ) 导出绩效基数
+
+                md-button.md-primary.md-raised(
                     download
                     ng-href="/api/performance_salaries/export_base_salary?month={{ctrl.currentCalcTime()}}"
                     href="javascript:"

@@ -1,0 +1,22 @@
+md-dialog.punishment_new(style="min-width: 450px;")
+    md-toolbar.md-accent(md-theme="hrms")
+        .md-toolbar-tools
+            span 导出绩效基数
+    form(name="attendanceImportForm")
+        md-content(ng-init="departments = dialog.departments")
+            fieldset
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 部门
+                        md-select.md-primary(ng-model="ctrl.exportDepartmentId" required placeholder="请选择部门")
+                            md-option(ng-value="department.id" ng-repeat="department in departments track by department.id") {{department.name}}
+
+        .md-actions
+            md-button(type="button" ng-click="dialog.close()") 取 消
+            md-button.md-primary.md-raised(
+                ng-disabled=""
+                download
+                ng-href="/api/performance_salaries/export_point_base_salary?department_id={{ctrl.exportDepartmentId}}"
+                href="javascript:"
+                ng-click="dialog.close()"
+            ) 上传文件
