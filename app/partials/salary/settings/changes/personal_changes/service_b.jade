@@ -7,7 +7,7 @@ block vars
     - var hasPerformanceSetting = false
     - var hasAllowanceSetting = true
     - var hasCommunicate = true
-    - var hasServiceCarSetting = false
+    - var hasServiceCarSetting = true
     - var hasTempSetting = true
 
 block base_info
@@ -256,6 +256,14 @@ block communicate_setting
         md-input-container(flex)
             label 通讯补贴
             input(type="number" min="0" max="1000000" ng-model="current.communicateAllowance" ng-disabled="!exchangeCtrl.editing")
+
+block service_car_setting
+    div(layout)
+        md-checkbox.md-primary(ng-model="current.isSendTransportFee" ng-disabled="!exchangeCtrl.editing") 是否发放交通费
+    div(layout)
+        md-input-container(flex)
+            label 公务车报销额度
+            input(type="number" min="0" max="1000000" ng-model="current.officialCar" ng-disabled="!exchangeCtrl.editing")
 
 block temp_setting
     div(layout)
