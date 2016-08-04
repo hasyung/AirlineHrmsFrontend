@@ -1625,10 +1625,12 @@ class SalaryKeepController extends SalaryBaseController
 
 # 绩效工资
 class SalaryPerformanceController extends SalaryBaseController
-    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'PerformanceSalary', 'toaster', '$rootScope']
+    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'PerformanceSalary', 'toaster', '$rootScope', 'DEPARTMENTS']
 
-    constructor: (@http, $scope, $q, @Evt, @Employee, @PerformanceSalary, @toaster, @rootScope) ->
+    constructor: (@http, $scope, $q, @Evt, @Employee, @PerformanceSalary, @toaster, @rootScope, @DEPARTMENTS) ->
         super(@PerformanceSalary, $scope, $q, false, null, @rootScope)
+
+        @loadDepartments()
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
@@ -1752,6 +1754,10 @@ class SalaryPerformanceController extends SalaryBaseController
             .error (response)->
                 self.scope.resRecord = response.messages
                 params.status = "error"
+
+    loadDepartments: () ->
+        @departmentsGradeOne = _.filter @DEPARTMENTS, (department)->
+            department.grade.id == 3
 
 
 # 小时费
