@@ -736,6 +736,8 @@ class SalaryPersonalController extends nb.Controller
             self.import_finish = true
 
     uploadHoursFeeSetup: (attachment_id) ->
+        tableState = @tableState
+
         self = @
         @show_error_names = false
         params = {attachment_id: attachment_id}
@@ -746,10 +748,10 @@ class SalaryPersonalController extends nb.Controller
                 self.error_names = data.error_names
 
                 self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
-                self.salaryPersonSetups.$refresh()
+                self.salaryPersonSetups.$refresh(tableState)
             else
                 self.toaster.pop('success', '提示', '导入成功')
-                self.salaryPersonSetups.$refresh()
+                self.salaryPersonSetups.$refresh(tableState)
             self.import_finish = true
 
 
