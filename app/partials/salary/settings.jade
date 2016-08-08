@@ -1,8 +1,10 @@
 tabset(flex)
     tab(heading="薪酬全局设置" has-permission="salaries_global")
         include settings/global.jade
-    tab(heading="部门编号设置" has-permission="salaries_global")
+    tab(heading="部门编号设置" has-permission="departments_index")
         include settings/department_no.jade
+    tab(heading="薪酬岗位设置" has-permission="salary_position_relations_index")
+        include settings/position_map.jade
     tab(heading="基本工资设置" has-permission="salaries_basic")
         include settings/basic.jade
     tab(heading="考核性收入设置" has-permission="salaries_performance")
@@ -19,5 +21,5 @@ tabset(flex)
         include settings/communicate.jade
     tab(heading="寒冷补贴设置" has-permission="salaries_cold_subsidy")
         include settings/cold_subsidy.jade
-    tab(heading="公务车设置" has-permission="salaries_global")
+    tab(heading="公务车设置" has-permission="salaries_official_car_of_duty_rank")
         include settings/official_car.jade

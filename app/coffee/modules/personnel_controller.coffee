@@ -31,11 +31,15 @@ app.config(Route)
 
 
 class PersonnelCtrl extends nb.Controller
-    @.$inject = ['$scope', 'sweet', 'Employee', 'CURRENT_ROLES', 'toaster', '$http', '$rootScope']
+    @.$inject = ['$scope', 'sweet', 'Employee', 'CURRENT_ROLES', 'toaster', '$http', '$rootScope', 'AttendanceDepartment']
 
-    constructor: (@scope, @sweet, @Employee, @CURRENT_ROLES, @toaster, @http, @rootScope) ->
+    constructor: (@scope, @sweet, @Employee, @CURRENT_ROLES, @toaster, @http, @rootScope, @AttendanceDepartment) ->
         @loadInitialData()
+
         @selectedIndex = 1
+
+        @attendanceImportDepartmentId = null
+        @attendanceImportMonth = null
 
         @tableState = {}
 
@@ -105,6 +109,12 @@ class PersonnelCtrl extends nb.Controller
     loadInitialData: () ->
         @employees = @Employee.$collection().$fetch()
 
+    loadMonthList: () ->
+        @$getFilterMonths()
+
+    loadAttendanceDepartments: () ->
+        @departments = @AttendanceDepartment.$collection().$refresh({summary_date: @attendanceImportMonth})
+
     search: (tableState) ->
         tableState = tableState || {}
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
@@ -137,32 +147,33 @@ class PersonnelCtrl extends nb.Controller
         .error (data) ->
             self.importing = false
 
-    uploadAttendance: (type, attachment_id)->
+    uploadAttendance: (type, attachment_id, departmentId, month, dialog)->
         self = @
-        monthStr = ''
+        # monthStr = ''
 
-        now = moment()
-        year = now.get('year')
-        month = now.get('month') + 1
-        date = now.get('date')
+        # now = moment()
+        # year = now.get('year')
+        # month = now.get('month') + 1
+        # date = now.get('date')
 
-        if date > 15
-            month = now.get('month') + 1
-        else
-            month =  now.get('month')
+        # if date > 15
+        #     month = now.get('month') + 1
+        # else
+        #     month =  now.get('month')
 
-        if month < 10
-            month = '0' + month
+        # if month < 10
+        #     month = '0' + month
 
-        monthStr = year + '-' + month
+        # monthStr = year + '-' + month
 
-        params = {type: type, attachment_id: attachment_id, month: monthStr}
+        params = {type: type, attachment_id: attachment_id, month: month, department_id: departmentId}
         @importing = true
 
         @http.post("/api/attendance_summaries/import", params).success (data, status) ->
             self.toaster.pop('success', '提示', '导入成功')
             self.importing = false
             self.rootScope.downloadUrl = data.path
+            dialog.close()
         .error (data) ->
             self.toaster.pop('error', '提示', '导入失败')
             self.importing = false
@@ -1508,14 +1519,14 @@ class EmployeeAttendanceCtrl extends nb.Controller
         self = @
 
         @eventSources = []
-        keys = ["leaves", "late_or_early_leaves", "absences", "lands", "off_post_trains", "filigt_groundeds", "flight_ground_works"]
+        keys = ["leaves", "late_or_early_leaves", "absences", "lands", "off_post_trains", "flight_groundeds", "flight_ground_works"]
         colors = {
             "leaves": "#006600"
             "late_or_early_leaves": "#ffff66"
             "absences": "#ff0033"
             "lands": "#9933ff"
             "off_post_trains": "#0066ff"
-            "filigt_groundeds": "#ff6633"
+            "flight_groundeds": "#ff6633"
             "flight_ground_works": "#33ff00"
         }
 
@@ -1570,7 +1581,7 @@ class EmployeeAttendanceCtrl extends nb.Controller
                 self.eventSources.push(source)
 
             self.scope.vacations = data.attendance_records.vacations
-            self.scope.hasVacation = Object.keys(self.scope.vacations.year).length > 0
+            # self.scope.hasVacation = Object.keys(self.scope.vacations.year).length > 0
 
 class EmployeeTechnicalRecordsCtrl extends nb.Controller
     @.$inject = ['$scope', 'Employee']
@@ -1578,7 +1589,7 @@ class EmployeeTechnicalRecordsCtrl extends nb.Controller
     constructor: (@scope, @Employee)->
 
     loadRecords: (employee)->
-        @scope.records = employee.technicalRecords.$fetch()
+        @records = employee.technicalRecords.$refresh()
 
 
 

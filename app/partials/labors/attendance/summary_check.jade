@@ -7,10 +7,10 @@
                 div.grid-toolbar-row.year-and-month-container(layout)
                     label.row-text 月度：
                     .year-and-month(layout style="width: 120px;")
-                        md-select.year(ng-model="ctrl.year" ng-change="ctrl.exeSearch(); ctrl.loadMonthList()")
+                        md-select.year(ng-model="ctrl.year" ng-change="ctrl.exeSearch(ctrl.tableData.$metadata.department_id); ctrl.loadMonthList()")
                             md-option(ng-value="item" ng-repeat="item in ctrl.year_list" ng-bind="item")
 
-                        md-select.month(ng-model="ctrl.month" ng-change="ctrl.exeSearch()" placeholder="请选择月份")
+                        md-select.month(ng-model="ctrl.month" ng-change="ctrl.exeSearch(ctrl.tableData.$metadata.department_id)" placeholder="请选择月份")
                             md-option(ng-value="item" ng-repeat="item in ctrl.month_list" ng-bind="item")
 
                     span.row-text.last {{ctrl.tableData.$metadata.status}}
@@ -45,6 +45,14 @@
                             ng-change="ctrl.exeSearch()"
                             )
                 span(flex)
+
+                md-button.md-primary.md-raised(
+                    has-permission="attendance_summaries_administrator_check"
+                    ng-disabled="!ctrl.hrLaborRelationMemberChecked"
+                    nb-confirm="ctrl.administratorConfirm()"
+                    nb-title="管理员确认考勤"
+                    nb-content="确认本部门{{ctrl.year}}-{{ctrl.month}}考勤已完成统计，进入后续审批。"
+                ) 管理员确认考勤
 
                 md-button.md-primary.md-raised(
                     has-permission="attendance_summaries_department_hr_confirm"

@@ -73,6 +73,11 @@
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
                                 flow-file-success="ctrl.upload_start=false;ctrl.upload_allowance('年审补贴', ctrl.parseJSON($message).id);")
                                 md-button(flex flow-btn type="button") 年审补贴
+                            md-menu-item(
+                                flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
+                                flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                                flow-file-success="ctrl.upload_start=false;ctrl.upload_allowance('航材搬运补贴', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 航材搬运补贴
 
                 span
                     md-button.md-raised.md-primary(

@@ -25,8 +25,12 @@ md-dialog.punishment_new(style="min-width: 450px;")
                         input(ng-model="::current.position.name" readonly)
                 div(layout)
                     md-input-container(flex)
-                        label 技术等级
-                        input(type="text" ng-model="params.technical" required)
+                        label 原技术等级
+                        input(type="text" ng-model="::current.technical" readonly)
+                div(layout)
+                    md-input-container(flex)
+                        label 变更后技术等级
+                        input(type="text" ng-model="params.technical")
                 div(layout)
                     md-input-container(flex)
                         label 变更日期

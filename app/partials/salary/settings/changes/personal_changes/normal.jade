@@ -372,6 +372,8 @@ block communicate_setting
 
 block service_car_setting
     div(layout)
+        md-checkbox.md-primary(ng-model="current.isSendTransportFee" ng-disabled="!exchangeCtrl.editing") 是否发放交通费
+    div(layout)
         md-input-container(flex)
             label 公务车报销额度
             input(type="number" min="0" max="1000000" ng-model="current.officialCar" ng-disabled="!exchangeCtrl.editing")

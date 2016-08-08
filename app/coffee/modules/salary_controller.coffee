@@ -299,7 +299,7 @@ class SalaryController extends nb.Controller
                 self.toaster.pop('success', '提示', '配置已更新')
 
     calcAmount: (rate)->
-        parseInt(@basic_cardinality * parseFloat(rate))
+        @$multiply(@basic_cardinality, parseFloat(rate))
 
     calcRate: (amount)->
         if !@basic_cardinality || @basic_cardinality == 0
@@ -547,6 +547,8 @@ class SalaryPersonalController extends nb.Controller
     @.$inject = ['$http', '$scope', '$nbEvent', '$enum', 'SalaryPersonSetup', 'toaster']
 
     constructor: (@http, $scope, $Evt, $enum, @SalaryPersonSetup, @toaster) ->
+        @show_error_names = false
+
         @tableState = null
         @exportSalarySettingUrl = ''
 
@@ -731,6 +733,25 @@ class SalaryPersonalController extends nb.Controller
 
         @http.post("/api/salary_person_setups/upload_share_fund", params).success (data, status) ->
             self.toaster.pop('success', '提示', '导入成功')
+            self.import_finish = true
+
+    uploadHoursFeeSetup: (attachment_id) ->
+        tableState = @tableState
+
+        self = @
+        @show_error_names = false
+        params = {attachment_id: attachment_id}
+
+        @http.post("/api/salary_person_setups/import_hours_fee_setup", params).success (data, status) ->
+            if data.error_count > 0
+                self.show_error_names = true
+                self.error_names = data.error_names
+
+                self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
+                self.salaryPersonSetups.$refresh(tableState)
+            else
+                self.toaster.pop('success', '提示', '导入成功')
+                self.salaryPersonSetups.$refresh(tableState)
             self.import_finish = true
 
 
@@ -1613,10 +1634,12 @@ class SalaryKeepController extends SalaryBaseController
 
 # 绩效工资
 class SalaryPerformanceController extends SalaryBaseController
-    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'PerformanceSalary', 'toaster', '$rootScope']
+    @.$inject = ['$http', '$scope', '$q', '$nbEvent', 'Employee', 'PerformanceSalary', 'toaster', '$rootScope', 'DEPARTMENTS']
 
-    constructor: (@http, $scope, $q, @Evt, @Employee, @PerformanceSalary, @toaster, @rootScope) ->
+    constructor: (@http, $scope, $q, @Evt, @Employee, @PerformanceSalary, @toaster, @rootScope, @DEPARTMENTS) ->
         super(@PerformanceSalary, $scope, $q, false, null, @rootScope)
+
+        @loadDepartments()
 
         @filterOptions = angular.copy(SALARY_FILTER_DEFAULT)
 
@@ -1740,6 +1763,10 @@ class SalaryPerformanceController extends SalaryBaseController
             .error (response)->
                 self.scope.resRecord = response.messages
                 params.status = "error"
+
+    loadDepartments: () ->
+        @departmentsGradeOne = _.filter @DEPARTMENTS, (department)->
+            department.grade.id == 3
 
 
 # 小时费
@@ -1981,6 +2008,7 @@ class SalaryAllowanceController extends SalaryBaseController
             {minWidth: 150,displayName: '后援补贴', name: 'backupSubsidy', enableCellEdit: false}
             {minWidth: 150,displayName: '年审补贴', name: 'annualAuditSubsidy', enableCellEdit: false}
             {minWidth: 150,displayName: '维修补贴', name: 'maintainSubsidy', enableCellEdit: false}
+            {minWidth: 150,displayName: '航材搬运补贴', name: 'materialHandlingSubsidy', enableCellEdit: false}
             {minWidth: 150,displayName: '后勤保障部补贴', name: 'logisticalSupportSubsidy', enableCellEdit: false}
             {minWidth: 150,displayName: '值班工资', name: 'watchSubsidy', enableCellEdit: false}
             {minWidth: 150,displayName: '重庆兼职车辆维修班补贴', name: 'cqPartTimeFixCarSubsidy', enableCellEdit: false}
@@ -2175,9 +2203,9 @@ class SalaryRewardController extends SalaryBaseController
             {minWidth: 150,displayName: '货运目标责任书季度奖', name: 'freightQualityFee', enableCellEdit: false}
             {minWidth: 150,displayName: '收益奖励金', name: 'earningsFee', enableCellEdit: false}
             {minWidth: 150,displayName: '品牌质量考核奖', name: 'brandQualityFee', enableCellEdit: false}
-            {minWidth: 150,displayName: '预算外奖励', name: 'offBudgetFee', enableCellEdit: false}
+            {minWidth: 150,displayName: '内部奖惩', name: 'offBudgetFee', enableCellEdit: false}
             {minWidth: 150,displayName: '节油奖', name: 'saveOilFee', enableCellEdit: false}
-            {minWidth: 150,displayName: '经济型扣罚', name: 'cashFineFee', enableCellEdit: false}
+            {minWidth: 150,displayName: '其他事件性奖惩', name: 'cashFineFee', enableCellEdit: false}
             {minWidth: 150,displayName: '补扣发', name: 'addGarnishee', headerCellClass: 'editable_cell_header'}
             {
                 minWidth: 150
@@ -2620,6 +2648,104 @@ class RewardsAllocationController
             self.toaster.pop('success', '提示', '修改成功')
 
 
+class PositionMapsController extends nb.Controller
+    @.$inject = ['$http', '$scope', 'toaster', 'Position', 'SalaryPositionRelation']
+
+    constructor: (@http, @scope, @toaster, @Position, @SalaryPositionRelation)->
+        @initialComplete = false
+
+        @initialPositions = {
+            '35': [
+                {
+                    id: 99999
+                    name: '机坪清洁工'
+                    department: {
+                        name: '机务管理部－技术办公室'
+                    }
+                }
+                {
+                    id: 99998
+                    name: '跑道清洁工'
+                    department: {
+                        name: '机务管理部－运营办公室'
+                    }
+                }
+            ]
+        }
+
+        @initialData()
+        @loadPositions()
+
+    initialData: () ->
+        @initialPositions = @SalaryPositionRelation.$collection().$fetch()
+
+
+    loadPositions: () ->
+        self = @
+
+        @Position.$collection().$fetch({'per_page': 10000}).$asPromise().then (data) ->
+            self.positions = data
+            self.initialComplete = true
+
+    queryPositions: (text) ->
+        self = @
+
+        result = _.filter @positions, (position)->
+            _.includes position.name, text
+
+        return result
+
+    addSalaryPosition: (newPosition, positions) ->
+        isPositionExist = false
+
+        if angular.isDefined newPosition
+            position = {
+                id: newPosition.id
+                name: newPosition.name
+                department: {
+                    name: newPosition.department.name
+                }
+            }
+
+            _.forEach positions, (item)->
+                if item.id == newPosition.id
+                    isPositionExist = true
+                    return
+
+            if !isPositionExist
+                positions.push position
+            else
+                @toaster.pop 'error', '警告', '所选岗位已存在'
+
+    removeSalaryPosition: (remove, positions) ->
+        _.remove positions, (position)->
+            position.id == remove.id
+
+    compatFullName: (prefix, name) ->
+        return prefix + '-' + name
+
+    saveServiceBRow: (salaryChannel, positions) ->
+        self = @
+
+        params = {}
+        positionIds = []
+
+        _.forEach positions, (item)->
+            positionIds.push item.id
+
+        params.salary_id = salaryChannel.salaryId
+        params.position_ids = positionIds
+
+        @http.put('/api/salary_position_relations/'+ salaryChannel.id, params).then (data)->
+            self.toaster.pop('success', '提示', "本行修改保存成功")
+
+
+
+
+
+
+
+
 app.controller 'salaryCtrl', SalaryController
 app.controller 'depNumSettingCtrl', DepNumSettingController
 app.controller 'salaryPersonalCtrl', SalaryPersonalController
@@ -2641,3 +2767,4 @@ app.controller 'salaryOverviewCtrl', SalaryOverviewController
 app.controller 'birthSalaryCtrl', BirthSalaryController
 app.controller 'calcStepCtrl', CalcStepsController
 app.controller 'rewardsAllocationCtrl', RewardsAllocationController
+app.controller 'positionMapsCtrl', PositionMapsController

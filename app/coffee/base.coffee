@@ -57,6 +57,21 @@ class Controller extends Base
     parseJSON: (data) ->
         angular.fromJson(data)
 
+    $multiply: (multiplier, multiplicand) ->
+        m = 0
+        s1 = multiplier.toString()
+        s2 = multiplicand.toString()
+
+        try
+            m += s1.split(".")[1].length
+        catch error
+        
+        try
+            m += s2.split(".")[1].length
+        catch error
+        
+        return Number(s1.replace(".", "")) * Number(s2.replace(".","")) / Math.pow(10,m)
+        
 
 class FilterController extends Controller
     onConditionInValid: ($Evt, invalid) ->
@@ -213,14 +228,18 @@ class NewFlowCtrl
 class NewMyRequestCtrl extends NewFlowCtrl
     @.$inject = ['$scope', '$http', '$timeout', '$state', 'USER_META', 'toaster', '$nbEvent', 'Employee', 'VACATIONS']
 
-    constructor: (scope, $http, $timeout, $state, meta, toaster, @Evt, @Employee, vacations) ->
-        super(scope, $http, $state, meta, toaster, vacations) # 手动注入父类实例化参数
+    constructor: (scope, $http, $timeout, $state, meta, @toaster, @Evt, @Employee, vacations) ->
+        super(scope, $http, $state, meta, @toaster, vacations) # 手动注入父类实例化参数
         self = @
 
         scope.request = {}
         scope.calculating = false
         scope.start_times = []
         scope.end_times = []
+
+        scope.isRequestLegal = true
+
+        console.log vacations
 
         enableCalculating = ->
             scope.calculating = true
@@ -271,6 +290,19 @@ class NewMyRequestCtrl extends NewFlowCtrl
                 $http.get('/api/vacations/calc_days', {params: request_data}).success (data, status)->
                     $timeout disableCalculating, 2000
                     scope.vacation_days = data.vacation_days
+                    scope.isRequestLegal = self.isVacationLegal(vacation_type, vacations, scope.vacation_days)
+
+    # 检测有限假期的规则
+    isVacationLegal: (type, vacations, calcDays) ->
+        if type == '年假' && vacations.year_days.total < calcDays
+            @toaster.pop('error', '提示', '剩余年假不足')
+            return false
+        if type == '补休假' && vacations.offset_days < calcDays
+            @toaster.pop('error', '提示', '剩余补休假不足')
+            return false
+
+        return true
+
 
 
 app.controller('EditableResourceCtrl', EditableResourceCtrl)

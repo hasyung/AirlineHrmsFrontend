@@ -7,7 +7,7 @@
                 span(flex)
                 span
                     md-menu(ng-if="ctrl.isDepartmentHr()")
-                        md-button.md-primary.md-raised(ng-click="$mdOpenMenu($event)" ng-disabled="!ctrl.getSelected()") 代请假
+                        md-button.md-primary.md-raised(ng-click="$mdOpenMenu($event)" ng-disabled="!ctrl.getSelected() || ctrl.importing") 代请假
                         md-menu-content
                             md-menu-item()
                                 a.md-button(
@@ -77,12 +77,51 @@
                                     template-url="partials/self/my_requests/leave/abortion_leave5.html") 产假(流产)
 
                 md-button.md-primary.md-raised(
-                     ng-if="ctrl.isDepartmentHr()"
-                    ng-disabled="!ctrl.getSelected()"
+                    ng-if="ctrl.isDepartmentHr()"
+                    ng-disabled="!ctrl.getSelected() || ctrl.importing"
                     nb-dialog
                     template-url="/partials/labors/attendance/new.html"
                     locals="{current: ctrl.getSelected()}"
                 ) 新增考勤
+
+                md-button.md-primary.md-raised(
+                    ng-disabled="ctrl.importing"
+                    has-permission="special_states_temporarily_stop_air_duty"
+                    nb-dialog
+                    template-url="partials/personnel/move/stop_flight.html"
+                ) 空勤停飞设置
+
+                md-button.md-primary.md-raised(
+                    ng-disabled="ctrl.importing"
+                    has-permission="special_states_temporarily_transfer"
+                    nb-dialog
+                    template-url="partials/personnel/move/borrow.html"
+                ) 借调设置
+
+                md-button.md-primary.md-raised(
+                    ng-disabled="ctrl.importing"
+                    has-permission="special_states_temporarily_defend"
+                    nb-dialog
+                    template-url="partials/personnel/move/accredit.html"
+                ) 派驻设置
+
+                md-button.md-primary.md-raised(
+                    ng-disabled="ctrl.importing"
+                    has-permission="special_states_temporarily_business_trip"
+                    nb-dialog
+                    template-url="partials/personnel/move/on_business.html"
+                ) 新增出差
+
+                md-button.md-primary.md-raised(
+                    has-permission="vacation_import_annual_days"
+                    flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads: true, testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
+                    flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                    flow-file-success="ctrl.upload_start=false;ctrl.uploadAnnualDays('年假导入', ctrl.parseJSON($message).id);"
+                    flow-btn
+                    type="button"
+                    ng-disabled="ctrl.importing"
+                ) 年假导入
+                
 
         div(
             nb-grid
