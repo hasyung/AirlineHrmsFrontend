@@ -423,8 +423,8 @@ class BossLaborsController extends nb.Controller
             month: month
         }
 
-        # @newEmployees = @Employee.$collection().$fetch(tableParam)
-        # @LeaveEmployees = @LeaveEmployees.$collection().$fetch(tableParam)
+        @newEmployees = @Employee.$collection().$fetch(tableParam)
+        @LeaveEmployees = @LeaveEmployees.$collection().$fetch(tableParam)
         @reports = @ReportNeedToKnow.$collection().$fetch({department_name: '劳动关系管理室'})
 
     loadChartData: () ->
@@ -452,10 +452,8 @@ class BossLaborsController extends nb.Controller
                 self.initialDataCompleted = true
             .error (msg) ->
 
-        @newEmployees = @Employee.$collection().$fetch(tableParam)
-        @LeaveEmployees = @LeaveEmployees.$collection().$fetch(tableParam)
-        # @newEmployees.$refresh(tableParam)
-        # @LeaveEmployees.$refresh(tableParam)
+        @newEmployees.$refresh(tableParam)
+        @LeaveEmployees.$refresh(tableParam)
 
     isImgObj: (obj)->
         return /jpg|jpeg|png|gif/.test(obj.type)
