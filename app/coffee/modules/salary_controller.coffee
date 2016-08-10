@@ -736,6 +736,8 @@ class SalaryPersonalController extends nb.Controller
             self.import_finish = true
 
     uploadHoursFeeSetup: (attachment_id) ->
+        tableState = @tableState
+
         self = @
         @show_error_names = false
         params = {attachment_id: attachment_id}
@@ -746,10 +748,10 @@ class SalaryPersonalController extends nb.Controller
                 self.error_names = data.error_names
 
                 self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
-                self.salaryPersonSetups.$refresh()
+                self.salaryPersonSetups.$refresh(tableState)
             else
                 self.toaster.pop('success', '提示', '导入成功')
-                self.salaryPersonSetups.$refresh()
+                self.salaryPersonSetups.$refresh(tableState)
             self.import_finish = true
 
 
@@ -1757,7 +1759,7 @@ class SalaryPerformanceController extends SalaryBaseController
 
     loadDepartments: () ->
         @departmentsGradeOne = _.filter @DEPARTMENTS, (department)->
-            department.grade.id == 3
+            department.xdepth == 2
 
 
 # 小时费
@@ -1999,6 +2001,7 @@ class SalaryAllowanceController extends SalaryBaseController
             {minWidth: 150,displayName: '后援补贴', name: 'backupSubsidy', enableCellEdit: false}
             {minWidth: 150,displayName: '年审补贴', name: 'annualAuditSubsidy', enableCellEdit: false}
             {minWidth: 150,displayName: '维修补贴', name: 'maintainSubsidy', enableCellEdit: false}
+            {minWidth: 150,displayName: '航材搬运补贴', name: 'materialHandlingSubsidy', enableCellEdit: false}
             {minWidth: 150,displayName: '后勤保障部补贴', name: 'logisticalSupportSubsidy', enableCellEdit: false}
             {minWidth: 150,displayName: '值班工资', name: 'watchSubsidy', enableCellEdit: false}
             {minWidth: 150,displayName: '重庆兼职车辆维修班补贴', name: 'cqPartTimeFixCarSubsidy', enableCellEdit: false}
