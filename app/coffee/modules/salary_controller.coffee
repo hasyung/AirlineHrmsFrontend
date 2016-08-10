@@ -1759,7 +1759,7 @@ class SalaryPerformanceController extends SalaryBaseController
 
     loadDepartments: () ->
         @departmentsGradeOne = _.filter @DEPARTMENTS, (department)->
-            department.grade.id == 3
+            department.xdepth == 2
 
 
 # 小时费
