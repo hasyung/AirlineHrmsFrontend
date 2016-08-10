@@ -423,8 +423,8 @@ class BossLaborsController extends BossBaseController
             month: month
         }
 
-        @newEmployees = @Employee.$collection().$fetch(tableParam)
-        @LeaveEmployees = @LeaveEmployees.$collection().$fetch(tableParam)
+        # @newEmployees = @Employee.$collection().$fetch(tableParam)
+        # @LeaveEmployees = @LeaveEmployees.$collection().$fetch(tableParam)
 
     loadChartData: () ->
         self = @
@@ -451,8 +451,8 @@ class BossLaborsController extends BossBaseController
                 self.initialDataCompleted = true
             .error (msg) ->
 
-        @newEmployees.$refresh(tableParam)
-        @LeaveEmployees.$refresh(tableParam)
+        # @newEmployees.$refresh(tableParam)
+        # @LeaveEmployees.$refresh(tableParam)
 
     dataFormatForBar: (data) ->
         config = {}
