@@ -243,25 +243,24 @@ ATTENDANCE_SUMMERY_DEFS= [
     {width:100, displayName: '病假', name: 'sickLeave'}
     {width:130, displayName: '病假（工伤待定）', name: 'sickLeaveInjury'}
     {width:130, displayName: '病假（怀孕待产）', name: 'sickLeaveNulliparous'}
+    {width:100, displayName: '病假总计', name: 'sickDays'}
+    {width:100, displayName: '病假工作日', name: 'sickWorkDays'}
     {width:100, displayName: '事假', name: 'personalLeave'}
+    {width:100, displayName: '事假工作日', name: 'personalLeaveWorkDays'}
     {width:100, displayName: '公假', name: 'publicLeave'}
     {width:100, displayName: '探亲假', name: 'homeLeave'}
-    {width:100, displayName: '驻站地点', name: 'stationPlace'}
+    {width:120, displayName: '探亲假工作日', name: 'homeLeaveWorkDays'}
     {width:100, displayName: '培训', name: 'cultivate'}
+    {width:100, displayName: '培训工作日', name: 'cultivateWorkDays'}
     {width:100, displayName: '出差', name: 'evection'}
+    {width:100, displayName: '出差工作日', name: 'evectionWorkDays'}
     {width:100, displayName: '旷工', name: 'absenteeism'}
     {width:100, displayName: '迟到早退', name: 'lateOrLeave'}
     {width:100, displayName: '空勤停飞', name: 'ground'}
+    {width:120, displayName: '空勤停飞工作日', name: 'flightGroundedWorkDays'}
     {width:120, displayName: '空勤地面工作', name: 'surfaceWork'}
     {width:100, displayName: '驻站天数', name: 'stationDays'}
     {width:100, displayName: '驻站地点', name: 'stationPlace'}
-    {width:100, displayName: '病假总计', name: 'sickDays'}
-    {width:100, displayName: '病假工作日', name: 'sickWorkDays'}
-    {width:100, displayName: '事假工作日', name: 'personalLeaveWorkDays'}
-    {width:120, displayName: '探亲假工作日', name: 'homeLeaveWorkDays'}
-    {width:100, displayName: '出差工作日', name: 'evectionWorkDays'}
-    {width:100, displayName: '培训工作日', name: 'cultivateWorkDays'}
-    {width:120, displayName: '空勤停飞工作日', name: 'flightGroundedWorkDays'}
     {width:100, displayName: '备注', name: 'remark'}
 ]
 
@@ -287,24 +286,24 @@ ATTENDANCE_SUMMERY_HIS_DEFS= [
     {width:100, displayName: '病假', name: 'sickLeave'}
     {width:130, displayName: '病假（工伤待定）', name: 'sickLeaveInjury'}
     {width:130, displayName: '病假（怀孕待产）', name: 'sickLeaveNulliparous'}
+    {width:100, displayName: '病假总计', name: 'sickDays'}
+    {width:100, displayName: '病假工作日', name: 'sickWorkDays'}
     {width:100, displayName: '事假', name: 'personalLeave'}
+    {width:100, displayName: '事假工作日', name: 'personalLeaveWorkDays'}
     {width:100, displayName: '公假', name: 'publicLeave'}
     {width:100, displayName: '探亲假', name: 'homeLeave'}
+    {width:120, displayName: '探亲假工作日', name: 'homeLeaveWorkDays'}
     {width:100, displayName: '培训', name: 'cultivate'}
+    {width:100, displayName: '培训工作日', name: 'cultivateWorkDays'}
     {width:100, displayName: '出差', name: 'evection'}
+    {width:100, displayName: '出差工作日', name: 'evectionWorkDays'}
     {width:100, displayName: '旷工', name: 'absenteeism'}
     {width:100, displayName: '迟到早退', name: 'lateOrLeave'}
     {width:100, displayName: '空勤停飞', name: 'ground'}
+    {width:120, displayName: '空勤停飞工作日', name: 'flightGroundedWorkDays'}
     {width:120, displayName: '空勤地面工作', name: 'surfaceWork'}
     {width:100, displayName: '驻站天数', name: 'stationDays'}
     {width:100, displayName: '驻站地点', name: 'stationPlace'}
-    {width:100, displayName: '病假总计', name: 'sickDays'}
-    {width:100, displayName: '病假工作日', name: 'sickWorkDays'}
-    {width:100, displayName: '事假工作日', name: 'personalLeaveWorkDays'}
-    {width:120, displayName: '探亲假工作日', name: 'homeLeaveWorkDays'}
-    {width:100, displayName: '出差工作日', name: 'evectionWorkDays'}
-    {width:100, displayName: '培训工作日', name: 'cultivateWorkDays'}
-    {width:120, displayName: '空勤停飞工作日', name: 'flightGroundedWorkDays'}
     {width:100, displayName: '备注', name: 'remark'}
 ]
 
