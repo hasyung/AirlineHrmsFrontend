@@ -182,11 +182,12 @@ class BossBaseController extends nb.Controller
         @currentYear + "-" + @currentMonth
 
 
-class BossLaborsController extends nb.Controller
+class BossLaborsController extends BossBaseController
     @.$inject = ['$scope', '$http', 'Employee', 'LeaveEmployees', 'ReportNeedToKnow', 'REPORT_CHECKER']
 
     constructor: (@scope, @http, @Employee, @LeaveEmployees, @ReportNeedToKnow, @reportCheckers) ->
-        @initialDataCompleted = false
+        super(@scope, @http, @ReportNeedToKnow, '劳动关系管理室')
+
         @datasType = '公司人员进出'
         @showChartInDialog = true
         @tableTypeInDialog = '新进员工'
@@ -425,7 +426,6 @@ class BossLaborsController extends nb.Controller
 
         @newEmployees = @Employee.$collection().$fetch(tableParam)
         @LeaveEmployees = @LeaveEmployees.$collection().$fetch(tableParam)
-        @reports = @ReportNeedToKnow.$collection().$fetch({department_name: '劳动关系管理室'})
 
     loadChartData: () ->
         self = @
@@ -454,29 +454,6 @@ class BossLaborsController extends nb.Controller
 
         @newEmployees.$refresh(tableParam)
         @LeaveEmployees.$refresh(tableParam)
-
-    isImgObj: (obj)->
-        return /jpg|jpeg|png|gif/.test(obj.type)
-
-    loadMonthList: () ->
-        if @currentYear == new Date().getFullYear()
-            months = [1..new Date().getMonth() + 1]
-        else
-            months = [1..12]
-
-        @month_list = _.map months, (item)->
-            item = '0' + item if item < 10
-            item + ''
-
-    loadDateTime: ()->
-        @year_list = @$getYears()
-        @month_list = @$getMonths()
-
-        @currentYear = _.last(@year_list)
-        @currentMonth = _.last(@month_list)
-
-    currentCalcTime: ()->
-        @currentYear + "-" + @currentMonth
 
     dataFormatForBar: (data) ->
         config = {}
