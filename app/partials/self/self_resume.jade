@@ -1,3 +1,7 @@
-md-dialog.self-resume(ng-init="current = dialog.currentUser; ctrl = dialog.ctrl")
+md-dialog.self-resume(ng-init="current = dialog.currentUser.$refresh();\
+						ctrl = dialog.ctrl;\
+						resume=current.resume;\
+						ctrl.distinguish(current.resume);\
+						")
     md-content
         include ../personnel/personnel_resume
