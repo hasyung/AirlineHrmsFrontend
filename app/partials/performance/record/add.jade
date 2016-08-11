@@ -1,4 +1,4 @@
-md-dialog.sample-dialog(ng-init="request = {};params = {status:'init'}; ctrl = dialog.ctrl")
+md-dialog.sample-dialog(ng-init="request = {};params = {status:'init'}; ctrl = dialog.ctrl; departments = dialog.departments")
     md-content
         form(ng-submit="ctrl.uploadPerformance(request, params)")
             md-toolbar.md-accent(md-theme="hrms")
@@ -15,6 +15,12 @@ md-dialog.sample-dialog(ng-init="request = {};params = {status:'init'}; ctrl = d
                         label 考核时段
                         md-select(ng-model="request.assessTime" placeholder="请选择考核时段")
                             md-option(ng-value="item" ng-repeat="item in ctrl.getDateOptions('year') track by $index") {{item}}
+                div(layout)
+                    md-input-container(flex)
+                        label 考核部门
+                        md-select.md-primary(ng-model="request.departmentId" required placeholder="请选择部门")
+                            md-option(ng-value="department.id" ng-repeat="department in departments track by department.id") {{department.name}}
+
                 div(nb-file-upload ng-model="request.file_id" single-file)
             .dialog-content.loading(ng-if="params.status == 'uploading'" layout-align="center")
                  md-progress-circular.md-hue-2(md-mode="indeterminate")

@@ -1747,6 +1747,7 @@ class SalaryPerformanceController extends SalaryBaseController
 
         # 年度的时候 assessTime 是整数
         request.assess_time = moment(new Date(new String(request.assessTime))).format "YYYY-MM-DD"
+        request.department_id = request.departmentId
         params.status = "uploading"
 
         @http.post("/api/performance_salaries/import", request)
