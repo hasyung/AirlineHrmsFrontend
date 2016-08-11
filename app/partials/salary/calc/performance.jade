@@ -40,14 +40,14 @@
                                     ng-click="$mdMenu.hide()"
                                     nb-dialog
                                     template-url="/partials/performance/record/add.html"
-                                    locals="{performanceType: 'month', ctrl: ctrl}"
+                                    locals="{performanceType: 'month', ctrl: ctrl, departments: ctrl.departmentsGradeOne}"
                                 ) 员工月度绩效
                             md-menu-item()
                                 a.md-button(
                                     ng-click="$mdMenu.hide()"
                                     nb-dialog
                                     template-url="/partials/performance/record/add.html"
-                                    locals="{performanceType: 'year', ctrl: ctrl}"
+                                    locals="{performanceType: 'year', ctrl: ctrl, departments: ctrl.departmentsGradeOne}"
                                 ) 员工年度绩效
 
                 span
