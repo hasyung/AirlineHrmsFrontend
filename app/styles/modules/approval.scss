@@ -131,6 +131,10 @@
 .approval-opinions {
     margin-top: 20px;
 
+    textarea {
+        border-color: #000;
+    }
+
     .add-habit {
         background: rgb(33,150,243);
         border: 0;
