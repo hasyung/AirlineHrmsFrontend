@@ -7,6 +7,12 @@ md-dialog.labors-new-leave.datas__container--charts
 					md-icon(md-svg-src="/images/svg/insert_chart.svg" style="fill: rgb(33,150,243);")
 				md-button.md-icon-button(ng-show="ctrl.showChartInDialog" ng-click="ctrl.showChartInDialog = !ctrl.showChartInDialog" style="fill: rgb(33,150,243);")
 					md-icon(md-svg-src="/images/svg/view_list.svg")
+				md-button.md-icon-button(
+					style="fill: rgb(33,150,243);"
+					ng-href="/api/position_records/export?channel_name={{ctrl.positionChangeTableType}}&month={{ctrl.currentYear}}-{{ctrl.currentMonth}}"
+					download
+					)
+					md-icon(md-svg-src="/images/svg/ic_open_in_new_24px.svg")
 				span(flex)
 				.date-selector(layout)
 					md-select(ng-model="ctrl.positionChangeTableType" placeholder="请选择" flex-order="0" ng-change="ctrl.loadPositionChangesData()")

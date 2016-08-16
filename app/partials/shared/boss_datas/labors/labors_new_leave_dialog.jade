@@ -7,6 +7,28 @@ md-dialog.labors-new-leave.datas__container--charts
 					md-icon(md-svg-src="/images/svg/insert_chart.svg" style="fill: rgb(33,150,243);")
 				md-button.md-icon-button(ng-show="ctrl.showChartInDialog" ng-click="ctrl.showChartInDialog = !ctrl.showChartInDialog" style="fill: rgb(33,150,243);")
 					md-icon(md-svg-src="/images/svg/view_list.svg")
+
+				md-menu
+					md-button.md-icon-button(
+						style="fill: rgb(33,150,243);"
+						ng-click="$mdOpenMenu($event)"
+						)
+						md-icon(md-svg-src="/images/svg/ic_open_in_new_24px.svg")
+					md-menu-content
+						md-menu-item
+							a.md-button(
+								ng-click="$mdMenu.hide()"
+								ng-href="/api/employees/export_to_xls?month={{ctrl.currentYear}}-{{ctrl.currentMonth}}"
+								download
+							) 导出新进人员
+
+						md-menu-item
+							a.md-button(
+								ng-click="$mdMenu.hide()"
+								ng-href="/api/leave_employees/export_to_xls?month={{ctrl.currentYear}}-{{ctrl.currentMonth}}"
+								download
+							) 导出离职人员
+
 				span(flex)
 				.date-selector(layout)
 					md-select(style="width: 150px;" ng-model="ctrl.currentYear" ng-change="ctrl.loadChartData()" placeholder="请选择")
