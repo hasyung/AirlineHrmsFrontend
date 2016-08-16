@@ -786,11 +786,12 @@ class BossWelfareController extends BossBaseController
             },
             xAxis: {
                 type: 'category',
+                splitLine: { show: false },
                 boundaryGap: false,
                 data: []
             },
             yAxis: {
-                type: 'value'
+                type: 'value',
             },
             series: []
         }
