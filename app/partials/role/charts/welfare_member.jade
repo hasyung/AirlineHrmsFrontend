@@ -1,5 +1,5 @@
 div.echarts-wrapper.md-whiteframe-z1
-	div.charts-toolbar(layout style="margin-bottom: 20px;")
+	div.charts-toolbar(layout style="margin-bottom: 20px;" has-permission="welfare_fees_index")
 		h3 福利费用
 		span(flex)
 		.date-selector(layout)
@@ -9,6 +9,7 @@ div.echarts-wrapper.md-whiteframe-z1
 		span(flex)
 
 		md-button.md-primary.md-raised(
+			has-permission="welfare_fees_import"
 			ng-disabled="ctrl.importing"
 			flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads: true, testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
 			flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
@@ -17,6 +18,7 @@ div.echarts-wrapper.md-whiteframe-z1
 			type="button"
 		) 导入
 		md-button.md-primary.md-raised.ml10(
+			has-permission="welfare_fees_export"
 			ng-href="/api/welfare_fees/export?year={{ctrl.currentYear}}"
 			download
 		) 导出
