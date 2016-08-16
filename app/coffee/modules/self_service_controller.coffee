@@ -529,6 +529,11 @@ class ChartsMainController extends nb.Controller
     constructor: (@scope, @rootScope, CURRENT_ROLES) ->
         @current_roles = CURRENT_ROLES
 
+    checkRole: (role) ->
+        _.includes @current_roles, role
+
+
+
 class CompanyLeaderChartsController extends nb.Controller
     @.$inject = ['$scope', '$http', 'Employee', 'LeaveEmployees']
 
@@ -1455,12 +1460,100 @@ class HrLeaderChartsController extends nb.Controller
         
         return config
 
+class WelfareManageChartsController extends nb.Controller
+    @.$inject = ['$scope', '$http', 'toaster']
+
+    constructor: (@scope, @http, @toaster) ->
+        @importing = false
+
+        @brokenLineConfig = {
+            theme:'default'
+            dataLoaded:true
+        }
+
+        @brokenLineOpition = {
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['福利费','社会保险费','公积金','企业年金']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: []
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: []
+        }
+
+        @loadDateTime()
+        @loadWelfareFees(@currentYear)
+
+    loadWelfareFees: (year) ->
+        self = @
+        welfareFees = []
+        xAxisArray = []
+
+        @http.get('/api/welfare_fees?year=' + year)
+            .success (data)->
+                _.forEach data.welfare_fees, (outVal, outKey)->
+                    fee = new Object()
+                    valArr = []
+                    fee.name = outKey
+                    fee.type = 'line'
+
+                    _.forEach outVal, (inVal, inKey)->
+                        valArr.push inVal
+                        xAxisArray.push(inKey+'月') if !_.includes xAxisArray, inKey
+
+                    fee.data = valArr
+                    welfareFees.push fee
+                    
+                self.brokenLineOpition.xAxis.data = xAxisArray
+                self.brokenLineOpition.series = welfareFees
+
+            .error (err)->
+                console.log err
+
+    loadDateTime: () ->
+        @year_list = @$getYears()
+
+        @currentYear = _.last(@year_list)
+
+    uploadWelfareFees: (type, attachment_id) ->
+        self = @
+
+        params = {type: type, attachment_id: attachment_id}
+        @importing = true
+
+        @http.post("/api/welfare_fees/import", params).success (data, status) ->
+            self.toaster.pop('success', '提示', '导入成功')
+            self.importing = false
+        .error (data) ->
+            self.toaster.pop('error', '提示', '导入失败')
+            self.importing = false
+
+
+
+
+        
+
 app.controller 'ChartsMainCtrl', ChartsMainController
 app.controller 'CompanyLeaderChartsCtrl', CompanyLeaderChartsController
 app.controller 'CountyLeaderChartsCtrl', CountyLeaderChartsController
 app.controller 'DepartmentHrChartsCtrl', DepartmentHrChartsController
 app.controller 'DepartmentLeaderChartsCtrl', DepartmentLeaderChartsController
 app.controller 'HrLeaderChartsCtrl', HrLeaderChartsController
+app.controller 'WelfareManageChartsCtrl', WelfareManageChartsController
 
 
 app.config(Route)

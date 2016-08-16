@@ -1,0 +1,15 @@
+div.echarts-wrapper
+	div.charts-toolbar(layout)
+		span(flex)
+		.date-selector(layout)
+			md-select(style="width: 120px;" ng-model="ctrl.currentYear" ng-change="ctrl.loadWelfareFees(ctrl.currentYear)" placeholder="请选择")
+				md-option(ng-value="item" ng-repeat="item in ctrl.year_list track by $index" ng-bind="item")
+			label(flex-order="2") 年
+	
+	ng-echarts.echarts-bar(
+		ec-config="ctrl.brokenLineConfig"
+		ec-option="ctrl.brokenLineOpition"
+		nb-dialog
+		template-url="partials/shared/boss_datas/welfare/welfare_fees_dialog.html"
+		locals="{}"
+	)
