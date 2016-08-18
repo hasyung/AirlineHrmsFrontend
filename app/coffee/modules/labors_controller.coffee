@@ -882,6 +882,12 @@ class AttendanceRecordCtrl extends nb.Controller
             else
                 self.Evt.$send('special_state:save:error', msg || "创建失败")
 
+    # 安排离岗培训
+    newTrainEmployee: (moveEmployee)->
+        self = @
+        @http.post('/api/special_states/temporarily_train', moveEmployee).then (data)->
+            self.Evt.$send("moveEmployee:save:success", '离岗培训设置成功')
+
     uploadAnnualDays: (type, attachment_id)->
         self = @
 

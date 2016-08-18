@@ -85,6 +85,14 @@
                 ) 新增考勤
 
                 md-button.md-primary.md-raised(
+                    has-permission="special_states_temporarily_train"
+                    nb-dialog
+                    ng-disabled="!ctrl.getSelected() || ctrl.importing"
+                    template-url="/partials/labors/attendance/train.html"
+                    locals="{current: ctrl.getSelected()}"
+                ) 离岗培训
+
+                md-button.md-primary.md-raised(
                     ng-disabled="ctrl.importing"
                     has-permission="special_states_temporarily_stop_air_duty"
                     nb-dialog
