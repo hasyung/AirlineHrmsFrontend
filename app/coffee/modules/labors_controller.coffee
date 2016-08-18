@@ -483,13 +483,14 @@ class AttendanceCtrl extends nb.Controller
             ]
         }
 
+        # mouseover进行hack数据刷新 很不科学 存在问题
         checkBaseDef = ATTENDANCE_BASE_TABLE_DEFS.concat [
             {
                 minWidth: 120
                 name: 'type'
                 displayName: '详细'
                 cellTemplate: '''
-                <div class="ui-grid-cell-contents" ng-mousedown="realFlow = grid.appScope.$parent.realFlow(row.entity)">
+                <div class="ui-grid-cell-contents" ng-mouseover="realFlow = grid.appScope.$parent.realFlow(row.entity)">
                     <a ng-if="!realFlow.processed" flow-handler="realFlow" flows="grid.options.data">
                         查看
                     </a>
@@ -505,7 +506,7 @@ class AttendanceCtrl extends nb.Controller
                 name: 'type'
                 displayName: '详细'
                 cellTemplate: '''
-                <div class="ui-grid-cell-contents" ng-mousedown="realFlow = grid.appScope.$parent.realFlow(row.entity)">
+                <div class="ui-grid-cell-contents" ng-mouseover="realFlow = grid.appScope.$parent.realFlow(row.entity)">
                     <a flow-handler="realFlow" flow-view="true">
                         查看
                     </a>
@@ -786,6 +787,19 @@ class AttendanceRecordCtrl extends nb.Controller
 
         @Employee.flow_leaders(employee.id).$asPromise().then (data) ->
             self.reviewers = data
+
+    # 假期录入 不需要审批 所有字段非必填
+    attendanceEntry: (request, receptor, type) ->
+        self = @
+
+        params = request
+        params.type = type
+        params.receptor_id = receptor.id
+
+        @http.post('/api/workflows/instead_leave', params).success ()->
+            self.toaster.pop('success', '提示', '假期录入成功')
+        .error ()->
+            self.toaster.pop('error', '提示', '假期录入失败')
 
     loadInitialData: ()->
         @employees = @Employee.$collection().$fetch()
