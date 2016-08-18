@@ -796,7 +796,7 @@ class AttendanceRecordCtrl extends nb.Controller
         params.type = type
         params.receptor_id = receptor.id
 
-        @http.post('/api/workflows/instead_leave', params).success ()->
+        @http.post('/api/workflows/instead_leave/instead_leave', params).success ()->
             self.toaster.pop('success', '提示', '假期录入成功')
         .error ()->
             self.toaster.pop('error', '提示', '假期录入失败')
