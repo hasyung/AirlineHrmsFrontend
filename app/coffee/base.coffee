@@ -289,7 +289,7 @@ class NewMyRequestCtrl extends NewFlowCtrl
 
                 $http.get('/api/vacations/calc_days', {params: request_data}).success (data, status)->
                     $timeout disableCalculating, 2000
-                    scope.vacation_days = data.vacation_days
+                    scope.vacation_days = data.general_days
                     scope.isRequestLegal = self.isVacationLegal(vacation_type, vacations, scope.vacation_days)
 
     # 检测有限假期的规则
