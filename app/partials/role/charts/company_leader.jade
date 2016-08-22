@@ -26,6 +26,25 @@ div.echarts-wrapper.md-whiteframe-z1(ng-if="ctrl.initialDataCompleted")
             md-select(ng-model="ctrl.currentMonth" ng-change="ctrl.loadChartData()" placeholder="请选择")
                 md-option(ng-value="item" ng-repeat="item in ctrl.month_list track by $index" ng-bind="item")
             label(flex-order="3") 月
+        span(flex)
+        md-menu
+            md-button.md-primary.md-raised(
+                ng-click="$mdOpenMenu($event)"
+                ) 导出
+            md-menu-content
+                md-menu-item
+                    a.md-button(
+                        ng-click="$mdMenu.hide()"
+                        ng-href="/api/employees/export_to_xls?month={{ctrl.currentYear}}-{{ctrl.currentMonth}}"
+                        download
+                    ) 导出新进人员
+
+                md-menu-item
+                    a.md-button(
+                        ng-click="$mdMenu.hide()"
+                        ng-href="/api/leave_employees/export_to_xls?month={{ctrl.currentYear}}-{{ctrl.currentMonth}}"
+                        download
+                    ) 导出离职人员
 
     ng-echarts.echarts-bar(
         ng-if="ctrl.showChart"

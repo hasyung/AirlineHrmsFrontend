@@ -413,6 +413,7 @@ class BossLaborsController extends BossBaseController
             {minWidth: 120, displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
         ]
 
+        @loadDateTime()
         @loadInitialData()
         @loadChartData()
 
@@ -738,6 +739,69 @@ class BossWelfareController extends BossBaseController
 
     constructor: (@scope, @http, @ReportNeedToKnow) ->
         super(@scope, @http, @ReportNeedToKnow, '福利管理室')
+
+        @datasType = '福利费用'
+        @importing = false
+
+        @brokenLineConfig = {
+            theme:''
+            dataLoaded:true
+        }
+
+        @brokenLineOpition = {
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['福利费','社会保险费','公积金','企业年金']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                splitLine: { show: false },
+                boundaryGap: false,
+                data: []
+            },
+            yAxis: {
+                type: 'value',
+            },
+            series: []
+        }
+
+        @loadDateTime()
+        @loadWelfareFees(@currentYear)
+
+    loadWelfareFees: (year) ->
+        self = @
+        welfareFees = []
+        xAxisArray = []
+
+        @http.get('/api/welfare_fees?year=' + year)
+            .success (data)->
+                _.forEach data.welfare_fees, (outVal, outKey)->
+                    fee = new Object()
+                    valArr = []
+                    fee.name = outKey
+                    fee.type = 'line'
+
+                    _.forEach outVal, (inVal, inKey)->
+                        valArr.push inVal
+                        xAxisArray.push(inKey+'月') if !_.includes xAxisArray, inKey
+
+                    fee.data = valArr
+                    welfareFees.push fee
+                    
+                self.brokenLineOpition.xAxis.data = xAxisArray
+                self.brokenLineOpition.series = welfareFees
+
+            .error (err)->
+                console.log err
+
 
         
 class BossContactController extends BossBaseController
