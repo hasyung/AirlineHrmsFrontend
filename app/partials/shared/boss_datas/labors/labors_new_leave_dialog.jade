@@ -1,5 +1,5 @@
 md-dialog.labors-new-leave.datas__container--charts
-	.dialog-content(ng-init="ctrl.showChartInDialog = true")
+	.dialog-content(ng-init="ctrl.showChartInDialog = true; ctrl.loadInitialData()")
 		div.echarts-wrapper(ng-if="ctrl.initialDataCompleted")
 			div.charts-toolbar(layout)
 				//- 切换图标和表格

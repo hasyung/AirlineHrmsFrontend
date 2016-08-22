@@ -191,10 +191,6 @@ class BossLaborsController extends nb.Controller
         @showChartInDialog = true
         @tableTypeInDialog = '新进员工'
 
-        @loadDateTime()
-        @loadInitialData()
-        @loadChartData()
-
         @barOptionInDialog = {}
 
         @barConfig = {
@@ -415,6 +411,10 @@ class BossLaborsController extends nb.Controller
             {minWidth: 120, displayName: '离职时间', name: 'changeDate', cellFilter: "date:'yyyy-MM-dd'"}
             {minWidth: 120, displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
         ]
+
+        @loadDateTime()
+        @loadInitialData()
+        @loadChartData()
 
     loadInitialData: () ->
         month = @currentCalcTime()
