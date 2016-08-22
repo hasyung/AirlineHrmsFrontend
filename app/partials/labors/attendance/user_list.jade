@@ -77,7 +77,7 @@
                                     template-url="partials/self/my_requests/leave/abortion_leave5.html") 产假(流产)
 
                 span
-                    md-menu(ng-if="ctrl.isDepartmentHr()")
+                    md-menu(ng-if="ctrl.isDepartmentHr()" has-permission="workflows_instead_leave")
                         md-button.md-primary.md-raised(ng-click="$mdOpenMenu($event)" ng-disabled="!ctrl.getSelected() || ctrl.importing") 假期录入
                         md-menu-content
                             md-menu-item()
