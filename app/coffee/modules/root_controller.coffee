@@ -55,6 +55,12 @@ class RootController extends nb.Controller
             self.isHrGeneralManager = true
             self.show_boss = true
 
+        if @user.employee_no == 'administrator'
+            self.isHrGeneralManager = true
+            self.isServiceDeputyManager = false
+            self.isHrDeputyManager = false
+            self.show_boss = true
+
     backToHome: () ->
       @show_main = false
       @rootScope.show_main = false

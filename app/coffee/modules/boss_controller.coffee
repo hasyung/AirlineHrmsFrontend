@@ -796,6 +796,49 @@ class BossWelfareController extends BossBaseController
             series: []
         }
 
+        @brokenLineOpitionInDialog = {
+            tooltip: {
+                trigger: 'axis'
+                textStyle: {
+                    fontSize: 16
+                }
+            },
+            legend: {
+                data:['福利费','社会保险费','公积金','企业年金']
+                textStyle: {
+                    fontSize: 16
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                splitLine: { show: false },
+                boundaryGap: false,
+                data: []
+                axisLabel: { 
+                    'interval': 0
+                    textStyle: {
+                        fontSize: 16
+                    }
+                }
+            },
+            yAxis: {
+                type: 'value',
+                axisLabel: { 
+                    'interval': 0
+                    textStyle: {
+                        fontSize: 16
+                    }
+                }
+            },
+            series: []
+        }
+
         @loadDateTime()
         @loadWelfareFees(@currentYear)
 
@@ -811,6 +854,7 @@ class BossWelfareController extends BossBaseController
                     valArr = []
                     fee.name = outKey
                     fee.type = 'line'
+                    fee.symbolSize = 10
 
                     _.forEach outVal, (inVal, inKey)->
                         valArr.push inVal
@@ -821,6 +865,9 @@ class BossWelfareController extends BossBaseController
                     
                 self.brokenLineOpition.xAxis.data = xAxisArray
                 self.brokenLineOpition.series = welfareFees
+
+                self.brokenLineOpitionInDialog.xAxis.data = xAxisArray
+                self.brokenLineOpitionInDialog.series = welfareFees
 
             .error (err)->
                 console.log err
