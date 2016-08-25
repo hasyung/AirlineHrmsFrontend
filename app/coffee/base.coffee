@@ -34,11 +34,20 @@ class Controller extends Base
             item + '' # to string
 
     $getFilterMonths: ()->
+        self = @
         years = @$getYears()
-        months = @$getMonths()
 
         array = []
         angular.forEach years, (year)->
+            if year == new Date().getFullYear()
+                months = self.$getMonths()
+            else
+                months = [1..12]
+
+                months = _.map months, (item)->
+                    item = '0' + item if item < 10
+                    item + ''
+
             angular.forEach months, (month)->
                 array.push(year + '-' + month)
 

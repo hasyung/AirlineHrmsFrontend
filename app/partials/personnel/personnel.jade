@@ -25,14 +25,6 @@ tabset(flex)
                         ) 修改技术等级
 
                         md-button.md-primary.md-raised(
-                            has-permission="attendance_summaries_import"
-                            nb-dialog
-                            template-url="/partials/personnel/attendance_import.html"
-                            locals="{}"
-                            ng-disabled="ctrl.importing"
-                        ) 考勤导入
-
-                        md-button.md-primary.md-raised(
                             has-permission="employees_transfer_to_regular_worker"
                             ng-disabled="ctrl.getSelected().length != 1 || ctrl.importing"
                             nb-dialog

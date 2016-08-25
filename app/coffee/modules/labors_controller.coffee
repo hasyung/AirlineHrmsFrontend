@@ -729,16 +729,14 @@ class AttendanceCtrl extends nb.Controller
                 self.depCheckInfo = dep
                 return
 
-
-
     finishVacation: ()->
         # 销假的逻辑目前没有实际的数据影响
 
 
 class AttendanceRecordCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Attendance', 'Employee', 'GridHelper', '$enum', 'CURRENT_ROLES', '$q', '$http', 'toaster', '$nbEvent']
+    @.$inject = ['$scope', 'Attendance', 'AttendanceDepartment', 'Employee', 'GridHelper', '$enum', 'CURRENT_ROLES', '$q', '$http', 'toaster', '$nbEvent']
 
-    constructor: (@scope, @Attendance, @Employee, GridHelper, $enum, @CURRENT_ROLES, @q, @http, @toaster, @Evt) ->
+    constructor: (@scope, @Attendance, @AttendanceDepartment, @Employee, GridHelper, $enum, @CURRENT_ROLES, @q, @http, @toaster, @Evt) ->
         @loadInitialData()
 
         @scope.$enum = $enum
@@ -926,6 +924,26 @@ class AttendanceRecordCtrl extends nb.Controller
             self.toaster.pop('error', '提示', '导入失败')
             self.importing = false
 
+    loadMonthList: () ->
+        @$getFilterMonths()
+
+    loadAttendanceDepartments: () ->
+        @departments = @AttendanceDepartment.$collection().$refresh({summary_date: @attendanceImportMonth})
+
+    uploadAttendance: (type, attachment_id, departmentId, month, dialog)->
+        self = @
+
+        params = {type: type, attachment_id: attachment_id, month: month, department_id: departmentId}
+        @importing = true
+
+        @http.post("/api/attendance_summaries/import", params).success (data, status) ->
+            self.toaster.pop('success', '提示', '导入成功')
+            self.importing = false
+            self.rootScope.downloadUrl = data.path
+            dialog.close()
+        .error (data) ->
+            self.toaster.pop('error', '提示', '导入失败')
+            self.importing = false
 
 
 class AttendanceHisCtrl extends nb.Controller
