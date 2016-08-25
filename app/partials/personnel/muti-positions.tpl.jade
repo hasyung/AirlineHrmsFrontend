@@ -25,6 +25,7 @@
                     md-option(aria-label="primary" value="主职") 主职
                     md-option(aria-label="part" value="兼职") 兼职
                     md-option(aria-label="proxy" value="代理") 代理
+                    md-option(aria-label="temporary" value="临时主持") 临时主持
         .item-action-container(flex="10" ng-if="editStatus")
             md-button.md-fab.md-raised(type="button" ng-click="ctrl.removePosition($index)" ng-disabled="positions.length <= 1")
                 md-icon(md-svg-src="/images/svg/ic_remove_24px.svg" style="margin-top: -2px;"  aria-label="删除")
