@@ -254,6 +254,14 @@
                     type="button"
                     ng-disabled="ctrl.importing"
                 ) 年假导入
+
+                md-button.md-primary.md-raised(
+                    has-permission="attendance_summaries_import"
+                    nb-dialog
+                    template-url="/partials/personnel/attendance_import.html"
+                    locals="{}"
+                    ng-disabled="ctrl.importing"
+                ) 考勤导入
                 
 
         div(

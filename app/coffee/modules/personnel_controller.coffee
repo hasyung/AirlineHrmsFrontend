@@ -31,9 +31,9 @@ app.config(Route)
 
 
 class PersonnelCtrl extends nb.Controller
-    @.$inject = ['$scope', 'sweet', 'Employee', 'CURRENT_ROLES', 'toaster', '$http', '$rootScope', 'AttendanceDepartment']
+    @.$inject = ['$scope', 'sweet', 'Employee', 'CURRENT_ROLES', 'toaster', '$http', '$rootScope']
 
-    constructor: (@scope, @sweet, @Employee, @CURRENT_ROLES, @toaster, @http, @rootScope, @AttendanceDepartment) ->
+    constructor: (@scope, @sweet, @Employee, @CURRENT_ROLES, @toaster, @http, @rootScope) ->
         @loadInitialData()
 
         @selectedIndex = 1
@@ -109,12 +109,6 @@ class PersonnelCtrl extends nb.Controller
     loadInitialData: () ->
         @employees = @Employee.$collection().$fetch()
 
-    loadMonthList: () ->
-        @$getFilterMonths()
-
-    loadAttendanceDepartments: () ->
-        @departments = @AttendanceDepartment.$collection().$refresh({summary_date: @attendanceImportMonth})
-
     search: (tableState) ->
         tableState = tableState || {}
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
@@ -145,21 +139,6 @@ class PersonnelCtrl extends nb.Controller
             self.employees.$refresh()
             self.importing = false
         .error (data) ->
-            self.importing = false
-
-    uploadAttendance: (type, attachment_id, departmentId, month, dialog)->
-        self = @
-
-        params = {type: type, attachment_id: attachment_id, month: month, department_id: departmentId}
-        @importing = true
-
-        @http.post("/api/attendance_summaries/import", params).success (data, status) ->
-            self.toaster.pop('success', '提示', '导入成功')
-            self.importing = false
-            self.rootScope.downloadUrl = data.path
-            dialog.close()
-        .error (data) ->
-            self.toaster.pop('error', '提示', '导入失败')
             self.importing = false
 
     getCondition: ()->
