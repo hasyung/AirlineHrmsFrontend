@@ -16,7 +16,7 @@
 
             md-input-container.row-has-value(flex)
                 label 岗位
-                md-select(ng-model="posItem.position.id" ng-disabled="!editStatus")
+                md-select(ng-model="posItem.position.id" ng-disabled="!editStatus" title="{{posItem.position.name}}")
                     md-option(ng-value="pos.id" ng-repeat="pos in itemParams.orgPos") {{::pos.name}}
             md-input-container.row-has-value(flex)
                 label 岗位性质
