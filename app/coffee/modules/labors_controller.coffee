@@ -734,9 +734,9 @@ class AttendanceCtrl extends nb.Controller
 
 
 class AttendanceRecordCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Attendance', 'AttendanceDepartment', 'Employee', 'GridHelper', '$enum', 'CURRENT_ROLES', '$q', '$http', 'toaster', '$nbEvent']
+    @.$inject = ['$scope', 'Attendance', 'AttendanceDepartment', 'Employee', 'GridHelper', '$enum', 'CURRENT_ROLES', '$q', '$http', 'toaster', '$nbEvent', '$rootScope']
 
-    constructor: (@scope, @Attendance, @AttendanceDepartment, @Employee, GridHelper, $enum, @CURRENT_ROLES, @q, @http, @toaster, @Evt) ->
+    constructor: (@scope, @Attendance, @AttendanceDepartment, @Employee, GridHelper, $enum, @CURRENT_ROLES, @q, @http, @toaster, @Evt, @rootScope) ->
         @loadInitialData()
 
         @scope.$enum = $enum
