@@ -899,10 +899,19 @@ class AttendanceRecordCtrl extends nb.Controller
                 self.Evt.$send('special_state:save:error', msg || "创建失败")
 
     # 安排离岗培训
-    newTrainEmployee: (moveEmployee)->
+    newTrainEmployee: (moveEmployee, dialog)->
         self = @
-        @http.post('/api/special_states/temporarily_train', moveEmployee).then (data)->
-            self.Evt.$send("moveEmployee:save:success", '离岗培训设置成功')
+
+        if moveEmployee.special_date_from && moveEmployee.special_date_to
+            start = moment(moveEmployee.special_date_from)
+            end = moment(moveEmployee.special_date_to)
+
+            if start < end
+                @http.post('/api/special_states/temporarily_train', moveEmployee).then (data)->
+                    self.Evt.$send("moveEmployee:save:success", '离岗培训设置成功')
+                    dialog.close()
+            else
+                self.toaster.pop('error', '提示', '日期填写不正确，开始日期不能大于结束日期')
 
     uploadAnnualDays: (type, attachment_id)->
         self = @
