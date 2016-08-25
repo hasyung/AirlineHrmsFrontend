@@ -623,30 +623,32 @@ class AttendanceCtrl extends nb.Controller
 
         params = {summary_date: @getDate()}
 
-        @http.put('/api/attendance_summaries/department_hr_confirm', params).then (data)->
-            self.tableData.$refresh()
-            self.departmentHrChecked = true
+        if isConfirm
+            @http.put('/api/attendance_summaries/department_hr_confirm', params).then (data)->
+                self.tableData.$refresh()
+                self.departmentHrChecked = true
 
-            angular.forEach self.tableData, (item)->
-                item.departmentHrChecked = true
+                angular.forEach self.tableData, (item)->
+                    item.departmentHrChecked = true
 
-            erorr_msg = data.$response.data.messages if angular.isDefined data.$response
-            self.toaster.pop('info', '提示', erorr_msg || "确认成功")
+                erorr_msg = data.$response.data.messages if angular.isDefined data.$response
+                self.toaster.pop('info', '提示', erorr_msg || "确认成功")
 
     administratorConfirm: (isConfirm)->
         self = @
 
         params = {summary_date: @getDate()}
 
-        @http.put('/api/attendance_summaries/administrator_check', params).then (data)->
-            self.tableData.$refresh()
-            self.hrDepartmentLeaderChecked = true
+        if isConfirm
+            @http.put('/api/attendance_summaries/administrator_check', params).then (data)->
+                self.tableData.$refresh()
+                self.hrDepartmentLeaderChecked = true
 
-            angular.forEach self.tableData, (item)->
-                item.hrDepartmentLeaderChecked = true
+                angular.forEach self.tableData, (item)->
+                    item.hrDepartmentLeaderChecked = true
 
-            erorr_msg = data.$response.data.messages if angular.isDefined data.$response
-            self.toaster.pop('info', '提示', erorr_msg || "确认成功")
+                erorr_msg = data.$response.data.messages if angular.isDefined data.$response
+                self.toaster.pop('info', '提示', erorr_msg || "确认成功")
 
     departmentLeaderCheck: (opinion)->
         self = @
