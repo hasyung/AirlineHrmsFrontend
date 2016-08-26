@@ -404,9 +404,9 @@ class ProfileCtrl extends nb.Controller
 
 
 class MyRequestCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Employee', 'OrgStore', 'USER_META', 'VACATIONS', 'MyLeave', '$injector', 'UserAnnuity', '$http', 'toaster', 'UserAllege']
+    @.$inject = ['$scope', 'Employee', 'OrgStore', 'USER_META', 'VACATIONS', 'MyLeave', '$injector', 'UserAnnuity', '$http', 'toaster', 'UserAllege', 'User']
 
-    constructor: (@scope, @Employee, @OrgStore, meta, vacations, @MyLeave, injector, @UserAnnuity, @http, @toaster, @UserAllege) ->
+    constructor: (@scope, @Employee, @OrgStore, meta, vacations, @MyLeave, injector, @UserAnnuity, @http, @toaster, @UserAllege, @User) ->
         @scope.realFlow = (entity) ->
             t = entity.type
             m = injector.get(t)
