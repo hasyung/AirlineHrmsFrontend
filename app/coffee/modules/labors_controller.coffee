@@ -789,7 +789,7 @@ class AttendanceRecordCtrl extends nb.Controller
             self.reviewers = data
 
     # 假期录入 不需要审批 所有字段非必填
-    attendanceEntry: (request, receptor, type) ->
+    attendanceEntry: (request, receptor, type, panel) ->
         self = @
 
         params = request
@@ -798,6 +798,7 @@ class AttendanceRecordCtrl extends nb.Controller
 
         @http.post('/api/workflows/instead_leave/instead_leave', params).success ()->
             self.toaster.pop('success', '提示', '假期录入成功')
+            panel.close()
         .error ()->
             self.toaster.pop('error', '提示', '假期录入失败')
 

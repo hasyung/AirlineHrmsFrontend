@@ -165,6 +165,6 @@ div.workflow.md-background(md-theme="hrms")
                         md-button.md-raised.white(type="button" ng-click="panel.close()") 取消
                         md-button.md-primary.md-raised(
                             type="button"
-                            ng-click="ctrl.attendanceEntry(request, receptor, '#{flowType}')"
+                            ng-click="ctrl.attendanceEntry(request, receptor, '#{flowType}', panel)"
                             ng-disabled="leave_form.$invalid || !isRequestLegal"
                             ) 提交
