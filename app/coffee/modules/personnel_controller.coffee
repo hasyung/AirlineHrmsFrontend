@@ -146,7 +146,7 @@ class PersonnelCtrl extends nb.Controller
         params = {type: type, attachment_id: attachment_id}
         @importing = true
 
-        @http.post("/api/employees/work_experience_import", params).success (data, status) ->
+        @http.get("/api/employees/work_experience_import", params).success (data, status) ->
             self.toaster.pop('success', '提示', '导入成功')
             self.importing = false
         .error (data) ->
