@@ -43,6 +43,16 @@ tabset(flex)
                         ) 实习批量转正
 
                         md-button.md-primary.md-raised(
+                            has-permission="employees_work_experience_import"
+                            flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads: true, testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
+                            flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                            flow-file-success="ctrl.upload_start=false;ctrl.uploadWorkExperience('任职记录导入', ctrl.parseJSON($message).id);"
+                            flow-btn
+                            type="button"
+                            ng-disabled="ctrl.importing"
+                        ) 任职记录导入
+
+                        md-button.md-primary.md-raised(
                             has-permission="employees_set_early_retire"
                             ng-disabled="ctrl.getSelected().length != 1 || ctrl.importing"
                             nb-dialog
