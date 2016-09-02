@@ -136,8 +136,11 @@ FlowHandlerDirective = (ngDialog)->
         scope.isHistory = angular.isDefined(attrs.isHistory)
 
         offeredExtra = (flow) ->
+            if flow.relationData
+                relationDataWithoutNg = flow.relationData.replace(/ng-repeat\s?=\s?".*"/, '').replace(/ng-if\s?=\s?".*"/, '')
+
             return template
-                    .replace(/#flowRelationData#/, `flow.relationData ? flow.relationData : ''`)
+                    .replace(/#flowRelationData#/, `flow.relationData ? relationDataWithoutNg : ''`)
                     .replace(/#extraFormLayout#/, `flow.$extraForm ? flow.$extraForm : ''`)
                     .replace(/#FlowType#/, `flow.type? flow.type : ''`)
 
