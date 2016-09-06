@@ -111,7 +111,14 @@ FlowHandlerDirective = (ngDialog)->
                     </div>
                 </md-card>
                 <div class="approval-buttons" ng-if="!flowView || (!isHistory && flow.name=='合同续签')">
-                    <md-button ng-disabled="!dialog.userReply" class="md-raised md-warn" ng-click="reply(dialog.userReply, $$prevSibling.flowReplyForm); submitFlow({opinion: true}, flow, dialog, state)" type="button">通过</md-button>
+                    <md-button ng-if="!ifNeedConfirm()" ng-disabled="!dialog.userReply" class="md-raised md-warn" ng-click="reply(dialog.userReply, $parent.$$prevSibling.flowReplyForm); submitFlow({opinion: true}, flow, dialog, state)" type="button">通过</md-button>
+                    <md-button class="md-warn md-raised"
+                        ng-if="ifNeedConfirm()"
+                        ng-disabled="!dialog.userReply"
+                        nb-confirm="confirmFlow(isConfirm, dialog.userReply, $parent.$$prevSibling.flowReplyForm, {opinion: true}, flow, dialog, state)"
+                        nb-title="通过确认"
+                        nb-content="是否确认不需要移交而立即通过该申请?"
+                        >通过</md-button>
                     <md-button ng-disabled="!dialog.userReply" class="md-raised md-warn" ng-click="reply(dialog.userReply, $$prevSibling.flowReplyForm); submitFlow({opinion: false}, flow, dialog, state)" type="button">驳回</md-button>
                     <md-button class="md-raised md-primary"
                         ng-disabled="!dialog.userReply"
@@ -176,9 +183,9 @@ FlowHandlerDirective = (ngDialog)->
 
 
 class FlowController
-    @.$inject = ['$http','$scope', 'USER_META', 'OrgStore', 'Employee', '$nbEvent', '$state', 'VACATIONS', 'FavNote', 'toaster']
+    @.$inject = ['$http','$scope', 'USER_META', 'OrgStore', 'Employee', '$nbEvent', '$state', 'VACATIONS', 'FavNote', 'toaster', 'CURRENT_ROLES']
 
-    constructor: (http, scope, meta, OrgStore, Employee, Evt, @state, vacations, FavNote, toaster) ->
+    constructor: (http, scope, meta, OrgStore, Employee, Evt, @state, vacations, FavNote, toaster, CURRENT_ROLES) ->
         scope.leaveFlowsNeedAttachment = [
             "Flow::AccreditLeave"
             "Flow::FuneralLeave"
@@ -277,8 +284,20 @@ class FlowController
                     scope.flowSet.$refresh() # 刷新TODO列表
                     # 表格数据刷新后id错位，因为查看这列的ng-init中的realFlow绑定关系没有更新
                     # state.go(state.current.name, {}, {reload: true})
-
                 dialog.close()
+
+        scope.ifNeedConfirm = () ->
+            if CURRENT_ROLES.indexOf('hr_leader') >= 0
+                return false
+            else if CURRENT_ROLES.indexOf('department_leader') >= 0 && !_.includes(meta.department.name, '人力资源部')
+                return false
+            else
+                return true
+
+        scope.confirmFlow = (isConfirm, userReply, form, req, flow, dialog, state) ->
+            if isConfirm
+                scope.reply(userReply, form)
+                scope.submitFlow(req, flow, dialog, state)
 
         # 补传附件 － new feature
         scope.supplementFlowFile = (flow, attachments_ids, dialog) ->
