@@ -732,6 +732,13 @@ class AttendanceCtrl extends nb.Controller
     finishVacation: ()->
         # 销假的逻辑目前没有实际的数据影响
 
+    revertLeave: (isConfirm, leave)->
+        self = @
+
+        if isConfirm
+            leave.revert().$asPromise().then ()->
+                self.tableData.$refresh()
+
 
 class AttendanceRecordCtrl extends nb.Controller
     @.$inject = ['$scope', 'Attendance', 'AttendanceDepartment', 'Employee', 'GridHelper', '$enum', 'CURRENT_ROLES', '$q', '$http', 'toaster', '$nbEvent', '$rootScope']
