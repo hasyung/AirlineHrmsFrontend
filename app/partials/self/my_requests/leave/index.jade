@@ -1,4 +1,4 @@
-.flow-list(flex ng-init="leaves = ctrl.MyLeave.$collection().$fetch();receptor=User.$fetch();")
+.flow-list(flex ng-init="leaves = ctrl.MyLeave.$collection().$fetch();receptor= ctrl.User.$fetch();")
     md-toolbar
         .md-toolbar-tools
             span
@@ -51,121 +51,121 @@
                                     a.md-button(
                                         ng-click="$mdMenu.hide()"
                                         nb-panel
-                                        locals="{list: leaves}"
+                                        locals="{list: leaves, receptor: receptor, receptor: receptor}"
                                         template-url="partials/self/my_requests/leave/presence_leave.html") 派驻人员休假
                                 md-menu-item(ng-if="ctrl.hasVacation('年假')")
                                     a.md-button(
                                         ng-click="$mdMenu.hide()"
                                         nb-panel
-                                        locals="{list: leaves}"
+                                        locals="{list: leaves, receptor: receptor}"
                                         template-url="partials/self/my_requests/leave/yearly_leave.html") 年假
                                 md-menu-item(ng-if="ctrl.hasVacation('丧假')")
                                     a.md-button(
                                         ng-click="$mdMenu.hide()"
                                         nb-panel
-                                        locals="{list: leaves}"
+                                        locals="{list: leaves, receptor: receptor}"
                                         template-url="partials/self/my_requests/leave/dead_leave.html") 丧假
                                 md-menu-item(ng-if="ctrl.hasVacation('探亲假')")
                                     a.md-button(
                                         ng-click="$mdMenu.hide()"
                                         nb-panel
-                                        locals="{list: leaves}"
+                                        locals="{list: leaves, receptor: receptor}"
                                         template-url="partials/self/my_requests/leave/visit_leave.html") 探亲假
                                 md-menu-item(ng-if="ctrl.hasVacation('婚假')")
                                     a.md-button(
                                         ng-click="$mdMenu.hide()"
                                         nb-panel
-                                        locals="{list: leaves}"
+                                        locals="{list: leaves, receptor: receptor}"
                                         template-url="partials/self/my_requests/leave/wedding_leave.html") 婚假
                                 md-menu-item(ng-if="ctrl.hasVacation('产假')")
                                     a.md-button(
                                         ng-click="$mdMenu.hide()"
                                         nb-panel
-                                        locals="{list: leaves}"
+                                        locals="{list: leaves, receptor: receptor}"
                                         template-url="partials/self/my_requests/leave/abortion_leave.html") 产假
                                 md-menu-item(ng-if="ctrl.hasVacation('哺乳假')")
                                     a.md-button(
                                         ng-click="$mdMenu.hide()"
                                         nb-panel
-                                        locals="{list: leaves}"
+                                        locals="{list: leaves, receptor: receptor}"
                                         template-url="partials/self/my_requests/leave/lactation_leave.html") 哺乳假
                                 md-menu-item(ng-if="ctrl.hasVacation('产假(母乳喂养)')")
                                     a.md-button(
                                         ng-click="$mdMenu.hide()"
                                         nb-panel
-                                        locals="{list: leaves}"
+                                        locals="{list: leaves, receptor: receptor}"
                                         template-url="partials/self/my_requests/leave/abortion_leave1.html") 产假(母乳喂养)
                                 md-menu-item(ng-if="ctrl.hasVacation('产假(剖腹产、难产)')")
                                     a.md-button(
                                         ng-click="$mdMenu.hide()"
                                         nb-panel
-                                        locals="{list: leaves}"
+                                        locals="{list: leaves, receptor: receptor}"
                                         template-url="partials/self/my_requests/leave/abortion_leave2.html") 产假(剖腹产、难产)
                                 md-menu-item(ng-if="ctrl.hasVacation('产假(多胞胎)')")
                                     a.md-button(
                                         ng-click="$mdMenu.hide()"
                                         nb-panel
-                                        locals="{list: leaves}"
+                                        locals="{list: leaves, receptor: receptor}"
                                         template-url="partials/self/my_requests/leave/abortion_leave4.html") 产假(多胞胎)
                                 md-menu-item(ng-if="ctrl.hasVacation('产假(流产)')")
                                     a.md-button(
                                         ng-click="$mdMenu.hide()"
                                         nb-panel
-                                        locals="{list: leaves}"
+                                        locals="{list: leaves, receptor: receptor}"
                                         template-url="partials/self/my_requests/leave/abortion_leave5.html") 产假(流产)
                                 md-menu-item(ng-if="ctrl.hasVacation('事假')")
                                     a.md-button(
                                         ng-click="$mdMenu.hide()"
                                         nb-panel
-                                        locals="{list: leaves}"
+                                        locals="{list: leaves, receptor: receptor}"
                                         template-url="partials/self/my_requests/leave/matter_leave.html") 事假
                                 md-menu-item(ng-if="ctrl.hasVacation('公假')")
                                     a.md-button(
                                         ng-click="$mdMenu.hide()"
                                         nb-panel
-                                        locals="{list: leaves}"
+                                        locals="{list: leaves, receptor: receptor}"
                                         template-url="partials/self/my_requests/leave/public_leave.html") 公假
                                 md-menu-item(ng-if="ctrl.hasVacation('产前孕期检查假')")
                                     a.md-button(
                                         ng-click="$mdMenu.hide()"
                                         nb-panel
-                                        locals="{list: leaves}"
+                                        locals="{list: leaves, receptor: receptor}"
                                         template-url="partials/self/my_requests/leave/produce_before.html") 产前孕期检查假
                                 md-menu-item(ng-if="ctrl.hasVacation('生育护理假')")
                                     a.md-button(
                                         ng-click="$mdMenu.hide()"
                                         nb-panel
-                                        locals="{list: leaves}"
+                                        locals="{list: leaves, receptor: receptor}"
                                         template-url="partials/self/my_requests/leave/nurse_leave.html") 生育护理假
                                 md-menu-item(ng-if="ctrl.hasVacation('病假')")
                                     a.md-button(
                                         ng-click="$mdMenu.hide()"
                                         nb-panel
-                                        locals="{list: leaves}"
+                                        locals="{list: leaves, receptor: receptor}"
                                         template-url="partials/self/my_requests/leave/sick_leave.html") 病假
                                 md-menu-item(ng-if="ctrl.hasVacation('病假(工伤待定)')")
                                     a.md-button(
                                         ng-click="$mdMenu.hide()"
                                         nb-panel
-                                        locals="{list: leaves}"
+                                        locals="{list: leaves, receptor: receptor}"
                                         template-url="partials/self/my_requests/leave/sick_leave1.html") 病假(工伤待定)
                                 md-menu-item(ng-if="ctrl.hasVacation('病假(怀孕待产)')")
                                     a.md-button(
                                         ng-click="$mdMenu.hide()"
                                         nb-panel
-                                        locals="{list: leaves}"
+                                        locals="{list: leaves, receptor: receptor}"
                                         template-url="partials/self/my_requests/leave/sick_leave2.html") 病假(怀孕待产)
                                 md-menu-item(ng-if="ctrl.hasVacation('女工假')")
                                     a.md-button(
                                         ng-click="$mdMenu.hide()"
                                         nb-panel
-                                        locals="{list: leaves}"
+                                        locals="{list: leaves, receptor: receptor}"
                                         template-url="partials/self/my_requests/leave/female_leave.html") 女工假
                                 md-menu-item(ng-if="ctrl.hasVacation('补休假')")
                                     a.md-button(
                                         ng-click="$mdMenu.hide()"
                                         nb-panel
-                                        locals="{list: leaves}"
+                                        locals="{list: leaves, receptor: receptor}"
                                         template-url="partials/self/my_requests/leave/offset_leave.html") 补休假
 
 

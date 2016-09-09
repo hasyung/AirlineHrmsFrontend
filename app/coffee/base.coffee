@@ -248,8 +248,6 @@ class NewMyRequestCtrl extends NewFlowCtrl
 
         scope.isRequestLegal = true
 
-        console.log vacations
-
         enableCalculating = ->
             scope.calculating = true
 
@@ -273,7 +271,7 @@ class NewMyRequestCtrl extends NewFlowCtrl
             ]
 
         # 计算请假天数
-        scope.calculateTotalDays = (data, vacation_type, sync_end_time) ->
+        scope.calculateTotalDays = (data, vacation_type, sync_end_time, receptor) ->
             data.end_time = data.start_time if sync_end_time
             # 女工假特殊处理
             if vacation_type == '女工假'
@@ -299,14 +297,14 @@ class NewMyRequestCtrl extends NewFlowCtrl
                 $http.get('/api/vacations/calc_days', {params: request_data}).success (data, status)->
                     $timeout disableCalculating, 2000
                     scope.vacation_days = data.general_days
-                    scope.isRequestLegal = self.isVacationLegal(vacation_type, vacations, scope.vacation_days)
+                    scope.isRequestLegal = self.isVacationLegal(vacation_type, receptor.vacations, scope.vacation_days)
 
     # 检测有限假期的规则
     isVacationLegal: (type, vacations, calcDays) ->
-        if type == '年假' && vacations.year_days.total < calcDays
+        if type == '年假' && vacations.yearDays.total < calcDays
             @toaster.pop('error', '提示', '剩余年假不足')
             return false
-        if type == '补休假' && vacations.offset_days < calcDays
+        if type == '补休假' && vacations.offsetDays < calcDays
             @toaster.pop('error', '提示', '剩余补休假不足')
             return false
 

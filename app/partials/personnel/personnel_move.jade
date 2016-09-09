@@ -37,6 +37,12 @@
                     template-url="partials/personnel/move/on_business.html"
                 ) 新增出差
 
+                md-button.md-primary.md-raised(
+                    has-permission="special_states_export_xls"
+                    href="/api/special_states/export_xls"
+                    download
+                ) 导出
+
         div(
             nb-grid
             column-defs="ctrl.columnDef"

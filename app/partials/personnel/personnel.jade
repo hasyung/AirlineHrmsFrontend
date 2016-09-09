@@ -9,6 +9,16 @@ tabset(flex)
                         h2 员工人事花名册
                         div(flex)
                         md-button.md-primary.md-raised(
+                            has-permission="employees_import_family_members"
+                            flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads: true, testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
+                            flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                            flow-file-success="ctrl.upload_start=false;ctrl.uploadFamilyMembers('家庭成员信息导入', ctrl.parseJSON($message).id);"
+                            flow-btn
+                            type="button"
+                            ng-disabled="ctrl.importing"
+                        ) 家庭成员信息导入
+
+                        md-button.md-primary.md-raised(
                             has-permission="employees_set_employee_date"
                             ng-disabled="ctrl.getSelected().length != 1 || ctrl.importing"
                             nb-dialog
@@ -41,6 +51,16 @@ tabset(flex)
                             type="button"
                             ng-disabled="ctrl.importing"
                         ) 实习批量转正
+
+                        md-button.md-primary.md-raised(
+                            has-permission="employees_work_experience_import"
+                            flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads: true, testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
+                            flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                            flow-file-success="ctrl.upload_start=false;ctrl.uploadWorkExperience('任职记录导入', ctrl.parseJSON($message).id);"
+                            flow-btn
+                            type="button"
+                            ng-disabled="ctrl.importing"
+                        ) 任职记录导入
 
                         md-button.md-primary.md-raised(
                             has-permission="employees_set_early_retire"
