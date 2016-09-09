@@ -8,6 +8,7 @@
                 div(flex)
 
                 md-button.md-primary.md-raised(
+                    ng-if="ctrl.isDepartmentHr()"
                     ng-disabled="!(ctrl.getSelected() && ctrl.getSelected().workflowState !== '已生效' && ctrl.getSelected().workflowState !== '已撤销' && ctrl.getSelected().workflowState !== '已驳回' && ctrl.getSelected().sponsor.$pk !== ctrl.getSelected().receptor.$pk && ctrl.getSelected().sponsor.$pk == ctrl.User.id)"
                     nb-confirm="ctrl.revertLeave(isConfirm, ctrl.getSelected())"
                     nb-title="你是否要撤销所选请假操作?"
