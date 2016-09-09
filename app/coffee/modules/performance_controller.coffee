@@ -72,6 +72,8 @@ class PerformanceRecord extends nb.Controller
     @.$inject = ['$scope', 'Performance', '$http', 'USER_META', '$nbEvent']
 
     constructor: (@scope, @Performance, @http, @USER_META, @Evt)->
+        @importing = false
+
         @year_list = @$getYears()
         @filter_month_list = @$getFilterMonths()
 
@@ -212,6 +214,18 @@ class PerformanceRecord extends nb.Controller
                     dialog.close()
             else
                 self.toaster.pop('error', '提示', '日期填写不正确，开始日期不能大于结束日期')
+
+    uploadPerformances: (type, attachment_id) ->
+        self = @
+        params = {type: type, attachment_id: attachment_id}
+        @importing = true
+
+        @http.post("/api/performances/import_performance_collect", params).success (data, status) ->
+            self.toaster.pop('success', '提示', '导入成功')
+            self.performances.$refresh()
+            self.importing = false
+        .error (data) ->
+            self.importing = false
 
 
 class PerformanceMasterRecord extends nb.Controller
