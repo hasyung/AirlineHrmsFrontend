@@ -31,10 +31,10 @@
                     nb-content="你确认要将该病假（工伤待定）转换为工伤假?"
                 ) 工伤假
 
-                md-button.md-primary.md-raised(
-                    ng-if="ctrl.isDepartmentHr()"
-                    ng-disabled="!ctrl.getSelected()"
-                    ng-click="ctrl.finishVacation()"
-                ) 销假
+                //- md-button.md-primary.md-raised(
+                //-     ng-if="ctrl.isDepartmentHr()"
+                //-     ng-disabled="!ctrl.getSelected()"
+                //-     ng-click="ctrl.finishVacation()"
+                //- ) 销假
 
         div(nb-grid column-defs="ctrl.recodsColumnDef" on-register-api="ctrl.exportGridApi(gridApi)" multi-select="false" grid-selection safe-src="ctrl.tableData")
