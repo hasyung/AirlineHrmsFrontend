@@ -141,6 +141,17 @@ class PersonnelCtrl extends nb.Controller
         .error (data) ->
             self.importing = false
 
+    uploadEmpStar: (type, attachment_id) ->
+        self = @
+        params = {type: type, attachment_id: attachment_id}
+        @importing = true
+
+        @http.post("/api/employees/star_import", params).success (data, status) ->
+            self.toaster.pop('success', '提示', '导入成功')
+            self.importing = false
+        .error (data) ->
+            self.importing = false
+
     uploadWorkExperience: (type, attachment_id) ->
         self = @
         params = {type: type, attachment_id: attachment_id}
