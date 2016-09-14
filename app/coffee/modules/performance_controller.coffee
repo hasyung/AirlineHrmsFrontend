@@ -69,9 +69,9 @@ class Route
 
 
 class PerformanceRecord extends nb.Controller
-    @.$inject = ['$scope', 'Performance', '$http', 'USER_META', '$nbEvent']
+    @.$inject = ['$scope', 'Performance', '$http', 'USER_META', '$nbEvent', 'toaster']
 
-    constructor: (@scope, @Performance, @http, @USER_META, @Evt)->
+    constructor: (@scope, @Performance, @http, @USER_META, @Evt, @toaster)->
         @importing = false
 
         @year_list = @$getYears()
