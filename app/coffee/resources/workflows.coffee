@@ -144,6 +144,21 @@ resources.factory 'Leave', (restmod, $injector) ->
                         $config:
                             jsonRootMany:'workflows'
                             jsonRootSingle: 'workflow'
+
+                        $extend:
+                            Record:
+                                revert: ()->
+                                    self = this
+
+                                    request = {
+                                        url: "/api/workflows/#{this.type}/#{this.id}/repeal"
+                                        method: "PUT"
+                                    }
+
+                                    onSuccess = (res) ->
+                                        self.$dispatch 'after-revert'
+                                    
+                                    this.$send(request, onSuccess)
                     ).$collection().$fetch()
     }
 

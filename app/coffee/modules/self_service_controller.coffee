@@ -471,9 +471,10 @@ class MyRequestCtrl extends nb.Controller
         rows = @scope.$gridApi.selection.getSelectedGridRows()
         selected = if rows.length >= 1 then rows[0].entity else null
 
-    revert: (isConfirm, leave)->
+    revert: (isConfirm, leave, leaves)->
         if isConfirm
-            leave.revert()
+            leave.revert().$asPromise().then ()->
+                leaves.$refresh()
 
     charge: (leave, params, leaves)->
         leave.charge(params).$then ()->

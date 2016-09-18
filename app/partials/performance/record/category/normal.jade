@@ -21,4 +21,13 @@
                     locals="{performance: ctrl.getSelected(), can_upload: true, outerScope: ctrl.scope, can_del: true}"
                 ) 上传文档
 
+                md-button.md-primary.md-raised(
+                    has-permission="performances_import_performance_collect"
+                    flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads: true, testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
+                    flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+                    flow-file-success="ctrl.upload_start=false;ctrl.uploadPerformances('绩效导入', ctrl.parseJSON($message).id);"
+                    flow-btn
+                    type="button"
+                ) 历史绩效导入
+
         div(nb-grid multi-select="false" export-api on-register-api="ctrl.exportGridApi(gridApi)" grid-selection column-defs="ctrl.columnDef" safe-src="ctrl.performances")
