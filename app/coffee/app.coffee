@@ -105,7 +105,9 @@ mdThemingConf = ($mdThemingProvider) ->
         .primaryPalette 'blue', {
             'default': '500'
         }
-        .accentPalette 'grey'
+        .accentPalette 'grey', {
+            'default': '300'
+        }
         .warnPalette 'red', {
             'default' : '400'
         }
