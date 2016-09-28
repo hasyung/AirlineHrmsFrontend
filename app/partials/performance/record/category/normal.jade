@@ -12,6 +12,7 @@
                     ng-disabled="!ctrl.getSelected()"
                     template-url="/partials/performance/record/leave_to_train.html"
                     locals="{current: ctrl.getSelected()}"
+                    ng-disabled="ctrl.importing"
                     ) 离岗培训
 
                 md-button.md-primary.md-raised(
@@ -19,6 +20,7 @@
                     ng-disabled="!ctrl.getSelected()"
                     template-url="/partials/performance/record/add_attachment.html"
                     locals="{performance: ctrl.getSelected(), can_upload: true, outerScope: ctrl.scope, can_del: true}"
+                    ng-disabled="ctrl.importing"
                 ) 上传文档
 
                 md-button.md-primary.md-raised(
