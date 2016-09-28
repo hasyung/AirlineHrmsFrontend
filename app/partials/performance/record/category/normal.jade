@@ -9,14 +9,14 @@
                 md-button.md-primary.md-raised(
                     has-permission="special_states_temporarily_train"
                     nb-dialog
-                    ng-disabled="!ctrl.getSelected()"
+                    ng-disabled="!ctrl.getSelected() || ctrl.importing"
                     template-url="/partials/performance/record/leave_to_train.html"
                     locals="{current: ctrl.getSelected()}"
                     ) 离岗培训
 
                 md-button.md-primary.md-raised(
                     nb-dialog
-                    ng-disabled="!ctrl.getSelected()"
+                    ng-disabled="!ctrl.getSelected() || ctrl.importing"
                     template-url="/partials/performance/record/add_attachment.html"
                     locals="{performance: ctrl.getSelected(), can_upload: true, outerScope: ctrl.scope, can_del: true}"
                 ) 上传文档
@@ -28,6 +28,7 @@
                     flow-file-success="ctrl.upload_start=false;ctrl.uploadPerformances('绩效导入', ctrl.parseJSON($message).id);"
                     flow-btn
                     type="button"
+                    ng-disabled="ctrl.importing"
                 ) 历史绩效导入
 
         div(nb-grid multi-select="false" export-api on-register-api="ctrl.exportGridApi(gridApi)" grid-selection column-defs="ctrl.columnDef" safe-src="ctrl.performances")
