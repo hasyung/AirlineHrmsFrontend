@@ -69,9 +69,9 @@ class Route
 
 
 class PerformanceRecord extends nb.Controller
-    @.$inject = ['$scope', 'Performance', '$http', 'USER_META', '$nbEvent', 'toaster']
+    @.$inject = ['$scope', 'Performance', '$http', 'USER_META', '$nbEvent', 'toaster', '$rootScope']
 
-    constructor: (@scope, @Performance, @http, @USER_META, @Evt, @toaster)->
+    constructor: (@scope, @Performance, @http, @USER_META, @Evt, @toaster, @rootScope)->
         @importing = false
 
         @year_list = @$getYears()
@@ -219,13 +219,16 @@ class PerformanceRecord extends nb.Controller
         self = @
         params = {type: type, attachment_id: attachment_id}
         @importing = true
+        @startLoading()
 
         @http.post("/api/performances/import_performance_collect", params).success (data, status) ->
             self.toaster.pop('success', '提示', '导入成功')
             self.performances.$refresh()
             self.importing = false
+            self.cancelLoading()
         .error (data) ->
             self.importing = false
+            self.cancelLoading()
 
 
 class PerformanceMasterRecord extends nb.Controller

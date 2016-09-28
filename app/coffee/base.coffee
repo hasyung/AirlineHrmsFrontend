@@ -80,6 +80,14 @@ class Controller extends Base
         catch error
         
         return Number(s1.replace(".", "")) * Number(s2.replace(".","")) / Math.pow(10,m)
+
+    # 这两个函数依赖于 $rootScope 
+    # 所以在使用时必须在子类controller中注入 $rootScope
+    cancelLoading: () ->
+        @rootScope.loading = false
+
+    startLoading: () ->
+        @rootScope.loading = true
         
 
 class FilterController extends Controller
