@@ -27,3 +27,38 @@ div.echarts-wrapper.md-whiteframe-z1
 		ec-config="ctrl.brokenLineConfig"
 		ec-option="ctrl.brokenLineOpition"
 	)
+
+div.echarts-wrapper.md-whiteframe-z1
+	div.charts-toolbar(layout style="margin-bottom: 20px;" has-permission="welfare_fees_index")
+		h3 福利费用饼图
+		span(flex)
+		.date-selector(layout)
+			md-select(style="width: 150px;" ng-model="ctrl.welfareFeeType" placeholder="请选择" flex-order="0" ng-change="ctrl.loadWelfareFeesForPie()")
+				md-option(value="福利费") 福利费
+				md-option(value="社会保险费") 社会保险费
+				md-option(value="公积金") 公积金
+				md-option(value="企业年金") 企业年金
+			md-select(style="width: 120px;" ng-model="ctrl.currentYearForWelfarePie" ng-change="ctrl.loadWelfareFeesForPie()" placeholder="请选择")
+				md-option(ng-value="item" ng-repeat="item in ctrl.year_list track by $index" ng-bind="item")
+			label(flex-order="2") 年
+		span(flex)
+
+		md-button.md-primary.md-raised(
+			has-permission="welfare_fees_import"
+			ng-disabled="ctrl.importing"
+			flow-init="{target: '/api/attachments/upload_file', allowDuplicateUploads: true, testChunks: false, chunkSize: 10*1024*1024, uploadMethod: 'POST', singleFile: true}"
+			flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
+			flow-file-success="ctrl.upload_start=false;ctrl.uploadWelfareBudget('福利费用预算导入', ctrl.parseJSON($message).id)"
+			flow-btn
+			type="button"
+		) 预算导入
+		//- md-button.md-primary.md-raised.ml10(
+		//- 	has-permission="welfare_fees_export"
+		//- 	ng-href="/api/welfare_fees/export?year={{ctrl.currentYear}}"
+		//- 	download
+		//- ) 导出
+	
+	ng-echarts.echarts-bar(
+		ec-config="ctrl.pieConfig"
+		ec-option="ctrl.welfareFeesPieOption"
+	)
