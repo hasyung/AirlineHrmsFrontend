@@ -10,11 +10,11 @@ md-dialog.labors-new-leave.datas__container--charts
 						md-option(value="公积金") 公积金
 						md-option(value="企业年金") 企业年金
 
-					md-select(style="width: 120px;" ng-model="ctrl.currentYear" ng-change="ctrl.loadWelfareFeesForPie()" placeholder="请选择")
+					md-select(style="width: 120px;" ng-model="ctrl.currentYearForWelfarePie" ng-change="ctrl.loadWelfareFeesForPie()" placeholder="请选择")
 						md-option(ng-value="item" ng-repeat="item in ctrl.year_list track by $index" ng-bind="item")
 					label(flex-order="2") 年
-			
-			ng-echarts.echarts-bar(
-				ec-config="ctrl.pieConfig"
-				ec-option="ctrl.welfareFeesPieOptionInDialog"
+
+			nb-chart(
+				nb-options="ctrl.welfareFeesPieOptionInDialog"
+				category="pie"
 			)

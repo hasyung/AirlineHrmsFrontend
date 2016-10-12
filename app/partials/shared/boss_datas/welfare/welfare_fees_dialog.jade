@@ -14,7 +14,7 @@ md-dialog.labors-new-leave.datas__container--charts
 						md-option(ng-value="item" ng-repeat="item in ctrl.year_list track by $index" ng-bind="item")
 					label(flex-order="2") 年
 
-			ng-echarts.echarts-bar(
-				ec-config="ctrl.brokenLineConfig"
-				ec-option="ctrl.brokenLineOpitionInDialog"
+			nb-chart(
+				nb-options="ctrl.brokenLineOpitionInDialog"
+				category="brokenLine"
 			)

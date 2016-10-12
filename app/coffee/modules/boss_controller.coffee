@@ -779,33 +779,17 @@ class BossWelfareController extends BossBaseController
         }
 
         @brokenLineOpition = {
-            tooltip: {
-                trigger: 'axis'
-            },
             legend: {
                 data:['福利费','社会保险费','公积金','企业年金']
             },
-            grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                containLabel: true
-            },
             xAxis: {
-                type: 'category',
-                splitLine: { show: false },
-                boundaryGap: false,
                 data: []
-            },
-            yAxis: {
-                type: 'value',
             },
             series: []
         }
 
         @brokenLineOpitionInDialog = {
             tooltip: {
-                trigger: 'axis'
                 textStyle: {
                     fontSize: 16
                 }
@@ -816,16 +800,7 @@ class BossWelfareController extends BossBaseController
                     fontSize: 16
                 }
             },
-            grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                containLabel: true
-            },
             xAxis: {
-                type: 'category',
-                splitLine: { show: false },
-                boundaryGap: false,
                 data: []
                 axisLabel: { 
                     'interval': 0
@@ -835,7 +810,6 @@ class BossWelfareController extends BossBaseController
                 }
             },
             yAxis: {
-                type: 'value',
                 axisLabel: { 
                     'interval': 0
                     textStyle: {
@@ -848,75 +822,41 @@ class BossWelfareController extends BossBaseController
 
         @welfareFeesPieOption = {
             title : {
-                text: '福利费用',
-                x:'center'
-            },
-            tooltip : {
-                trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
+                text: '',
             },
             legend: {
-                orient: 'vertical',
-                left: '5%',
-                top: '5%',
                 data: []
             },
             series : [
                 {
-                    name: '福利类型',
-                    type: 'pie',
-                    radius : '55%',
-                    center: ['50%', '50%'],
+                    name: '',
                     data:[],
-                    itemStyle: {
-                        emphasis: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        }
-                    }
                 }
             ]
         }
 
         @welfareFeesPieOptionInDialog = {
             title : {
-                text: '福利费用'
-                x:'center'
+                text: ''
                 textStyle: {
                     fontSize: 18
                 }
             },
             tooltip : {
-                trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
                 textStyle: {
                     fontSize: 16
                 }
             },
             legend: {
-                orient: 'vertical',
-                left: '5%',
-                top: '5%',
                 data: []
                 textStyle: {
                     fontSize: 16
                 }
             },
-            series : [
+            series: [
                 {
-                    name: '福利类型',
-                    type: 'pie',
-                    radius : '55%',
-                    center: ['50%', '50%'],
+                    name: '',
                     data:[],
-                    itemStyle: {
-                        emphasis: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        }
-                    }
                     label: {
                         normal: {
                             textStyle: {
@@ -936,6 +876,10 @@ class BossWelfareController extends BossBaseController
         @loadDateTime()
         @loadWelfareFees(@currentYear)
         @loadWelfareFeesForPie()
+
+    loadDateTime: () ->
+        super()
+        @currentYearForWelfarePie = _.last(@year_list)
 
     loadWelfareFees: (year) ->
         self = @
@@ -964,6 +908,8 @@ class BossWelfareController extends BossBaseController
                 self.brokenLineOpitionInDialog.xAxis.data = xAxisArray
                 self.brokenLineOpitionInDialog.series = welfareFees
 
+                self.initialDataCompleted = true
+
             .error (err)->
                 console.log err
 
@@ -971,7 +917,7 @@ class BossWelfareController extends BossBaseController
         self = @
 
         category = @welfareFeeType
-        year = @currentYear
+        year = @currentYearForWelfarePie
 
         @http.get('/api/welfare_fees/getcategory_with_year?year='+year+'&category='+category)
             .success (data) ->
@@ -996,7 +942,7 @@ class BossWelfareController extends BossBaseController
 
                 self.initialDataCompleted = true
 
-            .error (msg) ->
+            .error (err) ->
                 console.log err
 
         
