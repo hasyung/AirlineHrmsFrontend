@@ -171,6 +171,15 @@ class NbFilterCtrl extends nb.FilterController
                 <md-option value="空勤停飞" placeholder="异动性质">空勤停飞</md-option>
             </md-select>
         '''
+        'class_system_select':'''
+            <md-select placeholder="${ displayName }" ng-model="${ name }">
+                <md-option value="行政班" placeholder="班制">行政班</md-option>
+                <md-option value="两班倒" placeholder="班制">两班倒</md-option>
+                <md-option value="三班倒" placeholder="班制">三班倒</md-option>
+                <md-option value="四班倒" placeholder="班制">四班倒</md-option>
+                <md-option value="空勤" placeholder="班制">空勤</md-option>
+            </md-select>
+        '''
         'review_category_select':'''
             <md-select placeholder="${ displayName }" ng-model="${ name }">
                 <md-option value="基本信息" placeholder="信息变更模块">基本信息</md-option>

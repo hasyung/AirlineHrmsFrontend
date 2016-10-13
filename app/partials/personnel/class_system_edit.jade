@@ -1,0 +1,43 @@
+md-dialog.punishment_new(style="min-width: 450px;")
+    md-toolbar.md-accent(md-theme="hrms")
+        .md-toolbar-tools
+            span 员工班制编辑
+    form(ng-controller="EditableResourceCtrl" ng-submit="ctrl.updateClassSystem(current);dialog.close();" name="editClassSystem")
+        md-content(ng-init="current=dialog.record.$refresh();ctrl=dialog.ctrl;")
+            fieldset
+                div(layout)
+                    md-input-container(flex)
+                        label 姓名
+                        input(ng-model="::current.employeeName" readonly)
+                    md-input-container(flex)
+                        label 员工编号
+                        input(ng-model="::current.employeeNo" readonly)
+                div(layout)
+                    md-input-container(flex)
+                        label 部门
+                        input(ng-model="::current.department.name" readonly)
+                    md-input-container(flex)
+                        label 岗位
+                        input(ng-model="::current.positionName" readonly)
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 班制
+                        md-select(
+                            ng-model="current.workShifts"
+                            required
+                            placeholder="请选择"
+                            )
+
+                                md-option(value="行政班") 行政班
+                                md-option(value="两班倒") 两班倒
+                                md-option(value="三班倒") 三班倒
+                                md-option(value="四班倒") 四班倒
+                                md-option(value="空勤") 空勤
+                //- div(layout)
+                //-     md-input-container(flex)
+                //-         label 文件号
+                //-         input(ng-model="current.fileNo")
+
+        .md-actions
+            md-button(type="button" ng-click="cancel(current, $event, editLeaveForm);dialog.close()") 取 消
+            md-button.md-primary.md-raised(type="submit" ng-disabled="editClassSystem.$invalid") 确 定

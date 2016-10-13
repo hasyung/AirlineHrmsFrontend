@@ -1,0 +1,20 @@
+.app-content-wrapper(flex style="height: 700px;" ng-controller="ClassSystemCtrl as ctrl")
+
+    div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+
+    div.ui-grid-container
+        md-toolbar
+            .md-toolbar-tools
+                h2 员工班制列表
+                div(flex)
+                span
+                    md-button.md-primary.md-raised(
+                        nb-dialog
+                        template-url="/partials/personnel/class_system_new.html"
+                        locals="{}"
+                    ) 新建员工班制
+
+        div(nb-grid
+          column-defs="ctrl.columnDef"
+          on-register-api="ctrl.exportGridApi(gridApi)"
+          safe-src="ctrl.records")
