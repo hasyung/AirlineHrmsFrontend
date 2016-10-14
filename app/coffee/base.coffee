@@ -305,15 +305,18 @@ class NewMyRequestCtrl extends NewFlowCtrl
                 $http.get('/api/vacations/calc_days', {params: request_data}).success (data, status)->
                     $timeout disableCalculating, 2000
                     scope.vacation_days = data.general_days
-                    scope.isRequestLegal = self.isVacationLegal(vacation_type, receptor.vacations, scope.vacation_days)
+                    scope.isRequestLegal = self.isVacationLegal(vacation_type, receptor.vacations, scope.vacation_days, receptor.workShifts)
 
     # 检测有限假期的规则
-    isVacationLegal: (type, vacations, calcDays) ->
+    isVacationLegal: (type, vacations, calcDays, classSystem) ->
         if type == '年假' && vacations.yearDays.total < calcDays
             @toaster.pop('error', '提示', '剩余年假不足')
             return false
         if type == '补休假' && vacations.offsetDays < calcDays
             @toaster.pop('error', '提示', '剩余补休假不足')
+            return false
+        if type == '年假' && classSystem == '三班倒' && calcDays%3 != 0
+            @toaster.pop('error', '提示', '天数必须为3的倍数')
             return false
 
         return true
