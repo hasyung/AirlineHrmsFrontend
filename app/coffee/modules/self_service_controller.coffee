@@ -1569,25 +1569,34 @@ class WelfareManageChartsController extends nb.Controller
         self = @
 
         category = @welfareFeeType
-        year = @currentYearForWelfarePie
+        year = @currentYear1
+        month = @currentMonth1
 
         @http.get('/api/welfare_fees/getcategory_with_year?year='+year+'&category='+category)
             .success (data) ->
                 pieSeries = []
-                pieLegend = []
+                pieLegend = ['已使用', '剩余']
+
+                total = 0
+                leave = 0
 
                 welfareFeesSrc = data.welfare_fees
 
-                _.map welfareFeesSrc, (val, key) ->
-                    pieSeries.push({ value: val, name: key })
-                    pieLegend.push(key)
+                _.forEach welfareFeesSrc, (val, key) ->
+                    if parseInt(key.split('-')[1], 10) <= parseInt(self.currentMonth1, 10) && key != '剩余'
+                        total = total + parseInt(val, 10)
+                    else
+                        leave = leave + parseInt(val, 10)
 
+                pieSeries.push({ value: total, name: '已使用' })
+                pieSeries.push({ value: leave, name: '剩余' })
+
+                self.welfareFeesPieOption.title.text = category
                 self.welfareFeesPieOption.legend.data = pieLegend
                 self.welfareFeesPieOption.series[0].name = category
                 self.welfareFeesPieOption.series[0].data = pieSeries
-                self.welfareFeesPieOption.title.text = category
 
-            .error (msg) ->
+            .error (err) ->
                 console.log err
 
     loadDateTime: () ->
@@ -1595,7 +1604,8 @@ class WelfareManageChartsController extends nb.Controller
 
         @currentYear = _.last(@year_list)
 
-        @currentYearForWelfarePie = _.last(@year_list)
+        @currentYear1 = _.last(@year_list)
+        @currentMonth1 = _.last(@year_list)
 
     uploadWelfareFees: (type, attachment_id) ->
         self = @
