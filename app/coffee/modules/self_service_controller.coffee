@@ -1601,11 +1601,12 @@ class WelfareManageChartsController extends nb.Controller
 
     loadDateTime: () ->
         @year_list = @$getYears()
+        @month_list = @$getMonths()
 
         @currentYear = _.last(@year_list)
 
         @currentYear1 = _.last(@year_list)
-        @currentMonth1 = _.last(@year_list)
+        @currentMonth1 = _.last(@month_list)
 
     uploadWelfareFees: (type, attachment_id) ->
         self = @
