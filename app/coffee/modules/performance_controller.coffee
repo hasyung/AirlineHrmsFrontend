@@ -219,7 +219,6 @@ class PerformanceRecord extends nb.Controller
         self = @
         params = {type: type, attachment_id: attachment_id}
         @importing = true
-        @startLoading()
 
         @http.post("/api/performances/import_performance_collect", params).success (data, status) ->
             self.toaster.pop('success', '提示', '导入成功')
