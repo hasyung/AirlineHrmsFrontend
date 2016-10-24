@@ -969,6 +969,16 @@ class BossWelfareController extends BossBaseController
         @currentYear1 = _.last(@year_list)
         @currentMonth1 = _.last(@month_list)
 
+    loadMonthList1: () ->
+        if @currentYear1 == new Date().getFullYear()
+            months = [1..new Date().getMonth() + 1]
+        else
+            months = [1..12]
+
+        @month_list = _.map months, (item)->
+            item = '0' + item if item < 10
+            item + ''
+
     loadWelfareFees: (year) ->
         self = @
         welfareFees = []
@@ -1001,6 +1011,8 @@ class BossWelfareController extends BossBaseController
 
     loadWelfareFeesForPie: () ->
         self = @
+
+        @loadMonthList1()
 
         category = @welfareFeeType
         year = @currentYear1
