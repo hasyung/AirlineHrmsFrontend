@@ -183,9 +183,9 @@ class BossBaseController extends nb.Controller
 
 
 class BossLaborsController extends BossBaseController
-    @.$inject = ['$scope', '$http', 'Employee', 'LeaveEmployees', 'ReportNeedToKnow', 'REPORT_CHECKER']
+    @.$inject = ['$scope', '$http', 'Employee', 'LeaveEmployees', 'ReportNeedToKnow', 'REPORT_CHECKER', 'BarChartService']
 
-    constructor: (@scope, @http, @Employee, @LeaveEmployees, @ReportNeedToKnow, @reportCheckers) ->
+    constructor: (@scope, @http, @Employee, @LeaveEmployees, @ReportNeedToKnow, @reportCheckers, BarChartService) ->
         super(@scope, @http, @ReportNeedToKnow, '劳动关系管理室')
 
         @datasType = '公司人员进出'
@@ -199,166 +199,17 @@ class BossLaborsController extends BossBaseController
             dataLoaded:true
         }
 
-        @barOption = {
-            title : {
-                left: 20
-                text: '新进/离职人员分布'
-                textStyle: {
-                    fontSize: 14
-                }
-            },
-            tooltip : {
-                trigger: 'axis'
-                axisPointer: {
-                    type: 'shadow'
-                }
-            },
-            legend: {
-                data:['新进人员','离职人员']
-            },
-            calculable : true
-            xAxis : [
-                {
-                    type: 'value'
-                }
-            ],
-            yAxis : [
-                {
-                    type: 'category'
-                    axisLabel: { 
-                        'interval': 0
-                    }
-                    splitLine: { show: false }
-                    data: []
-                }
-            ],
-            grid : {
-                left: '20%'
-                right: '5%'
-            },
-            series : [
-                {
-                    name:'新进人员'
-                    type:'bar'
-                    data:[]
-                    markPoint : {
-                        data : [
-                            {type : 'max', name: '最大值'}
-                        ]
-                    },
-                },
-                {
-                    name:'离职人员'
-                    type:'bar'
-                    data:[]
-                    markPoint : {
-                        data : [
-                            {type : 'max', name: '最大值'}
-                        ]
-                    },
-                }
-            ]
-        }
+        @barOption = BarChartService
+            .initial()
+            .setTitle('新进/离职人员分布')
+            .setLegend(['新进人员','离职人员'])
+            .fetchSmallOptions()
 
-        @barOptionInDialog = {
-            title : {
-                left: 20
-                text: '新进/离职人员分布'
-                textStyle: {
-                    fontSize: 18
-                }
-            },
-            tooltip : {
-                trigger: 'axis'
-                axisPointer: {
-                    type: 'shadow'
-                }
-                textStyle: {
-                    fontSize: 16
-                }
-            },
-            legend: {
-                data:['新进人员','离职人员']
-                textStyle: {
-                    fontSize: 16
-                }
-            },
-            calculable : true
-            xAxis : [
-                {
-                    type: 'value'
-                    axisLabel: { 
-                        'interval': 0
-                        textStyle: {
-                            fontSize: 16
-                        }
-                    }
-                }
-            ],
-            yAxis : [
-                {
-                    type: 'category'
-                    axisLabel: { 
-                        'interval': 0
-                        textStyle: {
-                            fontSize: 16
-                        }
-                    }
-                    splitLine: { show: false }
-                    data: []
-                }
-            ],
-            grid : {
-                left: '20%'
-                right: '5%'
-            },
-            series : [
-                {
-                    name:'新进人员'
-                    type:'bar'
-                    data:[]
-                    markPoint : {
-                        data : [
-                            {type : 'max', name: '最大值'}
-                        ]
-                        label: {
-                            normal: {
-                                textStyle: {
-                                    fontSize: 16
-                                }
-                            }
-                            emphasis: {
-                                textStyle: {
-                                    fontSize: 16
-                                }
-                            }
-                        }
-                    },
-                },
-                {
-                    name:'离职人员'
-                    type:'bar'
-                    data:[]
-                    markPoint : {
-                        data : [
-                            {type : 'max', name: '最大值'}
-                        ]
-                        label: {
-                            normal: {
-                                textStyle: {
-                                    fontSize: 16
-                                }
-                            }
-                            emphasis: {
-                                textStyle: {
-                                    fontSize: 16
-                                }
-                            }
-                        }
-                    },
-                }
-            ]
-        }
+        @barOptionInDialog = BarChartService
+            .initial()
+            .setTitle('新进/离职人员分布')
+            .setLegend(['新进人员','离职人员'])
+            .fetchBigOptions()
 
         @columnDefNew = [
             {
@@ -440,14 +291,14 @@ class BossLaborsController extends BossBaseController
 
         @http.get('/api/statements/new_leave_employee_summary?month='+month)
             .success (data) ->
-                self.barSrc = self.dataFormatForBar(data.new_leave_employee_summary)
-                self.barOption.yAxis[0].data = self.barSrc['yAxisData']
-                self.barOption.series[0].data = self.barSrc['seriesA']
-                self.barOption.series[1].data = self.barSrc['seriesB']
+                barSrc = self.dataFormatForBar(data.new_leave_employee_summary)
+                self.barOption.yAxis[0].data = barSrc['yAxisData']
+                self.barOption.series[0].data = barSrc['seriesA']
+                self.barOption.series[1].data = barSrc['seriesB']
 
-                self.barOptionInDialog.yAxis[0].data = self.barSrc['yAxisData']
-                self.barOptionInDialog.series[0].data = self.barSrc['seriesA']
-                self.barOptionInDialog.series[1].data = self.barSrc['seriesB']
+                self.barOptionInDialog.yAxis[0].data = barSrc['yAxisData']
+                self.barOptionInDialog.series[0].data = barSrc['seriesA']
+                self.barOptionInDialog.series[1].data = barSrc['seriesB']
 
                 self.initialDataCompleted = true
             .error (msg) ->
