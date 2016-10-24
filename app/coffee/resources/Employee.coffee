@@ -268,6 +268,16 @@ Formerleaders = (restmod, RMUtils, $Evt) ->
                     this.$refresh(tableState)
     }
 
+ClassSystem = (restmod, RMUtils, $Evt) ->
+    ClassSystem = restmod.model('/work_shifts/index').mix 'nbRestApi', {
+        # joinScalDate: {decode: 'date', param: 'yyyy-MM-dd'}
+        $config:
+            jsonRootSingle: 'work_shift'
+            jsonRootMany: 'work_shifts'
+
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+    }
+
 
 resources.factory 'Employee', ['restmod', 'RMUtils', '$nbEvent', Employee]
 resources.factory 'EmployeesHasEarlyRetire', ['restmod', 'RMUtils', '$nbEvent', EmployeesHasEarlyRetire]
@@ -278,4 +288,5 @@ resources.factory 'AdjustPositionWaiting', ['restmod', 'RMUtils', '$nbEvent', Ad
 resources.factory 'AdjustPositionRecord', ['restmod', 'RMUtils', '$nbEvent', AdjustPositionRecord]
 resources.factory 'EducationExpRecord', ['restmod', 'RMUtils', '$nbEvent', EducationExpRecord]
 resources.factory 'MoveEmployees', ['restmod', 'RMUtils', '$nbEvent', MoveEmployees]
+resources.factory 'ClassSystem', ['restmod', 'RMUtils', '$nbEvent', ClassSystem]
 

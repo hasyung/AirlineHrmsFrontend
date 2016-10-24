@@ -1,10 +1,12 @@
 extends ./../datas_layout.jade
 
 block vars
-	- var pickers = ['福利费用', '汇报']
+	- var pickers = ['福利费用', '福利费使用情况', '汇报']
 
 block datas_content
 	.datas__container--reports(ng-if="ctrl.datasType == '汇报'")
 		include ./welfare_reports
 	.datas__container--charts(ng-if="ctrl.datasType == '福利费用'")
 		include ./welfare_fees
+	.datas__container--charts(ng-if="ctrl.datasType == '福利费使用情况'")
+		include ./welfare_fees_pie

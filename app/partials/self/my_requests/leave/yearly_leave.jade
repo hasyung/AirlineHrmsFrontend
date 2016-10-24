@@ -10,6 +10,9 @@ block relation_data
         .flow-info-cell(flex)
             .flow-cell-title 川航工作年限
             .flow-cell-content {{ receptor.joinScalDate | fromNow}}
+        .flow-info-cell(flex)
+            .flow-cell-title 班制
+            .flow-cell-content {{ receptor.workShifts }}
     div.flow-info-row(layout)
         .flow-info-cell(flex)
             .flow-cell-title 假别

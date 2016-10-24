@@ -1,0 +1,24 @@
+div.echarts-wrapper(ng-if="ctrl.initialDataCompleted")
+	div.charts-toolbar(layout)
+		div(layout)
+			md-select(style="width: 150px; margin: 0;" ng-model="ctrl.welfareFeeType" placeholder="请选择" flex-order="0" ng-change="ctrl.loadWelfareFeesForPie()")
+				md-option(value="福利费") 福利费
+				md-option(value="社会保险费") 社会保险费
+				md-option(value="公积金") 公积金
+				md-option(value="企业年金") 企业年金
+		span(flex)
+		.date-selector(layout)
+			md-select(style="width: 90px;" ng-model="ctrl.currentYear1" ng-change="ctrl.loadWelfareFeesForPie()" placeholder="请选择")
+				md-option(ng-value="item" ng-repeat="item in ctrl.year_list track by $index" ng-bind="item")
+			label(flex-order="2") 年
+			md-select(style="width: 90px;" ng-model="ctrl.currentMonth1" ng-change="ctrl.loadWelfareFeesForPie()" placeholder="请选择")
+				md-option(ng-value="item" ng-repeat="item in ctrl.month_list track by $index" ng-bind="item")
+			label(flex-order="4") 月
+	
+	ng-echarts.echarts-bar(
+		ec-config="ctrl.pieConfig"
+		ec-option="ctrl.welfareFeesPieOption"
+		nb-dialog
+		template-url="partials/shared/boss_datas/welfare/welfare_fees_pie_dialog.html"
+		locals="{}"
+	)

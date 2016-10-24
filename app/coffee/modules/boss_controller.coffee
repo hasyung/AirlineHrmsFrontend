@@ -741,9 +741,16 @@ class BossWelfareController extends BossBaseController
         super(@scope, @http, @ReportNeedToKnow, '福利管理室')
 
         @datasType = '福利费用'
+        @welfareFeeType = '福利费'
+        
         @importing = false
 
         @brokenLineConfig = {
+            theme:''
+            dataLoaded:true
+        }
+
+        @pieConfig = {
             theme:''
             dataLoaded:true
         }
@@ -816,8 +823,128 @@ class BossWelfareController extends BossBaseController
             series: []
         }
 
+        @welfareFeesPieOption = {
+            title : {
+                text: '福利费用',
+                x:'center'
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: '5%',
+                top: '5%',
+                data: []
+            },
+            series : [
+                {
+                    name: '福利类型',
+                    type: 'pie',
+                    radius : '55%',
+                    center: ['50%', '50%'],
+                    data:[],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        }
+
+        @welfareFeesPieOptionInDialog = {
+            title : {
+                text: '福利费用'
+                x:'center'
+                textStyle: {
+                    fontSize: 18
+                }
+            }
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+                textStyle: {
+                    fontSize: 16
+                }
+            }
+            legend: {
+                orient: 'vertical',
+                left: '5%',
+                top: '5%',
+                data: []
+                textStyle: {
+                    fontSize: 16
+                }
+            }
+            series : [
+                {
+                    name: '福利类型',
+                    type: 'pie',
+                    radius : '55%',
+                    center: ['50%', '50%'],
+                    data:[],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                    label: {
+                        normal: {
+                            textStyle: {
+                                fontSize: 16
+                            }
+                        }
+                        emphasis: {
+                            textStyle: {
+                                fontSize: 16
+                            }
+                        }
+                    }
+                }
+                {
+                    name: '福利类型',
+                    type: 'pie',
+                    radius : ['40%', '60%'],
+                    center: ['50%', '50%'],
+                    data:[],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                    label: {
+                        normal: {
+                            textStyle: {
+                                fontSize: 16
+                            }
+                        }
+                        emphasis: {
+                            textStyle: {
+                                fontSize: 16
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+
         @loadDateTime()
         @loadWelfareFees(@currentYear)
+        @loadWelfareFeesForPie()
+
+    loadDateTime: () ->
+        super()
+
+        @currentYear1 = _.last(@year_list)
+        @currentMonth1 = _.last(@month_list)
 
     loadWelfareFees: (year) ->
         self = @
@@ -849,6 +976,46 @@ class BossWelfareController extends BossBaseController
             .error (err)->
                 console.log err
 
+    loadWelfareFeesForPie: () ->
+        self = @
+
+        category = @welfareFeeType
+        year = @currentYear1
+        month = @currentMonth1
+
+        @http.get('/api/welfare_fees/getcategory_with_year?year='+year+'&category='+category)
+            .success (data) ->
+                pieSeries = []
+                pieLegend = ['已使用', '剩余']
+
+                total = 0
+                leave = 0
+
+                welfareFeesSrc = data.welfare_fees
+
+                _.forEach welfareFeesSrc, (val, key) ->
+                    if parseInt(key.split('-')[1], 10) <= parseInt(self.currentMonth1, 10) && key != '剩余'
+                        total = total + parseInt(val, 10)
+                    else
+                        leave = leave + parseInt(val, 10)
+
+                pieSeries.push({ value: total, name: '已使用' })
+                pieSeries.push({ value: leave, name: '剩余' })
+
+                self.welfareFeesPieOption.title.text = category
+                self.welfareFeesPieOption.legend.data = pieLegend
+                self.welfareFeesPieOption.series[0].name = category
+                self.welfareFeesPieOption.series[0].data = pieSeries
+
+                self.welfareFeesPieOptionInDialog.title.text = category
+                self.welfareFeesPieOptionInDialog.legend.data = pieLegend
+                self.welfareFeesPieOptionInDialog.series[0].name = category
+                self.welfareFeesPieOptionInDialog.series[0].data = pieSeries
+
+                self.initialDataCompleted = true
+
+            .error (err) ->
+                console.log err
 
         
 class BossContactController extends BossBaseController

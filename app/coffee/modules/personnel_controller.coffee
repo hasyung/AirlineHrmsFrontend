@@ -1756,6 +1756,125 @@ class PersonnelDataCtrl extends nb.Controller
         if angular.isDefined(employee.languages)
             employee.languages.push new Object()
 
+class ClassSystemController extends nb.Controller
+    @.$inject = ['$scope', 'ClassSystem', 'toaster', 'PERMISSIONS', 'Employee', '$http']
+
+    constructor: (@scope, @ClassSystem, @toaster, @permissions, @Employee, @http) ->
+        @loadInitialData()
+
+        @columnDef = [
+            {
+                minWidth: 350
+                displayName: '所属部门'
+                name: 'department.name'
+                cellTooltip: (row) ->
+                    return row.entity.department.name
+            }
+            {
+                minWidth: 120
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {minWidth: 120, displayName: '员工编号', name: 'employeeNo'}
+            {
+                minWidth: 250
+                displayName: '岗位'
+                name: 'positionName'
+                cellTooltip: (row) ->
+                    return row.entity.positionName
+            }
+            {minWidth: 120, displayName: '班制', name: 'workShifts'}
+            {
+                minWidth: 120
+                displayName: '查看'
+                field: 'edit'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents">
+                    <a nb-dialog
+                        template-url="/partials/personnel/class_system_edit.html"
+                        locals="{record: row.entity, ctrl:grid.appScope.$parent.ctrl}">
+                        查看
+                    </a>
+                </div>
+                '''
+            }
+        ]
+
+        @filterOptions = {
+            name: 'classSystem'
+            constraintDefs: [
+                {
+                    name: 'name'
+                    displayName: '姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'work_shifts'
+                    displayName: '班制'
+                    type: 'class_system_select'
+                }
+            ]
+        }
+
+    loadEmployee: (params, newRecord)->
+        self = @
+
+        @Employee.$collection().$refresh(params).$then (employees)->
+            args = _.mapKeys params, (value, key) ->
+                _.camelCase key
+
+            matched = _.find employees, args
+            if matched
+                self.loadEmp = matched
+                newRecord.employee_id = matched.$pk
+            else
+                self.loadEmp = params
+
+    loadInitialData: () ->
+        @records = @ClassSystem.$collection().$fetch()
+
+    search: (tableState) ->
+        tableState = tableState || {}
+        tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+        @records.$refresh(tableState)
+
+    getSelected: () ->
+        rows = @gridApi.selection.getSelectedGridRows()
+        rows.map (row) -> return row.entity
+
+    getSelectsIds: () ->
+        rows = @gridApi.selection.getSelectedGridRows()
+        rows.map (row) -> return row.entity.$pk
+
+    exportGridApi: (gridApi) ->
+        @gridApi = gridApi
+
+    updateClassSystem: (model) ->
+        self = @
+
+        model.$save().$then () ->
+            self.toaster.pop('success', '提示', '更新成功')
+            self.records.$refresh()
+
+    newClassSystem: (newRecord) ->
+        self = @
+        params = {}
+        params['employee_id'] = newRecord.employee_id
+        params['work_shifts'] = newRecord.workShifts
+
+        @http.post('/api/work_shifts/index', params).then (data)->
+            self.toaster.pop('success', '提示', '创建成功')
+            self.records.$refresh()
+
 
 app.controller('PersonnelSort', PersonnelSort)
 app.controller('LeaveEmployeesCtrl', LeaveEmployeesCtrl)
@@ -1770,3 +1889,4 @@ app.controller('EmployeePerformanceCtrl', EmployeePerformanceCtrl)
 app.controller('EmployeeAttendanceCtrl', EmployeeAttendanceCtrl)
 app.controller('EmployeeRewardPunishmentCtrl', EmployeeRewardPunishmentCtrl)
 app.controller('PersonnelDataCtrl', PersonnelDataCtrl)
+app.controller('ClassSystemCtrl', ClassSystemController)
