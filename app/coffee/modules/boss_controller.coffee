@@ -325,100 +325,25 @@ class BossLaborsController extends BossBaseController
         return config
 
 class BossHumanController extends BossBaseController
-    @.$inject = ['$scope', '$http', 'ReportNeedToKnow', 'AdjustPositionRecord', '$enum', '$q']
+    @.$inject = ['$scope', '$http', 'ReportNeedToKnow', 'AdjustPositionRecord', '$enum', '$q', 'PieChartService']
 
-    constructor: (@scope, @http, @ReportNeedToKnow, @AdjustPositionRecord, @enum, @q) ->
+    constructor: (@scope, @http, @ReportNeedToKnow, @AdjustPositionRecord, @enum, @q, PieChartService) ->
         super(@scope, @http, @ReportNeedToKnow, '人事调配管理室')
         self = @
         @datasType = '调岗记录'
         @channels = []
 
-        @positionChangePieOption = {
-            title : {
-                text: '员工调岗来源',
-                x:'center'
-            },
-            tooltip : {
-                trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
-            },
-            legend: {
-                orient: 'vertical',
-                left: '5%',
-                top: '5%',
-                data: []
-            },
-            series : [
-                {
-                    name: '调岗来源',
-                    type: 'pie',
-                    radius : '55%',
-                    center: ['50%', '50%'],
-                    data:[],
-                    itemStyle: {
-                        emphasis: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        }
-                    }
-                }
-            ]
-        }
+        @positionChangePieOption = PieChartService
+            .initial()
+            .setTitle('员工调岗来源')
+            .setSeriesName('调岗来源')
+            .fetchSmallOptions()
 
-        @positionChangePieOptionInDialog = {
-            title : {
-                text: '员工调岗来源'
-                x:'center'
-                textStyle: {
-                    fontSize: 18
-                }
-            },
-            tooltip : {
-                trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
-                textStyle: {
-                    fontSize: 16
-                }
-            },
-            legend: {
-                orient: 'vertical',
-                left: '5%',
-                top: '5%',
-                data: []
-                textStyle: {
-                    fontSize: 16
-                }
-            },
-            series : [
-                {
-                    name: '调岗来源',
-                    type: 'pie',
-                    radius : '55%',
-                    center: ['50%', '50%'],
-                    data:[],
-                    itemStyle: {
-                        emphasis: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        }
-                    }
-                    label: {
-                        normal: {
-                            textStyle: {
-                                fontSize: 16
-                            }
-                        }
-                        emphasis: {
-                            textStyle: {
-                                fontSize: 16
-                            }
-                        }
-                    }
-                }
-            ]
-        }
+        @positionChangePieOptionInDialog = PieChartService
+            .initial()
+            .setTitle('员工调岗来源')
+            .setSeriesName('调岗来源')
+            .fetchBigOptions()
 
         @adjustPositionDef = [
             {
@@ -541,9 +466,9 @@ class BossHumanController extends BossBaseController
                     pieSeries = []
                     pieLegend = []
 
-                    self.positionChangeSrc = data.position_change_record_pie
+                    positionChangeSrc = data.position_change_record_pie
 
-                    _.map self.positionChangeSrc, (val, key) ->
+                    _.map positionChangeSrc, (val, key) ->
                         pieSeries.push({ value: val, name: key })
                         pieLegend.push(key)
 
@@ -586,9 +511,9 @@ class BossServiceController extends BossBaseController
 
 
 class BossWelfareController extends BossBaseController
-    @.$inject = ['$scope', '$http', 'ReportNeedToKnow']
+    @.$inject = ['$scope', '$http', 'ReportNeedToKnow', 'BrokenLineChartService', 'PieChartService']
 
-    constructor: (@scope, @http, @ReportNeedToKnow) ->
+    constructor: (@scope, @http, @ReportNeedToKnow, BrokenLineChartService, PieChartService) ->
         super(@scope, @http, @ReportNeedToKnow, '福利管理室')
 
         @datasType = '福利费用'
@@ -606,186 +531,23 @@ class BossWelfareController extends BossBaseController
             dataLoaded:true
         }
 
-        @brokenLineOpition = {
-            tooltip: {
-                trigger: 'axis'
-            },
-            legend: {
-                data:['福利费','社会保险费','公积金','企业年金']
-            },
-            grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                containLabel: true
-            },
-            xAxis: {
-                type: 'category',
-                splitLine: { show: false },
-                boundaryGap: false,
-                data: []
-            },
-            yAxis: {
-                type: 'value',
-            },
-            series: []
-        }
+        @brokenLineOpition = BrokenLineChartService
+            .initial()
+            .setLegend(['福利费','社会保险费','公积金','企业年金'])
+            .fetchSmallOptions()
 
-        @brokenLineOpitionInDialog = {
-            tooltip: {
-                trigger: 'axis'
-                textStyle: {
-                    fontSize: 16
-                }
-            },
-            legend: {
-                data:['福利费','社会保险费','公积金','企业年金']
-                textStyle: {
-                    fontSize: 16
-                }
-            },
-            grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                containLabel: true
-            },
-            xAxis: {
-                type: 'category',
-                splitLine: { show: false },
-                boundaryGap: false,
-                data: []
-                axisLabel: { 
-                    'interval': 0
-                    textStyle: {
-                        fontSize: 16
-                    }
-                }
-            },
-            yAxis: {
-                type: 'value',
-                axisLabel: { 
-                    'interval': 0
-                    textStyle: {
-                        fontSize: 16
-                    }
-                }
-            },
-            series: []
-        }
+        @brokenLineOpitionInDialog = BrokenLineChartService
+            .initial()
+            .setLegend(['福利费','社会保险费','公积金','企业年金'])
+            .fetchBigOptions()
 
-        @welfareFeesPieOption = {
-            title : {
-                text: '福利费用',
-                x:'center'
-            },
-            tooltip : {
-                trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
-            },
-            legend: {
-                orient: 'vertical',
-                left: '5%',
-                top: '5%',
-                data: []
-            },
-            series : [
-                {
-                    name: '福利类型',
-                    type: 'pie',
-                    radius : '55%',
-                    center: ['50%', '50%'],
-                    data:[],
-                    itemStyle: {
-                        emphasis: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        }
-                    }
-                }
-            ]
-        }
+        @welfareFeesPieOption = PieChartService
+            .initial()
+            .fetchSmallOptions()
 
-        @welfareFeesPieOptionInDialog = {
-            title : {
-                text: '福利费用'
-                x:'center'
-                textStyle: {
-                    fontSize: 18
-                }
-            }
-            tooltip : {
-                trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
-                textStyle: {
-                    fontSize: 16
-                }
-            }
-            legend: {
-                orient: 'vertical',
-                left: '5%',
-                top: '5%',
-                data: []
-                textStyle: {
-                    fontSize: 16
-                }
-            }
-            series : [
-                {
-                    name: '福利类型',
-                    type: 'pie',
-                    radius : '55%',
-                    center: ['50%', '50%'],
-                    data:[],
-                    itemStyle: {
-                        emphasis: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        }
-                    }
-                    label: {
-                        normal: {
-                            textStyle: {
-                                fontSize: 16
-                            }
-                        }
-                        emphasis: {
-                            textStyle: {
-                                fontSize: 16
-                            }
-                        }
-                    }
-                }
-                {
-                    name: '福利类型',
-                    type: 'pie',
-                    radius : ['40%', '60%'],
-                    center: ['50%', '50%'],
-                    data:[],
-                    itemStyle: {
-                        emphasis: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        }
-                    }
-                    label: {
-                        normal: {
-                            textStyle: {
-                                fontSize: 16
-                            }
-                        }
-                        emphasis: {
-                            textStyle: {
-                                fontSize: 16
-                            }
-                        }
-                    }
-                }
-            ]
-        }
+        @welfareFeesPieOptionInDialog = PieChartService
+            .initial()
+            .fetchBigOptions()
 
         @loadDateTime()
         @loadWelfareFees(@currentYear)
