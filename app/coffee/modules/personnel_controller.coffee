@@ -1487,7 +1487,7 @@ class EmployeePerformanceCtrl extends nb.Controller
     loadData: (employee)->
         self = @
         employee.performances.$refresh().$then (performances)->
-            self.performances = _.sortBy(_.groupBy performances, (item)-> item.assessYear).reverse()
+            self.performances = _.sortBy(_.groupBy performances, (item)-> item.assessYear)
 
 class EmployeeRewardPunishmentCtrl extends nb.Controller
     @.$inject = ['$scope', 'Employee', 'Reward', 'Punishment']
