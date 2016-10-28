@@ -30,7 +30,7 @@ request         = require("request")
 proxy           = require('./compat/proxy-middleware')
 
 
-debugMode       = true
+debugMode       = false
 
 
 DEVELOPMENT_TEST_SERVER = "http://192.168.6.99:9001"
