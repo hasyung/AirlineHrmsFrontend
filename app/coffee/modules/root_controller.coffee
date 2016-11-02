@@ -19,7 +19,7 @@ class RootController extends nb.Controller
         @reportCheckers = REPORT_CHECKER
         @user = USER_META
 
-        @show_main = @root_info.single_point
+        # @show_main = @root_info.single_point
 
         self = @
 
