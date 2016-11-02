@@ -13,8 +13,9 @@ getBaseFilterOptions = (fliterName)->
 
 
 BASE_TABLE_DEFS = [
-    {displayName: '员工编号', name: 'employeeNo'}
+    {displayName: '员工编号', name: 'employeeNo', minWidth: 120}
     {
+        minWidth: 120
         displayName: '姓名'
         field: 'employeeName'
         cellTemplate: '''
@@ -28,18 +29,20 @@ BASE_TABLE_DEFS = [
         '''
     }
     {
+        minWidth: 350
         displayName: '所属部门'
         name: 'departmentName'
         cellTooltip: (row) ->
             return row.entity.departmentName
     }
     {
+        minWidth: 250
         displayName: '岗位'
         name: 'positionName'
         cellTooltip: (row) ->
             return row.entity.positionName
     }
-    {displayName: '通道', name: 'channel'}
+    {displayName: '通道', name: 'channel', minWidth: 120}
 ]
 
 
@@ -73,50 +76,37 @@ class PerformanceRecord extends nb.Controller
 
     constructor: (@scope, @Performance, @http, @USER_META, @Evt, @toaster, @rootScope)->
         @importing = false
-
-        @year_list = @$getYears()
+        @tableState = null
         @filter_month_list = @$getFilterMonths()
 
         @filterOptions = getBaseFilterOptions('performance_record')
         @filterOptions.constraintDefs = @filterOptions.constraintDefs.concat [
             {
-                displayName: '月度绩效'
-                name: 'month_assess_time'
-                placeholder: '月度绩效'
-                type: 'month-list'
-            }
-            {
-                displayName: '季度绩效'
-                name: 'season_assess_time'
-                placeholder: '季度绩效'
-                type: 'season-list'
-            }
-            {
-                displayName: '年度绩效'
-                name: 'year_assess_time'
-                placeholder: '年度绩效'
-                type: 'year-list'
-            }
-            {
                 displayName: '绩效人员分类'
                 name: 'employee_category'
-                placeholder: '年度绩效'
+                placeholder: '绩效人员分类'
                 type: 'perf_category_select'
-            }
-            {
-                displayName: '绩效'
-                name: 'result'
-                placeholder: '绩效'
-                type: 'performance_select'
             }
         ]
 
         @columnDef = BASE_TABLE_DEFS.concat [
-            {displayName: '绩效类型', name: 'categoryName'}
-            {displayName: '考核时段', name: 'assessTime', width: '180', cellTooltip: (row) -> return row.entity.assessTime}
-            {displayName: '绩效', name: 'result'}
-            {displayName: '排序', name: 'sortNo'}
+            {displayName: '1月', name: 'january', minWidth: 120}
+            {displayName: '2月', name: 'february', minWidth: 120}
+            {displayName: '3月', name: 'march', minWidth: 120}
+            {displayName: '4月', name: 'april', minWidth: 120}
+            {displayName: '5月', name: 'may', minWidth: 120}
+            {displayName: '6月', name: 'june', minWidth: 120}
+            {displayName: '7月', name: 'july', minWidth: 120}
+            {displayName: '8月', name: 'august', minWidth: 120}
+            {displayName: '9月', name: 'september', minWidth: 120}
+            {displayName: '10月', name: 'october', minWidth: 120}
+            {displayName: '11月', name: 'november', minWidth: 120}
+            {displayName: '12月', name: 'december', minWidth: 120}
+            {displayName: '季度绩效', name: 'season', minWidth: 120}
+            {displayName: '年度绩效', name: 'year', minWidth: 120}
+            {displayName: '排序', name: 'sortNo', minWidth: 120}
             {
+                minWidth: 120
                 displayName: '附件',
                 field: '查看',
                 cellTemplate: '''
@@ -132,16 +122,23 @@ class PerformanceRecord extends nb.Controller
             }
         ]
 
+        @loadYearList()
         #PRD要求初始化表体为空
         @performances = @Performance.$collection().$fetch({employee_category: 'NULL'})
+
+    loadYearList: () ->
+        @year_list = @$getYears()
+        @currentYear = _.last @year_list
 
     exportGridApi: (gridApi) ->
         @gridApi = gridApi
 
     search: (tableState)->
-        tableState = tableState || {}
+        tableState = tableState || @tableState || {}
         tableState['per_page'] = @gridApi.grid.options.paginationPageSize
+        tableState['year'] = @currentYear
         @performances.$refresh(tableState)
+        @tableState = tableState
 
     isImgObj: (obj)->
         return /jpg|jpeg|png|gif/.test(obj.type)
