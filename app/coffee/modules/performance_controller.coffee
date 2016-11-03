@@ -72,7 +72,7 @@ class Route
 
 
 class PerformanceRecord extends nb.Controller
-    @.$inject = ['$scope', 'Performance', '$http', 'USER_META', '$nbEvent', 'toaster', '$rootScope']
+    @.$inject = ['$scope', 'PerformanceMix', '$http', 'USER_META', '$nbEvent', 'toaster', '$rootScope']
 
     constructor: (@scope, @Performance, @http, @USER_META, @Evt, @toaster, @rootScope)->
         @importing = false
@@ -90,20 +90,20 @@ class PerformanceRecord extends nb.Controller
         ]
 
         @columnDef = BASE_TABLE_DEFS.concat [
-            {displayName: '1月', name: 'january', minWidth: 120}
-            {displayName: '2月', name: 'february', minWidth: 120}
-            {displayName: '3月', name: 'march', minWidth: 120}
-            {displayName: '4月', name: 'april', minWidth: 120}
-            {displayName: '5月', name: 'may', minWidth: 120}
-            {displayName: '6月', name: 'june', minWidth: 120}
-            {displayName: '7月', name: 'july', minWidth: 120}
-            {displayName: '8月', name: 'august', minWidth: 120}
-            {displayName: '9月', name: 'september', minWidth: 120}
-            {displayName: '10月', name: 'october', minWidth: 120}
-            {displayName: '11月', name: 'november', minWidth: 120}
-            {displayName: '12月', name: 'december', minWidth: 120}
-            {displayName: '季度绩效', name: 'season', minWidth: 120}
-            {displayName: '年度绩效', name: 'year', minWidth: 120}
+            {displayName: '1月', name: 'result.january', minWidth: 120}
+            {displayName: '2月', name: 'result.february', minWidth: 120}
+            {displayName: '3月', name: 'result.march', minWidth: 120}
+            {displayName: '4月', name: 'result.april', minWidth: 120}
+            {displayName: '5月', name: 'result.may', minWidth: 120}
+            {displayName: '6月', name: 'result.june', minWidth: 120}
+            {displayName: '7月', name: 'result.july', minWidth: 120}
+            {displayName: '8月', name: 'result.august', minWidth: 120}
+            {displayName: '9月', name: 'result.september', minWidth: 120}
+            {displayName: '10月', name: 'result.october', minWidth: 120}
+            {displayName: '11月', name: 'result.november', minWidth: 120}
+            {displayName: '12月', name: 'result.december', minWidth: 120}
+            {displayName: '季度绩效', name: 'result.season', minWidth: 120}
+            {displayName: '年度绩效', name: 'result.year', minWidth: 120}
             {displayName: '排序', name: 'sortNo', minWidth: 120}
             {
                 minWidth: 120
