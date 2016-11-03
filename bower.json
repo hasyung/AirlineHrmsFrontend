@@ -46,7 +46,7 @@
     "bootstrap-datepicker": "~1.4.0",
     "ngInfiniteScroll": "~1.2.0",
     "ng-echarts": "https://github.com/soccerloway/ng-echarts.git#98dd138c85490afdb219fe3aa8ba2089d3f3f6f9",
-    "echarts": "git@code.cdavatar.com:hasyung/echats_3.2.3.git",
+    "echarts": "git@114.215.142.122:hasyung/echats_3.2.3.git",
     "angular-ui-calendar": "latest",
     "moment-range": "latest"
   }
