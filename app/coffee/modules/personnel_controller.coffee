@@ -516,6 +516,12 @@ class LeaveEmployeesCtrl extends nb.Controller
                     type: 'string'
                 }
                 {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                    placeholder: '员工编号'
+                }
+                {
                     name: 'channel'
                     displayName: '通道'
                     type: 'string'
