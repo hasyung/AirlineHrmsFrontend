@@ -72,7 +72,7 @@ class NbFilterCtrl extends nb.FilterController
             <md-select placeholder="${ displayName }" ng-model="${ name }">
                 <md-option value="员工" placeholder="人员分类">员工</md-option>
                 <md-option value="基层干部" placeholder="人员分类">基层干部</md-option>
-                <md-option value="中层干部" placeholder="人员分类">中层干部</md-option>
+                <md-option value="中层" placeholder="人员分类">中层</md-option>
                 <md-option value="主官" placeholder="人员分类">主官</md-option>
             </md-select>
         '''
