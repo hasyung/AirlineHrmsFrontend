@@ -12,6 +12,10 @@ PerformanceMix = (restmod, RMUtils, $Evt) ->
     Performance = restmod.model('/performances/index_all').mix 'nbRestApi', 'DirtyModel', {
         attachments: {hasMany: 'Attachment'}
 
+        $config:
+            jsonRootSingle: 'performance'
+            jsonRootMany: 'performances'
+
         owner: {belongsTo: 'Employee', key: 'employee_id'}
     }
 
