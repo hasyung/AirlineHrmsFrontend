@@ -765,6 +765,13 @@ class MoveEmployeesCtrl extends nb.Controller
                 cellTooltip: (row) ->
                     return row.entity.limitTime
             }
+            {
+                minWidth: 120
+                displayName: '发起人'
+                name: 'sponsor'
+                cellTooltip: (row) ->
+                    return row.entity.sponsor
+            }
         ]
 
         @filterOptions = {
