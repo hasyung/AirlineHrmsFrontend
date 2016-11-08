@@ -276,6 +276,11 @@ class SalaryController extends nb.Controller
     loadDynamicConfig: (category)->
         @current_category = category
         @dynamic_config = @settings[category + '_setting']
+
+        # 强行从配置里面删除rate系数，暂时取消rate系数列 important
+        # 旧的薪酬规则已经废弃，取消rate系数 等待新规
+        _.remove @dynamic_config.flag_list, (flag)-> flag == 'rate'
+
         @backup_config = angular.copy(@dynamic_config)
         @editing = false
 
