@@ -47,22 +47,44 @@
                                     span.require-tip *
                                 md-select(ng-model="newEmp.politicalStatusId" name="politicalStatus" placeholder="请选择")
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('political_status')") {{item.label}}
-
+                        
                         div(layout)
                             md-input-container(flex)
-                                label 民族
-                                input(type="text" ng-model="newEmp.nation")
+                                nb-search.nb-search(
+                                    type="nationality"
+                                    ng-model="newEmp.nationality"
+                                    float-label="true"
+                                    placeholder="国籍"
+                                    search-text-change="newEmp.nation = null;"
+                                    selected-item-change=""
+                                    editable="true"
+                                    md-no-cache="true"
+                                    )
+                            md-input-container(flex)
+                                nb-search.nb-search(
+                                    ng-if="newEmp.nationality == '中国'"
+                                    type="nation"
+                                    ng-model="newEmp.nation"
+                                    float-label="true"
+                                    placeholder="民族"
+                                    search-text-change=""
+                                    selected-item-change=""
+                                    editable="newEmp.nationality == '中国'"
+                                    md-no-cache="true"
+                                    )
+
+                        div(layout)
                             md-input-container.row-has-value(flex)
                                 label 学历
                                     span.require-tip *
                                 md-select(ng-model="newEmp.educationBackgroundId" name="educationBackground" placeholder="请选择")
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('education_backgrounds')") {{item.label}}
 
-                        div(layout)
                             md-input-container.row-has-value(flex)
                                 label 学位
                                 md-select(ng-model="newEmp.degreeId" name="degree" placeholder="请选择")
                                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('degrees')") {{item.label}}
+                        div(layout)
                             md-input-container(flex)
                                 label 毕业院校
                                 input(type="text" ng-model="newEmp.school")
