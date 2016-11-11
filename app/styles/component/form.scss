@@ -444,6 +444,19 @@ md-radio-group.horizontal {
     }
 }
 
-
+// 用css3为nbSearch添加必填提示 *
+.nb-search {
+    &[required] {
+        label {
+            &::after {
+                content: '*';
+                color: #f00;
+                left: 5px;
+                position: relative;
+                top: 2px;
+            }
+        }
+    }
+}
 
 
