@@ -52,6 +52,7 @@
                             md-input-container(flex)
                                 nb-search.nb-search(
                                     type="nationality"
+                                    name="nationality"
                                     ng-model="newEmp.nationality"
                                     float-label="true"
                                     placeholder="国籍"
@@ -153,7 +154,7 @@
                         //- md-icon.form-icon(md-svg-src="/images/svg/positions_info_24.svg" alt="岗位信息")
                         | 岗位信息
                     div
-                        org-search(ng-model="newEmp.department" required float-label search-text-change="newEmp.position=null;params.orgPos=null;" selected-item-change="params.orgPos = org.positions.$refresh();newEmp.position = null;" editable)
+                        org-search.nb-search(ng-model="newEmp.department" required float-label search-text-change="newEmp.position=null;params.orgPos=null;" selected-item-change="params.orgPos = org.positions.$refresh();newEmp.position = null;" editable)
                         div(layout)
                             md-input-container.row-has-value(flex)
                                 label 岗位
@@ -219,7 +220,6 @@
                                 input(ng-model="newEmp.joinScalDate" bs-datepicker name="joinScalDate")
                             md-input-container(flex)
                                 label 参工时间
-                                    span.require-tip *
                                 input(ng-model="newEmp.startWorkDate" name="startWorkDate" bs-datepicker)
 
                         div(layout)
