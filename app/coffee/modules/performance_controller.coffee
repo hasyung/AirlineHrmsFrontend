@@ -366,11 +366,11 @@ class PerformanceSetting extends nb.Controller
         @filterOptions = getBaseFilterOptions('performance_setting')
 
         @filterOptions.constraintDefs = @filterOptions.constraintDefs.concat [
-            {
-                displayName: '绩效人员分类'
-                name: 'employee_category'
-                type: 'perf_category_select'
-            }
+            # {
+            #     displayName: '绩效人员分类'
+            #     name: 'employee_category'
+            #     type: 'perf_category_select'
+            # }
         ]
 
 
@@ -400,21 +400,21 @@ class PerformanceSetting extends nb.Controller
                 headerCellClass: 'editable_cell_header'
                 type: 'number'
             }
-            {
-                displayName: '考核人员分类'
-                name: 'pcategory'
-                headerCellClass: 'editable_cell_header'
-                editableCellTemplate: 'ui-grid/dropdownEditor'
-                editDropdownValueLabel: 'value'
-                editDropdownIdLabel: 'key'
-                editDropdownOptionsArray: [
-                    {key: '员工', value: '员工'}
-                    {key: '基层干部', value: '基层干部'}
-                    {key: '中层干部', value: '中层干部'}
-                    {key: '高层干部', value: '高层干部'}
-                    {key: '主官', value: '主官'}
-                ]
-            }
+            # {
+            #     displayName: '考核人员分类'
+            #     name: 'pcategory'
+            #     headerCellClass: 'editable_cell_header'
+            #     editableCellTemplate: 'ui-grid/dropdownEditor'
+            #     editDropdownValueLabel: 'value'
+            #     editDropdownIdLabel: 'key'
+            #     editDropdownOptionsArray: [
+            #         {key: '员工', value: '员工'}
+            #         {key: '基层干部', value: '基层干部'}
+            #         {key: '中层干部', value: '中层干部'}
+            #         {key: '高层干部', value: '高层干部'}
+            #         {key: '主官', value: '主官'}
+            #     ]
+            # }
         ]
 
         @performanceTemps = @PerformanceTemp.$collection().$fetch()
