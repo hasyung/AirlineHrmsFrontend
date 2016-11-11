@@ -127,7 +127,7 @@ class PerformanceRecord extends nb.Controller
         @performances = @Performance.$collection().$fetch({employee_category: 'NULL', year: @currentYear})
 
     loadYearList: () ->
-        @year_list = @$getYears()
+        @year_list = [2011..new Date().getFullYear()]
         @currentYear = _.last @year_list
 
     exportGridApi: (gridApi) ->
