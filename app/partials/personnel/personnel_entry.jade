@@ -57,14 +57,13 @@
                                     float-label="true"
                                     placeholder="国籍"
                                     search-text-change="newEmp.nation = null;"
-                                    selected-item-change=""
+                                    selected-item-change="newEmp.nation = null;"
                                     editable="true"
                                     md-no-cache="true"
                                     required="required"
                                     )
                             md-input-container(flex)
                                 nb-search.nb-search(
-                                    ng-if="newEmp.nationality == '中国'"
                                     type="nation"
                                     ng-model="newEmp.nation"
                                     float-label="true"
