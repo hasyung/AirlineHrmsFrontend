@@ -35,6 +35,11 @@ angular.module 'nb.directives'
 				scope.selectedItemChange()
 				ngModelCtrl.$setViewValue(item) if ngModelCtrl
 
+			scope.$watch 'bindModel', (newVal, oldVal)->
+				if newVal == null
+					scope.ctrl.searchText = newVal
+					scope.ctrl.selectedItem = newVal
+
 			if ngModelCtrl
 				ngModelCtrl.$render = ->
 					if ngModelCtrl.$viewValue
@@ -44,6 +49,7 @@ angular.module 'nb.directives'
 			require: '?ngModel'
 
 			scope: {
+				bindModel: '=ngModel'
 				selectedItemChange: '&'
 				searchTextChange: '&'
 				editStatus: '=editable'

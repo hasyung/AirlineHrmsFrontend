@@ -44,13 +44,12 @@ form(ng-controller="EditableResourceCtrl", ng-submit="save(currentUser.$save(), 
                             float-label="true"
                             placeholder="国籍"
                             search-text-change="currentUser.nation = null;"
-                            selected-item-change=""
+                            selected-item-change="currentUser.nation = null;"
                             editable="editing"
                             md-no-cache="true"
                             )
                     md-input-container(flex)
                         nb-search.nb-search(
-                            ng-if="currentUser.nationality == '中国'"
                             type="nation"
                             ng-model="currentUser.nation"
                             float-label="true"

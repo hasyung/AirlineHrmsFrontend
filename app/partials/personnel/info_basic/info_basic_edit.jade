@@ -29,13 +29,12 @@ form(name="empEditForm" ng-submit="" ng-controller="EditableResourceCtrl")
                     float-label="true"
                     placeholder="国籍"
                     search-text-change="current.nation = null;"
-                    selected-item-change=""
+                    selected-item-change="current.nation = null;"
                     editable="editing"
                     md-no-cache="true"
                     )
             md-input-container(flex)
                 nb-search.nb-search(
-                    ng-if="current.nationality == '中国'"
                     type="nation"
                     ng-model="current.nation"
                     float-label="true"
