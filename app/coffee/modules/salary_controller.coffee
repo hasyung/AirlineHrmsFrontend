@@ -301,6 +301,7 @@ class SalaryController extends nb.Controller
                 self.editing = false
                 self.backup_config = angular.copy(self.dynamic_config)
                 self.toaster.pop('success', '提示', '配置已更新')
+                self.toaster.pop('warn', '提示', '薪酬设置属于基础配置修改，将在手动刷新系统页面后生效!')
 
     calcAmount: (rate)->
         @$multiply(@basic_cardinality, parseFloat(rate))
@@ -389,6 +390,7 @@ class SalaryController extends nb.Controller
         @http.put('/api/salaries/update_temperature_amount', params)
             .success (data)->
                 self.toaster.pop('success', '提示', '更新成功')
+                self.toaster.pop('warn', '提示', '薪酬设置属于基础配置修改，将在手动刷新系统页面后生效!')
             .error (data)->
                 self.toaster.pop('error', '提示', '更新失败')
 
@@ -429,6 +431,7 @@ class SalaryController extends nb.Controller
         @http.put('/api/salaries/update_communicate_allowance', params)
             .success (data)->
                 self.toaster.pop('success', '提示', '更新成功')
+                self.toaster.pop('warn', '提示', '薪酬设置属于基础配置修改，将在手动刷新系统页面后生效!')
             .error (data)->
                 self.toaster.pop('error', '提示', '更新失败')
 
@@ -439,6 +442,7 @@ class SalaryController extends nb.Controller
         @http.put('/api/salaries/set_communicate_of_duty_rank', params)
             .success (data)->
                 self.toaster.pop('success', '提示', '更新成功')
+                self.toaster.pop('warn', '提示', '薪酬设置属于基础配置修改，将在手动刷新系统页面后生效!')
             .error (data)->
                 self.toaster.pop('error', '提示', '更新失败')
 
@@ -471,6 +475,7 @@ class SalaryController extends nb.Controller
         @http.put('/api/salaries/set_position_cold_subsidy', params)
             .success (data)->
                 self.toaster.pop('success', '提示', '更新成功')
+                self.toaster.pop('warn', '提示', '薪酬设置属于基础配置修改，将在手动刷新系统页面后生效!')
             .error (data)->
                 self.toaster.pop('error', '提示', '更新失败')
 
@@ -515,6 +520,7 @@ class SalaryController extends nb.Controller
         @http.put('/api/salaries/set_official_car_of_duty_rank', params)
             .success (data)->
                 self.toaster.pop('success', '提示', '更新成功')
+                self.toaster.pop('warn', '提示', '薪酬设置属于基础配置修改，将在手动刷新系统页面后生效!')
             .error (data)->
                 self.toaster.pop('error', '提示', '更新失败')
 
