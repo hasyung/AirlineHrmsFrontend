@@ -267,7 +267,7 @@ class ProfileCtrl extends nb.Controller
     loadPerformance: ()->
         self = @
         @UserPerformance.$collection().$fetch().$then (performances)->
-            self.performances = _.sortBy((_.groupBy performances, (item)-> item.assessYear)).reverse()
+            self.performances = _.sortBy(_.groupBy(performances, (item)-> item.assessYear), [ (arr)-> arr[0].assessYear ]).reverse()
 
     loadRewards: ()->
         @rewards = @UserReward.$collection().$fetch()
@@ -739,7 +739,7 @@ class CompanyLeaderChartsController extends nb.Controller
             config['seriesB'].push(val.leave | 0)
 
             index++
-        
+
         return config
 
 class CountyLeaderChartsController extends nb.Controller
@@ -955,7 +955,7 @@ class CountyLeaderChartsController extends nb.Controller
             config['seriesB'].push(val.leave | 0)
 
             index++
-        
+
         return config
 
 class DepartmentHrChartsController extends nb.Controller
@@ -1449,7 +1449,7 @@ class HrLeaderChartsController extends nb.Controller
             config['seriesB'].push(val.leave | 0)
 
             index++
-        
+
         return config
 
 class WelfareManageChartsController extends nb.Controller
@@ -1549,7 +1549,7 @@ class WelfareManageChartsController extends nb.Controller
 
                     fee.data = valArr
                     welfareFees.push fee
-                    
+
                 self.brokenLineOpition.xAxis.data = xAxisArray
                 self.brokenLineOpition.series = welfareFees
 
@@ -1624,7 +1624,7 @@ class WelfareManageChartsController extends nb.Controller
             self.importing = false
 
 
-        
+
 
 app.controller 'ChartsMainCtrl', ChartsMainController
 app.controller 'CompanyLeaderChartsCtrl', CompanyLeaderChartsController
