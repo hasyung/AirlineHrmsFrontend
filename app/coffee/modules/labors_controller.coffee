@@ -408,9 +408,9 @@ app.config(Route)
 
 
 class AttendanceCtrl extends nb.Controller
-    @.$inject = ['GridHelper', 'Leave', '$scope', '$injector', '$http', 'AttendanceSummary', 'CURRENT_ROLES', 'toaster', '$q', '$nbEvent', '$timeout', 'USER_META']
+    @.$inject = ['GridHelper', 'Leave', '$scope', '$injector', '$http', 'AttendanceSummary', 'CURRENT_ROLES', 'toaster', '$q', '$nbEvent', '$timeout', 'USER_META', '$rootScope']
 
-    constructor: (helper, @Leave, scope, injector, @http, @AttendanceSummary, @CURRENT_ROLES, @toaster, @q, @Evt, @timeout, @User) ->
+    constructor: (helper, @Leave, scope, injector, @http, @AttendanceSummary, @CURRENT_ROLES, @toaster, @q, @Evt, @timeout, @User, @rootScope) ->
         @initDate()
 
         scope.realFlow = (entity) ->
