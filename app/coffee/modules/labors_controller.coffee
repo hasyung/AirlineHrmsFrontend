@@ -1294,16 +1294,19 @@ class ContractCtrl extends nb.Controller
     uploadContract: (attachment_id)->
         self = @
         params = {attachment_id: attachment_id}
-
         tableState = @tableState || {}
         tableState['show_merged'] = @show_merged
 
         @http.post("/api/contracts/import", params).success (data, status) ->
+            self.importing = false
             if data.error_count > 0
                 self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
             else
                 self.contracts.$refresh(tableState)
                 self.toaster.pop('success', '提示', '导入成功')
+        .error () ->
+            self.importing = false
+
 
 class ProtocolCtrl extends nb.Controller
     @.$inject = ['$scope', 'Protocol', '$http', 'Employee', '$nbEvent', 'toaster', 'CURRENT_ROLES', 'PERMISSIONS']
@@ -1824,7 +1827,7 @@ class VacationManagementCtrl extends nb.Controller
             self.records.$refresh(params)
             self.importing = false
         .error (data) ->
-            self.importing = false        
+            self.importing = false
 
 
 app.controller('AttendanceRecordCtrl', AttendanceRecordCtrl)
