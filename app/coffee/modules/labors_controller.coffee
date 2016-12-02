@@ -624,7 +624,9 @@ class AttendanceCtrl extends nb.Controller
         params = {summary_date: @getDate()}
 
         if isConfirm
+            @startLoading();
             @http.put('/api/attendance_summaries/department_hr_confirm', params).then (data)->
+                self.cancelLoading()
                 self.tableData.$refresh()
                 self.departmentHrChecked = true
 
