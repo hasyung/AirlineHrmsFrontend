@@ -1879,6 +1879,17 @@ class ClassSystemController extends nb.Controller
             self.toaster.pop('success', '提示', '更新成功')
             self.records.$refresh()
 
+    uploadClassSystem: (type, attachment_id) ->
+        self = @
+        params = {type: type, attachment_id: attachment_id}
+
+        @http.post("/api/work_shifts/import", params).success (data, status) ->
+            self.records.$refresh()
+            self.toaster.pop('success', '提示', '导入成功')
+            self.importing = false
+        .error (data) ->
+            self.importing = false
+
     newClassSystem: (newRecord) ->
         self = @
         params = {}
