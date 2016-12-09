@@ -74,21 +74,21 @@ class Controller extends Base
         try
             m += s1.split(".")[1].length
         catch error
-        
+
         try
             m += s2.split(".")[1].length
         catch error
-        
+
         return Number(s1.replace(".", "")) * Number(s2.replace(".","")) / Math.pow(10,m)
 
-    # 这两个函数依赖于 $rootScope 
+    # 这两个函数依赖于 $rootScope
     # 所以在使用时必须在子类controller中注入 $rootScope
     cancelLoading: () ->
         @rootScope.loading = false
 
     startLoading: () ->
         @rootScope.loading = true
-        
+
 
 class FilterController extends Controller
     onConditionInValid: ($Evt, invalid) ->
@@ -310,10 +310,10 @@ class NewMyRequestCtrl extends NewFlowCtrl
     # 检测有限假期的规则
     isVacationLegal: (type, vacations, calcDays, classSystem) ->
         if type == '年假' && classSystem == '三班倒' && calcDays%3 != 0 && vacations.initYearDays >=15
-            @toaster.pop('error', '提示', '当年年假总天数大于等于15天，天数必须为3的倍数')
+            @toaster.pop('error', '提示', '三班倒的请假日期必须为3的整数倍')
             return false
         if type == '年假' && classSystem == '三班倒' && calcDays%2.5 != 0 && vacations.initYearDays < 15
-            @toaster.pop('error', '提示', '当年年假总天数小于15天，天数必须为2.5的倍数')
+            @toaster.pop('error', '提示', '三班倒的请假日期必须为3的整数倍')
             return false
         if type == '年假' && vacations.yearDays.total < calcDays
             @toaster.pop('error', '提示', '剩余年假不足')
