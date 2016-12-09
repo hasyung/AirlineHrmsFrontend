@@ -309,17 +309,17 @@ class NewMyRequestCtrl extends NewFlowCtrl
 
     # 检测有限假期的规则
     isVacationLegal: (type, vacations, calcDays, classSystem) ->
-        if type == '年假' && vacations.yearDays.total < calcDays
-            @toaster.pop('error', '提示', '剩余年假不足')
-            return false
-        if type == '补休假' && vacations.offsetDays < calcDays
-            @toaster.pop('error', '提示', '剩余补休假不足')
-            return false
         if type == '年假' && classSystem == '三班倒' && calcDays%3 != 0 && vacations.initYearDays >=15
             @toaster.pop('error', '提示', '当年年假总天数大于等于15天，天数必须为3的倍数')
             return false
         if type == '年假' && classSystem == '三班倒' && calcDays%2.5 != 0 && vacations.initYearDays < 15
             @toaster.pop('error', '提示', '当年年假总天数小于15天，天数必须为2.5的倍数')
+            return false
+        if type == '年假' && vacations.yearDays.total < calcDays
+            @toaster.pop('error', '提示', '剩余年假不足')
+            return false
+        if type == '补休假' && vacations.offsetDays < calcDays
+            @toaster.pop('error', '提示', '剩余补休假不足')
             return false
 
         return true
