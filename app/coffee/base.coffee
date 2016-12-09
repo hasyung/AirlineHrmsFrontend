@@ -316,10 +316,10 @@ class NewMyRequestCtrl extends NewFlowCtrl
             @toaster.pop('error', '提示', '剩余补休假不足')
             return false
         if type == '年假' && classSystem == '三班倒' && calcDays%3 != 0 && vacations.initYearDays >=15
-            @toaster.pop('error', '提示', '年假剩余天数大于等于15天，天数必须为3的倍数')
+            @toaster.pop('error', '提示', '当年年假总天数大于等于15天，天数必须为3的倍数')
             return false
         if type == '年假' && classSystem == '三班倒' && calcDays%2.5 != 0 && vacations.initYearDays < 15
-            @toaster.pop('error', '提示', '年假剩余天数小于15天，天数必须为2.5的倍数')
+            @toaster.pop('error', '提示', '当年年假总天数小于15天，天数必须为2.5的倍数')
             return false
 
         return true
