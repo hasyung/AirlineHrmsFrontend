@@ -87,8 +87,6 @@ class Route
                     }
                 }
             }
-            
-            
 
 
 class BossDashBoardController extends nb.Controller
@@ -116,7 +114,7 @@ class BossDashBoardController extends nb.Controller
         @timeout ()->
             self.rootScope.show_main = true
             self.rootScope.selectPendingAnother = true
-        , 800 
+        , 800
 
     checkBossType: () ->
         self = @
@@ -321,7 +319,7 @@ class BossLaborsController extends BossBaseController
             config['seriesB'].push(val.leave | 0)
 
             index++
-        
+
         return config
 
 class BossHumanController extends BossBaseController
@@ -420,7 +418,7 @@ class BossHumanController extends BossBaseController
     getChannels: () ->
         self = @
         month = @currentCalcTime()
-        
+
         deferred = @q.defer()
 
         @http.get('/api/statements/position_change_record_channel?month='+month)
@@ -452,7 +450,7 @@ class BossHumanController extends BossBaseController
         @getChannels().then () ->
             if angular.isDefined(needResetChannel)
                 self.positionChangeTableType = _.head self.channels
-            
+
             month = self.currentCalcTime()
             channel = self.positionChangeTableType
 
@@ -518,7 +516,7 @@ class BossWelfareController extends BossBaseController
 
         @datasType = '福利费用'
         @welfareFeeType = '福利费'
-        
+
         @importing = false
 
         @brokenLineConfig = {
@@ -589,7 +587,7 @@ class BossWelfareController extends BossBaseController
 
                     fee.data = valArr
                     welfareFees.push fee
-                    
+
                 self.brokenLineOpition.xAxis.data = xAxisArray
                 self.brokenLineOpition.series = welfareFees
 
@@ -642,7 +640,7 @@ class BossWelfareController extends BossBaseController
             .error (err) ->
                 console.log err
 
-        
+
 class BossContactController extends BossBaseController
     @.$inject = ['$scope', '$http']
 

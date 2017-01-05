@@ -1,0 +1,19 @@
+tabset(flex)
+    tab(heading="国籍管理")
+        .app-content-wrapper(flex)
+
+            div(nb-filter="ctrl.filterOptions" on-search="ctrl.search(state)")
+            div.ui-grid-container
+                md-toolbar
+                    .md-toolbar-tools
+                        h2 国籍列表
+                        div(flex)
+
+
+                div(nb-grid column-defs="ctrl.columnDef"
+                    on-register-api="ctrl.exportGridApi(gridApi)"
+                    grid-selection
+                    safe-src="ctrl.employees")
+
+    tab(heading="其他子tab标签")
+        div 这里是子tab页内容

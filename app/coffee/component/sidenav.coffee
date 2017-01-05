@@ -221,6 +221,18 @@ menuFactory = ($rootScope, $state)->
         ]
     }
 
+    sections.push {
+        name: '国籍管理'
+        icon_src: '/images/svg/left-side-svg/left_icon_8.svg'
+        pages: [
+            {
+                name: '国籍管理'
+                state: 'nationality'
+            }
+        ]
+    }
+
+
     self = {
         sections: sections
 
