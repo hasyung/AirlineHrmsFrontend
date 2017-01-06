@@ -3,7 +3,7 @@ md-dialog.punishment_new(style="min-width: 450px;")
         .md-toolbar-tools
             span 新建员工班制
     form(ng-submit="ctrl.newClassSystem(newRecord);dialog.close();" name="newClassSystem")
-        md-content(ng-init="newRecord = {}")
+        md-content(ng-init="newRecord = {}; ctrl.loadEmp = {}")
             fieldset
                 div(style="display:none;")
                     input(ng-model="newRecord.employee_id")
