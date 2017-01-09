@@ -113,6 +113,13 @@ tabset(flex)
                         ) 员工调岗
 
                         md-button.md-primary.md-raised(
+                            ng-disabled="ctrl.getSelected().length != 1 || ctrl.importing"
+                            nb-dialog
+                            template-url="/partials/personnel/update_job_title.html"
+                            locals="{employee: ctrl.getSelected()[0], empCtrl: ctrl}"
+                        ) 职称修改
+
+                        md-button.md-primary.md-raised(
                             has-permission="position_change_records_batch_create"
                             ng-disabled="ctrl.importing || ctrl.getSelectsIds().length < 1"
                             nb-dialog
@@ -197,3 +204,7 @@ tabset(flex)
 
     tab(heading="员工班制管理" has-permission="work_shifts_index")
         include class_system_management
+
+    tab(heading="职称变动记录")
+        include jobTitleChangeRecords
+
