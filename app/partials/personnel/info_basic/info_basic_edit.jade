@@ -56,7 +56,7 @@ form(name="empEditForm" ng-submit="" ng-controller="EditableResourceCtrl")
         div(layout)
             md-input-container(flex)
                 label 出生日期
-                input(ng-model="current.birthday" bs-datepicker disabled)
+                input(ng-model="current.birthday" bs-datepicker ng-disabled="!editing")
             md-input-container(flex)
                 label 参工时间
                 input(ng-model="current.startWorkDate" bs-datepicker)
@@ -74,7 +74,7 @@ form(name="empEditForm" ng-submit="" ng-controller="EditableResourceCtrl")
             md-input-container(flex)
                 label 专业
                 input(type="text" placeholder="请输入专业" ng-model="current.major")
-                    
+
         div(layout)
             md-input-container(flex)
                 label 入党时间
