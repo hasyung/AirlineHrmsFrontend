@@ -1195,76 +1195,70 @@ class JobTitleChangeRecordsController extends nb.Controller
                 '''
             }
             {
-                minWidth: 120
-                displayName: '用工性质'
-                name: 'laborRelationId'
-                cellFilter: "enum:'labor_relations'"
-            }
-            {
-                minWidth: 120
-                displayName: '变动日期'
-                name: 'changeDate'
-                cellFilter: "date:'yyyy-MM-dd'"
-            }
-            {
                 minWidth: 350
-                displayName: '原部门'
-                name: 'preDepartmentName'
-                cellTooltip: (row) ->
-                    return row.entity.preDepartmentName
-            }
-            {
-                minWidth: 250
-                displayName: '原岗位'
-                name: 'prePositionName'
-                cellTooltip: (row) ->
-                    return row.entity.prePositionName
-            }
-            {
-                minWidth: 120
-                displayName: '原通道'
-                name: 'preChannelName'
-            }
-            {
-                minWidth: 120
-                displayName: '原属地'
-                name: 'preLocation'
-            }
-            {
-                minWidth: 350
-                displayName: '现部门'
+                displayName: '所属部门'
                 name: 'departmentName'
                 cellTooltip: (row) ->
                     return row.entity.departmentName
             }
             {
                 minWidth: 250
-                displayName: '现岗位'
+                displayName: '岗位'
                 name: 'positionName'
                 cellTooltip: (row) ->
                     return row.entity.positionName
             }
             {
-                minWidth: 120
-                displayName: '现通道'
-                name: 'channelName'
-            }
-            {
-                minWidth: 120
-                displayName: '现属地'
-                name: 'location'
+                minWidth: 150
+                displayName: '变动日期'
+                name: 'changeDate'
+                cellFilter: "date:'yyyy-MM-dd'"
             }
             {
                 minWidth: 150
-                displayName: '文件号'
-                name: 'oaFileNo'
+                displayName: '原职称'
+                name: 'prevJobTitle'
+            }
+            {
+                minWidth: 120
+                displayName: '原职称级别'
+                name: 'prevJobTitleDegreeId'
+                cellFilter: "enum:'job_title_degrees'"
+            }
+            {
+                minWidth: 150
+                displayName: '原技术职务'
+                name: 'prevTechnicalDuty'
+            }
+            {
+                minWidth: 150
+                displayName: '原文件号'
+                name: 'prevFileNo'
                 cellTooltip: (row) ->
                     return row.entity.fileNo
             }
             {
                 minWidth: 150
-                displayName: '备注'
-                name: 'note'
+                displayName: '现职称'
+                name: 'jobTitle'
+            }
+            {
+                minWidth: 120
+                displayName: '现职称级别'
+                name: 'jobTitleDegreeId'
+                cellFilter: "enum:'job_title_degrees'"
+            }
+            {
+                minWidth: 150
+                displayName: '现技术职务'
+                name: 'technicalDuty'
+            }
+            {
+                minWidth: 150
+                displayName: '现文件号'
+                name: 'fileNo'
+                cellTooltip: (row) ->
+                    return row.entity.fileNo
             }
         ]
 
@@ -2051,6 +2045,7 @@ class JobTitleChangeController extends nb.Controller
         params.job_title_degree_id = employee.jobTitleDegreeId
         params.technical_duty = employee.technicalDuty
         params.file_no = employee.fileNo
+        params.change_date = employee.changeDate
 
         employee.edit_job_title(params, list, tableState)
 

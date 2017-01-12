@@ -34,6 +34,10 @@ md-dialog.punishment_new(
                         input(ng-model="current.technicalDuty" required)
                 div(layout)
                     md-input-container(flex)
+                        label 变动时间
+                        input(ng-model="current.changeDate" bs-datepicker required)
+                div(layout)
+                    md-input-container(flex)
                         label 调岗文件
                         input(ng-model="current.fileNo" required)
 
