@@ -1197,16 +1197,16 @@ class JobTitleChangeRecordsController extends nb.Controller
             {
                 minWidth: 350
                 displayName: '所属部门'
-                name: 'departmentName'
+                name: 'department.name'
                 cellTooltip: (row) ->
-                    return row.entity.departmentName
+                    return row.entity.department.name
             }
             {
                 minWidth: 250
                 displayName: '岗位'
-                name: 'positionName'
+                name: 'position.name'
                 cellTooltip: (row) ->
-                    return row.entity.positionName
+                    return row.entity.position.name
             }
             {
                 minWidth: 150
