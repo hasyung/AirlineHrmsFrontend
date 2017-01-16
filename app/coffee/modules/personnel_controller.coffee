@@ -876,7 +876,7 @@ class MoveEmployeesCtrl extends nb.Controller
             if data.status == 200
                 self.Evt.$send("special_state:save:success", msg || "创建成功")
             else
-                self.Evt.$send('special_state:save:error', msg || "创建失败")    
+                self.Evt.$send('special_state:save:error', msg || "创建失败")
 
     search: (tableState) ->
         tableState = tableState || {}
@@ -1146,6 +1146,136 @@ class PositionRecordController extends nb.Controller
 
     search: (tableState)->
         @adjustPositionRecords.$refresh(tableState)
+
+class JobTitleChangeRecordsController extends nb.Controller
+    @.$inject = ['$scope', 'toaster', 'JobTitleChangeRecords']
+
+    constructor: (@scope, @toaster, @JobTitleChangeRecords) ->
+        @loadInitialData()
+
+        @filterOptions = {
+            name: 'positionRecord'
+            constraintDefs: [
+                {
+                    name: 'employee_name'
+                    displayName: '姓名'
+                    type: 'string'
+                }
+                {
+                    name: 'employee_no'
+                    displayName: '员工编号'
+                    type: 'string'
+                }
+                {
+                    name: 'change_date'
+                    displayName: '变动时间'
+                    type: 'date-range'
+                }
+            ]
+        }
+
+        @columnDef = [
+            {
+                minWidth: 120
+                displayName: '员工编号'
+                name: 'employeeNo'
+            }
+            {
+                minWidth: 120
+                displayName: '姓名'
+                field: 'employeeName'
+                cellTemplate: '''
+                <div class="ui-grid-cell-contents ng-binding ng-scope">
+                    <a nb-panel
+                        template-url="partials/personnel/info_basic.html"
+                        locals="{employee: row.entity.owner}">
+                        {{grid.getCellValue(row, col)}}
+                    </a>
+                </div>
+                '''
+            }
+            {
+                minWidth: 350
+                displayName: '所属部门'
+                name: 'department.name'
+                cellTooltip: (row) ->
+                    return row.entity.department.name
+            }
+            {
+                minWidth: 250
+                displayName: '岗位'
+                name: 'position.name'
+                cellTooltip: (row) ->
+                    return row.entity.position.name
+            }
+            {
+                minWidth: 150
+                displayName: '变动日期'
+                name: 'changeDate'
+                cellFilter: "date:'yyyy-MM-dd'"
+            }
+            {
+                minWidth: 150
+                displayName: '原职称'
+                name: 'prevJobTitle'
+            }
+            {
+                minWidth: 120
+                displayName: '原职称级别'
+                name: 'prevJobTitleDegreeId'
+                cellFilter: "enum:'job_title_degrees'"
+            }
+            {
+                minWidth: 150
+                displayName: '原技术职务'
+                name: 'prevTechnicalDuty'
+            }
+            {
+                minWidth: 150
+                displayName: '原文件号'
+                name: 'prevFileNo'
+                cellTooltip: (row) ->
+                    return row.entity.fileNo
+            }
+            {
+                minWidth: 150
+                displayName: '现职称'
+                name: 'jobTitle'
+            }
+            {
+                minWidth: 120
+                displayName: '现职称级别'
+                name: 'jobTitleDegreeId'
+                cellFilter: "enum:'job_title_degrees'"
+            }
+            {
+                minWidth: 150
+                displayName: '现技术职务'
+                name: 'technicalDuty'
+            }
+            {
+                minWidth: 150
+                displayName: '现文件号'
+                name: 'fileNo'
+                cellTooltip: (row) ->
+                    return row.entity.fileNo
+            }
+        ]
+
+    loadInitialData: () ->
+        self = @
+
+        @jobTitleChangeRecords = @JobTitleChangeRecords.$collection().$fetch()
+
+    getSelectsIds: () ->
+        rows = @gridApi.selection.getSelectedGridRows()
+        rows.map (row) -> return row.entity.$pk
+
+    exportGridApi: (gridApi) ->
+        @gridApi = gridApi
+
+    search: (tableState)->
+        @jobTitleChangeRecords.$refresh(tableState)
 
 
 
@@ -1501,7 +1631,7 @@ class EmployeePerformanceCtrl extends nb.Controller
         self = @
         employee.performances.$refresh().$then (performances)->
             self.performances = _.sortBy(_.groupBy(performances, (item)-> item.assessYear), [ (arr)-> arr[0].assessYear ]).reverse()
-            
+
 
 class EmployeeRewardPunishmentCtrl extends nb.Controller
     @.$inject = ['$scope', 'Employee', 'Reward', 'Punishment']
@@ -1900,6 +2030,25 @@ class ClassSystemController extends nb.Controller
             self.toaster.pop('success', '提示', '创建成功')
             self.records.$refresh()
 
+class JobTitleChangeController extends nb.Controller
+    @.$inject = ['$scope', '$http', '$nbEvent']
+
+    constructor: (scope, @http, @Evt) ->
+
+    updateJobTitle: (employee, list, tableState) ->
+        self = @
+
+        params = {}
+
+        params.employee_id = employee.id
+        params.job_title = employee.jobTitle
+        params.job_title_degree_id = employee.jobTitleDegreeId
+        params.technical_duty = employee.technicalDuty
+        params.file_no = employee.fileNo
+        params.change_date = employee.changeDate
+
+        employee.edit_job_title(params, list, tableState)
+
 
 app.controller('PersonnelSort', PersonnelSort)
 app.controller('LeaveEmployeesCtrl', LeaveEmployeesCtrl)
@@ -1907,6 +2056,7 @@ app.controller('EarlyRetireEmployeesCtrl', EarlyRetireEmployeesCtrl)
 app.controller('MoveEmployeesCtrl', MoveEmployeesCtrl)
 app.controller('adjustPositionWaitingCtrl', AdjustPositionWaitingController)
 app.controller('PositionRecordCtrl', PositionRecordController)
+app.controller('JobTitleChangeRecordsCtrl', JobTitleChangeRecordsController)
 app.controller('EducationExpRecordCtrl', EducationExpRecordController)
 app.controller('EmployeeMemberCtrl', EmployeeMemberCtrl)
 app.controller('EmployeeTechnicalRecordsCtrl', EmployeeTechnicalRecordsCtrl)
@@ -1915,3 +2065,4 @@ app.controller('EmployeeAttendanceCtrl', EmployeeAttendanceCtrl)
 app.controller('EmployeeRewardPunishmentCtrl', EmployeeRewardPunishmentCtrl)
 app.controller('PersonnelDataCtrl', PersonnelDataCtrl)
 app.controller('ClassSystemCtrl', ClassSystemController)
+app.controller('JobTitleChangeCtrl', JobTitleChangeController)

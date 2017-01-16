@@ -1,0 +1,47 @@
+md-dialog.punishment_new(
+    style="min-width: 500px;"
+    ng-init="current = dialog.employee.$refresh();\
+        request={};\
+        empCtrl=dialog.empCtrl;\
+    "
+    )
+    md-toolbar.md-accent(md-theme="hrms")
+        .md-toolbar-tools
+            span 职称修改
+    form(ng-controller="JobTitleChangeCtrl as ctrl" ng-submit="ctrl.updateJobTitle(current, empCtrl.employees, empCtrl.tableState); dialog.close();" name="updateJobTitleForm")
+        md-content
+            fieldset(flex)
+                div(layout)
+                    md-input-container(flex)
+                        label 姓名
+                        input(ng-model="::current.name" readonly)
+                    md-input-container(flex)
+                        label 员工编号
+                        input(ng-model="::current.employeeNo" readonly)
+
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 职称
+                        input(ng-model="current.jobTitle" required)
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 职称级别
+                        md-select(ng-model="current.jobTitleDegreeId")
+                            md-option(ng-value="item.id" ng-repeat="item in $enum.get('job_title_degrees')") {{item.label}}
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 技术职务
+                        input(ng-model="current.technicalDuty" required)
+                div(layout)
+                    md-input-container(flex)
+                        label 变动时间
+                        input(ng-model="current.changeDate" bs-datepicker required)
+                div(layout)
+                    md-input-container(flex)
+                        label 调岗文件
+                        input(ng-model="current.fileNo" required)
+
+        .md-actions
+            md-button(type="button" ng-click="current.$restore();dialog.close()") 取 消
+            md-button.md-primary.md-raised(type="submit" ng-disabled="!(updateJobTitleForm.$valid&&current.jobTitleDegreeId)") 确 定
+
