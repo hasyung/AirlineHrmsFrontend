@@ -8,6 +8,17 @@ Performance = (restmod, RMUtils, $Evt) ->
         owner: {belongsTo: 'Employee', key: 'employee_id'}
     }
 
+PerformanceMix = (restmod, RMUtils, $Evt) ->
+    Performance = restmod.model('/performances/index_all').mix 'nbRestApi', 'DirtyModel', {
+        attachments: {hasMany: 'Attachment'}
+
+        $config:
+            jsonRootSingle: 'performance'
+            jsonRootMany: 'performances'
+
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+    }
+
 
 Attachment = (restmod, RMUtils, $Evt)->
     Attachment = restmod.model().mix 'nbRestApi', {
@@ -31,5 +42,6 @@ PerformanceTemp = (restmod, RMUtils, $Evt)->
 
 resources.factory 'Attachment', ['restmod', 'RMUtils', '$nbEvent', Attachment]
 resources.factory 'Performance', ['restmod', 'RMUtils', '$nbEvent', Performance]
+resources.factory 'PerformanceMix', ['restmod', 'RMUtils', '$nbEvent', PerformanceMix]
 resources.factory 'Allege', ['restmod', 'RMUtils', '$nbEvent', Allege]
 resources.factory 'PerformanceTemp', ['restmod', 'RMUtils', '$nbEvent', PerformanceTemp]

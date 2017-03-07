@@ -1,6 +1,6 @@
 md-dialog.punishment_new(style="min-width: 400px;")
-    md-content(ng-init="current = dialog.current; trainEmployee={employee_id: dialog.current.owner.$pk}")
-        form(flex ng-submit="ctrl.newTrainEmployee(trainEmployee, dialog);" name="newLeaveToTrainForm")
+    md-content(ng-init="current = dialog.current; trainEmployee={employee_id: dialog.current.$pk}")
+        form(flex ng-submit="ctrl.newTrainEmployee(trainEmployee, dialog);" name="newTrainForm")
             md-toolbar.md-accent(md-theme="hrms")
                 .md-toolbar-tools
                     span 离岗培训
@@ -9,7 +9,7 @@ md-dialog.punishment_new(style="min-width: 400px;")
                     div(layout)
                         md-input-container(flex)
                             label 姓名
-                            input(ng-model="current.employeeName" name="employeeName" readonly)
+                            input(ng-model="current.name" name="name" readonly)
                     div(layout)
                         md-input-container(flex)
                             label 开始时间
@@ -25,4 +25,4 @@ md-dialog.punishment_new(style="min-width: 400px;")
 
             .md-actions
                 md-button(type="button" ng-click="dialog.close()") 取 消
-                md-button.md-primary.md-raised(type="submit" ng-disabled="newLeaveToTrainForm.$invalid") 确 定
+                md-button.md-primary.md-raised(type="submit" ng-disabled="newTrainForm.$invalid") 确 定

@@ -34,11 +34,20 @@ class Controller extends Base
             item + '' # to string
 
     $getFilterMonths: ()->
+        self = @
         years = @$getYears()
-        months = @$getMonths()
 
         array = []
         angular.forEach years, (year)->
+            if year == new Date().getFullYear()
+                months = self.$getMonths()
+            else
+                months = [1..12]
+
+                months = _.map months, (item)->
+                    item = '0' + item if item < 10
+                    item + ''
+
             angular.forEach months, (month)->
                 array.push(year + '-' + month)
 
@@ -65,13 +74,21 @@ class Controller extends Base
         try
             m += s1.split(".")[1].length
         catch error
-        
+
         try
             m += s2.split(".")[1].length
         catch error
-        
+
         return Number(s1.replace(".", "")) * Number(s2.replace(".","")) / Math.pow(10,m)
-        
+
+    # 这两个函数依赖于 $rootScope
+    # 所以在使用时必须在子类controller中注入 $rootScope
+    cancelLoading: () ->
+        @rootScope.loading = false
+
+    startLoading: () ->
+        @rootScope.loading = true
+
 
 class FilterController extends Controller
     onConditionInValid: ($Evt, invalid) ->
@@ -239,8 +256,6 @@ class NewMyRequestCtrl extends NewFlowCtrl
 
         scope.isRequestLegal = true
 
-        console.log vacations
-
         enableCalculating = ->
             scope.calculating = true
 
@@ -264,7 +279,7 @@ class NewMyRequestCtrl extends NewFlowCtrl
             ]
 
         # 计算请假天数
-        scope.calculateTotalDays = (data, vacation_type, sync_end_time) ->
+        scope.calculateTotalDays = (data, vacation_type, sync_end_time, receptor) ->
             data.end_time = data.start_time if sync_end_time
             # 女工假特殊处理
             if vacation_type == '女工假'
@@ -289,15 +304,21 @@ class NewMyRequestCtrl extends NewFlowCtrl
 
                 $http.get('/api/vacations/calc_days', {params: request_data}).success (data, status)->
                     $timeout disableCalculating, 2000
-                    scope.vacation_days = data.vacation_days
-                    scope.isRequestLegal = self.isVacationLegal(vacation_type, vacations, scope.vacation_days)
+                    scope.vacation_days = data.general_days
+                    scope.isRequestLegal = self.isVacationLegal(vacation_type, receptor.vacations, scope.vacation_days, receptor.workShifts)
 
     # 检测有限假期的规则
-    isVacationLegal: (type, vacations, calcDays) ->
-        if type == '年假' && vacations.year_days.total < calcDays
+    isVacationLegal: (type, vacations, calcDays, classSystem) ->
+        if type == '年假' && classSystem == '三班倒' && calcDays%3 != 0 && vacations.initYearDays >=15
+            @toaster.pop('error', '提示', '三班倒的请假日期必须为3的整数倍')
+            return false
+        if type == '年假' && classSystem == '三班倒' && calcDays%2.5 != 0 && vacations.initYearDays < 15
+            @toaster.pop('error', '提示', '三班倒的请假日期必须为3的整数倍')
+            return false
+        if type == '年假' && vacations.yearDays.total < calcDays
             @toaster.pop('error', '提示', '剩余年假不足')
             return false
-        if type == '补休假' && vacations.offset_days < calcDays
+        if type == '补休假' && vacations.offsetDays < calcDays
             @toaster.pop('error', '提示', '剩余补休假不足')
             return false
 

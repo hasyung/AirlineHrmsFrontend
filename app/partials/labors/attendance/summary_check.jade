@@ -49,7 +49,7 @@
                 md-button.md-primary.md-raised(
                     has-permission="attendance_summaries_administrator_check"
                     ng-disabled="!ctrl.hrLaborRelationMemberChecked"
-                    nb-confirm="ctrl.administratorConfirm()"
+                    nb-confirm="ctrl.administratorConfirm(isConfirm)"
                     nb-title="管理员确认考勤"
                     nb-content="确认本部门{{ctrl.year}}-{{ctrl.month}}考勤已完成统计，进入后续审批。"
                 ) 管理员确认考勤
@@ -57,7 +57,7 @@
                 md-button.md-primary.md-raised(
                     has-permission="attendance_summaries_department_hr_confirm"
                     ng-disabled="ctrl.departmentHrChecked"
-                    nb-confirm="ctrl.departmentHrConfirm()"
+                    nb-confirm="ctrl.departmentHrConfirm(isConfirm)"
                     nb-title="考勤汇总确认"
                     nb-content="确认本部门{{ctrl.year}}-{{ctrl.month}}考勤已完成统计，进入后续审批。"
                 ) 汇总确认

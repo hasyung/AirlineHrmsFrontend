@@ -6,6 +6,7 @@ div.notification-center.md-background(md-theme="hrms")
         div(
             infinite-scroll-container="'.ngdialog'"
             infinite-scroll="notifications.loadMore()"
+            infinite-scroll-disabled="true"
             )
             //- md-subheader 新消息
             .nt-msg-item(ng-repeat="item in notifications track by item.id")

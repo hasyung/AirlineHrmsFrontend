@@ -276,6 +276,10 @@ class SalaryController extends nb.Controller
     loadDynamicConfig: (category)->
         @current_category = category
         @dynamic_config = @settings[category + '_setting']
+        # 强行从配置里面删除rate系数，暂时取消rate系数列 important
+        # 旧的薪酬规则已经废弃，取消rate系数 等待新规
+        _.remove @dynamic_config.flag_list, (flag)-> flag == 'rate'
+
         @backup_config = angular.copy(@dynamic_config)
         @editing = false
 
@@ -297,6 +301,7 @@ class SalaryController extends nb.Controller
                 self.editing = false
                 self.backup_config = angular.copy(self.dynamic_config)
                 self.toaster.pop('success', '提示', '配置已更新')
+                self.toaster.pop('warn', '提示', '薪酬设置属于基础配置修改，将在手动刷新系统页面后生效!')
 
     calcAmount: (rate)->
         @$multiply(@basic_cardinality, parseFloat(rate))
@@ -385,6 +390,7 @@ class SalaryController extends nb.Controller
         @http.put('/api/salaries/update_temperature_amount', params)
             .success (data)->
                 self.toaster.pop('success', '提示', '更新成功')
+                self.toaster.pop('warn', '提示', '薪酬设置属于基础配置修改，将在手动刷新系统页面后生效!')
             .error (data)->
                 self.toaster.pop('error', '提示', '更新失败')
 
@@ -425,6 +431,7 @@ class SalaryController extends nb.Controller
         @http.put('/api/salaries/update_communicate_allowance', params)
             .success (data)->
                 self.toaster.pop('success', '提示', '更新成功')
+                self.toaster.pop('warn', '提示', '薪酬设置属于基础配置修改，将在手动刷新系统页面后生效!')
             .error (data)->
                 self.toaster.pop('error', '提示', '更新失败')
 
@@ -435,6 +442,7 @@ class SalaryController extends nb.Controller
         @http.put('/api/salaries/set_communicate_of_duty_rank', params)
             .success (data)->
                 self.toaster.pop('success', '提示', '更新成功')
+                self.toaster.pop('warn', '提示', '薪酬设置属于基础配置修改，将在手动刷新系统页面后生效!')
             .error (data)->
                 self.toaster.pop('error', '提示', '更新失败')
 
@@ -467,6 +475,7 @@ class SalaryController extends nb.Controller
         @http.put('/api/salaries/set_position_cold_subsidy', params)
             .success (data)->
                 self.toaster.pop('success', '提示', '更新成功')
+                self.toaster.pop('warn', '提示', '薪酬设置属于基础配置修改，将在手动刷新系统页面后生效!')
             .error (data)->
                 self.toaster.pop('error', '提示', '更新失败')
 
@@ -511,6 +520,7 @@ class SalaryController extends nb.Controller
         @http.put('/api/salaries/set_official_car_of_duty_rank', params)
             .success (data)->
                 self.toaster.pop('success', '提示', '更新成功')
+                self.toaster.pop('warn', '提示', '薪酬设置属于基础配置修改，将在手动刷新系统页面后生效!')
             .error (data)->
                 self.toaster.pop('error', '提示', '更新失败')
 
@@ -1754,6 +1764,7 @@ class SalaryPerformanceController extends SalaryBaseController
 
         # 年度的时候 assessTime 是整数
         request.assess_time = moment(new Date(new String(request.assessTime))).format "YYYY-MM-DD"
+        request.department_id = request.departmentId
         params.status = "uploading"
 
         @http.post("/api/performance_salaries/import", request)
@@ -1766,7 +1777,7 @@ class SalaryPerformanceController extends SalaryBaseController
 
     loadDepartments: () ->
         @departmentsGradeOne = _.filter @DEPARTMENTS, (department)->
-            department.grade.id == 3
+            department.xdepth == 2
 
 
 # 小时费

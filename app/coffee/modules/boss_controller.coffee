@@ -182,18 +182,15 @@ class BossBaseController extends nb.Controller
         @currentYear + "-" + @currentMonth
 
 
-class BossLaborsController extends nb.Controller
-    @.$inject = ['$scope', '$http', 'Employee', 'LeaveEmployees', 'ReportNeedToKnow', 'REPORT_CHECKER']
+class BossLaborsController extends BossBaseController
+    @.$inject = ['$scope', '$http', 'Employee', 'LeaveEmployees', 'ReportNeedToKnow', 'REPORT_CHECKER', 'BarChartService']
 
-    constructor: (@scope, @http, @Employee, @LeaveEmployees, @ReportNeedToKnow, @reportCheckers) ->
-        @initialDataCompleted = false
+    constructor: (@scope, @http, @Employee, @LeaveEmployees, @ReportNeedToKnow, @reportCheckers, BarChartService) ->
+        super(@scope, @http, @ReportNeedToKnow, '劳动关系管理室')
+
         @datasType = '公司人员进出'
         @showChartInDialog = true
         @tableTypeInDialog = '新进员工'
-
-        @loadDateTime()
-        @loadInitialData()
-        @loadChartData()
 
         @barOptionInDialog = {}
 
@@ -202,166 +199,17 @@ class BossLaborsController extends nb.Controller
             dataLoaded:true
         }
 
-        @barOption = {
-            title : {
-                left: 20
-                text: '新进/离职人员分布'
-                textStyle: {
-                    fontSize: 14
-                }
-            },
-            tooltip : {
-                trigger: 'axis'
-                axisPointer: {
-                    type: 'shadow'
-                }
-            },
-            legend: {
-                data:['新进人员','离职人员']
-            },
-            calculable : true
-            xAxis : [
-                {
-                    type: 'value'
-                }
-            ],
-            yAxis : [
-                {
-                    type: 'category'
-                    axisLabel: { 
-                        'interval': 0
-                    }
-                    splitLine: { show: false }
-                    data: []
-                }
-            ],
-            grid : {
-                left: '20%'
-                right: '5%'
-            },
-            series : [
-                {
-                    name:'新进人员'
-                    type:'bar'
-                    data:[]
-                    markPoint : {
-                        data : [
-                            {type : 'max', name: '最大值'}
-                        ]
-                    },
-                },
-                {
-                    name:'离职人员'
-                    type:'bar'
-                    data:[]
-                    markPoint : {
-                        data : [
-                            {type : 'max', name: '最大值'}
-                        ]
-                    },
-                }
-            ]
-        }
+        @barOption = BarChartService
+            .initial()
+            .setTitle('新进/离职人员分布')
+            .setLegend(['新进人员','离职人员'])
+            .fetchSmallOptions()
 
-        @barOptionInDialog = {
-            title : {
-                left: 20
-                text: '新进/离职人员分布'
-                textStyle: {
-                    fontSize: 18
-                }
-            },
-            tooltip : {
-                trigger: 'axis'
-                axisPointer: {
-                    type: 'shadow'
-                }
-                textStyle: {
-                    fontSize: 16
-                }
-            },
-            legend: {
-                data:['新进人员','离职人员']
-                textStyle: {
-                    fontSize: 16
-                }
-            },
-            calculable : true
-            xAxis : [
-                {
-                    type: 'value'
-                    axisLabel: { 
-                        'interval': 0
-                        textStyle: {
-                            fontSize: 16
-                        }
-                    }
-                }
-            ],
-            yAxis : [
-                {
-                    type: 'category'
-                    axisLabel: { 
-                        'interval': 0
-                        textStyle: {
-                            fontSize: 16
-                        }
-                    }
-                    splitLine: { show: false }
-                    data: []
-                }
-            ],
-            grid : {
-                left: '20%'
-                right: '5%'
-            },
-            series : [
-                {
-                    name:'新进人员'
-                    type:'bar'
-                    data:[]
-                    markPoint : {
-                        data : [
-                            {type : 'max', name: '最大值'}
-                        ]
-                        label: {
-                            normal: {
-                                textStyle: {
-                                    fontSize: 16
-                                }
-                            }
-                            emphasis: {
-                                textStyle: {
-                                    fontSize: 16
-                                }
-                            }
-                        }
-                    },
-                },
-                {
-                    name:'离职人员'
-                    type:'bar'
-                    data:[]
-                    markPoint : {
-                        data : [
-                            {type : 'max', name: '最大值'}
-                        ]
-                        label: {
-                            normal: {
-                                textStyle: {
-                                    fontSize: 16
-                                }
-                            }
-                            emphasis: {
-                                textStyle: {
-                                    fontSize: 16
-                                }
-                            }
-                        }
-                    },
-                }
-            ]
-        }
+        @barOptionInDialog = BarChartService
+            .initial()
+            .setTitle('新进/离职人员分布')
+            .setLegend(['新进人员','离职人员'])
+            .fetchBigOptions()
 
         @columnDefNew = [
             {
@@ -416,6 +264,10 @@ class BossLaborsController extends nb.Controller
             {minWidth: 120, displayName: '通道', name: 'channelId', cellFilter: "enum:'channels'"}
         ]
 
+        @loadDateTime()
+        @loadInitialData()
+        @loadChartData()
+
     loadInitialData: () ->
         month = @currentCalcTime()
 
@@ -425,7 +277,6 @@ class BossLaborsController extends nb.Controller
 
         @newEmployees = @Employee.$collection().$fetch(tableParam)
         @LeaveEmployees = @LeaveEmployees.$collection().$fetch(tableParam)
-        @reports = @ReportNeedToKnow.$collection().$fetch({department_name: '劳动关系管理室'})
 
     loadChartData: () ->
         self = @
@@ -440,43 +291,20 @@ class BossLaborsController extends nb.Controller
 
         @http.get('/api/statements/new_leave_employee_summary?month='+month)
             .success (data) ->
-                self.barSrc = self.dataFormatForBar(data.new_leave_employee_summary)
-                self.barOption.yAxis[0].data = self.barSrc['yAxisData']
-                self.barOption.series[0].data = self.barSrc['seriesA']
-                self.barOption.series[1].data = self.barSrc['seriesB']
+                barSrc = self.dataFormatForBar(data.new_leave_employee_summary)
+                self.barOption.yAxis[0].data = barSrc['yAxisData']
+                self.barOption.series[0].data = barSrc['seriesA']
+                self.barOption.series[1].data = barSrc['seriesB']
 
-                self.barOptionInDialog.yAxis[0].data = self.barSrc['yAxisData']
-                self.barOptionInDialog.series[0].data = self.barSrc['seriesA']
-                self.barOptionInDialog.series[1].data = self.barSrc['seriesB']
+                self.barOptionInDialog.yAxis[0].data = barSrc['yAxisData']
+                self.barOptionInDialog.series[0].data = barSrc['seriesA']
+                self.barOptionInDialog.series[1].data = barSrc['seriesB']
 
                 self.initialDataCompleted = true
             .error (msg) ->
 
         @newEmployees.$refresh(tableParam)
         @LeaveEmployees.$refresh(tableParam)
-
-    isImgObj: (obj)->
-        return /jpg|jpeg|png|gif/.test(obj.type)
-
-    loadMonthList: () ->
-        if @currentYear == new Date().getFullYear()
-            months = [1..new Date().getMonth() + 1]
-        else
-            months = [1..12]
-
-        @month_list = _.map months, (item)->
-            item = '0' + item if item < 10
-            item + ''
-
-    loadDateTime: ()->
-        @year_list = @$getYears()
-        @month_list = @$getMonths()
-
-        @currentYear = _.last(@year_list)
-        @currentMonth = _.last(@month_list)
-
-    currentCalcTime: ()->
-        @currentYear + "-" + @currentMonth
 
     dataFormatForBar: (data) ->
         config = {}
@@ -497,100 +325,25 @@ class BossLaborsController extends nb.Controller
         return config
 
 class BossHumanController extends BossBaseController
-    @.$inject = ['$scope', '$http', 'ReportNeedToKnow', 'AdjustPositionRecord', '$enum', '$q']
+    @.$inject = ['$scope', '$http', 'ReportNeedToKnow', 'AdjustPositionRecord', '$enum', '$q', 'PieChartService']
 
-    constructor: (@scope, @http, @ReportNeedToKnow, @AdjustPositionRecord, @enum, @q) ->
+    constructor: (@scope, @http, @ReportNeedToKnow, @AdjustPositionRecord, @enum, @q, PieChartService) ->
         super(@scope, @http, @ReportNeedToKnow, '人事调配管理室')
         self = @
         @datasType = '调岗记录'
         @channels = []
 
-        @positionChangePieOption = {
-            title : {
-                text: '员工调岗来源',
-                x:'center'
-            },
-            tooltip : {
-                trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
-            },
-            legend: {
-                orient: 'vertical',
-                left: '5%',
-                top: '5%',
-                data: []
-            },
-            series : [
-                {
-                    name: '调岗来源',
-                    type: 'pie',
-                    radius : '55%',
-                    center: ['50%', '50%'],
-                    data:[],
-                    itemStyle: {
-                        emphasis: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        }
-                    }
-                }
-            ]
-        }
+        @positionChangePieOption = PieChartService
+            .initial()
+            .setTitle('员工调岗来源')
+            .setSeriesName('调岗来源')
+            .fetchSmallOptions()
 
-        @positionChangePieOptionInDialog = {
-            title : {
-                text: '员工调岗来源'
-                x:'center'
-                textStyle: {
-                    fontSize: 18
-                }
-            },
-            tooltip : {
-                trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
-                textStyle: {
-                    fontSize: 16
-                }
-            },
-            legend: {
-                orient: 'vertical',
-                left: '5%',
-                top: '5%',
-                data: []
-                textStyle: {
-                    fontSize: 16
-                }
-            },
-            series : [
-                {
-                    name: '调岗来源',
-                    type: 'pie',
-                    radius : '55%',
-                    center: ['50%', '50%'],
-                    data:[],
-                    itemStyle: {
-                        emphasis: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        }
-                    }
-                    label: {
-                        normal: {
-                            textStyle: {
-                                fontSize: 16
-                            }
-                        }
-                        emphasis: {
-                            textStyle: {
-                                fontSize: 16
-                            }
-                        }
-                    }
-                }
-            ]
-        }
+        @positionChangePieOptionInDialog = PieChartService
+            .initial()
+            .setTitle('员工调岗来源')
+            .setSeriesName('调岗来源')
+            .fetchBigOptions()
 
         @adjustPositionDef = [
             {
@@ -713,9 +466,9 @@ class BossHumanController extends BossBaseController
                     pieSeries = []
                     pieLegend = []
 
-                    self.positionChangeSrc = data.position_change_record_pie
+                    positionChangeSrc = data.position_change_record_pie
 
-                    _.map self.positionChangeSrc, (val, key) ->
+                    _.map positionChangeSrc, (val, key) ->
                         pieSeries.push({ value: val, name: key })
                         pieLegend.push(key)
 
@@ -758,10 +511,136 @@ class BossServiceController extends BossBaseController
 
 
 class BossWelfareController extends BossBaseController
-    @.$inject = ['$scope', '$http', 'ReportNeedToKnow']
+    @.$inject = ['$scope', '$http', 'ReportNeedToKnow', 'BrokenLineChartService', 'PieChartService']
 
-    constructor: (@scope, @http, @ReportNeedToKnow) ->
+    constructor: (@scope, @http, @ReportNeedToKnow, BrokenLineChartService, PieChartService) ->
         super(@scope, @http, @ReportNeedToKnow, '福利管理室')
+
+        @datasType = '福利费用'
+        @welfareFeeType = '福利费'
+        
+        @importing = false
+
+        @brokenLineConfig = {
+            theme:''
+            dataLoaded:true
+        }
+
+        @pieConfig = {
+            theme:''
+            dataLoaded:true
+        }
+
+        @brokenLineOpition = BrokenLineChartService
+            .initial()
+            .setLegend(['福利费','社会保险费','公积金','企业年金'])
+            .fetchSmallOptions()
+
+        @brokenLineOpitionInDialog = BrokenLineChartService
+            .initial()
+            .setLegend(['福利费','社会保险费','公积金','企业年金'])
+            .fetchBigOptions()
+
+        @welfareFeesPieOption = PieChartService
+            .initial()
+            .fetchSmallOptions()
+
+        @welfareFeesPieOptionInDialog = PieChartService
+            .initial()
+            .fetchBigOptions()
+
+        @loadDateTime()
+        @loadWelfareFees(@currentYear)
+        @loadWelfareFeesForPie()
+
+    loadDateTime: () ->
+        super()
+
+        @currentYear1 = _.last(@year_list)
+        @currentMonth1 = _.last(@month_list)
+
+    loadMonthList1: () ->
+        if @currentYear1 == new Date().getFullYear()
+            months = [1..new Date().getMonth() + 1]
+        else
+            months = [1..12]
+
+        @month_list = _.map months, (item)->
+            item = '0' + item if item < 10
+            item + ''
+
+    loadWelfareFees: (year) ->
+        self = @
+        welfareFees = []
+        xAxisArray = []
+
+        @http.get('/api/welfare_fees?year=' + year)
+            .success (data)->
+                _.forEach data.welfare_fees, (outVal, outKey)->
+                    fee = new Object()
+                    valArr = []
+                    fee.name = outKey
+                    fee.type = 'line'
+                    fee.symbolSize = 10
+
+                    _.forEach outVal, (inVal, inKey)->
+                        valArr.push inVal
+                        xAxisArray.push(inKey+'月') if !_.includes xAxisArray, inKey
+
+                    fee.data = valArr
+                    welfareFees.push fee
+                    
+                self.brokenLineOpition.xAxis.data = xAxisArray
+                self.brokenLineOpition.series = welfareFees
+
+                self.brokenLineOpitionInDialog.xAxis.data = xAxisArray
+                self.brokenLineOpitionInDialog.series = welfareFees
+
+            .error (err)->
+                console.log err
+
+    loadWelfareFeesForPie: () ->
+        self = @
+
+        @loadMonthList1()
+
+        category = @welfareFeeType
+        year = @currentYear1
+        month = @currentMonth1
+
+        @http.get('/api/welfare_fees/getcategory_with_year?year='+year+'&category='+category)
+            .success (data) ->
+                pieSeries = []
+                pieLegend = ['已使用', '剩余']
+
+                total = 0
+                leave = 0
+
+                welfareFeesSrc = data.welfare_fees
+
+                _.forEach welfareFeesSrc, (val, key) ->
+                    if parseInt(key.split('-')[1], 10) <= parseInt(self.currentMonth1, 10) && key != '剩余'
+                        total = total + parseInt(val, 10)
+                    else
+                        leave = leave + parseInt(val, 10)
+
+                pieSeries.push({ value: total, name: '已使用' })
+                pieSeries.push({ value: leave, name: '剩余' })
+
+                self.welfareFeesPieOption.title.text = category
+                self.welfareFeesPieOption.legend.data = pieLegend
+                self.welfareFeesPieOption.series[0].name = category
+                self.welfareFeesPieOption.series[0].data = pieSeries
+
+                self.welfareFeesPieOptionInDialog.title.text = category
+                self.welfareFeesPieOptionInDialog.legend.data = pieLegend
+                self.welfareFeesPieOptionInDialog.series[0].name = category
+                self.welfareFeesPieOptionInDialog.series[0].data = pieSeries
+
+                self.initialDataCompleted = true
+
+            .error (err) ->
+                console.log err
 
         
 class BossContactController extends BossBaseController

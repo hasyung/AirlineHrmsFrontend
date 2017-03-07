@@ -19,7 +19,7 @@ class RootController extends nb.Controller
         @reportCheckers = REPORT_CHECKER
         @user = USER_META
 
-        @show_main = @root_info.single_point
+        # @show_main = @root_info.single_point
 
         self = @
 
@@ -53,6 +53,12 @@ class RootController extends nb.Controller
 
         if userPositionIds.indexOf(@reportCheckers['人力资源部总经理']) > -1
             self.isHrGeneralManager = true
+            self.show_boss = true
+
+        if @user.employee_no == 'administrator'
+            self.isHrGeneralManager = true
+            self.isServiceDeputyManager = false
+            self.isHrDeputyManager = false
             self.show_boss = true
 
     backToHome: () ->

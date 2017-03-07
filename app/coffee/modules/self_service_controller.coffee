@@ -242,15 +242,6 @@ class ProfileCtrl extends nb.Controller
         @loadInitialData()
         @status = 'show'
 
-        @nations = [ '汉族'  , '壮族' , '满族' , '回族' , '苗族'  , '维吾尔族'  , '土家族'
-                , '彝族'  , '蒙古族'  ,' 藏族'  , '布依族'  ,' 侗族'  ,' 瑶族'  , '朝鲜族'
-                ,' 白族'  , '哈尼族'  , '哈萨克族'  ,' 黎族'  ,' 傣族'  ,' 畲族'  , '傈僳族'
-                , '仡佬族'  , '东乡族'  , '高山族'  , '拉祜族'  ,' 水族'  ,' 佤族'  , '纳西族'
-                ,' 羌族'  ,' 土族'  , '仫佬族'  , '锡伯族'  , '柯尔克孜族'  , '达斡尔族'  , '景颇族'
-                , '毛南族'  , '撒拉族'  , '布朗族'  , '塔吉克族'  , '阿昌族'  , '普米族'  , '鄂温克族'
-                ,' 怒族'  ,' 京族'  , '基诺族'  , '德昂族'  , '保安族'  , '俄罗斯族'  , '裕固族'
-                , '乌兹别克族'  , '门巴族'  , '鄂伦春族'  , '独龙族'  , '塔塔尔族'  , '赫哲族'  , '珞巴族']
-
     dayOnClick: ()->
         #
 
@@ -276,7 +267,7 @@ class ProfileCtrl extends nb.Controller
     loadPerformance: ()->
         self = @
         @UserPerformance.$collection().$fetch().$then (performances)->
-            self.performances = _.sortBy((_.groupBy performances, (item)-> item.assessYear)).reverse()
+            self.performances = _.sortBy(_.groupBy(performances, (item)-> item.assessYear), [ (arr)-> arr[0].assessYear ]).reverse()
 
     loadRewards: ()->
         @rewards = @UserReward.$collection().$fetch()
@@ -404,9 +395,9 @@ class ProfileCtrl extends nb.Controller
 
 
 class MyRequestCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Employee', 'OrgStore', 'USER_META', 'VACATIONS', 'MyLeave', '$injector', 'UserAnnuity', '$http', 'toaster', 'UserAllege']
+    @.$inject = ['$scope', 'Employee', 'OrgStore', 'USER_META', 'VACATIONS', 'MyLeave', '$injector', 'UserAnnuity', '$http', 'toaster', 'UserAllege', 'User']
 
-    constructor: (@scope, @Employee, @OrgStore, meta, vacations, @MyLeave, injector, @UserAnnuity, @http, @toaster, @UserAllege) ->
+    constructor: (@scope, @Employee, @OrgStore, meta, vacations, @MyLeave, injector, @UserAnnuity, @http, @toaster, @UserAllege, @User) ->
         @scope.realFlow = (entity) ->
             t = entity.type
             m = injector.get(t)
@@ -471,9 +462,10 @@ class MyRequestCtrl extends nb.Controller
         rows = @scope.$gridApi.selection.getSelectedGridRows()
         selected = if rows.length >= 1 then rows[0].entity else null
 
-    revert: (isConfirm, leave)->
+    revert: (isConfirm, leave, leaves)->
         if isConfirm
-            leave.revert()
+            leave.revert().$asPromise().then ()->
+                leaves.$refresh()
 
     charge: (leave, params, leaves)->
         leave.charge(params).$then ()->
@@ -528,6 +520,11 @@ class ChartsMainController extends nb.Controller
 
     constructor: (@scope, @rootScope, CURRENT_ROLES) ->
         @current_roles = CURRENT_ROLES
+
+    checkRole: (role) ->
+        _.includes @current_roles, role
+
+
 
 class CompanyLeaderChartsController extends nb.Controller
     @.$inject = ['$scope', '$http', 'Employee', 'LeaveEmployees']
@@ -742,7 +739,7 @@ class CompanyLeaderChartsController extends nb.Controller
             config['seriesB'].push(val.leave | 0)
 
             index++
-        
+
         return config
 
 class CountyLeaderChartsController extends nb.Controller
@@ -958,7 +955,7 @@ class CountyLeaderChartsController extends nb.Controller
             config['seriesB'].push(val.leave | 0)
 
             index++
-        
+
         return config
 
 class DepartmentHrChartsController extends nb.Controller
@@ -1452,8 +1449,182 @@ class HrLeaderChartsController extends nb.Controller
             config['seriesB'].push(val.leave | 0)
 
             index++
-        
+
         return config
+
+class WelfareManageChartsController extends nb.Controller
+    @.$inject = ['$scope', '$http', 'toaster']
+
+    constructor: (@scope, @http, @toaster) ->
+        @welfareFeeType = '福利费'
+        @importing = false
+
+        @pieConfig = {
+            theme:''
+            dataLoaded:true
+        }
+
+        @brokenLineConfig = {
+            theme:'default'
+            dataLoaded:true
+        }
+
+        @brokenLineOpition = {
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['福利费','社会保险费','公积金','企业年金']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: []
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: []
+        }
+
+        @welfareFeesPieOption = {
+            title : {
+                text: '福利费用',
+                x:'center'
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: '5%',
+                top: '5%',
+                data: []
+            },
+            series : [
+                {
+                    name: '福利类型',
+                    type: 'pie',
+                    radius : '55%',
+                    center: ['50%', '50%'],
+                    data:[],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        }
+
+        @loadDateTime()
+        @loadWelfareFees(@currentYear)
+        @loadWelfareFeesForPie()
+
+    loadWelfareFees: (year) ->
+        self = @
+        welfareFees = []
+        xAxisArray = []
+
+        @http.get('/api/welfare_fees?year=' + year)
+            .success (data)->
+                _.forEach data.welfare_fees, (outVal, outKey)->
+                    fee = new Object()
+                    valArr = []
+                    fee.name = outKey
+                    fee.type = 'line'
+
+                    _.forEach outVal, (inVal, inKey)->
+                        valArr.push inVal
+                        xAxisArray.push(inKey+'月') if !_.includes xAxisArray, inKey
+
+                    fee.data = valArr
+                    welfareFees.push fee
+
+                self.brokenLineOpition.xAxis.data = xAxisArray
+                self.brokenLineOpition.series = welfareFees
+
+            .error (err)->
+                console.log err
+
+    loadWelfareFeesForPie: () ->
+        self = @
+
+        category = @welfareFeeType
+        year = @currentYear1
+        month = @currentMonth1
+
+        @http.get('/api/welfare_fees/getcategory_with_year?year='+year+'&category='+category)
+            .success (data) ->
+                pieSeries = []
+                pieLegend = ['已使用', '剩余']
+
+                total = 0
+                leave = 0
+
+                welfareFeesSrc = data.welfare_fees
+
+                _.forEach welfareFeesSrc, (val, key) ->
+                    if parseInt(key.split('-')[1], 10) <= parseInt(self.currentMonth1, 10) && key != '剩余'
+                        total = total + parseInt(val, 10)
+                    else
+                        leave = leave + parseInt(val, 10)
+
+                pieSeries.push({ value: total, name: '已使用' })
+                pieSeries.push({ value: leave, name: '剩余' })
+
+                self.welfareFeesPieOption.title.text = category
+                self.welfareFeesPieOption.legend.data = pieLegend
+                self.welfareFeesPieOption.series[0].name = category
+                self.welfareFeesPieOption.series[0].data = pieSeries
+
+            .error (err) ->
+                console.log err
+
+    loadDateTime: () ->
+        @year_list = @$getYears()
+        @month_list = @$getMonths()
+
+        @currentYear = _.last(@year_list)
+
+        @currentYear1 = _.last(@year_list)
+        @currentMonth1 = _.last(@month_list)
+
+    uploadWelfareFees: (type, attachment_id) ->
+        self = @
+
+        params = {type: type, attachment_id: attachment_id}
+        @importing = true
+
+        @http.post("/api/welfare_fees/import", params).success (data, status) ->
+            self.toaster.pop('success', '提示', '导入成功')
+            self.importing = false
+        .error (data) ->
+            self.toaster.pop('error', '提示', '导入失败')
+            self.importing = false
+
+    uploadWelfareBudget: (type, attachment_id) ->
+        self = @
+        @importing = true
+
+        @http.get("/api/welfare_fees/import_budget?attachment_id=" + attachment_id).success (data, status) ->
+            self.toaster.pop('success', '提示', '导入成功')
+            self.importing = false
+        .error (data) ->
+            self.toaster.pop('error', '提示', '导入失败')
+            self.importing = false
+
+
+
 
 app.controller 'ChartsMainCtrl', ChartsMainController
 app.controller 'CompanyLeaderChartsCtrl', CompanyLeaderChartsController
@@ -1461,6 +1632,7 @@ app.controller 'CountyLeaderChartsCtrl', CountyLeaderChartsController
 app.controller 'DepartmentHrChartsCtrl', DepartmentHrChartsController
 app.controller 'DepartmentLeaderChartsCtrl', DepartmentLeaderChartsController
 app.controller 'HrLeaderChartsCtrl', HrLeaderChartsController
+app.controller 'WelfareManageChartsCtrl', WelfareManageChartsController
 
 
 app.config(Route)

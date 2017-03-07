@@ -1,0 +1,57 @@
+md-dialog.punishment_new(style="min-width: 450px;")
+    md-toolbar.md-accent(md-theme="hrms")
+        .md-toolbar-tools
+            span 新建员工班制
+    form(ng-submit="ctrl.newClassSystem(newRecord);dialog.close();" name="newClassSystem")
+        md-content(ng-init="newRecord = {}; ctrl.loadEmp = {}")
+            fieldset
+                div(style="display:none;")
+                    input(ng-model="newRecord.employee_id")
+                div(layout)
+                    md-input-container(flex)
+                        label 姓名
+                        input(
+                            ng-model="ctrl.loadEmp.name"
+                            name="employeeName"
+                            ng-model-options="{debounce: {'default': 1000, 'blur': 0}}"
+                            ng-change="ctrl.loadEmployee({name: ctrl.loadEmp.name}, newRecord);"
+                            required
+                        )
+                    md-input-container(flex)
+                        label 员工编号
+                        input(
+                            ng-model="ctrl.loadEmp.employeeNo"
+                            name="employeeNo"
+                            ng-model-options="{debounce: {'default': 1000, 'blur': 0}}"
+                            ng-change="ctrl.loadEmployee({employee_no: ctrl.loadEmp.employeeNo}, newRecord);"
+                            required
+                        )
+                div(layout)
+                    md-input-container(flex)
+                        label 部门
+                        input(ng-model="ctrl.loadEmp.department.name" readonly)
+                    md-input-container(flex)
+                        label 岗位
+                        input(ng-model="ctrl.loadEmp.position.name" readonly)
+                div(layout)
+                    md-input-container.row-has-value(flex)
+                        label 班制
+                        md-select(
+                            ng-model="newRecord.workShifts"
+                            required
+                            placeholder="请选择"
+                            )
+
+                                md-option(value="行政班") 行政班
+                                md-option(value="两班倒") 两班倒
+                                md-option(value="三班倒") 三班倒
+                                md-option(value="四班倒") 四班倒
+                                md-option(value="空勤") 空勤
+                //- div(layout)
+                //-     md-input-container(flex)
+                //-         label 文件号
+                //-         input(ng-model="current.fileNo")
+
+        .md-actions
+            md-button(type="button" ng-click="cancel(current, $event, editLeaveForm);dialog.close()") 取 消
+            md-button.md-primary.md-raised(type="submit" ng-disabled="editClassSystem.$invalid") 确 定

@@ -1,30 +1,35 @@
 div.charts-container(
     flex
     ng-controller="ChartsMainCtrl as chartCtrl"
-    ng-switch="rootCtrl.current_roles[0]"
     )
-    .container960(
-        ng-controller="DepartmentLeaderChartsCtrl as ctrl"
-        ng-switch-when="department_leader"
-        )
-        include charts/department_leader
+    //- .container960(
+    //-     ng-controller="DepartmentLeaderChartsCtrl as ctrl"
+    //-     ng-if="chartCtrl.checkRole('department_leader')"
+    //-     )
+    //-     include charts/department_leader
     .container960(
         ng-controller="HrLeaderChartsCtrl as ctrl"
-        ng-switch-when="hr_leader"
+        ng-if="chartCtrl.checkRole('hr_leader')"
         )
         include charts/hr_leader
-    .container960(
-        ng-controller="DepartmentHrChartsCtrl as ctrl"
-        ng-switch-default
-        )
-        include charts/department_hr
+    //- .container960(
+    //-     ng-controller="DepartmentHrChartsCtrl as ctrl"
+    //-     ng-if="chartCtrl.checkRole('department_hr')"
+    //-     )
+    //-     include charts/department_hr
     .container960(
         ng-controller="CompanyLeaderChartsCtrl as ctrl"
-        ng-switch-when="company_leader"
+        ng-if="chartCtrl.checkRole('company_leader')"
         )
         include charts/company_leader
     .container960(
         ng-controller="CountyLeaderChartsCtrl as ctrl"
-        ng-switch-when="county_leader"
+        ng-if="chartCtrl.checkRole('county_leader')"
         )
         include charts/county_leader
+
+    .container960(
+        ng-controller="WelfareManageChartsCtrl as ctrl"
+        ng-if="chartCtrl.checkRole('welfare_member')"
+        )
+        include charts/welfare_member

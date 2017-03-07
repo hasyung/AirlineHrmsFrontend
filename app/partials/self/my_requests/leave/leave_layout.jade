@@ -25,10 +25,10 @@ div.workflow.md-background(md-theme="hrms")
                                         div(layout)
                                             md-input-container(flex)
                                                 label 开始日期
-                                                input(ng-model="request.start_time" ng-change="calculateTotalDays(request, '#{flowName}', true)" name="start_time" bs-datepicker required)
+                                                input(ng-model="request.start_time" ng-change="calculateTotalDays(request, '#{flowName}', true, receptor)" name="start_time" bs-datepicker required)
                                             md-input-container.row-has-value(style="flex: 0 0 150px;")
                                                 label 详细时间
-                                                md-select(ng-model="request.start_time" ng-change="calculateTotalDays(request, '#{flowName}')" md-on-open="loadStartTime()" ng-disabled="!request.start_time" required)
+                                                md-select(ng-model="request.start_time" ng-change="calculateTotalDays(request, '#{flowName}', false, receptor)" md-on-open="loadStartTime()" ng-disabled="!request.start_time" required)
                                                     md-option(ng-value="time" ng-repeat="time in start_times" ) {{time | mdate: 'H:mm'}}
                                         div(layout)
                                             md-input-container(flex)
@@ -38,7 +38,7 @@ div.workflow.md-background(md-theme="hrms")
                                                 label 详细时间
                                                 md-select(
                                                     ng-model="request.end_time"
-                                                    ng-change="calculateTotalDays(request, '#{flowName}')"
+                                                    ng-change="calculateTotalDays(request, '#{flowName}', false, receptor)"
                                                     md-on-open="loadEndTime()"
                                                     ng-disabled="!request.end_time"
                                                     required)
@@ -62,10 +62,10 @@ div.workflow.md-background(md-theme="hrms")
                                         div(layout)
                                             md-input-container(flex)
                                                 label 开始日期
-                                                input(ng-model="request.start_time" ng-change="calculateTotalDays(request, '#{flowName}')" name="start_time" bs-datepicker required)
+                                                input(ng-model="request.start_time" ng-change="calculateTotalDays(request, '#{flowName}', false, receptor)" name="start_time" bs-datepicker required)
                                             md-input-container(flex)
                                                 label 结束日期
-                                                input(ng-model="request.end_time" ng-change="calculateTotalDays(request, '#{flowName}')" name="end_time" required bs-datepicker)
+                                                input(ng-model="request.end_time" ng-change="calculateTotalDays(request, '#{flowName}', false, receptor)" name="end_time" required bs-datepicker)
                                         div(layout)
                                             .without-edit
                                                 div.progress-wrapper(ng-if="calculating")
@@ -85,20 +85,20 @@ div.workflow.md-background(md-theme="hrms")
                                         div(layout)
                                             md-input-container(flex)
                                                 label 开始日期
-                                                input(ng-model="request.start_time" ng-change="calculateTotalDays(request, '#{flowName}')" name="start_time" bs-datepicker required)
+                                                input(ng-model="request.start_time" ng-change="calculateTotalDays(request, '#{flowName}', false,receptor)" name="start_time" bs-datepicker required)
                                             md-input-container.row-has-value(style="flex: 0 0 150px;")
                                                 label 详细时间
-                                                md-select(ng-model="request.start_time" ng-change="calculateTotalDays(request, '#{flowName}')" md-on-open="loadStartTime()" ng-disabled="!request.start_time" required)
+                                                md-select(ng-model="request.start_time" ng-change="calculateTotalDays(request, '#{flowName}', false, receptor)" md-on-open="loadStartTime()" ng-disabled="!request.start_time" required)
                                                     md-option(ng-value="time" ng-repeat="time in start_times" ) {{time | mdate: 'H:mm'}}
                                         div(layout)
                                             md-input-container(flex)
                                                 label 结束日期
-                                                input(ng-model="request.end_time" ng-change="calculateTotalDays(request, '#{flowName}')" name="end_time" required bs-datepicker)
+                                                input(ng-model="request.end_time" ng-change="calculateTotalDays(request, '#{flowName}', false, receptor)" name="end_time" required bs-datepicker)
                                             md-input-container.row-has-value(style="flex: 0 0 150px;")
                                                 label 详细时间
                                                 md-select(
                                                     ng-model="request.end_time"
-                                                    ng-change="calculateTotalDays(request, '#{flowName}')"
+                                                    ng-change="calculateTotalDays(request, '#{flowName}', false, receptor)"
                                                     md-on-open="loadEndTime()"
                                                     ng-disabled="!request.end_time"
                                                     required)
@@ -124,7 +124,7 @@ div.workflow.md-background(md-theme="hrms")
                                         div(layout)
                                             md-input-container(flex)
                                                 label 开始日期
-                                                input(ng-model="request.start_time" ng-change="calculateTotalDays(request, '#{flowName}')" name="start_time" bs-datepicker required)
+                                                input(ng-model="request.start_time" ng-change="calculateTotalDays(request, '#{flowName}', false, receptor)" name="start_time" bs-datepicker required)
 
                                         div(layout)
                                             .without-edit
@@ -137,12 +137,15 @@ div.workflow.md-background(md-theme="hrms")
                                             md-input-container(flex)
                                                 label 申请理由
                                                 textarea(ng-model="request.reason" columns="1" md-maxlength="150")
+
+                                        //- 上传附件控件 
                                         if need_attachment
                                             md-subheader.accessory-header.md-background.md-hue-1 附件
                                             div(flow-file-upload flow-type="#{flowType}" ng-model="request.attachment_ids")
                                             block attachment_tip
 
-                    md-card.form-material-section.nb-card
+                    //- 上级选择框
+                    md-card.form-material-section.nb-card(ng-if="!panel.noApproval")
                         md-subheader.superior-header.md-background.md-hue-1 提交上级
                         .superior-container
                             md-radio-group(ng-model="request.reviewer_id" md-theme="default")
@@ -151,7 +154,17 @@ div.workflow.md-background(md-theme="hrms")
                                     ng-value="reviewer.id") {{ reviewer.name }}
                                     div {{reviewer.department.name}} / {{reviewer.position.name}}
 
-                    .form-bottom-group(layout)
+                    //- 提交按钮组 我要请假 和 假期录入 不同
+                    .form-bottom-group(layout ng-if="!panel.noApproval")
                         span(flex)
                         md-button.md-raised.white(type="button" ng-click="panel.close()") 取消
-                        md-button.md-primary.md-raised(type="submit" ng-disabled="leave_form.$invalid || !isRequestLegal") 提交上级
+                        md-button.md-primary.md-raised(type="submit" ng-disabled="leave_form.$invalid || !isRequestLegal || calculating") 提交上级
+
+                    .form-bottom-group(layout ng-if="panel.noApproval")
+                        span(flex)
+                        md-button.md-raised.white(type="button" ng-click="panel.close()") 取消
+                        md-button.md-primary.md-raised(
+                            type="button"
+                            ng-click="ctrl.attendanceEntry(request, receptor, '#{flowType}', panel)"
+                            ng-disabled="leave_form.$invalid || !isRequestLegal || calculating"
+                            ) 提交

@@ -33,6 +33,8 @@ Employee = (restmod, RMUtils, $Evt) ->
                 $Evt.$send('employee:change_employee_date:success', "员工工作年限已更新")
             'after-change-employee-tech-grade': ->
                 $Evt.$send('employee:change_employee_tech_grade:success', "员工技术等级已更新")
+            'after-edit-jobTitle': ->
+                $Evt.$send('employee:edit_job_title:success', "员工职称信息已更新")
         }
 
         $extend:
@@ -83,6 +85,21 @@ Employee = (restmod, RMUtils, $Evt) ->
 
                     onSuccess = (res) ->
                         self.$dispatch 'after-edit-technical'
+                        list.$refresh(tableState)
+
+                    this.$send(request, onSuccess)
+
+                edit_job_title: (params, list, tableState)->
+                    self = this
+
+                    request = {
+                        url: "/api/employees/#{this.id}/update_title_info"
+                        method: "PUT"
+                        data: params
+                    }
+
+                    onSuccess = (res) ->
+                        self.$dispatch 'after-edit-jobTitle'
                         list.$refresh(tableState)
 
                     this.$send(request, onSuccess)
@@ -239,6 +256,20 @@ AdjustPositionRecord = (restmod, RMUtils, $Evt) ->
                     this.$refresh(tableState)
     }
 
+JobTitleChangeRecords = (restmod, RMUtils, $Evt) ->
+    AdjustPositionEmployees = restmod.model('/title_info_change_records').mix 'nbRestApi', {
+        $config:
+            jsonRootSingle: 'title_info_change_record'
+            jsonRootMany: 'title_info_change_records'
+
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+
+        $extend:
+            Collection:
+                search: (tableState) ->
+                    this.$refresh(tableState)
+    }
+
 EducationExpRecord = (restmod, RMUtils, $Evt) ->
     EducationExpEmployees = restmod.model('/education_experience_records').mix 'nbRestApi', {
         $config:
@@ -268,6 +299,16 @@ Formerleaders = (restmod, RMUtils, $Evt) ->
                     this.$refresh(tableState)
     }
 
+ClassSystem = (restmod, RMUtils, $Evt) ->
+    ClassSystem = restmod.model('/work_shifts/index').mix 'nbRestApi', {
+        # joinScalDate: {decode: 'date', param: 'yyyy-MM-dd'}
+        $config:
+            jsonRootSingle: 'work_shift'
+            jsonRootMany: 'work_shifts'
+
+        owner: {belongsTo: 'Employee', key: 'employee_id'}
+    }
+
 
 resources.factory 'Employee', ['restmod', 'RMUtils', '$nbEvent', Employee]
 resources.factory 'EmployeesHasEarlyRetire', ['restmod', 'RMUtils', '$nbEvent', EmployeesHasEarlyRetire]
@@ -276,6 +317,8 @@ resources.factory 'LeaveEmployees', ['restmod', 'RMUtils', '$nbEvent', LeaveEmpl
 resources.factory 'EarlyRetireEmployees', ['restmod', 'RMUtils', '$nbEvent', EarlyRetireEmployees]
 resources.factory 'AdjustPositionWaiting', ['restmod', 'RMUtils', '$nbEvent', AdjustPositionWaiting]
 resources.factory 'AdjustPositionRecord', ['restmod', 'RMUtils', '$nbEvent', AdjustPositionRecord]
+resources.factory 'JobTitleChangeRecords', ['restmod', 'RMUtils', '$nbEvent', JobTitleChangeRecords]
 resources.factory 'EducationExpRecord', ['restmod', 'RMUtils', '$nbEvent', EducationExpRecord]
 resources.factory 'MoveEmployees', ['restmod', 'RMUtils', '$nbEvent', MoveEmployees]
+resources.factory 'ClassSystem', ['restmod', 'RMUtils', '$nbEvent', ClassSystem]
 

@@ -33,17 +33,38 @@ form(ng-controller="EditableResourceCtrl", ng-submit="save(currentUser.$save(), 
                         md-select(ng-model="currentUser.genderId" ng-disabled="!editing")
                             md-option(ng-value="item.id" ng-repeat="item in $enum.get('genders')") {{item.label}}
                     md-input-container(flex)
-                        label 民族
-                        input(ng-model="currentUser.nation")
+                        label 出生地
+                            span.require-tip *
+                        input(ng-model="currentUser.birthPlace" name="birthPlace" required)
+                div(layout)
+                    md-input-container(flex)
+                        nb-search.nb-search(
+                            type="nationality"
+                            ng-model="currentUser.nationality"
+                            float-label="true"
+                            placeholder="国籍"
+                            search-text-change="currentUser.nation = null;"
+                            selected-item-change=""
+                            editable="editing"
+                            md-no-cache="true"
+                            )
+                    md-input-container(flex)
+                        nb-search.nb-search(
+                            type="nation"
+                            ng-model="currentUser.nation"
+                            float-label="true"
+                            placeholder="民族"
+                            search-text-change=""
+                            selected-item-change=""
+                            editable="editing && currentUser.nationality == '中国'"
+                            md-no-cache="true"
+                            )
+
                 div(layout)
                     md-input-container(flex)
                         label 户籍地址
                             span.require-tip *
                         input(ng-model="currentUser.nativePlace" name="nativePlace" required)
-                    md-input-container(flex)
-                        label 出生地
-                            span.require-tip *
-                        input(ng-model="currentUser.birthPlace" name="birthPlace" required)
                 div(layout)
                     md-input-container(flex)
                         label 出生日期
@@ -190,3 +211,6 @@ form(ng-controller="EditableResourceCtrl", ng-submit="save(currentUser.$save(), 
                     md-input-container.row-has-value(flex)
                         label 技术等级
                         input(ng-model="currentUser.technical" disabled)
+                    md-input-container.row-has-value(flex)
+                        label 员工星级
+                        input(ng-model="currentUser.star" disabled)

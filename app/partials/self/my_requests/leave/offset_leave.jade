@@ -9,9 +9,9 @@ block relation_data
     div.flow-info-row(layout)
         .flow-info-cell(flex)
             .flow-cell-title 川航工作年限
-            .flow-cell-content {{ meta.join_scal_date | fromNow}}
+            .flow-cell-content {{ receptor.joinScalDate | fromNow}}
     div.flow-info-row(layout)
         .flow-info-cell(flex)
             .flow-cell-title 假别
             .flow-cell-content 补休假
-                span ( 补休假剩余天数 {{ vacations.offset_days }} 天 )
+                span ( 补休假剩余天数 {{ receptor.vacations.offsetDays }} 天 )

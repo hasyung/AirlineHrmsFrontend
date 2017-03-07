@@ -241,17 +241,24 @@ ATTENDANCE_SUMMERY_DEFS= [
     {width:100, displayName: '疗养假', name: 'recuperateLeave'}
     {width:100, displayName: '派驻休假', name: 'accreditLeave'}
     {width:100, displayName: '病假', name: 'sickLeave'}
-    {width:100, displayName: '病假（工伤待定）', name: 'sickLeaveInjury'}
-    {width:100, displayName: '病假（怀孕待产）', name: 'sickLeaveNulliparous'}
+    {width:130, displayName: '病假（工伤待定）', name: 'sickLeaveInjury'}
+    {width:130, displayName: '病假（怀孕待产）', name: 'sickLeaveNulliparous'}
+    {width:100, displayName: '病假总计', name: 'sickDays'}
+    {width:100, displayName: '病假工作日', name: 'sickWorkDays'}
     {width:100, displayName: '事假', name: 'personalLeave'}
+    {width:100, displayName: '事假工作日', name: 'personalLeaveWorkDays'}
     {width:100, displayName: '公假', name: 'publicLeave'}
     {width:100, displayName: '探亲假', name: 'homeLeave'}
+    {width:120, displayName: '探亲假工作日', name: 'homeLeaveWorkDays'}
     {width:100, displayName: '培训', name: 'cultivate'}
+    {width:100, displayName: '培训工作日', name: 'cultivateWorkDays'}
     {width:100, displayName: '出差', name: 'evection'}
+    {width:100, displayName: '出差工作日', name: 'evectionWorkDays'}
     {width:100, displayName: '旷工', name: 'absenteeism'}
     {width:100, displayName: '迟到早退', name: 'lateOrLeave'}
     {width:100, displayName: '空勤停飞', name: 'ground'}
-    {width:100, displayName: '空勤地面工作', name: 'surfaceWork'}
+    {width:120, displayName: '空勤停飞工作日', name: 'flightGroundedWorkDays'}
+    {width:120, displayName: '空勤地面工作', name: 'surfaceWork'}
     {width:100, displayName: '驻站天数', name: 'stationDays'}
     {width:100, displayName: '驻站地点', name: 'stationPlace'}
     {width:100, displayName: '备注', name: 'remark'}
@@ -277,17 +284,24 @@ ATTENDANCE_SUMMERY_HIS_DEFS= [
     {width:100, displayName: '疗养假', name: 'recuperateLeave'}
     {width:100, displayName: '派驻休假', name: 'accreditLeave'}
     {width:100, displayName: '病假', name: 'sickLeave'}
-    {width:100, displayName: '病假（工伤待定）', name: 'sickLeaveInjury'}
-    {width:100, displayName: '病假（怀孕待产）', name: 'sickLeaveNulliparous'}
+    {width:130, displayName: '病假（工伤待定）', name: 'sickLeaveInjury'}
+    {width:130, displayName: '病假（怀孕待产）', name: 'sickLeaveNulliparous'}
+    {width:100, displayName: '病假总计', name: 'sickDays'}
+    {width:100, displayName: '病假工作日', name: 'sickWorkDays'}
     {width:100, displayName: '事假', name: 'personalLeave'}
+    {width:100, displayName: '事假工作日', name: 'personalLeaveWorkDays'}
     {width:100, displayName: '公假', name: 'publicLeave'}
     {width:100, displayName: '探亲假', name: 'homeLeave'}
+    {width:120, displayName: '探亲假工作日', name: 'homeLeaveWorkDays'}
     {width:100, displayName: '培训', name: 'cultivate'}
+    {width:100, displayName: '培训工作日', name: 'cultivateWorkDays'}
     {width:100, displayName: '出差', name: 'evection'}
+    {width:100, displayName: '出差工作日', name: 'evectionWorkDays'}
     {width:100, displayName: '旷工', name: 'absenteeism'}
     {width:100, displayName: '迟到早退', name: 'lateOrLeave'}
     {width:100, displayName: '空勤停飞', name: 'ground'}
-    {width:100, displayName: '空勤地面工作', name: 'surfaceWork'}
+    {width:120, displayName: '空勤停飞工作日', name: 'flightGroundedWorkDays'}
+    {width:120, displayName: '空勤地面工作', name: 'surfaceWork'}
     {width:100, displayName: '驻站天数', name: 'stationDays'}
     {width:100, displayName: '驻站地点', name: 'stationPlace'}
     {width:100, displayName: '备注', name: 'remark'}
@@ -394,9 +408,9 @@ app.config(Route)
 
 
 class AttendanceCtrl extends nb.Controller
-    @.$inject = ['GridHelper', 'Leave', '$scope', '$injector', '$http', 'AttendanceSummary', 'CURRENT_ROLES', 'toaster', '$q', '$nbEvent', '$timeout']
+    @.$inject = ['GridHelper', 'Leave', '$scope', '$injector', '$http', 'AttendanceSummary', 'CURRENT_ROLES', 'toaster', '$q', '$nbEvent', '$timeout', 'USER_META', '$rootScope']
 
-    constructor: (helper, @Leave, scope, injector, @http, @AttendanceSummary, @CURRENT_ROLES, @toaster, @q, @Evt, @timeout) ->
+    constructor: (helper, @Leave, scope, injector, @http, @AttendanceSummary, @CURRENT_ROLES, @toaster, @q, @Evt, @timeout, @User, @rootScope) ->
         @initDate()
 
         scope.realFlow = (entity) ->
@@ -469,13 +483,14 @@ class AttendanceCtrl extends nb.Controller
             ]
         }
 
+        # mouseover进行hack数据刷新 很不科学 存在问题
         checkBaseDef = ATTENDANCE_BASE_TABLE_DEFS.concat [
             {
                 minWidth: 120
                 name: 'type'
                 displayName: '详细'
                 cellTemplate: '''
-                <div class="ui-grid-cell-contents" ng-mousedown="realFlow = grid.appScope.$parent.realFlow(row.entity)">
+                <div class="ui-grid-cell-contents" ng-mouseover="realFlow = grid.appScope.$parent.realFlow(row.entity)">
                     <a ng-if="!realFlow.processed" flow-handler="realFlow" flows="grid.options.data">
                         查看
                     </a>
@@ -491,7 +506,7 @@ class AttendanceCtrl extends nb.Controller
                 name: 'type'
                 displayName: '详细'
                 cellTemplate: '''
-                <div class="ui-grid-cell-contents" ng-mousedown="realFlow = grid.appScope.$parent.realFlow(row.entity)">
+                <div class="ui-grid-cell-contents" ng-mouseover="realFlow = grid.appScope.$parent.realFlow(row.entity)">
                     <a flow-handler="realFlow" flow-view="true">
                         查看
                     </a>
@@ -608,30 +623,34 @@ class AttendanceCtrl extends nb.Controller
 
         params = {summary_date: @getDate()}
 
-        @http.put('/api/attendance_summaries/department_hr_confirm', params).then (data)->
-            self.tableData.$refresh()
-            self.departmentHrChecked = true
+        if isConfirm
+            @startLoading();
+            @http.put('/api/attendance_summaries/department_hr_confirm', params).then (data)->
+                self.cancelLoading()
+                self.tableData.$refresh()
+                self.departmentHrChecked = true
 
-            angular.forEach self.tableData, (item)->
-                item.departmentHrChecked = true
+                angular.forEach self.tableData, (item)->
+                    item.departmentHrChecked = true
 
-            erorr_msg = data.$response.data.messages if angular.isDefined data.$response
-            self.toaster.pop('info', '提示', erorr_msg || "确认成功")
+                erorr_msg = data.$response.data.messages if angular.isDefined data.$response
+                self.toaster.pop('info', '提示', erorr_msg || "确认成功")
 
     administratorConfirm: (isConfirm)->
         self = @
 
         params = {summary_date: @getDate()}
 
-        @http.put('/api/attendance_summaries/administrator_check', params).then (data)->
-            self.tableData.$refresh()
-            self.hrDepartmentLeaderChecked = true
+        if isConfirm
+            @http.put('/api/attendance_summaries/administrator_check', params).then (data)->
+                self.tableData.$refresh()
+                self.hrDepartmentLeaderChecked = true
 
-            angular.forEach self.tableData, (item)->
-                item.hrDepartmentLeaderChecked = true
+                angular.forEach self.tableData, (item)->
+                    item.hrDepartmentLeaderChecked = true
 
-            erorr_msg = data.$response.data.messages if angular.isDefined data.$response
-            self.toaster.pop('info', '提示', erorr_msg || "确认成功")
+                erorr_msg = data.$response.data.messages if angular.isDefined data.$response
+                self.toaster.pop('info', '提示', erorr_msg || "确认成功")
 
     departmentLeaderCheck: (opinion)->
         self = @
@@ -712,16 +731,21 @@ class AttendanceCtrl extends nb.Controller
                 self.depCheckInfo = dep
                 return
 
-
-
     finishVacation: ()->
         # 销假的逻辑目前没有实际的数据影响
 
+    revertLeave: (isConfirm, leave)->
+        self = @
+
+        if isConfirm
+            leave.revert().$asPromise().then ()->
+                self.tableData.$refresh()
+
 
 class AttendanceRecordCtrl extends nb.Controller
-    @.$inject = ['$scope', 'Attendance', 'Employee', 'GridHelper', '$enum', 'CURRENT_ROLES', '$q', '$http', 'toaster', '$nbEvent']
+    @.$inject = ['$scope', 'Attendance', 'AttendanceDepartment', 'Employee', 'GridHelper', '$enum', 'CURRENT_ROLES', '$q', '$http', 'toaster', '$nbEvent', '$rootScope']
 
-    constructor: (@scope, @Attendance, @Employee, GridHelper, $enum, @CURRENT_ROLES, @q, @http, @toaster, @Evt) ->
+    constructor: (@scope, @Attendance, @AttendanceDepartment, @Employee, GridHelper, $enum, @CURRENT_ROLES, @q, @http, @toaster, @Evt, @rootScope) ->
         @loadInitialData()
 
         @scope.$enum = $enum
@@ -772,6 +796,20 @@ class AttendanceRecordCtrl extends nb.Controller
 
         @Employee.flow_leaders(employee.id).$asPromise().then (data) ->
             self.reviewers = data
+
+    # 假期录入 不需要审批 所有字段非必填
+    attendanceEntry: (request, receptor, type, panel) ->
+        self = @
+
+        params = request
+        params.type = type
+        params.receptor_id = receptor.id
+
+        @http.post('/api/workflows/instead_leave/instead_leave', params).success ()->
+            self.toaster.pop('success', '提示', '假期录入成功')
+            panel.close()
+        .error ()->
+            self.toaster.pop('error', '提示', '假期录入失败')
 
     loadInitialData: ()->
         @employees = @Employee.$collection().$fetch()
@@ -868,6 +906,21 @@ class AttendanceRecordCtrl extends nb.Controller
             else
                 self.Evt.$send('special_state:save:error', msg || "创建失败")
 
+    # 安排离岗培训
+    newTrainEmployee: (moveEmployee, dialog)->
+        self = @
+
+        if moveEmployee.special_date_from && moveEmployee.special_date_to
+            start = moment(moveEmployee.special_date_from)
+            end = moment(moveEmployee.special_date_to)
+
+            if start < end
+                @http.post('/api/special_states/temporarily_train', moveEmployee).then (data)->
+                    self.Evt.$send("moveEmployee:save:success", '离岗培训设置成功')
+                    dialog.close()
+            else
+                self.toaster.pop('error', '提示', '日期填写不正确，开始日期不能大于结束日期')
+
     uploadAnnualDays: (type, attachment_id)->
         self = @
 
@@ -881,6 +934,26 @@ class AttendanceRecordCtrl extends nb.Controller
             self.toaster.pop('error', '提示', '导入失败')
             self.importing = false
 
+    loadMonthList: () ->
+        @$getFilterMonths()
+
+    loadAttendanceDepartments: () ->
+        @departments = @AttendanceDepartment.$collection().$refresh({summary_date: @attendanceImportMonth})
+
+    uploadAttendance: (type, attachment_id, departmentId, month, dialog)->
+        self = @
+
+        params = {type: type, attachment_id: attachment_id, month: month, department_id: departmentId}
+        @importing = true
+
+        @http.post("/api/attendance_summaries/import", params).success (data, status) ->
+            self.toaster.pop('success', '提示', '导入成功')
+            self.importing = false
+            self.rootScope.downloadUrl = data.path
+            dialog.close()
+        .error (data) ->
+            self.toaster.pop('error', '提示', '导入失败')
+            self.importing = false
 
 
 class AttendanceHisCtrl extends nb.Controller
@@ -1223,16 +1296,19 @@ class ContractCtrl extends nb.Controller
     uploadContract: (attachment_id)->
         self = @
         params = {attachment_id: attachment_id}
-
         tableState = @tableState || {}
         tableState['show_merged'] = @show_merged
 
         @http.post("/api/contracts/import", params).success (data, status) ->
+            self.importing = false
             if data.error_count > 0
                 self.toaster.pop('error', '提示', '有' + data.error_count + '个导入失败')
             else
                 self.contracts.$refresh(tableState)
                 self.toaster.pop('success', '提示', '导入成功')
+        .error () ->
+            self.importing = false
+
 
 class ProtocolCtrl extends nb.Controller
     @.$inject = ['$scope', 'Protocol', '$http', 'Employee', '$nbEvent', 'toaster', 'CURRENT_ROLES', 'PERMISSIONS']
@@ -1753,7 +1829,7 @@ class VacationManagementCtrl extends nb.Controller
             self.records.$refresh(params)
             self.importing = false
         .error (data) ->
-            self.importing = false        
+            self.importing = false
 
 
 app.controller('AttendanceRecordCtrl', AttendanceRecordCtrl)

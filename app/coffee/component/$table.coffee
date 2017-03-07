@@ -72,7 +72,7 @@ class NbFilterCtrl extends nb.FilterController
             <md-select placeholder="${ displayName }" ng-model="${ name }">
                 <md-option value="员工" placeholder="人员分类">员工</md-option>
                 <md-option value="基层干部" placeholder="人员分类">基层干部</md-option>
-                <md-option value="中层干部" placeholder="人员分类">中层干部</md-option>
+                <md-option value="中层" placeholder="人员分类">中层</md-option>
                 <md-option value="主官" placeholder="人员分类">主官</md-option>
             </md-select>
         '''
@@ -169,6 +169,16 @@ class NbFilterCtrl extends nb.FilterController
                 <md-option value="借调" placeholder="异动性质">借调</md-option>
                 <md-option value="空勤地面" placeholder="异动性质">空勤地面</md-option>
                 <md-option value="空勤停飞" placeholder="异动性质">空勤停飞</md-option>
+                <md-option value="出差" placeholder="异动性质">出差</md-option>
+            </md-select>
+        '''
+        'class_system_select':'''
+            <md-select placeholder="${ displayName }" ng-model="${ name }">
+                <md-option value="行政班" placeholder="班制">行政班</md-option>
+                <md-option value="两班倒" placeholder="班制">两班倒</md-option>
+                <md-option value="三班倒" placeholder="班制">三班倒</md-option>
+                <md-option value="四班倒" placeholder="班制">四班倒</md-option>
+                <md-option value="空勤" placeholder="班制">空勤</md-option>
             </md-select>
         '''
         'review_category_select':'''

@@ -1,0 +1,20 @@
+md-dialog.labors-new-leave.datas__container--charts
+	.dialog-content
+		div.echarts-wrapper()
+			div.charts-toolbar(layout)
+				md-button.md-icon-button(
+					style="fill: rgb(33,150,243);"
+					ng-href="/api/welfare_fees/export?year={{ctrl.currentYear}}"
+					download
+					)
+					md-icon(md-svg-src="/images/svg/ic_open_in_new_24px.svg")
+				span(flex)
+				.date-selector(layout)
+					md-select(style="width: 150px;" ng-model="ctrl.currentYear" ng-change="ctrl.loadWelfareFees(ctrl.currentYear)" placeholder="请选择")
+						md-option(ng-value="item" ng-repeat="item in ctrl.year_list track by $index" ng-bind="item")
+					label(flex-order="2") 年
+
+			ng-echarts.echarts-bar(
+				ec-config="ctrl.brokenLineConfig"
+				ec-option="ctrl.brokenLineOpitionInDialog"
+			)

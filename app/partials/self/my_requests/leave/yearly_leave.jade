@@ -9,10 +9,13 @@ block relation_data
     div.flow-info-row(layout)
         .flow-info-cell(flex)
             .flow-cell-title 川航工作年限
-            .flow-cell-content {{ meta.join_scal_date | fromNow}}
+            .flow-cell-content {{ receptor.joinScalDate | fromNow}}
+        .flow-info-cell(flex)
+            .flow-cell-title 班制
+            .flow-cell-content {{ receptor.workShifts }}
     div.flow-info-row(layout)
         .flow-info-cell(flex)
             .flow-cell-title 假别
             .flow-cell-content 年假 (
-                span(ng-repeat="(key, value) in vacations.year_days.year") {{key}} 年年假剩余天数 {{value}} 天 {{$last ? '' : '，' }}
+                span(ng-repeat="(key, value) in receptor.vacations.yearDays.year") {{key}} 年年假剩余天数 {{value}} 天 {{$last ? '' : '，' }}
                 span )

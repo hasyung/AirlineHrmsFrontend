@@ -23,20 +23,40 @@ form(name="empEditForm" ng-submit="" ng-controller="EditableResourceCtrl")
 
         div(layout)
             md-input-container(flex)
-                label 身份证号
-                    span.require-tip *
-                input(ng-model="current.identityNo", name="identityNo" required)
+                nb-search.nb-search(
+                    type="nationality"
+                    ng-model="current.nationality"
+                    float-label="true"
+                    placeholder="国籍"
+                    search-text-change="current.nation = null;"
+                    selected-item-change=""
+                    editable="editing"
+                    md-no-cache="true"
+                    )
+            md-input-container(flex)
+                nb-search.nb-search(
+                    type="nation"
+                    ng-model="current.nation"
+                    float-label="true"
+                    placeholder="民族"
+                    search-text-change=""
+                    selected-item-change=""
+                    editable="editing && current.nationality == '中国'"
+                    md-no-cache="true"
+                    )
+        div(layout)
             md-input-container.row-has-value(flex)
                 label 政治面貌
                 md-select(ng-model="current.politicalStatusId" ng-disabled="!editing")
                     md-option(ng-value="item.id" ng-repeat="item in $enum.get('political_status')") {{item.label}}
             md-input-container(flex)
-                label 民族
-                input(type="text", ng-model="current.nation")
+                label 身份证号
+                    span.require-tip *
+                input(ng-model="current.identityNo", name="identityNo" required)
         div(layout)
             md-input-container(flex)
                 label 出生日期
-                input(ng-model="current.birthday" bs-datepicker disabled)
+                input(ng-model="current.birthday" bs-datepicker ng-disabled="!editing")
             md-input-container(flex)
                 label 参工时间
                 input(ng-model="current.startWorkDate" bs-datepicker)
@@ -54,7 +74,7 @@ form(name="empEditForm" ng-submit="" ng-controller="EditableResourceCtrl")
             md-input-container(flex)
                 label 专业
                 input(type="text" placeholder="请输入专业" ng-model="current.major")
-                    
+
         div(layout)
             md-input-container(flex)
                 label 入党时间

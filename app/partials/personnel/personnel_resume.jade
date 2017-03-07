@@ -1,6 +1,4 @@
-.resume-wrap(
-    ng-init="current.$refresh();resume=current.resume.$refresh(); ctrl.distinguish(current.resume)"
-    style="width: 760px;")
+.resume-wrap(style="width: 760px;")
     .resume-header
         span {{ resume.name }}
         | 个人履历
@@ -24,14 +22,18 @@
                 .resume-row
                     .resume-item
                         label.control-label 性别
-                        .form-content(ng-bind="resume.gender.displayName")
+                        .form-content(ng-bind="resume.gender.displayName") {{resume.gender.displayName}}
+                    .resume-item
+                        label.control-label 国籍
+                        .form-content(ng-bind="resume.nationality")
+                .resume-row
                     .resume-item
                         label.control-label 民族
                         .form-content(ng-bind="resume.nation")
-                .resume-row
                     .resume-item
                         label.control-label 户籍地址
                         .form-content(ng-bind="resume.nativePlace")
+                .resume-row
                     .resume-item
                         label.control-label 身份证号
                         .form-content(ng-bind="resume.identityNo")
@@ -77,6 +79,13 @@
                     .resume-item
                         label.control-label 等级
                         .form-content(ng-bind="language.grade")
+                .resume-row
+                    .resume-item
+                        label.control-label 技术等级
+                        .form-content(ng-bind="resume.technical")
+                    .resume-item
+                        label.control-label 员工星级
+                        .form-content(ng-bind="resume.star")
         section.resume-section(layout)
             .resume-section-left(style="flex: 0 0 150px;")
                 h4 联系方式
@@ -307,7 +316,7 @@
                             label.control-label 工作描述
                             .form-content(ng-bind="work.jobDesc")
 
-        section.resume-section.last(layout)
+        section.resume-section(layout)
             .resume-section-left(style="flex: 0 0 150px;")
                 h4 到川航后工作经历
             .resume-section-right(flex)
@@ -335,7 +344,7 @@
                             label.control-label 工作描述
                             .form-content(ng-bind="work.jobDesc")
 
-        section.resume-section(layout)
+        section.resume-section.last(layout)
             .resume-section-left(style="flex: 0 0 150px;")
                 h4 到川航后任职记录
             .resume-section-right(flex)
