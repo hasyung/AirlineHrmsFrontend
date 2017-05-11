@@ -86,11 +86,11 @@ TechnicalRecords = (restmod, RMUtils, $Evt) ->
 
         $hooks:
             'after-create': ->
-                $Evt.$send('TechnicalRecords:create:success', "家庭成员创建成功")
+                $Evt.$send('TechnicalRecords:create:success', "技术等级创建成功")
             'after-update': ->
-                $Evt.$send('TechnicalRecords:update:success', "家庭成员更新成功")
+                $Evt.$send('TechnicalRecords:update:success', "技术等级更新成功")
             'after-destroy': ->
-                $Evt.$send('TechnicalRecords:update:success', "家庭成员删除成功")
+                $Evt.$send('TechnicalRecords:update:success', "技术等级删除成功")
 
         $config:
             jsonRootSingle: 'technical_record'
