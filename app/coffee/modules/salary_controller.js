@@ -1531,7 +1531,7 @@
           name: 'fullSalePromotion',
           enableCellEdit: false
         }, {
-          displayName: '四川航空报稿费',
+          displayName: '公司报稿费',
           name: 'articleFee',
           enableCellEdit: false
         }, {

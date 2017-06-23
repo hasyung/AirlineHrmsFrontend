@@ -101,8 +101,8 @@
                                 ng-click="$mdMenu.hide()"
                                 flow-init="{target: '/api/attachments/upload_xls', allowDuplicateUploads: true, testChunks: false, uploadMethod: 'POST', singleFile: true}"
                                 flow-files-submitted="ctrl.upload_start=true;$flow.upload();"
-                                flow-file-success="upload_start=false;ctrl.upload_reward('四川航空报稿费', ctrl.parseJSON($message).id);")
-                                md-button(flex flow-btn type="button") 四川航空报稿费
+                                flow-file-success="upload_start=false;ctrl.upload_reward('公司报稿费', ctrl.parseJSON($message).id);")
+                                md-button(flex flow-btn type="button") 公司报稿费
 
                             md-menu-item(
                                 ng-click="$mdMenu.hide()"

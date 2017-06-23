@@ -174,7 +174,7 @@
                     .leave {{ctrl.global_setting.full_sale_promotion[ctrl.currentYear].budget - ctrl.global_setting.full_sale_promotion[ctrl.currentYear].sent | number: 2}}
 
                 .form-row(layout ng-class="{'yellow': ctrl.global_setting.article_fee[ctrl.currentYear].sent/ctrl.global_setting.article_fee[ctrl.currentYear].budget>=0.8, 'red': ctrl.global_setting.article_fee[ctrl.currentYear].sent/ctrl.global_setting.article_fee[ctrl.currentYear].budget>=1}")
-                    label 川航稿费奖预算
+                    label 公司稿费奖预算
                     md-input-container(md-no-float)
                         input(type="number" min="0" step="1" ng-model="ctrl.global_setting.article_fee[ctrl.currentYear].budget" round-number)
                     label 已发

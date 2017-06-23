@@ -107,7 +107,7 @@ class OrgsCtrl extends nb.Controller
         @buildTree(@treeRootOrg)
 
     backToSCAL: () ->
-        scal_org =  _.find @orgs, (org) -> org.xdepth == 1 # 四川航空
+        scal_org =  _.find @orgs, (org) -> org.xdepth == 1 # 公司
         @selectOrgChart(scal_org)
 
     onItemClick: (evt) -> #机构树 点击事件处理 重构？

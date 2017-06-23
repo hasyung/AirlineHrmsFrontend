@@ -2195,7 +2195,7 @@ class SalaryRewardController extends SalaryBaseController
             {minWidth: 150,displayName: '电子航意险代理提成奖', name: 'insuranceProxy', enableCellEdit: false}
             {minWidth: 150,displayName: '客舱升舱提成奖', name: 'cabinGrowUp', enableCellEdit: false}
             {minWidth: 150,displayName: '全员促销奖', name: 'fullSalePromotion', enableCellEdit: false}
-            {minWidth: 150,displayName: '四川航空报稿费', name: 'articleFee', enableCellEdit: false}
+            {minWidth: 150,displayName: '公司报稿费', name: 'articleFee', enableCellEdit: false}
             {minWidth: 150,displayName: '无差错飞行中队奖', name: 'allRightFly', enableCellEdit: false}
             {minWidth: 150,displayName: '年度综治奖', name: 'yearCompositeBonus', enableCellEdit: false}
             {minWidth: 150,displayName: '运兵先进奖', name: 'movePerfect', enableCellEdit: false}
@@ -2540,7 +2540,7 @@ class BirthSalaryController extends SalaryBaseController
 
         @columnDef = angular.copy(SALARY_COLUMNDEF_DEFAULT).concat([
             {minWidth: 100, displayName: '基本工资', name: 'basicSalary', enableCellEdit: false}
-            {minWidth: 100, displayName: '川航工龄工资', name: 'workingYearsSalary', enableCellEdit: false}
+            {minWidth: 100, displayName: '公司工龄工资', name: 'workingYearsSalary', enableCellEdit: false}
             {minWidth: 100, displayName: '保留工资', name: 'keepSalary', enableCellEdit: false}
             {minWidth: 100, displayName: '绩效薪酬', name: 'performanceSalary', enableCellEdit: false}
             {minWidth: 100, displayName: '小时费', name: 'hoursFee', enableCellEdit: false}
