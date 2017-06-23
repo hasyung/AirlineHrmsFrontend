@@ -52,14 +52,14 @@
 				.todos__title
 					span.todos__count 0
 					| 近期会议
-				.todos__content.building
+				.todos__content
 					.todos__window(slimscroll height="389")
 
 			.todos__board#task.outlier
 				.todos__title
 					span.todos__count 0
 					| 任务查看
-				.todos__content.building
+				.todos__content
 					.todos__window(slimscroll height="389")
 
 		.boss__datas
@@ -97,7 +97,7 @@
 					ng-class="{'active': ctrl.messagesType=='私信'}"
 				) 私信
 			
-			.messages__content.building
+			.messages__content
 				div(ng-if="ctrl.messagesType == '交流分享'")
 
 				div(ng-if="ctrl.messagesType == '私信'")
