@@ -293,6 +293,10 @@ md-input-container {
     font-family: $font-family-sans-serif;
     font-size: $font-size-base;
 
+    // label {
+    //     color: rgba(0, 0, 0, .87) !important;
+    // }
+
     &.mix-height {
         height: 76px;
 
