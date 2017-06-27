@@ -365,7 +365,7 @@ gulp.task "express", ['copy'],  ->
             metadata = if !err && response.statusCode == 200 then body else "alert('meta data initial failed');console.log(#{body});"
             res.render('index', {meta: metadata, libs: libs, debugMode: debugMode})
         # Just send the index.html for other files to support HTML5Mode
-    app.listen(8000)
+    app.listen(7000)
 
     libs = generate_scripts()
 
